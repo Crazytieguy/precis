@@ -1,7 +1,7 @@
 fixture = "vaul"
 budget = 10000
-cumulative_tokens = 9880
-batch_count = 112
+cumulative_tokens = 9969
+batch_count = 111
 
 [[batches]]
 position = 1
@@ -2819,55 +2819,74 @@ pattern = '''^  test\('should be open and snapped on initial load''''
 
 [[batches]]
 position = 111
-key = 'Typescript(ExportDoc { file: "src/use-position-fixed.ts", start_line: 15 })'
-descriptor = "export doc at src/use-position-fixed.ts:15"
-cost_tokens = 147
-cum_tokens = 9836
+key = 'Plaintext(DeclSurface { file: "src/style.css" })'
+descriptor = "declaration surface of src/style.css"
+cost_tokens = 280
+cum_tokens = 9969
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/use-position-fixed.ts"
-start = 6
-end = 13
+path = "src/style.css"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 112
-key = 'Typescript(TestNames { file: "test/tests/with-scaled-background.spec.ts", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in test/tests/with-scaled-background.spec.ts"
-cost_tokens = 44
-cum_tokens = 9880
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "test/tests/with-scaled-background.spec.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^test\.describe\('With scaled background''''
-
-[[batches.content.spans]]
-path = "test/tests/with-scaled-background.spec.ts"
+path = "src/style.css"
 start = 9
 end = 9
 
 [batches.content.spans.render]
-kind = "truncated"
-pattern = '''^  test\('should scale background''''
+kind = "full"
 
 [[batches.content.spans]]
-path = "test/tests/with-scaled-background.spec.ts"
-start = 17
-end = 17
+path = "src/style.css"
+start = 12
+end = 12
 
 [batches.content.spans.render]
-kind = "truncated"
-pattern = '''^  test\('should scale background when dragging''''
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/style.css"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/style.css"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/style.css"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/style.css"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/style.css"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"

@@ -82,10 +82,11 @@ Score(3000)=0.870 I=0.951 C=0.796 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 | walker |  | 4360 | 33 | CHANGELOG.md section #6 |  |  | 0.825 |
 | walker |  | 4400 | 40 | CHANGELOG.md section #5 |  |  | 0.825 |
 | walker |  | 4495 | 95 | CHANGELOG.md section #1 |  |  | 0.826 |
-| walker |  | 4589 | 94 | CHANGELOG.md section #3 |  |  | 0.826 |
-| ns | 4665 |  | 622 | instances_spec.lua (full) | 3.5 | 3.1 | 0.754 |
-| walker |  | 4674 | 85 | CHANGELOG.md section #8 |  |  | 0.754 |
-| walker |  | 4848 | 174 | CHANGELOG.md section #7 |  |  | 0.755 |
+| ns | 4665 |  | 622 | instances_spec.lua (full) | 3.5 | 3.1 | 0.753 |
+| walker |  | 4796 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.753 |
+| walker |  | 4890 | 94 | CHANGELOG.md section #3 |  |  | 0.754 |
+| walker |  | 4975 | 85 | CHANGELOG.md section #8 |  |  | 0.754 |
+| walker |  | 5149 | 174 | CHANGELOG.md section #7 |  |  | 0.755 |
 | ns | 5271 |  | 606 | mixins_spec.lua (full) | 3.6 | 3.1 | 0.707 |
 | ns | 5498 |  | 227 | default_methods_spec.lua nested describe() locations | 3.7 | 3.1 | 0.694 |
 | ns | 5788 |  | 290 | default_methods_spec.lua: name/tostring/()/subclass guards | 3.8 | 3.7 | 0.667 |

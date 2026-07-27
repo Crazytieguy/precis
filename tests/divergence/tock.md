@@ -139,222 +139,207 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 4092 | 0 | go decl at internal/core/models/activity.go:41 |  |  | 0.525 |
 | walker |  | 4105 | 13 | go decl body at internal/core/models/activity.go:19 |  |  | 0.525 |
 | walker |  | 4124 | 19 | go decl doc at internal/core/models/activity.go:31 |  |  | 0.525 |
-| walker |  | 4134 | 10 | docs/commands.md section #11 |  |  | 0.525 |
-| walker |  | 4144 | 10 | docs/commands.md section #31 |  |  | 0.525 |
-| walker |  | 4234 | 90 | README.md section #21 |  |  | 0.525 |
 | ns | 4328 |  | 411 | cli.NewRootCmd (composition root, wiring) | 6.1 |  | 0.499 |
-| walker |  | 4329 | 95 | go decl names surface in internal/adapters/cli/remove.go |  |  | 0.499 |
-| walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:22 |  |  | 0.499 |
-| walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:95 |  |  | 0.499 |
-| walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:116 |  |  | 0.499 |
-| walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:127 |  |  | 0.499 |
-| walker |  | 4351 | 22 | go decl body at internal/services/ics/generator.go:12 |  |  | 0.503 |
-| walker |  | 4519 | 168 | go decl names surface in internal/config/config.go |  |  | 0.503 |
-| walker |  | 4519 | 0 | go decl at internal/config/config.go:62 |  |  | 0.503 |
-| walker |  | 4519 | 0 | go decl at internal/config/config.go:68 |  |  | 0.503 |
-| walker |  | 4519 | 0 | go decl at internal/config/config.go:74 |  |  | 0.503 |
-| walker |  | 4519 | 0 | go decl at internal/config/config.go:80 |  |  | 0.503 |
-| walker |  | 4534 | 15 | go decl at internal/config/config.go:41 |  |  | 0.503 |
-| walker |  | 4551 | 17 | go decl at internal/config/config.go:37 |  |  | 0.503 |
-| walker |  | 4568 | 17 | go decl at internal/config/config.go:45 |  |  | 0.503 |
-| walker |  | 4587 | 19 | go decl at internal/config/config.go:33 |  |  | 0.503 |
-| ns | 4638 |  | 310 | cli.NewStartCmd (cmd shape + time-parse logic) | 6.2 |  | 0.487 |
-| walker |  | 4677 | 90 | go decl at internal/config/config.go:25 |  |  | 0.492 |
-| walker |  | 4717 | 40 | go package + imports in cmd/tock/main.go |  |  | 0.505 |
-| ns | 4772 |  | 134 | cli.NewStopCmd | 6.3 |  | 0.497 |
-| walker |  | 4819 | 102 | go decl names surface in internal/adapters/cli/add.go |  |  | 0.497 |
-| walker |  | 4819 | 0 | go decl at internal/adapters/cli/add.go:26 |  |  | 0.497 |
-| walker |  | 4819 | 0 | go decl at internal/adapters/cli/add.go:64 |  |  | 0.497 |
-| walker |  | 4819 | 0 | go decl at internal/adapters/cli/add.go:124 |  |  | 0.497 |
-| walker |  | 4819 | 0 | go decl at internal/adapters/cli/add.go:163 |  |  | 0.497 |
-| walker |  | 4892 | 73 | go decl at internal/core/ports/ports.go:22 |  |  | 0.503 |
-| walker |  | 4904 | 12 | docs/commands.md section #41 |  |  | 0.503 |
-| walker |  | 5018 | 114 | go decl at internal/config/config.go:49 |  |  | 0.503 |
-| ns | 5082 |  | 310 | cli.NewAddCmd (definition + flags only) | 6.4 |  | 0.491 |
-| walker |  | 5207 | 189 | go decl names surface in internal/timeutil/timeutil.go |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:11 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:25 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:34 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:39 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:47 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:56 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:103 |  |  | 0.492 |
-| walker |  | 5207 | 0 | go decl at internal/timeutil/timeutil.go:158 |  |  | 0.492 |
-| walker |  | 5220 | 13 | go decl at internal/timeutil/timeutil.go:19 |  |  | 0.492 |
-| walker |  | 5229 | 9 | go decl at internal/timeutil/timeutil.go:13 |  |  | 0.492 |
-| walker |  | 5239 | 10 | go decl doc at internal/timeutil/timeutil.go:19 |  |  | 0.492 |
-| walker |  | 5247 | 8 | go decl body at internal/timeutil/timeutil.go:34 |  |  | 0.492 |
-| walker |  | 5261 | 14 | go decl doc at internal/timeutil/timeutil.go:11 |  |  | 0.492 |
-| walker |  | 5276 | 15 | go decl doc at internal/timeutil/timeutil.go:34 |  |  | 0.492 |
-| walker |  | 5292 | 16 | go decl doc at internal/timeutil/timeutil.go:47 |  |  | 0.492 |
-| walker |  | 5309 | 17 | go decl doc at internal/timeutil/timeutil.go:39 |  |  | 0.492 |
-| walker |  | 5345 | 36 | go decl doc at internal/timeutil/timeutil.go:56 |  |  | 0.492 |
-| ns | 5359 |  | 277 | cli.NewContinueCmd (definition + flags) | 6.5 |  | 0.481 |
-| walker |  | 5385 | 40 | go decl doc at internal/timeutil/timeutil.go:25 |  |  | 0.481 |
-| walker |  | 5429 | 44 | go decl doc at internal/timeutil/timeutil.go:103 |  |  | 0.481 |
-| ns | 5443 |  | 84 | cli.NewRemoveCmd (definition) | 6.6 |  | 0.477 |
-| walker |  | 5540 | 111 | go decl names surface in internal/adapters/cli/calendar_sidebar.go |  |  | 0.477 |
-| walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:15 |  |  | 0.477 |
-| walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:27 |  |  | 0.477 |
-| walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:51 |  |  | 0.477 |
-| walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:128 |  |  | 0.477 |
-| walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:211 |  |  | 0.477 |
-| walker |  | 5571 | 31 | go decl at internal/adapters/cli/update.go:17 |  |  | 0.477 |
+| ns | 4638 |  | 310 | cli.NewStartCmd (cmd shape + time-parse logic) | 6.2 |  | 0.483 |
+| walker |  | 4758 | 634 | plaintext config install.sh |  |  | 0.484 |
+| walker |  | 4768 | 10 | docs/commands.md section #11 |  |  | 0.484 |
+| ns | 4772 |  | 134 | cli.NewStopCmd | 6.3 |  | 0.476 |
+| walker |  | 4778 | 10 | docs/commands.md section #31 |  |  | 0.476 |
+| walker |  | 4868 | 90 | README.md section #21 |  |  | 0.476 |
+| walker |  | 4963 | 95 | go decl names surface in internal/adapters/cli/remove.go |  |  | 0.476 |
+| walker |  | 4963 | 0 | go decl at internal/adapters/cli/remove.go:22 |  |  | 0.476 |
+| walker |  | 4963 | 0 | go decl at internal/adapters/cli/remove.go:95 |  |  | 0.476 |
+| walker |  | 4963 | 0 | go decl at internal/adapters/cli/remove.go:116 |  |  | 0.476 |
+| walker |  | 4963 | 0 | go decl at internal/adapters/cli/remove.go:127 |  |  | 0.476 |
+| walker |  | 4985 | 22 | go decl body at internal/services/ics/generator.go:12 |  |  | 0.480 |
+| ns | 5082 |  | 310 | cli.NewAddCmd (definition + flags only) | 6.4 |  | 0.468 |
+| walker |  | 5153 | 168 | go decl names surface in internal/config/config.go |  |  | 0.468 |
+| walker |  | 5153 | 0 | go decl at internal/config/config.go:62 |  |  | 0.468 |
+| walker |  | 5153 | 0 | go decl at internal/config/config.go:68 |  |  | 0.468 |
+| walker |  | 5153 | 0 | go decl at internal/config/config.go:74 |  |  | 0.468 |
+| walker |  | 5153 | 0 | go decl at internal/config/config.go:80 |  |  | 0.468 |
+| walker |  | 5168 | 15 | go decl at internal/config/config.go:41 |  |  | 0.468 |
+| walker |  | 5185 | 17 | go decl at internal/config/config.go:37 |  |  | 0.468 |
+| walker |  | 5202 | 17 | go decl at internal/config/config.go:45 |  |  | 0.468 |
+| walker |  | 5221 | 19 | go decl at internal/config/config.go:33 |  |  | 0.468 |
+| walker |  | 5311 | 90 | go decl at internal/config/config.go:25 |  |  | 0.473 |
+| walker |  | 5351 | 40 | go package + imports in cmd/tock/main.go |  |  | 0.486 |
+| ns | 5359 |  | 277 | cli.NewContinueCmd (definition + flags) | 6.5 |  | 0.475 |
+| ns | 5443 |  | 84 | cli.NewRemoveCmd (definition) | 6.6 |  | 0.471 |
+| walker |  | 5453 | 102 | go decl names surface in internal/adapters/cli/add.go |  |  | 0.471 |
+| walker |  | 5453 | 0 | go decl at internal/adapters/cli/add.go:26 |  |  | 0.471 |
+| walker |  | 5453 | 0 | go decl at internal/adapters/cli/add.go:64 |  |  | 0.471 |
+| walker |  | 5453 | 0 | go decl at internal/adapters/cli/add.go:124 |  |  | 0.471 |
+| walker |  | 5453 | 0 | go decl at internal/adapters/cli/add.go:163 |  |  | 0.471 |
+| walker |  | 5526 | 73 | go decl at internal/core/ports/ports.go:22 |  |  | 0.477 |
+| walker |  | 5538 | 12 | docs/commands.md section #41 |  |  | 0.477 |
 | ns | 5618 |  | 175 | cli.NewCurrentCmd (definition + flags) | 6.7 |  | 0.471 |
-| walker |  | 5696 | 125 | README.md section #18 |  |  | 0.472 |
-| walker |  | 5713 | 17 | go decl doc at internal/adapters/cli/analyze.go:84 |  |  | 0.472 |
+| walker |  | 5652 | 114 | go decl at internal/config/config.go:49 |  |  | 0.471 |
 | ns | 5779 |  | 161 | cli.NewLastCmd | 6.8 |  | 0.464 |
-| walker |  | 5834 | 121 | go decl names surface in internal/adapters/cli/theme.go |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:40 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:53 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:66 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:79 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:93 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:122 |  |  | 0.464 |
-| walker |  | 5834 | 0 | go decl at internal/adapters/cli/theme.go:167 |  |  | 0.464 |
-| walker |  | 5850 | 16 | go decl doc at internal/adapters/cli/theme.go:167 |  |  | 0.464 |
-| walker |  | 5868 | 18 | go decl doc at internal/adapters/cli/theme.go:40 |  |  | 0.464 |
-| walker |  | 5886 | 18 | go decl doc at internal/adapters/cli/theme.go:53 |  |  | 0.464 |
-| walker |  | 5905 | 19 | go decl doc at internal/adapters/cli/theme.go:122 |  |  | 0.464 |
-| walker |  | 5925 | 20 | go decl doc at internal/adapters/cli/theme.go:66 |  |  | 0.464 |
-| walker |  | 5946 | 21 | go decl doc at internal/adapters/cli/theme.go:79 |  |  | 0.464 |
-| walker |  | 5975 | 29 | go decl doc at internal/adapters/cli/theme.go:93 |  |  | 0.464 |
-| walker |  | 5988 | 13 | docs/commands.md section #45 |  |  | 0.464 |
-| walker |  | 6001 | 13 | docs/commands.md section #49 |  |  | 0.464 |
-| walker |  | 6019 | 18 | go decl doc at internal/adapters/cli/report.go:61 |  |  | 0.464 |
+| walker |  | 5841 | 189 | go decl names surface in internal/timeutil/timeutil.go |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:11 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:25 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:34 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:39 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:47 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:56 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:103 |  |  | 0.464 |
+| walker |  | 5841 | 0 | go decl at internal/timeutil/timeutil.go:158 |  |  | 0.464 |
+| walker |  | 5854 | 13 | go decl at internal/timeutil/timeutil.go:19 |  |  | 0.464 |
+| walker |  | 5863 | 9 | go decl at internal/timeutil/timeutil.go:13 |  |  | 0.464 |
+| walker |  | 5873 | 10 | go decl doc at internal/timeutil/timeutil.go:19 |  |  | 0.464 |
+| walker |  | 5881 | 8 | go decl body at internal/timeutil/timeutil.go:34 |  |  | 0.464 |
+| walker |  | 5895 | 14 | go decl doc at internal/timeutil/timeutil.go:11 |  |  | 0.464 |
+| walker |  | 5910 | 15 | go decl doc at internal/timeutil/timeutil.go:34 |  |  | 0.464 |
+| walker |  | 5926 | 16 | go decl doc at internal/timeutil/timeutil.go:47 |  |  | 0.464 |
+| walker |  | 5943 | 17 | go decl doc at internal/timeutil/timeutil.go:39 |  |  | 0.464 |
+| walker |  | 5979 | 36 | go decl doc at internal/timeutil/timeutil.go:56 |  |  | 0.464 |
+| walker |  | 6019 | 40 | go decl doc at internal/timeutil/timeutil.go:25 |  |  | 0.464 |
+| walker |  | 6063 | 44 | go decl doc at internal/timeutil/timeutil.go:103 |  |  | 0.464 |
 | ns | 6089 |  | 310 | cli.NewReportCmd (definition + flags) | 6.9 |  | 0.456 |
-| walker |  | 6106 | 87 | go decl at internal/adapters/cli/theme.go:11 |  |  | 0.456 |
-| walker |  | 6120 | 14 | go decl doc at internal/adapters/cli/theme.go:11 |  |  | 0.456 |
-| walker |  | 6139 | 19 | go decl doc at internal/adapters/cli/calendar_sidebar.go:15 |  |  | 0.456 |
-| ns | 6155 |  | 66 | cli.runUpdateCheck (update-check throttle gate) | 6.10 |  | 0.454 |
-| walker |  | 6211 | 72 | go decl doc at internal/timeutil/timeutil.go:158 |  |  | 0.454 |
-| walker |  | 6225 | 14 | docs/commands.md section #21 |  |  | 0.454 |
+| ns | 6155 |  | 66 | cli.runUpdateCheck (update-check throttle gate) | 6.10 |  | 0.453 |
+| walker |  | 6174 | 111 | go decl names surface in internal/adapters/cli/calendar_sidebar.go |  |  | 0.453 |
+| walker |  | 6174 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:15 |  |  | 0.453 |
+| walker |  | 6174 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:27 |  |  | 0.453 |
+| walker |  | 6174 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:51 |  |  | 0.453 |
+| walker |  | 6174 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:128 |  |  | 0.453 |
+| walker |  | 6174 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:211 |  |  | 0.453 |
+| walker |  | 6205 | 31 | go decl at internal/adapters/cli/update.go:17 |  |  | 0.453 |
 | ns | 6259 |  | 104 | cli version/commit/date ldflags vars | 6.11 |  | 0.451 |
-| walker |  | 6278 | 53 | go package + imports in internal/timeutil/timeutil.go |  |  | 0.452 |
-| walker |  | 6298 | 20 | go decl doc at internal/adapters/cli/analyze.go:206 |  |  | 0.452 |
-| walker |  | 6311 | 13 | go decl body at internal/adapters/cli/current.go:23 |  |  | 0.452 |
-| walker |  | 6326 | 15 | docs/commands.md section #36 |  |  | 0.452 |
-| ns | 6404 |  | 145 | cli watchModel + keyMap (state for `tock watch`) | 7.1 |  | 0.444 |
-| walker |  | 6424 | 98 | go decl at internal/core/models/activity.go:10 |  |  | 0.455 |
-| walker |  | 6436 | 12 | go decl doc at internal/core/models/activity.go:10 |  |  | 0.458 |
-| walker |  | 6452 | 16 | docs/commands.md section #26 |  |  | 0.458 |
-| ns | 6502 |  | 98 | cli.NewICalCmd (definition + flags) | 7.2 |  | 0.455 |
-| walker |  | 6622 | 170 | go decl names surface in internal/adapters/cli/ical.go |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:23 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:78 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:155 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:185 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:210 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:250 |  |  | 0.455 |
-| walker |  | 6622 | 0 | go decl at internal/adapters/cli/ical.go:302 |  |  | 0.455 |
-| ns | 6675 |  | 173 | cli.NewAnalyzeCmd + AnalysisStats | 7.3 |  | 0.450 |
-| walker |  | 6792 | 170 | go decl names surface in internal/adapters/cli/watch.go |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:19 |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:95 |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:115 |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:121 |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:175 |  |  | 0.450 |
-| walker |  | 6792 | 0 | go decl at internal/adapters/cli/watch.go:262 |  |  | 0.450 |
-| walker |  | 6814 | 22 | go decl at internal/adapters/cli/watch.go:90 |  |  | 0.452 |
-| ns | 6854 |  | 179 | cli reportModel (state for `tock calendar`) | 7.4 |  | 0.446 |
-| walker |  | 6881 | 67 | go package + imports in internal/extra/extra.go |  |  | 0.446 |
-| ns | 7041 |  | 187 | cli calendar_sidebar.go: renderSidebar (fixed-height-budget layout) | 7.5 |  | 0.439 |
-| ns | 7158 |  | 117 | cli list_gui model (state for `tock list`) | 7.6 |  | 0.434 |
-| walker |  | 7281 | 400 | README.md section #19 |  |  | 0.434 |
-| ns | 7349 |  | 191 | cli.SelectActivityMetadata (interactive picker entry point) | 7.7 |  | 0.427 |
-| walker |  | 7396 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.427 |
-| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.427 |
-| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.427 |
-| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.427 |
-| walker |  | 7403 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.427 |
-| ns | 7462 |  | 113 | cli theme.go: Theme/Styles structs + DarkTheme | 7.8 |  | 0.437 |
-| walker |  | 7571 | 168 | go decl at internal/config/config.go:12 |  |  | 0.457 |
-| ns | 7575 |  | 113 | file/parser.go: ParseActivity (the plaintext activity format) | 8.1 |  | 0.454 |
-| walker |  | 7614 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.466 |
-| walker |  | 7688 | 74 | go package + imports in internal/config/config.go |  |  | 0.481 |
-| ns | 7738 |  | 163 | file/repository.go: Find | 8.2 |  | 0.476 |
-| ns | 7852 |  | 114 | file package test names | 8.3 |  | 0.472 |
-| walker |  | 7898 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.472 |
-| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.472 |
-| walker |  | 7905 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.472 |
-| walker |  | 7955 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.486 |
-| ns | 8032 |  | 180 | notes/repository.go: Save (per-activity notes/tags sidecar) | 8.4 |  | 0.482 |
-| ns | 8085 |  | 53 | notes package test names | 8.5 |  | 0.480 |
-| walker |  | 8100 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.481 |
-| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.481 |
-| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.481 |
-| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.481 |
-| walker |  | 8111 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.481 |
-| walker |  | 8120 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.481 |
-| walker |  | 8137 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.481 |
-| walker |  | 8151 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.481 |
-| walker |  | 8205 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.493 |
-| ns | 8217 |  | 132 | timewarrior/repository.go: Find + filter helpers | 8.6 |  | 0.490 |
-| ns | 8329 |  | 112 | timewarrior/repository.go: parseIncLine (native undo-log format) | 8.7 |  | 0.488 |
-| walker |  | 8375 | 170 | go decl names surface in internal/adapters/repositories/file/repository.go |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:23 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:27 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:93 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:130 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:168 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:229 |  |  | 0.488 |
-| walker |  | 8375 | 0 | go decl at internal/adapters/repositories/file/repository.go:250 |  |  | 0.488 |
-| walker |  | 8386 | 11 | go decl at internal/adapters/repositories/file/repository.go:19 |  |  | 0.488 |
-| walker |  | 8400 | 14 | go decl body at internal/adapters/repositories/file/repository.go:23 |  |  | 0.488 |
-| ns | 8435 |  | 106 | timewarrior package test names | 8.8 |  | 0.486 |
-| ns | 8561 |  | 126 | timeutil.Formatter: type + display-format getters | 9.1 |  | 0.496 |
-| walker |  | 8669 | 269 | go decl names surface in internal/adapters/cli/root.go |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:31 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:107 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:115 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:119 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:123 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:127 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:134 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:173 |  |  | 0.496 |
-| walker |  | 8669 | 0 | go decl at internal/adapters/cli/root.go:195 |  |  | 0.496 |
-| walker |  | 8678 | 9 | go decl at internal/adapters/cli/root.go:21 |  |  | 0.496 |
-| ns | 8743 |  | 182 | timeutil.ParseTime (24h-first-then-12h fallback chain) | 9.2 |  | 0.492 |
-| walker |  | 8831 | 153 | go decl at internal/adapters/cli/analyze.go:70 |  |  | 0.505 |
-| ns | 8846 |  | 103 | timeutil_test.go test names | 9.3 |  | 0.503 |
-| ns | 8961 |  | 115 | extra.CalculateEndTime + its test name | 9.4 |  | 0.500 |
-| ns | 9009 |  | 48 | .github/workflows/ci.yml | 10.1 |  | 0.504 |
-| ns | 9083 |  | 74 | .github/workflows/release.yml | 10.2 |  | 0.501 |
-| walker |  | 9097 | 266 | docs/commands.md section #0 |  |  | 0.527 |
-| walker |  | 9162 | 65 | go package + imports in internal/services/ics/generator.go |  |  | 0.538 |
-| ns | 9171 |  | 88 | .goreleaser.yaml | 10.3 |  | 0.534 |
-| ns | 9268 |  | 97 | .mockery.yaml (mocked interfaces) | 10.4 |  | 0.531 |
-| walker |  | 9321 | 159 | go decl at internal/core/ports/ports.go:11 |  |  | 0.546 |
-| ns | 9370 |  | 102 | .golangci.yaml: version/issues/formatters | 10.5 |  | 0.542 |
-| ns | 9486 |  | 116 | install.sh (OS/arch detection + fetch-and-install) | 10.6 |  | 0.539 |
-| ns | 9560 |  | 74 | README Quick Start / Installation options | 11.1 |  | 0.536 |
-| walker |  | 9613 | 292 | go decl names surface in internal/services/activity/service.go |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:20 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:24 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:68 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:118 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:141 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:149 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:186 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:210 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:214 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:218 |  |  | 0.544 |
-| walker |  | 9631 | 18 | go decl body at internal/services/activity/service.go:20 |  |  | 0.544 |
-| walker |  | 9657 | 26 | go decl at internal/services/activity/service.go:15 |  |  | 0.544 |
-| walker |  | 9668 | 11 | go decl body at internal/services/activity/service.go:210 |  |  | 0.544 |
-| ns | 9669 |  | 109 | README Configuration: priority order + env var list | 11.2 |  | 0.540 |
-| walker |  | 9680 | 12 | go decl body at internal/services/activity/service.go:214 |  |  | 0.540 |
-| ns | 9720 |  | 51 | README Theming section | 11.3 |  | 0.538 |
-| walker |  | 9745 | 65 | go decl at internal/adapters/cli/add.go:16 |  |  | 0.538 |
-| ns | 9852 |  | 132 | README File Format spec | 11.4 |  | 0.542 |
-| ns | 9929 |  | 77 | docs/commands.md: `start` section lede + usage | 11.6 |  | 0.540 |
-| ns | 9971 |  | 42 | core/ports/mocks: the three mock type declarations | 12.1 |  | 0.539 |
+| walker |  | 6330 | 125 | README.md section #18 |  |  | 0.451 |
+| walker |  | 6347 | 17 | go decl doc at internal/adapters/cli/analyze.go:84 |  |  | 0.451 |
+| ns | 6404 |  | 145 | cli watchModel + keyMap (state for `tock watch`) | 7.1 |  | 0.443 |
+| walker |  | 6468 | 121 | go decl names surface in internal/adapters/cli/theme.go |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:40 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:53 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:66 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:79 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:93 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:122 |  |  | 0.443 |
+| walker |  | 6468 | 0 | go decl at internal/adapters/cli/theme.go:167 |  |  | 0.443 |
+| walker |  | 6484 | 16 | go decl doc at internal/adapters/cli/theme.go:167 |  |  | 0.443 |
+| walker |  | 6502 | 18 | go decl doc at internal/adapters/cli/theme.go:40 |  |  | 0.440 |
+| ns | 6502 |  | 98 | cli.NewICalCmd (definition + flags) | 7.2 |  | 0.440 |
+| walker |  | 6520 | 18 | go decl doc at internal/adapters/cli/theme.go:53 |  |  | 0.440 |
+| walker |  | 6539 | 19 | go decl doc at internal/adapters/cli/theme.go:122 |  |  | 0.440 |
+| walker |  | 6559 | 20 | go decl doc at internal/adapters/cli/theme.go:66 |  |  | 0.440 |
+| walker |  | 6580 | 21 | go decl doc at internal/adapters/cli/theme.go:79 |  |  | 0.440 |
+| walker |  | 6609 | 29 | go decl doc at internal/adapters/cli/theme.go:93 |  |  | 0.440 |
+| walker |  | 6622 | 13 | docs/commands.md section #45 |  |  | 0.440 |
+| walker |  | 6635 | 13 | docs/commands.md section #49 |  |  | 0.440 |
+| walker |  | 6653 | 18 | go decl doc at internal/adapters/cli/report.go:61 |  |  | 0.440 |
+| ns | 6675 |  | 173 | cli.NewAnalyzeCmd + AnalysisStats | 7.3 |  | 0.434 |
+| walker |  | 6740 | 87 | go decl at internal/adapters/cli/theme.go:11 |  |  | 0.435 |
+| walker |  | 6754 | 14 | go decl doc at internal/adapters/cli/theme.go:11 |  |  | 0.435 |
+| walker |  | 6773 | 19 | go decl doc at internal/adapters/cli/calendar_sidebar.go:15 |  |  | 0.435 |
+| walker |  | 6845 | 72 | go decl doc at internal/timeutil/timeutil.go:158 |  |  | 0.435 |
+| ns | 6854 |  | 179 | cli reportModel (state for `tock calendar`) | 7.4 |  | 0.429 |
+| walker |  | 6859 | 14 | docs/commands.md section #21 |  |  | 0.429 |
+| walker |  | 6912 | 53 | go package + imports in internal/timeutil/timeutil.go |  |  | 0.429 |
+| walker |  | 6932 | 20 | go decl doc at internal/adapters/cli/analyze.go:206 |  |  | 0.429 |
+| walker |  | 6945 | 13 | go decl body at internal/adapters/cli/current.go:23 |  |  | 0.429 |
+| walker |  | 6960 | 15 | docs/commands.md section #36 |  |  | 0.429 |
+| ns | 7041 |  | 187 | cli calendar_sidebar.go: renderSidebar (fixed-height-budget layout) | 7.5 |  | 0.423 |
+| walker |  | 7058 | 98 | go decl at internal/core/models/activity.go:10 |  |  | 0.434 |
+| walker |  | 7070 | 12 | go decl doc at internal/core/models/activity.go:10 |  |  | 0.437 |
+| walker |  | 7086 | 16 | docs/commands.md section #26 |  |  | 0.437 |
+| ns | 7158 |  | 117 | cli list_gui model (state for `tock list`) | 7.6 |  | 0.432 |
+| walker |  | 7256 | 170 | go decl names surface in internal/adapters/cli/ical.go |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:23 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:78 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:155 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:185 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:210 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:250 |  |  | 0.432 |
+| walker |  | 7256 | 0 | go decl at internal/adapters/cli/ical.go:302 |  |  | 0.432 |
+| ns | 7349 |  | 191 | cli.SelectActivityMetadata (interactive picker entry point) | 7.7 |  | 0.425 |
+| walker |  | 7426 | 170 | go decl names surface in internal/adapters/cli/watch.go |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:19 |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:95 |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:115 |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:121 |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:175 |  |  | 0.426 |
+| walker |  | 7426 | 0 | go decl at internal/adapters/cli/watch.go:262 |  |  | 0.426 |
+| walker |  | 7448 | 22 | go decl at internal/adapters/cli/watch.go:90 |  |  | 0.428 |
+| ns | 7462 |  | 113 | cli theme.go: Theme/Styles structs + DarkTheme | 7.8 |  | 0.438 |
+| walker |  | 7515 | 67 | go package + imports in internal/extra/extra.go |  |  | 0.438 |
+| ns | 7575 |  | 113 | file/parser.go: ParseActivity (the plaintext activity format) | 8.1 |  | 0.434 |
+| ns | 7738 |  | 163 | file/repository.go: Find | 8.2 |  | 0.429 |
+| ns | 7852 |  | 114 | file package test names | 8.3 |  | 0.426 |
+| walker |  | 7915 | 400 | README.md section #19 |  |  | 0.426 |
+| walker |  | 8030 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.426 |
+| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.426 |
+| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.426 |
+| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.426 |
+| ns | 8032 |  | 180 | notes/repository.go: Save (per-activity notes/tags sidecar) | 8.4 |  | 0.422 |
+| walker |  | 8037 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.422 |
+| ns | 8085 |  | 53 | notes package test names | 8.5 |  | 0.421 |
+| walker |  | 8205 | 168 | go decl at internal/config/config.go:12 |  |  | 0.440 |
+| ns | 8217 |  | 132 | timewarrior/repository.go: Find + filter helpers | 8.6 |  | 0.437 |
+| walker |  | 8248 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.449 |
+| walker |  | 8322 | 74 | go package + imports in internal/config/config.go |  |  | 0.464 |
+| ns | 8329 |  | 112 | timewarrior/repository.go: parseIncLine (native undo-log format) | 8.7 |  | 0.462 |
+| ns | 8435 |  | 106 | timewarrior package test names | 8.8 |  | 0.459 |
+| walker |  | 8532 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.459 |
+| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.459 |
+| walker |  | 8539 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.459 |
+| ns | 8561 |  | 126 | timeutil.Formatter: type + display-format getters | 9.1 |  | 0.471 |
+| walker |  | 8589 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.484 |
+| walker |  | 8734 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.484 |
+| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.484 |
+| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.484 |
+| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.484 |
+| ns | 8743 |  | 182 | timeutil.ParseTime (24h-first-then-12h fallback chain) | 9.2 |  | 0.481 |
+| walker |  | 8745 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.481 |
+| walker |  | 8754 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.481 |
+| walker |  | 8771 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.481 |
+| walker |  | 8785 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.481 |
+| walker |  | 8839 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.492 |
+| ns | 8846 |  | 103 | timeutil_test.go test names | 9.3 |  | 0.490 |
+| ns | 8961 |  | 115 | extra.CalculateEndTime + its test name | 9.4 |  | 0.488 |
+| walker |  | 9009 | 170 | go decl names surface in internal/adapters/repositories/file/repository.go |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:23 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:27 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:93 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:130 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:168 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:229 |  |  | 0.492 |
+| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:250 |  |  | 0.492 |
+| ns | 9009 |  | 48 | .github/workflows/ci.yml | 10.1 |  | 0.492 |
+| walker |  | 9020 | 11 | go decl at internal/adapters/repositories/file/repository.go:19 |  |  | 0.492 |
+| walker |  | 9034 | 14 | go decl body at internal/adapters/repositories/file/repository.go:23 |  |  | 0.492 |
+| ns | 9083 |  | 74 | .github/workflows/release.yml | 10.2 |  | 0.488 |
+| ns | 9171 |  | 88 | .goreleaser.yaml | 10.3 |  | 0.485 |
+| ns | 9268 |  | 97 | .mockery.yaml (mocked interfaces) | 10.4 |  | 0.482 |
+| walker |  | 9303 | 269 | go decl names surface in internal/adapters/cli/root.go |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:31 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:107 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:115 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:119 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:123 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:127 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:134 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:173 |  |  | 0.482 |
+| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:195 |  |  | 0.482 |
+| walker |  | 9312 | 9 | go decl at internal/adapters/cli/root.go:21 |  |  | 0.482 |
+| ns | 9370 |  | 102 | .golangci.yaml: version/issues/formatters | 10.5 |  | 0.479 |
+| walker |  | 9465 | 153 | go decl at internal/adapters/cli/analyze.go:70 |  |  | 0.491 |
+| ns | 9486 |  | 116 | install.sh (OS/arch detection + fetch-and-install) | 10.6 |  | 0.497 |
+| ns | 9560 |  | 74 | README Quick Start / Installation options | 11.1 |  | 0.495 |
+| ns | 9669 |  | 109 | README Configuration: priority order + env var list | 11.2 |  | 0.491 |
+| ns | 9720 |  | 51 | README Theming section | 11.3 |  | 0.490 |
+| walker |  | 9731 | 266 | docs/commands.md section #0 |  |  | 0.515 |
+| walker |  | 9796 | 65 | go package + imports in internal/services/ics/generator.go |  |  | 0.526 |
+| ns | 9852 |  | 132 | README File Format spec | 11.4 |  | 0.530 |
+| ns | 9929 |  | 77 | docs/commands.md: `start` section lede + usage | 11.6 |  | 0.528 |
+| walker |  | 9955 | 159 | go decl at internal/core/ports/ports.go:11 |  |  | 0.542 |
+| ns | 9971 |  | 42 | core/ports/mocks: the three mock type declarations | 12.1 |  | 0.541 |

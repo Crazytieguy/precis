@@ -185,66 +185,64 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | walker |  | 6112 | 127 | README.md section #26 |  |  | 0.661 |
 | walker |  | 6137 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.661 |
 | walker |  | 6244 | 107 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.661 |
-| walker |  | 6312 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.661 |
-| walker |  | 6329 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.661 |
-| walker |  | 6358 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.661 |
-| walker |  | 6374 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.661 |
-| walker |  | 6390 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.661 |
-| walker |  | 6479 | 89 | packages/crypto/README.md section #1 |  |  | 0.661 |
+| walker |  | 6333 | 89 | declaration surface of packages/docs/src/components/credential-inputs.vue |  |  | 0.661 |
+| walker |  | 6401 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.661 |
+| walker |  | 6418 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.661 |
+| walker |  | 6447 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.661 |
+| walker |  | 6463 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.661 |
+| walker |  | 6479 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.661 |
+| walker |  | 6573 | 94 | declaration surface of packages/docs/src/components/toggle.vue |  |  | 0.661 |
 | ns | 6584 |  | 504 | server.ts: Hono app assembly | 4.3 |  | 0.635 |
+| walker |  | 6662 | 89 | packages/crypto/README.md section #1 |  |  | 0.635 |
 | ns | 6666 |  | 82 | config.ts top-level section keys | 4.4 |  | 0.630 |
-| walker |  | 6672 | 193 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.630 |
-| walker |  | 6749 | 77 | package identity in packages/app-client/package.json |  |  | 0.630 |
-| walker |  | 6800 | 51 | package runtime metadata in packages/app-client/package.json |  |  | 0.630 |
-| walker |  | 6877 | 77 | package identity in packages/app-server/package.json |  |  | 0.630 |
-| walker |  | 6928 | 51 | package runtime metadata in packages/app-server/package.json |  |  | 0.630 |
-| walker |  | 7005 | 77 | package identity in packages/docs/package.json |  |  | 0.630 |
-| walker |  | 7019 | 14 | package entrypoints in packages/docs/package.json |  |  | 0.630 |
-| walker |  | 7036 | 17 | package runtime metadata in packages/docs/package.json |  |  | 0.630 |
+| walker |  | 6855 | 193 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.630 |
+| walker |  | 6932 | 77 | package identity in packages/app-client/package.json |  |  | 0.630 |
+| walker |  | 6983 | 51 | package runtime metadata in packages/app-client/package.json |  |  | 0.630 |
+| walker |  | 7060 | 77 | package identity in packages/app-server/package.json |  |  | 0.630 |
+| walker |  | 7111 | 51 | package runtime metadata in packages/app-server/package.json |  |  | 0.607 |
 | ns | 7111 |  | 445 | auth.middleware.ts: JWT gate | 4.5 |  | 0.607 |
-| walker |  | 7123 | 87 | package scripts in packages/docs/package.json |  |  | 0.607 |
-| walker |  | 7154 | 31 | package runtime dependencies in packages/docs/package.json |  |  | 0.607 |
-| walker |  | 7233 | 79 | package identity in packages/crypto/package.json |  |  | 0.607 |
-| walker |  | 7284 | 51 | package runtime metadata in packages/crypto/package.json |  |  | 0.607 |
-| walker |  | 7435 | 151 | package scripts in packages/crypto/package.json |  |  | 0.607 |
-| walker |  | 7466 | 31 | package runtime dependencies in packages/crypto/package.json |  |  | 0.607 |
+| walker |  | 7188 | 77 | package identity in packages/docs/package.json |  |  | 0.607 |
+| walker |  | 7202 | 14 | package entrypoints in packages/docs/package.json |  |  | 0.607 |
+| walker |  | 7219 | 17 | package runtime metadata in packages/docs/package.json |  |  | 0.607 |
+| walker |  | 7306 | 87 | package scripts in packages/docs/package.json |  |  | 0.607 |
+| walker |  | 7337 | 31 | package runtime dependencies in packages/docs/package.json |  |  | 0.607 |
+| walker |  | 7416 | 79 | package identity in packages/crypto/package.json |  |  | 0.607 |
+| walker |  | 7467 | 51 | package runtime metadata in packages/crypto/package.json |  |  | 0.607 |
 | ns | 7480 |  | 369 | notes.models.ts + notes.constants.ts | 4.6 |  | 0.592 |
-| walker |  | 7545 | 79 | package identity in packages/lib/package.json |  |  | 0.592 |
-| walker |  | 7596 | 51 | package runtime metadata in packages/lib/package.json |  |  | 0.592 |
-| walker |  | 7720 | 124 | package entrypoints in packages/lib/package.json |  |  | 0.592 |
-| walker |  | 7869 | 149 | package scripts in packages/lib/package.json |  |  | 0.592 |
+| walker |  | 7618 | 151 | package scripts in packages/crypto/package.json |  |  | 0.592 |
+| walker |  | 7649 | 31 | package runtime dependencies in packages/crypto/package.json |  |  | 0.592 |
+| walker |  | 7728 | 79 | package identity in packages/lib/package.json |  |  | 0.592 |
+| walker |  | 7779 | 51 | package runtime metadata in packages/lib/package.json |  |  | 0.592 |
+| walker |  | 7903 | 124 | package entrypoints in packages/lib/package.json |  |  | 0.592 |
 | ns | 7984 |  | 504 | app-client/ directory structure | 5.1 |  | 0.638 |
-| walker |  | 8069 | 200 | package scripts in packages/app-client/package.json |  |  | 0.638 |
-| walker |  | 8149 | 80 | package identity in packages/cli/package.json |  |  | 0.638 |
-| walker |  | 8200 | 51 | package runtime metadata in packages/cli/package.json |  |  | 0.638 |
-| walker |  | 8284 | 84 | package entrypoints in packages/cli/package.json |  |  | 0.638 |
+| walker |  | 8052 | 149 | package scripts in packages/lib/package.json |  |  | 0.638 |
+| walker |  | 8252 | 200 | package scripts in packages/app-client/package.json |  |  | 0.638 |
+| walker |  | 8332 | 80 | package identity in packages/cli/package.json |  |  | 0.638 |
+| walker |  | 8383 | 51 | package runtime metadata in packages/cli/package.json |  |  | 0.638 |
 | ns | 8427 |  | 443 | routes.tsx: page routing table | 5.2 |  | 0.618 |
-| walker |  | 8435 | 151 | package scripts in packages/cli/package.json |  |  | 0.618 |
-| walker |  | 8485 | 50 | README.md section #22 |  |  | 0.618 |
-| walker |  | 8632 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.618 |
-| walker |  | 8696 | 64 | README.md section #14 |  |  | 0.618 |
-| walker |  | 8782 | 86 | packages/lib/README.md section #1 |  |  | 0.618 |
-| walker |  | 8842 | 60 | packages/docs/src/how-it-works.md section #0 |  |  | 0.618 |
+| walker |  | 8467 | 84 | package entrypoints in packages/cli/package.json |  |  | 0.618 |
+| walker |  | 8618 | 151 | package scripts in packages/cli/package.json |  |  | 0.618 |
+| walker |  | 8668 | 50 | README.md section #22 |  |  | 0.618 |
+| walker |  | 8815 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.618 |
+| walker |  | 8879 | 64 | README.md section #14 |  |  | 0.618 |
+| walker |  | 8965 | 86 | packages/lib/README.md section #1 |  |  | 0.618 |
 | ns | 9004 |  | 577 | notes.usecases.ts + notes.services.ts | 5.3 |  | 0.594 |
-| walker |  | 9006 | 164 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.594 |
-| walker |  | 9020 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.598 |
-| walker |  | 9063 | 43 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.598 |
-| walker |  | 9088 | 25 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.598 |
-| walker |  | 9140 | 52 | README.md section #28 |  |  | 0.598 |
+| walker |  | 9025 | 60 | packages/docs/src/how-it-works.md section #0 |  |  | 0.594 |
+| walker |  | 9189 | 164 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.594 |
+| walker |  | 9203 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.598 |
+| walker |  | 9246 | 43 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.598 |
+| walker |  | 9271 | 25 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.598 |
+| walker |  | 9323 | 52 | README.md section #28 |  |  | 0.598 |
 | ns | 9359 |  | 355 | Locales roster | 5.4 |  | 0.591 |
-| walker |  | 9421 | 281 | package scripts in packages/app-server/package.json |  |  | 0.591 |
 | ns | 9489 |  | 130 | cli/ directory structure | 6.1 |  | 0.601 |
-| walker |  | 9530 | 109 | json config packages/lib/tsconfig.json |  |  | 0.601 |
-| walker |  | 9651 | 121 | json config packages/crypto/tsconfig.json |  |  | 0.601 |
+| walker |  | 9604 | 281 | package scripts in packages/app-server/package.json |  |  | 0.601 |
 | ns | 9678 |  | 189 | cli.ts: subcommand registration | 6.2 |  | 0.595 |
-| walker |  | 9702 | 51 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.595 |
-| walker |  | 9732 | 30 | export names surface in packages/lib/src/files/files.models.ts |  |  | 0.595 |
-| walker |  | 9762 | 30 | export names surface in packages/lib/src/notes/notes.models.ts |  |  | 0.595 |
-| walker |  | 9793 | 31 | packages/docs/src/how-it-works.md section #13 |  |  | 0.595 |
-| walker |  | 9847 | 54 | packages/docs/src/resources/brand-kit.md section #0 |  |  | 0.595 |
+| walker |  | 9713 | 109 | json config packages/lib/tsconfig.json |  |  | 0.595 |
+| walker |  | 9834 | 121 | json config packages/crypto/tsconfig.json |  |  | 0.595 |
 | ns | 9852 |  | 174 | docs/ + deploy-cloudflare/ directory structure | 7.1 |  | 0.604 |
-| walker |  | 9860 | 13 | export names surface in packages/app-client/playwright.config.ts |  |  | 0.604 |
-| walker |  | 9873 | 13 | export names surface in packages/app-client/uno.config.ts |  |  | 0.604 |
-| walker |  | 9886 | 13 | export names surface in packages/app-client/vite.config.ts |  |  | 0.604 |
-| walker |  | 9965 | 79 | README.md section #21 |  |  | 0.604 |
+| walker |  | 9885 | 51 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.604 |
+| walker |  | 9915 | 30 | export names surface in packages/lib/src/files/files.models.ts |  |  | 0.604 |
+| walker |  | 9945 | 30 | export names surface in packages/lib/src/notes/notes.models.ts |  |  | 0.604 |
 | ns | 9973 |  | 121 | docs: versioning policy | 7.2 |  | 0.602 |
+| walker |  | 9976 | 31 | packages/docs/src/how-it-works.md section #13 |  |  | 0.602 |
+| walker |  | 9991 | 15 | declaration surface of packages/docs/src/public/robots.txt |  |  | 0.602 |

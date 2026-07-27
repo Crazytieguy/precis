@@ -152,7 +152,6 @@ Score(3000)=0.847 I=0.910 C=0.788 ns_rows≤3K=17/42 (reached=12 partial=1 missi
 | walker |  | 9656 | 32 | test names surface in test/tests/with-handle.spec.ts |  |  | 0.675 |
 | walker |  | 9689 | 33 | test names surface in test/tests/initial-snap.spec.ts |  |  | 0.675 |
 | ns | 9727 |  | 373 | Per-demo distinguishing Drawer.Root/Handle line, one per test/src/app/*/page.tsx route | 6.2 |  | 0.668 |
-| walker |  | 9836 | 147 | export doc at src/use-position-fixed.ts:15 |  |  | 0.682 |
-| walker |  | 9880 | 44 | test names surface in test/tests/with-scaled-background.spec.ts |  |  | 0.682 |
-| ns | 9906 |  | 179 | playwright.config.ts — webServer + device projects | 7.1 |  | 0.688 |
-| ns | 9984 |  | 78 | CI workflow — install/build/test steps | 7.2 |  | 0.685 |
+| ns | 9906 |  | 179 | playwright.config.ts — webServer + device projects | 7.1 |  | 0.674 |
+| walker |  | 9969 | 280 | declaration surface of src/style.css |  |  | 0.674 |
+| ns | 9984 |  | 78 | CI workflow — install/build/test steps | 7.2 |  | 0.672 |

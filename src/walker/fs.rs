@@ -295,10 +295,19 @@ const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
 const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
 const MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT: usize = 2;
 
+/// Case-insensitive, and `Sources/` counts: that is the spelling
+/// SwiftPM mandates, and the same for `Source/` in Objective-C and
+/// C# trees. A case-sensitive check leaves those repos with no
+/// recognised source root at all.
 pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "src" | "lib" | "source"))
+        .is_some_and(|name| {
+            matches!(
+                name.to_ascii_lowercase().as_str(),
+                "src" | "lib" | "source" | "sources"
+            )
+        })
 }
 
 /// `pkg/` directory next to a `go.mod` — the Go convention for
@@ -535,19 +544,26 @@ fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -
     count.min(target)
 }
 
+/// A directory is a source directory because of what its files *are*,
+/// not because of which languages this crate happens to parse — a
+/// `com/google/gson/` of `.java` is as much a package as a `src/` of
+/// `.ts`. The parsed languages are listed here; every other
+/// hand-authored source format comes from
+/// [`crate::walker::plaintext::SOURCE_TEXT_CODE_EXTENSIONS`].
 fn is_source_inventory_file(path: &Path) -> bool {
     // Markdown files count here because docs directories are inventories too:
     // a listing of pages often carries the orientation value.
-    const SOURCE_INVENTORY_EXTS: &[&str] = &[
+    const PARSED_INVENTORY_EXTS: &[&str] = &[
         "c", "cc", "cjs", "cpp", "cxx", "go", "h", "hpp", "js", "jsx", "md", "mdx", "mjs", "py",
         "rs", "ts", "tsx",
     ];
     path.extension()
         .and_then(|e| e.to_str())
         .is_some_and(|ext| {
-            SOURCE_INVENTORY_EXTS
-                .iter()
-                .any(|candidate| ext.eq_ignore_ascii_case(candidate))
+            let lower = ext.to_ascii_lowercase();
+            PARSED_INVENTORY_EXTS.contains(&lower.as_str())
+                || crate::walker::plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
+                    .contains(&lower.as_str())
         })
 }
 

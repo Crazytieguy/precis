@@ -326,10 +326,11 @@ Score(3000)=0.498 I=0.806 C=0.308 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | walker |  | 9592 | 26 | python method at xlstm/components/conv.py:98 |  |  | 0.424 |
 | ns | 9606 |  | 53 | tests/ directory listing | 10.1 |  | 0.430 |
 | ns | 9653 |  | 47 | conftest.py - CUDA-required skip-all guard | 10.2 |  | 0.429 |
+| walker |  | 9666 | 74 | declaration surface of pytest.ini |  |  | 0.429 |
 | ns | 9788 |  | 135 | Test-function locations across the pytest suite | 10.3 |  | 0.426 |
-| walker |  | 9805 | 213 | python class body at xlstm/components/conv.py:55 |  |  | 0.426 |
-| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.432 |
+| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.433 |
 | ns | 9872 |  | 8 | .github/workflows/ - no test/lint CI, only CLA + repo-sync | 11.2 |  | 0.434 |
+| walker |  | 9879 | 213 | python class body at xlstm/components/conv.py:55 |  |  | 0.434 |
 | ns | 9887 |  | 15 | LICENSE header | 11.3 |  | 0.433 |
-| ns | 9961 |  | 74 | pytest.ini - full | 11.4 |  | 0.431 |
-| ns | 9996 |  | 35 | README - Citation BibTeX keys | 11.5 |  | 0.431 |
+| ns | 9961 |  | 74 | pytest.ini - full | 11.4 |  | 0.438 |
+| ns | 9996 |  | 35 | README - Citation BibTeX keys | 11.5 |  | 0.438 |

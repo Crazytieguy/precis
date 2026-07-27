@@ -8,6 +8,20 @@ expression: rendered
         workflow.yml
 .gitignore
 Justfile
+       1→default: install lint test
+       2→
+       3→install:
+    …
+       7→lint:
+    …
+      12→lint-ci:
+    …
+      17→test *args:
+    …
+      20→publish:
+    …
+      26→run-faststream-example *args:
+    …
 README.md
     …
       12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
@@ -31,32 +45,7 @@ README.md
       71→  - [Application configuration](#application-configuration)
       72→- [Advanced](#advanced)
       74→## Installation
-      75→
-      76→Also, you can specify extras during installation for concrete framework:
-      77→
-      78→- `fastapi`
-      79→- `litestar`
-      80→- `faststream` (ASGI app)
-      81→
-      82→Also we have `granian` extra that is requires for `create_granian_server`.
-      83→
-      84→For uv:
-      85→
-      86→```bash
-      87→uv add "microbootstrap[fastapi]"
-      88→```
-      89→
-      90→For poetry:
-      91→
-      92→```bash
-      93→poetry add microbootstrap -E fastapi
-      94→```
-      95→
-      96→For pip:
-      97→
-      98→```bash
-      99→pip install "microbootstrap[fastapi]"
-     100→```
+    …
      102→## Quickstart
     …
      141→### FastAPI
@@ -247,11 +236,6 @@ microbootstrap/
               60→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
             …
         cors_instrument.py
-            …
-               8→class CorsConfig(BaseInstrumentConfig):
-            …
-              18→class CorsInstrument(Instrument[CorsConfig]):
-            …
         health_checks_instrument.py
         instrument_box.py
             …

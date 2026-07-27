@@ -756,7 +756,9 @@ fn is_readme(file: &Path) -> bool {
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
 }
 
-fn is_readme_rst(file: &Path) -> bool {
+/// Root `README.rst` is the one `.rst` this walker owns; the plaintext
+/// fallback must skip it so the two never emit overlapping spans.
+pub(crate) fn is_readme_rst(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.rst"))

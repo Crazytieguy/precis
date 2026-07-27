@@ -1,7 +1,7 @@
 fixture = "middleclass"
 budget = 10000
-cumulative_tokens = 4848
-batch_count = 57
+cumulative_tokens = 5149
+batch_count = 58
 
 [[batches]]
 position = 1
@@ -1561,10 +1561,28 @@ kind = "full"
 
 [[batches]]
 position = 55
+key = 'Plaintext(Whole { file: "MIT-LICENSE.txt" })'
+descriptor = "plaintext config MIT-LICENSE.txt"
+cost_tokens = 301
+cum_tokens = 4796
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "MIT-LICENSE.txt"
+start = 1
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #3"
 cost_tokens = 94
-cum_tokens = 4589
+cum_tokens = 4890
 
 [batches.content]
 kind = "lines"
@@ -1578,11 +1596,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #8"
 cost_tokens = 85
-cum_tokens = 4674
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -1596,11 +1614,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #7"
 cost_tokens = 174
-cum_tokens = 4848
+cum_tokens = 5149
 
 [batches.content]
 kind = "lines"

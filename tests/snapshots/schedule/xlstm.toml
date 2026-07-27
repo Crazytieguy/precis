@@ -1,7 +1,7 @@
 fixture = "xlstm"
 budget = 10000
-cumulative_tokens = 9805
-batch_count = 263
+cumulative_tokens = 9879
+batch_count = 264
 
 [[batches]]
 position = 1
@@ -6729,10 +6729,28 @@ kind = "full"
 
 [[batches]]
 position = 263
+key = 'Plaintext(DeclSurface { file: "pytest.ini" })'
+descriptor = "declaration surface of pytest.ini"
+cost_tokens = 74
+cum_tokens = 9666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pytest.ini"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 264
 key = 'Python(ClassBody { file: "xlstm/components/conv.py", start_line: 55 })'
 descriptor = "python class body at xlstm/components/conv.py:55"
 cost_tokens = 213
-cum_tokens = 9805
+cum_tokens = 9879
 
 [batches.content]
 kind = "lines"

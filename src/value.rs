@@ -227,9 +227,16 @@ pub(crate) fn non_essential_factor_inner(
         let mut prefix = root.to_path_buf();
         for component in target.components() {
             prefix.push(component);
-            let Some(s) = component.as_os_str().to_str() else {
+            let Some(raw) = component.as_os_str().to_str() else {
                 continue;
             };
+            // Case-insensitive: `Tests/`, `Scripts/`, `Examples/` are
+            // the spelling in Swift, C#, Objective-C and Java trees,
+            // and a role classifier that only knows the lowercase
+            // spelling gives those ecosystems' test suites the same
+            // weight as their library source.
+            let lowered = raw.to_ascii_lowercase();
+            let s = lowered.as_str();
             if (matches!(
                 s,
                 "tests"
