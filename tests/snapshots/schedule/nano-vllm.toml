@@ -7,8 +7,8 @@ batch_count = 298
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 26
-cum_tokens = 26
+cost_tokens = 28
+cum_tokens = 28
 
 [batches.content]
 kind = "fs"
@@ -21,8 +21,8 @@ entries = [".gitignore", "LICENSE", "README.md", "assets", "bench.py", "example.
 position = 2
 key = 'Fs(DirListing { dir: "assets" })'
 descriptor = "listing of 'assets'"
-cost_tokens = 4
-cum_tokens = 30
+cost_tokens = 3
+cum_tokens = 31
 
 [batches.content]
 kind = "fs"
@@ -36,7 +36,7 @@ position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 33
-cum_tokens = 63
+cum_tokens = 64
 
 [batches.content]
 kind = "lines"
@@ -53,8 +53,8 @@ kind = "full"
 position = 4
 key = 'Fs(DirListing { dir: "nanovllm" })'
 descriptor = "listing of 'nanovllm'"
-cost_tokens = 32
-cum_tokens = 95
+cost_tokens = 35
+cum_tokens = 99
 
 [batches.content]
 kind = "fs"
@@ -68,7 +68,7 @@ position = 5
 key = 'Python(Imports { file: "nanovllm/__init__.py" })'
 descriptor = "python imports in nanovllm/__init__.py"
 cost_tokens = 31
-cum_tokens = 126
+cum_tokens = 130
 
 [batches.content]
 kind = "lines"
@@ -85,8 +85,8 @@ kind = "full"
 position = 6
 key = 'Fs(DirListing { dir: "nanovllm/models" })'
 descriptor = "listing of 'nanovllm/models'"
-cost_tokens = 6
-cum_tokens = 132
+cost_tokens = 5
+cum_tokens = 135
 
 [batches.content]
 kind = "fs"
@@ -99,8 +99,8 @@ entries = ["qwen3.py"]
 position = 7
 key = 'Fs(DirListing { dir: "nanovllm/utils" })'
 descriptor = "listing of 'nanovllm/utils'"
-cost_tokens = 8
-cum_tokens = 140
+cost_tokens = 7
+cum_tokens = 142
 
 [batches.content]
 kind = "fs"
@@ -114,7 +114,7 @@ position = 8
 key = 'Python(DeclNames { file: "bench.py" })'
 descriptor = "python decl names surface in bench.py"
 cost_tokens = 11
-cum_tokens = 151
+cum_tokens = 153
 
 [batches.content]
 kind = "lines"
@@ -140,7 +140,7 @@ position = 9
 key = 'Python(Decl { file: "bench.py", start_line: 8 })'
 descriptor = "python decl at bench.py:8"
 cost_tokens = 0
-cum_tokens = 151
+cum_tokens = 153
 
 [batches.content]
 kind = "lines"
@@ -158,7 +158,7 @@ position = 10
 key = 'Python(DeclNames { file: "example.py" })'
 descriptor = "python decl names surface in example.py"
 cost_tokens = 11
-cum_tokens = 162
+cum_tokens = 164
 
 [batches.content]
 kind = "lines"
@@ -184,7 +184,7 @@ position = 11
 key = 'Python(Decl { file: "example.py", start_line: 6 })'
 descriptor = "python decl at example.py:6"
 cost_tokens = 0
-cum_tokens = 162
+cum_tokens = 164
 
 [batches.content]
 kind = "lines"
@@ -201,8 +201,8 @@ kind = "full"
 position = 12
 key = 'Fs(DirListing { dir: "nanovllm/engine" })'
 descriptor = "listing of 'nanovllm/engine'"
-cost_tokens = 24
-cum_tokens = 186
+cost_tokens = 23
+cum_tokens = 187
 
 [batches.content]
 kind = "fs"
@@ -215,7 +215,7 @@ entries = ["block_manager.py", "llm_engine.py", "model_runner.py", "scheduler.py
 position = 13
 key = 'Fs(DirListing { dir: "nanovllm/layers" })'
 descriptor = "listing of 'nanovllm/layers'"
-cost_tokens = 31
+cost_tokens = 30
 cum_tokens = 217
 
 [batches.content]

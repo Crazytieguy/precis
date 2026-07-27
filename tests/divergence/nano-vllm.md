@@ -2,26 +2,26 @@ Score(3000)=0.652 I=0.849 C=0.501 ns_rows≤3K=25/50 (reached=16 partial=2 missi
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 26 | 26 | listing of '.' |  |  | 1.000 |
-| ns | 26 |  | 26 | Root file tree | 1.1 |  | 1.000 |
-| walker |  | 30 | 4 | listing of 'assets' |  |  | 1.000 |
-| ns | 58 |  | 32 | nanovllm/ package listing | 1.2 |  | 0.638 |
-| walker |  | 63 | 33 | README headline in README.md |  |  | 0.640 |
-| ns | 82 |  | 24 | nanovllm/engine/ listing | 1.3 |  | 0.538 |
-| walker |  | 95 | 32 | listing of 'nanovllm' |  |  | 0.847 |
-| ns | 113 |  | 31 | nanovllm/layers/ listing | 1.4 |  | 0.706 |
-| ns | 119 |  | 6 | nanovllm/models/ listing | 1.5 |  | 0.691 |
-| walker |  | 126 | 31 | python imports in nanovllm/__init__.py |  |  | 0.693 |
-| ns | 127 |  | 8 | nanovllm/utils/ listing | 1.6 |  | 0.665 |
-| ns | 131 |  | 4 | assets/ listing | 1.7 |  | 0.672 |
-| walker |  | 132 | 6 | listing of 'nanovllm/models' |  |  | 0.695 |
-| walker |  | 140 | 8 | listing of 'nanovllm/utils' |  |  | 0.740 |
-| walker |  | 151 | 11 | python decl names surface in bench.py |  |  | 0.740 |
-| walker |  | 151 | 0 | python decl at bench.py:8 |  |  | 0.740 |
-| walker |  | 162 | 11 | python decl names surface in example.py |  |  | 0.740 |
-| walker |  | 162 | 0 | python decl at example.py:6 |  |  | 0.740 |
-| walker |  | 186 | 24 | listing of 'nanovllm/engine' |  |  | 0.857 |
-| walker |  | 217 | 31 | listing of 'nanovllm/layers' |  |  | 1.000 |
+| walker |  | 28 | 28 | listing of '.' |  |  | 1.000 |
+| ns | 28 |  | 28 | Root file tree | 1.1 |  | 1.000 |
+| walker |  | 31 | 3 | listing of 'assets' |  |  | 1.000 |
+| ns | 63 |  | 35 | nanovllm/ package listing | 1.2 |  | 0.638 |
+| walker |  | 64 | 33 | README headline in README.md |  |  | 0.640 |
+| ns | 86 |  | 23 | nanovllm/engine/ listing | 1.3 |  | 0.538 |
+| walker |  | 99 | 35 | listing of 'nanovllm' |  |  | 0.847 |
+| ns | 116 |  | 30 | nanovllm/layers/ listing | 1.4 |  | 0.706 |
+| ns | 121 |  | 5 | nanovllm/models/ listing | 1.5 |  | 0.691 |
+| ns | 128 |  | 7 | nanovllm/utils/ listing | 1.6 |  | 0.663 |
+| walker |  | 130 | 31 | python imports in nanovllm/__init__.py |  |  | 0.665 |
+| ns | 131 |  | 3 | assets/ listing | 1.7 |  | 0.672 |
+| walker |  | 135 | 5 | listing of 'nanovllm/models' |  |  | 0.695 |
+| walker |  | 142 | 7 | listing of 'nanovllm/utils' |  |  | 0.740 |
+| walker |  | 153 | 11 | python decl names surface in bench.py |  |  | 0.740 |
+| walker |  | 153 | 0 | python decl at bench.py:8 |  |  | 0.740 |
+| walker |  | 164 | 11 | python decl names surface in example.py |  |  | 0.740 |
+| walker |  | 164 | 0 | python decl at example.py:6 |  |  | 0.740 |
+| walker |  | 187 | 23 | listing of 'nanovllm/engine' |  |  | 0.857 |
+| walker |  | 217 | 30 | listing of 'nanovllm/layers' |  |  | 1.000 |
 | ns | 256 |  | 125 | README: title, description, key features | 1.8 |  | 0.870 |
 | walker |  | 273 | 56 | headings outline in README.md |  |  | 0.881 |
 | walker |  | 285 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.881 |

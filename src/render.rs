@@ -168,6 +168,10 @@ pub struct RenderedTree {
     root: PathBuf,
     nodes: HashMap<PathBuf, TreeNode>,
     source_cache: SourceCache,
+    /// Memo for "does this entry hold anything on disk" — one `read_dir`
+    /// or `stat` per entry, asked once per render and once per scheduler
+    /// cost probe.
+    entry_non_empty: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl RenderedTree {
@@ -178,6 +182,7 @@ impl RenderedTree {
             root,
             nodes,
             source_cache,
+            entry_non_empty: RefCell::new(HashMap::new()),
         }
     }
 
@@ -263,6 +268,67 @@ impl RenderedTree {
             .unwrap_or(0)
     }
 
+    /// Whether the node at `path` puts anything of its own below its
+    /// entry row — listed children for a directory, source rows for a
+    /// file. Ellipsis records are gap occupants, not rows.
+    fn renders_content(&self, path: &Path) -> bool {
+        match self.nodes.get(path) {
+            Some(TreeNode::Dir { children }) => !children.is_empty(),
+            Some(TreeNode::File { content }) => content.values().any(is_anchor_record),
+            None => false,
+        }
+    }
+
+    /// Whether `path` holds anything at all on disk. Guards the elision
+    /// marker so a genuinely empty directory or zero-byte file keeps
+    /// rendering as a bare name.
+    fn entry_non_empty(&self, path: &Path, kind: EntryKind) -> bool {
+        if let Some(&known) = self.entry_non_empty.borrow().get(path) {
+            return known;
+        }
+        let non_empty = match kind {
+            EntryKind::Directory => !list_dir(path).is_empty(),
+            EntryKind::File => std::fs::metadata(path).is_ok_and(|m| m.len() > 0),
+        };
+        self.entry_non_empty
+            .borrow_mut()
+            .insert(path.to_path_buf(), non_empty);
+        non_empty
+    }
+
+    /// Whether `path`'s entry row carries the elision marker: it shows
+    /// none of its contents, but there are contents to show.
+    fn entry_elided(&self, path: &Path, kind: EntryKind) -> bool {
+        !self.renders_content(path) && self.entry_non_empty(path, kind)
+    }
+
+    /// Marginal cost of the elision marker on `path`'s *own* entry row,
+    /// or `None` when there is no such row (the root) or it isn't marked.
+    /// Listing a directory's children — or admitting a file's first source
+    /// row — takes this marker back off the parent-emitted row, so both
+    /// cost paths refund it.
+    fn entry_marker_cost<T: Fn(&str) -> usize>(&self, path: &Path, tokens: &T) -> Option<Cost> {
+        if path == self.root {
+            return None;
+        }
+        let parent = path.parent()?;
+        let name = path.file_name()?.to_str()?;
+        let TreeNode::Dir { children } = self.nodes.get(parent)? else {
+            return None;
+        };
+        let kind = *children.get(name)?;
+        if !self.entry_elided(path, kind) {
+            return None;
+        }
+        let indent_depth = self.depth_from_root(parent);
+        let marked = format_entry_row(name, kind, indent_depth, true);
+        let plain = format_entry_row(name, kind, indent_depth, false);
+        Some(Cost {
+            tokens: tokens(&marked).saturating_sub(tokens(&plain)),
+            bytes: marked.len().saturating_sub(plain.len()),
+        })
+    }
+
     fn visit_fs_atom_costs<F, T>(&self, groups: &[FsGroup], tokens: &T, visit: &mut F)
     where
         F: FnMut(Cost),
@@ -284,22 +350,35 @@ impl RenderedTree {
                 _ => None,
             };
             let probed = list_dir(parent);
+            // Signed per-group accounting: new entry rows, minus the
+            // elision marker the parent's own row sheds once it renders
+            // children.
+            let mut d_tokens: isize = 0;
+            let mut d_bytes: isize = 0;
+            let mut listed_any = false;
             for p in paths {
                 let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
                     continue;
                 };
-                let cost = if already_listed.is_some_and(|c| c.contains_key(name)) {
-                    Cost::default()
-                } else {
-                    let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
-                    let row = format_entry_row(name, kind, indent_depth);
-                    Cost {
-                        tokens: tokens(&row),
-                        bytes: row.len(),
-                    }
-                };
-                visit(cost);
+                if already_listed.is_some_and(|c| c.contains_key(name)) {
+                    continue;
+                }
+                let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
+                let child = parent.join(name);
+                let row =
+                    format_entry_row(name, kind, indent_depth, self.entry_elided(&child, kind));
+                d_tokens += tokens(&row) as isize;
+                d_bytes += row.len() as isize;
+                listed_any = true;
             }
+            if listed_any && let Some(marker) = self.entry_marker_cost(parent, tokens) {
+                d_tokens -= marker.tokens as isize;
+                d_bytes -= marker.bytes as isize;
+            }
+            visit(Cost {
+                tokens: d_tokens.max(0) as usize,
+                bytes: d_bytes.max(0) as usize,
+            });
         }
     }
 
@@ -362,13 +441,17 @@ impl RenderedTree {
                     }
                 }
             }
-            let marker_delta = source.as_deref().map_or(0, |source| {
-                local_marker_delta(existing, &file_spans, source)
-            });
-            if marker_delta != 0 {
+            let delta = local_marker_delta(existing, &file_spans, source.as_deref());
+            if delta.gaps != 0 {
                 let marker_row = format_marker_row(indent_depth);
-                d_tokens += marker_delta * tokens(&marker_row) as isize;
-                d_bytes += marker_delta * marker_row.len() as isize;
+                d_tokens += delta.gaps * tokens(&marker_row) as isize;
+                d_bytes += delta.gaps * marker_row.len() as isize;
+            }
+            if delta.entry != 0
+                && let Some(marker) = self.entry_marker_cost(path, tokens)
+            {
+                d_tokens += delta.entry * marker.tokens as isize;
+                d_bytes += delta.entry * marker.bytes as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
@@ -455,7 +538,13 @@ impl RenderedTree {
             return;
         };
         for (name, kind) in children {
-            out.push_str(&format_entry_row(name, *kind, indent_depth));
+            let child = path.join(name);
+            out.push_str(&format_entry_row(
+                name,
+                *kind,
+                indent_depth,
+                self.entry_elided(&child, *kind),
+            ));
             match kind {
                 EntryKind::Directory => {
                     self.render_dir(&path.join(name), indent_depth + 1, out);
@@ -471,15 +560,17 @@ impl RenderedTree {
         let Some(TreeNode::File { content }) = self.nodes.get(path) else {
             return;
         };
-        if content.is_empty() {
-            return;
-        }
-        let source = self.source_cache.view(path);
         // Elision marking is a renderer invariant: a `…` row appears
         // iff the adjacent elided source is non-blank (leading,
         // between anchors, trailing). Author-supplied Ellipsis records
         // are gap occupants, not rows — synthesis subsumes them.
         let anchors = content_anchor_lines(content);
+        if anchors.is_empty() {
+            // Nothing of this file is shown; the marker rides on the
+            // entry row `render_dir` emitted, not on a row of its own.
+            return;
+        }
+        let source = self.source_cache.view(path);
         let marker_row = format_marker_row(indent_depth);
         walk_anchor_gaps(&anchors, source.as_deref(), |event| match event {
             GapWalkEvent::Gap => out.push_str(&marker_row),
@@ -512,22 +603,35 @@ impl std::ops::Add for Cost {
 fn content_anchor_lines(content: &BTreeMap<usize, LineRecord>) -> BTreeSet<usize> {
     content
         .iter()
-        .filter(|(_, r)| !matches!(r.render, Render::Ellipsis))
+        .filter(|(_, r)| is_anchor_record(r))
         .map(|(n, _)| *n)
         .collect()
 }
 
-/// Exact synthesized-marker change caused by replacing `entries` in one file.
-/// Only the gap bounded by the nearest unchanged anchors can change, so this
-/// avoids cloning and rescanning the file's full accumulated anchor set for
-/// every scheduler probe.
+fn is_anchor_record(record: &LineRecord) -> bool {
+    !matches!(record.render, Render::Ellipsis)
+}
+
+/// Marker change caused by replacing `entries` in one file: `gaps` counts
+/// synthesized in-file `…` rows, `entry` the file's own entry-row elision
+/// marker (which exists exactly while the file shows no source at all).
+#[derive(Default)]
+struct MarkerDelta {
+    gaps: isize,
+    entry: isize,
+}
+
+/// Exact marker change caused by replacing `entries` in one file. Only the
+/// gap bounded by the nearest unchanged anchors can change, so this avoids
+/// cloning and rescanning the file's full accumulated anchor set for every
+/// scheduler probe.
 fn local_marker_delta(
     existing: Option<&BTreeMap<usize, LineRecord>>,
     spans: &[&Span],
-    source: &CachedSource,
-) -> isize {
+    source: Option<&CachedSource>,
+) -> MarkerDelta {
     let Some(first_changed) = spans.iter().map(|span| span.start).min() else {
-        return 0;
+        return MarkerDelta::default();
     };
     let last_changed = spans
         .iter()
@@ -535,12 +639,11 @@ fn local_marker_delta(
         .max()
         .unwrap_or(first_changed);
 
-    let is_anchor = |record: &&LineRecord| !matches!(record.render, Render::Ellipsis);
     let left = existing.and_then(|content| {
         content
             .range(..first_changed)
             .rev()
-            .find(|(_, record)| is_anchor(record))
+            .find(|(_, record)| is_anchor_record(record))
             .map(|(line, _)| *line)
     });
     let right = existing.and_then(|content| {
@@ -549,7 +652,7 @@ fn local_marker_delta(
                 std::ops::Bound::Excluded(last_changed),
                 std::ops::Bound::Unbounded,
             ))
-            .find(|(_, record)| is_anchor(record))
+            .find(|(_, record)| is_anchor_record(record))
             .map(|(line, _)| *line)
     });
 
@@ -558,7 +661,7 @@ fn local_marker_delta(
         before.extend(
             content
                 .range(first_changed..=last_changed)
-                .filter(|(_, record)| !matches!(record.render, Render::Ellipsis))
+                .filter(|(_, record)| is_anchor_record(record))
                 .map(|(line, _)| *line),
         );
     }
@@ -573,14 +676,32 @@ fn local_marker_delta(
         }
     }
 
-    let has_records_before = existing.is_some_and(|content| !content.is_empty());
-    let before_count = if has_records_before {
-        marker_count_between(left, right, &before, source)
-    } else {
-        0
-    };
-    let after_count = marker_count_between(left, right, &after, source);
-    after_count as isize - before_count as isize
+    // `left`/`right` are the nearest anchors outside the changed range, so
+    // either being present means the batch can't take the file's last
+    // anchor away. Together with the local sets that decides whether the
+    // file shows any source at all before and after — which is what both
+    // the gap rows and the entry marker hinge on.
+    let outer_anchors = left.is_some() || right.is_some();
+    let shown_before = outer_anchors || !before.is_empty();
+    let shown_after = outer_anchors || !after.is_empty();
+
+    let gaps = source.map_or(0, |source| {
+        let before_count = if shown_before {
+            marker_count_between(left, right, &before, source)
+        } else {
+            0
+        };
+        let after_count = if shown_after {
+            marker_count_between(left, right, &after, source)
+        } else {
+            0
+        };
+        after_count as isize - before_count as isize
+    });
+    MarkerDelta {
+        gaps,
+        entry: isize::from(!shown_after) - isize::from(!shown_before),
+    }
 }
 
 /// Count non-blank gaps between unchanged outer anchors. `inner` contains
@@ -644,7 +765,11 @@ fn format_marker_row(indent_depth: usize) -> String {
     s
 }
 
-fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {
+/// One tree entry row. `elided` trails the same `…` glyph the in-file
+/// gap rows use: the entry holds content and none of it is shown. Without
+/// it a pruned entry is byte-identical to an empty one, and readers take
+/// marker-absence as proof of emptiness.
+fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize, elided: bool) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
     for ch in name.chars() {
         if ch.is_control() {
@@ -655,6 +780,9 @@ fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String 
     }
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
+    }
+    if elided {
+        s.push_str(" …");
     }
     s.push('\n');
     s
@@ -754,6 +882,105 @@ mod tests {
             Arc::from("fn a();\n\nfn b();\nhidden1\nhidden2\nfn c();\n"),
         );
         (cache, path)
+    }
+
+    /// Real on-disk tree — the elision marker asks the filesystem
+    /// whether an unopened entry holds anything, so these cases can't
+    /// run against the stub paths the gap tests use.
+    ///
+    /// `listed/` and `shown.rs` end up rendering content; `pruned/` and
+    /// `hidden.rs` hold content that stays hidden; `empty/` and
+    /// `zero.rs` hold nothing at all.
+    fn disk_fixture() -> tempfile::TempDir {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        std::fs::create_dir(root.join("pruned")).unwrap();
+        std::fs::write(root.join("pruned/a.rs"), "fn a() {}\n").unwrap();
+        std::fs::write(root.join("pruned/b.rs"), "fn b() {}\n").unwrap();
+        std::fs::create_dir(root.join("listed")).unwrap();
+        std::fs::write(root.join("listed/c.rs"), "fn c() {}\n").unwrap();
+        std::fs::create_dir(root.join("empty")).unwrap();
+        std::fs::write(root.join("zero.rs"), "").unwrap();
+        std::fs::write(root.join("hidden.rs"), "fn hidden() {}\n").unwrap();
+        std::fs::write(root.join("shown.rs"), "fn shown() {}\n").unwrap();
+        temp
+    }
+
+    fn dir_listing(parent: PathBuf, entries: &[&str]) -> BatchContent {
+        BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent,
+                entries: FsEntries::Listed(entries.iter().map(PathBuf::from).collect()),
+            }],
+        }
+    }
+
+    const DISK_FIXTURE_ROOT_ENTRIES: &[&str] = &[
+        "empty",
+        "hidden.rs",
+        "listed",
+        "pruned",
+        "shown.rs",
+        "zero.rs",
+    ];
+
+    #[test]
+    fn render_entry_marker_separates_pruned_entries_from_empty_ones() {
+        let temp = disk_fixture();
+        let root = temp.path().to_path_buf();
+        let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
+        tree.apply(
+            &dir_listing(root.clone(), DISK_FIXTURE_ROOT_ENTRIES),
+            BatchId::new(0),
+            |_| true,
+        );
+        tree.apply(
+            &dir_listing(root.join("listed"), &["c.rs"]),
+            BatchId::new(1),
+            |_| true,
+        );
+        tree.apply(
+            &one_span(root.join("shown.rs"), 1, Render::Full),
+            BatchId::new(2),
+            |_| true,
+        );
+
+        let out = tree.render();
+        // Content is hidden behind these, so they say so.
+        assert!(out.contains("pruned/ …\n"), "output:\n{out}");
+        assert!(out.contains("hidden.rs …\n"), "output:\n{out}");
+        // These hold nothing; marking them would be the opposite lie.
+        assert!(out.contains("empty/\n"), "output:\n{out}");
+        assert!(out.contains("zero.rs\n"), "output:\n{out}");
+        // These render their contents, so the marker comes back off.
+        assert!(out.contains("listed/\n"), "output:\n{out}");
+        assert!(out.contains("shown.rs\n"), "output:\n{out}");
+    }
+
+    #[test]
+    fn render_entry_marker_charged_cost_matches_rendered_rows() {
+        let temp = disk_fixture();
+        let root = temp.path().to_path_buf();
+        let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
+        // Each step takes a marker back off a row an earlier step paid
+        // for, so a stale charge shows up as a mismatch here.
+        let steps = [
+            dir_listing(root.clone(), DISK_FIXTURE_ROOT_ENTRIES),
+            dir_listing(root.join("listed"), &["c.rs"]),
+            one_span(root.join("shown.rs"), 1, Render::Full),
+            dir_listing(root.join("pruned"), &["a.rs", "b.rs"]),
+        ];
+        let mut charged = 0;
+        for (i, content) in steps.iter().enumerate() {
+            charged += tree.marginal_cost(content).tokens;
+            tree.apply(content, BatchId::new(i), |_| true);
+        }
+        let rendered: usize = tree
+            .render()
+            .lines()
+            .map(|line| tokenizer::count(&format!("{line}\n")))
+            .sum();
+        assert_eq!(charged, rendered, "output:\n{}", tree.render());
     }
 
     #[test]

@@ -2,8 +2,8 @@
 source: tests/fixture_baselines.rs
 expression: rendered
 ---
-.gitignore
-LICENSE
+.gitignore …
+LICENSE …
 README.md
     …
        9→# Nano-vLLM
@@ -35,7 +35,7 @@ README.md
       65→
       66→[![Star History Chart](https://api.star-history.com/svg?repos=GeeeekExplorer/nano-vllm&type=Date)](https://www.star-history.com/#GeeeekExplorer/nano-vllm&Date)
 assets/
-    logo.png
+    logo.png …
 bench.py
        1→import os
        2→import time
@@ -170,7 +170,7 @@ nanovllm/
               11→    @torch.compile
               12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
             …
-        attention.py
+        attention.py …
         embed_head.py
             …
                9→class VocabParallelEmbedding(nn.Module):
@@ -223,7 +223,7 @@ nanovllm/
               45→        residual: torch.Tensor | None = None,
               46→    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
             …
-        linear.py
+        linear.py …
         rotary_embedding.py
                1→from functools import lru_cache
                2→import torch
@@ -268,7 +268,7 @@ nanovllm/
            4→class LLM(LLMEngine):
            5→    pass
     models/
-        qwen3.py
+        qwen3.py …
     sampling_params.py
            1→from dataclasses import dataclass
            4→@dataclass

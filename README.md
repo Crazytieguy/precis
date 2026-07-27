@@ -8,12 +8,12 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 
 <!-- precis-example-start -->
 ```
-.editorconfig
-.eslintrc
+.editorconfig …
+.eslintrc …
 .github/
-    PULL_REQUEST_TEMPLATE.md
+    PULL_REQUEST_TEMPLATE.md …
     workflows/
-        compressed-size.yml
+        compressed-size.yml …
         main.yml
                1→name: CI
                2→
@@ -40,8 +40,8 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
               23→          npm test
               24→        env:
               25→          CI: true
-.gitignore
-LICENSE
+.gitignore …
+LICENSE …
 README.md
     …
        9→# Mitt
@@ -90,13 +90,15 @@ src/
           48→): Emitter<Events> {
         …
 test/
-    index_test.ts
-    test-types-compilation.ts
-tsconfig.json
+    index_test.ts …
+    test-types-compilation.ts …
+tsconfig.json …
 ```
 <!-- precis-example-end -->
 
 The file tree shows everything that exists; the README lede and heading outline give orientation; `package.json` identifies the package; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
+
+`…` always means "there is source here that isn't shown" — on a line of its own for a gap inside a file, and trailing a tree entry whose contents are entirely hidden. A name with no `…` and nothing under it is genuinely empty.
 
 ## Installation
 

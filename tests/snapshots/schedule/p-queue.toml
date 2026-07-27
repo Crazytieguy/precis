@@ -7,8 +7,8 @@ batch_count = 72
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 39
-cum_tokens = 39
+cost_tokens = 43
+cum_tokens = 43
 
 [batches.content]
 kind = "fs"
@@ -21,8 +21,8 @@ entries = [".editorconfig", ".gitattributes", ".github", ".gitignore", ".npmrc",
 position = 2
 key = 'Fs(DirListing { dir: "test-d" })'
 descriptor = "listing of 'test-d'"
-cost_tokens = 6
-cum_tokens = 45
+cost_tokens = 5
+cum_tokens = 48
 
 [batches.content]
 kind = "fs"
@@ -35,8 +35,8 @@ entries = ["index.test-d.ts"]
 position = 3
 key = 'Fs(DirListing { dir: "source" })'
 descriptor = "listing of 'source'"
-cost_tokens = 23
-cum_tokens = 68
+cost_tokens = 22
+cum_tokens = 70
 
 [batches.content]
 kind = "fs"
@@ -50,7 +50,7 @@ position = 4
 key = 'Typescript(Export { file: "source/options.ts", start_line: 111 })'
 descriptor = "export at source/options.ts:111"
 cost_tokens = 14
-cum_tokens = 82
+cum_tokens = 84
 
 [batches.content]
 kind = "lines"
@@ -68,7 +68,7 @@ position = 5
 key = 'Typescript(Export { file: "source/options.ts", start_line: 97 })'
 descriptor = "export at source/options.ts:97"
 cost_tokens = 13
-cum_tokens = 95
+cum_tokens = 97
 
 [batches.content]
 kind = "lines"
@@ -86,7 +86,7 @@ position = 6
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 68
-cum_tokens = 163
+cum_tokens = 165
 
 [batches.content]
 kind = "lines"
@@ -112,7 +112,7 @@ position = 7
 key = 'Typescript(ExportNames { file: "source/index.ts" })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 63
-cum_tokens = 226
+cum_tokens = 228
 
 [batches.content]
 kind = "lines"
@@ -138,7 +138,7 @@ position = 8
 key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 33
-cum_tokens = 259
+cum_tokens = 261
 
 [batches.content]
 kind = "lines"
@@ -172,7 +172,7 @@ position = 9
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 67
-cum_tokens = 326
+cum_tokens = 328
 
 [batches.content]
 kind = "lines"
@@ -190,7 +190,7 @@ position = 10
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 333
+cum_tokens = 335
 
 [batches.content]
 kind = "fs"
@@ -203,8 +203,8 @@ entries = ["security.md", "workflows"]
 position = 11
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 337
+cost_tokens = 3
+cum_tokens = 338
 
 [batches.content]
 kind = "fs"
@@ -218,7 +218,7 @@ position = 12
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 201
-cum_tokens = 538
+cum_tokens = 539
 
 [batches.content]
 kind = "lines"
@@ -236,7 +236,7 @@ position = 13
 key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
-cum_tokens = 558
+cum_tokens = 559
 
 [batches.content]
 kind = "lines"
@@ -254,7 +254,7 @@ position = 14
 key = 'Typescript(Export { file: "source/options.ts", start_line: 27 })'
 descriptor = "export at source/options.ts:27"
 cost_tokens = 30
-cum_tokens = 588
+cum_tokens = 589
 
 [batches.content]
 kind = "lines"
@@ -272,7 +272,7 @@ position = 15
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 31
-cum_tokens = 619
+cum_tokens = 620
 
 [batches.content]
 kind = "lines"
@@ -290,7 +290,7 @@ position = 16
 key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
 descriptor = "export names surface in source/priority-queue.ts"
 cost_tokens = 37
-cum_tokens = 656
+cum_tokens = 657
 
 [batches.content]
 kind = "lines"
@@ -332,7 +332,7 @@ position = 17
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
 descriptor = "export at source/priority-queue.ts:7"
 cost_tokens = 17
-cum_tokens = 673
+cum_tokens = 674
 
 [batches.content]
 kind = "lines"
@@ -350,7 +350,7 @@ position = 18
 key = 'Typescript(TestNames { file: "bench.ts", chunk_index: 0, benchmark: true })'
 descriptor = "benchmark names surface in bench.ts"
 cost_tokens = 76
-cum_tokens = 749
+cum_tokens = 750
 
 [batches.content]
 kind = "lines"
@@ -405,7 +405,7 @@ position = 19
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 0 })'
 descriptor = "export tail #1 at source/index.ts:16"
 cost_tokens = 218
-cum_tokens = 967
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -495,7 +495,7 @@ position = 20
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 121
-cum_tokens = 1088
+cum_tokens = 1089
 
 [batches.content]
 kind = "lines"
@@ -681,7 +681,7 @@ position = 21
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 129
-cum_tokens = 1217
+cum_tokens = 1218
 
 [batches.content]
 kind = "lines"
@@ -795,7 +795,7 @@ position = 22
 key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #5"
 cost_tokens = 10
-cum_tokens = 1227
+cum_tokens = 1228
 
 [batches.content]
 kind = "lines"
@@ -813,7 +813,7 @@ position = 23
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 1 })'
 descriptor = "export tail #2 at source/index.ts:16"
 cost_tokens = 289
-cum_tokens = 1516
+cum_tokens = 1517
 
 [batches.content]
 kind = "lines"
@@ -1095,7 +1095,7 @@ position = 24
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
-cum_tokens = 1608
+cum_tokens = 1609
 
 [batches.content]
 kind = "lines"
@@ -1120,7 +1120,7 @@ kind = "full"
 position = 25
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
-cost_tokens = 31
+cost_tokens = 30
 cum_tokens = 1639
 
 [batches.content]
