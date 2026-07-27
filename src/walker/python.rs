@@ -14,7 +14,10 @@
 //!   line — catastrophic-omission hedge.
 //! - [`PythonKey::MethodSigs`]: surface listing of every method's inner
 //!   `def` line across every top-level class. Decorator rows are owned by
-//!   the per-method batch.
+//!   the per-method batch. `@overload` stubs are excluded, as in
+//!   [`PythonKey::DeclNames`] — an overload stack is one method, and the
+//!   return annotation that discriminates its variants is not on the
+//!   `def` line.
 //! - [`PythonKey::TestNames`]: in `test_*.py` / `*_test.py` only,
 //!   surface listing of `def test_*` first lines.
 //! - [`PythonKey::SetupManifest`]: in `setup.py` only, the top-level
@@ -214,7 +217,27 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        let flat_methods: Vec<(usize, DeclInfo)> = collect_methods_by_class(&decls, &source)
+        let methods_by_class = collect_methods_by_class(&decls, &source);
+        // The same exclusion [`names_roster`] applies to top-level
+        // defs, for the same reason: an overload stack is one method,
+        // and what discriminates its variants is the return annotation
+        // — which a roster row, being the `def` line alone, cannot
+        // show. Listing every stub therefore overstates the method
+        // count and, when the signature wraps, repeats a bare
+        // `def name(` that implies distinctions the roster has hidden.
+        // The implementation def's row stands for the stack; each stub
+        // still gets its own batch, where the full signature is
+        // visible.
+        let collapsed_stub_lines: HashSet<usize> = methods_by_class
+            .iter()
+            .flat_map(|(_, methods)| {
+                methods
+                    .iter()
+                    .filter(|m| collapsed_overload_stub(m, methods, &source))
+                    .map(signature_line)
+            })
+            .collect();
+        let flat_methods: Vec<(usize, DeclInfo)> = methods_by_class
             .into_iter()
             .flat_map(|(class_index, methods)| methods.into_iter().map(move |m| (class_index, m)))
             .collect();
@@ -281,6 +304,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             let full: Vec<_> = flat_methods
                 .iter()
                 .map(|(_, m)| signature_line(m))
+                .filter(|line| !collapsed_stub_lines.contains(line))
                 .collect();
             let ellipses: Vec<_> = full
                 .iter()
@@ -985,12 +1009,26 @@ fn signature_line(info: &DeclInfo) -> usize {
     info.inner_node.start_position().row + 1
 }
 
+/// Last row of `inner`'s signature. [`signature_end_row`] reports the
+/// row the *body* starts on, which is one past the signature only when
+/// the body starts on its own line. A stub written
+/// `def f(\n    x,\n) -> T: ...` puts the body on the same row as the
+/// closing paren, so stopping one row short there drops the return
+/// annotation — precisely what distinguishes one `@overload` variant
+/// from the next.
+fn signature_last_row(inner: Node) -> usize {
+    let before_body = signature_end_row(inner).saturating_sub(1);
+    inner
+        .child_by_field_name("return_type")
+        .or_else(|| inner.child_by_field_name("parameters"))
+        .map(|node| node.end_position().row.max(before_body))
+        .unwrap_or(before_body)
+}
+
 fn collect_decl(info: &DeclInfo) -> FileLines {
     let unit_start = info.unit_node.start_position().row;
     let end_row = match info.kind {
-        DeclKind::Function | DeclKind::Class => signature_end_row(info.inner_node)
-            .saturating_sub(1)
-            .max(unit_start),
+        DeclKind::Function | DeclKind::Class => signature_last_row(info.inner_node).max(unit_start),
         DeclKind::Const => info.unit_node.end_position().row,
     };
     let mut lines = Vec::new();
@@ -1001,9 +1039,7 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
 fn collect_method_decl(info: &DeclInfo) -> FileLines {
     let unit_start = info.unit_node.start_position().row;
     let signature_start = info.inner_node.start_position().row;
-    let end_row = signature_end_row(info.inner_node)
-        .saturating_sub(1)
-        .max(signature_start);
+    let end_row = signature_last_row(info.inner_node).max(signature_start);
     let mut lines = Vec::new();
     push_rows(&mut lines, unit_start, end_row);
     FileLines::new(dedup_sorted(lines))
@@ -1857,6 +1893,51 @@ class C:
         let lines = collect_method_decl(&method);
         assert_eq!(lines.full, vec![2, 3, 4]);
         assert_eq!(signature_line(&method), 4);
+    }
+
+    #[test]
+    fn python_method_decl_keeps_a_wrapped_signature_s_return_annotation() {
+        let src = "\
+class C:
+    @overload
+    def get(
+        self, key: str, default: None = None
+    ) -> str | None: ...
+    @overload
+    def get(self, key: str, default: int) -> str | int: ...
+    def get(
+        self, key: str, default: object = None
+    ) -> object:
+        return default
+";
+        let (source, tree) = parse(src);
+        let decls = find_top_level_decls(&tree, &source);
+        let by_class = collect_methods_by_class(&decls, &source);
+        let methods = &by_class[0].1;
+
+        assert_eq!(
+            collect_method_decl(&methods[0]).full,
+            vec![2, 3, 4, 5],
+            "the `) -> str | None: ...` row is signature, not body — it is what \
+             discriminates this overload from the next"
+        );
+        assert_eq!(collect_method_decl(&methods[1]).full, vec![6, 7]);
+        assert_eq!(
+            collect_method_decl(&methods[2]).full,
+            vec![8, 9, 10],
+            "a body on its own line still stops the decl at the signature"
+        );
+
+        let stub_rows: Vec<_> = methods
+            .iter()
+            .filter(|m| collapsed_overload_stub(m, methods, &source))
+            .map(signature_line)
+            .collect();
+        assert_eq!(
+            stub_rows,
+            vec![3, 7],
+            "both stubs drop off the roster; the implementation's row stands for the stack"
+        );
     }
 
     #[test]

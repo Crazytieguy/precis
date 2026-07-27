@@ -232,58 +232,62 @@ Score(3000)=0.648 I=0.877 C=0.479 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | ns | 9124 |  | 335 | auth.py class/method locations | 8.1 |  | 0.478 |
 | ns | 9336 |  | 212 | cookies.py top-level class/function locations | 9.1 |  | 0.474 |
 | ns | 9364 |  | 28 | RequestsCookieJar method locations (sampled) | 9.2 | 9.1 | 0.474 |
-| ns | 9441 |  | 77 | utils.py function locations (sampled) | 10.1 |  | 0.472 |
-| walker |  | 9525 | 819 | python method sigs in src/requests/models.py |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:271 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:355 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:358 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:451 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:454 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:465 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:563 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:652 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:720 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:763 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:810 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:813 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:824 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:832 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:835 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:845 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:855 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:1087 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:1140 |  |  | 0.509 |
-| walker |  | 9525 | 0 | python method at src/requests/models.py:1169 |  |  | 0.509 |
-| walker |  | 9531 | 6 | python method at src/requests/models.py:112 |  |  | 0.509 |
-| walker |  | 9539 | 8 | python method at src/requests/models.py:859 |  |  | 0.509 |
-| walker |  | 9547 | 8 | python method at src/requests/models.py:874 |  |  | 0.509 |
-| walker |  | 9555 | 8 | python method at src/requests/models.py:881 |  |  | 0.509 |
-| walker |  | 9563 | 8 | python method at src/requests/models.py:889 |  |  | 0.509 |
-| walker |  | 9571 | 8 | python method at src/requests/models.py:894 |  |  | 0.509 |
-| walker |  | 9580 | 9 | python method at src/requests/models.py:1030 |  |  | 0.509 |
-| walker |  | 9589 | 9 | python method at src/requests/models.py:1049 |  |  | 0.509 |
-| walker |  | 9598 | 9 | python method at src/requests/models.py:1122 |  |  | 0.509 |
-| walker |  | 9612 | 14 | python method at src/requests/models.py:405 |  |  | 0.509 |
-| walker |  | 9620 | 8 | python method at src/requests/models.py:471 |  |  | 0.509 |
-| walker |  | 9632 | 12 | python method doc at src/requests/models.py:720 |  |  | 0.509 |
-| walker |  | 9645 | 13 | python method doc at src/requests/models.py:112 |  |  | 0.509 |
-| walker |  | 9658 | 13 | python method doc at src/requests/models.py:465 |  |  | 0.509 |
-| walker |  | 9671 | 13 | python method doc at src/requests/models.py:563 |  |  | 0.509 |
-| walker |  | 9700 | 29 | python method at src/requests/models.py:816 |  |  | 0.509 |
-| walker |  | 9715 | 15 | python method doc at src/requests/models.py:1030 |  |  | 0.509 |
-| walker |  | 9748 | 33 | python method at src/requests/models.py:697 |  |  | 0.509 |
-| walker |  | 9764 | 16 | python method doc at src/requests/models.py:855 |  |  | 0.509 |
-| walker |  | 9798 | 34 | python method at src/requests/models.py:908 |  |  | 0.509 |
-| walker |  | 9815 | 17 | python method doc at src/requests/models.py:652 |  |  | 0.498 |
+| walker |  | 9407 | 701 | python method sigs in src/requests/models.py |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:271 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:355 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:358 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:451 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:454 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:465 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:563 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:652 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:720 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:763 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:810 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:813 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:824 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:832 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:835 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:845 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:855 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:1087 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:1140 |  |  | 0.511 |
+| walker |  | 9407 | 0 | python method at src/requests/models.py:1169 |  |  | 0.511 |
+| walker |  | 9413 | 6 | python method at src/requests/models.py:112 |  |  | 0.511 |
+| walker |  | 9421 | 8 | python method at src/requests/models.py:859 |  |  | 0.511 |
+| walker |  | 9429 | 8 | python method at src/requests/models.py:874 |  |  | 0.511 |
+| walker |  | 9437 | 8 | python method at src/requests/models.py:881 |  |  | 0.511 |
+| ns | 9441 |  | 77 | utils.py function locations (sampled) | 10.1 |  | 0.509 |
+| walker |  | 9445 | 8 | python method at src/requests/models.py:889 |  |  | 0.509 |
+| walker |  | 9453 | 8 | python method at src/requests/models.py:894 |  |  | 0.509 |
+| walker |  | 9462 | 9 | python method at src/requests/models.py:1030 |  |  | 0.509 |
+| walker |  | 9471 | 9 | python method at src/requests/models.py:1049 |  |  | 0.509 |
+| walker |  | 9480 | 9 | python method at src/requests/models.py:1122 |  |  | 0.509 |
+| walker |  | 9494 | 14 | python method at src/requests/models.py:405 |  |  | 0.509 |
+| walker |  | 9502 | 8 | python method at src/requests/models.py:471 |  |  | 0.509 |
+| walker |  | 9514 | 12 | python method doc at src/requests/models.py:720 |  |  | 0.509 |
+| walker |  | 9527 | 13 | python method doc at src/requests/models.py:112 |  |  | 0.509 |
+| walker |  | 9540 | 13 | python method doc at src/requests/models.py:465 |  |  | 0.509 |
+| walker |  | 9553 | 13 | python method doc at src/requests/models.py:563 |  |  | 0.509 |
+| walker |  | 9582 | 29 | python method at src/requests/models.py:816 |  |  | 0.509 |
+| walker |  | 9597 | 15 | python method doc at src/requests/models.py:1030 |  |  | 0.509 |
+| walker |  | 9630 | 33 | python method at src/requests/models.py:697 |  |  | 0.509 |
+| walker |  | 9646 | 16 | python method doc at src/requests/models.py:855 |  |  | 0.509 |
+| walker |  | 9663 | 17 | python method doc at src/requests/models.py:652 |  |  | 0.509 |
+| walker |  | 9699 | 36 | python method at src/requests/models.py:258 |  |  | 0.509 |
+| walker |  | 9711 | 12 | python method doc at src/requests/models.py:258 |  |  | 0.509 |
+| walker |  | 9747 | 36 | python method at src/requests/models.py:912 |  |  | 0.509 |
+| walker |  | 9765 | 18 | python method doc at src/requests/models.py:881 |  |  | 0.509 |
+| walker |  | 9783 | 18 | python method doc at src/requests/models.py:1140 |  |  | 0.509 |
+| walker |  | 9802 | 19 | python method doc at src/requests/models.py:1122 |  |  | 0.509 |
 | ns | 9815 |  | 374 | certs.py full + packages.py (near-complete) | 11.1 |  | 0.498 |
-| walker |  | 9851 | 36 | python method at src/requests/models.py:258 |  |  | 0.498 |
-| walker |  | 9863 | 12 | python method doc at src/requests/models.py:258 |  |  | 0.498 |
+| walker |  | 9841 | 39 | python method at src/requests/models.py:574 |  |  | 0.498 |
+| walker |  | 9855 | 14 | python method doc at src/requests/models.py:574 |  |  | 0.498 |
 | ns | 9876 |  | 61 | docs/user/quickstart.rst heading roster (sampled) | 12.1 |  | 0.496 |
-| walker |  | 9899 | 36 | python method at src/requests/models.py:904 |  |  | 0.496 |
-| walker |  | 9935 | 36 | python method at src/requests/models.py:912 |  |  | 0.496 |
-| walker |  | 9950 | 15 | python method at src/requests/models.py:137 |  |  | 0.496 |
-| walker |  | 9950 | 0 | python method body at src/requests/models.py:137 body 139 |  |  | 0.496 |
-| walker |  | 9968 | 18 | python method doc at src/requests/models.py:881 |  |  | 0.496 |
+| walker |  | 9895 | 40 | python method at src/requests/models.py:481 |  |  | 0.496 |
+| walker |  | 9908 | 13 | python method doc at src/requests/models.py:481 |  |  | 0.496 |
+| walker |  | 9949 | 41 | python method at src/requests/models.py:668 |  |  | 0.496 |
+| walker |  | 9963 | 14 | python method doc at src/requests/models.py:668 |  |  | 0.496 |
 | ns | 9982 |  | 106 | tox.ini (near-complete) | 13.1 |  | 0.497 |
-| walker |  | 9986 | 18 | python method doc at src/requests/models.py:1140 |  |  | 0.497 |
+| walker |  | 9985 | 22 | python method doc at src/requests/models.py:894 |  |  | 0.497 |
 | ns | 10011 |  | 29 | HISTORY.md recent release heading roster | 14.1 |  | 0.496 |
