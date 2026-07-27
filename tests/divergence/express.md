@@ -25,8 +25,8 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 | walker |  | 1071 | 420 | README headline in Readme.md |  |  | 0.521 |
 | walker |  | 1199 | 128 | headings outline in Readme.md |  |  | 0.524 |
 | ns | 1209 |  | 307 | package.json identity | 1.10 |  | 0.480 |
-| walker |  | 1286 | 87 | Readme.md section #2 |  |  | 0.480 |
-| walker |  | 1411 | 125 | listing of 'examples' |  |  | 0.663 |
+| walker |  | 1324 | 125 | listing of 'examples' |  |  | 0.663 |
+| walker |  | 1411 | 87 | Readme.md section #2 |  |  | 0.663 |
 | ns | 1585 |  | 376 | test/ directory listing | 1.11 |  | 0.749 |
 | walker |  | 1587 | 176 | package scripts in package.json |  |  | 0.799 |
 | walker |  | 1698 | 111 | export names surface in lib/request.js |  |  | 0.799 |
@@ -56,8 +56,8 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 | walker |  | 2044 | 26 | export doc at lib/request.js:37 |  |  | 0.765 |
 | walker |  | 2069 | 25 | imports in lib/express.js |  |  | 0.765 |
 | ns | 2092 |  | 233 | package.json dependencies (accepts..http-errors) | 1.13 |  | 0.736 |
-| walker |  | 2096 | 27 | imports in lib/application.js |  |  | 0.736 |
-| walker |  | 2181 | 85 | listing of 'test/acceptance' |  |  | 0.801 |
+| walker |  | 2154 | 85 | listing of 'test/acceptance' |  |  | 0.801 |
+| walker |  | 2181 | 27 | imports in lib/application.js |  |  | 0.801 |
 | walker |  | 2204 | 23 | Readme.md section #19 |  |  | 0.801 |
 | walker |  | 2227 | 23 | Readme.md section #30 |  |  | 0.801 |
 | walker |  | 2251 | 24 | Readme.md section #12 |  |  | 0.801 |

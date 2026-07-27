@@ -24,12 +24,12 @@ Score(3000)=0.639 I=0.812 C=0.502 ns_rows≤3K=21/48 (reached=9 partial=2 missin
 | walker |  | 642 | 150 | c whole header in include/varnum.h |  |  | 0.797 |
 | ns | 761 |  | 202 | README: Compilation intro + Linux build command | 1.10 |  | 0.762 |
 | walker |  | 886 | 244 | c whole header in include/serialize.h |  |  | 0.765 |
+| walker |  | 901 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.765 |
 | ns | 923 |  | 162 | README: Non-volatile storage intro | 1.11 |  | 0.734 |
 | ns | 1051 |  | 128 | README: Contribution guidelines | 1.12 |  | 0.693 |
-| walker |  | 1222 | 336 | c whole header in include/worldgen.h |  |  | 0.696 |
-| walker |  | 1249 | 27 | c decl names surface in src/main.c |  |  | 0.696 |
-| walker |  | 1249 | 0 | c decl at src/main.c:68 |  |  | 0.696 |
-| walker |  | 1264 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.696 |
+| walker |  | 1237 | 336 | c whole header in include/worldgen.h |  |  | 0.696 |
+| walker |  | 1264 | 27 | c decl names surface in src/main.c |  |  | 0.696 |
+| walker |  | 1264 | 0 | c decl at src/main.c:68 |  |  | 0.696 |
 | ns | 1286 |  | 235 | README: Configuration knob summary | 1.13 |  | 0.666 |
 | ns | 1380 |  | 94 | README: Compilation, Windows/ESP options | 1.14 |  | 0.635 |
 | ns | 1502 |  | 122 | README: Non-volatile storage, remaining options | 1.15 |  | 0.620 |

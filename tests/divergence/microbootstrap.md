@@ -27,12 +27,12 @@ Score(3000)=0.633 I=0.844 C=0.476 ns_rows≤3K=15/45 (reached=9 partial=0 missin
 | walker |  | 642 | 50 | python imports #9 in microbootstrap/__init__.py |  |  | 0.565 |
 | walker |  | 711 | 69 | listing of 'microbootstrap/instruments' |  |  | 0.697 |
 | walker |  | 745 | 34 | manifest config in pyproject.toml |  |  | 0.697 |
-| walker |  | 758 | 13 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.697 |
-| walker |  | 758 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.697 |
-| walker |  | 772 | 14 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.697 |
+| walker |  | 762 | 17 | listing of 'examples' |  |  | 0.697 |
 | ns | 774 |  | 216 | README lede + minimal usage sketch | 1.8 |  | 0.606 |
-| walker |  | 780 | 8 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.606 |
-| walker |  | 797 | 17 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 775 | 13 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.606 |
+| walker |  | 775 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.606 |
+| walker |  | 789 | 14 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.606 |
+| walker |  | 797 | 8 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.606 |
 | ns | 810 |  | 36 | pyproject.toml: project identity | 1.9 |  | 0.596 |
 | walker |  | 1056 | 259 | README headline in README.md |  |  | 0.598 |
 | walker |  | 1078 | 22 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.598 |

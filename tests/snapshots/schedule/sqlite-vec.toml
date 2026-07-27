@@ -711,10 +711,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 148
+cum_tokens = 845
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
+
+[[batches]]
+position = 17
 key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
 descriptor = "headings outline in ARCHITECTURE.md"
 cost_tokens = 48
-cum_tokens = 745
+cum_tokens = 893
 
 [batches.content]
 kind = "lines"
@@ -766,20 +780,6 @@ end = 50
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 148
-cum_tokens = 893
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
 
 [[batches]]
 position = 18
@@ -919,10 +919,24 @@ entries = ["lib.rs"]
 
 [[batches]]
 position = 26
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 95
+cum_tokens = 1261
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
+
+[[batches]]
+position = 27
 key = 'Sql(QueryChunk { file: "test.sql", chunk_index: 0 })'
 descriptor = "SQL SELECT/WHERE contracts chunk #1 in test.sql"
 cost_tokens = 128
-cum_tokens = 1294
+cum_tokens = 1389
 
 [batches.content]
 kind = "lines"
@@ -944,11 +958,11 @@ end = 302
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 318
-cum_tokens = 1612
+cum_tokens = 1707
 
 [batches.content]
 kind = "lines"
@@ -960,20 +974,6 @@ end = 28
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 95
-cum_tokens = 1707
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
 
 [[batches]]
 position = 29
@@ -1351,10 +1351,24 @@ entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.
 
 [[batches]]
 position = 38
+key = 'Fs(DirListing { dir: "site/using" })'
+descriptor = "listing of 'site/using'"
+cost_tokens = 48
+cum_tokens = 3020
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/using"
+entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
+
+[[batches]]
+position = 39
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 121
-cum_tokens = 3093
+cum_tokens = 3141
 
 [batches.content]
 kind = "lines"
@@ -1366,20 +1380,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "site/using" })'
-descriptor = "listing of 'site/using'"
-cost_tokens = 48
-cum_tokens = 3141
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/using"
-entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
 
 [[batches]]
 position = 40

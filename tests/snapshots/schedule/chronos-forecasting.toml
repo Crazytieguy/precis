@@ -153,98 +153,10 @@ entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
 
 [[batches]]
 position = 11
-key = 'Python(DeclNames { file: "src/chronos/base.py" })'
-descriptor = "python decl names surface in src/chronos/base.py"
-cost_tokens = 42
-cum_tokens = 585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Python(Decl { file: "src/chronos/base.py", start_line: 27 })'
-descriptor = "python decl at src/chronos/base.py:27"
-cost_tokens = 0
-cum_tokens = 585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Python(Decl { file: "src/chronos/base.py", start_line: 32 })'
-descriptor = "python decl at src/chronos/base.py:32"
-cost_tokens = 0
-cum_tokens = 585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Python(Decl { file: "src/chronos/base.py", start_line: 44 })'
-descriptor = "python decl at src/chronos/base.py:44"
-cost_tokens = 0
-cum_tokens = 585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 17
-cum_tokens = 602
+cum_tokens = 560
 
 [batches.content]
 kind = "fs"
@@ -252,6 +164,94 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "scripts"
 entries = ["README.md", "evaluation", "kernel-synth.py", "training"]
+
+[[batches]]
+position = 12
+key = 'Python(DeclNames { file: "src/chronos/base.py" })'
+descriptor = "python decl names surface in src/chronos/base.py"
+cost_tokens = 42
+cum_tokens = 602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Python(Decl { file: "src/chronos/base.py", start_line: 27 })'
+descriptor = "python decl at src/chronos/base.py:27"
+cost_tokens = 0
+cum_tokens = 602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(Decl { file: "src/chronos/base.py", start_line: 32 })'
+descriptor = "python decl at src/chronos/base.py:32"
+cost_tokens = 0
+cum_tokens = 602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(Decl { file: "src/chronos/base.py", start_line: 44 })'
+descriptor = "python decl at src/chronos/base.py:44"
+cost_tokens = 0
+cum_tokens = 602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/base.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 16

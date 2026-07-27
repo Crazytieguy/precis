@@ -678,10 +678,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 21
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 30
+cum_tokens = 1119
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
+
+[[batches]]
+position = 22
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 129
-cum_tokens = 1218
+cum_tokens = 1248
 
 [batches.content]
 kind = "lines"
@@ -791,11 +805,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #5"
 cost_tokens = 10
-cum_tokens = 1228
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -809,11 +823,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 1 })'
 descriptor = "export tail #2 at source/index.ts:16"
 cost_tokens = 289
-cum_tokens = 1517
+cum_tokens = 1547
 
 [batches.content]
 kind = "lines"
@@ -1091,11 +1105,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
-cum_tokens = 1609
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -1115,20 +1129,6 @@ end = 26
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 30
-cum_tokens = 1639
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
 
 [[batches]]
 position = 26

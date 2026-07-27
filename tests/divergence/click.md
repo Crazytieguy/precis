@@ -10,24 +10,24 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 170 | 30 | headings outline in README.md |  |  | 1.000 |
 | walker |  | 201 | 31 | [dependencies] in pyproject.toml |  |  | 1.000 |
 | walker |  | 211 | 10 | listing of '.devcontainer' |  |  | 1.000 |
-| ns | 242 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.816 |
-| ns | 271 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.783 |
-| walker |  | 296 | 85 | listing of 'src/click' |  |  | 0.812 |
-| walker |  | 311 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.812 |
-| walker |  | 382 | 71 | python imports in src/click/__init__.py |  |  | 0.813 |
-| ns | 389 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.629 |
-| walker |  | 400 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.629 |
-| walker |  | 430 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.629 |
-| ns | 473 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.560 |
-| walker |  | 530 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.563 |
-| walker |  | 548 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.563 |
-| walker |  | 548 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.563 |
-| ns | 559 |  | 86 | src/click/ module listing | 1.7 |  | 0.650 |
-| walker |  | 709 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.652 |
-| ns | 766 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.500 |
-| walker |  | 853 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.504 |
-| walker |  | 867 | 14 | listing of '.github' |  |  | 0.504 |
-| walker |  | 889 | 22 | listing of '.github/workflows' |  |  | 0.506 |
+| walker |  | 225 | 14 | listing of '.github' |  |  | 1.000 |
+| ns | 242 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.817 |
+| walker |  | 247 | 22 | listing of '.github/workflows' |  |  | 0.820 |
+| ns | 271 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.787 |
+| walker |  | 332 | 85 | listing of 'src/click' |  |  | 0.816 |
+| walker |  | 347 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.816 |
+| ns | 389 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.631 |
+| walker |  | 418 | 71 | python imports in src/click/__init__.py |  |  | 0.632 |
+| walker |  | 436 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.632 |
+| walker |  | 466 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.632 |
+| ns | 473 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.562 |
+| ns | 559 |  | 86 | src/click/ module listing | 1.7 |  | 0.649 |
+| walker |  | 566 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.653 |
+| walker |  | 584 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.653 |
+| walker |  | 584 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.653 |
+| walker |  | 745 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.655 |
+| ns | 766 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.502 |
+| walker |  | 889 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.506 |
 | ns | 949 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.439 |
 | walker |  | 977 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.440 |
 | walker |  | 1076 | 99 | README.md section #0 |  |  | 0.440 |
@@ -41,13 +41,13 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 1651 | 180 | python imports #8 in src/click/__init__.py |  |  | 0.579 |
 | walker |  | 1729 | 78 | [package] in pyproject.toml |  |  | 0.597 |
 | walker |  | 1774 | 45 | listing of 'examples' |  |  | 0.605 |
-| walker |  | 1790 | 16 | python decl names surface in src/click/_textwrap.py |  |  | 0.605 |
-| walker |  | 1790 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.605 |
 | ns | 1837 |  | 307 | click/__init__.py: decorators + exceptions exports | 2.2 |  | 0.628 |
-| walker |  | 1924 | 134 | manifest config in pyproject.toml |  |  | 0.628 |
-| walker |  | 1953 | 29 | docs/setuptools.md section #0 |  |  | 0.628 |
-| ns | 2072 |  | 235 | click/__init__.py: formatting/globals/termui exports | 2.3 |  | 0.643 |
-| walker |  | 2080 | 127 | listing of 'tests' |  |  | 0.687 |
+| walker |  | 1901 | 127 | listing of 'tests' |  |  | 0.676 |
+| walker |  | 1917 | 16 | python decl names surface in src/click/_textwrap.py |  |  | 0.676 |
+| walker |  | 1917 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.676 |
+| walker |  | 2051 | 134 | manifest config in pyproject.toml |  |  | 0.676 |
+| ns | 2072 |  | 235 | click/__init__.py: formatting/globals/termui exports | 2.3 |  | 0.687 |
+| walker |  | 2080 | 29 | docs/setuptools.md section #0 |  |  | 0.687 |
 | walker |  | 2243 | 163 | tool.mypy+pyright config in pyproject.toml |  |  | 0.687 |
 | ns | 2254 |  | 182 | click/__init__.py: parameter-type exports | 2.4 |  | 0.696 |
 | walker |  | 2318 | 75 | README.md section #3 |  |  | 0.696 |

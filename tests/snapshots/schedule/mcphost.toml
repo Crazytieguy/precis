@@ -1601,10 +1601,24 @@ kind = "full"
 
 [[batches]]
 position = 81
+key = 'Fs(DirListing { dir: "internal/tools" })'
+descriptor = "listing of 'internal/tools'"
+cost_tokens = 25
+cum_tokens = 1644
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/tools"
+entries = ["buffered_logger.go", "connection_pool.go", "debug_logger.go", "mcp.go", "mcp_test.go"]
+
+[[batches]]
+position = 82
 key = 'Go(DeclDoc { file: "sdk/types.go", start_line: 10 })'
 descriptor = "go decl doc at sdk/types.go:10"
 cost_tokens = 33
-cum_tokens = 1652
+cum_tokens = 1677
 
 [batches.content]
 kind = "lines"
@@ -1618,11 +1632,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #27"
 cost_tokens = 17
-cum_tokens = 1669
+cum_tokens = 1694
 
 [batches.content]
 kind = "lines"
@@ -1636,11 +1650,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 16
-cum_tokens = 1685
+cum_tokens = 1710
 
 [batches.content]
 kind = "lines"
@@ -1654,11 +1668,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #25"
 cost_tokens = 17
-cum_tokens = 1702
+cum_tokens = 1727
 
 [batches.content]
 kind = "lines"
@@ -1672,11 +1686,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Go(DeclDoc { file: "sdk/types.go", start_line: 14 })'
 descriptor = "go decl doc at sdk/types.go:14"
 cost_tokens = 34
-cum_tokens = 1736
+cum_tokens = 1761
 
 [batches.content]
 kind = "lines"
@@ -1690,11 +1704,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Go(PackageImports { file: "internal/models/models_data.go" })'
 descriptor = "go package + imports in internal/models/models_data.go"
 cost_tokens = 11
-cum_tokens = 1747
+cum_tokens = 1772
 
 [batches.content]
 kind = "lines"
@@ -1706,20 +1720,6 @@ end = 4
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: "internal/tools" })'
-descriptor = "listing of 'internal/tools'"
-cost_tokens = 25
-cum_tokens = 1772
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/tools"
-entries = ["buffered_logger.go", "connection_pool.go", "debug_logger.go", "mcp.go", "mcp_test.go"]
 
 [[batches]]
 position = 88

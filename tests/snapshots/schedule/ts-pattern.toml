@@ -225,10 +225,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 11
+cum_tokens = 358
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["gif-fetcher", "one-file-demo"]
+
+[[batches]]
+position = 14
 key = 'Typescript(ExportNames { file: "src/match.ts" })'
 descriptor = "export names surface in src/match.ts"
 cost_tokens = 20
-cum_tokens = 367
+cum_tokens = 378
 
 [batches.content]
 kind = "lines"
@@ -250,11 +264,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Typescript(Export { file: "src/match.ts", start_line: 32 })'
 descriptor = "export at src/match.ts:32"
 cost_tokens = 20
-cum_tokens = 387
+cum_tokens = 398
 
 [batches.content]
 kind = "lines"
@@ -276,11 +290,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
 descriptor = "export body at src/match.ts:32 body 35"
 cost_tokens = 16
-cum_tokens = 403
+cum_tokens = 414
 
 [batches.content]
 kind = "lines"
@@ -292,20 +306,6 @@ end = 35
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 11
-cum_tokens = 414
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["gif-fetcher", "one-file-demo"]
 
 [[batches]]
 position = 17
@@ -335,10 +335,24 @@ kind = "full"
 
 [[batches]]
 position = 18
+key = 'Fs(DirListing { dir: "benchmarks" })'
+descriptor = "listing of 'benchmarks'"
+cost_tokens = 25
+cum_tokens = 589
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmarks"
+entries = ["always-last-digit.ts", "nested-objects.ts", "package-lock.json", "package.json", "random-digit.ts"]
+
+[[batches]]
+position = 19
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 109
-cum_tokens = 673
+cum_tokens = 698
 
 [batches.content]
 kind = "lines"
@@ -350,20 +364,6 @@ end = 46
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "benchmarks" })'
-descriptor = "listing of 'benchmarks'"
-cost_tokens = 25
-cum_tokens = 698
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benchmarks"
-entries = ["always-last-digit.ts", "nested-objects.ts", "package-lock.json", "package.json", "random-digit.ts"]
 
 [[batches]]
 position = 20
@@ -505,10 +505,24 @@ kind = "full"
 
 [[batches]]
 position = 25
+key = 'Fs(DirListing { dir: "examples/gif-fetcher" })'
+descriptor = "listing of 'examples/gif-fetcher'"
+cost_tokens = 16
+cum_tokens = 1132
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/gif-fetcher"
+entries = ["package.json", "public", "src", "tsconfig.json"]
+
+[[batches]]
+position = 26
 key = 'Typescript(ExportBody { file: "src/errors.ts", start_line: 5, body_start_line: 7 })'
 descriptor = "export body at src/errors.ts:5 body 7"
 cost_tokens = 75
-cum_tokens = 1191
+cum_tokens = 1207
 
 [batches.content]
 kind = "lines"
@@ -522,25 +536,25 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "examples/gif-fetcher" })'
-descriptor = "listing of 'examples/gif-fetcher'"
-cost_tokens = 16
-cum_tokens = 1207
+position = 27
+key = 'Fs(DirListing { dir: "examples/gif-fetcher/src" })'
+descriptor = "listing of 'examples/gif-fetcher/src'"
+cost_tokens = 22
+cum_tokens = 1229
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "examples/gif-fetcher"
-entries = ["package.json", "public", "src", "tsconfig.json"]
+parent = "examples/gif-fetcher/src"
+entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(Imports { file: "src/types/index.ts" })'
 descriptor = "imports in src/types/index.ts"
 cost_tokens = 10
-cum_tokens = 1217
+cum_tokens = 1239
 
 [batches.content]
 kind = "lines"
@@ -552,20 +566,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "examples/gif-fetcher/src" })'
-descriptor = "listing of 'examples/gif-fetcher/src'"
-cost_tokens = 22
-cum_tokens = 1239
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/gif-fetcher/src"
-entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
 
 [[batches]]
 position = 29
@@ -587,10 +587,24 @@ kind = "full"
 
 [[batches]]
 position = 30
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 298
+cum_tokens = 1559
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
+
+[[batches]]
+position = 31
 key = 'Typescript(ExportDoc { file: "src/errors.ts", start_line: 5 })'
 descriptor = "export doc at src/errors.ts:5"
 cost_tokens = 40
-cum_tokens = 1301
+cum_tokens = 1599
 
 [batches.content]
 kind = "lines"
@@ -602,20 +616,6 @@ end = 4
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 298
-cum_tokens = 1599
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
 
 [[batches]]
 position = 32

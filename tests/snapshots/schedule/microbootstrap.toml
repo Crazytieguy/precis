@@ -315,28 +315,24 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Python(DeclNames { file: "microbootstrap/instruments_setupper.py" })'
-descriptor = "python decl names surface in microbootstrap/instruments_setupper.py"
-cost_tokens = 13
-cum_tokens = 758
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 17
+cum_tokens = 762
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "microbootstrap/instruments_setupper.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "examples"
+entries = ["fastapi_app.py", "faststream_app.py", "litestar_app.py"]
 
 [[batches]]
 position = 21
-key = 'Python(Decl { file: "microbootstrap/instruments_setupper.py", start_line: 19 })'
-descriptor = "python decl at microbootstrap/instruments_setupper.py:19"
-cost_tokens = 0
-cum_tokens = 758
+key = 'Python(DeclNames { file: "microbootstrap/instruments_setupper.py" })'
+descriptor = "python decl names surface in microbootstrap/instruments_setupper.py"
+cost_tokens = 13
+cum_tokens = 775
 
 [batches.content]
 kind = "lines"
@@ -351,10 +347,28 @@ kind = "full"
 
 [[batches]]
 position = 22
+key = 'Python(Decl { file: "microbootstrap/instruments_setupper.py", start_line: 19 })'
+descriptor = "python decl at microbootstrap/instruments_setupper.py:19"
+cost_tokens = 0
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "microbootstrap/instruments_setupper.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
 key = 'Python(DeclNames { file: "microbootstrap/console_writer.py" })'
 descriptor = "python decl names surface in microbootstrap/console_writer.py"
 cost_tokens = 14
-cum_tokens = 772
+cum_tokens = 789
 
 [batches.content]
 kind = "lines"
@@ -368,11 +382,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Python(Decl { file: "microbootstrap/console_writer.py", start_line: 10 })'
 descriptor = "python decl at microbootstrap/console_writer.py:10"
 cost_tokens = 8
-cum_tokens = 780
+cum_tokens = 797
 
 [batches.content]
 kind = "lines"
@@ -384,20 +398,6 @@ end = 11
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 17
-cum_tokens = 797
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["fastapi_app.py", "faststream_app.py", "litestar_app.py"]
 
 [[batches]]
 position = 25

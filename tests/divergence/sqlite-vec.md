@@ -22,9 +22,9 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 683 | 27 | listing of 'bindings/rust' |  |  | 0.559 |
 | walker |  | 686 | 3 | listing of 'bindings/rust/src' |  |  | 0.559 |
 | walker |  | 697 | 11 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.559 |
-| walker |  | 745 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.559 |
 | ns | 781 |  | 249 | TODO roadmap | 1.6 |  | 0.484 |
-| walker |  | 893 | 148 | listing of 'tests' |  |  | 0.487 |
+| walker |  | 845 | 148 | listing of 'tests' |  |  | 0.487 |
+| walker |  | 893 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.487 |
 | walker |  | 905 | 12 | listing of 'scripts' |  |  | 0.487 |
 | walker |  | 927 | 22 | listing of 'benchmarks' |  |  | 0.487 |
 | walker |  | 939 | 12 | listing of 'benchmarks/self-params' |  |  | 0.487 |
@@ -34,11 +34,11 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 1138 | 77 | listing of 'site' |  |  | 0.457 |
 | walker |  | 1163 | 25 | listing of 'benchmarks/micro' |  |  | 0.457 |
 | walker |  | 1166 | 3 | listing of 'benchmarks/micro/src' |  |  | 0.457 |
-| walker |  | 1294 | 128 | SQL SELECT/WHERE contracts chunk #1 in test.sql |  |  | 0.460 |
-| ns | 1330 |  | 304 | README sample usage (vec0 create/insert) | 1.8 |  | 0.420 |
-| walker |  | 1612 | 318 | README.md section #0 |  |  | 0.420 |
-| ns | 1669 |  | 339 | reference.yaml: section catalog + meta functions | 2.1 |  | 0.370 |
-| walker |  | 1707 | 95 | listing of 'examples' |  |  | 0.371 |
+| walker |  | 1261 | 95 | listing of 'examples' |  |  | 0.458 |
+| ns | 1330 |  | 304 | README sample usage (vec0 create/insert) | 1.8 |  | 0.418 |
+| walker |  | 1389 | 128 | SQL SELECT/WHERE contracts chunk #1 in test.sql |  |  | 0.421 |
+| ns | 1669 |  | 339 | reference.yaml: section catalog + meta functions | 2.1 |  | 0.371 |
+| walker |  | 1707 | 318 | README.md section #0 |  |  | 0.371 |
 | ns | 1844 |  | 175 | reference.yaml: full function-name roster (locations) | 2.2 |  | 0.433 |
 | walker |  | 1872 | 165 | YAML reference leaf contracts in reference.yaml:1 chunk 1 |  |  | 0.461 |
 | ns | 2027 |  | 183 | reference.yaml: vec_f32 constructor (worked exemplar) | 2.3 | 2.2 | 0.442 |
@@ -56,9 +56,9 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 2928 | 523 | README.md section #3 |  |  | 0.530 |
 | ns | 2929 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.548 |
 | walker |  | 2972 | 44 | listing of 'site/guides' |  |  | 0.548 |
-| ns | 3022 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.540 |
-| walker |  | 3093 | 121 | ARCHITECTURE.md section #0 |  |  | 0.540 |
-| walker |  | 3141 | 48 | listing of 'site/using' |  |  | 0.541 |
+| walker |  | 3020 | 48 | listing of 'site/using' |  |  | 0.550 |
+| ns | 3022 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.541 |
+| walker |  | 3141 | 121 | ARCHITECTURE.md section #0 |  |  | 0.541 |
 | walker |  | 3155 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.541 |
 | ns | 3184 |  | 162 | sqlite-vec.c: #pragma region map | 4.2 |  | 0.528 |
 | walker |  | 3318 | 163 | YAML reference leaf contracts in reference.yaml:308 chunk 1 |  |  | 0.528 |

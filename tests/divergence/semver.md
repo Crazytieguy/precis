@@ -26,19 +26,19 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 520 | 40 | listing of '.github/workflows' |  |  | 0.756 |
 | ns | 526 |  | 39 | test/ top-level listing | 1.10 |  | 0.711 |
 | ns | 542 |  | 16 | test/classes/ listing | 1.11 |  | 0.695 |
-| walker |  | 580 | 60 | package identity metadata in package.json |  |  | 0.695 |
-| walker |  | 617 | 37 | listing of 'benchmarks' |  |  | 0.729 |
+| walker |  | 557 | 37 | listing of 'benchmarks' |  |  | 0.729 |
+| walker |  | 617 | 60 | package identity metadata in package.json |  |  | 0.729 |
 | ns | 646 |  | 104 | test/functions/ listing | 1.12 |  | 0.646 |
-| ns | 701 |  | 55 | test/ranges/ listing | 1.13 |  | 0.616 |
-| ns | 727 |  | 26 | test/internal/ listing | 1.14 |  | 0.601 |
-| walker |  | 797 | 180 | headings outline in README.md |  |  | 0.614 |
-| ns | 817 |  | 90 | test leaf directories: fixtures/, bin/, integration/ | 1.15 |  | 0.578 |
-| walker |  | 822 | 25 | README.md section #1 |  |  | 0.599 |
-| ns | 848 |  | 31 | .github/ top-level listing | 1.16 |  | 0.607 |
-| walker |  | 849 | 27 | README.md section #55 |  |  | 0.607 |
-| walker |  | 888 | 39 | listing of 'test' |  |  | 0.653 |
-| ns | 888 |  | 40 | .github/workflows/ listing | 1.17 |  | 0.653 |
-| walker |  | 904 | 16 | listing of 'test/classes' |  |  | 0.668 |
+| walker |  | 656 | 39 | listing of 'test' |  |  | 0.694 |
+| walker |  | 672 | 16 | listing of 'test/classes' |  |  | 0.712 |
+| ns | 701 |  | 55 | test/ranges/ listing | 1.13 |  | 0.679 |
+| ns | 727 |  | 26 | test/internal/ listing | 1.14 |  | 0.663 |
+| ns | 817 |  | 90 | test leaf directories: fixtures/, bin/, integration/ | 1.15 |  | 0.624 |
+| ns | 848 |  | 31 | .github/ top-level listing | 1.16 |  | 0.630 |
+| walker |  | 852 | 180 | headings outline in README.md |  |  | 0.642 |
+| walker |  | 877 | 25 | README.md section #1 |  |  | 0.662 |
+| ns | 888 |  | 40 | .github/workflows/ listing | 1.17 |  | 0.668 |
+| walker |  | 904 | 27 | README.md section #55 |  |  | 0.668 |
 | ns | 907 |  | 19 | .github/actions/ and ISSUE_TEMPLATE/ listing | 1.18 |  | 0.659 |
 | ns | 915 |  | 8 | tap-snapshots/test/bin/ listing | 1.19 |  | 0.657 |
 | ns | 995 |  | 80 | classes/semver.js method roster | 2.1 |  | 0.641 |
@@ -59,24 +59,24 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 1925 | 21 | README.md section #22 |  |  | 0.575 |
 | walker |  | 1946 | 21 | README.md section #23 |  |  | 0.575 |
 | walker |  | 1967 | 21 | README.md section #24 |  |  | 0.575 |
-| walker |  | 1989 | 22 | README.md section #35 |  |  | 0.575 |
-| walker |  | 2011 | 22 | README.md section #52 |  |  | 0.575 |
-| walker |  | 2036 | 25 | README.md section #13 |  |  | 0.575 |
-| walker |  | 2140 | 104 | listing of 'test/functions' |  |  | 0.642 |
+| walker |  | 2071 | 104 | listing of 'test/functions' |  |  | 0.642 |
+| walker |  | 2093 | 22 | README.md section #35 |  |  | 0.642 |
+| walker |  | 2115 | 22 | README.md section #52 |  |  | 0.642 |
+| walker |  | 2140 | 25 | README.md section #13 |  |  | 0.642 |
 | walker |  | 2164 | 24 | README.md section #43 |  |  | 0.642 |
 | walker |  | 2188 | 24 | README.md section #48 |  |  | 0.642 |
-| walker |  | 2192 | 4 | listing of 'test/bin' |  |  | 0.642 |
 | ns | 2217 |  | 306 | internal/identifiers.js | 2.7 |  | 0.605 |
-| walker |  | 2247 | 55 | listing of 'test/ranges' |  |  | 0.633 |
+| walker |  | 2243 | 55 | listing of 'test/ranges' |  |  | 0.632 |
+| walker |  | 2247 | 4 | listing of 'test/bin' |  |  | 0.633 |
 | walker |  | 2276 | 29 | README.md section #14 |  |  | 0.633 |
-| walker |  | 2299 | 23 | README.md section #34 |  |  | 0.633 |
-| walker |  | 2328 | 29 | README.md section #26 |  |  | 0.633 |
 | ns | 2355 |  | 138 | package.json scripts | 2.8 |  | 0.639 |
-| walker |  | 2357 | 29 | README.md section #36 |  |  | 0.639 |
-| walker |  | 2463 | 106 | README.md section #4 |  |  | 0.640 |
-| walker |  | 2493 | 30 | README.md section #39 |  |  | 0.640 |
-| ns | 2510 |  | 155 | package.json: bin, files, engines | 2.9 |  | 0.650 |
-| walker |  | 2576 | 83 | listing of 'test/fixtures' |  |  | 0.684 |
+| walker |  | 2359 | 83 | listing of 'test/fixtures' |  |  | 0.675 |
+| walker |  | 2382 | 23 | README.md section #34 |  |  | 0.675 |
+| walker |  | 2411 | 29 | README.md section #26 |  |  | 0.675 |
+| walker |  | 2440 | 29 | README.md section #36 |  |  | 0.675 |
+| ns | 2510 |  | 155 | package.json: bin, files, engines | 2.9 |  | 0.683 |
+| walker |  | 2546 | 106 | README.md section #4 |  |  | 0.684 |
+| walker |  | 2576 | 30 | README.md section #39 |  |  | 0.684 |
 | walker |  | 2658 | 82 | package dev/peer dependencies in package.json |  |  | 0.686 |
 | walker |  | 2691 | 33 | README.md section #31 |  |  | 0.686 |
 | walker |  | 2728 | 37 | README.md section #40 |  |  | 0.686 |

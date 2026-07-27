@@ -14,25 +14,25 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 | walker |  | 206 | 10 | go decl doc at main.go:11 |  |  | 0.985 |
 | ns | 262 |  | 96 | Binary entrypoint (main.go) + VERSION | 1.4 |  | 0.856 |
 | walker |  | 267 | 61 | README headline in README.md |  |  | 0.856 |
-| walker |  | 274 | 7 | listing of '.vscode' |  |  | 0.856 |
 | ns | 285 |  | 23 | pkg/exprparser/ directory listing | 2.1 |  | 0.805 |
-| walker |  | 320 | 46 | listing of 'cmd' |  |  | 0.814 |
-| ns | 336 |  | 51 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.725 |
-| walker |  | 338 | 18 | listing of 'cmd/testdata' |  |  | 0.732 |
-| walker |  | 390 | 52 | listing of 'pkg' |  |  | 0.732 |
-| ns | 393 |  | 57 | pkg/model/ directory listing | 2.3 |  | 0.659 |
-| walker |  | 405 | 15 | listing of 'pkg/workflowpattern' |  |  | 0.659 |
-| walker |  | 413 | 8 | listing of 'pkg/gh' |  |  | 0.660 |
-| walker |  | 435 | 22 | listing of 'pkg/exprparser' |  |  | 0.711 |
-| ns | 458 |  | 65 | cmd/ directory listing | 2.4 |  | 0.744 |
-| walker |  | 459 | 24 | listing of 'pkg/artifacts' |  |  | 0.762 |
-| walker |  | 484 | 25 | listing of 'pkg/artifactcache' |  |  | 0.830 |
-| walker |  | 487 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.830 |
-| walker |  | 490 | 3 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.830 |
-| walker |  | 502 | 12 | listing of 'pkg/filecollector' |  |  | 0.831 |
-| walker |  | 534 | 32 | listing of 'pkg/lookpath' |  |  | 0.837 |
-| ns | 547 |  | 89 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.747 |
-| walker |  | 552 | 18 | listing of 'pkg/schema' |  |  | 0.752 |
+| walker |  | 319 | 52 | listing of 'pkg' |  |  | 0.805 |
+| walker |  | 334 | 15 | listing of 'pkg/workflowpattern' |  |  | 0.805 |
+| ns | 336 |  | 51 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.717 |
+| walker |  | 342 | 8 | listing of 'pkg/gh' |  |  | 0.717 |
+| walker |  | 364 | 22 | listing of 'pkg/exprparser' |  |  | 0.774 |
+| walker |  | 388 | 24 | listing of 'pkg/artifacts' |  |  | 0.799 |
+| ns | 393 |  | 57 | pkg/model/ directory listing | 2.3 |  | 0.719 |
+| walker |  | 413 | 25 | listing of 'pkg/artifactcache' |  |  | 0.801 |
+| walker |  | 416 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.801 |
+| walker |  | 419 | 3 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.801 |
+| walker |  | 431 | 12 | listing of 'pkg/filecollector' |  |  | 0.802 |
+| ns | 458 |  | 65 | cmd/ directory listing | 2.4 |  | 0.719 |
+| walker |  | 463 | 32 | listing of 'pkg/lookpath' |  |  | 0.724 |
+| walker |  | 481 | 18 | listing of 'pkg/schema' |  |  | 0.729 |
+| walker |  | 488 | 7 | listing of '.vscode' |  |  | 0.729 |
+| walker |  | 534 | 46 | listing of 'cmd' |  |  | 0.791 |
+| ns | 547 |  | 89 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.706 |
+| walker |  | 552 | 18 | listing of 'cmd/testdata' |  |  | 0.752 |
 | walker |  | 608 | 56 | listing of 'pkg/model' |  |  | 0.830 |
 | walker |  | 626 | 18 | go decl names surface in cmd/graph.go |  |  | 0.830 |
 | walker |  | 626 | 0 | go decl at cmd/graph.go:10 |  |  | 0.830 |
@@ -86,12 +86,12 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 | walker |  | 1752 | 3 | listing of 'pkg/runner/hashfiles' |  |  | 0.906 |
 | walker |  | 1755 | 3 | listing of 'pkg/runner/res' |  |  | 0.912 |
 | ns | 1802 |  | 255 | Makefile — test/lint targets | 3.4 | 3.3 | 0.857 |
-| walker |  | 1820 | 65 | go package + imports in main.go |  |  | 0.857 |
-| walker |  | 1845 | 25 | go decl names surface in pkg/gh/gh.go |  |  | 0.857 |
-| walker |  | 1845 | 0 | go decl at pkg/gh/gh.go:10 |  |  | 0.857 |
 | ns | 2224 |  | 422 | CI checks.yml — lint job | 4.1 |  | 0.798 |
 | ns | 2552 |  | 328 | go.mod — primary direct dependencies | 4.2 |  | 0.772 |
-| walker |  | 2674 | 829 | listing of 'pkg/runner/testdata' |  |  | 0.772 |
+| walker |  | 2584 | 829 | listing of 'pkg/runner/testdata' |  |  | 0.772 |
+| walker |  | 2649 | 65 | go package + imports in main.go |  |  | 0.772 |
+| walker |  | 2674 | 25 | go decl names surface in pkg/gh/gh.go |  |  | 0.772 |
+| walker |  | 2674 | 0 | go decl at pkg/gh/gh.go:10 |  |  | 0.772 |
 | walker |  | 2725 | 51 | go decl names surface in cmd/secrets.go |  |  | 0.772 |
 | walker |  | 2725 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.772 |
 | walker |  | 2725 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.772 |

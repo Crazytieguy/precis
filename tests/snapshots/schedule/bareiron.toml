@@ -273,10 +273,24 @@ kind = "full"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 15
+cum_tokens = 901
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
+
+[[batches]]
+position = 14
 key = 'C(WholeFile { file: "include/worldgen.h" })'
 descriptor = "c whole header in include/worldgen.h"
 cost_tokens = 336
-cum_tokens = 1222
+cum_tokens = 1237
 
 [batches.content]
 kind = "lines"
@@ -290,37 +304,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'C(DeclNames { file: "src/main.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 27
-cum_tokens = 1249
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/main.c"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/main.c"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 15
-key = 'C(Decl { file: "src/main.c", start_line: 68 })'
-descriptor = "c decl at src/main.c:68"
-cost_tokens = 0
-cum_tokens = 1249
+cum_tokens = 1264
 
 [batches.content]
 kind = "lines"
@@ -343,17 +331,29 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 15
+key = 'C(Decl { file: "src/main.c", start_line: 68 })'
+descriptor = "c decl at src/main.c:68"
+cost_tokens = 0
 cum_tokens = 1264
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
+[[batches.content.spans]]
+path = "src/main.c"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/main.c"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 17

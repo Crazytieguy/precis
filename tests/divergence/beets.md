@@ -77,19 +77,19 @@ Score(3000)=0.619 I=0.813 C=0.471 ns_rows≤3K=20/51 (reached=13 partial=0 missi
 | walker |  | 1800 | 69 | [package] in pyproject.toml |  |  | 0.587 |
 | walker |  | 1814 | 14 | listing of 'beets/test' |  |  | 0.587 |
 | walker |  | 1821 | 7 | python imports #11 in beets/util/__init__.py |  |  | 0.587 |
-| walker |  | 1939 | 118 | python decl names surface in beets/ui/commands/import_/__init__.py |  |  | 0.587 |
-| walker |  | 1939 | 0 | python decl at beets/ui/commands/import_/__init__.py:14 |  |  | 0.587 |
-| walker |  | 1939 | 0 | python decl at beets/ui/commands/import_/__init__.py:34 |  |  | 0.587 |
-| walker |  | 1939 | 0 | python decl at beets/ui/commands/import_/__init__.py:49 |  |  | 0.587 |
-| walker |  | 1939 | 0 | python decl at beets/ui/commands/import_/__init__.py:81 |  |  | 0.587 |
-| walker |  | 1939 | 0 | python decl at beets/ui/commands/import_/__init__.py:134 |  |  | 0.587 |
-| walker |  | 1965 | 26 | python decl at beets/ui/commands/import_/__init__.py:160 |  |  | 0.587 |
-| walker |  | 1983 | 18 | python decl doc at beets/ui/commands/import_/__init__.py:34 |  |  | 0.587 |
-| walker |  | 2015 | 32 | python decl doc at beets/ui/commands/import_/__init__.py:49 |  |  | 0.587 |
-| walker |  | 2048 | 33 | python decl doc at beets/ui/commands/import_/__init__.py:14 |  |  | 0.587 |
-| walker |  | 2088 | 40 | listing of 'docs/dev/plugins/other' |  |  | 0.587 |
-| walker |  | 2129 | 41 | listing of '.github' |  |  | 0.600 |
-| walker |  | 2159 | 30 | listing of '.github/workflows' |  |  | 0.627 |
+| walker |  | 1862 | 41 | listing of '.github' |  |  | 0.600 |
+| walker |  | 1892 | 30 | listing of '.github/workflows' |  |  | 0.627 |
+| walker |  | 2010 | 118 | python decl names surface in beets/ui/commands/import_/__init__.py |  |  | 0.627 |
+| walker |  | 2010 | 0 | python decl at beets/ui/commands/import_/__init__.py:14 |  |  | 0.627 |
+| walker |  | 2010 | 0 | python decl at beets/ui/commands/import_/__init__.py:34 |  |  | 0.627 |
+| walker |  | 2010 | 0 | python decl at beets/ui/commands/import_/__init__.py:49 |  |  | 0.627 |
+| walker |  | 2010 | 0 | python decl at beets/ui/commands/import_/__init__.py:81 |  |  | 0.627 |
+| walker |  | 2010 | 0 | python decl at beets/ui/commands/import_/__init__.py:134 |  |  | 0.627 |
+| walker |  | 2036 | 26 | python decl at beets/ui/commands/import_/__init__.py:160 |  |  | 0.627 |
+| walker |  | 2054 | 18 | python decl doc at beets/ui/commands/import_/__init__.py:34 |  |  | 0.627 |
+| walker |  | 2086 | 32 | python decl doc at beets/ui/commands/import_/__init__.py:49 |  |  | 0.627 |
+| walker |  | 2119 | 33 | python decl doc at beets/ui/commands/import_/__init__.py:14 |  |  | 0.627 |
+| walker |  | 2159 | 40 | listing of 'docs/dev/plugins/other' |  |  | 0.627 |
 | walker |  | 2166 | 7 | python imports #12 in beets/util/__init__.py |  |  | 0.627 |
 | walker |  | 2233 | 67 | python decl at beets/library/__init__.py:8 |  |  | 0.627 |
 | walker |  | 2247 | 14 | python decl names surface in beets/library/library.py |  |  | 0.627 |

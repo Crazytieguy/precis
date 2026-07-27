@@ -63,11 +63,11 @@ Score(3000)=0.714 I=0.914 C=0.558 ns_rows≤3K=21/40 (reached=14 partial=0 missi
 | walker |  | 2666 | 17 | python decl names surface in src/posting/user_host.py |  |  | 0.665 |
 | walker |  | 2666 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.665 |
 | walker |  | 2685 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.665 |
-| walker |  | 2706 | 21 | headings outline in docs/guide/command_palette.md |  |  | 0.665 |
-| walker |  | 2724 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.665 |
-| walker |  | 2724 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.665 |
-| walker |  | 2747 | 23 | headings outline in docs/guide/help_system.md |  |  | 0.665 |
-| walker |  | 2851 | 104 | listing of 'tests' |  |  | 0.714 |
+| walker |  | 2789 | 104 | listing of 'tests' |  |  | 0.714 |
+| walker |  | 2810 | 21 | headings outline in docs/guide/command_palette.md |  |  | 0.714 |
+| walker |  | 2828 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.714 |
+| walker |  | 2828 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.714 |
+| walker |  | 2851 | 23 | headings outline in docs/guide/help_system.md |  |  | 0.714 |
 | walker |  | 2863 | 12 | python decl names surface in src/posting/importing/curl.py |  |  | 0.714 |
 | walker |  | 2863 | 0 | python decl at src/posting/importing/curl.py:22 |  |  | 0.714 |
 | walker |  | 2883 | 20 | python decl names surface in src/posting/jump_overlay.py |  |  | 0.714 |

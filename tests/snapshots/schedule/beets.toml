@@ -1031,10 +1031,38 @@ kind = "full"
 
 [[batches]]
 position = 58
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 41
+cum_tokens = 1862
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["CODEOWNERS", "ISSUE_TEMPLATE", "copilot-instructions.md", "labeler.yaml", "problem-matchers", "pull_request_template.md", "stale.yml", "workflows"]
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 30
+cum_tokens = 1892
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["changelog_reminder.yaml", "ci.yaml", "integration_test.yaml", "label-issues.yaml", "lint.yaml", "make_release.yaml"]
+
+[[batches]]
+position = 60
 key = 'Python(DeclNames { file: "beets/ui/commands/import_/__init__.py" })'
 descriptor = "python decl names surface in beets/ui/commands/import_/__init__.py"
 cost_tokens = 118
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1128,11 +1156,11 @@ end = 135
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 14 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:14"
 cost_tokens = 0
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1146,11 +1174,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 60
+position = 62
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 34 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:34"
 cost_tokens = 0
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1164,11 +1192,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 61
+position = 63
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 49 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:49"
 cost_tokens = 0
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1182,11 +1210,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 62
+position = 64
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 81 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:81"
 cost_tokens = 0
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1200,11 +1228,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 134 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:134"
 cost_tokens = 0
-cum_tokens = 1939
+cum_tokens = 2010
 
 [batches.content]
 kind = "lines"
@@ -1218,11 +1246,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 64
+position = 66
 key = 'Python(Decl { file: "beets/ui/commands/import_/__init__.py", start_line: 160 })'
 descriptor = "python decl at beets/ui/commands/import_/__init__.py:160"
 cost_tokens = 26
-cum_tokens = 1965
+cum_tokens = 2036
 
 [batches.content]
 kind = "lines"
@@ -1236,11 +1264,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Python(DeclDoc { file: "beets/ui/commands/import_/__init__.py", start_line: 34 })'
 descriptor = "python decl doc at beets/ui/commands/import_/__init__.py:34"
 cost_tokens = 18
-cum_tokens = 1983
+cum_tokens = 2054
 
 [batches.content]
 kind = "lines"
@@ -1254,11 +1282,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 66
+position = 68
 key = 'Python(DeclDoc { file: "beets/ui/commands/import_/__init__.py", start_line: 49 })'
 descriptor = "python decl doc at beets/ui/commands/import_/__init__.py:49"
 cost_tokens = 32
-cum_tokens = 2015
+cum_tokens = 2086
 
 [batches.content]
 kind = "lines"
@@ -1272,11 +1300,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 67
+position = 69
 key = 'Python(DeclDoc { file: "beets/ui/commands/import_/__init__.py", start_line: 14 })'
 descriptor = "python decl doc at beets/ui/commands/import_/__init__.py:14"
 cost_tokens = 33
-cum_tokens = 2048
+cum_tokens = 2119
 
 [batches.content]
 kind = "lines"
@@ -1290,11 +1318,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 68
+position = 70
 key = 'Fs(DirListing { dir: "docs/dev/plugins/other" })'
 descriptor = "listing of 'docs/dev/plugins/other'"
 cost_tokens = 40
-cum_tokens = 2088
+cum_tokens = 2159
 
 [batches.content]
 kind = "fs"
@@ -1302,34 +1330,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/dev/plugins/other"
 entries = ["config.rst", "fields.rst", "import.rst", "index.rst", "logging.rst", "mediafile.rst", "prompts.rst", "templates.rst"]
-
-[[batches]]
-position = 69
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 41
-cum_tokens = 2129
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["CODEOWNERS", "ISSUE_TEMPLATE", "copilot-instructions.md", "labeler.yaml", "problem-matchers", "pull_request_template.md", "stale.yml", "workflows"]
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 30
-cum_tokens = 2159
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["changelog_reminder.yaml", "ci.yaml", "integration_test.yaml", "label-issues.yaml", "lint.yaml", "make_release.yaml"]
 
 [[batches]]
 position = 71

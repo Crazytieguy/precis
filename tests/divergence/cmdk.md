@@ -7,11 +7,11 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 67 | 67 | listing of '.' |  |  | 0.000 |
 | walker |  | 80 | 13 | listing of 'cmdk' |  |  | 0.000 |
 | walker |  | 107 | 27 | package identity in package.json |  |  | 0.000 |
-| ns | 130 |  | 67 | Repo root listing | 1.3 |  | 0.475 |
-| ns | 140 |  | 10 | website/components/code listing | 2.1 |  | 0.451 |
-| walker |  | 149 | 42 | package identity in cmdk/package.json |  |  | 0.451 |
-| ns | 150 |  | 10 | website/components/icons listing | 2.2 |  | 0.430 |
-| walker |  | 158 | 9 | listing of 'cmdk/src' |  |  | 0.442 |
+| walker |  | 116 | 9 | listing of 'cmdk/src' |  |  | 0.000 |
+| ns | 130 |  | 67 | Repo root listing | 1.3 |  | 0.489 |
+| ns | 140 |  | 10 | website/components/code listing | 2.1 |  | 0.464 |
+| ns | 150 |  | 10 | website/components/icons listing | 2.2 |  | 0.442 |
+| walker |  | 158 | 42 | package identity in cmdk/package.json |  |  | 0.442 |
 | ns | 160 |  | 10 | cmdk/src listing | 2.3 |  | 0.448 |
 | walker |  | 162 | 4 | listing of '.husky' |  |  | 0.448 |
 | ns | 179 |  | 19 | website/styles/cmdk listing | 2.4 |  | 0.414 |
@@ -37,13 +37,13 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 974 | 202 | package scripts in package.json |  |  | 0.210 |
 | walker |  | 987 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.211 |
 | ns | 998 |  | 201 | website/package.json dependencies | 2.16 |  | 0.199 |
-| walker |  | 1132 | 145 | package entrypoints in cmdk/package.json |  |  | 0.202 |
-| walker |  | 1166 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.272 |
-| walker |  | 1223 | 57 | listing of 'website' |  |  | 0.340 |
-| walker |  | 1239 | 16 | listing of 'website/components' |  |  | 0.366 |
-| walker |  | 1255 | 16 | listing of 'website/pages' |  |  | 0.384 |
-| walker |  | 1277 | 22 | listing of 'website/components/cmdk' |  |  | 0.410 |
-| walker |  | 1335 | 58 | listing of 'test' |  |  | 0.472 |
+| walker |  | 1044 | 57 | listing of 'website' |  |  | 0.261 |
+| walker |  | 1060 | 16 | listing of 'website/components' |  |  | 0.285 |
+| walker |  | 1076 | 16 | listing of 'website/pages' |  |  | 0.302 |
+| walker |  | 1098 | 22 | listing of 'website/components/cmdk' |  |  | 0.327 |
+| walker |  | 1243 | 145 | package entrypoints in cmdk/package.json |  |  | 0.331 |
+| walker |  | 1301 | 58 | listing of 'test' |  |  | 0.388 |
+| walker |  | 1335 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.472 |
 | ns | 1339 |  | 341 | cmdk/package.json identity + exports + deps | 2.17 |  | 0.453 |
 | ns | 1551 |  | 212 | README lede | 2.18 |  | 0.444 |
 | ns | 1757 |  | 206 | Root package.json scripts | 2.19 |  | 0.459 |
@@ -117,8 +117,8 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 4082 | 112 | package dev/peer dependencies in package.json |  |  | 0.451 |
 | walker |  | 4155 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.467 |
 | walker |  | 4180 | 25 | README.md section #23 |  |  | 0.467 |
-| walker |  | 4215 | 35 | README.md section #21 |  |  | 0.467 |
-| walker |  | 4274 | 59 | listing of 'test/pages' |  |  | 0.497 |
+| walker |  | 4239 | 59 | listing of 'test/pages' |  |  | 0.497 |
+| walker |  | 4274 | 35 | README.md section #21 |  |  | 0.497 |
 | walker |  | 4293 | 19 | imports in playwright.config.ts |  |  | 0.497 |
 | walker |  | 4389 | 96 | package runtime dependencies in cmdk/package.json |  |  | 0.516 |
 | walker |  | 4480 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.532 |

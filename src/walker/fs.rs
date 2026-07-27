@@ -190,7 +190,13 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         // surface; treat them on par with source-inventory dirs so the
         // listing schedules early enough for per-file batches inside it
         // to compete in the early budget.
-        (0.9, 0.5, 0.3)
+        //
+        // `cat` is held at the catch-all's level rather than below it: a
+        // directory we positively recognize as source should not be
+        // priced under one we failed to classify. Swept 2026-07-26 —
+        // the response is a shallow ridge over 0.95–1.08 and falls off
+        // sharply outside it, so this sits at the low-churn end.
+        (0.95, 0.5, 0.3)
     } else {
         (0.95, 0.45, 0.25)
     };

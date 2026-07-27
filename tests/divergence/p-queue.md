@@ -34,13 +34,13 @@ Score(3000)=0.503 I=0.789 C=0.321 ns_rows≤3K=21/42 (reached=9 partial=3 missin
 | walker |  | 968 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.509 |
 | ns | 1081 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.477 |
 | walker |  | 1089 | 121 | headings outline in readme.md |  |  | 0.556 |
-| walker |  | 1218 | 129 | export at source/priority-queue.ts:11 |  |  | 0.556 |
-| walker |  | 1228 | 10 | readme.md section #5 |  |  | 0.556 |
-| ns | 1353 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.490 |
-| walker |  | 1517 | 289 | export tail #2 at source/index.ts:16 |  |  | 0.493 |
-| ns | 1588 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.453 |
-| walker |  | 1609 | 92 | package entrypoints in package.json |  |  | 0.483 |
-| walker |  | 1639 | 30 | listing of 'test' |  |  | 0.555 |
+| walker |  | 1119 | 30 | listing of 'test' |  |  | 0.646 |
+| walker |  | 1248 | 129 | export at source/priority-queue.ts:11 |  |  | 0.647 |
+| walker |  | 1258 | 10 | readme.md section #5 |  |  | 0.647 |
+| ns | 1353 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.570 |
+| walker |  | 1547 | 289 | export tail #2 at source/index.ts:16 |  |  | 0.573 |
+| ns | 1588 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.525 |
+| walker |  | 1639 | 92 | package entrypoints in package.json |  |  | 0.555 |
 | ns | 1733 |  | 145 | source/options.ts — Options (intervalCap, interval) | 3.4 | 3.3 | 0.521 |
 | walker |  | 1743 | 104 | package scripts in package.json |  |  | 0.554 |
 | walker |  | 1758 | 15 | readme.md section #24 |  |  | 0.554 |

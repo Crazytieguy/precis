@@ -18,11 +18,11 @@ Score(3000)=0.591 I=0.781 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | walker |  | 519 | 29 | listing of 'src/chronos/chronos2' |  |  | 0.715 |
 | walker |  | 527 | 8 | listing of '.github' |  |  | 0.716 |
 | walker |  | 543 | 16 | listing of '.github/workflows' |  |  | 0.716 |
-| walker |  | 585 | 42 | python decl names surface in src/chronos/base.py |  |  | 0.717 |
-| walker |  | 585 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.717 |
-| walker |  | 585 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.717 |
-| walker |  | 585 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.717 |
-| walker |  | 602 | 17 | listing of 'scripts' |  |  | 0.717 |
+| walker |  | 560 | 17 | listing of 'scripts' |  |  | 0.716 |
+| walker |  | 602 | 42 | python decl names surface in src/chronos/base.py |  |  | 0.717 |
+| walker |  | 602 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.717 |
+| walker |  | 602 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.717 |
+| walker |  | 602 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.717 |
 | ns | 615 |  | 153 | base.py - class/def locations | 2.3 |  | 0.637 |
 | walker |  | 619 | 17 | python class body at src/chronos/base.py:32 |  |  | 0.637 |
 | walker |  | 718 | 99 | headings outline in README.md |  |  | 0.639 |

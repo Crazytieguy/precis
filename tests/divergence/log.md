@@ -4,13 +4,13 @@ Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 52 | 52 | listing of '.' |  |  | 1.000 |
 | ns | 52 |  | 52 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 55 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 58 | 3 | listing of '.github/workflows' |  |  | 1.000 |
-| walker |  | 61 | 3 | listing of 'benches' |  |  | 1.000 |
-| ns | 73 |  | 21 | src/ directory listing | 1.2 |  | 0.813 |
-| walker |  | 82 | 21 | listing of 'src' |  |  | 1.000 |
-| ns | 92 |  | 19 | src/kv/ directory listing | 1.3 |  | 0.858 |
-| walker |  | 101 | 19 | listing of 'src/kv' |  |  | 1.000 |
+| walker |  | 73 | 21 | listing of 'src' |  |  | 1.000 |
+| ns | 73 |  | 21 | src/ directory listing | 1.2 |  | 1.000 |
+| walker |  | 92 | 19 | listing of 'src/kv' |  |  | 1.000 |
+| ns | 92 |  | 19 | src/kv/ directory listing | 1.3 |  | 1.000 |
+| walker |  | 95 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 98 | 3 | listing of '.github/workflows' |  |  | 1.000 |
+| walker |  | 101 | 3 | listing of 'benches' |  |  | 1.000 |
 | ns | 123 |  | 31 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.859 |
 | walker |  | 153 | 52 | README headline in README.md |  |  | 0.860 |
 | walker |  | 160 | 7 | listing of 'tests' |  |  | 0.816 |

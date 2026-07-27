@@ -38,8 +38,8 @@ Score(3000)=0.639 I=0.887 C=0.460 ns_rows≤3K=14/40 (reached=6 partial=2 missin
 | walker |  | 1308 | 66 | README prelude in docs/readme.md |  |  | 0.764 |
 | walker |  | 1389 | 81 | export at src/error.ts:5 |  |  | 0.764 |
 | ns | 1401 |  | 331 | Readme design principles | 1.10 |  | 0.726 |
-| walker |  | 1482 | 93 | export at src/error.ts:25 |  |  | 0.726 |
-| walker |  | 1512 | 30 | listing of 'test' |  |  | 0.775 |
+| walker |  | 1419 | 30 | listing of 'test' |  |  | 0.774 |
+| walker |  | 1512 | 93 | export at src/error.ts:25 |  |  | 0.775 |
 | ns | 1541 |  | 140 | struct.ts symbol locations | 2.1 |  | 0.736 |
 | walker |  | 1544 | 32 | headings outline in docs/guides/05-handling-errors.md |  |  | 0.736 |
 | walker |  | 1578 | 34 | headings outline in docs/guides/03-coercing-data.md |  |  | 0.736 |
@@ -51,9 +51,9 @@ Score(3000)=0.639 I=0.887 C=0.460 ns_rows≤3K=14/40 (reached=6 partial=2 missin
 | walker |  | 1732 | 40 | headings outline in docs/reference/errors.md |  |  | 0.702 |
 | walker |  | 1758 | 26 | export doc at src/error.ts:5 |  |  | 0.703 |
 | walker |  | 1810 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.703 |
-| walker |  | 1852 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.703 |
-| walker |  | 1897 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.703 |
-| walker |  | 1921 | 24 | listing of 'test/api' |  |  | 0.703 |
+| walker |  | 1834 | 24 | listing of 'test/api' |  |  | 0.703 |
+| walker |  | 1876 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.703 |
+| walker |  | 1921 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.703 |
 | walker |  | 1979 | 58 | export names surface in src/structs/coercions.ts |  |  | 0.703 |
 | walker |  | 1979 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.703 |
 | walker |  | 1998 | 19 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.703 |
@@ -92,29 +92,29 @@ Score(3000)=0.639 I=0.887 C=0.460 ns_rows≤3K=14/40 (reached=6 partial=2 missin
 | walker |  | 3516 | 39 | export doc at src/struct.ts:266 |  |  | 0.617 |
 | walker |  | 3535 | 19 | docs/resources/links.md section #0 |  |  | 0.617 |
 | walker |  | 3700 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.619 |
-| walker |  | 3779 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.619 |
-| walker |  | 3825 | 46 | export doc at src/struct.ts:185 |  |  | 0.631 |
-| ns | 3863 |  | 437 | struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner) | 2.6 |  | 0.654 |
-| walker |  | 3907 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.654 |
-| walker |  | 3945 | 38 | imports in src/struct.ts |  |  | 0.654 |
-| walker |  | 4030 | 85 | export body at src/structs/coercions.ts:16 body 21 |  |  | 0.654 |
-| walker |  | 4195 | 165 | listing of 'test/validation' |  |  | 0.657 |
-| ns | 4401 |  | 538 | error.ts full (Failure type + StructError class) | 3.1 |  | 0.651 |
-| walker |  | 4715 | 520 | Readme.md section #0 |  |  | 0.651 |
-| ns | 4722 |  | 321 | types.ts factory locations (all 25) | 4.1 |  | 0.630 |
-| walker |  | 4742 | 27 | docs/reference/typescript.md section #0 |  |  | 0.630 |
-| walker |  | 4843 | 101 | export names surface in src/structs/refinements.ts |  |  | 0.631 |
-| walker |  | 4876 | 33 | export at src/structs/refinements.ts:93 |  |  | 0.631 |
-| walker |  | 4920 | 44 | export at src/structs/refinements.ts:146 |  |  | 0.631 |
-| walker |  | 4968 | 48 | export at src/structs/refinements.ts:8 |  |  | 0.631 |
-| walker |  | 5016 | 48 | export at src/structs/refinements.ts:77 |  |  | 0.631 |
-| walker |  | 5073 | 57 | export at src/structs/refinements.ts:33 |  |  | 0.631 |
-| walker |  | 5130 | 57 | export at src/structs/refinements.ts:55 |  |  | 0.631 |
-| walker |  | 5192 | 62 | export at src/structs/refinements.ts:109 |  |  | 0.631 |
-| walker |  | 5216 | 24 | export doc at src/structs/refinements.ts:93 |  |  | 0.631 |
-| walker |  | 5242 | 26 | export doc at src/structs/refinements.ts:33 |  |  | 0.631 |
-| walker |  | 5268 | 26 | export doc at src/structs/refinements.ts:55 |  |  | 0.631 |
-| walker |  | 5450 | 182 | listing of 'test/typings' |  |  | 0.634 |
+| ns | 3863 |  | 437 | struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner) | 2.6 |  | 0.644 |
+| walker |  | 3865 | 165 | listing of 'test/validation' |  |  | 0.647 |
+| walker |  | 3944 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.647 |
+| walker |  | 3990 | 46 | export doc at src/struct.ts:185 |  |  | 0.657 |
+| walker |  | 4072 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.657 |
+| walker |  | 4254 | 182 | listing of 'test/typings' |  |  | 0.660 |
+| walker |  | 4292 | 38 | imports in src/struct.ts |  |  | 0.660 |
+| walker |  | 4377 | 85 | export body at src/structs/coercions.ts:16 body 21 |  |  | 0.660 |
+| ns | 4401 |  | 538 | error.ts full (Failure type + StructError class) | 3.1 |  | 0.654 |
+| ns | 4722 |  | 321 | types.ts factory locations (all 25) | 4.1 |  | 0.634 |
+| walker |  | 4897 | 520 | Readme.md section #0 |  |  | 0.634 |
+| walker |  | 4924 | 27 | docs/reference/typescript.md section #0 |  |  | 0.634 |
+| walker |  | 5025 | 101 | export names surface in src/structs/refinements.ts |  |  | 0.634 |
+| walker |  | 5058 | 33 | export at src/structs/refinements.ts:93 |  |  | 0.634 |
+| walker |  | 5102 | 44 | export at src/structs/refinements.ts:146 |  |  | 0.634 |
+| walker |  | 5150 | 48 | export at src/structs/refinements.ts:8 |  |  | 0.634 |
+| walker |  | 5198 | 48 | export at src/structs/refinements.ts:77 |  |  | 0.634 |
+| walker |  | 5255 | 57 | export at src/structs/refinements.ts:33 |  |  | 0.634 |
+| walker |  | 5312 | 57 | export at src/structs/refinements.ts:55 |  |  | 0.634 |
+| walker |  | 5374 | 62 | export at src/structs/refinements.ts:109 |  |  | 0.634 |
+| walker |  | 5398 | 24 | export doc at src/structs/refinements.ts:93 |  |  | 0.634 |
+| walker |  | 5424 | 26 | export doc at src/structs/refinements.ts:33 |  |  | 0.634 |
+| walker |  | 5450 | 26 | export doc at src/structs/refinements.ts:55 |  |  | 0.634 |
 | walker |  | 5479 | 29 | export doc at src/structs/refinements.ts:8 |  |  | 0.634 |
 | ns | 5507 |  | 785 | array + object factory bodies | 4.2 | 4.1 | 0.581 |
 | walker |  | 5508 | 29 | export doc at src/structs/refinements.ts:77 |  |  | 0.581 |

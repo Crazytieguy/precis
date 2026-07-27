@@ -42,9 +42,9 @@ Score(3000)=0.502 I=0.795 C=0.317 ns_rows≤3K=14/40 (reached=5 partial=1 missin
 | walker |  | 814 | 0 | export at lib/svgo-node.js:83 |  |  | 0.634 |
 | walker |  | 867 | 53 | export at lib/svgo.js:136 |  |  | 0.636 |
 | walker |  | 878 | 11 | README.md section #8 |  |  | 0.636 |
-| walker |  | 933 | 55 | README.md section #1 |  |  | 0.672 |
-| walker |  | 973 | 40 | listing of 'test' |  |  | 0.673 |
-| walker |  | 977 | 4 | listing of 'test/fixtures' |  |  | 0.574 |
+| walker |  | 918 | 40 | listing of 'test' |  |  | 0.637 |
+| walker |  | 922 | 4 | listing of 'test/fixtures' |  |  | 0.637 |
+| walker |  | 977 | 55 | README.md section #1 |  |  | 0.574 |
 | ns | 977 |  | 178 | README — CLI usage | 2.1 |  | 0.574 |
 | walker |  | 995 | 18 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.574 |
 | ns | 1218 |  | 241 | README — svgo.config.mjs shape (plugins array + custom params) | 2.2 |  | 0.492 |
@@ -60,17 +60,17 @@ Score(3000)=0.502 I=0.795 C=0.317 ns_rows≤3K=14/40 (reached=5 partial=1 missin
 | walker |  | 1492 | 20 | export body at lib/xast.js:32 body 33 |  |  | 0.462 |
 | walker |  | 1527 | 35 | export body at lib/xast.js:50 body 51 |  |  | 0.462 |
 | ns | 1540 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.433 |
-| walker |  | 1754 | 227 | package entrypoints in package.json |  |  | 0.531 |
-| walker |  | 1789 | 35 | listing of 'test/regression' |  |  | 0.531 |
+| walker |  | 1562 | 35 | listing of 'test/regression' |  |  | 0.433 |
+| walker |  | 1789 | 227 | package entrypoints in package.json |  |  | 0.531 |
 | ns | 1843 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.481 |
 | walker |  | 1846 | 57 | README.md section #14 |  |  | 0.481 |
 | walker |  | 1868 | 22 | export names surface in lib/stringifier.js |  |  | 0.481 |
 | walker |  | 1868 | 0 | export at lib/stringifier.js:66 |  |  | 0.481 |
 | walker |  | 1881 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.481 |
+| walker |  | 1932 | 51 | listing of 'test/fixtures/config-loader' |  |  | 0.481 |
 | ns | 1934 |  | 91 | lib/ directory listing | 3.1 |  | 0.536 |
-| walker |  | 2268 | 387 | listing of 'docs/04-plugins' |  |  | 0.536 |
 | ns | 2318 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.482 |
-| walker |  | 2319 | 51 | listing of 'test/fixtures/config-loader' |  |  | 0.482 |
+| walker |  | 2319 | 387 | listing of 'docs/04-plugins' |  |  | 0.482 |
 | walker |  | 2349 | 30 | README.md section #5 |  |  | 0.482 |
 | walker |  | 2381 | 32 | export names surface in lib/path.js |  |  | 0.483 |
 | walker |  | 2381 | 0 | export at lib/path.js:141 |  |  | 0.483 |
@@ -191,6 +191,5 @@ Score(3000)=0.502 I=0.795 C=0.317 ns_rows≤3K=14/40 (reached=5 partial=1 missin
 | walker |  | 9607 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.561 |
 | walker |  | 9607 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.561 |
 | walker |  | 9616 | 9 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.561 |
-| walker |  | 9679 | 63 | export doc at lib/style.js:253 |  |  | 0.561 |
 | ns | 9871 |  | 672 | test/plugins/_index.test.js — per-plugin fixture convention | 7.2 |  | 0.541 |
 | ns | 9981 |  | 110 | test/plugins/removeComments.01.svg.txt — a worked fixture example | 7.3 |  | 0.536 |

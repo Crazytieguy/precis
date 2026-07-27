@@ -23,17 +23,17 @@ Score(3000)=0.539 I=0.588 C=0.494 ns_rows≤3K=22/104 (reached=7 partial=0 missi
 | ns | 764 |  | 99 | .readthedocs.yml: docs build config | 1.9 |  | 0.068 |
 | walker |  | 781 | 91 | headings outline in README.md |  |  | 0.068 |
 | walker |  | 803 | 22 | README.md section #0 |  |  | 0.068 |
-| walker |  | 824 | 21 | listing of 'benchmarks' |  |  | 0.068 |
-| walker |  | 848 | 24 | listing of '.github' |  |  | 0.068 |
-| walker |  | 877 | 29 | listing of '.github/workflows' |  |  | 0.187 |
+| walker |  | 827 | 24 | listing of '.github' |  |  | 0.068 |
+| walker |  | 856 | 29 | listing of '.github/workflows' |  |  | 0.187 |
+| walker |  | 877 | 21 | listing of 'benchmarks' |  |  | 0.187 |
 | walker |  | 960 | 83 | [dependencies] in pyproject.toml |  |  | 0.187 |
 | ns | 966 |  | 202 | Root directory listing | 2.1 |  | 0.386 |
 | walker |  | 1114 | 154 | plaintext config Makefile |  |  | 0.504 |
-| walker |  | 1195 | 81 | [package] in pyproject.toml |  |  | 0.581 |
-| walker |  | 1237 | 42 | listing of 'tools' |  |  | 0.581 |
-| ns | 1327 |  | 361 | rich/ package directory listing (main source, 81 files) | 2.2 |  | 0.430 |
-| walker |  | 1373 | 136 | listing of 'docs/source' |  |  | 0.436 |
-| walker |  | 1382 | 9 | listing of 'docs/source/appendix' |  |  | 0.436 |
+| walker |  | 1156 | 42 | listing of 'tools' |  |  | 0.504 |
+| walker |  | 1292 | 136 | listing of 'docs/source' |  |  | 0.513 |
+| walker |  | 1301 | 9 | listing of 'docs/source/appendix' |  |  | 0.513 |
+| ns | 1327 |  | 361 | rich/ package directory listing (main source, 81 files) | 2.2 |  | 0.380 |
+| walker |  | 1382 | 81 | [package] in pyproject.toml |  |  | 0.436 |
 | walker |  | 1547 | 165 | listing of 'examples' |  |  | 0.445 |
 | ns | 1702 |  | 375 | tests/ directory listing (58 test files, mirrors rich/ 1:1) | 2.3 |  | 0.375 |
 | ns | 1867 |  | 165 | examples/ directory listing (37 runnable demo scripts) | 2.4 |  | 0.431 |

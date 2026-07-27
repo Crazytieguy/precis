@@ -162,52 +162,10 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Fs(DirListing { dir: ".vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 7
-cum_tokens = 274
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".vscode"
-entries = ["extensions.json", "settings.json"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "cmd" })'
-descriptor = "listing of 'cmd'"
-cost_tokens = 46
-cum_tokens = 320
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmd"
-entries = ["dir.go", "execute_test.go", "graph.go", "input.go", "list.go", "notices.go", "platforms.go", "root.go", "root_test.go", "secrets.go", "testdata"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "cmd/testdata" })'
-descriptor = "listing of 'cmd/testdata'"
-cost_tokens = 18
-cum_tokens = 338
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmd/testdata"
-entries = ["env.actrc", "secrets.yml", "simple.actrc", "split.actrc"]
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "pkg" })'
 descriptor = "listing of 'pkg'"
 cost_tokens = 52
-cum_tokens = 390
+cum_tokens = 319
 
 [batches.content]
 kind = "fs"
@@ -217,11 +175,11 @@ parent = "pkg"
 entries = ["artifactcache", "artifacts", "common", "container", "exprparser", "filecollector", "gh", "lookpath", "model", "runner", "schema", "workflowpattern"]
 
 [[batches]]
-position = 13
+position = 10
 key = 'Fs(DirListing { dir: "pkg/workflowpattern" })'
 descriptor = "listing of 'pkg/workflowpattern'"
 cost_tokens = 15
-cum_tokens = 405
+cum_tokens = 334
 
 [batches.content]
 kind = "fs"
@@ -231,11 +189,11 @@ parent = "pkg/workflowpattern"
 entries = ["trace_writer.go", "workflow_pattern.go", "workflow_pattern_test.go"]
 
 [[batches]]
-position = 14
+position = 11
 key = 'Fs(DirListing { dir: "pkg/gh" })'
 descriptor = "listing of 'pkg/gh'"
 cost_tokens = 8
-cum_tokens = 413
+cum_tokens = 342
 
 [batches.content]
 kind = "fs"
@@ -245,11 +203,11 @@ parent = "pkg/gh"
 entries = ["gh.go", "gh_test.go"]
 
 [[batches]]
-position = 15
+position = 12
 key = 'Fs(DirListing { dir: "pkg/exprparser" })'
 descriptor = "listing of 'pkg/exprparser'"
 cost_tokens = 22
-cum_tokens = 435
+cum_tokens = 364
 
 [batches.content]
 kind = "fs"
@@ -259,11 +217,11 @@ parent = "pkg/exprparser"
 entries = ["functions.go", "functions_test.go", "interpreter.go", "interpreter_test.go", "testdata"]
 
 [[batches]]
-position = 16
+position = 13
 key = 'Fs(DirListing { dir: "pkg/artifacts" })'
 descriptor = "listing of 'pkg/artifacts'"
 cost_tokens = 24
-cum_tokens = 459
+cum_tokens = 388
 
 [batches.content]
 kind = "fs"
@@ -273,11 +231,11 @@ parent = "pkg/artifacts"
 entries = ["artifact.pb.go", "artifacts_v4.go", "server.go", "server_test.go", "testdata"]
 
 [[batches]]
-position = 17
+position = 14
 key = 'Fs(DirListing { dir: "pkg/artifactcache" })'
 descriptor = "listing of 'pkg/artifactcache'"
 cost_tokens = 25
-cum_tokens = 484
+cum_tokens = 413
 
 [batches.content]
 kind = "fs"
@@ -287,11 +245,11 @@ parent = "pkg/artifactcache"
 entries = ["doc.go", "handler.go", "handler_test.go", "model.go", "storage.go", "testdata"]
 
 [[batches]]
-position = 18
+position = 15
 key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata" })'
 descriptor = "listing of 'pkg/artifactcache/testdata'"
 cost_tokens = 3
-cum_tokens = 487
+cum_tokens = 416
 
 [batches.content]
 kind = "fs"
@@ -301,11 +259,11 @@ parent = "pkg/artifactcache/testdata"
 entries = ["example"]
 
 [[batches]]
-position = 19
+position = 16
 key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata/example" })'
 descriptor = "listing of 'pkg/artifactcache/testdata/example'"
 cost_tokens = 3
-cum_tokens = 490
+cum_tokens = 419
 
 [batches.content]
 kind = "fs"
@@ -315,11 +273,11 @@ parent = "pkg/artifactcache/testdata/example"
 entries = ["example.yaml"]
 
 [[batches]]
-position = 20
+position = 17
 key = 'Fs(DirListing { dir: "pkg/filecollector" })'
 descriptor = "listing of 'pkg/filecollector'"
 cost_tokens = 12
-cum_tokens = 502
+cum_tokens = 431
 
 [batches.content]
 kind = "fs"
@@ -329,11 +287,11 @@ parent = "pkg/filecollector"
 entries = ["file_collector.go", "file_collector_test.go"]
 
 [[batches]]
-position = 21
+position = 18
 key = 'Fs(DirListing { dir: "pkg/lookpath" })'
 descriptor = "listing of 'pkg/lookpath'"
 cost_tokens = 32
-cum_tokens = 534
+cum_tokens = 463
 
 [batches.content]
 kind = "fs"
@@ -343,11 +301,11 @@ parent = "pkg/lookpath"
 entries = ["LICENSE", "env.go", "error.go", "lp_js.go", "lp_plan9.go", "lp_unix.go", "lp_windows.go"]
 
 [[batches]]
-position = 22
+position = 19
 key = 'Fs(DirListing { dir: "pkg/schema" })'
 descriptor = "listing of 'pkg/schema'"
 cost_tokens = 18
-cum_tokens = 552
+cum_tokens = 481
 
 [batches.content]
 kind = "fs"
@@ -355,6 +313,48 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "pkg/schema"
 entries = ["action_schema.json", "schema.go", "schema_test.go", "workflow_schema.json"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: ".vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 7
+cum_tokens = 488
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".vscode"
+entries = ["extensions.json", "settings.json"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "cmd" })'
+descriptor = "listing of 'cmd'"
+cost_tokens = 46
+cum_tokens = 534
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmd"
+entries = ["dir.go", "execute_test.go", "graph.go", "input.go", "list.go", "notices.go", "platforms.go", "root.go", "root_test.go", "secrets.go", "testdata"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "cmd/testdata" })'
+descriptor = "listing of 'cmd/testdata'"
+cost_tokens = 18
+cum_tokens = 552
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmd/testdata"
+entries = ["env.actrc", "secrets.yml", "simple.actrc", "split.actrc"]
 
 [[batches]]
 position = 23
@@ -1442,10 +1442,24 @@ entries = ["trampoline.js"]
 
 [[batches]]
 position = 69
+key = 'Fs(DirListing { dir: "pkg/runner/testdata" })'
+descriptor = "listing of 'pkg/runner/testdata'"
+cost_tokens = 829
+cum_tokens = 2584
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/runner/testdata"
+entries = [".github", "GITHUB_ENV-use-in-env-ctx", "GITHUB_STATE", "act-composite-env-test", "action-cache-v2-fetch-failure-is-job-error", "actions", "actions-environment-and-context-tests", "basic", "checkout", "commands", "composite-fail-with-output", "container-hostname", "defaults-run", "dir with spaces", "do-not-leak-step-env-in-composite", "docker-action-custom-path", "docker-action-host-env", "ensure-post-steps", "env-and-path", "environment-files", "environment-files-parser-bug", "environment-variables", "evalenv", "evalmatrix", "evalmatrix-merge-array", "evalmatrix-merge-map", "evalmatrixneeds", "evalmatrixneeds2", "fail", "if-env-act", "if-expressions", "input-from-cli", "inputs-via-env-context", "issue-104", "issue-1195", "issue-122", "issue-141", "issue-1595", "issue-597", "issue-598", "job-container", "job-container-invalid-credentials", "job-container-non-root", "job-needs-context-contains-result", "job-nil-step", "job-status-check", "local-action-docker-url", "local-action-dockerfile", "local-action-js", "local-action-via-composite-dockerfile", "local-remote-action-overrides", "localdockerimagetest_", "mask-values", "matrix", "matrix-exitcode", "matrix-include-exclude", "matrix-with-user-inclusions", "mysql-service-container-with-health-check", "networking", "nix-prepend-path", "no-panic-on-invalid-composite-action", "node", "non-existent-action", "outputs", "parallel", "path-handling", "post-step-failure-is-job-failure", "pull-request", "python", "remote-action-composite-action-ref", "remote-action-composite-js-pre-with-defaults", "remote-action-docker", "remote-action-docker-new-cache", "remote-action-js", "remote-action-js-node-user", "runs-on", "secrets", "services", "services-empty-image", "services-host-network", "services-with-container", "set-env-new-env-file-per-step", "set-env-step-env-override", "shells", "steps-context", "stepsummary", "uses-action-with-pre-and-post-step", "uses-and-run-in-one-step", "uses-composite", "uses-composite-check-for-input-collision", "uses-composite-check-for-input-in-if-uses", "uses-composite-check-for-input-shadowing", "uses-composite-with-error", "uses-composite-with-inputs", "uses-composite-with-pre-and-post-steps", "uses-docker-url", "uses-github-empty", "uses-github-full-sha", "uses-github-noref", "uses-github-path", "uses-github-root", "uses-github-short-sha", "uses-nested-composite", "uses-workflow", "uses-workflow-defaults", "windows-add-env", "windows-add-env-powershell-5", "windows-prepend-path", "windows-prepend-path-powershell-5", "windows-shell-cmd", "workdir", "workflow_call_inputs", "workflow_dispatch", "workflow_dispatch-scalar", "workflow_dispatch-scalar-composite-action", "workflow_dispatch_no_inputs_mapping"]
+
+[[batches]]
+position = 70
 key = 'Go(PackageImports { file: "main.go" })'
 descriptor = "go package + imports in main.go"
 cost_tokens = 65
-cum_tokens = 1820
+cum_tokens = 2649
 
 [batches.content]
 kind = "lines"
@@ -1459,11 +1473,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Go(DeclNames { file: "pkg/gh/gh.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/gh/gh.go"
 cost_tokens = 25
-cum_tokens = 1845
+cum_tokens = 2674
 
 [batches.content]
 kind = "lines"
@@ -1485,11 +1499,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Go(Decl { file: "pkg/gh/gh.go", start_line: 10 })'
 descriptor = "go decl at pkg/gh/gh.go:10"
 cost_tokens = 0
-cum_tokens = 1845
+cum_tokens = 2674
 
 [batches.content]
 kind = "lines"
@@ -1501,20 +1515,6 @@ end = 10
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "pkg/runner/testdata" })'
-descriptor = "listing of 'pkg/runner/testdata'"
-cost_tokens = 829
-cum_tokens = 2674
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/runner/testdata"
-entries = [".github", "GITHUB_ENV-use-in-env-ctx", "GITHUB_STATE", "act-composite-env-test", "action-cache-v2-fetch-failure-is-job-error", "actions", "actions-environment-and-context-tests", "basic", "checkout", "commands", "composite-fail-with-output", "container-hostname", "defaults-run", "dir with spaces", "do-not-leak-step-env-in-composite", "docker-action-custom-path", "docker-action-host-env", "ensure-post-steps", "env-and-path", "environment-files", "environment-files-parser-bug", "environment-variables", "evalenv", "evalmatrix", "evalmatrix-merge-array", "evalmatrix-merge-map", "evalmatrixneeds", "evalmatrixneeds2", "fail", "if-env-act", "if-expressions", "input-from-cli", "inputs-via-env-context", "issue-104", "issue-1195", "issue-122", "issue-141", "issue-1595", "issue-597", "issue-598", "job-container", "job-container-invalid-credentials", "job-container-non-root", "job-needs-context-contains-result", "job-nil-step", "job-status-check", "local-action-docker-url", "local-action-dockerfile", "local-action-js", "local-action-via-composite-dockerfile", "local-remote-action-overrides", "localdockerimagetest_", "mask-values", "matrix", "matrix-exitcode", "matrix-include-exclude", "matrix-with-user-inclusions", "mysql-service-container-with-health-check", "networking", "nix-prepend-path", "no-panic-on-invalid-composite-action", "node", "non-existent-action", "outputs", "parallel", "path-handling", "post-step-failure-is-job-failure", "pull-request", "python", "remote-action-composite-action-ref", "remote-action-composite-js-pre-with-defaults", "remote-action-docker", "remote-action-docker-new-cache", "remote-action-js", "remote-action-js-node-user", "runs-on", "secrets", "services", "services-empty-image", "services-host-network", "services-with-container", "set-env-new-env-file-per-step", "set-env-step-env-override", "shells", "steps-context", "stepsummary", "uses-action-with-pre-and-post-step", "uses-and-run-in-one-step", "uses-composite", "uses-composite-check-for-input-collision", "uses-composite-check-for-input-in-if-uses", "uses-composite-check-for-input-shadowing", "uses-composite-with-error", "uses-composite-with-inputs", "uses-composite-with-pre-and-post-steps", "uses-docker-url", "uses-github-empty", "uses-github-full-sha", "uses-github-noref", "uses-github-path", "uses-github-root", "uses-github-short-sha", "uses-nested-composite", "uses-workflow", "uses-workflow-defaults", "windows-add-env", "windows-add-env-powershell-5", "windows-prepend-path", "windows-prepend-path-powershell-5", "windows-shell-cmd", "workdir", "workflow_call_inputs", "workflow_dispatch", "workflow_dispatch-scalar", "workflow_dispatch-scalar-composite-action", "workflow_dispatch_no_inputs_mapping"]
 
 [[batches]]
 position = 73

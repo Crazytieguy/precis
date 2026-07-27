@@ -157,10 +157,24 @@ entries = ["README.md", "build-api.sh", "doxygen-md"]
 
 [[batches]]
 position = 11
+key = 'Fs(DirListing { dir: "deps" })'
+descriptor = "listing of 'deps'"
+cost_tokens = 41
+cum_tokens = 520
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "deps"
+entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
+
+[[batches]]
+position = 12
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 427
-cum_tokens = 906
+cum_tokens = 947
 
 [batches.content]
 kind = "lines"
@@ -174,25 +188,25 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "deps" })'
-descriptor = "listing of 'deps'"
-cost_tokens = 41
-cum_tokens = 947
+position = 13
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 50
+cum_tokens = 997
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "deps"
-entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
+parent = "examples"
+entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
-cum_tokens = 1180
+cum_tokens = 1230
 
 [batches.content]
 kind = "lines"
@@ -486,11 +500,11 @@ end = 580
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: true, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 44
-cum_tokens = 1224
+cum_tokens = 1274
 
 [batches.content]
 kind = "lines"
@@ -504,11 +518,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 19
-cum_tokens = 1243
+cum_tokens = 1293
 
 [batches.content]
 kind = "lines"
@@ -520,20 +534,6 @@ end = 581
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 50
-cum_tokens = 1293
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
 position = 17

@@ -95,13 +95,13 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 1601 |  | 241 | main.go (full) | 3.5 |  | 0.731 |
 | walker |  | 1605 | 16 | README.md section #16 |  |  | 0.731 |
 | walker |  | 1619 | 14 | README.md section #17 |  |  | 0.731 |
-| walker |  | 1652 | 33 | go decl doc at sdk/types.go:10 |  |  | 0.731 |
-| walker |  | 1669 | 17 | README.md section #27 |  |  | 0.731 |
-| walker |  | 1685 | 16 | README.md section #26 |  |  | 0.731 |
-| walker |  | 1702 | 17 | README.md section #25 |  |  | 0.731 |
-| walker |  | 1736 | 34 | go decl doc at sdk/types.go:14 |  |  | 0.731 |
-| walker |  | 1747 | 11 | go package + imports in internal/models/models_data.go |  |  | 0.731 |
-| walker |  | 1772 | 25 | listing of 'internal/tools' |  |  | 0.763 |
+| walker |  | 1644 | 25 | listing of 'internal/tools' |  |  | 0.763 |
+| walker |  | 1677 | 33 | go decl doc at sdk/types.go:10 |  |  | 0.763 |
+| walker |  | 1694 | 17 | README.md section #27 |  |  | 0.763 |
+| walker |  | 1710 | 16 | README.md section #26 |  |  | 0.763 |
+| walker |  | 1727 | 17 | README.md section #25 |  |  | 0.763 |
+| walker |  | 1761 | 34 | go decl doc at sdk/types.go:14 |  |  | 0.763 |
+| walker |  | 1772 | 11 | go package + imports in internal/models/models_data.go |  |  | 0.763 |
 | walker |  | 1892 | 120 | headings outline in sdk/README.md |  |  | 0.763 |
 | walker |  | 1905 | 13 | sdk/README.md section #17 |  |  | 0.763 |
 | walker |  | 1938 | 33 | sdk/README.md section #1 |  |  | 0.763 |

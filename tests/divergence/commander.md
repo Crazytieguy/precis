@@ -41,17 +41,17 @@ Score(3000)=0.645 I=0.875 C=0.476 ns_rows≤3K=18/40 (reached=11 partial=1 missi
 | walker |  | 1150 | 0 | export at lib/help.js:12 |  |  | 0.609 |
 | walker |  | 1150 | 0 | export at lib/help.js:740 |  |  | 0.609 |
 | walker |  | 1161 | 11 | export member at lib/option.js:3 member 181 |  |  | 0.609 |
-| walker |  | 1211 | 50 | export names surface in lib/argument.js |  |  | 0.609 |
-| walker |  | 1211 | 0 | export at lib/argument.js:143 |  |  | 0.609 |
 | ns | 1231 |  | 271 | index.js (CommonJS entry point) full body | 1.13 |  | 0.605 |
-| walker |  | 1264 | 53 | export names surface in lib/command.js |  |  | 0.605 |
-| walker |  | 1264 | 0 | export at lib/command.js:13 |  |  | 0.605 |
-| walker |  | 1264 | 0 | export at lib/command.js:2752 |  |  | 0.605 |
-| walker |  | 1317 | 53 | export names surface in lib/error.js |  |  | 0.605 |
-| walker |  | 1328 | 11 | export at lib/error.js:25 |  |  | 0.605 |
-| walker |  | 1344 | 16 | export at lib/error.js:4 |  |  | 0.605 |
-| ns | 1516 |  | 285 | command.js: public-method roster, part 1 of 3 (constructor..action) | 2.1 |  | 0.563 |
-| walker |  | 1580 | 236 | listing of 'examples' |  |  | 0.762 |
+| walker |  | 1397 | 236 | listing of 'examples' |  |  | 0.817 |
+| walker |  | 1447 | 50 | export names surface in lib/argument.js |  |  | 0.817 |
+| walker |  | 1447 | 0 | export at lib/argument.js:143 |  |  | 0.817 |
+| walker |  | 1500 | 53 | export names surface in lib/command.js |  |  | 0.817 |
+| walker |  | 1500 | 0 | export at lib/command.js:13 |  |  | 0.817 |
+| walker |  | 1500 | 0 | export at lib/command.js:2752 |  |  | 0.817 |
+| ns | 1516 |  | 285 | command.js: public-method roster, part 1 of 3 (constructor..action) | 2.1 |  | 0.761 |
+| walker |  | 1553 | 53 | export names surface in lib/error.js |  |  | 0.761 |
+| walker |  | 1564 | 11 | export at lib/error.js:25 |  |  | 0.761 |
+| walker |  | 1580 | 16 | export at lib/error.js:4 |  |  | 0.762 |
 | walker |  | 1593 | 13 | imports in typings/esm.d.mts |  |  | 0.762 |
 | walker |  | 1662 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.762 |
 | walker |  | 1673 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.762 |
@@ -97,22 +97,22 @@ Score(3000)=0.645 I=0.875 C=0.476 ns_rows≤3K=18/40 (reached=11 partial=1 missi
 | walker |  | 5025 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.560 |
 | walker |  | 5044 | 19 | export body at lib/option.js:3 body 133 |  |  | 0.560 |
 | ns | 5048 |  | 462 | Readme.md: Commands intro | 3.6 |  | 0.536 |
-| walker |  | 5058 | 14 | module item at examples/configure-output.js:4 |  |  | 0.536 |
-| walker |  | 5069 | 11 | module item at examples/configure-output.js:2 |  |  | 0.536 |
-| walker |  | 5083 | 14 | module item at examples/nestedCommands.js:21 |  |  | 0.536 |
-| walker |  | 5102 | 19 | export body at lib/option.js:3 body 257 |  |  | 0.536 |
-| walker |  | 5165 | 63 | export doc at lib/argument.js:143 |  |  | 0.536 |
-| walker |  | 5180 | 15 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.536 |
-| walker |  | 5191 | 11 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.536 |
-| walker |  | 5205 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.536 |
-| walker |  | 5218 | 13 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.536 |
 | ns | 5687 |  | 639 | Readme.md: Action handler | 3.7 |  | 0.504 |
-| walker |  | 6032 | 814 | listing of 'tests' |  |  | 0.510 |
-| walker |  | 6060 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.510 |
+| walker |  | 5858 | 814 | listing of 'tests' |  |  | 0.510 |
+| walker |  | 5886 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.510 |
+| walker |  | 5980 | 94 | listing of 'tests/fixtures' |  |  | 0.510 |
+| walker |  | 5982 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.510 |
+| walker |  | 5984 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.510 |
+| walker |  | 5998 | 14 | module item at examples/configure-output.js:4 |  |  | 0.510 |
+| walker |  | 6009 | 11 | module item at examples/configure-output.js:2 |  |  | 0.510 |
+| walker |  | 6023 | 14 | module item at examples/nestedCommands.js:21 |  |  | 0.510 |
+| walker |  | 6042 | 19 | export body at lib/option.js:3 body 257 |  |  | 0.510 |
 | ns | 6076 |  | 389 | Readme.md: Life cycle hooks | 3.8 |  | 0.494 |
-| walker |  | 6154 | 94 | listing of 'tests/fixtures' |  |  | 0.494 |
-| walker |  | 6156 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.494 |
-| walker |  | 6158 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.494 |
+| walker |  | 6105 | 63 | export doc at lib/argument.js:143 |  |  | 0.494 |
+| walker |  | 6120 | 15 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.494 |
+| walker |  | 6131 | 11 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.494 |
+| walker |  | 6145 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.494 |
+| walker |  | 6158 | 13 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.494 |
 | walker |  | 6171 | 13 | module item at examples/nestedCommands.js:4 |  |  | 0.494 |
 | walker |  | 6243 | 72 | export doc at lib/help.js:740 |  |  | 0.494 |
 | walker |  | 6256 | 13 | export member at lib/option.js:3 member 11 |  |  | 0.494 |

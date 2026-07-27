@@ -56,8 +56,8 @@ Score(3000)=0.677 I=0.846 C=0.541 ns_rows≤3K=30/50 (reached=15 partial=2 missi
 | walker |  | 826 | 3 | listing of 'internal/site/public' |  |  | 0.560 |
 | ns | 838 |  | 58 | internal/records/ + internal/migrations/ directory listings | 1.13 |  | 0.565 |
 | walker |  | 876 | 50 | package identity in internal/site/package.json |  |  | 0.565 |
-| walker |  | 894 | 18 | listing of 'internal/site/public/static' |  |  | 0.565 |
-| walker |  | 925 | 31 | listing of 'internal/site/src' |  |  | 0.613 |
+| walker |  | 907 | 31 | listing of 'internal/site/src' |  |  | 0.613 |
+| walker |  | 925 | 18 | listing of 'internal/site/public/static' |  |  | 0.613 |
 | walker |  | 954 | 29 | listing of '.github' |  |  | 0.657 |
 | walker |  | 972 | 18 | listing of '.github/workflows' |  |  | 0.691 |
 | ns | 1046 |  | 208 | README lede (head) | 1.14 |  | 0.668 |
@@ -101,72 +101,72 @@ Score(3000)=0.677 I=0.846 C=0.541 ns_rows≤3K=30/50 (reached=15 partial=2 missi
 | walker |  | 1655 | 0 | go decl at internal/hub/utils/utils.go:7 |  |  | 0.796 |
 | walker |  | 1664 | 9 | go package + imports in internal/common/common-ssh.go |  |  | 0.796 |
 | walker |  | 1694 | 30 | listing of 'supplemental/kubernetes/beszel-hub/charts/templates' |  |  | 0.799 |
-| walker |  | 1717 | 23 | readme.md section #3 |  |  | 0.799 |
-| walker |  | 1731 | 14 | go decl doc at internal/hub/update.go:14 |  |  | 0.799 |
 | ns | 1734 |  | 146 | internal/hub/utils/utils.go — full | 1.23 |  | 0.774 |
-| walker |  | 1755 | 24 | readme.md section #7 |  |  | 0.774 |
-| walker |  | 1779 | 24 | readme.md section #6 |  |  | 0.774 |
-| walker |  | 1803 | 24 | readme.md section #5 |  |  | 0.774 |
-| ns | 1864 |  | 130 | internal/site/src/locales/ directory listing — all 32 supported languages | 1.24 |  | 0.716 |
-| ns | 1987 |  | 123 | internal/site/src/components/ directory listing | 1.25 |  | 0.682 |
-| ns | 2164 |  | 177 | supplemental/CHANGELOG.md — most recent release-note entries (head) | 1.26 |  | 0.664 |
-| walker |  | 2178 | 375 | listing of 'agent' |  |  | 0.674 |
-| walker |  | 2186 | 8 | listing of 'agent/health' |  |  | 0.674 |
-| walker |  | 2194 | 8 | listing of 'agent/utils' |  |  | 0.674 |
-| walker |  | 2206 | 12 | listing of 'agent/deltatracker' |  |  | 0.674 |
-| walker |  | 2220 | 14 | listing of 'agent/lhm' |  |  | 0.674 |
-| walker |  | 2239 | 19 | listing of 'agent/zfs' |  |  | 0.674 |
-| walker |  | 2267 | 28 | listing of 'agent/test-data' |  |  | 0.675 |
-| walker |  | 2298 | 31 | listing of 'agent/battery' |  |  | 0.677 |
-| ns | 2313 |  | 149 | internal/site/src/components/ui/ directory listing | 1.27 |  | 0.640 |
-| walker |  | 2316 | 18 | go decl names surface in agent/sensors_default.go |  |  | 0.640 |
-| walker |  | 2336 | 20 | go decl names surface in agent/smart_nonwindows.go |  |  | 0.640 |
-| walker |  | 2336 | 0 | go decl at agent/smart_nonwindows.go:7 |  |  | 0.640 |
-| walker |  | 2358 | 22 | go decl names surface in agent/agent_test_helpers.go |  |  | 0.640 |
-| walker |  | 2358 | 0 | go decl at agent/agent_test_helpers.go:6 |  |  | 0.640 |
-| walker |  | 2383 | 25 | listing of 'agent/test-data/smart' |  |  | 0.642 |
-| walker |  | 2408 | 25 | go decl names surface in agent/response.go |  |  | 0.642 |
-| walker |  | 2408 | 0 | go decl at agent/response.go:13 |  |  | 0.642 |
-| walker |  | 2417 | 9 | go decl body at agent/agent_test_helpers.go:6 |  |  | 0.642 |
-| walker |  | 2436 | 19 | go decl names surface in agent/zfs/zfs_unsupported.go |  |  | 0.642 |
-| walker |  | 2436 | 0 | go decl at agent/zfs/zfs_unsupported.go:7 |  |  | 0.642 |
-| ns | 2454 |  | 141 | supplemental/ subdirectory breadth | 1.28 |  | 0.646 |
-| walker |  | 2475 | 39 | go decl names surface in agent/gpu_darwin_unsupported.go |  |  | 0.646 |
-| walker |  | 2475 | 0 | go decl at agent/gpu_darwin_unsupported.go:6 |  |  | 0.646 |
-| walker |  | 2475 | 0 | go decl at agent/gpu_darwin_unsupported.go:9 |  |  | 0.646 |
-| walker |  | 2484 | 9 | go package + imports in agent/agent_test_helpers.go |  |  | 0.646 |
-| walker |  | 2493 | 9 | go package + imports in agent/gpu_darwin_unsupported.go |  |  | 0.646 |
-| walker |  | 2536 | 43 | go decl names surface in agent/gpu_amd_unsupported.go |  |  | 0.646 |
-| walker |  | 2536 | 0 | go decl at agent/gpu_amd_unsupported.go:9 |  |  | 0.646 |
-| walker |  | 2536 | 0 | go decl at agent/gpu_amd_unsupported.go:13 |  |  | 0.646 |
-| walker |  | 2583 | 47 | go decl names surface in agent/emmc_stub.go |  |  | 0.646 |
-| walker |  | 2583 | 0 | go decl at agent/emmc_stub.go:7 |  |  | 0.646 |
-| walker |  | 2583 | 0 | go decl at agent/emmc_stub.go:11 |  |  | 0.646 |
-| walker |  | 2592 | 9 | go package + imports in agent/emmc_stub.go |  |  | 0.646 |
-| walker |  | 2639 | 47 | go decl names surface in agent/gpu_nvml_unsupported.go |  |  | 0.646 |
-| walker |  | 2639 | 0 | go decl at agent/gpu_nvml_unsupported.go:11 |  |  | 0.646 |
-| walker |  | 2652 | 13 | go decl at agent/gpu_nvml_unsupported.go:7 |  |  | 0.646 |
-| ns | 2655 |  | 201 | PocketBase collection roster — all 14 collection names | 1.29 |  | 0.631 |
-| walker |  | 2699 | 47 | go decl names surface in agent/mdraid_stub.go |  |  | 0.631 |
-| walker |  | 2699 | 0 | go decl at agent/mdraid_stub.go:5 |  |  | 0.631 |
-| walker |  | 2699 | 0 | go decl at agent/mdraid_stub.go:9 |  |  | 0.631 |
-| walker |  | 2706 | 7 | go package + imports in agent/mdraid_stub.go |  |  | 0.631 |
-| walker |  | 2713 | 7 | go decl body at agent/emmc_stub.go:7 |  |  | 0.631 |
-| walker |  | 2720 | 7 | go decl body at agent/mdraid_stub.go:5 |  |  | 0.631 |
-| walker |  | 2727 | 7 | go decl body at agent/gpu_amd_unsupported.go:9 |  |  | 0.631 |
-| walker |  | 2763 | 36 | go decl names surface in agent/battery/battery_stub.go |  |  | 0.631 |
-| walker |  | 2763 | 0 | go decl at agent/battery/battery_stub.go:7 |  |  | 0.631 |
-| walker |  | 2763 | 0 | go decl at agent/battery/battery_stub.go:11 |  |  | 0.631 |
-| walker |  | 2770 | 7 | go decl body at agent/battery/battery_stub.go:7 |  |  | 0.631 |
-| walker |  | 2792 | 22 | go decl doc at agent/agent_test_helpers.go:6 |  |  | 0.631 |
-| walker |  | 2812 | 20 | go package + imports in agent/gpu_nvml_unsupported.go |  |  | 0.649 |
-| ns | 2812 |  | 157 | agent/ subpackage breadth (battery, deltatracker, health, lhm, test-data, tools, utils, zfs) | 1.30 |  | 0.649 |
-| walker |  | 2832 | 20 | go package + imports in agent/smart_nonwindows.go |  |  | 0.649 |
-| walker |  | 2844 | 12 | go decl body at agent/zfs/zfs_unsupported.go:7 |  |  | 0.649 |
-| walker |  | 2853 | 9 | go decl body at agent/emmc_stub.go:11 |  |  | 0.649 |
-| walker |  | 2862 | 9 | go decl body at agent/gpu_amd_unsupported.go:13 |  |  | 0.649 |
-| walker |  | 2871 | 9 | go decl body at agent/mdraid_stub.go:9 |  |  | 0.649 |
-| walker |  | 2922 | 51 | listing of 'internal/site/src/lib' |  |  | 0.677 |
+| walker |  | 1745 | 51 | listing of 'internal/site/src/lib' |  |  | 0.813 |
+| walker |  | 1768 | 23 | readme.md section #3 |  |  | 0.813 |
+| walker |  | 1782 | 14 | go decl doc at internal/hub/update.go:14 |  |  | 0.813 |
+| walker |  | 1806 | 24 | readme.md section #7 |  |  | 0.813 |
+| walker |  | 1830 | 24 | readme.md section #6 |  |  | 0.813 |
+| walker |  | 1854 | 24 | readme.md section #5 |  |  | 0.813 |
+| ns | 1864 |  | 130 | internal/site/src/locales/ directory listing — all 32 supported languages | 1.24 |  | 0.752 |
+| ns | 1987 |  | 123 | internal/site/src/components/ directory listing | 1.25 |  | 0.717 |
+| ns | 2164 |  | 177 | supplemental/CHANGELOG.md — most recent release-note entries (head) | 1.26 |  | 0.698 |
+| walker |  | 2229 | 375 | listing of 'agent' |  |  | 0.708 |
+| walker |  | 2237 | 8 | listing of 'agent/health' |  |  | 0.708 |
+| walker |  | 2245 | 8 | listing of 'agent/utils' |  |  | 0.708 |
+| walker |  | 2257 | 12 | listing of 'agent/deltatracker' |  |  | 0.708 |
+| walker |  | 2271 | 14 | listing of 'agent/lhm' |  |  | 0.708 |
+| walker |  | 2290 | 19 | listing of 'agent/zfs' |  |  | 0.708 |
+| ns | 2313 |  | 149 | internal/site/src/components/ui/ directory listing | 1.27 |  | 0.670 |
+| walker |  | 2318 | 28 | listing of 'agent/test-data' |  |  | 0.671 |
+| walker |  | 2349 | 31 | listing of 'agent/battery' |  |  | 0.673 |
+| walker |  | 2367 | 18 | go decl names surface in agent/sensors_default.go |  |  | 0.673 |
+| walker |  | 2387 | 20 | go decl names surface in agent/smart_nonwindows.go |  |  | 0.673 |
+| walker |  | 2387 | 0 | go decl at agent/smart_nonwindows.go:7 |  |  | 0.673 |
+| walker |  | 2409 | 22 | go decl names surface in agent/agent_test_helpers.go |  |  | 0.673 |
+| walker |  | 2409 | 0 | go decl at agent/agent_test_helpers.go:6 |  |  | 0.673 |
+| walker |  | 2434 | 25 | listing of 'agent/test-data/smart' |  |  | 0.674 |
+| ns | 2454 |  | 141 | supplemental/ subdirectory breadth | 1.28 |  | 0.676 |
+| walker |  | 2459 | 25 | go decl names surface in agent/response.go |  |  | 0.676 |
+| walker |  | 2459 | 0 | go decl at agent/response.go:13 |  |  | 0.676 |
+| walker |  | 2468 | 9 | go decl body at agent/agent_test_helpers.go:6 |  |  | 0.676 |
+| walker |  | 2487 | 19 | go decl names surface in agent/zfs/zfs_unsupported.go |  |  | 0.676 |
+| walker |  | 2487 | 0 | go decl at agent/zfs/zfs_unsupported.go:7 |  |  | 0.676 |
+| walker |  | 2526 | 39 | go decl names surface in agent/gpu_darwin_unsupported.go |  |  | 0.676 |
+| walker |  | 2526 | 0 | go decl at agent/gpu_darwin_unsupported.go:6 |  |  | 0.676 |
+| walker |  | 2526 | 0 | go decl at agent/gpu_darwin_unsupported.go:9 |  |  | 0.676 |
+| walker |  | 2535 | 9 | go package + imports in agent/agent_test_helpers.go |  |  | 0.676 |
+| walker |  | 2544 | 9 | go package + imports in agent/gpu_darwin_unsupported.go |  |  | 0.676 |
+| walker |  | 2587 | 43 | go decl names surface in agent/gpu_amd_unsupported.go |  |  | 0.676 |
+| walker |  | 2587 | 0 | go decl at agent/gpu_amd_unsupported.go:9 |  |  | 0.676 |
+| walker |  | 2587 | 0 | go decl at agent/gpu_amd_unsupported.go:13 |  |  | 0.676 |
+| walker |  | 2634 | 47 | go decl names surface in agent/emmc_stub.go |  |  | 0.676 |
+| walker |  | 2634 | 0 | go decl at agent/emmc_stub.go:7 |  |  | 0.676 |
+| walker |  | 2634 | 0 | go decl at agent/emmc_stub.go:11 |  |  | 0.676 |
+| walker |  | 2643 | 9 | go package + imports in agent/emmc_stub.go |  |  | 0.676 |
+| ns | 2655 |  | 201 | PocketBase collection roster — all 14 collection names | 1.29 |  | 0.661 |
+| walker |  | 2690 | 47 | go decl names surface in agent/gpu_nvml_unsupported.go |  |  | 0.661 |
+| walker |  | 2690 | 0 | go decl at agent/gpu_nvml_unsupported.go:11 |  |  | 0.661 |
+| walker |  | 2703 | 13 | go decl at agent/gpu_nvml_unsupported.go:7 |  |  | 0.661 |
+| walker |  | 2750 | 47 | go decl names surface in agent/mdraid_stub.go |  |  | 0.661 |
+| walker |  | 2750 | 0 | go decl at agent/mdraid_stub.go:5 |  |  | 0.661 |
+| walker |  | 2750 | 0 | go decl at agent/mdraid_stub.go:9 |  |  | 0.661 |
+| walker |  | 2757 | 7 | go package + imports in agent/mdraid_stub.go |  |  | 0.661 |
+| walker |  | 2764 | 7 | go decl body at agent/emmc_stub.go:7 |  |  | 0.661 |
+| walker |  | 2771 | 7 | go decl body at agent/mdraid_stub.go:5 |  |  | 0.661 |
+| walker |  | 2778 | 7 | go decl body at agent/gpu_amd_unsupported.go:9 |  |  | 0.661 |
+| ns | 2812 |  | 157 | agent/ subpackage breadth (battery, deltatracker, health, lhm, test-data, tools, utils, zfs) | 1.30 |  | 0.677 |
+| walker |  | 2814 | 36 | go decl names surface in agent/battery/battery_stub.go |  |  | 0.677 |
+| walker |  | 2814 | 0 | go decl at agent/battery/battery_stub.go:7 |  |  | 0.677 |
+| walker |  | 2814 | 0 | go decl at agent/battery/battery_stub.go:11 |  |  | 0.677 |
+| walker |  | 2821 | 7 | go decl body at agent/battery/battery_stub.go:7 |  |  | 0.677 |
+| walker |  | 2843 | 22 | go decl doc at agent/agent_test_helpers.go:6 |  |  | 0.677 |
+| walker |  | 2863 | 20 | go package + imports in agent/gpu_nvml_unsupported.go |  |  | 0.677 |
+| walker |  | 2883 | 20 | go package + imports in agent/smart_nonwindows.go |  |  | 0.677 |
+| walker |  | 2895 | 12 | go decl body at agent/zfs/zfs_unsupported.go:7 |  |  | 0.677 |
+| walker |  | 2904 | 9 | go decl body at agent/emmc_stub.go:11 |  |  | 0.677 |
+| walker |  | 2913 | 9 | go decl body at agent/gpu_amd_unsupported.go:13 |  |  | 0.677 |
+| walker |  | 2922 | 9 | go decl body at agent/mdraid_stub.go:9 |  |  | 0.677 |
 | walker |  | 2933 | 11 | go package + imports in agent/battery/battery.go |  |  | 0.677 |
 | walker |  | 2943 | 10 | go decl body at agent/smart_nonwindows.go:7 |  |  | 0.677 |
 | walker |  | 2998 | 55 | readme.md section #9 |  |  | 0.677 |

@@ -37,12 +37,12 @@ Score(3000)=0.648 I=0.877 C=0.479 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 1949 | 77 | manifest config in pyproject.toml |  |  | 0.620 |
 | walker |  | 1969 | 20 | python imports in setup.py |  |  | 0.620 |
 | walker |  | 2051 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.620 |
-| walker |  | 2190 | 139 | [dependencies] in pyproject.toml |  |  | 0.644 |
-| walker |  | 2253 | 63 | README.md section #1 |  |  | 0.644 |
-| walker |  | 2297 | 44 | listing of '.github' |  |  | 0.663 |
-| ns | 2322 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.589 |
-| walker |  | 2337 | 40 | listing of '.github/workflows' |  |  | 0.630 |
-| walker |  | 2350 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.630 |
+| walker |  | 2095 | 44 | listing of '.github' |  |  | 0.639 |
+| walker |  | 2135 | 40 | listing of '.github/workflows' |  |  | 0.685 |
+| walker |  | 2148 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.685 |
+| walker |  | 2287 | 139 | [dependencies] in pyproject.toml |  |  | 0.708 |
+| ns | 2322 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.630 |
+| walker |  | 2350 | 63 | README.md section #1 |  |  | 0.630 |
 | ns | 2431 |  | 109 | structures.py class/method locations | 3.3 |  | 0.613 |
 | walker |  | 2459 | 109 | tool.pytest+pyright config in pyproject.toml |  |  | 0.613 |
 | walker |  | 2815 | 356 | plaintext config Makefile |  |  | 0.655 |

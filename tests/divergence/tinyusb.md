@@ -13,59 +13,59 @@ Score(3000)=0.481 I=0.604 C=0.383 ns_rows≤3K=23/43 (reached=9 partial=1 missin
 | walker |  | 194 | 6 | listing of 'lib/rt-thread/port' |  |  | 0.000 |
 | ns | 218 |  | 115 | README key features bullets | 1.3 |  | 0.000 |
 | walker |  | 228 | 34 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.000 |
-| walker |  | 233 | 5 | listing of '.PVS-Studio' |  |  | 0.000 |
-| walker |  | 241 | 8 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.000 |
-| walker |  | 277 | 36 | listing of 'lib/networking' |  |  | 0.000 |
+| walker |  | 264 | 36 | listing of 'lib/networking' |  |  | 0.000 |
+| walker |  | 269 | 5 | listing of '.PVS-Studio' |  |  | 0.000 |
+| walker |  | 277 | 8 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.000 |
 | walker |  | 295 | 18 | listing of 'hw/mcu' |  |  | 0.000 |
 | walker |  | 300 | 5 | listing of 'hw/mcu/bridgetek' |  |  | 0.000 |
 | walker |  | 305 | 5 | listing of 'hw/mcu/sony' |  |  | 0.000 |
 | walker |  | 311 | 6 | listing of 'hw/mcu/nordic' |  |  | 0.000 |
 | walker |  | 321 | 10 | listing of 'hw/mcu/dialog' |  |  | 0.000 |
+| walker |  | 328 | 7 | listing of '.claude' |  |  | 0.000 |
 | ns | 337 |  | 119 | Root directory listing | 1.4 |  | 0.408 |
 | ns | 393 |  | 56 | src/ top-level listing | 1.5 |  | 0.354 |
-| walker |  | 396 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.354 |
-| walker |  | 402 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.354 |
-| walker |  | 412 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.354 |
+| walker |  | 403 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.354 |
+| walker |  | 409 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.354 |
+| walker |  | 419 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.354 |
 | ns | 431 |  | 38 | examples/ top-level listing | 1.6 |  | 0.327 |
 | ns | 451 |  | 20 | test/ and hw/ top-level listings | 1.7 |  | 0.316 |
-| walker |  | 467 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.316 |
-| walker |  | 474 | 7 | listing of '.claude' |  |  | 0.316 |
-| walker |  | 530 | 56 | listing of 'docs' |  |  | 0.330 |
-| walker |  | 533 | 3 | listing of 'docs/_static' |  |  | 0.330 |
-| walker |  | 546 | 13 | listing of 'docs/assets' |  |  | 0.330 |
-| walker |  | 569 | 23 | listing of 'docs/info' |  |  | 0.330 |
-| walker |  | 577 | 8 | listing of '.circleci' |  |  | 0.330 |
-| ns | 612 |  | 161 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.298 |
-| walker |  | 633 | 56 | listing of 'src' |  |  | 0.373 |
-| walker |  | 652 | 19 | listing of 'src/typec' |  |  | 0.373 |
-| walker |  | 673 | 21 | listing of 'src/device' |  |  | 0.373 |
-| walker |  | 702 | 29 | listing of 'src/host' |  |  | 0.373 |
-| walker |  | 760 | 58 | listing of 'src/class' |  |  | 0.383 |
-| ns | 787 |  | 175 | README project layout tree | 1.9 |  | 0.362 |
-| walker |  | 866 | 106 | listing of 'src/portable' |  |  | 0.377 |
-| walker |  | 921 | 55 | listing of 'src/common' |  |  | 0.377 |
-| walker |  | 929 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.377 |
+| walker |  | 474 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.316 |
+| walker |  | 530 | 56 | listing of 'src' |  |  | 0.411 |
+| walker |  | 549 | 19 | listing of 'src/typec' |  |  | 0.411 |
+| walker |  | 570 | 21 | listing of 'src/device' |  |  | 0.411 |
+| walker |  | 599 | 29 | listing of 'src/host' |  |  | 0.411 |
+| ns | 612 |  | 161 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.332 |
+| walker |  | 657 | 58 | listing of 'src/class' |  |  | 0.341 |
+| walker |  | 763 | 106 | listing of 'src/portable' |  |  | 0.356 |
+| ns | 787 |  | 175 | README project layout tree | 1.9 |  | 0.336 |
+| walker |  | 818 | 55 | listing of 'src/common' |  |  | 0.336 |
+| walker |  | 874 | 56 | listing of 'docs' |  |  | 0.377 |
+| walker |  | 877 | 3 | listing of 'docs/_static' |  |  | 0.377 |
+| walker |  | 890 | 13 | listing of 'docs/assets' |  |  | 0.377 |
+| walker |  | 913 | 23 | listing of 'docs/info' |  |  | 0.377 |
+| walker |  | 921 | 8 | listing of '.circleci' |  |  | 0.377 |
 | ns | 975 |  | 188 | README Device Stack intro + first 7 classes | 1.10 |  | 0.354 |
-| walker |  | 998 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.354 |
-| walker |  | 1061 | 63 | listing of 'src/osal' |  |  | 0.361 |
-| walker |  | 1165 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.361 |
-| walker |  | 1165 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.361 |
-| walker |  | 1170 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 984 | 63 | listing of 'src/osal' |  |  | 0.361 |
+| walker |  | 1088 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.361 |
+| walker |  | 1088 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1093 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1101 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.361 |
+| walker |  | 1170 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.361 |
 | walker |  | 1179 | 9 | listing of 'hw/mcu/sony/cxd56' |  |  | 0.361 |
-| ns | 1208 |  | 233 | README Device Stack remaining classes + escape hatch | 1.11 |  | 0.346 |
-| walker |  | 1215 | 36 | listing of 'docs/reference' |  |  | 0.348 |
-| walker |  | 1260 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.348 |
-| walker |  | 1319 | 59 | c decl names surface in src/common/tusb_debug.h |  |  | 0.348 |
-| walker |  | 1332 | 13 | c includes in src/osal/osal.h |  |  | 0.348 |
-| ns | 1362 |  | 154 | README Host Stack class list | 1.12 |  | 0.332 |
-| walker |  | 1462 | 130 | README headline in README.rst |  |  | 0.511 |
-| ns | 1569 |  | 207 | README Power Delivery + OSAL support lists | 1.13 |  | 0.483 |
-| walker |  | 1618 | 156 | README.rst section #5 |  |  | 0.535 |
-| ns | 1627 |  | 58 | src/class/ listing | 2.1 |  | 0.558 |
-| ns | 1733 |  | 106 | src/portable/ listing | 2.2 |  | 0.586 |
-| ns | 1814 |  | 81 | src/osal/ + hw/mcu/ listings | 2.3 |  | 0.599 |
-| walker |  | 1837 | 219 | README.rst section #7 |  |  | 0.614 |
-| walker |  | 1849 | 12 | listing of 'test' |  |  | 0.629 |
+| walker |  | 1191 | 12 | listing of 'test' |  |  | 0.382 |
+| ns | 1208 |  | 233 | README Device Stack remaining classes + escape hatch | 1.11 |  | 0.366 |
+| walker |  | 1227 | 36 | listing of 'docs/reference' |  |  | 0.369 |
+| walker |  | 1272 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.369 |
+| walker |  | 1331 | 59 | c decl names surface in src/common/tusb_debug.h |  |  | 0.369 |
+| walker |  | 1344 | 13 | c includes in src/osal/osal.h |  |  | 0.369 |
+| ns | 1362 |  | 154 | README Host Stack class list | 1.12 |  | 0.352 |
+| walker |  | 1474 | 130 | README headline in README.rst |  |  | 0.534 |
+| ns | 1569 |  | 207 | README Power Delivery + OSAL support lists | 1.13 |  | 0.505 |
+| ns | 1627 |  | 58 | src/class/ listing | 2.1 |  | 0.532 |
+| walker |  | 1630 | 156 | README.rst section #5 |  |  | 0.577 |
+| ns | 1733 |  | 106 | src/portable/ listing | 2.2 |  | 0.603 |
+| ns | 1814 |  | 81 | src/osal/ + hw/mcu/ listings | 2.3 |  | 0.615 |
+| walker |  | 1849 | 219 | README.rst section #7 |  |  | 0.629 |
 | walker |  | 2043 | 194 | c decl names surface in src/typec/pd_types.h |  |  | 0.629 |
 | walker |  | 2054 | 11 | c decl at src/typec/pd_types.h:229 |  |  | 0.629 |
 | ns | 2058 |  | 244 | examples/device/ listing | 2.4 |  | 0.575 |
@@ -172,38 +172,38 @@ Score(3000)=0.481 I=0.604 C=0.383 ns_rows≤3K=23/43 (reached=9 partial=1 missin
 | walker |  | 6611 | 68 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:39 |  |  | 0.421 |
 | walker |  | 6685 | 74 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:52 |  |  | 0.421 |
 | walker |  | 6721 | 36 | c includes in src/typec/pd_types.h |  |  | 0.421 |
-| ns | 6897 |  | 1175 | usbh.h host application API (init/task/mount checks) | 3.7 |  | 0.390 |
-| walker |  | 6907 | 186 | c decl names surface in src/common/tusb_verify.h |  |  | 0.390 |
-| walker |  | 6952 | 45 | c decl at src/common/tusb_verify.h:122 |  |  | 0.390 |
-| walker |  | 7001 | 49 | c decl at src/common/tusb_verify.h:104 |  |  | 0.390 |
-| ns | 7120 |  | 223 | usbh.h remaining tuh_* API (locations only) | 3.8 |  | 0.384 |
-| ns | 7181 |  | 61 | usbh.h application callbacks (locations only) | 3.9 |  | 0.382 |
-| ns | 7486 |  | 305 | dcd_event_t + dcd_eventid_t (the ISR->task handoff shape) | 4.1 |  | 0.375 |
-| walker |  | 7608 | 607 | c decl names surface in src/common/tusb_fifo.h |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:42 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:166 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:183 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:187 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:193 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:209 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:211 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:217 |  |  | 0.375 |
-| walker |  | 7608 | 0 | c decl at src/common/tusb_fifo.h:222 |  |  | 0.375 |
-| walker |  | 7621 | 13 | c decl at src/common/tusb_fifo.h:200 |  |  | 0.375 |
-| walker |  | 7651 | 30 | c decl at src/common/tusb_fifo.h:142 |  |  | 0.375 |
-| walker |  | 7707 | 56 | c decl at src/common/tusb_fifo.h:134 |  |  | 0.375 |
-| walker |  | 7752 | 45 | c decl at src/common/tusb_fifo.h:154 |  |  | 0.375 |
-| walker |  | 7809 | 57 | c decl at src/common/tusb_fifo.h:147 |  |  | 0.375 |
-| walker |  | 7829 | 20 | c decl body at src/common/tusb_fifo.h:211 |  |  | 0.375 |
-| walker |  | 7982 | 153 | c decl at src/common/tusb_fifo.h:119 |  |  | 0.375 |
-| walker |  | 8009 | 27 | c includes in src/common/tusb_fifo.h |  |  | 0.375 |
-| ns | 8012 |  | 526 | dcd_*/hcd_* controller+endpoint API (locations only) | 4.2 |  | 0.363 |
-| walker |  | 8047 | 38 | listing of 'examples' |  |  | 0.377 |
-| ns | 8187 |  | 175 | dcd_event_xxx()/hcd_event_xxx() ISR-side helper signatures (locations only) | 4.3 |  | 0.374 |
-| walker |  | 8219 | 172 | c decl at src/typec/pd_types.h:115 |  |  | 0.374 |
-| walker |  | 8266 | 47 | c includes in src/common/tusb_verify.h |  |  | 0.374 |
-| walker |  | 8284 | 18 | listing of 'test/unit-test' |  |  | 0.375 |
-| walker |  | 8302 | 18 | listing of 'test/unit-test/test' |  |  | 0.375 |
+| walker |  | 6759 | 38 | listing of 'examples' |  |  | 0.438 |
+| ns | 6897 |  | 1175 | usbh.h host application API (init/task/mount checks) | 3.7 |  | 0.405 |
+| walker |  | 6945 | 186 | c decl names surface in src/common/tusb_verify.h |  |  | 0.405 |
+| walker |  | 6990 | 45 | c decl at src/common/tusb_verify.h:122 |  |  | 0.405 |
+| walker |  | 7039 | 49 | c decl at src/common/tusb_verify.h:104 |  |  | 0.405 |
+| ns | 7120 |  | 223 | usbh.h remaining tuh_* API (locations only) | 3.8 |  | 0.399 |
+| ns | 7181 |  | 61 | usbh.h application callbacks (locations only) | 3.9 |  | 0.397 |
+| ns | 7486 |  | 305 | dcd_event_t + dcd_eventid_t (the ISR->task handoff shape) | 4.1 |  | 0.389 |
+| walker |  | 7646 | 607 | c decl names surface in src/common/tusb_fifo.h |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:42 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:166 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:183 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:187 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:193 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:209 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:211 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:217 |  |  | 0.389 |
+| walker |  | 7646 | 0 | c decl at src/common/tusb_fifo.h:222 |  |  | 0.389 |
+| walker |  | 7659 | 13 | c decl at src/common/tusb_fifo.h:200 |  |  | 0.389 |
+| walker |  | 7689 | 30 | c decl at src/common/tusb_fifo.h:142 |  |  | 0.389 |
+| walker |  | 7745 | 56 | c decl at src/common/tusb_fifo.h:134 |  |  | 0.389 |
+| walker |  | 7790 | 45 | c decl at src/common/tusb_fifo.h:154 |  |  | 0.389 |
+| walker |  | 7847 | 57 | c decl at src/common/tusb_fifo.h:147 |  |  | 0.389 |
+| walker |  | 7867 | 20 | c decl body at src/common/tusb_fifo.h:211 |  |  | 0.389 |
+| ns | 8012 |  | 526 | dcd_*/hcd_* controller+endpoint API (locations only) | 4.2 |  | 0.377 |
+| walker |  | 8020 | 153 | c decl at src/common/tusb_fifo.h:119 |  |  | 0.377 |
+| walker |  | 8047 | 27 | c includes in src/common/tusb_fifo.h |  |  | 0.377 |
+| walker |  | 8065 | 18 | listing of 'test/unit-test' |  |  | 0.378 |
+| walker |  | 8083 | 18 | listing of 'test/unit-test/test' |  |  | 0.378 |
+| ns | 8187 |  | 175 | dcd_event_xxx()/hcd_event_xxx() ISR-side helper signatures (locations only) | 4.3 |  | 0.375 |
+| walker |  | 8255 | 172 | c decl at src/typec/pd_types.h:115 |  |  | 0.375 |
+| walker |  | 8302 | 47 | c includes in src/common/tusb_verify.h |  |  | 0.375 |
 | walker |  | 8310 | 8 | c decl doc at src/typec/tcd.h:73 |  |  | 0.375 |
 | walker |  | 8320 | 10 | c decl doc at src/common/tusb_common.h:114 |  |  | 0.375 |
 | walker |  | 8343 | 23 | c decl doc at src/common/tusb_common.h:37 |  |  | 0.375 |

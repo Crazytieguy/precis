@@ -101,24 +101,10 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Fs(DirListing { dir: "widgets" })'
-descriptor = "listing of 'widgets'"
-cost_tokens = 39
-cum_tokens = 223
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "widgets"
-entries = ["actionStatus.widget.js", "actionsMenu.widget.js", "containers", "help.widget.js", "images", "searchInput.widget.js", "services", "toolbar.widget.js"]
-
-[[batches]]
-position = 8
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 40
-cum_tokens = 263
+cum_tokens = 224
 
 [batches.content]
 kind = "fs"
@@ -128,11 +114,11 @@ parent = "src"
 entries = ["assetsLoader.js", "baseWidget.js", "cli.js", "dockerUtil.js", "enum.js", "grid.config.js", "screen.js", "themes", "widgetsTemplates"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Fs(DirListing { dir: "src/themes" })'
 descriptor = "listing of 'src/themes'"
 cost_tokens = 8
-cum_tokens = 271
+cum_tokens = 232
 
 [batches.content]
 kind = "fs"
@@ -142,11 +128,11 @@ parent = "src/themes"
 entries = ["styles.js", "theme.selector.js"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Fs(DirListing { dir: "src/widgetsTemplates" })'
 descriptor = "listing of 'src/widgetsTemplates'"
 cost_tokens = 30
-cum_tokens = 301
+cum_tokens = 262
 
 [batches.content]
 kind = "fs"
@@ -154,6 +140,20 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "src/widgetsTemplates"
 entries = ["base.hook.template.js", "help.widget.template.js", "info.widget.template.js", "list.widget.template.js", "logs.widget.template.js"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "widgets" })'
+descriptor = "listing of 'widgets'"
+cost_tokens = 39
+cum_tokens = 301
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "widgets"
+entries = ["actionStatus.widget.js", "actionsMenu.widget.js", "containers", "help.widget.js", "images", "searchInput.widget.js", "services", "toolbar.widget.js"]
 
 [[batches]]
 position = 11
@@ -1271,10 +1271,52 @@ kind = "ellipsis"
 
 [[batches]]
 position = 54
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 52
+cum_tokens = 1665
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = [".gitignore", ".prettierrc", "LICENSE", "README.md", "gatsby-browser.js", "gatsby-config.js", "gatsby-node.js", "gatsby-ssr.js", "package.json", "src"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "docs/src" })'
+descriptor = "listing of 'docs/src'"
+cost_tokens = 11
+cum_tokens = 1676
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/src"
+entries = ["assets", "components", "pages"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "docs/src/pages" })'
+descriptor = "listing of 'docs/src/pages'"
+cost_tokens = 12
+cum_tokens = 1688
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/src/pages"
+entries = ["404.js", "generic.js", "index.js"]
+
+[[batches]]
+position = 57
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 86 })'
 descriptor = "export member at src/screen.js:18 member 86"
 cost_tokens = 11
-cum_tokens = 1624
+cum_tokens = 1699
 
 [batches.content]
 kind = "lines"
@@ -1296,53 +1338,25 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 52
-cum_tokens = 1676
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = [".gitignore", ".prettierrc", "LICENSE", "README.md", "gatsby-browser.js", "gatsby-config.js", "gatsby-node.js", "gatsby-ssr.js", "package.json", "src"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "docs/src" })'
-descriptor = "listing of 'docs/src'"
-cost_tokens = 11
-cum_tokens = 1687
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/src"
-entries = ["assets", "components", "pages"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "docs/src/pages" })'
-descriptor = "listing of 'docs/src/pages'"
-cost_tokens = 12
-cum_tokens = 1699
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/src/pages"
-entries = ["404.js", "generic.js", "index.js"]
-
-[[batches]]
 position = 58
+key = 'Fs(DirListing { dir: "docs/src/components" })'
+descriptor = "listing of 'docs/src/components'"
+cost_tokens = 24
+cum_tokens = 1723
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/src/components"
+entries = ["Footer.js", "Header.js", "HeaderGeneric.js", "Nav.js", "Scroll.js", "layout.js"]
+
+[[batches]]
+position = 59
 key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 72, body_start_line: 73 })'
 descriptor = "module item body at index.js:72 body 73"
 cost_tokens = 95
-cum_tokens = 1794
+cum_tokens = 1818
 
 [batches.content]
 kind = "lines"
@@ -1354,20 +1368,6 @@ end = 83
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "docs/src/components" })'
-descriptor = "listing of 'docs/src/components'"
-cost_tokens = 24
-cum_tokens = 1818
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/src/components"
-entries = ["Footer.js", "Header.js", "HeaderGeneric.js", "Nav.js", "Scroll.js", "layout.js"]
 
 [[batches]]
 position = 60

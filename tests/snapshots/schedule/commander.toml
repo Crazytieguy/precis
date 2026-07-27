@@ -719,10 +719,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 236
+cum_tokens = 1397
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
+
+[[batches]]
+position = 29
 key = 'Typescript(ExportNames { file: "lib/argument.js" })'
 descriptor = "export names surface in lib/argument.js"
 cost_tokens = 50
-cum_tokens = 1211
+cum_tokens = 1447
 
 [batches.content]
 kind = "lines"
@@ -768,11 +782,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(Export { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export at lib/argument.js:143"
 cost_tokens = 0
-cum_tokens = 1211
+cum_tokens = 1447
 
 [batches.content]
 kind = "lines"
@@ -794,11 +808,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Typescript(ExportNames { file: "lib/command.js" })'
 descriptor = "export names surface in lib/command.js"
 cost_tokens = 53
-cum_tokens = 1264
+cum_tokens = 1500
 
 [batches.content]
 kind = "lines"
@@ -844,11 +858,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Typescript(Export { file: "lib/command.js", start_line: 13 })'
 descriptor = "export at lib/command.js:13"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1500
 
 [batches.content]
 kind = "lines"
@@ -862,11 +876,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Typescript(Export { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export at lib/command.js:2752"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1500
 
 [batches.content]
 kind = "lines"
@@ -888,11 +902,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Typescript(ExportNames { file: "lib/error.js" })'
 descriptor = "export names surface in lib/error.js"
 cost_tokens = 53
-cum_tokens = 1317
+cum_tokens = 1553
 
 [batches.content]
 kind = "lines"
@@ -938,11 +952,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Typescript(Export { file: "lib/error.js", start_line: 25 })'
 descriptor = "export at lib/error.js:25"
 cost_tokens = 11
-cum_tokens = 1328
+cum_tokens = 1564
 
 [batches.content]
 kind = "lines"
@@ -972,11 +986,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Typescript(Export { file: "lib/error.js", start_line: 4 })'
 descriptor = "export at lib/error.js:4"
 cost_tokens = 16
-cum_tokens = 1344
+cum_tokens = 1580
 
 [batches.content]
 kind = "lines"
@@ -1004,20 +1018,6 @@ end = 12
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 236
-cum_tokens = 1580
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
 
 [[batches]]
 position = 37
@@ -2841,10 +2841,80 @@ kind = "full"
 
 [[batches]]
 position = 74
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 814
+cum_tokens = 5858
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["args.literal.test.js", "args.variadic.test.js", "argument.chain.test.js", "argument.choices.test.js", "argument.custom-processing.test.js", "argument.required.test.js", "argument.variadic.test.js", "command.action.test.js", "command.addCommand.test.js", "command.addHelpOption.test.js", "command.addHelpText.test.js", "command.alias.test.js", "command.allowExcessArguments.test.js", "command.allowUnknownOption.test.js", "command.argumentVariations.test.js", "command.asterisk.test.js", "command.chain.test.js", "command.commandHelp.test.js", "command.configureHelp.test.js", "command.configureOutput.test.js", "command.copySettings.test.js", "command.createArgument.test.js", "command.createHelp.test.js", "command.createOption.test.js", "command.default.test.js", "command.description.test.js", "command.error.test.js", "command.executableSubcommand.inspect.test.js", "command.executableSubcommand.lookup.test.js", "command.executableSubcommand.mock.test.js", "command.executableSubcommand.search.test.js", "command.executableSubcommand.signals.test.js", "command.executableSubcommand.test.js", "command.exitOverride.test.js", "command.help.test.js", "command.helpCommand.test.js", "command.helpOption.test.js", "command.hook.test.js", "command.name.test.js", "command.nested.test.js", "command.onCommand.test.js", "command.option-misuse.test.js", "command.parse.test.js", "command.parseOptions.test.js", "command.positionalOptions.test.js", "command.registerClash.test.js", "command.showHelpAfterError.test.js", "command.showSuggestionAfterError.test.js", "command.summary.test.js", "command.unknownCommand.test.js", "command.unknownOption.test.js", "command.usage.test.js", "commander.configureCommand.test.js", "createCommand.test.js", "deprecated.test.js", "esm-imports-test.mjs", "fixtures", "fixtures-extensions", "help.argumentDescription.test.js", "help.boxWrap.test.js", "help.commandTerm.test.js", "help.commandUsage.test.js", "help.longestArgumentTermLength.test.js", "help.longestCommandTermLength.test.js", "help.longestOptionTermLength.test.js", "help.minWidthToWrap.test.js", "help.optionDescription.test.js", "help.optionTerm.test.js", "help.padWidth.test.js", "help.preformatted.test.js", "help.showGlobalOptions.test.js", "help.sortCommands.test.js", "help.sortOptions.test.js", "help.stripAnsi.test.js", "help.style.test.js", "help.subcommandDescription.test.js", "help.suggestion.test.js", "help.visibleArguments.test.js", "help.visibleCommands.test.js", "help.visibleGlobalOptions.test.js", "help.visibleOptions.test.js", "helpGroup.test.js", "incrementNodeInspectorPort.test.js", "negatives.test.js", "option.bad-flags.test.js", "option.chain.test.js", "options.bool.combo.test.js", "options.bool.small.combined.test.js", "options.bool.test.js", "options.camelcase.test.js", "options.choices.test.js", "options.conflicts.test.js", "options.custom-processing.test.js", "options.default.test.js", "options.dual-options.test.js", "options.env.test.js", "options.flags.test.js", "options.getset.test.js", "options.implies.test.js", "options.mandatory.test.js", "options.optional.test.js", "options.opts.test.js", "options.optsWithGlobals.test.js", "options.preset.test.js", "options.registerClash.test.js", "options.required.test.js", "options.twice.test.js", "options.values.test.js", "options.variadic.test.js", "options.version.test.js", "program.test.js", "ts-imports.test.ts", "useColor.test.js"]
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
+descriptor = "listing of 'tests/fixtures-extensions'"
+cost_tokens = 28
+cum_tokens = 5886
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures-extensions"
+entries = ["pm-try-cjs.cjs", "pm-try-mjs.mjs", "pm-try-ts.ts", "pm.js"]
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "tests/fixtures" })'
+descriptor = "listing of 'tests/fixtures'"
+cost_tokens = 94
+cum_tokens = 5980
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures"
+entries = ["another-dir", "inspect-sub.js", "inspect.js", "other-dir", "pm", "pm-cache-clear.js", "pm-cache-validate.js", "pm-cache.js", "pm-default", "pm-echo.js", "pm-fail.js", "pm-install", "pm-listen", "pm-publish.js", "pm-search", "pm-silent", "pm-terminate.js", "pmlink", "pmlink-install"]
+
+[[batches]]
+position = 77
+key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
+descriptor = "listing of 'tests/fixtures/another-dir'"
+cost_tokens = 2
+cum_tokens = 5982
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures/another-dir"
+entries = ["pm"]
+
+[[batches]]
+position = 78
+key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
+descriptor = "listing of 'tests/fixtures/other-dir'"
+cost_tokens = 2
+cum_tokens = 5984
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures/other-dir"
+entries = ["pm"]
+
+[[batches]]
+position = 79
 key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
 descriptor = "module item at examples/configure-output.js:4"
 cost_tokens = 14
-cum_tokens = 5058
+cum_tokens = 5998
 
 [batches.content]
 kind = "lines"
@@ -2866,11 +2936,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 80
 key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
 descriptor = "module item at examples/configure-output.js:2"
 cost_tokens = 11
-cum_tokens = 5069
+cum_tokens = 6009
 
 [batches.content]
 kind = "lines"
@@ -2884,11 +2954,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 76
+position = 81
 key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 21 })'
 descriptor = "module item at examples/nestedCommands.js:21"
 cost_tokens = 14
-cum_tokens = 5083
+cum_tokens = 6023
 
 [batches.content]
 kind = "lines"
@@ -2910,11 +2980,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 82
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 257 })'
 descriptor = "export body at lib/option.js:3 body 257"
 cost_tokens = 19
-cum_tokens = 5102
+cum_tokens = 6042
 
 [batches.content]
 kind = "lines"
@@ -2928,11 +2998,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 78
+position = 83
 key = 'Typescript(ExportDoc { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export doc at lib/argument.js:143"
 cost_tokens = 63
-cum_tokens = 5165
+cum_tokens = 6105
 
 [batches.content]
 kind = "lines"
@@ -2946,11 +3016,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 79
+position = 84
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 10 })'
 descriptor = "module item at examples/arguments-custom-processing.js:10"
 cost_tokens = 15
-cum_tokens = 5180
+cum_tokens = 6120
 
 [batches.content]
 kind = "lines"
@@ -2972,11 +3042,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 85
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 8 })'
 descriptor = "module item at examples/arguments-custom-processing.js:8"
 cost_tokens = 11
-cum_tokens = 5191
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -2990,11 +3060,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 81
+position = 86
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 20 })'
 descriptor = "module item at examples/arguments-custom-processing.js:20"
 cost_tokens = 14
-cum_tokens = 5205
+cum_tokens = 6145
 
 [batches.content]
 kind = "lines"
@@ -3016,11 +3086,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 87
 key = 'Typescript(ModuleItemBody { file: "examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
 descriptor = "module item body at examples/arguments-custom-processing.js:20 body 21"
 cost_tokens = 13
-cum_tokens = 5218
+cum_tokens = 6158
 
 [batches.content]
 kind = "lines"
@@ -3032,76 +3102,6 @@ end = 21
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 83
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 814
-cum_tokens = 6032
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["args.literal.test.js", "args.variadic.test.js", "argument.chain.test.js", "argument.choices.test.js", "argument.custom-processing.test.js", "argument.required.test.js", "argument.variadic.test.js", "command.action.test.js", "command.addCommand.test.js", "command.addHelpOption.test.js", "command.addHelpText.test.js", "command.alias.test.js", "command.allowExcessArguments.test.js", "command.allowUnknownOption.test.js", "command.argumentVariations.test.js", "command.asterisk.test.js", "command.chain.test.js", "command.commandHelp.test.js", "command.configureHelp.test.js", "command.configureOutput.test.js", "command.copySettings.test.js", "command.createArgument.test.js", "command.createHelp.test.js", "command.createOption.test.js", "command.default.test.js", "command.description.test.js", "command.error.test.js", "command.executableSubcommand.inspect.test.js", "command.executableSubcommand.lookup.test.js", "command.executableSubcommand.mock.test.js", "command.executableSubcommand.search.test.js", "command.executableSubcommand.signals.test.js", "command.executableSubcommand.test.js", "command.exitOverride.test.js", "command.help.test.js", "command.helpCommand.test.js", "command.helpOption.test.js", "command.hook.test.js", "command.name.test.js", "command.nested.test.js", "command.onCommand.test.js", "command.option-misuse.test.js", "command.parse.test.js", "command.parseOptions.test.js", "command.positionalOptions.test.js", "command.registerClash.test.js", "command.showHelpAfterError.test.js", "command.showSuggestionAfterError.test.js", "command.summary.test.js", "command.unknownCommand.test.js", "command.unknownOption.test.js", "command.usage.test.js", "commander.configureCommand.test.js", "createCommand.test.js", "deprecated.test.js", "esm-imports-test.mjs", "fixtures", "fixtures-extensions", "help.argumentDescription.test.js", "help.boxWrap.test.js", "help.commandTerm.test.js", "help.commandUsage.test.js", "help.longestArgumentTermLength.test.js", "help.longestCommandTermLength.test.js", "help.longestOptionTermLength.test.js", "help.minWidthToWrap.test.js", "help.optionDescription.test.js", "help.optionTerm.test.js", "help.padWidth.test.js", "help.preformatted.test.js", "help.showGlobalOptions.test.js", "help.sortCommands.test.js", "help.sortOptions.test.js", "help.stripAnsi.test.js", "help.style.test.js", "help.subcommandDescription.test.js", "help.suggestion.test.js", "help.visibleArguments.test.js", "help.visibleCommands.test.js", "help.visibleGlobalOptions.test.js", "help.visibleOptions.test.js", "helpGroup.test.js", "incrementNodeInspectorPort.test.js", "negatives.test.js", "option.bad-flags.test.js", "option.chain.test.js", "options.bool.combo.test.js", "options.bool.small.combined.test.js", "options.bool.test.js", "options.camelcase.test.js", "options.choices.test.js", "options.conflicts.test.js", "options.custom-processing.test.js", "options.default.test.js", "options.dual-options.test.js", "options.env.test.js", "options.flags.test.js", "options.getset.test.js", "options.implies.test.js", "options.mandatory.test.js", "options.optional.test.js", "options.opts.test.js", "options.optsWithGlobals.test.js", "options.preset.test.js", "options.registerClash.test.js", "options.required.test.js", "options.twice.test.js", "options.values.test.js", "options.variadic.test.js", "options.version.test.js", "program.test.js", "ts-imports.test.ts", "useColor.test.js"]
-
-[[batches]]
-position = 84
-key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
-descriptor = "listing of 'tests/fixtures-extensions'"
-cost_tokens = 28
-cum_tokens = 6060
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures-extensions"
-entries = ["pm-try-cjs.cjs", "pm-try-mjs.mjs", "pm-try-ts.ts", "pm.js"]
-
-[[batches]]
-position = 85
-key = 'Fs(DirListing { dir: "tests/fixtures" })'
-descriptor = "listing of 'tests/fixtures'"
-cost_tokens = 94
-cum_tokens = 6154
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures"
-entries = ["another-dir", "inspect-sub.js", "inspect.js", "other-dir", "pm", "pm-cache-clear.js", "pm-cache-validate.js", "pm-cache.js", "pm-default", "pm-echo.js", "pm-fail.js", "pm-install", "pm-listen", "pm-publish.js", "pm-search", "pm-silent", "pm-terminate.js", "pmlink", "pmlink-install"]
-
-[[batches]]
-position = 86
-key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
-descriptor = "listing of 'tests/fixtures/another-dir'"
-cost_tokens = 2
-cum_tokens = 6156
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures/another-dir"
-entries = ["pm"]
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
-descriptor = "listing of 'tests/fixtures/other-dir'"
-cost_tokens = 2
-cum_tokens = 6158
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures/other-dir"
-entries = ["pm"]
 
 [[batches]]
 position = 88
