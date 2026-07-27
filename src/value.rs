@@ -22,7 +22,7 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
-pub const ROSTER_MASS_BASELINE: f64 = 11.0;
+const ROSTER_MASS_BASELINE: f64 = 11.0;
 /// Cap on the roster-mass boost (reached around ~40 entries).
 pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
@@ -35,15 +35,7 @@ pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// the ratio roster-size-neutral. Boost-only (≥ 1) and capped: small
 /// rosters keep their existing rank rather than being demoted.
 pub fn roster_mass_factor(entries: usize) -> f64 {
-    roster_mass_factor_with_baseline(entries, ROSTER_MASS_BASELINE)
-}
-
-/// [`roster_mass_factor`] with a caller-chosen neutral size, for roster
-/// shapes whose acceptably-ranked size differs from directory listings —
-/// e.g. Python decl/method/field surfaces, where one- and two-entry
-/// surfaces already rank fine and the catalog-sized ones lose.
-pub fn roster_mass_factor_with_baseline(entries: usize, baseline: f64) -> f64 {
-    (entries as f64 / baseline)
+    (entries as f64 / ROSTER_MASS_BASELINE)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
         .clamp(1.0, ROSTER_MASS_FACTOR_CAP)
 }
