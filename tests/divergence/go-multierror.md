@@ -31,11 +31,11 @@ Score(3000)=0.666 I=0.836 C=0.531 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 494 | 33 | go decl at group.go:10 |  |  | 0.689 |
 | walker |  | 508 | 14 | listing of '.github' |  |  | 0.715 |
 | walker |  | 519 | 11 | listing of '.github/workflows' |  |  | 0.760 |
-| walker |  | 531 | 12 | go package + imports in sort.go |  |  | 0.760 |
-| walker |  | 584 | 53 | go decl names surface in sort.go |  |  | 0.825 |
-| walker |  | 584 | 0 | go decl at sort.go:7 |  |  | 0.825 |
-| walker |  | 584 | 0 | go decl at sort.go:16 |  |  | 0.825 |
-| walker |  | 584 | 0 | go decl at sort.go:21 |  |  | 0.825 |
+| walker |  | 574 | 55 | go decl names surface in sort.go |  |  | 0.825 |
+| walker |  | 574 | 0 | go decl at sort.go:7 |  |  | 0.825 |
+| walker |  | 574 | 0 | go decl at sort.go:16 |  |  | 0.825 |
+| walker |  | 574 | 0 | go decl at sort.go:21 |  |  | 0.825 |
+| walker |  | 584 | 10 | go package + imports in sort.go |  |  | 0.825 |
 | walker |  | 595 | 11 | go decl doc at sort.go:7 |  |  | 0.826 |
 | walker |  | 609 | 14 | go decl doc at sort.go:16 |  |  | 0.826 |
 | walker |  | 623 | 14 | go decl doc at sort.go:21 |  |  | 0.826 |

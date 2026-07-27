@@ -129,13 +129,7 @@ testall.sh
 xxhash.go
        1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
        2→// at https://xxhash.com/.
-       3→package xxhash
-       4→
-       5→import (
-       6→	"encoding/binary"
-       7→	"errors"
-       8→	"math/bits"
-       9→)
+    …
       11→const (
       12→	prime1 uint64 = 11400714785074694791
       13→	prime2 uint64 = 14029467366897019727
@@ -155,6 +149,8 @@ xxhash.go
       44→// NewWithSeed creates a new Digest with the given seed.
       45→func NewWithSeed(seed uint64) *Digest {
     …
+      51→// Reset clears the Digest's state so that it can be reused.
+      52→// It uses a seed value of zero.
       53→func (d *Digest) Reset() {
       54→	d.ResetWithSeed(0)
     …
@@ -167,6 +163,7 @@ xxhash.go
       74→// Write adds more data to d. It always returns len(b), nil.
       75→func (d *Digest) Write(b []byte) (n int, err error) {
     …
+     112→// Sum appends the current hash to b and returns the resulting slice.
      113→func (d *Digest) Sum(b []byte) []byte {
     …
      128→// Sum64 returns the current hash.

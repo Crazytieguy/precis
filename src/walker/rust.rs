@@ -62,10 +62,10 @@ use crate::value::{
 
 use super::{
     BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, budget_chunk_ranges,
-    build_file_spans, build_per_file_content, coalesce_body_parts_tail,
-    collect_doc_comments_above_filtered, dedup_sorted, entry_body_part_value_factor, extend_span,
-    file_depth_factor, file_lines_covered_by, fs::files_with_extension, name_of, push_rows,
-    signature_end_row, single_file_lines_content, statement_block_parts,
+    build_file_spans, coalesce_body_parts_tail, collect_doc_comments_above_filtered, dedup_sorted,
+    entry_body_part_value_factor, extend_span, file_depth_factor, file_lines_covered_by,
+    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
+    statement_block_parts,
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`] — memoizes module
@@ -455,6 +455,20 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
+        // Every batch below needs the parse tree. Parse the file once;
+        // the cached tree is shared with every collector that follows.
+        let Some((source, tree)) = parse_rust(ctx, file) else {
+            continue;
+        };
+        let items = find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Public);
+        let src_lines: Vec<&str> = source.lines().collect();
+        // For a single-item file the names-surface batch (one line +
+        // ellipsis) is redundant with the per-item batch that follows:
+        // the agent gets the same name from either. Skip the surface
+        // batch and let the lone PubItem stand on its own with no
+        // predecessor.
+        let emit_names_surface = items.len() > 1;
+        let names_key = RustKey::PubItemNames { file: file.clone() };
         // ModUse stays gated to entrypoints + workspace members: `use`
         // plumbing of an arbitrary single-crate file is tiny-cost /
         // high-ratio noise that floods the mid-budget (measured: corpus
@@ -462,28 +476,31 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // to every [package] source file — impl-method surface is the
         // only batch shape covering impl-dominated files (anyhow's
         // context.rs has zero other batches).
-        if (ep || is_workspace_member_source_file(file, ctx))
-            && let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use)
-        {
-            let mod_decl_count = parse_rust(ctx, file)
-                .map(|(source, tree)| count_top_level_mod_items(&tree, &source))
-                .unwrap_or(0);
-            out.push(batch(
-                RustKey::ModUse { file: file.clone() },
-                None,
-                content,
-                mod_use_value(file, ctx, mod_decl_count),
-            ));
-        }
+        //
+        // Held back until the file's declaration batches are known: a
+        // plumbing-only block — nothing but private `use` — is a
+        // refinement of the file's declaration surface, not a way in to
+        // the file. As the cheapest batch such a file offers it would
+        // otherwise be the first content any budget buys there,
+        // rendering a dependency list where a bare name had honestly
+        // said "not covered". `mod` items and `pub use` re-exports
+        // publish names rather than importing them, so those blocks are
+        // declaration surface themselves and stay entry points.
+        let pending_mod_use = (ep || is_workspace_member_source_file(file, ctx))
+            .then(|| single_file_lines_content(file, &source, collect_mod_use(&tree, &source)))
+            .flatten()
+            .map(|content| {
+                let mod_decl_count = count_top_level_mod_items(&tree, &source);
+                let declares_surface = mod_decl_count > 0 || has_top_level_pub_use(&tree, &source);
+                (content, mod_decl_count, declares_surface)
+            });
         // MethodSigs covers every [package] source file — impl-method
         // surface is the only batch shape covering impl-dominated files
         // (anyhow's context.rs has zero other batches). Entrypoints keep
         // the full impl surface; other files render the exported API
         // surface only, which is the shape NS "method signatures
         // (locations)" rows take.
-        if (ep || is_package_source_file(file, ctx))
-            && let Some((source, tree)) = parse_rust(ctx, file)
-        {
+        if ep || is_package_source_file(file, ctx) {
             let pub_traits = ctx
                 .rust_state()
                 .crate_pub_traits(|| collect_crate_pub_trait_names(ctx));
@@ -507,7 +524,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // natural entry ticket for the per-method dive — and
                 // gating there keeps the signature-line overlap inside
                 // the predecessor chain.
-                let src_lines: Vec<&str> = source.lines().collect();
                 out.extend(emit_impl_methods(
                     file,
                     ctx,
@@ -519,11 +535,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
 
-        // Per-item pub declarations. Parse the file once; the cached tree
-        // is shared with every per-item collector below.
-        let Some((source, tree)) = parse_rust(ctx, file) else {
-            continue;
-        };
         if !is_entrypoint_file(file) && is_package_source_file(file, ctx) {
             for roster in collect_registration_rosters(&tree, &source) {
                 if let Some(content) =
@@ -541,16 +552,10 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
-        let items = find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Public);
-        let src_lines: Vec<&str> = source.lines().collect();
+        // The file's declaration entry ticket: the names roster when one
+        // is emitted, otherwise the lone item's own batch.
+        let mut first_pub_item_key: Option<BatchKey> = None;
         if !items.is_empty() {
-            // For a single-item file the names-surface batch (one line +
-            // ellipsis) is redundant with the per-item batch that
-            // follows: the agent gets the same name from either. Skip
-            // the surface batch and let the lone PubItem stand on its
-            // own with no predecessor.
-            let emit_names_surface = items.len() > 1;
-            let names_key = RustKey::PubItemNames { file: file.clone() };
             let parent_names_lines = collect_pub_item_names(&items, &source);
             if emit_names_surface
                 && let Some(content) =
@@ -563,7 +568,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     pub_item_names_value(file, ctx),
                 ));
             }
-            let names_predecessor = BatchKey::Rust(names_key);
+            let names_predecessor = BatchKey::Rust(names_key.clone());
             for item in &items {
                 let pub_item_key = RustKey::PubItem {
                     file: file.clone(),
@@ -596,6 +601,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         content,
                         pub_item_value(file, item.kind, item.surface, ctx),
                     ));
+                    first_pub_item_key.get_or_insert_with(|| BatchKey::Rust(pub_item_key.clone()));
                 }
                 let item_key = BatchKey::Rust(pub_item_key.clone());
                 let part_value_factor = body_part_value_factor(parts.len());
@@ -658,6 +664,21 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ));
                 }
             }
+        }
+        if let Some((content, mod_decl_count, declares_surface)) = pending_mod_use {
+            let entry_ticket = if declares_surface {
+                None
+            } else if emit_names_surface {
+                Some(BatchKey::Rust(names_key))
+            } else {
+                first_pub_item_key
+            };
+            out.push(batch(
+                RustKey::ModUse { file: file.clone() },
+                entry_ticket,
+                content,
+                mod_use_value(file, ctx, mod_decl_count),
+            ));
         }
 
         let example_entry = is_example_source_path(ctx.root(), file);
@@ -1185,6 +1206,22 @@ fn count_top_level_mod_items(tree: &Tree, _source: &str) -> usize {
     root.children(&mut cursor)
         .filter(|child| child.kind() == "mod_item")
         .count()
+}
+
+/// `true` iff the file has a top-level `pub use` — a re-export, which
+/// publishes names rather than importing them, and so is declaration
+/// surface in its own right.
+fn has_top_level_pub_use(tree: &Tree, _source: &str) -> bool {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter(|child| child.kind() == "use_declaration")
+        .any(|child| {
+            let mut inner = child.walk();
+            child
+                .children(&mut inner)
+                .any(|n| n.kind() == "visibility_modifier")
+        })
 }
 
 fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -3677,6 +3714,49 @@ use self::not_pub::Hidden;
                     if *start_line == 9)
             ),
             "the private method's body is now reachable"
+        );
+    }
+
+    /// `ModUse` predecessor for a single-crate `src/lib.rs`.
+    fn mod_use_predecessor(lib_rs: &str) -> Option<BatchKey> {
+        let (dir, src) = write_vis_tree(&[("lib.rs", lib_rs)]);
+        std::fs::write(
+            dir.path().join("Cargo.toml"),
+            "[package]\nname='t'\nversion='0.1.0'\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        expand_in_dir(&src, &ctx)
+            .into_iter()
+            .find(|b| matches!(b.key, BatchKey::Rust(RustKey::ModUse { .. })))
+            .expect("emits a ModUse batch")
+            .predecessor
+    }
+
+    #[test]
+    fn rust_private_use_block_gates_on_the_declaration_surface() {
+        let pred =
+            mod_use_predecessor("use std::fmt;\nuse std::io;\n\npub struct A;\npub struct B;\n");
+        assert!(
+            matches!(pred, Some(BatchKey::Rust(RustKey::PubItemNames { .. }))),
+            "a block that only imports names refines the roster: {pred:?}"
+        );
+    }
+
+    #[test]
+    fn rust_reexport_and_module_blocks_stay_entry_points() {
+        // `pub use` publishes names, so it is declaration surface of its
+        // own and must not be held behind another batch.
+        assert_eq!(
+            mod_use_predecessor(
+                "use std::fmt;\npub use std::io::Read;\n\npub struct A;\npub struct B;\n"
+            ),
+            None,
+        );
+        // Same for the `mod` table.
+        assert_eq!(
+            mod_use_predecessor("use std::fmt;\nmod inner;\n\npub struct A;\npub struct B;\n"),
+            None,
         );
     }
 

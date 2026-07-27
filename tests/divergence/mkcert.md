@@ -99,19 +99,19 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 3922 | 198 | README.md section #13 |  |  | 0.711 |
 | walker |  | 3977 | 55 | README.md section #4 |  |  | 0.711 |
 | walker |  | 4017 | 40 | README.md section #22 |  |  | 0.711 |
-| walker |  | 4072 | 55 | go decl body at main.go:336 |  |  | 0.711 |
-| walker |  | 4115 | 43 | README.md section #17 |  |  | 0.711 |
-| ns | 4138 |  | 490 | Run() — full body: CAROOT setup, install/uninstall/warning dispatch, -csr branch, handoff to makeCert | 4.2 | 2.1 | 0.661 |
-| walker |  | 4159 | 44 | README.md section #15 |  |  | 0.666 |
-| walker |  | 4204 | 45 | README.md section #24 |  |  | 0.666 |
-| ns | 4397 |  | 259 | getCAROOT() — CA storage location resolution | 4.3 | 2.1 | 0.639 |
-| walker |  | 4412 | 208 | go decl at truststore_nss.go:17 |  |  | 0.641 |
-| walker |  | 4459 | 47 | README.md section #19 |  |  | 0.641 |
-| walker |  | 4506 | 47 | README.md section #21 |  |  | 0.641 |
+| walker |  | 4060 | 43 | README.md section #17 |  |  | 0.711 |
+| walker |  | 4104 | 44 | README.md section #15 |  |  | 0.717 |
+| ns | 4138 |  | 490 | Run() — full body: CAROOT setup, install/uninstall/warning dispatch, -csr branch, handoff to makeCert | 4.2 | 2.1 | 0.666 |
+| walker |  | 4149 | 45 | README.md section #24 |  |  | 0.666 |
+| walker |  | 4357 | 208 | go decl at truststore_nss.go:17 |  |  | 0.668 |
+| ns | 4397 |  | 259 | getCAROOT() — CA storage location resolution | 4.3 | 2.1 | 0.641 |
+| walker |  | 4404 | 47 | README.md section #19 |  |  | 0.641 |
+| walker |  | 4451 | 47 | README.md section #21 |  |  | 0.641 |
+| walker |  | 4519 | 68 | README.md section #7 |  |  | 0.641 |
 | ns | 4528 |  | 131 | install() — system-store install | 4.4 | 2.1 | 0.630 |
-| walker |  | 4574 | 68 | README.md section #7 |  |  | 0.630 |
-| walker |  | 4673 | 99 | README.md section #20 |  |  | 0.630 |
-| walker |  | 4789 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.630 |
+| walker |  | 4618 | 99 | README.md section #20 |  |  | 0.630 |
+| walker |  | 4734 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.630 |
+| walker |  | 4789 | 55 | go decl body at main.go:336 |  |  | 0.630 |
 | walker |  | 4865 | 76 | README.md section #5 |  |  | 0.630 |
 | walker |  | 4873 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.648 |
 | ns | 4963 |  | 435 | install() — NSS + Java install | 4.5 |  | 0.622 |
