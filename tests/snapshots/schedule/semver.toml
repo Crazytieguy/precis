@@ -159,10 +159,24 @@ entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisf
 
 [[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "functions" })'
+descriptor = "listing of 'functions'"
+cost_tokens = 104
+cum_tokens = 419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "functions"
+entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
+
+[[batches]]
+position = 11
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 345
+cum_tokens = 449
 
 [batches.content]
 kind = "lines"
@@ -174,20 +188,6 @@ end = 51
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "functions" })'
-descriptor = "listing of 'functions'"
-cost_tokens = 104
-cum_tokens = 449
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "functions"
-entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
 position = 12

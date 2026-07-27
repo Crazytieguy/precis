@@ -15,11 +15,11 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 260 | 61 | package identity in package.json |  |  | 0.709 |
 | ns | 261 |  | 16 | classes/ listing | 1.4 |  | 0.712 |
 | walker |  | 315 | 55 | listing of 'ranges' |  |  | 0.730 |
-| walker |  | 345 | 30 | package runtime metadata in package.json |  |  | 0.730 |
 | ns | 365 |  | 104 | functions/ listing | 1.5 |  | 0.563 |
-| ns | 420 |  | 55 | ranges/ listing | 1.6 |  | 0.591 |
-| ns | 446 |  | 26 | internal/ listing | 1.7 |  | 0.602 |
-| walker |  | 449 | 104 | listing of 'functions' |  |  | 0.777 |
+| walker |  | 419 | 104 | listing of 'functions' |  |  | 0.781 |
+| ns | 420 |  | 55 | ranges/ listing | 1.6 |  | 0.779 |
+| ns | 446 |  | 26 | internal/ listing | 1.7 |  | 0.777 |
+| walker |  | 449 | 30 | package runtime metadata in package.json |  |  | 0.777 |
 | ns | 450 |  | 4 | bin/ listing | 1.8 |  | 0.777 |
 | walker |  | 480 | 31 | listing of '.github' |  |  | 0.781 |
 | ns | 487 |  | 37 | benchmarks/ listing | 1.9 |  | 0.751 |

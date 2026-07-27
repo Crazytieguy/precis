@@ -168,10 +168,13 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     //      tiny sibling dirs.
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
     let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
-    let source_inventory_dir = !source_dir
-        && !module_source_dir
-        && (non_essential < 1.0 || under_root_source_ancestor)
-        && is_source_inventory_dir(dir, ctx);
+    // The structural half of that probe — "this directory is a catalog
+    // of source files, and isn't a named source root or module dir" —
+    // is also what decides roster mass below, at a lower strength for
+    // the members the inventory tier's location clause leaves out.
+    let structural_catalog = !source_dir && !module_source_dir && is_source_inventory_dir(dir, ctx);
+    let source_inventory_dir =
+        structural_catalog && (non_essential < 1.0 || under_root_source_ancestor);
     let readme_cited = ctx.is_readme_cited(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
@@ -231,12 +234,15 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     // Source-inventory catalogs keep size-neutral ranking: a flat
     // partition's complete listing is the API map NS authors anchor on,
     // and without the factor an N-entry listing's ratio falls as N^-k
-    // against tiny same-tier sibling listings. Gated to the inventory
-    // tier only — boosting plain `src/`-named or module dirs lets the
-    // big listing itself displace NS-wanted content (measured: soluna
-    // −0.210, beszel −0.073 with the looser gate).
+    // against tiny same-tier sibling listings. Boosting plain
+    // `src/`-named or module dirs lets the big listing itself displace
+    // NS-wanted content (measured: soluna −0.210, beszel −0.073), so
+    // those stay out; the rest of the structural catalog class is
+    // neutralized by [`catalog_roster_mass_factor`].
     let fanout = if source_inventory_dir {
         crate::value::roster_mass_factor(children.len())
+    } else if structural_catalog {
+        catalog_roster_mass_factor(children)
     } else {
         1.0
     };
@@ -299,6 +305,28 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
         return false;
     }
     ctx.fs_state().child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
+}
+
+/// Fraction of the way to full roster-mass neutrality taken outside the
+/// source-inventory tier. Swept 0.5 / 0.75 / 1.0 on the full corpus; the
+/// response is non-monotone and 0.75 wins at every budget but 4327.
+const CATALOG_ROSTER_MASS_NEUTRALIZATION: f64 = 0.75;
+
+/// Partial [`crate::value::roster_mass_factor`] for a directory the
+/// structural catalog test recognizes outside the source-inventory
+/// tier. The mass counts only the entries the listing *terminates* on:
+/// a file's row is the last thing the walk will say about it, while a
+/// subdirectory's row is a pointer to a listing the scheduler buys
+/// separately — so neutralizing a package root whose content lives in
+/// subdirectories buys the index plus the swarm it seeds (measured at
+/// full mass: 1751 tokens of scaffolding listings on one monorepo).
+fn catalog_roster_mass_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
+    let terminal_entries = children
+        .values()
+        .filter(|kind| matches!(kind, EntryKind::File))
+        .count();
+    let neutral = crate::value::roster_mass_factor(terminal_entries);
+    1.0 + (neutral - 1.0) * CATALOG_ROSTER_MASS_NEUTRALIZATION
 }
 
 /// Count of immediate subdirectories of `dir`.
@@ -859,5 +887,26 @@ mod tests {
         std::fs::write(iroot.join(".gitignore"), "\n").unwrap();
         let visible_ctx = WalkCtx::new(iroot.to_path_buf());
         assert!(has_source_root_ancestor(&icatalog, &visible_ctx));
+    }
+
+    /// Roster mass is what keeps a listing's `value/cost^k` from falling
+    /// as the directory grows. A wide subsystem directory outside any
+    /// `src/` gets it; the same width made of subdirectories does not,
+    /// because those rows are pointers to listings bought separately.
+    #[test]
+    fn fs_catalog_roster_mass_counts_terminal_entries_only() {
+        let mut files = BTreeMap::new();
+        let mut dirs = BTreeMap::new();
+        for i in 0..40 {
+            files.insert(format!("f{i}.c"), EntryKind::File);
+            dirs.insert(format!("d{i}"), EntryKind::Directory);
+        }
+        let wide_catalog = catalog_roster_mass_factor(&files);
+        assert!(wide_catalog > 1.0, "a wide file catalog is neutralized");
+        assert!(
+            wide_catalog < crate::value::roster_mass_factor(files.len()),
+            "outside the inventory tier the neutralization is partial"
+        );
+        assert_eq!(catalog_roster_mass_factor(&dirs), 1.0);
     }
 }

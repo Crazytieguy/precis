@@ -42,18 +42,18 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 809 |  | 162 | README Overview: host/client/server framing | 3.1 |  | 0.770 |
 | walker |  | 819 | 16 | go decl names surface in internal/tokens/counter.go |  |  | 0.770 |
 | walker |  | 819 | 0 | go decl at internal/tokens/counter.go:21 |  |  | 0.770 |
-| walker |  | 833 | 14 | README.md section #1 |  |  | 0.770 |
-| walker |  | 845 | 12 | README.md section #2 |  |  | 0.770 |
-| walker |  | 857 | 12 | README.md section #3 |  |  | 0.770 |
-| walker |  | 871 | 14 | README.md section #5 |  |  | 0.770 |
-| walker |  | 884 | 13 | README.md section #4 |  |  | 0.770 |
-| walker |  | 898 | 14 | README.md section #12 |  |  | 0.770 |
-| walker |  | 912 | 14 | README.md section #11 |  |  | 0.770 |
-| ns | 928 |  | 119 | README Overview: supported models bullet list | 3.2 |  | 0.750 |
-| walker |  | 998 | 86 | listing of 'internal/ui' |  |  | 0.825 |
-| walker |  | 1002 | 4 | listing of 'internal/ui/progress' |  |  | 0.833 |
-| walker |  | 1023 | 21 | go decl names surface in internal/ui/callbacks.go |  |  | 0.833 |
-| walker |  | 1023 | 0 | go decl at internal/ui/callbacks.go:17 |  |  | 0.833 |
+| walker |  | 905 | 86 | listing of 'internal/ui' |  |  | 0.847 |
+| walker |  | 909 | 4 | listing of 'internal/ui/progress' |  |  | 0.855 |
+| ns | 928 |  | 119 | README Overview: supported models bullet list | 3.2 |  | 0.833 |
+| walker |  | 930 | 21 | go decl names surface in internal/ui/callbacks.go |  |  | 0.833 |
+| walker |  | 930 | 0 | go decl at internal/ui/callbacks.go:17 |  |  | 0.833 |
+| walker |  | 944 | 14 | README.md section #1 |  |  | 0.833 |
+| walker |  | 956 | 12 | README.md section #2 |  |  | 0.833 |
+| walker |  | 968 | 12 | README.md section #3 |  |  | 0.833 |
+| walker |  | 982 | 14 | README.md section #5 |  |  | 0.833 |
+| walker |  | 995 | 13 | README.md section #4 |  |  | 0.833 |
+| walker |  | 1009 | 14 | README.md section #12 |  |  | 0.833 |
+| walker |  | 1023 | 14 | README.md section #11 |  |  | 0.833 |
 | walker |  | 1038 | 15 | README.md section #6 |  |  | 0.833 |
 | walker |  | 1054 | 16 | README.md section #13 |  |  | 0.833 |
 | walker |  | 1082 | 28 | go decl names surface in internal/tokens/init.go |  |  | 0.833 |

@@ -17,32 +17,32 @@ Score(3000)=0.645 I=0.875 C=0.476 ns_rows≤3K=18/40 (reached=11 partial=1 missi
 | ns | 297 |  | 34 | Readme.md title + one-line tagline | 1.8 |  | 0.850 |
 | walker |  | 326 | 65 | README headline in Readme.md |  |  | 0.873 |
 | walker |  | 350 | 24 | listing of 'docs/zh-CN' |  |  | 0.873 |
-| walker |  | 380 | 30 | package runtime metadata in package.json |  |  | 0.878 |
-| walker |  | 422 | 42 | export names surface in lib/option.js |  |  | 0.878 |
-| walker |  | 422 | 0 | export at lib/option.js:3 |  |  | 0.878 |
-| walker |  | 432 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.878 |
-| ns | 433 |  | 136 | esm.mjs (ESM entry point) full body | 1.9 |  | 0.750 |
-| walker |  | 458 | 26 | export at lib/option.js:268 |  |  | 0.750 |
-| ns | 463 |  | 30 | package.json engines | 1.10 |  | 0.754 |
-| walker |  | 469 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.754 |
-| walker |  | 480 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.754 |
-| walker |  | 491 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.754 |
-| walker |  | 511 | 20 | listing of '.github' |  |  | 0.820 |
-| walker |  | 520 | 9 | listing of '.github/workflows' |  |  | 0.860 |
-| ns | 699 |  | 236 | examples/ directory listing | 1.11 |  | 0.646 |
-| walker |  | 855 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.646 |
-| walker |  | 890 | 35 | Readme.md section #1 |  |  | 0.646 |
-| walker |  | 932 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.646 |
-| ns | 960 |  | 261 | package.json scripts block | 1.12 |  | 0.604 |
-| walker |  | 1090 | 158 | export names surface in index.js |  |  | 0.608 |
-| walker |  | 1090 | 0 | export at index.js:17 |  |  | 0.608 |
-| walker |  | 1107 | 17 | export doc at index.js:17 |  |  | 0.609 |
-| walker |  | 1150 | 43 | export names surface in lib/help.js |  |  | 0.609 |
-| walker |  | 1150 | 0 | export at lib/help.js:12 |  |  | 0.609 |
-| walker |  | 1150 | 0 | export at lib/help.js:740 |  |  | 0.609 |
-| walker |  | 1161 | 11 | export member at lib/option.js:3 member 181 |  |  | 0.609 |
-| ns | 1231 |  | 271 | index.js (CommonJS entry point) full body | 1.13 |  | 0.605 |
-| walker |  | 1397 | 236 | listing of 'examples' |  |  | 0.817 |
+| ns | 433 |  | 136 | esm.mjs (ESM entry point) full body | 1.9 |  | 0.746 |
+| ns | 463 |  | 30 | package.json engines | 1.10 |  | 0.727 |
+| walker |  | 586 | 236 | listing of 'examples' |  |  | 0.770 |
+| walker |  | 616 | 30 | package runtime metadata in package.json |  |  | 0.798 |
+| walker |  | 658 | 42 | export names surface in lib/option.js |  |  | 0.798 |
+| walker |  | 658 | 0 | export at lib/option.js:3 |  |  | 0.798 |
+| walker |  | 668 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.798 |
+| walker |  | 694 | 26 | export at lib/option.js:268 |  |  | 0.798 |
+| ns | 699 |  | 236 | examples/ directory listing | 1.11 |  | 0.822 |
+| walker |  | 705 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.822 |
+| walker |  | 716 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.822 |
+| walker |  | 727 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.822 |
+| walker |  | 747 | 20 | listing of '.github' |  |  | 0.874 |
+| walker |  | 756 | 9 | listing of '.github/workflows' |  |  | 0.907 |
+| ns | 960 |  | 261 | package.json scripts block | 1.12 |  | 0.849 |
+| walker |  | 1091 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.849 |
+| walker |  | 1126 | 35 | Readme.md section #1 |  |  | 0.849 |
+| walker |  | 1168 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.849 |
+| ns | 1231 |  | 271 | index.js (CommonJS entry point) full body | 1.13 |  | 0.769 |
+| walker |  | 1326 | 158 | export names surface in index.js |  |  | 0.807 |
+| walker |  | 1326 | 0 | export at index.js:17 |  |  | 0.807 |
+| walker |  | 1343 | 17 | export doc at index.js:17 |  |  | 0.817 |
+| walker |  | 1386 | 43 | export names surface in lib/help.js |  |  | 0.817 |
+| walker |  | 1386 | 0 | export at lib/help.js:12 |  |  | 0.817 |
+| walker |  | 1386 | 0 | export at lib/help.js:740 |  |  | 0.817 |
+| walker |  | 1397 | 11 | export member at lib/option.js:3 member 181 |  |  | 0.817 |
 | walker |  | 1450 | 53 | export names surface in lib/command.js |  |  | 0.817 |
 | walker |  | 1450 | 0 | export at lib/command.js:13 |  |  | 0.817 |
 | walker |  | 1450 | 0 | export at lib/command.js:2752 |  |  | 0.817 |
