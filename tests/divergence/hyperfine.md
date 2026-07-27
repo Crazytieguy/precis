@@ -85,11 +85,11 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 2199 | 25 | pub-item names surface in src/parameter/range_step.rs |  |  | 0.643 |
 | walker |  | 2224 | 25 | pub-item names surface in src/timer/unix_timer.rs |  |  | 0.643 |
 | walker |  | 2241 | 17 | pub item at src/timer/unix_timer.rs:18 |  |  | 0.643 |
-| walker |  | 2267 | 26 | pub-item names surface in src/output/warnings.rs |  |  | 0.643 |
-| walker |  | 2297 | 30 | pub item at src/output/warnings.rs:7 |  |  | 0.643 |
-| ns | 2419 |  | 439 | cli.rs — every flag's Arg::new(...) anchor line | 2.1 |  | 0.597 |
-| walker |  | 2477 | 180 | mod/use plumbing in src/main.rs |  |  | 0.657 |
-| walker |  | 2498 | 21 | listing of 'tests' |  |  | 0.669 |
+| walker |  | 2262 | 21 | listing of 'tests' |  |  | 0.657 |
+| walker |  | 2288 | 26 | pub-item names surface in src/output/warnings.rs |  |  | 0.657 |
+| walker |  | 2318 | 30 | pub item at src/output/warnings.rs:7 |  |  | 0.657 |
+| ns | 2419 |  | 439 | cli.rs — every flag's Arg::new(...) anchor line | 2.1 |  | 0.610 |
+| walker |  | 2498 | 180 | mod/use plumbing in src/main.rs |  |  | 0.669 |
 | ns | 2865 |  | 446 | cli.rs — build_command() header + positional `command` arg | 2.2 | 2.1 | 0.620 |
 | walker |  | 2950 | 452 | registration roster at src/cli.rs:18 |  |  | 0.696 |
 | walker |  | 2983 | 33 | pub item at src/output/progress_bar.rs:13 |  |  | 0.696 |
@@ -138,68 +138,63 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 4587 | 33 | pub item at src/benchmark/executor.rs:19 |  |  | 0.606 |
 | walker |  | 4629 | 42 | pub item at src/benchmark/executor.rs:169 |  |  | 0.606 |
 | walker |  | 4639 | 10 | pub-item doc lede at src/util/units.rs:6 |  |  | 0.606 |
-| walker |  | 4652 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.606 |
-| ns | 4736 |  | 155 | options.rs — validate_against_command_list: --output count + normalization | 3.5 | 3.4 | 0.596 |
-| walker |  | 4792 | 140 | pub-item names surface in src/options.rs |  |  | 0.596 |
-| walker |  | 4829 | 37 | pub item at src/options.rs:102 |  |  | 0.596 |
-| walker |  | 4872 | 43 | pub item at src/options.rs:185 |  |  | 0.596 |
-| walker |  | 4938 | 66 | pub item at src/options.rs:24 |  |  | 0.596 |
-| walker |  | 4995 | 57 | pub item at src/options.rs:108 |  |  | 0.596 |
-| walker |  | 5068 | 73 | pub item at src/options.rs:123 |  |  | 0.596 |
-| walker |  | 5080 | 12 | pub-item doc lede at src/options.rs:24 |  |  | 0.596 |
-| ns | 5085 |  | 349 | command.rs — replace_parameters_in (the {param} substitution algorithm) | 4.1 |  | 0.576 |
-| walker |  | 5091 | 11 | pub-item doc lede at src/options.rs:108 |  |  | 0.576 |
-| walker |  | 5187 | 96 | pub item at src/options.rs:71 |  |  | 0.576 |
-| walker |  | 5201 | 14 | pub-item doc lede at src/options.rs:71 |  |  | 0.576 |
-| walker |  | 5331 | 130 | pub item at src/options.rs:149 |  |  | 0.576 |
-| walker |  | 5346 | 15 | pub-item doc lede at src/options.rs:149 |  |  | 0.576 |
-| ns | 5372 |  | 287 | parameter/tokenize.rs — tokenize() function body | 4.2 |  | 0.555 |
-| walker |  | 5495 | 149 | pub item at src/options.rs:84 |  |  | 0.555 |
-| walker |  | 5503 | 8 | pub-item doc lede at src/options.rs:84 |  |  | 0.555 |
-| walker |  | 5559 | 56 | listing of 'scripts' |  |  | 0.586 |
+| walker |  | 4695 | 56 | listing of 'scripts' |  |  | 0.640 |
+| ns | 4736 |  | 155 | options.rs — validate_against_command_list: --output count + normalization | 3.5 | 3.4 | 0.629 |
+| walker |  | 4835 | 140 | pub-item names surface in src/options.rs |  |  | 0.629 |
+| walker |  | 4872 | 37 | pub item at src/options.rs:102 |  |  | 0.629 |
+| walker |  | 4915 | 43 | pub item at src/options.rs:185 |  |  | 0.629 |
+| walker |  | 4981 | 66 | pub item at src/options.rs:24 |  |  | 0.629 |
+| walker |  | 5038 | 57 | pub item at src/options.rs:108 |  |  | 0.629 |
+| ns | 5085 |  | 349 | command.rs — replace_parameters_in (the {param} substitution algorithm) | 4.1 |  | 0.608 |
+| walker |  | 5111 | 73 | pub item at src/options.rs:123 |  |  | 0.608 |
+| walker |  | 5207 | 96 | pub item at src/options.rs:71 |  |  | 0.608 |
+| walker |  | 5337 | 130 | pub item at src/options.rs:149 |  |  | 0.608 |
+| ns | 5372 |  | 287 | parameter/tokenize.rs — tokenize() function body | 4.2 |  | 0.586 |
+| walker |  | 5486 | 149 | pub item at src/options.rs:84 |  |  | 0.586 |
+| walker |  | 5564 | 78 | pub-item names surface in src/output/format.rs |  |  | 0.586 |
+| walker |  | 5564 | 0 | pub item at src/output/format.rs:5 |  |  | 0.586 |
+| walker |  | 5564 | 0 | pub item at src/output/format.rs:11 |  |  | 0.586 |
+| walker |  | 5564 | 0 | pub item at src/output/format.rs:18 |  |  | 0.586 |
 | ns | 5584 |  | 212 | benchmark/mod.rs — run-count determination formula | 5.1 |  | 0.574 |
-| walker |  | 5637 | 78 | pub-item names surface in src/output/format.rs |  |  | 0.574 |
-| walker |  | 5637 | 0 | pub item at src/output/format.rs:5 |  |  | 0.574 |
-| walker |  | 5637 | 0 | pub item at src/output/format.rs:11 |  |  | 0.574 |
-| walker |  | 5637 | 0 | pub item at src/output/format.rs:18 |  |  | 0.574 |
-| walker |  | 5884 | 247 | pub item at src/error.rs:7 |  |  | 0.574 |
+| walker |  | 5811 | 247 | pub item at src/error.rs:7 |  |  | 0.574 |
 | ns | 5923 |  | 339 | benchmark/scheduler.rs — run_benchmarks (executor selection + run order) | 5.2 |  | 0.558 |
-| walker |  | 6062 | 178 | mod/use plumbing in src/timer/mod.rs |  |  | 0.558 |
-| walker |  | 6166 | 104 | pub-item names surface in src/benchmark/relative_speed.rs |  |  | 0.558 |
-| walker |  | 6166 | 0 | pub item at src/benchmark/relative_speed.rs:16 |  |  | 0.558 |
-| walker |  | 6166 | 0 | pub item at src/benchmark/relative_speed.rs:20 |  |  | 0.558 |
+| walker |  | 5989 | 178 | mod/use plumbing in src/timer/mod.rs |  |  | 0.558 |
+| walker |  | 6093 | 104 | pub-item names surface in src/benchmark/relative_speed.rs |  |  | 0.558 |
+| walker |  | 6093 | 0 | pub item at src/benchmark/relative_speed.rs:16 |  |  | 0.558 |
+| walker |  | 6093 | 0 | pub item at src/benchmark/relative_speed.rs:20 |  |  | 0.558 |
+| walker |  | 6132 | 39 | pub item at src/benchmark/relative_speed.rs:112 |  |  | 0.558 |
+| walker |  | 6172 | 40 | pub item at src/benchmark/relative_speed.rs:98 |  |  | 0.558 |
 | ns | 6204 |  | 281 | benchmark/executor.rs — Executor trait | 5.3 |  | 0.545 |
-| walker |  | 6205 | 39 | pub item at src/benchmark/relative_speed.rs:112 |  |  | 0.545 |
-| walker |  | 6245 | 40 | pub item at src/benchmark/relative_speed.rs:98 |  |  | 0.545 |
-| walker |  | 6299 | 54 | pub item at src/benchmark/relative_speed.rs:86 |  |  | 0.545 |
-| walker |  | 6382 | 83 | pub item at src/benchmark/relative_speed.rs:7 |  |  | 0.545 |
-| walker |  | 6436 | 54 | README.md section #12 |  |  | 0.545 |
+| walker |  | 6226 | 54 | pub item at src/benchmark/relative_speed.rs:86 |  |  | 0.545 |
+| walker |  | 6309 | 83 | pub item at src/benchmark/relative_speed.rs:7 |  |  | 0.545 |
+| walker |  | 6363 | 54 | README.md section #12 |  |  | 0.545 |
 | ns | 6456 |  | 252 | benchmark/executor.rs — ShellExecutor shell-spawn-time calibration | 5.4 | 5.3 | 0.531 |
-| walker |  | 6576 | 140 | pub item at src/benchmark/timing_result.rs:5 |  |  | 0.531 |
-| walker |  | 6802 | 226 | mod/use plumbing in src/export/mod.rs |  |  | 0.531 |
+| walker |  | 6503 | 140 | pub item at src/benchmark/timing_result.rs:5 |  |  | 0.531 |
+| walker |  | 6729 | 226 | mod/use plumbing in src/export/mod.rs |  |  | 0.531 |
 | ns | 6806 |  | 350 | outlier_detection.rs — modified Z-score algorithm | 6.1 |  | 0.519 |
-| walker |  | 6881 | 79 | impl method sigs in src/benchmark/scheduler.rs |  |  | 0.519 |
+| walker |  | 6808 | 79 | impl method sigs in src/benchmark/scheduler.rs |  |  | 0.519 |
 | ns | 7055 |  | 249 | benchmark/relative_speed.rs — ratio + stddev propagation formula | 6.2 |  | 0.510 |
-| walker |  | 7254 | 373 | pub item at src/error.rs:37 |  |  | 0.512 |
+| walker |  | 7181 | 373 | pub item at src/error.rs:37 |  |  | 0.512 |
 | ns | 7399 |  | 344 | benchmark/benchmark_result.rs — BenchmarkResult schema, part 1 (command/mean/stddev/median/user/system) | 6.3 |  | 0.500 |
+| walker |  | 7596 | 415 | impl method sigs in src/benchmark/mod.rs |  |  | 0.500 |
 | ns | 7642 |  | 243 | benchmark/benchmark_result.rs — remaining fields (min/max/times/memory/exit_codes/parameters) | 6.4 | 6.3 | 0.490 |
-| walker |  | 7669 | 415 | impl method sigs in src/benchmark/mod.rs |  |  | 0.490 |
+| walker |  | 7782 | 186 | impl method sigs in src/options.rs |  |  | 0.490 |
 | ns | 7800 |  | 158 | output/format.rs — automatic time-unit selection thresholds | 6.5 |  | 0.487 |
-| walker |  | 7855 | 186 | impl method sigs in src/options.rs |  |  | 0.487 |
-| ns | 8061 |  | 261 | export/mod.rs — ExportType enum + Exporter trait | 7.1 |  | 0.487 |
-| walker |  | 8124 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.513 |
-| walker |  | 8198 | 74 | README.md section #13 |  |  | 0.513 |
-| walker |  | 8280 | 82 | README.md section #11 |  |  | 0.513 |
+| walker |  | 8051 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.515 |
+| ns | 8061 |  | 261 | export/mod.rs — ExportType enum + Exporter trait | 7.1 |  | 0.513 |
+| walker |  | 8125 | 74 | README.md section #13 |  |  | 0.513 |
+| walker |  | 8207 | 82 | README.md section #11 |  |  | 0.513 |
 | ns | 8372 |  | 311 | export/json.rs — full file | 7.2 |  | 0.501 |
-| walker |  | 8610 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.501 |
-| walker |  | 8743 | 133 | impl method sigs in src/export/asciidoc.rs |  |  | 0.501 |
+| walker |  | 8537 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.501 |
+| walker |  | 8670 | 133 | impl method sigs in src/export/asciidoc.rs |  |  | 0.501 |
 | ns | 8761 |  | 389 | error.rs — OptionsError variants (exact user-facing error strings) | 8.1 |  | 0.516 |
 | ns | 8895 |  | 134 | tests/common.rs — full file (test harness) | 9.1 |  | 0.511 |
-| walker |  | 9071 | 328 | dev/build/target dependencies in Cargo.toml |  |  | 0.557 |
+| walker |  | 8998 | 328 | dev/build/target dependencies in Cargo.toml |  |  | 0.557 |
+| walker |  | 9025 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.557 |
 | ns | 9163 |  | 268 | tests/execution_order_tests.rs — fullest execution-order exemplar | 9.2 |  | 0.547 |
-| walker |  | 9344 | 273 | impl method sigs in src/command.rs |  |  | 0.547 |
+| walker |  | 9298 | 273 | impl method sigs in src/command.rs |  |  | 0.547 |
 | ns | 9515 |  | 352 | tests/integration_tests.rs — console output exemplar (time-unit formatting) | 9.3 |  | 0.536 |
 | ns | 9770 |  | 255 | timer/mod.rs — execute_and_measure: platform-conditional process creation/timer start | 10.1 |  | 0.529 |
-| walker |  | 9929 | 585 | pub item at src/options.rs:198 |  |  | 0.546 |
-| walker |  | 9956 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.546 |
+| walker |  | 9883 | 585 | pub item at src/options.rs:198 |  |  | 0.546 |
+| walker |  | 9896 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.546 |
 | ns | 9997 |  | 227 | README.md — Markdown export sample table | 11.1 |  | 0.544 |

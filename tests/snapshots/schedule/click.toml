@@ -141,10 +141,38 @@ entries = ["devcontainer.json", "on-create-command.sh"]
 
 [[batches]]
 position = 7
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 219
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 23
+cum_tokens = 242
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
+
+[[batches]]
+position = 9
 key = 'Fs(DirListing { dir: "src/click" })'
 descriptor = "listing of 'src/click'"
 cost_tokens = 86
-cum_tokens = 292
+cum_tokens = 328
 
 [batches.content]
 kind = "fs"
@@ -154,11 +182,11 @@ parent = "src/click"
 entries = ["__init__.py", "_compat.py", "_termui_impl.py", "_textwrap.py", "_utils.py", "_winconsole.py", "core.py", "decorators.py", "exceptions.py", "formatting.py", "globals.py", "parser.py", "py.typed", "shell_completion.py", "termui.py", "testing.py", "types.py", "utils.py"]
 
 [[batches]]
-position = 8
+position = 10
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in src/click/__init__.py"
 cost_tokens = 15
-cum_tokens = 307
+cum_tokens = 343
 
 [batches.content]
 kind = "lines"
@@ -172,11 +200,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 9
+position = 11
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in src/click/__init__.py"
 cost_tokens = 71
-cum_tokens = 378
+cum_tokens = 414
 
 [batches.content]
 kind = "lines"
@@ -190,11 +218,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 10
+position = 12
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in src/click/__init__.py"
 cost_tokens = 18
-cum_tokens = 396
+cum_tokens = 432
 
 [batches.content]
 kind = "lines"
@@ -208,11 +236,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 11
+position = 13
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in src/click/__init__.py"
 cost_tokens = 30
-cum_tokens = 426
+cum_tokens = 462
 
 [batches.content]
 kind = "lines"
@@ -226,11 +254,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 12
+position = 14
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in src/click/__init__.py"
 cost_tokens = 100
-cum_tokens = 526
+cum_tokens = 562
 
 [batches.content]
 kind = "lines"
@@ -244,11 +272,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 13
+position = 15
 key = 'Python(DeclNames { file: "src/click/__init__.py" })'
 descriptor = "python decl names surface in src/click/__init__.py"
 cost_tokens = 18
-cum_tokens = 544
+cum_tokens = 580
 
 [batches.content]
 kind = "lines"
@@ -270,11 +298,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Python(Decl { file: "src/click/__init__.py", start_line: 77 })'
 descriptor = "python decl at src/click/__init__.py:77"
 cost_tokens = 0
-cum_tokens = 544
+cum_tokens = 580
 
 [batches.content]
 kind = "lines"
@@ -288,11 +316,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in src/click/__init__.py"
 cost_tokens = 161
-cum_tokens = 705
+cum_tokens = 741
 
 [batches.content]
 kind = "lines"
@@ -306,11 +334,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in src/click/__init__.py"
 cost_tokens = 144
-cum_tokens = 849
+cum_tokens = 885
 
 [batches.content]
 kind = "lines"
@@ -322,34 +350,6 @@ end = 38
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 862
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 23
-cum_tokens = 885
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
 
 [[batches]]
 position = 19
@@ -493,28 +493,24 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Python(DeclNames { file: "src/click/_textwrap.py" })'
-descriptor = "python decl names surface in src/click/_textwrap.py"
-cost_tokens = 16
-cum_tokens = 1778
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 127
+cum_tokens = 1889
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/click/_textwrap.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "tests"
+entries = ["conftest.py", "test_arguments.py", "test_basic.py", "test_chain.py", "test_command_decorators.py", "test_commands.py", "test_compat.py", "test_context.py", "test_custom_classes.py", "test_defaults.py", "test_formatting.py", "test_imports.py", "test_info_dict.py", "test_normalization.py", "test_options.py", "test_parser.py", "test_shell_completion.py", "test_stream_lifecycle.py", "test_termui.py", "test_testing.py", "test_types.py", "test_utils.py", "typing"]
 
 [[batches]]
 position = 28
-key = 'Python(Decl { file: "src/click/_textwrap.py", start_line: 8 })'
-descriptor = "python decl at src/click/_textwrap.py:8"
-cost_tokens = 0
-cum_tokens = 1778
+key = 'Python(DeclNames { file: "src/click/_textwrap.py" })'
+descriptor = "python decl names surface in src/click/_textwrap.py"
+cost_tokens = 16
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -529,10 +525,28 @@ kind = "full"
 
 [[batches]]
 position = 29
+key = 'Python(Decl { file: "src/click/_textwrap.py", start_line: 8 })'
+descriptor = "python decl at src/click/_textwrap.py:8"
+cost_tokens = 0
+cum_tokens = 1905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/click/_textwrap.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 134
-cum_tokens = 1912
+cum_tokens = 2039
 
 [batches.content]
 kind = "lines"
@@ -554,11 +568,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(Section { file: "docs/setuptools.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/setuptools.md section #0"
 cost_tokens = 29
-cum_tokens = 1941
+cum_tokens = 2068
 
 [batches.content]
 kind = "lines"
@@ -570,20 +584,6 @@ end = 7
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 127
-cum_tokens = 2068
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["conftest.py", "test_arguments.py", "test_basic.py", "test_chain.py", "test_command_decorators.py", "test_commands.py", "test_compat.py", "test_context.py", "test_custom_classes.py", "test_defaults.py", "test_formatting.py", "test_imports.py", "test_info_dict.py", "test_normalization.py", "test_options.py", "test_parser.py", "test_shell_completion.py", "test_stream_lifecycle.py", "test_termui.py", "test_testing.py", "test_types.py", "test_utils.py", "typing"]
 
 [[batches]]
 position = 32
@@ -771,10 +771,24 @@ kind = "full"
 
 [[batches]]
 position = 40
+key = 'Fs(DirListing { dir: "tests/typing" })'
+descriptor = "listing of 'tests/typing'"
+cost_tokens = 56
+cum_tokens = 2777
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/typing"
+entries = ["typing_aliased_group.py", "typing_confirmation_option.py", "typing_group_kw_options.py", "typing_help_option.py", "typing_options.py", "typing_password_option.py", "typing_progressbar.py", "typing_simple_example.py", "typing_version_option.py"]
+
+[[batches]]
+position = 41
 key = 'Markdown(HeadingsOutline { file: "docs/click-concepts.md" })'
 descriptor = "headings outline in docs/click-concepts.md"
 cost_tokens = 21
-cum_tokens = 2742
+cum_tokens = 2798
 
 [batches.content]
 kind = "lines"
@@ -812,11 +826,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Markdown(HeadingsOutline { file: "docs/unicode-support.md" })'
 descriptor = "headings outline in docs/unicode-support.md"
 cost_tokens = 21
-cum_tokens = 2763
+cum_tokens = 2819
 
 [batches.content]
 kind = "lines"
@@ -852,20 +866,6 @@ end = 52
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 42
-key = 'Fs(DirListing { dir: "tests/typing" })'
-descriptor = "listing of 'tests/typing'"
-cost_tokens = 56
-cum_tokens = 2819
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/typing"
-entries = ["typing_aliased_group.py", "typing_confirmation_option.py", "typing_group_kw_options.py", "typing_help_option.py", "typing_options.py", "typing_password_option.py", "typing_progressbar.py", "typing_simple_example.py", "typing_version_option.py"]
 
 [[batches]]
 position = 43

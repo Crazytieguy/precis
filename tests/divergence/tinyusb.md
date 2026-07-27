@@ -11,47 +11,47 @@ Score(3000)=0.530 I=0.631 C=0.445 ns_rows≤3K=23/43 (reached=11 partial=1 missi
 | walker |  | 150 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.000 |
 | walker |  | 172 | 22 | listing of 'lib/rt-thread' |  |  | 0.000 |
 | walker |  | 179 | 7 | listing of 'lib/rt-thread/port' |  |  | 0.000 |
-| walker |  | 194 | 15 | listing of 'hw/mcu' |  |  | 0.000 |
-| walker |  | 199 | 5 | listing of 'hw/mcu/bridgetek' |  |  | 0.000 |
-| walker |  | 204 | 5 | listing of 'hw/mcu/sony' |  |  | 0.000 |
-| walker |  | 210 | 6 | listing of 'hw/mcu/nordic' |  |  | 0.000 |
+| walker |  | 214 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.000 |
 | ns | 218 |  | 115 | README key features bullets | 1.3 |  | 0.000 |
-| walker |  | 245 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.000 |
-| walker |  | 282 | 37 | listing of 'lib/networking' |  |  | 0.000 |
-| walker |  | 291 | 9 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.000 |
-| walker |  | 297 | 6 | listing of '.PVS-Studio' |  |  | 0.000 |
-| walker |  | 307 | 10 | listing of 'hw/mcu/dialog' |  |  | 0.000 |
-| walker |  | 313 | 6 | listing of '.claude' |  |  | 0.000 |
+| walker |  | 251 | 37 | listing of 'lib/networking' |  |  | 0.000 |
+| walker |  | 266 | 15 | listing of 'hw/mcu' |  |  | 0.000 |
+| walker |  | 271 | 5 | listing of 'hw/mcu/bridgetek' |  |  | 0.000 |
+| walker |  | 276 | 5 | listing of 'hw/mcu/sony' |  |  | 0.000 |
+| walker |  | 282 | 6 | listing of 'hw/mcu/nordic' |  |  | 0.000 |
+| walker |  | 288 | 6 | listing of '.claude' |  |  | 0.000 |
+| walker |  | 297 | 9 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.000 |
+| walker |  | 303 | 6 | listing of '.PVS-Studio' |  |  | 0.000 |
+| walker |  | 313 | 10 | listing of 'hw/mcu/dialog' |  |  | 0.000 |
 | ns | 325 |  | 107 | Root directory listing | 1.4 |  | 0.408 |
-| ns | 375 |  | 50 | src/ top-level listing | 1.5 |  | 0.354 |
-| walker |  | 388 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.354 |
-| walker |  | 394 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.354 |
-| walker |  | 404 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.354 |
-| ns | 409 |  | 34 | examples/ top-level listing | 1.6 |  | 0.327 |
-| ns | 426 |  | 17 | test/ and hw/ top-level listings | 1.7 |  | 0.316 |
-| walker |  | 459 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.316 |
-| walker |  | 509 | 50 | listing of 'src' |  |  | 0.411 |
-| walker |  | 529 | 20 | listing of 'src/typec' |  |  | 0.411 |
-| walker |  | 551 | 22 | listing of 'src/device' |  |  | 0.411 |
-| ns | 580 |  | 154 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.332 |
-| walker |  | 581 | 30 | listing of 'src/host' |  |  | 0.332 |
-| walker |  | 627 | 46 | listing of 'src/class' |  |  | 0.341 |
-| walker |  | 712 | 85 | listing of 'src/portable' |  |  | 0.356 |
+| walker |  | 363 | 50 | listing of 'src' |  |  | 0.450 |
+| ns | 375 |  | 50 | src/ top-level listing | 1.5 |  | 0.461 |
+| walker |  | 383 | 20 | listing of 'src/typec' |  |  | 0.461 |
+| walker |  | 405 | 22 | listing of 'src/device' |  |  | 0.461 |
+| ns | 409 |  | 34 | examples/ top-level listing | 1.6 |  | 0.425 |
+| ns | 426 |  | 17 | test/ and hw/ top-level listings | 1.7 |  | 0.411 |
+| walker |  | 435 | 30 | listing of 'src/host' |  |  | 0.411 |
+| walker |  | 481 | 46 | listing of 'src/class' |  |  | 0.423 |
+| walker |  | 566 | 85 | listing of 'src/portable' |  |  | 0.441 |
+| ns | 580 |  | 154 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.356 |
+| walker |  | 641 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.356 |
+| walker |  | 647 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.356 |
+| walker |  | 657 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.356 |
+| walker |  | 712 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.356 |
 | ns | 755 |  | 175 | README project layout tree | 1.9 |  | 0.336 |
-| walker |  | 765 | 53 | listing of 'docs' |  |  | 0.377 |
-| walker |  | 769 | 4 | listing of 'docs/_static' |  |  | 0.377 |
-| walker |  | 783 | 14 | listing of 'docs/assets' |  |  | 0.377 |
-| walker |  | 807 | 24 | listing of 'docs/info' |  |  | 0.377 |
-| walker |  | 863 | 56 | listing of 'src/common' |  |  | 0.377 |
-| walker |  | 871 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.377 |
-| walker |  | 879 | 8 | listing of 'hw/mcu/sony/cxd56' |  |  | 0.377 |
-| ns | 943 |  | 188 | README Device Stack intro + first 7 classes | 1.10 |  | 0.354 |
-| walker |  | 948 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.354 |
-| walker |  | 957 | 9 | listing of '.circleci' |  |  | 0.354 |
-| walker |  | 1021 | 64 | listing of 'src/osal' |  |  | 0.361 |
-| walker |  | 1125 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.361 |
-| walker |  | 1125 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.361 |
-| walker |  | 1130 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 768 | 56 | listing of 'src/common' |  |  | 0.336 |
+| walker |  | 821 | 53 | listing of 'docs' |  |  | 0.377 |
+| walker |  | 825 | 4 | listing of 'docs/_static' |  |  | 0.377 |
+| walker |  | 839 | 14 | listing of 'docs/assets' |  |  | 0.377 |
+| walker |  | 863 | 24 | listing of 'docs/info' |  |  | 0.377 |
+| walker |  | 927 | 64 | listing of 'src/osal' |  |  | 0.383 |
+| ns | 943 |  | 188 | README Device Stack intro + first 7 classes | 1.10 |  | 0.361 |
+| walker |  | 1031 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.361 |
+| walker |  | 1031 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1036 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1044 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.361 |
+| walker |  | 1052 | 8 | listing of 'hw/mcu/sony/cxd56' |  |  | 0.361 |
+| walker |  | 1121 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.361 |
+| walker |  | 1130 | 9 | listing of '.circleci' |  |  | 0.361 |
 | walker |  | 1140 | 10 | listing of 'test' |  |  | 0.382 |
 | ns | 1176 |  | 233 | README Device Stack remaining classes + escape hatch | 1.11 |  | 0.366 |
 | walker |  | 1185 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.366 |
@@ -155,24 +155,24 @@ Score(3000)=0.530 I=0.631 C=0.445 ns_rows≤3K=23/43 (reached=11 partial=1 missi
 | walker |  | 5861 | 70 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.421 |
 | walker |  | 5906 | 45 | c decl body at src/common/tusb_common.h:176 |  |  | 0.421 |
 | walker |  | 6047 | 141 | c decl at src/typec/pd_types.h:174 |  |  | 0.421 |
-| walker |  | 6191 | 144 | c decl at src/typec/pd_types.h:165 |  |  | 0.421 |
-| walker |  | 6459 | 268 | c decl names surface in hw/mcu/dialog/da1469x/include/hal/hal_gpio.h |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:91 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:102 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:111 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:119 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:128 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:137 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:158 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:165 |  |  | 0.421 |
-| walker |  | 6459 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:172 |  |  | 0.421 |
-| walker |  | 6478 | 19 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:150 |  |  | 0.421 |
-| walker |  | 6489 | 11 | c decl doc at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81 |  |  | 0.421 |
-| walker |  | 6557 | 68 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:39 |  |  | 0.421 |
-| walker |  | 6631 | 74 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:52 |  |  | 0.421 |
-| walker |  | 6667 | 36 | c includes in src/typec/pd_types.h |  |  | 0.421 |
-| walker |  | 6701 | 34 | listing of 'examples' |  |  | 0.438 |
+| walker |  | 6081 | 34 | listing of 'examples' |  |  | 0.438 |
+| walker |  | 6225 | 144 | c decl at src/typec/pd_types.h:165 |  |  | 0.438 |
+| walker |  | 6493 | 268 | c decl names surface in hw/mcu/dialog/da1469x/include/hal/hal_gpio.h |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:91 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:102 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:111 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:119 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:128 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:137 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:158 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:165 |  |  | 0.438 |
+| walker |  | 6493 | 0 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:172 |  |  | 0.438 |
+| walker |  | 6512 | 19 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:150 |  |  | 0.438 |
+| walker |  | 6523 | 11 | c decl doc at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81 |  |  | 0.438 |
+| walker |  | 6591 | 68 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:39 |  |  | 0.438 |
+| walker |  | 6665 | 74 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:52 |  |  | 0.438 |
+| walker |  | 6701 | 36 | c includes in src/typec/pd_types.h |  |  | 0.438 |
 | ns | 6790 |  | 1175 | usbh.h host application API (init/task/mount checks) | 3.7 |  | 0.405 |
 | walker |  | 6887 | 186 | c decl names surface in src/common/tusb_verify.h |  |  | 0.405 |
 | walker |  | 6932 | 45 | c decl at src/common/tusb_verify.h:122 |  |  | 0.405 |
@@ -199,11 +199,11 @@ Score(3000)=0.530 I=0.631 C=0.445 ns_rows≤3K=23/43 (reached=11 partial=1 missi
 | ns | 7905 |  | 526 | dcd_*/hcd_* controller+endpoint API (locations only) | 4.2 |  | 0.377 |
 | walker |  | 7962 | 153 | c decl at src/common/tusb_fifo.h:119 |  |  | 0.377 |
 | walker |  | 7989 | 27 | c includes in src/common/tusb_fifo.h |  |  | 0.377 |
-| ns | 8080 |  | 175 | dcd_event_xxx()/hcd_event_xxx() ISR-side helper signatures (locations only) | 4.3 |  | 0.374 |
-| walker |  | 8161 | 172 | c decl at src/typec/pd_types.h:115 |  |  | 0.374 |
-| walker |  | 8208 | 47 | c includes in src/common/tusb_verify.h |  |  | 0.374 |
-| walker |  | 8226 | 18 | listing of 'test/unit-test' |  |  | 0.375 |
-| walker |  | 8243 | 17 | listing of 'test/unit-test/test' |  |  | 0.375 |
+| walker |  | 8007 | 18 | listing of 'test/unit-test' |  |  | 0.378 |
+| walker |  | 8024 | 17 | listing of 'test/unit-test/test' |  |  | 0.378 |
+| ns | 8080 |  | 175 | dcd_event_xxx()/hcd_event_xxx() ISR-side helper signatures (locations only) | 4.3 |  | 0.375 |
+| walker |  | 8196 | 172 | c decl at src/typec/pd_types.h:115 |  |  | 0.375 |
+| walker |  | 8243 | 47 | c includes in src/common/tusb_verify.h |  |  | 0.375 |
 | walker |  | 8251 | 8 | c decl doc at src/typec/tcd.h:73 |  |  | 0.375 |
 | walker |  | 8261 | 10 | c decl doc at src/common/tusb_common.h:114 |  |  | 0.375 |
 | walker |  | 8284 | 23 | c decl doc at src/common/tusb_common.h:37 |  |  | 0.375 |

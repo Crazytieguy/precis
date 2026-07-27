@@ -22,11 +22,11 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.502 |
 | walker |  | 378 | 36 | listing of 'cmd' |  |  | 0.625 |
 | walker |  | 395 | 17 | listing of 'internal/auth' |  |  | 0.636 |
-| walker |  | 458 | 63 | README headline in README.md |  |  | 0.648 |
-| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.575 |
-| walker |  | 482 | 24 | README.md section #0 |  |  | 0.575 |
-| walker |  | 535 | 53 | go module identity in go.mod |  |  | 0.627 |
-| walker |  | 541 | 6 | listing of 'examples' |  |  | 0.659 |
+| walker |  | 401 | 6 | listing of 'examples' |  |  | 0.673 |
+| walker |  | 464 | 63 | README headline in README.md |  |  | 0.686 |
+| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.608 |
+| walker |  | 488 | 24 | README.md section #0 |  |  | 0.608 |
+| walker |  | 541 | 53 | go module identity in go.mod |  |  | 0.659 |
 | ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.597 |
 | walker |  | 581 | 40 | README headline in sdk/README.md |  |  | 0.597 |
 | walker |  | 616 | 35 | listing of 'internal/models' |  |  | 0.640 |
@@ -99,14 +99,14 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | walker |  | 1665 | 17 | README.md section #27 |  |  | 0.731 |
 | walker |  | 1681 | 16 | README.md section #26 |  |  | 0.731 |
 | walker |  | 1698 | 17 | README.md section #25 |  |  | 0.731 |
-| walker |  | 1732 | 34 | go decl doc at sdk/types.go:14 |  |  | 0.731 |
-| walker |  | 1743 | 11 | go package + imports in internal/models/models_data.go |  |  | 0.731 |
-| walker |  | 1863 | 120 | headings outline in sdk/README.md |  |  | 0.731 |
-| walker |  | 1876 | 13 | sdk/README.md section #17 |  |  | 0.731 |
-| walker |  | 1909 | 33 | sdk/README.md section #1 |  |  | 0.731 |
-| walker |  | 1941 | 32 | go decl doc at sdk/types.go:18 |  |  | 0.731 |
-| ns | 1954 |  | 359 | cmd/root.go package-level flag vars | 4.1 |  | 0.662 |
-| walker |  | 1967 | 26 | listing of 'internal/tools' |  |  | 0.691 |
+| walker |  | 1724 | 26 | listing of 'internal/tools' |  |  | 0.763 |
+| walker |  | 1758 | 34 | go decl doc at sdk/types.go:14 |  |  | 0.763 |
+| walker |  | 1769 | 11 | go package + imports in internal/models/models_data.go |  |  | 0.763 |
+| walker |  | 1889 | 120 | headings outline in sdk/README.md |  |  | 0.763 |
+| walker |  | 1902 | 13 | sdk/README.md section #17 |  |  | 0.763 |
+| walker |  | 1935 | 33 | sdk/README.md section #1 |  |  | 0.763 |
+| ns | 1954 |  | 359 | cmd/root.go package-level flag vars | 4.1 |  | 0.691 |
+| walker |  | 1967 | 32 | go decl doc at sdk/types.go:18 |  |  | 0.691 |
 | ns | 1998 |  | 44 | cmd/root.go rootCmd identity (Use/Short) | 4.2 | 4.1 | 0.685 |
 | walker |  | 2015 | 48 | README.md section #31 |  |  | 0.685 |
 | walker |  | 2049 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.685 |

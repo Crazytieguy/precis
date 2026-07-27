@@ -54,40 +54,40 @@ Score(3000)=0.417 I=0.745 C=0.233 ns_rows≤3K=13/41 (reached=4 partial=1 missin
 | walker |  | 1141 | 24 | listing of 'apps/web/layouts' |  |  | 0.488 |
 | ns | 1155 |  | 310 | docker-compose.yml | 1.8 |  | 0.425 |
 | walker |  | 1161 | 20 | listing of 'apps/web/lib/shared' |  |  | 0.425 |
-| walker |  | 1178 | 17 | listing of 'apps/mobile/app/(tabs)/collections' |  |  | 0.425 |
-| walker |  | 1195 | 17 | listing of 'apps/mobile/app/(tabs)/dashboard' |  |  | 0.425 |
-| walker |  | 1212 | 17 | listing of 'apps/mobile/app/(tabs)/settings' |  |  | 0.425 |
-| walker |  | 1229 | 17 | listing of 'apps/mobile/app/(tabs)/tags' |  |  | 0.425 |
-| walker |  | 1366 | 137 | headings outline in README.md |  |  | 0.425 |
-| walker |  | 1392 | 26 | README.md section #26 |  |  | 0.425 |
-| walker |  | 1403 | 11 | README.md section #18 |  |  | 0.425 |
-| walker |  | 1413 | 10 | README.md section #17 |  |  | 0.425 |
-| walker |  | 1423 | 10 | README.md section #19 |  |  | 0.425 |
+| walker |  | 1190 | 29 | listing of '.github' |  |  | 0.425 |
+| walker |  | 1211 | 21 | listing of '.github/workflows' |  |  | 0.425 |
+| walker |  | 1228 | 17 | listing of 'apps/mobile/app/(tabs)/collections' |  |  | 0.425 |
+| walker |  | 1245 | 17 | listing of 'apps/mobile/app/(tabs)/dashboard' |  |  | 0.425 |
+| walker |  | 1262 | 17 | listing of 'apps/mobile/app/(tabs)/settings' |  |  | 0.425 |
+| walker |  | 1279 | 17 | listing of 'apps/mobile/app/(tabs)/tags' |  |  | 0.425 |
+| walker |  | 1416 | 137 | headings outline in README.md |  |  | 0.425 |
+| walker |  | 1442 | 26 | README.md section #26 |  |  | 0.425 |
 | ns | 1450 |  | 295 | .env.sample: AI provider settings | 1.9 |  | 0.381 |
-| walker |  | 1452 | 29 | listing of '.github' |  |  | 0.381 |
-| walker |  | 1473 | 21 | listing of '.github/workflows' |  |  | 0.381 |
-| walker |  | 1486 | 13 | README.md section #23 |  |  | 0.381 |
-| walker |  | 1499 | 13 | README.md section #24 |  |  | 0.381 |
-| walker |  | 1595 | 96 | package runtime metadata in package.json |  |  | 0.381 |
-| walker |  | 1735 | 140 | YAML config at docker-compose.yml |  |  | 0.412 |
-| ns | 1826 |  | 376 | Dockerfile (stages + build + CMD) | 1.10 |  | 0.375 |
-| walker |  | 1869 | 134 | plaintext config .env.sample |  |  | 0.442 |
-| walker |  | 1928 | 59 | listing of 'apps/mobile/components' |  |  | 0.443 |
-| walker |  | 1954 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.443 |
-| walker |  | 1986 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.443 |
-| walker |  | 2000 | 14 | README.md section #21 |  |  | 0.443 |
-| walker |  | 2012 | 12 | README.md section #22 |  |  | 0.443 |
-| walker |  | 2026 | 14 | README.md section #20 |  |  | 0.443 |
-| walker |  | 2135 | 109 | listing of 'packages/lib' |  |  | 0.444 |
-| walker |  | 2164 | 29 | README.md section #29 |  |  | 0.444 |
+| walker |  | 1453 | 11 | README.md section #18 |  |  | 0.381 |
+| walker |  | 1463 | 10 | README.md section #17 |  |  | 0.381 |
+| walker |  | 1473 | 10 | README.md section #19 |  |  | 0.381 |
+| walker |  | 1582 | 109 | listing of 'packages/lib' |  |  | 0.383 |
+| walker |  | 1639 | 57 | listing of 'apps/worker/lib' |  |  | 0.383 |
+| walker |  | 1652 | 13 | README.md section #23 |  |  | 0.383 |
+| walker |  | 1665 | 13 | README.md section #24 |  |  | 0.383 |
+| walker |  | 1761 | 96 | package runtime metadata in package.json |  |  | 0.383 |
+| ns | 1826 |  | 376 | Dockerfile (stages + build + CMD) | 1.10 |  | 0.349 |
+| walker |  | 1901 | 140 | YAML config at docker-compose.yml |  |  | 0.377 |
+| walker |  | 2035 | 134 | plaintext config .env.sample |  |  | 0.444 |
+| walker |  | 2094 | 59 | listing of 'apps/mobile/components' |  |  | 0.444 |
+| walker |  | 2120 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.444 |
+| walker |  | 2152 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.444 |
+| walker |  | 2166 | 14 | README.md section #21 |  |  | 0.444 |
 | ns | 2173 |  | 347 | .env.sample: additional optional settings roster | 1.11 |  | 0.401 |
-| walker |  | 2221 | 57 | listing of 'apps/worker/lib' |  |  | 0.401 |
+| walker |  | 2178 | 12 | README.md section #22 |  |  | 0.401 |
+| walker |  | 2192 | 14 | README.md section #20 |  |  | 0.401 |
+| walker |  | 2221 | 29 | README.md section #29 |  |  | 0.401 |
 | walker |  | 2283 | 62 | listing of 'apps/web/hooks' |  |  | 0.401 |
-| walker |  | 2298 | 15 | README.md section #11 |  |  | 0.401 |
-| walker |  | 2316 | 18 | listing of 'apps/web/e2e' |  |  | 0.401 |
-| walker |  | 2322 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.401 |
-| walker |  | 2339 | 17 | listing of 'apps/web/e2e/fixtures' |  |  | 0.401 |
-| walker |  | 2352 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.401 |
+| walker |  | 2301 | 18 | listing of 'apps/web/e2e' |  |  | 0.401 |
+| walker |  | 2307 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.401 |
+| walker |  | 2324 | 17 | listing of 'apps/web/e2e/fixtures' |  |  | 0.401 |
+| walker |  | 2337 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.401 |
+| walker |  | 2352 | 15 | README.md section #11 |  |  | 0.401 |
 | walker |  | 2394 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.402 |
 | walker |  | 2411 | 17 | README.md section #7 |  |  | 0.402 |
 | walker |  | 2427 | 16 | README.md section #6 |  |  | 0.402 |
@@ -95,48 +95,48 @@ Score(3000)=0.417 I=0.745 C=0.233 ns_rows≤3K=13/41 (reached=4 partial=1 missin
 | walker |  | 2460 | 16 | README.md section #8 |  |  | 0.402 |
 | walker |  | 2476 | 16 | README.md section #10 |  |  | 0.402 |
 | walker |  | 2493 | 17 | README.md section #16 |  |  | 0.402 |
-| walker |  | 2572 | 79 | listing of 'apps/web/public' |  |  | 0.402 |
-| walker |  | 2582 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.402 |
+| walker |  | 2515 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.402 |
+| walker |  | 2594 | 79 | listing of 'apps/web/public' |  |  | 0.402 |
+| walker |  | 2604 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.402 |
 | ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.379 |
-| walker |  | 2859 | 277 | plaintext config Dockerfile |  |  | 0.438 |
+| walker |  | 2881 | 277 | plaintext config Dockerfile |  |  | 0.438 |
 | ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.417 |
-| walker |  | 2908 | 49 | listing of 'apps/web/public/locales' |  |  | 0.417 |
-| walker |  | 2912 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.417 |
-| walker |  | 2916 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.417 |
-| walker |  | 2920 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.417 |
-| walker |  | 2924 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.417 |
-| walker |  | 2928 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.417 |
-| walker |  | 2932 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.417 |
-| walker |  | 2936 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.417 |
-| walker |  | 2940 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.417 |
-| walker |  | 2944 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.417 |
-| walker |  | 2948 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.417 |
-| walker |  | 2952 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.417 |
-| walker |  | 2956 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.417 |
-| walker |  | 2960 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.417 |
-| walker |  | 2964 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.417 |
-| walker |  | 2968 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.417 |
-| walker |  | 3018 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.417 |
-| walker |  | 3104 | 86 | listing of 'apps/web/pages' |  |  | 0.417 |
-| walker |  | 3110 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.417 |
-| walker |  | 3118 | 8 | listing of 'apps/web/pages/api' |  |  | 0.417 |
-| walker |  | 3121 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.417 |
-| walker |  | 3130 | 9 | listing of 'apps/web/pages/public' |  |  | 0.417 |
-| walker |  | 3135 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.417 |
-| walker |  | 3139 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.417 |
+| walker |  | 2930 | 49 | listing of 'apps/web/public/locales' |  |  | 0.417 |
+| walker |  | 2934 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.417 |
+| walker |  | 2938 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.417 |
+| walker |  | 2942 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.417 |
+| walker |  | 2946 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.417 |
+| walker |  | 2950 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.417 |
+| walker |  | 2954 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.417 |
+| walker |  | 2958 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.417 |
+| walker |  | 2962 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.417 |
+| walker |  | 2966 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.417 |
+| walker |  | 2970 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.417 |
+| walker |  | 2974 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.417 |
+| walker |  | 2978 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.417 |
+| walker |  | 2982 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.417 |
+| walker |  | 2986 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.417 |
+| walker |  | 2990 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.417 |
+| walker |  | 3040 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.417 |
+| walker |  | 3126 | 86 | listing of 'apps/web/pages' |  |  | 0.417 |
+| walker |  | 3132 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.417 |
+| walker |  | 3140 | 8 | listing of 'apps/web/pages/api' |  |  | 0.403 |
 | ns | 3140 |  | 243 | apps/web/package.json (identity + scripts) | 1.14 |  | 0.403 |
-| walker |  | 3145 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.403 |
-| walker |  | 3151 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.403 |
-| walker |  | 3162 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.403 |
-| walker |  | 3173 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.403 |
-| walker |  | 3185 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.403 |
-| walker |  | 3199 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.403 |
-| walker |  | 3199 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.403 |
-| walker |  | 3215 | 16 | listing of 'apps/web/pages/links' |  |  | 0.403 |
-| walker |  | 3234 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.403 |
-| walker |  | 3244 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.403 |
-| walker |  | 3287 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.403 |
-| walker |  | 3309 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.403 |
+| walker |  | 3143 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.403 |
+| walker |  | 3152 | 9 | listing of 'apps/web/pages/public' |  |  | 0.403 |
+| walker |  | 3157 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.403 |
+| walker |  | 3161 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.403 |
+| walker |  | 3167 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.403 |
+| walker |  | 3173 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.403 |
+| walker |  | 3184 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.403 |
+| walker |  | 3195 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.403 |
+| walker |  | 3207 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.403 |
+| walker |  | 3221 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.403 |
+| walker |  | 3221 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.403 |
+| walker |  | 3237 | 16 | listing of 'apps/web/pages/links' |  |  | 0.403 |
+| walker |  | 3256 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.403 |
+| walker |  | 3266 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.403 |
+| walker |  | 3309 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.403 |
 | walker |  | 3328 | 19 | README.md section #15 |  |  | 0.403 |
 | walker |  | 3415 | 87 | export at vitest.config.mts:4 |  |  | 0.431 |
 | walker |  | 3471 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.431 |

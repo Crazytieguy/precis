@@ -6,6 +6,27 @@ expression: rendered
 .git-blame-ignore-revs
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    PULL_REQUEST_TEMPLATE.md
+    SECURITY.md
+    commit-convention.md
+    copilot-instructions.md
+    renovate.json5
+    workflows/
+        ci.yml
+        copilot-setup-steps.yml
+        ecosystem-ci-trigger.yml
+        issue-close-require.yml
+        issue-labeled.yml
+        issue-template-check.yml
+        lock-closed-issues.yml
+        preview-release.yml
+        publish.yml
+        pull-request-template-check.yml
+        release-tag.yml
+        semantic-pull-request.yml
+        zizmor.yml
+    zizmor.yml
 .gitignore
 .oxfmtrc.json
 CODE_OF_CONDUCT.md
@@ -37,6 +58,26 @@ README.md
       61→## Sponsors
     …
 docs/
+    .vitepress/
+    _data/
+        acknowledgements.data.ts
+        blog.data.ts
+        team.js
+    acknowledgements.md
+    blog/
+    blog.md
+    changes/
+    config/
+    guide/
+    images/
+    index.md
+    live.md
+    package.json
+    plugins/
+    public/
+    releases.md
+    team.md
+    tsconfig.json
 eslint.config.js
 netlify.toml
 package.json
@@ -190,10 +231,6 @@ packages/
             vite.config.js
         template-react-ts/
             README.md
-                   1→# React + TypeScript + Vite
-                   2→
-                   3→This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-                …
             _gitignore
             eslint.config.js
             index.html
@@ -240,12 +277,6 @@ packages/
             vite.config.js
         template-solid-ts/
             README.md
-                   1→## Usage
-                   2→
-                   3→```bash
-                   4→$ npm install # or pnpm install or yarn install
-                   5→```
-                …
             _gitignore
             index.html
             package.json
@@ -294,31 +325,6 @@ packages/
             svelte.config.js
             vite.config.js
         template-svelte-ts/
-            .vscode/
-            README.md
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.svelte
-                app.css
-                assets/
-                    hero.png
-                    svelte.svg
-                    vite.svg
-                lib/
-                    Counter.svelte
-                main.ts
-                    …
-                       9→export default app
-            svelte.config.js
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
         template-vanilla/
             _gitignore
             index.html

@@ -19,10 +19,24 @@ entries = [".github", ".gitignore", "CHANGELOG.md", "Cargo.toml", "LICENSE-APACH
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 21
+cum_tokens = 67
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
+
+[[batches]]
+position = 3
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 49
+cum_tokens = 70
 
 [batches.content]
 kind = "fs"
@@ -32,11 +46,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 3
+position = 4
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 53
+cum_tokens = 74
 
 [batches.content]
 kind = "fs"
@@ -44,20 +58,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = ".github/workflows"
 entries = ["main.yml"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 21
-cum_tokens = 74
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
 
 [[batches]]
 position = 5

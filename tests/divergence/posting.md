@@ -25,10 +25,10 @@ Score(3000)=0.714 I=0.914 C=0.558 ns_rows≤3K=21/40 (reached=14 partial=0 missi
 | ns | 383 |  | 99 | tests/ listing | 1.9 |  | 0.649 |
 | ns | 470 |  | 87 | src/posting/widgets/ listing | 1.10 |  | 0.579 |
 | walker |  | 493 | 156 | listing of 'src/posting' |  |  | 0.598 |
-| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.673 |
-| ns | 728 |  | 102 | tests/ fixture sub-listing (sample-* dirs) | 1.12 |  | 0.628 |
-| walker |  | 760 | 267 | python imports in src/posting/__init__.py |  |  | 0.628 |
-| walker |  | 774 | 14 | listing of 'src/posting/importing' |  |  | 0.652 |
+| walker |  | 507 | 14 | listing of 'src/posting/importing' |  |  | 0.630 |
+| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.698 |
+| ns | 728 |  | 102 | tests/ fixture sub-listing (sample-* dirs) | 1.12 |  | 0.652 |
+| walker |  | 774 | 267 | python imports in src/posting/__init__.py |  |  | 0.652 |
 | walker |  | 861 | 87 | listing of 'src/posting/widgets' |  |  | 0.736 |
 | walker |  | 891 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.774 |
 | walker |  | 957 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.842 |
@@ -56,17 +56,17 @@ Score(3000)=0.714 I=0.914 C=0.558 ns_rows≤3K=21/40 (reached=14 partial=0 missi
 | walker |  | 1582 | 50 | README.md section #3 |  |  | 0.684 |
 | ns | 1800 |  | 249 | __main__.py: make_posting() app construction | 2.4 | 2.2 | 0.651 |
 | walker |  | 1839 | 257 | README.md section #0 |  |  | 0.654 |
-| ns | 2024 |  | 224 | Makefile — full | 2.5 |  | 0.668 |
-| ns | 2425 |  | 401 | .github/workflows/test.yml (head) | 2.6 |  | 0.616 |
-| walker |  | 2630 | 791 | YAML config at mkdocs.yml |  |  | 0.665 |
-| walker |  | 2647 | 17 | python decl names surface in src/posting/suggesters.py |  |  | 0.665 |
-| walker |  | 2664 | 17 | python decl names surface in src/posting/user_host.py |  |  | 0.665 |
-| walker |  | 2664 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.665 |
-| walker |  | 2683 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.665 |
-| walker |  | 2704 | 21 | headings outline in docs/guide/command_palette.md |  |  | 0.665 |
-| walker |  | 2722 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.665 |
-| walker |  | 2722 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.665 |
-| walker |  | 2821 | 99 | listing of 'tests' |  |  | 0.714 |
+| walker |  | 1938 | 99 | listing of 'tests' |  |  | 0.713 |
+| ns | 2024 |  | 224 | Makefile — full | 2.5 |  | 0.723 |
+| ns | 2425 |  | 401 | .github/workflows/test.yml (head) | 2.6 |  | 0.667 |
+| walker |  | 2729 | 791 | YAML config at mkdocs.yml |  |  | 0.714 |
+| walker |  | 2746 | 17 | python decl names surface in src/posting/suggesters.py |  |  | 0.714 |
+| walker |  | 2763 | 17 | python decl names surface in src/posting/user_host.py |  |  | 0.714 |
+| walker |  | 2763 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.714 |
+| walker |  | 2782 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.714 |
+| walker |  | 2803 | 21 | headings outline in docs/guide/command_palette.md |  |  | 0.714 |
+| walker |  | 2821 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.714 |
+| walker |  | 2821 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.714 |
 | walker |  | 2844 | 23 | headings outline in docs/guide/help_system.md |  |  | 0.714 |
 | walker |  | 2856 | 12 | python decl names surface in src/posting/importing/curl.py |  |  | 0.714 |
 | walker |  | 2856 | 0 | python decl at src/posting/importing/curl.py:22 |  |  | 0.714 |

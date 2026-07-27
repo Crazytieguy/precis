@@ -255,10 +255,24 @@ entries = ["__init__.py", "__main__.py", "_start_time.py", "app.py", "auth.py", 
 
 [[batches]]
 position = 14
+key = 'Fs(DirListing { dir: "src/posting/importing" })'
+descriptor = "listing of 'src/posting/importing'"
+cost_tokens = 14
+cum_tokens = 507
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/importing"
+entries = ["curl.py", "open_api.py", "postman.py"]
+
+[[batches]]
+position = 15
 key = 'Python(Imports { file: "src/posting/__init__.py" })'
 descriptor = "python imports in src/posting/__init__.py"
 cost_tokens = 267
-cum_tokens = 760
+cum_tokens = 774
 
 [batches.content]
 kind = "lines"
@@ -286,20 +300,6 @@ end = 35
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "src/posting/importing" })'
-descriptor = "listing of 'src/posting/importing'"
-cost_tokens = 14
-cum_tokens = 774
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/importing"
-entries = ["curl.py", "open_api.py", "postman.py"]
 
 [[batches]]
 position = 16
@@ -723,10 +723,24 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 99
+cum_tokens = 1938
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__snapshots__", "posting_snapshot_app.py", "resources", "sample-collections", "sample-configs", "sample-envs", "sample-importable-collections", "sample-themes", "test_curl_export.py", "test_curl_import.py", "test_files.py", "test_load_env_file_dialog.py", "test_open_api_import.py", "test_postman_import.py", "test_snapshots.py", "test_urls.py", "test_variables.py"]
+
+[[batches]]
+position = 37
 key = 'Yaml(Whole { file: "mkdocs.yml" })'
 descriptor = "YAML config at mkdocs.yml"
 cost_tokens = 791
-cum_tokens = 2630
+cum_tokens = 2729
 
 [batches.content]
 kind = "lines"
@@ -740,11 +754,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(DeclNames { file: "src/posting/suggesters.py" })'
 descriptor = "python decl names surface in src/posting/suggesters.py"
 cost_tokens = 17
-cum_tokens = 2647
+cum_tokens = 2746
 
 [batches.content]
 kind = "lines"
@@ -758,11 +772,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Python(DeclNames { file: "src/posting/user_host.py" })'
 descriptor = "python decl names surface in src/posting/user_host.py"
 cost_tokens = 17
-cum_tokens = 2664
+cum_tokens = 2763
 
 [batches.content]
 kind = "lines"
@@ -784,11 +798,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(Decl { file: "src/posting/user_host.py", start_line: 9 })'
 descriptor = "python decl at src/posting/user_host.py:9"
 cost_tokens = 0
-cum_tokens = 2664
+cum_tokens = 2763
 
 [batches.content]
 kind = "lines"
@@ -802,11 +816,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Python(DeclDoc { file: "src/posting/help_data.py", start_line: 4 })'
 descriptor = "python decl doc at src/posting/help_data.py:4"
 cost_tokens = 19
-cum_tokens = 2683
+cum_tokens = 2782
 
 [batches.content]
 kind = "lines"
@@ -820,11 +834,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Markdown(HeadingsOutline { file: "docs/guide/command_palette.md" })'
 descriptor = "headings outline in docs/guide/command_palette.md"
 cost_tokens = 21
-cum_tokens = 2704
+cum_tokens = 2803
 
 [batches.content]
 kind = "lines"
@@ -862,29 +876,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Python(DeclNames { file: "src/posting/auth.py" })'
 descriptor = "python decl names surface in src/posting/auth.py"
 cost_tokens = 18
-cum_tokens = 2722
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/auth.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Python(Decl { file: "src/posting/auth.py", start_line: 6 })'
-descriptor = "python decl at src/posting/auth.py:6"
-cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2821
 
 [batches.content]
 kind = "lines"
@@ -899,17 +895,21 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 99
+key = 'Python(Decl { file: "src/posting/auth.py", start_line: 6 })'
+descriptor = "python decl at src/posting/auth.py:6"
+cost_tokens = 0
 cum_tokens = 2821
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__snapshots__", "posting_snapshot_app.py", "resources", "sample-collections", "sample-configs", "sample-envs", "sample-importable-collections", "sample-themes", "test_curl_export.py", "test_curl_import.py", "test_files.py", "test_load_env_file_dialog.py", "test_open_api_import.py", "test_postman_import.py", "test_snapshots.py", "test_urls.py", "test_variables.py"]
+[[batches.content.spans]]
+path = "src/posting/auth.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 45

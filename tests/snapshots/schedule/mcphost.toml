@@ -235,10 +235,24 @@ entries = ["browser.go", "credentials.go", "credentials_test.go", "oauth.go"]
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 6
+cum_tokens = 401
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["hooks", "scripts"]
+
+[[batches]]
+position = 17
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 63
-cum_tokens = 458
+cum_tokens = 464
 
 [batches.content]
 kind = "lines"
@@ -252,11 +266,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 24
-cum_tokens = 482
+cum_tokens = 488
 
 [batches.content]
 kind = "lines"
@@ -270,11 +284,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 53
-cum_tokens = 535
+cum_tokens = 541
 
 [batches.content]
 kind = "lines"
@@ -286,20 +300,6 @@ end = 5
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 6
-cum_tokens = 541
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["hooks", "scripts"]
 
 [[batches]]
 position = 20
@@ -1673,10 +1673,24 @@ kind = "full"
 
 [[batches]]
 position = 85
+key = 'Fs(DirListing { dir: "internal/tools" })'
+descriptor = "listing of 'internal/tools'"
+cost_tokens = 26
+cum_tokens = 1724
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/tools"
+entries = ["buffered_logger.go", "connection_pool.go", "debug_logger.go", "mcp.go", "mcp_test.go"]
+
+[[batches]]
+position = 86
 key = 'Go(DeclDoc { file: "sdk/types.go", start_line: 14 })'
 descriptor = "go decl doc at sdk/types.go:14"
 cost_tokens = 34
-cum_tokens = 1732
+cum_tokens = 1758
 
 [batches.content]
 kind = "lines"
@@ -1690,11 +1704,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Go(PackageImports { file: "internal/models/models_data.go" })'
 descriptor = "go package + imports in internal/models/models_data.go"
 cost_tokens = 11
-cum_tokens = 1743
+cum_tokens = 1769
 
 [batches.content]
 kind = "lines"
@@ -1708,11 +1722,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Markdown(HeadingsOutline { file: "sdk/README.md" })'
 descriptor = "headings outline in sdk/README.md"
 cost_tokens = 120
-cum_tokens = 1863
+cum_tokens = 1889
 
 [batches.content]
 kind = "lines"
@@ -1878,11 +1892,11 @@ end = 147
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Markdown(Section { file: "sdk/README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "sdk/README.md section #17"
 cost_tokens = 13
-cum_tokens = 1876
+cum_tokens = 1902
 
 [batches.content]
 kind = "lines"
@@ -1896,11 +1910,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Markdown(Section { file: "sdk/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "sdk/README.md section #1"
 cost_tokens = 33
-cum_tokens = 1909
+cum_tokens = 1935
 
 [batches.content]
 kind = "lines"
@@ -1914,11 +1928,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Go(DeclDoc { file: "sdk/types.go", start_line: 18 })'
 descriptor = "go decl doc at sdk/types.go:18"
 cost_tokens = 32
-cum_tokens = 1941
+cum_tokens = 1967
 
 [batches.content]
 kind = "lines"
@@ -1930,20 +1944,6 @@ end = 17
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 91
-key = 'Fs(DirListing { dir: "internal/tools" })'
-descriptor = "listing of 'internal/tools'"
-cost_tokens = 26
-cum_tokens = 1967
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/tools"
-entries = ["buffered_logger.go", "connection_pool.go", "debug_logger.go", "mcp.go", "mcp_test.go"]
 
 [[batches]]
 position = 92

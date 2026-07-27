@@ -810,10 +810,24 @@ kind = "full"
 
 [[batches]]
 position = 23
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 31
+cum_tokens = 1258
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
+
+[[batches]]
+position = 24
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 1 })'
 descriptor = "export tail #2 at source/index.ts:16"
 cost_tokens = 289
-cum_tokens = 1516
+cum_tokens = 1547
 
 [batches.content]
 kind = "lines"
@@ -1091,11 +1105,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
-cum_tokens = 1608
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -1115,20 +1129,6 @@ end = 26
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 31
-cum_tokens = 1639
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
 
 [[batches]]
 position = 26

@@ -187,10 +187,24 @@ entries = ["env.js", "tmpl.js", "utils.js"]
 
 [[batches]]
 position = 12
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 101
+cum_tokens = 749
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
+
+[[batches]]
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 420
-cum_tokens = 1068
+cum_tokens = 1169
 
 [batches.content]
 kind = "lines"
@@ -212,11 +226,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 128
-cum_tokens = 1196
+cum_tokens = 1297
 
 [batches.content]
 kind = "lines"
@@ -428,20 +442,6 @@ end = 264
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 101
-cum_tokens = 1297
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
 
 [[batches]]
 position = 15
@@ -1195,10 +1195,24 @@ kind = "full"
 
 [[batches]]
 position = 42
+key = 'Fs(DirListing { dir: "test/acceptance" })'
+descriptor = "listing of 'test/acceptance'"
+cost_tokens = 86
+cum_tokens = 2128
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/acceptance"
+entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
+
+[[batches]]
+position = 43
 key = 'Typescript(Imports { file: "lib/application.js" })'
 descriptor = "imports in lib/application.js"
 cost_tokens = 27
-cum_tokens = 2069
+cum_tokens = 2155
 
 [batches.content]
 kind = "lines"
@@ -1218,20 +1232,6 @@ end = 16
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 43
-key = 'Fs(DirListing { dir: "test/acceptance" })'
-descriptor = "listing of 'test/acceptance'"
-cost_tokens = 86
-cum_tokens = 2155
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/acceptance"
-entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
 
 [[batches]]
 position = 44

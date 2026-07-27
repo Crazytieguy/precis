@@ -47,14 +47,14 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 1001 | 0 | c decl at src/jq_test.c:21 |  |  | 0.787 |
 | walker |  | 1017 | 16 | c decl at src/jq_test.c:78 |  |  | 0.787 |
 | ns | 1053 |  | 277 | README.md — build instructions and license | 1.10 | 1.9 | 0.719 |
-| ns | 1190 |  | 137 | configure.ac — feature-flag roster | 2.1 |  | 0.700 |
-| walker |  | 1344 | 327 | c decl names surface in src/jv.h |  |  | 0.703 |
-| walker |  | 1423 | 79 | c decl at src/jv.h:19 |  |  | 0.705 |
-| walker |  | 1508 | 85 | c decl at src/jv.h:34 |  |  | 0.708 |
-| ns | 1536 |  | 346 | Dockerfile (full) | 2.2 |  | 0.642 |
-| walker |  | 1541 | 33 | c includes in src/jv.h |  |  | 0.642 |
-| walker |  | 1568 | 27 | c decl doc at src/jv.h:34 |  |  | 0.643 |
-| walker |  | 1733 | 165 | listing of 'tests' |  |  | 0.732 |
+| walker |  | 1182 | 165 | listing of 'tests' |  |  | 0.819 |
+| ns | 1190 |  | 137 | configure.ac — feature-flag roster | 2.1 |  | 0.798 |
+| walker |  | 1509 | 327 | c decl names surface in src/jv.h |  |  | 0.801 |
+| ns | 1536 |  | 346 | Dockerfile (full) | 2.2 |  | 0.727 |
+| walker |  | 1588 | 79 | c decl at src/jv.h:19 |  |  | 0.729 |
+| walker |  | 1673 | 85 | c decl at src/jv.h:34 |  |  | 0.731 |
+| walker |  | 1706 | 33 | c includes in src/jv.h |  |  | 0.731 |
+| walker |  | 1733 | 27 | c decl doc at src/jv.h:34 |  |  | 0.732 |
 | ns | 1968 |  | 432 | jq.h — core embedding lifecycle API | 3.1 |  | 0.671 |
 | walker |  | 2079 | 346 | plaintext config Dockerfile |  |  | 0.766 |
 | ns | 2214 |  | 246 | jq.h — callback registration and attrs/origin accessors | 3.2 | 3.1 | 0.741 |
@@ -86,12 +86,12 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | ns | 3717 |  | 199 | manual.yml — top-level section table of contents | 4.1 |  | 0.725 |
 | walker |  | 3720 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.748 |
 | walker |  | 3720 | 0 | c decl at src/jq.h:60 |  |  | 0.748 |
-| walker |  | 3750 | 30 | README.md section #2 |  |  | 0.748 |
-| walker |  | 3856 | 106 | c decl names surface in src/jv_print.c |  |  | 0.748 |
-| walker |  | 3856 | 0 | c decl at src/jv_print.c:40 |  |  | 0.748 |
 | ns | 3874 |  | 157 | builtin.jq — sampler of jq-coded (not C) builtin definitions | 4.2 |  | 0.738 |
-| walker |  | 3953 | 97 | c whole header in src/jq_parser.h |  |  | 0.738 |
-| walker |  | 4120 | 167 | listing of 'vendor/decNumber' |  |  | 0.738 |
+| walker |  | 3887 | 167 | listing of 'vendor/decNumber' |  |  | 0.738 |
+| walker |  | 3917 | 30 | README.md section #2 |  |  | 0.738 |
+| walker |  | 4023 | 106 | c decl names surface in src/jv_print.c |  |  | 0.738 |
+| walker |  | 4023 | 0 | c decl at src/jv_print.c:40 |  |  | 0.738 |
+| walker |  | 4120 | 97 | c whole header in src/jq_parser.h |  |  | 0.738 |
 | walker |  | 4206 | 86 | c decl names surface in src/util.h |  |  | 0.718 |
 | ns | 4206 |  | 332 | manual.yml — Assignment section: no-references / deep-copy mental model | 4.3 | 4.1 | 0.718 |
 | walker |  | 4221 | 15 | c decl at src/util.h:44 |  |  | 0.718 |

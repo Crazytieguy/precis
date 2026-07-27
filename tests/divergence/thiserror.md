@@ -23,14 +23,14 @@ Score(3000)=0.649 I=0.861 C=0.489 ns_rows≤3K=21/45 (reached=11 partial=2 missi
 | walker |  | 529 | 185 | [package] in Cargo.toml |  |  | 0.742 |
 | ns | 536 |  | 145 | Cargo.toml — std feature doc comment | 1.8 |  | 0.669 |
 | ns | 568 |  | 32 | Cargo.toml — [dependencies] | 1.9 |  | 0.674 |
-| ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.678 |
-| walker |  | 601 | 72 | README.md section #0 |  |  | 0.678 |
-| walker |  | 648 | 47 | listing of 'impl/src' |  |  | 0.848 |
-| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.806 |
-| walker |  | 690 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.807 |
-| walker |  | 725 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.807 |
-| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.771 |
-| walker |  | 756 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.772 |
+| walker |  | 576 | 47 | listing of 'impl/src' |  |  | 0.847 |
+| ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.848 |
+| walker |  | 618 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.848 |
+| walker |  | 653 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.849 |
+| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.807 |
+| walker |  | 684 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.808 |
+| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.772 |
+| walker |  | 756 | 72 | README.md section #0 |  |  | 0.772 |
 | ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.719 |
 | walker |  | 889 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.774 |
 | ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.726 |
@@ -69,11 +69,11 @@ Score(3000)=0.649 I=0.861 C=0.489 ns_rows≤3K=21/45 (reached=11 partial=2 missi
 | ns | 3079 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.641 |
 | walker |  | 3103 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.641 |
 | ns | 3354 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.613 |
-| walker |  | 3437 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.613 |
-| ns | 3644 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.584 |
-| walker |  | 3721 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.624 |
-| ns | 4061 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.583 |
-| walker |  | 4249 | 528 | listing of 'tests/ui' |  |  | 0.587 |
+| walker |  | 3631 | 528 | listing of 'tests/ui' |  |  | 0.618 |
+| ns | 3644 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.588 |
+| walker |  | 3965 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.588 |
+| ns | 4061 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.549 |
+| walker |  | 4249 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.587 |
 | walker |  | 4300 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.587 |
 | walker |  | 4353 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.587 |
 | walker |  | 4425 | 72 | README.md section #2 |  |  | 0.587 |

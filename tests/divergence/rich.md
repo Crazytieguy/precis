@@ -21,17 +21,17 @@ Score(3000)=0.539 I=0.588 C=0.494 ns_rows≤3K=22/104 (reached=7 partial=0 missi
 | ns | 665 |  | 75 | pythonpackage.yml: main CI test matrix | 1.8 | 1.7 | 0.074 |
 | walker |  | 693 | 91 | headings outline in README.md |  |  | 0.074 |
 | walker |  | 715 | 22 | README.md section #0 |  |  | 0.074 |
-| walker |  | 736 | 21 | listing of 'benchmarks' |  |  | 0.074 |
-| walker |  | 759 | 23 | listing of '.github' |  |  | 0.074 |
+| walker |  | 738 | 23 | listing of '.github' |  |  | 0.074 |
 | ns | 764 |  | 99 | .readthedocs.yml: docs build config | 1.9 |  | 0.068 |
-| walker |  | 789 | 30 | listing of '.github/workflows' |  |  | 0.187 |
+| walker |  | 768 | 30 | listing of '.github/workflows' |  |  | 0.187 |
+| walker |  | 789 | 21 | listing of 'benchmarks' |  |  | 0.187 |
 | walker |  | 872 | 83 | [dependencies] in pyproject.toml |  |  | 0.187 |
 | ns | 955 |  | 191 | Root directory listing | 2.1 |  | 0.386 |
 | walker |  | 1026 | 154 | plaintext config Makefile |  |  | 0.504 |
-| walker |  | 1107 | 81 | [package] in pyproject.toml |  |  | 0.581 |
-| walker |  | 1150 | 43 | listing of 'tools' |  |  | 0.581 |
-| walker |  | 1285 | 135 | listing of 'docs/source' |  |  | 0.589 |
-| walker |  | 1295 | 10 | listing of 'docs/source/appendix' |  |  | 0.589 |
+| walker |  | 1069 | 43 | listing of 'tools' |  |  | 0.504 |
+| walker |  | 1204 | 135 | listing of 'docs/source' |  |  | 0.513 |
+| walker |  | 1214 | 10 | listing of 'docs/source/appendix' |  |  | 0.513 |
+| walker |  | 1295 | 81 | [package] in pyproject.toml |  |  | 0.589 |
 | ns | 1316 |  | 361 | rich/ package directory listing (main source, 81 files) | 2.2 |  | 0.436 |
 | walker |  | 1461 | 166 | listing of 'examples' |  |  | 0.445 |
 | ns | 1692 |  | 376 | tests/ directory listing (58 test files, mirrors rich/ 1:1) | 2.3 |  | 0.375 |

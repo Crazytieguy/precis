@@ -18,22 +18,22 @@ Score(3000)=0.430 I=0.672 C=0.275 ns_rows≤3K=23/81 (reached=4 partial=0 missin
 | walker |  | 282 | 40 | listing of 'sps/src/cli' |  |  | 0.915 |
 | walker |  | 303 | 21 | listing of 'sps-net/src' |  |  | 0.916 |
 | ns | 308 |  | 120 | README: crate roles & feature status | 1.4 |  | 0.781 |
-| walker |  | 311 | 8 | listing of '.github' |  |  | 0.781 |
-| walker |  | 315 | 4 | listing of '.github/workflows' |  |  | 0.781 |
-| walker |  | 340 | 25 | listing of 'sps-core/src' |  |  | 0.781 |
-| walker |  | 351 | 11 | listing of 'sps-core/src/build' |  |  | 0.781 |
-| walker |  | 363 | 12 | listing of 'sps-core/src/check' |  |  | 0.782 |
-| walker |  | 375 | 12 | listing of 'sps-core/src/pipeline' |  |  | 0.782 |
-| walker |  | 389 | 14 | listing of 'sps-core/src/utils' |  |  | 0.783 |
-| walker |  | 406 | 17 | listing of 'sps-core/src/uninstall' |  |  | 0.784 |
-| walker |  | 423 | 17 | listing of 'sps-core/src/upgrade' |  |  | 0.785 |
-| walker |  | 443 | 20 | listing of 'sps-core/src/install' |  |  | 0.787 |
+| walker |  | 328 | 25 | listing of 'sps-core/src' |  |  | 0.781 |
+| walker |  | 339 | 11 | listing of 'sps-core/src/build' |  |  | 0.781 |
+| walker |  | 351 | 12 | listing of 'sps-core/src/check' |  |  | 0.782 |
+| walker |  | 363 | 12 | listing of 'sps-core/src/pipeline' |  |  | 0.782 |
+| walker |  | 377 | 14 | listing of 'sps-core/src/utils' |  |  | 0.783 |
+| walker |  | 394 | 17 | listing of 'sps-core/src/uninstall' |  |  | 0.784 |
+| walker |  | 411 | 17 | listing of 'sps-core/src/upgrade' |  |  | 0.785 |
+| walker |  | 431 | 20 | listing of 'sps-core/src/install' |  |  | 0.787 |
+| walker |  | 460 | 29 | pub item at sps-core/src/install/mod.rs:17 |  |  | 0.625 |
 | ns | 460 |  | 152 | README: CLI verb surface (usage examples) | 1.5 |  | 0.625 |
-| walker |  | 472 | 29 | pub item at sps-core/src/install/mod.rs:17 |  |  | 0.625 |
-| walker |  | 488 | 16 | mod/use plumbing in sps-core/src/build/mod.rs |  |  | 0.625 |
-| walker |  | 504 | 16 | mod/use plumbing in sps-core/src/pipeline/mod.rs |  |  | 0.625 |
+| walker |  | 476 | 16 | mod/use plumbing in sps-core/src/build/mod.rs |  |  | 0.625 |
+| walker |  | 492 | 16 | mod/use plumbing in sps-core/src/pipeline/mod.rs |  |  | 0.625 |
+| walker |  | 517 | 25 | pub item body at sps-core/src/install/mod.rs:17 body 18 |  |  | 0.625 |
+| walker |  | 525 | 8 | listing of '.github' |  |  | 0.625 |
 | ns | 527 |  | 67 | README: build-from-source instructions | 1.6 |  | 0.579 |
-| walker |  | 529 | 25 | pub item body at sps-core/src/install/mod.rs:17 body 18 |  |  | 0.579 |
+| walker |  | 529 | 4 | listing of '.github/workflows' |  |  | 0.579 |
 | walker |  | 551 | 22 | mod/use plumbing in sps-core/src/utils/mod.rs |  |  | 0.579 |
 | ns | 603 |  | 76 | sps-common directory map | 2.1 |  | 0.478 |
 | walker |  | 636 | 85 | mod/use plumbing in sps-core/src/lib.rs |  |  | 0.478 |

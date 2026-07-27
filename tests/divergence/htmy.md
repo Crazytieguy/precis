@@ -93,17 +93,17 @@ Score(3000)=0.693 I=0.899 C=0.535 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | walker |  | 2357 | 24 | README.md section #11 |  |  | 0.724 |
 | walker |  | 2382 | 25 | README.md section #6 |  |  | 0.735 |
 | walker |  | 2439 | 57 | listing of 'tests' |  |  | 0.735 |
-| walker |  | 2455 | 16 | README.md section #41 |  |  | 0.735 |
-| walker |  | 2483 | 28 | listing of 'tests/renderer' |  |  | 0.736 |
+| walker |  | 2467 | 28 | listing of 'tests/renderer' |  |  | 0.736 |
+| walker |  | 2483 | 16 | README.md section #41 |  |  | 0.736 |
 | ns | 2583 |  | 236 | htmy/typing.py -- context providers & text protocols | 2.3 | 2.1 | 0.698 |
 | walker |  | 2637 | 154 | tool.poe config in pyproject.toml |  |  | 0.726 |
 | ns | 2747 |  | 164 | htmy/core.py -- Fragment & WithContext | 2.4 |  | 0.698 |
 | walker |  | 2793 | 156 | tool.mypy+pdm+pyright+pytest config in pyproject.toml |  |  | 0.698 |
-| walker |  | 2824 | 31 | README.md section #10 |  |  | 0.707 |
-| walker |  | 2850 | 26 | python decl body at htmy/io.py:11 body 13 |  |  | 0.707 |
+| walker |  | 2827 | 34 | listing of 'docs/examples' |  |  | 0.698 |
+| walker |  | 2858 | 31 | README.md section #10 |  |  | 0.707 |
 | ns | 2862 |  | 115 | htmy/core.py -- ContextAware (from_context) | 2.5 |  | 0.693 |
-| walker |  | 2896 | 46 | README.md section #46 |  |  | 0.693 |
-| walker |  | 2930 | 34 | listing of 'docs/examples' |  |  | 0.693 |
+| walker |  | 2884 | 26 | python decl body at htmy/io.py:11 body 13 |  |  | 0.693 |
+| walker |  | 2930 | 46 | README.md section #46 |  |  | 0.693 |
 | walker |  | 3002 | 72 | README.md section #16 |  |  | 0.693 |
 | walker |  | 3023 | 21 | docs/api/md.md section #0 |  |  | 0.693 |
 | walker |  | 3044 | 21 | README.md section #26 |  |  | 0.693 |

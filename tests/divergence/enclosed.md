@@ -10,12 +10,12 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | ns | 156 |  | 74 | README title + tagline | 1.3 |  | 0.860 |
 | walker |  | 163 | 17 | listing of 'packages/docs' |  |  | 0.860 |
 | walker |  | 186 | 23 | listing of 'packages/app-server' |  |  | 0.860 |
-| walker |  | 211 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.861 |
-| walker |  | 237 | 26 | listing of 'packages/crypto' |  |  | 0.861 |
-| walker |  | 263 | 26 | listing of 'packages/lib' |  |  | 0.862 |
+| walker |  | 212 | 26 | listing of 'packages/lib' |  |  | 0.861 |
+| walker |  | 228 | 16 | listing of 'packages/lib/src' |  |  | 0.862 |
+| walker |  | 233 | 5 | listing of 'packages/lib/src/files' |  |  | 0.862 |
+| walker |  | 258 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.862 |
 | ns | 274 |  | 118 | README intro paragraph | 1.4 |  | 0.750 |
-| walker |  | 279 | 16 | listing of 'packages/lib/src' |  |  | 0.751 |
-| walker |  | 284 | 5 | listing of 'packages/lib/src/files' |  |  | 0.751 |
+| walker |  | 284 | 26 | listing of 'packages/crypto' |  |  | 0.751 |
 | walker |  | 294 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.751 |
 | ns | 303 |  | 29 | .github/ directory listing | 1.5 |  | 0.681 |
 | walker |  | 323 | 29 | listing of 'packages/cli' |  |  | 0.681 |
@@ -31,22 +31,22 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | walker |  | 513 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.594 |
 | walker |  | 528 | 15 | listing of 'packages/app-server/src/modules' |  |  | 0.594 |
 | walker |  | 579 | 51 | package runtime metadata in package.json |  |  | 0.595 |
-| walker |  | 591 | 12 | listing of 'packages/app-server/src/modules/shared' |  |  | 0.596 |
-| walker |  | 595 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.596 |
-| ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.540 |
-| walker |  | 658 | 63 | listing of 'packages/app-client' |  |  | 0.540 |
-| walker |  | 669 | 11 | listing of 'packages/app-client/e2e-tests' |  |  | 0.540 |
-| walker |  | 695 | 26 | listing of 'packages/app-client/src' |  |  | 0.541 |
-| walker |  | 699 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.541 |
-| ns | 706 |  | 60 | Repo hygiene: renovate config | 1.10 |  | 0.518 |
-| walker |  | 742 | 43 | README headline in packages/app-client/README.md |  |  | 0.518 |
-| walker |  | 773 | 31 | listing of 'packages/docs/src' |  |  | 0.518 |
-| walker |  | 783 | 10 | listing of 'packages/docs/src/components' |  |  | 0.518 |
-| walker |  | 794 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.518 |
-| walker |  | 806 | 12 | listing of 'packages/docs/src/data' |  |  | 0.518 |
-| walker |  | 820 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.519 |
-| ns | 846 |  | 140 | README Project Structure prose | 1.11 |  | 0.498 |
-| walker |  | 852 | 32 | listing of 'packages/crypto/src' |  |  | 0.500 |
+| walker |  | 610 | 31 | listing of 'packages/docs/src' |  |  | 0.596 |
+| walker |  | 620 | 10 | listing of 'packages/docs/src/components' |  |  | 0.596 |
+| walker |  | 631 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.596 |
+| walker |  | 643 | 12 | listing of 'packages/docs/src/data' |  |  | 0.596 |
+| ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.541 |
+| walker |  | 657 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.541 |
+| walker |  | 689 | 32 | listing of 'packages/crypto/src' |  |  | 0.542 |
+| walker |  | 701 | 12 | listing of 'packages/app-server/src/modules/shared' |  |  | 0.543 |
+| walker |  | 705 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.543 |
+| ns | 706 |  | 60 | Repo hygiene: renovate config | 1.10 |  | 0.520 |
+| walker |  | 768 | 63 | listing of 'packages/app-client' |  |  | 0.520 |
+| walker |  | 779 | 11 | listing of 'packages/app-client/e2e-tests' |  |  | 0.520 |
+| walker |  | 805 | 26 | listing of 'packages/app-client/src' |  |  | 0.520 |
+| walker |  | 809 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.520 |
+| ns | 846 |  | 140 | README Project Structure prose | 1.11 |  | 0.500 |
+| walker |  | 852 | 43 | README headline in packages/app-client/README.md |  |  | 0.500 |
 | walker |  | 865 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.500 |
 | walker |  | 874 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.500 |
 | walker |  | 883 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.500 |
@@ -55,10 +55,10 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | walker |  | 946 | 21 | listing of 'packages/crypto/src/node' |  |  | 0.502 |
 | walker |  | 967 | 21 | listing of 'packages/crypto/src/web' |  |  | 0.503 |
 | walker |  | 988 | 21 | listing of 'packages/lib/src/api' |  |  | 0.503 |
-| walker |  | 1045 | 57 | README headline in packages/cli/README.md |  |  | 0.503 |
-| walker |  | 1104 | 59 | README headline in packages/lib/README.md |  |  | 0.503 |
-| walker |  | 1129 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.504 |
-| walker |  | 1140 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.504 |
+| walker |  | 999 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.504 |
+| walker |  | 1056 | 57 | README headline in packages/cli/README.md |  |  | 0.504 |
+| walker |  | 1115 | 59 | README headline in packages/lib/README.md |  |  | 0.504 |
+| walker |  | 1140 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.504 |
 | walker |  | 1188 | 48 | YAML config at docker-compose.yml |  |  | 0.527 |
 | ns | 1196 |  | 350 | README Features bullet list | 1.12 |  | 0.482 |
 | walker |  | 1246 | 58 | YAML config tail at docker-compose.yml |  |  | 0.557 |
@@ -154,15 +154,15 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | walker |  | 4718 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.634 |
 | walker |  | 4737 | 19 | listing of 'packages/app-server/src/modules/notes/tasks' |  |  | 0.635 |
 | ns | 4752 |  | 359 | lib public API surface (index.ts) | 3.2 |  | 0.620 |
-| walker |  | 4852 | 115 | headings outline in packages/app-client/README.md |  |  | 0.620 |
-| walker |  | 4852 | 0 | packages/app-client/README.md section #3 |  |  | 0.620 |
-| walker |  | 4929 | 77 | packages/app-client/README.md section #0 |  |  | 0.620 |
-| walker |  | 4955 | 26 | packages/cli/README.md section #7 |  |  | 0.620 |
-| walker |  | 4988 | 33 | packages/crypto/README.md section #2 |  |  | 0.620 |
-| walker |  | 5036 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.622 |
-| walker |  | 5066 | 30 | packages/app-client/README.md section #2 |  |  | 0.622 |
-| walker |  | 5102 | 36 | README.md section #1 |  |  | 0.627 |
-| walker |  | 5154 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.627 |
+| walker |  | 4789 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.621 |
+| walker |  | 4904 | 115 | headings outline in packages/app-client/README.md |  |  | 0.621 |
+| walker |  | 4904 | 0 | packages/app-client/README.md section #3 |  |  | 0.621 |
+| walker |  | 4981 | 77 | packages/app-client/README.md section #0 |  |  | 0.621 |
+| walker |  | 5007 | 26 | packages/cli/README.md section #7 |  |  | 0.621 |
+| walker |  | 5040 | 33 | packages/crypto/README.md section #2 |  |  | 0.621 |
+| walker |  | 5088 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.622 |
+| walker |  | 5118 | 30 | packages/app-client/README.md section #2 |  |  | 0.622 |
+| walker |  | 5154 | 36 | README.md section #1 |  |  | 0.627 |
 | walker |  | 5180 | 26 | packages/lib/README.md section #4 |  |  | 0.627 |
 | walker |  | 5231 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.627 |
 | walker |  | 5264 | 33 | packages/cli/README.md section #6 |  |  | 0.627 |

@@ -1,7 +1,7 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 9677
-batch_count = 152
+cumulative_tokens = 9614
+batch_count = 151
 
 [[batches]]
 position = 1
@@ -784,10 +784,38 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 34
+cum_tokens = 842
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["browser.js", "cli", "coa", "fixtures", "plugins", "regression", "svg2js", "svgo", "svgo.cjs"]
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "test/fixtures" })'
+descriptor = "listing of 'test/fixtures'"
+cost_tokens = 4
+cum_tokens = 846
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/fixtures"
+entries = ["config-loader"]
+
+[[batches]]
+position = 34
 key = 'Typescript(Export { file: "lib/svgo.js", start_line: 136 })'
 descriptor = "export at lib/svgo.js:136"
 cost_tokens = 53
-cum_tokens = 861
+cum_tokens = 899
 
 [batches.content]
 kind = "lines"
@@ -799,34 +827,6 @@ end = 143
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 34
-cum_tokens = 895
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["browser.js", "cli", "coa", "fixtures", "plugins", "regression", "svg2js", "svgo", "svgo.cjs"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "test/fixtures" })'
-descriptor = "listing of 'test/fixtures'"
-cost_tokens = 4
-cum_tokens = 899
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/fixtures"
-entries = ["config-loader"]
 
 [[batches]]
 position = 35
@@ -1144,10 +1144,24 @@ kind = "full"
 
 [[batches]]
 position = 48
+key = 'Fs(DirListing { dir: "test/regression" })'
+descriptor = "listing of 'test/regression'"
+cost_tokens = 35
+cum_tokens = 1552
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/regression"
+entries = ["compare.js", "delta.js", "extract.js", "file-lists.js", "lib.js", "lists", "optimize.js", "regression-io.js"]
+
+[[batches]]
+position = 49
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 227
-cum_tokens = 1744
+cum_tokens = 1779
 
 [batches.content]
 kind = "lines"
@@ -1159,20 +1173,6 @@ end = 73
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 49
-key = 'Fs(DirListing { dir: "test/regression" })'
-descriptor = "listing of 'test/regression'"
-cost_tokens = 35
-cum_tokens = 1779
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/regression"
-entries = ["compare.js", "delta.js", "extract.js", "file-lists.js", "lib.js", "lists", "optimize.js", "regression-io.js"]
 
 [[batches]]
 position = 50
@@ -1246,10 +1246,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 53
+key = 'Fs(DirListing { dir: "test/fixtures/config-loader" })'
+descriptor = "listing of 'test/fixtures/config-loader'"
+cost_tokens = 49
+cum_tokens = 1907
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/fixtures/config-loader"
+entries = ["cjs", "invalid-array.js", "invalid-null.js", "invalid-runtime.js", "invalid-runtime.mjs", "invalid-string.js", "mjs", "module-not-found.js", "one", "svgo.config.js"]
+
+[[batches]]
+position = 54
 key = 'Typescript(Imports { file: "lib/util/map-nodes-to-parents.js" })'
 descriptor = "imports in lib/util/map-nodes-to-parents.js"
 cost_tokens = 13
-cum_tokens = 1871
+cum_tokens = 1920
 
 [batches.content]
 kind = "lines"
@@ -1261,20 +1275,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "test/fixtures/config-loader" })'
-descriptor = "listing of 'test/fixtures/config-loader'"
-cost_tokens = 49
-cum_tokens = 1920
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/fixtures/config-loader"
-entries = ["cjs", "invalid-array.js", "invalid-null.js", "invalid-runtime.js", "invalid-runtime.mjs", "invalid-string.js", "mjs", "module-not-found.js", "one", "svgo.config.js"]
 
 [[batches]]
 position = 55
@@ -3486,21 +3486,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test/coa/testSvgRecursively/depth-1/depth-2"
 entries = ["test.1.svg", "test.svg"]
-
-[[batches]]
-position = 152
-key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 253 })'
-descriptor = "export doc at lib/style.js:253"
-cost_tokens = 63
-cum_tokens = 9677
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/style.js"
-start = 248
-end = 252
-
-[batches.content.spans.render]
-kind = "full"

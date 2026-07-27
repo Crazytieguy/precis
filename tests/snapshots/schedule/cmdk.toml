@@ -348,10 +348,52 @@ kind = "full"
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: "website" })'
+descriptor = "listing of 'website'"
+cost_tokens = 54
+cum_tokens = 1026
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website"
+entries = [".eslintrc.json", ".gitignore", "README.md", "components", "next-env.d.ts", "next.config.js", "package.json", "pages", "public", "styles", "tsconfig.json", "vercel.json"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "website/components" })'
+descriptor = "listing of 'website/components'"
+cost_tokens = 14
+cum_tokens = 1040
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components"
+entries = ["cmdk", "code", "icons", "index.ts"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "website/pages" })'
+descriptor = "listing of 'website/pages'"
+cost_tokens = 17
+cum_tokens = 1057
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/pages"
+entries = ["_app.tsx", "_document.tsx", "index.tsx"]
+
+[[batches]]
+position = 19
 key = 'Typescript(ExportNames { file: "cmdk/tsup.config.ts" })'
 descriptor = "export names surface in cmdk/tsup.config.ts"
 cost_tokens = 13
-cum_tokens = 985
+cum_tokens = 1070
 
 [batches.content]
 kind = "lines"
@@ -373,11 +415,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 20
 key = 'Json(Entry { file: "cmdk/package.json" })'
 descriptor = "package entrypoints in cmdk/package.json"
 cost_tokens = 145
-cum_tokens = 1130
+cum_tokens = 1215
 
 [batches.content]
 kind = "lines"
@@ -399,53 +441,39 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "website" })'
-descriptor = "listing of 'website'"
-cost_tokens = 54
-cum_tokens = 1184
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website"
-entries = [".eslintrc.json", ".gitignore", "README.md", "components", "next-env.d.ts", "next.config.js", "package.json", "pages", "public", "styles", "tsconfig.json", "vercel.json"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "website/components" })'
-descriptor = "listing of 'website/components'"
-cost_tokens = 14
-cum_tokens = 1198
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components"
-entries = ["cmdk", "code", "icons", "index.ts"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "website/pages" })'
-descriptor = "listing of 'website/pages'"
-cost_tokens = 17
-cum_tokens = 1215
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/pages"
-entries = ["_app.tsx", "_document.tsx", "index.tsx"]
-
-[[batches]]
 position = 21
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 58
+cum_tokens = 1273
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["basic.test.ts", "dialog.test.ts", "group.test.ts", "item.test.ts", "keybind.test.ts", "next-env.d.ts", "numeric.test.ts", "package.json", "pages", "props.test.ts", "style.css", "tsconfig.json"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "website/components/cmdk" })'
+descriptor = "listing of 'website/components/cmdk'"
+cost_tokens = 23
+cum_tokens = 1296
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components/cmdk"
+entries = ["framer.tsx", "linear.tsx", "raycast.tsx", "vercel.tsx"]
+
+[[batches]]
+position = 23
 key = 'Plaintext(Whole { file: "pnpm-workspace.yaml" })'
 descriptor = "plaintext config pnpm-workspace.yaml"
 cost_tokens = 34
-cum_tokens = 1249
+cum_tokens = 1330
 
 [batches.content]
 kind = "lines"
@@ -457,34 +485,6 @@ end = 4
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 58
-cum_tokens = 1307
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["basic.test.ts", "dialog.test.ts", "group.test.ts", "item.test.ts", "keybind.test.ts", "next-env.d.ts", "numeric.test.ts", "package.json", "pages", "props.test.ts", "style.css", "tsconfig.json"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "website/components/cmdk" })'
-descriptor = "listing of 'website/components/cmdk'"
-cost_tokens = 23
-cum_tokens = 1330
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components/cmdk"
-entries = ["framer.tsx", "linear.tsx", "raycast.tsx", "vercel.tsx"]
 
 [[batches]]
 position = 24
@@ -2382,10 +2382,24 @@ kind = "full"
 
 [[batches]]
 position = 87
+key = 'Fs(DirListing { dir: "test/pages" })'
+descriptor = "listing of 'test/pages'"
+cost_tokens = 60
+cum_tokens = 4235
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/pages"
+entries = ["_app.tsx", "dialog.tsx", "group.tsx", "huge.tsx", "index.tsx", "item-advanced.tsx", "item.tsx", "keybinds.tsx", "numeric.tsx", "portal.tsx", "props.tsx"]
+
+[[batches]]
+position = 88
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 35
-cum_tokens = 4210
+cum_tokens = 4270
 
 [batches.content]
 kind = "lines"
@@ -2397,20 +2411,6 @@ end = 252
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 88
-key = 'Fs(DirListing { dir: "test/pages" })'
-descriptor = "listing of 'test/pages'"
-cost_tokens = 60
-cum_tokens = 4270
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/pages"
-entries = ["_app.tsx", "dialog.tsx", "group.tsx", "huge.tsx", "index.tsx", "item-advanced.tsx", "item.tsx", "keybinds.tsx", "numeric.tsx", "portal.tsx", "props.tsx"]
 
 [[batches]]
 position = 89

@@ -159,10 +159,24 @@ entries = ["ResponsePromise.ts", "common.ts", "hooks.ts", "ky.ts", "options.ts",
 
 [[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "source/utils" })'
+descriptor = "listing of 'source/utils'"
+cost_tokens = 38
+cum_tokens = 201
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/utils"
+entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
+
+[[batches]]
+position = 11
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 71
-cum_tokens = 234
+cum_tokens = 272
 
 [batches.content]
 kind = "lines"
@@ -182,20 +196,6 @@ end = 13
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "source/utils" })'
-descriptor = "listing of 'source/utils'"
-cost_tokens = 38
-cum_tokens = 272
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/utils"
-entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
 
 [[batches]]
 position = 12
@@ -557,10 +557,24 @@ kind = "full"
 
 [[batches]]
 position = 29
+key = 'Fs(DirListing { dir: "test/helpers" })'
+descriptor = "listing of 'test/helpers'"
+cost_tokens = 32
+cum_tokens = 1780
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/helpers"
+entries = ["create-http-test-server.ts", "create-large-file.ts", "index.ts", "parse-body.ts", "with-page.ts", "with-performance.ts"]
+
+[[batches]]
+position = 30
 key = 'Typescript(Imports { file: "source/errors/TimeoutError.ts" })'
 descriptor = "imports in source/errors/TimeoutError.ts"
 cost_tokens = 14
-cum_tokens = 1762
+cum_tokens = 1794
 
 [batches.content]
 kind = "lines"
@@ -574,11 +588,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 340
-cum_tokens = 2102
+cum_tokens = 2134
 
 [batches.content]
 kind = "lines"
@@ -936,11 +950,11 @@ end = 1353
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Markdown(Section { file: "readme.md", section_index: 49, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #49"
 cost_tokens = 16
-cum_tokens = 2118
+cum_tokens = 2150
 
 [batches.content]
 kind = "lines"
@@ -954,11 +968,11 @@ end = 1345
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Markdown(Section { file: "readme.md", section_index: 48, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #48"
 cost_tokens = 20
-cum_tokens = 2138
+cum_tokens = 2170
 
 [batches.content]
 kind = "lines"
@@ -972,11 +986,11 @@ end = 1341
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(Section { file: "readme.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #22"
 cost_tokens = 15
-cum_tokens = 2153
+cum_tokens = 2185
 
 [batches.content]
 kind = "lines"
@@ -990,11 +1004,11 @@ end = 866
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(Section { file: "readme.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #7"
 cost_tokens = 18
-cum_tokens = 2171
+cum_tokens = 2203
 
 [batches.content]
 kind = "lines"
@@ -1008,11 +1022,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(Section { file: "readme.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #11"
 cost_tokens = 19
-cum_tokens = 2190
+cum_tokens = 2222
 
 [batches.content]
 kind = "lines"
@@ -1026,11 +1040,11 @@ end = 747
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 82
-cum_tokens = 2272
+cum_tokens = 2304
 
 [batches.content]
 kind = "lines"
@@ -1042,20 +1056,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "test/helpers" })'
-descriptor = "listing of 'test/helpers'"
-cost_tokens = 32
-cum_tokens = 2304
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/helpers"
-entries = ["create-http-test-server.ts", "create-large-file.ts", "index.ts", "parse-body.ts", "with-page.ts", "with-performance.ts"]
 
 [[batches]]
 position = 38

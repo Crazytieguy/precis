@@ -12,22 +12,22 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 | walker |  | 182 | 32 | go module identity in go.mod |  |  | 0.983 |
 | walker |  | 192 | 10 | plaintext config VERSION |  |  | 0.984 |
 | walker |  | 202 | 10 | go decl doc at main.go:11 |  |  | 0.985 |
+| walker |  | 243 | 41 | listing of 'pkg' |  |  | 0.985 |
 | ns | 258 |  | 96 | Binary entrypoint (main.go) + VERSION | 1.4 |  | 0.856 |
-| walker |  | 263 | 61 | README headline in README.md |  |  | 0.856 |
+| walker |  | 259 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.856 |
 | ns | 280 |  | 22 | pkg/exprparser/ directory listing | 2.1 |  | 0.805 |
-| walker |  | 304 | 41 | listing of 'pkg' |  |  | 0.805 |
-| walker |  | 320 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.805 |
-| walker |  | 329 | 9 | listing of 'pkg/gh' |  |  | 0.717 |
-| ns | 329 |  | 49 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.717 |
-| walker |  | 351 | 22 | listing of 'pkg/exprparser' |  |  | 0.774 |
-| walker |  | 375 | 24 | listing of 'pkg/artifacts' |  |  | 0.799 |
-| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.719 |
-| walker |  | 400 | 25 | listing of 'pkg/artifactcache' |  |  | 0.801 |
-| walker |  | 403 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.801 |
-| walker |  | 416 | 13 | listing of 'pkg/filecollector' |  |  | 0.802 |
-| walker |  | 420 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.802 |
-| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.719 |
-| walker |  | 453 | 33 | listing of 'pkg/lookpath' |  |  | 0.724 |
+| walker |  | 281 | 22 | listing of 'pkg/exprparser' |  |  | 0.869 |
+| walker |  | 290 | 9 | listing of 'pkg/gh' |  |  | 0.870 |
+| walker |  | 314 | 24 | listing of 'pkg/artifacts' |  |  | 0.874 |
+| ns | 329 |  | 49 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.799 |
+| walker |  | 339 | 25 | listing of 'pkg/artifactcache' |  |  | 0.890 |
+| walker |  | 342 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.890 |
+| walker |  | 355 | 13 | listing of 'pkg/filecollector' |  |  | 0.891 |
+| walker |  | 359 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.891 |
+| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.802 |
+| walker |  | 392 | 33 | listing of 'pkg/lookpath' |  |  | 0.808 |
+| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.724 |
+| walker |  | 453 | 61 | README headline in README.md |  |  | 0.724 |
 | walker |  | 472 | 19 | listing of 'pkg/schema' |  |  | 0.729 |
 | walker |  | 518 | 46 | listing of 'cmd' |  |  | 0.791 |
 | walker |  | 537 | 19 | listing of 'cmd/testdata' |  |  | 0.843 |

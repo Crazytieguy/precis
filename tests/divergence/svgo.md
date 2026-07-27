@@ -40,9 +40,9 @@ Score(3000)=0.435 I=0.763 C=0.248 ns_rows≤3K=15/40 (reached=5 partial=1 missin
 | walker |  | 808 | 42 | export names surface in lib/svgo-node.js |  |  | 0.634 |
 | walker |  | 808 | 0 | export at lib/svgo-node.js:44 |  |  | 0.634 |
 | walker |  | 808 | 0 | export at lib/svgo-node.js:83 |  |  | 0.634 |
-| walker |  | 861 | 53 | export at lib/svgo.js:136 |  |  | 0.636 |
-| walker |  | 895 | 34 | listing of 'test' |  |  | 0.637 |
-| walker |  | 899 | 4 | listing of 'test/fixtures' |  |  | 0.637 |
+| walker |  | 842 | 34 | listing of 'test' |  |  | 0.635 |
+| walker |  | 846 | 4 | listing of 'test/fixtures' |  |  | 0.635 |
+| walker |  | 899 | 53 | export at lib/svgo.js:136 |  |  | 0.637 |
 | walker |  | 910 | 11 | README.md section #8 |  |  | 0.637 |
 | walker |  | 965 | 55 | README.md section #1 |  |  | 0.673 |
 | ns | 967 |  | 178 | README — CLI usage | 2.1 |  | 0.574 |
@@ -60,14 +60,14 @@ Score(3000)=0.435 I=0.763 C=0.248 ns_rows≤3K=15/40 (reached=5 partial=1 missin
 | walker |  | 1482 | 20 | export body at lib/xast.js:32 body 33 |  |  | 0.462 |
 | walker |  | 1517 | 35 | export body at lib/xast.js:50 body 51 |  |  | 0.462 |
 | ns | 1530 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.433 |
-| walker |  | 1744 | 227 | package entrypoints in package.json |  |  | 0.531 |
-| walker |  | 1779 | 35 | listing of 'test/regression' |  |  | 0.531 |
+| walker |  | 1552 | 35 | listing of 'test/regression' |  |  | 0.433 |
+| walker |  | 1779 | 227 | package entrypoints in package.json |  |  | 0.531 |
 | ns | 1833 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.481 |
 | walker |  | 1836 | 57 | README.md section #14 |  |  | 0.481 |
 | walker |  | 1858 | 22 | export names surface in lib/stringifier.js |  |  | 0.481 |
 | walker |  | 1858 | 0 | export at lib/stringifier.js:66 |  |  | 0.481 |
-| walker |  | 1871 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.481 |
-| walker |  | 1920 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.481 |
+| walker |  | 1907 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.481 |
+| walker |  | 1920 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.481 |
 | ns | 1923 |  | 90 | lib/ directory listing | 3.1 |  | 0.536 |
 | ns | 2307 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.482 |
 | walker |  | 2308 | 388 | listing of 'docs/04-plugins' |  |  | 0.482 |
@@ -191,6 +191,5 @@ Score(3000)=0.435 I=0.763 C=0.248 ns_rows≤3K=15/40 (reached=5 partial=1 missin
 | walker |  | 9604 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.561 |
 | walker |  | 9604 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.561 |
 | walker |  | 9614 | 10 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.561 |
-| walker |  | 9677 | 63 | export doc at lib/style.js:253 |  |  | 0.561 |
 | ns | 9853 |  | 672 | test/plugins/_index.test.js — per-plugin fixture convention | 7.2 |  | 0.541 |
 | ns | 9963 |  | 110 | test/plugins/removeComments.01.svg.txt — a worked fixture example | 7.3 |  | 0.536 |

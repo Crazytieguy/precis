@@ -1873,10 +1873,24 @@ entries = ["__init__.py", "conftest.py", "data", "renderer", "test_formatter.py"
 
 [[batches]]
 position = 75
+key = 'Fs(DirListing { dir: "tests/renderer" })'
+descriptor = "listing of 'tests/renderer'"
+cost_tokens = 28
+cum_tokens = 2467
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/renderer"
+entries = ["test_default_renderer.py", "test_renderer_comparison.py", "test_renderer_in_context.py", "test_streaming_renderers.py"]
+
+[[batches]]
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 41, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #41"
 cost_tokens = 16
-cum_tokens = 2455
+cum_tokens = 2483
 
 [batches.content]
 kind = "lines"
@@ -1888,20 +1902,6 @@ end = 305
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "tests/renderer" })'
-descriptor = "listing of 'tests/renderer'"
-cost_tokens = 28
-cum_tokens = 2483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/renderer"
-entries = ["test_default_renderer.py", "test_renderer_comparison.py", "test_renderer_in_context.py", "test_streaming_renderers.py"]
 
 [[batches]]
 position = 77
@@ -1941,10 +1941,24 @@ kind = "full"
 
 [[batches]]
 position = 79
+key = 'Fs(DirListing { dir: "docs/examples" })'
+descriptor = "listing of 'docs/examples'"
+cost_tokens = 34
+cum_tokens = 2827
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples"
+entries = ["fastapi-htmx-tailwind-daisyui.md", "index.md", "internationalization.md", "markdown.md", "snippet-slots-fastapi.md"]
+
+[[batches]]
+position = 80
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 31
-cum_tokens = 2824
+cum_tokens = 2858
 
 [batches.content]
 kind = "lines"
@@ -1958,11 +1972,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(DeclBody { file: "htmy/io.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at htmy/io.py:11 body 13"
 cost_tokens = 26
-cum_tokens = 2850
+cum_tokens = 2884
 
 [batches.content]
 kind = "lines"
@@ -1976,11 +1990,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Markdown(Section { file: "README.md", section_index: 46, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #46"
 cost_tokens = 46
-cum_tokens = 2896
+cum_tokens = 2930
 
 [batches.content]
 kind = "lines"
@@ -1992,20 +2006,6 @@ end = 339
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 82
-key = 'Fs(DirListing { dir: "docs/examples" })'
-descriptor = "listing of 'docs/examples'"
-cost_tokens = 34
-cum_tokens = 2930
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples"
-entries = ["fastapi-htmx-tailwind-daisyui.md", "index.md", "internationalization.md", "markdown.md", "snippet-slots-fastapi.md"]
 
 [[batches]]
 position = 83

@@ -75,10 +75,10 @@ Score(3000)=0.619 I=0.813 C=0.471 ns_rows≤3K=20/51 (reached=13 partial=0 missi
 | ns | 1687 |  | 383 | beetsplug/ full plugin-file listing | 1.18 |  | 0.581 |
 | walker |  | 1725 | 69 | tool.docstrfmt config in pyproject.toml |  |  | 0.581 |
 | walker |  | 1794 | 69 | [package] in pyproject.toml |  |  | 0.587 |
-| walker |  | 1801 | 7 | python imports #11 in beets/util/__init__.py |  |  | 0.587 |
-| walker |  | 1816 | 15 | listing of 'beets/test' |  |  | 0.587 |
-| walker |  | 1855 | 39 | listing of '.github' |  |  | 0.600 |
-| walker |  | 1886 | 31 | listing of '.github/workflows' |  |  | 0.627 |
+| walker |  | 1833 | 39 | listing of '.github' |  |  | 0.600 |
+| walker |  | 1864 | 31 | listing of '.github/workflows' |  |  | 0.627 |
+| walker |  | 1871 | 7 | python imports #11 in beets/util/__init__.py |  |  | 0.627 |
+| walker |  | 1886 | 15 | listing of 'beets/test' |  |  | 0.627 |
 | walker |  | 2004 | 118 | python decl names surface in beets/ui/commands/import_/__init__.py |  |  | 0.627 |
 | walker |  | 2004 | 0 | python decl at beets/ui/commands/import_/__init__.py:14 |  |  | 0.627 |
 | walker |  | 2004 | 0 | python decl at beets/ui/commands/import_/__init__.py:34 |  |  | 0.627 |

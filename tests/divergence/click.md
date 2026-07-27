@@ -10,24 +10,24 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 164 | 30 | headings outline in README.md |  |  | 1.000 |
 | walker |  | 195 | 31 | [dependencies] in pyproject.toml |  |  | 1.000 |
 | walker |  | 206 | 11 | listing of '.devcontainer' |  |  | 1.000 |
-| ns | 236 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.816 |
-| ns | 265 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.783 |
-| walker |  | 292 | 86 | listing of 'src/click' |  |  | 0.812 |
-| walker |  | 307 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.812 |
-| walker |  | 378 | 71 | python imports in src/click/__init__.py |  |  | 0.813 |
-| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.629 |
-| walker |  | 396 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.629 |
-| walker |  | 426 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.629 |
-| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.560 |
-| walker |  | 526 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.563 |
-| walker |  | 544 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.563 |
-| walker |  | 544 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.563 |
-| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.650 |
-| walker |  | 705 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.652 |
-| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.500 |
-| walker |  | 849 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.504 |
-| walker |  | 862 | 13 | listing of '.github' |  |  | 0.504 |
-| walker |  | 885 | 23 | listing of '.github/workflows' |  |  | 0.506 |
+| walker |  | 219 | 13 | listing of '.github' |  |  | 1.000 |
+| ns | 236 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.817 |
+| walker |  | 242 | 23 | listing of '.github/workflows' |  |  | 0.820 |
+| ns | 265 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.787 |
+| walker |  | 328 | 86 | listing of 'src/click' |  |  | 0.816 |
+| walker |  | 343 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.816 |
+| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.631 |
+| walker |  | 414 | 71 | python imports in src/click/__init__.py |  |  | 0.632 |
+| walker |  | 432 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.632 |
+| walker |  | 462 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.632 |
+| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.562 |
+| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.649 |
+| walker |  | 562 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.653 |
+| walker |  | 580 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.653 |
+| walker |  | 580 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.653 |
+| walker |  | 741 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.655 |
+| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.502 |
+| walker |  | 885 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.506 |
 | ns | 943 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.439 |
 | walker |  | 973 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.440 |
 | walker |  | 1072 | 99 | README.md section #0 |  |  | 0.440 |
@@ -41,13 +41,13 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 1648 | 180 | python imports #8 in src/click/__init__.py |  |  | 0.579 |
 | walker |  | 1684 | 36 | listing of 'examples' |  |  | 0.586 |
 | walker |  | 1762 | 78 | [package] in pyproject.toml |  |  | 0.605 |
-| walker |  | 1778 | 16 | python decl names surface in src/click/_textwrap.py |  |  | 0.605 |
-| walker |  | 1778 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.605 |
 | ns | 1820 |  | 307 | click/__init__.py: decorators + exceptions exports | 2.2 |  | 0.628 |
-| walker |  | 1912 | 134 | manifest config in pyproject.toml |  |  | 0.628 |
-| walker |  | 1941 | 29 | docs/setuptools.md section #0 |  |  | 0.628 |
-| ns | 2055 |  | 235 | click/__init__.py: formatting/globals/termui exports | 2.3 |  | 0.643 |
-| walker |  | 2068 | 127 | listing of 'tests' |  |  | 0.687 |
+| walker |  | 1889 | 127 | listing of 'tests' |  |  | 0.676 |
+| walker |  | 1905 | 16 | python decl names surface in src/click/_textwrap.py |  |  | 0.676 |
+| walker |  | 1905 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.676 |
+| walker |  | 2039 | 134 | manifest config in pyproject.toml |  |  | 0.676 |
+| ns | 2055 |  | 235 | click/__init__.py: formatting/globals/termui exports | 2.3 |  | 0.687 |
+| walker |  | 2068 | 29 | docs/setuptools.md section #0 |  |  | 0.687 |
 | walker |  | 2231 | 163 | tool.mypy+pyright config in pyproject.toml |  |  | 0.687 |
 | ns | 2237 |  | 182 | click/__init__.py: parameter-type exports | 2.4 |  | 0.696 |
 | walker |  | 2306 | 75 | README.md section #3 |  |  | 0.696 |
@@ -58,10 +58,10 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 2659 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.699 |
 | walker |  | 2668 | 9 | python method at src/click/_textwrap.py:27 |  |  | 0.699 |
 | walker |  | 2721 | 53 | docs/license.md section #0 |  |  | 0.699 |
-| walker |  | 2742 | 21 | headings outline in docs/click-concepts.md |  |  | 0.699 |
 | ns | 2744 |  | 419 | _utils.py: UNSET / FLAG_NEEDS_VALUE sentinels | 2.6 |  | 0.654 |
-| walker |  | 2763 | 21 | headings outline in docs/unicode-support.md |  |  | 0.654 |
-| walker |  | 2819 | 56 | listing of 'tests/typing' |  |  | 0.689 |
+| walker |  | 2777 | 56 | listing of 'tests/typing' |  |  | 0.689 |
+| walker |  | 2798 | 21 | headings outline in docs/click-concepts.md |  |  | 0.689 |
+| walker |  | 2819 | 21 | headings outline in docs/unicode-support.md |  |  | 0.689 |
 | walker |  | 2841 | 22 | headings outline in docs/command-line-reference.md |  |  | 0.689 |
 | walker |  | 2863 | 22 | headings outline in docs/design-opinions.md |  |  | 0.689 |
 | walker |  | 2931 | 68 | docs/design-opinions.md section #0 |  |  | 0.689 |

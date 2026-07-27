@@ -123,6 +123,13 @@ eslint.base.mjs
 examples/
     basic.ts
     d2ql/
+        README.md
+        basic_select.ts
+        functions.ts
+        group_by.ts
+        joins.ts
+        kitchen_sink.ts
+        where_conditions.ts
     electric/
         CHANGELOG.md
         README.md
@@ -271,12 +278,6 @@ packages/
                   97→  constructor(graph: ID2, writer: DifferenceStreamWriter<T>) {
                 …
                  166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-                 167→  sendData(
-                 168→    version: Version | number | number[],
-                 169→    collection: MultiSet<T> | MultiSetArray<T>,
-                 170→  ): void {
-                …
-                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
                 …
             electric/
                 index.ts

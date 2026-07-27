@@ -37,14 +37,14 @@ Score(3000)=0.847 I=0.910 C=0.788 ns_rows≤3K=17/42 (reached=12 partial=1 missi
 | ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.472 |
 | ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.520 |
 | walker |  | 1365 | 318 | export at src/index.tsx:139 |  |  | 0.527 |
-| walker |  | 1379 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.527 |
-| walker |  | 1393 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.527 |
 | ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.556 |
-| walker |  | 1530 | 137 | package scripts in package.json |  |  | 0.613 |
-| walker |  | 1545 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.613 |
-| walker |  | 1545 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.613 |
-| walker |  | 1597 | 52 | listing of 'test' |  |  | 0.678 |
-| walker |  | 1600 | 3 | listing of 'test/src' |  |  | 0.678 |
+| walker |  | 1417 | 52 | listing of 'test' |  |  | 0.622 |
+| walker |  | 1420 | 3 | listing of 'test/src' |  |  | 0.622 |
+| walker |  | 1434 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.622 |
+| walker |  | 1448 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.622 |
+| walker |  | 1585 | 137 | package scripts in package.json |  |  | 0.678 |
+| walker |  | 1600 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.678 |
+| walker |  | 1600 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.678 |
 | walker |  | 1616 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.678 |
 | ns | 1701 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.705 |
 | walker |  | 1788 | 172 | package entrypoints in package.json |  |  | 0.778 |
@@ -56,13 +56,13 @@ Score(3000)=0.847 I=0.910 C=0.788 ns_rows≤3K=17/42 (reached=12 partial=1 missi
 | walker |  | 3168 | 176 | package identity metadata in package.json |  |  | 0.847 |
 | ns | 3189 |  | 318 | Root() destructured props + defaults | 2.7 | 2.2 | 0.851 |
 | walker |  | 3279 | 111 | json config tsconfig.json |  |  | 0.851 |
-| walker |  | 3315 | 36 | export names surface in src/context.ts |  |  | 0.851 |
-| walker |  | 3315 | 0 | export at src/context.ts:69 |  |  | 0.851 |
-| walker |  | 3414 | 99 | listing of 'test/src/app' |  |  | 0.908 |
+| walker |  | 3378 | 99 | listing of 'test/src/app' |  |  | 0.908 |
+| walker |  | 3414 | 36 | export names surface in src/context.ts |  |  | 0.908 |
+| walker |  | 3414 | 0 | export at src/context.ts:69 |  |  | 0.908 |
 | walker |  | 3431 | 17 | imports in playwright.config.ts |  |  | 0.908 |
-| walker |  | 3468 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.908 |
-| walker |  | 3468 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.908 |
-| walker |  | 3534 | 66 | listing of 'test/tests' |  |  | 0.938 |
+| walker |  | 3497 | 66 | listing of 'test/tests' |  |  | 0.938 |
+| walker |  | 3534 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.938 |
+| walker |  | 3534 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.938 |
 | ns | 3558 |  | 369 | Overlay component (full) | 2.8 | 2.2 | 0.891 |
 | walker |  | 3848 | 314 | imports in src/index.tsx |  |  | 0.891 |
 | walker |  | 3860 | 12 | imports in src/use-controllable-state.ts |  |  | 0.891 |

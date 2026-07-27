@@ -13,9 +13,9 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 | walker |  | 130 | 21 | listing of 'source/errors' |  |  | 1.000 |
 | ns | 145 |  | 105 | package.json — identity | 1.2 |  | 0.774 |
 | walker |  | 163 | 33 | listing of 'source/types' |  |  | 0.799 |
-| walker |  | 234 | 71 | package identity in package.json |  |  | 0.874 |
-| ns | 250 |  | 105 | package.json — scripts | 1.3 |  | 0.731 |
-| walker |  | 272 | 38 | listing of 'source/utils' |  |  | 0.752 |
+| walker |  | 201 | 38 | listing of 'source/utils' |  |  | 0.806 |
+| ns | 250 |  | 105 | package.json — scripts | 1.3 |  | 0.693 |
+| walker |  | 272 | 71 | package identity in package.json |  |  | 0.752 |
 | walker |  | 338 | 66 | listing of 'test' |  |  | 0.752 |
 | ns | 366 |  | 116 | source/ tree breadth | 1.4 |  | 0.845 |
 | walker |  | 369 | 31 | package runtime metadata in package.json |  |  | 0.845 |
@@ -43,16 +43,16 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 | ns | 1452 |  | 61 | GitHub community files | 3.4 |  | 0.713 |
 | walker |  | 1648 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.719 |
 | walker |  | 1748 | 100 | imports in source/index.ts |  |  | 0.724 |
-| walker |  | 1762 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.724 |
-| ns | 1932 |  | 480 | index.ts — createInstance implementation | 4.1 |  | 0.729 |
-| walker |  | 2102 | 340 | headings outline in readme.md |  |  | 0.811 |
-| walker |  | 2118 | 16 | readme.md section #49 |  |  | 0.811 |
-| walker |  | 2138 | 20 | readme.md section #48 |  |  | 0.811 |
-| walker |  | 2153 | 15 | readme.md section #22 |  |  | 0.811 |
-| walker |  | 2171 | 18 | readme.md section #7 |  |  | 0.811 |
-| walker |  | 2190 | 19 | readme.md section #11 |  |  | 0.811 |
-| walker |  | 2272 | 82 | json config tsconfig.json |  |  | 0.840 |
-| walker |  | 2304 | 32 | listing of 'test/helpers' |  |  | 0.877 |
+| walker |  | 1780 | 32 | listing of 'test/helpers' |  |  | 0.770 |
+| walker |  | 1794 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.771 |
+| ns | 1932 |  | 480 | index.ts — createInstance implementation | 4.1 |  | 0.768 |
+| walker |  | 2134 | 340 | headings outline in readme.md |  |  | 0.849 |
+| walker |  | 2150 | 16 | readme.md section #49 |  |  | 0.849 |
+| walker |  | 2170 | 20 | readme.md section #48 |  |  | 0.849 |
+| walker |  | 2185 | 15 | readme.md section #22 |  |  | 0.849 |
+| walker |  | 2203 | 18 | readme.md section #7 |  |  | 0.849 |
+| walker |  | 2222 | 19 | readme.md section #11 |  |  | 0.849 |
+| walker |  | 2304 | 82 | json config tsconfig.json |  |  | 0.877 |
 | walker |  | 2316 | 12 | export names surface in source/core/Ky.ts |  |  | 0.877 |
 | walker |  | 2337 | 21 | readme.md section #13 |  |  | 0.877 |
 | ns | 2342 |  | 410 | index.ts — public export roster | 4.2 |  | 0.791 |

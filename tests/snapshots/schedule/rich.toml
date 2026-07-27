@@ -319,24 +319,10 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Fs(DirListing { dir: "benchmarks" })'
-descriptor = "listing of 'benchmarks'"
-cost_tokens = 21
-cum_tokens = 736
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benchmarks"
-entries = ["README.md", "__init__.py", "benchmarks.py", "results", "snippets.py"]
-
-[[batches]]
-position = 13
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 23
-cum_tokens = 759
+cum_tokens = 738
 
 [batches.content]
 kind = "fs"
@@ -346,11 +332,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 14
+position = 13
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 30
-cum_tokens = 789
+cum_tokens = 768
 
 [batches.content]
 kind = "fs"
@@ -358,6 +344,20 @@ kind = "fs"
 [[batches.content.groups]]
 parent = ".github/workflows"
 entries = ["codeql.yml", "codespell.yml", "comment.yml", "newissue.yml", "pythonpackage.yml", "readmechanged.yml"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "benchmarks" })'
+descriptor = "listing of 'benchmarks'"
+cost_tokens = 21
+cum_tokens = 789
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmarks"
+entries = ["README.md", "__init__.py", "benchmarks.py", "results", "snippets.py"]
 
 [[batches]]
 position = 15
@@ -397,10 +397,52 @@ kind = "full"
 
 [[batches]]
 position = 17
+key = 'Fs(DirListing { dir: "tools" })'
+descriptor = "listing of 'tools'"
+cost_tokens = 43
+cum_tokens = 1069
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tools"
+entries = ["README.md", "cats.json", "make_emoji.py", "make_width_tables.py", "movies.md", "profile_divide.py", "profile_pretty.py", "stress_test_pretty.py"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "docs/source" })'
+descriptor = "listing of 'docs/source'"
+cost_tokens = 135
+cum_tokens = 1204
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/source"
+entries = ["appendix", "appendix.rst", "columns.rst", "conf.py", "console.rst", "group.rst", "highlighting.rst", "index.rst", "introduction.rst", "layout.rst", "live.rst", "logging.rst", "markdown.rst", "markup.rst", "padding.rst", "panel.rst", "pretty.rst", "progress.rst", "prompt.rst", "protocol.rst", "reference", "reference.rst", "style.rst", "syntax.rst", "tables.rst", "text.rst", "traceback.rst", "tree.rst"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "docs/source/appendix" })'
+descriptor = "listing of 'docs/source/appendix'"
+cost_tokens = 10
+cum_tokens = 1214
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/source/appendix"
+entries = ["box.rst", "colors.rst"]
+
+[[batches]]
+position = 20
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 81
-cum_tokens = 1107
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
@@ -428,48 +470,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "tools" })'
-descriptor = "listing of 'tools'"
-cost_tokens = 43
-cum_tokens = 1150
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tools"
-entries = ["README.md", "cats.json", "make_emoji.py", "make_width_tables.py", "movies.md", "profile_divide.py", "profile_pretty.py", "stress_test_pretty.py"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "docs/source" })'
-descriptor = "listing of 'docs/source'"
-cost_tokens = 135
-cum_tokens = 1285
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/source"
-entries = ["appendix", "appendix.rst", "columns.rst", "conf.py", "console.rst", "group.rst", "highlighting.rst", "index.rst", "introduction.rst", "layout.rst", "live.rst", "logging.rst", "markdown.rst", "markup.rst", "padding.rst", "panel.rst", "pretty.rst", "progress.rst", "prompt.rst", "protocol.rst", "reference", "reference.rst", "style.rst", "syntax.rst", "tables.rst", "text.rst", "traceback.rst", "tree.rst"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "docs/source/appendix" })'
-descriptor = "listing of 'docs/source/appendix'"
-cost_tokens = 10
-cum_tokens = 1295
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/source/appendix"
-entries = ["box.rst", "colors.rst"]
 
 [[batches]]
 position = 21

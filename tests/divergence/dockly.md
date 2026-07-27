@@ -11,10 +11,10 @@ Score(3000)=0.727 I=0.860 C=0.614 ns_rows≤3K=19/43 (reached=12 partial=1 missi
 | walker |  | 175 | 66 | package identity in package.json |  |  | 0.944 |
 | walker |  | 180 | 5 | listing of '.devcontainer' |  |  | 0.944 |
 | ns | 202 |  | 62 | package.json bin + engines | 1.3 |  | 0.833 |
-| walker |  | 217 | 37 | listing of 'widgets' |  |  | 0.838 |
-| walker |  | 256 | 39 | listing of 'src' |  |  | 0.848 |
-| walker |  | 265 | 9 | listing of 'src/themes' |  |  | 0.849 |
-| walker |  | 296 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.850 |
+| walker |  | 219 | 39 | listing of 'src' |  |  | 0.839 |
+| walker |  | 228 | 9 | listing of 'src/themes' |  |  | 0.839 |
+| walker |  | 259 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.841 |
+| walker |  | 296 | 37 | listing of 'widgets' |  |  | 0.850 |
 | ns | 304 |  | 102 | README lede | 1.4 |  | 0.766 |
 | walker |  | 315 | 19 | listing of 'widgets/images' |  |  | 0.768 |
 | walker |  | 325 | 10 | export names surface in lib/node.version.js |  |  | 0.768 |
@@ -65,14 +65,14 @@ Score(3000)=0.727 I=0.860 C=0.614 ns_rows≤3K=19/43 (reached=12 partial=1 missi
 | walker |  | 1455 | 10 | export names surface in src/enum.js |  |  | 0.537 |
 | walker |  | 1575 | 120 | package scripts in package.json |  |  | 0.590 |
 | walker |  | 1588 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.590 |
-| walker |  | 1599 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.590 |
 | ns | 1619 |  | 215 | README FAQ: PuTTY / icons / alternatives | 1.12 |  | 0.555 |
-| walker |  | 1651 | 52 | listing of 'docs' |  |  | 0.557 |
-| walker |  | 1660 | 9 | listing of 'docs/src' |  |  | 0.558 |
-| walker |  | 1673 | 13 | listing of 'docs/src/pages' |  |  | 0.558 |
+| walker |  | 1640 | 52 | listing of 'docs' |  |  | 0.557 |
+| walker |  | 1649 | 9 | listing of 'docs/src' |  |  | 0.558 |
+| walker |  | 1662 | 13 | listing of 'docs/src/pages' |  |  | 0.558 |
+| walker |  | 1673 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.558 |
+| walker |  | 1698 | 25 | listing of 'docs/src/components' |  |  | 0.558 |
 | ns | 1728 |  | 109 | Code directory rosters: src/, hooks/, widgets/, lib/ | 2.1 |  | 0.617 |
-| walker |  | 1768 | 95 | module item body at index.js:72 body 73 |  |  | 0.618 |
-| walker |  | 1793 | 25 | listing of 'docs/src/components' |  |  | 0.618 |
+| walker |  | 1793 | 95 | module item body at index.js:72 body 73 |  |  | 0.618 |
 | walker |  | 1804 | 11 | export member at src/screen.js:18 member 107 |  |  | 0.618 |
 | walker |  | 1818 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.618 |
 | walker |  | 1851 | 33 | package dev/peer dependencies in package.json |  |  | 0.618 |

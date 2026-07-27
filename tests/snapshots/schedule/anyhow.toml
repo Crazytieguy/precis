@@ -37,10 +37,24 @@ kind = "full"
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 49
+cum_tokens = 110
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["backtrace.rs", "chain.rs", "context.rs", "ensure.rs", "error.rs", "fmt.rs", "kind.rs", "lib.rs", "macros.rs", "nightly.rs", "ptr.rs", "wrapper.rs"]
+
+[[batches]]
+position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 67
-cum_tokens = 128
+cum_tokens = 177
 
 [batches.content]
 kind = "lines"
@@ -60,20 +74,6 @@ end = 10
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 49
-cum_tokens = 177
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["backtrace.rs", "chain.rs", "context.rs", "ensure.rs", "error.rs", "fmt.rs", "kind.rs", "lib.rs", "macros.rs", "nightly.rs", "ptr.rs", "wrapper.rs"]
 
 [[batches]]
 position = 5
@@ -301,10 +301,24 @@ kind = "full"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 90
+cum_tokens = 447
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "test_backtrace.rs", "test_boxed.rs", "test_chain.rs", "test_context.rs", "test_convert.rs", "test_downcast.rs", "test_ensure.rs", "test_ffi.rs", "test_fmt.rs", "test_macros.rs", "test_repr.rs", "test_source.rs", "ui"]
+
+[[batches]]
+position = 14
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 44
-cum_tokens = 401
+cum_tokens = 491
 
 [batches.content]
 kind = "lines"
@@ -372,20 +386,6 @@ end = 156
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 90
-cum_tokens = 491
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "test_backtrace.rs", "test_boxed.rs", "test_chain.rs", "test_context.rs", "test_convert.rs", "test_downcast.rs", "test_ensure.rs", "test_ffi.rs", "test_fmt.rs", "test_macros.rs", "test_repr.rs", "test_source.rs", "ui"]
 
 [[batches]]
 position = 15

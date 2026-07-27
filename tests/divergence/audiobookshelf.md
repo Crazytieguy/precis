@@ -46,10 +46,10 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 860 | 8 | listing of 'client/components/prompt' |  |  | 0.651 |
 | ns | 860 |  | 72 | build/, .devcontainer/, .vscode/, images/ listings | 1.9 |  | 0.651 |
 | walker |  | 877 | 17 | listing of 'client/components/player' |  |  | 0.651 |
-| walker |  | 898 | 21 | listing of 'docs/objects/metadata' |  |  | 0.651 |
-| walker |  | 1053 | 155 | README headline in readme.md |  |  | 0.651 |
-| walker |  | 1059 | 6 | listing of 'client/cypress/tests' |  |  | 0.657 |
-| walker |  | 1062 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.660 |
+| walker |  | 883 | 6 | listing of 'client/cypress/tests' |  |  | 0.657 |
+| walker |  | 886 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.660 |
+| walker |  | 907 | 21 | listing of 'docs/objects/metadata' |  |  | 0.660 |
+| walker |  | 1062 | 155 | README headline in readme.md |  |  | 0.660 |
 | walker |  | 1111 | 49 | listing of 'server/providers' |  |  | 0.718 |
 | walker |  | 1127 | 16 | listing of '.vscode' |  |  | 0.727 |
 | walker |  | 1153 | 26 | listing of 'client/components/readers' |  |  | 0.727 |
@@ -107,10 +107,10 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 2530 | 111 | listing of 'server/utils' |  |  | 0.721 |
 | walker |  | 2549 | 19 | listing of 'server/utils/generators' |  |  | 0.726 |
 | walker |  | 2594 | 45 | listing of 'server/utils/queries' |  |  | 0.743 |
-| ns | 2690 |  | 626 | client/components/ shallow listings | 1.14 |  | 0.674 |
-| walker |  | 2710 | 116 | listing of 'server/models' |  |  | 0.707 |
-| walker |  | 2831 | 121 | listing of 'server/controllers' |  |  | 0.761 |
-| walker |  | 2848 | 17 | listing of 'server/utils/migrations' |  |  | 0.767 |
+| walker |  | 2611 | 17 | listing of 'server/utils/migrations' |  |  | 0.750 |
+| ns | 2690 |  | 626 | client/components/ shallow listings | 1.14 |  | 0.680 |
+| walker |  | 2727 | 116 | listing of 'server/models' |  |  | 0.713 |
+| walker |  | 2848 | 121 | listing of 'server/controllers' |  |  | 0.767 |
 | walker |  | 2921 | 73 | listing of 'server/utils/parsers' |  |  | 0.793 |
 | ns | 3052 |  | 362 | client/components/modals/ full listing | 1.15 |  | 0.738 |
 | walker |  | 3065 | 144 | listing of 'server/libs' |  |  | 0.766 |
@@ -158,11 +158,11 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 3507 | 13 | listing of 'server/libs/fsExtra/copy' |  |  | 0.756 |
 | walker |  | 3520 | 13 | listing of 'server/libs/fsExtra/mkdirs' |  |  | 0.756 |
 | walker |  | 3533 | 13 | listing of 'server/libs/fsExtra/move' |  |  | 0.756 |
-| walker |  | 3572 | 39 | listing of 'server/libs/fluentFfmpeg' |  |  | 0.756 |
-| walker |  | 3586 | 14 | listing of 'server/libs/fluentFfmpeg/presets' |  |  | 0.756 |
-| walker |  | 3610 | 24 | listing of 'server/libs/umzug/storage' |  |  | 0.756 |
+| walker |  | 3557 | 24 | listing of 'server/libs/jsonwebtoken/lib' |  |  | 0.756 |
+| walker |  | 3596 | 39 | listing of 'server/libs/fluentFfmpeg' |  |  | 0.756 |
+| walker |  | 3610 | 14 | listing of 'server/libs/fluentFfmpeg/presets' |  |  | 0.756 |
 | ns | 3630 |  | 335 | test/ full listing | 1.18 |  | 0.731 |
-| walker |  | 3634 | 24 | listing of 'server/libs/jsonwebtoken/lib' |  |  | 0.731 |
+| walker |  | 3634 | 24 | listing of 'server/libs/umzug/storage' |  |  | 0.731 |
 | walker |  | 3679 | 45 | listing of 'server/libs/nodeCron' |  |  | 0.731 |
 | walker |  | 3687 | 8 | listing of 'server/libs/nodeCron/background-scheduled-task' |  |  | 0.731 |
 | ns | 3716 |  | 86 | docs/ listing (OpenAPI spec tree) | 1.19 |  | 0.737 |
@@ -188,20 +188,20 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 4262 | 167 | listing of 'client/strings' |  |  | 0.720 |
 | walker |  | 4267 | 5 | json config client/strings/eu.json |  |  | 0.720 |
 | walker |  | 4272 | 5 | json config client/strings/is.json |  |  | 0.720 |
-| walker |  | 4369 | 97 | listing of 'client/components/tables' |  |  | 0.732 |
-| walker |  | 4375 | 6 | listing of 'client/components/tables/collection' |  |  | 0.733 |
-| walker |  | 4381 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.735 |
-| walker |  | 4391 | 10 | listing of 'client/components/tables/library' |  |  | 0.738 |
-| walker |  | 4409 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.743 |
-| walker |  | 4507 | 98 | listing of 'client/components/widgets' |  |  | 0.759 |
-| ns | 4553 |  | 430 | package.json scripts | 2.3 |  | 0.747 |
-| walker |  | 4610 | 103 | listing of 'server/libs/watcher' |  |  | 0.747 |
-| walker |  | 4618 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.747 |
-| walker |  | 4630 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.747 |
-| walker |  | 4643 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.747 |
-| walker |  | 4680 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.747 |
-| walker |  | 4707 | 27 | listing of 'test/server' |  |  | 0.749 |
-| walker |  | 4729 | 22 | listing of 'test/server/managers' |  |  | 0.751 |
+| walker |  | 4299 | 27 | listing of 'test/server' |  |  | 0.722 |
+| walker |  | 4321 | 22 | listing of 'test/server/managers' |  |  | 0.724 |
+| walker |  | 4418 | 97 | listing of 'client/components/tables' |  |  | 0.736 |
+| walker |  | 4424 | 6 | listing of 'client/components/tables/collection' |  |  | 0.737 |
+| walker |  | 4430 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.738 |
+| walker |  | 4440 | 10 | listing of 'client/components/tables/library' |  |  | 0.741 |
+| walker |  | 4458 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.746 |
+| ns | 4553 |  | 430 | package.json scripts | 2.3 |  | 0.735 |
+| walker |  | 4556 | 98 | listing of 'client/components/widgets' |  |  | 0.751 |
+| walker |  | 4659 | 103 | listing of 'server/libs/watcher' |  |  | 0.751 |
+| walker |  | 4667 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.751 |
+| walker |  | 4679 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.751 |
+| walker |  | 4692 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.751 |
+| walker |  | 4729 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.751 |
 | walker |  | 5048 | 319 | headings outline in readme.md |  |  | 0.772 |
 | walker |  | 5048 | 0 | readme.md section #49 |  |  | 0.772 |
 | walker |  | 5071 | 23 | readme.md section #50 |  |  | 0.772 |
@@ -228,29 +228,29 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 5367 | 22 | readme.md section #18 |  |  | 0.747 |
 | walker |  | 5391 | 24 | readme.md section #12 |  |  | 0.747 |
 | walker |  | 5505 | 114 | listing of 'client/components/cards' |  |  | 0.769 |
-| walker |  | 5579 | 74 | readme.md section #23 |  |  | 0.769 |
-| walker |  | 5651 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.769 |
-| walker |  | 5658 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.769 |
-| walker |  | 5665 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.769 |
-| walker |  | 5672 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.769 |
-| walker |  | 5679 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.769 |
-| walker |  | 5686 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.769 |
-| walker |  | 5693 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.769 |
-| walker |  | 5700 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.769 |
-| walker |  | 5707 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.769 |
-| walker |  | 5714 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.769 |
-| walker |  | 5721 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.769 |
-| walker |  | 5728 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.769 |
-| walker |  | 5739 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.769 |
-| walker |  | 5750 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.769 |
-| ns | 5764 |  | 402 | docker-compose.yml | 2.8 |  | 0.755 |
-| walker |  | 5765 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.755 |
-| walker |  | 5778 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.755 |
-| walker |  | 5798 | 20 | readme.md section #46 |  |  | 0.755 |
-| walker |  | 5830 | 32 | readme.md section #17 |  |  | 0.755 |
-| walker |  | 5863 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.761 |
-| walker |  | 5896 | 33 | listing of 'test/server/utils' |  |  | 0.764 |
-| walker |  | 5919 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.767 |
+| walker |  | 5538 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.775 |
+| walker |  | 5571 | 33 | listing of 'test/server/utils' |  |  | 0.778 |
+| walker |  | 5594 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.781 |
+| walker |  | 5668 | 74 | readme.md section #23 |  |  | 0.781 |
+| walker |  | 5740 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.781 |
+| walker |  | 5747 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.781 |
+| walker |  | 5754 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.781 |
+| walker |  | 5761 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.781 |
+| ns | 5764 |  | 402 | docker-compose.yml | 2.8 |  | 0.767 |
+| walker |  | 5768 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.767 |
+| walker |  | 5775 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.767 |
+| walker |  | 5782 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.767 |
+| walker |  | 5789 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.767 |
+| walker |  | 5796 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.767 |
+| walker |  | 5803 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.767 |
+| walker |  | 5810 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.767 |
+| walker |  | 5817 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.767 |
+| walker |  | 5828 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.767 |
+| walker |  | 5839 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.767 |
+| walker |  | 5854 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.767 |
+| walker |  | 5867 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.767 |
+| walker |  | 5887 | 20 | readme.md section #46 |  |  | 0.767 |
+| walker |  | 5919 | 32 | readme.md section #17 |  |  | 0.767 |
 | walker |  | 5940 | 21 | readme.md section #39 |  |  | 0.767 |
 | walker |  | 5974 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.767 |
 | ns | 6069 |  | 305 | Dockerfile runtime stage | 2.9 | 2.7 | 0.752 |
@@ -276,14 +276,14 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 6420 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.800 |
 | walker |  | 6456 | 36 | readme.md section #1 |  |  | 0.800 |
 | walker |  | 6479 | 23 | readme.md section #44 |  |  | 0.800 |
-| ns | 6601 |  | 277 | Server.js constructor: manager + router composition | 3.1 |  | 0.789 |
-| walker |  | 6633 | 154 | listing of 'client/components/ui' |  |  | 0.827 |
-| walker |  | 6663 | 30 | export names surface in server/libs/archiver/lib/error.js |  |  | 0.827 |
-| walker |  | 6663 | 0 | export at server/libs/archiver/lib/error.js:30 |  |  | 0.827 |
-| walker |  | 6706 | 43 | docs/README.md section #3 |  |  | 0.827 |
-| walker |  | 6807 | 101 | YAML config at docker-compose.yml |  |  | 0.828 |
-| walker |  | 6840 | 33 | readme.md section #20 |  |  | 0.828 |
-| walker |  | 6884 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.831 |
+| walker |  | 6523 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.803 |
+| ns | 6601 |  | 277 | Server.js constructor: manager + router composition | 3.1 |  | 0.792 |
+| walker |  | 6677 | 154 | listing of 'client/components/ui' |  |  | 0.830 |
+| walker |  | 6707 | 30 | export names surface in server/libs/archiver/lib/error.js |  |  | 0.830 |
+| walker |  | 6707 | 0 | export at server/libs/archiver/lib/error.js:30 |  |  | 0.830 |
+| walker |  | 6750 | 43 | docs/README.md section #3 |  |  | 0.830 |
+| walker |  | 6851 | 101 | YAML config at docker-compose.yml |  |  | 0.831 |
+| walker |  | 6884 | 33 | readme.md section #20 |  |  | 0.831 |
 | walker |  | 6964 | 80 | readme.md section #25 |  |  | 0.834 |
 | ns | 7110 |  | 509 | Server.js init() startup sequence | 3.2 | 3.1 | 0.813 |
 | walker |  | 7209 | 245 | module item names surface in index.js |  |  | 0.817 |
@@ -301,16 +301,16 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 7373 | 164 | module item at index.js:1 |  |  | 0.824 |
 | walker |  | 7416 | 43 | readme.md section #15 |  |  | 0.824 |
 | ns | 7437 |  | 327 | Database.js init() sequence | 3.3 |  | 0.810 |
-| walker |  | 7717 | 301 | YAML config tail at docker-compose.yml |  |  | 0.827 |
-| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.816 |
-| walker |  | 7747 | 30 | readme.md section #34 |  |  | 0.816 |
+| walker |  | 7454 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.810 |
+| walker |  | 7457 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.810 |
+| walker |  | 7475 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.810 |
+| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.800 |
+| walker |  | 7776 | 301 | YAML config tail at docker-compose.yml |  |  | 0.816 |
+| walker |  | 7806 | 30 | readme.md section #34 |  |  | 0.816 |
 | ns | 7851 |  | 130 | SocketAuthority socket-event census | 3.5 |  | 0.812 |
 | ns | 7965 |  | 114 | Auth.js initAuthRoutes: auth HTTP surface | 3.6 |  | 0.809 |
-| walker |  | 8098 | 351 | package scripts in package.json |  |  | 0.821 |
-| walker |  | 8176 | 78 | docs/README.md section #1 |  |  | 0.821 |
-| walker |  | 8214 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.821 |
-| walker |  | 8217 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.821 |
-| walker |  | 8235 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.821 |
+| walker |  | 8157 | 351 | package scripts in package.json |  |  | 0.821 |
+| walker |  | 8235 | 78 | docs/README.md section #1 |  |  | 0.821 |
 | walker |  | 8268 | 33 | readme.md section #28 |  |  | 0.821 |
 | ns | 8320 |  | 355 | Scan pipeline method census (Scanner/LibraryScanner/BookScanner/PodcastScanner) | 4.1 |  | 0.809 |
 | walker |  | 8336 | 68 | docs/README.md section #2 |  |  | 0.809 |

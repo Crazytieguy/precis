@@ -233,10 +233,24 @@ entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration",
 
 [[batches]]
 position = 15
+key = 'Fs(DirListing { dir: "benchmarks" })'
+descriptor = "listing of 'benchmarks'"
+cost_tokens = 38
+cum_tokens = 585
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmarks"
+entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench-parse.js", "bench-satisfies.js", "bench-subset.js"]
+
+[[batches]]
+position = 16
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 60
-cum_tokens = 607
+cum_tokens = 645
 
 [batches.content]
 kind = "lines"
@@ -258,11 +272,25 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
+key = 'Fs(DirListing { dir: "test/classes" })'
+descriptor = "listing of 'test/classes'"
+cost_tokens = 17
+cum_tokens = 662
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/classes"
+entries = ["comparator.js", "index.js", "range.js", "semver.js"]
+
+[[batches]]
+position = 18
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 180
-cum_tokens = 787
+cum_tokens = 842
 
 [batches.content]
 kind = "lines"
@@ -556,11 +584,11 @@ end = 611
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 25
-cum_tokens = 812
+cum_tokens = 867
 
 [batches.content]
 kind = "lines"
@@ -574,11 +602,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 55, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #55"
 cost_tokens = 27
-cum_tokens = 839
+cum_tokens = 894
 
 [batches.content]
 kind = "lines"
@@ -590,34 +618,6 @@ end = 578
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "benchmarks" })'
-descriptor = "listing of 'benchmarks'"
-cost_tokens = 38
-cum_tokens = 877
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benchmarks"
-entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench-parse.js", "bench-satisfies.js", "bench-subset.js"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "test/classes" })'
-descriptor = "listing of 'test/classes'"
-cost_tokens = 17
-cum_tokens = 894
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/classes"
-entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
 position = 21
@@ -801,10 +801,24 @@ kind = "full"
 
 [[batches]]
 position = 31
+key = 'Fs(DirListing { dir: "test/functions" })'
+descriptor = "listing of 'test/functions'"
+cost_tokens = 105
+cum_tokens = 2057
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/functions"
+entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
+
+[[batches]]
+position = 32
 key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #35"
 cost_tokens = 22
-cum_tokens = 1974
+cum_tokens = 2079
 
 [batches.content]
 kind = "lines"
@@ -818,11 +832,11 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 52, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #52"
 cost_tokens = 22
-cum_tokens = 1996
+cum_tokens = 2101
 
 [batches.content]
 kind = "lines"
@@ -836,11 +850,11 @@ end = 560
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 25
-cum_tokens = 2021
+cum_tokens = 2126
 
 [batches.content]
 kind = "lines"
@@ -854,11 +868,11 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(Section { file: "README.md", section_index: 43, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #43"
 cost_tokens = 24
-cum_tokens = 2045
+cum_tokens = 2150
 
 [batches.content]
 kind = "lines"
@@ -872,11 +886,11 @@ end = 508
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 48, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #48"
 cost_tokens = 24
-cum_tokens = 2069
+cum_tokens = 2174
 
 [batches.content]
 kind = "lines"
@@ -890,25 +904,25 @@ end = 533
 kind = "full"
 
 [[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "test/functions" })'
-descriptor = "listing of 'test/functions'"
-cost_tokens = 105
-cum_tokens = 2174
+position = 37
+key = 'Fs(DirListing { dir: "test/ranges" })'
+descriptor = "listing of 'test/ranges'"
+cost_tokens = 56
+cum_tokens = 2230
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "test/functions"
-entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
+parent = "test/ranges"
+entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
-position = 37
+position = 38
 key = 'Fs(DirListing { dir: ".github/matchers" })'
 descriptor = "listing of '.github/matchers'"
 cost_tokens = 4
-cum_tokens = 2178
+cum_tokens = 2234
 
 [batches.content]
 kind = "fs"
@@ -918,11 +932,11 @@ parent = ".github/matchers"
 entries = ["tap.json"]
 
 [[batches]]
-position = 38
+position = 39
 key = 'Fs(DirListing { dir: "test/integration" })'
 descriptor = "listing of 'test/integration'"
 cost_tokens = 4
-cum_tokens = 2182
+cum_tokens = 2238
 
 [batches.content]
 kind = "fs"
@@ -930,20 +944,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test/integration"
 entries = ["whitespace.js"]
-
-[[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "test/ranges" })'
-descriptor = "listing of 'test/ranges'"
-cost_tokens = 56
-cum_tokens = 2238
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/ranges"
-entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
 position = 40
@@ -983,10 +983,24 @@ kind = "full"
 
 [[batches]]
 position = 42
+key = 'Fs(DirListing { dir: "test/fixtures" })'
+descriptor = "listing of 'test/fixtures'"
+cost_tokens = 84
+cum_tokens = 2374
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/fixtures"
+entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
+
+[[batches]]
+position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 29
-cum_tokens = 2319
+cum_tokens = 2403
 
 [batches.content]
 kind = "lines"
@@ -1000,11 +1014,11 @@ end = 462
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #36"
 cost_tokens = 29
-cum_tokens = 2348
+cum_tokens = 2432
 
 [batches.content]
 kind = "lines"
@@ -1018,11 +1032,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 106
-cum_tokens = 2454
+cum_tokens = 2538
 
 [batches.content]
 kind = "lines"
@@ -1036,11 +1050,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Markdown(Section { file: "README.md", section_index: 39, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #39"
 cost_tokens = 30
-cum_tokens = 2484
+cum_tokens = 2568
 
 [batches.content]
 kind = "lines"
@@ -1054,11 +1068,11 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Fs(DirListing { dir: "test/bin" })'
 descriptor = "listing of 'test/bin'"
 cost_tokens = 5
-cum_tokens = 2489
+cum_tokens = 2573
 
 [batches.content]
 kind = "fs"
@@ -1066,20 +1080,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test/bin"
 entries = ["semver.js"]
-
-[[batches]]
-position = 47
-key = 'Fs(DirListing { dir: "test/fixtures" })'
-descriptor = "listing of 'test/fixtures'"
-cost_tokens = 84
-cum_tokens = 2573
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/fixtures"
-entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
 
 [[batches]]
 position = 48

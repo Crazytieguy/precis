@@ -81,7 +81,6 @@ THREATMODEL.md
 docs/
     .vitepress/
     data/
-        sponsors.json
     es/
         index.md
         pages/
@@ -145,9 +144,7 @@ examples/
     README.md
     abort-controller/
     all/
-        index.html
     amd/
-        index.html
     get/
     improved-network-errors.md
     network_enhanced.js
@@ -155,7 +152,6 @@ examples/
     postMultipartFormData/
     server.js
     transform-response/
-        index.html
     upload/
 gulpfile.js
     …
@@ -218,9 +214,6 @@ lib/
         fetch.js
         http.js
         xhr.js
-            …
-              15→export default isXHRAdapterSupported &&
-            …
     axios.js
         …
           89→export default axios;
@@ -273,7 +266,6 @@ lib/
         classes/
             FormData.js
         data.js
-               1→export const VERSION = "1.16.1";
     helpers/
         AxiosTransformStream.js
             …

@@ -32,15 +32,15 @@ Score(3000)=0.664 I=0.871 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 903 | 12 | listing of 'examples/airline/data/routines' |  |  | 0.721 |
 | ns | 914 |  | 268 | setup.cfg — package metadata + autopep8 config | 1.9 |  | 0.590 |
 | walker |  | 917 | 14 | listing of 'examples/airline/configs' |  |  | 0.590 |
-| walker |  | 935 | 18 | python imports in swarm/util.py |  |  | 0.590 |
-| walker |  | 1015 | 80 | python method sigs in swarm/core.py |  |  | 0.593 |
-| walker |  | 1015 | 0 | python method at swarm/core.py:27 |  |  | 0.593 |
-| walker |  | 1015 | 0 | python method at swarm/core.py:71 |  |  | 0.593 |
+| walker |  | 951 | 34 | listing of 'examples/basic' |  |  | 0.591 |
+| walker |  | 985 | 34 | listing of 'examples/customer_service_streaming' |  |  | 0.592 |
+| walker |  | 1010 | 25 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.592 |
+| walker |  | 1022 | 12 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.592 |
 | ns | 1032 |  | 118 | pyproject.toml + pre-commit config | 1.10 |  | 0.564 |
-| walker |  | 1049 | 34 | listing of 'examples/basic' |  |  | 0.565 |
-| walker |  | 1083 | 34 | listing of 'examples/customer_service_streaming' |  |  | 0.566 |
-| walker |  | 1108 | 25 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.566 |
-| walker |  | 1120 | 12 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.566 |
+| walker |  | 1040 | 18 | python imports in swarm/util.py |  |  | 0.564 |
+| walker |  | 1120 | 80 | python method sigs in swarm/core.py |  |  | 0.566 |
+| walker |  | 1120 | 0 | python method at swarm/core.py:27 |  |  | 0.566 |
+| walker |  | 1120 | 0 | python method at swarm/core.py:71 |  |  | 0.566 |
 | walker |  | 1152 | 32 | listing of 'examples/customer_service_streaming/src' |  |  | 0.567 |
 | walker |  | 1171 | 19 | listing of 'examples/customer_service_streaming/src/swarm' |  |  | 0.567 |
 | walker |  | 1185 | 14 | listing of 'examples/customer_service_streaming/src/swarm/engines' |  |  | 0.568 |

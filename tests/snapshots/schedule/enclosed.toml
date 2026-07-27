@@ -87,38 +87,10 @@ entries = ["eslint.config.js", "package.json", "src", "tsconfig.json", "wrangler
 
 [[batches]]
 position = 6
-key = 'Fs(DirListing { dir: "packages/deploy-cloudflare" })'
-descriptor = "listing of 'packages/deploy-cloudflare'"
-cost_tokens = 25
-cum_tokens = 211
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/deploy-cloudflare"
-entries = [".nvmrc", "_routes.json", "build.sh", "package.json", "wrangler.toml"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "packages/crypto" })'
-descriptor = "listing of 'packages/crypto'"
-cost_tokens = 26
-cum_tokens = 237
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/crypto"
-entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 8
 key = 'Fs(DirListing { dir: "packages/lib" })'
 descriptor = "listing of 'packages/lib'"
 cost_tokens = 26
-cum_tokens = 263
+cum_tokens = 212
 
 [batches.content]
 kind = "fs"
@@ -128,11 +100,11 @@ parent = "packages/lib"
 entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 9
+position = 7
 key = 'Fs(DirListing { dir: "packages/lib/src" })'
 descriptor = "listing of 'packages/lib/src'"
 cost_tokens = 16
-cum_tokens = 279
+cum_tokens = 228
 
 [batches.content]
 kind = "fs"
@@ -142,11 +114,11 @@ parent = "packages/lib/src"
 entries = ["api", "crypto", "files", "index.ts", "notes"]
 
 [[batches]]
-position = 10
+position = 8
 key = 'Fs(DirListing { dir: "packages/lib/src/files" })'
 descriptor = "listing of 'packages/lib/src/files'"
 cost_tokens = 5
-cum_tokens = 284
+cum_tokens = 233
 
 [batches.content]
 kind = "fs"
@@ -154,6 +126,34 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/lib/src/files"
 entries = ["files.models.ts"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "packages/deploy-cloudflare" })'
+descriptor = "listing of 'packages/deploy-cloudflare'"
+cost_tokens = 25
+cum_tokens = 258
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/deploy-cloudflare"
+entries = [".nvmrc", "_routes.json", "build.sh", "package.json", "wrangler.toml"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "packages/crypto" })'
+descriptor = "listing of 'packages/crypto'"
+cost_tokens = 26
+cum_tokens = 284
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/crypto"
+entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
 position = 11
@@ -347,10 +347,94 @@ kind = "full"
 
 [[batches]]
 position = 22
+key = 'Fs(DirListing { dir: "packages/docs/src" })'
+descriptor = "listing of 'packages/docs/src'"
+cost_tokens = 31
+cum_tokens = 610
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src"
+entries = ["components", "data", "how-it-works.md", "index.md", "integrations", "public", "resources", "self-hosting"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "packages/docs/src/components" })'
+descriptor = "listing of 'packages/docs/src/components'"
+cost_tokens = 10
+cum_tokens = 620
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src/components"
+entries = ["credential-inputs.vue", "toggle.vue"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "packages/docs/src/resources" })'
+descriptor = "listing of 'packages/docs/src/resources'"
+cost_tokens = 11
+cum_tokens = 631
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src/resources"
+entries = ["brand-kit.md", "i18n.md"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "packages/docs/src/data" })'
+descriptor = "listing of 'packages/docs/src/data'"
+cost_tokens = 12
+cum_tokens = 643
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src/data"
+entries = ["configuration.data.ts", "i18n.data.ts"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "packages/docs/src/integrations" })'
+descriptor = "listing of 'packages/docs/src/integrations'"
+cost_tokens = 14
+cum_tokens = 657
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src/integrations"
+entries = ["cli.md", "npm-package.md", "versioning.md"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "packages/crypto/src" })'
+descriptor = "listing of 'packages/crypto/src'"
+cost_tokens = 32
+cum_tokens = 689
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/crypto/src"
+entries = ["api-definition.ts", "encryption-algorithms", "index.node.ts", "index.test.ts", "index.web.ts", "node", "web"]
+
+[[batches]]
+position = 28
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/shared" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared'"
 cost_tokens = 12
-cum_tokens = 591
+cum_tokens = 701
 
 [batches.content]
 kind = "fs"
@@ -360,11 +444,11 @@ parent = "packages/app-server/src/modules/shared"
 entries = ["errors", "logger", "utils", "validation"]
 
 [[batches]]
-position = 23
+position = 29
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/shared/utils" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared/utils'"
 cost_tokens = 4
-cum_tokens = 595
+cum_tokens = 705
 
 [batches.content]
 kind = "fs"
@@ -374,11 +458,11 @@ parent = "packages/app-server/src/modules/shared/utils"
 entries = ["random.ts"]
 
 [[batches]]
-position = 24
+position = 30
 key = 'Fs(DirListing { dir: "packages/app-client" })'
 descriptor = "listing of 'packages/app-client'"
 cost_tokens = 63
-cum_tokens = 658
+cum_tokens = 768
 
 [batches.content]
 kind = "fs"
@@ -388,11 +472,11 @@ parent = "packages/app-client"
 entries = [".env.example", ".gitignore", "README.md", "components.json", "e2e-tests", "eslint.config.js", "index.html", "package.json", "playwright.config.ts", "public", "src", "tsconfig.json", "uno.config.ts", "vite.config.ts"]
 
 [[batches]]
-position = 25
+position = 31
 key = 'Fs(DirListing { dir: "packages/app-client/e2e-tests" })'
 descriptor = "listing of 'packages/app-client/e2e-tests'"
 cost_tokens = 11
-cum_tokens = 669
+cum_tokens = 779
 
 [batches.content]
 kind = "fs"
@@ -402,11 +486,11 @@ parent = "packages/app-client/e2e-tests"
 entries = ["create-and-view-note.e2e.test.ts"]
 
 [[batches]]
-position = 26
+position = 32
 key = 'Fs(DirListing { dir: "packages/app-client/src" })'
 descriptor = "listing of 'packages/app-client/src'"
 cost_tokens = 26
-cum_tokens = 695
+cum_tokens = 805
 
 [batches.content]
 kind = "fs"
@@ -416,11 +500,11 @@ parent = "packages/app-client/src"
 entries = ["app.css", "assets", "index.tsx", "locales", "modules", "routes.tsx", "scripts"]
 
 [[batches]]
-position = 27
+position = 33
 key = 'Fs(DirListing { dir: "packages/app-client/src/assets" })'
 descriptor = "listing of 'packages/app-client/src/assets'"
 cost_tokens = 4
-cum_tokens = 699
+cum_tokens = 809
 
 [batches.content]
 kind = "fs"
@@ -430,11 +514,11 @@ parent = "packages/app-client/src/assets"
 entries = ["favicon.ico"]
 
 [[batches]]
-position = 28
+position = 34
 key = 'Markdown(ReadmeHeadline { file: "packages/app-client/README.md" })'
 descriptor = "README headline in packages/app-client/README.md"
 cost_tokens = 43
-cum_tokens = 742
+cum_tokens = 852
 
 [batches.content]
 kind = "lines"
@@ -446,90 +530,6 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "packages/docs/src" })'
-descriptor = "listing of 'packages/docs/src'"
-cost_tokens = 31
-cum_tokens = 773
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src"
-entries = ["components", "data", "how-it-works.md", "index.md", "integrations", "public", "resources", "self-hosting"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "packages/docs/src/components" })'
-descriptor = "listing of 'packages/docs/src/components'"
-cost_tokens = 10
-cum_tokens = 783
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src/components"
-entries = ["credential-inputs.vue", "toggle.vue"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "packages/docs/src/resources" })'
-descriptor = "listing of 'packages/docs/src/resources'"
-cost_tokens = 11
-cum_tokens = 794
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src/resources"
-entries = ["brand-kit.md", "i18n.md"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "packages/docs/src/data" })'
-descriptor = "listing of 'packages/docs/src/data'"
-cost_tokens = 12
-cum_tokens = 806
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src/data"
-entries = ["configuration.data.ts", "i18n.data.ts"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "packages/docs/src/integrations" })'
-descriptor = "listing of 'packages/docs/src/integrations'"
-cost_tokens = 14
-cum_tokens = 820
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src/integrations"
-entries = ["cli.md", "npm-package.md", "versioning.md"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "packages/crypto/src" })'
-descriptor = "listing of 'packages/crypto/src'"
-cost_tokens = 32
-cum_tokens = 852
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/crypto/src"
-entries = ["api-definition.ts", "encryption-algorithms", "index.node.ts", "index.test.ts", "index.web.ts", "node", "web"]
 
 [[batches]]
 position = 35
@@ -645,10 +645,24 @@ entries = ["api.client.ts", "api.constants.ts", "api.models.test.ts", "api.model
 
 [[batches]]
 position = 43
+key = 'Fs(DirListing { dir: "packages/docs/.vitepress" })'
+descriptor = "listing of 'packages/docs/.vitepress'"
+cost_tokens = 11
+cum_tokens = 999
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/.vitepress"
+entries = ["config.ts", "plausible.ts", "theme"]
+
+[[batches]]
+position = 44
 key = 'Markdown(ReadmeHeadline { file: "packages/cli/README.md" })'
 descriptor = "README headline in packages/cli/README.md"
 cost_tokens = 57
-cum_tokens = 1045
+cum_tokens = 1056
 
 [batches.content]
 kind = "lines"
@@ -662,11 +676,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Markdown(ReadmeHeadline { file: "packages/lib/README.md" })'
 descriptor = "README headline in packages/lib/README.md"
 cost_tokens = 59
-cum_tokens = 1104
+cum_tokens = 1115
 
 [batches.content]
 kind = "lines"
@@ -680,11 +694,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Fs(DirListing { dir: "packages/lib/src/crypto" })'
 descriptor = "listing of 'packages/lib/src/crypto'"
 cost_tokens = 25
-cum_tokens = 1129
+cum_tokens = 1140
 
 [batches.content]
 kind = "fs"
@@ -692,20 +706,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/lib/src/crypto"
 entries = ["crypto.constants.ts", "crypto.types.ts", "crypto.usecases.ts", "encryption-algorithms", "serialization"]
-
-[[batches]]
-position = 46
-key = 'Fs(DirListing { dir: "packages/docs/.vitepress" })'
-descriptor = "listing of 'packages/docs/.vitepress'"
-cost_tokens = 11
-cum_tokens = 1140
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/.vitepress"
-entries = ["config.ts", "plausible.ts", "theme"]
 
 [[batches]]
 position = 47
@@ -2651,10 +2651,24 @@ entries = ["delete-expired-notes.tasks.test.ts", "delete-expired-notes.tasks.ts"
 
 [[batches]]
 position = 128
+key = 'Fs(DirListing { dir: "packages/app-server/src/modules/notes/e2e" })'
+descriptor = "listing of 'packages/app-server/src/modules/notes/e2e'"
+cost_tokens = 52
+cum_tokens = 4789
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/app-server/src/modules/notes/e2e"
+entries = ["create-and-view-note-authenticated.e2e.test.ts", "create-and-view-note-unauthenticated.e2e.test.ts", "no-expiration-delay.e2e.test.ts", "size-limited-note-cration.e2e.test.ts"]
+
+[[batches]]
+position = 129
 key = 'Markdown(HeadingsOutline { file: "packages/app-client/README.md" })'
 descriptor = "headings outline in packages/app-client/README.md"
 cost_tokens = 115
-cum_tokens = 4852
+cum_tokens = 4904
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +2746,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #3"
 cost_tokens = 0
-cum_tokens = 4852
+cum_tokens = 4904
 
 [batches.content]
 kind = "lines"
@@ -2750,11 +2764,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #0"
 cost_tokens = 77
-cum_tokens = 4929
+cum_tokens = 4981
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2782,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Markdown(Section { file: "packages/cli/README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/cli/README.md section #7"
 cost_tokens = 26
-cum_tokens = 4955
+cum_tokens = 5007
 
 [batches.content]
 kind = "lines"
@@ -2786,11 +2800,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Markdown(Section { file: "packages/crypto/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/crypto/README.md section #2"
 cost_tokens = 33
-cum_tokens = 4988
+cum_tokens = 5040
 
 [batches.content]
 kind = "lines"
@@ -2804,11 +2818,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Fs(DirListing { dir: "packages/app-client/src/modules/ui/components" })'
 descriptor = "listing of 'packages/app-client/src/modules/ui/components'"
 cost_tokens = 48
-cum_tokens = 5036
+cum_tokens = 5088
 
 [batches.content]
 kind = "fs"
@@ -2818,11 +2832,11 @@ parent = "packages/app-client/src/modules/ui/components"
 entries = ["alert.tsx", "button.tsx", "card.tsx", "dropdown-menu.tsx", "sonner.tsx", "switch.tsx", "tabs.tsx", "textarea.tsx", "textfield.tsx"]
 
 [[batches]]
-position = 134
+position = 135
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #2"
 cost_tokens = 30
-cum_tokens = 5066
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -2836,11 +2850,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 36
-cum_tokens = 5102
+cum_tokens = 5154
 
 [batches.content]
 kind = "lines"
@@ -2852,20 +2866,6 @@ end = 38
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 136
-key = 'Fs(DirListing { dir: "packages/app-server/src/modules/notes/e2e" })'
-descriptor = "listing of 'packages/app-server/src/modules/notes/e2e'"
-cost_tokens = 52
-cum_tokens = 5154
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/app-server/src/modules/notes/e2e"
-entries = ["create-and-view-note-authenticated.e2e.test.ts", "create-and-view-note-unauthenticated.e2e.test.ts", "no-expiration-delay.e2e.test.ts", "size-limited-note-cration.e2e.test.ts"]
 
 [[batches]]
 position = 137

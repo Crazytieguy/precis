@@ -35,15 +35,15 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 770 | 80 | package scripts in cmdk/package.json |  |  | 0.226 |
 | ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.206 |
 | walker |  | 972 | 202 | package scripts in package.json |  |  | 0.210 |
-| walker |  | 985 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.211 |
-| ns | 996 |  | 201 | website/package.json dependencies | 2.16 |  | 0.199 |
-| walker |  | 1130 | 145 | package entrypoints in cmdk/package.json |  |  | 0.202 |
-| walker |  | 1184 | 54 | listing of 'website' |  |  | 0.264 |
-| walker |  | 1198 | 14 | listing of 'website/components' |  |  | 0.288 |
-| walker |  | 1215 | 17 | listing of 'website/pages' |  |  | 0.306 |
-| walker |  | 1249 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.384 |
-| walker |  | 1307 | 58 | listing of 'test' |  |  | 0.447 |
-| walker |  | 1330 | 23 | listing of 'website/components/cmdk' |  |  | 0.472 |
+| ns | 996 |  | 201 | website/package.json dependencies | 2.16 |  | 0.198 |
+| walker |  | 1026 | 54 | listing of 'website' |  |  | 0.260 |
+| walker |  | 1040 | 14 | listing of 'website/components' |  |  | 0.284 |
+| walker |  | 1057 | 17 | listing of 'website/pages' |  |  | 0.301 |
+| walker |  | 1070 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.302 |
+| walker |  | 1215 | 145 | package entrypoints in cmdk/package.json |  |  | 0.306 |
+| walker |  | 1273 | 58 | listing of 'test' |  |  | 0.364 |
+| walker |  | 1296 | 23 | listing of 'website/components/cmdk' |  |  | 0.388 |
+| walker |  | 1330 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.472 |
 | ns | 1337 |  | 341 | cmdk/package.json identity + exports + deps | 2.17 |  | 0.453 |
 | ns | 1549 |  | 212 | README lede | 2.18 |  | 0.444 |
 | ns | 1755 |  | 206 | Root package.json scripts | 2.19 |  | 0.459 |
@@ -117,8 +117,8 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 4077 | 112 | package dev/peer dependencies in package.json |  |  | 0.451 |
 | walker |  | 4150 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.467 |
 | walker |  | 4175 | 25 | README.md section #23 |  |  | 0.467 |
-| walker |  | 4210 | 35 | README.md section #21 |  |  | 0.467 |
-| walker |  | 4270 | 60 | listing of 'test/pages' |  |  | 0.497 |
+| walker |  | 4235 | 60 | listing of 'test/pages' |  |  | 0.497 |
+| walker |  | 4270 | 35 | README.md section #21 |  |  | 0.497 |
 | walker |  | 4289 | 19 | imports in playwright.config.ts |  |  | 0.497 |
 | walker |  | 4385 | 96 | package runtime dependencies in cmdk/package.json |  |  | 0.516 |
 | walker |  | 4476 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.532 |

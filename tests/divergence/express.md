@@ -21,11 +21,11 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 | ns | 613 |  | 148 | Readme Running Tests | 1.8 |  | 0.387 |
 | walker |  | 636 | 376 | listing of 'test' |  |  | 0.408 |
 | walker |  | 648 | 12 | listing of 'test/support' |  |  | 0.453 |
-| ns | 875 |  | 262 | package.json scripts/engines/files | 1.9 |  | 0.424 |
-| walker |  | 1068 | 420 | README headline in Readme.md |  |  | 0.521 |
-| ns | 1182 |  | 307 | package.json identity | 1.10 |  | 0.476 |
-| walker |  | 1196 | 128 | headings outline in Readme.md |  |  | 0.480 |
-| walker |  | 1297 | 101 | listing of 'examples' |  |  | 0.663 |
+| walker |  | 749 | 101 | listing of 'examples' |  |  | 0.695 |
+| ns | 875 |  | 262 | package.json scripts/engines/files | 1.9 |  | 0.641 |
+| walker |  | 1169 | 420 | README headline in Readme.md |  |  | 0.725 |
+| ns | 1182 |  | 307 | package.json identity | 1.10 |  | 0.661 |
+| walker |  | 1297 | 128 | headings outline in Readme.md |  |  | 0.663 |
 | walker |  | 1384 | 87 | Readme.md section #2 |  |  | 0.663 |
 | ns | 1558 |  | 376 | test/ directory listing | 1.11 |  | 0.749 |
 | walker |  | 1560 | 176 | package scripts in package.json |  |  | 0.799 |
@@ -56,8 +56,8 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 | walker |  | 2017 | 26 | export doc at lib/request.js:37 |  |  | 0.765 |
 | walker |  | 2042 | 25 | imports in lib/express.js |  |  | 0.765 |
 | ns | 2065 |  | 233 | package.json dependencies (accepts..http-errors) | 1.13 |  | 0.736 |
-| walker |  | 2069 | 27 | imports in lib/application.js |  |  | 0.736 |
-| walker |  | 2155 | 86 | listing of 'test/acceptance' |  |  | 0.801 |
+| walker |  | 2128 | 86 | listing of 'test/acceptance' |  |  | 0.801 |
+| walker |  | 2155 | 27 | imports in lib/application.js |  |  | 0.801 |
 | walker |  | 2178 | 23 | Readme.md section #19 |  |  | 0.801 |
 | walker |  | 2201 | 23 | Readme.md section #30 |  |  | 0.801 |
 | walker |  | 2225 | 24 | Readme.md section #12 |  |  | 0.801 |

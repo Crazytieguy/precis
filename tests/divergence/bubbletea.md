@@ -381,53 +381,53 @@ Score(3000)=0.528 I=0.816 C=0.342 ns_rows≤3K=16/48 (reached=5 partial=1 missin
 | walker |  | 8595 | 32 | go decl doc at exec.go:69 |  |  | 0.476 |
 | walker |  | 8625 | 30 | go decl doc at tty.go:109 |  |  | 0.476 |
 | ns | 8633 |  | 278 | examples/simple/main.go: main() | 7.4 |  | 0.466 |
-| walker |  | 8855 | 230 | go decl names surface in color.go |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:10 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:13 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:18 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:21 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:26 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:29 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:36 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:39 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:44 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:67 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:70 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:75 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:81 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:84 |  |  | 0.474 |
-| walker |  | 8855 | 0 | go decl at color.go:89 |  |  | 0.474 |
-| walker |  | 8864 | 9 | go decl body at color.go:13 |  |  | 0.474 |
-| walker |  | 8873 | 9 | go decl body at color.go:21 |  |  | 0.474 |
-| walker |  | 8882 | 9 | go decl body at color.go:29 |  |  | 0.474 |
-| walker |  | 8894 | 12 | go decl doc at color.go:39 |  |  | 0.474 |
-| walker |  | 8906 | 12 | go decl doc at color.go:70 |  |  | 0.474 |
-| ns | 8911 |  | 278 | UPGRADE_GUIDE_V2.md: intro + migration checklist | 8.1 |  | 0.469 |
-| walker |  | 8918 | 12 | go decl doc at color.go:84 |  |  | 0.469 |
-| walker |  | 8932 | 14 | go decl doc at color.go:44 |  |  | 0.469 |
-| walker |  | 8946 | 14 | go decl doc at color.go:75 |  |  | 0.469 |
-| walker |  | 8960 | 14 | go decl doc at color.go:89 |  |  | 0.469 |
-| walker |  | 8976 | 16 | go decl doc at color.go:13 |  |  | 0.469 |
-| walker |  | 8992 | 16 | go decl doc at color.go:21 |  |  | 0.469 |
-| walker |  | 9008 | 16 | go decl doc at color.go:29 |  |  | 0.469 |
-| walker |  | 9042 | 34 | go decl doc at color.go:81 |  |  | 0.469 |
-| walker |  | 9060 | 18 | go decl doc at color.go:10 |  |  | 0.469 |
-| walker |  | 9078 | 18 | go decl doc at color.go:18 |  |  | 0.469 |
-| walker |  | 9096 | 18 | go decl doc at color.go:26 |  |  | 0.469 |
-| walker |  | 9144 | 48 | go decl doc at color.go:36 |  |  | 0.469 |
-| ns | 9191 |  | 280 | UPGRADE_GUIDE_V2.md: View field table | 8.2 |  | 0.464 |
-| walker |  | 9197 | 53 | go package + imports in color.go |  |  | 0.464 |
-| walker |  | 9236 | 39 | go decl at renderer.go:10 |  |  | 0.464 |
-| walker |  | 9290 | 54 | go package + imports in nil_renderer.go |  |  | 0.464 |
-| walker |  | 9332 | 42 | README.md section #44 |  |  | 0.464 |
-| walker |  | 9387 | 55 | go package + imports in key.go |  |  | 0.464 |
-| walker |  | 9442 | 55 | go package + imports in mouse.go |  |  | 0.464 |
-| walker |  | 9532 | 90 | go decl doc at termcap.go:41 |  |  | 0.464 |
-| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.458 |
-| walker |  | 9577 | 45 | README.md section #24 |  |  | 0.458 |
-| walker |  | 9650 | 73 | go decl doc at environ.go:32 |  |  | 0.458 |
-| walker |  | 9696 | 46 | go decl body at renderer.go:70 |  |  | 0.458 |
-| ns | 9936 |  | 375 | Taskfile.yaml + .golangci.yml | 9.1 |  | 0.446 |
-| walker |  | 9946 | 250 | listing of 'examples' |  |  | 0.508 |
+| walker |  | 8875 | 250 | listing of 'examples' |  |  | 0.533 |
+| ns | 8911 |  | 278 | UPGRADE_GUIDE_V2.md: intro + migration checklist | 8.1 |  | 0.527 |
+| walker |  | 9105 | 230 | go decl names surface in color.go |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:10 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:13 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:18 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:21 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:26 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:29 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:36 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:39 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:44 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:67 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:70 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:75 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:81 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:84 |  |  | 0.535 |
+| walker |  | 9105 | 0 | go decl at color.go:89 |  |  | 0.535 |
+| walker |  | 9114 | 9 | go decl body at color.go:13 |  |  | 0.535 |
+| walker |  | 9123 | 9 | go decl body at color.go:21 |  |  | 0.535 |
+| walker |  | 9132 | 9 | go decl body at color.go:29 |  |  | 0.535 |
+| walker |  | 9144 | 12 | go decl doc at color.go:39 |  |  | 0.535 |
+| walker |  | 9156 | 12 | go decl doc at color.go:70 |  |  | 0.535 |
+| walker |  | 9168 | 12 | go decl doc at color.go:84 |  |  | 0.535 |
+| walker |  | 9182 | 14 | go decl doc at color.go:44 |  |  | 0.535 |
+| ns | 9191 |  | 280 | UPGRADE_GUIDE_V2.md: View field table | 8.2 |  | 0.529 |
+| walker |  | 9196 | 14 | go decl doc at color.go:75 |  |  | 0.529 |
+| walker |  | 9210 | 14 | go decl doc at color.go:89 |  |  | 0.529 |
+| walker |  | 9226 | 16 | go decl doc at color.go:13 |  |  | 0.529 |
+| walker |  | 9242 | 16 | go decl doc at color.go:21 |  |  | 0.529 |
+| walker |  | 9258 | 16 | go decl doc at color.go:29 |  |  | 0.529 |
+| walker |  | 9292 | 34 | go decl doc at color.go:81 |  |  | 0.529 |
+| walker |  | 9310 | 18 | go decl doc at color.go:10 |  |  | 0.529 |
+| walker |  | 9328 | 18 | go decl doc at color.go:18 |  |  | 0.529 |
+| walker |  | 9346 | 18 | go decl doc at color.go:26 |  |  | 0.529 |
+| walker |  | 9394 | 48 | go decl doc at color.go:36 |  |  | 0.529 |
+| walker |  | 9447 | 53 | go package + imports in color.go |  |  | 0.529 |
+| walker |  | 9486 | 39 | go decl at renderer.go:10 |  |  | 0.529 |
+| walker |  | 9540 | 54 | go package + imports in nil_renderer.go |  |  | 0.529 |
+| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.522 |
+| walker |  | 9582 | 42 | README.md section #44 |  |  | 0.522 |
+| walker |  | 9637 | 55 | go package + imports in key.go |  |  | 0.522 |
+| walker |  | 9692 | 55 | go package + imports in mouse.go |  |  | 0.522 |
+| walker |  | 9782 | 90 | go decl doc at termcap.go:41 |  |  | 0.522 |
+| walker |  | 9827 | 45 | README.md section #24 |  |  | 0.522 |
+| walker |  | 9900 | 73 | go decl doc at environ.go:32 |  |  | 0.522 |
+| ns | 9936 |  | 375 | Taskfile.yaml + .golangci.yml | 9.1 |  | 0.508 |
+| walker |  | 9946 | 46 | go decl body at renderer.go:70 |  |  | 0.508 |
 | ns | 9985 |  | 49 | .github/ subdirectory listings | 9.3 |  | 0.508 |
 | ns | 9994 |  | 9 | LICENSE: license identification | 9.4 |  | 0.508 |

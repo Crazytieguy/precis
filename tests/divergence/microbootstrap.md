@@ -29,10 +29,10 @@ Score(3000)=0.553 I=0.788 C=0.388 ns_rows≤3K=15/45 (reached=7 partial=0 missin
 | walker |  | 743 | 34 | manifest config in pyproject.toml |  |  | 0.697 |
 | walker |  | 756 | 13 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.697 |
 | walker |  | 756 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.697 |
-| walker |  | 770 | 14 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.606 |
 | ns | 770 |  | 216 | README lede + minimal usage sketch | 1.8 |  | 0.606 |
-| walker |  | 778 | 8 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.606 |
-| walker |  | 796 | 18 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 774 | 18 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 788 | 14 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.606 |
+| walker |  | 796 | 8 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.606 |
 | ns | 806 |  | 36 | pyproject.toml: project identity | 1.9 |  | 0.596 |
 | walker |  | 1055 | 259 | README headline in README.md |  |  | 0.598 |
 | walker |  | 1077 | 22 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.598 |

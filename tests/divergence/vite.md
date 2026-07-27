@@ -1,4 +1,4 @@
-Score(3000)=0.470 I=0.711 C=0.311 ns_rows≤3K=24/49 (reached=7 partial=0 missing=17)
+Score(3000)=0.510 I=0.736 C=0.353 ns_rows≤3K=24/49 (reached=8 partial=0 missing=16)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,123 +44,123 @@ Score(3000)=0.470 I=0.711 C=0.311 ns_rows≤3K=24/49 (reached=7 partial=0 missin
 | walker |  | 1108 | 13 | imports #8 in packages/vite/src/node/index.ts |  |  | 0.570 |
 | ns | 1142 |  | 199 | CONTRIBUTING.md: Integration Tests (serve/build split) | 1.9 | 1.6 | 0.537 |
 | walker |  | 1152 | 44 | listing of 'packages/vite/types' |  |  | 0.539 |
-| walker |  | 1164 | 12 | imports #9 in packages/vite/src/node/index.ts |  |  | 0.539 |
-| walker |  | 1194 | 30 | listing of 'scripts' |  |  | 0.539 |
+| walker |  | 1182 | 30 | listing of 'scripts' |  |  | 0.539 |
+| walker |  | 1194 | 12 | imports #9 in packages/vite/src/node/index.ts |  |  | 0.539 |
 | walker |  | 1278 | 84 | README headline in packages/plugin-legacy/README.md |  |  | 0.539 |
 | walker |  | 1300 | 22 | listing of 'packages/vite/src/node/__tests_dts__' |  |  | 0.539 |
 | ns | 1320 |  | 178 | ci.yml: build/test steps | 1.10 |  | 0.491 |
-| walker |  | 1337 | 37 | listing of 'packages/vite/types/internal' |  |  | 0.493 |
-| ns | 1397 |  | 77 | packages/vite directory listing | 2.1 |  | 0.558 |
-| walker |  | 1460 | 123 | listing of 'packages/create-vite' |  |  | 0.559 |
-| walker |  | 1464 | 4 | listing of 'packages/create-vite/src' |  |  | 0.559 |
-| walker |  | 1469 | 5 | listing of 'packages/create-vite/__tests__' |  |  | 0.559 |
-| walker |  | 1488 | 19 | listing of 'packages/create-vite/template-lit' |  |  | 0.559 |
-| walker |  | 1496 | 8 | listing of 'packages/create-vite/template-lit/public' |  |  | 0.559 |
-| walker |  | 1515 | 19 | listing of 'packages/create-vite/template-vanilla' |  |  | 0.559 |
-| walker |  | 1523 | 8 | listing of 'packages/create-vite/template-vanilla/public' |  |  | 0.559 |
-| walker |  | 1535 | 12 | listing of 'packages/create-vite/template-lit/src' |  |  | 0.559 |
-| walker |  | 1559 | 24 | listing of 'packages/create-vite/template-lit-ts' |  |  | 0.559 |
-| walker |  | 1567 | 8 | listing of 'packages/create-vite/template-lit-ts/public' |  |  | 0.559 |
-| walker |  | 1579 | 12 | listing of 'packages/create-vite/template-lit-ts/src' |  |  | 0.559 |
-| ns | 1588 |  | 191 | packages/vite/package.json: bin + exports map | 2.2 |  | 0.519 |
-| walker |  | 1603 | 24 | listing of 'packages/create-vite/template-preact' |  |  | 0.519 |
-| walker |  | 1611 | 8 | listing of 'packages/create-vite/template-preact/public' |  |  | 0.519 |
-| walker |  | 1635 | 24 | listing of 'packages/create-vite/template-vanilla-ts' |  |  | 0.519 |
-| walker |  | 1643 | 8 | listing of 'packages/create-vite/template-vanilla-ts/public' |  |  | 0.519 |
-| walker |  | 1658 | 15 | listing of 'packages/create-vite/template-vanilla/src' |  |  | 0.519 |
-| walker |  | 1673 | 15 | listing of 'packages/create-vite/template-vanilla-ts/src' |  |  | 0.519 |
-| walker |  | 1701 | 28 | listing of 'packages/create-vite/template-qwik' |  |  | 0.519 |
-| walker |  | 1709 | 8 | listing of 'packages/create-vite/template-qwik/public' |  |  | 0.519 |
-| walker |  | 1722 | 13 | README headline in packages/create-vite/template-qwik/README.md |  |  | 0.519 |
-| walker |  | 1750 | 28 | listing of 'packages/create-vite/template-solid' |  |  | 0.519 |
-| walker |  | 1758 | 8 | listing of 'packages/create-vite/template-solid/public' |  |  | 0.519 |
-| walker |  | 1804 | 46 | README headline in packages/create-vite/README.md |  |  | 0.519 |
-| walker |  | 1816 | 12 | listing of 'packages/create-vite/template-lit/src/assets' |  |  | 0.519 |
-| ns | 1820 |  | 232 | packages/vite/package.json: build/dev scripts | 2.3 |  | 0.501 |
-| walker |  | 1828 | 12 | listing of 'packages/create-vite/template-lit-ts/src/assets' |  |  | 0.501 |
-| ns | 1837 |  | 17 | packages/vite/src top-level listing | 2.4 |  | 0.517 |
-| walker |  | 1840 | 12 | listing of 'packages/create-vite/template-vanilla/src/assets' |  |  | 0.517 |
-| walker |  | 1873 | 33 | listing of 'packages/create-vite/template-react' |  |  | 0.517 |
-| walker |  | 1881 | 8 | listing of 'packages/create-vite/template-react/public' |  |  | 0.517 |
-| walker |  | 1914 | 33 | listing of 'packages/create-vite/template-vue' |  |  | 0.517 |
-| walker |  | 1922 | 8 | listing of 'packages/create-vite/template-vue/public' |  |  | 0.517 |
-| walker |  | 1940 | 18 | listing of 'packages/create-vite/template-vue/src' |  |  | 0.517 |
-| walker |  | 1945 | 5 | listing of 'packages/create-vite/template-vue/src/components' |  |  | 0.517 |
-| walker |  | 1957 | 12 | listing of 'packages/create-vite/template-vue/src/assets' |  |  | 0.517 |
-| ns | 1972 |  | 135 | packages/vite/src/node top-level listing | 2.5 |  | 0.586 |
-| walker |  | 1976 | 19 | listing of 'packages/create-vite/template-preact/src' |  |  | 0.586 |
-| walker |  | 1995 | 19 | listing of 'packages/create-vite/template-qwik/src' |  |  | 0.586 |
-| walker |  | 2014 | 19 | listing of 'packages/create-vite/template-react/src' |  |  | 0.586 |
-| walker |  | 2026 | 12 | listing of 'packages/create-vite/template-react/src/assets' |  |  | 0.586 |
-| walker |  | 2045 | 19 | listing of 'packages/create-vite/template-solid/src' |  |  | 0.586 |
-| ns | 2053 |  | 81 | packages/vite/types + types/internal listing | 2.6 |  | 0.605 |
-| walker |  | 2057 | 12 | listing of 'packages/create-vite/template-solid/src/assets' |  |  | 0.605 |
-| walker |  | 2070 | 13 | listing of 'packages/create-vite/template-preact/src/assets' |  |  | 0.605 |
-| walker |  | 2083 | 13 | listing of 'packages/create-vite/template-qwik/src/assets' |  |  | 0.605 |
-| walker |  | 2096 | 13 | listing of 'packages/create-vite/template-vanilla-ts/src/assets' |  |  | 0.605 |
-| walker |  | 2120 | 24 | headings outline in packages/create-vite/README.md |  |  | 0.605 |
-| walker |  | 2161 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.605 |
-| walker |  | 2169 | 8 | listing of 'packages/create-vite/template-preact-ts/public' |  |  | 0.605 |
-| walker |  | 2190 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.605 |
-| ns | 2202 |  | 149 | packages/vite/src/node/plugins listing | 2.7 |  | 0.560 |
-| walker |  | 2203 | 13 | listing of 'packages/create-vite/template-preact-ts/src/assets' |  |  | 0.560 |
-| walker |  | 2247 | 44 | listing of 'packages/create-vite/template-svelte' |  |  | 0.560 |
-| walker |  | 2255 | 8 | listing of 'packages/create-vite/template-svelte/public' |  |  | 0.560 |
-| walker |  | 2274 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.560 |
-| ns | 2277 |  | 75 | packages/vite/src/node/server listing | 2.8 |  | 0.538 |
-| walker |  | 2279 | 5 | listing of 'packages/create-vite/template-svelte/src/lib' |  |  | 0.538 |
-| walker |  | 2289 | 10 | export names surface in packages/create-vite/template-svelte/src/main.js |  |  | 0.538 |
-| walker |  | 2302 | 13 | listing of 'packages/create-vite/template-svelte/src/assets' |  |  | 0.538 |
-| walker |  | 2339 | 37 | README headline in packages/create-vite/template-svelte/README.md |  |  | 0.538 |
-| ns | 2344 |  | 67 | packages/vite/src/node/server/middlewares listing | 2.9 |  | 0.521 |
-| ns | 2373 |  | 29 | packages/vite/src/node/optimizer listing | 2.10 |  | 0.514 |
-| walker |  | 2384 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.514 |
-| walker |  | 2392 | 8 | listing of 'packages/create-vite/template-qwik-ts/public' |  |  | 0.514 |
-| walker |  | 2405 | 13 | README headline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.514 |
-| walker |  | 2426 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.514 |
-| ns | 2433 |  | 60 | packages/vite/src/node/ssr + ssr/runtime listing | 2.11 |  | 0.503 |
-| walker |  | 2439 | 13 | listing of 'packages/create-vite/template-qwik-ts/src/assets' |  |  | 0.503 |
-| ns | 2451 |  | 18 | packages/vite/src/node/server/environments listing | 2.12 |  | 0.499 |
-| walker |  | 2484 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.499 |
-| walker |  | 2492 | 8 | listing of 'packages/create-vite/template-solid-ts/public' |  |  | 0.499 |
-| walker |  | 2513 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.499 |
-| walker |  | 2525 | 12 | listing of 'packages/create-vite/template-solid-ts/src/assets' |  |  | 0.499 |
-| walker |  | 2575 | 50 | listing of 'packages/create-vite/template-react-ts' |  |  | 0.499 |
-| walker |  | 2583 | 8 | listing of 'packages/create-vite/template-react-ts/public' |  |  | 0.499 |
-| walker |  | 2604 | 21 | listing of 'packages/create-vite/template-react-ts/src' |  |  | 0.499 |
-| walker |  | 2616 | 12 | listing of 'packages/create-vite/template-react-ts/src/assets' |  |  | 0.499 |
-| walker |  | 2666 | 50 | listing of 'packages/create-vite/template-vue-ts' |  |  | 0.499 |
-| walker |  | 2674 | 8 | listing of 'packages/create-vite/template-vue-ts/public' |  |  | 0.499 |
-| walker |  | 2692 | 18 | listing of 'packages/create-vite/template-vue-ts/src' |  |  | 0.499 |
-| walker |  | 2697 | 5 | listing of 'packages/create-vite/template-vue-ts/src/components' |  |  | 0.499 |
-| walker |  | 2709 | 12 | listing of 'packages/create-vite/template-vue-ts/src/assets' |  |  | 0.499 |
-| ns | 2722 |  | 271 | cli.ts: global CLI options | 3.1 |  | 0.486 |
-| walker |  | 2752 | 43 | README headline in packages/create-vite/template-react/README.md |  |  | 0.486 |
-| walker |  | 2795 | 43 | README headline in packages/create-vite/template-solid/README.md |  |  | 0.486 |
-| walker |  | 2838 | 43 | README headline in packages/create-vite/template-solid-ts/README.md |  |  | 0.486 |
-| walker |  | 2884 | 46 | README headline in packages/create-vite/template-react-ts/README.md |  |  | 0.486 |
-| walker |  | 2940 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.486 |
-| walker |  | 2948 | 8 | listing of 'packages/create-vite/template-svelte-ts/public' |  |  | 0.486 |
-| walker |  | 2967 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.486 |
-| walker |  | 2972 | 5 | listing of 'packages/create-vite/template-svelte-ts/src/lib' |  |  | 0.486 |
-| walker |  | 2982 | 10 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.486 |
-| ns | 2983 |  | 261 | cli.ts: `vite`/`vite serve` (dev server) command flags | 3.2 |  | 0.470 |
-| walker |  | 2995 | 13 | listing of 'packages/create-vite/template-svelte-ts/src/assets' |  |  | 0.470 |
-| walker |  | 3037 | 42 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.470 |
-| walker |  | 3227 | 190 | README.md section #0 |  |  | 0.470 |
-| walker |  | 3251 | 24 | headings outline in packages/create-vite/template-react/README.md |  |  | 0.470 |
-| walker |  | 3275 | 24 | headings outline in packages/create-vite/template-react-ts/README.md |  |  | 0.470 |
-| walker |  | 3316 | 41 | listing of '.github' |  |  | 0.470 |
-| walker |  | 3395 | 79 | listing of '.github/workflows' |  |  | 0.510 |
-| walker |  | 3459 | 64 | listing of 'docs' |  |  | 0.510 |
-| walker |  | 3474 | 15 | listing of 'docs/_data' |  |  | 0.510 |
-| walker |  | 3494 | 20 | imports #2 in packages/vite/src/node/index.ts |  |  | 0.510 |
-| walker |  | 3509 | 15 | imports #10 in packages/vite/src/node/index.ts |  |  | 0.510 |
-| walker |  | 3522 | 13 | imports #11 in packages/vite/src/node/index.ts |  |  | 0.510 |
-| walker |  | 3541 | 19 | listing of 'docs/.vitepress' |  |  | 0.510 |
-| walker |  | 3570 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.525 |
-| walker |  | 3618 | 48 | imports #5 in packages/vite/src/node/index.ts |  |  | 0.525 |
-| walker |  | 3639 | 21 | listing of 'docs/.vitepress/theme' |  |  | 0.525 |
+| walker |  | 1341 | 41 | listing of '.github' |  |  | 0.491 |
+| ns | 1397 |  | 77 | packages/vite directory listing | 2.1 |  | 0.555 |
+| walker |  | 1420 | 79 | listing of '.github/workflows' |  |  | 0.637 |
+| walker |  | 1484 | 64 | listing of 'docs' |  |  | 0.637 |
+| walker |  | 1499 | 15 | listing of 'docs/_data' |  |  | 0.637 |
+| walker |  | 1536 | 37 | listing of 'packages/vite/types/internal' |  |  | 0.640 |
+| ns | 1588 |  | 191 | packages/vite/package.json: bin + exports map | 2.2 |  | 0.594 |
+| walker |  | 1659 | 123 | listing of 'packages/create-vite' |  |  | 0.596 |
+| walker |  | 1663 | 4 | listing of 'packages/create-vite/src' |  |  | 0.596 |
+| walker |  | 1668 | 5 | listing of 'packages/create-vite/__tests__' |  |  | 0.596 |
+| walker |  | 1687 | 19 | listing of 'packages/create-vite/template-lit' |  |  | 0.596 |
+| walker |  | 1695 | 8 | listing of 'packages/create-vite/template-lit/public' |  |  | 0.596 |
+| walker |  | 1714 | 19 | listing of 'packages/create-vite/template-vanilla' |  |  | 0.596 |
+| walker |  | 1722 | 8 | listing of 'packages/create-vite/template-vanilla/public' |  |  | 0.596 |
+| walker |  | 1734 | 12 | listing of 'packages/create-vite/template-lit/src' |  |  | 0.596 |
+| walker |  | 1749 | 15 | listing of 'packages/create-vite/template-vanilla/src' |  |  | 0.596 |
+| walker |  | 1773 | 24 | listing of 'packages/create-vite/template-lit-ts' |  |  | 0.596 |
+| walker |  | 1781 | 8 | listing of 'packages/create-vite/template-lit-ts/public' |  |  | 0.596 |
+| walker |  | 1793 | 12 | listing of 'packages/create-vite/template-lit-ts/src' |  |  | 0.596 |
+| walker |  | 1817 | 24 | listing of 'packages/create-vite/template-preact' |  |  | 0.596 |
+| ns | 1820 |  | 232 | packages/vite/package.json: build/dev scripts | 2.3 |  | 0.575 |
+| walker |  | 1825 | 8 | listing of 'packages/create-vite/template-preact/public' |  |  | 0.575 |
+| ns | 1837 |  | 17 | packages/vite/src top-level listing | 2.4 |  | 0.587 |
+| walker |  | 1849 | 24 | listing of 'packages/create-vite/template-vanilla-ts' |  |  | 0.587 |
+| walker |  | 1857 | 8 | listing of 'packages/create-vite/template-vanilla-ts/public' |  |  | 0.587 |
+| walker |  | 1872 | 15 | listing of 'packages/create-vite/template-vanilla-ts/src' |  |  | 0.587 |
+| walker |  | 1900 | 28 | listing of 'packages/create-vite/template-qwik' |  |  | 0.587 |
+| walker |  | 1908 | 8 | listing of 'packages/create-vite/template-qwik/public' |  |  | 0.587 |
+| walker |  | 1921 | 13 | README headline in packages/create-vite/template-qwik/README.md |  |  | 0.587 |
+| walker |  | 1949 | 28 | listing of 'packages/create-vite/template-solid' |  |  | 0.587 |
+| walker |  | 1957 | 8 | listing of 'packages/create-vite/template-solid/public' |  |  | 0.587 |
+| ns | 1972 |  | 135 | packages/vite/src/node top-level listing | 2.5 |  | 0.641 |
+| walker |  | 1976 | 19 | listing of 'packages/create-vite/template-preact/src' |  |  | 0.641 |
+| walker |  | 1995 | 19 | listing of 'packages/create-vite/template-qwik/src' |  |  | 0.641 |
+| walker |  | 2014 | 19 | listing of 'packages/create-vite/template-solid/src' |  |  | 0.641 |
+| ns | 2053 |  | 81 | packages/vite/types + types/internal listing | 2.6 |  | 0.656 |
+| walker |  | 2060 | 46 | README headline in packages/create-vite/README.md |  |  | 0.656 |
+| walker |  | 2072 | 12 | listing of 'packages/create-vite/template-lit/src/assets' |  |  | 0.656 |
+| walker |  | 2084 | 12 | listing of 'packages/create-vite/template-lit-ts/src/assets' |  |  | 0.656 |
+| walker |  | 2096 | 12 | listing of 'packages/create-vite/template-solid/src/assets' |  |  | 0.656 |
+| walker |  | 2108 | 12 | listing of 'packages/create-vite/template-vanilla/src/assets' |  |  | 0.656 |
+| walker |  | 2141 | 33 | listing of 'packages/create-vite/template-react' |  |  | 0.656 |
+| walker |  | 2149 | 8 | listing of 'packages/create-vite/template-react/public' |  |  | 0.656 |
+| walker |  | 2168 | 19 | listing of 'packages/create-vite/template-react/src' |  |  | 0.656 |
+| walker |  | 2180 | 12 | listing of 'packages/create-vite/template-react/src/assets' |  |  | 0.656 |
+| ns | 2202 |  | 149 | packages/vite/src/node/plugins listing | 2.7 |  | 0.607 |
+| walker |  | 2213 | 33 | listing of 'packages/create-vite/template-vue' |  |  | 0.607 |
+| walker |  | 2221 | 8 | listing of 'packages/create-vite/template-vue/public' |  |  | 0.607 |
+| walker |  | 2239 | 18 | listing of 'packages/create-vite/template-vue/src' |  |  | 0.607 |
+| walker |  | 2244 | 5 | listing of 'packages/create-vite/template-vue/src/components' |  |  | 0.607 |
+| walker |  | 2256 | 12 | listing of 'packages/create-vite/template-vue/src/assets' |  |  | 0.607 |
+| walker |  | 2269 | 13 | listing of 'packages/create-vite/template-preact/src/assets' |  |  | 0.607 |
+| ns | 2277 |  | 75 | packages/vite/src/node/server listing | 2.8 |  | 0.584 |
+| walker |  | 2282 | 13 | listing of 'packages/create-vite/template-qwik/src/assets' |  |  | 0.584 |
+| walker |  | 2295 | 13 | listing of 'packages/create-vite/template-vanilla-ts/src/assets' |  |  | 0.584 |
+| walker |  | 2319 | 24 | headings outline in packages/create-vite/README.md |  |  | 0.584 |
+| ns | 2344 |  | 67 | packages/vite/src/node/server/middlewares listing | 2.9 |  | 0.565 |
+| walker |  | 2360 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.565 |
+| walker |  | 2368 | 8 | listing of 'packages/create-vite/template-preact-ts/public' |  |  | 0.565 |
+| ns | 2373 |  | 29 | packages/vite/src/node/optimizer listing | 2.10 |  | 0.558 |
+| walker |  | 2389 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.558 |
+| walker |  | 2402 | 13 | listing of 'packages/create-vite/template-preact-ts/src/assets' |  |  | 0.558 |
+| ns | 2433 |  | 60 | packages/vite/src/node/ssr + ssr/runtime listing | 2.11 |  | 0.545 |
+| walker |  | 2446 | 44 | listing of 'packages/create-vite/template-svelte' |  |  | 0.545 |
+| ns | 2451 |  | 18 | packages/vite/src/node/server/environments listing | 2.12 |  | 0.541 |
+| walker |  | 2454 | 8 | listing of 'packages/create-vite/template-svelte/public' |  |  | 0.541 |
+| walker |  | 2473 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.541 |
+| walker |  | 2478 | 5 | listing of 'packages/create-vite/template-svelte/src/lib' |  |  | 0.541 |
+| walker |  | 2488 | 10 | export names surface in packages/create-vite/template-svelte/src/main.js |  |  | 0.541 |
+| walker |  | 2501 | 13 | listing of 'packages/create-vite/template-svelte/src/assets' |  |  | 0.541 |
+| walker |  | 2538 | 37 | README headline in packages/create-vite/template-svelte/README.md |  |  | 0.541 |
+| walker |  | 2583 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.541 |
+| walker |  | 2591 | 8 | listing of 'packages/create-vite/template-qwik-ts/public' |  |  | 0.541 |
+| walker |  | 2604 | 13 | README headline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.541 |
+| walker |  | 2625 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.541 |
+| walker |  | 2638 | 13 | listing of 'packages/create-vite/template-qwik-ts/src/assets' |  |  | 0.541 |
+| walker |  | 2683 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.541 |
+| walker |  | 2691 | 8 | listing of 'packages/create-vite/template-solid-ts/public' |  |  | 0.541 |
+| walker |  | 2712 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.541 |
+| ns | 2722 |  | 271 | cli.ts: global CLI options | 3.1 |  | 0.526 |
+| walker |  | 2724 | 12 | listing of 'packages/create-vite/template-solid-ts/src/assets' |  |  | 0.526 |
+| walker |  | 2774 | 50 | listing of 'packages/create-vite/template-react-ts' |  |  | 0.526 |
+| walker |  | 2782 | 8 | listing of 'packages/create-vite/template-react-ts/public' |  |  | 0.526 |
+| walker |  | 2803 | 21 | listing of 'packages/create-vite/template-react-ts/src' |  |  | 0.526 |
+| walker |  | 2815 | 12 | listing of 'packages/create-vite/template-react-ts/src/assets' |  |  | 0.526 |
+| walker |  | 2865 | 50 | listing of 'packages/create-vite/template-vue-ts' |  |  | 0.526 |
+| walker |  | 2873 | 8 | listing of 'packages/create-vite/template-vue-ts/public' |  |  | 0.526 |
+| walker |  | 2891 | 18 | listing of 'packages/create-vite/template-vue-ts/src' |  |  | 0.526 |
+| walker |  | 2896 | 5 | listing of 'packages/create-vite/template-vue-ts/src/components' |  |  | 0.526 |
+| walker |  | 2908 | 12 | listing of 'packages/create-vite/template-vue-ts/src/assets' |  |  | 0.526 |
+| walker |  | 2951 | 43 | README headline in packages/create-vite/template-react/README.md |  |  | 0.526 |
+| ns | 2983 |  | 261 | cli.ts: `vite`/`vite serve` (dev server) command flags | 3.2 |  | 0.510 |
+| walker |  | 2994 | 43 | README headline in packages/create-vite/template-solid/README.md |  |  | 0.510 |
+| walker |  | 3037 | 43 | README headline in packages/create-vite/template-solid-ts/README.md |  |  | 0.510 |
+| walker |  | 3083 | 46 | README headline in packages/create-vite/template-react-ts/README.md |  |  | 0.510 |
+| walker |  | 3139 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.510 |
+| walker |  | 3147 | 8 | listing of 'packages/create-vite/template-svelte-ts/public' |  |  | 0.510 |
+| walker |  | 3166 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.510 |
+| walker |  | 3171 | 5 | listing of 'packages/create-vite/template-svelte-ts/src/lib' |  |  | 0.510 |
+| walker |  | 3181 | 10 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.510 |
+| walker |  | 3194 | 13 | listing of 'packages/create-vite/template-svelte-ts/src/assets' |  |  | 0.510 |
+| walker |  | 3236 | 42 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.510 |
+| walker |  | 3426 | 190 | README.md section #0 |  |  | 0.510 |
+| walker |  | 3450 | 24 | headings outline in packages/create-vite/template-react/README.md |  |  | 0.510 |
+| walker |  | 3474 | 24 | headings outline in packages/create-vite/template-react-ts/README.md |  |  | 0.510 |
+| walker |  | 3493 | 19 | listing of 'docs/.vitepress' |  |  | 0.510 |
+| walker |  | 3513 | 20 | imports #2 in packages/vite/src/node/index.ts |  |  | 0.510 |
+| walker |  | 3528 | 15 | imports #10 in packages/vite/src/node/index.ts |  |  | 0.510 |
+| walker |  | 3549 | 21 | listing of 'docs/.vitepress/theme' |  |  | 0.510 |
+| walker |  | 3562 | 13 | imports #11 in packages/vite/src/node/index.ts |  |  | 0.510 |
+| walker |  | 3591 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.525 |
+| walker |  | 3639 | 48 | imports #5 in packages/vite/src/node/index.ts |  |  | 0.525 |
 | walker |  | 3689 | 50 | listing of 'packages/vite/src/types' |  |  | 0.525 |
 | walker |  | 3708 | 19 | package identity in packages/vite/src/types/package.json |  |  | 0.525 |
 | walker |  | 3727 | 19 | module item at packages/create-vite/template-solid-ts/src/index.tsx:6 |  |  | 0.525 |
@@ -236,42 +236,33 @@ Score(3000)=0.470 I=0.711 C=0.311 ns_rows≤3K=24/49 (reached=7 partial=0 missin
 | walker |  | 7750 | 15 | export names surface in packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.345 |
 | walker |  | 7782 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.345 |
 | walker |  | 7791 | 9 | listing of 'packages/vite/src/node/ssr/__tests__/__snapshots__' |  |  | 0.345 |
-| walker |  | 7804 | 13 | export names surface in packages/vite/rolldown.config.ts |  |  | 0.345 |
-| walker |  | 7817 | 13 | export names surface in packages/vite/rolldown.dts.config.ts |  |  | 0.345 |
+| walker |  | 7830 | 39 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures' |  |  | 0.345 |
+| walker |  | 7844 | 14 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/named-overwrite-all' |  |  | 0.345 |
+| walker |  | 7860 | 16 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/modules' |  |  | 0.345 |
+| walker |  | 7878 | 18 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/multi-source-sourcemaps' |  |  | 0.345 |
+| walker |  | 7902 | 24 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/errors' |  |  | 0.345 |
+| walker |  | 7915 | 13 | export names surface in packages/vite/rolldown.config.ts |  |  | 0.345 |
+| walker |  | 7928 | 13 | export names surface in packages/vite/rolldown.dts.config.ts |  |  | 0.345 |
 | ns | 8047 |  | 325 | ViteDevServer: field + method roster | 6.3 |  | 0.338 |
 | ns | 8160 |  | 113 | createServer() / _createServer() signatures | 6.4 | 6.3 | 0.335 |
 | ns | 8429 |  | 269 | server/index.ts: middleware registration order | 6.5 |  | 0.331 |
 | ns | 8640 |  | 211 | EnvironmentModuleNode: field roster | 6.6 |  | 0.328 |
 | ns | 8956 |  | 316 | EnvironmentModuleGraph: fields + method roster | 6.7 |  | 0.323 |
-| walker |  | 9098 | 1281 | export at packages/vite/src/node/optimizer/index.ts:74 |  |  | 0.323 |
 | ns | 9127 |  | 171 | hmr.ts: primary export roster | 6.10 |  | 0.321 |
 | ns | 9182 |  | 55 | packages/vite/src/shared directory listing | 9.1 |  | 0.331 |
-| walker |  | 9209 | 111 | imports #4 in packages/vite/src/node/index.ts |  |  | 0.331 |
+| walker |  | 9209 | 1281 | export at packages/vite/src/node/optimizer/index.ts:74 |  |  | 0.331 |
 | ns | 9212 |  | 30 | packages/plugin-legacy directory listing | 10.1 |  | 0.338 |
-| walker |  | 9263 | 54 | headings outline in packages/create-vite/template-qwik/README.md |  |  | 0.338 |
-| walker |  | 9317 | 54 | headings outline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.338 |
+| walker |  | 9251 | 42 | listing of 'docs/config' |  |  | 0.338 |
 | ns | 9335 |  | 123 | packages/create-vite directory + template listing | 10.2 |  | 0.359 |
-| walker |  | 9341 | 24 | export names surface in packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.359 |
-| walker |  | 9341 | 0 | export at packages/vite/src/module-runner/sourcemap/index.ts:4 |  |  | 0.359 |
-| walker |  | 9380 | 39 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures' |  |  | 0.359 |
-| walker |  | 9394 | 14 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/named-overwrite-all' |  |  | 0.359 |
-| walker |  | 9410 | 16 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/modules' |  |  | 0.359 |
-| walker |  | 9428 | 18 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/multi-source-sourcemaps' |  |  | 0.359 |
-| walker |  | 9452 | 24 | listing of 'packages/vite/src/node/ssr/__tests__/fixtures/errors' |  |  | 0.359 |
-| walker |  | 9466 | 14 | export names surface in packages/vite/rollupLicensePlugin.ts |  |  | 0.359 |
-| walker |  | 9500 | 34 | export at packages/vite/src/node/ssr/runnerImport.ts:15 |  |  | 0.359 |
-| walker |  | 9575 | 75 | README.md section #4 |  |  | 0.359 |
-| walker |  | 9595 | 20 | imports #13 in packages/vite/src/node/index.ts |  |  | 0.360 |
-| walker |  | 9612 | 17 | imports #14 in packages/vite/src/node/index.ts |  |  | 0.361 |
-| walker |  | 9654 | 42 | listing of 'docs/config' |  |  | 0.361 |
-| walker |  | 9680 | 26 | export names surface in packages/vite/src/node/ssr/fetchModule.ts |  |  | 0.361 |
-| walker |  | 9715 | 35 | export at packages/vite/src/node/ssr/fetchModule.ts:14 |  |  | 0.361 |
-| ns | 9741 |  | 406 | playground/ directory listing | 11.1 |  | 0.343 |
-| walker |  | 9811 | 96 | export names surface in packages/plugin-legacy/src/index.ts |  |  | 0.343 |
-| walker |  | 9811 | 0 | export at packages/plugin-legacy/src/index.ts:1066 |  |  | 0.343 |
-| walker |  | 9830 | 19 | export at packages/plugin-legacy/src/index.ts:149 |  |  | 0.343 |
-| walker |  | 9864 | 34 | export at packages/plugin-legacy/src/index.ts:128 |  |  | 0.343 |
-| walker |  | 9913 | 49 | export at packages/plugin-legacy/src/index.ts:794 |  |  | 0.343 |
-| ns | 9925 |  | 184 | docs/guide + docs/config directory listings | 12.1 |  | 0.338 |
-| ns | 9962 |  | 37 | netlify.toml: build config | 13.1 |  | 0.338 |
-| walker |  | 9979 | 66 | export at packages/plugin-legacy/src/index.ts:1057 |  |  | 0.338 |
+| walker |  | 9362 | 111 | imports #4 in packages/vite/src/node/index.ts |  |  | 0.359 |
+| walker |  | 9416 | 54 | headings outline in packages/create-vite/template-qwik/README.md |  |  | 0.359 |
+| walker |  | 9470 | 54 | headings outline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.359 |
+| walker |  | 9494 | 24 | export names surface in packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.359 |
+| walker |  | 9494 | 0 | export at packages/vite/src/module-runner/sourcemap/index.ts:4 |  |  | 0.359 |
+| walker |  | 9508 | 14 | export names surface in packages/vite/rollupLicensePlugin.ts |  |  | 0.359 |
+| ns | 9741 |  | 406 | playground/ directory listing | 11.1 |  | 0.342 |
+| walker |  | 9914 | 406 | listing of 'playground' |  |  | 0.418 |
+| ns | 9925 |  | 184 | docs/guide + docs/config directory listings | 12.1 |  | 0.411 |
+| walker |  | 9959 | 45 | listing of 'docs/changes' |  |  | 0.411 |
+| ns | 9962 |  | 37 | netlify.toml: build config | 13.1 |  | 0.411 |
+| walker |  | 9993 | 34 | export at packages/vite/src/node/ssr/runnerImport.ts:15 |  |  | 0.411 |

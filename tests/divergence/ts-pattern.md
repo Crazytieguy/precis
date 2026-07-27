@@ -19,11 +19,11 @@ Score(3000)=0.645 I=0.843 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 | walker |  | 313 | 9 | listing of '.github' |  |  | 0.853 |
 | walker |  | 331 | 18 | export names surface in src/errors.ts |  |  | 0.853 |
 | walker |  | 343 | 12 | export at src/errors.ts:5 |  |  | 0.853 |
-| ns | 357 |  | 67 | examples/ tree listings | 1.6 |  | 0.737 |
-| walker |  | 363 | 20 | export names surface in src/match.ts |  |  | 0.737 |
-| walker |  | 383 | 20 | export at src/match.ts:32 |  |  | 0.737 |
-| walker |  | 399 | 16 | export body at src/match.ts:32 body 35 |  |  | 0.737 |
-| walker |  | 409 | 10 | listing of 'examples' |  |  | 0.740 |
+| walker |  | 353 | 10 | listing of 'examples' |  |  | 0.854 |
+| ns | 357 |  | 67 | examples/ tree listings | 1.6 |  | 0.740 |
+| walker |  | 373 | 20 | export names surface in src/match.ts |  |  | 0.740 |
+| walker |  | 393 | 20 | export at src/match.ts:32 |  |  | 0.740 |
+| walker |  | 409 | 16 | export body at src/match.ts:32 body 35 |  |  | 0.740 |
 | ns | 483 |  | 126 | Config bundle A1: jsr.json, jest.config.cjs | 1.7 |  | 0.673 |
 | walker |  | 559 | 150 | README headline in README.md |  |  | 0.675 |
 | ns | 637 |  | 154 | Config bundle A2: tsconfig.json | 1.8 |  | 0.615 |
@@ -37,13 +37,13 @@ Score(3000)=0.645 I=0.843 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 | walker |  | 851 | 39 | export at src/is-matching.ts:48 |  |  | 0.661 |
 | walker |  | 866 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.677 |
 | walker |  | 941 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.678 |
-| walker |  | 951 | 10 | imports in src/types/index.ts |  |  | 0.678 |
-| walker |  | 974 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.719 |
+| walker |  | 964 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.719 |
+| walker |  | 974 | 10 | imports in src/types/index.ts |  |  | 0.719 |
 | walker |  | 996 | 22 | README.md section #2 |  |  | 0.719 |
 | ns | 1002 |  | 273 | package.json: scripts | 1.11 |  | 0.667 |
-| walker |  | 1036 | 40 | export doc at src/errors.ts:5 |  |  | 0.668 |
-| ns | 1220 |  | 218 | package.json: author/license/devDependencies | 1.12 |  | 0.620 |
-| walker |  | 1334 | 298 | listing of 'tests' |  |  | 0.640 |
+| ns | 1220 |  | 218 | package.json: author/license/devDependencies | 1.12 |  | 0.619 |
+| walker |  | 1294 | 298 | listing of 'tests' |  |  | 0.639 |
+| walker |  | 1334 | 40 | export doc at src/errors.ts:5 |  |  | 0.640 |
 | walker |  | 1361 | 27 | README.md section #7 |  |  | 0.640 |
 | walker |  | 1389 | 28 | README.md section #8 |  |  | 0.640 |
 | ns | 1526 |  | 306 | tests/ and tests/types-catalog/ listings | 1.13 |  | 0.707 |

@@ -21,19 +21,19 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.578 |
 | walker |  | 476 | 14 | listing of 'docs/tools' |  |  | 0.623 |
 | ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.595 |
-| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.532 |
-| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.630 |
-| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.592 |
-| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.599 |
-| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.601 |
-| walker |  | 903 | 427 | README headline in README.md |  |  | 0.707 |
-| walker |  | 945 | 42 | listing of 'deps' |  |  | 0.770 |
-| ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.695 |
-| walker |  | 1178 | 233 | headings outline in README.md |  |  | 0.696 |
-| walker |  | 1222 | 44 | README.md section #0 |  |  | 0.696 |
-| ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.654 |
-| walker |  | 1241 | 19 | README.md section #21 |  |  | 0.654 |
-| walker |  | 1292 | 51 | listing of 'examples' |  |  | 0.715 |
+| walker |  | 518 | 42 | listing of 'deps' |  |  | 0.603 |
+| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.540 |
+| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.638 |
+| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.657 |
+| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.662 |
+| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.664 |
+| walker |  | 945 | 427 | README headline in README.md |  |  | 0.770 |
+| walker |  | 996 | 51 | listing of 'examples' |  |  | 0.841 |
+| ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.759 |
+| walker |  | 1229 | 233 | headings outline in README.md |  |  | 0.761 |
+| ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.715 |
+| walker |  | 1273 | 44 | README.md section #0 |  |  | 0.715 |
+| walker |  | 1292 | 19 | README.md section #21 |  |  | 0.715 |
 | ns | 1467 |  | 227 | neco.h — Channels group (recv/tryrecv/close/select/case) | 3.3 |  | 0.681 |
 | walker |  | 1711 | 419 | c decl names surface in neco.h |  |  | 0.746 |
 | walker |  | 1711 | 0 | c decl at neco.h:35 |  |  | 0.746 |

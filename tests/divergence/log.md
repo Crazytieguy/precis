@@ -4,10 +4,10 @@ Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 46 | 46 | listing of '.' |  |  | 1.000 |
 | ns | 46 |  | 46 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 49 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 53 | 4 | listing of '.github/workflows' |  |  | 1.000 |
-| ns | 67 |  | 21 | src/ directory listing | 1.2 |  | 0.811 |
-| walker |  | 74 | 21 | listing of 'src' |  |  | 1.000 |
+| walker |  | 67 | 21 | listing of 'src' |  |  | 1.000 |
+| ns | 67 |  | 21 | src/ directory listing | 1.2 |  | 1.000 |
+| walker |  | 70 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 74 | 4 | listing of '.github/workflows' |  |  | 1.000 |
 | ns | 87 |  | 20 | src/kv/ directory listing | 1.3 |  | 0.856 |
 | walker |  | 94 | 20 | listing of 'src/kv' |  |  | 1.000 |
 | walker |  | 98 | 4 | listing of 'benches' |  |  | 1.000 |

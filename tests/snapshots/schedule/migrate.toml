@@ -359,10 +359,352 @@ kind = "full"
 
 [[batches]]
 position = 22
+key = 'Fs(DirListing { dir: "source" })'
+descriptor = "listing of 'source'"
+cost_tokens = 89
+cum_tokens = 525
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source"
+entries = ["aws_s3", "bitbucket", "driver.go", "driver_test.go", "errors.go", "file", "github", "github_ee", "gitlab", "go_bindata", "godoc_vfs", "google_cloud_storage", "httpfs", "iofs", "migration.go", "migration_test.go", "parse.go", "parse_test.go", "pkger", "stub", "testing"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "source/file" })'
+descriptor = "listing of 'source/file'"
+cost_tokens = 13
+cum_tokens = 538
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/file"
+entries = ["README.md", "file.go", "file_test.go"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "source/google_cloud_storage" })'
+descriptor = "listing of 'source/google_cloud_storage'"
+cost_tokens = 13
+cum_tokens = 551
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/google_cloud_storage"
+entries = ["README.md", "storage.go", "storage_test.go"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "source/aws_s3" })'
+descriptor = "listing of 'source/aws_s3'"
+cost_tokens = 15
+cum_tokens = 566
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/aws_s3"
+entries = ["README.md", "s3.go", "s3_test.go"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "source/pkger" })'
+descriptor = "listing of 'source/pkger'"
+cost_tokens = 15
+cum_tokens = 581
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/pkger"
+entries = ["README.md", "pkger.go", "pkger_test.go"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "source/godoc_vfs" })'
+descriptor = "listing of 'source/godoc_vfs'"
+cost_tokens = 18
+cum_tokens = 599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/godoc_vfs"
+entries = ["vfs.go", "vfs_example_test.go", "vfs_test.go"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "source/bitbucket" })'
+descriptor = "listing of 'source/bitbucket'"
+cost_tokens = 20
+cum_tokens = 619
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/bitbucket"
+entries = [".gitignore", "README.md", "bitbucket.go", "bitbucket_test.go"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "source/github" })'
+descriptor = "listing of 'source/github'"
+cost_tokens = 21
+cum_tokens = 640
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/github"
+entries = [".gitignore", "README.md", "examples", "github.go", "github_test.go"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "source/github_ee" })'
+descriptor = "listing of 'source/github_ee'"
+cost_tokens = 22
+cum_tokens = 662
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/github_ee"
+entries = [".gitignore", "README.md", "github_ee.go", "github_ee_test.go"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "source/stub" })'
+descriptor = "listing of 'source/stub'"
+cost_tokens = 9
+cum_tokens = 671
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/stub"
+entries = ["stub.go", "stub_test.go"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "source/gitlab" })'
+descriptor = "listing of 'source/gitlab'"
+cost_tokens = 23
+cum_tokens = 694
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/gitlab"
+entries = [".gitignore", "README.md", "examples", "gitlab.go", "gitlab_test.go"]
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "source/go_bindata" })'
+descriptor = "listing of 'source/go_bindata'"
+cost_tokens = 24
+cum_tokens = 718
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/go_bindata"
+entries = ["README.md", "examples", "go-bindata.go", "go-bindata_test.go", "testdata"]
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "source/go_bindata/testdata" })'
+descriptor = "listing of 'source/go_bindata/testdata'"
+cost_tokens = 5
+cum_tokens = 723
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/go_bindata/testdata"
+entries = ["bindata.go"]
+
+[[batches]]
+position = 35
+key = 'Fs(DirListing { dir: "source/httpfs" })'
+descriptor = "listing of 'source/httpfs'"
+cost_tokens = 28
+cum_tokens = 751
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs"
+entries = ["README.md", "driver.go", "driver_test.go", "partial_driver.go", "partial_driver_test.go", "testdata"]
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "source/iofs" })'
+descriptor = "listing of 'source/iofs'"
+cost_tokens = 28
+cum_tokens = 779
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/iofs"
+entries = ["README.md", "doc.go", "example_test.go", "iofs.go", "iofs_test.go", "testdata"]
+
+[[batches]]
+position = 37
+key = 'Fs(DirListing { dir: "source/iofs/testdata" })'
+descriptor = "listing of 'source/iofs/testdata'"
+cost_tokens = 3
+cum_tokens = 782
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/iofs/testdata"
+entries = ["migrations"]
+
+[[batches]]
+position = 38
+key = 'Markdown(ReadmeHeadline { file: "source/github_ee/README.md" })'
+descriptor = "README headline in source/github_ee/README.md"
+cost_tokens = 10
+cum_tokens = 792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/github_ee/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(ReadmeHeadline { file: "source/httpfs/README.md" })'
+descriptor = "README headline in source/httpfs/README.md"
+cost_tokens = 10
+cum_tokens = 802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/httpfs/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(ReadmeHeadline { file: "source/go_bindata/README.md" })'
+descriptor = "README headline in source/go_bindata/README.md"
+cost_tokens = 11
+cum_tokens = 813
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/go_bindata/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Markdown(ReadmeHeadline { file: "source/google_cloud_storage/README.md" })'
+descriptor = "README headline in source/google_cloud_storage/README.md"
+cost_tokens = 11
+cum_tokens = 824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/google_cloud_storage/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Fs(DirListing { dir: "source/httpfs/testdata" })'
+descriptor = "listing of 'source/httpfs/testdata'"
+cost_tokens = 11
+cum_tokens = 835
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata"
+entries = ["duplicates", "no-migrations", "sql"]
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "source/httpfs/testdata/no-migrations" })'
+descriptor = "listing of 'source/httpfs/testdata/no-migrations'"
+cost_tokens = 4
+cum_tokens = 839
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata/no-migrations"
+entries = ["some-file"]
+
+[[batches]]
+position = 44
+key = 'Markdown(ReadmeHeadline { file: "source/aws_s3/README.md" })'
+descriptor = "README headline in source/aws_s3/README.md"
+cost_tokens = 27
+cum_tokens = 866
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/aws_s3/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
 key = 'Markdown(HeadingsOutline { file: "GETTING_STARTED.md" })'
 descriptor = "headings outline in GETTING_STARTED.md"
 cost_tokens = 53
-cum_tokens = 489
+cum_tokens = 919
 
 [batches.content]
 kind = "lines"
@@ -446,348 +788,6 @@ end = 48
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "source" })'
-descriptor = "listing of 'source'"
-cost_tokens = 89
-cum_tokens = 578
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source"
-entries = ["aws_s3", "bitbucket", "driver.go", "driver_test.go", "errors.go", "file", "github", "github_ee", "gitlab", "go_bindata", "godoc_vfs", "google_cloud_storage", "httpfs", "iofs", "migration.go", "migration_test.go", "parse.go", "parse_test.go", "pkger", "stub", "testing"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "source/file" })'
-descriptor = "listing of 'source/file'"
-cost_tokens = 13
-cum_tokens = 591
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/file"
-entries = ["README.md", "file.go", "file_test.go"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "source/google_cloud_storage" })'
-descriptor = "listing of 'source/google_cloud_storage'"
-cost_tokens = 13
-cum_tokens = 604
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/google_cloud_storage"
-entries = ["README.md", "storage.go", "storage_test.go"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "source/aws_s3" })'
-descriptor = "listing of 'source/aws_s3'"
-cost_tokens = 15
-cum_tokens = 619
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/aws_s3"
-entries = ["README.md", "s3.go", "s3_test.go"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "source/pkger" })'
-descriptor = "listing of 'source/pkger'"
-cost_tokens = 15
-cum_tokens = 634
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/pkger"
-entries = ["README.md", "pkger.go", "pkger_test.go"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "source/godoc_vfs" })'
-descriptor = "listing of 'source/godoc_vfs'"
-cost_tokens = 18
-cum_tokens = 652
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/godoc_vfs"
-entries = ["vfs.go", "vfs_example_test.go", "vfs_test.go"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "source/bitbucket" })'
-descriptor = "listing of 'source/bitbucket'"
-cost_tokens = 20
-cum_tokens = 672
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/bitbucket"
-entries = [".gitignore", "README.md", "bitbucket.go", "bitbucket_test.go"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "source/stub" })'
-descriptor = "listing of 'source/stub'"
-cost_tokens = 9
-cum_tokens = 681
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/stub"
-entries = ["stub.go", "stub_test.go"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "source/github" })'
-descriptor = "listing of 'source/github'"
-cost_tokens = 21
-cum_tokens = 702
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/github"
-entries = [".gitignore", "README.md", "examples", "github.go", "github_test.go"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "source/github_ee" })'
-descriptor = "listing of 'source/github_ee'"
-cost_tokens = 22
-cum_tokens = 724
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/github_ee"
-entries = [".gitignore", "README.md", "github_ee.go", "github_ee_test.go"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "source/gitlab" })'
-descriptor = "listing of 'source/gitlab'"
-cost_tokens = 23
-cum_tokens = 747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/gitlab"
-entries = [".gitignore", "README.md", "examples", "gitlab.go", "gitlab_test.go"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "source/go_bindata" })'
-descriptor = "listing of 'source/go_bindata'"
-cost_tokens = 24
-cum_tokens = 771
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/go_bindata"
-entries = ["README.md", "examples", "go-bindata.go", "go-bindata_test.go", "testdata"]
-
-[[batches]]
-position = 35
-key = 'Fs(DirListing { dir: "source/go_bindata/testdata" })'
-descriptor = "listing of 'source/go_bindata/testdata'"
-cost_tokens = 5
-cum_tokens = 776
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/go_bindata/testdata"
-entries = ["bindata.go"]
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "source/httpfs" })'
-descriptor = "listing of 'source/httpfs'"
-cost_tokens = 28
-cum_tokens = 804
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs"
-entries = ["README.md", "driver.go", "driver_test.go", "partial_driver.go", "partial_driver_test.go", "testdata"]
-
-[[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "source/iofs" })'
-descriptor = "listing of 'source/iofs'"
-cost_tokens = 28
-cum_tokens = 832
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/iofs"
-entries = ["README.md", "doc.go", "example_test.go", "iofs.go", "iofs_test.go", "testdata"]
-
-[[batches]]
-position = 38
-key = 'Fs(DirListing { dir: "source/iofs/testdata" })'
-descriptor = "listing of 'source/iofs/testdata'"
-cost_tokens = 3
-cum_tokens = 835
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/iofs/testdata"
-entries = ["migrations"]
-
-[[batches]]
-position = 39
-key = 'Markdown(ReadmeHeadline { file: "source/github_ee/README.md" })'
-descriptor = "README headline in source/github_ee/README.md"
-cost_tokens = 10
-cum_tokens = 845
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/github_ee/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Markdown(ReadmeHeadline { file: "source/httpfs/README.md" })'
-descriptor = "README headline in source/httpfs/README.md"
-cost_tokens = 10
-cum_tokens = 855
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/httpfs/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Markdown(ReadmeHeadline { file: "source/go_bindata/README.md" })'
-descriptor = "README headline in source/go_bindata/README.md"
-cost_tokens = 11
-cum_tokens = 866
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/go_bindata/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Markdown(ReadmeHeadline { file: "source/google_cloud_storage/README.md" })'
-descriptor = "README headline in source/google_cloud_storage/README.md"
-cost_tokens = 11
-cum_tokens = 877
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/google_cloud_storage/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Fs(DirListing { dir: "source/httpfs/testdata" })'
-descriptor = "listing of 'source/httpfs/testdata'"
-cost_tokens = 11
-cum_tokens = 888
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata"
-entries = ["duplicates", "no-migrations", "sql"]
-
-[[batches]]
-position = 44
-key = 'Fs(DirListing { dir: "source/httpfs/testdata/no-migrations" })'
-descriptor = "listing of 'source/httpfs/testdata/no-migrations'"
-cost_tokens = 4
-cum_tokens = 892
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata/no-migrations"
-entries = ["some-file"]
-
-[[batches]]
-position = 45
-key = 'Markdown(ReadmeHeadline { file: "source/aws_s3/README.md" })'
-descriptor = "README headline in source/aws_s3/README.md"
-cost_tokens = 27
-cum_tokens = 919
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/aws_s3/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 46
@@ -903,10 +903,378 @@ kind = "full"
 
 [[batches]]
 position = 52
+key = 'Fs(DirListing { dir: "database" })'
+descriptor = "listing of 'database'"
+cost_tokens = 122
+cum_tokens = 1111
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database"
+entries = ["cassandra", "clickhouse", "cockroachdb", "crate", "driver.go", "driver_test.go", "error.go", "firebird", "mongodb", "multistmt", "mysql", "neo4j", "parse_test.go", "pgx", "postgres", "ql", "redshift", "rqlite", "shell", "snowflake", "spanner", "sqlcipher", "sqlite", "sqlite3", "sqlserver", "stub", "testing", "util.go", "util_test.go", "yugabytedb"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "database/crate" })'
+descriptor = "listing of 'database/crate'"
+cost_tokens = 4
+cum_tokens = 1115
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/crate"
+entries = ["README.md"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "database/shell" })'
+descriptor = "listing of 'database/shell'"
+cost_tokens = 4
+cum_tokens = 1119
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/shell"
+entries = ["README.md"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "database/multistmt" })'
+descriptor = "listing of 'database/multistmt'"
+cost_tokens = 9
+cum_tokens = 1128
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/multistmt"
+entries = ["parse.go", "parse_test.go"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "database/snowflake" })'
+descriptor = "listing of 'database/snowflake'"
+cost_tokens = 9
+cum_tokens = 1137
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/snowflake"
+entries = ["README.md", "snowflake.go"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "database/stub" })'
+descriptor = "listing of 'database/stub'"
+cost_tokens = 9
+cum_tokens = 1146
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/stub"
+entries = ["stub.go", "stub_test.go"]
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "database/mongodb" })'
+descriptor = "listing of 'database/mongodb'"
+cost_tokens = 16
+cum_tokens = 1162
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/mongodb"
+entries = ["README.md", "examples", "mongodb.go", "mongodb_test.go"]
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "database/mysql" })'
+descriptor = "listing of 'database/mysql'"
+cost_tokens = 16
+cum_tokens = 1178
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/mysql"
+entries = ["README.md", "examples", "mysql.go", "mysql_test.go"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "database/sqlite" })'
+descriptor = "listing of 'database/sqlite'"
+cost_tokens = 16
+cum_tokens = 1194
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlite"
+entries = ["README.md", "examples", "sqlite.go", "sqlite_test.go"]
+
+[[batches]]
+position = 61
+key = 'Fs(DirListing { dir: "database/cassandra" })'
+descriptor = "listing of 'database/cassandra'"
+cost_tokens = 18
+cum_tokens = 1212
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/cassandra"
+entries = ["README.md", "cassandra.go", "cassandra_test.go", "examples"]
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "database/clickhouse" })'
+descriptor = "listing of 'database/clickhouse'"
+cost_tokens = 18
+cum_tokens = 1230
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/clickhouse"
+entries = ["README.md", "clickhouse.go", "clickhouse_test.go", "examples"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "database/firebird" })'
+descriptor = "listing of 'database/firebird'"
+cost_tokens = 18
+cum_tokens = 1248
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/firebird"
+entries = ["README.md", "examples", "firebird.go", "firebird_test.go"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "database/ql" })'
+descriptor = "listing of 'database/ql'"
+cost_tokens = 18
+cum_tokens = 1266
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/ql"
+entries = ["README.md", "examples", "ql.go", "ql_test.go"]
+
+[[batches]]
+position = 65
+key = 'Fs(DirListing { dir: "database/redshift" })'
+descriptor = "listing of 'database/redshift'"
+cost_tokens = 18
+cum_tokens = 1284
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/redshift"
+entries = ["README.md", "examples", "redshift.go", "redshift_test.go"]
+
+[[batches]]
+position = 66
+key = 'Fs(DirListing { dir: "database/spanner" })'
+descriptor = "listing of 'database/spanner'"
+cost_tokens = 18
+cum_tokens = 1302
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/spanner"
+entries = ["README.md", "examples", "spanner.go", "spanner_test.go"]
+
+[[batches]]
+position = 67
+key = 'Markdown(ReadmeHeadline { file: "database/spanner/README.md" })'
+descriptor = "README headline in database/spanner/README.md"
+cost_tokens = 12
+cum_tokens = 1314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/spanner/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Fs(DirListing { dir: "database/sqlcipher" })'
+descriptor = "listing of 'database/sqlcipher'"
+cost_tokens = 18
+cum_tokens = 1332
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlcipher"
+entries = ["README.md", "examples", "sqlcipher.go", "sqlcipher_test.go"]
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "database/sqlite3" })'
+descriptor = "listing of 'database/sqlite3'"
+cost_tokens = 18
+cum_tokens = 1350
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlite3"
+entries = ["README.md", "examples", "sqlite3.go", "sqlite3_test.go"]
+
+[[batches]]
+position = 70
+key = 'Fs(DirListing { dir: "database/sqlserver" })'
+descriptor = "listing of 'database/sqlserver'"
+cost_tokens = 18
+cum_tokens = 1368
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlserver"
+entries = ["README.md", "examples", "sqlserver.go", "sqlserver_test.go"]
+
+[[batches]]
+position = 71
+key = 'Fs(DirListing { dir: "database/rqlite" })'
+descriptor = "listing of 'database/rqlite'"
+cost_tokens = 20
+cum_tokens = 1388
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/rqlite"
+entries = ["README.md", "examples", "rqlite.go", "rqlite_test.go"]
+
+[[batches]]
+position = 72
+key = 'Fs(DirListing { dir: "database/pgx" })'
+descriptor = "listing of 'database/pgx'"
+cost_tokens = 22
+cum_tokens = 1410
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/pgx"
+entries = ["README.md", "examples", "pgx.go", "pgx_test.go", "v5"]
+
+[[batches]]
+position = 73
+key = 'Fs(DirListing { dir: "database/postgres" })'
+descriptor = "listing of 'database/postgres'"
+cost_tokens = 22
+cum_tokens = 1432
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/postgres"
+entries = ["README.md", "TUTORIAL.md", "examples", "postgres.go", "postgres_test.go"]
+
+[[batches]]
+position = 74
+key = 'Fs(DirListing { dir: "database/yugabytedb" })'
+descriptor = "listing of 'database/yugabytedb'"
+cost_tokens = 24
+cum_tokens = 1456
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/yugabytedb"
+entries = ["README.md", "examples", "yugabytedb.go", "yugabytedb_test.go"]
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "database/cockroachdb" })'
+descriptor = "listing of 'database/cockroachdb'"
+cost_tokens = 26
+cum_tokens = 1482
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/cockroachdb"
+entries = ["README.md", "TUTORIAL.md", "cockroachdb.go", "cockroachdb_test.go", "examples"]
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "database/neo4j" })'
+descriptor = "listing of 'database/neo4j'"
+cost_tokens = 26
+cum_tokens = 1508
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/neo4j"
+entries = ["README.md", "TUTORIAL.md", "examples", "neo4j.go", "neo4j_test.go"]
+
+[[batches]]
+position = 77
+key = 'Fs(DirListing { dir: "database/pgx/v5" })'
+descriptor = "listing of 'database/pgx/v5'"
+cost_tokens = 15
+cum_tokens = 1523
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/pgx/v5"
+entries = ["README.md", "pgx.go", "pgx_test.go"]
+
+[[batches]]
+position = 78
 key = 'Markdown(ReadmeHeadline { file: "source/iofs/README.md" })'
 descriptor = "README headline in source/iofs/README.md"
 cost_tokens = 36
-cum_tokens = 1025
+cum_tokens = 1559
 
 [batches.content]
 kind = "lines"
@@ -920,11 +1288,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 53
+position = 79
 key = 'Markdown(HeadingsOutline { file: "source/google_cloud_storage/README.md" })'
 descriptor = "headings outline in source/google_cloud_storage/README.md"
 cost_tokens = 17
-cum_tokens = 1042
+cum_tokens = 1576
 
 [batches.content]
 kind = "lines"
@@ -960,374 +1328,6 @@ end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "database" })'
-descriptor = "listing of 'database'"
-cost_tokens = 122
-cum_tokens = 1164
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database"
-entries = ["cassandra", "clickhouse", "cockroachdb", "crate", "driver.go", "driver_test.go", "error.go", "firebird", "mongodb", "multistmt", "mysql", "neo4j", "parse_test.go", "pgx", "postgres", "ql", "redshift", "rqlite", "shell", "snowflake", "spanner", "sqlcipher", "sqlite", "sqlite3", "sqlserver", "stub", "testing", "util.go", "util_test.go", "yugabytedb"]
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "database/crate" })'
-descriptor = "listing of 'database/crate'"
-cost_tokens = 4
-cum_tokens = 1168
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/crate"
-entries = ["README.md"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "database/shell" })'
-descriptor = "listing of 'database/shell'"
-cost_tokens = 4
-cum_tokens = 1172
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/shell"
-entries = ["README.md"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "database/multistmt" })'
-descriptor = "listing of 'database/multistmt'"
-cost_tokens = 9
-cum_tokens = 1181
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/multistmt"
-entries = ["parse.go", "parse_test.go"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "database/snowflake" })'
-descriptor = "listing of 'database/snowflake'"
-cost_tokens = 9
-cum_tokens = 1190
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/snowflake"
-entries = ["README.md", "snowflake.go"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "database/stub" })'
-descriptor = "listing of 'database/stub'"
-cost_tokens = 9
-cum_tokens = 1199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/stub"
-entries = ["stub.go", "stub_test.go"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "database/mongodb" })'
-descriptor = "listing of 'database/mongodb'"
-cost_tokens = 16
-cum_tokens = 1215
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/mongodb"
-entries = ["README.md", "examples", "mongodb.go", "mongodb_test.go"]
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "database/mysql" })'
-descriptor = "listing of 'database/mysql'"
-cost_tokens = 16
-cum_tokens = 1231
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/mysql"
-entries = ["README.md", "examples", "mysql.go", "mysql_test.go"]
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "database/sqlite" })'
-descriptor = "listing of 'database/sqlite'"
-cost_tokens = 16
-cum_tokens = 1247
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlite"
-entries = ["README.md", "examples", "sqlite.go", "sqlite_test.go"]
-
-[[batches]]
-position = 63
-key = 'Fs(DirListing { dir: "database/cassandra" })'
-descriptor = "listing of 'database/cassandra'"
-cost_tokens = 18
-cum_tokens = 1265
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/cassandra"
-entries = ["README.md", "cassandra.go", "cassandra_test.go", "examples"]
-
-[[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "database/clickhouse" })'
-descriptor = "listing of 'database/clickhouse'"
-cost_tokens = 18
-cum_tokens = 1283
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/clickhouse"
-entries = ["README.md", "clickhouse.go", "clickhouse_test.go", "examples"]
-
-[[batches]]
-position = 65
-key = 'Fs(DirListing { dir: "database/firebird" })'
-descriptor = "listing of 'database/firebird'"
-cost_tokens = 18
-cum_tokens = 1301
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/firebird"
-entries = ["README.md", "examples", "firebird.go", "firebird_test.go"]
-
-[[batches]]
-position = 66
-key = 'Fs(DirListing { dir: "database/ql" })'
-descriptor = "listing of 'database/ql'"
-cost_tokens = 18
-cum_tokens = 1319
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/ql"
-entries = ["README.md", "examples", "ql.go", "ql_test.go"]
-
-[[batches]]
-position = 67
-key = 'Fs(DirListing { dir: "database/redshift" })'
-descriptor = "listing of 'database/redshift'"
-cost_tokens = 18
-cum_tokens = 1337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/redshift"
-entries = ["README.md", "examples", "redshift.go", "redshift_test.go"]
-
-[[batches]]
-position = 68
-key = 'Fs(DirListing { dir: "database/spanner" })'
-descriptor = "listing of 'database/spanner'"
-cost_tokens = 18
-cum_tokens = 1355
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/spanner"
-entries = ["README.md", "examples", "spanner.go", "spanner_test.go"]
-
-[[batches]]
-position = 69
-key = 'Markdown(ReadmeHeadline { file: "database/spanner/README.md" })'
-descriptor = "README headline in database/spanner/README.md"
-cost_tokens = 12
-cum_tokens = 1367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: "database/sqlcipher" })'
-descriptor = "listing of 'database/sqlcipher'"
-cost_tokens = 18
-cum_tokens = 1385
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlcipher"
-entries = ["README.md", "examples", "sqlcipher.go", "sqlcipher_test.go"]
-
-[[batches]]
-position = 71
-key = 'Fs(DirListing { dir: "database/sqlite3" })'
-descriptor = "listing of 'database/sqlite3'"
-cost_tokens = 18
-cum_tokens = 1403
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlite3"
-entries = ["README.md", "examples", "sqlite3.go", "sqlite3_test.go"]
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "database/sqlserver" })'
-descriptor = "listing of 'database/sqlserver'"
-cost_tokens = 18
-cum_tokens = 1421
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlserver"
-entries = ["README.md", "examples", "sqlserver.go", "sqlserver_test.go"]
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "database/rqlite" })'
-descriptor = "listing of 'database/rqlite'"
-cost_tokens = 20
-cum_tokens = 1441
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/rqlite"
-entries = ["README.md", "examples", "rqlite.go", "rqlite_test.go"]
-
-[[batches]]
-position = 74
-key = 'Fs(DirListing { dir: "database/pgx" })'
-descriptor = "listing of 'database/pgx'"
-cost_tokens = 22
-cum_tokens = 1463
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/pgx"
-entries = ["README.md", "examples", "pgx.go", "pgx_test.go", "v5"]
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "database/postgres" })'
-descriptor = "listing of 'database/postgres'"
-cost_tokens = 22
-cum_tokens = 1485
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/postgres"
-entries = ["README.md", "TUTORIAL.md", "examples", "postgres.go", "postgres_test.go"]
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "database/yugabytedb" })'
-descriptor = "listing of 'database/yugabytedb'"
-cost_tokens = 24
-cum_tokens = 1509
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/yugabytedb"
-entries = ["README.md", "examples", "yugabytedb.go", "yugabytedb_test.go"]
-
-[[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "database/cockroachdb" })'
-descriptor = "listing of 'database/cockroachdb'"
-cost_tokens = 26
-cum_tokens = 1535
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/cockroachdb"
-entries = ["README.md", "TUTORIAL.md", "cockroachdb.go", "cockroachdb_test.go", "examples"]
-
-[[batches]]
-position = 78
-key = 'Fs(DirListing { dir: "database/neo4j" })'
-descriptor = "listing of 'database/neo4j'"
-cost_tokens = 26
-cum_tokens = 1561
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/neo4j"
-entries = ["README.md", "TUTORIAL.md", "examples", "neo4j.go", "neo4j_test.go"]
-
-[[batches]]
-position = 79
-key = 'Fs(DirListing { dir: "database/pgx/v5" })'
-descriptor = "listing of 'database/pgx/v5'"
-cost_tokens = 15
-cum_tokens = 1576
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/pgx/v5"
-entries = ["README.md", "pgx.go", "pgx_test.go"]
 
 [[batches]]
 position = 80

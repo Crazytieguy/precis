@@ -201,38 +201,10 @@ entries = ["api.rs", "http.rs", "lib.rs", "oci.rs", "validation.rs"]
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 311
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "workflows"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 315
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["rust.yml"]
-
-[[batches]]
-position = 15
 key = 'Fs(DirListing { dir: "sps-core/src" })'
 descriptor = "listing of 'sps-core/src'"
 cost_tokens = 25
-cum_tokens = 340
+cum_tokens = 328
 
 [batches.content]
 kind = "fs"
@@ -242,11 +214,11 @@ parent = "sps-core/src"
 entries = ["build", "check", "install", "lib.rs", "pipeline", "uninstall", "upgrade", "utils"]
 
 [[batches]]
-position = 16
+position = 14
 key = 'Fs(DirListing { dir: "sps-core/src/build" })'
 descriptor = "listing of 'sps-core/src/build'"
 cost_tokens = 11
-cum_tokens = 351
+cum_tokens = 339
 
 [batches.content]
 kind = "fs"
@@ -256,11 +228,11 @@ parent = "sps-core/src/build"
 entries = ["compile", "env.rs", "mod.rs"]
 
 [[batches]]
-position = 17
+position = 15
 key = 'Fs(DirListing { dir: "sps-core/src/check" })'
 descriptor = "listing of 'sps-core/src/check'"
 cost_tokens = 12
-cum_tokens = 363
+cum_tokens = 351
 
 [batches.content]
 kind = "fs"
@@ -270,11 +242,11 @@ parent = "sps-core/src/check"
 entries = ["installed.rs", "mod.rs", "update.rs"]
 
 [[batches]]
-position = 18
+position = 16
 key = 'Fs(DirListing { dir: "sps-core/src/pipeline" })'
 descriptor = "listing of 'sps-core/src/pipeline'"
 cost_tokens = 12
-cum_tokens = 375
+cum_tokens = 363
 
 [batches.content]
 kind = "fs"
@@ -284,11 +256,11 @@ parent = "sps-core/src/pipeline"
 entries = ["engine.rs", "mod.rs", "worker.rs"]
 
 [[batches]]
-position = 19
+position = 17
 key = 'Fs(DirListing { dir: "sps-core/src/utils" })'
 descriptor = "listing of 'sps-core/src/utils'"
 cost_tokens = 14
-cum_tokens = 389
+cum_tokens = 377
 
 [batches.content]
 kind = "fs"
@@ -298,11 +270,11 @@ parent = "sps-core/src/utils"
 entries = ["applescript.rs", "mod.rs", "xattr.rs"]
 
 [[batches]]
-position = 20
+position = 18
 key = 'Fs(DirListing { dir: "sps-core/src/uninstall" })'
 descriptor = "listing of 'sps-core/src/uninstall'"
 cost_tokens = 17
-cum_tokens = 406
+cum_tokens = 394
 
 [batches.content]
 kind = "fs"
@@ -312,11 +284,11 @@ parent = "sps-core/src/uninstall"
 entries = ["cask.rs", "common.rs", "formula.rs", "mod.rs"]
 
 [[batches]]
-position = 21
+position = 19
 key = 'Fs(DirListing { dir: "sps-core/src/upgrade" })'
 descriptor = "listing of 'sps-core/src/upgrade'"
 cost_tokens = 17
-cum_tokens = 423
+cum_tokens = 411
 
 [batches.content]
 kind = "fs"
@@ -326,11 +298,11 @@ parent = "sps-core/src/upgrade"
 entries = ["bottle.rs", "cask.rs", "mod.rs", "source.rs"]
 
 [[batches]]
-position = 22
+position = 20
 key = 'Fs(DirListing { dir: "sps-core/src/install" })'
 descriptor = "listing of 'sps-core/src/install'"
 cost_tokens = 20
-cum_tokens = 443
+cum_tokens = 431
 
 [batches.content]
 kind = "fs"
@@ -340,11 +312,11 @@ parent = "sps-core/src/install"
 entries = ["bottle", "cask", "devtools.rs", "extract.rs", "mod.rs"]
 
 [[batches]]
-position = 23
+position = 21
 key = 'Rust(PubItem { file: "sps-core/src/install/mod.rs", start_line: 17 })'
 descriptor = "pub item at sps-core/src/install/mod.rs:17"
 cost_tokens = 29
-cum_tokens = 472
+cum_tokens = 460
 
 [batches.content]
 kind = "lines"
@@ -366,11 +338,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 22
 key = 'Rust(ModUse { file: "sps-core/src/build/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/build/mod.rs"
 cost_tokens = 16
-cum_tokens = 488
+cum_tokens = 476
 
 [batches.content]
 kind = "lines"
@@ -384,11 +356,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
 key = 'Rust(ModUse { file: "sps-core/src/pipeline/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/pipeline/mod.rs"
 cost_tokens = 16
-cum_tokens = 504
+cum_tokens = 492
 
 [batches.content]
 kind = "lines"
@@ -402,11 +374,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 26
+position = 24
 key = 'Rust(PubItemBody { file: "sps-core/src/install/mod.rs", start_line: 17, body_start_line: 18 })'
 descriptor = "pub item body at sps-core/src/install/mod.rs:17 body 18"
 cost_tokens = 25
-cum_tokens = 529
+cum_tokens = 517
 
 [batches.content]
 kind = "lines"
@@ -418,6 +390,34 @@ end = 19
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 525
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "workflows"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 529
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["rust.yml"]
 
 [[batches]]
 position = 27

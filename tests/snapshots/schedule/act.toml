@@ -135,10 +135,150 @@ kind = "full"
 
 [[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "pkg" })'
+descriptor = "listing of 'pkg'"
+cost_tokens = 41
+cum_tokens = 243
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg"
+entries = ["artifactcache", "artifacts", "common", "container", "exprparser", "filecollector", "gh", "lookpath", "model", "runner", "schema", "workflowpattern"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "pkg/workflowpattern" })'
+descriptor = "listing of 'pkg/workflowpattern'"
+cost_tokens = 16
+cum_tokens = 259
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/workflowpattern"
+entries = ["trace_writer.go", "workflow_pattern.go", "workflow_pattern_test.go"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "pkg/exprparser" })'
+descriptor = "listing of 'pkg/exprparser'"
+cost_tokens = 22
+cum_tokens = 281
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/exprparser"
+entries = ["functions.go", "functions_test.go", "interpreter.go", "interpreter_test.go", "testdata"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "pkg/gh" })'
+descriptor = "listing of 'pkg/gh'"
+cost_tokens = 9
+cum_tokens = 290
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/gh"
+entries = ["gh.go", "gh_test.go"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "pkg/artifacts" })'
+descriptor = "listing of 'pkg/artifacts'"
+cost_tokens = 24
+cum_tokens = 314
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifacts"
+entries = ["artifact.pb.go", "artifacts_v4.go", "server.go", "server_test.go", "testdata"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "pkg/artifactcache" })'
+descriptor = "listing of 'pkg/artifactcache'"
+cost_tokens = 25
+cum_tokens = 339
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache"
+entries = ["doc.go", "handler.go", "handler_test.go", "model.go", "storage.go", "testdata"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata" })'
+descriptor = "listing of 'pkg/artifactcache/testdata'"
+cost_tokens = 3
+cum_tokens = 342
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache/testdata"
+entries = ["example"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "pkg/filecollector" })'
+descriptor = "listing of 'pkg/filecollector'"
+cost_tokens = 13
+cum_tokens = 355
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/filecollector"
+entries = ["file_collector.go", "file_collector_test.go"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata/example" })'
+descriptor = "listing of 'pkg/artifactcache/testdata/example'"
+cost_tokens = 4
+cum_tokens = 359
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache/testdata/example"
+entries = ["example.yaml"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "pkg/lookpath" })'
+descriptor = "listing of 'pkg/lookpath'"
+cost_tokens = 33
+cum_tokens = 392
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/lookpath"
+entries = ["LICENSE", "env.go", "error.go", "lp_js.go", "lp_plan9.go", "lp_unix.go", "lp_windows.go"]
+
+[[batches]]
+position = 18
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 61
-cum_tokens = 263
+cum_tokens = 453
 
 [batches.content]
 kind = "lines"
@@ -159,146 +299,6 @@ end = 7
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "pkg" })'
-descriptor = "listing of 'pkg'"
-cost_tokens = 41
-cum_tokens = 304
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg"
-entries = ["artifactcache", "artifacts", "common", "container", "exprparser", "filecollector", "gh", "lookpath", "model", "runner", "schema", "workflowpattern"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "pkg/workflowpattern" })'
-descriptor = "listing of 'pkg/workflowpattern'"
-cost_tokens = 16
-cum_tokens = 320
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/workflowpattern"
-entries = ["trace_writer.go", "workflow_pattern.go", "workflow_pattern_test.go"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "pkg/gh" })'
-descriptor = "listing of 'pkg/gh'"
-cost_tokens = 9
-cum_tokens = 329
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/gh"
-entries = ["gh.go", "gh_test.go"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "pkg/exprparser" })'
-descriptor = "listing of 'pkg/exprparser'"
-cost_tokens = 22
-cum_tokens = 351
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/exprparser"
-entries = ["functions.go", "functions_test.go", "interpreter.go", "interpreter_test.go", "testdata"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "pkg/artifacts" })'
-descriptor = "listing of 'pkg/artifacts'"
-cost_tokens = 24
-cum_tokens = 375
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifacts"
-entries = ["artifact.pb.go", "artifacts_v4.go", "server.go", "server_test.go", "testdata"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "pkg/artifactcache" })'
-descriptor = "listing of 'pkg/artifactcache'"
-cost_tokens = 25
-cum_tokens = 400
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache"
-entries = ["doc.go", "handler.go", "handler_test.go", "model.go", "storage.go", "testdata"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata" })'
-descriptor = "listing of 'pkg/artifactcache/testdata'"
-cost_tokens = 3
-cum_tokens = 403
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache/testdata"
-entries = ["example"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "pkg/filecollector" })'
-descriptor = "listing of 'pkg/filecollector'"
-cost_tokens = 13
-cum_tokens = 416
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/filecollector"
-entries = ["file_collector.go", "file_collector_test.go"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata/example" })'
-descriptor = "listing of 'pkg/artifactcache/testdata/example'"
-cost_tokens = 4
-cum_tokens = 420
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache/testdata/example"
-entries = ["example.yaml"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "pkg/lookpath" })'
-descriptor = "listing of 'pkg/lookpath'"
-cost_tokens = 33
-cum_tokens = 453
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/lookpath"
-entries = ["LICENSE", "env.go", "error.go", "lp_js.go", "lp_plan9.go", "lp_unix.go", "lp_windows.go"]
 
 [[batches]]
 position = 19

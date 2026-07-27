@@ -1,4 +1,4 @@
-Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missing=11)
+Score(3000)=0.550 I=0.720 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,16 +22,16 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 676 | 27 | listing of 'bindings/rust' |  |  | 0.559 |
 | walker |  | 680 | 4 | listing of 'bindings/rust/src' |  |  | 0.559 |
 | walker |  | 691 | 11 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.559 |
-| walker |  | 739 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.559 |
 | ns | 774 |  | 249 | TODO roadmap | 1.6 |  | 0.484 |
-| walker |  | 883 | 144 | listing of 'tests' |  |  | 0.487 |
+| walker |  | 835 | 144 | listing of 'tests' |  |  | 0.487 |
+| walker |  | 883 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.487 |
 | walker |  | 896 | 13 | listing of 'scripts' |  |  | 0.487 |
 | walker |  | 915 | 19 | listing of 'benchmarks' |  |  | 0.487 |
 | walker |  | 928 | 13 | listing of 'benchmarks/self-params' |  |  | 0.487 |
 | walker |  | 947 | 19 | python imports in tmp-static.py |  |  | 0.487 |
+| walker |  | 1019 | 72 | listing of 'site' |  |  | 0.419 |
 | ns | 1019 |  | 245 | Makefile: build + test targets | 1.7 |  | 0.419 |
-| walker |  | 1050 | 103 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.456 |
-| walker |  | 1122 | 72 | listing of 'site' |  |  | 0.457 |
+| walker |  | 1122 | 103 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.457 |
 | walker |  | 1202 | 80 | listing of 'examples' |  |  | 0.458 |
 | walker |  | 1226 | 24 | listing of 'benchmarks/micro' |  |  | 0.458 |
 | walker |  | 1230 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.458 |
@@ -56,10 +56,10 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 2897 | 523 | README.md section #3 |  |  | 0.530 |
 | ns | 2922 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.548 |
 | walker |  | 2942 | 45 | listing of 'site/guides' |  |  | 0.548 |
-| ns | 3015 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.540 |
-| walker |  | 3063 | 121 | ARCHITECTURE.md section #0 |  |  | 0.540 |
-| walker |  | 3077 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.540 |
-| walker |  | 3126 | 49 | listing of 'site/using' |  |  | 0.541 |
+| walker |  | 2991 | 49 | listing of 'site/using' |  |  | 0.550 |
+| ns | 3015 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.541 |
+| walker |  | 3112 | 121 | ARCHITECTURE.md section #0 |  |  | 0.541 |
+| walker |  | 3126 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.541 |
 | ns | 3177 |  | 162 | sqlite-vec.c: #pragma region map | 4.2 |  | 0.528 |
 | walker |  | 3289 | 163 | YAML reference leaf contracts in reference.yaml:308 chunk 1 |  |  | 0.528 |
 | walker |  | 3337 | 48 | listing of 'tests/fuzz' |  |  | 0.528 |

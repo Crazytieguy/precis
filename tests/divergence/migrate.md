@@ -28,68 +28,68 @@ Score(3000)=0.494 I=0.674 C=0.362 ns_rows≤3K=14/42 (reached=4 partial=2 missin
 | walker |  | 429 | 0 | go decl at cli/version.go:4 |  |  | 0.598 |
 | walker |  | 436 | 7 | go package + imports in log.go |  |  | 0.598 |
 | ns | 450 |  | 125 | Root directory listing | 1.5 |  | 0.780 |
-| walker |  | 489 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.780 |
-| walker |  | 578 | 89 | listing of 'source' |  |  | 0.783 |
-| walker |  | 591 | 13 | listing of 'source/file' |  |  | 0.783 |
-| walker |  | 604 | 13 | listing of 'source/google_cloud_storage' |  |  | 0.783 |
-| walker |  | 619 | 15 | listing of 'source/aws_s3' |  |  | 0.783 |
+| walker |  | 525 | 89 | listing of 'source' |  |  | 0.783 |
+| walker |  | 538 | 13 | listing of 'source/file' |  |  | 0.783 |
+| walker |  | 551 | 13 | listing of 'source/google_cloud_storage' |  |  | 0.783 |
+| walker |  | 566 | 15 | listing of 'source/aws_s3' |  |  | 0.783 |
+| walker |  | 581 | 15 | listing of 'source/pkger' |  |  | 0.783 |
+| walker |  | 599 | 18 | listing of 'source/godoc_vfs' |  |  | 0.783 |
+| walker |  | 619 | 20 | listing of 'source/bitbucket' |  |  | 0.783 |
 | ns | 633 |  | 183 | README lede: what migrate is | 1.6 |  | 0.705 |
-| walker |  | 634 | 15 | listing of 'source/pkger' |  |  | 0.705 |
-| walker |  | 652 | 18 | listing of 'source/godoc_vfs' |  |  | 0.705 |
-| walker |  | 672 | 20 | listing of 'source/bitbucket' |  |  | 0.705 |
-| walker |  | 681 | 9 | listing of 'source/stub' |  |  | 0.705 |
-| walker |  | 702 | 21 | listing of 'source/github' |  |  | 0.705 |
-| walker |  | 724 | 22 | listing of 'source/github_ee' |  |  | 0.705 |
-| walker |  | 747 | 23 | listing of 'source/gitlab' |  |  | 0.705 |
-| walker |  | 771 | 24 | listing of 'source/go_bindata' |  |  | 0.705 |
-| walker |  | 776 | 5 | listing of 'source/go_bindata/testdata' |  |  | 0.705 |
-| walker |  | 804 | 28 | listing of 'source/httpfs' |  |  | 0.705 |
-| walker |  | 832 | 28 | listing of 'source/iofs' |  |  | 0.705 |
-| walker |  | 835 | 3 | listing of 'source/iofs/testdata' |  |  | 0.705 |
-| walker |  | 845 | 10 | README headline in source/github_ee/README.md |  |  | 0.705 |
-| walker |  | 855 | 10 | README headline in source/httpfs/README.md |  |  | 0.705 |
-| walker |  | 866 | 11 | README headline in source/go_bindata/README.md |  |  | 0.705 |
-| walker |  | 877 | 11 | README headline in source/google_cloud_storage/README.md |  |  | 0.705 |
-| walker |  | 888 | 11 | listing of 'source/httpfs/testdata' |  |  | 0.705 |
-| walker |  | 892 | 4 | listing of 'source/httpfs/testdata/no-migrations' |  |  | 0.705 |
+| walker |  | 640 | 21 | listing of 'source/github' |  |  | 0.705 |
+| walker |  | 662 | 22 | listing of 'source/github_ee' |  |  | 0.705 |
+| walker |  | 671 | 9 | listing of 'source/stub' |  |  | 0.705 |
+| walker |  | 694 | 23 | listing of 'source/gitlab' |  |  | 0.705 |
+| walker |  | 718 | 24 | listing of 'source/go_bindata' |  |  | 0.705 |
+| walker |  | 723 | 5 | listing of 'source/go_bindata/testdata' |  |  | 0.705 |
+| walker |  | 751 | 28 | listing of 'source/httpfs' |  |  | 0.705 |
+| walker |  | 779 | 28 | listing of 'source/iofs' |  |  | 0.705 |
+| walker |  | 782 | 3 | listing of 'source/iofs/testdata' |  |  | 0.705 |
+| walker |  | 792 | 10 | README headline in source/github_ee/README.md |  |  | 0.705 |
+| walker |  | 802 | 10 | README headline in source/httpfs/README.md |  |  | 0.705 |
+| walker |  | 813 | 11 | README headline in source/go_bindata/README.md |  |  | 0.705 |
+| walker |  | 824 | 11 | README headline in source/google_cloud_storage/README.md |  |  | 0.705 |
+| walker |  | 835 | 11 | listing of 'source/httpfs/testdata' |  |  | 0.705 |
+| walker |  | 839 | 4 | listing of 'source/httpfs/testdata/no-migrations' |  |  | 0.705 |
+| walker |  | 866 | 27 | README headline in source/aws_s3/README.md |  |  | 0.705 |
 | ns | 905 |  | 272 | CONTRIBUTING.md (dev workflow) | 1.7 |  | 0.637 |
-| walker |  | 919 | 27 | README headline in source/aws_s3/README.md |  |  | 0.637 |
+| walker |  | 919 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.637 |
 | walker |  | 932 | 13 | listing of 'testing' |  |  | 0.637 |
 | walker |  | 965 | 33 | README headline in source/file/README.md |  |  | 0.637 |
 | walker |  | 977 | 12 | go decl names surface in cmd/migrate/main.go |  |  | 0.637 |
 | walker |  | 977 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.637 |
 | walker |  | 989 | 12 | go decl names surface in cmd/migrate/version.go |  |  | 0.637 |
 | walker |  | 989 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.637 |
-| walker |  | 1025 | 36 | README headline in source/iofs/README.md |  |  | 0.637 |
-| walker |  | 1042 | 17 | headings outline in source/google_cloud_storage/README.md |  |  | 0.637 |
-| walker |  | 1164 | 122 | listing of 'database' |  |  | 0.640 |
-| walker |  | 1168 | 4 | listing of 'database/crate' |  |  | 0.640 |
-| walker |  | 1172 | 4 | listing of 'database/shell' |  |  | 0.640 |
-| walker |  | 1181 | 9 | listing of 'database/multistmt' |  |  | 0.538 |
+| walker |  | 1111 | 122 | listing of 'database' |  |  | 0.640 |
+| walker |  | 1115 | 4 | listing of 'database/crate' |  |  | 0.640 |
+| walker |  | 1119 | 4 | listing of 'database/shell' |  |  | 0.640 |
+| walker |  | 1128 | 9 | listing of 'database/multistmt' |  |  | 0.640 |
+| walker |  | 1137 | 9 | listing of 'database/snowflake' |  |  | 0.640 |
+| walker |  | 1146 | 9 | listing of 'database/stub' |  |  | 0.640 |
+| walker |  | 1162 | 16 | listing of 'database/mongodb' |  |  | 0.640 |
+| walker |  | 1178 | 16 | listing of 'database/mysql' |  |  | 0.640 |
 | ns | 1181 |  | 276 | Migrate struct fields | 2.1 |  | 0.538 |
-| walker |  | 1190 | 9 | listing of 'database/snowflake' |  |  | 0.538 |
-| walker |  | 1199 | 9 | listing of 'database/stub' |  |  | 0.538 |
-| walker |  | 1215 | 16 | listing of 'database/mongodb' |  |  | 0.538 |
-| walker |  | 1231 | 16 | listing of 'database/mysql' |  |  | 0.538 |
-| walker |  | 1247 | 16 | listing of 'database/sqlite' |  |  | 0.538 |
-| walker |  | 1265 | 18 | listing of 'database/cassandra' |  |  | 0.538 |
-| walker |  | 1283 | 18 | listing of 'database/clickhouse' |  |  | 0.538 |
-| walker |  | 1301 | 18 | listing of 'database/firebird' |  |  | 0.538 |
-| walker |  | 1319 | 18 | listing of 'database/ql' |  |  | 0.538 |
-| walker |  | 1337 | 18 | listing of 'database/redshift' |  |  | 0.538 |
-| walker |  | 1355 | 18 | listing of 'database/spanner' |  |  | 0.538 |
-| walker |  | 1367 | 12 | README headline in database/spanner/README.md |  |  | 0.538 |
-| walker |  | 1385 | 18 | listing of 'database/sqlcipher' |  |  | 0.538 |
-| walker |  | 1403 | 18 | listing of 'database/sqlite3' |  |  | 0.538 |
-| walker |  | 1421 | 18 | listing of 'database/sqlserver' |  |  | 0.538 |
-| walker |  | 1441 | 20 | listing of 'database/rqlite' |  |  | 0.538 |
+| walker |  | 1194 | 16 | listing of 'database/sqlite' |  |  | 0.538 |
+| walker |  | 1212 | 18 | listing of 'database/cassandra' |  |  | 0.538 |
+| walker |  | 1230 | 18 | listing of 'database/clickhouse' |  |  | 0.538 |
+| walker |  | 1248 | 18 | listing of 'database/firebird' |  |  | 0.538 |
+| walker |  | 1266 | 18 | listing of 'database/ql' |  |  | 0.538 |
+| walker |  | 1284 | 18 | listing of 'database/redshift' |  |  | 0.538 |
+| walker |  | 1302 | 18 | listing of 'database/spanner' |  |  | 0.538 |
+| walker |  | 1314 | 12 | README headline in database/spanner/README.md |  |  | 0.538 |
+| walker |  | 1332 | 18 | listing of 'database/sqlcipher' |  |  | 0.538 |
+| walker |  | 1350 | 18 | listing of 'database/sqlite3' |  |  | 0.538 |
+| walker |  | 1368 | 18 | listing of 'database/sqlserver' |  |  | 0.538 |
+| walker |  | 1388 | 20 | listing of 'database/rqlite' |  |  | 0.538 |
+| walker |  | 1410 | 22 | listing of 'database/pgx' |  |  | 0.538 |
+| walker |  | 1432 | 22 | listing of 'database/postgres' |  |  | 0.539 |
+| walker |  | 1456 | 24 | listing of 'database/yugabytedb' |  |  | 0.539 |
 | ns | 1458 |  | 277 | Package-level errors and error types | 2.2 |  | 0.471 |
-| walker |  | 1463 | 22 | listing of 'database/pgx' |  |  | 0.471 |
-| walker |  | 1485 | 22 | listing of 'database/postgres' |  |  | 0.471 |
-| walker |  | 1509 | 24 | listing of 'database/yugabytedb' |  |  | 0.471 |
-| walker |  | 1535 | 26 | listing of 'database/cockroachdb' |  |  | 0.471 |
-| walker |  | 1561 | 26 | listing of 'database/neo4j' |  |  | 0.471 |
-| walker |  | 1576 | 15 | listing of 'database/pgx/v5' |  |  | 0.471 |
+| walker |  | 1482 | 26 | listing of 'database/cockroachdb' |  |  | 0.471 |
+| walker |  | 1508 | 26 | listing of 'database/neo4j' |  |  | 0.471 |
+| walker |  | 1523 | 15 | listing of 'database/pgx/v5' |  |  | 0.471 |
+| walker |  | 1559 | 36 | README headline in source/iofs/README.md |  |  | 0.471 |
+| walker |  | 1576 | 17 | headings outline in source/google_cloud_storage/README.md |  |  | 0.471 |
 | walker |  | 1603 | 27 | go decl names surface in database/error.go |  |  | 0.471 |
 | walker |  | 1603 | 0 | go decl at database/error.go:22 |  |  | 0.471 |
 | walker |  | 1644 | 41 | README headline in source/bitbucket/README.md |  |  | 0.471 |

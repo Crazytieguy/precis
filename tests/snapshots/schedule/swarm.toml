@@ -623,10 +623,66 @@ entries = ["__init__.py", "agents.py", "tools.py"]
 
 [[batches]]
 position = 22
+key = 'Fs(DirListing { dir: "examples/basic" })'
+descriptor = "listing of 'examples/basic'"
+cost_tokens = 34
+cum_tokens = 951
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/basic"
+entries = ["README.md", "agent_handoff.py", "bare_minimum.py", "context_variables.py", "function_calling.py", "simple_loop_no_helpers.py"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming" })'
+descriptor = "listing of 'examples/customer_service_streaming'"
+cost_tokens = 34
+cum_tokens = 985
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming"
+entries = [".gitignore", "configs", "data", "docker-compose.yaml", "logs", "main.py", "prep_data.py", "src", "tests"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs'"
+cost_tokens = 25
+cum_tokens = 1010
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs"
+entries = ["__init__.py", "assistants", "general.py", "prompts.py", "swarm_tasks.json", "tools"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/tools'"
+cost_tokens = 12
+cum_tokens = 1022
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/tools"
+entries = ["query_docs", "send_email", "submit_ticket"]
+
+[[batches]]
+position = 26
 key = 'Python(Imports { file: "swarm/util.py" })'
 descriptor = "python imports in swarm/util.py"
 cost_tokens = 18
-cum_tokens = 935
+cum_tokens = 1040
 
 [batches.content]
 kind = "lines"
@@ -640,11 +696,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 23
+position = 27
 key = 'Python(MethodSigs { file: "swarm/core.py" })'
 descriptor = "python method sigs in swarm/core.py"
 cost_tokens = 80
-cum_tokens = 1015
+cum_tokens = 1120
 
 [batches.content]
 kind = "lines"
@@ -746,11 +802,11 @@ end = 232
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 28
 key = 'Python(Method { file: "swarm/core.py", start_line: 27 })'
 descriptor = "python method at swarm/core.py:27"
 cost_tokens = 0
-cum_tokens = 1015
+cum_tokens = 1120
 
 [batches.content]
 kind = "lines"
@@ -764,11 +820,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 25
+position = 29
 key = 'Python(Method { file: "swarm/core.py", start_line: 71 })'
 descriptor = "python method at swarm/core.py:71"
 cost_tokens = 0
-cum_tokens = 1015
+cum_tokens = 1120
 
 [batches.content]
 kind = "lines"
@@ -780,62 +836,6 @@ end = 71
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "examples/basic" })'
-descriptor = "listing of 'examples/basic'"
-cost_tokens = 34
-cum_tokens = 1049
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/basic"
-entries = ["README.md", "agent_handoff.py", "bare_minimum.py", "context_variables.py", "function_calling.py", "simple_loop_no_helpers.py"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming" })'
-descriptor = "listing of 'examples/customer_service_streaming'"
-cost_tokens = 34
-cum_tokens = 1083
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming"
-entries = [".gitignore", "configs", "data", "docker-compose.yaml", "logs", "main.py", "prep_data.py", "src", "tests"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs" })'
-descriptor = "listing of 'examples/customer_service_streaming/configs'"
-cost_tokens = 25
-cum_tokens = 1108
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/configs"
-entries = ["__init__.py", "assistants", "general.py", "prompts.py", "swarm_tasks.json", "tools"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools" })'
-descriptor = "listing of 'examples/customer_service_streaming/configs/tools'"
-cost_tokens = 12
-cum_tokens = 1120
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/configs/tools"
-entries = ["query_docs", "send_email", "submit_ticket"]
 
 [[batches]]
 position = 30

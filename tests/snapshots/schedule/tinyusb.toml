@@ -103,66 +103,10 @@ entries = ["msc_device_port.c"]
 
 [[batches]]
 position = 8
-key = 'Fs(DirListing { dir: "hw/mcu" })'
-descriptor = "listing of 'hw/mcu'"
-cost_tokens = 15
-cum_tokens = 194
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu"
-entries = ["bridgetek", "dialog", "nordic", "sony"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "hw/mcu/bridgetek" })'
-descriptor = "listing of 'hw/mcu/bridgetek'"
-cost_tokens = 5
-cum_tokens = 199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/bridgetek"
-entries = ["ft9xx"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "hw/mcu/sony" })'
-descriptor = "listing of 'hw/mcu/sony'"
-cost_tokens = 5
-cum_tokens = 204
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/sony"
-entries = ["cxd56"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "hw/mcu/nordic" })'
-descriptor = "listing of 'hw/mcu/nordic'"
-cost_tokens = 6
-cum_tokens = 210
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/nordic"
-entries = ["nrf5x"]
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "lib/SEGGER_RTT/RTT" })'
 descriptor = "listing of 'lib/SEGGER_RTT/RTT'"
 cost_tokens = 35
-cum_tokens = 245
+cum_tokens = 214
 
 [batches.content]
 kind = "fs"
@@ -172,11 +116,11 @@ parent = "lib/SEGGER_RTT/RTT"
 entries = ["SEGGER_RTT.c", "SEGGER_RTT.h", "SEGGER_RTT_ASM_ARMv7M.S", "SEGGER_RTT_printf.c"]
 
 [[batches]]
-position = 13
+position = 9
 key = 'Fs(DirListing { dir: "lib/networking" })'
 descriptor = "listing of 'lib/networking'"
 cost_tokens = 37
-cum_tokens = 282
+cum_tokens = 251
 
 [batches.content]
 kind = "fs"
@@ -186,53 +130,67 @@ parent = "lib/networking"
 entries = ["dhserver.c", "dhserver.h", "dnserver.c", "dnserver.h", "ndis.h", "rndis_protocol.h", "rndis_reports.c"]
 
 [[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "lib/SEGGER_RTT/Config" })'
-descriptor = "listing of 'lib/SEGGER_RTT/Config'"
-cost_tokens = 9
-cum_tokens = 291
+position = 10
+key = 'Fs(DirListing { dir: "hw/mcu" })'
+descriptor = "listing of 'hw/mcu'"
+cost_tokens = 15
+cum_tokens = 266
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "lib/SEGGER_RTT/Config"
-entries = ["SEGGER_RTT_Conf.h"]
+parent = "hw/mcu"
+entries = ["bridgetek", "dialog", "nordic", "sony"]
 
 [[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".PVS-Studio" })'
-descriptor = "listing of '.PVS-Studio'"
+position = 11
+key = 'Fs(DirListing { dir: "hw/mcu/bridgetek" })'
+descriptor = "listing of 'hw/mcu/bridgetek'"
+cost_tokens = 5
+cum_tokens = 271
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/mcu/bridgetek"
+entries = ["ft9xx"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "hw/mcu/sony" })'
+descriptor = "listing of 'hw/mcu/sony'"
+cost_tokens = 5
+cum_tokens = 276
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/mcu/sony"
+entries = ["cxd56"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "hw/mcu/nordic" })'
+descriptor = "listing of 'hw/mcu/nordic'"
 cost_tokens = 6
-cum_tokens = 297
+cum_tokens = 282
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = ".PVS-Studio"
-entries = [".pvsconfig"]
+parent = "hw/mcu/nordic"
+entries = ["nrf5x"]
 
 [[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "hw/mcu/dialog" })'
-descriptor = "listing of 'hw/mcu/dialog'"
-cost_tokens = 10
-cum_tokens = 307
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/dialog"
-entries = ["README.md", "da1469x"]
-
-[[batches]]
-position = 17
+position = 14
 key = 'Fs(DirListing { dir: ".claude" })'
 descriptor = "listing of '.claude'"
 cost_tokens = 6
-cum_tokens = 313
+cum_tokens = 288
 
 [batches.content]
 kind = "fs"
@@ -242,11 +200,137 @@ parent = ".claude"
 entries = ["commands", "skills"]
 
 [[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "lib/SEGGER_RTT/Config" })'
+descriptor = "listing of 'lib/SEGGER_RTT/Config'"
+cost_tokens = 9
+cum_tokens = 297
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/SEGGER_RTT/Config"
+entries = ["SEGGER_RTT_Conf.h"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: ".PVS-Studio" })'
+descriptor = "listing of '.PVS-Studio'"
+cost_tokens = 6
+cum_tokens = 303
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".PVS-Studio"
+entries = [".pvsconfig"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "hw/mcu/dialog" })'
+descriptor = "listing of 'hw/mcu/dialog'"
+cost_tokens = 10
+cum_tokens = 313
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/mcu/dialog"
+entries = ["README.md", "da1469x"]
+
+[[batches]]
 position = 18
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 50
+cum_tokens = 363
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["CMakeLists.txt", "class", "common", "device", "host", "osal", "portable", "tinyusb.mk", "tusb.c", "tusb.h", "tusb_option.h", "typec"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "src/typec" })'
+descriptor = "listing of 'src/typec'"
+cost_tokens = 20
+cum_tokens = 383
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/typec"
+entries = ["pd_types.h", "tcd.h", "usbc.c", "usbc.h"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "src/device" })'
+descriptor = "listing of 'src/device'"
+cost_tokens = 22
+cum_tokens = 405
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/device"
+entries = ["dcd.h", "usbd.c", "usbd.h", "usbd_pvt.h"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "src/host" })'
+descriptor = "listing of 'src/host'"
+cost_tokens = 30
+cum_tokens = 435
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/host"
+entries = ["hcd.h", "hub.c", "hub.h", "usbh.c", "usbh.h", "usbh_pvt.h"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "src/class" })'
+descriptor = "listing of 'src/class'"
+cost_tokens = 46
+cum_tokens = 481
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/class"
+entries = ["audio", "bth", "cdc", "dfu", "hid", "midi", "msc", "mtp", "net", "printer", "usbtmc", "vendor", "video"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "src/portable" })'
+descriptor = "listing of 'src/portable'"
+cost_tokens = 85
+cum_tokens = 566
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/portable"
+entries = ["analog", "bridgetek", "chipidea", "dialog", "ehci", "mentor", "microchip", "mindmotion", "nordic", "nuvoton", "nxp", "ohci", "raspberrypi", "renesas", "sony", "st", "sunxi", "synopsys", "template", "ti", "valentyusb", "wch"]
+
+[[batches]]
+position = 24
 key = 'C(DeclNames { file: "lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h"
 cost_tokens = 75
-cum_tokens = 388
+cum_tokens = 641
 
 [batches.content]
 kind = "lines"
@@ -284,11 +368,11 @@ end = 408
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 25
 key = 'C(Decl { file: "lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h", start_line: 407 })'
 descriptor = "c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407"
 cost_tokens = 6
-cum_tokens = 394
+cum_tokens = 647
 
 [batches.content]
 kind = "lines"
@@ -302,11 +386,11 @@ end = 408
 kind = "full"
 
 [[batches]]
-position = 20
+position = 26
 key = 'C(Decl { file: "lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h", start_line: 404 })'
 descriptor = "c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404"
 cost_tokens = 10
-cum_tokens = 404
+cum_tokens = 657
 
 [batches.content]
 kind = "lines"
@@ -320,11 +404,11 @@ end = 405
 kind = "full"
 
 [[batches]]
-position = 21
+position = 27
 key = 'C(DeclNames { file: "lib/networking/dhserver.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/networking/dhserver.h"
 cost_tokens = 55
-cum_tokens = 459
+cum_tokens = 712
 
 [batches.content]
 kind = "lines"
@@ -378,151 +462,11 @@ end = 64
 kind = "ellipsis"
 
 [[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 50
-cum_tokens = 509
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["CMakeLists.txt", "class", "common", "device", "host", "osal", "portable", "tinyusb.mk", "tusb.c", "tusb.h", "tusb_option.h", "typec"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "src/typec" })'
-descriptor = "listing of 'src/typec'"
-cost_tokens = 20
-cum_tokens = 529
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/typec"
-entries = ["pd_types.h", "tcd.h", "usbc.c", "usbc.h"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "src/device" })'
-descriptor = "listing of 'src/device'"
-cost_tokens = 22
-cum_tokens = 551
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/device"
-entries = ["dcd.h", "usbd.c", "usbd.h", "usbd_pvt.h"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "src/host" })'
-descriptor = "listing of 'src/host'"
-cost_tokens = 30
-cum_tokens = 581
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/host"
-entries = ["hcd.h", "hub.c", "hub.h", "usbh.c", "usbh.h", "usbh_pvt.h"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "src/class" })'
-descriptor = "listing of 'src/class'"
-cost_tokens = 46
-cum_tokens = 627
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class"
-entries = ["audio", "bth", "cdc", "dfu", "hid", "midi", "msc", "mtp", "net", "printer", "usbtmc", "vendor", "video"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "src/portable" })'
-descriptor = "listing of 'src/portable'"
-cost_tokens = 85
-cum_tokens = 712
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable"
-entries = ["analog", "bridgetek", "chipidea", "dialog", "ehci", "mentor", "microchip", "mindmotion", "nordic", "nuvoton", "nxp", "ohci", "raspberrypi", "renesas", "sony", "st", "sunxi", "synopsys", "template", "ti", "valentyusb", "wch"]
-
-[[batches]]
 position = 28
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 53
-cum_tokens = 765
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["_static", "assets", "conf.py", "faq.rst", "getting_started.rst", "index.rst", "info", "integration.rst", "porting.rst", "reference", "requirements.txt", "troubleshooting.rst"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "docs/_static" })'
-descriptor = "listing of 'docs/_static'"
-cost_tokens = 4
-cum_tokens = 769
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/_static"
-entries = ["custom.css"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "docs/assets" })'
-descriptor = "listing of 'docs/assets'"
-cost_tokens = 14
-cum_tokens = 783
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/assets"
-entries = ["adafruit_logo.svg", "logo.svg", "stack.svg"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "docs/info" })'
-descriptor = "listing of 'docs/info'"
-cost_tokens = 24
-cum_tokens = 807
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/info"
-entries = ["changelog.rst", "code_of_conduct.rst", "contributors.rst", "index.rst"]
-
-[[batches]]
-position = 32
 key = 'Fs(DirListing { dir: "src/common" })'
 descriptor = "listing of 'src/common'"
 cost_tokens = 56
-cum_tokens = 863
+cum_tokens = 768
 
 [batches.content]
 kind = "fs"
@@ -532,95 +476,67 @@ parent = "src/common"
 entries = ["tusb_common.h", "tusb_compiler.h", "tusb_debug.h", "tusb_fifo.c", "tusb_fifo.h", "tusb_mcu.h", "tusb_private.h", "tusb_types.h", "tusb_verify.h"]
 
 [[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 53
+cum_tokens = 821
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["_static", "assets", "conf.py", "faq.rst", "getting_started.rst", "index.rst", "info", "integration.rst", "porting.rst", "reference", "requirements.txt", "troubleshooting.rst"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 4
+cum_tokens = 825
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_static"
+entries = ["custom.css"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "docs/assets" })'
+descriptor = "listing of 'docs/assets'"
+cost_tokens = 14
+cum_tokens = 839
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/assets"
+entries = ["adafruit_logo.svg", "logo.svg", "stack.svg"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "docs/info" })'
+descriptor = "listing of 'docs/info'"
+cost_tokens = 24
+cum_tokens = 863
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/info"
+entries = ["changelog.rst", "code_of_conduct.rst", "contributors.rst", "index.rst"]
+
+[[batches]]
 position = 33
-key = 'Fs(DirListing { dir: "hw/mcu/bridgetek/ft9xx" })'
-descriptor = "listing of 'hw/mcu/bridgetek/ft9xx'"
-cost_tokens = 8
-cum_tokens = 871
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/bridgetek/ft9xx"
-entries = ["Readme.md", "scripts"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "hw/mcu/sony/cxd56" })'
-descriptor = "listing of 'hw/mcu/sony/cxd56'"
-cost_tokens = 8
-cum_tokens = 879
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hw/mcu/sony/cxd56"
-entries = ["mkspk", "tools"]
-
-[[batches]]
-position = 35
-key = 'C(DeclNames { file: "lib/networking/dnserver.h", chunk_index: 0 })'
-descriptor = "c decl names surface in lib/networking/dnserver.h"
-cost_tokens = 69
-cum_tokens = 948
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/networking/dnserver.h"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/networking/dnserver.h"
-start = 47
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/networking/dnserver.h"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/networking/dnserver.h"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: ".circleci" })'
-descriptor = "listing of '.circleci'"
-cost_tokens = 9
-cum_tokens = 957
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".circleci"
-entries = ["config.yml", "config2.yml"]
-
-[[batches]]
-position = 37
 key = 'Fs(DirListing { dir: "src/osal" })'
 descriptor = "listing of 'src/osal'"
 cost_tokens = 64
-cum_tokens = 1021
+cum_tokens = 927
 
 [batches.content]
 kind = "fs"
@@ -630,11 +546,11 @@ parent = "src/osal"
 entries = ["osal.h", "osal_freertos.h", "osal_mynewt.h", "osal_none.h", "osal_pico.h", "osal_rtthread.h", "osal_rtx4.h", "osal_threadx.h", "osal_zephyr.h"]
 
 [[batches]]
-position = 38
+position = 34
 key = 'C(DeclNames { file: "src/osal/osal.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/osal/osal.h"
 cost_tokens = 104
-cum_tokens = 1125
+cum_tokens = 1031
 
 [batches.content]
 kind = "lines"
@@ -672,11 +588,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 35
 key = 'C(Decl { file: "src/osal/osal.h", start_line: 39 })'
 descriptor = "c decl at src/osal/osal.h:39"
 cost_tokens = 0
-cum_tokens = 1125
+cum_tokens = 1031
 
 [batches.content]
 kind = "lines"
@@ -690,11 +606,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 40
+position = 36
 key = 'C(DeclDoc { file: "src/osal/osal.h", start_line: 39 })'
 descriptor = "c decl doc at src/osal/osal.h:39"
 cost_tokens = 5
-cum_tokens = 1130
+cum_tokens = 1036
 
 [batches.content]
 kind = "lines"
@@ -706,6 +622,90 @@ end = 38
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 37
+key = 'Fs(DirListing { dir: "hw/mcu/bridgetek/ft9xx" })'
+descriptor = "listing of 'hw/mcu/bridgetek/ft9xx'"
+cost_tokens = 8
+cum_tokens = 1044
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/mcu/bridgetek/ft9xx"
+entries = ["Readme.md", "scripts"]
+
+[[batches]]
+position = 38
+key = 'Fs(DirListing { dir: "hw/mcu/sony/cxd56" })'
+descriptor = "listing of 'hw/mcu/sony/cxd56'"
+cost_tokens = 8
+cum_tokens = 1052
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/mcu/sony/cxd56"
+entries = ["mkspk", "tools"]
+
+[[batches]]
+position = 39
+key = 'C(DeclNames { file: "lib/networking/dnserver.h", chunk_index: 0 })'
+descriptor = "c decl names surface in lib/networking/dnserver.h"
+cost_tokens = 69
+cum_tokens = 1121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/networking/dnserver.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/networking/dnserver.h"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/networking/dnserver.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/networking/dnserver.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'Fs(DirListing { dir: ".circleci" })'
+descriptor = "listing of '.circleci'"
+cost_tokens = 9
+cum_tokens = 1130
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".circleci"
+entries = ["config.yml", "config2.yml"]
 
 [[batches]]
 position = 41
@@ -3147,10 +3147,24 @@ kind = "full"
 
 [[batches]]
 position = 126
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 34
+cum_tokens = 6081
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["CMakeLists.txt", "CMakePresets.json", "build_system", "device", "dual", "host", "typec", "west.yml"]
+
+[[batches]]
+position = 127
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 165 })'
 descriptor = "c decl at src/typec/pd_types.h:165"
 cost_tokens = 144
-cum_tokens = 6191
+cum_tokens = 6225
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3178,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'C(DeclNames { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", chunk_index: 0 })'
 descriptor = "c decl names surface in hw/mcu/dialog/da1469x/include/hal/hal_gpio.h"
 cost_tokens = 268
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3430,11 +3444,11 @@ end = 173
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 129
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 81 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3448,11 +3462,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 91 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:91"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3466,11 +3480,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 102 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:102"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3484,11 +3498,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 111 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:111"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3502,11 +3516,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 119 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:119"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3520,11 +3534,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 128 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:128"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3538,11 +3552,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 137 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:137"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3556,11 +3570,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 158 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:158"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3574,11 +3588,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 165 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:165"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3592,11 +3606,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 172 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:172"
 cost_tokens = 0
-cum_tokens = 6459
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -3610,11 +3624,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 150 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:150"
 cost_tokens = 19
-cum_tokens = 6478
+cum_tokens = 6512
 
 [batches.content]
 kind = "lines"
@@ -3628,11 +3642,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'C(DeclDoc { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 81 })'
 descriptor = "c decl doc at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:81"
 cost_tokens = 11
-cum_tokens = 6489
+cum_tokens = 6523
 
 [batches.content]
 kind = "lines"
@@ -3646,11 +3660,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 39 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:39"
 cost_tokens = 68
-cum_tokens = 6557
+cum_tokens = 6591
 
 [batches.content]
 kind = "lines"
@@ -3664,11 +3678,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'C(Decl { file: "hw/mcu/dialog/da1469x/include/hal/hal_gpio.h", start_line: 52 })'
 descriptor = "c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:52"
 cost_tokens = 74
-cum_tokens = 6631
+cum_tokens = 6665
 
 [batches.content]
 kind = "lines"
@@ -3682,11 +3696,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'C(Includes { file: "src/typec/pd_types.h" })'
 descriptor = "c includes in src/typec/pd_types.h"
 cost_tokens = 36
-cum_tokens = 6667
+cum_tokens = 6701
 
 [batches.content]
 kind = "lines"
@@ -3698,20 +3712,6 @@ end = 36
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 143
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 34
-cum_tokens = 6701
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["CMakeLists.txt", "CMakePresets.json", "build_system", "device", "dual", "host", "typec", "west.yml"]
 
 [[batches]]
 position = 144
@@ -4381,10 +4381,38 @@ kind = "full"
 
 [[batches]]
 position = 165
+key = 'Fs(DirListing { dir: "test/unit-test" })'
+descriptor = "listing of 'test/unit-test'"
+cost_tokens = 18
+cum_tokens = 8007
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/unit-test"
+entries = ["CMakeLists.txt", "ceedling", "project.yml", "test"]
+
+[[batches]]
+position = 166
+key = 'Fs(DirListing { dir: "test/unit-test/test" })'
+descriptor = "listing of 'test/unit-test/test'"
+cost_tokens = 17
+cum_tokens = 8024
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/unit-test/test"
+entries = ["device", "support", "test_common_func.c", "test_fifo.c"]
+
+[[batches]]
+position = 167
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 115 })'
 descriptor = "c decl at src/typec/pd_types.h:115"
 cost_tokens = 172
-cum_tokens = 8161
+cum_tokens = 8196
 
 [batches.content]
 kind = "lines"
@@ -4398,11 +4426,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 166
+position = 168
 key = 'C(Includes { file: "src/common/tusb_verify.h" })'
 descriptor = "c includes in src/common/tusb_verify.h"
 cost_tokens = 47
-cum_tokens = 8208
+cum_tokens = 8243
 
 [batches.content]
 kind = "lines"
@@ -4414,34 +4442,6 @@ end = 32
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 167
-key = 'Fs(DirListing { dir: "test/unit-test" })'
-descriptor = "listing of 'test/unit-test'"
-cost_tokens = 18
-cum_tokens = 8226
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/unit-test"
-entries = ["CMakeLists.txt", "ceedling", "project.yml", "test"]
-
-[[batches]]
-position = 168
-key = 'Fs(DirListing { dir: "test/unit-test/test" })'
-descriptor = "listing of 'test/unit-test/test'"
-cost_tokens = 17
-cum_tokens = 8243
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/unit-test/test"
-entries = ["device", "support", "test_common_func.c", "test_fifo.c"]
 
 [[batches]]
 position = 169
