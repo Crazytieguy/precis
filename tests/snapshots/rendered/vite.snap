@@ -190,10 +190,6 @@ packages/
             vite.config.js
         template-react-ts/
             README.md
-                   1→# React + TypeScript + Vite
-                   2→
-                   3→This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-                …
             _gitignore
             eslint.config.js
             index.html
@@ -294,31 +290,6 @@ packages/
             svelte.config.js
             vite.config.js
         template-svelte-ts/
-            .vscode/
-            README.md
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.svelte
-                app.css
-                assets/
-                    hero.png
-                    svelte.svg
-                    vite.svg
-                lib/
-                    Counter.svelte
-                main.ts
-                    …
-                       9→export default app
-            svelte.config.js
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
         template-vanilla/
             _gitignore
             index.html
@@ -435,6 +406,17 @@ packages/
                5→  "license": "MIT",
             …
                7→  "description": "Native-ESM powered web dev build tool",
+            …
+              75→  "dependencies": {
+              76→    "lightningcss": "^1.32.0",
+              77→    "picomatch": "^4.0.4",
+              78→    "postcss": "^8.5.14",
+              79→    "rolldown": "1.0.1",
+              80→    "tinyglobby": "^0.2.16"
+              81→  },
+              82→  "optionalDependencies": {
+              83→    "fsevents": "~2.3.3"
+              84→  },
             …
         rolldown.config.ts
         rolldown.dts.config.ts

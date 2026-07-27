@@ -10,21 +10,21 @@ Score(3000)=0.692 I=0.816 C=0.587 ns_rows≤3K=22/60 (reached=13 partial=1 missi
 | walker |  | 157 | 65 | package identity in package.json |  |  | 1.000 |
 | walker |  | 200 | 43 | module-doc lede in src/index.js |  |  | 1.000 |
 | ns | 212 |  | 113 | src/index.js — node/browser dispatch | 1.3 |  | 0.793 |
-| walker |  | 232 | 32 | package runtime metadata in package.json |  |  | 0.793 |
-| ns | 240 |  | 28 | package.json main/browser fields | 1.4 |  | 0.758 |
-| ns | 285 |  | 45 | README lede | 1.5 |  | 0.769 |
-| walker |  | 300 | 68 | package entrypoints in package.json |  |  | 0.814 |
-| walker |  | 314 | 14 | export names surface in karma.conf.js |  |  | 0.814 |
-| walker |  | 314 | 0 | export at karma.conf.js:1 |  |  | 0.814 |
-| ns | 395 |  | 110 | README section-heading roster (part 1, all levels) | 1.6 |  | 0.678 |
-| walker |  | 422 | 108 | package scripts in package.json |  |  | 0.689 |
-| ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.586 |
-| walker |  | 613 | 191 | headings outline in README.md |  |  | 0.791 |
-| walker |  | 638 | 25 | README.md section #1 |  |  | 0.791 |
-| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.800 |
-| walker |  | 770 | 132 | YAML config at .travis.yml |  |  | 0.823 |
-| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.834 |
-| walker |  | 800 | 30 | package runtime dependencies in package.json |  |  | 0.835 |
+| walker |  | 232 | 32 | package runtime dependencies in package.json |  |  | 0.794 |
+| ns | 240 |  | 28 | package.json main/browser fields | 1.4 |  | 0.759 |
+| walker |  | 264 | 32 | package runtime metadata in package.json |  |  | 0.759 |
+| ns | 285 |  | 45 | README lede | 1.5 |  | 0.770 |
+| walker |  | 332 | 68 | package entrypoints in package.json |  |  | 0.815 |
+| walker |  | 346 | 14 | export names surface in karma.conf.js |  |  | 0.815 |
+| walker |  | 346 | 0 | export at karma.conf.js:1 |  |  | 0.815 |
+| ns | 395 |  | 110 | README section-heading roster (part 1, all levels) | 1.6 |  | 0.679 |
+| walker |  | 452 | 106 | package scripts in package.json |  |  | 0.690 |
+| ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.587 |
+| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.623 |
+| walker |  | 643 | 191 | headings outline in README.md |  |  | 0.801 |
+| walker |  | 668 | 25 | README.md section #1 |  |  | 0.801 |
+| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.694 |
+| walker |  | 800 | 132 | YAML config at .travis.yml |  |  | 0.835 |
 | walker |  | 843 | 43 | README.md section #16 |  |  | 0.835 |
 | walker |  | 865 | 22 | export names surface in src/common.js |  |  | 0.835 |
 | walker |  | 865 | 0 | export at src/common.js:7 |  |  | 0.835 |

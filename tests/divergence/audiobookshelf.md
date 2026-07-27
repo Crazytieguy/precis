@@ -200,145 +200,139 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 4630 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.747 |
 | walker |  | 4643 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.747 |
 | walker |  | 4680 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.747 |
-| walker |  | 4707 | 27 | listing of 'test/server' |  |  | 0.749 |
-| walker |  | 4729 | 22 | listing of 'test/server/managers' |  |  | 0.751 |
-| walker |  | 5048 | 319 | headings outline in readme.md |  |  | 0.772 |
-| walker |  | 5048 | 0 | readme.md section #49 |  |  | 0.772 |
-| walker |  | 5071 | 23 | readme.md section #50 |  |  | 0.772 |
-| walker |  | 5085 | 14 | readme.md section #9 |  |  | 0.772 |
-| walker |  | 5098 | 13 | readme.md section #8 |  |  | 0.772 |
-| walker |  | 5113 | 15 | readme.md section #2 |  |  | 0.772 |
-| walker |  | 5128 | 15 | readme.md section #4 |  |  | 0.772 |
-| ns | 5132 |  | 579 | index.js CLI entry (flags + Server construction) | 2.4 |  | 0.751 |
-| walker |  | 5143 | 15 | readme.md section #3 |  |  | 0.751 |
-| ns | 5148 |  | 16 | prod.js exists as index.js's --prod-with-dev-env-less sibling | 2.5 |  | 0.751 |
-| walker |  | 5158 | 15 | readme.md section #5 |  |  | 0.751 |
-| walker |  | 5173 | 15 | readme.md section #10 |  |  | 0.751 |
-| walker |  | 5187 | 14 | readme.md section #11 |  |  | 0.751 |
-| walker |  | 5221 | 34 | readme.md section #24 |  |  | 0.751 |
-| walker |  | 5237 | 16 | readme.md section #16 |  |  | 0.751 |
-| walker |  | 5254 | 17 | readme.md section #14 |  |  | 0.751 |
-| walker |  | 5270 | 16 | readme.md section #13 |  |  | 0.751 |
-| ns | 5274 |  | 126 | .devcontainer/dev.js example | 2.6 |  | 0.746 |
-| walker |  | 5298 | 28 | readme.md section #71 |  |  | 0.746 |
-| walker |  | 5316 | 18 | readme.md section #7 |  |  | 0.746 |
-| walker |  | 5333 | 17 | readme.md section #6 |  |  | 0.746 |
-| walker |  | 5345 | 12 | readme.md section #63 |  |  | 0.746 |
-| ns | 5362 |  | 88 | Dockerfile stage markers | 2.7 |  | 0.747 |
-| walker |  | 5367 | 22 | readme.md section #18 |  |  | 0.747 |
-| walker |  | 5391 | 24 | readme.md section #12 |  |  | 0.747 |
-| walker |  | 5505 | 114 | listing of 'client/components/cards' |  |  | 0.769 |
-| walker |  | 5579 | 74 | readme.md section #23 |  |  | 0.769 |
-| walker |  | 5651 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.769 |
-| walker |  | 5658 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.769 |
-| walker |  | 5665 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.769 |
-| walker |  | 5672 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.769 |
-| walker |  | 5679 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.769 |
-| walker |  | 5686 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.769 |
-| walker |  | 5693 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.769 |
-| walker |  | 5700 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.769 |
-| walker |  | 5707 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.769 |
-| walker |  | 5714 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.769 |
-| walker |  | 5721 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.769 |
-| walker |  | 5728 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.769 |
-| walker |  | 5739 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.769 |
-| walker |  | 5750 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.769 |
-| ns | 5764 |  | 402 | docker-compose.yml | 2.8 |  | 0.755 |
-| walker |  | 5765 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.755 |
-| walker |  | 5778 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.755 |
-| walker |  | 5798 | 20 | readme.md section #46 |  |  | 0.755 |
-| walker |  | 5830 | 32 | readme.md section #17 |  |  | 0.755 |
-| walker |  | 5863 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.761 |
-| walker |  | 5896 | 33 | listing of 'test/server/utils' |  |  | 0.764 |
-| walker |  | 5919 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.767 |
-| walker |  | 5940 | 21 | readme.md section #39 |  |  | 0.767 |
-| walker |  | 5974 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.767 |
-| ns | 6069 |  | 305 | Dockerfile runtime stage | 2.9 | 2.7 | 0.752 |
-| walker |  | 6121 | 147 | listing of 'client/components/modals' |  |  | 0.762 |
-| walker |  | 6126 | 5 | listing of 'client/components/modals/authors' |  |  | 0.763 |
-| walker |  | 6131 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.763 |
-| walker |  | 6136 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.764 |
-| walker |  | 6142 | 6 | listing of 'client/components/modals/notification' |  |  | 0.765 |
-| walker |  | 6150 | 8 | listing of 'client/components/modals/item' |  |  | 0.766 |
-| walker |  | 6162 | 12 | listing of 'client/components/modals/player' |  |  | 0.768 |
-| walker |  | 6174 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.769 |
-| walker |  | 6189 | 15 | listing of 'client/components/modals/emails' |  |  | 0.771 |
-| walker |  | 6205 | 16 | listing of 'client/components/modals/collections' |  |  | 0.774 |
-| walker |  | 6222 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.777 |
-| walker |  | 6257 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.785 |
-| walker |  | 6267 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.787 |
-| walker |  | 6304 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.796 |
-| ns | 6324 |  | 255 | client/package.json scripts | 2.10 |  | 0.788 |
-| walker |  | 6336 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.800 |
-| walker |  | 6391 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.800 |
-| walker |  | 6395 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.800 |
-| walker |  | 6402 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.800 |
-| walker |  | 6420 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.800 |
-| walker |  | 6456 | 36 | readme.md section #1 |  |  | 0.800 |
-| walker |  | 6479 | 23 | readme.md section #44 |  |  | 0.800 |
-| ns | 6601 |  | 277 | Server.js constructor: manager + router composition | 3.1 |  | 0.789 |
-| walker |  | 6633 | 154 | listing of 'client/components/ui' |  |  | 0.827 |
-| walker |  | 6663 | 30 | export names surface in server/libs/archiver/lib/error.js |  |  | 0.827 |
-| walker |  | 6663 | 0 | export at server/libs/archiver/lib/error.js:30 |  |  | 0.827 |
-| walker |  | 6706 | 43 | docs/README.md section #3 |  |  | 0.827 |
-| walker |  | 6807 | 101 | YAML config at docker-compose.yml |  |  | 0.828 |
-| walker |  | 6840 | 33 | readme.md section #20 |  |  | 0.828 |
-| walker |  | 6884 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.831 |
-| walker |  | 6964 | 80 | readme.md section #25 |  |  | 0.834 |
-| ns | 7110 |  | 509 | Server.js init() startup sequence | 3.2 | 3.1 | 0.813 |
-| walker |  | 7209 | 245 | module item names surface in index.js |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:13 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:21 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:38 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:39 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:41 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:42 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:43 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:44 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:45 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:47 |  |  | 0.817 |
-| walker |  | 7209 | 0 | module item at index.js:52 |  |  | 0.817 |
-| walker |  | 7373 | 164 | module item at index.js:1 |  |  | 0.824 |
-| walker |  | 7416 | 43 | readme.md section #15 |  |  | 0.824 |
-| ns | 7437 |  | 327 | Database.js init() sequence | 3.3 |  | 0.810 |
-| walker |  | 7717 | 301 | YAML config tail at docker-compose.yml |  |  | 0.827 |
-| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.816 |
-| walker |  | 7747 | 30 | readme.md section #34 |  |  | 0.816 |
-| ns | 7851 |  | 130 | SocketAuthority socket-event census | 3.5 |  | 0.812 |
-| ns | 7965 |  | 114 | Auth.js initAuthRoutes: auth HTTP surface | 3.6 |  | 0.809 |
-| walker |  | 8098 | 351 | package scripts in package.json |  |  | 0.821 |
-| walker |  | 8176 | 78 | docs/README.md section #1 |  |  | 0.821 |
-| walker |  | 8214 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.821 |
-| walker |  | 8217 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.821 |
-| walker |  | 8235 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.821 |
-| walker |  | 8268 | 33 | readme.md section #28 |  |  | 0.821 |
-| ns | 8320 |  | 355 | Scan pipeline method census (Scanner/LibraryScanner/BookScanner/PodcastScanner) | 4.1 |  | 0.809 |
-| walker |  | 8336 | 68 | docs/README.md section #2 |  |  | 0.809 |
-| walker |  | 8366 | 30 | readme.md section #59 |  |  | 0.809 |
+| walker |  | 5025 | 345 | package runtime dependencies in package.json |  |  | 0.747 |
+| walker |  | 5052 | 27 | listing of 'test/server' |  |  | 0.749 |
+| walker |  | 5074 | 22 | listing of 'test/server/managers' |  |  | 0.751 |
+| ns | 5132 |  | 579 | index.js CLI entry (flags + Server construction) | 2.4 |  | 0.730 |
+| ns | 5148 |  | 16 | prod.js exists as index.js's --prod-with-dev-env-less sibling | 2.5 |  | 0.730 |
+| ns | 5274 |  | 126 | .devcontainer/dev.js example | 2.6 |  | 0.725 |
+| ns | 5362 |  | 88 | Dockerfile stage markers | 2.7 |  | 0.726 |
+| walker |  | 5393 | 319 | headings outline in readme.md |  |  | 0.747 |
+| walker |  | 5393 | 0 | readme.md section #49 |  |  | 0.747 |
+| walker |  | 5416 | 23 | readme.md section #50 |  |  | 0.747 |
+| walker |  | 5430 | 14 | readme.md section #9 |  |  | 0.747 |
+| walker |  | 5443 | 13 | readme.md section #8 |  |  | 0.747 |
+| walker |  | 5458 | 15 | readme.md section #2 |  |  | 0.747 |
+| walker |  | 5473 | 15 | readme.md section #4 |  |  | 0.747 |
+| walker |  | 5488 | 15 | readme.md section #3 |  |  | 0.747 |
+| walker |  | 5503 | 15 | readme.md section #5 |  |  | 0.747 |
+| walker |  | 5518 | 15 | readme.md section #10 |  |  | 0.747 |
+| walker |  | 5532 | 14 | readme.md section #11 |  |  | 0.747 |
+| walker |  | 5566 | 34 | readme.md section #24 |  |  | 0.747 |
+| walker |  | 5582 | 16 | readme.md section #16 |  |  | 0.747 |
+| walker |  | 5599 | 17 | readme.md section #14 |  |  | 0.747 |
+| walker |  | 5615 | 16 | readme.md section #13 |  |  | 0.747 |
+| walker |  | 5643 | 28 | readme.md section #71 |  |  | 0.747 |
+| walker |  | 5661 | 18 | readme.md section #7 |  |  | 0.747 |
+| walker |  | 5678 | 17 | readme.md section #6 |  |  | 0.747 |
+| walker |  | 5690 | 12 | readme.md section #63 |  |  | 0.747 |
+| walker |  | 5712 | 22 | readme.md section #18 |  |  | 0.747 |
+| walker |  | 5736 | 24 | readme.md section #12 |  |  | 0.747 |
+| ns | 5764 |  | 402 | docker-compose.yml | 2.8 |  | 0.733 |
+| walker |  | 5850 | 114 | listing of 'client/components/cards' |  |  | 0.755 |
+| walker |  | 5924 | 74 | readme.md section #23 |  |  | 0.755 |
+| walker |  | 5996 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.755 |
+| walker |  | 6003 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.755 |
+| walker |  | 6010 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.755 |
+| walker |  | 6017 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.755 |
+| walker |  | 6024 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.755 |
+| walker |  | 6031 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.755 |
+| walker |  | 6038 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.755 |
+| walker |  | 6045 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.755 |
+| walker |  | 6052 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.755 |
+| walker |  | 6059 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.755 |
+| walker |  | 6066 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.755 |
+| ns | 6069 |  | 305 | Dockerfile runtime stage | 2.9 | 2.7 | 0.741 |
+| walker |  | 6073 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.741 |
+| walker |  | 6084 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.741 |
+| walker |  | 6095 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.741 |
+| walker |  | 6110 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.741 |
+| walker |  | 6123 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.741 |
+| walker |  | 6143 | 20 | readme.md section #46 |  |  | 0.741 |
+| walker |  | 6175 | 32 | readme.md section #17 |  |  | 0.741 |
+| walker |  | 6208 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.747 |
+| walker |  | 6241 | 33 | listing of 'test/server/utils' |  |  | 0.750 |
+| walker |  | 6264 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.752 |
+| walker |  | 6285 | 21 | readme.md section #39 |  |  | 0.752 |
+| walker |  | 6319 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.752 |
+| ns | 6324 |  | 255 | client/package.json scripts | 2.10 |  | 0.745 |
+| walker |  | 6466 | 147 | listing of 'client/components/modals' |  |  | 0.755 |
+| walker |  | 6471 | 5 | listing of 'client/components/modals/authors' |  |  | 0.755 |
+| walker |  | 6476 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.756 |
+| walker |  | 6481 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.757 |
+| walker |  | 6487 | 6 | listing of 'client/components/modals/notification' |  |  | 0.758 |
+| walker |  | 6495 | 8 | listing of 'client/components/modals/item' |  |  | 0.759 |
+| walker |  | 6507 | 12 | listing of 'client/components/modals/player' |  |  | 0.761 |
+| walker |  | 6519 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.762 |
+| walker |  | 6534 | 15 | listing of 'client/components/modals/emails' |  |  | 0.764 |
+| walker |  | 6550 | 16 | listing of 'client/components/modals/collections' |  |  | 0.767 |
+| walker |  | 6567 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.770 |
+| ns | 6601 |  | 277 | Server.js constructor: manager + router composition | 3.1 |  | 0.759 |
+| walker |  | 6602 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.767 |
+| walker |  | 6612 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.769 |
+| walker |  | 6649 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.778 |
+| walker |  | 6681 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.789 |
+| walker |  | 6736 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.789 |
+| walker |  | 6740 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.789 |
+| walker |  | 6747 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.789 |
+| walker |  | 6765 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.789 |
+| walker |  | 6801 | 36 | readme.md section #1 |  |  | 0.789 |
+| walker |  | 6824 | 23 | readme.md section #44 |  |  | 0.789 |
+| walker |  | 6978 | 154 | listing of 'client/components/ui' |  |  | 0.827 |
+| walker |  | 7008 | 30 | export names surface in server/libs/archiver/lib/error.js |  |  | 0.827 |
+| walker |  | 7008 | 0 | export at server/libs/archiver/lib/error.js:30 |  |  | 0.827 |
+| walker |  | 7051 | 43 | docs/README.md section #3 |  |  | 0.827 |
+| ns | 7110 |  | 509 | Server.js init() startup sequence | 3.2 | 3.1 | 0.806 |
+| walker |  | 7152 | 101 | YAML config at docker-compose.yml |  |  | 0.806 |
+| walker |  | 7185 | 33 | readme.md section #20 |  |  | 0.806 |
+| walker |  | 7229 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.810 |
+| walker |  | 7309 | 80 | readme.md section #25 |  |  | 0.813 |
+| ns | 7437 |  | 327 | Database.js init() sequence | 3.3 |  | 0.800 |
+| walker |  | 7554 | 245 | module item names surface in index.js |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:13 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:21 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:38 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:39 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:41 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:42 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:43 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:44 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:45 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:47 |  |  | 0.804 |
+| walker |  | 7554 | 0 | module item at index.js:52 |  |  | 0.804 |
+| walker |  | 7718 | 164 | module item at index.js:1 |  |  | 0.810 |
+| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.800 |
+| walker |  | 7761 | 43 | readme.md section #15 |  |  | 0.800 |
+| ns | 7851 |  | 130 | SocketAuthority socket-event census | 3.5 |  | 0.796 |
+| ns | 7965 |  | 114 | Auth.js initAuthRoutes: auth HTTP surface | 3.6 |  | 0.793 |
+| walker |  | 8062 | 301 | YAML config tail at docker-compose.yml |  |  | 0.809 |
+| walker |  | 8092 | 30 | readme.md section #34 |  |  | 0.809 |
+| ns | 8320 |  | 355 | Scan pipeline method census (Scanner/LibraryScanner/BookScanner/PodcastScanner) | 4.1 |  | 0.797 |
+| walker |  | 8443 | 351 | package scripts in package.json |  |  | 0.809 |
 | ns | 8491 |  | 171 | Metadata-provider method census (8 providers) | 4.2 |  | 0.803 |
-| walker |  | 8541 | 175 | package scripts in client/package.json |  |  | 0.810 |
-| walker |  | 8579 | 38 | readme.md section #40 |  |  | 0.810 |
-| walker |  | 8582 | 3 | listing of 'client/cypress/fixtures' |  |  | 0.812 |
-| ns | 8657 |  | 166 | Auth strategy method census (TokenManager/LocalAuthStrategy/OidcAuthStrategy) | 4.3 |  | 0.806 |
-| ns | 8879 |  | 222 | custom-metadata-provider-specification.yaml: /search contract | 4.4 |  | 0.796 |
+| walker |  | 8521 | 78 | docs/README.md section #1 |  |  | 0.803 |
+| walker |  | 8559 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.803 |
+| walker |  | 8562 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.803 |
+| walker |  | 8580 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.803 |
+| walker |  | 8613 | 33 | readme.md section #28 |  |  | 0.803 |
+| ns | 8657 |  | 166 | Auth strategy method census (TokenManager/LocalAuthStrategy/OidcAuthStrategy) | 4.3 |  | 0.797 |
+| walker |  | 8681 | 68 | docs/README.md section #2 |  |  | 0.797 |
+| walker |  | 8711 | 30 | readme.md section #59 |  |  | 0.797 |
+| ns | 8879 |  | 222 | custom-metadata-provider-specification.yaml: /search contract | 4.4 |  | 0.787 |
+| walker |  | 8886 | 175 | package scripts in client/package.json |  |  | 0.794 |
+| walker |  | 8924 | 38 | readme.md section #40 |  |  | 0.794 |
+| walker |  | 8927 | 3 | listing of 'client/cypress/fixtures' |  |  | 0.796 |
 | ns | 9180 |  | 301 | client/store/index.js Vuex root state | 4.5 |  | 0.784 |
-| walker |  | 9214 | 632 | plaintext config tail of Dockerfile |  |  | 0.800 |
-| walker |  | 9249 | 35 | readme.md section #67 |  |  | 0.800 |
-| ns | 9312 |  | 132 | LibraryItem + Book model method sample | 5.1 |  | 0.796 |
-| walker |  | 9346 | 97 | package dev/peer dependencies in package.json |  |  | 0.796 |
-| walker |  | 9382 | 36 | readme.md section #61 |  |  | 0.796 |
-| walker |  | 9421 | 39 | readme.md section #54 |  |  | 0.796 |
-| ns | 9445 |  | 133 | LibraryItemController + LibraryController method sample | 5.2 |  | 0.792 |
-| walker |  | 9459 | 38 | readme.md section #33 |  |  | 0.792 |
-| walker |  | 9524 | 65 | readme.md section #19 |  |  | 0.792 |
-| ns | 9536 |  | 91 | CronManager + BackupManager method sample | 5.3 |  | 0.789 |
-| walker |  | 9591 | 67 | readme.md section #21 |  |  | 0.789 |
-| walker |  | 9636 | 45 | readme.md section #52 |  |  | 0.789 |
-| walker |  | 9683 | 47 | readme.md section #53 |  |  | 0.789 |
-| walker |  | 9766 | 83 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal/streams' |  |  | 0.789 |
-| walker |  | 9855 | 89 | docs/README.md section #4 |  |  | 0.789 |
-| walker |  | 9868 | 13 | imports in server/libs/archiver/lib/error.js |  |  | 0.789 |
-| walker |  | 9917 | 49 | readme.md section #57 |  |  | 0.789 |
-| walker |  | 9966 | 49 | readme.md section #58 |  |  | 0.789 |
-| walker |  | 9971 | 5 | listing of 'test/server/providers' |  |  | 0.790 |
+| ns | 9312 |  | 132 | LibraryItem + Book model method sample | 5.1 |  | 0.781 |
+| ns | 9445 |  | 133 | LibraryItemController + LibraryController method sample | 5.2 |  | 0.776 |
+| ns | 9536 |  | 91 | CronManager + BackupManager method sample | 5.3 |  | 0.773 |
+| walker |  | 9559 | 632 | plaintext config tail of Dockerfile |  |  | 0.789 |
+| walker |  | 9594 | 35 | readme.md section #67 |  |  | 0.789 |
+| walker |  | 9689 | 95 | package dev/peer dependencies in package.json |  |  | 0.789 |
+| walker |  | 9725 | 36 | readme.md section #61 |  |  | 0.789 |
+| walker |  | 9764 | 39 | readme.md section #54 |  |  | 0.789 |
+| walker |  | 9802 | 38 | readme.md section #33 |  |  | 0.789 |
+| walker |  | 9867 | 65 | readme.md section #19 |  |  | 0.789 |
+| walker |  | 9934 | 67 | readme.md section #21 |  |  | 0.789 |
+| walker |  | 9979 | 45 | readme.md section #52 |  |  | 0.789 |
 | ns | 9991 |  | 455 | test/server/Logger.test.js: mocha/chai/sinon convention example | 5.4 |  | 0.776 |

@@ -265,36 +265,6 @@ apps/
             linkwarden_dark.png
             linkwarden_light.png
             locales/
-                de/
-                    common.json
-                en/
-                    common.json
-                es/
-                    common.json
-                fr/
-                    common.json
-                it/
-                    common.json
-                ja/
-                    common.json
-                nl/
-                    common.json
-                pl/
-                    common.json
-                pt-BR/
-                    common.json
-                ro/
-                    common.json
-                ru/
-                    common.json
-                tr/
-                    common.json
-                uk/
-                    common.json
-                zh/
-                    common.json
-                zh-TW/
-                    common.json
             logo_maskable.png
             screenshots/
                 screenshot1.png
@@ -384,6 +354,17 @@ package.json
        7→    "apps/*",
        8→    "packages/*"
        9→  ],
+    …
+      32→  "dependencies": {
+      33→    "concurrently": "^9.1.2",
+      34→    "patch-package": "^8.0.0"
+      35→  },
+      36→  "resolutions": {
+      37→    "react": "19.1.0",
+      38→    "react-dom": "19.1.0",
+      39→    "react-native-mmkv": "4.1.2",
+      40→    "react-native-nitro-modules": "0.34.1"
+      41→  }
     …
 packages/
     filesystem/

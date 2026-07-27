@@ -211,18 +211,22 @@ package.json
       43→    "fmt:check": "oxfmt --check",
       44→    "prepare": "husky"
       45→  },
+      46→  "dependencies": {
+      47→    "@tinyhttp/app": "^3.0.1",
+      48→    "@tinyhttp/cors": "^2.0.1",
+      49→    "@tinyhttp/logger": "^2.1.0",
+      50→    "chalk": "^5.6.2",
+      51→    "chokidar": "^5.0.0",
+      52→    "dot-prop": "^10.1.0",
+      53→    "eta": "^4.5.0",
+      54→    "inflection": "^3.0.2",
+      55→    "json5": "^2.2.3",
+      56→    "lowdb": "^7.0.1",
+      57→    "milliparsec": "^5.1.0",
+      58→    "sirv": "^3.0.2",
+      59→    "sort-on": "^7.0.0"
+      60→  },
     …
-      61→  "devDependencies": {
-      62→    "@types/node": "^25.0.8",
-      63→    "concurrently": "^9.2.1",
-      64→    "get-port": "^7.1.0",
-      65→    "husky": "^9.1.7",
-      66→    "oxfmt": "^0.24.0",
-      67→    "oxlint": "^1.39.0",
-      68→    "tempy": "^3.1.0",
-      69→    "type-fest": "^5.4.0",
-      70→    "typescript": "^5.9.3"
-      71→  },
       72→  "engines": {
       73→    "node": ">=22.12.0"
       74→  }
@@ -231,16 +235,6 @@ pnpm-lock.yaml
 public/
     test.html
 schema.json
-       1→{
-       2→  "$schema": "https://json-schema.org/draft/2020-12/schema",
-       3→  "type": "object",
-       4→  "additionalProperties": {
-       5→    "oneOf": [
-       6→      { "type": "array" },
-       7→      { "type": "object" }
-       8→    ]
-       9→  }
-      10→}
 src/
     adapters/
         normalized-adapter.test.ts

@@ -180,12 +180,6 @@ packages/
             types.ts
             utils.ts
         tests/
-            graph.test.ts
-            indexes.test.ts
-            multiset.test.ts
-            operators/
-            test-utils.ts
-            utils.test.ts
         tsconfig.json
     d2ql/
         README.md
@@ -258,6 +252,12 @@ packages/
               35→    }
               36→  },
             …
+              73→  "dependencies": {
+              74→    "@types/murmurhash-js": "^1.0.6",
+              75→    "fractional-indexing": "^3.2.0",
+              76→    "murmurhash-js": "^1.0.0"
+              77→  }
+            …
         src/
             d2.ts
                 …
@@ -271,12 +271,6 @@ packages/
                   97→  constructor(graph: ID2, writer: DifferenceStreamWriter<T>) {
                 …
                  166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-                 167→  sendData(
-                 168→    version: Version | number | number[],
-                 169→    collection: MultiSet<T> | MultiSetArray<T>,
-                 170→  ): void {
-                …
-                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
                 …
             electric/
                 index.ts

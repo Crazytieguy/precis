@@ -52,33 +52,11 @@ README.md
       31→npm install -g dockly
       32→```
       34→# Usage
-      35→
-      36→Just fire up dockly and it will automatically connect to your localhost docker daemon through the unix socket:
-      37→
-      38→```
-      39→dockly
-      40→```
-      41→
+    …
       42→## Command line options:
-      43→
-      44→It's also possible to provide command line options for dockly to customize the docker connection
-      45→
-      46→| Param | Type | Description |
-      47→| --- | --- | --- |
-      48→| -s or --socketPath | string | Docker socket to connect to |
-      49→| -H or --host | string | Remote docker daemon host to connect to |
-      50→| -P or --port | string | Remote docker port to connect to  |
-      51→| -T or --protocol | `http` \| `https` \| `ssh` | Remote docker protocol to connect to |
-      52→| --containerFilters | string | String to apply to filter shown containers |
-      53→| -h or --help | null | Display help |
-      54→| -v or --version | null | Display version information |
-      55→
+    …
       56→### `--containerFilters`
-      57→
-      58→This is a string that could be used to filter the shown containers;
-      59→its format is in the x-www-form-urlencoded style and the filters you could apply are listed here: [https://docs.docker.com/engine/api/v1.37/#operation/ContainerList](https://docs.docker.com/engine/api/v1.37/#operation/ContainerList)
-      60→
-      61→Example: `--containerFilters="name=test&status=running"` to only show *running* container which name match *test*.
+    …
       63→# Docker Support
       64→
       65→## Run from docker
@@ -242,6 +220,19 @@ package.json
     …
       63→  "license": "MIT",
     …
+      68→  "dependencies": {
+      69→    "blessed": "^0.1.81",
+      70→    "blessed-contrib": "^4.10.1",
+      71→    "chalk": "^4",
+      72→    "clipboardy": "^2.3.0",
+      73→    "command-line-args": "^5.2.1",
+      74→    "command-line-usage": "^5.0.5",
+      75→    "dockerode": "3.3.5",
+      76→    "figures": "^2.0.0",
+      77→    "glob": "^7.2.3",
+      78→    "lockfile-lint": "^4.12.0",
+      79→    "semver": "7.6.3"
+      80→  },
       81→  "devDependencies": {
       82→    "standard": "^12.0.1"
       83→  },
@@ -291,8 +282,6 @@ src/
         …
          155→  getContainer (containerId, cb) {
         …
-         160→  getService (serviceId, cb) {
-        …
          233→module.exports = Util
     enum.js
            1→module.exports = {
@@ -316,8 +305,6 @@ src/
         …
          114→  setWidgetsRepo () {
         …
-         120→  setWidgetsUtils () {
-        …
          132→  renderWidgets () {
         …
          138→  toggleMode () {
@@ -334,9 +321,7 @@ src/
         styles.js
             …
               55→module.exports = {
-              56→  darkStyle,
-              57→  lightStyle
-              58→}
+            …
         theme.selector.js
             …
               13→module.exports = () => {

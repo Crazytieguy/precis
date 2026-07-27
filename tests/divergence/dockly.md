@@ -1,4 +1,4 @@
-Score(3000)=0.727 I=0.860 C=0.614 ns_rows≤3K=19/43 (reached=12 partial=1 missing=6)
+Score(3000)=0.689 I=0.833 C=0.570 ns_rows≤3K=19/43 (reached=10 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -62,75 +62,75 @@ Score(3000)=0.727 I=0.860 C=0.614 ns_rows≤3K=19/43 (reached=12 partial=1 missi
 | ns | 1404 |  | 179 | README FAQ: unsupported Node version | 1.11 |  | 0.488 |
 | walker |  | 1434 | 107 | package entrypoints in package.json |  |  | 0.537 |
 | walker |  | 1445 | 11 | export member at src/screen.js:18 member 79 |  |  | 0.537 |
-| walker |  | 1455 | 10 | export names surface in src/enum.js |  |  | 0.537 |
-| walker |  | 1575 | 120 | package scripts in package.json |  |  | 0.590 |
-| walker |  | 1588 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.590 |
-| walker |  | 1599 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.590 |
-| ns | 1619 |  | 215 | README FAQ: PuTTY / icons / alternatives | 1.12 |  | 0.555 |
-| walker |  | 1651 | 52 | listing of 'docs' |  |  | 0.557 |
-| walker |  | 1660 | 9 | listing of 'docs/src' |  |  | 0.558 |
-| walker |  | 1673 | 13 | listing of 'docs/src/pages' |  |  | 0.558 |
-| ns | 1728 |  | 109 | Code directory rosters: src/, hooks/, widgets/, lib/ | 2.1 |  | 0.617 |
-| walker |  | 1768 | 95 | module item body at index.js:72 body 73 |  |  | 0.618 |
-| walker |  | 1793 | 25 | listing of 'docs/src/components' |  |  | 0.618 |
-| walker |  | 1804 | 11 | export member at src/screen.js:18 member 107 |  |  | 0.618 |
-| walker |  | 1818 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.618 |
-| walker |  | 1851 | 33 | package dev/peer dependencies in package.json |  |  | 0.618 |
-| walker |  | 1862 | 11 | export member at src/screen.js:18 member 132 |  |  | 0.618 |
-| ns | 1863 |  | 135 | Nested code directory rosters: src/themes, src/widgetsTemplates, widgets/{containers,images,services} | 2.2 |  | 0.655 |
-| ns | 1916 |  | 53 | Meta/CI directory rosters | 2.3 |  | 0.662 |
-| ns | 1977 |  | 61 | docs/ roster | 2.4 |  | 0.676 |
-| walker |  | 2001 | 139 | module item body at index.js:86 body 87 |  |  | 0.681 |
-| walker |  | 2020 | 19 | export names surface in src/baseWidget.js |  |  | 0.681 |
-| walker |  | 2020 | 0 | export at src/baseWidget.js:4 |  |  | 0.681 |
-| walker |  | 2034 | 14 | export member at src/dockerUtil.js:5 member 100 |  |  | 0.681 |
-| walker |  | 2056 | 22 | export names surface in src/assetsLoader.js |  |  | 0.681 |
-| walker |  | 2067 | 11 | export member at src/screen.js:18 member 138 |  |  | 0.681 |
-| walker |  | 2091 | 24 | imports in src/dockerUtil.js |  |  | 0.681 |
-| walker |  | 2103 | 12 | export names surface in src/themes/styles.js |  |  | 0.681 |
-| walker |  | 2287 | 184 | module item body at index.js:47 body 48 |  |  | 0.685 |
-| ns | 2297 |  | 320 | index.js: requires + CLI gate (help/version/node-version check) | 3.1 |  | 0.630 |
-| walker |  | 2301 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.630 |
-| walker |  | 2408 | 107 | imports in index.js |  |  | 0.643 |
-| walker |  | 2419 | 11 | export member at src/screen.js:18 member 152 |  |  | 0.643 |
-| walker |  | 2433 | 14 | export names surface in src/themes/theme.selector.js |  |  | 0.643 |
-| walker |  | 2433 | 0 | export at src/themes/theme.selector.js:13 |  |  | 0.643 |
-| walker |  | 2470 | 37 | export at src/assetsLoader.js:10 |  |  | 0.643 |
-| walker |  | 2475 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.649 |
-| walker |  | 2491 | 16 | export member at src/dockerUtil.js:5 member 155 |  |  | 0.649 |
-| walker |  | 2503 | 12 | export member at src/screen.js:18 member 114 |  |  | 0.649 |
-| walker |  | 2531 | 28 | export names surface in src/widgetsTemplates/list.widget.template.js |  |  | 0.649 |
-| walker |  | 2531 | 0 | export at src/widgetsTemplates/list.widget.template.js:8 |  |  | 0.649 |
-| walker |  | 2541 | 10 | export member at src/widgetsTemplates/list.widget.template.js:8 member 21 |  |  | 0.649 |
-| walker |  | 2552 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 88 |  |  | 0.649 |
-| walker |  | 2563 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 107 |  |  | 0.649 |
-| walker |  | 2574 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 127 |  |  | 0.649 |
-| ns | 2619 |  | 322 | index.js: startup promise chain + initDockerConnection | 3.2 | 3.1 | 0.630 |
-| ns | 2888 |  | 269 | index.js: initScreens + exitError | 3.3 | 3.1 | 0.649 |
-| walker |  | 2953 | 379 | README.md section #1 |  |  | 0.727 |
-| walker |  | 2965 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.727 |
-| walker |  | 2981 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.727 |
-| walker |  | 3000 | 19 | export at src/themes/styles.js:55 |  |  | 0.727 |
-| walker |  | 3026 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.727 |
-| walker |  | 3052 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.727 |
-| walker |  | 3078 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.727 |
-| walker |  | 3090 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.727 |
-| walker |  | 3250 | 160 | README.md section #2 |  |  | 0.776 |
-| walker |  | 3266 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.776 |
-| walker |  | 3294 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.776 |
-| walker |  | 3318 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.776 |
-| walker |  | 3333 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.776 |
-| ns | 3422 |  | 534 | cli.js: cliOpts definitions | 3.4 |  | 0.704 |
-| walker |  | 3478 | 145 | README.md section #4 |  |  | 0.704 |
-| walker |  | 3540 | 62 | imports in src/cli.js |  |  | 0.705 |
-| ns | 3787 |  | 365 | cli.js: showVersion / showUsage / cliParse | 3.5 | 3.4 | 0.665 |
-| ns | 3997 |  | 210 | screen.js: requires + per-mode GRID_LAYOUT map | 4.1 |  | 0.650 |
-| walker |  | 4009 | 469 | package identity metadata in package.json |  |  | 0.650 |
-| walker |  | 4025 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.650 |
-| walker |  | 4038 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.650 |
-| walker |  | 4054 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.651 |
-| ns | 4149 |  | 152 | screen.js: Screen constructor | 4.2 |  | 0.637 |
-| walker |  | 4245 | 191 | package runtime dependencies in package.json |  |  | 0.669 |
+| ns | 1619 |  | 215 | README FAQ: PuTTY / icons / alternatives | 1.12 |  | 0.505 |
+| walker |  | 1640 | 195 | package runtime dependencies in package.json |  |  | 0.590 |
+| walker |  | 1650 | 10 | export names surface in src/enum.js |  |  | 0.590 |
+| ns | 1728 |  | 109 | Code directory rosters: src/, hooks/, widgets/, lib/ | 2.1 |  | 0.641 |
+| walker |  | 1770 | 120 | package scripts in package.json |  |  | 0.680 |
+| walker |  | 1783 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.680 |
+| walker |  | 1794 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.680 |
+| walker |  | 1846 | 52 | listing of 'docs' |  |  | 0.683 |
+| walker |  | 1855 | 9 | listing of 'docs/src' |  |  | 0.685 |
+| ns | 1863 |  | 135 | Nested code directory rosters: src/themes, src/widgetsTemplates, widgets/{containers,images,services} | 2.2 |  | 0.713 |
+| walker |  | 1868 | 13 | listing of 'docs/src/pages' |  |  | 0.713 |
+| ns | 1916 |  | 53 | Meta/CI directory rosters | 2.3 |  | 0.717 |
+| walker |  | 1963 | 95 | module item body at index.js:72 body 73 |  |  | 0.718 |
+| ns | 1977 |  | 61 | docs/ roster | 2.4 |  | 0.729 |
+| walker |  | 1988 | 25 | listing of 'docs/src/components' |  |  | 0.729 |
+| walker |  | 2019 | 31 | package dev/peer dependencies in package.json |  |  | 0.729 |
+| walker |  | 2030 | 11 | export member at src/screen.js:18 member 107 |  |  | 0.729 |
+| walker |  | 2044 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.729 |
+| walker |  | 2055 | 11 | export member at src/screen.js:18 member 132 |  |  | 0.729 |
+| walker |  | 2194 | 139 | module item body at index.js:86 body 87 |  |  | 0.734 |
+| walker |  | 2213 | 19 | export names surface in src/baseWidget.js |  |  | 0.734 |
+| walker |  | 2213 | 0 | export at src/baseWidget.js:4 |  |  | 0.734 |
+| walker |  | 2227 | 14 | export member at src/dockerUtil.js:5 member 100 |  |  | 0.734 |
+| walker |  | 2249 | 22 | export names surface in src/assetsLoader.js |  |  | 0.734 |
+| walker |  | 2260 | 11 | export member at src/screen.js:18 member 138 |  |  | 0.734 |
+| walker |  | 2284 | 24 | imports in src/dockerUtil.js |  |  | 0.734 |
+| walker |  | 2296 | 12 | export names surface in src/themes/styles.js |  |  | 0.734 |
+| ns | 2297 |  | 320 | index.js: requires + CLI gate (help/version/node-version check) | 3.1 |  | 0.676 |
+| walker |  | 2480 | 184 | module item body at index.js:47 body 48 |  |  | 0.679 |
+| walker |  | 2494 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.679 |
+| walker |  | 2601 | 107 | imports in index.js |  |  | 0.692 |
+| walker |  | 2612 | 11 | export member at src/screen.js:18 member 152 |  |  | 0.692 |
+| ns | 2619 |  | 322 | index.js: startup promise chain + initDockerConnection | 3.2 | 3.1 | 0.669 |
+| walker |  | 2626 | 14 | export names surface in src/themes/theme.selector.js |  |  | 0.669 |
+| walker |  | 2626 | 0 | export at src/themes/theme.selector.js:13 |  |  | 0.669 |
+| walker |  | 2663 | 37 | export at src/assetsLoader.js:10 |  |  | 0.669 |
+| walker |  | 2668 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.674 |
+| walker |  | 2684 | 16 | export member at src/dockerUtil.js:5 member 155 |  |  | 0.674 |
+| walker |  | 2696 | 12 | export member at src/screen.js:18 member 114 |  |  | 0.674 |
+| walker |  | 2724 | 28 | export names surface in src/widgetsTemplates/list.widget.template.js |  |  | 0.674 |
+| walker |  | 2724 | 0 | export at src/widgetsTemplates/list.widget.template.js:8 |  |  | 0.674 |
+| walker |  | 2734 | 10 | export member at src/widgetsTemplates/list.widget.template.js:8 member 21 |  |  | 0.674 |
+| walker |  | 2745 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 88 |  |  | 0.674 |
+| walker |  | 2756 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 107 |  |  | 0.674 |
+| walker |  | 2767 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 127 |  |  | 0.674 |
+| ns | 2888 |  | 269 | index.js: initScreens + exitError | 3.3 | 3.1 | 0.689 |
+| walker |  | 3146 | 379 | README.md section #1 |  |  | 0.767 |
+| walker |  | 3158 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.767 |
+| walker |  | 3174 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.767 |
+| walker |  | 3193 | 19 | export at src/themes/styles.js:55 |  |  | 0.767 |
+| walker |  | 3219 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.767 |
+| walker |  | 3245 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.767 |
+| walker |  | 3271 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.767 |
+| walker |  | 3283 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.767 |
+| ns | 3422 |  | 534 | cli.js: cliOpts definitions | 3.4 |  | 0.695 |
+| walker |  | 3443 | 160 | README.md section #2 |  |  | 0.739 |
+| walker |  | 3459 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.739 |
+| walker |  | 3487 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.739 |
+| walker |  | 3511 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.739 |
+| walker |  | 3526 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.739 |
+| walker |  | 3671 | 145 | README.md section #4 |  |  | 0.739 |
+| walker |  | 3733 | 62 | imports in src/cli.js |  |  | 0.741 |
+| ns | 3787 |  | 365 | cli.js: showVersion / showUsage / cliParse | 3.5 | 3.4 | 0.699 |
+| ns | 3997 |  | 210 | screen.js: requires + per-mode GRID_LAYOUT map | 4.1 |  | 0.683 |
+| ns | 4149 |  | 152 | screen.js: Screen constructor | 4.2 |  | 0.669 |
+| walker |  | 4200 | 467 | package identity metadata in package.json |  |  | 0.669 |
+| walker |  | 4216 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.669 |
+| walker |  | 4229 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.669 |
+| walker |  | 4245 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.669 |
 | walker |  | 4261 | 16 | export member at src/dockerUtil.js:5 member 180 |  |  | 0.670 |
 | walker |  | 4273 | 12 | export member at src/widgetsTemplates/list.widget.template.js:8 member 155 |  |  | 0.670 |
 | ns | 4496 |  | 347 | screen.js: initScreen + init (boot sequence) | 4.3 |  | 0.641 |
