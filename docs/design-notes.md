@@ -119,6 +119,29 @@ longest affordable prefix of the seed's entry rows and then stops.
 Listings only: entry rows are independent, so a prefix of one is a
 smaller listing, where a prefix of a line batch is severed source.
 
+**Which entries survive is a value judgment, and name order is the
+wrong one.** Alphabetical truncation spends a 100–300 token budget on
+dotfiles and README translations and never reaches `src/` — better
+than the empty string it replaced, and still close to the least useful
+subset on offer. `rank_seed_entries` orders the entries first and cuts
+the tail, on three conventions that hold on any repository rather than
+on a list of names: hidden entries last (a leading `.` is the filesystem's own
+"outside the ordinary view"), directories before files (a directory row
+stands for a subtree and is the only row that says how the repo is
+organized), and all-caps root documents after other files (the
+convention that makes `README`/`LICENSE`/`CONTRIBUTING` recognizable
+everywhere is what makes their *names* uninformative — a reader assumes
+they are there — while the manifest, entrypoint and build file names do
+say something; within the documents, `README.md` outranks
+`README.ja.md`). The ranking is a function of the listing alone, never
+of the budget, so a smaller budget's surviving set stays a subset of a
+larger budget's. Ranking is *only* consulted on this degraded path: a
+listing that fits renders every row in name order regardless, and the
+render order of a degraded listing is name order too, so no other
+scheduling decision anywhere can see it. Measured: rendered output is
+byte-identical across all 93 fixtures at every budget on the
+1000–9000 grid, and no fixture degrades at 1000 or above.
+
 The remedy this section prescribes above — *split the blocking batch or
 lower its rank* — is the right lever when a batch blocks *some* budgets,
 and it stays the first thing to reach for. It doesn't apply here: the

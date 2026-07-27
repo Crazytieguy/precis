@@ -187,40 +187,53 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     );
 }
 
+/// Walker that emits one batch: the listing of `.0`, exactly as
+/// `walker::fs` builds it, and nothing else.
+struct RootListing(PathBuf);
+
+impl Walker for RootListing {
+    type Key = BatchKey;
+
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        let dir = self.0.clone();
+        vec![Batch {
+            key: BatchKey::Fs(FsKey::DirListing { dir: dir.clone() }),
+            predecessor: None,
+            content: BatchContent::Fs {
+                groups: vec![FsGroup {
+                    // Bare names, matching what `walker::fs` emits.
+                    entries: FsEntries::Listed(
+                        precis::fs_util::list_dir(&dir, ctx.dir_filter())
+                            .into_keys()
+                            .map(PathBuf::from)
+                            .collect(),
+                    ),
+                    parent: dir,
+                }],
+            },
+            value: 900.0,
+        }]
+    }
+    fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        Vec::new()
+    }
+}
+
+/// Entry names a rendered root listing shows, marker rows dropped.
+fn listed_names(rendered: &str) -> Vec<String> {
+    rendered
+        .lines()
+        .filter_map(|line| line.split_whitespace().next())
+        .filter(|token| *token != "…")
+        .map(|token| token.trim_end_matches('/').to_string())
+        .collect()
+}
+
 #[test]
 fn scheduler_invariants_unaffordable_seed_listing_degrades_to_a_marked_prefix() {
     // Every batch a walker emits is gated on the seed listing, so a seed
     // too big for the budget used to leave the schedule empty and the
     // caller with an empty string.
-    struct RootListing(PathBuf);
-    impl Walker for RootListing {
-        type Key = BatchKey;
-
-        fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            let dir = self.0.clone();
-            vec![Batch {
-                key: BatchKey::Fs(FsKey::DirListing { dir: dir.clone() }),
-                predecessor: None,
-                content: BatchContent::Fs {
-                    groups: vec![FsGroup {
-                        // Bare names, matching what `walker::fs` emits.
-                        entries: FsEntries::Listed(
-                            precis::fs_util::list_dir(&dir, ctx.dir_filter())
-                                .into_keys()
-                                .map(PathBuf::from)
-                                .collect(),
-                        ),
-                        parent: dir,
-                    }],
-                },
-                value: 900.0,
-            }]
-        }
-        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            Vec::new()
-        }
-    }
-
     const ENTRIES: usize = 60;
     const BUDGET: usize = 100;
     let temp = tempfile::tempdir().unwrap();
@@ -244,6 +257,86 @@ fn scheduler_invariants_unaffordable_seed_listing_degrades_to_a_marked_prefix() 
     assert!(
         rendered.ends_with("…\n"),
         "a listing cut short must say so: {rendered:?}",
+    );
+}
+
+#[test]
+fn scheduler_invariants_degraded_seed_keeps_the_most_informative_entries() {
+    // A budget too small for the whole root listing buys a subset of it,
+    // and which subset is a quality decision: directory rows describe
+    // the repository, hidden entries and the standard root documents
+    // describe nothing a reader hadn't assumed.
+    let dirs = ["apps", "lib", "zzz_pkg"];
+    let hidden_dirs = [".github", ".zzz_hidden"];
+    let files = ["aaa.rs", "build.mk", "main.rs", "zzz.rs"];
+    let documents = ["AAA_NOTES.md", "COPYING", "README.ja.md", "README.md"];
+    let hidden_files = [".aaa_rc", ".editorconfig", ".zzz_rc"];
+
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path().to_path_buf();
+    for dir in dirs.iter().chain(&hidden_dirs) {
+        std::fs::create_dir(root.join(dir)).unwrap();
+        std::fs::write(root.join(dir).join("child.txt"), "x").unwrap();
+    }
+    for file in files.iter().chain(&documents).chain(&hidden_files) {
+        std::fs::write(root.join(file), "x").unwrap();
+    }
+    let total = dirs.len() + hidden_dirs.len() + files.len() + documents.len() + hidden_files.len();
+
+    // Ascending budgets, all below the whole listing's cost.
+    let ladder = [20usize, 30, 35, 40, 50];
+    let mut previous: Vec<String> = Vec::new();
+    // A rung whose cut falls between the two READMEs — without one, the
+    // plain-before-translated assertion below is satisfied vacuously by
+    // rungs that show both or neither.
+    let mut cut_between_readmes = false;
+    for budget in ladder {
+        let rendered = Scheduler::new(root.clone(), RootListing(root.clone()), budget, None)
+            .run()
+            .render();
+        let names = listed_names(&rendered);
+        assert!(
+            !names.is_empty() && names.len() < total,
+            "budget {budget} must exercise the partial path: {rendered:?}",
+        );
+        assert!(
+            precis::tokenizer::count(&rendered) <= budget,
+            "budget {budget} exceeded: {rendered:?}",
+        );
+
+        let shows = |name: &str| names.iter().any(|n| n == name);
+        let shows_all = |group: &[&str]| group.iter().all(|name| shows(name));
+        let shows_any = |group: &[&str]| group.iter().any(|name| shows(name));
+        assert!(
+            !shows_any(&files) || shows_all(&dirs),
+            "budget {budget} spent a row on a file before every directory: {names:?}",
+        );
+        assert!(
+            !shows_any(&documents) || shows_all(&files),
+            "budget {budget} spent a row on a root document before every other file: {names:?}",
+        );
+        assert!(
+            !shows_any(&hidden_dirs) && !shows_any(&hidden_files)
+                || shows_all(&files) && shows_all(&documents),
+            "budget {budget} spent a row on a hidden entry before every visible one: {names:?}",
+        );
+        assert!(
+            !shows("README.ja.md") || shows("README.md"),
+            "budget {budget} kept a translated README over the plain one: {names:?}",
+        );
+        cut_between_readmes |= shows("README.md") && !shows("README.ja.md");
+
+        // Prefix-monotonicity in the form that survives degradation:
+        // a smaller budget's rows are a subset of a larger budget's.
+        assert!(
+            previous.iter().all(|name| shows(name)),
+            "budget {budget} dropped a row a smaller budget showed: {previous:?} -> {names:?}",
+        );
+        previous = names;
+    }
+    assert!(
+        cut_between_readmes,
+        "no rung cut between README.md and README.ja.md — retune the ladder",
     );
 }
 
