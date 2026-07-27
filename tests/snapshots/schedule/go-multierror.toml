@@ -1,7 +1,7 @@
 fixture = "go-multierror"
 budget = 10000
-cumulative_tokens = 7026
-batch_count = 103
+cumulative_tokens = 7883
+batch_count = 104
 
 [[batches]]
 position = 1
@@ -2338,10 +2338,36 @@ kind = "full"
 
 [[batches]]
 position = 101
+key = 'Yaml(Whole { file: ".github/workflows/go-multierror.yml" })'
+descriptor = "YAML config at .github/workflows/go-multierror.yml"
+cost_tokens = 857
+cum_tokens = 7598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/go-multierror.yml"
+start = 1
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = ".github/workflows/go-multierror.yml"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
 key = 'Go(TestNames { file: "append_test.go" })'
 descriptor = "go test names surface in append_test.go"
 cost_tokens = 112
-cum_tokens = 6853
+cum_tokens = 7710
 
 [batches.content]
 kind = "lines"
@@ -2443,11 +2469,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Go(TestNames { file: "multierror_test.go" })'
 descriptor = "go test names surface in multierror_test.go"
 cost_tokens = 136
-cum_tokens = 6989
+cum_tokens = 7846
 
 [batches.content]
 kind = "lines"
@@ -2581,11 +2607,11 @@ end = 158
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #1"
 cost_tokens = 37
-cum_tokens = 7026
+cum_tokens = 7883
 
 [batches.content]
 kind = "lines"

@@ -66,7 +66,16 @@ const TOOLING_BYTE_GATE: usize = TOOLING_LINE_CAP * 120;
 const TOOLING_HEAD_LINE_CAP: usize = 80;
 const TOOLING_HEAD_BYTE_GATE: usize = TOOLING_HEAD_LINE_CAP * 200;
 const WORKFLOW_HEAD_LINE_CAP: usize = 60;
+/// The full-CI-tier gate is deliberately tighter than the line cap it
+/// guards: at `ci_value` a capped head of a long workflow displaces
+/// source, so suppressing the file entirely is the cheaper error.
 const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
+/// At the peripheral tier a capped head cannot outbid source, so the
+/// gate is only a read guard and is sized to the line cap it protects
+/// at the same 200 bytes/line the tooling head uses. Below it, a repo
+/// whose CI lives in one long workflow renders nothing but the
+/// filename at every budget.
+const WORKFLOW_PERIPHERAL_HEAD_BYTE_GATE: usize = WORKFLOW_HEAD_LINE_CAP * 200;
 const REFERENCE_MAP_BYTE_GATE: usize = 80_000;
 const REFERENCE_MAP_KEY_LINE_CAP: usize = 80;
 const REFERENCE_LEAF_CHUNK_TARGET_TOKENS: usize = 220;
@@ -386,12 +395,20 @@ impl YamlClass {
             YamlClass::Compose => {
                 gated_whole_file_content(file, ctx, COMPOSE_BYTE_GATE, COMPOSE_LINE_CAP)
             }
-            YamlClass::Workflow | YamlClass::WorkflowPeripheral => head_capped_yaml_content(
+            YamlClass::Workflow => head_capped_yaml_content(
                 file,
                 ctx,
                 TOOLING_BYTE_GATE,
                 TOOLING_LINE_CAP,
                 WORKFLOW_HEAD_BYTE_GATE,
+                WORKFLOW_HEAD_LINE_CAP,
+            ),
+            YamlClass::WorkflowPeripheral => head_capped_yaml_content(
+                file,
+                ctx,
+                TOOLING_BYTE_GATE,
+                TOOLING_LINE_CAP,
+                WORKFLOW_PERIPHERAL_HEAD_BYTE_GATE,
                 WORKFLOW_HEAD_LINE_CAP,
             ),
             YamlClass::Travis | YamlClass::Lint | YamlClass::Hook | YamlClass::DocsSite => {
@@ -1495,6 +1512,39 @@ volumes:
         assert!(
             !rendered.contains("rule_90: true"),
             "rendered output should not include lines past the capped tooling head:\n{rendered}",
+        );
+    }
+
+    /// A repo whose CI lives in one long workflow must not render just
+    /// the filename at every budget.
+    #[test]
+    fn yaml_emits_head_for_long_peripheral_workflow() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let workflow_dir = root.join(".github/workflows");
+        std::fs::create_dir_all(&workflow_dir).unwrap();
+        // Well past both the whole-file line cap and the tighter
+        // full-CI-tier byte gate, but inside the peripheral read guard.
+        let body: String = std::iter::once("name: ci\n".to_string())
+            .chain((1..=200).map(|i| format!("  step_{i}: run some reasonably long command\n")))
+            .collect();
+        assert!(body.len() > WORKFLOW_HEAD_BYTE_GATE);
+        assert!(body.len() <= WORKFLOW_PERIPHERAL_HEAD_BYTE_GATE);
+        for name in ["ci.yml", "stale.yml", "codeql.yml"] {
+            std::fs::write(workflow_dir.join(name), &body).unwrap();
+        }
+
+        let report = Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        let rendered = report.tree.render();
+
+        assert!(rendered.contains("step_1: run"), "{rendered}");
+        assert!(
+            rendered.contains(&format!("step_{}: run", WORKFLOW_HEAD_LINE_CAP - 1)),
+            "{rendered}",
+        );
+        assert!(
+            !rendered.contains(&format!("step_{}: run", WORKFLOW_HEAD_LINE_CAP + 1)),
+            "head must stay bounded by the line cap:\n{rendered}",
         );
     }
 }
