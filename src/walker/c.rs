@@ -1741,12 +1741,17 @@ const AGGREGATE_ENUM_CHUNK_SIZE: usize = 12;
 /// `struct Process_`) or the discriminant of a tagged union
 /// (`NodeKind kind;` opening `struct Node`).
 ///
-/// A split aggregate renders as its type header plus closing brace, so
-/// its name is all that survives — a type that *is a* `Row` then reads
-/// as unrelated to `Row`, and a tagged union reads as an untagged bag
-/// of fields. Scalars are data and stay in their member group; a
-/// pointer, array, or bitfield member references something else rather
-/// than embedding it, and a multi-line member is not an identity slot.
+/// A split aggregate renders as its type header plus closing brace,
+/// and on the names roster it renders as its opening line alone — in
+/// both cases the type's name is all that survives, so a type that
+/// *is a* `Row` reads as unrelated to `Row` and a tagged union reads
+/// as an untagged bag of fields. The line rides with both tiers,
+/// which form a predecessor chain (roster → `Decl` → member groups),
+/// so it can never be separated from the type it identifies.
+///
+/// Scalars are data and stay in their member group; a pointer, array,
+/// or bitfield member references something else rather than embedding
+/// it, and a multi-line member is not an identity slot.
 fn base_object_member_line(body: Node) -> Option<usize> {
     if body.kind() != "field_declaration_list" {
         return None;
@@ -2571,12 +2576,19 @@ fn collect_decl_names_from_with_global_starts(
     // `ellipsis_line_safe` / `all_starts`.
     for (_, info) in decls {
         full.push(info.start_line);
+        // The roster is often the only place an aggregate appears, and
+        // its opening line alone says nothing about what the type is —
+        // see [`base_object_member_line`].
+        full.extend(info.base_member_line);
         let ellipsis_line = info.start_line + 1;
-        if !all_starts.contains(&ellipsis_line) && ellipsis_line_safe(ellipsis_line, src_lines) {
+        if Some(ellipsis_line) != info.base_member_line
+            && !all_starts.contains(&ellipsis_line)
+            && ellipsis_line_safe(ellipsis_line, src_lines)
+        {
             ellipses.push(ellipsis_line);
         }
     }
-    FileLines::new(full).with_ellipses(ellipses)
+    FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
 }
 
 /// True iff the line is safe to claim as an ellipsis marker — not
@@ -2792,6 +2804,24 @@ mod tests {
         assert_eq!(
             base_member_line_of("struct P {\n  struct { int x; } p;\n  int a;\n};\n"),
             None
+        );
+    }
+
+    #[test]
+    fn c_names_roster_carries_the_identity_slot() {
+        // The roster is often the only place a type appears, so its
+        // opening line alone would render `Process` as unrelated to the
+        // hierarchy it is a leaf of.
+        let src = "struct P {\n  Row super;\n  int a;\n};\nint plain(void);\n";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        let starts: HashSet<usize> = decls.iter().map(|(_, i)| i.start_line).collect();
+        let src_lines: Vec<&str> = source.lines().collect();
+        let names = collect_decl_names_from_with_global_starts(&decls, &starts, &src_lines);
+        assert_eq!(names.full, vec![1, 2, 5]);
+        assert!(
+            !names.ellipses.contains(&2),
+            "the identity slot is real content, not an elision marker"
         );
     }
 

@@ -87,6 +87,7 @@ chibicc.h
       72→// Token type
       73→typedef struct Token Token;
       74→struct Token {
+      75→  TokenKind kind;   // Token kind
     …
       94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
       95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));

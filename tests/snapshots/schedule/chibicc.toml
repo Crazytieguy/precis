@@ -173,8 +173,8 @@ kind = "ellipsis"
 position = 6
 key = 'C(DeclNames { file: "chibicc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in chibicc.h"
-cost_tokens = 406
-cum_tokens = 841
+cost_tokens = 420
+cum_tokens = 855
 
 [batches.content]
 kind = "lines"
@@ -238,7 +238,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "chibicc.h"
 start = 73
-end = 74
+end = 75
 
 [batches.content.spans.render]
 kind = "full"
@@ -299,20 +299,12 @@ end = 63
 [batches.content.spans.render]
 kind = "ellipsis"
 
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 7
 key = 'C(Decl { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl at chibicc.h:73"
 cost_tokens = 0
-cum_tokens = 841
+cum_tokens = 855
 
 [batches.content]
 kind = "lines"
@@ -330,7 +322,7 @@ position = 8
 key = 'C(Decl { file: "chibicc.h", start_line: 38 })'
 descriptor = "c decl at chibicc.h:38"
 cost_tokens = 31
-cum_tokens = 872
+cum_tokens = 886
 
 [batches.content]
 kind = "lines"
@@ -348,7 +340,7 @@ position = 9
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl doc at chibicc.h:73"
 cost_tokens = 8
-cum_tokens = 880
+cum_tokens = 894
 
 [batches.content]
 kind = "lines"
@@ -366,7 +358,7 @@ position = 10
 key = 'C(Decl { file: "chibicc.h", start_line: 62 })'
 descriptor = "c decl at chibicc.h:62"
 cost_tokens = 67
-cum_tokens = 947
+cum_tokens = 961
 
 [batches.content]
 kind = "lines"
@@ -384,7 +376,7 @@ position = 11
 key = 'C(Decl { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl at chibicc.h:52"
 cost_tokens = 105
-cum_tokens = 1052
+cum_tokens = 1066
 
 [batches.content]
 kind = "lines"
@@ -402,7 +394,7 @@ position = 12
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl doc at chibicc.h:52"
 cost_tokens = 7
-cum_tokens = 1059
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -420,7 +412,7 @@ position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 366
-cum_tokens = 1425
+cum_tokens = 1439
 
 [batches.content]
 kind = "lines"
@@ -437,8 +429,8 @@ kind = "full"
 position = 14
 key = 'C(DeclNames { file: "chibicc.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in chibicc.h"
-cost_tokens = 293
-cum_tokens = 1718
+cost_tokens = 315
+cum_tokens = 1754
 
 [batches.content]
 kind = "lines"
@@ -486,7 +478,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "chibicc.h"
 start = 228
-end = 228
+end = 229
 
 [batches.content.spans.render]
 kind = "full"
@@ -510,7 +502,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "chibicc.h"
 start = 320
-end = 320
+end = 321
 
 [batches.content.spans.render]
 kind = "full"
@@ -573,14 +565,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "chibicc.h"
 start = 296
 end = 296
 
@@ -591,14 +575,6 @@ kind = "ellipsis"
 path = "chibicc.h"
 start = 302
 end = 302
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 321
-end = 321
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -624,7 +600,7 @@ position = 15
 key = 'C(Decl { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl at chibicc.h:126"
 cost_tokens = 0
-cum_tokens = 1718
+cum_tokens = 1754
 
 [batches.content]
 kind = "lines"
@@ -642,7 +618,7 @@ position = 16
 key = 'C(Decl { file: "chibicc.h", start_line: 167 })'
 descriptor = "c decl at chibicc.h:167"
 cost_tokens = 0
-cum_tokens = 1718
+cum_tokens = 1754
 
 [batches.content]
 kind = "lines"
@@ -657,10 +633,36 @@ kind = "full"
 
 [[batches]]
 position = 17
+key = 'C(Decl { file: "chibicc.h", start_line: 228 })'
+descriptor = "c decl at chibicc.h:228"
+cost_tokens = 5
+cum_tokens = 1759
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 228
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
 key = 'C(Decl { file: "chibicc.h", start_line: 127 })'
 descriptor = "c decl at chibicc.h:127"
 cost_tokens = 7
-cum_tokens = 1725
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -682,37 +684,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 18
-key = 'C(Decl { file: "chibicc.h", start_line: 176 })'
-descriptor = "c decl at chibicc.h:176"
-cost_tokens = 10
-cum_tokens = 1735
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 19
 key = 'C(Decl { file: "chibicc.h", start_line: 320 })'
 descriptor = "c decl at chibicc.h:320"
-cost_tokens = 16
-cum_tokens = 1751
+cost_tokens = 7
+cum_tokens = 1773
 
 [batches.content]
 kind = "lines"
@@ -735,26 +711,26 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'C(Decl { file: "chibicc.h", start_line: 228 })'
-descriptor = "c decl at chibicc.h:228"
-cost_tokens = 18
-cum_tokens = 1769
+key = 'C(Decl { file: "chibicc.h", start_line: 176 })'
+descriptor = "c decl at chibicc.h:176"
+cost_tokens = 10
+cum_tokens = 1783
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 228
-end = 229
+start = 176
+end = 176
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 291
-end = 291
+start = 225
+end = 225
 
 [batches.content.spans.render]
 kind = "full"
@@ -764,7 +740,7 @@ position = 21
 key = 'C(Decl { file: "chibicc.h", start_line: 108 })'
 descriptor = "c decl at chibicc.h:108"
 cost_tokens = 21
-cum_tokens = 1790
+cum_tokens = 1804
 
 [batches.content]
 kind = "lines"
@@ -782,7 +758,7 @@ position = 22
 key = 'C(Decl { file: "chibicc.h", start_line: 168 })'
 descriptor = "c decl at chibicc.h:168"
 cost_tokens = 41
-cum_tokens = 1831
+cum_tokens = 1845
 
 [batches.content]
 kind = "lines"
@@ -800,7 +776,7 @@ position = 23
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 176 })'
 descriptor = "c decl doc at chibicc.h:176"
 cost_tokens = 6
-cum_tokens = 1837
+cum_tokens = 1851
 
 [batches.content]
 kind = "lines"
@@ -818,7 +794,7 @@ position = 24
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 228 })'
 descriptor = "c decl doc at chibicc.h:228"
 cost_tokens = 7
-cum_tokens = 1844
+cum_tokens = 1858
 
 [batches.content]
 kind = "lines"
@@ -836,7 +812,7 @@ position = 25
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 238 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 238"
 cost_tokens = 47
-cum_tokens = 1891
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -854,7 +830,7 @@ position = 26
 key = 'C(Decl { file: "chibicc.h", start_line: 362 })'
 descriptor = "c decl at chibicc.h:362"
 cost_tokens = 110
-cum_tokens = 2001
+cum_tokens = 2015
 
 [batches.content]
 kind = "lines"
@@ -872,7 +848,7 @@ position = 27
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 261 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 261"
 cost_tokens = 53
-cum_tokens = 2054
+cum_tokens = 2068
 
 [batches.content]
 kind = "lines"
@@ -898,7 +874,7 @@ position = 28
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 282 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 282"
 cost_tokens = 53
-cum_tokens = 2107
+cum_tokens = 2121
 
 [batches.content]
 kind = "lines"
@@ -932,7 +908,7 @@ position = 29
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 270 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 270"
 cost_tokens = 62
-cum_tokens = 2169
+cum_tokens = 2183
 
 [batches.content]
 kind = "lines"
@@ -966,7 +942,7 @@ position = 30
 key = 'C(Decl { file: "chibicc.h", start_line: 301 })'
 descriptor = "c decl at chibicc.h:301"
 cost_tokens = 142
-cum_tokens = 2311
+cum_tokens = 2325
 
 [batches.content]
 kind = "lines"
@@ -984,7 +960,7 @@ position = 31
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 350 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 350"
 cost_tokens = 69
-cum_tokens = 2380
+cum_tokens = 2394
 
 [batches.content]
 kind = "lines"
@@ -1010,7 +986,7 @@ position = 32
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 321 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 321"
 cost_tokens = 73
-cum_tokens = 2453
+cum_tokens = 2467
 
 [batches.content]
 kind = "lines"
@@ -1028,7 +1004,7 @@ position = 33
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 128 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 128"
 cost_tokens = 77
-cum_tokens = 2530
+cum_tokens = 2544
 
 [batches.content]
 kind = "lines"
@@ -1046,7 +1022,7 @@ position = 34
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 336 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 336"
 cost_tokens = 77
-cum_tokens = 2607
+cum_tokens = 2621
 
 [batches.content]
 kind = "lines"
@@ -1088,7 +1064,7 @@ position = 35
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 136 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 136"
 cost_tokens = 81
-cum_tokens = 2688
+cum_tokens = 2702
 
 [batches.content]
 kind = "lines"
@@ -1122,7 +1098,7 @@ position = 36
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 229 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 229"
 cost_tokens = 85
-cum_tokens = 2773
+cum_tokens = 2787
 
 [batches.content]
 kind = "lines"
@@ -1140,7 +1116,7 @@ position = 37
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 245 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 245"
 cost_tokens = 86
-cum_tokens = 2859
+cum_tokens = 2873
 
 [batches.content]
 kind = "lines"
@@ -1182,7 +1158,7 @@ position = 38
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 150 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 150"
 cost_tokens = 95
-cum_tokens = 2954
+cum_tokens = 2968
 
 [batches.content]
 kind = "lines"
@@ -1208,7 +1184,7 @@ position = 39
 key = 'C(WholeFile { file: "test/include3.h" })'
 descriptor = "c whole header in test/include3.h"
 cost_tokens = 10
-cum_tokens = 2964
+cum_tokens = 2978
 
 [batches.content]
 kind = "lines"
@@ -1226,7 +1202,7 @@ position = 40
 key = 'C(WholeFile { file: "test/include4.h" })'
 descriptor = "c whole header in test/include4.h"
 cost_tokens = 10
-cum_tokens = 2974
+cum_tokens = 2988
 
 [batches.content]
 kind = "lines"
@@ -1244,7 +1220,7 @@ position = 41
 key = 'C(WholeFile { file: "test/include2.h" })'
 descriptor = "c whole header in test/include2.h"
 cost_tokens = 11
-cum_tokens = 2985
+cum_tokens = 2999
 
 [batches.content]
 kind = "lines"
@@ -1261,7 +1237,7 @@ kind = "full"
 position = 42
 key = 'C(Decl { file: "chibicc.h", start_line: 74 })'
 descriptor = "c decl at chibicc.h:74"
-cost_tokens = 280
+cost_tokens = 266
 cum_tokens = 3265
 
 [batches.content]

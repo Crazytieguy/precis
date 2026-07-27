@@ -2559,10 +2559,28 @@ kind = "full"
 
 [[batches]]
 position = 100
+key = 'Plaintext(DeclSurface { file: "docs/public/robots.txt" })'
+descriptor = "declaration surface of docs/public/robots.txt"
+cost_tokens = 15
+cum_tokens = 6966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/public/robots.txt"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'C(DeclNames { file: "src/jv_alloc.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_alloc.c"
-cost_tokens = 176
-cum_tokens = 7127
+cost_tokens = 189
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2570,7 +2588,7 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/jv_alloc.c"
 start = 7
-end = 7
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
@@ -2641,14 +2659,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "src/jv_alloc.c"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
 start = 142
 end = 142
 
@@ -2707,42 +2717,42 @@ kind = "ellipsis"
 path = "src/jv_alloc.c"
 start = 184
 end = 184
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'C(Decl { file: "src/jv_alloc.c", start_line: 141 })'
-descriptor = "c decl at src/jv_alloc.c:141"
-cost_tokens = 0
-cum_tokens = 7127
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
-start = 142
-end = 142
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 102
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 141 })'
+descriptor = "c decl at src/jv_alloc.c:141"
+cost_tokens = 0
+cum_tokens = 7155
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_alloc.c"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_alloc.c"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 103
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 149 })'
 descriptor = "c decl at src/jv_alloc.c:149"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2764,11 +2774,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 104
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 153 })'
 descriptor = "c decl at src/jv_alloc.c:153"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2790,11 +2800,11 @@ end = 154
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 105
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 162 })'
 descriptor = "c decl at src/jv_alloc.c:162"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2816,11 +2826,11 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 106
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 167 })'
 descriptor = "c decl at src/jv_alloc.c:167"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2842,11 +2852,11 @@ end = 168
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 107
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 175 })'
 descriptor = "c decl at src/jv_alloc.c:175"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2868,11 +2878,11 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 108
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 179 })'
 descriptor = "c decl at src/jv_alloc.c:179"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2894,11 +2904,11 @@ end = 180
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 109
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 183 })'
 descriptor = "c decl at src/jv_alloc.c:183"
 cost_tokens = 0
-cum_tokens = 7127
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -2920,65 +2930,11 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 109
-key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 179 })'
-descriptor = "c decl body at src/jv_alloc.c:179"
-cost_tokens = 8
-cum_tokens = 7135
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 110
-key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 149 })'
-descriptor = "c decl body at src/jv_alloc.c:149"
-cost_tokens = 9
-cum_tokens = 7144
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 175 })'
-descriptor = "c decl body at src/jv_alloc.c:175"
-cost_tokens = 9
-cum_tokens = 7153
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_alloc.c"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
 key = 'C(Decl { file: "src/jv_alloc.c", start_line: 7 })'
 descriptor = "c decl at src/jv_alloc.c:7"
-cost_tokens = 27
-cum_tokens = 7180
+cost_tokens = 14
+cum_tokens = 7169
 
 [batches.content]
 kind = "lines"
@@ -2992,19 +2948,55 @@ end = 10
 kind = "full"
 
 [[batches]]
+position = 111
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 179 })'
+descriptor = "c decl body at src/jv_alloc.c:179"
+cost_tokens = 8
+cum_tokens = 7177
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_alloc.c"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 149 })'
+descriptor = "c decl body at src/jv_alloc.c:149"
+cost_tokens = 9
+cum_tokens = 7186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_alloc.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 113
-key = 'Plaintext(DeclSurface { file: "docs/public/robots.txt" })'
-descriptor = "declaration surface of docs/public/robots.txt"
-cost_tokens = 15
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 175 })'
+descriptor = "c decl body at src/jv_alloc.c:175"
+cost_tokens = 9
 cum_tokens = 7195
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/public/robots.txt"
-start = 1
-end = 2
+path = "src/jv_alloc.c"
+start = 176
+end = 176
 
 [batches.content.spans.render]
 kind = "full"
@@ -3457,8 +3449,8 @@ kind = "full"
 position = 128
 key = 'C(DeclNames { file: "src/bytecode.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/bytecode.h"
-cost_tokens = 183
-cum_tokens = 8253
+cost_tokens = 191
+cum_tokens = 8261
 
 [batches.content]
 kind = "lines"
@@ -3474,7 +3466,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "src/bytecode.h"
 start = 32
-end = 32
+end = 33
 
 [batches.content.spans.render]
 kind = "full"
@@ -3521,14 +3513,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "src/bytecode.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/bytecode.h"
 start = 49
 end = 49
 
@@ -3564,7 +3548,7 @@ position = 129
 key = 'C(Decl { file: "src/bytecode.h", start_line: 59 })'
 descriptor = "c decl at src/bytecode.h:59"
 cost_tokens = 37
-cum_tokens = 8290
+cum_tokens = 8298
 
 [batches.content]
 kind = "lines"
@@ -3581,7 +3565,7 @@ kind = "full"
 position = 130
 key = 'C(Decl { file: "src/bytecode.h", start_line: 32 })'
 descriptor = "c decl at src/bytecode.h:32"
-cost_tokens = 77
+cost_tokens = 69
 cum_tokens = 8367
 
 [batches.content]
@@ -3597,558 +3581,10 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'C(DeclNames { file: "src/jv_aux.c", chunk_index: 0 })'
-descriptor = "c decl names surface in src/jv_aux.c"
-cost_tokens = 256
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 230
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 372
-end = 372
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 431
-end = 431
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 554
-end = 554
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 566
-end = 566
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 600
-end = 600
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 675
-end = 675
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 711
-end = 711
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 726
-end = 726
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 754
-end = 754
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 147
-end = 147
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 373
-end = 373
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 432
-end = 432
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 505
-end = 505
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 555
-end = 555
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 567
-end = 567
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 601
-end = 601
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 676
-end = 676
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 712
-end = 712
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 727
-end = 727
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 755
-end = 755
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 132
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 80 })'
-descriptor = "c decl at src/jv_aux.c:80"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 133
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 146 })'
-descriptor = "c decl at src/jv_aux.c:146"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 147
-end = 147
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 230 })'
-descriptor = "c decl at src/jv_aux.c:230"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 230
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 372 })'
-descriptor = "c decl at src/jv_aux.c:372"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 372
-end = 372
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 373
-end = 373
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 136
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 431 })'
-descriptor = "c decl at src/jv_aux.c:431"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 431
-end = 431
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 432
-end = 432
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 137
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 504 })'
-descriptor = "c decl at src/jv_aux.c:504"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 505
-end = 505
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 138
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 554 })'
-descriptor = "c decl at src/jv_aux.c:554"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 554
-end = 554
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 555
-end = 555
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 139
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 566 })'
-descriptor = "c decl at src/jv_aux.c:566"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 566
-end = 566
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 567
-end = 567
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 140
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 600 })'
-descriptor = "c decl at src/jv_aux.c:600"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 600
-end = 600
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 601
-end = 601
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 141
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 711 })'
-descriptor = "c decl at src/jv_aux.c:711"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 711
-end = 711
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 712
-end = 712
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 726 })'
-descriptor = "c decl at src/jv_aux.c:726"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 726
-end = 726
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 727
-end = 727
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 143
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 754 })'
-descriptor = "c decl at src/jv_aux.c:754"
-cost_tokens = 0
-cum_tokens = 8623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 754
-end = 754
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 755
-end = 755
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 144
-key = 'C(Decl { file: "src/jv_aux.c", start_line: 675 })'
-descriptor = "c decl at src/jv_aux.c:675"
-cost_tokens = 31
-cum_tokens = 8654
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_aux.c"
-start = 675
-end = 679
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
 key = 'C(Decl { file: "src/exec_stack.h", start_line: 40 })'
 descriptor = "c decl at src/exec_stack.h:40"
 cost_tokens = 41
-cum_tokens = 8695
+cum_tokens = 8408
 
 [batches.content]
 kind = "lines"
@@ -4157,6 +3593,546 @@ kind = "lines"
 path = "src/exec_stack.h"
 start = 40
 end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'C(DeclNames { file: "src/jv_aux.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_aux.c"
+cost_tokens = 265
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 431
+end = 431
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 504
+end = 504
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 554
+end = 554
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 566
+end = 566
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 600
+end = 600
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 675
+end = 676
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 711
+end = 711
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 726
+end = 726
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 754
+end = 754
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 432
+end = 432
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 555
+end = 555
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 567
+end = 567
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 601
+end = 601
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 712
+end = 712
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 727
+end = 727
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 755
+end = 755
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 80 })'
+descriptor = "c decl at src/jv_aux.c:80"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 146 })'
+descriptor = "c decl at src/jv_aux.c:146"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 230 })'
+descriptor = "c decl at src/jv_aux.c:230"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 372 })'
+descriptor = "c decl at src/jv_aux.c:372"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 431 })'
+descriptor = "c decl at src/jv_aux.c:431"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 431
+end = 431
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 432
+end = 432
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 138
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 504 })'
+descriptor = "c decl at src/jv_aux.c:504"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 504
+end = 504
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 139
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 554 })'
+descriptor = "c decl at src/jv_aux.c:554"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 554
+end = 554
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 555
+end = 555
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 140
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 566 })'
+descriptor = "c decl at src/jv_aux.c:566"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 566
+end = 566
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 567
+end = 567
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 141
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 600 })'
+descriptor = "c decl at src/jv_aux.c:600"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 600
+end = 600
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 601
+end = 601
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 711 })'
+descriptor = "c decl at src/jv_aux.c:711"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 711
+end = 711
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 712
+end = 712
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 726 })'
+descriptor = "c decl at src/jv_aux.c:726"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 726
+end = 726
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 727
+end = 727
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 144
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 754 })'
+descriptor = "c decl at src/jv_aux.c:754"
+cost_tokens = 0
+cum_tokens = 8673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 754
+end = 754
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 755
+end = 755
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 145
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 675 })'
+descriptor = "c decl at src/jv_aux.c:675"
+cost_tokens = 22
+cum_tokens = 8695
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_aux.c"
+start = 675
+end = 679
 
 [batches.content.spans.render]
 kind = "full"

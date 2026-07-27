@@ -164,31 +164,26 @@ Score(3000)=0.546 I=0.730 C=0.408 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 8751 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.507 |
 | walker |  | 8819 | 68 | ARCHITECTURE.md section #11 |  |  | 0.507 |
 | walker |  | 8886 | 67 | ARCHITECTURE.md section #12 |  |  | 0.507 |
+| walker |  | 8916 | 30 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.507 |
 | ns | 9082 |  | 348 | examples/simple-python/demo.py (canonical exemplar: setup, create, insert, KNN) | 10.2 |  | 0.493 |
 | ns | 9211 |  | 129 | Per-language simple-* example directory contents | 10.3 |  | 0.482 |
+| walker |  | 9254 | 338 | README.md section #5 |  |  | 0.482 |
 | ns | 9269 |  | 58 | Non-simple example directories breadth | 10.4 |  | 0.479 |
-| walker |  | 9297 | 411 | c decl names surface #2 in sqlite-vec.c |  |  | 0.481 |
-| walker |  | 9297 | 0 | c decl at sqlite-vec.c:2280 |  |  | 0.481 |
-| walker |  | 9297 | 0 | c decl at sqlite-vec.c:2731 |  |  | 0.481 |
-| walker |  | 9308 | 11 | c decl at sqlite-vec.c:2267 |  |  | 0.481 |
-| walker |  | 9319 | 11 | c decl at sqlite-vec.c:2724 |  |  | 0.481 |
-| walker |  | 9335 | 16 | c decl at sqlite-vec.c:2430 |  |  | 0.482 |
-| walker |  | 9351 | 16 | c decl at sqlite-vec.c:2877 |  |  | 0.482 |
-| walker |  | 9365 | 14 | c decl at sqlite-vec.c:2641 |  |  | 0.482 |
-| walker |  | 9380 | 15 | c decl at sqlite-vec.c:2294 |  |  | 0.482 |
-| walker |  | 9413 | 33 | c decl at sqlite-vec.c:2250 |  |  | 0.484 |
-| walker |  | 9446 | 33 | c decl at sqlite-vec.c:2256 |  |  | 0.484 |
-| ns | 9458 |  | 189 | site/ tree listing (root, getting-started, guides, using, features) | 11.1 |  | 0.504 |
-| walker |  | 9483 | 37 | c decl at sqlite-vec.c:2261 |  |  | 0.507 |
-| ns | 9519 |  | 61 | site/getting-started/introduction.md | 11.2 |  | 0.504 |
-| walker |  | 9520 | 37 | c decl at sqlite-vec.c:2718 |  |  | 0.504 |
-| walker |  | 9560 | 40 | c decl at sqlite-vec.c:2635 |  |  | 0.504 |
-| walker |  | 9603 | 43 | c decl at sqlite-vec.c:2881 |  |  | 0.504 |
-| walker |  | 9641 | 38 | c decl at sqlite-vec.c:2171 |  |  | 0.504 |
-| ns | 9696 |  | 177 | site/getting-started/installation.md: package-manager commands | 11.3 |  | 0.497 |
-| walker |  | 9700 | 59 | c decl at sqlite-vec.c:2236 |  |  | 0.502 |
-| walker |  | 9761 | 61 | c decl at sqlite-vec.c:2242 |  |  | 0.511 |
-| walker |  | 9818 | 57 | c decl at sqlite-vec.c:2740 |  |  | 0.511 |
-| walker |  | 9892 | 74 | c decl at sqlite-vec.c:2435 |  |  | 0.515 |
-| ns | 9957 |  | 261 | site/versioning.md | 11.4 |  | 0.511 |
-| ns | 10015 |  | 58 | Dual license + security policy | 12.1 |  | 0.510 |
+| walker |  | 9328 | 74 | ARCHITECTURE.md section #15 |  |  | 0.479 |
+| walker |  | 9419 | 91 | c decl body at sqlite-vec.c:656 |  |  | 0.479 |
+| ns | 9458 |  | 189 | site/ tree listing (root, getting-started, guides, using, features) | 11.1 |  | 0.499 |
+| ns | 9519 |  | 61 | site/getting-started/introduction.md | 11.2 |  | 0.497 |
+| ns | 9696 |  | 177 | site/getting-started/installation.md: package-manager commands | 11.3 |  | 0.489 |
+| walker |  | 9880 | 461 | c decl names surface #2 in sqlite-vec.c |  |  | 0.493 |
+| walker |  | 9880 | 0 | c decl at sqlite-vec.c:2280 |  |  | 0.493 |
+| walker |  | 9880 | 0 | c decl at sqlite-vec.c:2731 |  |  | 0.493 |
+| walker |  | 9884 | 4 | c decl at sqlite-vec.c:2430 |  |  | 0.493 |
+| walker |  | 9888 | 4 | c decl at sqlite-vec.c:2877 |  |  | 0.493 |
+| walker |  | 9899 | 11 | c decl at sqlite-vec.c:2267 |  |  | 0.493 |
+| walker |  | 9910 | 11 | c decl at sqlite-vec.c:2724 |  |  | 0.493 |
+| walker |  | 9924 | 14 | c decl at sqlite-vec.c:2641 |  |  | 0.493 |
+| walker |  | 9939 | 15 | c decl at sqlite-vec.c:2294 |  |  | 0.493 |
+| ns | 9957 |  | 261 | site/versioning.md | 11.4 |  | 0.489 |
+| walker |  | 9963 | 24 | c decl at sqlite-vec.c:2261 |  |  | 0.491 |
+| walker |  | 9996 | 33 | c decl at sqlite-vec.c:2250 |  |  | 0.493 |
+| ns | 10015 |  | 58 | Dual license + security policy | 12.1 |  | 0.492 |

@@ -1,7 +1,7 @@
 fixture = "sqlite-vec"
 budget = 10000
-cumulative_tokens = 9892
-batch_count = 138
+cumulative_tokens = 9996
+batch_count = 133
 
 [[batches]]
 position = 1
@@ -3737,10 +3737,78 @@ kind = "full"
 
 [[batches]]
 position = 119
+key = 'Fs(DirListing { dir: "benchmarks/exhaustive-memory" })'
+descriptor = "listing of 'benchmarks/exhaustive-memory'"
+cost_tokens = 30
+cum_tokens = 8916
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmarks/exhaustive-memory"
+entries = [".gitignore", "Makefile", "README.md", "bench.py", "gist.suite", "requirements.txt", "sift.suite"]
+
+[[batches]]
+position = 120
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 338
+cum_tokens = 9254
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 129
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "ARCHITECTURE.md section #15"
+cost_tokens = 74
+cum_tokens = 9328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 102
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'C(DeclBody { file: "sqlite-vec.c", start_line: 656 })'
+descriptor = "c decl body at sqlite-vec.c:656"
+cost_tokens = 91
+cum_tokens = 9419
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 657
+end = 665
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
 key = 'C(DeclNames { file: "sqlite-vec.c", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in sqlite-vec.c"
-cost_tokens = 411
-cum_tokens = 9297
+cost_tokens = 461
+cum_tokens = 9880
 
 [batches.content]
 kind = "lines"
@@ -3788,7 +3856,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "sqlite-vec.c"
 start = 2261
-end = 2261
+end = 2262
 
 [batches.content.spans.render]
 kind = "full"
@@ -3820,7 +3888,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "sqlite-vec.c"
 start = 2429
-end = 2430
+end = 2431
 
 [batches.content.spans.render]
 kind = "full"
@@ -3828,7 +3896,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "sqlite-vec.c"
 start = 2434
-end = 2435
+end = 2436
 
 [batches.content.spans.render]
 kind = "full"
@@ -3892,7 +3960,7 @@ kind = "full"
 [[batches.content.spans]]
 path = "sqlite-vec.c"
 start = 2876
-end = 2877
+end = 2878
 
 [batches.content.spans.render]
 kind = "full"
@@ -3947,14 +4015,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "sqlite-vec.c"
-start = 2262
-end = 2262
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
 start = 2268
 end = 2268
 
@@ -3973,22 +4033,6 @@ kind = "ellipsis"
 path = "sqlite-vec.c"
 start = 2295
 end = 2295
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2431
-end = 2431
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2436
-end = 2436
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -4051,14 +4095,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "sqlite-vec.c"
-start = 2878
-end = 2878
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
 start = 2882
 end = 2882
 
@@ -4066,11 +4102,11 @@ end = 2882
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 124
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2280 })'
 descriptor = "c decl at sqlite-vec.c:2280"
 cost_tokens = 0
-cum_tokens = 9297
+cum_tokens = 9880
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4128,11 @@ end = 2281
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 125
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2731 })'
 descriptor = "c decl at sqlite-vec.c:2731"
 cost_tokens = 0
-cum_tokens = 9297
+cum_tokens = 9880
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +4154,47 @@ end = 2732
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 126
+key = 'C(Decl { file: "sqlite-vec.c", start_line: 2430 })'
+descriptor = "c decl at sqlite-vec.c:2430"
+cost_tokens = 4
+cum_tokens = 9884
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2430
+end = 2432
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'C(Decl { file: "sqlite-vec.c", start_line: 2877 })'
+descriptor = "c decl at sqlite-vec.c:2877"
+cost_tokens = 4
+cum_tokens = 9888
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2877
+end = 2879
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2267 })'
 descriptor = "c decl at sqlite-vec.c:2267"
 cost_tokens = 11
-cum_tokens = 9308
+cum_tokens = 9899
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +4216,11 @@ end = 2269
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 129
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2724 })'
 descriptor = "c decl at sqlite-vec.c:2724"
 cost_tokens = 11
-cum_tokens = 9319
+cum_tokens = 9910
 
 [batches.content]
 kind = "lines"
@@ -4170,47 +4242,11 @@ end = 2726
 kind = "ellipsis"
 
 [[batches]]
-position = 124
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2430 })'
-descriptor = "c decl at sqlite-vec.c:2430"
-cost_tokens = 16
-cum_tokens = 9335
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2430
-end = 2432
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2877 })'
-descriptor = "c decl at sqlite-vec.c:2877"
-cost_tokens = 16
-cum_tokens = 9351
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2877
-end = 2879
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
+position = 130
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2641 })'
 descriptor = "c decl at sqlite-vec.c:2641"
 cost_tokens = 14
-cum_tokens = 9365
+cum_tokens = 9924
 
 [batches.content]
 kind = "lines"
@@ -4232,11 +4268,11 @@ end = 2643
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 131
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2294 })'
 descriptor = "c decl at sqlite-vec.c:2294"
 cost_tokens = 15
-cum_tokens = 9380
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -4258,47 +4294,11 @@ end = 2296
 kind = "ellipsis"
 
 [[batches]]
-position = 128
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2250 })'
-descriptor = "c decl at sqlite-vec.c:2250"
-cost_tokens = 33
-cum_tokens = 9413
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2250
-end = 2254
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2256 })'
-descriptor = "c decl at sqlite-vec.c:2256"
-cost_tokens = 33
-cum_tokens = 9446
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2256
-end = 2260
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
+position = 132
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2261 })'
 descriptor = "c decl at sqlite-vec.c:2261"
-cost_tokens = 37
-cum_tokens = 9483
+cost_tokens = 24
+cum_tokens = 9963
 
 [batches.content]
 kind = "lines"
@@ -4312,161 +4312,19 @@ end = 2265
 kind = "full"
 
 [[batches]]
-position = 131
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2718 })'
-descriptor = "c decl at sqlite-vec.c:2718"
-cost_tokens = 37
-cum_tokens = 9520
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2718
-end = 2722
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2635 })'
-descriptor = "c decl at sqlite-vec.c:2635"
-cost_tokens = 40
-cum_tokens = 9560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2635
-end = 2639
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 133
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2881 })'
-descriptor = "c decl at sqlite-vec.c:2881"
-cost_tokens = 43
-cum_tokens = 9603
+key = 'C(Decl { file: "sqlite-vec.c", start_line: 2250 })'
+descriptor = "c decl at sqlite-vec.c:2250"
+cost_tokens = 33
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "sqlite-vec.c"
-start = 2881
-end = 2884
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2171 })'
-descriptor = "c decl at sqlite-vec.c:2171"
-cost_tokens = 38
-cum_tokens = 9641
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2171
-end = 2174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2175
-end = 2175
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2236 })'
-descriptor = "c decl at sqlite-vec.c:2236"
-cost_tokens = 59
-cum_tokens = 9700
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2236
-end = 2240
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2242 })'
-descriptor = "c decl at sqlite-vec.c:2242"
-cost_tokens = 61
-cum_tokens = 9761
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2242
-end = 2248
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2740 })'
-descriptor = "c decl at sqlite-vec.c:2740"
-cost_tokens = 57
-cum_tokens = 9818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2740
-end = 2744
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2745
-end = 2745
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 138
-key = 'C(Decl { file: "sqlite-vec.c", start_line: 2435 })'
-descriptor = "c decl at sqlite-vec.c:2435"
-cost_tokens = 74
-cum_tokens = 9892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.c"
-start = 2435
-end = 2442
+start = 2250
+end = 2254
 
 [batches.content.spans.render]
 kind = "full"
