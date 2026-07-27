@@ -36,21 +36,21 @@ Score(3000)=0.703 I=0.905 C=0.545 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | ns | 859 |  | 19 | CI workflow listing | 1.11 |  | 0.453 |
 | walker |  | 874 | 88 | python imports in htmy/md/__init__.py |  |  | 0.453 |
 | ns | 910 |  | 51 | CI: tests workflow -- actual test invocation | 1.12 |  | 0.436 |
-| walker |  | 911 | 37 | manifest config in pyproject.toml |  |  | 0.436 |
-| ns | 1012 |  | 102 | htmy/ package listing (incl. md/ and renderer/ subpackages) | 1.13 |  | 0.551 |
-| walker |  | 1019 | 108 | python imports #9 in htmy/__init__.py |  |  | 0.553 |
-| walker |  | 1044 | 25 | listing of 'examples' |  |  | 0.553 |
-| walker |  | 1100 | 56 | headings outline in docs/components-guide.md |  |  | 0.553 |
-| walker |  | 1100 | 0 | docs/components-guide.md section #0 |  |  | 0.553 |
-| walker |  | 1195 | 95 | [dependencies] in pyproject.toml |  |  | 0.571 |
-| walker |  | 1254 | 59 | headings outline in docs/function-components.md |  |  | 0.572 |
-| walker |  | 1267 | 13 | listing of 'examples/internationalization' |  |  | 0.572 |
-| walker |  | 1280 | 13 | listing of 'examples/markdown_customization' |  |  | 0.572 |
-| walker |  | 1293 | 13 | listing of 'examples/markdown_essentials' |  |  | 0.573 |
+| walker |  | 982 | 108 | python imports #9 in htmy/__init__.py |  |  | 0.438 |
+| walker |  | 1007 | 25 | listing of 'examples' |  |  | 0.438 |
+| ns | 1012 |  | 102 | htmy/ package listing (incl. md/ and renderer/ subpackages) | 1.13 |  | 0.553 |
+| walker |  | 1063 | 56 | headings outline in docs/components-guide.md |  |  | 0.553 |
+| walker |  | 1063 | 0 | docs/components-guide.md section #0 |  |  | 0.553 |
+| walker |  | 1160 | 97 | [dependencies] in pyproject.toml |  |  | 0.571 |
+| walker |  | 1219 | 59 | headings outline in docs/function-components.md |  |  | 0.572 |
+| walker |  | 1232 | 13 | listing of 'examples/internationalization' |  |  | 0.572 |
+| walker |  | 1245 | 13 | listing of 'examples/markdown_customization' |  |  | 0.572 |
+| walker |  | 1258 | 13 | listing of 'examples/markdown_essentials' |  |  | 0.573 |
 | ns | 1350 |  | 338 | htmy/__init__.py -- public export surface, part 1 | 1.14 |  | 0.586 |
-| walker |  | 1519 | 226 | python imports #8 in htmy/__init__.py |  |  | 0.638 |
-| walker |  | 1588 | 69 | [package] in pyproject.toml |  |  | 0.677 |
-| walker |  | 1617 | 29 | package metadata in pyproject.toml |  |  | 0.688 |
+| walker |  | 1484 | 226 | python imports #8 in htmy/__init__.py |  |  | 0.638 |
+| walker |  | 1553 | 69 | [package] in pyproject.toml |  |  | 0.677 |
+| walker |  | 1582 | 29 | package metadata in pyproject.toml |  |  | 0.688 |
+| walker |  | 1617 | 35 | manifest config in pyproject.toml |  |  | 0.688 |
 | ns | 1668 |  | 318 | htmy/__init__.py -- public export surface, part 2 | 1.15 | 1.14 | 0.702 |
 | walker |  | 1829 | 212 | headings outline in README.md |  |  | 0.829 |
 | walker |  | 1840 | 11 | README.md section #14 |  |  | 0.830 |

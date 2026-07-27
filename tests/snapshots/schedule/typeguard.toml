@@ -141,28 +141,10 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
-descriptor = "tool.mypy config in pyproject.toml"
-cost_tokens = 48
-cum_tokens = 715
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 99
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 28
-cum_tokens = 743
+cum_tokens = 695
 
 [batches.content]
 kind = "fs"
@@ -172,11 +154,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "SECURITY.md", "dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 11
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 7
-cum_tokens = 750
+cum_tokens = 702
 
 [batches.content]
 kind = "fs"
@@ -186,11 +168,11 @@ parent = ".github/workflows"
 entries = ["publish.yml", "test.yml"]
 
 [[batches]]
-position = 12
+position = 11
 key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
 descriptor = "YAML config at .github/workflows/test.yml"
 cost_tokens = 475
-cum_tokens = 1225
+cum_tokens = 1177
 
 [batches.content]
 kind = "lines"
@@ -204,11 +186,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 70
-cum_tokens = 1295
+cum_tokens = 1247
 
 [batches.content]
 kind = "lines"
@@ -238,11 +220,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 35
-cum_tokens = 1330
+cum_tokens = 1282
 
 [batches.content]
 kind = "lines"
@@ -259,6 +241,24 @@ kind = "full"
 path = "pyproject.toml"
 start = 31
 end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
+descriptor = "tool.mypy config in pyproject.toml"
+cost_tokens = 48
+cum_tokens = 1330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 99
+end = 103
 
 [batches.content.spans.render]
 kind = "full"

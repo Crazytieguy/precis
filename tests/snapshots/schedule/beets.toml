@@ -803,46 +803,10 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'Toml(Config { file: "pyproject.toml" })'
-descriptor = "manifest config in pyproject.toml"
-cost_tokens = 41
-cum_tokens = 1366
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 187
-end = 189
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "pipx-install" })'
-descriptor = "tool.pipx-install config in pyproject.toml"
-cost_tokens = 41
-cum_tokens = 1407
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 191
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
 key = 'Python(ImportChunk { file: "beets/util/__init__.py", chunk_index: 8 })'
 descriptor = "python imports #8 in beets/util/__init__.py"
 cost_tokens = 8
-cum_tokens = 1415
+cum_tokens = 1333
 
 [batches.content]
 kind = "lines"
@@ -856,11 +820,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 49
+position = 47
 key = 'Python(DeclBody { file: "beets/library/__init__.py", start_line: 15, body_start_line: 16 })'
 descriptor = "python decl body at beets/library/__init__.py:15 body 16"
 cost_tokens = 21
-cum_tokens = 1436
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -874,11 +838,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 50
+position = 48
 key = 'Python(ImportChunk { file: "beets/util/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in beets/util/__init__.py"
 cost_tokens = 7
-cum_tokens = 1443
+cum_tokens = 1361
 
 [batches.content]
 kind = "lines"
@@ -892,11 +856,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 51
+position = 49
 key = 'Python(DeclDoc { file: "beets/__init__.py", start_line: 35 })'
 descriptor = "python decl doc at beets/__init__.py:35"
 cost_tokens = 40
-cum_tokens = 1483
+cum_tokens = 1401
 
 [batches.content]
 kind = "lines"
@@ -910,11 +874,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 52
+position = 50
 key = 'Python(Imports { file: "beets/library/__init__.py" })'
 descriptor = "python imports in beets/library/__init__.py"
 cost_tokens = 172
-cum_tokens = 1655
+cum_tokens = 1573
 
 [batches.content]
 kind = "lines"
@@ -936,11 +900,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 53
+position = 51
 key = 'Python(ImportChunk { file: "beets/util/__init__.py", chunk_index: 10 })'
 descriptor = "python imports #10 in beets/util/__init__.py"
 cost_tokens = 7
-cum_tokens = 1662
+cum_tokens = 1580
 
 [batches.content]
 kind = "lines"
@@ -954,29 +918,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 54
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "docstrfmt" })'
-descriptor = "tool.docstrfmt config in pyproject.toml"
-cost_tokens = 69
-cum_tokens = 1731
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 296
-end = 302
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
+position = 52
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 69
-cum_tokens = 1800
+cum_tokens = 1649
 
 [batches.content]
 kind = "lines"
@@ -993,6 +939,60 @@ kind = "full"
 path = "pyproject.toml"
 start = 7
 end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 41
+cum_tokens = 1690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 187
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "pipx-install" })'
+descriptor = "tool.pipx-install config in pyproject.toml"
+cost_tokens = 41
+cum_tokens = 1731
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 191
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "docstrfmt" })'
+descriptor = "tool.docstrfmt config in pyproject.toml"
+cost_tokens = 69
+cum_tokens = 1800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 296
+end = 302
 
 [batches.content.spans.render]
 kind = "full"

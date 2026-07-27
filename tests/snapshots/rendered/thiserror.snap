@@ -103,23 +103,21 @@ build/
 build.rs …
 impl/
     Cargo.toml
+           1→[package]
+           2→name = "thiserror-impl"
+           3→version = "2.0.18"
+           4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+           5→description = "Implementation detail of the `thiserror` crate"
+           6→edition = "2021"
+           7→license = "MIT OR Apache-2.0"
+           8→repository = "https://github.com/dtolnay/thiserror"
+           9→rust-version = "1.71"
         …
-          11→[lib]
-          12→proc-macro = true
           14→[dependencies]
           15→proc-macro2 = "1.0.74"
           16→quote = "1.0.35"
           17→syn = "2.0.87"
-          19→[package.metadata.docs.rs]
-          20→targets = ["x86_64-unknown-linux-gnu"]
-          21→rustdoc-args = [
-          22→    "--generate-link-to-definition",
-          23→    "--generate-macro-expansion",
-          24→    "--extern-html-root-url=core=https://doc.rust-lang.org",
-          25→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
-          26→    "--extern-html-root-url=std=https://doc.rust-lang.org",
-          27→    "--extern-html-root-url=proc_macro=https://doc.rust-lang.org",
-          28→]
+        …
     LICENSE-APACHE …
     LICENSE-MIT …
     src/

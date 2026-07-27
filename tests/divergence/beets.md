@@ -64,17 +64,17 @@ Score(3000)=0.632 I=0.820 C=0.487 ns_rows≤3K=20/51 (reached=13 partial=1 missi
 | walker |  | 1318 | 0 | python method at beets/__init__.py:40 |  |  | 0.704 |
 | ns | 1322 |  | 55 | beetsplug/_utils, web/, bpd/ sub-listings | 1.17 |  | 0.683 |
 | walker |  | 1325 | 7 | python imports #7 in beets/util/__init__.py |  |  | 0.683 |
-| walker |  | 1366 | 41 | manifest config in pyproject.toml |  |  | 0.700 |
-| walker |  | 1407 | 41 | tool.pipx-install config in pyproject.toml |  |  | 0.700 |
-| walker |  | 1415 | 8 | python imports #8 in beets/util/__init__.py |  |  | 0.700 |
-| walker |  | 1436 | 21 | python decl body at beets/library/__init__.py:15 body 16 |  |  | 0.700 |
-| walker |  | 1443 | 7 | python imports #9 in beets/util/__init__.py |  |  | 0.700 |
-| walker |  | 1483 | 40 | python decl doc at beets/__init__.py:35 |  |  | 0.700 |
-| walker |  | 1655 | 172 | python imports in beets/library/__init__.py |  |  | 0.700 |
-| walker |  | 1662 | 7 | python imports #10 in beets/util/__init__.py |  |  | 0.700 |
-| ns | 1708 |  | 386 | beetsplug/ full plugin-file listing | 1.18 |  | 0.581 |
-| walker |  | 1731 | 69 | tool.docstrfmt config in pyproject.toml |  |  | 0.581 |
-| walker |  | 1800 | 69 | [package] in pyproject.toml |  |  | 0.587 |
+| walker |  | 1333 | 8 | python imports #8 in beets/util/__init__.py |  |  | 0.683 |
+| walker |  | 1354 | 21 | python decl body at beets/library/__init__.py:15 body 16 |  |  | 0.683 |
+| walker |  | 1361 | 7 | python imports #9 in beets/util/__init__.py |  |  | 0.683 |
+| walker |  | 1401 | 40 | python decl doc at beets/__init__.py:35 |  |  | 0.683 |
+| walker |  | 1573 | 172 | python imports in beets/library/__init__.py |  |  | 0.683 |
+| walker |  | 1580 | 7 | python imports #10 in beets/util/__init__.py |  |  | 0.683 |
+| walker |  | 1649 | 69 | [package] in pyproject.toml |  |  | 0.690 |
+| walker |  | 1690 | 41 | manifest config in pyproject.toml |  |  | 0.707 |
+| ns | 1708 |  | 386 | beetsplug/ full plugin-file listing | 1.18 |  | 0.587 |
+| walker |  | 1731 | 41 | tool.pipx-install config in pyproject.toml |  |  | 0.587 |
+| walker |  | 1800 | 69 | tool.docstrfmt config in pyproject.toml |  |  | 0.587 |
 | walker |  | 1814 | 14 | listing of 'beets/test' |  |  | 0.587 |
 | walker |  | 1821 | 7 | python imports #11 in beets/util/__init__.py |  |  | 0.587 |
 | walker |  | 1902 | 81 | package metadata in pyproject.toml |  |  | 0.607 |

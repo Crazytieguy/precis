@@ -1,4 +1,4 @@
-Score(3000)=0.671 I=0.877 C=0.513 ns_rows≤3K=21/45 (reached=12 partial=2 missing=7)
+Score(3000)=0.683 I=0.885 C=0.528 ns_rows≤3K=21/45 (reached=12 partial=2 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,18 +55,18 @@ Score(3000)=0.671 I=0.877 C=0.513 ns_rows≤3K=21/45 (reached=12 partial=2 missi
 | walker |  | 2293 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.723 |
 | walker |  | 2311 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.723 |
 | walker |  | 2352 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.723 |
+| walker |  | 2396 | 44 | pub-item names surface in src/provide.rs |  |  | 0.723 |
+| walker |  | 2441 | 45 | pub-item names surface in src/display.rs |  |  | 0.723 |
 | ns | 2455 |  | 184 | #[error(transparent)] rule + 'anything else' variant example | 2.5 |  | 0.695 |
-| walker |  | 2513 | 161 | manifest config in impl/Cargo.toml |  |  | 0.705 |
-| walker |  | 2557 | 44 | pub-item names surface in src/provide.rs |  |  | 0.705 |
-| walker |  | 2602 | 45 | pub-item names surface in src/display.rs |  |  | 0.705 |
-| walker |  | 2648 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.705 |
-| walker |  | 2656 | 8 | listing of 'tests/no-std' |  |  | 0.722 |
-| walker |  | 2700 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.722 |
-| walker |  | 2700 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.722 |
-| walker |  | 2700 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.722 |
-| ns | 2916 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.654 |
-| walker |  | 2959 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.671 |
-| walker |  | 3079 | 120 | [package] in impl/Cargo.toml |  |  | 0.692 |
+| walker |  | 2487 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.695 |
+| walker |  | 2495 | 8 | listing of 'tests/no-std' |  |  | 0.712 |
+| walker |  | 2539 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.712 |
+| walker |  | 2539 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.712 |
+| walker |  | 2539 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.712 |
+| walker |  | 2798 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.730 |
+| ns | 2916 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.661 |
+| walker |  | 2920 | 122 | [package] in impl/Cargo.toml |  |  | 0.683 |
+| walker |  | 3079 | 159 | manifest config in impl/Cargo.toml |  |  | 0.692 |
 | ns | 3083 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.670 |
 | walker |  | 3138 | 59 | README.md section #11 |  |  | 0.670 |
 | walker |  | 3223 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.670 |

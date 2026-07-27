@@ -28,11 +28,11 @@ Score(3000)=0.762 I=0.902 C=0.644 ns_rows≤3K=16/40 (reached=8 partial=1 missin
 | walker |  | 1267 | 3 | listing of '.github/workflows' |  |  | 0.735 |
 | walker |  | 1280 | 13 | listing of 'scripts' |  |  | 0.756 |
 | walker |  | 1306 | 26 | downstream/README.md section #0 |  |  | 0.756 |
-| walker |  | 1349 | 43 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.756 |
-| walker |  | 1391 | 42 | dev/build/target dependencies in pyproject.toml |  |  | 0.756 |
-| walker |  | 1440 | 49 | tool.setuptools config in pyproject.toml |  |  | 0.756 |
+| walker |  | 1350 | 44 | dev/build/target dependencies in pyproject.toml |  |  | 0.756 |
+| walker |  | 1401 | 51 | [package] in pyproject.toml |  |  | 0.756 |
+| walker |  | 1442 | 41 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.756 |
 | ns | 1454 |  | 208 | README definitive example, part 2: manager wiring + call + real output | 1.9 | 1.8 | 0.765 |
-| walker |  | 1491 | 51 | [package] in pyproject.toml |  |  | 0.765 |
+| walker |  | 1491 | 49 | tool.setuptools config in pyproject.toml |  |  | 0.765 |
 | ns | 1506 |  | 52 | _callers.py: every def location (signatures only) | 2.1 |  | 0.755 |
 | walker |  | 1554 | 63 | manifest config in pyproject.toml |  |  | 0.755 |
 | walker |  | 1570 | 16 | listing of 'docs/examples' |  |  | 0.780 |

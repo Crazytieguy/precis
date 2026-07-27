@@ -17,15 +17,15 @@ Score(3000)=0.759 I=0.910 C=0.632 ns_rows≤3K=16/45 (reached=11 partial=2 missi
 | walker |  | 612 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.592 |
 | ns | 646 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.529 |
 | walker |  | 667 | 55 | [dependencies] in pyproject.toml |  |  | 0.551 |
-| walker |  | 715 | 48 | tool.mypy config in pyproject.toml |  |  | 0.552 |
-| walker |  | 743 | 28 | listing of '.github' |  |  | 0.576 |
-| walker |  | 750 | 7 | listing of '.github/workflows' |  |  | 0.594 |
-| ns | 844 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.631 |
-| ns | 1138 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.624 |
-| walker |  | 1225 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.634 |
-| walker |  | 1295 | 70 | [package] in pyproject.toml |  |  | 0.687 |
-| ns | 1302 |  | 164 | typeguard/__init__.py: config attr + plugin autoload | 3.3 | 3.2 | 0.635 |
-| walker |  | 1330 | 35 | package metadata in pyproject.toml |  |  | 0.650 |
+| walker |  | 695 | 28 | listing of '.github' |  |  | 0.575 |
+| walker |  | 702 | 7 | listing of '.github/workflows' |  |  | 0.593 |
+| ns | 844 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.630 |
+| ns | 1138 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.623 |
+| walker |  | 1177 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.633 |
+| walker |  | 1247 | 70 | [package] in pyproject.toml |  |  | 0.686 |
+| walker |  | 1282 | 35 | package metadata in pyproject.toml |  |  | 0.701 |
+| ns | 1302 |  | 164 | typeguard/__init__.py: config attr + plugin autoload | 3.3 | 3.2 | 0.649 |
+| walker |  | 1330 | 48 | tool.mypy config in pyproject.toml |  |  | 0.650 |
 | ns | 1358 |  | 56 | pytest config (pyproject.toml) | 4.1 |  | 0.635 |
 | ns | 1566 |  | 208 | ruff lint config (pyproject.toml) | 4.2 |  | 0.586 |
 | ns | 1664 |  | 98 | mypy + tox config (pyproject.toml) | 4.3 |  | 0.577 |

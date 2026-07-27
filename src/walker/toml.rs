@@ -19,9 +19,11 @@
 //!   735 `[dependency-groups]`; predecessor: `Dependencies` on the same
 //!   file when that manifest has a runtime roster
 //! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
-//!   with adjacent small tables packed into compact families
+//!   with adjacent small tables packed into compact families; predecessor:
+//!   `Identity` on the same file when it has one
 //! - `Config { file }` — every other table of a manifest, whatever it is
-//!   named: build systems, targets, profiles, lints, patches, packaging
+//!   named: build systems, targets, profiles, lints, patches, packaging;
+//!   predecessor: `Identity` on the same file when it has one
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
@@ -74,6 +76,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             Vec::new()
         };
         let identity_residue = python_identity_non_lede_rows(&source, &sections);
+        let mut identity: Option<BatchKey> = None;
         if let Some(content) = build_section_content(
             &file,
             &source,
@@ -84,6 +87,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             },
             &identity_residue,
         ) {
+            identity = Some(TomlKey::Identity { file: file.clone() }.into());
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
                 predecessor: None,
@@ -168,6 +172,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: development_dependencies_value(&file, ctx),
             });
         }
+        // The config appendix of a manifest gates behind that manifest's
+        // identity block: linter settings and build-backend tables are
+        // qualifiers on a package the reader has not been told the name of
+        // yet. The load-bearing sections (scripts, features, dependency
+        // rosters) stay ungated — they answer what the project is on their
+        // own, and gating them costs more than it buys.
         for (tool, content) in
             build_tool_config_contents(&file, &source, &sections, python_project_manifest)
         {
@@ -177,7 +187,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     tool,
                 }
                 .into(),
-                predecessor: None,
+                predecessor: identity.clone(),
                 content,
                 value: config_value(&file, ctx),
             });
@@ -187,7 +197,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         {
             out.push(Batch {
                 key: TomlKey::Config { file: file.clone() }.into(),
-                predecessor: None,
+                predecessor: identity.clone(),
                 content,
                 value: config_value(&file, ctx),
             });
@@ -1669,6 +1679,47 @@ pytest = "*"
                 })
                 .expect("development dependencies batch");
             assert_eq!(dev.predecessor, expected, "{rel}");
+        }
+    }
+
+    /// A manifest's config appendix is a qualifier on the package the
+    /// identity block names, so it waits for it. A manifest that declares
+    /// no identity table at all — a bare `[build-system]` pyproject — has
+    /// nothing to wait for and stays ungated.
+    #[test]
+    fn walker_toml_config_appendix_gates_behind_identity() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::write(
+            root.join("Cargo.toml"),
+            "[package]\nname='demo'\nversion='0.1.0'\n[profile.release]\nlto=true\n",
+        )
+        .unwrap();
+        fs::write(
+            root.join("pyproject.toml"),
+            "[build-system]\nrequires = ['setuptools']\nbuild-backend = 'setuptools.build_meta'\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        for (rel, expected) in [
+            (
+                "Cargo.toml",
+                Some(BatchKey::Toml(TomlKey::Identity {
+                    file: root.join("Cargo.toml"),
+                })),
+            ),
+            ("pyproject.toml", None),
+        ] {
+            let file = root.join(rel);
+            let config = batches
+                .iter()
+                .find(
+                    |b| matches!(&b.key, BatchKey::Toml(TomlKey::Config { file: f }) if *f == file),
+                )
+                .expect("config batch");
+            assert_eq!(config.predecessor, expected, "{rel}");
         }
     }
 

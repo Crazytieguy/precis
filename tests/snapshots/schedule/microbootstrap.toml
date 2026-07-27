@@ -297,28 +297,10 @@ entries = ["__init__.py", "base.py", "cors_instrument.py", "health_checks_instru
 
 [[batches]]
 position = 19
-key = 'Toml(Config { file: "pyproject.toml" })'
-descriptor = "manifest config in pyproject.toml"
-cost_tokens = 34
-cum_tokens = 745
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 93
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 17
-cum_tokens = 762
+cum_tokens = 728
 
 [batches.content]
 kind = "fs"
@@ -328,11 +310,11 @@ parent = "examples"
 entries = ["fastapi_app.py", "faststream_app.py", "litestar_app.py"]
 
 [[batches]]
-position = 21
+position = 20
 key = 'Plaintext(DeclSurface { file: "Justfile" })'
 descriptor = "declaration surface of Justfile"
 cost_tokens = 71
-cum_tokens = 833
+cum_tokens = 799
 
 [batches.content]
 kind = "lines"
@@ -386,11 +368,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 259
-cum_tokens = 1092
+cum_tokens = 1058
 
 [batches.content]
 kind = "lines"
@@ -412,11 +394,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Markdown(Prelude { file: "README.md" })'
 descriptor = "README prelude in README.md"
 cost_tokens = 375
-cum_tokens = 1467
+cum_tokens = 1433
 
 [batches.content]
 kind = "lines"
@@ -430,47 +412,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 24
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "coverage+pytest" })'
-descriptor = "tool.coverage+pytest config in pyproject.toml"
-cost_tokens = 84
-cum_tokens = 1551
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 142
-end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "uv+mypy" })'
-descriptor = "tool.uv+mypy config in pyproject.toml"
-cost_tokens = 109
-cum_tokens = 1660
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 97
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
+position = 23
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 46
-cum_tokens = 1706
+cum_tokens = 1479
 
 [batches.content]
 kind = "fs"
@@ -480,11 +426,11 @@ parent = "tests"
 entries = ["__init__.py", "bootstrappers", "conftest.py", "instruments", "test_granian_server.py", "test_helpers.py", "test_instruments_setupper.py", "test_settings.py"]
 
 [[batches]]
-position = 27
+position = 24
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 240
-cum_tokens = 1946
+cum_tokens = 1719
 
 [batches.content]
 kind = "lines"
@@ -826,11 +772,11 @@ end = 747
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 15
-cum_tokens = 1961
+cum_tokens = 1734
 
 [batches.content]
 kind = "lines"
@@ -844,11 +790,11 @@ end = 461
 kind = "full"
 
 [[batches]]
-position = 29
+position = 26
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
-cost_tokens = 70
-cum_tokens = 2031
+cost_tokens = 72
+cum_tokens = 1806
 
 [batches.content]
 kind = "lines"
@@ -870,11 +816,47 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 30
+position = 27
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 32
+cum_tokens = 1838
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 93
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "coverage+pytest" })'
+descriptor = "tool.coverage+pytest config in pyproject.toml"
+cost_tokens = 84
+cum_tokens = 1922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 142
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 99
-cum_tokens = 2130
+cum_tokens = 2021
 
 [batches.content]
 kind = "lines"
@@ -891,6 +873,24 @@ kind = "full"
 path = "pyproject.toml"
 start = 60
 end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "uv+mypy" })'
+descriptor = "tool.uv+mypy config in pyproject.toml"
+cost_tokens = 109
+cum_tokens = 2130
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 97
+end = 107
 
 [batches.content.spans.render]
 kind = "full"

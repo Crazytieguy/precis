@@ -26,24 +26,24 @@ Score(3000)=0.633 I=0.843 C=0.475 ns_rows≤3K=15/45 (reached=9 partial=0 missin
 | walker |  | 592 | 63 | python imports #5 in microbootstrap/__init__.py |  |  | 0.562 |
 | walker |  | 642 | 50 | python imports #9 in microbootstrap/__init__.py |  |  | 0.565 |
 | walker |  | 711 | 69 | listing of 'microbootstrap/instruments' |  |  | 0.697 |
-| walker |  | 745 | 34 | manifest config in pyproject.toml |  |  | 0.697 |
-| walker |  | 762 | 17 | listing of 'examples' |  |  | 0.697 |
+| walker |  | 728 | 17 | listing of 'examples' |  |  | 0.697 |
 | ns | 774 |  | 216 | README lede + minimal usage sketch | 1.8 |  | 0.606 |
+| walker |  | 799 | 71 | declaration surface of Justfile |  |  | 0.606 |
 | ns | 810 |  | 36 | pyproject.toml: project identity | 1.9 |  | 0.596 |
-| walker |  | 833 | 71 | declaration surface of Justfile |  |  | 0.596 |
-| walker |  | 1092 | 259 | README headline in README.md |  |  | 0.598 |
+| walker |  | 1058 | 259 | README headline in README.md |  |  | 0.598 |
 | ns | 1147 |  | 337 | instruments/base.py: BaseInstrumentConfig + Instrument fields | 2.1 |  | 0.513 |
-| ns | 1449 |  | 302 | instruments/base.py: Instrument lifecycle methods | 2.2 |  | 0.463 |
-| walker |  | 1467 | 375 | README prelude in README.md |  |  | 0.662 |
-| walker |  | 1551 | 84 | tool.coverage+pytest config in pyproject.toml |  |  | 0.662 |
-| walker |  | 1660 | 109 | tool.uv+mypy config in pyproject.toml |  |  | 0.662 |
-| walker |  | 1706 | 46 | listing of 'tests' |  |  | 0.676 |
+| walker |  | 1433 | 375 | README prelude in README.md |  |  | 0.734 |
+| ns | 1449 |  | 302 | instruments/base.py: Instrument lifecycle methods | 2.2 |  | 0.662 |
+| walker |  | 1479 | 46 | listing of 'tests' |  |  | 0.676 |
+| walker |  | 1719 | 240 | headings outline in README.md |  |  | 0.676 |
 | ns | 1728 |  | 279 | microbootstrap/__init__.py: imports | 2.3 |  | 0.705 |
-| ns | 1926 |  | 198 | microbootstrap/__init__.py: __all__ surface | 2.4 |  | 0.723 |
-| walker |  | 1946 | 240 | headings outline in README.md |  |  | 0.723 |
-| walker |  | 1961 | 15 | README.md section #22 |  |  | 0.723 |
-| walker |  | 2031 | 70 | [package] in pyproject.toml |  |  | 0.733 |
-| walker |  | 2130 | 99 | package metadata in pyproject.toml |  |  | 0.733 |
+| walker |  | 1734 | 15 | README.md section #22 |  |  | 0.705 |
+| walker |  | 1806 | 72 | [package] in pyproject.toml |  |  | 0.717 |
+| walker |  | 1838 | 32 | manifest config in pyproject.toml |  |  | 0.717 |
+| walker |  | 1922 | 84 | tool.coverage+pytest config in pyproject.toml |  |  | 0.717 |
+| ns | 1926 |  | 198 | microbootstrap/__init__.py: __all__ surface | 2.4 |  | 0.733 |
+| walker |  | 2021 | 99 | package metadata in pyproject.toml |  |  | 0.733 |
+| walker |  | 2130 | 109 | tool.uv+mypy config in pyproject.toml |  |  | 0.733 |
 | walker |  | 2183 | 53 | README.md section #33 |  |  | 0.733 |
 | ns | 2201 |  | 275 | bootstrappers/base.py: ApplicationBootstrapper.bootstrap() | 2.5 |  | 0.686 |
 | walker |  | 2218 | 35 | listing of 'tests/bootstrappers' |  |  | 0.703 |

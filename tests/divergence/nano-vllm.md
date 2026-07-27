@@ -29,10 +29,10 @@ Score(3000)=0.675 I=0.886 C=0.514 ns_rows≤3K=25/50 (reached=16 partial=2 missi
 | walker |  | 468 | 11 | python decl names surface in example.py |  |  | 0.989 |
 | walker |  | 468 | 0 | python decl at example.py:6 |  |  | 0.989 |
 | ns | 469 |  | 165 | README: quick start usage snippet | 1.10 |  | 0.873 |
-| walker |  | 566 | 98 | manifest config in pyproject.toml |  |  | 0.877 |
-| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.811 |
-| walker |  | 654 | 88 | [package] in pyproject.toml |  |  | 0.819 |
-| walker |  | 676 | 22 | package metadata in pyproject.toml |  |  | 0.819 |
+| walker |  | 558 | 90 | [package] in pyproject.toml |  |  | 0.882 |
+| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.816 |
+| walker |  | 580 | 22 | package metadata in pyproject.toml |  |  | 0.816 |
+| walker |  | 676 | 96 | manifest config in pyproject.toml |  |  | 0.819 |
 | ns | 682 |  | 113 | README: benchmark results table | 1.12 |  | 0.777 |
 | walker |  | 689 | 13 | python imports in nanovllm/sampling_params.py |  |  | 0.777 |
 | walker |  | 720 | 31 | python imports in example.py |  |  | 0.777 |
