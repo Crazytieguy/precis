@@ -1636,6 +1636,10 @@ are the bulk of entry rows, so the +2 applies everywhere.
 Baseline 0.6389 / 71 fixtures. Two questions, both answered by
 measurement rather than by the audit's estimate.
 
+**Superseded 2026-07-28 — see "Un-ship sweep against the v2 NS key"
+below. The YAML defence recorded here was measured on the pre-refreeze
+key and reverses under v2 (+0.0016, sqlite-vec +0.117).**
+
 **YAML reference deep-leaf slices: DEFENDED, do not un-ship.** The
 2026-07-26 un-ship audit rated the mechanism at +0.0002 and recommended
 keeping only the `TopLevelKeys` roster. Measured removal (roster kept,
@@ -1909,3 +1913,58 @@ named type onto both the roster and the trimmed `Decl` header
 (htop +0.015, tinyusb −0.001). Six fixtures have any qualifying
 aggregate. htop's rendering trades `ProcessMergedCommand`'s four leaf
 fields for the fact that `Process` extends `Row`.
+
+## Un-ship sweep against the v2 NS key (2026-07-28)
+
+Zero point 0.6074 / 71 training fixtures. Every un-ship verdict
+recorded before the 2026-07-05→07-28 NS re-freeze v2 was measured on a
+different key and does not transfer — three of the five candidates
+re-measured here reversed sign. **Re-measure, do not cite.**
+
+Shipped (each its own commit, grid in the message):
+
+| mechanism | Δ@3000 | mover | non-test LOC |
+|---|---|---|---|
+| dominant-C-binary names promotion | +0.0002 | krep +0.012 (+0.143 @4327) | −78 |
+| YAML reference deep-leaf slices | +0.0016 | sqlite-vec +0.117 | −326 |
+| TS test/benchmark name rosters | +0.0000 | none @3000 | −228 |
+| TS documented-member doc slices | +0.0003 | p-queue +0.019 | −363 |
+
+Cumulative: 0.6074 → 0.6095 @3000; +0.0001 / 0.0000 / 0.0000 /
+**+0.0021** / +0.0015 / +0.0009 / −0.0001 across the grid, for −995
+non-test lines.
+
+**The recurring shape is frontier packing, not content quality.** Each
+of the three winning removals was leaving 200–440 tokens of the 3K
+budget stranded behind a batch the mechanism had made too expensive to
+buy (krep 349, sqlite-vec 437, p-queue 207). The mechanisms were not
+rendering *wrong* content — they were rendering content in
+indivisible-enough units that the scheduler could not fill the primary
+budget. A candidate whose fixture shows large 3K slack is worth
+re-measuring for that reason alone.
+
+**The TS test-roster removal is the one that cost something**: exactly
+0.0000 at every budget except 9000, where mitt −0.017 and debug −0.015
+give −0.0005. Accepted for −228 LOC and for removing the tree's least
+bounded content class (test-label mass has no cap and a repo's test
+tree can dwarf its source). The separate `BENCHMARK_NAMES_EARLY_TIER_MAX
+= 8` value cliff measured flat on its own, so it was buying nothing
+either.
+
+**Dead-code inventory: already clean.** The 2026-07-26 inventory's
+never-read `diagnose.rs` fields, `oracle_relevant_count`, the python
+tiny-tail fold, `TsKey::ExportMemberDocTail` and `LuaKey::Banner` are
+all gone from the tree. A fresh key census over all 71
+`tests/snapshots/schedule/*.toml` leaves three keys never scheduled
+≤10K — and none of them is dead code:
+
+- `Python::DeclNamesChunk` — the *head* split is the live effect; the
+  module doc already records that unifying every roster costs −0.0007.
+- `Python::DeclDocRest` — removing it is a recall hole (a long
+  docstring's remainder would never be emitted at any budget), not a
+  deletion.
+- `Yaml::ComposeSkeletonChunk` — over-cap path, corpus-neutral by
+  construction and verified on adversarial repro repos.
+
+`Python::TestNames` has *one* scheduled batch now (the inventory said
+zero) — the census must be re-run, not inherited.

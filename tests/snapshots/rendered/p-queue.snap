@@ -31,18 +31,7 @@ expression: rendered
               21→      - run: npm test
 .gitignore …
 .npmrc …
-bench.ts
-    …
-      34→addBenchmark('baseline'…
-    …
-      44→addBenchmark('operation with random priority'…
-    …
-      56→addBenchmark('operation with increasing priority'…
-    …
-      68→addBenchmark('large-fifo-backlog'…
-    …
-      79→addBenchmark('priority-queue-dequeue'…
-    …
+bench.ts …
 license …
 package.json
     …
@@ -50,7 +39,8 @@ package.json
        3→	"version": "9.2.0",
        4→	"description": "Promise queue with concurrency control",
        5→	"license": "MIT",
-    …
+       6→	"repository": "sindresorhus/p-queue",
+       7→	"funding": "https://github.com/sponsors/sindresorhus",
        8→	"type": "module",
        9→	"exports": {
       10→		"types": "./dist/index.d.ts",
@@ -70,7 +60,28 @@ package.json
       24→		"dist"
       25→	],
       26→	"types": "dist/index.d.ts",
-    …
+      27→	"keywords": [
+      28→		"promise",
+      29→		"queue",
+      30→		"enqueue",
+      31→		"limit",
+      32→		"limited",
+      33→		"concurrency",
+      34→		"throttle",
+      35→		"throat",
+      36→		"rate",
+      37→		"batch",
+      38→		"ratelimit",
+      39→		"priority",
+      40→		"priorityqueue",
+      41→		"fifo",
+      42→		"job",
+      43→		"task",
+      44→		"async",
+      45→		"await",
+      46→		"promises",
+      47→		"bluebird"
+      48→	],
       49→	"dependencies": {
       50→		"eventemitter3": "^5.0.4",
       51→		"p-timeout": "^7.0.0"
@@ -130,6 +141,9 @@ readme.md
      162→### queue
      164→`PQueue` instance.
     …
+     236→#### .addAll(fns, options?)
+     237→
+     238→Same as `.add()`, but accepts an array of sync or async functions and returns a promise that resolves when all functions are resolved.
      240→#### .pause()
      241→
      242→Put queue execution on hold.
@@ -237,26 +251,12 @@ source/
          956→		readonly timeout?: number;
          957→	}> {
         …
-    lower-bound.ts …
+    lower-bound.ts
+        …
+           3→export default function lowerBound<T>(array: readonly T[], value: T, comparator: (a: T, b: T) => number): number {
+        …
     options.ts
            1→import {type Queue, type RunFunction} from './queue.js';
-        …
-          27→export type Options<QueueType extends Queue<RunFunction, QueueOptions>, QueueOptions extends QueueAddOptions> = {
-        …
-          97→export type QueueAddOptions = {
-          98→	/**
-          99→	Priority of operation. Operations with greater priority will be scheduled first.
-         100→
-         101→	@default 0
-         102→	*/
-         103→	readonly priority?: number;
-         104→
-         105→	/**
-         106→	Unique identifier for the promise function, used to update its priority before execution. If not specified, it is auto-assigned an incrementing BigInt starting from `1n`.
-         107→	*/
-         108→	id?: string;
-        …
-         111→export type TaskOptions = {
         …
     priority-queue.ts
            1→import {type Queue, type RunFunction} from './queue.js';

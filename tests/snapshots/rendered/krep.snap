@@ -43,9 +43,14 @@ README.md
       10→>
       11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
       13→## The Story Behind the Name
-    …
+      14→
+      15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
+      16→
+      17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
       19→## Key Features
     …
+      22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
+      23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
       24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
       25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
       26→- **Regex support**: POSIX Extended Regular Expression searching
@@ -142,8 +147,16 @@ krep.h
        4→ * Year: 2025
        5→ */
     …
-      19→extern unsigned char lower_table[256];
+      10→#include <stdbool.h>
+      11→#include <stdint.h>
+      12→#include <stdio.h>     // For size_t definition
+      13→#include <regex.h>     // For regex_t type
+      14→#include <pthread.h>   // For mutex types (though no longer used for counting)
+      15→#include <stdatomic.h> // For atomic types used in structs
+      16→#include <ctype.h>     // For isalnum function
     …
+      19→extern unsigned char lower_table[256];
+      21→// Forward declaration for Aho-Corasick trie structure
       22→struct ac_trie;
       23→typedef struct ac_trie ac_trie_t;
     …

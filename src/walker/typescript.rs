@@ -15,10 +15,6 @@
 //!   the surface is larger than the roster lists) and a JSDoc
 //!   `@deprecated` / `@internal` / `@private` marker (which says a
 //!   listed export is not one to reach for).
-//! - `TestNames { file, chunk_index, benchmark }`: string-label roster
-//!   from `test` / `it` / `describe` / `bench` calls in recognized test
-//!   and benchmark files. Oversize rosters are predecessor-chained,
-//!   value-conserving chunks.
 //!
 //! Per-item keys (keyed by start line):
 //! - `Export { file, start_line }`: one top-level export's declaration
@@ -29,9 +25,6 @@
 //! - `ExportMember { file, start_line, member_start_line }`: one member
 //!   surface of an exported JavaScript class, predecessor = the matching
 //!   class `Export`.
-//! - `ExportMemberDoc { file, start_line, chunk_index }`: one source-order
-//!   slice of documented interface / object-type members (JSDoc + signature),
-//!   predecessor = the matching `Export` header.
 //! - `ExportBody { file, start_line, body_start_line }`: body slice
 //!   (brace-stripped) of a function, class, or `const X = <fn-init>`
 //!   export, predecessor = the matching `Export`.
@@ -97,12 +90,6 @@ const MEMBER_CATALOG_SPLIT_TOKENS: usize = 450;
 const MEMBER_CATALOG_CHUNK_TARGET_TOKENS: usize = 250;
 /// Avoid creating a final crumb when a catalog barely crosses a cut.
 const MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS: usize = 100;
-/// A tiny member comment is cheaper and flatter as part of its declaration.
-/// Split only when the declaration has enough documented-member mass to form
-/// an independent early-budget purchase.
-const DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS: usize = 100;
-const DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS: usize = 220;
-const DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Rendered class surfaces above this cost are outside the early NS
 /// purchase envelope and split at member boundaries.
 const OVERSIZE_EXPORT_SPLIT_TOKENS: usize = 400;
@@ -122,16 +109,6 @@ const CLASS_BODY_CHUNK_MIN_TAIL_TOKENS: usize = 300;
 /// per-method exports to fire. Below this floor a couple incidental
 /// `thing.helper = function …` lines shouldn't hijack the file shape.
 const JS_PROTOTYPE_METHOD_MIN: usize = 3;
-/// Test-name catalogs larger than the early semantic-recall window are
-/// partitioned in source order. A small tail folds into its predecessor.
-const TEST_NAMES_CHUNK_TARGET_TOKENS: usize = 500;
-const TEST_NAMES_CHUNK_MIN_TAIL_TOKENS: usize = TEST_NAMES_CHUNK_TARGET_TOKENS / 2;
-const BENCHMARK_NAMES_VALUE_FACTOR: f64 = 2.0;
-/// Compact benchmark scenario inventories are an operational map. Larger
-/// microbenchmark matrices remain semantic recall, but should not outrank
-/// the package's API and build orientation merely because every case is named.
-const BENCHMARK_NAMES_EARLY_TIER_MAX: usize = 8;
-
 /// Per-run TypeScript-walker state. Caches the project's "public
 /// surface" (entrypoint files + transitively re-exported targets) so
 /// items in non-surface files can be damped as internal.
@@ -342,7 +319,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_ts(ctx, file) else {
             continue;
         };
-        emit_test_name_batches(&mut out, file, ctx, &source, &tree);
         let src_lines: Vec<&str> = source.lines().collect();
         let local_value_reexports = collect_local_value_reexports(&tree, &source);
         let commonjs_value_reexports = collect_commonjs_value_reexports(&tree, &source);
@@ -388,21 +364,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .iter()
                 .map(|item| {
                     let split_js_class = should_split_js_class_export(file, item);
-                    // Runtime implementation modules already compete through
-                    // their executable exports and often benefit from a
-                    // coherent whole type slab. This recall mechanism serves
-                    // type-only API modules and declaration files.
-                    let documented_member_plan = if split_js_class
-                        || (per_export_factor >= 1.0 && !is_declaration_file(file))
-                    {
-                        None
-                    } else {
-                        documented_member_plan(file, item.kind, item.decl, &source, ctx)
-                    };
                     let member_names_catalog = if split_js_class {
                         None
-                    } else if let Some(plan) = &documented_member_plan {
-                        plan.residual_catalog.clone()
                     } else {
                         member_names_catalog_lines(item.kind, item.decl, &source)
                     };
@@ -417,7 +380,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         };
                     ExportSplitPlan {
                         split_js_class,
-                        documented_member_plan,
                         member_names_catalog,
                         member_catalog_chunks,
                         oversized_export_chunks,
@@ -436,47 +398,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // One unified names surface per file — NS authors anchor on
             // the complete catalog as a single unit (chunking measured
             // against unified on the post-refreeze keys: unified wins).
-            let documented_export_count = export_split_plans
-                .iter()
-                .filter(|plan| plan.documented_member_plan.is_some())
-                .count();
-            // Early promotion is reserved for a genuine per-file API group,
-            // not isolated type declarations scattered across a project.
-            // The latter displaced orientation in type-heavy repos without
-            // buying their doc slices inside the same budget window.
-            let promote_doc_headers = per_export_factor < 1.0
-                && !is_declaration_file(file)
-                && documented_export_count >= 3;
-            let documented_export_start_lines: HashSet<_> = if promote_doc_headers {
-                exports
-                    .iter()
-                    .zip(&export_split_plans)
-                    .filter_map(|(item, plan)| {
-                        plan.documented_member_plan
-                            .as_ref()
-                            .map(|_| item.start_line)
-                    })
-                    .collect()
-            } else {
-                HashSet::new()
-            };
             let mut names_lines = collect_export_names_from(
                 &exports,
                 &export_start_lines,
                 &import_owned_lines,
                 &top_level_decl_start_lines,
             );
-            // A doc-rich declaration owns its header as the prerequisite
-            // for its member-doc slices. Remove that line (and the roster's
-            // courtesy ellipsis) from the file-level export catalog so the
-            // two sibling surfaces stay line-disjoint and the declaration
-            // need not wait for the whole-file roster to schedule.
-            names_lines
-                .full
-                .retain(|line| !documented_export_start_lines.contains(line));
-            names_lines
-                .ellipses
-                .retain(|line| !documented_export_start_lines.contains(&line.saturating_sub(1)));
             // A roster claims "these exports exist". A JSDoc tag that
             // disavows one contradicts that claim, and it lives in
             // `ExportDoc` — a batch that competes with the roster
@@ -486,10 +413,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // here makes it impossible to render the export without it.
             let disavowal_lines: HashSet<usize> = exports
                 .iter()
-                .filter(|item| {
-                    item.predecessor_start_line.is_none()
-                        && !documented_export_start_lines.contains(&item.start_line)
-                })
+                .filter(|item| item.predecessor_start_line.is_none())
                 .flat_map(|item| {
                     disavowal_doc_lines(item.anchor, &source, &src_lines, is_entrypoint_file(file))
                 })
@@ -538,7 +462,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 };
                 let ExportSplitPlan {
                     split_js_class,
-                    documented_member_plan,
                     member_names_catalog,
                     member_catalog_chunks,
                     oversized_export_chunks,
@@ -551,39 +474,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             start_line,
                         })
                     })
-                    .or_else(|| {
-                        if documented_member_plan.is_some() && promote_doc_headers {
-                            module_predecessor.clone()
-                        } else {
-                            names_gate.clone()
-                        }
-                    });
+                    .or_else(|| names_gate.clone());
                 let partitioned_member_catalog = member_catalog_chunks
                     .as_ref()
                     .is_some_and(|chunks| chunks.len() > 1);
                 let mut export_lines = if let Some(chunks) = &oversized_export_chunks {
                     chunks[0].clone()
-                } else if split_js_class
-                    || documented_member_plan.is_some()
-                    || member_names_catalog.is_some()
-                {
+                } else if split_js_class || member_names_catalog.is_some() {
                     // Catalogued declarations trade the whole-member
                     // surface for a cheap header; the members arrive via
                     // the gated `ExportMemberNames` catalog instead.
                     header_surface_lines(
                         item.anchor,
-                        if documented_member_plan.is_some() {
-                            documented_member_body(item.kind, item.decl)
-                        } else {
-                            member_surface_body(item.kind, item.decl)
-                        },
+                        member_surface_body(item.kind, item.decl),
                         item.decl,
                         &source,
                     )
                 } else {
                     decl_surface_lines(item.kind, item.anchor, item.decl, &source, true)
                 };
-                if partitioned_member_catalog || documented_member_plan.is_some() {
+                if partitioned_member_catalog {
                     // Oversized catalog chunks are siblings of this header,
                     // all gated by ExportNames. Keep the header disjoint from
                     // them instead of placing its courtesy ellipsis on the
@@ -602,7 +512,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 doc_lines.retain(|line| !disavowal_lines.contains(line));
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
-                    || documented_member_plan.is_some()
                     || member_names_catalog.is_some()
                     || oversized_export_chunks.is_some()
                     || (!split_js_class && !item.body_parts.is_empty())
@@ -615,20 +524,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         predecessor: export_surface_predecessor,
                         content,
                         value: export_value(file, item.kind, ctx, js_factor)
-                            * if documented_member_plan.is_some() && promote_doc_headers {
-                                1.0
-                            } else {
-                                // A doc plan splits the members out of the
-                                // header just as a names catalog does, so it
-                                // keeps the contract-roster exemption:
-                                // otherwise documenting the last member of a
-                                // contract interface would drop its header
-                                // from 1.0 to the type-machinery damp.
-                                contract_roster_factor(
-                                    member_names_catalog.is_some()
-                                        || documented_member_plan.is_some(),
-                                )
-                            },
+                            * contract_roster_factor(member_names_catalog.is_some()),
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
@@ -662,122 +558,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // budget, and a sibling body batch could collide with
                 // the catalog's ellipsis markers (non-ancestor overlap).
                 let mut body_parts_predecessor = oversized_tail_predecessor;
-                if let Some(documented_member_plan) = documented_member_plan {
-                    let catalog_contents: Vec<(usize, BatchContent)> =
-                        if let (Some(catalog), Some(chunks)) = (
-                            member_names_catalog.as_ref(),
-                            member_catalog_chunks.as_ref(),
-                        ) {
-                            chunks
-                                .iter()
-                                .enumerate()
-                                .filter_map(|(chunk_index, lines)| {
-                                    member_names_catalog_content(
-                                        file,
-                                        &source,
-                                        lines,
-                                        catalog.truncate_to_name,
-                                    )
-                                    .map(|content| (chunk_index, content))
-                                })
-                                .collect()
-                        } else {
-                            Vec::new()
-                        };
-                    let doc_contents: Vec<(usize, BatchContent)> = documented_member_plan
-                        .chunks
-                        .iter()
-                        .enumerate()
-                        .filter_map(|(chunk_index, lines)| {
-                            single_file_lines_content(file, &source, lines.clone())
-                                .map(|content| (chunk_index, content))
-                        })
-                        .collect();
-                    // A mixed declaration is one member surface, even when
-                    // documented members become slices and undocumented
-                    // members remain a residual catalog. Allocate one
-                    // declaration-level value across every emitted piece;
-                    // conserving each group independently would award the
-                    // declaration two complete catalog bases.
-                    let costs: Vec<usize> = catalog_contents
-                        .iter()
-                        .map(|(_, content)| ctx.marginal_tokens(content))
-                        .chain(
-                            doc_contents
-                                .iter()
-                                .map(|(_, content)| ctx.marginal_tokens(content)),
-                        )
-                        .collect();
-                    let surface_factors =
-                        conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
-                    let catalog_piece_count = catalog_contents.len();
-                    let total_member_count = documented_member_plan.documented_member_count
-                        + member_names_catalog
-                            .map(|catalog| catalog.lines.full.len())
-                            .unwrap_or(0);
-                    let mut factors = surface_factors.into_iter();
-                    let chunk_predecessor = names_gate
-                        .clone()
-                        .unwrap_or_else(|| export_predecessor.clone());
-                    for (chunk_index, content) in catalog_contents {
-                        let key = if catalog_piece_count == 1 {
-                            TsKey::ExportMemberNames {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                            }
-                        } else {
-                            TsKey::ExportMemberNamesChunk {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                chunk_index,
-                            }
-                        };
-                        let predecessor = if catalog_piece_count == 1 {
-                            export_predecessor.clone()
-                        } else {
-                            chunk_predecessor.clone()
-                        };
-                        let chunk_factor = factors.next().expect("catalog factor");
-                        out.push(Batch {
-                            key: key.clone().into(),
-                            predecessor: Some(predecessor),
-                            content,
-                            value: export_member_names_value(
-                                file,
-                                item.kind,
-                                ctx,
-                                js_factor,
-                                total_member_count,
-                                chunk_factor,
-                            ),
-                        });
-                        if catalog_piece_count == 1 {
-                            body_parts_predecessor = BatchKey::Typescript(key);
-                        }
-                    }
-                    for (chunk_index, content) in doc_contents {
-                        let chunk_factor = factors.next().expect("documented-member factor");
-                        out.push(Batch {
-                            key: TsKey::ExportMemberDoc {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                chunk_index,
-                            }
-                            .into(),
-                            predecessor: Some(export_predecessor.clone()),
-                            content,
-                            value: export_member_names_value(
-                                file,
-                                item.kind,
-                                ctx,
-                                js_factor,
-                                total_member_count,
-                                chunk_factor,
-                            ),
-                        });
-                    }
-                    debug_assert!(factors.next().is_none());
-                } else if let (Some(member_catalog), Some(member_catalog_chunks)) =
+                if let (Some(member_catalog), Some(member_catalog_chunks)) =
                     (member_names_catalog, member_catalog_chunks)
                 {
                     let member_count = member_catalog.lines.full.len();
@@ -1271,7 +1052,6 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
 /// `ExportNames` flags and the per-item emission.
 struct ExportSplitPlan {
     split_js_class: bool,
-    documented_member_plan: Option<DocumentedMemberPlan>,
     member_names_catalog: Option<MemberNamesCatalog>,
     member_catalog_chunks: Option<Vec<FileLines>>,
     oversized_export_chunks: Option<Vec<FileLines>>,
@@ -2767,195 +2547,6 @@ fn parse_ts(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &language)
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum TestFileKind {
-    Test,
-    Benchmark,
-}
-
-fn emit_test_name_batches(
-    out: &mut Vec<Batch<BatchKey>>,
-    file: &Path,
-    ctx: &WalkCtx,
-    source: &str,
-    tree: &Tree,
-) {
-    let Some(kind) = test_file_kind(file, ctx.root()) else {
-        return;
-    };
-    let spans = collect_test_name_spans(file, tree, source, kind);
-    if spans.is_empty() {
-        return;
-    }
-    let content_for = |range: std::ops::Range<usize>| BatchContent::Lines {
-        spans: spans[range].to_vec(),
-    };
-    let ranges = budget_chunk_ranges(
-        spans.len(),
-        |range| ctx.marginal_tokens(&content_for(range)),
-        TEST_NAMES_CHUNK_TARGET_TOKENS,
-        TEST_NAMES_CHUNK_MIN_TAIL_TOKENS,
-        |_| true,
-        |_| true,
-    );
-    let contents: Vec<_> = ranges.into_iter().map(content_for).collect();
-    let costs: Vec<_> = contents
-        .iter()
-        .map(|content| ctx.marginal_tokens(content))
-        .collect();
-    let factors = conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
-    let mut predecessor = None;
-    for (chunk_index, (content, chunk_factor)) in contents.into_iter().zip(factors).enumerate() {
-        let key = BatchKey::Typescript(TsKey::TestNames {
-            file: file.to_path_buf(),
-            chunk_index,
-            benchmark: kind == TestFileKind::Benchmark,
-        });
-        out.push(Batch {
-            key: key.clone(),
-            predecessor: predecessor.clone(),
-            content,
-            value: test_names_value(file, ctx, kind, spans.len()) * chunk_factor,
-        });
-        predecessor = Some(key);
-    }
-}
-
-fn test_file_kind(file: &Path, root: &Path) -> Option<TestFileKind> {
-    let relative = file.strip_prefix(root).unwrap_or(file);
-    let components: Vec<_> = relative
-        .parent()
-        .into_iter()
-        .flat_map(Path::components)
-        .filter_map(|component| component.as_os_str().to_str())
-        .map(str::to_ascii_lowercase)
-        .collect();
-    let name = file.file_name()?.to_str()?.to_ascii_lowercase();
-    let stem = [".tsx", ".mjs", ".cjs", ".ts", ".js"]
-        .into_iter()
-        .find_map(|extension| name.strip_suffix(extension))?;
-    let benchmark = components.iter().any(|component| {
-        matches!(
-            component.as_str(),
-            "bench" | "benches" | "benchmark" | "benchmarks"
-        )
-    }) || stem == "bench"
-        || stem == "benchmark"
-        || stem.starts_with("bench.")
-        || stem.starts_with("benchmark.")
-        || stem.ends_with("_bench")
-        || stem.ends_with("_benchmark")
-        || stem.ends_with(".bench")
-        || stem.ends_with(".benchmark");
-    if benchmark {
-        return Some(TestFileKind::Benchmark);
-    }
-    let test = components.iter().any(|component| {
-        matches!(
-            component.as_str(),
-            "test" | "tests" | "testing" | "spec" | "specs" | "__tests__"
-        )
-    }) || stem == "test"
-        || stem.starts_with("test.")
-        || stem.starts_with("test_")
-        || stem.ends_with("_test")
-        || stem.ends_with(".test")
-        || stem.ends_with(".spec");
-    test.then_some(TestFileKind::Test)
-}
-
-fn collect_test_name_spans(
-    file: &Path,
-    tree: &Tree,
-    source: &str,
-    kind: TestFileKind,
-) -> Vec<Span> {
-    fn visit(node: Node, file: &Path, source: &str, kind: TestFileKind, out: &mut Vec<Span>) {
-        if node.kind() == "call_expression"
-            && let Some(function) = node.child_by_field_name("function")
-            && is_test_name_callee(function, source, kind)
-            && let Some(arguments) = node.child_by_field_name("arguments")
-            && let Some(label) = arguments.named_child(0)
-            && matches!(label.kind(), "string" | "template_string")
-            && label.start_position().row == label.end_position().row
-        {
-            let label_text = &source[label.start_byte()..label.end_byte()];
-            if !label_text.contains("${") {
-                let line_start = source[..label.end_byte()]
-                    .rfind('\n')
-                    .map_or(0, |newline| newline + 1);
-                let prefix = &source[line_start..label.end_byte()];
-                out.push(Span {
-                    path: file.to_path_buf(),
-                    start: label.start_position().row + 1,
-                    end: label.start_position().row + 1,
-                    render: Render::Truncated {
-                        pattern: format!("^{}", regex::escape(prefix)),
-                    },
-                });
-            }
-        }
-        let mut cursor = node.walk();
-        for child in node.named_children(&mut cursor) {
-            visit(child, file, source, kind, out);
-        }
-    }
-
-    let mut out = Vec::new();
-    visit(tree.root_node(), file, source, kind, &mut out);
-    // The line-span vocabulary can render one label per source row. Keep
-    // the outermost call when compact source nests multiple test calls on
-    // one row, preventing duplicate `(path, line)` spans in one batch.
-    let mut seen_lines = HashSet::new();
-    out.retain(|span| seen_lines.insert(span.start));
-    out
-}
-
-fn is_test_name_callee(function: Node, source: &str, kind: TestFileKind) -> bool {
-    let recognized = |name: &str| {
-        matches!(name, "test" | "it" | "describe" | "bench")
-            || (kind == TestFileKind::Benchmark && name.to_ascii_lowercase().ends_with("benchmark"))
-    };
-    match function.kind() {
-        "identifier" => recognized(&source[function.start_byte()..function.end_byte()]),
-        "member_expression" => {
-            let property = function.child_by_field_name("property");
-            if property.is_some_and(|property| {
-                recognized(&source[property.start_byte()..property.end_byte()])
-            }) {
-                return true;
-            }
-            let modifier = property.is_some_and(|property| {
-                matches!(
-                    &source[property.start_byte()..property.end_byte()],
-                    "only" | "skip" | "todo" | "concurrent"
-                )
-            });
-            modifier
-                && function
-                    .child_by_field_name("object")
-                    .is_some_and(|object| is_test_name_callee(object, source, kind))
-        }
-        _ => false,
-    }
-}
-
-fn test_names_value(file: &Path, ctx: &WalkCtx, kind: TestFileKind, entries: usize) -> f64 {
-    // A test-label roster is semantic recall inside a non-essential file,
-    // and takes that file's ordinary non-essential discount. Overriding the
-    // discount here would let test-label mass — unbounded in a repo with a
-    // large test tree — outbid the source surfaces it is an index of.
-    let roster_location =
-        crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file);
-    let benchmark_factor =
-        if kind == TestFileKind::Benchmark && entries <= BENCHMARK_NAMES_EARLY_TIER_MAX {
-            BENCHMARK_NAMES_VALUE_FACTOR
-        } else {
-            1.0
-        };
-    mix_signals(0.40, 0.0, 0.30, roster_location) * benchmark_factor
-}
-
 // --- collectors ---
 
 /// Collect lines belonging to the leading `/** … */` JSDoc block at the
@@ -3521,41 +3112,6 @@ fn member_surface_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
     }
 }
 
-fn documented_member_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
-    match kind {
-        ItemKind::TypeAlias => single_object_type_body(decl.child_by_field_name("value")?),
-        _ => member_surface_body(kind, decl),
-    }
-}
-
-/// Find the sole object-literal member body inside a type alias. Public
-/// option types commonly refine `{ ... }` with `& SharedOptions`; treating
-/// only a direct `object_type` as the body made those member docs
-/// inexpressible. Refuse aliases with multiple object literals rather than
-/// selecting one arm of a union and silently dropping its peers.
-fn single_object_type_body(value: Node) -> Option<Node> {
-    fn collect<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
-        if node.kind() == "object_type" {
-            out.push(node);
-            return;
-        }
-        if !matches!(
-            node.kind(),
-            "intersection_type" | "union_type" | "parenthesized_type"
-        ) {
-            return;
-        }
-        let mut cursor = node.walk();
-        for child in node.named_children(&mut cursor) {
-            collect(child, out);
-        }
-    }
-
-    let mut bodies = Vec::new();
-    collect(value, &mut bodies);
-    (bodies.len() == 1).then(|| bodies[0])
-}
-
 /// `(first_line, end_line)` of every member surfaced by a declaration's
 /// member catalog — interface/object-type signatures, or public class
 /// members. Underscore-prefixed names are conventionally private and
@@ -3607,108 +3163,6 @@ struct MemberNamesCatalog {
 /// Minimum member count for a big interface / object-type alias to
 /// trade its whole-member surface for a header + member-name catalog.
 const MEMBER_CATALOG_MIN_MEMBERS: usize = 12;
-
-struct DocumentedMemberPlan {
-    chunks: Vec<FileLines>,
-    documented_member_count: usize,
-    /// Undocumented members remain a cheap, line-disjoint signature
-    /// catalog. A wholly undocumented declaration never creates this plan
-    /// and retains the pre-existing whole/catalog behavior.
-    residual_catalog: Option<MemberNamesCatalog>,
-}
-
-struct DocumentedMember {
-    lines: FileLines,
-}
-
-/// Split doc-rich interface/object-type members into source-order purchases.
-/// Each documented member owns its attached JSDoc and complete signature;
-/// undocumented signatures remain in a sibling catalog so all emitted spans
-/// are line-disjoint. Tiny doc mass keeps the declaration's old flat shape.
-fn documented_member_plan(
-    file: &Path,
-    kind: ItemKind,
-    decl: Node,
-    source: &str,
-    ctx: &WalkCtx,
-) -> Option<DocumentedMemberPlan> {
-    if !matches!(kind, ItemKind::Interface | ItemKind::TypeAlias) {
-        return None;
-    }
-    let body = documented_member_body(kind, decl)?;
-    // The header surface owns every row through the body's opening brace,
-    // and slices are sibling batches of the residual catalog — enforce
-    // line-disjointness by construction: a slice never re-claims a
-    // header-owned or already-sliced row (compact `{ member;` openers,
-    // trailing same-line JSDoc), and the catalog drops members whose
-    // name line is owned elsewhere.
-    let header_last_line = body.start_position().row + 1;
-    let mut claimed = HashSet::new();
-    let mut documented = Vec::new();
-    let mut undocumented_spans = Vec::new();
-    let mut cursor = body.walk();
-    for member in body.children(&mut cursor) {
-        if !is_surfaced_member(kind, decl, member, source) {
-            continue;
-        }
-        let mut doc_lines = Vec::new();
-        collect_jsdoc_above(member, source, &mut doc_lines, false);
-        if doc_lines.is_empty() {
-            undocumented_spans.push((
-                member.start_position().row + 1,
-                member.end_position().row + 1,
-            ));
-            continue;
-        }
-        extend_span(&mut doc_lines, member, source);
-        let mut lines = dedup_sorted(doc_lines);
-        lines.retain(|&line| line > header_last_line && claimed.insert(line));
-        if lines.is_empty() {
-            continue;
-        }
-        documented.push(DocumentedMember {
-            lines: FileLines::new(lines),
-        });
-    }
-    if documented.is_empty() {
-        return None;
-    }
-    undocumented_spans.retain(|&(first, _)| first > header_last_line && !claimed.contains(&first));
-
-    let content_for = |lines: &FileLines| {
-        single_file_lines_content(file, source, lines.clone())
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-    let total_tokens: usize = documented
-        .iter()
-        .map(|member| content_for(&member.lines))
-        .sum();
-    if total_tokens < DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS {
-        return None;
-    }
-
-    let lines_for = |range: std::ops::Range<usize>| {
-        let full = documented[range]
-            .iter()
-            .flat_map(|member| member.lines.full.iter().copied())
-            .collect();
-        FileLines::new(full)
-    };
-    let ranges = budget_chunk_ranges(
-        documented.len(),
-        |range| content_for(&lines_for(range)),
-        DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS,
-        DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS,
-        |_| true,
-        |_| true,
-    );
-    Some(DocumentedMemberPlan {
-        chunks: ranges.into_iter().map(lines_for).collect(),
-        documented_member_count: documented.len(),
-        residual_catalog: member_names_catalog_from_spans(undocumented_spans, false),
-    })
-}
 
 /// Unified member-first-line surface for a big declaration — the
 /// "header then one line per member" catalog shape NS authors anchor
@@ -4870,143 +4324,6 @@ export function old() {}
         assert!(!is_disavowal_jsdoc_line(" * @public"));
     }
 
-    #[test]
-    fn walker_typescript_recognizes_test_and_benchmark_file_conventions() {
-        let root = Path::new("/repo");
-        for path in [
-            "test/basic.ts",
-            "tests/unit.js",
-            "src/app.test.ts",
-            "src/app.spec.tsx",
-            "test.node.js",
-            "src/index_test.ts",
-        ] {
-            assert_eq!(
-                test_file_kind(&root.join(path), root),
-                Some(TestFileKind::Test),
-                "{path}"
-            );
-        }
-        for path in [
-            "bench.ts",
-            "bench/queue.ts",
-            "benches/queue.mjs",
-            "src/queue.benchmark.js",
-        ] {
-            assert_eq!(
-                test_file_kind(&root.join(path), root),
-                Some(TestFileKind::Benchmark),
-                "{path}"
-            );
-        }
-        assert_eq!(test_file_kind(&root.join("src/testing.ts"), root), None);
-    }
-
-    #[test]
-    fn walker_typescript_collects_static_test_and_benchmark_labels() {
-        let source = r#"describe('suite', () => {
-  it.only("case", () => {});
-  test.skip(`static template`, () => {});
-  t.test('nested node test', () => {});
-  test(`dynamic ${name}`, () => {});
-  helper('not a test', () => {});
-});
-"#;
-        let tree = parse(source);
-        let spans = collect_test_name_spans(
-            Path::new("/repo/test/basic.ts"),
-            &tree,
-            source,
-            TestFileKind::Test,
-        );
-        assert_eq!(
-            spans.iter().map(|span| span.start).collect::<Vec<_>>(),
-            vec![1, 2, 3, 4]
-        );
-
-        let benchmark_source = "addBenchmark('wrapped', () => {});\nbench('direct', () => {});\n";
-        let benchmark_tree = parse(benchmark_source);
-        let spans = collect_test_name_spans(
-            Path::new("/repo/bench.ts"),
-            &benchmark_tree,
-            benchmark_source,
-            TestFileKind::Benchmark,
-        );
-        assert_eq!(
-            spans.iter().map(|span| span.start).collect::<Vec<_>>(),
-            vec![1, 2]
-        );
-
-        let compact_source = "describe('outer', () => { it('inner', () => {}); });\n";
-        let compact_tree = parse(compact_source);
-        let spans = collect_test_name_spans(
-            Path::new("/repo/test/compact.ts"),
-            &compact_tree,
-            compact_source,
-            TestFileKind::Test,
-        );
-        assert_eq!(spans.len(), 1, "one renderable span per source line");
-    }
-
-    #[test]
-    fn walker_typescript_test_roster_takes_the_ordinary_non_essential_discount() {
-        let dir = tempfile::tempdir().unwrap();
-        let test_dir = dir.path().join("test");
-        std::fs::create_dir(&test_dir).unwrap();
-        let file = test_dir.join("basic.ts");
-        std::fs::write(&file, "test('a', () => {});\n").unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let expected = mix_signals(
-            0.40,
-            0.0,
-            0.30,
-            crate::value::depth_factor(ctx.depth_from_root(&file))
-                * ctx.non_essential_factor(&file),
-        );
-        assert!((test_names_value(&file, &ctx, TestFileKind::Test, 1) - expected).abs() < 1e-9);
-        assert!(
-            ctx.non_essential_factor(&file) < 0.5,
-            "a test file must stay damped — the roster no longer floors it"
-        );
-    }
-
-    #[test]
-    fn walker_typescript_test_name_chunks_are_chained_and_value_conserved() {
-        let dir = tempfile::tempdir().unwrap();
-        let test_dir = dir.path().join("test");
-        std::fs::create_dir(&test_dir).unwrap();
-        let file = test_dir.join("basic.ts");
-        let source = (0..120)
-            .map(|index| {
-                format!(
-                    "test('case {index}: a deliberately descriptive semantic behavior label', () => {{}});\n"
-                )
-            })
-            .collect::<String>();
-        std::fs::write(&file, &source).unwrap();
-        let tree = parse(&source);
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let mut batches = Vec::new();
-        emit_test_name_batches(&mut batches, &file, &ctx, &source, &tree);
-        assert!(batches.len() > 1, "expected an oversized roster to split");
-        assert!(batches[0].predecessor.is_none());
-        for pair in batches.windows(2) {
-            assert_eq!(pair[1].predecessor.as_ref(), Some(&pair[0].key));
-        }
-        let span_count: usize = batches
-            .iter()
-            .map(|batch| match &batch.content {
-                BatchContent::Lines { spans } => spans.len(),
-                BatchContent::Fs { .. } => panic!("test roster must be line content"),
-            })
-            .sum();
-        assert_eq!(span_count, 120);
-        let total_value: f64 = batches.iter().map(|batch| batch.value).sum();
-        assert!(
-            (total_value - test_names_value(&file, &ctx, TestFileKind::Test, 120)).abs() < 1e-9
-        );
-    }
-
     fn export_infos<'a>(tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
         export_infos_for_path(Path::new("fixture.ts"), tree, source)
     }
@@ -5207,257 +4524,6 @@ export function old() {}
             }
         }
         assert_eq!(covered.len(), 80, "partitions must cover every member");
-    }
-
-    #[test]
-    fn walker_typescript_doc_rich_interface_gets_disjoint_member_slices() {
-        let source = r#"export interface Options {
-  /**
-   * Controls the first behavior. This explanation deliberately carries
-   * enough semantic detail to make the documented member independently
-   * useful: it describes defaults, lifecycle timing, error behavior, and
-   * how callers should choose a value in production deployments.
-   *
-   * @example
-   * const options: Options = { first: 'enabled' };
-   */
-  first?: string;
-
-  count?: number;
-
-  /**
-   * Controls the second behavior. This companion explanation covers the
-   * interaction with the first option, the fallback used when omitted,
-   * and the observable result an API consumer should expect.
-   *
-   * @example
-   * const options: Options = { second: true };
-   */
-  second?: boolean;
-}
-"#;
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.ts");
-        std::fs::write(&file, source).unwrap();
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None).run_with_report();
-        let export_key = BatchKey::Typescript(TsKey::Export {
-            file: file.clone(),
-            start_line: 1,
-        });
-        let owned: Vec<_> = report
-            .candidates
-            .iter()
-            .filter(|batch| {
-                batch.key == export_key
-                    || matches!(
-                        batch.key,
-                        BatchKey::Typescript(
-                            TsKey::ExportMemberDoc { .. } | TsKey::ExportMemberNames { .. }
-                        )
-                    )
-            })
-            .collect();
-        let docs: Vec<_> = owned
-            .iter()
-            .filter(|batch| {
-                matches!(
-                    batch.key,
-                    BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
-                )
-            })
-            .collect();
-        assert!(!docs.is_empty(), "expected documented-member slices");
-        assert!(
-            docs.iter()
-                .all(|batch| batch.predecessor.as_ref() == Some(&export_key))
-        );
-        assert!(
-            owned.iter().any(|batch| matches!(
-                batch.key,
-                BatchKey::Typescript(TsKey::ExportMemberNames { .. })
-            )),
-            "the undocumented member must form a residual catalog",
-        );
-
-        let member_surface_total: f64 = owned
-            .iter()
-            .filter(|batch| {
-                matches!(
-                    batch.key,
-                    BatchKey::Typescript(
-                        TsKey::ExportMemberDoc { .. }
-                            | TsKey::ExportMemberNames { .. }
-                            | TsKey::ExportMemberNamesChunk { .. }
-                    )
-                )
-            })
-            .map(|batch| batch.value)
-            .sum();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let js_factor = js_value_factor(&file, &ctx)
-            * public_surface_factor(&file, &ctx)
-            * secondary_ts_workspace_member_factor(&file, &ctx);
-        let unsplit_value =
-            export_member_names_value(&file, ItemKind::Interface, &ctx, js_factor, 3, 1.0);
-        assert!(
-            (member_surface_total - unsplit_value).abs() < 1e-9,
-            "mixed residual + documented surfaces must conserve one declaration allocation: \
-             total={member_surface_total}, unsplit={unsplit_value}",
-        );
-
-        let mut covered = HashSet::new();
-        for batch in owned {
-            let BatchContent::Lines { spans } = &batch.content else {
-                panic!("typescript member surfaces must be line content");
-            };
-            for span in spans {
-                for line in span.start..=span.end {
-                    assert!(
-                        covered.insert(line),
-                        "header, residual catalog, and doc slices overlap at line {line}"
-                    );
-                }
-            }
-        }
-        assert!(covered.contains(&2), "first JSDoc must be owned");
-        assert!(
-            covered.contains(&11),
-            "first member signature must be owned"
-        );
-        assert!(
-            covered.contains(&13),
-            "undocumented member must stay catalogued"
-        );
-        assert!(covered.contains(&15), "second JSDoc must be owned");
-        assert!(
-            covered.contains(&23),
-            "second member signature must be owned"
-        );
-    }
-
-    /// Compact `{ member;` openers put a member on the header-owned brace
-    /// row, and a trailing same-line `/** ... */` starts the next member's
-    /// JSDoc on the previous member's row — both previously double-claimed
-    /// lines across sibling batches (debug-panicking in the scheduler).
-    #[test]
-    fn walker_typescript_doc_slices_stay_disjoint_on_shared_rows() {
-        let source = r#"export interface Options { compact?: string;
-  plain: number; /**
-   * Documents the alpha member. This explanation deliberately carries
-   * enough semantic detail to clear the documented-member token gate:
-   * defaults, lifecycle timing, error behavior, and production guidance.
-   */
-  alpha(input: string): number;
-
-  /**
-   * Documents the beta member with equally substantial guidance covering
-   * interaction with alpha, the fallback used when omitted, and the
-   * observable result an API consumer should expect in deployments.
-   */
-  beta?: boolean;
-}
-"#;
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.d.ts");
-        std::fs::write(&file, source).unwrap();
-        // Debug builds assert non-ancestor overlap inside the scheduler,
-        // so completing the run is itself the regression check.
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None).run_with_report();
-        let mut covered = HashSet::new();
-        for batch in report.candidates.iter().filter(|batch| {
-            matches!(
-                batch.key,
-                BatchKey::Typescript(
-                    TsKey::Export { start_line: 1, .. }
-                        | TsKey::ExportMemberDoc { .. }
-                        | TsKey::ExportMemberNames { .. }
-                )
-            )
-        }) {
-            let BatchContent::Lines { spans } = &batch.content else {
-                panic!("typescript member surfaces must be line content");
-            };
-            for span in spans {
-                for line in span.start..=span.end {
-                    assert!(
-                        covered.insert(line),
-                        "header, residual catalog, and doc slices overlap at line {line}"
-                    );
-                }
-            }
-        }
-    }
-
-    #[test]
-    fn walker_typescript_tiny_member_doc_stays_flat() {
-        let source =
-            "export interface Small {\n  /** Whether enabled. */\n  enabled?: boolean;\n}\n";
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.ts");
-        std::fs::write(&file, source).unwrap();
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
-        assert!(!report.candidates.iter().any(|batch| matches!(
-            batch.key,
-            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
-        )));
-    }
-
-    #[test]
-    fn walker_typescript_documented_intersection_type_is_split() {
-        let source = r#"type Shared = { timeout?: number };
-export type Options = {
-  /**
-   * Controls request concurrency, including the default used when omitted,
-   * the minimum accepted value, and when a newly available slot is consumed.
-   * The setting applies to work that has not started yet, does not cancel
-   * work already in flight, and can be changed between requests. Callers
-   * should choose a finite value based on the downstream service limit and
-   * leave enough capacity for retries, health checks, and administrative
-   * traffic. Values below one are rejected before any request is queued.
-   *
-   * @example
-   * const options: Options = { concurrency: 4 };
-   */
-  concurrency?: number;
-} & Shared;
-"#;
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.ts");
-        std::fs::write(&file, source).unwrap();
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
-        assert!(report.candidates.iter().any(|batch| matches!(
-            batch.key,
-            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
-        )));
-    }
-
-    #[test]
-    fn walker_typescript_runtime_module_keeps_documented_type_slab() {
-        let source = r#"export interface Options {
-  /**
-   * Controls request concurrency, including the default used when omitted,
-   * the minimum accepted value, and when a newly available slot is consumed.
-   *
-   * @example
-   * const options: Options = { concurrency: 4 };
-   */
-  concurrency?: number;
-}
-export function run(options: Options): void { void options; }
-"#;
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.ts");
-        std::fs::write(&file, source).unwrap();
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
-        assert!(!report.candidates.iter().any(|batch| matches!(
-            batch.key,
-            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
-        )));
     }
 
     #[test]
