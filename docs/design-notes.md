@@ -2076,8 +2076,58 @@ all gone from the tree. A fresh key census over all 71
 - `Python::DeclDocRest` — removing it is a recall hole (a long
   docstring's remainder would never be emitted at any budget), not a
   deletion.
-- `Yaml::ComposeSkeletonChunk` — over-cap path, corpus-neutral by
-  construction and verified on adversarial repro repos.
-
 `Python::TestNames` has *one* scheduled batch now (the inventory said
 zero) — the census must be re-run, not inherited.
+
+### Second wave (zero point 0.6150, after the week's merges)
+
+The four candidates the first wave did not cover. Same protocol: revert
+the mechanism, measure the whole grid, keep the revert only if 3000 is
+flat-or-better with no material higher-budget loss.
+
+| mechanism | Δ@3000 on removal | mover | verdict |
+|---|---|---|---|
+| Makefile target skeleton | −0.00003 | beszel −0.002 | **removed**, −384 LOC |
+| compose topology skeleton + tail | **+0.00009** | linkwarden +0.007 (+0.049 @4327) | **removed**, −404 LOC |
+| C configuration-surface header role | −0.00137 | bareiron −0.097 | kept |
+| Rust nested-entry coalescing | −0.00103 | sps −0.041, mdbook −0.032 | kept |
+
+Combined removals: 0.61502 → 0.61508 @3000; +0.0000 / −0.0000 /
+−0.0000 / **+0.0001** / +0.0006 / −0.0001 / +0.0002 across the grid.
+
+**Frontier slack predicted both outcomes.** Measuring peak
+`Score(B=cum)` in the 1500–3000 window against `Score(3000)`:
+linkwarden carried +0.255 of slack and its sole-beneficiary mechanism
+measured *negative*; bareiron carried +0.000 (monotone to the frontier)
+and its mechanism is genuinely earning. Compute the slack in a window
+near the frontier, not over the whole prefix — the early-schedule
+maxima (krep peaks at 1.000 by cum=103) are an artifact of scoring a
+two-batch prefix, not real slack.
+
+**Both removals restore a strictly simpler contract**, not a different
+one: an over-cap Makefile and an over-cap compose file are once again
+suppressed entirely rather than parsed into a bounded skeleton. Two
+hand-rolled structural parsers (a four-statement-kind Make parser with
+logical-line continuation; a compose service/field indent walker), two
+chunking paths that never bought a second chunk anywhere in the corpus,
+and `MAKEFILE_TARGET_MASS_BASELINE`/`_FLOOR` — a second roster-mass
+model competing with `value::roster_mass_factor` — are gone.
+
+**The C config-surface floor stays, and the multiplier alternative the
+inventory proposed does not fix it.** Three variants were measured
+against the shipped absolute floor of 1250:
+
+| variant | @2080 | @3000 | @4327 | @6240 |
+|---|---|---|---|---|
+| removed entirely | −0.0009 | −0.0014 | −0.0019 | −0.0009 |
+| ×1.4, names chunks only | −0.0003 | +0.0000 | +0.0000 | −0.0008 |
+| ×1.4, positional selection kept | −0.0009 | +0.0000 | +0.0000 | +0.0001 |
+| ×2.0, positional selection kept | −0.0031 | +0.0017 | +0.0014 | +0.0001 |
+
+The ×1.4 rows are flat at 3000 because 1.4 is what the absolute floor
+already worked out to at bareiron's `include/` depth — the multiplier
+form re-expresses the same fit rather than generalizing it. Pushing to
+×2.0 buys +0.0017 @3000 entirely from bareiron (+0.119) while costing
+tinyusb −0.224 @2080, which is exactly the wrong-header promotion the
+inventory warned the role would cause on unseen repos. Do not sweep
+this constant upward on training score.

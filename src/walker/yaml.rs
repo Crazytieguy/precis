@@ -3,10 +3,13 @@
 //! deployment files, CI workflows, lint/hook configs, and docs-site
 //! configs.
 //!
-//! Implementation: hand-rolled, no tree-sitter dependency. Compact
-//! tooling configs are emitted as one `Whole` batch capped by class.
-//! Compose files use a service-topology head (service names plus image /
-//! build / ports / depends_on) followed by one gated complementary tail.
+//! Implementation: hand-rolled, no tree-sitter dependency. The file is
+//! emitted as a single `Whole` batch capped by class. These operational
+//! configs are line-oriented enough that the whole-file `Whole` batch is
+//! sufficient — splitting per-service/job/hook would either produce many
+//! tiny batches or require a real YAML parser to handle block-style
+//! nesting. The one exception is the reference-map class, whose key
+//! surface is genuinely a roster.
 //!
 //! **Secrets safety**: env values inlined in `environment:` blocks
 //! (`DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@…`) are
@@ -19,19 +22,18 @@
 use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchKey, YamlKey};
-use crate::value::{DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals};
+use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, fs::files_with_any_extension, gap_ellipses,
-    gated_read_source, gated_whole_file_content, path_depth_factor, single_file_lines_content,
-    whole_file_lines_content,
+    FileLines, WalkCtx, fs::files_with_any_extension, gated_whole_file_content, path_depth_factor,
+    single_file_lines_content,
 };
 
 /// Hard cap on the number of source lines a docker-compose file may
 /// have to be considered for a whole-file body. Typical real-world
 /// compose files are well under this (the linkwarden fixture is 28
-/// lines, beszel's 18, audiobookshelf's 27); above the cap only the
-/// bounded service-topology skeleton is emitted.
+/// lines, beszel's 18, audiobookshelf's 27); above the cap the file is
+/// left for an explicit read.
 const COMPOSE_LINE_CAP: usize = 80;
 
 /// FS-metadata pre-flight gate: skip files whose raw byte size is
@@ -39,24 +41,6 @@ const COMPOSE_LINE_CAP: usize = 80;
 /// generous bound for indented YAML (the linkwarden fixture averages
 /// ~30 chars/line).
 const COMPOSE_BYTE_GATE: usize = COMPOSE_LINE_CAP * 100;
-
-/// Larger pre-flight gate for extracting a topology skeleton from an
-/// over-cap compose file. The emitted content remains bounded below;
-/// this only permits reading realistic multi-service deployment files.
-const COMPOSE_SKELETON_BYTE_GATE: usize = 256 * 1024;
-
-/// Defense in depth for adversarial compose inputs: even when the
-/// source contains hundreds of services or huge selected field blocks,
-/// the topology surface stays a bounded orientation batch.
-const COMPOSE_SKELETON_SERVICE_CAP: usize = 80;
-const COMPOSE_SKELETON_ROW_CAP: usize = 400;
-const COMPOSE_SKELETON_CHUNK_TARGET_TOKENS: usize = 90;
-const COMPOSE_SKELETON_CHUNK_MIN_TOKENS: usize = 50;
-
-/// Compose body value relative to the service-topology head. Mirrors
-/// the shipped Dockerfile contract/body split: the body is close
-/// operational follow-up, but the topology should purchase first.
-const COMPOSE_TAIL_FACTOR: f64 = 0.85;
 
 /// Compact CI/tooling configs stay cheap enough to render whole. Larger
 /// workflows/configs are intentionally left for explicit reads rather
@@ -91,10 +75,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         else {
             continue;
         };
-        if class == YamlClass::Compose {
-            push_compose_batches(&file, ctx, &mut out);
-            continue;
-        }
         if class == YamlClass::ReferenceMap {
             push_reference_map_batches(&file, ctx, &mut out);
         } else if let Some(content) = class.content(&file, ctx) {
@@ -107,265 +87,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
     }
     out
-}
-
-fn yaml_indent(raw: &str) -> Option<usize> {
-    let mut indent = 0;
-    for character in raw.chars() {
-        match character {
-            ' ' => indent += 1,
-            '\t' => return None,
-            _ => break,
-        }
-    }
-    Some(indent)
-}
-
-fn yaml_mapping_key(trimmed: &str) -> Option<&str> {
-    if trimmed.is_empty() || trimmed.starts_with(['#', '-']) || is_yaml_document_marker(trimmed) {
-        return None;
-    }
-    let (key, _) = trimmed.split_once(':')?;
-    let key = key.trim().trim_matches(['\'', '"']);
-    (!key.is_empty()).then_some(key)
-}
-
-fn compose_field_selected(key: &str) -> bool {
-    matches!(key, "image" | "build" | "ports" | "depends_on")
-}
-
-/// 1-based rows in the compose service-topology skeleton: `services:`,
-/// every direct service name, and each service's direct image/build/
-/// ports/depends_on field including block-style descendants.
-fn compose_skeleton(source: &str) -> (Vec<usize>, usize) {
-    let lines: Vec<&str> = source.lines().collect();
-    let Some((services_index, services_indent)) =
-        lines.iter().enumerate().find_map(|(index, raw)| {
-            let trimmed = raw.trim();
-            (yaml_mapping_key(trimmed) == Some("services") && yaml_indent(raw) == Some(0))
-                .then(|| yaml_indent(raw).map(|indent| (index, indent)))
-                .flatten()
-        })
-    else {
-        return (Vec::new(), 0);
-    };
-    let services_end = (services_index + 1..lines.len())
-        .find(|&index| {
-            let trimmed = lines[index].trim();
-            !trimmed.is_empty()
-                && !trimmed.starts_with('#')
-                && yaml_indent(lines[index]).is_some_and(|indent| indent <= services_indent)
-        })
-        .unwrap_or(lines.len());
-    let Some(service_indent) = (services_index + 1..services_end)
-        .filter_map(|index| {
-            let trimmed = lines[index].trim();
-            let indent = yaml_indent(lines[index])?;
-            (indent > services_indent && yaml_mapping_key(trimmed).is_some()).then_some(indent)
-        })
-        .min()
-    else {
-        return (Vec::new(), 0);
-    };
-    let service_starts: Vec<usize> = (services_index + 1..services_end)
-        .filter(|&index| {
-            yaml_indent(lines[index]) == Some(service_indent)
-                && yaml_mapping_key(lines[index].trim()).is_some()
-        })
-        .collect();
-    if service_starts.is_empty() {
-        return (Vec::new(), 0);
-    }
-
-    let mut selected = vec![services_index + 1];
-    for (service_position, &service_start) in service_starts
-        .iter()
-        .take(COMPOSE_SKELETON_SERVICE_CAP)
-        .enumerate()
-    {
-        let service_end = service_starts
-            .get(service_position + 1)
-            .copied()
-            .unwrap_or(services_end);
-        selected.push(service_start + 1);
-        let Some(field_indent) = (service_start + 1..service_end)
-            .filter_map(|index| {
-                let trimmed = lines[index].trim();
-                let indent = yaml_indent(lines[index])?;
-                (indent > service_indent && yaml_mapping_key(trimmed).is_some()).then_some(indent)
-            })
-            .min()
-        else {
-            continue;
-        };
-        let field_starts: Vec<usize> = (service_start + 1..service_end)
-            .filter(|&index| {
-                yaml_indent(lines[index]) == Some(field_indent)
-                    && yaml_mapping_key(lines[index].trim()).is_some()
-            })
-            .collect();
-        for (field_position, &field_start) in field_starts.iter().enumerate() {
-            let Some(key) = yaml_mapping_key(lines[field_start].trim()) else {
-                continue;
-            };
-            if !compose_field_selected(key) {
-                continue;
-            }
-            let field_end = field_starts
-                .get(field_position + 1)
-                .copied()
-                .unwrap_or(service_end);
-            selected.extend(field_start + 1..=field_end);
-        }
-    }
-    selected.sort_unstable();
-    selected.dedup();
-    selected.truncate(COMPOSE_SKELETON_ROW_CAP);
-    let service_count = service_starts.len().min(COMPOSE_SKELETON_SERVICE_CAP);
-    (selected, service_count)
-}
-
-fn compose_skeleton_contents(
-    file: &Path,
-    source: &str,
-    selected: &[usize],
-    ctx: &WalkCtx,
-) -> Vec<crate::content::BatchContent> {
-    let line_count = source.lines().count();
-    let all_ellipses = gap_ellipses(selected, line_count);
-    let lines_for = |range: std::ops::Range<usize>| {
-        let chunk_lines = selected[range].to_vec();
-        let is_first_chunk = chunk_lines.first() == selected.first();
-        let ellipses = all_ellipses
-            .iter()
-            .copied()
-            .filter(|ellipsis| {
-                (*ellipsis == 1 && is_first_chunk)
-                    || ellipsis
-                        .checked_sub(1)
-                        .is_some_and(|previous| chunk_lines.binary_search(&previous).is_ok())
-            })
-            .collect();
-        FileLines::new(chunk_lines).with_ellipses(ellipses)
-    };
-    let cost = |range: std::ops::Range<usize>| {
-        single_file_lines_content(file, source, lines_for(range))
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-    budget_chunk_ranges(
-        selected.len(),
-        cost,
-        COMPOSE_SKELETON_CHUNK_TARGET_TOKENS,
-        COMPOSE_SKELETON_CHUNK_MIN_TOKENS,
-        |_| true,
-        |range| cost(range) <= COMPOSE_SKELETON_CHUNK_TARGET_TOKENS + 40,
-    )
-    .into_iter()
-    .filter_map(|range| single_file_lines_content(file, source, lines_for(range)))
-    .collect()
-}
-
-fn push_compose_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let byte_len = std::fs::metadata(file)
-        .map(|metadata| metadata.len() as usize)
-        .unwrap_or(usize::MAX);
-    let Some(source) = gated_read_source(file, ctx, COMPOSE_SKELETON_BYTE_GATE) else {
-        return;
-    };
-    let line_count = source.lines().count();
-    if line_count == 0 || (line_count <= COMPOSE_LINE_CAP && byte_len > COMPOSE_BYTE_GATE) {
-        return;
-    }
-    let over_cap = line_count > COMPOSE_LINE_CAP;
-    let value = compose_value(file, ctx);
-    let head_key = YamlKey::Whole {
-        file: file.to_path_buf(),
-    };
-    let (head_lines, service_count) = compose_skeleton(&source);
-    if over_cap {
-        if head_lines.is_empty() {
-            return;
-        }
-        let contents = compose_skeleton_contents(file, &source, &head_lines, ctx);
-        let costs: Vec<usize> = contents
-            .iter()
-            .map(|content| ctx.marginal_tokens(content))
-            .collect();
-        let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
-        let mut predecessor = None;
-        for (chunk_index, (content, factor)) in contents.into_iter().zip(factors).enumerate() {
-            let key = YamlKey::ComposeSkeletonChunk {
-                file: file.to_path_buf(),
-                chunk_index,
-            };
-            out.push(Batch {
-                key: key.clone().into(),
-                predecessor,
-                content,
-                value: value * factor,
-            });
-            predecessor = Some(BatchKey::Yaml(key));
-        }
-        return;
-    }
-    let tail_lines: Vec<usize> = (1..=line_count)
-        .filter(|line| head_lines.binary_search(line).is_err())
-        .collect();
-    if head_lines.is_empty() || tail_lines.is_empty() {
-        if let Some(content) = whole_file_lines_content(file, &source) {
-            out.push(Batch {
-                key: head_key.into(),
-                predecessor: None,
-                content,
-                value,
-            });
-        }
-        return;
-    }
-    let head =
-        FileLines::new(head_lines.clone()).with_ellipses(gap_ellipses(&head_lines, line_count));
-    let Some(head_content) = single_file_lines_content(file, &source, head) else {
-        return;
-    };
-    // Multi-service files have topology value that the old whole-file
-    // lump systematically hid. Single-service compose is bimodal:
-    // sometimes early and tiny (Enclosed), sometimes a late, comment-
-    // heavy ops appendix (Audiobookshelf). Keep its former scheduling
-    // ratio so splitting does not promote it into a new semantic tier.
-    let head_value = if service_count > 1 {
-        value
-    } else {
-        let Some(whole_content) = whole_file_lines_content(file, &source) else {
-            return;
-        };
-        let whole_cost = ctx.marginal_tokens(&whole_content);
-        let head_cost = ctx.marginal_tokens(&head_content);
-        if whole_cost == 0 {
-            value
-        } else {
-            value * (head_cost as f64 / whole_cost as f64).powf(DEFAULT_CONCAVITY_EXPONENT)
-        }
-    };
-    out.push(Batch {
-        key: head_key.clone().into(),
-        predecessor: None,
-        content: head_content,
-        value: head_value,
-    });
-    // Complementary full rows only. Tail ellipses could land on a
-    // head-owned row and overwrite the already-rendered topology.
-    if let Some(content) = single_file_lines_content(file, &source, FileLines::new(tail_lines)) {
-        out.push(Batch {
-            key: YamlKey::Tail {
-                file: file.to_path_buf(),
-            }
-            .into(),
-            predecessor: Some(BatchKey::Yaml(head_key)),
-            content,
-            value: value * COMPOSE_TAIL_FACTOR,
-        });
-    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -881,37 +602,7 @@ mod tests {
     }
 
     #[test]
-    fn yaml_compose_skeleton_selects_service_contract_fields() {
-        let source = "\
-name: demo
-services:
-  db:
-    image: postgres:16
-    environment:
-      POSTGRES_PASSWORD: secret
-    ports:
-      - 5432:5432
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      db:
-        condition: service_started
-    environment:
-      DATABASE_URL: postgres://db
-volumes:
-  data:
-";
-        assert_eq!(
-            compose_skeleton(source).0,
-            vec![2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-        );
-        assert_eq!(compose_skeleton(source).1, 2);
-    }
-
-    #[test]
-    fn yaml_emits_whole_batch_for_all_skeleton_compose_file() {
+    fn yaml_emits_whole_batch_for_compose_file() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(
@@ -933,102 +624,6 @@ volumes:
             keys.iter()
                 .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Whole { .. }))),
             "missing Yaml::Whole batch; scheduled keys: {keys:?}",
-        );
-    }
-
-    #[test]
-    fn yaml_compose_split_head_plus_tail_renders_whole_file() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let source = "\
-services:
-  web:
-    image: example/web:latest
-    environment:
-      WEB_MODE: production
-    ports:
-      - 8080:80
-    depends_on:
-      - db
-  db:
-    image: postgres:16
-    volumes:
-      - data:/var/lib/postgresql/data
-volumes:
-  data:
-";
-        std::fs::write(root.join("compose.override.yml"), source).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
-        let report = scheduler.run_with_report();
-        let keys: Vec<_> = report
-            .scheduled
-            .iter()
-            .map(|record| record.key.clone())
-            .collect();
-        assert!(
-            keys.iter()
-                .any(|key| matches!(key, BatchKey::Yaml(YamlKey::Tail { .. }))),
-            "missing compose tail; scheduled keys: {keys:?}",
-        );
-        let rendered = report.tree.render();
-        let rendered_source_lines: Vec<_> = rendered
-            .lines()
-            .filter_map(|line| line.split_once('→').map(|(_, source_line)| source_line))
-            .collect();
-        for line in source.lines().filter(|line| !line.is_empty()) {
-            assert_eq!(
-                rendered_source_lines
-                    .iter()
-                    .filter(|rendered_line| **rendered_line == line)
-                    .count(),
-                source
-                    .lines()
-                    .filter(|source_line| *source_line == line)
-                    .count(),
-                "source line {line:?} should retain its exact multiplicity:\n{rendered}",
-            );
-        }
-    }
-
-    #[test]
-    fn yaml_oversized_compose_emits_bounded_topology_head_only() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let mut body = String::from("services:\n");
-        for i in 0..(COMPOSE_SKELETON_SERVICE_CAP + 10) {
-            body.push_str(&format!(
-                "  svc{i}:\n    image: image{i}\n    environment:\n      NOISE: value\n"
-            ));
-        }
-        std::fs::write(root.join("docker-compose.yml"), body).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
-        let report = scheduler.run_with_report();
-        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
-        assert!(
-            keys.iter()
-                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::ComposeSkeletonChunk { .. }))),
-            "missing YAML topology head for oversized compose; scheduled keys: {keys:?}",
-        );
-        assert!(
-            !keys
-                .iter()
-                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Tail { .. }))),
-            "oversized compose must not emit a tail; scheduled keys: {keys:?}",
-        );
-        let rendered = report.tree.render();
-        assert!(
-            rendered.contains("svc0:"),
-            "missing first service:\n{rendered}"
-        );
-        assert!(
-            rendered.contains("image0"),
-            "missing selected contract field:\n{rendered}"
-        );
-        assert!(
-            !rendered.contains(&format!("svc{}:", COMPOSE_SKELETON_SERVICE_CAP)),
-            "service cap was not enforced:\n{rendered}"
         );
     }
 

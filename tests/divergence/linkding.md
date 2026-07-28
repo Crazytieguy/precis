@@ -48,10 +48,9 @@ Score(3000)=0.691 I=0.841 C=0.567 ns_rows≤3K=18/51 (reached=8 partial=1 missin
 | walker |  | 1321 | 16 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.751 |
 | walker |  | 1341 | 20 | listing of 'docs/src' |  |  | 0.751 |
 | walker |  | 1348 | 7 | listing of 'docs/src/content' |  |  | 0.751 |
-| walker |  | 1407 | 59 | YAML config at docker-compose.yml |  |  | 0.751 |
 | ns | 1446 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.700 |
 | ns | 1467 |  | 21 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.705 |
-| walker |  | 1475 | 68 | YAML config tail at docker-compose.yml |  |  | 0.705 |
+| walker |  | 1475 | 127 | YAML config at docker-compose.yml |  |  | 0.705 |
 | walker |  | 1525 | 50 | listing of 'scripts' |  |  | 0.707 |
 | walker |  | 1536 | 11 | python decl names surface in manage.py |  |  | 0.707 |
 | walker |  | 1536 | 0 | python decl at manage.py:7 |  |  | 0.707 |

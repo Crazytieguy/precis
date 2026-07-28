@@ -68,8 +68,7 @@ Score(3000)=0.528 I=0.801 C=0.348 ns_rows≤3K=16/47 (reached=5 partial=0 missin
 | walker |  | 1463 | 22 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.423 |
 | walker |  | 1485 | 22 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.424 |
 | walker |  | 1508 | 23 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.425 |
-| walker |  | 1556 | 48 | YAML config at docker-compose.yml |  |  | 0.435 |
-| walker |  | 1614 | 58 | YAML config tail at docker-compose.yml |  |  | 0.472 |
+| walker |  | 1614 | 106 | YAML config at docker-compose.yml |  |  | 0.472 |
 | walker |  | 1677 | 63 | listing of 'packages/app-client/public' |  |  | 0.472 |
 | walker |  | 1714 | 37 | listing of 'packages/app-client/src/modules' |  |  | 0.472 |
 | walker |  | 1718 | 4 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.473 |
