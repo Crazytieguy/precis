@@ -259,16 +259,6 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
-    /// One source-order slice of documented interface / object-type
-    /// members. Contains each member's attached JSDoc plus its signature;
-    /// predecessor: the matching `Export` header.
-    ExportMemberDoc {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-        /// Zero-based source-order slice index.
-        chunk_index: usize,
-    },
     /// Whole member-name catalog of one big exported declaration
     /// (interface / object-type alias / class above the per-member
     /// split range). Predecessor: the matching `Export` header.
@@ -833,7 +823,6 @@ impl InnerKey for TsKey {
             self,
             TsKey::ExportBody { .. }
                 | TsKey::ExportMember { .. }
-                | TsKey::ExportMemberDoc { .. }
                 | TsKey::ExportTail { .. }
                 | TsKey::ModuleItemBody { .. }
         )
@@ -856,8 +845,7 @@ impl InnerKey for TsKey {
             // Roster tier for the unified member catalog — measured:
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
-            TsKey::ExportMemberDoc { .. }
-            | TsKey::ExportMemberNames { .. }
+            TsKey::ExportMemberNames { .. }
             | TsKey::ExportMemberNamesChunk { .. }
             | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
@@ -882,15 +870,6 @@ impl InnerKey for TsKey {
                 member_start_line,
             } => format!(
                 "export member at {}:{start_line} member {member_start_line}",
-                display_path(file, root)
-            ),
-            TsKey::ExportMemberDoc {
-                file,
-                start_line,
-                chunk_index,
-            } => format!(
-                "export member docs #{} at {}:{start_line}",
-                chunk_index + 1,
                 display_path(file, root)
             ),
             TsKey::ExportMemberNames { file, start_line } => format!(
