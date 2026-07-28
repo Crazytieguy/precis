@@ -619,24 +619,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 148
-cum_tokens = 711
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
-
-[[batches]]
-position = 15
 key = 'Toml(Identity { file: "sqlite-dist.toml" })'
 descriptor = "[package] in sqlite-dist.toml"
 cost_tokens = 104
-cum_tokens = 815
+cum_tokens = 667
 
 [batches.content]
 kind = "lines"
@@ -650,11 +636,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 38
-cum_tokens = 853
+cum_tokens = 705
 
 [batches.content]
 kind = "lines"
@@ -724,11 +710,11 @@ end = 153
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 12
-cum_tokens = 865
+cum_tokens = 717
 
 [batches.content]
 kind = "fs"
@@ -738,11 +724,11 @@ parent = "scripts"
 entries = ["progress.ts", "publish-release.sh", "vendor.sh"]
 
 [[batches]]
-position = 18
+position = 17
 key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
 descriptor = "headings outline in ARCHITECTURE.md"
 cost_tokens = 48
-cum_tokens = 913
+cum_tokens = 765
 
 [batches.content]
 kind = "lines"
@@ -796,11 +782,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 22
-cum_tokens = 935
+cum_tokens = 787
 
 [batches.content]
 kind = "fs"
@@ -810,11 +796,11 @@ parent = "benchmarks"
 entries = ["README.md", "exhaustive-memory", "micro", "profiling", "self-params"]
 
 [[batches]]
-position = 20
+position = 19
 key = 'Fs(DirListing { dir: "benchmarks/self-params" })'
 descriptor = "listing of 'benchmarks/self-params'"
 cost_tokens = 12
-cum_tokens = 947
+cum_tokens = 799
 
 [batches.content]
 kind = "fs"
@@ -824,11 +810,11 @@ parent = "benchmarks/self-params"
 entries = ["build.py", "knn.py", "test.py"]
 
 [[batches]]
-position = 21
+position = 20
 key = 'Python(Imports { file: "tmp-static.py" })'
 descriptor = "python imports in tmp-static.py"
 cost_tokens = 19
-cum_tokens = 966
+cum_tokens = 818
 
 [batches.content]
 kind = "lines"
@@ -842,11 +828,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Fs(DirListing { dir: "site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 77
-cum_tokens = 1043
+cum_tokens = 895
 
 [batches.content]
 kind = "fs"
@@ -856,11 +842,11 @@ parent = "site"
 entries = [".gitignore", ".vitepress", "api-reference.md", "build-ref.mjs", "compiling.md", "features", "getting-started", "guides", "index.md", "package-lock.json", "package.json", "project.data.ts", "public", "sqlite.tmlanguage.json", "using", "versioning.md"]
 
 [[batches]]
-position = 23
+position = 22
 key = 'Fs(DirListing { dir: "site/.vitepress" })'
 descriptor = "listing of 'site/.vitepress'"
 cost_tokens = 8
-cum_tokens = 1051
+cum_tokens = 903
 
 [batches.content]
 kind = "fs"
@@ -870,11 +856,11 @@ parent = "site/.vitepress"
 entries = ["config.mts", "theme"]
 
 [[batches]]
-position = 24
+position = 23
 key = 'Fs(DirListing { dir: "site/.vitepress/theme" })'
 descriptor = "listing of 'site/.vitepress/theme'"
 cost_tokens = 16
-cum_tokens = 1067
+cum_tokens = 919
 
 [batches.content]
 kind = "fs"
@@ -884,11 +870,11 @@ parent = "site/.vitepress/theme"
 entries = ["HeroImg.vue", "Sponsors.vue", "index.ts", "style.css"]
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: "benchmarks/micro" })'
 descriptor = "listing of 'benchmarks/micro'"
 cost_tokens = 25
-cum_tokens = 1092
+cum_tokens = 944
 
 [batches.content]
 kind = "fs"
@@ -898,11 +884,11 @@ parent = "benchmarks/micro"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml", "benches", "build.rs", "src"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "benchmarks/micro/src" })'
 descriptor = "listing of 'benchmarks/micro/src'"
 cost_tokens = 3
-cum_tokens = 1095
+cum_tokens = 947
 
 [batches.content]
 kind = "fs"
@@ -910,6 +896,20 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "benchmarks/micro/src"
 entries = ["lib.rs"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 148
+cum_tokens = 1095
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
 
 [[batches]]
 position = 27

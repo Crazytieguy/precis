@@ -199,24 +199,10 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 66
-cum_tokens = 340
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
-
-[[batches]]
-position = 13
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 11
-cum_tokens = 351
+cum_tokens = 285
 
 [batches.content]
 kind = "fs"
@@ -226,11 +212,11 @@ parent = ".github"
 entries = ["funding.yml", "security.md", "workflows"]
 
 [[batches]]
-position = 14
+position = 13
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 3
-cum_tokens = 354
+cum_tokens = 288
 
 [batches.content]
 kind = "fs"
@@ -240,11 +226,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 335
-cum_tokens = 689
+cum_tokens = 623
 
 [batches.content]
 kind = "lines"
@@ -258,11 +244,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 31
-cum_tokens = 720
+cum_tokens = 654
 
 [batches.content]
 kind = "lines"
@@ -276,11 +262,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Typescript(ExportNames { file: "source/errors/TimeoutError.ts" })'
 descriptor = "export names surface in source/errors/TimeoutError.ts"
 cost_tokens = 15
-cum_tokens = 735
+cum_tokens = 669
 
 [batches.content]
 kind = "lines"
@@ -302,11 +288,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(Export { file: "source/errors/TimeoutError.ts", start_line: 3 })'
 descriptor = "export at source/errors/TimeoutError.ts:3"
 cost_tokens = 25
-cum_tokens = 760
+cum_tokens = 694
 
 [batches.content]
 kind = "lines"
@@ -328,11 +314,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(ExportNames { file: "source/errors/ForceRetryError.ts" })'
 descriptor = "export names surface in source/errors/ForceRetryError.ts"
 cost_tokens = 16
-cum_tokens = 776
+cum_tokens = 710
 
 [batches.content]
 kind = "lines"
@@ -354,11 +340,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 183
-cum_tokens = 959
+cum_tokens = 893
 
 [batches.content]
 kind = "lines"
@@ -380,11 +366,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Markdown(Prelude { file: "readme.md" })'
 descriptor = "README prelude in readme.md"
 cost_tokens = 41
-cum_tokens = 1000
+cum_tokens = 934
 
 [batches.content]
 kind = "lines"
@@ -398,11 +384,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Typescript(ExportNames { file: "source/errors/HTTPError.ts" })'
 descriptor = "export names surface in source/errors/HTTPError.ts"
 cost_tokens = 19
-cum_tokens = 1019
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -422,6 +408,20 @@ end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 66
+cum_tokens = 1019
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
 
 [[batches]]
 position = 23

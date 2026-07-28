@@ -16,23 +16,23 @@ Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | walker |  | 203 | 37 | listing of 'source/utils' |  |  | 0.782 |
 | ns | 244 |  | 119 | Complete `source/` tree: every library file | 1.3 |  | 0.736 |
 | walker |  | 274 | 71 | package identity in package.json |  |  | 0.746 |
-| ns | 320 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.725 |
-| walker |  | 340 | 66 | listing of 'test' |  |  | 0.736 |
-| walker |  | 351 | 11 | listing of '.github' |  |  | 0.736 |
-| walker |  | 354 | 3 | listing of '.github/workflows' |  |  | 0.737 |
-| ns | 422 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.658 |
-| ns | 542 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.598 |
-| ns | 676 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.544 |
-| walker |  | 689 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.544 |
-| walker |  | 720 | 31 | package runtime metadata in package.json |  |  | 0.545 |
-| walker |  | 735 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.545 |
-| ns | 758 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.515 |
-| walker |  | 760 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.515 |
-| walker |  | 776 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.515 |
-| ns | 880 |  | 122 | package.json module contract: type, exports, main, engines | 1.9 | 1.4 | 0.485 |
-| walker |  | 959 | 183 | README headline in readme.md |  |  | 0.607 |
-| walker |  | 1000 | 41 | README prelude in readme.md |  |  | 0.727 |
-| walker |  | 1019 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.727 |
+| walker |  | 285 | 11 | listing of '.github' |  |  | 0.747 |
+| walker |  | 288 | 3 | listing of '.github/workflows' |  |  | 0.747 |
+| ns | 320 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.726 |
+| ns | 422 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.648 |
+| ns | 542 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.590 |
+| walker |  | 623 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.590 |
+| walker |  | 654 | 31 | package runtime metadata in package.json |  |  | 0.590 |
+| walker |  | 669 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.590 |
+| ns | 676 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.537 |
+| walker |  | 694 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.537 |
+| walker |  | 710 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.537 |
+| ns | 758 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.507 |
+| ns | 880 |  | 122 | package.json module contract: type, exports, main, engines | 1.9 | 1.4 | 0.478 |
+| walker |  | 893 | 183 | README headline in readme.md |  |  | 0.600 |
+| walker |  | 934 | 41 | README prelude in readme.md |  |  | 0.721 |
+| walker |  | 953 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.721 |
+| walker |  | 1019 | 66 | listing of 'test' |  |  | 0.727 |
 | walker |  | 1076 | 57 | export at source/errors/HTTPError.ts:5 |  |  | 0.727 |
 | ns | 1130 |  | 250 | source/index.ts: the complete public type-export block | 1.10 | 1.7 | 0.631 |
 | walker |  | 1181 | 105 | package entrypoints in package.json |  |  | 0.692 |

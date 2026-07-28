@@ -14,29 +14,29 @@ Score(3000)=0.513 I=0.817 C=0.322 ns_rows≤3K=24/56 (reached=6 partial=2 missin
 | walker |  | 183 | 36 | [dependencies] in Cargo.toml |  |  | 0.637 |
 | walker |  | 212 | 29 | headings outline in README.md |  |  | 0.640 |
 | ns | 219 |  | 90 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.461 |
-| walker |  | 285 | 73 | listing of 'tests' |  |  | 0.464 |
-| ns | 317 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.405 |
-| walker |  | 356 | 71 | mod/use plumbing in src/lib.rs |  |  | 0.411 |
-| walker |  | 402 | 46 | listing of 'impl/src' |  |  | 0.567 |
+| walker |  | 283 | 71 | mod/use plumbing in src/lib.rs |  |  | 0.468 |
+| ns | 317 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.408 |
+| walker |  | 329 | 46 | listing of 'impl/src' |  |  | 0.624 |
+| walker |  | 371 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.627 |
 | ns | 402 |  | 85 | README canonical example, tail: named-field variant, unit variant | 1.5 | 1.4 | 0.567 |
-| walker |  | 444 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.569 |
-| walker |  | 479 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.569 |
-| walker |  | 479 | 0 | impl method at impl/src/lib.rs:49 |  |  | 0.569 |
-| ns | 480 |  | 78 | Derive entry point: #[proc_macro_derive(Error, attributes(...))] | 1.6 |  | 0.551 |
-| walker |  | 510 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.577 |
-| ns | 616 |  | 136 | Root crate module structure and public re-export (src/lib.rs tail) | 1.7 |  | 0.530 |
-| walker |  | 695 | 185 | [package] in Cargo.toml |  |  | 0.697 |
-| ns | 711 |  | 95 | Root crate attributes: no_std, docs.rs root, nightly cfg gate | 1.8 |  | 0.663 |
-| walker |  | 767 | 72 | README.md section #0 |  |  | 0.701 |
-| ns | 818 |  | 107 | Cargo manifest: features, dependency on impl, workspace members | 1.9 |  | 0.694 |
-| ns | 874 |  | 56 | Documentation map: README section headings + rustdoc mirror in src/lib.rs | 2.1 |  | 0.679 |
-| walker |  | 900 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.679 |
-| ns | 1040 |  | 166 | Details: no public API footprint, allowed error shapes, Display generation | 2.2 |  | 0.639 |
-| walker |  | 1167 | 267 | crate-doc lede in src/lib.rs |  |  | 0.639 |
-| ns | 1226 |  | 186 | Display shorthand table: {var}, {0}, {var:?}, {0:?} | 2.3 |  | 0.611 |
-| walker |  | 1363 | 196 | README.md section #1 |  |  | 0.739 |
-| ns | 1408 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.693 |
-| walker |  | 1527 | 164 | [features] in Cargo.toml |  |  | 0.716 |
+| walker |  | 406 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.567 |
+| walker |  | 406 | 0 | impl method at impl/src/lib.rs:49 |  |  | 0.567 |
+| walker |  | 437 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.572 |
+| ns | 480 |  | 78 | Derive entry point: #[proc_macro_derive(Error, attributes(...))] | 1.6 |  | 0.574 |
+| ns | 616 |  | 136 | Root crate module structure and public re-export (src/lib.rs tail) | 1.7 |  | 0.527 |
+| walker |  | 622 | 185 | [package] in Cargo.toml |  |  | 0.695 |
+| walker |  | 694 | 72 | README.md section #0 |  |  | 0.736 |
+| ns | 711 |  | 95 | Root crate attributes: no_std, docs.rs root, nightly cfg gate | 1.8 |  | 0.700 |
+| ns | 818 |  | 107 | Cargo manifest: features, dependency on impl, workspace members | 1.9 |  | 0.692 |
+| walker |  | 827 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.692 |
+| ns | 874 |  | 56 | Documentation map: README section headings + rustdoc mirror in src/lib.rs | 2.1 |  | 0.678 |
+| ns | 1040 |  | 166 | Details: no public API footprint, allowed error shapes, Display generation | 2.2 |  | 0.638 |
+| walker |  | 1094 | 267 | crate-doc lede in src/lib.rs |  |  | 0.638 |
+| ns | 1226 |  | 186 | Display shorthand table: {var}, {0}, {var:?}, {0:?} | 2.3 |  | 0.609 |
+| walker |  | 1290 | 196 | README.md section #1 |  |  | 0.737 |
+| ns | 1408 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.691 |
+| walker |  | 1454 | 164 | [features] in Cargo.toml |  |  | 0.714 |
+| walker |  | 1527 | 73 | listing of 'tests' |  |  | 0.716 |
 | ns | 1561 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.689 |
 | walker |  | 1600 | 73 | dev/build/target dependencies in Cargo.toml |  |  | 0.690 |
 | walker |  | 1647 | 47 | impl method body at impl/src/lib.rs:49 body 50 |  |  | 0.690 |

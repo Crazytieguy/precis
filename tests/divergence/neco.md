@@ -7,19 +7,19 @@ Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missin
 | walker |  | 59 | 26 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 70 | 11 | README headline in docs/README.md |  |  | 0.000 |
 | walker |  | 90 | 20 | listing of 'docs/assets' |  |  | 0.000 |
+| walker |  | 105 | 15 | listing of '.github' |  |  | 0.000 |
+| walker |  | 108 | 3 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 121 |  | 74 | How the library is consumed and built | 1.2 |  | 0.000 |
-| ns | 154 |  | 33 | Complete root listing | 1.3 |  | 0.305 |
-| walker |  | 215 | 125 | listing of 'tests' |  |  | 0.369 |
-| walker |  | 230 | 15 | listing of '.github' |  |  | 0.379 |
-| walker |  | 233 | 3 | listing of '.github/workflows' |  |  | 0.383 |
-| ns | 245 |  | 91 | examples/ and deps/ listings | 1.4 |  | 0.256 |
-| ns | 342 |  | 97 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.274 |
-| walker |  | 376 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.276 |
-| walker |  | 390 | 14 | listing of 'docs/tools' |  |  | 0.315 |
-| walker |  | 431 | 41 | listing of 'deps' |  |  | 0.360 |
-| ns | 467 |  | 125 | Complete tests/ listing | 1.6 |  | 0.404 |
-| walker |  | 520 | 89 | c header banner in neco.h |  |  | 0.404 |
-| walker |  | 570 | 50 | listing of 'examples' |  |  | 0.539 |
+| ns | 154 |  | 33 | Complete root listing | 1.3 |  | 0.322 |
+| ns | 245 |  | 91 | examples/ and deps/ listings | 1.4 |  | 0.215 |
+| walker |  | 251 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.217 |
+| walker |  | 265 | 14 | listing of 'docs/tools' |  |  | 0.228 |
+| walker |  | 306 | 41 | listing of 'deps' |  |  | 0.290 |
+| ns | 342 |  | 97 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.313 |
+| walker |  | 395 | 89 | c header banner in neco.h |  |  | 0.313 |
+| walker |  | 445 | 50 | listing of 'examples' |  |  | 0.478 |
+| ns | 467 |  | 125 | Complete tests/ listing | 1.6 |  | 0.390 |
+| walker |  | 570 | 125 | listing of 'tests' |  |  | 0.539 |
 | ns | 599 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.501 |
 | ns | 868 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.455 |
 | walker |  | 997 | 427 | README headline in README.md |  |  | 0.679 |
