@@ -356,11 +356,6 @@ pub enum PlaintextKey {
     /// tail. Chunks form a predecessor chain after [`PlaintextKey::Whole`]
     /// so later config groups cannot render before earlier ones.
     DotenvChunk { file: PathBuf, chunk_index: usize },
-    /// Source-ordered chunk of literal target/dependency rows from an
-    /// oversized root Makefile, plus bounded variable blocks that
-    /// directly govern build/test targets. Recipe, pattern, and
-    /// generated-output rules are deliberately absent.
-    MakefileSkeletonChunk { file: PathBuf, chunk_index: usize },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
@@ -386,17 +381,8 @@ pub enum SqlKey {
 /// reference/spec maps whose top-level keys are useful orientation.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum YamlKey {
-    /// Whole-file render of a compact operational config. For compose
-    /// files with a non-trivial service body, carries the service
-    /// topology skeleton instead.
+    /// Whole-file render of a compact operational config.
     Whole { file: PathBuf },
-    /// Source-ordered chunk of a bounded service-topology skeleton from
-    /// an over-cap compose file. Chunks form a predecessor chain so the
-    /// deployment map grows as a stable prefix.
-    ComposeSkeletonChunk { file: PathBuf, chunk_index: usize },
-    /// Compose rows complementary to the service-topology skeleton.
-    /// Predecessor: the matching [`YamlKey::Whole`] head.
-    Tail { file: PathBuf },
     /// Root and child keys in a root reference/API/spec map.
     TopLevelKeys { file: PathBuf },
 }
@@ -1001,13 +987,6 @@ impl InnerKey for PlaintextKey {
                     display_path(file, root),
                 )
             }
-            PlaintextKey::MakefileSkeletonChunk { file, chunk_index } => {
-                format!(
-                    "Makefile target skeleton chunk #{} of {}",
-                    chunk_index + 1,
-                    display_path(file, root),
-                )
-            }
             PlaintextKey::ManLede { file } => {
                 format!(
                     "man-page NAME + DESCRIPTION in {}",
@@ -1068,14 +1047,6 @@ impl InnerKey for YamlKey {
     fn describe(&self, root: &Path) -> String {
         match self {
             YamlKey::Whole { file } => format!("YAML config at {}", display_path(file, root)),
-            YamlKey::ComposeSkeletonChunk { file, chunk_index } => format!(
-                "compose topology skeleton chunk #{} at {}",
-                chunk_index + 1,
-                display_path(file, root),
-            ),
-            YamlKey::Tail { file } => {
-                format!("YAML config tail at {}", display_path(file, root))
-            }
             YamlKey::TopLevelKeys { file } => {
                 format!(
                     "YAML reference map key roster in {}",

@@ -72,29 +72,6 @@ const DOCKERFILE_SKELETON_BYTE_GATE: usize = 256 * 1024;
 /// with repeated ENV/LABEL/ARG or continuation/heredoc bodies.
 const DOCKERFILE_SKELETON_ROW_CAP: usize = 80;
 
-/// Oversized Makefiles are parsed into a bounded structural skeleton,
-/// so they can tolerate realistic recipe-heavy files without admitting
-/// arbitrarily large plaintext inputs.
-const MAKEFILE_SKELETON_BYTE_GATE: usize = 256 * 1024;
-
-/// Target cost for source-ordered Makefile skeleton chunks. Skeleton
-/// rows are individually cheap, but a large target catalog should not
-/// become another whole-file-sized scheduling lump.
-const MAKEFILE_SKELETON_CHUNK_TARGET_TOKENS: usize = 100;
-const MAKEFILE_SKELETON_CHUNK_MIN_TOKENS: usize = 60;
-
-/// Variable context is supporting evidence, not a second config dump.
-/// Only compact blocks directly adjacent to build/test targets or
-/// referenced by admitted target headers survive this cap.
-const MAKEFILE_VARIABLE_BLOCK_MAX_LINES: usize = 10;
-
-/// Literal-target count at which an oversized Makefile skeleton carries
-/// the class's full aggregate value. Sparse skeletons still provide a
-/// useful reachability hedge, but should not rank like a broad build/test
-/// surface merely because excluding recipes made them very cheap.
-const MAKEFILE_TARGET_MASS_BASELINE: f64 = 18.0;
-const MAKEFILE_TARGET_MASS_FLOOR: f64 = 0.35;
-
 /// Tail-batch value factor for the Dockerfile split — the `RUN` /
 /// `COPY` bodies are follow-up to the stage + contract skeleton, but
 /// close follow-up: NSes that rank a Dockerfile at all want the build
@@ -782,10 +759,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             push_dockerfile_batches(&file, class, ctx, &mut out);
             continue;
         }
-        if matches!(class, Class::BuildEntrypoint) {
-            push_makefile_batches(&file, class, ctx, &mut out);
-            continue;
-        }
         // Head-sampled, not gated: a file one line over the cap used
         // to render as nothing at all, which is strictly worse than
         // the same file's first `PLAINTEXT_LINE_CAP` lines.
@@ -793,6 +766,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             Class::Requirements => {
                 head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, REQUIREMENTS_HEAD_LINE_CAP)
             }
+            // Build entrypoints get headroom over the generic cap:
+            // real app Dockerfiles / Makefiles routinely run 60–100
+            // lines and are exactly the ops surface NS authors anchor
+            // on (audiobookshelf 73, linkwarden 70). Gated rather than
+            // head-sampled: a Makefile's first 100 lines are usually
+            // variable preamble, so a partial head is not the same
+            // artifact as the build surface.
+            Class::BuildEntrypoint => gated_whole_file_content(
+                &file,
+                ctx,
+                BUILD_ENTRYPOINT_BYTE_GATE,
+                BUILD_ENTRYPOINT_LINE_CAP,
+            ),
             _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
         let Some(content) = content else {
@@ -806,373 +792,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         });
     }
     out
-}
-
-#[derive(Debug)]
-enum MakefileStatement {
-    Assignment {
-        lines: Vec<usize>,
-        name: String,
-    },
-    Target {
-        lines: Vec<usize>,
-        names: Vec<String>,
-        text: String,
-    },
-    Trivia,
-    Other,
-}
-
-fn makefile_logical_ranges(lines: &[&str]) -> Vec<Range<usize>> {
-    let mut ranges = Vec::new();
-    let mut start = 0;
-    while start < lines.len() {
-        let mut end = start + 1;
-        while end < lines.len() && lines[end - 1].trim_end().ends_with('\\') {
-            end += 1;
-        }
-        ranges.push(start..end);
-        start = end;
-    }
-    ranges
-}
-
-fn makefile_assignment_name(line: &str) -> Option<String> {
-    if line.starts_with(char::is_whitespace) {
-        return None;
-    }
-    let line = line.split('#').next().unwrap_or_default().trim();
-    let operator_at = [":=", "?=", "+=", "!=", "="]
-        .into_iter()
-        .filter_map(|operator| line.find(operator))
-        .min()?;
-    let before = line[..operator_at].trim();
-    if before.is_empty() || before.contains(':') {
-        return None;
-    }
-    let name = before.split_whitespace().last()?;
-    if name.is_empty()
-        || name
-            .chars()
-            .any(|ch| ch.is_whitespace() || matches!(ch, '$' | '%' | '/' | '\\'))
-    {
-        return None;
-    }
-    Some(name.to_owned())
-}
-
-fn is_literal_make_target(name: &str) -> bool {
-    !name.is_empty()
-        && !name.starts_with('.')
-        && !name.contains('.')
-        && !name.chars().any(|ch| {
-            matches!(
-                ch,
-                '$' | '%' | '/' | '\\' | '*' | '?' | '[' | ']' | '(' | ')' | '&' | '='
-            )
-        })
-}
-
-fn is_make_target_specific_assignment(rhs: &str) -> bool {
-    let rhs = rhs
-        .strip_prefix("private")
-        .filter(|rest| rest.starts_with(char::is_whitespace))
-        .unwrap_or(rhs)
-        .trim_start();
-    let Some(operator_at) = [":=", "?=", "+=", "="]
-        .into_iter()
-        .filter_map(|operator| rhs.find(operator))
-        .min()
-    else {
-        return false;
-    };
-    let name = rhs[..operator_at].trim();
-    !name.is_empty()
-        && !name.chars().any(char::is_whitespace)
-        && !name
-            .chars()
-            .any(|ch| matches!(ch, '$' | '%' | '/' | '\\' | ':' | ';'))
-}
-
-fn makefile_target(line: &str) -> Option<(Vec<String>, String)> {
-    if line.starts_with(char::is_whitespace) || line.trim_start().starts_with('#') {
-        return None;
-    }
-    let text = line.split('#').next().unwrap_or_default().trim();
-    let colon = text.find(':')?;
-    let lhs = text[..colon].trim();
-    let rhs = text[colon + 1..].trim();
-    // Target-specific variable assignments are valid user-invokable
-    // targets. Static-pattern rules and inline recipes are not skeleton
-    // rows; nor are arbitrary dependency strings containing assignments.
-    if rhs.contains(';')
-        || (!is_make_target_specific_assignment(rhs)
-            && (rhs.contains(':')
-                || ["?=", "+=", "!=", "="]
-                    .into_iter()
-                    .any(|operator| rhs.contains(operator))))
-    {
-        return None;
-    }
-    let names: Vec<String> = lhs.split_whitespace().map(str::to_owned).collect();
-    (!names.is_empty() && names.iter().all(|name| is_literal_make_target(name)))
-        .then_some((names, text.to_owned()))
-}
-
-fn is_build_test_target(name: &str) -> bool {
-    name == "all"
-        || ["build", "compile", "test", "check", "lint", "bench"]
-            .into_iter()
-            .any(|prefix| name == prefix || name.starts_with(&format!("{prefix}-")))
-}
-
-fn makefile_statements(source: &str) -> Vec<MakefileStatement> {
-    let lines: Vec<&str> = source.lines().collect();
-    makefile_logical_ranges(&lines)
-        .into_iter()
-        .map(|range| {
-            let first = lines[range.start];
-            let physical_lines: Vec<usize> = (range.start + 1..=range.end).collect();
-            if first.trim().is_empty() || first.trim_start().starts_with('#') {
-                return MakefileStatement::Trivia;
-            }
-            if let Some(name) = makefile_assignment_name(first) {
-                return MakefileStatement::Assignment {
-                    lines: physical_lines,
-                    name,
-                };
-            }
-            if let Some((names, text)) = makefile_target(first) {
-                return MakefileStatement::Target {
-                    lines: physical_lines,
-                    names,
-                    text,
-                };
-            }
-            MakefileStatement::Other
-        })
-        .collect()
-}
-
-/// Structural rows for an oversized Makefile. Literal user-invokable
-/// targets are the primary surface. Compact assignment blocks ride along
-/// only when the next substantive statement is a build/test target or a
-/// variable from the block appears in an admitted target header.
-fn makefile_skeleton_items(source: &str) -> Vec<Vec<usize>> {
-    let statements = makefile_statements(source);
-    let mut selected: Vec<Vec<usize>> = Vec::new();
-    let mut attached_targets: Vec<(usize, usize)> = Vec::new();
-    let mut index = 0;
-    while index < statements.len() {
-        if !matches!(statements[index], MakefileStatement::Assignment { .. }) {
-            index += 1;
-            continue;
-        }
-        let block_start = index;
-        let mut block_end = index;
-        let mut block_line_count = 0;
-        let mut block_names = Vec::new();
-        while block_end < statements.len()
-            && matches!(
-                statements[block_end],
-                MakefileStatement::Assignment { .. } | MakefileStatement::Trivia
-            )
-        {
-            if let MakefileStatement::Assignment { lines, name } = &statements[block_end] {
-                block_line_count += lines.len();
-                block_names.push(name.as_str());
-            }
-            block_end += 1;
-        }
-        let next_build_test = statements
-            .get(block_end)
-            .and_then(|statement| match statement {
-                MakefileStatement::Target { names, .. }
-                    if names.iter().any(|name| is_build_test_target(name)) =>
-                {
-                    Some(block_end)
-                }
-                _ => None,
-            });
-        let referenced_target =
-            statements
-                .iter()
-                .enumerate()
-                .find_map(|(target_index, statement)| match statement {
-                    MakefileStatement::Target { text, .. }
-                        if block_names.iter().any(|name| {
-                            text.contains(&format!("$({name})"))
-                                || text.contains(&format!("${{{name}}}"))
-                        }) =>
-                    {
-                        Some(target_index)
-                    }
-                    _ => None,
-                });
-        if block_line_count <= MAKEFILE_VARIABLE_BLOCK_MAX_LINES
-            && let Some(target_index) = next_build_test.or(referenced_target)
-        {
-            let mut block_lines: Vec<usize> = statements[block_start..block_end]
-                .iter()
-                .filter_map(|statement| match statement {
-                    MakefileStatement::Assignment { lines, .. } => Some(lines.iter().copied()),
-                    _ => None,
-                })
-                .flatten()
-                .collect();
-            if let Some((_, selected_index)) = attached_targets
-                .iter()
-                .find(|(attached_target, _)| *attached_target == target_index)
-            {
-                selected[*selected_index].append(&mut block_lines);
-                selected[*selected_index].sort_unstable();
-                selected[*selected_index].dedup();
-            } else if let MakefileStatement::Target { lines, .. } = &statements[target_index] {
-                block_lines.extend(lines);
-                block_lines.sort_unstable();
-                block_lines.dedup();
-                let selected_index = selected.len();
-                selected.push(block_lines);
-                attached_targets.push((target_index, selected_index));
-            }
-        }
-        index = block_end.max(index + 1);
-    }
-    selected.extend(
-        statements.into_iter().enumerate().filter_map(
-            |(target_index, statement)| match statement {
-                MakefileStatement::Target { lines, .. }
-                    if !attached_targets
-                        .iter()
-                        .any(|(attached_target, _)| *attached_target == target_index) =>
-                {
-                    Some(lines)
-                }
-                _ => None,
-            },
-        ),
-    );
-    selected.sort_unstable_by_key(|lines| lines[0]);
-    selected
-}
-
-fn makefile_skeleton_contents(
-    file: &Path,
-    source: &str,
-    ctx: &WalkCtx,
-) -> (Vec<crate::content::BatchContent>, usize) {
-    let items = makefile_skeleton_items(source);
-    if items.is_empty() {
-        return (Vec::new(), 0);
-    }
-    let target_count = items.len();
-    let line_count = source.lines().count();
-    let mut all_selected: Vec<usize> = items
-        .iter()
-        .flat_map(|lines| lines.iter().copied())
-        .collect();
-    all_selected.sort_unstable();
-    all_selected.dedup();
-    let all_ellipses = gap_ellipses(&all_selected, line_count);
-    let lines_for = |range: Range<usize>| {
-        let is_first_chunk = range.start == 0;
-        let mut selected: Vec<usize> = items[range]
-            .iter()
-            .flat_map(|lines| lines.iter().copied())
-            .collect();
-        selected.sort_unstable();
-        selected.dedup();
-        // Partition the global skeleton's gap markers with the source
-        // rows: a leading marker belongs to the first chunk, and every
-        // other marker belongs to the chunk containing the selected row
-        // immediately before that gap. Chunks therefore never claim the
-        // same line even when the scheduler buys them out of order.
-        let ellipses = all_ellipses
-            .iter()
-            .copied()
-            .filter(|ellipsis| {
-                (*ellipsis == 1 && is_first_chunk)
-                    || ellipsis
-                        .checked_sub(1)
-                        .is_some_and(|previous| selected.binary_search(&previous).is_ok())
-            })
-            .collect();
-        FileLines::new(selected).with_ellipses(ellipses)
-    };
-    let cost = |range: Range<usize>| {
-        single_file_lines_content(file, source, lines_for(range))
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-    let contents = budget_chunk_ranges(
-        items.len(),
-        cost,
-        MAKEFILE_SKELETON_CHUNK_TARGET_TOKENS,
-        MAKEFILE_SKELETON_CHUNK_MIN_TOKENS,
-        |_| true,
-        |range| cost(range) <= MAKEFILE_SKELETON_CHUNK_TARGET_TOKENS + 50,
-    )
-    .into_iter()
-    .filter_map(|range| single_file_lines_content(file, source, lines_for(range)))
-    .collect();
-    (contents, target_count)
-}
-
-fn makefile_target_mass_factor(target_count: usize) -> f64 {
-    (target_count as f64 / MAKEFILE_TARGET_MASS_BASELINE).clamp(MAKEFILE_TARGET_MASS_FLOOR, 1.0)
-}
-
-fn push_makefile_batches(file: &Path, class: Class, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let Some(source) = gated_read_source(file, ctx, MAKEFILE_SKELETON_BYTE_GATE) else {
-        return;
-    };
-    let line_count = source.lines().count();
-    if line_count == 0 {
-        return;
-    }
-    let value = class_value(class, file, ctx);
-    if line_count <= BUILD_ENTRYPOINT_LINE_CAP {
-        // Preserve the pre-skeleton whole-file contract exactly: a
-        // short-but-extremely-wide Makefile still fails the original
-        // 8KB metadata gate rather than riding the larger structural
-        // parser gate into a huge Whole batch.
-        if let Some(content) = gated_whole_file_content(
-            file,
-            ctx,
-            BUILD_ENTRYPOINT_BYTE_GATE,
-            BUILD_ENTRYPOINT_LINE_CAP,
-        ) {
-            out.push(Batch {
-                key: PlaintextKey::Whole {
-                    file: file.to_path_buf(),
-                }
-                .into(),
-                predecessor: None,
-                content,
-                value,
-            });
-        }
-        return;
-    }
-    let (contents, target_count) = makefile_skeleton_contents(file, &source, ctx);
-    let costs: Vec<usize> = contents
-        .iter()
-        .map(|content| ctx.marginal_tokens(content))
-        .collect();
-    let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
-    let skeleton_value = value * makefile_target_mass_factor(target_count);
-    for (chunk_index, (content, factor)) in contents.into_iter().zip(factors).enumerate() {
-        out.push(Batch {
-            key: PlaintextKey::MakefileSkeletonChunk {
-                file: file.to_path_buf(),
-                chunk_index,
-            }
-            .into(),
-            predecessor: None,
-            content,
-            value: skeleton_value * factor,
-        });
-    }
 }
 
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
@@ -2030,51 +1649,6 @@ mod tests {
     }
 
     #[test]
-    fn plaintext_makefile_skeleton_selects_literal_targets_and_small_variable_blocks() {
-        let source = "\
-BUILD_FLAGS = --release
-TEST_DEPS := unit integration
-
-build: $(BUILD_FLAGS)
-\tcargo build
-check: unit \\
- integration
-.PHONY: build check
-%.o: %.c
-$(OUTPUT): input.c
-artifact.bin: input.c
-inline: dep ; echo recipe
-lint: SHELL:=/bin/bash
-
-AUX = helper
-
-test: $(TEST_DEPS)
-\tcargo test
-";
-        let selected: Vec<usize> = makefile_skeleton_items(source)
-            .into_iter()
-            .flatten()
-            .collect();
-        assert_eq!(selected, vec![1, 2, 4, 6, 7, 13, 15, 17]);
-    }
-
-    #[test]
-    fn plaintext_makefile_skeleton_keeps_target_specific_assignment_operators() {
-        let source = "\
-plain: MODE = debug
-simple: MODE := release
-append: CFLAGS += -DTEST
-default: TOOLCHAIN ?= stable
-scoped: private MODE := release
-";
-        let selected: Vec<usize> = makefile_skeleton_items(source)
-            .into_iter()
-            .flatten()
-            .collect();
-        assert_eq!(selected, vec![1, 2, 3, 4, 5]);
-    }
-
-    #[test]
     fn plaintext_small_makefile_stays_whole() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
@@ -2107,44 +1681,20 @@ scoped: private MODE := release
     }
 
     #[test]
-    fn plaintext_oversized_makefile_chunks_conserve_value_and_exclude_recipes() {
+    fn plaintext_oversized_makefile_is_suppressed_entirely() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         let file = root.join("Makefile");
         let mut source = String::from("BUILD_DEPS = common-a common-b\n\nbuild: $(BUILD_DEPS)\n");
         for index in 0..60 {
             source.push_str(&format!(
-                "target-{index:02}: dep-{index:02}-a dep-{index:02}-b\n\tRECIPE_SHOULD_NOT_RENDER_{index:02}\n"
+                "target-{index:02}: dep-{index:02}-a dep-{index:02}-b\n\tRECIPE_{index:02}\n"
             ));
         }
-        source.push_str("%.o: %.c\n\tPATTERN_RECIPE\n$(OUTPUT): generated.c\n\tGENERATED_RECIPE\n");
         std::fs::write(&file, &source).unwrap();
 
         let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        assert!(batches.len() > 1, "expected several skeleton chunks");
-        assert!(batches.iter().all(|batch| matches!(
-            &batch.key,
-            BatchKey::Plaintext(PlaintextKey::MakefileSkeletonChunk {
-                file: batch_file,
-                ..
-            }) if batch_file == &file
-        )));
-        let total_value: f64 = batches.iter().map(|batch| batch.value).sum();
-        let expected =
-            class_value(Class::BuildEntrypoint, &file, &ctx) * makefile_target_mass_factor(61);
-        assert!(
-            (total_value - expected).abs() < 1e-9,
-            "skeleton allocation must be conserved: total={total_value}, expected={expected}",
-        );
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
-        let rendered = scheduler.run_with_report().tree.render();
-        assert!(rendered.contains("build: $(BUILD_DEPS)"));
-        assert!(rendered.contains("target-59: dep-59-a dep-59-b"));
-        assert!(!rendered.contains("RECIPE_SHOULD_NOT_RENDER"));
-        assert!(!rendered.contains("%.o: %.c"));
-        assert!(!rendered.contains("$(OUTPUT): generated.c"));
+        assert!(expand_in_dir(root, &ctx).is_empty());
     }
 
     /// Drive the full `FsWalker` + scheduler against a real

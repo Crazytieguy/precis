@@ -1,4 +1,4 @@
-Score(3000)=0.450 I=0.822 C=0.247 ns_rows≤3K=15/51 (reached=5 partial=0 missing=10)
+Score(3000)=0.457 I=0.827 C=0.252 ns_rows≤3K=15/51 (reached=5 partial=0 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -88,115 +88,114 @@ Score(3000)=0.450 I=0.822 C=0.247 ns_rows≤3K=15/51 (reached=5 partial=0 missin
 | walker |  | 2143 | 96 | package runtime metadata in package.json |  |  | 0.490 |
 | walker |  | 2223 | 80 | listing of 'apps/web/public' |  |  | 0.490 |
 | walker |  | 2232 | 9 | listing of 'apps/web/public/screenshots' |  |  | 0.490 |
-| walker |  | 2372 | 140 | YAML config at docker-compose.yml |  |  | 0.491 |
-| ns | 2420 |  | 313 | `User` model — identity, relations and subscription linkage | 2.4 | 2.1 | 0.460 |
-| walker |  | 2506 | 134 | plaintext config .env.sample |  |  | 0.461 |
-| walker |  | 2555 | 49 | listing of 'apps/mobile/components/ui' |  |  | 0.461 |
-| walker |  | 2569 | 14 | README.md section #21 |  |  | 0.464 |
-| walker |  | 2581 | 12 | README.md section #22 |  |  | 0.467 |
-| walker |  | 2595 | 14 | README.md section #20 |  |  | 0.472 |
-| walker |  | 2624 | 29 | README.md section #29 |  |  | 0.472 |
-| walker |  | 2639 | 15 | README.md section #11 |  |  | 0.472 |
-| walker |  | 2733 | 94 | listing of 'apps/web/pages' |  |  | 0.472 |
-| walker |  | 2738 | 5 | listing of 'apps/web/pages/preserved' |  |  | 0.472 |
-| walker |  | 2747 | 9 | listing of 'apps/web/pages/api' |  |  | 0.472 |
-| walker |  | 2750 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.472 |
-| walker |  | 2753 | 3 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.472 |
-| ns | 2762 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.448 |
-| walker |  | 2763 | 10 | listing of 'apps/web/pages/collections' |  |  | 0.448 |
-| walker |  | 2773 | 10 | listing of 'apps/web/pages/tags' |  |  | 0.448 |
-| walker |  | 2784 | 11 | listing of 'apps/web/pages/auth' |  |  | 0.448 |
-| walker |  | 2795 | 11 | listing of 'apps/web/pages/public' |  |  | 0.448 |
-| walker |  | 2799 | 4 | listing of 'apps/web/pages/public/collections' |  |  | 0.449 |
-| walker |  | 2804 | 5 | listing of 'apps/web/pages/public/links' |  |  | 0.449 |
-| walker |  | 2809 | 5 | listing of 'apps/web/pages/public/preserved' |  |  | 0.449 |
-| walker |  | 2824 | 15 | listing of 'apps/web/pages/links' |  |  | 0.449 |
-| walker |  | 2838 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.449 |
-| walker |  | 2838 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.449 |
-| walker |  | 2856 | 18 | listing of 'apps/web/pages/admin' |  |  | 0.449 |
-| walker |  | 2866 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.449 |
-| walker |  | 2909 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.449 |
-| walker |  | 2964 | 55 | listing of 'apps/web/pages/settings' |  |  | 0.450 |
-| walker |  | 3027 | 63 | listing of 'apps/web/public/locales' |  |  | 0.451 |
-| walker |  | 3030 | 3 | listing of 'apps/web/public/locales/de' |  |  | 0.451 |
-| walker |  | 3033 | 3 | listing of 'apps/web/public/locales/en' |  |  | 0.451 |
-| walker |  | 3036 | 3 | listing of 'apps/web/public/locales/es' |  |  | 0.451 |
-| walker |  | 3039 | 3 | listing of 'apps/web/public/locales/fr' |  |  | 0.451 |
-| walker |  | 3042 | 3 | listing of 'apps/web/public/locales/it' |  |  | 0.451 |
-| walker |  | 3045 | 3 | listing of 'apps/web/public/locales/ja' |  |  | 0.451 |
-| walker |  | 3048 | 3 | listing of 'apps/web/public/locales/nl' |  |  | 0.451 |
-| walker |  | 3051 | 3 | listing of 'apps/web/public/locales/pl' |  |  | 0.451 |
-| walker |  | 3054 | 3 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.451 |
-| walker |  | 3057 | 3 | listing of 'apps/web/public/locales/ro' |  |  | 0.451 |
-| walker |  | 3060 | 3 | listing of 'apps/web/public/locales/ru' |  |  | 0.451 |
-| walker |  | 3063 | 3 | listing of 'apps/web/public/locales/tr' |  |  | 0.451 |
-| walker |  | 3066 | 3 | listing of 'apps/web/public/locales/uk' |  |  | 0.451 |
-| walker |  | 3069 | 3 | listing of 'apps/web/public/locales/zh' |  |  | 0.451 |
-| walker |  | 3072 | 3 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.451 |
-| ns | 3079 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.430 |
-| walker |  | 3089 | 17 | README.md section #7 |  |  | 0.431 |
-| walker |  | 3105 | 16 | README.md section #6 |  |  | 0.432 |
-| walker |  | 3122 | 17 | README.md section #9 |  |  | 0.433 |
-| walker |  | 3138 | 16 | README.md section #8 |  |  | 0.435 |
-| walker |  | 3154 | 16 | README.md section #10 |  |  | 0.438 |
-| walker |  | 3171 | 17 | README.md section #16 |  |  | 0.443 |
-| walker |  | 3448 | 277 | plaintext config Dockerfile |  |  | 0.443 |
-| ns | 3460 |  | 381 | `UsersAndCollections` join model (the permission bits) and `Tag` model | 2.7 | 2.1 | 0.418 |
-| walker |  | 3467 | 19 | README.md section #15 |  |  | 0.424 |
-| walker |  | 3545 | 78 | listing of 'apps/web/lib/client' |  |  | 0.425 |
-| ns | 3618 |  | 158 | `AccessToken` model | 2.8 | 2.1 | 0.416 |
-| walker |  | 3632 | 87 | export at vitest.config.mts:4 |  |  | 0.416 |
+| walker |  | 2366 | 134 | plaintext config .env.sample |  |  | 0.491 |
+| walker |  | 2415 | 49 | listing of 'apps/mobile/components/ui' |  |  | 0.491 |
+| ns | 2420 |  | 313 | `User` model — identity, relations and subscription linkage | 2.4 | 2.1 | 0.461 |
+| walker |  | 2429 | 14 | README.md section #21 |  |  | 0.463 |
+| walker |  | 2441 | 12 | README.md section #22 |  |  | 0.467 |
+| walker |  | 2455 | 14 | README.md section #20 |  |  | 0.471 |
+| walker |  | 2484 | 29 | README.md section #29 |  |  | 0.471 |
+| walker |  | 2499 | 15 | README.md section #11 |  |  | 0.471 |
+| walker |  | 2593 | 94 | listing of 'apps/web/pages' |  |  | 0.472 |
+| walker |  | 2598 | 5 | listing of 'apps/web/pages/preserved' |  |  | 0.472 |
+| walker |  | 2607 | 9 | listing of 'apps/web/pages/api' |  |  | 0.472 |
+| walker |  | 2610 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.472 |
+| walker |  | 2613 | 3 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.472 |
+| walker |  | 2623 | 10 | listing of 'apps/web/pages/collections' |  |  | 0.472 |
+| walker |  | 2633 | 10 | listing of 'apps/web/pages/tags' |  |  | 0.472 |
+| walker |  | 2644 | 11 | listing of 'apps/web/pages/auth' |  |  | 0.472 |
+| walker |  | 2655 | 11 | listing of 'apps/web/pages/public' |  |  | 0.473 |
+| walker |  | 2659 | 4 | listing of 'apps/web/pages/public/collections' |  |  | 0.473 |
+| walker |  | 2664 | 5 | listing of 'apps/web/pages/public/links' |  |  | 0.473 |
+| walker |  | 2669 | 5 | listing of 'apps/web/pages/public/preserved' |  |  | 0.473 |
+| walker |  | 2684 | 15 | listing of 'apps/web/pages/links' |  |  | 0.473 |
+| walker |  | 2698 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.473 |
+| walker |  | 2698 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.473 |
+| walker |  | 2716 | 18 | listing of 'apps/web/pages/admin' |  |  | 0.473 |
+| walker |  | 2726 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.473 |
+| ns | 2762 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.449 |
+| walker |  | 2769 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.449 |
+| walker |  | 2824 | 55 | listing of 'apps/web/pages/settings' |  |  | 0.450 |
+| walker |  | 2887 | 63 | listing of 'apps/web/public/locales' |  |  | 0.451 |
+| walker |  | 2890 | 3 | listing of 'apps/web/public/locales/de' |  |  | 0.451 |
+| walker |  | 2893 | 3 | listing of 'apps/web/public/locales/en' |  |  | 0.451 |
+| walker |  | 2896 | 3 | listing of 'apps/web/public/locales/es' |  |  | 0.451 |
+| walker |  | 2899 | 3 | listing of 'apps/web/public/locales/fr' |  |  | 0.451 |
+| walker |  | 2902 | 3 | listing of 'apps/web/public/locales/it' |  |  | 0.451 |
+| walker |  | 2905 | 3 | listing of 'apps/web/public/locales/ja' |  |  | 0.451 |
+| walker |  | 2908 | 3 | listing of 'apps/web/public/locales/nl' |  |  | 0.451 |
+| walker |  | 2911 | 3 | listing of 'apps/web/public/locales/pl' |  |  | 0.451 |
+| walker |  | 2914 | 3 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.451 |
+| walker |  | 2917 | 3 | listing of 'apps/web/public/locales/ro' |  |  | 0.451 |
+| walker |  | 2920 | 3 | listing of 'apps/web/public/locales/ru' |  |  | 0.451 |
+| walker |  | 2923 | 3 | listing of 'apps/web/public/locales/tr' |  |  | 0.451 |
+| walker |  | 2926 | 3 | listing of 'apps/web/public/locales/uk' |  |  | 0.451 |
+| walker |  | 2929 | 3 | listing of 'apps/web/public/locales/zh' |  |  | 0.451 |
+| walker |  | 2932 | 3 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.451 |
+| walker |  | 2949 | 17 | README.md section #7 |  |  | 0.452 |
+| walker |  | 2965 | 16 | README.md section #6 |  |  | 0.453 |
+| walker |  | 2982 | 17 | README.md section #9 |  |  | 0.454 |
+| walker |  | 2998 | 16 | README.md section #8 |  |  | 0.457 |
+| walker |  | 3014 | 16 | README.md section #10 |  |  | 0.460 |
+| walker |  | 3031 | 17 | README.md section #16 |  |  | 0.465 |
+| ns | 3079 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.443 |
+| walker |  | 3308 | 277 | plaintext config Dockerfile |  |  | 0.443 |
+| walker |  | 3327 | 19 | README.md section #15 |  |  | 0.449 |
+| walker |  | 3405 | 78 | listing of 'apps/web/lib/client' |  |  | 0.450 |
+| ns | 3460 |  | 381 | `UsersAndCollections` join model (the permission bits) and `Tag` model | 2.7 | 2.1 | 0.425 |
+| walker |  | 3492 | 87 | export at vitest.config.mts:4 |  |  | 0.425 |
+| walker |  | 3568 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.425 |
+| ns | 3618 |  | 158 | `AccessToken` model | 2.8 | 2.1 | 0.417 |
 | ns | 3642 |  | 24 | Complete packages/prisma listing | 2.9 |  | 0.430 |
-| walker |  | 3708 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.430 |
 | ns | 3758 |  | 116 | The process-wide `prisma` client singleton | 2.10 |  | 0.439 |
+| walker |  | 3863 | 295 | README.md section #0 |  |  | 0.439 |
 | ns | 3867 |  | 109 | API version directories: every resource under pages/api/v1 (and the single v2 route) | 3.1 |  | 0.422 |
-| ns | 3934 |  | 67 | Route files for links, collections, tags and highlights | 3.2 |  | 0.411 |
-| walker |  | 4003 | 295 | README.md section #0 |  |  | 0.411 |
-| ns | 4004 |  | 70 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.401 |
-| walker |  | 4025 | 22 | README.md section #1 |  |  | 0.404 |
-| walker |  | 4047 | 22 | README.md section #2 |  |  | 0.408 |
+| walker |  | 3885 | 22 | README.md section #1 |  |  | 0.425 |
+| walker |  | 3907 | 22 | README.md section #2 |  |  | 0.428 |
+| ns | 3934 |  | 67 | Route files for links, collections, tags and highlights | 3.2 |  | 0.418 |
+| ns | 4004 |  | 70 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.408 |
 | ns | 4074 |  | 70 | Route files for archives, preserved, search, dashboard, rss, migration, payment, webhook, worker, getFavicon | 3.4 |  | 0.398 |
 | ns | 4119 |  | 45 | The unauthenticated `public/` route subtree | 3.5 |  | 0.392 |
-| walker |  | 4217 | 170 | YAML config tail at docker-compose.yml |  |  | 0.393 |
-| ns | 4395 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.383 |
-| walker |  | 4437 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.427 |
-| walker |  | 4452 | 15 | imports in packages/prisma/index.ts |  |  | 0.427 |
-| walker |  | 4605 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.427 |
-| ns | 4610 |  | 215 | apps/web/lib: the server helper layer and its client/shared siblings | 3.7 |  | 0.428 |
-| walker |  | 4629 | 24 | README.md section #5 |  |  | 0.432 |
-| walker |  | 4652 | 23 | README.md section #4 |  |  | 0.436 |
-| ns | 4717 |  | 107 | The controller tree: every resource directory under lib/api/controllers | 3.8 |  | 0.425 |
-| walker |  | 4752 | 100 | listing of 'apps/web/lib/api' |  |  | 0.476 |
-| walker |  | 4764 | 12 | listing of 'apps/web/lib/api/archives' |  |  | 0.476 |
-| walker |  | 4780 | 16 | listing of 'apps/web/lib/api/preserved' |  |  | 0.477 |
-| walker |  | 4812 | 32 | listing of 'apps/web/lib/api/stripe' |  |  | 0.484 |
-| walker |  | 4859 | 47 | listing of 'apps/web/lib/api/controllers' |  |  | 0.514 |
-| walker |  | 4863 | 4 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.514 |
-| walker |  | 4867 | 4 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.514 |
-| walker |  | 4872 | 5 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.514 |
-| ns | 4874 |  | 157 | Controller files for links, collections, tags and highlights | 3.9 |  | 0.498 |
-| walker |  | 4883 | 11 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.499 |
-| walker |  | 4887 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.499 |
-| walker |  | 4892 | 5 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.499 |
-| walker |  | 4897 | 5 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.499 |
-| walker |  | 4903 | 6 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.499 |
-| walker |  | 4916 | 13 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.499 |
-| walker |  | 4930 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.500 |
-| walker |  | 4944 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.500 |
-| walker |  | 4950 | 6 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.500 |
-| walker |  | 4964 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.501 |
-| walker |  | 4982 | 18 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.504 |
-| walker |  | 4993 | 11 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.506 |
-| walker |  | 5012 | 19 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.507 |
-| walker |  | 5039 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.515 |
-| ns | 5050 |  | 176 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.516 |
-| walker |  | 5059 | 20 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.522 |
-| walker |  | 5079 | 20 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.529 |
-| walker |  | 5103 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.539 |
-| walker |  | 5108 | 5 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.542 |
-| walker |  | 5134 | 26 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.550 |
-| walker |  | 5159 | 25 | README.md section #13 |  |  | 0.554 |
-| walker |  | 5183 | 24 | README.md section #12 |  |  | 0.557 |
+| walker |  | 4127 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.437 |
+| walker |  | 4142 | 15 | imports in packages/prisma/index.ts |  |  | 0.437 |
+| walker |  | 4295 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.438 |
+| walker |  | 4319 | 24 | README.md section #5 |  |  | 0.442 |
+| walker |  | 4342 | 23 | README.md section #4 |  |  | 0.446 |
+| ns | 4395 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.435 |
+| walker |  | 4442 | 100 | listing of 'apps/web/lib/api' |  |  | 0.437 |
+| walker |  | 4454 | 12 | listing of 'apps/web/lib/api/archives' |  |  | 0.437 |
+| walker |  | 4470 | 16 | listing of 'apps/web/lib/api/preserved' |  |  | 0.437 |
+| walker |  | 4502 | 32 | listing of 'apps/web/lib/api/stripe' |  |  | 0.437 |
+| walker |  | 4549 | 47 | listing of 'apps/web/lib/api/controllers' |  |  | 0.439 |
+| walker |  | 4553 | 4 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.439 |
+| walker |  | 4557 | 4 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.439 |
+| walker |  | 4562 | 5 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.439 |
+| walker |  | 4573 | 11 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.439 |
+| walker |  | 4577 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.439 |
+| walker |  | 4582 | 5 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.439 |
+| walker |  | 4587 | 5 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.439 |
+| walker |  | 4593 | 6 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.439 |
+| walker |  | 4606 | 13 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.439 |
+| ns | 4610 |  | 215 | apps/web/lib: the server helper layer and its client/shared siblings | 3.7 |  | 0.490 |
+| walker |  | 4620 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.490 |
+| walker |  | 4634 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.490 |
+| walker |  | 4640 | 6 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.490 |
+| walker |  | 4654 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.490 |
+| walker |  | 4672 | 18 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.491 |
+| walker |  | 4683 | 11 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.491 |
+| walker |  | 4702 | 19 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.491 |
+| ns | 4717 |  | 107 | The controller tree: every resource directory under lib/api/controllers | 3.8 |  | 0.514 |
+| walker |  | 4729 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.515 |
+| walker |  | 4749 | 20 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.515 |
+| walker |  | 4769 | 20 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.516 |
+| walker |  | 4793 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.516 |
+| walker |  | 4798 | 5 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.516 |
+| walker |  | 4824 | 26 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.517 |
+| walker |  | 4849 | 25 | README.md section #13 |  |  | 0.521 |
+| walker |  | 4873 | 24 | README.md section #12 |  |  | 0.525 |
+| ns | 4874 |  | 157 | Controller files for links, collections, tags and highlights | 3.9 |  | 0.549 |
+| ns | 5050 |  | 176 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.556 |
+| walker |  | 5183 | 310 | YAML config at docker-compose.yml |  |  | 0.557 |
 | walker |  | 5200 | 17 | imports in apps/worker/index.ts |  |  | 0.557 |
 | walker |  | 5247 | 47 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.575 |
 | walker |  | 5271 | 24 | Prisma decl at packages/prisma/schema.prisma:77 |  |  | 0.576 |
