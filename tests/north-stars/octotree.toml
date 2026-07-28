@@ -1,509 +1,1178 @@
 fixture = "octotree"
 revision_pin = "470747c7"
 summary = """
-Octotree is a browser extension (Chrome/Firefox/Opera/Safari/Edge) that injects a
-resizable file-tree sidebar into GitHub repo/PR pages. It's plain pre-module JS:
-every src/*.js file declares globals (`window.X = ...`) and gulpfile.js's buildJs()
-concatenates them in a load-bearing order into one script. Runtime shape: main.js
-wires a jQuery-driven sidebar DOM (from template.html) to a GitHub adapter
-(src/adapters/{adapter,pjax,github}.js, class chain Adapter -> PjaxAdapter -> GitHub)
-that queries the GitHub API for the repo tree, a TreeView (jstree wrapper), an
-OptionsView bound to ExtStore (core.storage.js, chrome.storage/localStorage), and
-help/error popups. core.constants.js is the STORE/EVENT/DEFAULTS vocabulary shared
-by every module. This NS serves architecture/explanation queries (how the sidebar
-loads a repo, how options persist, how branch detection works), feature work (new
-adapter, new option), and debugging (GitHub API error codes, huge-repo lazy-load).
-No test suite exists in this repo despite `mocha`/`gulp-mocha` devDependencies in
-package.json - a real dead-dependency gap, not an omission by this NS. libs/* are
-vendored third-party libraries (jQuery, jQuery UI, jstree, keymaster, file-icons,
-pjax) included only as filesystem listings, never as rendered bodies. Method/
-function *rosters* below show every member's first line only (locations); a small
-number of flagship bodies are rendered in full for the highest-value logic, and
-everything else is one grep/read away from its exact roster line number.
+Octotree: a browser extension (Chrome/Firefox/Edge/Safari/Brave/Opera) that
+injects a resizable code-tree sidebar into github.com pages. This repository
+is an archived, deliberately limited snapshot of what is otherwise
+proprietary software, so the ranking treats it as read-mostly: agents will
+be asked to explain how the sidebar works, how a GitHub page is detected and
+turned into a jstree, where a user setting is stored, how the unbundled
+files become one content script, and occasionally to patch or extend a
+piece of it.
+
+The codebase has no module system. Every file under `src/` is a bare script
+concatenated in a fixed order by `gulpfile.js` and communicating through
+`window` globals, so the ranking front-loads (a) the repository's identity
+and complete filesystem shape, (b) the shared vocabulary those globals carry
+-- `STORE` / `DEFAULTS` / `EVENT` in `src/core.constants.js`, the WebExtension
+`manifest.json`, and the concat order in `buildJs` -- and (c) name-complete
+symbol rosters for every class and top-level function in `src/`, so that any
+"where is X" question is one grep away. Only then does it spend budget on
+bodies: the adapter error table, GitHub repo/branch detection, the settings
+template's `data-store` bindings, storage key routing, the tree-building
+loop, and finally the gulp task graph, LESS variables, tooling config and
+project metadata.
 """
+
+# ---------------------------------------------------------------- Tier 1
+# What the project is, and the complete map of where its content lives.
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "Every top-level entry (config files, LICENSE, package files, src/libs/assets/docs/icons/.github dirs) in one cheap batch so the agent never has to guess what exists at the root."
-[batches.content]
-kind = "fs"
-groups = [ { parent = ".", entries = "all" } ]
-
-[[batches]]
-id = "1.2"
-descriptor = "README.md lede + proprietary notice"
-justification = "Lines 1-3 (About heading) and line 12 (the block-quoted notice that this repo is a proprietary, very-limited, old snapshot Octotree owns full copyright over) - the single fact most likely to change how an agent frames any 'add a feature' or 'send a PR' request. Badge links/screenshots (4-11,13-29) are pure marketing markup, cheaper to skim directly than render."
+descriptor = "README lede: what Octotree is"
+justification = """
+Rank 1 must answer "what is this repository". Three lines of README.md give
+the product category (browser extension), the host it enhances (GitHub) and
+the vendor site. Nothing else in the repo states this in prose.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
-  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+  {path = "README.md", start = 1, end = 3, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Complete repository root listing"
+justification = """
+Every immediate child of the root, with no omissions: source, vendored
+libs, build file, package manifests, asset/icon/doc image dirs, tooling
+dotfiles and LICENSE. Cheapest possible protection against the agent
+assuming an unlisted top-level thing does not exist, and it fixes the
+coordinates every later batch refers to.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  {parent = ".", entries = "all"},
 ]
 
 [[batches]]
 id = "1.3"
-descriptor = "package.json identity + scripts"
-justification = "Lines 1-9: name/version 3.0.10/description, and the four npm scripts (start/watch/build/dist all delegate to gulp) - the concrete evidence for 'how do I build this'."
-[batches.content]
-kind = "lines"
-spans = [ { path = "package.json", start = 1, end = 9, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.4"
-descriptor = "src/ directory listing"
-justification = "All 15 top-level src/ files (core.*.js, main.js, util.*.js, view.*.js, template.html) plus the adapters/config/styles subdirs, so no source file's existence is left implicit."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "src", entries = "all" } ]
-
-[[batches]]
-id = "1.5"
-descriptor = "src subdirectory listings"
-justification = "Contents of src/adapters (adapter.js/github.js/github.less/pjax.js), src/config/wex (background.js, manifest.json), and src/styles (octotree.less, vars.less) - closes the src/ tree one level deeper."
+descriptor = "Complete src/ listing -- the flat core source set"
+justification = """
+All of the project's own logic lives in one flat directory with a
+`<layer>.<topic>.js` naming convention (util.*, core.*, view.*, main.js)
+plus `template.html`. Surfacing the whole set immediately after the root
+listing is what lets an agent guess-and-read correctly instead of
+searching; deferring it behind the peripheral directories would be a
+mistake because this *is* the substance.
+"""
 [batches.content]
 kind = "fs"
 groups = [
-  { parent = "src/adapters", entries = "all" },
-  { parent = "src/config/wex", entries = "all" },
-  { parent = "src/styles", entries = "all" },
+  {parent = "src", entries = "all"},
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "The 'this is an old, limited snapshot' notice"
+justification = """
+Load-bearing context for almost any task: the README's blockquote states
+that Octotree is proprietary and that this repository holds the old source
+of a very limited version. An agent that misses this will propose upstream
+contributions and treat gaps as bugs.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "README.md", start = 12, end = 12, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Complete listings of src/adapters, src/styles, src/config, src/config/wex"
+justification = """
+The only subtrees under src/. Shows that the host-integration layer is
+three files (adapter.js, pjax.js, github.js) plus github.less, that styling
+is two LESS files, and that the packaged WebExtension config is exactly
+manifest.json + background.js. Names alone make the architecture guessable.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  {parent = "src/adapters", entries = "all"},
+  {parent = "src/styles", entries = "all"},
+  {parent = "src/config", entries = "all"},
+  {parent = "src/config/wex", entries = "all"},
 ]
 
 [[batches]]
 id = "1.6"
-descriptor = "Vendor/asset/meta directory listings"
-justification = "libs/ (+fonts/images/ondemand), assets/, docs/, icons/, .github/ - confirms these are icon/screenshot/vendor-lib directories (not more source) without reading any binary or vendored body."
+descriptor = "package.json identity and npm scripts"
+justification = """
+Name, version, description and the four scripts (start, watch, build,
+dist) -- i.e. the commands a contributor actually runs, all of which
+delegate to gulp. Answers "how do I build this" with zero follow-ups.
+"""
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "libs", entries = "all" },
-  { parent = "libs/fonts", entries = "all" },
-  { parent = "libs/images", entries = "all" },
-  { parent = "libs/ondemand", entries = "all" },
-  { parent = "assets", entries = "all" },
-  { parent = "docs", entries = "all" },
-  { parent = "icons", entries = "all" },
-  { parent = ".github", entries = "all" },
+kind = "lines"
+spans = [
+  {path = "package.json", start = 1, end = 10, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "1.7"
-descriptor = "package.json repository/author/license/bugs/homepage"
-justification = "Lines 11-20: git remote, author contact, the AGPL license field, issue-tracker/homepage URLs - the rest of package.json's metadata (devDependencies at 21-56 are cheaper to grep directly than render)."
+descriptor = "Complete listing of libs/ and libs/ondemand"
+justification = """
+Vendored third-party code is a large share of the repo's bytes and is
+never edited. Listing jquery/jquery-ui/jstree/keymaster/file-icons and the
+on-demand jquery.pjax.js tells the agent what is vendored (so it can stop
+reading there) and names the runtime globals src/ code assumes; the
+fonts/ and images/ subdirectories hold only binary assets.
+"""
 [batches.content]
-kind = "lines"
-spans = [ { path = "package.json", start = 11, end = 20, render = { kind = "full" } } ]
+kind = "fs"
+groups = [
+  {parent = "libs", entries = "all"},
+  {parent = "libs/ondemand", entries = "all"},
+]
 
 [[batches]]
-id = "2.1"
-descriptor = "gulpfile.js shared-task roster"
-justification = "First line of the shared build tasks (clean/build/default/dist/css/lib:ondemand/wex:template, plus the two wex chain tasks defined right after it, wex:js:ext/wex:js), Full since the task-name strings live inside the parens - names the top-level build entry points before any body is read."
+id = "1.8"
+descriptor = "Complete listings of icons/, assets/, docs/, .github/"
+justification = """
+Closes the filesystem map: the extension icon sizes that manifest.json and
+the gulp packaging step consume, the README badge/demo images, the docs
+screenshots, and the two GitHub issue/PR templates. All binary or
+boilerplate, so names are the whole value.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  {parent = "icons", entries = "all"},
+  {parent = "assets", entries = "all"},
+  {parent = "docs", entries = "all"},
+  {parent = ".github", entries = "all"},
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Remaining README section headings, with elided blocks marked"
+justification = """
+Hedge against treating the lede as the whole README: marks that a badge
+block sits at line 5 and that '### Support' and '### Learn more' sections
+follow, with their bodies elided. Cheap, and it tells the agent there is
+no build/architecture documentation here -- the code is the documentation.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "gulpfile.js", start = 13, end = 13, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 20, end = 20, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 24, end = 24, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 28, end = 28, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 32, end = 32, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 42, end = 42, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 58, end = 59, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 61, end = 61, render = { kind = "full" } },
+  {path = "README.md", start = 5, end = 5, render = {kind = "ellipsis"}},
+  {path = "README.md", start = 16, end = 16, render = {kind = "full"}},
+  {path = "README.md", start = 17, end = 17, render = {kind = "ellipsis"}},
+  {path = "README.md", start = 23, end = 23, render = {kind = "full"}},
+  {path = "README.md", start = 24, end = 24, render = {kind = "ellipsis"}},
+]
+
+# ---------------------------------------------------------------- Tier 2
+# The shared vocabulary and the assembly contract: constants every file
+# reads, the WebExtension manifest, and the concat order that stands in
+# for a module system.
+
+[[batches]]
+id = "2.1"
+descriptor = "CSS/DOM class-name constants (core.constants.js)"
+justification = """
+NODE_PREFIX, ADDON_CLASS, SHOW_CLASS and PINNED_CLASS are the four string
+constants that tie the JS to template.html and github.less. Four lines,
+and they explain the `octotree-show` / `octotree-pinned` classes an agent
+will otherwise chase across the LESS file.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/core.constants.js", start = 1, end = 4, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "2.2"
-descriptor = "gulpfile.js browser-specific task roster"
-justification = "First line of the per-browser task chains (wex, firefox:css:libs/firefox:css/firefox/firefox:zip, chrome:css:libs/chrome:css/chrome/chrome:zip, opera/opera:nex) - completes the build-target roster started in 2.1."
+descriptor = "STORE: the complete set of persisted setting keys"
+justification = """
+Every user-visible option and piece of persisted state in the extension is
+one of these eleven keys. Any question of the form "where is setting X
+kept" is answered outright, and the `.local` suffix on TOKEN is the hook
+for the storage-routing rule shown later. Rendered whole so the agent
+cannot infer a key is missing.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "gulpfile.js", start = 80, end = 80, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 83, end = 85, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 87, end = 87, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 96, end = 98, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 100, end = 100, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 109, end = 109, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 116, end = 116, render = { kind = "full" } },
+  {path = "src/core.constants.js", start = 6, end = 18, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "2.3"
-descriptor = "gulpfile.js helper-fn roster"
-justification = "First line of all 9 module-level helper functions under the '// Helpers' comment (pipe, html2js, buildJs, buildCssLibs, buildCss, buildTemplate, prepareWexFolder, getVersion, module.exports) - the build script's plumbing layer, separated from 2.1/2.2's task layer so each roster stays cheap."
+descriptor = "DEFAULTS: the default value for every STORE key"
+justification = """
+The exact counterpart of STORE -- same eleven names, initial values,
+including the default hotkeys string and the 232px default sidebar width.
+Shown immediately after STORE because a half-shown pair invites wrong
+assumptions about which options are on by default.
+"""
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "gulpfile.js", start = 125, end = 125, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 138, end = 138, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 158, end = 158, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 188, end = 188, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 205, end = 205, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 214, end = 214, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 226, end = 226, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 259, end = 259, render = { kind = "full" } },
-  { path = "gulpfile.js", start = 264, end = 264, render = { kind = "full" } },
+  {path = "src/core.constants.js", start = 20, end = 32, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "2.4"
-descriptor = "gulpfile.js buildJs() body - script load order"
-predecessor = "2.3"
-justification = "Lines 158-186: the exact ordered file list gulp concatenates into content.js (tmp/template.js, the compiled-from-template.html output built by buildTemplate/wex:template, loads first -> util.module -> util.async -> util.misc -> util.deXss -> util.plugins -> core.constants -> core.storage -> core.plugins -> core.api -> adapters/adapter -> pjax -> github -> view.help -> view.error -> view.tree -> view.options -> main). This IS the module system for a codebase with no import/export - load-order questions have no other answer."
-[batches.content]
-kind = "lines"
-spans = [ { path = "gulpfile.js", start = 158, end = 186, render = { kind = "full" } } ]
-
-[[batches]]
-id = "2.5"
-descriptor = "src/config/wex/manifest.json (full)"
-justification = "27-line WebExtension manifest: permissions (api.github.com, storage), optional_permissions (<all_urls>), content_scripts matching https://github.com/* at document_start, and the persistent background page - the config-file evidence for 'what does this extension request/inject'."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/config/wex/manifest.json", start = 1, end = 27, render = { kind = "full" } } ]
-
-[[batches]]
-id = "2.6"
-descriptor = ".eslintrc + .gitignore (full)"
-justification = "Lint rules (single quotes, 120-col max-len, 1tbs braces, eqeqeq) and ignored build artifacts (node_modules/tmp/dist) - the tooling-config surface most likely to matter for a lint/build question."
+descriptor = "EVENT: the complete jQuery event vocabulary"
+justification = """
+With no module system, these thirteen `octotree:*` event names are the
+actual wiring between main.js, the views, the adapters and the store.
+Grepping any one of them lands on both ends of a connection, so this is
+the highest-leverage navigation aid in the repository.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = ".eslintrc", start = 1, end = 25, render = { kind = "full" } },
-  { path = ".gitignore", start = 1, end = 7, render = { kind = "full" } },
+  {path = "src/core.constants.js", start = 34, end = 48, render = {kind = "full"}},
 ]
 
 [[batches]]
-id = "3.1"
-descriptor = "src/core.constants.js (full)"
-justification = "The shared vocabulary every other module imports as globals: NODE_PREFIX/ADDON_CLASS/SHOW_CLASS/PINNED_CLASS, the full STORE key table, DEFAULTS, and the full EVENT name table - a config/API surface almost every feature or debugging query needs."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/core.constants.js", start = 1, end = 52, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.2"
-descriptor = "src/core.api.js OctotreeService class body"
-justification = "Lines 43-118: window.octotree singleton - the activate/applyOptions hooks a host page overrides, the public load() entry point, reset()'s default-method wiring, and _shouldShowOctotree()'s repo-page detection (404/raw-content/reserved-name checks)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/core.api.js", start = 43, end = 118, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.3"
-descriptor = "src/core.plugins.js Plugin class (signatures + bodies, JSDoc elided)"
-justification = "The Plugin base class's class line, its 3 hook signatures+bodies (activate/deactivate/applyOptions, all default to a no-op return), and the window.Plugin export - the contract any octotree plugin (none shipped in this fixture) would implement. Each hook's multi-line JSDoc (params/returns) is skipped; one read of the 45-line file away."
+id = "2.5"
+descriptor = "The complete window-global surface exported by src/"
+justification = """
+Every `window.*` assignment in the project, in one place: STORE, DEFAULTS,
+EVENT, the `octotree` service singleton, the `Plugin` base class, the
+`extStore` singleton, `deXss`, `isSafari` and `isValidTimeStamp`. Because
+files are concatenated rather than imported, this list *is* the public API
+between files; showing a subset would strongly imply the rest do not exist.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/core.plugins.js", start = 1, end = 1, render = { kind = "full" } },
-  { path = "src/core.plugins.js", start = 20, end = 22, render = { kind = "full" } },
-  { path = "src/core.plugins.js", start = 31, end = 33, render = { kind = "full" } },
-  { path = "src/core.plugins.js", start = 40, end = 43, render = { kind = "full" } },
-  { path = "src/core.plugins.js", start = 45, end = 45, render = { kind = "full" } },
+  {path = "src/core.constants.js", start = 50, end = 52, render = {kind = "full"}},
+  {path = "src/core.api.js", start = 118, end = 118, render = {kind = "full"}},
+  {path = "src/core.plugins.js", start = 45, end = 45, render = {kind = "full"}},
+  {path = "src/core.storage.js", start = 172, end = 172, render = {kind = "full"}},
+  {path = "src/util.deXss.js", start = 3, end = 3, render = {kind = "full"}},
+  {path = "src/util.misc.js", start = 9, end = 10, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "WebExtension manifest: identity, icons, permissions"
+justification = """
+manifest_version 2, minimum_chrome_version, the `https://api.github.com/*`
+and `storage` permissions, the `<all_urls>` optional permission and the
+web-accessible font/image globs. This is the security-relevant surface of
+the extension and is asked about directly ("what permissions does it
+need"); the `$VERSION` placeholder also flags that gulp substitutes it.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/config/wex/manifest.json", start = 1, end = 14, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "WebExtension manifest: background script and content script injection"
+justification = """
+The other half of the same file: a persistent background page over
+background.js, and a content script injected at document_start into
+`https://github.com/*` as content.js + content.css. Those two bundle names
+are what the gulp pipeline produces, so this is the join between the
+manifest and the build.
+"""
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/config/wex/manifest.json", start = 15, end = 27, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "gulpfile.js helper functions and module exports"
+justification = """
+Names of every top-level helper in the build file -- pipe, html2js,
+buildJs, buildCssLibs, buildCss, buildTemplate, prepareWexFolder,
+getVersion -- plus the module.exports block, which is what makes some of
+them reusable. Name-only lines; establishes the build vocabulary before
+the pieces of it that carry real meaning.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "gulpfile.js", start = 125, end = 125, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 138, end = 138, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 158, end = 158, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 188, end = 188, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 205, end = 205, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 214, end = 214, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 226, end = 226, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "gulpfile.js", start = 259, end = 259, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 264, end = 270, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "buildJs: the exact concatenation order of every src/ script"
+justification = """
+This array is the project's dependency graph. It is why util.* may not
+reference core.*, why main.js is last, and why every file ends in a
+`window.` assignment. An agent adding a new src file must edit this list,
+and an agent reasoning about load order has nowhere else to look.
+"""
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "gulpfile.js", start = 159, end = 178, render = {kind = "full"}},
+]
+
+# ---------------------------------------------------------------- Tier 3
+# Name-complete symbol rosters. One truncated line per declaration, so
+# every class, method and top-level function in src/ has coordinates.
+
+[[batches]]
+id = "3.1"
+descriptor = "main.js: entry point and complete roster of its nested functions"
+justification = """
+main.js is a single document-ready closure whose sixteen nested functions
+are the whole application controller: loadExtension, optionsChanged,
+tryLoadRepo, showView, showError, toggleSidebar, togglePin, onPinToggled,
+layoutChanged, setupSidebarFloatingBehaviors, onTogglerHovered,
+onTogglerClicked, handleHoverOpenOption, setHotkeys, isSidebarVisible,
+isSidebarPinned. Ranked first in the tier because it names the behaviours
+users describe in bug reports.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/main.js", start = 1, end = 2, render = {kind = "full"}},
+  {path = "src/main.js", start = 4, end = 4, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 99, end = 99, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 135, end = 135, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 174, end = 174, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 180, end = 180, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 187, end = 187, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 206, end = 206, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 217, end = 217, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 230, end = 230, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 241, end = 241, render = {kind = "full"}},
+  {path = "src/main.js", start = 298, end = 298, render = {kind = "full"}},
+  {path = "src/main.js", start = 302, end = 302, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 307, end = 307, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 322, end = 322, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/main.js", start = 330, end = 330, render = {kind = "full"}},
+  {path = "src/main.js", start = 334, end = 334, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "class Adapter: complete method roster"
+justification = """
+The largest and most important type in the repo -- the host-agnostic base
+class. All 22 methods named in one shot, protected and public alike, so
+the split between the shared algorithm (_loadCodeTreeInternal,
+_handleError, _sort, _collapse, buildPatchHtml, downloadFile) and the
+abstract hooks that throw 'Not implemented' (getCssClass, loadCodeTree,
+getCreateTokenUrl, updateLayout, getRepoFromPath, _getTree, _getSubmodules)
+is immediately visible.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/adapter.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 19, end = 19, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 145, end = 145, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 206, end = 206, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 214, end = 214, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 222, end = 222, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 230, end = 230, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 238, end = 238, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 246, end = 246, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 254, end = 254, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 262, end = 262, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 270, end = 270, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 290, end = 290, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 298, end = 298, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 306, end = 306, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 329, end = 329, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 347, end = 347, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 356, end = 356, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 364, end = 364, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 371, end = 371, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 375, end = 375, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/adapter.js", start = 390, end = 390, render = {kind = "truncated", pattern = "^[^(]+"}},
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "class GitHub extends PjaxAdapter: complete method roster"
+justification = """
+The concrete adapter, and the file most tasks end up editing. Names every
+override and helper: init, getCssClass, shouldLoadEntireTree,
+getCreateTokenUrl, updateLayout, getRepoFromPath, loadCodeTree, the
+isOnPRPage getter, _getTree, _getPatch, _getSubmodules, _get. Read against
+3.2 it shows exactly which abstract hooks GitHub fills in.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/github.js", start = 14, end = 14, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 15, end = 15, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 20, end = 20, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 42, end = 42, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 47, end = 47, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 70, end = 70, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 78, end = 78, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 104, end = 104, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 186, end = 186, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 192, end = 192, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 203, end = 203, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 226, end = 226, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 299, end = 299, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/github.js", start = 310, end = 310, render = {kind = "truncated", pattern = "^[^(]+"}},
 ]
 
 [[batches]]
 id = "3.4"
-descriptor = "src/core.storage.js ExtStore method roster"
-justification = "First line of every ExtStore method plus the standalone promisify() helper (constructor, _setupOnChangeEvent, _isOctotreeKey, _notifyChange, set/get/remove/setIfNull, the three _inner*/_getLocal/_setLocal/_removeLocal backends) - the full storage-API surface before any body."
+descriptor = "class PjaxAdapter extends Adapter: complete method roster"
+justification = """
+The middle link of the three-level inheritance chain, five members only:
+constructor, init, selectFile, _handlePjaxEvent, _patchPjax. Small but
+essential -- without it an agent reading GitHub's `super.init()` has no
+idea what it resolves to.
+"""
+predecessor = "3.2"
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/core.storage.js", start = 2, end = 2, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 26, end = 26, render = { kind = "full" } },
-  { path = "src/core.storage.js", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 146, end = 146, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/core.storage.js", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  {path = "src/adapters/pjax.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/adapters/pjax.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/pjax.js", start = 14, end = 14, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/pjax.js", start = 63, end = 63, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/pjax.js", start = 90, end = 90, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/adapters/pjax.js", start = 113, end = 113, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "3.5"
-descriptor = "src/core.storage.js public API bodies (set/get/remove/setIfNull/_innerGet)"
-predecessor = "3.4"
-justification = "Lines 60-91: set/get/remove/setIfNull all await a pending _init before delegating to _innerGet (shown here) / _innerSet / _innerRemove, which route to localStorage vs chrome.storage.local based on whether the key ends in 'local' or the browser is Safari - the concrete rule for STORE.TOKEN's '.local' suffix."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/core.storage.js", start = 60, end = 91, render = { kind = "full" } } ]
-
-[[batches]]
-id = "4.1"
-descriptor = "src/main.js top-level DOM/event wiring"
-justification = "Lines 1-92: the extension's actual entry point ($(document).ready -> octotree.load) - builds the sidebar from TEMPLATE, constructs GitHub/TreeView/OptionsView/HelpPopup/ErrorView, wires every EVENT.* listener (VIEW_READY/VIEW_CLOSE/FETCH_ERROR/STORE_CHANGE/REQ_START/REQ_END/LAYOUT_CHANGE/TOGGLE_PIN/LOC_CHANGE), and calls octotree.activate() then tryLoadRepo()."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/main.js", start = 1, end = 92, render = { kind = "full" } } ]
-
-[[batches]]
-id = "4.2"
-descriptor = "src/main.js nested-function roster"
-justification = "First line of every helper nested inside loadExtension (optionsChanged, tryLoadRepo, showView, showError, toggleSidebar, togglePin, onPinToggled, layoutChanged, setupSidebarFloatingBehaviors, onTogglerHovered, onTogglerClicked, handleHoverOpenOption, setHotkeys, isSidebarVisible, isSidebarPinned) - loadExtension itself is already fully visible in 4.1's line 4."
+descriptor = "class OctotreeService: the hook surface the proprietary build overrides"
+justification = """
+`window.octotree` is the seam between this open snapshot and the real
+product. The roster names the two no-op hooks (activate, applyOptions),
+the public entry points (load, reset) and the four private defaults that
+reset() re-binds: _getAccessToken, _getInvalidTokenMessage,
+_setNodeIconAndText, _shouldShowOctotree. Explains why the code calls
+`octotree.x` for behaviour that looks trivially implemented here.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/main.js", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 174, end = 174, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 180, end = 180, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 206, end = 206, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 241, end = 241, render = { kind = "full" } },
-  { path = "src/main.js", start = 298, end = 298, render = { kind = "full" } },
-  { path = "src/main.js", start = 302, end = 302, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 307, end = 307, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 322, end = 322, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/main.js", start = 330, end = 330, render = { kind = "full" } },
-  { path = "src/main.js", start = 334, end = 334, render = { kind = "full" } },
+  {path = "src/core.api.js", start = 43, end = 43, render = {kind = "full"}},
+  {path = "src/core.api.js", start = 44, end = 44, render = {kind = "full"}},
+  {path = "src/core.api.js", start = 49, end = 49, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.api.js", start = 51, end = 51, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.api.js", start = 56, end = 56, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.api.js", start = 60, end = 60, render = {kind = "full"}},
+  {path = "src/core.api.js", start = 68, end = 68, render = {kind = "full"}},
+  {path = "src/core.api.js", start = 72, end = 72, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.api.js", start = 79, end = 79, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.api.js", start = 90, end = 90, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "class Plugin: the documented plugin contract"
+justification = """
+Only three methods -- activate, deactivate, applyOptions -- but the JSDoc
+on activate is the single place that enumerates the object graph handed to
+extensions: adapter, $sidebar, $toggler, $views, treeView, optsView,
+errorView. That block is rendered in full; the two shorter doc comments
+below it are marked elided.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/core.plugins.js", start = 1, end = 22, render = {kind = "full"}},
+  {path = "src/core.plugins.js", start = 24, end = 24, render = {kind = "ellipsis"}},
+  {path = "src/core.plugins.js", start = 31, end = 31, render = {kind = "full"}},
+  {path = "src/core.plugins.js", start = 34, end = 34, render = {kind = "ellipsis"}},
+  {path = "src/core.plugins.js", start = 40, end = 40, render = {kind = "full"}},
+  {path = "src/core.plugins.js", start = 41, end = 41, render = {kind = "ellipsis"}},
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "class TreeView: complete member roster"
+justification = """
+The jstree-backed sidebar body. Names constructor, the $jstree getter,
+focus, show, _showHeader, the overridable onItemClick hook, _onItemClick
+and syncSelection -- the last being the answer to "how does the tree
+highlight the file I'm looking at".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/view.tree.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/view.tree.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.tree.js", start = 20, end = 20, render = {kind = "full"}},
+  {path = "src/view.tree.js", start = 24, end = 24, render = {kind = "full"}},
+  {path = "src/view.tree.js", start = 28, end = 28, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.tree.js", start = 65, end = 65, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.tree.js", start = 97, end = 97, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.tree.js", start = 101, end = 101, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.tree.js", start = 149, end = 149, render = {kind = "truncated", pattern = "^[^(]+"}},
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "class OptionsView: complete member roster"
+justification = """
+The settings screen: constructor, loadElements, toggle, _load, _save,
+_eachOption. Together with the template's data-store attributes this is
+the entire options mechanism, and loadElements' name hints at the
+dynamic-element case that plugins rely on.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/view.options.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/view.options.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.options.js", start = 25, end = 25, render = {kind = "full"}},
+  {path = "src/view.options.js", start = 32, end = 32, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.options.js", start = 47, end = 47, render = {kind = "full"}},
+  {path = "src/view.options.js", start = 66, end = 66, render = {kind = "full"}},
+  {path = "src/view.options.js", start = 83, end = 83, render = {kind = "truncated", pattern = "^[^(]+"}},
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "class ErrorView in full; class HelpPopup roster"
+justification = """
+ErrorView is so small that its body is cheaper to show than to point at:
+it renders err.error/err.message into the view header, wires the inline
+'settings-btn' link that the adapter's error strings embed, and ends by
+triggering VIEW_READY.
+HelpPopup is named alongside it (constructor, init) to close the set of
+four view classes with TreeView and OptionsView.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/view.error.js", start = 1, end = 10, render = {kind = "full"}},
+  {path = "src/view.error.js", start = 11, end = 11, render = {kind = "ellipsis"}},
+  {path = "src/view.error.js", start = 14, end = 14, render = {kind = "full"}},
+  {path = "src/view.help.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/view.help.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/view.help.js", start = 6, end = 6, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "class ExtStore and promisify: complete roster"
+justification = """
+The persistence layer behind every STORE key. Names the debounced change
+notifier (_setupOnChangeEvent, _isOctotreeKey, _notifyChange), the async
+public API (set, get, remove, setIfNull), the three _inner* routers, the
+three localStorage implementations, and the promisify helper that adapts
+chrome.storage callbacks.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/core.storage.js", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/core.storage.js", start = 2, end = 2, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 26, end = 26, render = {kind = "full"}},
+  {path = "src/core.storage.js", start = 44, end = 44, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 50, end = 50, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 61, end = 61, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 66, end = 66, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 71, end = 71, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 76, end = 76, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 84, end = 84, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 92, end = 92, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 99, end = 99, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 105, end = 105, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 120, end = 120, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 146, end = 146, render = {kind = "truncated", pattern = "^[^(]+"}},
+  {path = "src/core.storage.js", start = 154, end = 154, render = {kind = "truncated", pattern = "^[^(]+"}},
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "util.misc.js in full; util.async.js and util.module.js heads"
+justification = """
+The three smallest files: the `isSafari` / `isValidTimeStamp` predicates
+that gate storage routing and huge-repo memoization in full, plus the
+signature and fan-out of the callback-counting `parallel` helper that
+OptionsView depends on, and the four INI regexes above parseGitmodules.
+The two function bodies are marked elided.
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/util.async.js", start = 1, end = 8, render = {kind = "full"}},
+  {path = "src/util.async.js", start = 9, end = 9, render = {kind = "ellipsis"}},
+  {path = "src/util.misc.js", start = 1, end = 10, render = {kind = "full"}},
+  {path = "src/util.module.js", start = 1, end = 7, render = {kind = "full"}},
+  {path = "src/util.module.js", start = 8, end = 8, render = {kind = "ellipsis"}},
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "util.plugins.js: the custom jstree 'truncate' plugin"
+justification = """
+The last unshown src/ script: it registers `$.jstree.plugins.truncate` by
+wrapping redraw_node so long path names ellipsize. Its header comment says
+custom JS Tree plugins go here, and 'truncate' is the third entry in
+TreeView's plugins array, so without this it looks like a stock jstree
+feature. Implementation body marked elided.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/util.plugins.js", start = 1, end = 12, render = {kind = "full"}},
+  {path = "src/util.plugins.js", start = 13, end = 13, render = {kind = "ellipsis"}},
+]
+
+# ---------------------------------------------------------------- Tier 4
+# Bodies: the semantics that names alone cannot convey. Budget here is
+# spent on breadth -- most functions get their decisive lines with the
+# rest marked elided, rather than a few functions in full.
+
+[[batches]]
+id = "4.1"
+descriptor = "github.js module constants: pjax container and layout selectors"
+justification = """
+GH_PJAX_CONTAINER_SEL, whose explanatory comment is abridged, plus
+GH_CONTAINERS, GH_MAX_HUGE_REPOS_SIZE,
+GH_HIDDEN_RESPONSIVE_CLASS and GH_RESPONSIVE_BREAKPOINT. These are the
+brittle coupling points to GitHub's DOM -- the first thing to check when
+the extension "stops working".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/github.js", start = 1, end = 2, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 3, end = 3, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.js", start = 6, end = 12, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "template.html: the sidebar DOM skeleton"
+justification = """
+One line per structural element of the injected markup: the
+octotree-sidebar nav, the toggle and its popup, the pin control, the three
+octotree-view panes (tree/error/settings) with their header and body
+divs, the spinner and the footer, with inner content marked elided. Every
+jQuery find() in the view classes resolves against these class names.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/template.html", start = 2, end = 3, render = {kind = "full"}},
+  {path = "src/template.html", start = 4, end = 4, render = {kind = "ellipsis"}},
+  {path = "src/template.html", start = 6, end = 6, render = {kind = "full"}},
+  {path = "src/template.html", start = 9, end = 9, render = {kind = "ellipsis"}},
+  {path = "src/template.html", start = 16, end = 16, render = {kind = "full"}},
+  {path = "src/template.html", start = 20, end = 20, render = {kind = "full"}},
+  {path = "src/template.html", start = 25, end = 29, render = {kind = "full"}},
+  {path = "src/template.html", start = 32, end = 34, render = {kind = "full"}},
+  {path = "src/template.html", start = 37, end = 39, render = {kind = "full"}},
+  {path = "src/template.html", start = 40, end = 40, render = {kind = "ellipsis"}},
+  {path = "src/template.html", start = 104, end = 104, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "4.3"
-descriptor = "src/main.js tryLoadRepo() body"
+descriptor = "template.html: every data-store-bound settings control"
+justification = """
+The complete set of UI controls wired to storage -- the access-token text
+input (TOKEN), the hotkeys input (HOTKEYS), and the four checkboxes
+HOVEROPEN, ICONS, PR and LAZYLOAD, plus their user-facing labels and the
+Apply settings button. Together with the PINNED pin link already shown in
+4.2 these are all seven data-store attributes in the file, so an agent can
+see which of the eleven STORE keys are user-editable and which are
+internal.
+"""
 predecessor = "4.2"
-justification = "Lines 135-172: calls adapter.getRepoFromPath, branches on err/pinned/visible/repo-changed to decide between showing the toggler, pinning, full treeView.show(), or a lighter syncSelection - the central 'when does the tree (re)load' decision tree for debugging."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/main.js", start = 135, end = 172, render = { kind = "full" } } ]
-
-[[batches]]
-id = "5.1"
-descriptor = "src/adapters/adapter.js method roster"
-justification = "First line of every one of Adapter's 22 methods (constructor, _loadCodeTreeInternal, _handleError, getCssClass, getMinWidth, init, shouldLoadEntireTree, loadCodeTree, getCreateTokenUrl, updateLayout, getRepoFromPath, selectFile, selectSubmodule, openInNewTab, downloadFile, buildPatchHtml, _getTree, _getSubmodules, _getItemHref, _getPatchHref, _sort, _collapse) - the base contract every host-site adapter (only GitHub, via PjaxAdapter, ships here) must satisfy or override."
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/adapters/adapter.js", start = 2, end = 2, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 206, end = 206, render = { kind = "full" } },
-  { path = "src/adapters/adapter.js", start = 214, end = 214, render = { kind = "full" } },
-  { path = "src/adapters/adapter.js", start = 222, end = 222, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 238, end = 238, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 246, end = 246, render = { kind = "full" } },
-  { path = "src/adapters/adapter.js", start = 254, end = 254, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 262, end = 262, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 270, end = 270, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 290, end = 290, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 298, end = 298, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 306, end = 306, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 329, end = 329, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 347, end = 347, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 356, end = 356, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 364, end = 364, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 371, end = 371, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 375, end = 375, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/adapter.js", start = 390, end = 390, render = { kind = "truncated", pattern = "^[^(]+" } },
+  {path = "src/template.html", start = 41, end = 41, render = {kind = "full"}},
+  {path = "src/template.html", start = 60, end = 61, render = {kind = "full"}},
+  {path = "src/template.html", start = 66, end = 66, render = {kind = "full"}},
+  {path = "src/template.html", start = 75, end = 75, render = {kind = "full"}},
+  {path = "src/template.html", start = 76, end = 76, render = {kind = "ellipsis"}},
+  {path = "src/template.html", start = 81, end = 81, render = {kind = "full"}},
+  {path = "src/template.html", start = 86, end = 86, render = {kind = "full"}},
+  {path = "src/template.html", start = 89, end = 89, render = {kind = "full"}},
+  {path = "src/template.html", start = 92, end = 92, render = {kind = "full"}},
+  {path = "src/template.html", start = 95, end = 96, render = {kind = "full"}},
+  {path = "src/template.html", start = 99, end = 99, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "main.js: object graph constructed at startup"
+justification = """
+The opening of loadExtension -- $(TEMPLATE) parsed into $dom, the sidebar/
+toggler/views/spinner/pinner handles pulled out of it, and the single
+construction site of GitHub, TreeView, OptionsView, HelpPopup and
+ErrorView. This is the one place that shows which adapter is actually
+used and how the views are given their DOM.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/main.js", start = 5, end = 24, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "GitHub.shouldLoadEntireTree: the lazy-load decision"
+justification = """
+Answers a recurring real question -- when does Octotree fetch the whole
+tree versus one folder. Shows the PR-page override, the global LAZYLOAD
+opt-out, and the HUGE_REPOS memo keyed by `username/reponame` whose
+timestamp is refreshed on each load.
+"""
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/github.js", start = 48, end = 57, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 59, end = 67, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "OctotreeService._shouldShowOctotree: when the sidebar appears"
+justification = """
+The gate that decides whether Octotree renders on the current page at
+all: the GH_404_SEL check, the GH_RAW_CONTENT skip, the
+username/reponame path regex, and the reserved-name rejection. Directly
+answers "why doesn't the sidebar show on this page".
+"""
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/core.api.js", start = 91, end = 115, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "ExtStore key routing: localStorage vs chrome.storage"
+justification = """
+_innerGet, _innerSet and _innerRemove share one rule -- keys ending in
+`local` (and everything on Safari) go to localStorage, everything else to
+chrome.storage.local. That rule is why STORE.TOKEN is spelled
+`octotree.token.local`, and it is invisible from the method names alone.
+"""
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/core.storage.js", start = 84, end = 103, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "Adapter._handleError: HTTP status to user-facing message, part 1"
+justification = """
+Every error string a user can see comes from this switch. First half
+covers status 0 (connection error), 409 (empty repository) and 401
+(invalid token, delegated to octotree.getInvalidTokenMessage). These
+strings are what appears verbatim in bug reports.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/adapter.js", start = 146, end = 152, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 153, end = 153, render = {kind = "ellipsis"}},
+  {path = "src/adapters/adapter.js", start = 156, end = 172, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "Adapter._handleError: statuses 404 and 403, and the emitted error object"
+justification = """
+The remainder of the same switch -- private-repository, the
+X-RateLimit-Remaining check that distinguishes 'API limit exceeded' from
+'Forbidden', and the statusText fallback -- plus the
+`{error, message, status}` object handed to the callback and rendered by
+ErrorView. Ranked immediately after 4.8 so the table is never
+half-present; the two long message strings are marked elided.
+"""
+predecessor = "4.8"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/adapter.js", start = 173, end = 177, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 178, end = 178, render = {kind = "ellipsis"}},
+  {path = "src/adapters/adapter.js", start = 181, end = 183, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 184, end = 184, render = {kind = "ellipsis"}},
+  {path = "src/adapters/adapter.js", start = 190, end = 199, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "main.js: the view and document event map"
+justification = """
+Which handler is bound to which EVENT, in one view: VIEW_READY (with the
+PR auto-expand that calls jstree('open_all')), VIEW_CLOSE, FETCH_ERROR
+across the three views; STORE_CHANGE to optionsChanged; and REQ_START /
+REQ_END / LAYOUT_CHANGE / TOGGLE_PIN / LOC_CHANGE on $document. Handler
+bodies marked elided -- their names are already in the 3.1 roster.
+"""
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/main.js", start = 32, end = 34, render = {kind = "full"}},
+  {path = "src/main.js", start = 35, end = 35, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 40, end = 41, render = {kind = "full"}},
+  {path = "src/main.js", start = 42, end = 42, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 46, end = 46, render = {kind = "full"}},
+  {path = "src/main.js", start = 47, end = 47, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 53, end = 53, render = {kind = "full"}},
+  {path = "src/main.js", start = 56, end = 57, render = {kind = "full"}},
+  {path = "src/main.js", start = 59, end = 64, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "main.js: sidebar insertion and the octotree.activate handoff"
+justification = """
+Applies the adapter's CSS class and the persisted STORE.WIDTH (capped at
+1000px), appends the sidebar to body, fires SIDEBAR_HTML_INSERTED, calls
+adapter.init and helpPopup.init, then hands the object graph to
+octotree.activate before the first tryLoadRepo. The startup sequence,
+end to end.
+"""
+predecessor = "4.10"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/main.js", start = 66, end = 77, render = {kind = "full"}},
+  {path = "src/main.js", start = 78, end = 78, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 92, end = 92, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "GitHub.getRepoFromPath: URL parsing and the branch fallback ladder"
+justification = """
+The most fragile function in the repo, reduced to its decisive lines: the
+`(username)/(reponame)[/(type)][/(typeId)]` regex, the isPR flag, then the
+whole commented fallback chain for the branch name -- commit id, master
+for releases/tags, the branch-select-menu DOM, the commits link, typeId,
+the PR target ref, the previous repo, the cached _defaultBranch -- and the
+`{username, reponame, branch, displayBranch, pullNumber}` result. The
+ladder is shown intact because debugging a wrong branch needs its order.
+"""
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/github.js", start = 110, end = 110, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 111, end = 111, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.js", start = 117, end = 117, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 118, end = 118, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.js", start = 148, end = 166, render = {kind = "full"}},
+  {path = "src/adapters/github.js", start = 167, end = 167, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.js", start = 172, end = 172, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.13"
+descriptor = "TreeView.show: jstree data source and refresh cycle"
+justification = """
+How a repo becomes a tree: the async data callback wired into
+$jstree.settings.core.data, the shouldLoadEntireTree branch choosing
+root-vs-node loading, the adapter.loadCodeTree call, the REPO_LOADED
+event carrying load duration, and the refresh.jstree one-shot that
+triggers syncSelection then VIEW_READY.
+"""
+predecessor = "3.7"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/view.tree.js", start = 31, end = 39, render = {kind = "full"}},
+  {path = "src/view.tree.js", start = 40, end = 40, render = {kind = "ellipsis"}},
+  {path = "src/view.tree.js", start = 50, end = 51, render = {kind = "full"}},
+  {path = "src/view.tree.js", start = 56, end = 62, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.14"
+descriptor = "main.js tryLoadRepo: the pin/visibility/reload state machine"
+justification = """
+Ties adapter.getRepoFromPath to the views: the error path, the
+pinned-but-hidden case, the JSON.stringify comparison over
+['username','reponame','branch','pullNumber'] that decides between a full
+treeView.show and a cheap syncSelection, and the not-a-repo teardown.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/main.js", start = 136, end = 140, render = {kind = "full"}},
+  {path = "src/main.js", start = 141, end = 141, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 145, end = 145, render = {kind = "full"}},
+  {path = "src/main.js", start = 146, end = 146, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 150, end = 157, render = {kind = "full"}},
+  {path = "src/main.js", start = 165, end = 165, render = {kind = "full"}},
+  {path = "src/main.js", start = 166, end = 166, render = {kind = "ellipsis"}},
+  {path = "src/main.js", start = 167, end = 168, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.15"
+descriptor = "Adapter._loadCodeTreeInternal: documented opts contract and chunking"
+justification = """
+The JSDoc naming every field of `opts` -- path, repo, node, token --
+plus the skeleton of the shared tree-building algorithm:
+the folders map, the _getTree/_getSubmodules nesting, the 300-item
+CHUNK_SIZE loop that defers to setTimeout so huge repos do not freeze the
+page, and the completion path through _sort and _collapse. Per-item node
+construction between them is marked elided.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/adapter.js", start = 8, end = 14, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 20, end = 21, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 25, end = 25, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 28, end = 28, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 33, end = 37, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 40, end = 47, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 49, end = 49, render = {kind = "ellipsis"}},
+  {path = "src/adapters/adapter.js", start = 133, end = 133, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "4.16"
+descriptor = "Adapter._loadCodeTreeInternal: turning an API entry into a tree node"
+justification = """
+The per-item core elided by 4.15: deXss on the display name (the XSS fix
+it cites), the NODE_PREFIX-prefixed id, item.text, the li_attr title, the
+octotree.setNodeIconAndText hook and the patch badge span. This is the
+code any tree-rendering change touches; the surrounding icon, bucketing
+and href-building lines are marked elided.
+"""
+predecessor = "4.15"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/adapters/adapter.js", start = 54, end = 55, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 56, end = 56, render = {kind = "ellipsis"}},
+  {path = "src/adapters/adapter.js", start = 59, end = 68, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 73, end = 76, render = {kind = "full"}},
+  {path = "src/adapters/adapter.js", start = 77, end = 77, render = {kind = "ellipsis"}},
+]
+
+# ---------------------------------------------------------------- Tier 5
+# Build graph, styling, tooling config and project metadata.
+
+[[batches]]
+id = "5.1"
+descriptor = "Complete gulp task roster"
+justification = """
+Every `gulp.task` declaration with its dependency array: clean, build,
+default, dist, css, lib:ondemand, the wex:* group, and the per-browser
+firefox/chrome/opera chains including the zip and nex packaging tasks.
+One batch so the task graph cannot be misread as partial.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "gulpfile.js", start = 13, end = 13, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 20, end = 21, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 24, end = 24, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 28, end = 29, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 32, end = 32, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 42, end = 42, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 58, end = 59, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 61, end = 61, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 80, end = 80, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 83, end = 85, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 87, end = 87, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 96, end = 98, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 100, end = 100, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 109, end = 109, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 116, end = 116, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "5.2"
-descriptor = "adapter.js _handleError(): HTTP status -> user message table"
-predecessor = "5.1"
-justification = "Lines 145-200: the exhaustive status-code switch (0 connection error, 409 empty repo, 401 invalid token, 404 private repo, 403 rate-limit vs forbidden, default) - the single place to look up any 'Octotree shows X error' report."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/adapters/adapter.js", start = 145, end = 200, render = { kind = "full" } } ]
-
-[[batches]]
-id = "5.3"
-descriptor = "src/adapters/pjax.js method roster"
-justification = "First line of all 5 PjaxAdapter methods (constructor, init, selectFile, _handlePjaxEvent, _patchPjax) - the pjax-navigation layer GitHub extends."
+descriptor = "prepareWexFolder: the layout of a packaged extension"
+justification = """
+What actually ships per browser: icons/, fonts/ and images/ directories,
+content.css/content.js, the manifest with `$VERSION` replaced from
+package.json, and background.js. Answers "where does file X end up in the
+build output" without a follow-up.
+"""
+predecessor = "2.8"
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/adapters/pjax.js", start = 2, end = 2, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/pjax.js", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/pjax.js", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/pjax.js", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/pjax.js", start = 113, end = 113, render = { kind = "full" } },
+  {path = "gulpfile.js", start = 227, end = 251, render = {kind = "full"}},
+  {path = "gulpfile.js", start = 252, end = 252, render = {kind = "ellipsis"}},
+  {path = "gulpfile.js", start = 256, end = 256, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "buildTemplate: where the TEMPLATE global comes from"
+justification = """
+template.html is preprocessed, its __SPACES__ marker expanded, and
+html2js wraps the result as `const TEMPLATE = '...'`. Without this the
+bare `$(TEMPLATE)` in main.js has no definition anywhere in src/.
+"""
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "gulpfile.js", start = 215, end = 224, render = {kind = "full"}},
 ]
 
 [[batches]]
 id = "5.4"
-descriptor = "src/adapters/github.js module-level constants"
-justification = "Lines 6-12 (skipping the leading explanatory comment): GH_PJAX_CONTAINER_SEL, GH_CONTAINERS, GH_MAX_HUGE_REPOS_SIZE=50, GH_HIDDEN_RESPONSIVE_CLASS, GH_RESPONSIVE_BREAKPOINT=1010 - the tunables referenced by shouldLoadEntireTree (5.6)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/adapters/github.js", start = 6, end = 12, render = { kind = "full" } } ]
-
-[[batches]]
-id = "5.5"
-descriptor = "src/adapters/github.js method roster"
-justification = "First line of all 13 GitHub methods (constructor, init, getCssClass, shouldLoadEntireTree, getCreateTokenUrl, updateLayout, getRepoFromPath, loadCodeTree, get isOnPRPage, _getTree, _getPatch, _getSubmodules, _get) - the concrete Adapter override that makes Octotree work against GitHub specifically."
+descriptor = "ESLint configuration"
+justification = """
+The complete rule set the sources are written against: browser env,
+ecmaVersion 2017, single quotes, 1tbs braces, eqeqeq with null ignored,
+always-parenthesised arrow params, a max-len rule whose options are
+elided, and no spacing inside object braces or array brackets. Needed
+before writing any patch.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/adapters/github.js", start = 15, end = 15, render = { kind = "full" } },
-  { path = "src/adapters/github.js", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 42, end = 42, render = { kind = "full" } },
-  { path = "src/adapters/github.js", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 70, end = 70, render = { kind = "full" } },
-  { path = "src/adapters/github.js", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 186, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 192, end = 192, render = { kind = "full" } },
-  { path = "src/adapters/github.js", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 226, end = 226, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 299, end = 299, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/adapters/github.js", start = 310, end = 310, render = { kind = "truncated", pattern = "^[^(]+" } },
+  {path = ".eslintrc", start = 1, end = 14, render = {kind = "full"}},
+  {path = ".eslintrc", start = 15, end = 15, render = {kind = "ellipsis"}},
+  {path = ".eslintrc", start = 22, end = 25, render = {kind = "full"}},
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "LESS entry point, theme variables and the icon set"
+justification = """
+octotree.less is two imports; vars.less holds the palette, the z-index
+constants that keep the sidebar above GitHub's chrome, and the
+header/footer/icon sizes -- shown in full -- followed by the octicon
+code-point section header and the .icon-v2 mixin signature with their
+bodies marked elided.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  {path = "src/styles/octotree.less", start = 1, end = 2, render = {kind = "full"}},
+  {path = "src/styles/vars.less", start = 1, end = 23, render = {kind = "full"}},
+  {path = "src/styles/vars.less", start = 24, end = 24, render = {kind = "ellipsis"}},
+  {path = "src/styles/vars.less", start = 43, end = 43, render = {kind = "truncated", pattern = "^\\.icon-v2\\(@code"}},
+  {path = "src/styles/vars.less", start = 44, end = 44, render = {kind = "ellipsis"}},
 ]
 
 [[batches]]
 id = "5.6"
-descriptor = "github.js shouldLoadEntireTree() + getCreateTokenUrl()"
-predecessor = "5.5"
-justification = "Lines 46-76: loads the whole tree eagerly only for PR diffs or repos absent from the STORE.HUGE_REPOS memo (else honors global lazyload or the per-repo huge-repo flag, refreshing its timestamp) - the exact lazy-load decision debugging needs; getCreateTokenUrl builds the GitHub PAT-creation URL with scopes=repo."
+descriptor = "github.less top-level rule blocks"
+justification = """
+606 lines of styling reduced to its three top-level scopes: the
+`.octotree-sidebar.octotree-github-sidebar` block, the `.octotree-show`
+body-shifting block, and a print media query -- bodies marked elided.
+Enough to aim a grep, cheap enough to always include.
+"""
 [batches.content]
 kind = "lines"
-spans = [ { path = "src/adapters/github.js", start = 46, end = 76, render = { kind = "full" } } ]
+spans = [
+  {path = "src/adapters/github.less", start = 1, end = 1, render = {kind = "full"}},
+  {path = "src/adapters/github.less", start = 2, end = 2, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.less", start = 539, end = 539, render = {kind = "full"}},
+  {path = "src/adapters/github.less", start = 540, end = 540, render = {kind = "ellipsis"}},
+  {path = "src/adapters/github.less", start = 598, end = 598, render = {kind = "full"}},
+  {path = "src/adapters/github.less", start = 599, end = 599, render = {kind = "ellipsis"}},
+]
 
 [[batches]]
 id = "5.7"
-descriptor = "github.js getRepoFromPath(): branch fallback chain"
-predecessor = "5.5"
-justification = "Lines 147-183: the ordered `||` fallback chain for `branch` (commit id, releases/tags -> 'master', DOM branch-menu summary, commits-link scrape, tree/blob typeId, PR target-branch match, cached currentRepo, this._defaultBranch cache) and the final _get() call to fetch default_branch when nothing resolved - a long ordered fallback chain, the kind of logic worth reading in full before touching branch detection (URL/DOM parsing that feeds `type`/`typeId`/`username`/`reponame` into this chain is at lines 104-146, one read away via the 5.5 roster's line 104)."
+descriptor = ".editorconfig and .gitignore"
+justification = """
+Two-space LF indentation with trailing whitespace trimmed and *no* final
+newline under src/**, and the ignored build outputs (node_modules, tmp,
+dist) that explain why gulp's ./tmp and ./dist are absent from the tree.
+"""
 [batches.content]
 kind = "lines"
-spans = [ { path = "src/adapters/github.js", start = 147, end = 183, render = { kind = "full" } } ]
+spans = [
+  {path = ".editorconfig", start = 1, end = 11, render = {kind = "full"}},
+  {path = ".gitignore", start = 1, end = 7, render = {kind = "full"}},
+]
 
 [[batches]]
 id = "5.8"
-descriptor = "src/adapters/github.less top-level selector locations"
-justification = "Only 2 top-level rule blocks in the 606-line stylesheet: `.octotree-sidebar.octotree-github-sidebar` (line 1, all sidebar/footer/resizer/tree-node CSS nests inside it) and `.octotree-show` (line 539) - locations only, so a styling question has an exact grep target instead of an unbounded file."
+descriptor = "GitHub issue and pull-request templates"
+justification = """
+The PR template explicitly refuses pull requests to this repository and
+redirects to the issue tracker -- decisive context for any task framed as
+'contribute this upstream'. The issue template's environment checklist is
+included alongside it to close the .github/ pair.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/adapters/github.less", start = 1, end = 1, render = { kind = "full" } },
-  { path = "src/adapters/github.less", start = 539, end = 539, render = { kind = "full" } },
+  {path = ".github/PULL_REQUEST_TEMPLATE.md", start = 1, end = 1, render = {kind = "full"}},
+  {path = ".github/ISSUE_TEMPLATE.md", start = 1, end = 4, render = {kind = "full"}},
+  {path = ".github/ISSUE_TEMPLATE.md", start = 5, end = 5, render = {kind = "ellipsis"}},
 ]
 
 [[batches]]
-id = "6.1"
-descriptor = "src/view.tree.js method roster"
-justification = "First line of all 8 TreeView members (constructor, get $jstree, focus, show, _showHeader, onItemClick, _onItemClick, syncSelection) - the jstree wrapper that renders the actual sidebar file tree. show() (line 28) drives jstree's data loader via adapter.loadCodeTree; syncSelection() (line 149) highlights the file matching the current GitHub URL."
+id = "5.9"
+descriptor = "package.json: repository, author, license and the devDependency block"
+justification = """
+Closes package.json: the AGPL license field, upstream repo/issue/homepage
+URLs, and the opening of devDependencies with its contents marked elided
+-- enough to know a gulp-3 era toolchain is pinned there without paying
+for 35 lines of version ranges.
+"""
+predecessor = "1.6"
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/view.tree.js", start = 2, end = 2, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.tree.js", start = 20, end = 20, render = { kind = "full" } },
-  { path = "src/view.tree.js", start = 24, end = 24, render = { kind = "full" } },
-  { path = "src/view.tree.js", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.tree.js", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.tree.js", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.tree.js", start = 101, end = 101, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.tree.js", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  {path = "package.json", start = 11, end = 21, render = {kind = "full"}},
+  {path = "package.json", start = 22, end = 22, render = {kind = "ellipsis"}},
 ]
 
 [[batches]]
-id = "6.2"
-descriptor = "src/view.options.js method roster"
-justification = "First line of all 6 OptionsView members (constructor, loadElements, toggle, _load, _save, _eachOption) - the settings-panel controller bound to template.html's [data-store] inputs. _eachOption (line 83) resolves each element's STORE key from its data-store attribute via util.async.js's parallel()."
+id = "5.10"
+descriptor = "License identification"
+justification = """
+Identifies LICENSE as the GNU Affero General Public License v3 of 19
+November 2007, with its remaining 659 lines marked elided -- the one fact
+about that file worth any budget, and it reconciles with the "AGPL"
+string in package.json. Pure appendix, correctly last.
+"""
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "src/view.options.js", start = 2, end = 2, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.options.js", start = 25, end = 25, render = { kind = "full" } },
-  { path = "src/view.options.js", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/view.options.js", start = 47, end = 47, render = { kind = "full" } },
-  { path = "src/view.options.js", start = 66, end = 66, render = { kind = "full" } },
-  { path = "src/view.options.js", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
-
-[[batches]]
-id = "6.3"
-descriptor = "src/view.help.js (full)"
-justification = "The 32-line first-run HelpPopup: shown once (STORE.POPUP gate) after a 500ms delay, auto-hides after 10s or on click/EVENT.TOGGLE, and persists POPUP=true so it never reappears."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/view.help.js", start = 1, end = 32, render = { kind = "full" } } ]
-
-[[batches]]
-id = "6.4"
-descriptor = "src/view.error.js (full)"
-justification = "The 16-line ErrorView: renders err.error/err.message into the error view and wires its 'go to Settings' button to fire EVENT.VIEW_CLOSE with showSettings:true (consumed by main.js's VIEW_CLOSE handler)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/view.error.js", start = 1, end = 16, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.1"
-descriptor = "src/util.async.js (full)"
-justification = "The 12-line parallel(arr, iter, done) helper - fires iter on every item concurrently and calls done() once all have finished; used by view.options.js's _eachOption."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/util.async.js", start = 1, end = 12, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.2"
-descriptor = "src/util.misc.js (full)"
-justification = "The 10-line isSafari()/isValidTimeStamp() globals - isSafari gates core.storage.js's storage backend choice and adapter.js's selectFile smooth-scroll path; isValidTimeStamp gates the STORE.HUGE_REPOS memo expiry check in github.js."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/util.misc.js", start = 1, end = 10, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.3"
-descriptor = "src/util.deXss.js (full)"
-justification = "The 7-line window.deXss(str) helper - sanitizes file/folder names (via a cached dummy <div>'s .text().html()) before they're inserted into tree-node HTML; adapter.js calls it at line 62 (fix #9)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/util.deXss.js", start = 1, end = 7, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.4"
-descriptor = "src/util.module.js (full)"
-justification = "The 25-line parseGitmodules(data) INI parser (regexes credited to node-iniparser) - turns a raw .gitmodules blob into a {path: url} map, consumed by github.js's _getSubmodules."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/util.module.js", start = 1, end = 25, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.5"
-descriptor = "src/util.plugins.js jstree.truncate registration signature"
-justification = "Lines 3-12: the header comment crediting jstree's own misc.js (https://github.com/vakata/jstree/blob/master/src/misc.js#L148) as the source of this logic, the IIFE opening, and the `$.jstree.plugins.truncate = function(opts, parent) {` line - a custom jstree plugin wired in via view.tree.js's `plugins: [..., 'truncate']`. The ellipsis at line 13 marks its redraw_node body (13-29, wraps long path text so it ellipses instead of wrapping)."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/util.plugins.js", start = 3, end = 12, render = { kind = "full" } },
-  { path = "src/util.plugins.js", start = 13, end = 13, render = { kind = "ellipsis" } },
-]
-
-[[batches]]
-id = "8.1"
-descriptor = "src/template.html toggle button + first-run popup markup"
-justification = "Lines 1-13: the .octotree-toggle button main.js's handleHoverOpenOption/onTogglerClicked/onTogglerHovered hook click/hover handlers onto, plus its first-run popup text (superseded functionally by view.help.js's HelpPopup, but this markup is what it toggles)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/template.html", start = 1, end = 13, render = { kind = "full" } } ]
-
-[[batches]]
-id = "8.2"
-descriptor = "src/styles/octotree.less (full)"
-justification = "The 2-line style entrypoint: @import './vars' then @import '../adapters/github' - confirms github.less (5.8) and vars.less are the only stylesheets actually compiled in (per gulpfile.js's css task, 2.1)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/styles/octotree.less", start = 1, end = 2, render = { kind = "full" } } ]
-
-[[batches]]
-id = "9.1"
-descriptor = ".github issue/PR templates (full)"
-justification = "ISSUE_TEMPLATE.md's bug-report fields (version/browser/OS/screenshot/console log) and PULL_REQUEST_TEMPLATE.md's note that this repo doesn't accept PRs (file a bug report instead) - answers 'how do I contribute' before any code is read."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".github/ISSUE_TEMPLATE.md", start = 1, end = 10, render = { kind = "full" } },
-  { path = ".github/PULL_REQUEST_TEMPLATE.md", start = 1, end = 1, render = { kind = "full" } },
+  {path = "LICENSE", start = 1, end = 2, render = {kind = "full"}},
+  {path = "LICENSE", start = 3, end = 3, render = {kind = "ellipsis"}},
 ]

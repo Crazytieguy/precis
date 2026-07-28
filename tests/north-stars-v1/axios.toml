@@ -1,0 +1,551 @@
+fixture = "axios"
+revision_pin = "26a87296"
+summary = """
+axios is a Promise-based, isomorphic HTTP client (browser + Node.js).
+`lib/axios.js`/`index.js` build a default instance; `lib/core/Axios.js`
+runs interceptor chains around `lib/core/dispatchRequest.js`, which picks
+one of three adapters (`lib/adapters/{http,xhr,fetch}.js`) via
+`lib/adapters/adapters.js`. `lib/core/mergeConfig.js` combines instance
+defaults with per-request config; `lib/core/AxiosHeaders.js` and
+`lib/core/AxiosError.js` are the header/error primitives threaded through
+every adapter. `lib/helpers/` holds environment-agnostic utilities (URL/
+form serialization, header parsing, progress/stream throttling, proxy
+bypass); `lib/platform/` and `lib/env/` isolate Node-vs-browser globals
+and the generated version string. The query distribution spans: request
+config semantics ("what does option X do", "what's the default"),
+interceptor/cancellation/error-handling behavior, adapter-specific
+networking (proxying, redirects, decompression, streaming, HTTP/2) which
+is Node-only and security-sensitive per THREATMODEL.md, form/URL
+serialization edge cases, and packaging/build/test operation (dual ESM/
+CJS/browser builds via Rollup, Vitest unit/browser/smoke/module suites).
+AGENTS.md already covers architecture boundaries, naming conventions,
+the request lifecycle, a bare list of AxiosError codes, and its own
+pointer to THREATMODEL.md for security-sensitive changes, so this NS
+buys breadth (every source file's location, including THREATMODEL.md's
+existence in the root docs listing) and precise shapes (config/
+response/error TypeScript types, per-key mergeConfig semantics) instead
+of re-narrating what AGENTS.md already states or re-deriving the
+security threat model, which is out of budget here and one file-read
+away via AGENTS.md's own pointer.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "lib/ top-level listing"
+justification = "axios's entire runtime source lives under lib/; cheapest, highest-value first look at the module breakdown (core/adapters/helpers/cancel/defaults/env/platform + the two entry files)."
+content.kind = "fs"
+content.groups = [
+  { parent = "lib", entries = "all" },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Root directories"
+justification = "The 8 top-level directories (source, tests, docs, examples, tooling). Split from root files below purely for growth-envelope budgeting; both land within the first handful of batches."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = [".github", ".husky", "docs", "examples", "lib", "sandbox", "scripts", "tests"] },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Root entry points and type declarations"
+justification = "The package's public JS/TS entry surface: ESM entry, and both TypeScript declaration files (ESM + CJS `export =`)."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = ["index.js", "index.d.ts", "index.d.cts"] },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Root config/build/tooling files"
+justification = "Every root-level config and build-tool file in one place: package manifests, lint/format/TS config, bundler configs, git/npm ignore files. Answers 'how is this built/linted/configured' without a directory guess."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = [
+    ".gitignore", ".npmignore", ".npmrc", ".prettierignore", ".prettierrc",
+    "eslint.config.js", "gulpfile.js", "package-lock.json", "package.json",
+    "rollup.config.js", "tsconfig.json", "tslint.json", "vitest.config.js", "webpack.config.js",
+  ] },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Root documentation files"
+justification = "All root-level markdown/license docs (governance, security, migration, changelog) so none are assumed missing; bodies of the highest-value ones are scheduled later, this batch just fixes their existence and location."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = [
+    "AGENTS.md", "CHANGELOG.md", "CLAUDE.md", "CODE_OF_CONDUCT.md", "COLLABORATOR_GUIDE.md",
+    "CONTRIBUTING.md", "CONTRIBUTORS.md", "ECOSYSTEM.md", "LICENSE", "MIGRATION_GUIDE.md",
+    "README.md", "SECURITY.md", "THREATMODEL.md",
+  ] },
+]
+
+
+[[batches]]
+id = "1.6"
+descriptor = "lib/env, lib/platform listings (incl. node/browser/common subdirs)"
+justification = "The environment-detection and platform-capability layer: version data, and the browser/node/common split that every adapter and helper reads through `platform.*`."
+content.kind = "fs"
+content.groups = [
+  { parent = "lib/env", entries = "all" },
+  { parent = "lib/env/classes", entries = "all" },
+  { parent = "lib/platform", entries = "all" },
+  { parent = "lib/platform/node", entries = "all" },
+  { parent = "lib/platform/node/classes", entries = "all" },
+  { parent = "lib/platform/browser", entries = "all" },
+  { parent = "lib/platform/browser/classes", entries = "all" },
+  { parent = "lib/platform/common", entries = "all" },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "lib/core, lib/adapters, lib/cancel, lib/defaults listings"
+justification = "Full children of the four smallest 'domain logic' subdirectories under lib/ (request core, network adapters, cancellation, default config) in one hop."
+content.kind = "fs"
+content.groups = [
+  { parent = "lib/core", entries = "all" },
+  { parent = "lib/adapters", entries = "all" },
+  { parent = "lib/cancel", entries = "all" },
+  { parent = "lib/defaults", entries = "all" },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "lib/helpers listing, part 1 (A-N)"
+justification = "First half (alphabetically) of the largest lib/ subdirectory (34 files) — generic, axios-agnostic utilities. Split in two purely for growth-envelope budgeting."
+content.kind = "fs"
+content.groups = [
+  { parent = "lib/helpers", entries = [
+    "AxiosTransformStream.js", "AxiosURLSearchParams.js", "bind.js", "buildURL.js",
+    "callbackify.js", "combineURLs.js", "composeSignals.js", "cookies.js",
+    "deprecatedMethod.js", "estimateDataURLDecodedBytes.js", "formDataToJSON.js",
+    "formDataToStream.js", "fromDataURI.js", "HttpStatusCode.js", "isAbsoluteURL.js",
+    "isAxiosError.js", "isURLSameOrigin.js",
+  ] },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "lib/helpers listing, part 2 (N-Z)"
+justification = "Second half (alphabetically) of lib/helpers/, completing the class started in 1.8 so no helper file is left unaccounted for."
+content.kind = "fs"
+content.groups = [
+  { parent = "lib/helpers", entries = [
+    "null.js", "parseHeaders.js", "parseProtocol.js", "progressEventReducer.js",
+    "readBlob.js", "README.md", "resolveConfig.js", "sanitizeHeaderValue.js",
+    "shouldBypassProxy.js", "speedometer.js", "spread.js", "throttle.js",
+    "toFormData.js", "toURLEncodedForm.js", "trackStream.js", "validator.js",
+    "ZlibHeaderTransformStream.js",
+  ] },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "tests/ top-level + unit top-level + unit/adapters,core,cancel listings"
+justification = "First half of the test-suite roster: the tests/ top level, tests/unit's own files, and its adapters/core/cancel subdirs."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/unit", entries = "all" },
+  { parent = "tests/unit/adapters", entries = "all" },
+  { parent = "tests/unit/core", entries = "all" },
+  { parent = "tests/unit/cancel", entries = "all" },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "unit/helpers, unit/utils, browser, setup listings"
+justification = "Second half of the test-suite roster, completing the class started in 1.10: helpers/utils unit subdirs, the browser suite, and shared setup helpers."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests/unit/helpers", entries = "all" },
+  { parent = "tests/unit/utils", entries = "all" },
+  { parent = "tests/browser", entries = "all" },
+  { parent = "tests/setup", entries = "all" },
+]
+
+[[batches]]
+id = "1.12"
+descriptor = "tests/smoke listings, part 1 (esm, cjs)"
+justification = "Package-compatibility smoke suites — each is its own mini npm package under tests/smoke, easy to miss if only tests/unit was sampled. Split in two for growth-envelope budgeting."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests/smoke", entries = "all" },
+  { parent = "tests/smoke/esm", entries = "all" },
+  { parent = "tests/smoke/esm/tests", entries = "all" },
+  { parent = "tests/smoke/cjs", entries = "all" },
+  { parent = "tests/smoke/cjs/tests", entries = "all" },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "tests/smoke listings, part 2 (bun, deno)"
+justification = "Completes the tests/smoke class started in 1.12: the Bun and Deno smoke suites."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests/smoke/bun", entries = "all" },
+  { parent = "tests/smoke/bun/tests", entries = "all" },
+  { parent = "tests/smoke/deno", entries = "all" },
+  { parent = "tests/smoke/deno/tests", entries = "all" },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "tests/module listings (cjs, esm)"
+justification = "TypeScript-version compatibility suites (TS 4.9 CJS / TS 5.x ESM), completing the test-suite roster started in 1.10-1.13."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests/module", entries = "all" },
+  { parent = "tests/module/esm", entries = "all" },
+  { parent = "tests/module/esm/tests", entries = "all" },
+  { parent = "tests/module/cjs", entries = "all" },
+  { parent = "tests/module/cjs/tests", entries = "all" },
+]
+
+[[batches]]
+id = "1.15"
+descriptor = "docs/ top-level + docs/pages listing"
+justification = "The VitePress docs-site root and its pages/ index, before descending into the three pages/ subdirectories."
+content.kind = "fs"
+content.groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/pages", entries = "all" },
+]
+
+[[batches]]
+id = "1.16"
+descriptor = "docs/pages/advanced, getting-started, misc listings"
+justification = "Every docs page name under the three pages/ subdirectories — the docs site mirrors and expands README topics per-page; listing them (without bodies, lower-value than the README sections scheduled later) hedges against assuming a topic isn't documented."
+content.kind = "fs"
+content.groups = [
+  { parent = "docs/pages/advanced", entries = "all" },
+  { parent = "docs/pages/getting-started", entries = "all" },
+  { parent = "docs/pages/getting-started/examples", entries = "all" },
+  { parent = "docs/pages/misc", entries = "all" },
+]
+
+[[batches]]
+id = "1.17"
+descriptor = "examples/ listings (all subdirectories)"
+justification = "Runnable usage examples (server+html pairs per feature: abort-controller, all, amd, get, post, postMultipartFormData, transform-response, upload)."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/abort-controller", entries = "all" },
+  { parent = "examples/all", entries = "all" },
+  { parent = "examples/amd", entries = "all" },
+  { parent = "examples/get", entries = "all" },
+  { parent = "examples/post", entries = "all" },
+  { parent = "examples/postMultipartFormData", entries = "all" },
+  { parent = "examples/transform-response", entries = "all" },
+  { parent = "examples/upload", entries = "all" },
+]
+
+[[batches]]
+id = "1.18"
+descriptor = "sandbox/, scripts/, .github/, .husky/ listings"
+justification = "The manual sandbox (server+client for ad hoc testing), the release-notes/version build script, CI workflow files, and the git commit-msg hook."
+content.kind = "fs"
+content.groups = [
+  { parent = "sandbox", entries = "all" },
+  { parent = "scripts", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".husky", entries = "all" },
+]
+
+
+
+
+
+[[batches]]
+id = "2.1"
+descriptor = "index.js — public re-export surface"
+justification = "The full list of named exports re-derived from the default axios instance; answers 'how do I import X' (named vs default) precisely, with exact names."
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 1, end = 45, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "lib/ subdirectory README notes (core, adapters, env, helpers)"
+justification = "Each of the four documented lib/ subdirectories carries a short 'why this dir exists' note (core=axios-specific domain logic, adapters=request dispatch, helpers=generic/reusable, env=generated version data). Cheap orientation not covered by AGENTS.md. lib/adapters/README.md's remaining 33 lines (a worked custom-adapter example under '## Example') are marked with an ellipsis rather than silently dropped, since the other three READMEs are rendered in full but this one is only its intro."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/README.md", start = 1, end = 8, render.kind = "full" },
+  { path = "lib/adapters/README.md", start = 1, end = 3, render.kind = "full" },
+  { path = "lib/adapters/README.md", start = 5, end = 5, render.kind = "ellipsis" },
+  { path = "lib/env/README.md", start = 1, end = 3, render.kind = "full" },
+  { path = "lib/helpers/README.md", start = 1, end = 7, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "package.json — browser/react-native alias map"
+justification = "The exact multi-runtime packaging aliasing (AGENTS.md narrates it conceptually): browser and react-native builds swap lib/adapters/http.js and lib/platform/node/* for browser/null replacements, and dist/node/axios.cjs for dist/browser/axios.cjs. Trimmed to just this block (not the full exports map, which is lower marginal value given AGENTS.md's narrative already covers the require/import split) to control cost."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 50, end = 61, render.kind = "full" },
+]
+
+
+[[batches]]
+id = "2.4"
+descriptor = "index.d.ts — AxiosRequestConfig interface, part 1 (url..maxRate)"
+justification = "The authoritative, exhaustive shape of request config options and their types — cheaper and more precise than re-deriving it from README prose or mergeConfig/defaults source. Includes the AddressFamily/LookupAddressEntry/LookupAddress type defs the interface's family/lookup fields depend on, then url through maxRate. Split in two for growth-envelope budgeting."
+content.kind = "lines"
+content.spans = [
+  { path = "index.d.ts", start = 357, end = 392, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "index.d.ts — AxiosRequestConfig interface, part 2 (beforeRedirect..redact)"
+justification = "Completes the AxiosRequestConfig interface started in 2.4, from beforeRedirect through the closing brace: socketPath/allowedSocketPaths/transport/httpAgent/httpsAgent/proxy/cancelToken/decompress/transitional/signal/insecureHTTPParser/env/formSerializer/family/lookup/withXSRFToken/parseReviver/fetchOptions/httpVersion/http2Options/formDataHeaderPolicy/redact fields."
+content.kind = "lines"
+content.spans = [
+  { path = "index.d.ts", start = 393, end = 452, render.kind = "full" },
+]
+
+
+[[batches]]
+id = "3.1"
+descriptor = "lib/core/InterceptorManager.js — constructor, use(), forEach() (docblocks elided)"
+justification = "The interceptor registry AGENTS.md describes narratively (LIFO/FIFO order lives in Axios.js, not here): handlers is a plain array, use() pushes {fulfilled, rejected, synchronous, runWhen}, eject() nulls an entry instead of splicing, forEach() skips nulls. eject()/clear() are one-liners inferable from their names; each is marked with an ellipsis rather than silently dropped."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/InterceptorManager.js", start = 5, end = 8, render.kind = "full" },
+  { path = "lib/core/InterceptorManager.js", start = 19, end = 27, render.kind = "full" },
+  { path = "lib/core/InterceptorManager.js", start = 36, end = 36, render.kind = "ellipsis" },
+  { path = "lib/core/InterceptorManager.js", start = 47, end = 47, render.kind = "ellipsis" },
+  { path = "lib/core/InterceptorManager.js", start = 63, end = 69, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "lib/core/dispatchRequest.js — part 1 (cancellation check, request transform, adapter call)"
+justification = "The first half of the adapter-dispatch step: throwIfCancellationRequested, converting config.headers to AxiosHeaders, running transformRequest, and picking the adapter via adapters.getAdapter. Split from the response-handling half for growth-envelope budgeting."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/dispatchRequest.js", start = 1, end = 46, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "lib/core/dispatchRequest.js — part 2 (response/rejection transform)"
+justification = "The resolve and reject handlers passed to the adapter's promise: both run transformResponse and AxiosHeaders.from on the response, including the reject path (only when not a cancellation) so a failed request still gets its data/headers normalized."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/dispatchRequest.js", start = 47, end = 89, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "lib/core/mergeConfig.js — part 1 (null-proto result object + per-strategy merge helper fns)"
+justification = "Why mergeConfig returns an Object.create(null) with hasOwnProperty restored as a non-enumerable slot (prototype-pollution hardening), and the four merge strategies (getMergedValue/mergeDeepProperties/valueFromConfig2/defaultToConfig2/mergeDirectKeys) the per-key table in part 2 dispatches through."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/mergeConfig.js", start = 1, end = 79, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "lib/core/mergeConfig.js — part 2 (per-key mergeMap table + apply loop)"
+justification = "The declarative per-key merge-strategy table (url/method/data -> config2 wins outright; most options fall back through config1 via defaultToConfig2; validateStatus uses hasOwnProp-based mergeDirectKeys; headers deep-merge case-insensitively) plus the loop that applies it, skipping __proto__/constructor/prototype keys. Not narrated anywhere in AGENTS.md or README."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/mergeConfig.js", start = 80, end = 124, render.kind = "full" },
+]
+
+
+
+[[batches]]
+id = "4.1"
+descriptor = "lib/core/AxiosError.js — class signature + error code constants"
+justification = "The exact source location and values of every AxiosError.ERR_* / E* code constant (AGENTS.md lists the names in prose; this grounds them at lib/core/AxiosError.js:161-174), plus the class/static-from/constructor/toJSON method locations."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/AxiosError.js", start = 75, end = 75, render.kind = "full" },
+  { path = "lib/core/AxiosError.js", start = 76, end = 76, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosError.js", start = 101, end = 101, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosError.js", start = 128, end = 128, render.kind = "full" },
+  { path = "lib/core/AxiosError.js", start = 160, end = 176, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "lib/cancel/isCancel.js, CanceledError.js — full"
+justification = "The two smallest cancellation primitives in full: the `__CANCEL__`-flagged CanceledError subclass and the isCancel(value) predicate that checks it. CancelToken.js (135 lines, the legacy path) is left as a location pointer given its size."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/cancel/isCancel.js", start = 1, end = 5, render.kind = "full" },
+  { path = "lib/cancel/CanceledError.js", start = 1, end = 22, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "lib/cancel/CancelToken.js — method locations"
+justification = "Locations of the legacy CancelToken's public surface (constructor, throwIfRequested, subscribe/unsubscribe, toAbortSignal, static source) so the walker can jump straight to whichever method a query needs without reading the whole 135-line file."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/cancel/CancelToken.js", start = 12, end = 12, render.kind = "full" },
+  { path = "lib/cancel/CancelToken.js", start = 13, end = 13, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/cancel/CancelToken.js", start = 68, end = 68, render.kind = "full" },
+  { path = "lib/cancel/CancelToken.js", start = 78, end = 78, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/cancel/CancelToken.js", start = 95, end = 95, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/cancel/CancelToken.js", start = 105, end = 105, render.kind = "full" },
+  { path = "lib/cancel/CancelToken.js", start = 123, end = 123, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.1"
+descriptor = "lib/core/AxiosHeaders.js — method locations"
+justification = "Every public method/static of the AxiosHeaders class at its exact line (constructor, set/get/has/delete/clear/normalize/concat/toJSON/[Symbol.iterator]/toString/getSetCookie/[Symbol.toStringTag], static from/concat/accessor) — the header API surface without the 348-line body cost. The two Symbol-keyed protocol hooks are marked with an ellipsis rather than elided silently."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/core/AxiosHeaders.js", start = 80, end = 81, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 85, end = 85, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 138, end = 138, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 168, end = 168, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 184, end = 184, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 211, end = 211, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 227, end = 227, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 254, end = 254, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 258, end = 258, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 270, end = 270, render.kind = "ellipsis" },
+  { path = "lib/core/AxiosHeaders.js", start = 274, end = 274, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 280, end = 280, render.kind = "full" },
+  { path = "lib/core/AxiosHeaders.js", start = 284, end = 284, render.kind = "ellipsis" },
+  { path = "lib/core/AxiosHeaders.js", start = 288, end = 288, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 292, end = 292, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 300, end = 300, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/core/AxiosHeaders.js", start = 326, end = 333, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "lib/adapters/adapters.js, xhr.js, fetch.js, http.js — top-level function/export locations"
+justification = "One-line-per-definition roster across all three network adapters + the resolver: `getAdapter`; the XHR closure; fetch.js's `factory`/`getFetch`; and http.js's `setFormDataHeaders`/`getTunnelingAgent`/`dispatchBeforeRedirect`/`setProxy`/`httpAdapter`. Every other top-level definition in these files — adapters.js's `knownAdapters` map, `renderReason`/`isResolvedHandle` helpers, and its own default export; fetch.js's `test` helper, the `adapter` binding, and its default export; http.js's decodeURIComponentSafe, the Http2Sessions class, `wrapAsync`/`resolveFamily`/`buildAddressEntry`, and `__setProxy` — is marked with an ellipsis at its line rather than silently dropped. Cheap breadth so no adapter internals are assumed absent even though full bodies aren't scheduled given the file sizes (132/227/473/1312 lines)."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/adapters/adapters.js", start = 16, end = 16, render.kind = "ellipsis" },
+  { path = "lib/adapters/adapters.js", start = 44, end = 44, render.kind = "ellipsis" },
+  { path = "lib/adapters/adapters.js", start = 52, end = 52, render.kind = "ellipsis" },
+  { path = "lib/adapters/adapters.js", start = 65, end = 65, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/adapters.js", start = 120, end = 120, render.kind = "ellipsis" },
+  { path = "lib/adapters/xhr.js", start = 15, end = 16, render.kind = "full" },
+  { path = "lib/adapters/fetch.js", start = 22, end = 22, render.kind = "ellipsis" },
+  { path = "lib/adapters/fetch.js", start = 30, end = 30, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/fetch.js", start = 157, end = 157, render.kind = "full" },
+  { path = "lib/adapters/fetch.js", start = 448, end = 448, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/fetch.js", start = 471, end = 471, render.kind = "ellipsis" },
+  { path = "lib/adapters/fetch.js", start = 473, end = 473, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 54, end = 54, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/http.js", start = 84, end = 84, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/http.js", start = 119, end = 119, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 137, end = 137, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 250, end = 250, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/http.js", start = 268, end = 268, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/adapters/http.js", start = 430, end = 430, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 455, end = 455, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 465, end = 465, render.kind = "ellipsis" },
+  { path = "lib/adapters/http.js", start = 517, end = 518, render.kind = "full" },
+  { path = "lib/adapters/http.js", start = 1312, end = 1312, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "lib/helpers/* — one-line-per-file export locations, part 1 (serialization + parsing + config)"
+justification = "Roster line per file's main export for URL/form serialization (buildURL, AxiosURLSearchParams, toFormData, formDataToJSON, toURLEncodedForm), header/protocol parsing (parseHeaders, sanitizeHeaderValue, parseProtocol, isAbsoluteURL, combineURLs), and config finalization (resolveConfig, validator), plus lib/helpers/null.js — the trivial `export default null;` stub that package.json's browser/react-native alias map (2.3) swaps in for lib/adapters/http.js and lib/platform/node/classes/FormData.js. Split from part 2 for growth-envelope budgeting; together they cover every file from the 1.8/1.9 listings."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/helpers/buildURL.js", start = 31, end = 31, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/AxiosURLSearchParams.js", start = 35, end = 35, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/toFormData.js", start = 89, end = 89, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/formDataToJSON.js", start = 49, end = 49, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/toURLEncodedForm.js", start = 7, end = 7, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/parseHeaders.js", start = 41, end = 41, render.kind = "full" },
+  { path = "lib/helpers/sanitizeHeaderValue.js", start = 46, end = 47, render.kind = "full" },
+  { path = "lib/helpers/parseProtocol.js", start = 3, end = 3, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/isAbsoluteURL.js", start = 10, end = 10, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/combineURLs.js", start = 11, end = 11, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/resolveConfig.js", start = 38, end = 38, render.kind = "full" },
+  { path = "lib/helpers/validator.js", start = 81, end = 81, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/null.js", start = 2, end = 2, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities)"
+justification = "Completes the helpers roster started in 5.3: streaming/progress (AxiosTransformStream, formDataToStream, ZlibHeaderTransformStream, trackStream, progressEventReducer, speedometer, throttle), proxy/origin (shouldBypassProxy, isURLSameOrigin, cookies), data URIs (fromDataURI, estimateDataURLDecodedBytes, readBlob), and small pure utilities (bind, spread, isAxiosError, callbackify, deprecatedMethod, composeSignals, HttpStatusCode)."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/helpers/AxiosTransformStream.js", start = 8, end = 8, render.kind = "full" },
+  { path = "lib/helpers/formDataToStream.js", start = 68, end = 68, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/ZlibHeaderTransformStream.js", start = 5, end = 5, render.kind = "full" },
+  { path = "lib/helpers/trackStream.js", start = 45, end = 45, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/progressEventReducer.js", start = 5, end = 5, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/speedometer.js", start = 9, end = 9, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/throttle.js", start = 7, end = 7, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/shouldBypassProxy.js", start = 127, end = 127, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/isURLSameOrigin.js", start = 3, end = 3, render.kind = "full" },
+  { path = "lib/helpers/cookies.js", start = 1, end = 4, render.kind = "full" },
+  { path = "lib/helpers/fromDataURI.js", start = 21, end = 21, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/estimateDataURLDecodedBytes.js", start = 10, end = 10, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/readBlob.js", start = 1, end = 3, render.kind = "full" },
+  { path = "lib/helpers/bind.js", start = 10, end = 10, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/spread.js", start = 24, end = 24, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/isAxiosError.js", start = 12, end = 12, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/callbackify.js", start = 3, end = 3, render.kind = "full" },
+  { path = "lib/helpers/deprecatedMethod.js", start = 15, end = 15, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "lib/helpers/composeSignals.js", start = 5, end = 5, render.kind = "full" },
+  { path = "lib/helpers/HttpStatusCode.js", start = 1, end = 1, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.1"
+descriptor = "README.md — Error Types table (per-code descriptions)"
+justification = "AGENTS.md lists AxiosError code names in prose; this table gives the one-line meaning of each (ERR_NETWORK vs ERR_BAD_RESPONSE vs ECONNABORTED etc.), which is what an agent actually needs when triaging a caught error."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 1349, end = 1362, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "CHANGELOG.md — v1.16.0 Notable Changes"
+justification = "The most recent release's behavior-affecting changes (fetch adapter now enforces maxBodyLength/maxContentLength, proxy preserves Host headers, basic-auth credentials URL-decoded, parseProtocol tightened) — the single highest-value slice of the 1747-line changelog for 'what changed / could this be a regression' queries."
+content.kind = "lines"
+content.spans = [
+  { path = "CHANGELOG.md", start = 1, end = 16, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "lib/utils.js — full export roster"
+justification = "Every predicate/helper name lib/utils.js exports (isArray/isFormData/isPlainObject/.../forEach/merge/extend/toFlatObject/reduceDescriptors/freezeMethods/asap/isIterable, etc.) — the foundational, everywhere-imported layer under `import utils from '../utils.js'`. Listing all ~55 names in one place prevents assuming an unfamiliar one (e.g. `isSpecCompliantForm`, `toJSONObject`) doesn't exist."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/utils.js", start = 872, end = 932, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "lib/defaults/transitional.js — full"
+justification = "The transitional-option defaults object (silentJSONParsing/forcedJSONParsing/clarifyTimeoutError/legacyInterceptorReqResOrdering) referenced throughout error/timeout handling and merged into every request's `config.transitional`."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/defaults/transitional.js", start = 1, end = 8, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "lib/platform/index.js — full"
+justification = "The platform façade that merges lib/platform/common/utils.js (hasBrowserEnv/hasStandardBrowserEnv/origin) with whichever of lib/platform/{node,browser}/index.js rollup/package.json aliasing selected — every adapter/helper reads capability flags through this merged object."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/platform/index.js", start = 1, end = 7, render.kind = "full" },
+]

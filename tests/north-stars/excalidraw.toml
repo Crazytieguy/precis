@@ -1,654 +1,622 @@
 fixture = "excalidraw"
 revision_pin = "f6d85bc8"
 summary = """
-Excalidraw is a large TypeScript/React monorepo (Yarn workspaces): a core
-editor library (`packages/excalidraw`, published as `@excalidraw/excalidraw`)
-built on four smaller packages (`common`, `element`, `math`, `utils`,
-`fractional-indexing`), plus the hosted web app that consumes the library
-(`excalidraw-app/`, excalidraw.com) with its own Firebase/IndexedDB sync and
-realtime-collaboration layer. `packages/excalidraw/components/App.tsx` is a
-~13k-line single class (`App`) that owns nearly all interactive editor
-behavior (pointer/keyboard handling, rendering orchestration, clipboard,
-cropping, frames, collaboration hooks) — most editor-behavior questions
-route through it. Query distribution this NS optimizes for: (a) integrators
-asking "how do I embed/configure the `<Excalidraw>` component" (props,
-imperative API, actions); (b) contributors debugging/extending specific
-editor features (element model, pointer/selection/binding logic, rendering,
-actions); (c) contributors working on the hosted app (collab, persistence
-backends); (d) operational questions (build/test/lint/CI/docker/self-host);
-(e) data-format questions (the `.excalidraw` JSON schema, fractional
-indexing for ordering). `CLAUDE.md` (host-injected) already covers the
-high-level package map and the `yarn test:update`/`yarn fix`/`yarn
-test:typecheck` workflow, so this NS spends its (tight, given the repo's
-size) budget on fs breadth, exact symbol/method locations, and the handful
-of semantic docs/type-shapes it does not restate, rather than re-deriving
-whole file bodies wherever a location pointer is nearly as useful.
-"""
+Excalidraw: an open-source, hand-drawn-style infinite whiteboard, shipped
+both as a React component (`@excalidraw/excalidraw`) and as the
+collaborative, end-to-end-encrypted web app at excalidraw.com. The repo is
+a yarn-workspaces monorepo: `packages/excalidraw` (the editor library and
+its React UI), `packages/element` (the element data model plus all
+geometry/binding/mutation logic over it), `packages/common`,
+`packages/math`, `packages/utils`, `packages/fractional-indexing`,
+`excalidraw-app` (the excalidraw.com app: collaboration, firebase,
+local-first storage), `examples/`, `dev-docs/`, and `scripts/`.
 
-# ---------------------------------------------------------------------------
-# Tier 1 — repo identity, root orientation
-# ---------------------------------------------------------------------------
+The ranking front-loads (1) what the project is and where its substance
+lives — monorepo map plus full directory rosters for the library, the app
+and the element package; (2) the npm package's host-facing API — the
+complete export block of `packages/excalidraw/index.tsx` plus complete
+rosters of `ExcalidrawProps` and `ExcalidrawImperativeAPI`; (3) the element
+data model in `packages/element/src/types.ts` and the source listings of the
+supporting packages; (4) editor runtime architecture — the `App` class, `AppState`, the
+action system, scene/renderer/store/history; (5) the excalidraw-app
+collaboration + persistence layer; and (6) dev workflow: test config, every test
+directory, the docs tree, the integration examples, build scripts and CI.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "CONTRIBUTING.md"
-justification = "Tiny (3 lines) stub pointing at hosted docs; cheap to include in full so the agent doesn't have to open it to learn it's just a redirect. Smallest available batch, so it leads."
-content = { kind = "lines", spans = [
-  { path = "CONTRIBUTING.md", start = 1, end = 3, render = { kind = "full" } },
-] }
+descriptor = "Repository identity: the one-line description of Excalidraw"
+justification = "Rank 1 must answer 'what is this'. Two lines of the README banner state the product and its two defining properties (collaborative, end-to-end encrypted) for ~20 tokens."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 17, end = 18, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "CI workflow roster"
-justification = "All 11 GitHub Actions workflow files by name (test, lint, size-limit, autorelease, publish-docker, build-docker, locales-coverage, sentry-production, semantic-pr-title, cancel, test-coverage-pr) — cheap fs listing so later depth (1.7) doesn't imply the rest don't exist."
-content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" } ] }
+descriptor = "Monorepo declaration: package name and yarn workspace globs"
+justification = "Immediately after 'what is it', 'how is it laid out'. The workspaces array is the authoritative statement that this is a three-way workspace split (excalidraw-app, packages/*, examples/*), which frames every later path."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 2, end = 9, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "Root directory listing — dotfiles/tooling config"
-justification = "Half of the root fs listing (split for growth-envelope reasons, not semantics): editor/CI/lint/package-manager dotfiles (.codesandbox, .eslintrc.json, .github, .husky, .npmrc, .watchmanconfig, crowdin.yml, vercel.json, ...). Paired with 1.4 for full root breadth."
-content = { kind = "fs", groups = [ { parent = ".", entries = [
-  ".codesandbox", ".dockerignore", ".editorconfig", ".env.development", ".env.production",
-  ".eslintignore", ".eslintrc.json", ".gitattributes", ".github", ".gitignore", ".husky",
-  ".lintstagedrc.js", ".npmrc", ".prettierignore", ".watchmanconfig",
-  "crowdin.yml", "vercel.json",
-] } ] }
+descriptor = "Complete listing of packages/"
+justification = "The `packages/*` glob is only useful once the agent knows which packages exist. Cheap, and `entries=all` closes the class so the agent never assumes a missing package."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "Root directory listing — packages, app, docs, config"
-justification = "Second half of the root fs listing: the monorepo package/app/doc directories (packages/, excalidraw-app/, examples/, dev-docs/, firebase-project/, public/, scripts/) plus root-level source/build config (package.json, tsconfig.json, vitest.config.mts, setupTests.ts, Dockerfile, docker-compose.yml). Together with 1.3, establishes full repo breadth before any depth."
-content = { kind = "fs", groups = [ { parent = ".", entries = [
-  "CLAUDE.md", "CONTRIBUTING.md", "LICENSE", "README.md", "dev-docs", "docker-compose.yml",
-  "Dockerfile", "examples", "excalidraw-app", "firebase-project", "package.json", "packages",
-  "public", "scripts", "setupTests.ts", "tsconfig.json", "vitest.config.mts", "yarn.lock",
-] } ] }
+descriptor = "What the published package is (packages/excalidraw/README.md lede)"
+justification = "One sentence establishes the central fact for the biggest query class — Excalidraw is consumed as an embeddable React component — before any API detail is spent on."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/README.md", start = 1, end = 3, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json — workspaces"
-justification = "Confirms the monorepo shape mechanically: yarn workspaces glob over excalidraw-app, packages/*, examples/*. Concrete backing for CLAUDE.md's package-map prose."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 1, end = 9, render = { kind = "full" } },
-] }
+descriptor = "Complete repository root listing"
+justification = "The full root class: every top-level directory and config file, so the agent never infers a missing one. Ranked after identity rather than before it, and cheap relative to the orientation it buys."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "package.json — build:packages entry point"
-justification = "The single script that builds every internal package in dependency order (common -> fractional-indexing -> math -> element -> excalidraw) before the app itself can build — the one line most upgrade/build-debugging sessions need first."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 60, end = 60, render = { kind = "full" } },
-] }
+descriptor = "Editor capabilities, part 1 (README 'Features' bullets: canvas, style, dark mode, images, shape libraries)"
+justification = "Semantic breadth per token: the feature bullets tell the agent which capabilities exist at all, which is what lets it frame a feature query without exploring. Split in two purely for budget granularity; part 2 completes the list."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 54, end = 62, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "test.yml — CI test job"
-justification = "Ground truth for what CI runs on push to master (yarn install && yarn test:app) — the smallest, most-asked-about workflow file. Full file (19 lines) so the actual run step (yarn install / yarn test:app) is visible, not just the job header."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/test.yml", start = 1, end = 19, render = { kind = "full" } },
-] }
+descriptor = "Editor capabilities, part 2 (i18n, export formats, .excalidraw file format, tool set, arrow binding, undo/redo, zoom)"
+justification = "Completes the feature class begun in 1.6 so no capability is silently implied absent; names the on-disk format and the arrow-binding feature, both of which are large subsystems later in the ranking."
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 63, end = 69, render.kind = "full" },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 2 — domain-concept docs (cheap, high semantic density)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "1.8"
+descriptor = "Complete listing of packages/excalidraw/ (the library root)"
+justification = "The single most-visited directory in the repo. Its roster names the editor's subsystems as directories (actions, components, renderer, scene, data, fonts, locales, wysiwyg, lasso, eraser, subset, charts, hooks, context) and its cross-cutting modules (history.ts, snapping.ts, clipboard.ts, i18n.ts, mermaid.ts, cursor.ts). One hop from here lands on almost any editor question."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/excalidraw", entries = "all" },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Complete listing of packages/element/src/ (the data-model package)"
+justification = "`packages/element` holds the element type definitions and every operation over them. The file names are the domain vocabulary — binding.ts, elbowArrow.ts, textWrapping.ts, fractionalIndex.ts, resizeElements.ts, zindex.ts, store.ts, Scene.ts — so this roster converts most 'where is X implemented' questions into a single read."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/element/src", entries = "all" },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Complete listing of excalidraw-app/ (root files and subdirectories)"
+justification = "The app half of the library/app split: names its entry points (index.tsx, App.tsx), its build config, and its subsystem directories (collab, data, components, share, app-language, tests)."
+content.kind = "fs"
+content.groups = [
+  { parent = "excalidraw-app", entries = "all" },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "What excalidraw.com adds on top of the library (README 'Excalidraw.com')"
+justification = "Names the app-only capabilities — PWA/offline, real-time collaboration, end-to-end encryption, local-first autosave, share links — and states explicitly that the app's source lives in this repo. That library/app boundary is the most load-bearing distinction here, and it makes the collab/persistence tier legible."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 71, end = 79, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "`.excalidraw` clipboard-format attribute table"
-justification = "The smaller of two sibling attribute tables for the Excalidraw JSON schema: the in-memory clipboard variant (type/elements/files, no appState). Ordered before 2.2 (the fuller on-disk variant) purely for growth-envelope headroom; semantically either could lead."
-content = { kind = "lines", spans = [
-  { path = "dev-docs/docs/codebase/json-schema.mdx", start = 65, end = 75, render = { kind = "full" } },
-] }
+descriptor = "The `Excalidraw` component export (packages/excalidraw/index.tsx)"
+justification = "The package's one runtime entry point: a memoized React component. Two lines, and it anchors every later API batch to a concrete file."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/index.tsx", start = 304, end = 305, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "`.excalidraw` JSON schema — attribute table"
-justification = "The exact on-disk attribute names/types (type/version/source/elements/appState/files) for the primary save format — the single highest-value semantic doc for anyone touching serialization/import/export, and nowhere else in the repo. Skips the worked JSON example (redundant with the table) to stay cheap; completes 2.1 (clipboard variant)."
-content = { kind = "lines", spans = [
-  { path = "dev-docs/docs/codebase/json-schema.mdx", start = 1, end = 19, render = { kind = "full" } },
-] }
+descriptor = "Quick start: the two easy-to-miss embedding requirements (packages/excalidraw/README.md)"
+justification = "Highest zero-follow-up density in the repo for integration queries: the CSS import and the non-zero-height parent are named as the two failure modes, with a complete working snippet. Answers 'why is my canvas blank' outright."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/README.md", start = 19, end = 42, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "Frame element-ordering invariant"
-justification = "A subtle, easy-to-violate invariant (frame children must precede the frame element in the elements array) the renderer relies on for clipping/perf — load-bearing tribal knowledge for anyone touching frames or element ordering, and cheap (22 lines)."
-content = { kind = "lines", spans = [
-  { path = "dev-docs/docs/codebase/frames.mdx", start = 1, end = 22, render = { kind = "full" } },
-] }
+descriptor = "Public export block 1/3: scene versioning, i18n, restore/reconcile, export, blob/JSON/library helpers"
+justification = "Start of the complete public export surface of index.tsx. Names exactly which helpers a host app can import (restoreAppState, reconcileElements, exportToSvg/Blob/Canvas/Clipboard, serializeAsJSON, loadFromBlob, mergeLibraryItems) and which internal package each is re-exported from."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/index.tsx", start = 307, end = 341, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "package.json — test/lint/typecheck/fix scripts"
-justification = "The full test:all/test:app/test:code/test:typecheck/test:update/fix family of scripts, as literally invoked by CI and yarn test:app — exact command strings for 'how do I run tests/lint/typecheck locally'. Placed after the cheaper tier-1/2 batches (not tier 1) purely for growth-envelope headroom."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 67, end = 79, render = { kind = "full" } },
-] }
+descriptor = "Public export block 2/3: constants, element mutation, CaptureUpdateAction, exported UI components"
+justification = "Continues the same class so no export is implied absent. Covers the constant re-exports (FONT_FAMILY, THEME, MIME_TYPES, ROUNDNESS, UserIdleState), mutateElement/newElementWith/bumpVersion, and the composable UI pieces (Sidebar, Button, MainMenu, Footer, WelcomeScreen, Stats, DefaultSidebar, TTDDialog) that custom-UI questions turn on."
+predecessor = "2.3"
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/index.tsx", start = 343, end = 391, render.kind = "full" },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 3 — operational config (build/self-host)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "2.5"
+descriptor = "Public export block 3/3: bounds/bbox helpers, DiagramToCodePlugin, Fonts, CommandPalette, charts"
+justification = "Closes the export class begun in 2.3/2.4 — the tail of the file's exports, including zoomToFitBounds, the withinBounds predicates, setCustomTextMetricsProvider and the spreadsheet/chart entry points, which are otherwise undiscoverable."
+predecessor = "2.4"
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/index.tsx", start = 393, end = 421, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "The appState subscription hooks exported for host apps (index.tsx overload signatures)"
+justification = "The last exports of index.tsx: the three useExcalidrawStateValue overloads (single prop, prop list, selector) and useOnExcalidrawStateChange. Signatures only, with an ellipsis where the wrapper body is elided, because the shape of the overloads is the answer to 'how do I read editor state from outside'."
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/index.tsx", start = 433, end = 441, render.kind = "full" },
+  { path = "packages/excalidraw/index.tsx", start = 442, end = 442, render.kind = "ellipsis" },
+  { path = "packages/excalidraw/index.tsx", start = 452, end = 452, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Complete member roster of `ExcalidrawImperativeAPI` (types.ts 944-1012)"
+justification = "The imperative handle is how a host drives the editor. Every member, name-first, with the `InstanceType<typeof App>[...]` tails truncated because they carry no information beyond the name: updateScene, applyDeltas, mutateElement, updateLibrary, resetScene, the element/appState/files getters, registerAction, setActiveTool, setCursor, toggleSidebar, updateFrameRendering, and the on* subscription callbacks."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/types.ts", start = 945, end = 945, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 946, end = 946, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 947, end = 947, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 948, end = 948, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 949, end = 949, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 950, end = 950, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 951, end = 951, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 954, end = 954, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 957, end = 957, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 960, end = 960, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 961, end = 961, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 962, end = 962, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 963, end = 963, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 964, end = 964, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 965, end = 965, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 966, end = 966, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 967, end = 967, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 968, end = 968, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 969, end = 969, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 970, end = 970, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 971, end = 971, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 972, end = 972, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 973, end = 973, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 974, end = 974, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 980, end = 980, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 981, end = 981, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 988, end = 988, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 991, end = 991, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 998, end = 998, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 1005, end = 1005, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 1008, end = 1008, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 1011, end = 1011, render.kind = "truncated", render.pattern = "^  \\w+" },
+  { path = "packages/excalidraw/types.ts", start = 1012, end = 1012, render.kind = "truncated", render.pattern = "^  \\w+" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Complete prop roster of `ExcalidrawProps` 1/2 (callbacks: onChange..renderTopRightUI)"
+justification = "The prop set is the largest single API question class. Declaration lines only — most are one-liners that carry their full signature — so the class is closed at a fraction of the cost of the interface body with its JSDoc. Part 1 covers the lifecycle/data callbacks; each entry doubles as a line pointer into the documented source."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/types.ts", start = 571, end = 571, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 579, end = 579, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 580, end = 580, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 587, end = 587, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 591, end = 591, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 595, end = 595, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 599, end = 599, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 600, end = 600, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 601, end = 601, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 606, end = 606, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 621, end = 621, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 626, end = 626, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 630, end = 630, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Complete prop roster of `ExcalidrawProps` 2/2 (mode toggles, theme, UIOptions, link/export hooks)"
+justification = "Completes the props class so nothing is implied absent: langCode, the viewMode/zenMode/gridMode/objectsSnapMode toggles, libraryReturnUrl, UIOptions, imageOptions, detectScroll, handleKeyboardGlobally, autoFocus, generateIdForFile, generateLinkForSelection, validateEmbeddable/renderEmbeddable, aiEnabled, showDeprecatedFonts, renderScrollbars, onExport."
+predecessor = "2.8"
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/types.ts", start = 634, end = 634, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 635, end = 635, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 636, end = 636, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 637, end = 637, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 638, end = 638, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 639, end = 639, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 640, end = 640, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 642, end = 642, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 643, end = 643, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 647, end = 647, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 651, end = 651, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 652, end = 652, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 653, end = 653, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 654, end = 654, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 655, end = 655, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 656, end = 656, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 657, end = 657, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 658, end = 658, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 664, end = 664, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 668, end = 668, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 672, end = 672, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 673, end = 673, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 674, end = 674, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 675, end = 675, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 681, end = 681, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 685, end = 685, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 686, end = 686, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 687, end = 687, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 697, end = 697, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "Dockerfile"
-justification = "Self-host build recipe: multi-stage node build -> nginx serve."
-content = { kind = "lines", spans = [
-  { path = "Dockerfile", start = 1, end = 20, render = { kind = "full" } },
-] }
+descriptor = "`ExcalidrawElement`: the element type union and its serializability contract"
+justification = "The single most load-bearing type in the repo — every scene is a list of these. Includes the doc comment stating elements must be JSON-serializable and contain no peer-local state, the full member union (generic, text, linear, arrow, freedraw, image, frame, magicframe, iframe, embeddable), and the Ordered/NonDeleted wrappers that appear in nearly every signature."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/element/src/types.ts", start = 201, end = 233, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "docker-compose.yml"
-justification = "Local dev-via-Docker recipe (volumes/ports/healthcheck) — the alternative to a native yarn install. Full file (23 lines) so the volumes list and the named `notused` volume it references aren't cut off mid-list."
-content = { kind = "lines", spans = [
-  { path = "docker-compose.yml", start = 1, end = 23, render = { kind = "full" } },
-] }
+descriptor = "`_ExcalidrawElementBase`: every field common to all elements, with its field docs"
+justification = "The on-disk `.excalidraw` record. The comments here are the only place that explains `seed`, `version`/`versionNonce` (collaboration reconciliation), `groupIds` ordering, `boundElements` and `updated` — semantics no amount of grepping recovers cheaply. The ellipsis marks the elided doc comment for the fractional `index` field, which is rendered right after it."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/element/src/types.ts", start = 40, end = 64, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 65, end = 65, render.kind = "ellipsis" },
+  { path = "packages/element/src/types.ts", start = 69, end = 82, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = ".size-limit.json — bundle-size budget"
-justification = "Concrete CI-enforced size budget (340kB min JS / 290kB locales / 900kB vendor) for packages/excalidraw — otherwise invisible until a PR fails the size-limit workflow."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/.size-limit.json", start = 1, end = 16, render = { kind = "full" } },
-] }
+descriptor = "The element model's scalar vocabulary (fill/stroke styles, fonts, alignment, roundness, branded ids)"
+justification = "Rendered in full rather than as a roster because here the declaration *is* the value set: FillStyle's four values, StrokeStyle's three, ChartType, the branded FontString/FractionalIndex/GroupId, TextAlign/VerticalAlign, RoundnessType, PointerType and BoundElement. Answers 'what values may this property take' with no follow-up."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/element/src/types.ts", start = 18, end = 38, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "firebase-project/ config sample"
-justification = "Concrete evidence of the collab-storage backend's security posture: scenes are world-readable/writable by design (`allow get, write: if true`) but not listable — a fact anyone touching Collab/firebase.ts needs, cheaper as config than inferred from code."
-content = { kind = "lines", spans = [
-  { path = "firebase-project/firebase.json", start = 1, end = 9, render = { kind = "full" } },
-  { path = "firebase-project/firestore.rules", start = 1, end = 10, render = { kind = "full" } },
-] }
+descriptor = "Roster of the remaining exported types in packages/element/src/types.ts (lines 84-448)"
+justification = "Closes the type class of the element package: one declaration line each for every concrete variant (rectangle, diamond, ellipse, embeddable, iframe, image, frame, magicframe, text, line, arrow, elbow arrow, freedraw), the binding types (FixedPointBinding, BindMode, FixedSegment), the arrowhead unions (Arrowhead, ArrowheadLegacy, CardinalityArrowhead, AnyArrowhead), and the four branded element maps. Each entry is also the exact line to read for that variant's extra fields."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/element/src/types.ts", start = 84, end = 84, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 88, end = 88, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 92, end = 92, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 96, end = 96, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 100, end = 100, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 105, end = 105, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 116, end = 116, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 123, end = 123, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 127, end = 127, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 137, end = 137, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 146, end = 146, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 158, end = 158, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 163, end = 163, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 168, end = 168, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 173, end = 173, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 180, end = 180, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 186, end = 186, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 191, end = 191, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 235, end = 235, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 259, end = 259, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 270, end = 270, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 276, end = 276, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 280, end = 280, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 282, end = 282, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 284, end = 284, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 301, end = 301, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 306, end = 306, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 314, end = 314, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 320, end = 320, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 331, end = 331, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 333, end = 333, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 343, end = 343, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 349, end = 349, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 355, end = 355, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 361, end = 361, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 387, end = 387, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 395, end = 395, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 397, end = 397, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 404, end = 404, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 410, end = 410, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 420, end = 420, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 430, end = 430, render.kind = "truncated", render.pattern = "^export type \\w+" },
+  { path = "packages/element/src/types.ts", start = 436, end = 436, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 440, end = 440, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 446, end = 446, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 447, end = 447, render.kind = "full" },
+  { path = "packages/element/src/types.ts", start = 448, end = 448, render.kind = "full" },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 4 — monorepo package map (fs breadth)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "3.5"
+descriptor = "Complete listings of packages/math/src/, packages/common/src/ and packages/utils/src/"
+justification = "Closes the file class for the three supporting packages: math's per-primitive modules (angle, curve, ellipse, line, point, polygon, range, rectangle, segment, triangle, vector), common's constants/colors/keys/queue/emitter/appEventBus/editorInterface/utility-types plus its colocated *.test.ts files, and utils's export/withinBounds/bbox/shape. Three pointers-dense listings for the price of a few source lines."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/math/src", entries = "all" },
+  { parent = "packages/common/src", entries = "all" },
+  { parent = "packages/utils/src", entries = "all" },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "packages/ — workspace roster"
-justification = "The 6 published/internal packages (common, element, math, utils, fractional-indexing, excalidraw) plus the shared eslint/tsconfig base files."
-content = { kind = "fs", groups = [ { parent = "packages", entries = "all" } ] }
+descriptor = "The `App` class head: React component signature and its core instance fields"
+justification = "packages/excalidraw/components/App.tsx is a 13k-line class that owns the editor's entire pointer/keyboard/state machine — the fact of it, and the fields it hangs everything off (scene, fonts, renderer, visibleElements, library, actionManager, store, history, files, imageCache, editorInterface), is the highest-value thing to know about editor internals. The trailing ellipsis marks that further private fields continue below."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/components/App.tsx", start = 621, end = 651, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 652, end = 652, render.kind = "ellipsis" },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "packages/excalidraw/ — top-level file+dir roster"
-justification = "Full breadth of the core editor package's top level: actions/, components/, data/, scene/, renderer/, hooks/, context/, fonts/, wysiwyg/, subset/, charts/, eraser/, lasso/, locales/, tests/, plus every top-level entry point (types.ts, appState.ts, index.tsx, clipboard.ts, history.ts, i18n.ts, ...). Everything in tiers 6-10 zooms in on one of these entries."
-content = { kind = "fs", groups = [ { parent = "packages/excalidraw", entries = "all" } ] }
+descriptor = "Roster of every remaining `public` member of `App` (lines 673-12980), name-first"
+justification = "Completes the public surface begun in 4.1 so no method is implied absent, and — because App.tsx is far too large to read — converts 'where does the editor do X' into a single jump: render(), componentDidMount/WillUnmount, updateScene, applyDeltas, mutateElement, syncActionResult, pasteFromClipboard, addFiles, toggleSidebar, getEditorUIOffsets, insertIframeElement/insertEmbeddableElement, handleCanvasPanUsingWheelOrSpaceDrag, refresh. These are also the implementations behind ExcalidrawImperativeAPI."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/components/App.tsx", start = 673, end = 673, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 682, end = 682, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 684, end = 684, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 1257, end = 1257, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2092, end = 2092, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2445, end = 2445, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2449, end = 2449, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2453, end = 2453, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2457, end = 2457, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2461, end = 2461, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2469, end = 2469, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2539, end = 2539, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2545, end = 2545, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2655, end = 2655, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2761, end = 2761, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 2774, end = 2774, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 3028, end = 3028, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 3096, end = 3096, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 3189, end = 3189, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 3865, end = 3865, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4523, end = 4523, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4573, end = 4573, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4623, end = 4623, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4644, end = 4644, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4669, end = 4669, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 4708, end = 4708, render.kind = "truncated", render.pattern = "^  public [\\w ]+" },
+  { path = "packages/excalidraw/components/App.tsx", start = 5635, end = 5635, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 8252, end = 8252, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 9070, end = 9070, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 9112, end = 9112, render.kind = "full" },
+  { path = "packages/excalidraw/components/App.tsx", start = 12980, end = 12980, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "packages/element/ — top-level roster"
-justification = "src/ (element domain logic), tests/, package.json, README — the core data-model package's own breadth."
-content = { kind = "fs", groups = [ { parent = "packages/element", entries = "all" } ] }
+descriptor = "The AppState type family (declaration lines in packages/excalidraw/types.ts)"
+justification = "`AppState` is the editor's ~200-field state record — too large to render, but its exact line (274) plus the derived slices are what an agent needs: StaticCanvasAppState, InteractiveCanvasAppState, ObservedAppState / ObservedStandaloneAppState / ObservedElementsAppState (what the store diffs), BoxSelectionMode and UIAppState. One hop from here to any state field."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/excalidraw/types.ts", start = 197, end = 197, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 215, end = 215, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 251, end = 251, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 254, end = 254, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 259, end = 259, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 272, end = 272, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 274, end = 274, render.kind = "full" },
+  { path = "packages/excalidraw/types.ts", start = 499, end = 499, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "packages/common, math, utils, fractional-indexing — top-level rosters"
-justification = "The four smaller shared packages grouped since each is small: common (constants/utils/event-bus), math (geometry primitives), utils (bbox/export/shape helpers), fractional-indexing (vendored ordering algorithm)."
-content = { kind = "fs", groups = [
-  { parent = "packages/common", entries = "all" },
-  { parent = "packages/math", entries = "all" },
-  { parent = "packages/utils", entries = "all" },
-  { parent = "packages/fractional-indexing", entries = "all" },
-] }
+descriptor = "Complete listing of packages/excalidraw/actions/"
+justification = "Every user-invocable editor command is a file here, and the names are self-describing (actionAlign, actionBoundText, actionClipboard, actionCropEditor, actionDeleteSelected, actionDistribute, actionFlip, actionFrame, actionGroup, actionHistory, actionLinearEditor, actionProperties, actionToggleGridMode/ZenMode/ViewMode/Stats, actionZindex) alongside the framework files manager.tsx, register.ts, shortcuts.ts and types.ts. The cheapest possible map of the command surface, including which actions have colocated tests."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/excalidraw/actions", entries = "all" },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "excalidraw-app/ — top-level roster"
-justification = "The hosted excalidraw.com app: collab/, components/, data/ (storage backends), share/, app-language/, tests/, plus App.tsx/index.tsx entry points."
-content = { kind = "fs", groups = [ { parent = "excalidraw-app", entries = "all" } ] }
+descriptor = "Complete listings of the rendering pipeline: scene/, renderer/, hooks/ and context/"
+justification = "Names the canvas pipeline end to end — Renderer.ts, staticScene/interactiveScene/staticSvgScene/renderNewElementScene/renderSnaps/roundRect/animation, scene export/normalize/scroll/scrollbars/zoom — plus the editor's React hook and context modules. Rendering and viewport questions land in one read from here."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/excalidraw/scene", entries = "all" },
+  { parent = "packages/excalidraw/renderer", entries = "all" },
+  { parent = "packages/excalidraw/hooks", entries = "all" },
+  { parent = "packages/excalidraw/context", entries = "all" },
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "examples/ — integration example rosters"
-justification = "Both bundled integration examples (Next.js, plain-script-in-browser) — answers 'is there a reference integration for X' without guessing."
-content = { kind = "fs", groups = [
-  { parent = "examples", entries = "all" },
-  { parent = "examples/with-nextjs/src", entries = "all" },
-  { parent = "examples/with-script-in-browser", entries = "all" },
-] }
+descriptor = "The undo/redo and scene-state architecture: exported classes of store.ts, history.ts and Scene.ts"
+justification = "Declaration lines for CaptureUpdateAction and CaptureUpdateActionType, Store, StoreChange, StoreIncrement/DurableIncrement/EphemeralIncrement, StoreDelta, StoreSnapshot, getObservedAppState, HistoryDelta/HistoryChangedEvent/History and Scene. This is the vocabulary every state-mutation or undo question needs, and `CaptureUpdateAction` is a required argument of the public updateScene API."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/element/src/store.ts", start = 38, end = 38, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 71, end = 71, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 78, end = 78, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 432, end = 432, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 454, end = 454, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 476, end = 476, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 488, end = 488, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 497, end = 497, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 643, end = 643, render.kind = "full" },
+  { path = "packages/element/src/store.ts", start = 1006, end = 1006, render.kind = "full" },
+  { path = "packages/excalidraw/history.ts", start = 15, end = 15, render.kind = "full" },
+  { path = "packages/excalidraw/history.ts", start = 83, end = 83, render.kind = "full" },
+  { path = "packages/excalidraw/history.ts", start = 90, end = 90, render.kind = "full" },
+  { path = "packages/element/src/Scene.ts", start = 106, end = 106, render.kind = "full" },
+  { path = "packages/element/src/Scene.ts", start = 108, end = 108, render.kind = "full" },
+]
 
-[[batches]]
-id = "4.7"
-descriptor = "dev-docs/ — doc-site source roster"
-justification = "The Docusaurus site's own doc tree (introduction/, codebase/, @excalidraw/, assets/) — establishes that 2.1/2.2 are drawn from a small, fully-enumerated set of hosted docs."
-content = { kind = "fs", groups = [
-  { parent = "dev-docs/docs", entries = "all" },
-  { parent = "dev-docs/docs/introduction", entries = "all" },
-  { parent = "dev-docs/docs/codebase", entries = "all" },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 5 — element domain model (the core data model)
-# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "packages/element/src/ — file roster"
-justification = "All 49 files in the element package's logic layer (binding, bounds, collision, cropElement, dragElements, elbowArrow, frame, groups, linearElementEditor, mutateElement, renderElement, resizeElements, Scene, textWrapping, transformHandles, ...) — the single most commonly-needed 'which file has X element behavior' index."
-content = { kind = "fs", groups = [ { parent = "packages/element/src", entries = "all" } ] }
+descriptor = "Complete listings of the excalidraw-app subsystems: data/, collab/, components/, share/, app-language/"
+justification = "Closes the file class for every subdirectory of the app. Names the persistence layer (LocalData.ts, FileManager.ts, firebase.ts, localStorage.ts, tabSync.ts, Locker.ts, TTDStorage.ts, fileStatusStore.ts), the collaboration layer (Collab.tsx, Portal.tsx, CollabError.tsx), the app-specific UI (AppMainMenu, AppFooter, AppSidebar, ExportToExcalidrawPlus, DebugCanvas, TopErrorBoundary, AI.tsx) and the share-link dialog. Highest pointer density available for the app half of the repo."
+content.kind = "fs"
+content.groups = [
+  { parent = "excalidraw-app/data", entries = "all" },
+  { parent = "excalidraw-app/collab", entries = "all" },
+  { parent = "excalidraw-app/components", entries = "all" },
+  { parent = "excalidraw-app/share", entries = "all" },
+  { parent = "excalidraw-app/app-language", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "ExcalidrawElement — shared base fields"
-justification = "The `_ExcalidrawElementBase` readonly shape every element type extends (id/x/y/style fields, seed/version/versionNonce/index for collab reconciliation, groupIds/frameId/boundElements) — foundational for any code touching elements; doc comments on version/versionNonce/index explain collaboration semantics written nowhere else."
-content = { kind = "lines", spans = [
-  { path = "packages/element/src/types.ts", start = 40, end = 82, render = { kind = "full" } },
-] }
+descriptor = "`CollabAPI`: the complete interface the app exposes for real-time collaboration"
+justification = "The seam between the editor and the collaboration layer, plus the three jotai atoms (collabAPIAtom, isCollaboratingAtom, isOfflineAtom, activeRoomLinkAtom) that gate collaborative UI. Every method of the interface is shown — startCollaboration, stopCollaboration, syncElements, onPointerUpdate, fetchImageFilesFromFirebase, username getters/setters, getActiveRoomLink, setCollabError."
+content.kind = "lines"
+content.spans = [
+  { path = "excalidraw-app/collab/Collab.tsx", start = 98, end = 100, render.kind = "full" },
+  { path = "excalidraw-app/collab/Collab.tsx", start = 110, end = 110, render.kind = "full" },
+  { path = "excalidraw-app/collab/Collab.tsx", start = 114, end = 126, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "ExcalidrawElement — per-type/union declaration locations"
-justification = "Location-only roster of the 15 most distinct concrete element types plus the top-level ExcalidrawElement union built on the base fields from 5.2 (Selection/Rectangle/Diamond/Ellipse/Embeddable/Iframe/Image/Frame/MagicFrame/ExcalidrawElement-union/Text/Linear/Line/Arrow/FreeDraw) — most of the closed set of element 'type' tags, so the agent doesn't assume an unlisted-here type (e.g. magicframe) doesn't exist; a few minor sibling unions (IframeLikeElement, FrameLikeElement, Bindable, ElbowArrow) are omitted for budget and sit within a few lines of their listed relatives."
-content = { kind = "lines", spans = [
-  { path = "packages/element/src/types.ts", start = 84, end = 84, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 88, end = 88, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 92, end = 92, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 96, end = 96, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 100, end = 100, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 116, end = 116, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 146, end = 146, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 163, end = 163, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 168, end = 168, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 206, end = 206, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 235, end = 235, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 333, end = 333, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 343, end = 343, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 355, end = 355, render = { kind = "full" } },
-  { path = "packages/element/src/types.ts", start = 387, end = 387, render = { kind = "full" } },
-] }
+descriptor = "Share-link and collaboration wire protocol (exported declarations of excalidraw-app/data/index.ts)"
+justification = "Declaration lines for SyncableExcalidrawElement, isSyncableElement/getSyncableElements, EncryptedData, SocketUpdateDataSource and its incoming/outgoing unions, isCollaborationLink, getCollaborationLinkData, generateCollaborationLinkData, getCollaborationLink, importFromBackend and exportToBackend — i.e. how a room link encodes its key and how scenes move to and from the backend."
+content.kind = "lines"
+content.spans = [
+  { path = "excalidraw-app/data/index.ts", start = 43, end = 43, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 46, end = 46, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 58, end = 58, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 74, end = 74, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 79, end = 79, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 123, end = 123, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 126, end = 126, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 133, end = 133, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 138, end = 138, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 148, end = 148, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 159, end = 159, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 202, end = 202, render.kind = "full" },
+  { path = "excalidraw-app/data/index.ts", start = 248, end = 248, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "packages/element/src/index.ts — public re-export roster"
-justification = "A sample of the element package's `export *` roster (14 of 46 re-exported modules) confirming these logic files (from 5.1's fs roster) are publicly re-exported, not internal-only — the fastest way to answer 'is function X exported from @excalidraw/element'; trimmed for budget, the roster continues alphabetically to line 102, signaled with a rendered ellipsis rather than left as a prose-only claim."
-content = { kind = "lines", spans = [
-  { path = "packages/element/src/index.ts", start = 56, end = 70, render = { kind = "full" } },
-  { path = "packages/element/src/index.ts", start = 71, end = 71, render = { kind = "ellipsis" } },
-] }
+descriptor = "The collaboration socket protocol: WS_EVENTS channels and the WS_SUBTYPES message enum"
+justification = "The complete set of message kinds exchanged over the collaboration socket — server vs server-volatile broadcast, user-follow channels, and SCENE_INIT / SCENE_UPDATE / MOUSE_LOCATION / IDLE_STATUS / USER_VISIBLE_SCENE_BOUNDS. Unguessable, and the first thing any collaboration change needs."
+content.kind = "lines"
+content.spans = [
+  { path = "excalidraw-app/app_constants.ts", start = 16, end = 30, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.5"
-descriptor = "packages/element/tests/ — colocated test roster"
-justification = "All 22 test files under packages/element/tests — prevents assuming only some element behaviors are tested; anchors 'where's the test for X' queries."
-content = { kind = "fs", groups = [ { parent = "packages/element/tests", entries = "all" } ] }
-
-[[batches]]
-id = "5.6"
-descriptor = "Scene class — method locations"
-justification = "The `Scene` class (packages/element/src/Scene.ts) is the in-memory element-store abstraction shared by editor and collab; this location-only batch (the constructor plus 15 of its 21 methods: the full run of `getXxx`-style accessors — getSceneNonce, getNonDeletedElementsMap, getElementsIncludingDeleted, getElementsMapIncludingDeleted, getNonDeletedElements, getFramesIncludingDeleted — plus getSelectedElements, getNonDeletedFramesLikes, mapElements, replaceAllElements, triggerUpdate, destroy, insertElementsAtIndex, getElementIndex, mutateElement) gives exact jump points instead of forcing a full-file grep, and — unlike a spot sample — doesn't stop mid-run through the adjacent accessor group."
-content = { kind = "lines", spans = [
-  { path = "packages/element/src/Scene.ts", start = 143, end = 143, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 147, end = 147, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 151, end = 151, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 155, end = 155, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 159, end = 159, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 163, end = 163, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 167, end = 167, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 178, end = 178, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 224, end = 224, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 254, end = 254, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 271, end = 271, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 303, end = 303, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 326, end = 326, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 342, end = 342, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 377, end = 377, render = { kind = "full" } },
-  { path = "packages/element/src/Scene.ts", start = 411, end = 411, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 6 — excalidraw package public API / core types
-# ---------------------------------------------------------------------------
+descriptor = "Every browser storage key the app uses (STORAGE_KEYS) plus the Excalidraw+ auth cookie"
+justification = "The complete STORAGE_KEYS map — localStorage keys for elements, app state, collab, theme and debug, the version-data keys, the IndexedDB library and TTD-chat keys, and the legacy key retained only for migrations — followed by the COOKIES map with the Excalidraw+ auth cookie. Answers local-first persistence questions outright, and the firebase storage prefixes sit just above it in the same file."
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = "excalidraw-app/app_constants.ts", start = 38, end = 57, render.kind = "full" },
+]
 
 [[batches]]
 id = "6.1"
-descriptor = "packages/excalidraw/types.ts — top-level type/interface locations"
-justification = "Location roster of the package's central type file's most load-bearing exports (Collaborator, BinaryFileData, ActiveTool, StaticCanvasAppState, AppState, UIAppState, Zoom, LibraryItem(s), ExcalidrawInitialDataState, ExcalidrawProps, SceneData, ImageOptions, UIOptions, AppProps, AppClassProperties, PointerDownState, ExcalidrawImperativeAPI, FrameNameBounds, Primitive, Offsets) — the index for 'what shape does X have', so 6.2/6.3 can safely go deep on only a few without implying the rest don't exist."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/types.ts", start = 70, end = 70, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 113, end = 113, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 163, end = 163, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 197, end = 197, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 274, end = 274, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 499, end = 499, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 503, end = 503, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 532, end = 532, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 551, end = 551, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 570, end = 570, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 716, end = 716, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 738, end = 738, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 757, end = 757, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 775, end = 775, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 795, end = 795, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 853, end = 853, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 943, end = 943, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 1015, end = 1015, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 1043, end = 1043, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 1073, end = 1073, render = { kind = "full" } },
-] }
+descriptor = "Test-runner configuration: jsdom environment, setup file and coverage thresholds (vitest.config.mts)"
+justification = "Tests are run with vitest under jsdom with `globals: true`, `./setupTests.ts` as the setup file, and enforced coverage thresholds (lines 60, branches 70, functions 63, statements 60). Anyone adding a test or debugging a coverage failure needs exactly these lines; the ellipsis stands for the hook-sequencing option above them, and the file's other half is the @excalidraw/* path-alias table that maps every internal import."
+content.kind = "lines"
+content.spans = [
+  { path = "vitest.config.mts", start = 65, end = 65, render.kind = "full" },
+  { path = "vitest.config.mts", start = 66, end = 66, render.kind = "ellipsis" },
+  { path = "vitest.config.mts", start = 71, end = 85, render.kind = "full" },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "ExcalidrawProps — most-used prop locations"
-justification = "Location roster of the `<Excalidraw>` component's highest-traffic props (onChange, onIncrement, onExcalidrawAPI, onMount, onUnmount, isCollaborating, theme, UIOptions, imageOptions, onExport) — answers 'how do I hook into X lifecycle/state' with an exact line to read the full signature+doc-comment from; the full ~50-prop interface starts at types.ts:570 (see 6.1)."
-predecessor = "6.1"
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/types.ts", start = 571, end = 571, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 579, end = 579, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 587, end = 587, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 591, end = 591, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 595, end = 595, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 600, end = 600, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 640, end = 640, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 647, end = 647, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 651, end = 651, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 697, end = 697, render = { kind = "full" } },
-] }
+descriptor = "Complete listing of packages/excalidraw/tests/"
+justification = "The editor's own suite, and the closest thing to a behavioural spec: regressionTests, App/excalidraw/appState/appStateHooks, dragCreate, multiPointCreate, move, rotate, flip, arrowBinding, elementLocking, history, clipboard, export, library, search, selection, shortcuts, viewMode, laser, lasso, MermaidToExcalidraw — plus the helpers/, fixtures/, queries/ and scene/ support directories and test-utils.ts."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/excalidraw/tests", entries = "all" },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "AppClassProperties / ExcalidrawImperativeAPI — embedding-surface locations"
-justification = "Location roster of what a host app can call on a mounted editor instance (updateScene, applyDeltas, mutateElement, resetScene, getSceneElements, getAppState, scrollToContent, setActiveTool, history, onChange/onPointerDown/onScrollChange subscriptions) and of the internal App members other modules type against — the embedding contract, complementing ExcalidrawProps (6.2)."
-predecessor = "6.1"
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/types.ts", start = 796, end = 796, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 802, end = 802, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 804, end = 804, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 814, end = 814, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 822, end = 822, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 827, end = 827, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 838, end = 838, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 946, end = 946, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 947, end = 947, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 948, end = 948, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 950, end = 950, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 957, end = 957, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 960, end = 960, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 961, end = 961, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 981, end = 981, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 991, end = 991, render = { kind = "full" } },
-  { path = "packages/excalidraw/types.ts", start = 1005, end = 1005, render = { kind = "full" } },
-] }
+descriptor = "Complete listings of the remaining test directories (element, math, common, utils, excalidraw-app)"
+justification = "Closes the test class across the monorepo so no suite is implied absent: packages/element/tests (binding, elbowArrow, cropElement, delta, duplicate, flowchart, fractionalIndex, linearElementEditor, textWrapping, zindex…) and its src/__tests__, packages/math/tests per primitive, packages/common/tests, packages/utils/tests, and excalidraw-app/tests (collab, MobileMenu, LanguageList)."
+predecessor = "6.2"
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/element/tests", entries = "all" },
+  { parent = "packages/element/src/__tests__", entries = "all" },
+  { parent = "packages/math/tests", entries = "all" },
+  { parent = "packages/common/tests", entries = "all" },
+  { parent = "packages/utils/tests", entries = "all" },
+  { parent = "excalidraw-app/tests", entries = "all" },
+]
 
 [[batches]]
 id = "6.4"
-descriptor = "index.tsx — `Excalidraw` component export"
-justification = "The literal `export const Excalidraw = React.memo(...)` line — the true npm-package entry point; the rest of index.tsx's ~40 re-exports are reachable in one hop from here (they immediately follow this line)."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/index.tsx", start = 304, end = 305, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 7 — actions system (the UI-triggerable command layer)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "actions/ — file roster"
-justification = "All 43 actionXXX*.ts(x) files plus manager.tsx/register.ts/shortcuts.ts/types.ts/index.ts — every user-triggerable editor command lives here under one name-per-file convention, so this listing alone answers 'is there an action for X' for most X."
-content = { kind = "fs", groups = [ { parent = "packages/excalidraw/actions", entries = "all" } ] }
+descriptor = "Complete listings of the dev-docs documentation tree"
+justification = "docs.excalidraw.com is built from this repo. The listings show that the docusaurus site carries the introduction section (get-started, development, contributing), a codebase section (json-schema, frames) and the per-package docs under @excalidraw/, so documentation questions resolve to a file rather than to the website."
+content.kind = "fs"
+content.groups = [
+  { parent = "dev-docs/docs", entries = "all" },
+  { parent = "dev-docs/docs/introduction", entries = "all" },
+  { parent = "dev-docs/docs/codebase", entries = "all" },
+  { parent = "dev-docs/docs/@excalidraw/excalidraw", entries = "all" },
+]
 
 [[batches]]
-id = "7.2"
-descriptor = "Action interface — field locations"
-justification = "Location roster of the `Action<T>` interface contract every action in 7.1 implements (name/label/keywords/icon/PanelComponent/perform/keyPriority/keyTest/predicate/trackEvent/viewMode) — read once instead of re-derived per action file."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/actions/types.ts", start = 163, end = 163, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 164, end = 164, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 165, end = 165, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 172, end = 172, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 173, end = 173, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 179, end = 179, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 180, end = 180, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 181, end = 181, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 182, end = 182, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 188, end = 188, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 195, end = 195, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/types.ts", start = 218, end = 218, render = { kind = "full" } },
-] }
+id = "6.5"
+descriptor = "Complete listings of the two integration examples"
+justification = "The package README tells agents to copy the nearest working example when generated code drifts; these listings say what those examples contain — a Next.js app with an excalidrawWrapper.tsx client component, and a vite/script-in-browser app with initialData.tsx, utils.ts and custom footer/sidebar components."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/with-nextjs", entries = "all" },
+  { parent = "examples/with-nextjs/src", entries = "all" },
+  { parent = "examples/with-script-in-browser", entries = "all" },
+  { parent = "examples/with-script-in-browser/components", entries = "all" },
+]
 
 [[batches]]
-id = "7.3"
-descriptor = "ActionManager class — method locations"
-justification = "The class that registers actions (registerAction/registerAll), dispatches keyboard shortcuts (handleKeyDown), renders an action's panel (renderAction), and checks enablement (isActionEnabled) — the runtime glue between the 7.1 roster and the app UI/keyboard layer."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/actions/manager.tsx", start = 52, end = 52, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 61, end = 61, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 81, end = 81, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 85, end = 85, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 89, end = 89, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 148, end = 148, render = { kind = "full" } },
-  { path = "packages/excalidraw/actions/manager.tsx", start = 192, end = 192, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 8 — common / math / utils / fractional-indexing packages
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "common/src/index.ts — public re-export roster"
-justification = "The @excalidraw/common package's full public surface in one 17-line file: binary-heap, bounds, colors, constants, font-metadata, queue, keys, points, promise-pool, random, url, utils, emitter, appEventBus, editorInterface, versionedSnapshotStore, Debug."
-content = { kind = "lines", spans = [
-  { path = "packages/common/src/index.ts", start = 1, end = 17, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.2"
-descriptor = "common/src/constants.ts — most-used constant locations"
-justification = "Location roster of the shared constants imported nearly everywhere (APP_NAME, CURSOR_TYPE, EVENT, FONT_FAMILY, THEME, FRAME_STYLE, MIME_TYPES, EPSILON, COLOR_WHITE, CANVAS_ONLY_ACTIONS, EXPORT_IMAGE_TYPES, VERSION_TIMEOUT, ZOOM_STEP) — prevents an agent re-declaring or hardcoding a value that already has a name here."
-content = { kind = "lines", spans = [
-  { path = "packages/common/src/constants.ts", start = 12, end = 12, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 27, end = 27, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 52, end = 52, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 130, end = 130, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 189, end = 189, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 196, end = 196, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 223, end = 223, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 227, end = 227, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 232, end = 232, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 262, end = 262, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 279, end = 279, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 300, end = 300, render = { kind = "full" } },
-  { path = "packages/common/src/constants.ts", start = 302, end = 302, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.3"
-descriptor = "common/src/constants.ts — EVENT enum body"
-justification = "Full body of the EVENT enum (POINTER_DOWN/UP/MOVE, KEYDOWN/UP, RESIZE, VISIBILITY_CHANGE, PASTE, DROP, FULLSCREENCHANGE, ...), overriding its declaration-only line from 8.2 — every DOM event name the editor listens for, in one place instead of scattered addEventListener call sites."
-predecessor = "8.2"
-content = { kind = "lines", spans = [
-  { path = "packages/common/src/constants.ts", start = 52, end = 84, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.4"
-descriptor = "math/src/ — file roster"
-justification = "The geometry-primitives package copilot-instructions.md explicitly calls out ('always include packages/math/src/types.ts ... always use the Point type'): angle/curve/ellipse/line/point/polygon/range/rectangle/segment/triangle/types/utils/vector — flags this package's outsized importance for math-touching code."
-content = { kind = "fs", groups = [ { parent = "packages/math/src", entries = "all" } ] }
-
-[[batches]]
-id = "8.5"
-descriptor = "math/src/types.ts — Point/angle primitives"
-justification = "Core of the file copilot-instructions.md singles out by name: Radians/Degrees (full one-liners), plus a location pointer to GlobalPoint (branded [x,y] tuple — NOT an {x,y} object, a mistake this file's own doc comments guard against). Trimmed for budget; LocalPoint (line 52) and the Vector/Line/Triangle section (from line 66) are one grep away, marked with a rendered ellipsis rather than a bare prose claim."
-content = { kind = "lines", spans = [
-  { path = "packages/math/src/types.ts", start = 1, end = 24, render = { kind = "full" } },
-  { path = "packages/math/src/types.ts", start = 34, end = 34, render = { kind = "full" } },
-  { path = "packages/math/src/types.ts", start = 65, end = 65, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.6"
-descriptor = "utils/src/ — file roster + index.ts"
-justification = "The @excalidraw/utils package (bbox, export, shape, withinBounds helpers) — small, self-contained fs roster."
-content = { kind = "fs", groups = [ { parent = "packages/utils/src", entries = "all" } ] }
-
-[[batches]]
-id = "8.7"
-descriptor = "utils/src/index.ts full content"
-justification = "The literal 4-line re-export list for utils/src: export/withinBounds/bbox plus a re-exported getCommonBounds from @excalidraw/element."
-content = { kind = "lines", spans = [
-  { path = "packages/utils/src/index.ts", start = 1, end = 4, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.8"
-descriptor = "fractional-indexing — vendored ordering algorithm"
-justification = "Single-file package (vendored from the fractional-indexing npm package, CC0) implementing the string-ordering scheme that backs ExcalidrawElement.index (see 5.2) for collab-safe reordering — the kind of vendored algorithm an agent should recognize rather than reimplement. Trimmed to the file header/provenance comment for budget; the algorithm body continues at line 9, marked with a rendered ellipsis."
-content = { kind = "lines", spans = [
-  { path = "packages/fractional-indexing/src/index.ts", start = 1, end = 8, render = { kind = "full" } },
-  { path = "packages/fractional-indexing/src/index.ts", start = 9, end = 9, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 9 — excalidraw package UI breadth (fs listings)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "9.1"
-descriptor = "packages/excalidraw/components/ — full roster (154 entries)"
-justification = "Every React component/dialog/panel in the editor UI in one fs batch — the largest single directory in the repo by file count; showing only some components (e.g. App.tsx, Sidebar, MainMenu) would wrongly imply the other ~150 (CommandPalette, TTDDialog, FollowMode, ColorPicker, DiagramToCodePlugin, live-collaboration/, ...) don't exist."
-content = { kind = "fs", groups = [ { parent = "packages/excalidraw/components", entries = "all" } ] }
-
-[[batches]]
-id = "9.2"
-descriptor = "packages/excalidraw/data/ — persistence-module roster"
-justification = "All modules for scene/library persistence and codecs (blob/json/encode/encryption/filesystem/image/library/reconcile/resave/restore/types, plus ai/) — the breadth backing tier 12's depth."
-content = { kind = "fs", groups = [ { parent = "packages/excalidraw/data", entries = "all" } ] }
-
-[[batches]]
-id = "9.3"
-descriptor = "scene/ + renderer/ — rendering pipeline rosters"
-justification = "The two directories implementing the canvas rendering pipeline: scene/ (export/normalize/Renderer/scroll/scrollbars/zoom) and renderer/ (animation/staticScene/staticSvgScene/interactiveScene/renderSnaps/roundRect)."
-content = { kind = "fs", groups = [
-  { parent = "packages/excalidraw/scene", entries = "all" },
-  { parent = "packages/excalidraw/renderer", entries = "all" },
-] }
-
-[[batches]]
-id = "9.6"
-descriptor = "packages/excalidraw/tests/ — colocated test roster"
-justification = "All 40 entries directly under tests/ (App.test.tsx, excalidraw.test.tsx, clipboard/export/flip/dragCreate/arrowBinding/... .test.tsx, plus data/, fixtures/, helpers/ subdirs) — establishes the full colocated-test surface for the core package."
-content = { kind = "fs", groups = [ { parent = "packages/excalidraw/tests", entries = "all" } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 10 — App.tsx (the ~13k-line God component)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "10.1"
-descriptor = "App class — opening field declarations"
-justification = "The start of the `class App extends React.Component<AppProps, AppState>` field block (canvas/interactiveCanvas/sessionExportThemeOverride/rc/actionManager/editorInterface/excalidrawContainerRef/scene/fonts/renderer/visibleElements/library) — before this, an agent can't know what state App.tsx's ~150 methods (10.3) actually operate on. Full field block continues to line 745 (createExcalidrawAPI); marked with a rendered ellipsis rather than left as a prose-only claim."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/components/App.tsx", start = 621, end = 640, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 641, end = 641, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "10.2"
-descriptor = "App constructor signature"
-justification = "The single-line constructor signature, locating where the field block (10.1) gets initialized."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/components/App.tsx", start = 791, end = 791, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.3"
-descriptor = "App class — method locations (45 of ~150, by line order)"
-justification = "150 methods on the App class govern essentially all interactive editor behavior; this location-only batch (name-only, one line per method) is the highest-leverage follow-up-minimizer for App.tsx: an agent asking 'where does Excalidraw handle X' gets an exact line to jump to instead of grepping a 13k-line file. Covers the first 45 by line order (lifecycle, embeddables, clipboard/paste, zoom/scroll, toasts, early text-editing) — a deliberate, budget-driven partial sample of a file too large to cover exhaustively at this token cap; the remaining ~105 (pointer/hit-testing/resize/crop/context-menu handlers, roughly line 3400-13000) are reachable via the same grep pattern (`^  (public |private )?(async )?[a-zA-Z_]+\\(` or `= \\(`) used to build this list."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/components/App.tsx", start = 747, end = 747, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 867, end = 867, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 930, end = 930, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1017, end = 1017, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1037, end = 1037, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1244, end = 1244, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1257, end = 1257, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1263, end = 1263, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1283, end = 1283, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1289, end = 1289, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1322, end = 1322, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1473, end = 1473, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1488, end = 1488, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1510, end = 1510, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1518, end = 1518, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1553, end = 1553, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1864, end = 1864, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1916, end = 1916, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 1923, end = 1923, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2085, end = 2085, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2092, end = 2092, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2449, end = 2449, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2453, end = 2453, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2457, end = 2457, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2461, end = 2461, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2507, end = 2507, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2545, end = 2545, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2549, end = 2549, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2644, end = 2644, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2655, end = 2655, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2717, end = 2717, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2761, end = 2761, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2866, end = 2866, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2874, end = 2874, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 2878, end = 2878, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3021, end = 3021, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3028, end = 3028, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3058, end = 3058, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3078, end = 3078, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3086, end = 3086, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3096, end = 3096, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3189, end = 3189, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3252, end = 3252, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3264, end = 3264, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3268, end = 3268, render = { kind = "full" } },
-  { path = "packages/excalidraw/components/App.tsx", start = 3269, end = 3269, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 11 — excalidraw-app (the hosted excalidraw.com app)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "11.1"
-descriptor = "excalidraw-app subdir rosters (components/, data/, collab/, share/, app-language/, tests/)"
-justification = "Full breadth of the hosted app's own directories, refining 4.5's top-level listing: app-level components (AppMainMenu, AppSidebar, AI, DebugCanvas, ExportToExcalidrawPlus, ...), storage backends under data/, the collab/ realtime layer, share/ link-export UI, i18n language detection, and its own colocated tests."
-content = { kind = "fs", groups = [
-  { parent = "excalidraw-app/components", entries = "all" },
-  { parent = "excalidraw-app/data", entries = "all" },
-  { parent = "excalidraw-app/collab", entries = "all" },
-  { parent = "excalidraw-app/share", entries = "all" },
-  { parent = "excalidraw-app/app-language", entries = "all" },
-  { parent = "excalidraw-app/tests", entries = "all" },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 12 — data & persistence (excalidraw package)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "12.1"
-descriptor = "data/restore.ts — location roster"
-justification = "The module that normalizes/repairs untrusted scene data on import (AllowedExcalidrawActiveTools, RestoredDataState, restoreElement(s), bumpElementVersions, restoreAppState, restoreLibraryItems) — the exact function needed when debugging 'why did my imported .excalidraw file's element/state come out wrong'."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/data/restore.ts", start = 162, end = 162, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 185, end = 185, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 413, end = 413, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 764, end = 764, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 957, end = 957, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 1013, end = 1013, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/restore.ts", start = 1108, end = 1108, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "12.2"
-descriptor = "data/index.ts — export/import pipeline entry points"
-justification = "Top-level export/import glue (loadFromBlob/loadFromJSON/saveAsJSON re-exports, prepareElementsForExport, exportCanvas) — the entry points that consume restore.ts (12.1) and feed the JSON schema in 2.1."
-content = { kind = "lines", spans = [
-  { path = "packages/excalidraw/data/index.ts", start = 40, end = 47, render = { kind = "full" } },
-  { path = "packages/excalidraw/data/index.ts", start = 99, end = 99, render = { kind = "full" } },
-] }
-
+id = "6.6"
+descriptor = "Complete listings of scripts/ and .github/workflows/"
+justification = "Release and build automation (buildPackage, buildBase, buildUtils, buildWasm, build-node, build-version, buildDocs, release, updateChangelog, locales-coverage) alongside every CI workflow (test, lint, size-limit, test-coverage-pr, autorelease-excalidraw, build/publish-docker, sentry-production, locales-coverage, semantic-pr-title, cancel). Appendix material by rank, but it closes the automation class."
+content.kind = "fs"
+content.groups = [
+  { parent = "scripts", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]

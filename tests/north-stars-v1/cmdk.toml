@@ -1,0 +1,937 @@
+fixture = "cmdk"
+revision_pin = "dd2250ed"
+summary = "cmdk (⌘K) is a small, dependency-light headless React component library (pnpm monorepo: cmdk/ library, test/ Playwright harness, website/ Next.js demo site) implementing an accessible, filterable command-menu/combobox. Its defining constraint is full compound-component composability: consumers render <Command.Item>/<Command.Group> as real JSX (not data arrays or render props), and the library keeps every item mounted in the React tree while toggling DOM visibility + reordering by fuzzy-match score. The whole runtime lives in one file, cmdk/src/index.tsx (~1090 lines): a Context+external-store (useSyncExternalStore) state machine that tracks item/group registration, computes filter scores via cmdk/src/command-score.ts, sorts the live DOM via imperative appendChild reordering, and drives keyboard navigation (arrows, vim binds, Home/End, groups). Expect queries across the full range: 'how does filtering/sorting work', 'add a prop to Item', 'why is selection order X', 'how do I test a new interaction', 'how do I style a new part', 'how do I build/run this'. README.md is the authoritative prop/behavior spec (not auto-injected) and is cheaper to read than re-deriving behavior from source, so its structure and FAQ are scheduled alongside the source. Given a strict token budget relative to this repo's size, the ranking favors directory/heading/signature rosters (cheap, prevent catastrophic omission, put every location one hop away) over exhaustively rendering every file's body, reserving full-body rendering for the handful of most-asked-about chunks: the filter/sort algorithm, keyboard handling, the Item component, and the command-score weights."
+
+[[batches]]
+id = "1.1"
+descriptor = "License header"
+justification = "MIT + author, cheapest possible answer to licensing/attribution questions common in dependency-audit or vendoring tasks."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "LICENSE.md"
+start = 1
+end = 3
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "pnpm workspace member list"
+justification = "Names the exact 3 packages (website, test, cmdk) composing the monorepo, grounding the root listing's directories as a pnpm workspace rather than unrelated folders."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pnpm-workspace.yaml"
+start = 1
+end = 4
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "Repo root listing"
+justification = "Full breadth of the root directory in one cheap fs batch: three-package pnpm monorepo (cmdk/, test/, website/), the two docs (README.md, ARCHITECTURE.md), and tooling dotfiles. Prevents the agent from assuming any top-level file/dir doesn't exist."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "2.1"
+descriptor = "website/components/code listing"
+justification = "Names the syntax-highlighting component's two files (index.tsx, code.module.scss)."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components/code"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "website/components/icons listing"
+justification = "Names the icon-component file and its stylesheet; pairs with the icon-signature roster later so the agent knows both that it exists and what it contains."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components/icons"
+entries = "all"
+
+[[batches]]
+id = "2.3"
+descriptor = "cmdk/src listing"
+justification = "The entire library's implementation is exactly these two files — index.tsx (the component tree + state machine) and command-score.ts (the fuzzy scorer). Confirms there is no hidden third source file."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmdk/src"
+entries = "all"
+
+[[batches]]
+id = "2.4"
+descriptor = "website/styles/cmdk listing"
+justification = "The 4 theme stylesheets (framer/linear/raycast/vercel .scss) that back the 4 demo components of the same names — lets the agent match a demo component to its styling file by name alone."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/styles/cmdk"
+entries = "all"
+
+[[batches]]
+id = "2.5"
+descriptor = "website/components/cmdk listing"
+justification = "The 4 themed demo implementations (framer/linear/raycast/vercel.tsx) shown on the homepage theme switcher — full roster so the agent knows all 4 exist even though only one (vercel) is rendered in depth later."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components/cmdk"
+entries = "all"
+
+[[batches]]
+id = "2.6"
+descriptor = "website/components listing"
+justification = "Top-level shape of the demo-site's shared component library: the 4 cmdk/ theme demos, the code/ highlighter, icons/, and the barrel index.ts."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/components"
+entries = "all"
+
+[[batches]]
+id = "2.7"
+descriptor = "cmdk/ package listing"
+justification = "The published-package directory: src/, package.json, tsup.config.ts — confirms the library package has no test files or extra build scripts colocated."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmdk"
+entries = "all"
+
+[[batches]]
+id = "2.8"
+descriptor = "website/pages listing"
+justification = "The Next.js pages router surface for the demo site: _app, _document, index — confirms there is exactly one route (the homepage)."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/pages"
+entries = "all"
+
+[[batches]]
+id = "2.9"
+descriptor = "website/styles listing"
+justification = "Global stylesheet + per-theme index.module.scss + the cmdk/ theme subdirectory, rounding out the demo site's styling structure."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/styles"
+entries = "all"
+
+[[batches]]
+id = "2.10"
+descriptor = "website/public listing"
+justification = "Static assets (favicon, OG image, avatars, font) — cheap fs listing answers 'is there a logo/font asset already' without opening any binary."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/public"
+entries = "all"
+
+[[batches]]
+id = "2.11"
+descriptor = "test/pages listing"
+justification = "All 11 files under test/pages: the 10 Playwright fixture pages (dialog, group, huge, index, item-advanced, item, keybinds, numeric, portal, props), plus the shared _app.tsx wrapper — full roster so the agent knows exactly which interaction scenarios have a dedicated test page, and that _app.tsx is just the Next.js app shell rather than another scenario, before opening any one of them."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/pages"
+entries = "all"
+
+[[batches]]
+id = "2.12"
+descriptor = "test/ listing"
+justification = "The Playwright package: the 7 *.test.ts spec files, the pages/ fixture app, and its own package.json/tsconfig — full roster prevents assuming any spec file doesn't exist."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+
+[[batches]]
+id = "2.13"
+descriptor = "website/ listing"
+justification = "The demo site package as a whole: components/, pages/, public/, styles/, its own config files, and its own README — completes the 3-package breadth started at the root listing."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website"
+entries = "all"
+
+[[batches]]
+id = "2.14"
+descriptor = "cmdk/tsup.config.ts"
+justification = "The entire build config for the published package: esm+cjs output, minified, .d.ts generated — answers 'how is this bundled' in 11 lines."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/tsup.config.ts"
+start = 1
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "2.15"
+descriptor = "test/package.json"
+justification = "The Playwright harness's own manifest: it depends on cmdk via `workspace:*` and runs a real Next.js dev server (next 13) — grounds how the e2e tests actually exercise the library."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/package.json"
+start = 1
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "2.16"
+descriptor = "website/package.json dependencies"
+justification = "The demo site's real dependency list (framer-motion, next-themes, prism-react-renderer, @radix-ui/react-popover, sass) — explains the imports seen in the theme components without needing to open package.json directly."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "website/package.json"
+start = 11
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "2.17"
+descriptor = "cmdk/package.json identity + exports + deps"
+justification = "The published package's own manifest: dual esm/cjs exports map, the only two real runtime dependencies (@radix-ui/react-dialog, react-primitive/id/compose-refs), and the react 18/19 peer range — answers 'what does this package actually ship and depend on'."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/package.json"
+start = 1
+end = 3
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "cmdk/package.json"
+start = 11
+end = 33
+render = { kind = "full" }
+
+[[batches]]
+id = "2.18"
+descriptor = "README lede"
+justification = "The one-line pitch ('command menu React component... accessible combobox... fully composable API') — cheapest possible answer to 'what is this library'. Placed after the cheap structural batches so its cost fits the growth envelope."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "2.19"
+descriptor = "Root package.json scripts"
+justification = "Workspace-level scripts (build/dev/website/testsite/format/test) — the entry points for 'how do I build/run/format this repo' before diving into any one package's own scripts."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 4
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.1"
+descriptor = "README section-heading roster"
+justification = "Every H2/H3 in README.md (Install, Use, Parts and styling, each part's heading incl. its cmdk-* selector, Examples' 4 sub-patterns, FAQ, History, Testing) as bare heading lines. Cheap map of the whole spec's structure so the agent never assumes an undocumented part/example exists elsewhere — only 2 sections are expanded in full below; this roster covers the rest for a 1-hop jump to the right line."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 15
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 82
+end = 82
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 86
+end = 86
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 153
+end = 153
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 180
+end = 180
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 190
+end = 190
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 212
+end = 212
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 242
+end = 242
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 256
+end = 256
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 260
+end = 260
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 264
+end = 264
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 274
+end = 274
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 285
+end = 285
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 289
+end = 289
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 338
+end = 338
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 361
+end = 361
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 397
+end = 397
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 426
+end = 426
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 430
+end = 430
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 456
+end = 456
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "README.md"
+start = 462
+end = 462
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "ARCHITECTURE.md core rationale"
+justification = "The load-bearing design decision: the DOM is authoritative, item order comes from React render order, and why an object-data-array / render-prop / React.Children API was rejected. This is the one fact not derivable from index.tsx itself (it explains *why* the imperative appendChild sorting in Command exists) and directly informs 'why is this built this way' / 'can we switch to a data-array API' questions."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 46
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 96
+end = 98
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "README testing steps"
+justification = "The exact operational sequence to run the real e2e suite: install deps + Playwright browsers, build the library, then `pnpm test` — answers 'how do I run the tests' without needing to cross-reference package.json scripts and playwright.config.ts by hand."
+predecessor = "3.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 462
+end = 481
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "README FAQ"
+justification = "Dense, non-derivable-from-source facts asked constantly in practice: React 18+ required (uses useId/useSyncExternalStore), no virtualization (fine to ~2-3k items), shouldFilter=false for manual filtering, no RSC support, no built-in ⌘K listener. Cheapest way to answer 'does this support X' without reading source."
+predecessor = "3.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 430
+end = 454
+render = { kind = "full" }
+
+[[batches]]
+id = "4.1"
+descriptor = "index.tsx component + helper location roster"
+justification = "Truncated first-line signature of every one of the 9 exported parts (Command, Item, Group, Separator, Input, List, Dialog, Empty, Loading) and every internal helper fn (findNextSibling/findPreviousSibling/useAsRef/useLayoutEffect/useLazyRef/useCmdk/useValue/useScheduleLayoutEffect/renderChildren/SlottableWithNestedChildren) with exact line numbers. Given the tight token budget most of these bodies aren't rendered elsewhere in this NS — this roster is what keeps them a single grep/read away instead of an unbounded search, and prevents assuming any part/helper doesn't exist."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 664
+end = 664
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 729
+end = 729
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 774
+end = 774
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 787
+end = 787
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 833
+end = 833
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 882
+end = 882
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 899
+end = 899
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 909
+end = 909
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 963
+end = 963
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 972
+end = 972
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 981
+end = 981
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 991
+end = 991
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 993
+end = 993
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1004
+end = 1004
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1010
+end = 1010
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1046
+end = 1046
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1061
+end = 1061
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1071
+end = 1071
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "CommandProps core knobs"
+justification = "The Command root's own config surface: label, shouldFilter, the custom filter fn contract (returns 0..1, third `keywords` arg), defaultValue. This is the prop block most 'how do I customize filtering/sorting' questions land on. The type literal continues past line 100 with value/onValueChange/loop/disablePointerSelection/vimBindings (loop and vimBindings are the controls behind README's `loop` prop and the ctrl+n/j/p/k vim binds exercised in 5.1); an ellipsis at line 101 marks the rest of the type as a 1-hop read instead of silently truncating it."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 79
+end = 100
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 101
+end = 101
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "4.3"
+descriptor = "ItemProps + GroupProps"
+justification = "Full JSDoc'd prop shapes for the two most commonly composed parts: Item's disabled/onSelect/value/keywords/forceMount, Group's heading/value/forceMount. Second-most-common landing spot after CommandProps for 'what props does X take'."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 44
+end = 68
+render = { kind = "full" }
+
+[[batches]]
+id = "5.1"
+descriptor = "Command keyboard-navigation switch"
+justification = "The exact onKeyDown case list (n/j ctrl, ArrowDown, p/k ctrl, ArrowUp, Home, End, Enter) plus the IME-composition guard — directly grounds test/keybind.test.ts and any 'add a new keybind' or 'why didn't my keypress register' task."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 579
+end = 638
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "Command filter/sort/select algorithm"
+justification = "The actual differentiator of this library: score() delegates to the pluggable filter, filterItems() recomputes per-item ranks and which groups have any visible item, sort() reorders the live DOM (items within/outside groups, then groups) by score via appendChild, and selectFirstItem() picks the new top item. The single highest-value chunk of source for 'how does filtering/sorting/selection actually work' — worth its size."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 362
+end = 470
+render = { kind = "full" }
+
+[[batches]]
+id = "6.1"
+descriptor = "Empty component"
+justification = "6-line whole implementation: renders iff filtered.count === 0. Trivial but referenced by nearly every test/demo's 'No results found' text — cheap to include in full."
+predecessor = "4.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 899
+end = 904
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "Item component"
+justification = "The most frequently customized part: shows exactly how `value` is resolved (via useValue upstream), how selection/pointer-move/click wire into the shared store, and the full list of DOM attributes it sets (aria-disabled/aria-selected/data-disabled/data-selected/cmdk-item). Directly answers 'why doesn't my Item show as selected' or 'how do I add a new data attribute'."
+predecessor = "4.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 664
+end = 723
+render = { kind = "full" }
+
+[[batches]]
+id = "7.1"
+descriptor = "commandScore exported entrypoint"
+justification = "Shows the public signature (string, abbreviation, aliases) and that keyword aliases are simply concatenated onto the value before scoring — the one fact needed to understand Item's `keywords` prop end-to-end without reading the recursive matcher."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 150
+end = 162
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "command-score weighting constants"
+justification = "The fuzzy-match scoring philosophy, entirely in the comments: continuous matches score 1, word-boundary jumps beat mid-word jumps, transpositions and skipped characters are penalized, exact-case beats case-insensitive. This explains *why* one item outranks another for a given query — the recursive matcher itself (commandScoreInner, not rendered here) is a 1-hop read away once this vocabulary is known."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 1
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "8.1"
+descriptor = "dialog.test.ts"
+justification = "Smallest, clearest example of the Playwright assertion style used throughout: goto a page, locate a `[cmdk-*]` attribute selector, assert count/text/attribute."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/dialog.test.ts"
+start = 1
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "8.2"
+descriptor = "CI test pipeline steps"
+justification = "The exact CI sequence — pnpm install, pnpm build, pnpm test:format, playwright install --with-deps, pnpm test — is the ground truth for 'why did CI fail' and 'what must pass before merge', cheaper than reconstructing it from package.json scripts alone. The job's steps list doesn't end at line 29: an ellipsis at line 31 marks the remaining 'Upload test results' artifact step."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 9
+end = 29
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 31
+end = 31
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "8.3"
+descriptor = "group.test.ts"
+justification = "The group-visibility contract under search + forceMount, directly exercising the filterItems()/sort() group logic shown in 5.2 — a good 'behavior contract' cross-reference for that algorithm."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/group.test.ts"
+start = 1
+end = 27
+render = { kind = "full" }
+
+[[batches]]
+id = "8.4"
+descriptor = "playwright.config.ts"
+justification = "Test runner shape: single webkit project only (not chromium/firefox), 5s per-test timeout, spins up `npm run dev` in test/ as the webServer — explains how `pnpm test` actually launches and against which engine, and why a failure might be webkit-specific."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "playwright.config.ts"
+start = 1
+end = 27
+render = { kind = "full" }
+
+[[batches]]
+id = "9.1"
+descriptor = "test/pages/dialog.tsx"
+justification = "The minimal real Command.Dialog usage (open/onOpenChange state, opened via an effect) that test/dialog.test.ts drives — a concrete, working alternative to README's dialog snippet, and Dialog's own component body is not rendered elsewhere in this NS."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/pages/dialog.tsx"
+start = 1
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "10.1"
+descriptor = "website icon component roster"
+justification = "Location-only roster (name + line) of every icon/logo component exported from website/components/icons/index.tsx (Figma/Raycast/YouTube/Slack/Vercel/Linear/Logo/Copy/Copied/GitHub/Framer). Consumed via the components/ barrel by website/pages/index.tsx (the theme-switcher's own tab icons and copy/GitHub chrome) and by the raycast.tsx demo (Logo/LinearIcon/FigmaIcon/SlackIcon/YouTubeIcon/RaycastIcon) — the vercel.tsx demo shown in depth at 10.2 defines its own local, same-named icon set instead, so this roster is the only place these exports themselves are visible."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 3
+end = 3
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 15
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 28
+end = 28
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 79
+end = 79
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 87
+end = 87
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 110
+end = 110
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 127
+end = 127
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 146
+end = 146
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 154
+end = 154
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/icons/index.tsx"
+start = 165
+end = 165
+render = { kind = "full" }
+
+[[batches]]
+id = "10.2"
+descriptor = "Vercel-theme demo: pages navigation state"
+justification = "The one demo (of 4) worth rendering in depth: shows the recurring 'nested pages' state pattern (a `pages` string-array stack, `popPage`, and a memoized `onKeyDown` that pops on Backspace) matching README's Nested-items example. An ellipsis at line 34 marks where the component's `bounce()` helper and its JSX return (which wires `onKeyDown` onto a real `<Command>` and renders the Home/Projects sub-views) continue, not rendered here. The other 3 themes (linear/raycast/framer) are named in the 2.5 roster for 1-hop follow-up."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "website/components/cmdk/vercel.tsx"
+start = 1
+end = 32
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/components/cmdk/vercel.tsx"
+start = 34
+end = 34
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "11.1"
+descriptor = "Format/lint-staged tooling"
+justification = "The pre-commit hook runs `pnpm lint-staged`, which (per root package.json, not shown here) runs prettier on staged files per .prettierrc.js's settings (no semicolons, single quotes, printWidth 120) — explains stylistic choices seen throughout the diffs and why .prettierignore's paths are exempt."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".husky/pre-commit"
+start = 1
+end = 4
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = ".prettierrc.js"
+start = 1
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = ".prettierignore"
+start = 1
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "11.2"
+descriptor = "website Next.js + Vercel deploy config"
+justification = "reactStrictMode/swcMinify toggles plus the one Vercel header rule (immutable long-cache for the variable font) — grounds 'why is Strict Mode on' (relevant to ARCHITECTURE.md's Strict Mode discussion) and how the font is served."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "website/next.config.js"
+start = 1
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "website/vercel.json"
+start = 1
+end = 13
+render = { kind = "full" }

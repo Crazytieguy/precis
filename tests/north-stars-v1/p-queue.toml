@@ -1,0 +1,1770 @@
+fixture = "p-queue"
+revision_pin = "fc4b7369"
+summary = """
+p-queue: a small, dependency-light TypeScript library (single default-export class `PQueue`, an
+EventEmitter3 subclass) implementing an async task queue with concurrency limiting, interval-based
+rate limiting (fixed-window and a `strict` sliding-window mode), task priority, per-task timeout,
+AbortSignal-based cancellation, and a pluggable `queueClass` (default `PriorityQueue`, a sorted-array
+implementation with binary insertion and lazy compaction). Published as ESM-only to npm; built with
+tsc, linted/tested with xo + node:test + tsd. The repo is source (5 files under source/), a large
+node:test suite (7 files under test/, 190 cases) plus a type-level test (test-d/), a benchmark
+script (bench.ts), and a long API-reference README. The query distribution this NS serves: "what
+public methods/options exist and what do they default to", "how does rate limiting / strict mode /
+priority ordering actually work internally", "is behavior X already tested, and where", "how do I
+build/test/bench this", and "how do I use AbortSignal / timeout / custom QueueClass / debug a stuck
+queue" — the last cluster served by the TaskOptions/QueueAddOptions/queue.ts type definitions (more
+precise than the README prose that restates them) plus test/debug.ts's runningTasks/isSaturated
+coverage, not by README FAQ body text, which this draft doesn't render given the budget spent
+making test/advanced.ts and test/strict.ts's coverage — previously entirely unrepresented — complete.
+Every span in this draft ends at a natural boundary (a field, method, type, or object closes at
+that exact line) or is a single-line location pointer (test-name/benchmark-name rosters); none is
+cut off mid-body, so no span here uses an ellipsis render.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = "Cheapest possible orientation: every top-level file/dir in one shot, so no follow-up 'ls' is ever needed and no root file is silently assumed absent. Establishes the source/test/test-d/.github split explored next."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "source/ listing"
+justification = "Names all 5 implementation files up front — index.ts (the class), options.ts (types), priority-queue.ts, queue.ts (interface), lower-bound.ts (helper) — so later batches that dive into individual files read as expected members of a known-complete set, not a surprise subset."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "source"
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "test/, test-d/, .github/ listings"
+justification = "Completes the directory closure: 7 node:test files (the bulk of the repo's line count), the tsd type-test dir, and the CI/security config dirs. Grouped together since each is a cheap 'what's here' hedge on its own directory."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+[[batches.content.groups]]
+parent = "test-d"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+
+[[batches]]
+id = "2.1"
+descriptor = "readme.md title + tagline"
+justification = "Just the H1 and the one-line tagline — smallest possible semantic anchor for what this package is, so even a minimal budget slice names the project accurately."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 1
+end = 3
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "readme.md — maintenance-mode notice"
+justification = "\"the project is feature complete... we don't plan any further development\" plus the Redis-backed-queue pointer for server use cases. Load-bearing for any 'let's add feature X' discussion — sets the right expectation before the agent proposes new API surface."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 5
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "package.json — name, version, description, license"
+justification = "The four fields a first-contact query needs most: what package this is, what version, one-line description, and license. Split from the rest of the identity block to stay inside the growth envelope at this position."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 1
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "package.json — repository, funding, type, exports, sideEffects, engines"
+justification = "Second half of the identity block: ESM-only (`type: module`), the exports map (types + default both point at dist/), sideEffects:false, and the engines.node >=20 floor. Answers 'is this ESM or CJS' and 'what Node version' precisely."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 6
+end = 16
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "package.json — scripts"
+justification = "The full scripts block: build (tsc), test (xo + node:test + tsc + tsd), bench, prepublishOnly. Directly answers 'how do I build/test/bench this' — the single highest-value operational fact in the manifest."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 17
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "readme.md — H2 section map"
+justification = "Every top-level (##) heading location in the 1077-line README, without bodies: Install, Usage, API, Events, Advanced example, Handling timeouts, Custom QueueClass, FAQ, Maintainers, Related. Prevents assuming a section (e.g. FAQ, or Custom QueueClass) doesn't exist just because later batches only expand some of them."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 39
+end = 39
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 512
+end = 512
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 698
+end = 698
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 768
+end = 768
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 813
+end = 813
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 847
+end = 847
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 1066
+end = 1066
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 1071
+end = 1071
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "readme.md — Usage example"
+justification = "The canonical 'here's how you actually call this thing' snippet: PQueue with concurrency:1, two .add() calls logging on completion. Highest zero-follow-up value per token for a first-contact 'what does using this look like' question."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 47
+end = 66
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "bench.ts — benchmark-name roster"
+justification = "Names all 5 named benchmark scenarios in the repo's only perf script (baseline, random priority, increasing priority, large-fifo-backlog of 10k tasks, priority-queue-dequeue in isolation) plus its invocation via `npm run bench` (already surfaced in 2.5). Closes the 'benchmark script (bench.ts)' class the summary promises and prevents assuming only some scenarios exist."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bench.ts"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+[[batches.content.spans]]
+path = "bench.ts"
+start = 44
+end = 44
+render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+[[batches.content.spans]]
+path = "bench.ts"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+[[batches.content.spans]]
+path = "bench.ts"
+start = 68
+end = 68
+render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+[[batches.content.spans]]
+path = "bench.ts"
+start = 79
+end = 79
+render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+
+[[batches]]
+id = "3.1"
+descriptor = "source/queue.ts (Queue interface + RunFunction)"
+justification = "The 11-line contract every queueClass (default PriorityQueue, or a custom one from the README's Custom QueueClass section) must satisfy: size/filter/dequeue/enqueue/setPriority, plus the still-optional `remove` slated to become required next major version. Read this before priority-queue.ts to know what it's implementing against."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/queue.ts"
+start = 1
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "source/options.ts — TimeoutOptions"
+justification = "The `timeout` field shared by both constructor Options and per-task QueueAddOptions, with its full doc comment (default undefined, begins at dequeue not enqueue, overridable per-task). Split out as its own tiny batch since it's mixed into two different exported types via `& TimeoutOptions`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 1
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "source/options.ts — Options (concurrency, autoStart, queueClass)"
+justification = "The three most-exercised constructor-options fields with actual JSDoc defaults/minimums: concurrency (default Infinity), autoStart (default true), queueClass (default PriorityQueue, extension point for the README's Custom QueueClass section). Cheaper, more precise evidence of the config format than the README prose that restates it."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 27
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "source/options.ts — Options (intervalCap, interval)"
+justification = "The two rate-limiting knobs (default Infinity and 0 respectively — i.e. rate limiting is off by default) that intervalCap/interval-related tests and the strict-mode doc comment (next batch) both build on."
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 49
+end = 65
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "source/options.ts — Options (carryoverIntervalCount)"
+justification = "carryoverIntervalCount and its deprecated carryoverConcurrencyCount alias — whether a task that misses its interval window carries over into the next one's count."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 66
+end = 77
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "source/options.ts — Options (strict)"
+justification = "The `strict` field's full doc comment closes out the Options type: fixed-window vs sliding-window semantics with a worked example (intervalCap:2/interval:1000 can burst 4-in-1ms under fixed window; strict forbids it). Strict mode gets its own dedicated test file (test/strict.ts) — this is its config-surface definition."
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 79
+end = 95
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "source/options.ts — QueueAddOptions"
+justification = "Per-task priority and id — the two fields that flow into PriorityQueue's ordering/lookup and into .setPriority(id, ...)/.sizeBy({priority}). Small (13 lines) natural boundary from the constructor-level Options above it."
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 97
+end = 109
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "source/options.ts — TaskOptions (signal field doc)"
+justification = "The `signal` field's own doc line, shared by every per-task options type via `& TaskOptions`. Split from its worked example (next batch) so a small budget still gets the field's existence and one-line purpose."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 111
+end = 113
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "source/options.ts — TaskOptions (AbortSignal cancellation example)"
+justification = "The full cancellation-flow example (AbortController + CancelError handling) attached to `signal`'s doc comment. This is the type that flows into `Task<T>`'s `{signal}` parameter in index.ts."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 114
+end = 148
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "source/priority-queue.ts — type + class fields"
+justification = "PriorityQueueOptions (priority + QueueAddOptions), the class declaration implementing Queue<RunFunction, PriorityQueueOptions>, and its two fields: the sorted `#queue` array and the `#head` cursor with the comment explaining why dequeued items are left in place until compaction rather than shifted."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 1
+end = 15
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "source/priority-queue.ts — enqueue (binary insertion)"
+justification = "enqueue()'s three paths: empty queue, append at tail for same/lower priority (FIFO-preserving), and binary-insert via a lower_bound-style sorted-index search otherwise — the algorithm a custom queueClass author would need to replicate."
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 17
+end = 48
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "source/priority-queue.ts — setPriority + remove"
+justification = "setPriority re-splices the live item out and re-enqueues it (via enqueue()) at a new priority; remove supports lookup by either an id string or the run function itself — two different call shapes a caller might use. Both must skip the already-consumed prefix before #head."
+predecessor = "3.11"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 50
+end = 80
+render = { kind = "full" }
+
+[[batches]]
+id = "3.13"
+descriptor = "source/priority-queue.ts — dequeue"
+justification = "dequeue() advances #head, resetting to an empty array when fully drained, else compacting once the consumed prefix passes compactionThreshold and exceeds half the array. Needed for any 'why did setPriority/remove behave oddly after partial drain' debugging session."
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 82
+end = 100
+render = { kind = "full" }
+
+[[batches]]
+id = "3.14"
+descriptor = "source/priority-queue.ts — filter/size/#compact"
+justification = "filter/size read only the live range from #head onward; #compact splices the dead prefix away to restore the whole-array-is-live invariant. Completes the file: every method now has a body batch backing its roster/type entries."
+predecessor = "3.13"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 102
+end = 127
+render = { kind = "full" }
+
+[[batches]]
+id = "4.1"
+descriptor = "source/index.ts — imports, Task/EventName types, class doc"
+justification = "The file's top: imports (EventEmitter3, p-timeout, the Queue/RunFunction/PriorityQueue/options types this class composes), the `Task<TaskResultType>` union (a task is either a Promise-returning or plain-returning function of `TaskOptions`), the full `EventName` union (every event this class can ever emit — cross-references the README Events section), and the one-line class doc. Cheapest possible entry point into the main file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 1
+end = 15
+render = { kind = "full" }
+
+
+[[batches]]
+id = "4.2"
+descriptor = "source/index.ts — PQueue class fields (interval/strict/rate-limit state)"
+justification = "The strict-mode and rate-limit bookkeeping fields: #carryoverIntervalCount, #isIntervalIgnored, #intervalCount, #intervalCap, #rateLimitedInInterval, #rateLimitFlushScheduled, #interval, #intervalEnd, #lastExecutionTime, #intervalId, #timeoutId, #strict, and the #strictTicks circular buffer + #strictTicksStartIndex. Answers 'why is field X set this way' for anything rate-limit-related."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 16
+end = 42
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "source/index.ts — PQueue class fields (queue/concurrency/task-tracking state)"
+justification = "The remaining private fields: the queue itself (#queue, #queueClass), #pending, #concurrency, #isPaused, #idAssigner (BigInt id counter), #runningTasks (Map backing the public .runningTasks getter and debug tests), #queueAbortListenerCleanupFunctions. Completes the mutable-state map opened in 4.2."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 44
+end = 66
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "source/index.ts — public member roster (locations)"
+justification = "Truncated first-line-only span for every public member of PQueue in file order: timeout field, constructor, concurrency get/set, setPriority, add, addAll, start, pause, clear, onEmpty, onSizeLessThan, onIdle, onPendingZero, onRateLimit, onRateLimitCleared, onError, size, sizeBy, pending, isPaused, isRateLimited, isSaturated, runningTasks. Showing every one together (not just the ones later batches expand) is the catastrophic-omission hedge for 'what's the public API surface' — the single most likely first question about a library."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 85
+end = 85
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 382
+end = 382
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 386
+end = 386
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 432
+end = 432
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 443
+end = 443
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 581
+end = 581
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 595
+end = 595
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 609
+end = 609
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 616
+end = 616
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 652
+end = 652
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 668
+end = 668
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 682
+end = 682
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 696
+end = 696
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 707
+end = 707
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 718
+end = 718
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 756
+end = 756
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 785
+end = 785
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 794
+end = 794
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 802
+end = 802
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 809
+end = 809
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 888
+end = 888
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 918
+end = 918
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 952
+end = 952
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "4.5"
+descriptor = "source/index.ts — private member roster (locations)"
+justification = "Same hedge for the # private methods that implement rate limiting and scheduling: cleanupStrictTicks, consumeIntervalSlot, rollbackIntervalSlot, getActiveTicksCount, #doesIntervalAllowAnother, #doesConcurrentAllowAnother, #next, #onResumeInterval, #isIntervalPausedAt, #createIntervalTimeout, #clearIntervalTimer, #clearTimeoutTimer, #tryToStartAnother, #initializeIntervalIfNeeded, #onInterval, #processQueue, #onEvent, #setupRateLimitTracking, #scheduleRateLimitUpdate, #rollbackIntervalConsumption, #updateRateLimitState. Without this, only the handful expanded below would seem to exist."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 137
+end = 137
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 168
+end = 168
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 179
+end = 179
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 183
+end = 183
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 196
+end = 196
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 200
+end = 200
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 211
+end = 211
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 219
+end = 219
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 265
+end = 265
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 275
+end = 275
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 282
+end = 282
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 289
+end = 289
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 340
+end = 340
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 360
+end = 360
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 377
+end = 377
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 767
+end = 767
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 813
+end = 813
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 832
+end = 832
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 845
+end = 845
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 854
+end = 854
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "source/index.ts — constructor (defaults merge)"
+justification = "The super() call and the options-defaults merge (carryoverIntervalCount:false, intervalCap:Infinity, interval:0, concurrency:Infinity, autoStart:true, queueClass:PriorityQueue, strict:false) — the exact default values an agent needs before explaining what `new PQueue()` with no args actually does."
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 85
+end = 99
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "source/index.ts — constructor (validation + field assignment)"
+justification = "Every constructor-time validation error is thrown here: intervalCap must be a number >= 1, interval must be finite >= 0, strict requires a non-zero interval and a finite intervalCap, timeout must be a positive finite number — plus the carryoverIntervalCount / deprecated carryoverConcurrencyCount fallback and the final field assignments. The exact text an agent needs to explain or reproduce any 'why did `new PQueue(...)` throw' report."
+predecessor = "4.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 100
+end = 135
+render = { kind = "full" }
+
+[[batches]]
+id = "4.8"
+descriptor = "source/index.ts — admission-control getters"
+justification = "The two boolean admission checks the private-method roster (4.5) only names by signature: #doesIntervalAllowAnother (strict mode compares live tick count to intervalCap; fixed-window mode compares #intervalCount) and #doesConcurrentAllowAnother (#pending < #concurrency). Cheap (16 lines) and the single most load-bearing pair of conditions for any 'why isn't my queue starting the next task' question."
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 183
+end = 198
+render = { kind = "full" }
+
+
+[[batches]]
+id = "5.1"
+descriptor = "test/basic.ts — test-name roster (part 1 of 2)"
+justification = "First half (by file position) of every node:test case name in the largest core-behavior test file, description string only, async-wrapper boilerplate dropped where present: .add() variants (concurrency, priority, timeout), onEmpty/onIdle/onSizeLessThan and the long onPendingZero edge-case cluster. Split in two so a small budget still gets a usable (if partial) roster rather than none."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 37
+end = 37
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 74
+end = 74
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 110
+end = 110
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 124
+end = 124
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 135
+end = 135
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 196
+end = 196
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 224
+end = 224
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 246
+end = 246
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 268
+end = 268
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 294
+end = 294
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 319
+end = 319
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 328
+end = 328
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 335
+end = 335
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 352
+end = 352
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 372
+end = 372
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 385
+end = 385
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 411
+end = 411
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 430
+end = 430
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 464
+end = 464
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 484
+end = 484
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 500
+end = 500
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 518
+end = 518
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 536
+end = 536
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 575
+end = 575
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "test/basic.ts — test-name roster (part 2 of 2)"
+justification = "Second half: .clear() variants, .addAll(), constructor/setter input validation for concurrency/intervalCap/interval, autoStart/.start()/.pause(), sync+async task mixing and error propagation, and throttled/carryoverIntervalCount interval behavior. Completes the roster opened in part 1 — both halves together are the full 58-case index for this file."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 589
+end = 589
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 612
+end = 612
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 651
+end = 651
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 661
+end = 661
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 684
+end = 684
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 694
+end = 694
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 722
+end = 722
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 751
+end = 751
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 779
+end = 779
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 811
+end = 811
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 831
+end = 831
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 844
+end = 844
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 854
+end = 854
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 887
+end = 887
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 900
+end = 900
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 922
+end = 922
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 941
+end = 941
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 958
+end = 958
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 986
+end = 986
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1002
+end = 1002
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1038
+end = 1038
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1085
+end = 1085
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1131
+end = 1131
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1173
+end = 1173
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1224
+end = 1224
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1246
+end = 1246
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1277
+end = 1277
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1308
+end = 1308
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/basic.ts"
+start = 1327
+end = 1327
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.3"
+descriptor = "test/advanced.ts — test-name roster (part 1 of 2)"
+justification = "First half of the repo's largest test file (67 cases, more than basic.ts): event-emission coverage for every EventName (active/idle/empty/add/next/completed/error), then the bulk of AbortSignal-cancellation coverage — skip/reject/reason-forwarding/pause-interaction/duplicate-id/listener-cleanup/event-emission-on-abort, plus clear()-vs-abort-listener interactions. This file, not basic.ts, is where most event and cancellation behavior is actually exercised."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 31
+end = 31
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 49
+end = 49
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 88
+end = 88
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 120
+end = 120
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 164
+end = 164
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 208
+end = 208
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 265
+end = 265
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 287
+end = 287
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 296
+end = 296
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 313
+end = 313
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 331
+end = 331
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 346
+end = 346
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 364
+end = 364
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 386
+end = 386
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 420
+end = 420
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 458
+end = 458
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 499
+end = 499
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 529
+end = 529
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 560
+end = 560
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 589
+end = 589
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 604
+end = 604
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 634
+end = 634
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 671
+end = 671
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 705
+end = 705
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 719
+end = 719
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 728
+end = 728
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 749
+end = 749
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 767
+end = 767
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 802
+end = 802
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 820
+end = 820
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 852
+end = 852
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 875
+end = 875
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.4"
+descriptor = "test/advanced.ts — test-name roster (part 2 of 2)"
+justification = "Second half: setPriority() re-scheduling under varying concurrency, interval-carryover/reset/idle-period behavior, throttled-interval edge cases (issues #182/#126), then the bulk of the file's rate-limit-specific race coverage (event-emission-once, boundary conditions, concurrent onRateLimit() calls, clear()-vs-scheduled-update races, dynamic concurrency changes) — the direct predecessor content for test/rate-limit.ts's narrower race-condition suite."
+predecessor = "5.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 904
+end = 904
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 934
+end = 934
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 954
+end = 954
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1002
+end = 1002
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1040
+end = 1040
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1076
+end = 1076
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1105
+end = 1105
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1137
+end = 1137
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1161
+end = 1161
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1189
+end = 1189
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1218
+end = 1218
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1246
+end = 1246
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1267
+end = 1267
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1296
+end = 1296
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1323
+end = 1323
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1346
+end = 1346
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1375
+end = 1375
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1396
+end = 1396
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1429
+end = 1429
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1456
+end = 1456
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1489
+end = 1489
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1525
+end = 1525
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1554
+end = 1554
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1583
+end = 1583
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1616
+end = 1616
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1659
+end = 1659
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1707
+end = 1707
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1752
+end = 1752
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1778
+end = 1778
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1808
+end = 1808
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1839
+end = 1839
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1890
+end = 1890
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/advanced.ts"
+start = 1915
+end = 1915
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.5"
+descriptor = "test/strict.ts — test-name roster"
+justification = "Dedicated coverage for the headline `strict` (sliding-window) rate-limit mode named in options.ts:94's doc comment and 3.5's config-surface batch: sliding-window enforcement vs fixed-window timing, circular-buffer tick bookkeeping (compaction, clear() preserving ticks), interaction with pause/start/priority/AbortSignal/timeout/concurrency:Infinity, and the two constructor validation errors (interval=0, intervalCap:Infinity). The 30-case file that answers 'is strict mode's sliding-window behavior actually tested' — previously the largest undocumented content class in the repo."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 93
+end = 93
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 116
+end = 116
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 146
+end = 146
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 174
+end = 174
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 199
+end = 199
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 222
+end = 222
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 261
+end = 261
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 275
+end = 275
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 300
+end = 300
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 327
+end = 327
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 352
+end = 352
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 366
+end = 366
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 402
+end = 402
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 424
+end = 424
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 456
+end = 456
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 477
+end = 477
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 510
+end = 510
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 535
+end = 535
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 564
+end = 564
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 587
+end = 587
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 620
+end = 620
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 650
+end = 650
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 676
+end = 676
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 718
+end = 718
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 743
+end = 743
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 773
+end = 773
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 797
+end = 797
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches.content.spans]]
+path = "test/strict.ts"
+start = 834
+end = 834
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.6"
+descriptor = "test/priority-queue.ts — test-name roster"
+justification = "Unit tests for the default queueClass in isolation (no PQueue involved): dequeued-item exclusion from all operations, insertion/append/removal/filter/setPriority correctness specifically after a partial dequeue has advanced #head, ordering after cursor compaction. This is the file to point at for 'is the #head/compaction invariant tested' questions raised by reading source/priority-queue.ts."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 7
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 28
+end = 28
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 50
+end = 50
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 72
+end = 72
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 91
+end = 91
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 110
+end = 110
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 137
+end = 137
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/priority-queue.ts"
+start = 164
+end = 164
+render = { kind = "full" }
+
+[[batches]]
+id = "5.7"
+descriptor = "test/validation.ts — test-name roster"
+justification = "Small, edge-case-focused suite layered on top of basic/advanced coverage: rate-limit-cleared timing at backlog drain, setPriority input validation, constructor timeout validation, abort-before-start interactions with concurrency and interval-count rollback, carryover-mode reporting with no backlog, and clear() while rate-limited. Good first stop for 'is this specific race already covered' questions."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 6
+end = 6
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 55
+end = 55
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 94
+end = 94
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/validation.ts"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.8"
+descriptor = "test/rate-limit.ts — test-name roster"
+justification = "Rate-limit-specific race conditions layered on top of advanced.ts: rapid pause/start cycles, zero-interval edge case, sync-microtask-scheduling consistency, queue manipulation during the rateLimit event, and onRateLimit()/onRateLimitCleared() microtask-race and rapid-transition behavior."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 6
+end = 6
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 46
+end = 46
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 65
+end = 65
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 135
+end = 135
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 165
+end = 165
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 189
+end = 189
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 221
+end = 221
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/rate-limit.ts"
+start = 252
+end = 252
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches]]
+id = "5.9"
+descriptor = "test/debug.ts — test-name roster"
+justification = "Covers the debugging-oriented public surface added for production troubleshooting: .runningTasks (current/empty/updates-as-tasks-complete/timeout-info/fresh-array/no-id/with-interval-rate-limiting) and .isSaturated (capacity/paused/rate-limited), plus one improved-timeout-error-message test. The file to point at for 'how do I introspect a stuck queue' before reaching for the README FAQ."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 6
+end = 6
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 52
+end = 52
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 65
+end = 65
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 84
+end = 84
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 102
+end = 102
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 125
+end = 125
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 146
+end = 146
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 174
+end = 174
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 198
+end = 198
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 216
+end = 216
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+
+[[batches.content.spans]]
+path = "test/debug.ts"
+start = 233
+end = 233
+render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+

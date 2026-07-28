@@ -1,118 +1,121 @@
 fixture = "migrate"
 revision_pin = "2bd822b3"
 summary = """
-golang-migrate/migrate: a Go library + CLI that applies versioned up/down
-migrations from a pluggable `source.Driver` to a pluggable `database.Driver`.
-The repo is a hub-and-spoke plugin architecture: two small interface
-packages (`database`, `source`) at the center, ~20 database-driver and ~12
-source-driver leaf packages at the edges (each following the exact same
-Open/Register/WithInstance recipe), a thin CLI (`internal/cli` +
-`cmd/migrate`) on top, and a `migrate` root package gluing source reads to
-database writes with locking/dirty-state/prefetch semantics. Query
-distribution: driver authors implementing a new database/source driver
-(need the interface + a worked example + build-tag wiring); CLI users
-debugging flag/URL/migration-file-naming issues; core-lib debuggers tracing
-why a migration didn't apply, why the DB is "dirty", or how locking works;
-occasional build/CI/lint questions. Ranking favors: the two Driver
-interfaces + one worked exemplar (postgres), the root migrate/migration
-types and their most-traveled methods, exact CLI flag/command surface, and
-compact operational docs (Makefile, lint config) over deep bodies of any
-single driver — token budget for this fixture is scarce relative to its
-size, so depth is deliberately concentrated on the parts every task type
-(driver authoring, CLI use, core debugging) shares, with directory listings
-carrying breadth instead of per-driver prose.
-"""
+golang-migrate/migrate v4: a Go library plus CLI that reads versioned
+up/down migration files from a *source* driver and applies them to a
+*database* driver. The repository is a thin engine wrapped in two plugin
+ecosystems: the root `package migrate` (migrate.go, migration.go, log.go,
+util.go) owns all ordering, buffering, locking and dirty-state logic;
+`database/driver.go` and `source/driver.go` define the two "dumb" driver
+interfaces; and implement them and self-register in `init()`; the database side has
+around twenty driver subpackages and the source side a dozen-plus. The CLI lives in
+`internal/cli` (flag-based, one `build_<driver>.go` file per build tag)
+behind two `package main` shims, `cmd/migrate` and the deprecated `cli`.
 
-# ---------------------------------------------------------------------------
-# Tier 1 — orientation (ordered ascending by cost to satisfy the growth
-# envelope; small budgets should still land a coherent orientation slice)
-# ---------------------------------------------------------------------------
+The ranking front-loads (1) what the project is and where things live,
+(2) the root package's public API and its dirty/lock protocol, (3) the two
+driver contracts including their "how to implement a driver" checklists,
+because those dominate the plausible query distribution: using the library,
+debugging a stuck/dirty database, and adding or fixing a driver. Then come
+the migration data model and filename grammar, the CLI surface, the
+documentation's own question/heading inventories, and finally the
+shared conformance-test harnesses. Packaging and CI files (three
+Dockerfiles, .goreleaser.yml, .travis.yml, .circleci/, .github/) are
+deliberately left as filenames in the root listing rather than read.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Module path + Go version"
-justification = "Import path (v4 major-version-in-path) and minimum Go version, needed before writing any go.mod-touching change. Cheapest possible first batch."
+descriptor = "Repository identity: name + one-line definition"
+justification = "Rank 1 must answer \"what is this?\" in the fewest tokens. README.md:10-12 is the H1 plus the bold one-liner that names both delivery modes (CLI and library). Everything else in the ranking is refinement of this sentence."
 content = { kind = "lines", spans = [
-  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } }
+  { path = "README.md", start = 10, end = 12, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Root package doc comment"
-justification = "migrate.go's package comment states the source/database split and 'dumb driver' contract in the exact words the code follows."
+descriptor = "FAQ codebase-layout block"
+justification = "FAQ.md:3-9 is the project's own four-line map of its top-level packages (/ = package migrate, /cli, /database, /source). Cheapest possible orientation to the directory structure, and it frames every later batch."
 content = { kind = "lines", spans = [
-  { path = "migrate.go", start = 1, end = 5, render = { kind = "full" } }
+  { path = "FAQ.md", start = 3, end = 9, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "Code-base structure map (FAQ)"
-justification = "FAQ's own ASCII map of what lives at /, /cli, /database, /source is the cheapest possible orientation, straight from the maintainers."
+descriptor = "Core design premise: dumb drivers, migrate glues"
+justification = "README.md:14-18 states the architectural contract that explains why the codebase is shaped the way it is — drivers are deliberately dumb, all logic lives in the root package, drivers never correct user input. An agent asked to add or change a driver needs this before reading any driver."
 content = { kind = "lines", spans = [
-  { path = "FAQ.md", start = 3, end = 9, render = { kind = "full" } }
+  { path = "README.md", start = 14, end = 18, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.4"
-descriptor = "Build entry points (Makefile)"
-justification = "Operational coverage: the SOURCE/DATABASE build-tag lists and the `build` target are the canonical 'how do I build this' answer, cheaper than reading the whole Makefile."
+descriptor = "Root package doc comment (migrate.go)"
+justification = "migrate.go:1-5 is the godoc lede for `package migrate` and names both driver interfaces plus the \"drivers are dumb\" rule from the source side. Also establishes that migrate.go is the engine file."
 content = { kind = "lines", spans = [
-  { path = "Makefile", start = 1, end = 2, render = { kind = "full" } },
-  { path = "Makefile", start = 9, end = 10, render = { kind = "full" } }
+  { path = "migrate.go", start = 1, end = 5, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.5"
-descriptor = "Root directory listing"
-justification = "The full top-level shape (packages vs docs vs CI config) before anything else is legible."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "Complete root directory listing"
+justification = "The full set of immediate children of the repo root: source files and tests of the root package, all six markdown docs (README, FAQ, GETTING_STARTED, MIGRATIONS, CONTRIBUTING, SECURITY), the Makefile / three Dockerfiles / goreleaser / CI dotfiles, and the seven top-level package directories (cli, cmd, database, dktesting, internal, source, testing). Listing only some would let the agent conclude the rest don't exist, so this is `entries = \"all\"`."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "README lede: what migrate is"
-justification = "The one-paragraph pitch + the 'sources -> database, drivers are dumb' design principle framing every later interface decision."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 10, end = 20, render = { kind = "full" } }
+descriptor = "Complete database/ listing — every database driver package"
+justification = "\"Which databases are supported?\" is one of the highest-frequency queries against this repo. The directory is the ground truth (and is broader than README's list: it also contains `stub`, `testing`, `multistmt` and the `driver.go`/`error.go`/`util.go` shared files). `entries = \"all\"` so no driver is silently missing."
+content = { kind = "fs", groups = [
+  { parent = "database", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.7"
-descriptor = "CONTRIBUTING.md (dev workflow)"
-justification = "Cheap and answers 'how do I run this locally / lint it' without guessing at Makefile variables; complements 1.4's build target. The numbered list continues past line 11 (make test + push-PR steps); marked with an ellipsis rather than silently cut mid-list."
-content = { kind = "lines", spans = [
-  { path = "CONTRIBUTING.md", start = 1, end = 11, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 12, end = 12, render = { kind = "ellipsis" } }
+descriptor = "Complete source/ listing — every source driver package"
+justification = "The mirror-image roster for migration sources (file, iofs, github, gitlab, aws_s3, ...), plus the shared `driver.go`, `migration.go`, `parse.go`, `errors.go` and the `stub`/`testing` helpers. Same catastrophic-omission argument as 1.6."
+content = { kind = "fs", groups = [
+  { parent = "source", entries = "all" },
 ] }
 
-# ---------------------------------------------------------------------------
-# Tier 2 — core `migrate` package (root)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "1.8"
+descriptor = "Complete README section-heading roster"
+justification = "Every `##`/`###` heading line in README.md and nothing else: tells the agent exactly which topics the README answers (Databases, Database URLs, Migration Sources, CLI usage, Docker usage, Use in your Go project, Tutorials, Migration files, Versions, Development and Contributing) and the line to jump to for each. Pure locations, one hop from any of them."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "README.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "README.md", start = 69, end = 69, render = { kind = "full" } },
+  { path = "README.md", start = 84, end = 84, render = { kind = "full" } },
+  { path = "README.md", start = 92, end = 92, render = { kind = "full" } },
+  { path = "README.md", start = 98, end = 98, render = { kind = "full" } },
+  { path = "README.md", start = 105, end = 105, render = { kind = "full" } },
+  { path = "README.md", start = 152, end = 152, render = { kind = "full" } },
+  { path = "README.md", start = 156, end = 156, render = { kind = "full" } },
+  { path = "README.md", start = 163, end = 163, render = { kind = "full" } },
+  { path = "README.md", start = 174, end = 174, render = { kind = "full" } },
+  { path = "README.md", start = 179, end = 179, render = { kind = "full" } },
+  { path = "README.md", start = 187, end = 187, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.1"
-descriptor = "Migrate struct fields"
-justification = "The central type every public method hangs off; its fields (GracefulStop, PrefetchMigrations, LockTimeout, Log) are the knobs a library consumer actually sets."
-content = { kind = "lines", spans = [
-  { path = "migrate.go", start = 56, end = 81, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "2.2"
-descriptor = "Package-level errors and error types"
-justification = "ErrNoChange/ErrDirty/ErrShortLimit/ErrLocked are the sentinel values every caller (including the CLI) branches on; needed to answer any 'what does this error mean' question."
-content = { kind = "lines", spans = [
-  { path = "migrate.go", start = 29, end = 54, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "2.3"
-descriptor = "Public API roster (signatures only)"
-justification = "Location batch: every constructor and public method of *Migrate in one place with exact line numbers, so no method is invisible even though bodies aren't all shown."
+descriptor = "All four Migrate constructors (full signatures)"
+justification = "migrate.go:85/119/145/171 — `New`, `NewWithDatabaseInstance`, `NewWithSourceInstance`, `NewWithInstance`. This is the entry point of every library-usage query, and the four together show the URL-vs-instance matrix on both the source and database side. Complete: these are every exported package-level constructor in the root package."
 content = { kind = "lines", spans = [
   { path = "migrate.go", start = 85, end = 85, render = { kind = "full" } },
   { path = "migrate.go", start = 119, end = 119, render = { kind = "full" } },
   { path = "migrate.go", start = 145, end = 145, render = { kind = "full" } },
   { path = "migrate.go", start = 171, end = 171, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Complete exported *Migrate method set (full signatures)"
+justification = "Every exported method on `*Migrate` in migrate.go: Close(193), Migrate(212), Steps(234), Up(265), Down(287), Drop(307), Run(321), Force(365), Version(383). Signatures are short enough to render in full, so return shapes (e.g. `Close() (source error, database error)`, `Version() (uint, bool, error)`) come for free. Ranked immediately after the constructors so a small budget yields the whole library API."
+content = { kind = "lines", spans = [
   { path = "migrate.go", start = 193, end = 193, render = { kind = "full" } },
   { path = "migrate.go", start = 212, end = 212, render = { kind = "full" } },
   { path = "migrate.go", start = 234, end = 234, render = { kind = "full" } },
@@ -121,308 +124,420 @@ content = { kind = "lines", spans = [
   { path = "migrate.go", start = 307, end = 307, render = { kind = "full" } },
   { path = "migrate.go", start = 321, end = 321, render = { kind = "full" } },
   { path = "migrate.go", start = 365, end = 365, render = { kind = "full" } },
-  { path = "migrate.go", start = 383, end = 383, render = { kind = "full" } }
+  { path = "migrate.go", start = 383, end = 383, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Package-level sentinel errors and tuning defaults"
+justification = "migrate.go:19-35 — `DefaultPrefetchMigrations`, `DefaultLockTimeout` and the complete `var (...)` error block (ErrNoChange, ErrNilVersion, ErrInvalidVersion, ErrLocked, ErrLockTimeout). Callers compare against these by identity, so \"what error does Up return when there's nothing to do?\" resolves with zero follow-ups."
+content = { kind = "lines", spans = [
+  { path = "migrate.go", start = 19, end = 35, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.4"
-descriptor = "New() constructor body"
-justification = "The most common entry point (source URL + database URL -> *Migrate); refines the 2.3 roster with the actual wiring."
-predecessor = "2.3"
+descriptor = "Logger interface (log.go, whole file)"
+justification = "log.go is 12 lines and is the entire pluggable-logging contract (`Printf`, `Verbose`). \"Bring your own logger\" is a README selling point; rendering the file whole costs less than pointing at it."
 content = { kind = "lines", spans = [
-  { path = "migrate.go", start = 83, end = 113, render = { kind = "full" } }
+  { path = "log.go", start = 1, end = 12, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.5"
-descriptor = "migration.go: Migration struct (core fields)"
-justification = "Per-migration bookkeeping (Identifier/Version/TargetVersion/Body/BufferedBody) that both source and database drivers interact with indirectly; trimmed to the fields most queries touch. The elided BufferSize/timing-bookkeeping fields (37-57) are marked with an ellipsis rather than silently dropped."
+descriptor = "The Migrate struct and its documented public knobs"
+justification = "migrate.go:56-81 — the whole type, unexported wiring fields (sourceDrv/databaseDrv/isLockedMu/isLocked/isGracefulStop) included, plus the four exported fields with their doc comments: `Log`, `GracefulStop chan bool`, `PrefetchMigrations`, `LockTimeout`. Shown in one span so no field looks absent."
 content = { kind = "lines", spans = [
-  { path = "migration.go", start = 15, end = 36, render = { kind = "full" } },
-  { path = "migration.go", start = 37, end = 37, render = { kind = "ellipsis" } },
-  { path = "migration.go", start = 58, end = 58, render = { kind = "full" } }
+  { path = "migrate.go", start = 56, end = 81, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.6"
-descriptor = "NewMigration + NilMigration/NilVersion explanation"
-justification = "The doc comment here is the canonical explanation of NilMigration/NilVersion, concepts referenced by the FAQ and by every source driver's ReadUp/ReadDown contract."
-predecessor = "2.5"
+descriptor = "Structured error types ErrShortLimit and ErrDirty"
+justification = "migrate.go:37-54, both types plus their `Error()` methods. `ErrDirty` produces the user-visible \"Dirty database version N. Fix and force version.\" message that both GETTING_STARTED.md and the FAQ devote a section to, so having its exact format string in-snapshot short-circuits a very common debugging query."
 content = { kind = "lines", spans = [
-  { path = "migration.go", start = 60, end = 77, render = { kind = "full" } }
+  { path = "migrate.go", start = 37, end = 54, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.7"
-descriptor = "Logger interface"
-justification = "The one interface a library consumer must implement to get log output; tiny and complete."
+descriptor = "Complete unexported machinery roster of migrate.go (names only)"
+justification = "All fourteen unexported funcs/methods in migrate.go, truncated at the opening paren: newCommon, read, readUp, readDown, runMigrations, versionExists, stop, newMigration, lock, unlock, unlockErr, logPrintf, logVerbosePrintf, logErr. Names plus line numbers make the 979-line engine navigable in one hop — e.g. \"where is the down-migration walk?\" lands on readUp/readDown directly."
 content = { kind = "lines", spans = [
-  { path = "log.go", start = 1, end = 12, render = { kind = "full" } }
+  { path = "migrate.go", start = 183, end = 183, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 400, end = 400, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 532, end = 532, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 632, end = 632, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 723, end = 723, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 776, end = 776, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 815, end = 815, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 832, end = 832, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 887, end = 887, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 938, end = 938, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 953, end = 953, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 961, end = 961, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 968, end = 968, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
+  { path = "migrate.go", start = 975, end = 975, render = { kind = "truncated", pattern = "^func (\\([^)]*\\) )?[A-Za-z]+" } },
 ] }
 
 [[batches]]
 id = "2.8"
-descriptor = "util.go: suint + FilterCustomQuery"
-justification = "suint's panic-on-negative contract and FilterCustomQuery's x- query-param stripping are both referenced by driver Open() implementations (x-migrations-table etc.)."
+descriptor = "Up() in full — the canonical lock/dirty/read/run pipeline"
+justification = "migrate.go:263-283. Every public migration entry point (Migrate, Steps, Up, Down, Run) is the same five moves: lock, read current version, refuse if dirty, spawn a reader goroutine onto a prefetch channel, unlockErr(runMigrations(ret)). Rendering one of them in full teaches the shape of all of them; the roster in 2.2 gives the line numbers for the rest."
+predecessor = "2.2"
 content = { kind = "lines", spans = [
-  { path = "util.go", start = 42, end = 63, render = { kind = "full" } }
+  { path = "migrate.go", start = 263, end = 283, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------------------
-# Tier 3 — `database` package (interface layer)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "2.9"
+descriptor = "runMigrations(): the dirty-flag write protocol"
+justification = "migrate.go:717-752 with its doc comment. The most load-bearing body in the repository: for each item off the prefetch channel it checks stop(), type-switches on error vs *Migration, then does SetVersion(target, true) → databaseDrv.Run(BufferedBody) → SetVersion(target, false). This is the definitive answer to \"what does dirty mean and who sets it\". The ellipsis at 753 marks the rest of the loop body (read/run timing and the verbose-vs-normal log formats, through 772) as elided rather than absent."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "migrate.go", start = 717, end = 752, render = { kind = "full" } },
+  { path = "migrate.go", start = 753, end = 753, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "lock(): mutex, ErrLocked and the LockTimeout race"
+justification = "migrate.go:885-933. Shows ErrLocked is raised in-process by the `isLocked` bool guarded by isLockedMu, and that ErrLockTimeout comes from racing a `time.After(m.LockTimeout)` goroutine against the driver's `Lock()` over a buffered errchan. Directly serves \"why do I get 'timeout: can't acquire database lock'\"."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "migrate.go", start = 885, end = 933, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "FilterCustomQuery and suint (util.go:42-63)"
+justification = "`FilterCustomQuery` defines the `x-` query-parameter convention every database driver uses to strip migrate-specific params before dialling — knowing it lives here saves a repo-wide grep. `suint` is the panic-on-negative int→uint conversion used by Version() and read()."
+content = { kind = "lines", spans = [
+  { path = "util.go", start = 42, end = 63, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.1"
-descriptor = "database.Driver interface"
-justification = "The exact contract every database driver implements (Open/Close/Lock/Unlock/Run/SetVersion/Version/Drop) — the single highest-value batch for a 'add database X' or 'why does driver Y behave differently' task."
+descriptor = "Package docs for the two driver packages"
+justification = "database/driver.go:1-5 and source/driver.go:1-5. Both godoc ledes state the same four-part contract — implement the interface, register yourself, optionally provide WithInstance, and pass the shared conformance tests in database/testing resp. source/testing. Pairing them in one batch makes the symmetry of the two plugin ecosystems explicit."
 content = { kind = "lines", spans = [
-  { path = "database/driver.go", start = 45, end = 82, render = { kind = "full" } }
+  { path = "database/driver.go", start = 1, end = 5, render = { kind = "full" } },
+  { path = "source/driver.go", start = 1, end = 5, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.2"
-descriptor = "database.Open/Register/List + NilVersion"
-justification = "The registry machinery (scheme -> driver lookup) and the NilVersion=-1 sentinel used throughout Version()/SetVersion()."
+descriptor = "database.Driver method roster (names only)"
+justification = "All eight methods of the database.Driver interface, truncated to the name: Open, Close, Lock, Unlock, Run, SetVersion, Version, Drop (database/driver.go:49-81). This is the complete implementation checklist for any new database driver, and it is the cheapest possible form of it. The per-method doc comments follow in 3.8."
 content = { kind = "lines", spans = [
-  { path = "database/driver.go", start = 20, end = 24, render = { kind = "full" } },
-  { path = "database/driver.go", start = 84, end = 123, render = { kind = "full" } }
+  { path = "database/driver.go", start = 49, end = 49, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 59, end = 59, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 63, end = 63, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 66, end = 66, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 71, end = 71, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 76, end = 76, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "database/driver.go", start = 81, end = 81, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
 ] }
 
 [[batches]]
 id = "3.3"
-descriptor = "database.Error type"
-justification = "The structured error every SQL-based driver wraps query failures in (Line/Query/Err/OrigErr); needed to interpret any 'migration failed' error message."
+descriptor = "source.Driver method roster (names only)"
+justification = "All seven methods of the source.Driver interface: Open, Close, First, Prev, Next, ReadUp, ReadDown (source/driver.go:39-72). Note the deliberate absence of a `Last()` — FAQ.md:11 explains why — so showing the set complete rather than partial matters here more than usual."
 content = { kind = "lines", spans = [
-  { path = "database/error.go", start = 1, end = 27, render = { kind = "full" } }
+  { path = "source/driver.go", start = 39, end = 39, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 43, end = 43, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 48, end = 48, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 58, end = 58, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 65, end = 65, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
+  { path = "source/driver.go", start = 72, end = 72, render = { kind = "truncated", pattern = "^\t[A-Za-z]+" } },
 ] }
 
 [[batches]]
 id = "3.4"
-descriptor = "database/util.go: GenerateAdvisoryLockId + CasRestoreOnErr"
-justification = "GenerateAdvisoryLockId is the shared locking primitive postgres/mysql/etc. call from Lock()/Unlock(), explaining the FAQ's GET_LOCK/pg_advisory_lock answer. CasRestoreOnErr is the file's other exported helper (atomic-bool CAS with restore-on-error) — a location-only line so it doesn't look missing, since its body isn't otherwise query-relevant here."
+descriptor = "Driver registries: Open / Register / List in both packages"
+justification = "The six registry functions — database/driver.go:85,102,115 and source/driver.go:76,97,110 — that turn a URL scheme into a driver instance. Together with 3.5 they explain the blank-import (`_ \"…/database/postgres\"`) idiom every user hits, and where the \"unknown driver (forgotten import?)\" error comes from."
 content = { kind = "lines", spans = [
-  { path = "database/util.go", start = 1, end = 20, render = { kind = "full" } },
-  { path = "database/util.go", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } }
+  { path = "database/driver.go", start = 85, end = 85, render = { kind = "full" } },
+  { path = "database/driver.go", start = 102, end = 102, render = { kind = "full" } },
+  { path = "database/driver.go", start = 115, end = 115, render = { kind = "full" } },
+  { path = "source/driver.go", start = 76, end = 76, render = { kind = "full" } },
+  { path = "source/driver.go", start = 97, end = 97, render = { kind = "full" } },
+  { path = "source/driver.go", start = 110, end = 110, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------------------
-# Tier 4 — `source` package (interface layer)
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "3.5"
+descriptor = "database package constants, sentinel errors and the registry map"
+justification = "database/driver.go:15-23 — `ErrLocked`, `ErrNotLocked`, `const NilVersion int = -1`, and the `driversMu`/`drivers` registry state. NilVersion (-1) is referenced throughout migrate.go and by every driver's Version() contract, and this is where it is defined."
+content = { kind = "lines", spans = [
+  { path = "database/driver.go", start = 15, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "\"How to implement a database driver\" — the 7-step checklist"
+justification = "database/driver.go:25-44. A numbered, authoritative procedure (implement the interface, add WithInstance, call database/testing.Test, Register in init, create internal/cli/build_<name>.go, add the name to the Makefile DATABASE variable) plus the two hard guidelines (never correct user input; all config from the URL or Config{}, never os.Getenv). Turns \"add a driver for X\" from an exploration into an execution."
+content = { kind = "lines", spans = [
+  { path = "database/driver.go", start = 25, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "\"How to implement a source driver\" — checklist and guidelines"
+justification = "source/driver.go:17-34, the mirror of 3.6, with the source-specific rules: drivers are read-only, and Open/WithInstance should ideally not load contents into memory. Note it has no build-tag/Makefile step, unlike the database side."
+content = { kind = "lines", spans = [
+  { path = "source/driver.go", start = 17, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "database.Driver in full: per-method semantic contracts"
+justification = "database/driver.go:45-82 replaces the 3.2 roster with each method's doc comment — how often Migrate calls it, that Lock may return nil if unsupported, that Lock must return database.ErrLocked, that SetVersion is called before and after every Run, that Version must return -1 when nothing is applied, and that Drop requires a fresh Open(). These sentences are exactly the details a driver author or reviewer needs and cannot infer."
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "database/driver.go", start = 45, end = 82, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "source.Driver in full: per-method semantic contracts"
+justification = "source/driver.go:35-73 refines the 3.3 roster: First/Prev/Next must return os.ErrNotExist when exhausted (the sentinel migrate.go's read loops branch on), and ReadUp/ReadDown must return a ReadCloser and explicitly \"Do not start reading\" — the invariant that makes prefetching safe."
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+  { path = "source/driver.go", start = 35, end = 73, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "database.Error: the query-level error type"
+justification = "database/error.go:7-27 — the `Error` struct (Line, Query, Err, OrigErr) and its two Sprintf formats. Nearly every SQL driver wraps failures in this type, so it is the shape of the message a user sees when a migration statement fails, and the thing to construct when writing a new driver."
+content = { kind = "lines", spans = [
+  { path = "database/error.go", start = 7, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "Shared driver helpers: GenerateAdvisoryLockId and CasRestoreOnErr"
+justification = "database/util.go — `advisoryLockIDSalt` and the signature of `GenerateAdvisoryLockId`, the crc32-with-salt lock-id generator the Postgres/MySQL-family drivers share, plus `CasRestoreOnErr`, the compare-and-swap wrapper that restores `isLocked` when a Lock/Unlock call fails. Signatures only, with ellipses marking the two elided bodies: what matters is that nearly every driver's Lock()/Unlock() reaches for these, and that they live here."
+content = { kind = "lines", spans = [
+  { path = "database/util.go", start = 10, end = 13, render = { kind = "full" } },
+  { path = "database/util.go", start = 14, end = 14, render = { kind = "ellipsis" } },
+  { path = "database/util.go", start = 22, end = 23, render = { kind = "full" } },
+  { path = "database/util.go", start = 24, end = 24, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "internal/url: SchemeFromURL"
+justification = "internal/url/url.go:8-25, the whole substance of the file. This tiny helper is what decides the driver name for both source and database URLs (a plain index of the first `:`, not net/url), and it owns the `errNoScheme` / `errEmptyURL` errors that surface as \"failed to parse scheme from source URL\". Cheap, and it closes the internal/ tree's non-CLI half."
+content = { kind = "lines", spans = [
+  { path = "internal/url/url.go", start = 8, end = 25, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "Exemplar driver: postgres registration, defaults and Config"
+justification = "database/postgres/postgres.go:24-54 — the `init()` that registers the driver under both \"postgres\" and \"postgresql\", `DefaultMigrationsTable = \"schema_migrations\"` and `DefaultMultiStatementMaxSize = 10 MB`, and the whole `Config` struct; the ellipsis at 36 stands for the driver-local sentinel error block at 37-42. Its fields — MigrationsTable, MigrationsTableQuoted, MultiStatementEnabled, DatabaseName, SchemaName, StatementTimeout, MultiStatementMaxSize — are what the `x-`-prefixed URL parameters populate, making this the concrete counterpart to FilterCustomQuery in 2.11 and the model any new driver copies."
+content = { kind = "lines", spans = [
+  { path = "database/postgres/postgres.go", start = 24, end = 35, render = { kind = "full" } },
+  { path = "database/postgres/postgres.go", start = 36, end = 36, render = { kind = "ellipsis" } },
+  { path = "database/postgres/postgres.go", start = 44, end = 54, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.1"
-descriptor = "source.Driver interface"
-justification = "Mirror of 3.1 for sources: the exact contract (Open/Close/First/Prev/Next/ReadUp/ReadDown) every source driver implements."
+descriptor = "Migration filename grammar (MIGRATIONS.md:10-23)"
+justification = "The normative spec: `{version}_{title}.up.{extension}` / `.down.{extension}`, title unused, extension unchecked, version is any 64-bit unsigned integer, applied ascending for up and descending for down. Every user-facing \"why isn't my migration picked up\" question resolves here, with zero follow-ups."
 content = { kind = "lines", spans = [
-  { path = "source/driver.go", start = 35, end = 73, render = { kind = "full" } }
+  { path = "MIGRATIONS.md", start = 10, end = 23, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "4.2"
-descriptor = "source.Open/Register/List (scheme dispatch)"
-justification = "How a source URL scheme resolves to a registered driver; List() is added as a location-only line (mirroring 3.2's database.List(), so source's own List() doesn't look absent) since its body is identical in shape to database's."
+descriptor = "source/parse.go: ErrParse, the Regex, and the Parse signature"
+justification = "Lines 9-25: `ErrParse`, the `DefaultParse`/`DefaultRegex` indirection hooks drivers can swap, and the actual `Regex` literal built by concatenating the Down/Up Direction constants — the executable counterpart to the prose spec in 4.1, which makes the grammar answerable both ways. `Parse`'s signature lands with it; the ellipsis at 26 marks its capture-group-to-Migration body (through line 39) as elided."
 content = { kind = "lines", spans = [
-  { path = "source/driver.go", start = 75, end = 107, render = { kind = "full" } },
-  { path = "source/driver.go", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } }
+  { path = "source/parse.go", start = 9, end = 25, render = { kind = "full" } },
+  { path = "source/parse.go", start = 26, end = 26, render = { kind = "ellipsis" } },
 ] }
 
 [[batches]]
 id = "4.3"
-descriptor = "source/errors.go: ErrDuplicateMigration"
-justification = "The one exported error type in the source package, surfaced when a source driver finds two files for the same version+direction."
+descriptor = "source.Direction and source.Migration"
+justification = "source/migration.go:7-32 — the `Direction` string type with its `Down`/`Up` constants (whose literal values \"down\"/\"up\" are spliced into the parse Regex), and the `Migration` helper struct (Version, Identifier, Direction, Raw) with the explicit note that it is fully independent from migrate.Migration. The two same-named types are a standing source of confusion; this batch disambiguates them."
 content = { kind = "lines", spans = [
-  { path = "source/errors.go", start = 1, end = 15, render = { kind = "full" } }
+  { path = "source/migration.go", start = 7, end = 32, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "4.4"
-descriptor = "source/migration.go: Migration struct"
-justification = "The in-memory record shape most source drivers (file, github, stub, ...) build up front and query via First/Prev/Next; trimmed to the struct itself, not the Migrations index's internals."
+descriptor = "source.Migrations: the in-memory index every directory-tree driver uses"
+justification = "source/migration.go:34-46 in full (the struct plus NewMigrations) and then the complete method roster — Append, buildIndex, First, Prev, Next, Up, Down, findPos — plus the `uintSlice` sorted-search helper at 129-131. Drivers that must build a full directory tree in memory build one of these; note Append returns ok=false rather than an error when a (version, direction) pair is already present."
 content = { kind = "lines", spans = [
-  { path = "source/migration.go", start = 1, end = 32, render = { kind = "full" } }
+  { path = "source/migration.go", start = 34, end = 46, render = { kind = "full" } },
+  { path = "source/migration.go", start = 48, end = 48, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 68, end = 68, render = { kind = "full" } },
+  { path = "source/migration.go", start = 78, end = 78, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 85, end = 85, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 93, end = 93, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 101, end = 101, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 110, end = 110, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 119, end = 119, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
+  { path = "source/migration.go", start = 129, end = 129, render = { kind = "full" } },
+  { path = "source/migration.go", start = 131, end = 131, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z]+" } },
 ] }
 
 [[batches]]
 id = "4.5"
-descriptor = "source/parse.go: filename regex + Parse()"
-justification = "The exact `{version}_{title}.{up|down}.{ext}` regex migrate uses to recognize migration files — the single most likely answer to 'why isn't my migration file being picked up'."
+descriptor = "migrate.Migration: type location, buffer default, and complete method set"
+justification = "migration.go — `DefaultBufferSize` (11-13), the `Migration` type's doc and opening line with an ellipsis standing in for its field block, the closing brace at 58, and full signatures for `NewMigration`, `String`, `LogString` and `Buffer`. `Buffer` is the goroutine every read path spawns, so its location matters even before its body does."
 content = { kind = "lines", spans = [
-  { path = "source/parse.go", start = 1, end = 40, render = { kind = "full" } }
+  { path = "migration.go", start = 11, end = 18, render = { kind = "full" } },
+  { path = "migration.go", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "migration.go", start = 58, end = 58, render = { kind = "full" } },
+  { path = "migration.go", start = 77, end = 78, render = { kind = "full" } },
+  { path = "migration.go", start = 107, end = 107, render = { kind = "full" } },
+  { path = "migration.go", start = 112, end = 112, render = { kind = "full" } },
+  { path = "migration.go", start = 122, end = 122, render = { kind = "full" } },
 ] }
-
-# ---------------------------------------------------------------------------
-# Tier 5 — CLI (internal/cli + cmd/migrate)
-# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "CLI flags + per-subcommand usage strings"
-justification = "The literal `-help` text: every flag and every subcommand's argument syntax, verbatim — the fastest way to answer any 'how do I invoke migrate' question without running the binary."
-content = { kind = "lines", spans = [
-  { path = "internal/cli/main.go", start = 18, end = 34, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 74, end = 97, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "5.2"
-descriptor = "Subcommand roster (switch cases)"
-justification = "Location hedge: the full list of top-level subcommands (create/goto/up/down/drop/force/version/default) with exact line numbers, so none look unimplemented."
-content = { kind = "lines", spans = [
-  { path = "internal/cli/main.go", start = 158, end = 158, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 195, end = 195, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 226, end = 226, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 256, end = 256, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 296, end = 296, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 331, end = 331, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 365, end = 365, render = { kind = "full" } },
-  { path = "internal/cli/main.go", start = 374, end = 374, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "commands.go: nextSeqVersion"
-justification = "The exact algorithm behind `migrate create -seq`'s sequential numbering (parses the last matching file's prefix, zero-pads to -digits) — the most subtle bit of the `create` command."
-content = { kind = "lines", spans = [
-  { path = "internal/cli/commands.go", start = 23, end = 57, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "5.4"
-descriptor = "commands.go: versionCmd + *Cmd roster"
-justification = "versionCmd shown in full (dirty-version print format `%v (dirty)`); the other *Cmd funcs (createCmd/gotoCmd/upCmd/downCmd/dropCmd/forceCmd/numDownMigrationsFromArgs) as a location hedge so none look missing — createCmd was the one silently dropped in an earlier pass despite backing the `create` subcommand."
-content = { kind = "lines", spans = [
-  { path = "internal/cli/commands.go", start = 212, end = 223, render = { kind = "full" } },
-  { path = "internal/cli/commands.go", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 150, end = 150, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 160, end = 160, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 205, end = 205, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "internal/cli/commands.go", start = 227, end = 227, render = { kind = "truncated", pattern = "^[^(]+" } }
-] }
-
-[[batches]]
-id = "5.5"
-descriptor = "internal/url: SchemeFromURL"
-justification = "The tiny function that turns 'postgres://...' into 'postgres' for driver dispatch; whole file, exact scheme-parsing edge cases (empty URL, no colon)."
-content = { kind = "lines", spans = [
-  { path = "internal/url/url.go", start = 1, end = 25, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "5.6"
-descriptor = "CLI entrypoints: cmd/migrate (current) vs cli/ (deprecated alias)"
-justification = "Both `main` packages exist and both call the same internal/cli.Main(); without this an agent editing cli/main.go wouldn't know it's a deprecated shim for cmd/migrate."
+descriptor = "CLI entry points and the cli/ deprecation"
+justification = "Both `package main` shims — cmd/migrate/main.go with its version.go, and cli/main.go — plus cli/README.md's three-line \"Deprecated, use cmd/migrate instead\". Shows that each binary is two lines of `cli.Main(Version)`, that `Version` is a `var = \"dev\"` overridden by an -ldflags -X at build time, and which of the two duplicate directories is live."
 content = { kind = "lines", spans = [
   { path = "cmd/migrate/main.go", start = 1, end = 7, render = { kind = "full" } },
   { path = "cmd/migrate/version.go", start = 1, end = 4, render = { kind = "full" } },
   { path = "cli/main.go", start = 1, end = 8, render = { kind = "full" } },
-  { path = "cli/README.md", start = 1, end = 3, render = { kind = "full" } }
+  { path = "cli/README.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "Complete internal/cli listing — the build-tag matrix"
+justification = "All 32 files of internal/cli: main.go, commands.go, log.go, commands_test.go and the 28 `build_<driver>.go` blank-import shims. The filenames *are* the answer to \"which build tags does the CLI support and where do I add one\" — and a partial listing would strand exactly that query. `entries = \"all\"`."
+content = { kind = "fs", groups = [
+  { parent = "internal/cli", entries = "all" },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "cli.Main and the complete global flag set"
+justification = "internal/cli/main.go:61-70 — the exported `Main(version string)` (public only for backwards compatibility with the old `cli` package) and every top-level flag it declares: help, version, verbose, prefetch, lock-timeout, path, database, source. Complete set, so nothing looks missing."
+content = { kind = "lines", spans = [
+  { path = "internal/cli/main.go", start = 61, end = 70, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "The `migrate -help` usage text, from source"
+justification = "internal/cli/main.go:72-98, the `flag.Usage` closure: the invocation forms, one-line descriptions of all eight options with their defaults, the command list, and the runtime-computed `Source drivers:`/`Database drivers:` footers built from source.List()/database.List(). Ranked here as the single canonical rendering of the CLI surface — the identical block reproduced in cmd/migrate/README.md is deliberately not scheduled."
+content = { kind = "lines", spans = [
+  { path = "internal/cli/main.go", start = 72, end = 98, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Subcommand usage strings (internal/cli/main.go:18-33)"
+justification = "The `const` block holding createUsage, gotoUsage, upUsage, downUsage, dropUsage, forceUsage — the exact argument grammar (`create [-ext E] [-dir D] [-seq] [-digits N] [-format] [-tz] NAME`, `down [N] [-all]`, `drop [-f]`, ...) that 5.4's usage block interpolates as `%s`. Also fixes defaultTimeFormat = \"20060102150405\" and defaultTimezone = \"UTC\"."
+content = { kind = "lines", spans = [
+  { path = "internal/cli/main.go", start = 18, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "Complete command-implementation roster (internal/cli/commands.go)"
+justification = "Every function in commands.go with its full signature: nextSeqVersion, timeVersion, createCmd, createFile, gotoCmd, upCmd, downCmd, dropCmd, forceCmd, versionCmd, numDownMigrationsFromArgs. One hop from \"where does `migrate create -seq` compute the next number\" to line 23."
+content = { kind = "lines", spans = [
+  { path = "internal/cli/commands.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 59, end = 59, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 75, end = 75, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 138, end = 138, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 150, end = 150, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 160, end = 160, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 179, end = 179, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 198, end = 198, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 205, end = 205, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 212, end = 212, render = { kind = "full" } },
+  { path = "internal/cli/commands.go", start = 227, end = 227, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "5.7"
-descriptor = "internal/cli/ directory listing"
-justification = "Class-closure: reveals every build_<driver>.go blank-import file (28 of them) plus main.go/commands.go/log.go, so no build tag looks missing."
-content = { kind = "fs", groups = [ { parent = "internal/cli", entries = "all" } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 6 — database/source directory topology (breadth hedge)
-# ---------------------------------------------------------------------------
+descriptor = "A build-tag shim in full, and the tag-name traps"
+justification = "internal/cli/build_postgres.go entire (7 lines) shows the whole pattern: `//go:build <tag>` plus one blank import. build_pgxv5.go is included because its tag is `pgx5`, not `pgxv5` — the file name and tag disagree, and build_go-bindata.go likewise carries tag `go_bindata` with a dash in the filename. Those mismatches are exactly the kind of detail an agent would otherwise guess wrong."
+content = { kind = "lines", spans = [
+  { path = "internal/cli/build_postgres.go", start = 1, end = 7, render = { kind = "full" } },
+  { path = "internal/cli/build_pgxv5.go", start = 1, end = 7, render = { kind = "full" } },
+  { path = "internal/cli/build_go-bindata.go", start = 1, end = 1, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.1"
-descriptor = "database/ directory listing"
-justification = "Authoritative roster of every database driver directory (plus stub/testing/multistmt helpers); the ground truth this fixture's own snowflake/ driver shows a curated prose list can't be trusted to replace."
-content = { kind = "fs", groups = [ { parent = "database", entries = "all" } ] }
+descriptor = "Complete FAQ question roster (every #### heading)"
+justification = "The sixteen `####` question lines of FAQ.md not already rendered (the seventeenth, \"How is the code base structured?\", is batch 1.2), and nothing else. This repository's FAQ is unusually load-bearing — it is where \"what does dirty mean\", \"what is a NilMigration/NilVersion\", \"uint(version) vs int(targetVersion)\", \"why is there no source Last()\", \"what happens if two programs migrate at once\" and \"can I maintain my driver in my own repo\" are actually answered. Rendering the questions alone turns each into a one-hop read at a known line."
+content = { kind = "lines", spans = [
+  { path = "FAQ.md", start = 11, end = 11, render = { kind = "full" } },
+  { path = "FAQ.md", start = 15, end = 15, render = { kind = "full" } },
+  { path = "FAQ.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "FAQ.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "FAQ.md", start = 28, end = 28, render = { kind = "full" } },
+  { path = "FAQ.md", start = 32, end = 32, render = { kind = "full" } },
+  { path = "FAQ.md", start = 39, end = 39, render = { kind = "full" } },
+  { path = "FAQ.md", start = 45, end = 45, render = { kind = "full" } },
+  { path = "FAQ.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "FAQ.md", start = 52, end = 52, render = { kind = "full" } },
+  { path = "FAQ.md", start = 59, end = 59, render = { kind = "full" } },
+  { path = "FAQ.md", start = 62, end = 62, render = { kind = "full" } },
+  { path = "FAQ.md", start = 67, end = 67, render = { kind = "full" } },
+  { path = "FAQ.md", start = 72, end = 72, render = { kind = "full" } },
+  { path = "FAQ.md", start = 75, end = 75, render = { kind = "full" } },
+  { path = "FAQ.md", start = 78, end = 78, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "source/ directory listing"
-justification = "Authoritative roster of every source driver directory (plus stub/testing helpers), same rationale as 6.1."
-content = { kind = "fs", groups = [ { parent = "source", entries = "all" } ] }
+descriptor = "Makefile: default driver tag sets and the test targets"
+justification = "Makefile:1-3 pins the `SOURCE`, `DATABASE` and `DATABASE_TEST` variables — the default tag sets the build and test targets expand into (and note DATABASE_TEST adds sqlite, sqlite3 and sqlcipher on top of DATABASE) — and 32-46 gives `test-short`, `test` and `test-with-flags`, i.e. the actual `go test ./...` invocation and its coverage/race flags. Answers both \"how do I run the tests\" and \"which tags ship\"."
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 1, end = 3, render = { kind = "full" } },
+  { path = "Makefile", start = 32, end = 46, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.3"
-descriptor = "database/snowflake/README.md (undocumented driver)"
-justification = "snowflake/ is a real, build-tag-wired driver (internal/cli/build_snowflake.go, go.mod dep) that the root README's Databases list omits entirely — surfacing its own README here prevents trusting curated prose over the 6.1 directory listing."
+descriptor = "Shared conformance-test harnesses (complete function rosters)"
+justification = "Every exported function of the database/testing package — testing.go's Test, TestNilVersion, TestLockAndUnlock, TestRun, TestDrop, TestSetVersion plus migrate_testing.go's TestMigrate, TestMigrateDrop, TestMigrateUp — and of source/testing/testing.go: Test, TestFirst, TestPrev, TestNext, TestReadUp, TestReadDown. Step 3 of both driver checklists in 3.6/3.7 is \"add a test that calls database/testing.go:Test()\" — this batch is the follow-through, showing the full set so a driver author knows what is covered for free and what still needs its own test."
 content = { kind = "lines", spans = [
-  { path = "database/snowflake/README.md", start = 1, end = 2, render = { kind = "full" } }
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 7 — postgres: worked driver exemplar
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "postgres.go: Config + Postgres struct + registration"
-justification = "The concrete data shape (MigrationsTable/SchemaName/MultiStatement*/StatementTimeout) behind every x-* URL query param, plus the init() that registers both 'postgres' and 'postgresql' schemes."
-content = { kind = "lines", spans = [
-  { path = "database/postgres/postgres.go", start = 24, end = 64, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "7.2"
-descriptor = "postgres.go: WithInstance"
-justification = "The canonical 'bring your own *sql.DB' entry point that the root README's second code sample calls; the shape every other driver's WithInstance (constructor differs only in the instance type) follows."
-predecessor = "7.1"
-content = { kind = "lines", spans = [
-  { path = "database/postgres/postgres.go", start = 132, end = 150, render = { kind = "full" } }
+  { path = "database/testing/testing.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "database/testing/testing.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "database/testing/testing.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "database/testing/testing.go", start = 102, end = 102, render = { kind = "full" } },
+  { path = "database/testing/testing.go", start = 112, end = 112, render = { kind = "full" } },
+  { path = "database/testing/testing.go", start = 118, end = 118, render = { kind = "full" } },
+  { path = "database/testing/migrate_testing.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "database/testing/migrate_testing.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "database/testing/migrate_testing.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 70, end = 70, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 99, end = 99, render = { kind = "full" } },
+  { path = "source/testing/testing.go", start = 141, end = 141, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "7.3"
-descriptor = "database/postgres/README.md (URL scheme + query params)"
-justification = "The driver-local doc pairing 7.1/7.2's code with the documented URL scheme and the migrate-specific x-migrations-table/x-statement-timeout query-param rows; the table's remaining generic-postgres rows (dbname/user/ssl*/etc.) are marked with an ellipsis rather than silently cut."
+id = "6.4"
+descriptor = "Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md)"
+justification = "The complete `##` heading sets of the two guides the README defers to: MIGRATIONS.md's Migration Filename Format / Migration Content Format / Reversibility of Migrations, and GETTING_STARTED.md's Create migrations / Run migrations / Forcing your database version / Further reading. These join README's roster (1.8) and the FAQ's (6.1); CONTRIBUTING.md and SECURITY.md stay filename-only from the root listing, which is the right trade at this budget."
 content = { kind = "lines", spans = [
-  { path = "database/postgres/README.md", start = 1, end = 11, render = { kind = "full" } },
-  { path = "database/postgres/README.md", start = 12, end = 12, render = { kind = "ellipsis" } }
-] }
-
-[[batches]]
-id = "7.4"
-descriptor = "database/postgres/ directory listing"
-justification = "Reveals TUTORIAL.md, postgres_test.go and examples/ alongside the files already excerpted, so nothing in this exemplar directory is invisible."
-content = { kind = "fs", groups = [ { parent = "database/postgres", entries = "all" } ] }
-
-[[batches]]
-id = "7.5"
-descriptor = "Example migration pair (create_users_table)"
-justification = "Grounds MIGRATIONS.md's naming convention in real bytes: the actual up/down SQL pair migrate's own examples/ use for the canonical demo migration."
-content = { kind = "lines", spans = [
-  { path = "database/postgres/examples/migrations/1085649617_create_users_table.up.sql", start = 1, end = 5, render = { kind = "full" } },
-  { path = "database/postgres/examples/migrations/1085649617_create_users_table.down.sql", start = 1, end = 1, render = { kind = "full" } }
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 8 — remaining docs
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "MIGRATIONS.md: filename format rules"
-justification = "The normative spec for {version}_{title}.{up|down}.{ext} — pairs with 4.5's regex with the human-readable rules around it."
-content = { kind = "lines", spans = [
-  { path = "MIGRATIONS.md", start = 1, end = 15, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "8.2"
-descriptor = "FAQ.md: remaining Q&A"
-justification = "Concrete rationale an agent can't derive from code alone: why up/down are separate files, what 'dirty' means operationally, and which lock function each DB uses (span corrected to the Q&As that actually say this — the previous span pointed at Last()/NilMigration/uint-vs-int/Next-Previous instead, none of which this justification described)."
-predecessor = "1.3"
-content = { kind = "lines", spans = [
-  { path = "FAQ.md", start = 28, end = 30, render = { kind = "full" } },
-  { path = "FAQ.md", start = 62, end = 70, render = { kind = "full" } }
-] }
-
-[[batches]]
-id = "8.3"
-descriptor = ".golangci.yml linters + exclusions"
-justification = "The complete enabled-linter list and exclusion rules; cheap and directly answers 'why did lint flag/not-flag this'. The trailing `issues:` and `formatters:` sections are marked with an ellipsis rather than silently cut."
-content = { kind = "lines", spans = [
-  { path = ".golangci.yml", start = 1, end = 25, render = { kind = "full" } },
-  { path = ".golangci.yml", start = 26, end = 26, render = { kind = "ellipsis" } }
+  { path = "MIGRATIONS.md", start = 3, end = 3, render = { kind = "full" } },
+  { path = "MIGRATIONS.md", start = 56, end = 56, render = { kind = "full" } },
+  { path = "MIGRATIONS.md", start = 67, end = 67, render = { kind = "full" } },
+  { path = "GETTING_STARTED.md", start = 6, end = 6, render = { kind = "full" } },
+  { path = "GETTING_STARTED.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "GETTING_STARTED.md", start = 37, end = 37, render = { kind = "full" } },
+  { path = "GETTING_STARTED.md", start = 47, end = 47, render = { kind = "full" } },
 ] }

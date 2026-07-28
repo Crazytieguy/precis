@@ -1,3739 +1,677 @@
 fixture = "chibicc"
 revision_pin = "90d1f7f1"
 summary = """
-chibicc is a small, single-binary, multi-stage C11 compiler (tokenize ->
-preprocess -> parse -> type-check -> x86-64 codegen) plus its own driver
-(argument parsing, subprocess orchestration for as/ld) and test suite.
-Dev tasks span: adding/debugging a language feature (touches all four
-stages), driver/CLI behavior (flags, linking modes, dependency-file
-generation), ABI/codegen questions (struct passing, bitfields, VLA,
-atomics, long double), and test-suite work (which test/*.c exercises a
-feature). README.md already narrates the four-stage pipeline and the
-project's design philosophy, so this NS spends its tight token budget on
-the complement: the exact struct/enum shapes defining the compiler's
-data model (chibicc.h, shown close to verbatim since it is the single
-highest-value document here), a location roster of every function in
-every stage file (so "where is X implemented" is one grep away without
-re-deriving it from scratch), the CLI's full recognized-flag surface,
-and one semantic slice an algorithm's signature can't convey (macro-hygiene
-hidesets — the reason macro expansion doesn't infinitely recurse). Breadth
-is prioritized over exhaustive
-bodies given the fixture's size relative to budget: test/*.c and
-include/*.h filenames are largely self-describing (vla.c, atomic.c,
-bitfield.c, stdatomic.h...) and are surfaced via directory listings
-rather than re-purchased as body excerpts.
+chibicc is Rui Ueyama's small C11 compiler: a flat root of nine `.c` files
+plus one shared header, `chibicc.h`, that declares every cross-module type
+and function grouped by the file that owns it. The pipeline is
+tokenize -> preprocess -> parse -> codegen (x86-64 AT&T assembly text),
+driven by a GCC-compatible driver in `main.c` that re-execs itself with
+`-cc1` and shells out to `as` and `ld`. Supporting modules: `type.c`
+(type constructors + `add_type` inference), `hashmap.c`, `unicode.c`,
+`strings.c`. `include/` ships the freestanding headers chibicc provides
+itself; `test/` holds 41 self-checking C programs plus `driver.sh`
+(command-line behaviour) and `thirdparty/` scripts that build Git, SQLite,
+libpng, tinycc and CPython with chibicc.
+
+The ranking front-loads the repository's identity and its module map: the
+README's four-stage "Internals" description, the complete root listing, the
+build and self-host targets, and the `// <file>.c` section banners inside
+`chibicc.h` that make the header a table of contents. It then spends budget
+on the header's cross-module API declarations, on per-file function-name
+rosters plus the two file-header comments that carry the load-bearing ideas
+(the parser's `Token **rest` convention and the preprocessor's hideset
+algorithm), and then on the core data structures (`Token`, `Obj`,
+`Node`/`NodeKind`, `Type`/`TypeKind`, `Member`, `HashMap`). The tail spends
+what is left on the places where the stages actually connect — `main()`,
+`cc1()`, `parse()` — on the C grammar that the recursive-descent parser
+records in comments above its functions (statements and the whole operator
+precedence chain), and on the complete list of preprocessor directives that preprocess2 dispatches.
+
+Deliberately left to a follow-up read, because the rosters already pin their
+locations: function bodies, codegen's register and cast tables, the
+tokenizer's keyword and punctuator lists, the driver's option-parsing chain
+(main.c:114), the predefined macro list (preprocess.c:1060), test bodies and
+the bundled headers' contents.
+
+Serves: "how does chibicc parse/preprocess/emit X", "where is <feature>
+implemented", "what C11 features are supported", "how do I build and run
+the tests", and modification tasks that need the data-structure vocabulary
+before touching any stage.
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Every root-level entry (9 .c files, chibicc.h, Makefile, README, LICENSE, include/ and test/ dirs, dotfiles) — first, cheapest orientation batch."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+descriptor = "README title + what chibicc is"
+justification = "Repository identity first: the title line and the opening claim that this is a small C compiler implementing most C11 features. Smallest possible batch that lets an agent frame any query about this tree."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 1, end = 1, render.kind = "full" },
+  { path = "README.md", start = 7, end = 9, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "include/ directory listing"
-justification = "The 7 libc-shim headers chibicc ships since it has no real libc to include from; names alone (stdarg.h, stdatomic.h, float.h, stddef.h, stdbool.h, stdalign.h, stdnoreturn.h) answer 'does chibicc provide header X' without a body read."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "include"
-entries = "all"
+descriptor = "Complete repository root listing"
+justification = "Every immediate child of the root: nine compiler sources, the shared chibicc.h, Makefile, README, LICENSE, and the include/ and test/ directories. Listing the root in one shot prevents the agent from inferring that unlisted sources don't exist, and gives it the flat-source shape of the project."
+content.kind = "fs"
+content.groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.3"
-descriptor = "CLI: FileType enum + take_arg[] argument-consuming flags"
-justification = "The FileType enum (what -x accepts) and the take_arg[] array listing exactly which flags consume a following argv[] slot — needed to read the flag roster (1.4 onward) correctly."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 42
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
+descriptor = "README lede tail: real-world programs it compiles"
+justification = "Completes the identity paragraph started in 1.1 — chibicc compiles Git, SQLite, libpng and itself. Calibrates how much C11 an agent may assume actually works."
+predecessor = "1.1"
+content.kind = "lines"
+content.spans = [{ path = "README.md", start = 10, end = 17, render.kind = "full" }]
 
 [[batches]]
 id = "1.4"
-descriptor = "CLI flags, part A: output/link-mode/preprocess switches"
-justification = "-###/-cc1/-o/-S/-fcommon/-fno-common/-c: the core output-mode and codegen-toggle flags, as their exact `strcmp` check lines."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 125
-end = 125
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 158
-end = 158
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h module section banners (the header's table of contents)"
+justification = "chibicc.h is organised as `// <file>.c` banners, each followed by the types and prototypes that file owns. Nine one-line spans name every section and pin its line, so any later 'where is the API of X' question is one read away. All nine banners are listed together — a partial list would imply missing modules."
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 35, end = 35, render.kind = "full" },
+  { path = "chibicc.h", start = 48, end = 48, render.kind = "full" },
+  { path = "chibicc.h", start = 112, end = 112, render.kind = "full" },
+  { path = "chibicc.h", start = 122, end = 122, render.kind = "full" },
+  { path = "chibicc.h", start = 298, end = 298, render.kind = "full" },
+  { path = "chibicc.h", start = 408, end = 408, render.kind = "full" },
+  { path = "chibicc.h", start = 415, end = 415, render.kind = "full" },
+  { path = "chibicc.h", start = 425, end = 425, render.kind = "full" },
+  { path = "chibicc.h", start = 449, end = 449, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "README lede"
-justification = "What chibicc is: a real, book-companion C11 compiler that self-hosts and compiles Git/SQLite/libpng — frames every other batch."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 7
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "All README H2 headings"
+justification = "The complete set of README sections with their line numbers: Status, Internals, Contributing, Design principles, About the Author, References. Cheap map of the only prose document in the tree; every later README batch lands inside one of these."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 55, end = 55, render.kind = "full" },
+  { path = "README.md", start = 93, end = 93, render.kind = "full" },
+  { path = "README.md", start = 110, end = 110, render.kind = "full" },
+  { path = "README.md", start = 128, end = 128, render.kind = "full" },
+  { path = "README.md", start = 180, end = 180, render.kind = "full" },
+  { path = "README.md", start = 188, end = 188, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "test/thirdparty/ directory listing"
-justification = "The 5 real-world smoke-test scripts (git/sqlite/libpng/tinycc/cpython) proving chibicc compiles large third-party C codebases, plus their shared harness script."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/thirdparty"
-entries = "all"
+descriptor = "README Internals: tokenize and preprocess stages"
+justification = "The author's own description of the pipeline. Two of the four stages here, the other two immediately after, so a small budget still learns that chibicc is a multi-pass compiler over a token list."
+predecessor = "1.5"
+content.kind = "lines"
+content.spans = [{ path = "README.md", start = 95, end = 103, render.kind = "full" }]
 
 [[batches]]
 id = "1.7"
-descriptor = "README: supported-feature bullet list"
-justification = "The non-obvious C11/GNU features chibicc implements (bitfields, VLA, atomics, TLS, compound literals, designated initializers, struct-by-value ABI) in one place — 'does chibicc support X' without a source dive. Complete list; a partial one would wrongly suggest the rest are unsupported."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 63
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "README Internals: parse and codegen stages"
+justification = "Completes the four-stage list — a partial stage list would be actively misleading about where work happens. Maps directly onto parse.c and codegen.c."
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [{ path = "README.md", start = 104, end = 109, render.kind = "full" }]
 
 [[batches]]
 id = "1.8"
-descriptor = "CLI flags, part B: --help/include/define/undef/-x"
-justification = "--help/-E/-I/-D/-U/-include/-x and the -l/-Wl, linker-passthrough recognizer, continuing the flag roster from 1.4."
-predecessor = "1.4"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 178
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 198
-end = 198
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 203
-end = 203
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 208
-end = 208
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 213
-end = 213
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Makefile: build flags and the chibicc target"
+justification = "How the compiler is built: C11, -fno-common, all root *.c globbed into objects, every object depending on chibicc.h. Answers 'how do I build this' with no follow-up."
+content.kind = "lines"
+content.spans = [{ path = "Makefile", start = 1, end = 14, render.kind = "full" }]
 
 [[batches]]
 id = "1.9"
-descriptor = "README: pipeline stage names"
-justification = "Names the four stages (tokenize/preprocess/parse/codegen) and the one file each lives in — the map every other batch in this NS assumes."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 97
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Makefile: test targets"
+justification = "`make test` builds every test/*.c with the freshly built chibicc, links it against test/common, runs it, then runs test/driver.sh; `test-all` adds the stage-2 self-host. The canonical command for validating a change."
+predecessor = "1.8"
+content.kind = "lines"
+content.spans = [{ path = "Makefile", start = 16, end = 24, render.kind = "full" }]
 
 [[batches]]
 id = "1.10"
-descriptor = "CLI flags, part C: -s/dependency-file/-fpic family"
-justification = "-Xlinker, -s/-M/-MF/-MP/-MT/-MD/-MQ/-MMD (dependency-file generation) and -fpic/-fPIC, continuing the flag roster from 1.8."
-predecessor = "1.8"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 218
-end = 218
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 223
-end = 223
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 228
-end = 228
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 233
-end = 233
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 238
-end = 238
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 243
-end = 243
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 251
-end = 251
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 264
-end = 264
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 269
-end = 269
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Makefile: stage-2 self-host targets and clean"
+justification = "The rest of the Makefile's targets, so the target class is closed: stage2/chibicc built from objects that chibicc compiled itself, the stage2/%.o and stage2/test/%.exe pattern rules, test-stage2 which re-runs the whole suite against the self-hosted binary, and clean. Self-hosting is chibicc's headline correctness check and it lives entirely in these lines."
+predecessor = "1.9"
+content.kind = "lines"
+content.spans = [
+  { path = "Makefile", start = 26, end = 26, render.kind = "full" },
+  { path = "Makefile", start = 28, end = 28, render.kind = "full" },
+  { path = "Makefile", start = 31, end = 31, render.kind = "full" },
+  { path = "Makefile", start = 35, end = 35, render.kind = "full" },
+  { path = "Makefile", start = 40, end = 40, render.kind = "full" },
+  { path = "Makefile", start = 46, end = 46, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "test/ directory listing"
-justification = "All 41 test/*.c regression files plus driver.sh/test.h/common — filenames are largely self-describing (vla.c, atomic.c, bitfield.c...) so this listing alone answers most 'is there a test for X' questions."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = "all"
+descriptor = "Complete include/ listing (bundled freestanding headers)"
+justification = "chibicc ships its own stdarg.h, stdatomic.h, float.h, stddef.h, stdalign.h, stdbool.h and stdnoreturn.h. Naming all seven at once tells the agent exactly which headers the compiler must provide itself versus take from the system."
+content.kind = "fs"
+content.groups = [{ parent = "include", entries = "all" }]
 
 [[batches]]
 id = "1.12"
-descriptor = "CLI flags, part D: cc1-internal/-idirafter/-static/-shared/-L"
-justification = "The -cc1-input/-cc1-output internal re-exec flags, -idirafter, -static/-shared, and -L, continuing the flag roster from 1.10."
-predecessor = "1.10"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 274
-end = 274
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 279
-end = 279
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 289
-end = 289
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 295
-end = 295
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 301
-end = 301
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 307
-end = 307
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "README Status: supported and unsupported C11 features"
+justification = "The feature list an agent needs before answering 'does chibicc support X': preprocessor, long double, bit-fields, alloca, VLAs, compound literals, TLS, atomics, designated initializers, struct-by-value per the SysV ABI — and, in the closing paragraph, that complex numbers, K&R-style prototypes and GCC inline assembly are explicitly not supported."
+predecessor = "1.5"
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 60, end = 79, render.kind = "full" },
+  { path = "README.md", start = 81, end = 81, render.kind = "ellipsis" },
+]
 
 [[batches]]
 id = "1.13"
-descriptor = "CLI flags, part E: -hashmap-test + ignored-for-compat flags"
-justification = "The undocumented -hashmap-test self-test entry point, and the full list of GCC-compat flags chibicc recognizes but silently ignores (-O*/-W*/-g*/-std=*/-ffreestanding/-fno-builtin/etc) — without this, an agent might assume passing e.g. -O2 is an error. Concludes the actionable-flag roster."
-predecessor = "1.12"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 313
-end = 313
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 319
-end = 319
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 320
-end = 320
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 322
-end = 322
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 323
-end = 323
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 324
-end = 324
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 325
-end = 325
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 326
-end = 326
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 327
-end = 327
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 328
-end = 328
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 329
-end = 329
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 330
-end = 330
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "1.14"
-descriptor = "Makefile: stage-1 build + test targets"
-justification = "CFLAGS, the chibicc build rule, and the per-test.c -> .exe compile+link+run rule (`make test`) — 'how do I build/test this'."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 1
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "1.15"
-descriptor = "Makefile: stage-2 self-hosting rule names"
-justification = "The 4 target names `make test-stage2` chains (stage2/chibicc, stage2/%.o, stage2/test/%.exe, test-stage2) that rebuild chibicc with itself and rerun test/*.c against that binary \u2014 recipe bodies elided, closing the gap 1.14's stage-1-only rules would otherwise leave unhedged."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-
-[[batches]]
-id = "1.16"
-descriptor = "Makefile: clean target"
-justification = "What `make clean` actually removes (binaries, tmp*, test artifacts, stage2/) — completes the Makefile picture from 1.14-1.15."
-predecessor = "1.15"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 45
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Complete test/ listing"
+justification = "The 41 feature-named test programs (arith.c, bitfield.c, initializer.c, vla.c, atomic.c, unicode.c, ...) plus driver.sh, common, test.h and thirdparty/. This listing doubles as a feature index: it says both where tests live and which language areas have coverage. Listed in full so no test area looks absent."
+content.kind = "fs"
+content.groups = [{ parent = "test", entries = "all" }]
 
 [[batches]]
 id = "2.1"
-descriptor = "chibicc.h: includes, MAX/MIN, opaque forward-typedefs"
-justification = "The libc surface chibicc depends on, the two macros used everywhere (MAX/MIN), and the five opaque forward-typedefs (Type, Node, Member, Relocation, Hideset) every stage passes around before their structs are defined further down this file."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 1
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "The four stage entry points declared in chibicc.h"
+justification = "One batch that makes the pipeline callable: `tokenize`/`tokenize_file`, `preprocess`, `parse` (Token* -> Obj*) and `codegen(Obj*, FILE*)`. These four prototypes plus their line numbers are the highest-value declarations in the tree; every stage-specific question starts from one of them."
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 105, end = 106, render.kind = "full" },
+  { path = "chibicc.h", start = 119, end = 119, render.kind = "full" },
+  { path = "chibicc.h", start = 295, end = 295, render.kind = "full" },
+  { path = "chibicc.h", start = 411, end = 412, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "chibicc.h: StringArray struct"
-justification = "The one shared growable-array type used for include paths, linker args, and macro varargs."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 38
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: rest of the tokenize.c public API"
+justification = "The error-reporting and token-walking helpers every other file uses — error/error_at/error_tok/warn_tok, equal/skip/consume, convert_pp_tokens, get_input_files, new_file, tokenize_string_literal. Completes the tokenize.c section whose entry points landed in 2.1, so the class of tokenizer exports is whole."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 94, end = 104, render.kind = "full" }]
 
 [[batches]]
 id = "2.3"
-descriptor = "chibicc.h: TokenKind enum"
-justification = "The 7 token kinds tokenize.c produces — the first data shape in the pipeline. Trailing per-item comments truncated (each kind's purpose is already named)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 53
-end = 59
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^/]+"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: rest of the preprocess.c API + the unreachable() macro"
+justification = "search_include_paths, init_macros, define_macro, undef_macro — the whole preprocessor surface besides `preprocess` itself, which the driver calls for -D/-U/-I handling. The unreachable() macro immediately above is the codebase's internal-error idiom."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 108, end = 109, render.kind = "full" },
+  { path = "chibicc.h", start = 115, end = 118, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "chibicc.h: File struct"
-justification = "Per-source-file bookkeeping (name/contents plus the #line-directive display_name/line_delta fields) that Token.file points at."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 62
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: parse.c's other exports + the main.c section"
+justification = "`new_cast` and `const_expr` are the two parser entry points other files reach for; the main.c section exports file_exists and the four driver globals (include_paths, opt_fpic, opt_fcommon, base_file) that stages read. Both sections are short and complete here."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 293, end = 294, render.kind = "full" },
+  { path = "chibicc.h", start = 452, end = 457, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "chibicc.h: Token struct"
-justification = "Every field a Token carries (value/location/macro-hideset/origin) — central to tokenize.c, preprocess.c and parse.c alike, since all three stages read and mutate Token chains directly. Field-level comments kept in full since several document non-obvious dual-use (e.g. hideset, origin)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 73
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: strings.c section (StringArray + strarray_push + format)"
+justification = "The growable string vector and the printf-style `format` helper are used on nearly every page of the driver and codegen; this is the entire strings.c section, type plus both functions."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 38, end = 45, render.kind = "full" }]
 
 [[batches]]
 id = "2.6"
-descriptor = "chibicc.h: Obj struct (variables & functions)"
-justification = "The single struct representing both variables and functions (is_function/is_local discriminate) — locals, globals, static-inline liveness (is_live/is_root/refs) all live here; this is what parse() returns a linked list of."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 126
-end = 162
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: type.c function API"
+justification = "The complete type-system API: is_integer/is_flonum/is_numeric/is_compatible predicates, copy_type, the constructors pointer_to/func_type/array_of/vla_of/enum_type/struct_type, and add_type (the AST type-inference pass). Anything touching types calls one of these twelve."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 394, end = 405, render.kind = "full" }]
 
 [[batches]]
 id = "2.7"
-descriptor = "chibicc.h: Relocation struct"
-justification = "How a global's initializer references another global's address — a linked list of (offset, label, addend) triples hung off Obj.rel."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 167
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: the extern singleton Types"
+justification = "All thirteen `extern Type *ty_*` globals (void, bool, the signed and unsigned integer widths, float, double, ldouble). Listing them together prevents an agent from inventing a missing singleton or assuming e.g. ty_ushort doesn't exist; type.c defines them at the top of the file."
+predecessor = "2.6"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 377, end = 392, render.kind = "full" }]
 
 [[batches]]
 id = "2.8"
-descriptor = "chibicc.h: NodeKind enum (every AST node kind)"
-justification = "All ~45 AST node kinds in one place — arithmetic/logic/control-flow/asm/atomic ops. Complete enumeration is load-bearing: showing only some would hide real node kinds. Trailing per-item comments truncated to fit budget; header comment kept."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 175
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 177
-end = 224
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^/]+"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: unicode.c API"
+justification = "encode_utf8/decode_utf8, the is_ident1/is_ident2 identifier-character predicates used by the tokenizer, and display_width used by error messages. The whole section, five functions."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 418, end = 422, render.kind = "full" }]
 
 [[batches]]
 id = "2.9"
-descriptor = "chibicc.h: Node struct"
-justification = "The AST node shape — lhs/rhs/cond/then/els/body, per-feature payload fields for switch/goto/asm/atomic/cast — every field any parse.c or codegen.c function might touch on a Node."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 228
-end = 291
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "2.10"
-descriptor = "chibicc.h: TypeKind enum"
-justification = "All type kinds including the three float widths (FLOAT/DOUBLE/LDOUBLE = x87 80-bit) and VLA as a kind distinct from ARRAY."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 301
-end = 318
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "2.11"
-descriptor = "chibicc.h: Type struct"
-justification = "The unified type representation — notably `base` doing double duty for both pointer-to and array-of (documented in the struct's own comment), plus VLA, struct/union, and function-type fields all on one struct."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 320
-end = 359
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "2.12"
-descriptor = "chibicc.h: Member struct + extern ty_* globals"
-justification = "Struct/union member shape (including bitfield fields bit_offset/bit_width) plus the full roster of singleton primitive-type globals (ty_void..ty_ldouble) that type.c defines and everyone else references instead of allocating new Types for primitives."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 362
-end = 392
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "2.13"
-descriptor = "chibicc.h: HashEntry/HashMap structs"
-justification = "The open-addressing hash-table shape the rest of the compiler builds scopes and macro tables on top of."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 428
-end = 438
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "2.14"
-descriptor = "chibicc.h: main.c extern globals"
-justification = "The driver's extern globals reached into directly from main.c's helpers: include_paths, opt_fpic, opt_fcommon, base_file."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 454
-end = 457
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "chibicc.h: hashmap.c API"
+justification = "get/put/delete in both NUL-terminated and explicit-length forms plus hashmap_test. The map is used for scopes, tags, keywords, macros and pragma-once state, so its seven-function surface is worth having verbatim."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 440, end = 446, render.kind = "full" }]
 
 [[batches]]
 id = "3.1"
-descriptor = "tokenize.c: every top-level function's location"
-justification = "One truncated first-line per function (34 total) spanning the whole file — error reporting, punctuator/keyword/string-literal readers, the main tokenize() loop, and file-reading/#line-directive helpers. Complete roster so no tokenizer routine is invisible."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 158
-end = 158
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 234
-end = 234
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 245
-end = 245
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 270
-end = 270
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 303
-end = 303
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 342
-end = 342
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 427
-end = 427
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 455
-end = 455
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 465
-end = 465
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 479
-end = 479
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 490
-end = 490
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 640
-end = 640
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 677
-end = 677
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 681
-end = 681
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 691
-end = 691
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 710
-end = 710
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 736
-end = 736
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 747
-end = 747
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 778
-end = 778
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "parse.c file-header comment: how to read the parser"
+justification = "The author's explanation of the recursive-descent convention that governs 3300 lines: each function is named after the grammar symbol it reads, and returns two things — an AST node and the remaining tokens — with the tokens handed back through a pointer argument, which is what every `Token **rest` parameter in the file is. Reading any parser function without this is guesswork; the ellipsis marks the rest of the comment."
+content.kind = "lines"
+content.spans = [
+  { path = "parse.c", start = 1, end = 12, render.kind = "full" },
+  { path = "parse.c", start = 13, end = 13, render.kind = "ellipsis" },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "preprocess.c: every top-level function's location"
-justification = "One truncated first-line per function (53 total): hideset algebra, macro object/table (find_macro/add_macro/read_macro_*), macro expansion (subst/expand_macro), #include/#include_next resolution, conditional-inclusion (#if/#ifdef/skip_cond_incl), and the six built-in macros (__FILE__/__LINE__/__COUNTER__/etc)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 151
-end = 151
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 221
-end = 221
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 246
-end = 246
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 280
-end = 280
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 320
-end = 320
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 326
-end = 326
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 335
-end = 335
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 368
-end = 368
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 388
-end = 388
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 419
-end = 419
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 420
-end = 420
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 457
-end = 457
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 465
-end = 465
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 490
-end = 490
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 499
-end = 499
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 510
-end = 510
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 518
-end = 518
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 630
-end = 630
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 685
-end = 685
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 706
-end = 706
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 716
-end = 716
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 762
-end = 762
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 795
-end = 795
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 820
-end = 820
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 839
-end = 839
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 993
-end = 993
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 998
-end = 998
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1002
-end = 1002
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1008
-end = 1008
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1014
-end = 1014
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1022
-end = 1022
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1030
-end = 1030
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1041
-end = 1041
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1046
-end = 1046
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1056
-end = 1056
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1060
-end = 1060
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1119
-end = 1119
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1134
-end = 1134
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 1198
-end = 1198
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "preprocess.c file-header comment: the hideset macro-expansion algorithm"
+justification = "Why macro expansion terminates: every token carries a hideset of macro names it was expanded from, and a macro is never re-applied to a token in its own hideset (Prosser's algorithm, linked in the comment). This is the single most non-obvious idea in the repository and it is stated in 23 lines."
+content.kind = "lines"
+content.spans = [{ path = "preprocess.c", start = 1, end = 23, render.kind = "full" }]
 
 [[batches]]
 id = "3.3"
-descriptor = "parse.c: function-location roster, part A (scopes/types/initializers)"
-justification = "First half of parse.c's ~113 top-level functions (truncated first line each): scope stack, AST-node/Obj constructors, the whole declarator/type-name grammar (declspec/declarator/func_params/array_dimensions/typename), enum & typeof specifiers, VLA size computation, and the full designated-initializer machinery."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 159
-end = 159
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 174
-end = 174
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 192
-end = 192
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 206
-end = 206
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 212
-end = 212
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 218
-end = 218
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 232
-end = 232
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 238
-end = 238
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 244
-end = 244
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 255
-end = 255
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 261
-end = 261
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 301
-end = 301
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 318
-end = 318
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 327
-end = 327
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 332
-end = 332
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 336
-end = 336
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 342
-end = 342
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 348
-end = 348
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 357
-end = 357
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 381
-end = 381
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 584
-end = 584
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 636
-end = 636
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 657
-end = 657
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 669
-end = 669
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 681
-end = 681
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 708
-end = 708
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 724
-end = 724
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 729
-end = 729
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 733
-end = 733
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 751
-end = 751
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 797
-end = 797
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 813
-end = 813
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 834
-end = 834
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 844
-end = 844
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 911
-end = 911
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 922
-end = 922
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 979
-end = 979
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 998
-end = 998
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1025
-end = 1025
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1066
-end = 1066
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1094
-end = 1094
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1134
-end = 1134
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1156
-end = 1156
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1184
-end = 1184
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1204
-end = 1204
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1230
-end = 1230
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1280
-end = 1280
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1295
-end = 1295
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1316
-end = 1316
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1331
-end = 1331
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1376
-end = 1376
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1391
-end = 1391
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1403
-end = 1403
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1486
-end = 1486
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1497
-end = 1497
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1416
-end = 1416
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1417
-end = 1417
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "Internal (non-exported) helpers of type.c, unicode.c and hashmap.c"
+justification = "chibicc.h already carries every exported function of these three modules (batches 2.6-2.9); what it cannot show is their file-local machinery. Name-only with exact lines: type.c's new_type, get_common_type and usual_arith_conv (the usual arithmetic conversions), unicode.c's in_range and char_width (the East-Asian width table), hashmap.c's fnv_hash, rehash, match, get_entry and get_or_insert_entry. That is the complete static set for these files; strings.c has none."
+content.kind = "lines"
+content.spans = [
+  { path = "type.c", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "type.c", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "type.c", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "unicode.c", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "unicode.c", start = 123, end = 123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "hashmap.c", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "hashmap.c", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "hashmap.c", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "hashmap.c", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "hashmap.c", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "parse.c: function-location roster, part B (stmts/exprs/structs/fns)"
-justification = "Second half of parse.c's functions: `asm` statement parsing, the full statement dispatcher (stmt), the entire binary/unary/postfix expression-grammar precedence chain (assign..primary), struct/union declaration + bitfield layout, function/global-variable parsing, goto-label resolution, static-inline liveness, and the top-level parse() entry point."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1517
-end = 1517
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1547
-end = 1547
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1763
-end = 1763
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1805
-end = 1805
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1818
-end = 1818
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1828
-end = 1828
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1838
-end = 1838
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1933
-end = 1933
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1949
-end = 1949
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1987
-end = 1987
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1992
-end = 1992
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2033
-end = 2033
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2145
-end = 2145
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2186
-end = 2186
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2215
-end = 2215
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2226
-end = 2226
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2237
-end = 2237
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2248
-end = 2248
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2259
-end = 2259
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2270
-end = 2270
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2292
-end = 2292
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2324
-end = 2324
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2350
-end = 2350
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2380
-end = 2380
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2417
-end = 2417
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2439
-end = 2439
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2466
-end = 2466
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2489
-end = 2489
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2544
-end = 2544
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2599
-end = 2599
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2633
-end = 2633
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2678
-end = 2678
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2717
-end = 2717
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2738
-end = 2738
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2769
-end = 2769
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2790
-end = 2790
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2807
-end = 2807
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2875
-end = 2875
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2932
-end = 2932
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 2983
-end = 2983
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3130
-end = 3130
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3146
-end = 3146
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3160
-end = 3160
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3176
-end = 3176
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3187
-end = 3187
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3199
-end = 3199
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3264
-end = 3264
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3293
-end = 3293
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3303
-end = 3303
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3329
-end = 3329
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3337
-end = 3337
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "Function-name roster: main.c (the driver)"
+justification = "All 28 functions of the driver in definition order — usage, take_arg, add_default_include_paths, parse_args, the tmpfile/cleanup helpers, run_subprocess, run_cc1, print_tokens, print_dependencies, cc1, assemble, find_libpath/find_gcc_libpath, run_linker, get_file_type, main. Turns any 'where does the driver do X' question into a single Read at a known line."
+content.kind = "lines"
+content.spans = [
+  { path = "main.c", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 350, end = 350, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 360, end = 360, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 367, end = 367, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 375, end = 375, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 380, end = 380, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 391, end = 391, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 414, end = 414, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 433, end = 433, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 448, end = 448, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 497, end = 497, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 504, end = 504, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 515, end = 515, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 570, end = 570, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 575, end = 575, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 586, end = 586, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 591, end = 591, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 599, end = 599, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 615, end = 615, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 682, end = 682, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "main.c", start = 700, end = 700, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "type.c: every top-level function's location"
-justification = "All 15 functions in type.c: numeric-type predicates, is_compatible, type constructors (pointer_to/func_type/array_of/vla_of/enum_type/struct_type), usual-arithmetic-conversion machinery, and add_type (the AST type-annotation pass)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 170
-end = 170
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "Function-name roster: tokenize.c"
+justification = "All 34 functions of the tokenizer: the error/warn family, new_token, read_ident/read_punct/is_keyword, read_escaped_char, the string- and char-literal readers including the UTF-16/UTF-32 variants, convert_pp_int/convert_pp_number/convert_pp_tokens, add_line_numbers, tokenize, read_file, canonicalize_newline, remove_backslash_newline, convert_universal_chars, tokenize_file."
+content.kind = "lines"
+content.spans = [
+  { path = "tokenize.c", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 144, end = 144, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 180, end = 180, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 234, end = 234, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 270, end = 270, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 303, end = 303, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 321, end = 321, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 342, end = 342, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 427, end = 427, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 455, end = 455, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 465, end = 465, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 479, end = 479, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 490, end = 490, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 640, end = 640, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 677, end = 677, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 681, end = 681, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 691, end = 691, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 710, end = 710, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 736, end = 736, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 747, end = 747, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tokenize.c", start = 778, end = 778, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "codegen.c: every top-level function's location"
-justification = "All 33 functions: register/stack helpers, address computation, load/store/cast/comparison, the SystemV struct-passing/return ABI (has_flonum*/push_struct/push_args/copy_struct_*), alloca, the two big dispatchers (gen_expr/gen_stmt), stack-frame layout, and .data/.text emission."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 261
-end = 261
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 286
-end = 286
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 390
-end = 390
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 419
-end = 419
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 437
-end = 437
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 441
-end = 441
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 445
-end = 445
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 456
-end = 456
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 573
-end = 573
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 610
-end = 610
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 651
-end = 651
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 663
-end = 663
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 692
-end = 692
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1188
-end = 1188
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1310
-end = 1310
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1378
-end = 1378
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1435
-end = 1435
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1447
-end = 1447
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1470
-end = 1470
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1585
-end = 1585
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "Function-name roster: codegen.c"
+justification = "All 33 functions of the x86-64 backend: println/push/pop/pushf/popf, reg_dx/reg_ax, gen_addr, load/store, cmp_zero, getTypeId, cast, the has_flonum family and push_args/push_args2/copy_ret_buffer/copy_struct_reg/copy_struct_mem that implement the SysV struct ABI, builtin_alloca, gen_expr, gen_stmt, assign_lvar_offsets, emit_data, store_fp/store_gp, emit_text, codegen."
+content.kind = "lines"
+content.spans = [
+  { path = "codegen.c", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 26, end = 26, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 186, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 229, end = 229, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 261, end = 261, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 390, end = 390, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 419, end = 419, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 437, end = 437, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 441, end = 441, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 445, end = 445, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 456, end = 456, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 504, end = 504, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 573, end = 573, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 610, end = 610, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 651, end = 651, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 663, end = 663, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 692, end = 692, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1188, end = 1188, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1310, end = 1310, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1378, end = 1378, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1435, end = 1435, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1447, end = 1447, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1470, end = 1470, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "codegen.c", start = 1585, end = 1585, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.7"
-descriptor = "strings.c + unicode.c + hashmap.c: every function's location"
-justification = "The three smallest support files in one roster: strarray_push/format (strings.c, 2 fns), UTF-8/16/32 encode/decode + identifier-char classification (unicode.c, 7 fns), and the open-addressing hash table's full API including its self-test entry point hashmap_test (hashmap.c, 12 fns)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 123
-end = 123
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 108
-end = 108
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 136
-end = 136
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+descriptor = "Function-name roster: preprocess.c, token and macro machinery"
+justification = "The first 32 functions of the preprocessor with exact lines: is_hash/skip_line/copy_token/new_eof, the hideset operations (new_hideset, hideset_union, hideset_contains, hideset_intersection, add_hideset), skip_cond_incl, quote_string, copy_line, read_const_expr/eval_const_expr, push_cond_incl, the macro table (find_macro, add_macro, read_macro_params, read_macro_definition, read_macro_arg_one, read_macro_args, find_arg), join_tokens, stringize, paste, has_varargs, subst and expand_macro — the core of the algorithm 3.2 describes."
+content.kind = "lines"
+content.spans = [
+  { path = "preprocess.c", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 164, end = 164, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 181, end = 181, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 221, end = 221, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 229, end = 229, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 241, end = 241, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 246, end = 246, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 280, end = 280, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 310, end = 310, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 320, end = 320, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 326, end = 326, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 335, end = 335, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 368, end = 368, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 388, end = 388, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 420, end = 420, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 457, end = 457, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 465, end = 465, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 490, end = 490, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 499, end = 499, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 510, end = 510, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 518, end = 518, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 630, end = 630, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.8"
-descriptor = "main.c: every top-level function's location"
-justification = "All 27 driver functions besides take_arg (already shown in full in 1.4): option parsing/validation, tmpfile/subprocess management, the -M/-MF/-MD dependency-file writer, the cc1() single-file compile pipeline, assemble/link orchestration, and main() itself."
+descriptor = "Function-name roster: preprocess.c, includes, directives and builtin macros"
+justification = "The remaining 21 functions: search_include_paths/search_include_next, read_include_filename, detect_include_guard, include_file, read_line_marker, preprocess2 (the directive dispatcher), define_macro/undef_macro, add_builtin and the five builtin handlers file_macro/line_macro/counter_macro/timestamp_macro/base_file_macro, format_date/format_time, init_macros, getStringKind, join_adjacent_string_literals and preprocess. Completes preprocess.c's function set."
+predecessor = "3.7"
+content.kind = "lines"
+content.spans = [
+  { path = "preprocess.c", start = 685, end = 685, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 706, end = 706, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 716, end = 716, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 762, end = 762, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 795, end = 795, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 820, end = 820, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 839, end = 839, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 993, end = 993, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 998, end = 998, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1002, end = 1002, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1008, end = 1008, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1014, end = 1014, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1022, end = 1022, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1030, end = 1030, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1041, end = 1041, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1046, end = 1046, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1056, end = 1056, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1060, end = 1060, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1119, end = 1119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1134, end = 1134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "preprocess.c", start = 1198, end = 1198, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 350
-end = 350
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 360
-end = 360
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 367
-end = 367
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 375
-end = 375
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 380
-end = 380
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 391
-end = 391
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 414
-end = 414
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 433
-end = 433
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 448
-end = 448
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 461
-end = 461
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 497
-end = 497
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 515
-end = 515
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 570
-end = 570
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 575
-end = 575
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 586
-end = 586
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 591
-end = 591
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 599
-end = 599
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 615
-end = 615
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 682
-end = 682
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 700
-end = 700
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+[[batches]]
+id = "3.9"
+descriptor = "parse.c forward-declaration block: the parser's function index"
+justification = "Forty-nine parser function names in one contiguous block, truncated at the parameter list: is_typename, declspec, typename, enum_specifier, typeof_specifier, type_suffix, declarator, declaration, the initializer family, compound_stmt/stmt/expr_stmt/expr, eval/eval2/eval_rval/is_const_expr/eval_double, the whole precedence chain assign, logor, conditional, logand, bitor, bitxor, bitand, equality, relational, shift, add, mul, cast, unary, postfix, funcall, primary, plus get_struct_member, struct_decl, union_decl, parse_typedef, is_function, function, global_variable. 3.1 supplies the shared `Token **rest, Token *tok` calling convention; tier 6 pins the definition lines of the ones with grammar comments."
+content.kind = "lines"
+content.spans = [
+  { path = "parse.c", start = 109, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "test/test.h: shared test-harness macro"
-justification = "The ASSERT(x, y) macro every test/*.c file uses, plus the minimal libc prototypes tests need — read this before any individual test/*.c file makes sense."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/test.h"
-start = 1
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "TokenKind enum"
+justification = "The seven token kinds with their comments (IDENT, PUNCT, KEYWORD, STR, NUM, PP_NUM, EOF). Small, complete, and the vocabulary of every tokenizer/preprocessor discussion."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 51, end = 60, render.kind = "full" }]
 
 [[batches]]
 id = "4.2"
-descriptor = "Hideset intersection: macro-hygiene fixed point"
-justification = "The one non-obvious rule in chibicc's macro expander: a token's hideset after nested macro expansion is the *intersection* of the two hidesets involved (not their union) — this single function is why macros don't infinitely re-expand themselves."
-predecessor = "3.2"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 128
-end = 137
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "File struct"
+justification = "How chibicc represents an input file — name, file_no (used for the assembler .file directive), contents, and the display_name/line_delta pair that implements #line. Explains why tokens carry both a file and a filename."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 62, end = 70, render.kind = "full" }]
 
 [[batches]]
 id = "4.3"
-descriptor = "README: the calloc-and-never-free memory policy"
-justification = "A real, load-bearing design decision that surprises readers used to malloc/free discipline: chibicc allocates with calloc and never frees, relying on process exit — relevant context before anyone 'fixes' an apparent leak."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 169
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Token struct (all fields)"
+justification = "The linked-list token with its value, location, type, string payload, source position, at_bol/has_space preprocessing flags, hideset and macro origin. Every stage before parse manipulates these fields; showing the struct whole avoids the agent assuming a field it needs is absent."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 72, end = 92, render.kind = "full" }]
 
 [[batches]]
 id = "4.4"
-descriptor = "LICENSE: MIT, copyright line"
-justification = "License type and copyright holder only — enough to answer licensing questions without spending budget on the full MIT boilerplate text."
+descriptor = "Obj struct: variables and functions"
+justification = "The parser's output type — one struct covering locals, globals and functions, with the field groups commented by role (local offset; global init_data/relocations/tentative/TLS; function params/body/locals/va_area/alloca_bottom/stack_size; static-inline liveness). Codegen reads almost all of these, so it is worth its ~330 tokens as one complete unit."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 125, end = 162, render.kind = "full" }]
 
-[batches.content]
-kind = "lines"
+[[batches]]
+id = "4.5"
+descriptor = "Relocation struct"
+justification = "How a global initialized by the address of another global is represented — the piece of static initialization that emit_data turns into `.quad label+addend`."
+predecessor = "4.4"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 164, end = 173, render.kind = "full" }]
 
-[[batches.content.spans]]
-path = "LICENSE"
-start = 1
-end = 3
+[[batches]]
+id = "4.6"
+descriptor = "NodeKind enum, first half (arithmetic through bit ops)"
+justification = "The AST node kinds are the switch labels of both gen_expr and add_type; an agent adding a construct adds a member here. First half now, remainder immediately after — the trailing ellipsis marks that the enum continues."
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 175, end = 200, render.kind = "full" },
+  { path = "chibicc.h", start = 201, end = 201, render.kind = "ellipsis" },
+]
 
-[batches.content.spans.render]
-kind = "full"
+[[batches]]
+id = "4.7"
+descriptor = "NodeKind enum, second half (control flow, calls, casts, atomics)"
+justification = "Replaces 4.6's ellipsis with the rest of the enum: logical ops, return/if/for/do/switch/case/block, goto and labels-as-values, funcall, statement expressions, VLA pointers, ND_MEMZERO, ND_ASM, ND_CAS/ND_EXCH. The enum is only useful complete."
+predecessor = "4.6"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 201, end = 225, render.kind = "full" }]
 
+[[batches]]
+id = "4.8"
+descriptor = "Node struct, first half (operands, control flow, calls)"
+justification = "The single fat AST node the README's design-principles section defends: kind/next/ty/tok, lhs/rhs, the if/for members, break/continue labels, block body, struct member, and the function-call group. Ellipsis marks the continuation."
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 227, end = 259, render.kind = "full" },
+  { path = "chibicc.h", start = 260, end = 260, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "Node struct, second half (goto/switch/case, asm, atomics, literals)"
+justification = "The remaining Node fields: label/unique_label/goto_next, case_next/default_case, case begin/end range, asm_str, the compare-and-swap and atomic op= members, var, and the numeric literal val/fval. Completes the struct so no field looks missing."
+predecessor = "4.8"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 260, end = 291, render.kind = "full" }]
+
+[[batches]]
+id = "4.10"
+descriptor = "TypeKind enum"
+justification = "All sixteen type kinds, including the ones that surprise readers: TY_LDOUBLE (x87 80-bit), TY_VLA distinct from TY_ARRAY, TY_ENUM and TY_FUNC. Complete and cheap."
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 301, end = 318, render.kind = "full" }]
+
+[[batches]]
+id = "4.11"
+descriptor = "Type struct, first half + the pointer/array duality comment"
+justification = "size/align/is_unsigned/is_atomic/origin plus the long comment explaining that `base` deliberately represents both pointer-to and array-of, and that most code tests `base` rather than `kind`. That comment prevents a whole class of wrong edits. Ellipsis marks the rest of the struct."
+content.kind = "lines"
+content.spans = [
+  { path = "chibicc.h", start = 320, end = 341, render.kind = "full" },
+  { path = "chibicc.h", start = 342, end = 342, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "Type struct, second half (array, VLA, struct, function members)"
+justification = "array_len, the VLA vla_len/vla_size pair, struct members/is_flexible/is_packed, and the function-type group return_ty/params/is_variadic/next. Completes the struct behind 4.11's ellipsis."
+predecessor = "4.11"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 342, end = 359, render.kind = "full" }]
+
+[[batches]]
+id = "4.13"
+descriptor = "Member struct (struct/union members incl. bitfields)"
+justification = "next/ty/tok/name/idx/align/offset plus is_bitfield/bit_offset/bit_width — everything a bitfield or offsetof question needs, in one complete struct."
+predecessor = "4.12"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 361, end = 375, render.kind = "full" }]
+
+[[batches]]
+id = "4.14"
+descriptor = "HashEntry / HashMap structs"
+justification = "The open-addressing map's data layout (key, keylen, val; buckets, capacity, used). Both structs together with the API from 2.9 make hashmap.c usable without opening it."
+predecessor = "2.9"
+content.kind = "lines"
+content.spans = [{ path = "chibicc.h", start = 428, end = 438, render.kind = "full" }]
+
+[[batches]]
+id = "5.1"
+descriptor = "main(): driver entry and the -cc1 self-re-exec split"
+justification = "The top-level control flow: atexit(cleanup), init_macros, parse_args, and then the crucial branch — when invoked with -cc1 the process adds the default include paths and runs cc1() itself, otherwise it is the driver that will re-exec chibicc per input file. Explains why the same binary appears twice in every compilation. The ellipsis marks the per-input-file loop that follows."
+predecessor = "3.4"
+content.kind = "lines"
+content.spans = [
+  { path = "main.c", start = 700, end = 709, render.kind = "full" },
+  { path = "main.c", start = 710, end = 710, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "cc1(): the compile pipeline in one function"
+justification = "The stage sequence made concrete: must_tokenize_file(base_file), preprocess(tok), the -M/-MD dependency short-circuit, the -E print_tokens short-circuit, parse(tok) into Obj *prog, and codegen into an open_memstream buffer. The single best answer to 'where do the stages connect'; the leading ellipsis stands for the -include handling at the head of the function and the trailing one for writing the buffer out."
+predecessor = "5.1"
+content.kind = "lines"
+content.spans = [
+  { path = "main.c", start = 515, end = 515, render.kind = "full" },
+  { path = "main.c", start = 516, end = 516, render.kind = "ellipsis" },
+  { path = "main.c", start = 535, end = 562, render.kind = "full" },
+  { path = "main.c", start = 563, end = 563, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "parse(): the top-level program loop"
+justification = "`// program = (typedef | function-definition | global-variable)*` and the loop that implements it: declspec for the base type, then dispatch to parse_typedef / function / global_variable, followed by the static-inline liveness marking (mark_live from is_root) and scan_globals removing redundant tentative definitions. Anchors every parser question at the root of the grammar."
+content.kind = "lines"
+content.spans = [
+  { path = "parse.c", start = 3336, end = 3359, render.kind = "full" },
+  { path = "parse.c", start = 3360, end = 3360, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "6.1"
+descriptor = "The statement grammar (comment above stmt())"
+justification = "chibicc records its grammar in comments above each parsing function; this one enumerates every statement form the compiler accepts — return, if/else, switch, case (including GNU case ranges), default, for, while, do, asm, goto with labels-as-values, break, continue, labeled statements, blocks and expression statements — and sits directly above stmt() at parse.c:1547. One batch answers 'is X supported' and 'where is it parsed' together."
+content.kind = "lines"
+content.spans = [{ path = "parse.c", start = 1532, end = 1546, render.kind = "full" }]
+
+[[batches]]
+id = "6.2"
+descriptor = "The expression precedence chain, as grammar comments"
+justification = "The BNF comments above expr, conditional, logor, logand, bitor, bitxor, bitand, equality, relational, shift, add, mul, cast and unary — each one line or two, each pinned at the line just above its function. Together they give the complete operator precedence ladder of chibicc's parser plus the exact location of every rung."
+predecessor = "3.9"
+content.kind = "lines"
+content.spans = [
+  { path = "parse.c", start = 1817, end = 1817, render.kind = "full" },
+  { path = "parse.c", start = 2185, end = 2185, render.kind = "full" },
+  { path = "parse.c", start = 2214, end = 2214, render.kind = "full" },
+  { path = "parse.c", start = 2225, end = 2225, render.kind = "full" },
+  { path = "parse.c", start = 2236, end = 2236, render.kind = "full" },
+  { path = "parse.c", start = 2247, end = 2247, render.kind = "full" },
+  { path = "parse.c", start = 2258, end = 2258, render.kind = "full" },
+  { path = "parse.c", start = 2269, end = 2269, render.kind = "full" },
+  { path = "parse.c", start = 2291, end = 2291, render.kind = "full" },
+  { path = "parse.c", start = 2323, end = 2323, render.kind = "full" },
+  { path = "parse.c", start = 2416, end = 2416, render.kind = "full" },
+  { path = "parse.c", start = 2438, end = 2438, render.kind = "full" },
+  { path = "parse.c", start = 2465, end = 2465, render.kind = "full" },
+  { path = "parse.c", start = 2485, end = 2488, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Every preprocessor directive chibicc handles"
+justification = "The dispatch chain inside preprocess2, truncated to the directive names: include, include_next, define, undef, if, ifdef, ifndef, elif, else, endif, line, pragma once, pragma, error. Complete — a directive absent from these lines is genuinely unimplemented — and each name carries the line where its handling begins."
+content.kind = "lines"
+content.spans = [
+  { path = "preprocess.c", start = 860, end = 860, render.kind = "full" },
+  { path = "preprocess.c", start = 877, end = 877, render.kind = "full" },
+  { path = "preprocess.c", start = 885, end = 885, render.kind = "full" },
+  { path = "preprocess.c", start = 890, end = 890, render.kind = "full" },
+  { path = "preprocess.c", start = 899, end = 899, render.kind = "full" },
+  { path = "preprocess.c", start = 907, end = 907, render.kind = "full" },
+  { path = "preprocess.c", start = 916, end = 916, render.kind = "full" },
+  { path = "preprocess.c", start = 925, end = 925, render.kind = "full" },
+  { path = "preprocess.c", start = 937, end = 937, render.kind = "full" },
+  { path = "preprocess.c", start = 948, end = 948, render.kind = "full" },
+  { path = "preprocess.c", start = 956, end = 956, render.kind = "full" },
+  { path = "preprocess.c", start = 966, end = 966, render.kind = "full" },
+  { path = "preprocess.c", start = 972, end = 972, render.kind = "full" },
+  { path = "preprocess.c", start = 979, end = 979, render.kind = "full" },
+]

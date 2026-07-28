@@ -1,0 +1,553 @@
+fixture = "svgo"
+revision_pin = "581fe687"
+summary = """
+svgo is a Node.js library + CLI (`svgo`) that optimizes SVG files by running an
+ordered pipeline of 53 small AST-transform plugins (preset-default, or a
+custom list) over a parsed XML tree (`XastRoot`), then re-stringifying it.
+Core engine: lib/svgo.js (optimize loop, plugin resolution) -> lib/parser.js
+(SAX-based XML->XAST) -> lib/svgo/plugins.js (visitor dispatch) -> plugins/*.js
+(one file per optimization, each exporting name/description/fn) ->
+lib/stringifier.js (XAST->string). lib/xast.js + lib/style.js layer CSS
+selector matching and cascade computation on top of the AST for plugins that
+need it (cleanupIds, removeAttributesBySelector, inlineStyles, ...). Plugins
+are configured via svgo.config.mjs (README) or CLI flags (bin/svgo.js ->
+lib/svgo/coa.js). Query distribution this NS optimizes for: "what does plugin
+X do" / "where do I configure Y" (config + plugin roster), "how does the
+pipeline actually run" (engine tier), "how do I add a test for a plugin"
+(test/plugins/_index.test.js convention), "why did v4 break my config"
+(migration guide), plus routine build/lint/test/CI entry points.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = "First orientation: every top-level entry (configs, lib/plugins/docs/test source dirs, tooling) so the agent never has to guess what exists at the root."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".", entries = "all" } ]
+
+[[batches]]
+id = "1.2"
+descriptor = "package.json — identity fields"
+justification = "name/version/description/license/homepage: the cheapest possible 'what is this' answer, useful for almost any session opener."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 3, end = 6, render = { kind = "full" } },
+  { path = "package.json", start = 14, end = 14, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "README title + tagline"
+justification = "The one-line tagline ('SVGO, short for SVG Optimizer...') — the cheapest possible restated identity, split from the rationale paragraph below to keep this early batch small."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 5, end = 7, render = { kind = "full" } } ]
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json — bin/types/exports"
+justification = "Public entry-point surface: CLI bin path and the two import conditions ('svgo' vs 'svgo/browser') — answers 'how would a consumer import this'."
+[batches.content]
+kind = "lines"
+spans = [ { path = "package.json", start = 53, end = 65, render = { kind = "full" } } ]
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json — key scripts"
+justification = "The build/lint/test/regression-test entry points — operational coverage for 'how do I build/test this' without opening a separate doc."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 78, end = 78, render = { kind = "full" } },
+  { path = "package.json", start = 81, end = 81, render = { kind = "full" } },
+  { path = "package.json", start = 83, end = 83, render = { kind = "full" } },
+  { path = "package.json", start = 86, end = 86, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json — runtime dependencies"
+justification = "Names the actual parsing/CSS stack (sax, css-tree, css-select, css-what, csso, commander, picocolors) that every later lib/ batch refers to by import; cheap and prevents mystery imports."
+[batches.content]
+kind = "lines"
+spans = [ { path = "package.json", start = 104, end = 112, render = { kind = "full" } } ]
+
+[[batches]]
+id = "1.7"
+descriptor = "README — rationale ('Why?')"
+justification = "The only place that states svgo's actual value proposition (redundant editor metadata removal) in plain prose; grounds every later plugin-behavior question."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 9, end = 11, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.1"
+descriptor = "README — CLI usage"
+justification = "The most common 'how do I run this' answer: the two core CLI invocation shapes (single files, recursive folder)."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 28, end = 46, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.2"
+descriptor = "README — svgo.config.mjs shape (plugins array + custom params)"
+justification = "The canonical config-file example: the plugins array, enabling a builtin by name, and enabling one with a params object — the most likely thing an agent needs verbatim when asked to change SVGO's behavior."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 54, end = 77, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.3"
+descriptor = "README — optimize() API usage"
+justification = "Programmatic (non-CLI) usage: the exact call shape for optimize(svgString, config) that any 'use svgo as a library' task needs."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 134, end = 151, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.4"
+descriptor = "lib/svgo/coa.js — function location roster"
+justification = "Every top-level function name in the CLI implementation (flag wiring, folder recursion, file I/O, error handling, --show-plugins) as a cheap hedge against assuming only the pieces detailed below exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/svgo/coa.js", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 287, end = 287, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 305, end = 305, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 333, end = 333, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 377, end = 377, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 394, end = 394, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 441, end = 441, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 459, end = 459, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 469, end = 469, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 492, end = 492, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 512, end = 512, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/coa.js", start = 527, end = 527, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "lib/svgo/coa.js — flag definitions (makeProgram)"
+justification = "The core input/output/precision/config CLI flags (-i/-s/-f/-o/-p/--config) with their exact help text — answers 'what flags does svgo support' precisely instead of vaguely. The trailing ellipsis marks where the option chain continues (--datauri/--multipass/--pretty/--indent/--eol/--final-newline/--recursive/--exclude/-q/--show-plugins/--no-color, then .action(action)) at lib/svgo/coa.js:54-85 — a location, not a name, since these flags aren't otherwise rostered."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/svgo/coa.js", start = 30, end = 53, render = { kind = "full" } },
+  { path = "lib/svgo/coa.js", start = 54, end = 54, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "3.1"
+descriptor = "lib/ directory listing"
+justification = "Names every core-engine file (svgo.js, svgo-node.js, parser.js, stringifier.js, path.js, style.js, xast.js, types.ts, builtin.js, version.js, svgo/, util/) plus their colocated *.test.js siblings, before any file's content is shown."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "lib", entries = "all" } ]
+
+[[batches]]
+id = "3.2"
+descriptor = "lib/svgo.js — resolvePluginConfig()"
+justification = "How a 'preset-default' string or {name,params} object in config becomes a runnable {name,params,fn} plugin — the mechanism behind every config example shown above."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/svgo.js", start = 35, end = 70, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.3"
+descriptor = "lib/svgo.js — optimize() core loop"
+justification = "The actual algorithm, shown whole: multipass loop, per-pass parseSvg->invokePlugins->stringifySvg, size-convergence early-exit, the trailing datauri-encoding branch, and the {data} return shape. This is the one function every other engine batch is in service of."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/svgo.js", start = 74, end = 134, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.4"
+descriptor = "lib/svgo.js — public re-exports"
+justification = "The exact named exports available from the 'svgo' package root (VERSION, builtinPlugins, mapNodesToParents, querySelector(All), _collections) — what 'import { X } from svgo' can legally reference."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/svgo.js", start = 136, end = 143, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.5"
+descriptor = "lib/ — remaining core-file function location roster"
+justification = "One signature line each for the rest of the engine: config loading (svgo-node.js loadConfig/optimize), the plugin registry (builtin.js builtinPlugins — the array resolvePluginConfig's getPlugin() in 3.2 looks names up against), plugin dispatch (plugins.js invokePlugins/createPreset), AST traversal (visit.js, map-nodes-to-parents.js), CSS-selector querying (xast.js x4, css-select-adapter.js createAdapter), XML parsing entry (parser.js SvgoParserError class + parseSvg fn), stringify entry (stringifier.js stringifySvg), path/style entry points (path.js x2, style.js x4: compareSpecificity/collectStylesheet/computeStyle/includesAttrSelector), and the shared svgo/tools.js utility module (encodeSVGDatauri/decodeSVGDatauri/cleanupOutData/removeLeadingZero/hasScripts/includesUrlReference/includesCssVarReference/findReferences/toFixed — imported by lib/svgo.js, lib/path.js, lib/svgo/coa.js, and a dozen plugins). A cheap, exact-line hedge covering the files whose full bodies aren't otherwise shown, so none of them look absent."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/svgo-node.js", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo-node.js", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/builtin.js", start = 62, end = 62, render = { kind = "full" } },
+  { path = "lib/svgo/plugins.js", start = 14, end = 14, render = { kind = "full" } },
+  { path = "lib/svgo/plugins.js", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/util/visit.js", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/util/map-nodes-to-parents.js", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/xast.js", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/xast.js", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/xast.js", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/xast.js", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/css-select-adapter.js", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/parser.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "lib/parser.js", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/stringifier.js", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/path.js", start = 141, end = 141, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/path.js", start = 302, end = 302, render = { kind = "full" } },
+  { path = "lib/style.js", start = 195, end = 195, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/style.js", start = 211, end = 211, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/style.js", start = 253, end = 253, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/style.js", start = 286, end = 286, render = { kind = "full" } },
+  { path = "lib/svgo/tools.js", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 163, end = 163, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 206, end = 206, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 215, end = 215, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/svgo/tools.js", start = 250, end = 250, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "lib/types.ts — XastElement + XastChild/Root/Parent/Node unions"
+justification = "XastElement's exact shape (name/attributes/children) plus the XastChild union naming every other node kind (doctype/instruction/comment/cdata/text) that every plugin's visitor pattern matches on. This is the vocabulary every other lib/ and plugins/ batch assumes; the individual leaf-kind shapes (XastDoctype etc., all trivial {type,value}-style records) are one grep away at lib/types.ts:161-189."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/types.ts", start = 190, end = 212, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.7"
+descriptor = "lib/types.ts — PluginInfo + Plugin contract"
+justification = "The exact function signature every plugins/*.js `fn` export must satisfy: (root, params, info) => Visitor | null | void, plus what `info` carries (path, multipassCount). The one type every custom-plugin-authoring question needs."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/types.ts", start = 263, end = 272, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.8"
+descriptor = "lib/types.ts — Config/Output/StringifyOptions/DataUri"
+justification = "The public optimize(input, config) parameter and return shape, and the js2svg rendering knobs an agent is actually likely to be asked to change (indent, pretty, useShortTags, eol, finalNewline) — the type-level source of truth behind the CLI --pretty/--indent/--eol flags. The ellipsis at line 215 marks the raw XML-delimiter-override fields (doctypeStart/tagOpenEnd/etc., lib/types.ts:215-232) omitted between the type header and the fields shown."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/types.ts", start = 214, end = 214, render = { kind = "full" } },
+  { path = "lib/types.ts", start = 215, end = 215, render = { kind = "ellipsis" } },
+  { path = "lib/types.ts", start = 233, end = 241, render = { kind = "full" } },
+  { path = "lib/types.ts", start = 334, end = 359, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "lib/types.ts — required- vs optional-params plugins"
+justification = "BuiltinsWithRequiredParams names the 5 plugins that error out with no params (addAttributesToSVGElement, addClassesToSVGElement, removeAttributesBySelector, removeAttrs, removeElementsByAttr) — every other registered plugin takes optional params. A distinction not stated anywhere else."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/types.ts", start = 100, end = 106, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.10"
+descriptor = "lib/types.ts — PathDataCommand + PathDataItem"
+justification = "The full 20-letter SVG path-command union that lib/path.js and plugins/convertPathData.js operate on — small, and answers 'which path commands does svgo understand' exhaustively."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/types.ts", start = 307, end = 332, render = { kind = "full" } } ]
+
+[[batches]]
+id = "4.1"
+descriptor = "plugins/ directory listing"
+justification = "Every plugin file plus the four shared internal helpers (_collections.js, _path.js, _transforms.js, applyTransforms.js) and preset-default.js — the full roster of what can be referenced by name in a config's plugins array, before any single plugin's content is shown."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "plugins", entries = "all" } ]
+
+[[batches]]
+id = "4.2"
+descriptor = "Plugin name + description roster (1/2: addAttributesToSVGElement..removeDesc)"
+justification = "The single highest-value semantic batch for this fixture: every registered plugin's exact name string (what to write in a config's plugins array) paired with its one-line description, sourced directly from each file's own export const name/description. Answers 'what does plugin X do' and 'what's the plugin called for Y' without opening 53 files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "plugins/addAttributesToSVGElement.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "plugins/addAttributesToSVGElement.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/addClassesToSVGElement.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "plugins/addClassesToSVGElement.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/cleanupAttrs.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/cleanupAttrs.js", start = 9, end = 10, render = { kind = "full" } },
+  { path = "plugins/cleanupEnableBackground.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/cleanupEnableBackground.js", start = 5, end = 6, render = { kind = "full" } },
+  { path = "plugins/cleanupIds.js", start = 13, end = 13, render = { kind = "full" } },
+  { path = "plugins/cleanupIds.js", start = 14, end = 14, render = { kind = "full" } },
+  { path = "plugins/cleanupListOfValues.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "plugins/cleanupListOfValues.js", start = 12, end = 12, render = { kind = "full" } },
+  { path = "plugins/cleanupNumericValues.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "plugins/cleanupNumericValues.js", start = 12, end = 13, render = { kind = "full" } },
+  { path = "plugins/collapseGroups.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/collapseGroups.js", start = 5, end = 5, render = { kind = "full" } },
+  { path = "plugins/convertColors.js", start = 17, end = 17, render = { kind = "full" } },
+  { path = "plugins/convertColors.js", start = 18, end = 19, render = { kind = "full" } },
+  { path = "plugins/convertEllipseToCircle.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/convertEllipseToCircle.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "plugins/convertOneStopGradients.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/convertOneStopGradients.js", start = 10, end = 11, render = { kind = "full" } },
+  { path = "plugins/convertPathData.js", start = 42, end = 42, render = { kind = "full" } },
+  { path = "plugins/convertPathData.js", start = 43, end = 44, render = { kind = "full" } },
+  { path = "plugins/convertShapeToPath.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "plugins/convertShapeToPath.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "plugins/convertStyleToAttrs.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/convertStyleToAttrs.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/convertTransform.js", start = 43, end = 43, render = { kind = "full" } },
+  { path = "plugins/convertTransform.js", start = 44, end = 45, render = { kind = "full" } },
+  { path = "plugins/inlineStyles.js", start = 21, end = 21, render = { kind = "full" } },
+  { path = "plugins/inlineStyles.js", start = 22, end = 22, render = { kind = "full" } },
+  { path = "plugins/mergePaths.js", start = 12, end = 12, render = { kind = "full" } },
+  { path = "plugins/mergePaths.js", start = 13, end = 13, render = { kind = "full" } },
+  { path = "plugins/mergeStyles.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/mergeStyles.js", start = 5, end = 5, render = { kind = "full" } },
+  { path = "plugins/minifyStyles.js", start = 26, end = 26, render = { kind = "full" } },
+  { path = "plugins/minifyStyles.js", start = 27, end = 27, render = { kind = "full" } },
+  { path = "plugins/moveElemsAttrsToGroup.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/moveElemsAttrsToGroup.js", start = 5, end = 6, render = { kind = "full" } },
+  { path = "plugins/moveGroupAttrsToElems.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/moveGroupAttrsToElems.js", start = 5, end = 6, render = { kind = "full" } },
+  { path = "plugins/prefixIds.js", start = 12, end = 12, render = { kind = "full" } },
+  { path = "plugins/prefixIds.js", start = 13, end = 13, render = { kind = "full" } },
+  { path = "plugins/removeAttributesBySelector.js", start = 21, end = 21, render = { kind = "full" } },
+  { path = "plugins/removeAttributesBySelector.js", start = 22, end = 23, render = { kind = "full" } },
+  { path = "plugins/removeAttrs.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/removeAttrs.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/removeComments.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/removeComments.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/removeDeprecatedAttrs.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "plugins/removeDeprecatedAttrs.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "plugins/removeDesc.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/removeDesc.js", start = 9, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Plugin name + description roster (2/2: removeDimensions..sortDefsChildren)"
+justification = "The single highest-value semantic batch for this fixture: every registered plugin's exact name string (what to write in a config's plugins array) paired with its one-line description, sourced directly from each file's own export const name/description. Answers 'what does plugin X do' and 'what's the plugin called for Y' without opening 53 files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "plugins/removeDimensions.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/removeDimensions.js", start = 2, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeDoctype.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeDoctype.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeEditorsNSData.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/removeEditorsNSData.js", start = 10, end = 11, render = { kind = "full" } },
+  { path = "plugins/removeElementsByAttr.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "plugins/removeElementsByAttr.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "plugins/removeEmptyAttrs.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeEmptyAttrs.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeEmptyContainers.js", start = 6, end = 6, render = { kind = "full" } },
+  { path = "plugins/removeEmptyContainers.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "plugins/removeEmptyText.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "plugins/removeEmptyText.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "plugins/removeHiddenElems.js", start = 29, end = 29, render = { kind = "full" } },
+  { path = "plugins/removeHiddenElems.js", start = 30, end = 31, render = { kind = "full" } },
+  { path = "plugins/removeMetadata.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeMetadata.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeNonInheritableGroupAttrs.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "plugins/removeNonInheritableGroupAttrs.js", start = 8, end = 9, render = { kind = "full" } },
+  { path = "plugins/removeOffCanvasPaths.js", start = 6, end = 6, render = { kind = "full" } },
+  { path = "plugins/removeOffCanvasPaths.js", start = 7, end = 8, render = { kind = "full" } },
+  { path = "plugins/removeRasterImages.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeRasterImages.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeScripts.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeScripts.js", start = 5, end = 5, render = { kind = "full" } },
+  { path = "plugins/removeStyleElement.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeStyleElement.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeTitle.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeTitle.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeUnknownsAndDefaults.js", start = 31, end = 31, render = { kind = "full" } },
+  { path = "plugins/removeUnknownsAndDefaults.js", start = 32, end = 33, render = { kind = "full" } },
+  { path = "plugins/removeUnusedNS.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/removeUnusedNS.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "plugins/removeUselessDefs.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/removeUselessDefs.js", start = 5, end = 5, render = { kind = "full" } },
+  { path = "plugins/removeUselessStrokeAndFill.js", start = 14, end = 14, render = { kind = "full" } },
+  { path = "plugins/removeUselessStrokeAndFill.js", start = 15, end = 15, render = { kind = "full" } },
+  { path = "plugins/removeViewBox.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/removeViewBox.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "plugins/removeXlink.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "plugins/removeXlink.js", start = 11, end = 12, render = { kind = "full" } },
+  { path = "plugins/removeXMLNS.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/removeXMLNS.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "plugins/removeXMLProcInst.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "plugins/removeXMLProcInst.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/reusePaths.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "plugins/reusePaths.js", start = 5, end = 8, render = { kind = "full" } },
+  { path = "plugins/sortAttrs.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "plugins/sortAttrs.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/sortDefsChildren.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "plugins/sortDefsChildren.js", start = 2, end = 2, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "plugins/preset-default.js — the default pipeline, in order"
+justification = "The exact ordered array of 33 plugins that createPreset wires up as 'preset-default' — the answer to 'what runs by default and in what order' that README/docs both just link to instead of stating."
+[batches.content]
+kind = "lines"
+spans = [ { path = "plugins/preset-default.js", start = 37, end = 77, render = { kind = "full" } } ]
+
+[[batches]]
+id = "4.5"
+descriptor = "plugins/_collections.js — export location roster"
+justification = "Names all 15 exported spec-reference tables (elemsGroups, textElems, pathElems, attrsGroups, attrsGroupsDefaults, attrsGroupsDeprecated, elems, editorNamespaces, referencesProps, inheritableAttrs, presentationNonInheritableGroupAttrs, colorsNames, colorsShortNames, colorsProps, pseudoClasses) in this 2455-line SVG-spec data file, so an agent knows exactly where to grep instead of assuming only a couple of tables exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "plugins/_collections.js", start = 8, end = 8, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 112, end = 112, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 117, end = 117, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 123, end = 123, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 321, end = 321, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 389, end = 389, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 419, end = 419, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2080, end = 2080, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2111, end = 2111, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2128, end = 2128, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2179, end = 2179, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2194, end = 2194, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2348, end = 2348, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2387, end = 2387, render = { kind = "full" } },
+  { path = "plugins/_collections.js", start = 2400, end = 2400, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "plugins/convertPathData.js — function location roster"
+justification = "svgo's flagship optimization is a 1358-line file; names all 19 internal functions (fn, convertToRelative, filters, convertToMixed, isConvex, getIntersection, strongRound, round, isCurveStraightLine, calculateSagitta, makeLonghand, getDistance, reflectPoint, getCubicBezierPoint, findCircle, isArc, isArcPrev, findArcAngle, data2Path — the last being the final path-data-to-string serializer) so its considerable internal structure isn't invisible even though budget doesn't allow the geometry bodies themselves."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "plugins/convertPathData.js", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 229, end = 229, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 396, end = 396, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 952, end = 952, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1037, end = 1037, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1064, end = 1064, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1099, end = 1099, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1120, end = 1120, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1134, end = 1134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1162, end = 1162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1184, end = 1184, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1207, end = 1207, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1218, end = 1218, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1231, end = 1231, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1249, end = 1249, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1295, end = 1295, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1318, end = 1318, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1332, end = 1332, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "plugins/convertPathData.js", start = 1350, end = 1350, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "plugins/removeComments.js — full plugin, as a worked example"
+justification = "The simplest complete plugin body (54 lines): name/description exports, a params typedef, default preserve-patterns, and a comment.enter visitor calling detachNodeFromParent. Grounds the visitor-pattern shape in real code rather than a synthetic doc example."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [ { path = "plugins/removeComments.js", start = 1, end = 54, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.1"
+descriptor = "docs/ directory listing"
+justification = "Names the docs site's structure (introduction, usage/, preset-default, plugins/, plugins-api, migrations/) before pulling any single page's body."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "docs", entries = "all" } ]
+
+[[batches]]
+id = "5.2"
+descriptor = "docs/05-plugins-api.mdx — custom plugin shape"
+justification = "The canonical {name, description, fn} custom-plugin shape and how to reference it from svgo.config.js — the doc-side counterpart to the source-grounded removeComments.js batch, for someone authoring a new plugin rather than reading an existing one."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/05-plugins-api.mdx", start = 9, end = 27, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.3"
+descriptor = "docs/06-migrations/01-migration-from-v3-to-v4.mdx — default-preset changes"
+justification = "svgo is at v4.0.1 (recent major); this is the single place stating that removeViewBox and removeTitle left the default preset in v4 — directly answers 'why did upgrading break my config'."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/06-migrations/01-migration-from-v3-to-v4.mdx", start = 11, end = 18, render = { kind = "full" } } ]
+
+[[batches]]
+id = "6.2"
+descriptor = ".github/workflows/ci.yml — trigger + lint job"
+justification = "The PR trigger and the `yarn lint` CI job — confirms CI runs on pull_request against main and gates on the same lint script package.json defines. The three trailing job-name lines name the rest of the `jobs:` map (types/spellcheck mirror lint's checkout/corepack/setup-node/install steps but run `yarn test:types`/`yarn spellcheck`; test additionally installs Playwright and runs across a 5-Node x 2-OS matrix) so their existence isn't only inferable from this one job."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/ci.yml", start = 1, end = 22, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 23, end = 23, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 32, end = 32, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 41, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = ".github/ directory listing"
+justification = "dependabot.yml plus the workflows/ and ISSUE_TEMPLATE/ subdirectories, so their existence isn't only inferable from ci.yml being shown."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".github", entries = "all" } ]
+
+[[batches]]
+id = "6.4"
+descriptor = ".github/workflows/ directory listing"
+justification = "Names the other 4 workflows (test-report, regression, publish, codeql) that exist alongside ci.yml but aren't detailed in this NS — a cheap hedge so their existence is discoverable in one grep."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".github/workflows", entries = "all" } ]
+
+[[batches]]
+id = "6.5"
+descriptor = "CONTRIBUTING.md — regression-test host-dependence caveat"
+justification = "The CI-quirk warning that regression test results are host-dependent and must cater to CI, not the dev machine — a footgun an agent asked to 'fix a failing regression test' needs to know about up front."
+[batches.content]
+kind = "lines"
+spans = [ { path = "CONTRIBUTING.md", start = 60, end = 67, render = { kind = "full" } } ]
+
+[[batches]]
+id = "6.6"
+descriptor = "scripts/sync-version.js"
+justification = "The core of the script `yarn build` runs first: copies package.json's version into lib/version.js's VERSION export — explains why lib/version.js looks hand-written but shouldn't be hand-edited."
+[batches.content]
+kind = "lines"
+spans = [ { path = "scripts/sync-version.js", start = 4, end = 12, render = { kind = "full" } } ]
+
+[[batches]]
+id = "7.1"
+descriptor = "test/ directory listing"
+justification = "Names every test area (plugins/, cli/, coa/, svgo/, fixtures/, regression/, svg2js/, plus the standalone svgo.cjs/browser.js bundle-smoke-test scripts) before any single test file's content is shown."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test", entries = "all" } ]
+
+[[batches]]
+id = "7.2"
+descriptor = "test/plugins/_index.test.js — per-plugin fixture convention"
+justification = "The generic test runner that discovers every `<pluginName>.<NN>.svg.txt` file in this directory and runs it as `original @@@ expected @@@ params?` (with idempotence/multipass checking, and an optional leading `description ===` section). This is the exact, otherwise-undocumented convention for 'how do I add a test case for plugin X' — the single highest-leverage testing batch in the fixture."
+[batches.content]
+kind = "lines"
+spans = [ { path = "test/plugins/_index.test.js", start = 1, end = 54, render = { kind = "full" } } ]
+
+[[batches]]
+id = "7.3"
+descriptor = "test/plugins/removeComments.01.svg.txt — a worked fixture example"
+justification = "One concrete `<original> @@@ <expected>` fixture file, grounding the convention described in _index.test.js in real bytes rather than leaving it abstract."
+[batches.content]
+kind = "lines"
+spans = [ { path = "test/plugins/removeComments.01.svg.txt", start = 1, end = 12, render = { kind = "full" } } ]
+

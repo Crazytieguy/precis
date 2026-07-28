@@ -1,0 +1,520 @@
+fixture = "neco"
+revision_pin = "9e8e19e4"
+summary = """
+Neco is a small single-file C library (neco.c/neco.h) implementing stackful \
+coroutines for concurrent I/O in C, with channels/generators/mutexes/\
+waitgroups/condvars, deadline+cancelation semantics on every blocking op, and \
+POSIX-style networking wrappers. It embeds three vendored dependencies (sco.c \
+scheduler, aat.h AA-tree, worker.c thread pool) via a BEGIN/END amalgamation \
+script (deps/embed.sh). Dev sessions on this repo skew toward: (a) \
+learning/using the API (README's worked examples + neco.h's @defgroup \
+surface — the README's own prose/example bodies are out of this NS's budget, \
+see below), (b) debugging or extending coroutine/channel/scheduler internals \
+in neco.c, (c) adding a test_*.c following the existing do_test/expect \
+harness, and (d) build/CI questions (tests/run.sh flags, amalgamation vs \
+NECO_NOAMALGA). Given the 10k-token ceiling (this fixture's neco.h+neco.c \
+alone are ~9200 lines), this NS deliberately spends almost its entire budget \
+on breadth and precise pointers rather than prose: full fs listing of every \
+directory, the complete neco.h signature surface (cheap, dense, load-bearing \
+for nearly every query), a roster of every one of the ~133 top-level neco_* \
+definitions in neco.c (so the agent never has to grep blind for "does X \
+exist"), and doc-comment + implementation bodies for just the 3 highest-value \
+non-obvious functions (cancelation, channel send, channel recv). The \
+tests/tests.h do_test/expect harness — the scaffold every test_*.c reuses — \
+gets its own tier since query (c) depends on it directly. Worked README \
+examples, the vendored deps/ sources, and individual test_*.c bodies didn't \
+fit the budget and are left for the agent to open on demand — their \
+filenames are still visible via the tier-2 directory listings.
+"""
+
+# ============================================================
+# Tier 1 — Orientation
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = "First thing any session needs: what's here. 12 top-level entries (.github, deps, docs, examples, tests + neco.c/neco.h/README.md/LICENSE + 3 dotfiles) — cheap and forecloses 'is there a Makefile/src dir' guessing on a repo whose only real source file is neco.c itself."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README lede — what Neco is"
+justification = "One-sentence concept anchor: coroutine-based concurrency library for C, small/fast, targeted at concurrent I/O and networking. Needed before any other batch makes sense."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 14, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README Features — core bullets"
+justification = "The 4 highest-signal feature bullets (coroutines, channels/generators/mutexes/waitgroups/condvars sync, deadlines+cancelation, POSIX fd wrappers) — trimmed from the full 11-bullet list to fit the early-batch growth envelope. An ellipsis at line 24 marks where the remaining 7 bullets continue (extra networking/signals/random/stream APIs, scheduler fairness, asm context switching, stackful nestable coroutines, cross-platform support, single-file amalgamation, test coverage) so the agent knows more feature bullets exist rather than assuming these 4 are the whole list; they're left for the agent to read directly from README.md lines 24-31 on demand."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 18, end = 23, render = { kind = "full" } },
+  { path = "README.md", start = 24, end = 24, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README Goals / non-goals"
+justification = "States the project's scope boundary explicitly: single-threaded-per-scheduler by design, not a multi-core scheduler, no async/await model. Directly answers 'why doesn't this use N threads' before an agent proposes that as a feature."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 38, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README 'Using' — how to build it in"
+justification = "The entire build story for consumers is 'drop neco.c/neco.h into your project and cc -c neco.c' — no configure, no Makefile, no package manager. One-line but load-bearing for any 'how do I build/link this' query."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 49, end = 55, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Full repository breadth (every remaining directory)
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "docs/ listing"
+justification = "6 entries: API.md (generated reference), README.md, TECHNICAL.md (stub), assets/, tools/, .gitignore. Cheap breadth so the agent doesn't assume docs/ is only API.md."
+content = { kind = "fs", groups = [ { parent = "docs", entries = "all" } ] }
+
+[[batches]]
+id = "2.2"
+descriptor = "docs/assets/ listing"
+justification = "The doxygen-md generator's head/foot templates plus the two logo PNGs — completes the docs/ subtree."
+content = { kind = "fs", groups = [ { parent = "docs/assets", entries = "all" } ] }
+
+[[batches]]
+id = "2.3"
+descriptor = "docs/tools/ listing"
+justification = "build-api.sh (the API.md generator script) plus the doxygen-md/ Go tool subdirectory."
+content = { kind = "fs", groups = [ { parent = "docs/tools", entries = "all" } ] }
+
+[[batches]]
+id = "2.4"
+descriptor = "docs/tools/doxygen-md/ listing"
+justification = "The Go module that converts doxygen XML into API.md's markdown — completes the nested tool directory."
+content = { kind = "fs", groups = [ { parent = "docs/tools/doxygen-md", entries = "all" } ] }
+
+[[batches]]
+id = "2.5"
+descriptor = "examples/ listing"
+justification = "11 entries: 9 example .c programs plus README.md. Establishes the full example roster up front so later batches expanding only some example bodies don't look like the only examples that exist."
+content = { kind = "fs", groups = [ { parent = "examples", entries = "all" } ] }
+
+[[batches]]
+id = "2.6"
+descriptor = "tests/ listing"
+justification = "26 entries: 18 test_*.c files, 5 shared headers (tests.h, panic.h, priv_funcs.h, fail_counters.h, signals.h), run.sh, README.md, bench.c. The single most catastrophic-omission-prone directory in the repo — list all of them up front."
+content = { kind = "fs", groups = [ { parent = "tests", entries = "all" } ] }
+
+[[batches]]
+id = "2.7"
+descriptor = "deps/ listing"
+justification = "The 3 embedded dependencies as standalone sources (sco.{c,h}, stack.{c,h}, worker.{c,h}) plus aat.h, embed.sh, and provenance dotfiles."
+content = { kind = "fs", groups = [ { parent = "deps", entries = "all" } ] }
+
+[[batches]]
+id = "2.8"
+descriptor = ".github/ listing"
+justification = "CONTRIBUTING.md, PULL_REQUEST_TEMPLATE.md, workflows/ — the whole contributor-process surface in 3 entries."
+content = { kind = "fs", groups = [ { parent = ".github", entries = "all" } ] }
+
+[[batches]]
+id = "2.9"
+descriptor = ".github/workflows/ listing"
+justification = "Single entry (main.yml) but completes the .github subtree — this repo's entire CI is one workflow file."
+content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" } ] }
+
+# ============================================================
+# Tier 3 — neco.h: the complete public API surface
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "neco.h — Basic operations group"
+justification = "neco_start/startv, yield, sleep(_dl), join(_dl), suspend/resume(_dl), exit, getid/lastid/starterid — the coroutine lifecycle primitives every other group builds on. Highest-traffic group in the header, ranked first among neco.h's defgroups."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 30, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "neco.h — Channels group (make/retain/release/send/broadcast)"
+justification = "neco_chan_make/retain/release/send(_dl)/broadcast — the setup and sending half of Neco's flagship synchronization primitive. Split from the receive/select half (3.3) purely to satisfy the early-batch growth envelope; the two are meant to be read together."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 55, end = 68, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "neco.h — Channels group (recv/tryrecv/close/select/case)"
+justification = "neco_chan_recv(_dl)/tryrecv/close/select family/case — the receive and multiplexing half of channels, completing the group started in 3.2."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 69, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "neco.h — Generators group"
+justification = "neco_gen_start/startv/retain/release/yield(_dl)/next(_dl)/close — a generator is documented here as 'a channel in disguise, strictly bound to a coroutine, treated like an iterator'."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 86, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "neco.h — Mutexes group"
+justification = "neco_mutex is a fixed-size opaque struct with init/lock(_dl)/trylock/unlock/rdlock(_dl)/tryrdlock — reader-writer, not a plain mutex. Worth the full 8-fn surface since neco.c's mutex implementation itself has no doc comments anywhere (an agent debugging lock fairness has only this signature list plus the 6.x roster to start from)."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 107, end = 125, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "neco.h — WaitGroups + Condition variables groups"
+justification = "waitgroup add/done/wait(_dl) (Go-style counter sync) and cond init/signal/broadcast/wait(_dl) (classic condvar over a neco_mutex) — the remaining two sync primitives, grouped since both are opaque fixed-size structs with a near-identical init pattern."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 127, end = 157, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "neco.h — Time + Error handling groups"
+justification = "neco_now() plus the full 19-entry NECO_OK..NECO_NOTSUSPENDED error-code table with neco_strerror/lasterr/gai_lasterr/panic — these codes are referenced by comment throughout the rest of the header, so this table is load-bearing for reading any other group's return-value semantics. The redundant ```c fenced duplicate of the NECO_NANOSECOND..NECO_HOUR constants (they're stated once here as real #defines and again verbatim in a doc-comment example) is skipped to save tokens — only the real #defines are included."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 325, end = 329, render = { kind = "full" } },
+  { path = "neco.h", start = 339, end = 385, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "neco.h — neco_stats struct"
+justification = "Every field of neco_stats (coroutines/sleepers/evwaiters/sigwaiters/senders/receivers/locked/waitgroupers/condwaiters/suspended/workers) with its own doc comment — the cheapest way to answer 'what does neco_getstats report' without reading neco.c's counter-incrementing call sites."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 287, end = 303, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "neco.h — remaining declarations, part A: Posix wrappers + fd helpers"
+justification = "neco_read/write/accept/connect/getaddrinfo(_dl) and neco_setnonblock/neco_wait(_dl) with the NECO_WAIT_READ/WRITE flags — @defgroup banner prose dropped to fit budget, but every declaration kept so this and 3.10-3.13 together leave none of the lower-traffic groups completely dark (a partial-coverage roster would wrongly suggest the omitted ones don't exist)."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 168, end = 195, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "neco.h — remaining declarations, part B: Networking + Cancelation"
+justification = "neco_serve/dial(_dl) plus neco_cancel(_dl), the NECO_CANCEL_* type/state constants, neco_setcanceltype/setcancelstate (per-coroutine cancel-behavior setters), and the neco_cleanup_push/pop macros."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 206, end = 209, render = { kind = "full" } },
+  { path = "neco.h", start = 220, end = 233, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "neco.h — remaining declarations, part C: Random + Signals + Worker + Global environment"
+justification = "NECO_CSPRNG/PRNG + neco_rand(_dl)/rand_setseed; neco_signal_watch/wait(_dl)/unwatch; neco_work; and the 4 neco_env_set* global-behavior hooks."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 244, end = 249, render = { kind = "full" } },
+  { path = "neco.h", start = 261, end = 264, render = { kind = "full" } },
+  { path = "neco.h", start = 276, end = 276, render = { kind = "full" } },
+  { path = "neco.h", start = 314, end = 317, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "neco.h — remaining declarations, part D: Streams and buffered I/O"
+justification = "The full buffered-I/O stream API: make(_buffered)/close(_dl)/read(_dl)/write(_dl)/readfull(_dl)/read_byte(_dl)/unread_byte/flush(_dl)/buffered_{read,write}_size — used nowhere in the README's worked examples so this is the only place an agent learns it exists."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 398, end = 414, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "neco.h — remaining declarations, part E: neco_main macro + private fns"
+justification = "The neco_main convenience macro (rewrites main() to run entirely inside a coroutine, auto-enabling panic-on-error and async cancelation) that every non-Example-1 README snippet uses instead of main(), plus the 3 __neco_* private helpers it expands to and the trailing EAI_SYSTEM fallback #define (some libc's getaddrinfo.h omits it; neco_gai_lasterr's callers rely on it being defined)."
+content = { kind = "lines", spans = [
+  { path = "neco.h", start = 427, end = 440, render = { kind = "full" } },
+  { path = "neco.h", start = 446, end = 448, render = { kind = "full" } },
+  { path = "neco.h", start = 452, end = 454, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Operational: build / test / CI
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = ".github/workflows/main.yml — CI"
+justification = "The entire CI pipeline: checkout + `tests/run.sh` on ubuntu-latest, nothing more. Confirms there's no matrix, no lint step, no release job to hunt for."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/main.yml", start = 1, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "tests/README.md — test entry point"
+justification = "The canonical test entry point (tests/run.sh) — directly answers 'how do I run the tests' without reading run.sh itself."
+content = { kind = "lines", spans = [
+  { path = "tests/README.md", start = 1, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "tests/README.md — run.sh env-var knobs"
+justification = "The CC/CFLAGS/VALGRIND/NOSANS examples (alternate compilers, WebAssembly via emcc, Zig cc, custom CFLAGS, disabling sanitizers, forcing Valgrind) — the exact invocations a debugging or CI-triage session would reach for."
+content = { kind = "lines", spans = [
+  { path = "tests/README.md", start = 16, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "neco.c — amalgamation vs NECO_NOAMALGA switch"
+justification = "The `#ifdef NECO_NOAMALGA` / `#else` toggle that decides whether the vendored deps (deps/sco.{c,h}, aat.h, deps/stack.{c,h}) are #included as separate translation units or inlined directly into neco.c's single-file build (the `#define *_STATIC` markers at the amalgamated branch's start). The line-139 ellipsis marks the analogous `#ifndef NECO_NOWORKERS / #include deps/worker.h` conditional (deps/worker.{c,h}'s inclusion follows the same NOAMALGA switch, elided here as a repeat of the pattern already shown for sco/aat/stack). Directly answers 'how do I build against the deps/ sources instead of the amalgamation' — the option is otherwise undocumented outside this comment."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 128, end = 137, render = { kind = "full" } },
+  { path = "neco.c", start = 139, end = 139, render = { kind = "ellipsis" } },
+  { path = "neco.c", start = 143, end = 147, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 5 — neco.c architecture: the mechanism behind every public call
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "neco.c — error_guard / async_error_guard macros"
+justification = "Every public neco_* function's implementation ends by calling one of these two macros — they set the thread-local `lasterr`, convert POSIX errno into a NECO_* code on -1, panic on NECO_INVAL/PERM/NOMEM if neco_env_setpaniconerror(true) was called, and (async variant only) immediately terminate the coroutine on NECO_CANCELED when NECO_CANCEL_ASYNC is active. Explains 'why did my operation panic' or 'why did my coroutine vanish mid-cancel' for literally any API call."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 3444, end = 3475, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 6 — neco.c public function-definition roster
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "neco.c — top-level neco_* definitions, range 1/5 (name only)"
+justification = "133 public neco_* definitions across the file, truncated to their signature start, partitioned into 5 line-ordered batches purely so each stays small (a growth-envelope / threshold-granularity concern, not a semantic one — the partition boundaries are arbitrary line cuts, not category boundaries). Partial coverage would be a textbook catastrophic omission (neco.h already names ~90 of these; this confirms exact line numbers for all of them, including undocumented ones like neco_pipe/neco_free/neco_malloc/neco_testcode/neco_env_setallocator that appear nowhere in neco.h). Tier-7 body batches below are predecessor-linked refinements of specific lines in this range."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 3121, end = 3121, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3129, end = 3129, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3144, end = 3144, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3161, end = 3161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3179, end = 3179, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3188, end = 3188, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3197, end = 3197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3420, end = 3420, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3560, end = 3560, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3719, end = 3719, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 3950, end = 3950, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4442, end = 4442, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4454, end = 4454, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4474, end = 4474, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4531, end = 4531, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4545, end = 4545, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4561, end = 4561, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4587, end = 4587, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4634, end = 4634, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4673, end = 4673, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4679, end = 4679, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4738, end = 4738, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4762, end = 4762, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4793, end = 4793, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4806, end = 4806, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4843, end = 4843, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4961, end = 4961, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 4998, end = 4998, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5130, end = 5130, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "neco.c — top-level neco_* definitions, range 2/5 (name only)"
+justification = "Continuation of the range-partitioned neco_* definition roster (see 6.1's justification for why it's split this way and what catastrophic omission it's guarding against)."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 5152, end = 5152, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5303, end = 5303, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5334, end = 5334, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5423, end = 5423, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5445, end = 5445, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5504, end = 5504, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5524, end = 5524, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5528, end = 5528, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5551, end = 5551, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5568, end = 5568, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5613, end = 5613, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5708, end = 5708, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5861, end = 5861, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5895, end = 5895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 5948, end = 5948, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6030, end = 6030, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6047, end = 6047, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6059, end = 6059, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6156, end = 6156, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6175, end = 6175, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6189, end = 6189, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6241, end = 6241, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6355, end = 6355, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6364, end = 6364, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6369, end = 6369, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6413, end = 6413, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "neco.c — top-level neco_* definitions, range 3/5 (name only)"
+justification = "Continuation of the range-partitioned neco_* definition roster (see 6.1's justification for why it's split this way and what catastrophic omission it's guarding against)."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 6426, end = 6426, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6436, end = 6436, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6464, end = 6464, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6550, end = 6550, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6687, end = 6687, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6714, end = 6714, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6755, end = 6755, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6845, end = 6845, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6945, end = 6945, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 6970, end = 6970, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7045, end = 7045, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7074, end = 7074, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7105, end = 7105, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7160, end = 7160, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7172, end = 7172, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7209, end = 7209, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7221, end = 7221, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7225, end = 7225, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7241, end = 7241, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7293, end = 7293, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7314, end = 7314, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7334, end = 7334, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7377, end = 7377, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7398, end = 7398, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7431, end = 7431, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7463, end = 7463, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "neco.c — top-level neco_* definitions, range 4/5 (name only)"
+justification = "Continuation of the range-partitioned neco_* definition roster (see 6.1's justification for why it's split this way and what catastrophic omission it's guarding against)."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 7469, end = 7469, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7483, end = 7483, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7514, end = 7514, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7544, end = 7544, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7563, end = 7563, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7584, end = 7584, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7620, end = 7620, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7626, end = 7626, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7632, end = 7632, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7651, end = 7651, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7672, end = 7672, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7846, end = 7846, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7877, end = 7877, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7905, end = 7905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7964, end = 7964, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7972, end = 7972, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 7978, end = 7978, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8002, end = 8002, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8066, end = 8066, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8077, end = 8077, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8101, end = 8101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8109, end = 8109, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8124, end = 8124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8131, end = 8131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8150, end = 8150, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8168, end = 8168, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "neco.c — top-level neco_* definitions, range 5/5 (name only)"
+justification = "Continuation of the range-partitioned neco_* definition roster (see 6.1's justification for why it's split this way and what catastrophic omission it's guarding against)."
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 8204, end = 8204, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8211, end = 8211, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8253, end = 8253, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8261, end = 8261, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8276, end = 8276, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8300, end = 8300, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8307, end = 8307, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8370, end = 8370, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8427, end = 8427, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8449, end = 8449, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8461, end = 8461, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8522, end = 8522, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8537, end = 8537, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8563, end = 8563, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8577, end = 8577, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8582, end = 8582, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8596, end = 8596, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8601, end = 8601, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8608, end = 8608, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8615, end = 8615, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8621, end = 8621, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8629, end = 8629, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8655, end = 8655, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8667, end = 8667, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8692, end = 8692, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "neco.c", start = 8757, end = 8757, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "7.1"
+descriptor = "neco.c — neco_cancel(_dl) implementation"
+justification = "No doc comment exists for these two (neco.h's Cancelation group is undocumented beyond the group blurb), so this is the only place the semantics live: cancel finds the target coroutine, and if its cancel state is enabled sets co->canceled and wakes it immediately; otherwise the canceling coroutine queues onto the target's cancellist and retries once released. Directly explains the claim that 'a cancel takes higher priority than a deadline'."
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 4640, end = 4681, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "neco.c — neco_chan_send(_dl) / neco_chan_broadcast"
+justification = "Doc-commented return codes (NECO_CLOSED, NECO_CANCELED) for the send path, plus the one place neco_chan_broadcast's distinct semantics are stated: sends to *every* current receiver, returns the receiver count, cannot be canceled or timed out."
+predecessor = "6.2"
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 6029, end = 6063, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "neco.c — neco_chan_recv(_dl) / neco_chan_tryrecv"
+justification = "The receive-side mirror of 7.2, plus neco_chan_tryrecv's non-blocking NECO_EMPTY behavior which has no README example at all."
+predecessor = "6.2"
+content = { kind = "lines", spans = [
+  { path = "neco.c", start = 6155, end = 6193, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 8 — tests/tests.h: the do_test/expect harness every test_*.c uses
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "tests/tests.h — do_test/do_test_ registration macros"
+justification = "Every test_*.c's main() is a flat list of `do_test(test_name)` calls (see tests/test_basic.c:208-214) that expands to this: optional CLI name-filter, seeded RNG, then `name(); wait_for_threads();` — the two ellipses at lines 137 and 144 mark a matched pair of neco_env_setcanceltype/setcancelstate + test-allocator init/cleanup bracketing the call, present only for the `for_neco=true` default (elided here since the setup/cleanup pairing is symmetric and named plainly in each `if (for_neco)` line). `do_test_(name, false)` is the escape hatch for non-coroutine tests (used once, for test_basic_malloc). This is the exact scaffold an agent adding a new test_*.c must replicate; nowhere else in the repo is it explained."
+content = { kind = "lines", spans = [
+  { path = "tests/tests.h", start = 133, end = 136, render = { kind = "full" } },
+  { path = "tests/tests.h", start = 137, end = 137, render = { kind = "ellipsis" } },
+  { path = "tests/tests.h", start = 142, end = 143, render = { kind = "full" } },
+  { path = "tests/tests.h", start = 144, end = 144, render = { kind = "ellipsis" } },
+  { path = "tests/tests.h", start = 149, end = 150, render = { kind = "full" } },
+  { path = "tests/tests.h", start = 152, end = 153, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "tests/tests.h — expect() assertion macro"
+justification = "The other half of the harness: `expect(op, ...)` runs op, compares its return against the first optional arg, printing a FAIL line with file/line/function and `_Exit(1)`-ing on mismatch — the pattern used by every assertion in every test_*.c body. Line 265's `neco_lasterr()` check repeats the identical fail-and-exit shape against a second optional arg (elided via the line-266 ellipsis to save tokens on a near-duplicate block)."
+content = { kind = "lines", spans = [
+  { path = "tests/tests.h", start = 252, end = 265, render = { kind = "full" } },
+  { path = "tests/tests.h", start = 266, end = 266, render = { kind = "ellipsis" } },
+  { path = "tests/tests.h", start = 271, end = 271, render = { kind = "full" } },
+] }

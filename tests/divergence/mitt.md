@@ -1,103 +1,111 @@
-Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missing=3)
+Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missing=4)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 32 | 32 | listing of '.' |  |  | 1.000 |
-| ns | 32 |  | 32 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 35 | 3 | listing of 'src' |  |  | 1.000 |
-| ns | 65 |  | 33 | src/, test/, and .github/ contents | 1.2 |  | 0.714 |
-| walker |  | 99 | 64 | package identity in package.json |  |  | 0.715 |
-| walker |  | 109 | 10 | listing of '.github' |  |  | 0.765 |
-| walker |  | 117 | 8 | listing of '.github/workflows' |  |  | 0.860 |
-| ns | 128 |  | 63 | README identity: title, tagline, runtime claims | 1.3 |  | 0.751 |
-| ns | 242 |  | 114 | README feature bullets | 1.4 |  | 0.657 |
-| walker |  | 334 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.661 |
-| ns | 336 |  | 94 | README table of contents | 1.5 |  | 0.559 |
-| walker |  | 345 | 11 | listing of 'test' |  |  | 0.650 |
-| ns | 425 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.571 |
-| ns | 507 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.507 |
-| walker |  | 532 | 187 | README headline in README.md |  |  | 0.663 |
-| ns | 619 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.589 |
-| walker |  | 692 | 160 | export names surface in src/index.ts |  |  | 0.735 |
-| walker |  | 706 | 14 | export at src/index.ts:13 |  |  | 0.748 |
-| walker |  | 729 | 23 | export at src/index.ts:46 |  |  | 0.749 |
-| walker |  | 757 | 28 | export at src/index.ts:6 |  |  | 0.779 |
-| walker |  | 792 | 35 | export at src/index.ts:18 |  |  | 0.813 |
-| ns | 825 |  | 206 | Emitter<Events> interface (full) | 2.4 | 2.1 | 0.704 |
-| ns | 903 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.677 |
-| walker |  | 989 | 197 | export at src/index.ts:23 |  |  | 0.812 |
-| ns | 997 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.761 |
-| walker |  | 1035 | 46 | export doc at src/index.ts:46 |  |  | 0.804 |
-| walker |  | 1179 | 144 | headings outline in README.md |  |  | 0.807 |
-| ns | 1198 |  | 201 | on() implementation | 2.7 | 2.6 | 0.744 |
-| walker |  | 1210 | 31 | README.md section #18 |  |  | 0.745 |
-| walker |  | 1248 | 38 | README.md section #15 |  |  | 0.745 |
-| walker |  | 1261 | 13 | README.md section #8 |  |  | 0.745 |
-| walker |  | 1344 | 83 | README.md section #1 |  |  | 0.806 |
-| ns | 1438 |  | 240 | off() implementation | 2.8 | 2.6 | 0.741 |
-| walker |  | 1459 | 115 | package identity metadata in package.json |  |  | 0.742 |
-| walker |  | 1671 | 212 | package entrypoints in package.json |  |  | 0.750 |
-| walker |  | 1690 | 19 | README.md section #13 |  |  | 0.750 |
-| ns | 1789 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.660 |
-| walker |  | 1923 | 233 | package scripts in package.json |  |  | 0.664 |
-| walker |  | 1940 | 17 | README.md section #7 |  |  | 0.664 |
-| ns | 2022 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.687 |
-| ns | 2257 |  | 235 | package.json: scripts | 3.2 |  | 0.702 |
-| ns | 2536 |  | 279 | index_test.ts: imports + top-level mitt() factory tests | 4.1 |  | 0.656 |
-| ns | 2735 |  | 199 | index_test.ts: shared Events type + beforeEach instance setup | 4.2 |  | 0.624 |
-| ns | 2796 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.616 |
-| walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.842 |
-| walker |  | 2983 | 145 | README.md section #5 |  |  | 0.842 |
-| ns | 3097 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.791 |
-| walker |  | 3263 | 280 | README.md section #2 |  |  | 0.793 |
-| walker |  | 3293 | 30 | README.md section #12 |  |  | 0.793 |
-| walker |  | 3442 | 149 | json config tsconfig.json |  |  | 0.795 |
-| ns | 3461 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.750 |
-| walker |  | 3475 | 33 | README.md section #10 |  |  | 0.750 |
-| walker |  | 3586 | 111 | README.md section #4 |  |  | 0.750 |
-| walker |  | 3621 | 35 | README.md section #6 |  |  | 0.750 |
-| walker |  | 3676 | 55 | README.md section #16 |  |  | 0.750 |
-| walker |  | 3775 | 99 | README.md section #14 |  |  | 0.750 |
-| ns | 3806 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.710 |
-| ns | 4069 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.684 |
-| walker |  | 4143 | 368 | package dev/peer dependencies in package.json |  |  | 0.687 |
-| walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
-| walker |  | 4379 | 120 | README.md section #9 |  |  | 0.687 |
-| ns | 4407 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.656 |
-| ns | 4586 |  | 179 | index_test.ts: emit() - wildcard ('*') handler invocation | 4.9 |  | 0.641 |
-| ns | 4788 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.622 |
-| walker |  | 4912 | 533 | README.md section #3 |  |  | 0.626 |
-| ns | 4984 |  | 196 | test-types-compilation.ts: on() type inference checks | 4.11 |  | 0.611 |
-| walker |  | 5032 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.612 |
-| ns | 5180 |  | 196 | test-types-compilation.ts: off() type inference checks | 4.12 |  | 0.597 |
-| walker |  | 5224 | 192 | README.md section #17 |  |  | 0.598 |
-| walker |  | 5243 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.598 |
-| walker |  | 5259 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.598 |
-| walker |  | 5287 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.598 |
-| ns | 5376 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.584 |
-| walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.585 |
-| walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.585 |
-| walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.585 |
-| ns | 5535 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.600 |
-| walker |  | 5649 | 165 | plaintext config .editorconfig |  |  | 0.601 |
-| ns | 5675 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.590 |
-| walker |  | 5958 | 309 | plaintext config LICENSE |  |  | 0.591 |
-| ns | 6044 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.608 |
-| ns | 6193 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.619 |
-| ns | 6418 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.603 |
-| walker |  | 6458 | 500 | plaintext config .eslintrc |  |  | 0.639 |
-| walker |  | 6520 | 62 | imports in test/index_test.ts |  |  | 0.640 |
-| ns | 6693 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.656 |
-| ns | 6858 |  | 165 | .editorconfig (full) | 6.4 |  | 0.665 |
-| walker |  | 6892 | 372 | test names surface in test/index_test.ts |  |  | 0.671 |
-| ns | 6932 |  | 74 | .gitignore (full) | 6.5 |  | 0.675 |
-| ns | 7149 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.686 |
-| ns | 7269 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.690 |
-| ns | 7558 |  | 289 | README: Install section | 7.1 |  | 0.699 |
-| ns | 7792 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.706 |
-| ns | 8105 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.715 |
-| ns | 8216 |  | 111 | README: Examples & Demos | 7.4 |  | 0.717 |
-| ns | 8545 |  | 329 | README: Contribute section | 7.5 |  | 0.721 |
-| ns | 8757 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.720 |
-| ns | 9066 |  | 309 | LICENSE (full) | 7.7 |  | 0.724 |
-| ns | 9104 |  | 38 | README: License section | 7.8 |  | 0.725 |
+| walker |  | 32 | 32 | listing of '.' |  |  | 0.000 |
+| ns | 32 |  | 32 | README title and one-line tagline | 1.1 |  | 0.000 |
+| walker |  | 35 | 3 | listing of 'src' |  |  | 0.000 |
+| ns | 64 |  | 32 | Complete root directory listing | 1.2 |  | 0.572 |
+| walker |  | 99 | 64 | package identity in package.json |  |  | 0.577 |
+| walker |  | 109 | 10 | listing of '.github' |  |  | 0.585 |
+| walker |  | 117 | 8 | listing of '.github/workflows' |  |  | 0.600 |
+| ns | 153 |  | 89 | Every exported name in src/index.ts (names only) | 1.3 |  | 0.441 |
+| ns | 269 |  | 116 | README feature bullets | 1.4 |  | 0.385 |
+| ns | 298 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.376 |
+| ns | 331 |  | 33 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.380 |
+| walker |  | 334 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.390 |
+| walker |  | 345 | 11 | listing of 'test' |  |  | 0.452 |
+| ns | 398 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.403 |
+| walker |  | 532 | 187 | README headline in README.md |  |  | 0.745 |
+| ns | 541 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.665 |
+| ns | 628 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.609 |
+| walker |  | 692 | 160 | export names surface in src/index.ts |  |  | 0.739 |
+| walker |  | 706 | 14 | export at src/index.ts:13 |  |  | 0.741 |
+| walker |  | 729 | 23 | export at src/index.ts:46 |  |  | 0.742 |
+| walker |  | 757 | 28 | export at src/index.ts:6 |  |  | 0.745 |
+| walker |  | 792 | 35 | export at src/index.ts:18 |  |  | 0.749 |
+| ns | 827 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.712 |
+| walker |  | 989 | 197 | export at src/index.ts:23 |  |  | 0.727 |
+| ns | 1033 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.758 |
+| walker |  | 1035 | 46 | export doc at src/index.ts:46 |  |  | 0.764 |
+| ns | 1111 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.773 |
+| walker |  | 1179 | 144 | headings outline in README.md |  |  | 0.827 |
+| walker |  | 1210 | 31 | README.md section #18 |  |  | 0.827 |
+| walker |  | 1248 | 38 | README.md section #15 |  |  | 0.827 |
+| walker |  | 1261 | 13 | README.md section #8 |  |  | 0.827 |
+| ns | 1333 |  | 222 | README Usage code block | 2.3 |  | 0.739 |
+| walker |  | 1344 | 83 | README.md section #1 |  |  | 0.739 |
+| walker |  | 1459 | 115 | package identity metadata in package.json |  |  | 0.741 |
+| ns | 1534 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.686 |
+| ns | 1639 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.654 |
+| walker |  | 1671 | 212 | package entrypoints in package.json |  |  | 0.742 |
+| walker |  | 1690 | 19 | README.md section #13 |  |  | 0.742 |
+| ns | 1914 |  | 275 | README Install section body | 2.6 |  | 0.685 |
+| walker |  | 1923 | 233 | package scripts in package.json |  |  | 0.693 |
+| walker |  | 1940 | 17 | README.md section #7 |  |  | 0.693 |
+| ns | 2008 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.669 |
+| ns | 2209 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.642 |
+| ns | 2449 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.613 |
+| ns | 2586 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.598 |
+| ns | 2800 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.568 |
+| walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.777 |
+| walker |  | 2983 | 145 | README.md section #5 |  |  | 0.779 |
+| ns | 3035 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.785 |
+| ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.760 |
+| walker |  | 3263 | 280 | README.md section #2 |  |  | 0.817 |
+| ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.798 |
+| walker |  | 3293 | 30 | README.md section #12 |  |  | 0.798 |
+| walker |  | 3442 | 149 | json config tsconfig.json |  |  | 0.831 |
+| walker |  | 3475 | 33 | README.md section #10 |  |  | 0.831 |
+| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.837 |
+| walker |  | 3586 | 111 | README.md section #4 |  |  | 0.837 |
+| walker |  | 3621 | 35 | README.md section #6 |  |  | 0.838 |
+| ns | 3659 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.841 |
+| walker |  | 3676 | 55 | README.md section #16 |  |  | 0.841 |
+| ns | 3737 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.832 |
+| walker |  | 3775 | 99 | README.md section #14 |  |  | 0.833 |
+| walker |  | 4143 | 368 | package dev/peer dependencies in package.json |  |  | 0.835 |
+| ns | 4154 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.801 |
+| walker |  | 4259 | 116 | README.md section #11 |  |  | 0.802 |
+| ns | 4356 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.777 |
+| walker |  | 4379 | 120 | README.md section #9 |  |  | 0.778 |
+| ns | 4541 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.757 |
+| ns | 4737 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.738 |
+| walker |  | 4912 | 533 | README.md section #3 |  |  | 0.836 |
+| ns | 4933 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.816 |
+| walker |  | 5032 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.817 |
+| ns | 5129 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.797 |
+| walker |  | 5224 | 192 | README.md section #17 |  |  | 0.799 |
+| walker |  | 5243 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.799 |
+| walker |  | 5259 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.799 |
+| ns | 5282 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.782 |
+| walker |  | 5287 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.782 |
+| walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.783 |
+| walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.783 |
+| ns | 5453 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.761 |
+| walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.762 |
+| walker |  | 5649 | 165 | plaintext config .editorconfig |  |  | 0.763 |
+| ns | 5680 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.745 |
+| ns | 5839 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.733 |
+| walker |  | 5958 | 309 | plaintext config LICENSE |  |  | 0.733 |
+| ns | 6121 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.711 |
+| ns | 6339 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.697 |
+| walker |  | 6458 | 500 | plaintext config .eslintrc |  |  | 0.700 |
+| walker |  | 6520 | 62 | imports in test/index_test.ts |  |  | 0.705 |
+| ns | 6614 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.686 |
+| ns | 6778 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.676 |
+| walker |  | 6892 | 372 | test names surface in test/index_test.ts |  |  | 0.699 |
+| ns | 6920 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.704 |
+| ns | 7026 |  | 106 | README Examples & Demos section | 7.2 |  | 0.707 |
+| ns | 7258 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.711 |
+| ns | 7601 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.714 |
+| ns | 7913 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.719 |
+| ns | 7944 |  | 31 | README License line | 7.6 |  | 0.720 |
+| ns | 8312 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.727 |
+| ns | 8537 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.734 |
+| ns | 8809 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.740 |
+| ns | 9013 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.740 |
+| ns | 9133 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.742 |
+| ns | 9207 |  | 74 | .gitignore in full | 7.12 |  | 0.744 |
+| ns | 9390 |  | 183 | README badge header | 7.13 |  | 0.741 |
+| ns | 9602 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.739 |

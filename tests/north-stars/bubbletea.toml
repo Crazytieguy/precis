@@ -1,1405 +1,1206 @@
 fixture = "bubbletea"
 revision_pin = "c60f0c53"
 summary = """
-Bubble Tea (charm.land/bubbletea/v2) is a Go TUI framework implementing The
-Elm Architecture: a user-supplied Model with Init/Update/View methods is
-driven by a Program that owns the terminal, an event loop (tea.go), and a
-cell-based ANSI renderer (cursed_renderer.go). Most of the package surface is
-message (Msg) and command (Cmd) types for keyboard, mouse, clipboard, color,
-focus, paste, and terminal-capability I/O, plus ProgramOption functions and
-declarative tea.View fields (the v2 headline change from v1's imperative
-options/commands, documented in UPGRADE_GUIDE_V2.md). The query distribution
-this NS serves: (a) library users learning the Model/Update/View contract and
-the Cmd/Msg vocabulary, (b) contributors debugging the event loop, renderer,
-or terminal/platform glue, (c) v1-to-v2 migration questions, (d) "show me how
-to do X" questions answered by examples/ and tutorials/, and (e) build/test/
-lint entry points. tea.go is the spine of the package (Model/Program/View/
-event loop all live there) and is weighted accordingly despite its size —
-the 10K budget cap forces most of its 1439 lines to go unrendered, so this NS
-prioritizes the contract-defining and hardest-to-rediscover-by-grep pieces
-(Model interface, eventLoop's internal message switch, Run()'s setup arc)
-over exhaustive coverage.
+Bubble Tea v2 (`charm.land/bubbletea/v2`): a Go framework for terminal UIs
+built on The Elm Architecture. The whole library is one flat package `tea` at
+the repository root — ~40 `.go` files with no internal subpackages — plus a
+separate `examples/` module (63 example programs, 38 of them written up in
+`examples/README.md`), a `tutorials/` module, and
+two large docs (the README tutorial and `UPGRADE_GUIDE_V2.md`, the v1→v2
+migration guide).
+
+The substance is concentrated in three places: `tea.go` (1439 lines: the
+`Model`/`Msg`/`Cmd` contract, the declarative `View` struct, the `Program`
+runtime and its event loop), `cursed_renderer.go` (860 lines: the cell-based
+renderer that turns a `View` into ANSI output), and a wide spray of tiny
+files that each define one or two message types plus their command
+constructors (`key.go`, `mouse.go`, `color.go`, `clipboard.go`, `paste.go`,
+`focus.go`, `termcap.go`, `xterm.go`, `environ.go`, `keyboard.go`,
+`cursor.go`, `screen.go`, `profile.go`, `raw.go`). Platform differences live
+in build-tagged pairs (`tty_unix.go`/`tty_windows.go`, `signals_*.go`,
+`termios_*.go`).
+
+The ranking front-loads identity plus the Elm contract (`Model`, `Msg`,
+`Cmd`, `View`), then the complete root file map, then the `Program` runtime
+surface (public methods, options, the event-loop dispatch table). After that
+it buys breadth: closed rosters of every message type and every command
+constructor across the small files, since "which message or command do I use
+for X?" is the dominant question for this library. The renderer and the
+platform/TTY layer come next, then the examples and tutorials inventory,
+the two documentation section maps, the v1→v2 migration checklist that
+answers "why doesn't `tea.WithAltScreen` exist any more?", the test-function
+roster and the CI workflow inventory.
 """
 
-# ============================================================
-# Tier 1 — Orientation: root shape, package doc, module info
-# ============================================================
+# ---------------------------------------------------------------- tier 1
+# Identity and the Elm contract: what this library is, and the handful of
+# types a caller must know before any other question can even be framed.
 
 [[batches]]
 id = "1.1"
-descriptor = "Root: project scaffolding listing"
-justification = "Cheap, catastrophic-omission-safe listing of every non-Go top-level entry (dirs + config/docs)."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = [".gitattributes", ".github", ".gitignore", ".golangci.yml", ".goreleaser.yml", "LICENSE", "README.md", "Taskfile.yaml", "UPGRADE_GUIDE_V2.md", "examples", "go.mod", "go.sum", "testdata", "tutorials"]
+descriptor = "Package identity: `tea` package doc lede + module path"
+justification = """
+Rank 1 must answer "what is this repository". The first sentences of the
+package comment in `tea.go` give the Elm-Architecture framing and the
+inline/full-window scope; `go.mod`'s module line gives the v2 vanity import
+path `charm.land/bubbletea/v2` (v1 was `github.com/charmbracelet/bubbletea`),
+which is itself one of the most frequently needed facts about this revision.
+Five lines total, so a tiny budget still gets the identity.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 1, end = 4, render = { kind = "full" } },
+  { path = "go.mod", start = 1, end = 1, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "Root: message/command Go file listing"
-justification = "Complete listing of root Go files defining Msg/Cmd types and small value types (vs. Program/runtime files in 1.3)."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = ["clipboard.go", "color.go", "commands.go", "cursor.go", "environ.go", "focus.go", "input.go", "key.go", "keyboard.go", "mouse.go", "paste.go", "profile.go", "raw.go", "screen.go", "termcap.go", "xterm.go"]
+descriptor = "`Model` interface skeleton: `Init` / `Update` / `View`"
+justification = """
+Every Bubble Tea program is a `Model` with these three methods, and their
+exact v2 signatures are the thing people get wrong (`Update` returns
+`(Model, Cmd)`; `View` returns a `View`, not a `string`). Method lines only —
+the doc comments between them are filled in by batch 1.5.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 52, end = 53, render = { kind = "full" } },
+  { path = "tea.go", start = 56, end = 56, render = { kind = "full" } },
+  { path = "tea.go", start = 60, end = 60, render = { kind = "full" } },
+  { path = "tea.go", start = 64, end = 65, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "Root: Program/runtime/platform Go file listing"
-justification = "Complete listing of root Go files implementing Program lifecycle, rendering, and OS-specific terminal glue."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = ["cursed_renderer.go", "exec.go", "logging.go", "mod.go", "nil_renderer.go", "options.go", "renderer.go", "signals_unix.go", "signals_windows.go", "tea.go", "termios_bsd.go", "termios_other.go", "termios_unix.go", "termios_windows.go", "tty.go", "tty_unix.go", "tty_windows.go"]
+descriptor = "`Msg` alias and the `Cmd` type"
+justification = """
+The other two nouns of the contract. `Msg` being a type alias for
+`ultraviolet.Event` is a load-bearing surprise — it explains why events
+arriving in `Update` are third-party types and why `input.go` exists to
+translate them. `Cmd` is just `func() Msg`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 48, end = 50, render = { kind = "full" } },
+  { path = "tea.go", start = 383, end = 384, render = { kind = "full" } },
+  { path = "tea.go", start = 390, end = 390, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "Root: _test.go file listing"
-justification = "Completes the root file class-closure with the colocated test files."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = ["commands_test.go", "cursed_renderer_test.go", "exec_test.go", "logging_test.go", "options_test.go", "screen_test.go", "tea_test.go"]
+descriptor = "Program entry points: `NewProgram`, `Run`, `ProgramOption`"
+justification = """
+The three symbols every `main()` touches, with exact signatures and
+locations. Note `Run()` takes no arguments in this revision and returns the
+final model plus an error — worth pinning because doc comments elsewhere in
+the tree still show the older `p.Run(ctx)` form.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 594, end = 595, render = { kind = "full" } },
+  { path = "tea.go", start = 991, end = 991, render = { kind = "full" } },
+  { path = "options.go", start = 17, end = 17, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "README lede"
-justification = "Repo-level orientation prose (what Bubble Tea is, headline features); skips badge/image markup lines which are pure decoration."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 10
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 18
-end = 22
-render = { kind = "full" }
+descriptor = "`Model` method doc comments (refines 1.2)"
+justification = """
+Fills the gaps left by the skeleton: what `Init` returning nil means, that
+`Update` is called per message, and that `View` renders after every update.
+Cheap depth on the interface an agent has already seen, and it keeps the
+early ramp small enough for the file map to land next.
+"""
+predecessor = "1.2"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 54, end = 55, render = { kind = "full" } },
+  { path = "tea.go", start = 58, end = 59, render = { kind = "full" } },
+  { path = "tea.go", start = 62, end = 63, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "tea.go: Model interface"
-justification = "The single most load-bearing few lines in the repo: what a Model must implement (Init/Update/View). Almost every session touching this repo needs this."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 52
-end = 65
-render = { kind = "full" }
+descriptor = "Complete root directory listing"
+justification = """
+The library is one flat package: every source file sits at the repository
+root. A complete listing is the map that routes every later read, and
+listing it as one closed set rather than a sample stops the agent inferring
+that unlisted files don't exist. It also reveals the subdirectories
+(`examples/`, `tutorials/`, `testdata/`, `.github/`), the colocated
+`*_test.go` files, the build-tagged platform variants, and the operational
+files (`Taskfile.yaml`, `.golangci.yml`, `go.mod`).
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "README: upgrade-guide pointer + companion libraries"
-justification = "Surfaces that UPGRADE_GUIDE_V2.md exists and that Bubbles is the expected companion widget library — orients an agent that might otherwise look for widget code in this repo (the README's fuller 'Libraries we use' list, including Lip Gloss, is further down and not rendered here)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 27
-end = 34
-render = { kind = "full" }
+descriptor = "`View` struct: header plus every field name"
+justification = """
+The defining change of v2: terminal features are declared as fields on the
+`View` returned from `View()` instead of toggled through program options and
+commands. The complete 12-field roster answers "how do I turn on the
+altscreen / mouse / a window title / a cursor" without a follow-up read, and
+listing all fields together avoids implying the omitted ones don't exist.
+Elided doc comments are marked with ellipses.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 82, end = 84, render = { kind = "full" } },
+  { path = "tea.go", start = 85, end = 85, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 96, end = 96, render = { kind = "full" } },
+  { path = "tea.go", start = 97, end = 97, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 126, end = 126, render = { kind = "full" } },
+  { path = "tea.go", start = 127, end = 127, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 131, end = 131, render = { kind = "full" } },
+  { path = "tea.go", start = 135, end = 135, render = { kind = "full" } },
+  { path = "tea.go", start = 139, end = 139, render = { kind = "full" } },
+  { path = "tea.go", start = 143, end = 143, render = { kind = "full" } },
+  { path = "tea.go", start = 147, end = 147, render = { kind = "full" } },
+  { path = "tea.go", start = 148, end = 148, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 161, end = 161, render = { kind = "full" } },
+  { path = "tea.go", start = 170, end = 170, render = { kind = "full" } },
+  { path = "tea.go", start = 173, end = 173, render = { kind = "full" } },
+  { path = "tea.go", start = 177, end = 177, render = { kind = "full" } },
+  { path = "tea.go", start = 178, end = 178, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 189, end = 189, render = { kind = "full" } },
+  { path = "tea.go", start = 190, end = 190, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "go.mod: module path + direct dependencies"
-justification = "Module path (charm.land/bubbletea/v2, note the vanity domain != github path) and the direct dependency surface."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 16
-render = { kind = "full" }
+descriptor = "`NewView` / `View.SetContent` constructors"
+justification = """
+The two ways to produce a `View` value, with their bodies (both are
+three-liners). Follows the field roster: the agent knows what a view carries,
+these lines say how to build one and that `Content` is a styled string with
+ANSI escapes embedded.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 67, end = 69, render = { kind = "full" } },
+  { path = "tea.go", start = 76, end = 80, render = { kind = "full" } },
+  { path = "tea.go", start = 279, end = 281, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "go.mod: indirect dependencies"
-justification = "Completes the go.mod class-closure (direct vs indirect requires)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "go.mod"
-start = 18
-end = 28
-render = { kind = "full" }
+descriptor = "`Cmd` semantics and the `Quit` command"
+justification = """
+Refines the bare `Cmd` type with the guidance an agent needs to use it
+correctly (use it for I/O; don't use it to pass messages internally), plus
+the `Quit`/`QuitMsg` pair every program calls. Ranked here because it is
+semantic depth on a type already introduced, not new surface.
+"""
+predecessor = "1.3"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 385, end = 389, render = { kind = "full" } },
+  { path = "tea.go", start = 554, end = 561, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 2 — Core Model/Program/View API (tea.go)
-# ============================================================
+[[batches]]
+id = "1.10"
+descriptor = "Direct dependency set from `go.mod`"
+justification = """
+Bubble Tea v2 is a thin layer over `charmbracelet/ultraviolet` (events,
+terminal reader, screen buffer), `colorprofile`, `x/ansi` and
+`muesli/cancelreader`; knowing that explains where escape-sequence handling
+and input parsing actually live — outside this repository. The complete
+`require` block closes the direct-dependency class in ten lines.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "go.mod", start = 7, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "README lede: positioning and shipped feature set"
+justification = """
+Prose framing the source doesn't provide: inline versus full-window use, and
+the feature list (cell-based renderer, color downsampling, declarative views,
+keyboard and mouse fidelity, clipboard). The last line points v1 users at
+`UPGRADE_GUIDE_V2.md`, which is the second-largest doc in the tree.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 10, end = 12, render = { kind = "full" } },
+  { path = "README.md", start = 18, end = 22, render = { kind = "full" } },
+  { path = "README.md", start = 29, end = 29, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 2
+# The `Program` runtime: its public surface, its options, and the event loop
+# that turns terminal input into `Update` calls and renders.
 
 [[batches]]
 id = "2.1"
-descriptor = "tea.go: NewView + View struct field roster"
-justification = "NewView is the primary constructor in every doc example. The field roster (name+type only) answers 'what can a View do' cheaply; UPGRADE_GUIDE_V2.md's field table (batch 8.2) supplies per-field semantics without re-paying for the long godoc comments here."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 67
-end = 80
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 84
-end = 84
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 96
-end = 96
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 126
-end = 126
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 131
-end = 131
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 135
-end = 135
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 139
-end = 139
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 143
-end = 143
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 147
-end = 147
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 161
-end = 161
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 170
-end = 170
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 173
-end = 173
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 177
-end = 177
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 189
-end = 189
-render = { kind = "full" }
+descriptor = "Sentinel errors returned by `Program.Run`"
+justification = """
+`ErrProgramPanic`, `ErrProgramKilled` and `ErrInterrupted` are the entire
+error vocabulary of the runtime — every failure an embedder sees from `Run`
+wraps one of them. Nine lines, complete class, and it makes error-handling
+questions answerable with no follow-up read.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 38, end = 46, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "tea.go: Cmd type"
-justification = "Cmd's definition (func() Msg) is the other half of the Elm Architecture contract alongside Model/Msg."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 383
-end = 390
-render = { kind = "full" }
+descriptor = "Every exported `*Program` method (complete roster)"
+justification = """
+The full external control surface of a running program: `Run`, `Send`,
+`Quit`, `Kill`, `Wait`, `ReleaseTerminal`, `RestoreTerminal`, `Println`,
+`Printf`. Nine signature lines close the class — showing a subset would let
+an agent conclude, wrongly, that e.g. `Wait` or `ReleaseTerminal` don't
+exist. `Run` is repeated here from 1.4 so the roster reads as complete.
+"""
+predecessor = "1.4"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 991, end = 991, render = { kind = "full" } },
+  { path = "tea.go", start = 1183, end = 1183, render = { kind = "full" } },
+  { path = "tea.go", start = 1197, end = 1197, render = { kind = "full" } },
+  { path = "tea.go", start = 1204, end = 1204, render = { kind = "full" } },
+  { path = "tea.go", start = 1209, end = 1209, render = { kind = "full" } },
+  { path = "tea.go", start = 1319, end = 1319, render = { kind = "full" } },
+  { path = "tea.go", start = 1344, end = 1344, render = { kind = "full" } },
+  { path = "tea.go", start = 1372, end = 1372, render = { kind = "full" } },
+  { path = "tea.go", start = 1386, end = 1386, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "tea.go: MouseMode enum"
-justification = "The three mouse-tracking levels (None/CellMotion/AllMotion) referenced by View.MouseMode, the renderer, and most mouse-handling examples."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 284
-end = 284
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 288
-end = 288
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 297
-end = 297
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 305
-end = 306
-render = { kind = "full" }
+descriptor = "Every `ProgramOption` constructor (complete roster)"
+justification = """
+The complete set of options accepted by `NewProgram` in v2 — twelve of them,
+all in `options.go`. This is a top-3 question for the library ("can I set the
+FPS / force a color profile / disable the renderer?") and the v2 answer is
+often "that option was removed, set a `View` field instead", which only reads
+correctly if the surviving options are shown as a closed set.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "options.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "options.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "options.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "options.go", start = 58, end = 58, render = { kind = "full" } },
+  { path = "options.go", start = 66, end = 66, render = { kind = "full" } },
+  { path = "options.go", start = 76, end = 76, render = { kind = "full" } },
+  { path = "options.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "options.go", start = 98, end = 98, render = { kind = "full" } },
+  { path = "options.go", start = 133, end = 133, render = { kind = "full" } },
+  { path = "options.go", start = 142, end = 142, render = { kind = "full" } },
+  { path = "options.go", start = 153, end = 153, render = { kind = "full" } },
+  { path = "options.go", start = 163, end = 163, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "tea.go: Cursor + NewCursor"
-justification = "The View.Cursor value type (position/color/shape/blink) and its constructor."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 356
-end = 381
-render = { kind = "full" }
+descriptor = "Build/test/lint entry points (`Taskfile.yaml`)"
+justification = """
+"How do I run the tests" is a large share of real sessions and this file
+answers it exactly: `go test -race -count 4 -cpu 1,4 ./...` and
+`golangci-lint run`. Fourteen lines, and it is the whole task file, so
+nothing about the local workflow is left implied.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "Taskfile.yaml", start = 1, end = 14, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "tea.go: Program struct field roster (names only)"
-justification = "Program is the central runtime type; a name+type-only roster (doc comments elided) is a cheap catastrophic-omission hedge for 'what state does Program hold'."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 429
-end = 429
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 433
-end = 433
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 439
-end = 439
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 472
-end = 472
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 477
-end = 477
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 481
-end = 481
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 486
-end = 486
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 490
-end = 490
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 494
-end = 495
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 499
-end = 499
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 501
-end = 504
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 506
-end = 506
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 509
-end = 510
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 513
-end = 515
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 518
-end = 518
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 520
-end = 520
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 523
-end = 523
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 525
-end = 529
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 532
-end = 532
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 535
-end = 535
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 538
-end = 538
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 541
-end = 541
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 544
-end = 544
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 547
-end = 547
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 549
-end = 549
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 551
-end = 551
-render = { kind = "full" }
+descriptor = "Event-loop dispatch table: every internally-handled message type"
+justification = """
+`eventLoop`'s type switch is the authoritative list of messages the runtime
+intercepts before handing the message to `Update` — clipboard, colour,
+capability, exec, batch/sequence, resize, clear-screen, print-above and so
+on. Rendering only the `case` labels buys the entire behavioural map for a
+few tokens per line and gives precise line coordinates for the handler an
+agent needs to read next.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 764, end = 765, render = { kind = "full" } },
+  { path = "tea.go", start = 768, end = 768, render = { kind = "full" } },
+  { path = "tea.go", start = 771, end = 771, render = { kind = "full" } },
+  { path = "tea.go", start = 776, end = 776, render = { kind = "full" } },
+  { path = "tea.go", start = 786, end = 786, render = { kind = "full" } },
+  { path = "tea.go", start = 800, end = 800, render = { kind = "full" } },
+  { path = "tea.go", start = 810, end = 810, render = { kind = "full" } },
+  { path = "tea.go", start = 813, end = 813, render = { kind = "full" } },
+  { path = "tea.go", start = 816, end = 816, render = { kind = "full" } },
+  { path = "tea.go", start = 819, end = 819, render = { kind = "full" } },
+  { path = "tea.go", start = 822, end = 822, render = { kind = "full" } },
+  { path = "tea.go", start = 825, end = 825, render = { kind = "full" } },
+  { path = "tea.go", start = 828, end = 828, render = { kind = "full" } },
+  { path = "tea.go", start = 831, end = 831, render = { kind = "full" } },
+  { path = "tea.go", start = 835, end = 835, render = { kind = "full" } },
+  { path = "tea.go", start = 838, end = 838, render = { kind = "full" } },
+  { path = "tea.go", start = 841, end = 841, render = { kind = "full" } },
+  { path = "tea.go", start = 845, end = 845, render = { kind = "full" } },
+  { path = "tea.go", start = 849, end = 849, render = { kind = "full" } },
+  { path = "tea.go", start = 852, end = 852, render = { kind = "full" } },
+  { path = "tea.go", start = 855, end = 855, render = { kind = "full" } },
+  { path = "tea.go", start = 858, end = 858, render = { kind = "full" } },
+  { path = "tea.go", start = 861, end = 861, render = { kind = "full" } },
+  { path = "tea.go", start = 864, end = 864, render = { kind = "full" } },
+  { path = "tea.go", start = 867, end = 867, render = { kind = "full" } },
+  { path = "tea.go", start = 868, end = 868, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "tea.go: Quit/Suspend/Resume/Interrupt messages"
-justification = "The special program-control messages every Bubble Tea program eventually needs (tea.Quit is in the tutorial itself)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 554
-end = 592
-render = { kind = "full" }
+descriptor = "Event-loop skeleton: translate → filter → dispatch → update → render"
+justification = """
+The control flow around the dispatch table from 2.5: messages come off
+`p.msgs`, get translated from `ultraviolet` events, pass through the
+optional `WithFilter` hook (nil means drop), then `model.Update` runs, the
+returned command is queued, and the model is re-rendered. This is the
+mechanism behind almost every "why did/didn't my Update see X" question.
+"""
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 743, end = 746, render = { kind = "full" } },
+  { path = "tea.go", start = 752, end = 753, render = { kind = "full" } },
+  { path = "tea.go", start = 756, end = 761, render = { kind = "full" } },
+  { path = "tea.go", start = 871, end = 881, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "tea.go: NewProgram core"
-justification = "The constructor's essential shape: channel setup and applying ProgramOptions, before falling to defaults (fps/context/trace-logger detail omitted for budget, marked with an ellipsis since NewProgram's body continues to line 641)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 594
-end = 605
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 606
-end = 606
-render = { kind = "ellipsis" }
+descriptor = "Program control messages: suspend, resume, interrupt"
+justification = """
+`Suspend`/`SuspendMsg`, `ResumeMsg` and `InterruptMsg`/`Interrupt` complete
+the lifecycle-message class begun by `Quit`/`QuitMsg` in 1.9; the retained
+doc lines explain why raw mode forces per-program handling of ctrl+z and
+ctrl+c. Answering "how do I background my TUI" needs exactly these lines.
+"""
+predecessor = "1.9"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 563, end = 566, render = { kind = "full" } },
+  { path = "tea.go", start = 568, end = 569, render = { kind = "full" } },
+  { path = "tea.go", start = 570, end = 570, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 574, end = 578, render = { kind = "full" } },
+  { path = "tea.go", start = 580, end = 581, render = { kind = "full" } },
+  { path = "tea.go", start = 582, end = 582, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 586, end = 586, render = { kind = "full" } },
+  { path = "tea.go", start = 588, end = 592, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "tea.go: eventLoop — start of the internal message switch"
-justification = "The densest, least-discoverable-by-grep piece of the codebase: how eventLoop filters/translates a Msg before special-casing internal control messages (Quit/Interrupt/Suspend) ahead of handing off to Model.Update. High value for 'why isn't my message reaching Update' debugging; the full switch continues for ~100 more lines, marked with an ellipsis since it isn't rendered here for budget."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 743
-end = 775
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 776
-end = 776
-render = { kind = "ellipsis" }
+descriptor = "`Run()`: how input and the TTY are acquired"
+justification = """
+The startup branch behind "my program can't read keys when stdin is piped":
+input defaults to `os.Stdin`, and when stdin is not a terminal `Run` opens
+the controlling TTY via `OpenTTY()`; `WithInput(nil)` disables input
+entirely. The signal handler is installed immediately after.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 1007, end = 1018, render = { kind = "full" } },
+  { path = "tea.go", start = 1020, end = 1023, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.9"
-descriptor = "tea.go: render()"
-justification = "How a returned View reaches the renderer — the last step of every eventLoop iteration."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 885
-end = 890
-render = { kind = "full" }
+descriptor = "`Run()`: renderer choice, colour profile, first three messages"
+justification = """
+Where `WithoutRenderer` becomes `nilRenderer` and everything else becomes
+`newCursedRenderer`, where the colour profile is detected (or taken from
+`WithColorProfile`), and the three messages every program receives before
+its first `Update`: `ColorProfileMsg`, `WindowSizeMsg` and `EnvMsg`.
+"""
+predecessor = "2.8"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 1056, end = 1061, render = { kind = "full" } },
+  { path = "tea.go", start = 1062, end = 1062, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 1082, end = 1083, render = { kind = "full" } },
+  { path = "tea.go", start = 1088, end = 1089, render = { kind = "full" } },
+  { path = "tea.go", start = 1092, end = 1093, render = { kind = "full" } },
+  { path = "tea.go", start = 1096, end = 1096, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.10"
-descriptor = "tea.go: Run() — guards + terminal init"
-justification = "The main entry point's opening arc: nil-model guard and the initTerminal call — the parts of Run() most often relevant to 'why did my program fail to start'; an ellipsis marks that Run()'s body continues well past this arc."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 991
-end = 1010
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 1011
-end = 1011
-render = { kind = "ellipsis" }
+descriptor = "`Run()`: model init, event loop, graceful shutdown"
+justification = """
+The tail of `Run`: `model.Init()` is dispatched as the first command, the
+initial view is rendered, resize and command handlers are registered, the
+event loop runs to completion, and on a non-killed exit the final model is
+rendered once more before `p.shutdown` restores the terminal.
+"""
+predecessor = "2.9"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 1117, end = 1118, render = { kind = "full" } },
+  { path = "tea.go", start = 1133, end = 1134, render = { kind = "full" } },
+  { path = "tea.go", start = 1136, end = 1144, render = { kind = "full" } },
+  { path = "tea.go", start = 1145, end = 1145, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 1170, end = 1173, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.11"
-descriptor = "tea.go: Send/Quit/Kill/Wait"
-justification = "Program's small public control-flow API used from outside the Update loop. Send and Quit keep their full doc comments (the blocking/no-op caveats are non-obvious); Kill and Wait are one-line bodies whose names are self-explanatory, so their doc comments are dropped for budget while their signatures and bodies stay fully visible."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 1176
-end = 1199
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 1204
-end = 1205
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 1209
-end = 1210
-render = { kind = "full" }
+descriptor = "Debug hooks: `TEA_TRACE`, `TEA_DEBUG`, panic recovery"
+justification = """
+Two environment variables documented nowhere else in the tree:
+`TEA_TRACE=<path>` installs a file logger inside `NewProgram`, and
+`TEA_DEBUG` makes a recovered panic dump a `bubbletea-panic-<unix>.log`
+file. Both recovery function signatures are rendered so the pair —
+`recoverFromPanic` for the main loop, `recoverFromGoPanic` for command
+goroutines — reads as complete.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 632, end = 637, render = { kind = "full" } },
+  { path = "tea.go", start = 1269, end = 1269, render = { kind = "full" } },
+  { path = "tea.go", start = 1281, end = 1282, render = { kind = "full" } },
+  { path = "tea.go", start = 1283, end = 1283, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 1294, end = 1294, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.12"
-descriptor = "tea.go: Println/Printf"
-justification = "Program's unmanaged above-the-fold printing methods, referenced by the README's debugging section."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea.go"
-start = 1368
-end = 1376
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tea.go"
-start = 1386
-end = 1386
-render = { kind = "full" }
+descriptor = "Frame pacing: the render ticker and the FPS bounds"
+justification = """
+The renderer runs off a ticker at `time.Second / fps`, flushing the
+program's output buffer and then the renderer on every tick;
+`defaultFPS = 60` and `maxFPS = 120` in `renderer.go` bound what `WithFPS`
+accepts (clamped in `NewProgram`). Answers "how often is my View drawn" and
+points at the goroutine to inspect for render-timing bugs.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "renderer.go", start = 10, end = 15, render = { kind = "full" } },
+  { path = "tea.go", start = 626, end = 630, render = { kind = "full" } },
+  { path = "tea.go", start = 1393, end = 1394, render = { kind = "full" } },
+  { path = "tea.go", start = 1409, end = 1411, render = { kind = "full" } },
+  { path = "tea.go", start = 1416, end = 1418, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 3 — Message/command surface (remaining root .go files)
-# ============================================================
+# ---------------------------------------------------------------- tier 3
+# The message and command catalog. Bubble Tea's API is mostly "which message
+# type do I match on, and which command do I return"; these batches close
+# both classes across the dozen tiny files that define them.
 
 [[batches]]
 id = "3.1"
-descriptor = "commands.go: Batch/Sequence + Every/Tick/RequestWindowSize signatures"
-justification = "Batch and Sequence are used in nearly every non-trivial program, so they get full bodies; Every, Tick, and RequestWindowSize are the file's remaining exported commands, rostered as signatures so the full exported-command class-closure is visible in one place."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "commands.go"
-start = 7
-end = 8
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "commands.go"
-start = 15
-end = 30
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "commands.go"
-start = 102
-end = 102
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "commands.go"
-start = 154
-end = 154
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "commands.go"
-start = 173
-end = 173
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
+descriptor = "Input event message types: keys, mouse, paste, focus (complete)"
+justification = """
+Every message an interactive program matches on in `Update`, from the four
+files that define them: `KeyPressMsg`/`KeyReleaseMsg` and the `KeyMsg`
+interface, the `MouseMsg` interface and its four concrete variants, the
+three paste messages, and focus/blur. Both `KeyMsg` and `MouseMsg` being
+interfaces in v2 is the most common upgrade bug, so their declarations are
+worth rendering in full.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "key.go", start = 191, end = 191, render = { kind = "full" } },
+  { path = "key.go", start = 224, end = 224, render = { kind = "full" } },
+  { path = "key.go", start = 259, end = 260, render = { kind = "full" } },
+  { path = "key.go", start = 263, end = 264, render = { kind = "full" } },
+  { path = "mouse.go", start = 46, end = 47, render = { kind = "full" } },
+  { path = "mouse.go", start = 50, end = 51, render = { kind = "full" } },
+  { path = "mouse.go", start = 83, end = 83, render = { kind = "full" } },
+  { path = "mouse.go", start = 98, end = 98, render = { kind = "full" } },
+  { path = "mouse.go", start = 113, end = 113, render = { kind = "full" } },
+  { path = "mouse.go", start = 128, end = 128, render = { kind = "full" } },
+  { path = "paste.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "paste.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "paste.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "focus.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "focus.go", start = 9, end = 9, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "options.go: ProgramOption roster (signatures only)"
-justification = "Every functional option NewProgram accepts, truncated to its signature — a roster-of-names concern (partial inclusion would wrongly imply the omitted options don't exist)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "options.go"
-start = 22
-end = 22
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 30
-end = 30
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 40
-end = 40
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 58
-end = 58
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 66
-end = 66
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 76
-end = 76
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 84
-end = 84
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 98
-end = 98
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 133
-end = 133
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 142
-end = 142
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 153
-end = 153
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
-[[batches.content.spans]]
-path = "options.go"
-start = 163
-end = 163
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
+descriptor = "Terminal report message types: colour, clipboard, size, capability (complete)"
+justification = """
+The other half of the message class — everything the terminal reports back:
+foreground/background/cursor colour, clipboard contents, cursor position,
+window size, termcap capability, terminal version, keyboard enhancements,
+colour profile, environment, raw output and mode reports, plus `BatchMsg`.
+One declaration line per type, each with its file, so "which message carries
+X" needs no search.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "color.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "color.go", start = 67, end = 67, render = { kind = "full" } },
+  { path = "color.go", start = 81, end = 81, render = { kind = "full" } },
+  { path = "clipboard.go", start = 5, end = 7, render = { kind = "full" } },
+  { path = "cursor.go", start = 7, end = 7, render = { kind = "full" } },
+  { path = "screen.go", start = 9, end = 11, render = { kind = "full" } },
+  { path = "screen.go", start = 62, end = 62, render = { kind = "full" } },
+  { path = "termcap.go", start = 41, end = 42, render = { kind = "full" } },
+  { path = "xterm.go", start = 4, end = 5, render = { kind = "full" } },
+  { path = "keyboard.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "profile.go", start = 13, end = 14, render = { kind = "full" } },
+  { path = "environ.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "raw.go", start = 5, end = 6, render = { kind = "full" } },
+  { path = "commands.go", start = 21, end = 21, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "key.go: special key constant roster"
-justification = "Named special-key constant groups (arrows, function keys) so 'does tea.KeyF37 exist' is answerable without a source read. The uniform KeyF4..KeyF61 run is elided with an ellipsis marker (F1/F2 and F62/F63 anchor the range) since every entry follows the same `KeyFN = uv.KeyFN` shape. An earlier standalone KeyExtended const and two more constant groups later in the file (keypad keys; modifier/media/lock/C0/G0 keys) are each hedged with their own ellipsis rather than silently dropped."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "key.go"
-start = 12
-end = 12
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "key.go"
-start = 16
-end = 32
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 36
-end = 36
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "key.go"
-start = 72
-end = 73
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 103
-end = 103
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "key.go"
-start = 133
-end = 134
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 139
-end = 139
-render = { kind = "ellipsis" }
+descriptor = "Command constructors, part 1: lifecycle, batching, timing, output"
+justification = """
+The commands a program returns from `Init`/`Update`: `Quit`, `Suspend`,
+`Interrupt`, `Batch`, `Sequence`, `Every`, `Tick`, `RequestWindowSize`,
+`ClearScreen`, `Println`, `Printf`, `Exec`, `ExecProcess`. Signature lines
+only; part 2 completes the class with the terminal-query commands, and the
+two together answer "what can I return from Update".
+"""
+predecessor = "2.7"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 555, end = 555, render = { kind = "full" } },
+  { path = "tea.go", start = 564, end = 564, render = { kind = "full" } },
+  { path = "tea.go", start = 590, end = 590, render = { kind = "full" } },
+  { path = "commands.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "commands.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "commands.go", start = 102, end = 102, render = { kind = "full" } },
+  { path = "commands.go", start = 154, end = 154, render = { kind = "full" } },
+  { path = "commands.go", start = 173, end = 173, render = { kind = "full" } },
+  { path = "screen.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "renderer.go", start = 70, end = 70, render = { kind = "full" } },
+  { path = "renderer.go", start = 86, end = 86, render = { kind = "full" } },
+  { path = "exec.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "exec.go", start = 50, end = 50, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "key.go: KeyMsg interface + Key struct field roster"
-justification = "The actual key-event type shape: KeyMsg's Key() method contract and Key's fields (Text/Mod/Code/ShiftedCode/BaseCode/IsRepeat) — the v2 field names every Update function matching on keys needs. Matching-pattern prose is covered instead by UPGRADE_GUIDE_V2.md's before/after examples (batch 8.3)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "key.go"
-start = 259
-end = 264
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 302
-end = 302
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 306
-end = 306
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 309
-end = 309
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 313
-end = 313
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 324
-end = 324
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 335
-end = 335
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "key.go"
-start = 342
-end = 342
-render = { kind = "full" }
+descriptor = "Command constructors, part 2: terminal queries and clipboard"
+justification = """
+Completes the command class: the three colour requests, the four clipboard
+commands (system and primary, read and set, all OSC 52), cursor-position,
+capability and terminal-version requests, and `Raw` for sending arbitrary
+escape sequences. Without part 2 an agent would reasonably conclude these
+capabilities are absent from v2.
+"""
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "color.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "color.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "color.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "clipboard.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "clipboard.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "clipboard.go", start = 54, end = 54, render = { kind = "full" } },
+  { path = "clipboard.go", start = 68, end = 68, render = { kind = "full" } },
+  { path = "cursor.go", start = 26, end = 26, render = { kind = "full" } },
+  { path = "termcap.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "xterm.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "raw.go", start = 33, end = 33, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "mouse.go: MouseButton consts, MouseMsg interface, Mouse struct"
-justification = "The base mouse-event vocabulary — button constants, the MouseMsg interface contract, and the Mouse struct fields (X, Y zero-based from top-left)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "mouse.go"
-start = 29
-end = 42
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "mouse.go"
-start = 46
-end = 51
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "mouse.go"
-start = 71
-end = 75
-render = { kind = "full" }
+descriptor = "`input.go`: the ultraviolet-event → `tea.Msg` translation table"
+justification = """
+The bridge between the dependency's event vocabulary and this library's:
+`translateInputEvent` maps every `uv.*Event` the terminal reader produces
+onto the message type `Update` sees. The first four mappings render in full
+to establish the one-to-one pattern; the remaining `case` labels render
+without their (mechanically identical) return lines, which is why the
+ellipses appear. This is the cheapest answer to "where does `KeyPressMsg`
+actually come from".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "input.go", start = 7, end = 17, render = { kind = "full" } },
+  { path = "input.go", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "input.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "input.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "input.go", start = 24, end = 24, render = { kind = "full" } },
+  { path = "input.go", start = 26, end = 26, render = { kind = "full" } },
+  { path = "input.go", start = 28, end = 28, render = { kind = "full" } },
+  { path = "input.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "input.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "input.go", start = 34, end = 34, render = { kind = "full" } },
+  { path = "input.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "input.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "input.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "input.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "input.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "input.go", start = 46, end = 46, render = { kind = "full" } },
+  { path = "input.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "input.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "input.go", start = 51, end = 51, render = { kind = "ellipsis" } },
+  { path = "input.go", start = 53, end = 53, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "Remaining message-type roster (screen/cursor/color/clipboard/focus/profile/environ/mod/paste/raw/termcap/xterm/keyboard)"
-justification = "Roster of every exported Msg/value type declared across the thirteen smallest root files — a catastrophic-omission hedge showing the full breadth of the Msg vocabulary without paying for any file's full body. Most files need only one line; cursor.go (Position, CursorShape) and mod.go (the KeyMod type) also declare non-Msg exported types that would otherwise be silently missing from this roster, so those two get one more line each. An ellipsis after each marks the named constant values (CursorShape's 3 shapes; KeyMod's ModShift/ModAlt/ModCtrl/etc. — the latter referenced directly by UPGRADE_GUIDE_V2.md's field-rename table) that exist but aren't spelled out here for budget. Each of these files is small enough that a follow-up file read is a single hop if the agent needs the full type."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "screen.go"
-start = 9
-end = 9
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "screen.go"
-start = 62
-end = 62
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursor.go"
-start = 4
-end = 4
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursor.go"
-start = 7
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursor.go"
-start = 12
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursor.go"
-start = 16
-end = 16
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "color.go"
-start = 36
-end = 36
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "color.go"
-start = 67
-end = 67
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "color.go"
-start = 81
-end = 81
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "clipboard.go"
-start = 5
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "focus.go"
-start = 5
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "focus.go"
-start = 9
-end = 9
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "profile.go"
-start = 13
-end = 13
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "environ.go"
-start = 19
-end = 19
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "mod.go"
-start = 6
-end = 6
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "mod.go"
-start = 10
-end = 10
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "mod.go"
-start = 11
-end = 11
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "paste.go"
-start = 5
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "paste.go"
-start = 16
-end = 16
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "paste.go"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "raw.go"
-start = 5
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "termcap.go"
-start = 41
-end = 41
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "xterm.go"
-start = 4
-end = 4
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "keyboard.go"
-start = 9
-end = 9
-render = { kind = "full" }
+descriptor = "`Key` struct fields"
+justification = """
+What a key event actually carries in v2: `Text`, `Mod`, `Code`,
+`ShiftedCode`, `BaseCode`, `IsRepeat`. This replaces v1's
+`Type`/`Runes`/`Alt` triple and is what every key-handling migration must be
+rewritten against. Field lines only; doc comments elided.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "key.go", start = 302, end = 302, render = { kind = "full" } },
+  { path = "key.go", start = 303, end = 303, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 306, end = 306, render = { kind = "full" } },
+  { path = "key.go", start = 309, end = 309, render = { kind = "full" } },
+  { path = "key.go", start = 313, end = 313, render = { kind = "full" } },
+  { path = "key.go", start = 324, end = 324, render = { kind = "full" } },
+  { path = "key.go", start = 335, end = 335, render = { kind = "full" } },
+  { path = "key.go", start = 342, end = 343, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 4 — Renderer
-# ============================================================
+[[batches]]
+id = "3.7"
+descriptor = "Key message methods: `String`, `Keystroke`, `Key`"
+justification = """
+The complete method set on `KeyPressMsg`, `KeyReleaseMsg` and `Key`.
+`String()` returns the text where there is one ("?"), `Keystroke()` always
+returns the modifier form ("shift+/") with modifiers in a fixed order — the
+distinction that decides whether `case "ctrl+c"` matches.
+"""
+predecessor = "3.6"
+content.kind = "lines"
+content.spans = [
+  { path = "key.go", start = 195, end = 195, render = { kind = "full" } },
+  { path = "key.go", start = 213, end = 213, render = { kind = "full" } },
+  { path = "key.go", start = 219, end = 219, render = { kind = "full" } },
+  { path = "key.go", start = 228, end = 228, render = { kind = "full" } },
+  { path = "key.go", start = 246, end = 246, render = { kind = "full" } },
+  { path = "key.go", start = 253, end = 253, render = { kind = "full" } },
+  { path = "key.go", start = 345, end = 346, render = { kind = "full" } },
+  { path = "key.go", start = 351, end = 351, render = { kind = "full" } },
+  { path = "key.go", start = 369, end = 369, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "`key.go` key-code catalog: group headings plus the C0/G0 names"
+justification = """
+`key.go` is 371 lines of which ~170 are re-exported key constants. Rather
+than reproduce them this batch renders the group headings — special keys,
+keypad keys, Kitty-protocol keys, function keys, lock/media/modifier keys —
+with ellipses for the members, plus the fully-spelled C0/G0 block
+(`KeyBackspace`, `KeyTab`, `KeyEnter`, `KeyReturn`, `KeyEscape`, `KeyEsc`,
+`KeySpace`) because those are the names people actually type. The taxonomy
+plus exact line coordinates makes any member one read away.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "key.go", start = 9, end = 13, render = { kind = "full" } },
+  { path = "key.go", start = 18, end = 20, render = { kind = "full" } },
+  { path = "key.go", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 34, end = 36, render = { kind = "full" } },
+  { path = "key.go", start = 37, end = 37, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 55, end = 55, render = { kind = "full" } },
+  { path = "key.go", start = 58, end = 58, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 70, end = 72, render = { kind = "full" } },
+  { path = "key.go", start = 73, end = 73, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 136, end = 136, render = { kind = "full" } },
+  { path = "key.go", start = 139, end = 139, render = { kind = "full" } },
+  { path = "key.go", start = 140, end = 140, render = { kind = "ellipsis" } },
+  { path = "key.go", start = 176, end = 176, render = { kind = "full" } },
+  { path = "key.go", start = 178, end = 183, render = { kind = "full" } },
+  { path = "key.go", start = 185, end = 188, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Modifier keys: the complete `KeyMod` constant set"
+justification = """
+`mod.go` is the whole modifier vocabulary: `ModShift`, `ModAlt`, `ModCtrl`,
+`ModMeta`, `ModHyper`, `ModSuper` and the three lock states, with the note
+that Meta and Super are swapped relative to the Kitty protocol. Needed by
+every `msg.Mod.Contains(...)` check, and the file is small enough to close
+completely.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "mod.go", start = 5, end = 13, render = { kind = "full" } },
+  { path = "mod.go", start = 19, end = 20, render = { kind = "full" } },
+  { path = "mod.go", start = 24, end = 26, render = { kind = "full" } },
+  { path = "mod.go", start = 27, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "`Mouse` struct and the complete mouse-button constant set"
+justification = """
+What a mouse event carries (`X`, `Y`, `Button`, `Mod`) and every button name
+v2 exports — left/middle/right, the four wheel directions, backward/forward
+and buttons 10 and 11. The v1 spellings were `MouseButtonLeft` and friends,
+so the exact names matter for migrations.
+"""
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  { path = "mouse.go", start = 10, end = 10, render = { kind = "full" } },
+  { path = "mouse.go", start = 29, end = 42, render = { kind = "full" } },
+  { path = "mouse.go", start = 71, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "`MouseMode` enum: none / cell-motion / all-motion"
+justification = """
+The three values the `View.MouseMode` field takes, with the doc lines
+explaining SGR-extended mode with X10 fallback and why cell motion is better
+supported than all motion. 3.10 says what arrives; this says how to ask for
+it.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 283, end = 291, render = { kind = "full" } },
+  { path = "tea.go", start = 292, end = 292, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 299, end = 301, render = { kind = "full" } },
+  { path = "tea.go", start = 302, end = 302, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 305, end = 306, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "Cursor value types: `Cursor`, `NewCursor`, `CursorShape`"
+justification = """
+The `View.Cursor` field's type — position, colour, shape, blink — plus
+`NewCursor(x, y)` with its block/blinking defaults, and `Position`,
+`CursorShape` and its three constants from `cursor.go`. Setting
+`view.Cursor = nil` is how v2 hides the cursor, which these lines make
+legible.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 356, end = 357, render = { kind = "full" } },
+  { path = "tea.go", start = 358, end = 358, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 360, end = 360, render = { kind = "full" } },
+  { path = "tea.go", start = 363, end = 363, render = { kind = "full" } },
+  { path = "tea.go", start = 366, end = 366, render = { kind = "full" } },
+  { path = "tea.go", start = 369, end = 370, render = { kind = "full" } },
+  { path = "tea.go", start = 374, end = 374, render = { kind = "full" } },
+  { path = "cursor.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "cursor.go", start = 11, end = 19, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "Keyboard enhancements: request fields and response predicates"
+justification = """
+The `View.KeyboardEnhancements` request struct (four flags, from key
+repeat/release reporting to reporting every key as an escape code) and the
+complete predicate set on the `KeyboardEnhancementsMsg` the terminal answers
+with. This pair is how a program discovers whether "shift+enter" is even
+distinguishable in the user's terminal.
+"""
+predecessor = "3.2"
+content.kind = "lines"
+content.spans = [
+  { path = "tea.go", start = 241, end = 241, render = { kind = "full" } },
+  { path = "tea.go", start = 242, end = 242, render = { kind = "ellipsis" } },
+  { path = "tea.go", start = 247, end = 247, render = { kind = "full" } },
+  { path = "tea.go", start = 253, end = 253, render = { kind = "full" } },
+  { path = "tea.go", start = 259, end = 259, render = { kind = "full" } },
+  { path = "tea.go", start = 266, end = 267, render = { kind = "full" } },
+  { path = "keyboard.go", start = 28, end = 29, render = { kind = "full" } },
+  { path = "keyboard.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "keyboard.go", start = 39, end = 39, render = { kind = "full" } },
+  { path = "keyboard.go", start = 45, end = 45, render = { kind = "full" } },
+  { path = "keyboard.go", start = 51, end = 51, render = { kind = "full" } },
+  { path = "keyboard.go", start = 57, end = 57, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "`Batch` vs `Sequence` semantics and where they execute"
+justification = """
+Concurrent versus ordered command execution, the `BatchMsg`/`sequenceMsg`
+payloads, the `compactCmds` helper that drops nils and unwraps a lone
+command, and the two `Program` methods that actually run them — `execBatchMsg`
+spawns a goroutine per command and waits, `execSequenceMsg` runs them in
+order. A recurring correctness question answered without a follow-up read.
+"""
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "commands.go", start = 7, end = 8, render = { kind = "full" } },
+  { path = "commands.go", start = 23, end = 24, render = { kind = "full" } },
+  { path = "commands.go", start = 29, end = 30, render = { kind = "full" } },
+  { path = "commands.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "tea.go", start = 892, end = 892, render = { kind = "full" } },
+  { path = "tea.go", start = 918, end = 918, render = { kind = "full" } },
+  { path = "tea.go", start = 929, end = 929, render = { kind = "full" } },
+  { path = "tea.go", start = 957, end = 957, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "`Exec` / `ExecProcess` and the `ExecCommand` interface"
+justification = """
+Running an editor or shell from inside a TUI: `ExecProcess` wraps an
+`*exec.Cmd`, `Exec` takes anything implementing the four-method
+`ExecCommand` interface, both block the program while running, and
+`ExecCallback` carries the exit error back into `Update`. `Program.exec` at
+`exec.go:102` is where the terminal is released and restored around the run.
+"""
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "exec.go", start = 15, end = 16, render = { kind = "full" } },
+  { path = "exec.go", start = 28, end = 28, render = { kind = "full" } },
+  { path = "exec.go", start = 56, end = 56, render = { kind = "full" } },
+  { path = "exec.go", start = 58, end = 65, render = { kind = "full" } },
+  { path = "exec.go", start = 101, end = 102, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "Logging to a file: `LogToFile` / `LogToFileWith`"
+justification = """
+A TUI owns stdout, so file logging is the standard debugging route, and this
+is the whole public surface of `logging.go`: the convenience wrapper, the
+`LogOptionsSetter` interface that lets charmbracelet/log be swapped in, and
+the reminder that the caller closes the file. The README's Debugging section
+tells people to use it; these lines say what it does.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "logging.go", start = 11, end = 12, render = { kind = "full" } },
+  { path = "logging.go", start = 23, end = 24, render = { kind = "full" } },
+  { path = "logging.go", start = 29, end = 32, render = { kind = "full" } },
+  { path = "logging.go", start = 35, end = 35, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 4
+# The rendering subsystem and the platform layer: the parts of the tree that
+# turn a `View` into bytes and that differ per operating system.
 
 [[batches]]
 id = "4.1"
-descriptor = "renderer.go: renderer interface (method roster)"
-justification = "Every method the renderer interface requires (cursedRenderer, nilRenderer both implement all of them) — the right first stop for 'how would I write a custom renderer' or 'what can a renderer do'. Name-only roster to stay cheap while showing the complete set (a partial method listing here would wrongly imply the interface is smaller than it is)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "renderer.go"
-start = 18
-end = 18
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 23
-end = 23
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 26
-end = 26
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 29
-end = 29
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 32
-end = 32
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 35
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 38
-end = 38
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 41
-end = 41
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 44
-end = 44
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 47
-end = 47
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 50
-end = 50
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 53
-end = 53
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "renderer.go"
-start = 56
-end = 57
-render = { kind = "full" }
+descriptor = "The `renderer` interface: complete method set, and its two implementations"
+justification = """
+Everything the runtime asks of a renderer — start, close, render, flush,
+reset, insertAbove, setSyncdUpdates, setWidthMethod, resize,
+setColorProfile, clearScreen, writeString, onMouse — plus the two types that
+implement it (`cursedRenderer`, and `nilRenderer` for `WithoutRenderer`).
+The interface is unexported, so this roster is the only way to know the
+seam exists without reading two large files.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "renderer.go", start = 17, end = 18, render = { kind = "full" } },
+  { path = "renderer.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "renderer.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "renderer.go", start = 26, end = 26, render = { kind = "full" } },
+  { path = "renderer.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "renderer.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "renderer.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "renderer.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "renderer.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "renderer.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "renderer.go", start = 47, end = 47, render = { kind = "full" } },
+  { path = "renderer.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "renderer.go", start = 53, end = 53, render = { kind = "full" } },
+  { path = "renderer.go", start = 56, end = 56, render = { kind = "full" } },
+  { path = "nil_renderer.go", start = 10, end = 12, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 38, end = 38, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "cursed_renderer.go: struct field roster + constructor signature"
-justification = "cursedRenderer is the real (only non-nil) renderer implementation; its fields anchor everything else in the file."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 18
-end = 36
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 40
-end = 40
-render = { kind = "truncated", pattern = "^func \\w+\\(" }
+descriptor = "`cursedRenderer`: every function in the 860-line renderer"
+justification = """
+`cursed_renderer.go` is the second-largest file and has no exported symbols,
+so its function roster is pure navigation value: the constructor, the
+interface methods, and the free functions that do the real work
+(`enableAltScreen`, `enterAltScreen`, `exitAltScreen`, `enableTextCursor`,
+`setProgressBar`, `viewEquals`, `keyboardEnhancementsFlags`, `reset`). Names
+are truncated at the argument list where there is one; the line numbers make
+any of them a single read away — notably `flush` at line 257, which runs to
+line 576.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "cursed_renderer.go", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 75, end = 75, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 249, end = 249, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 257, end = 257, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 579, end = 579, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 587, end = 587, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 593, end = 593, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 611, end = 611, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 619, end = 619, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 634, end = 634, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 645, end = 645, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 653, end = 653, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 663, end = 663, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 674, end = 674, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 683, end = 683, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 690, end = 690, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 707, end = 707, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 766, end = 766, render = { kind = "truncated", pattern = "^[^(]+\\([^)]*\\) [^(]+" } },
+  { path = "cursed_renderer.go", start = 779, end = 779, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 803, end = 803, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer.go", start = 845, end = 845, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "cursed_renderer.go: flush() synchronized-output rationale"
-justification = "flush() is the 300+ line per-frame diffing function; this is its highest-value prose — the comment explaining why updates are wrapped in synchronized-output mode vs. hide/show-cursor sequences depending on terminal support."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 493
-end = 510
-render = { kind = "full" }
+descriptor = "`View` fields → ANSI sequences, in `cursedRenderer.start`"
+justification = """
+The mapping that makes the declarative model concrete: `AltScreen` writes
+the altscreen sequence, `Cursor` toggles text-cursor visibility and style,
+foreground/background colours are set through colorful, bracketed paste and
+focus reporting are modes, `MouseMode` selects button-event versus any-event
+plus SGR, `WindowTitle` and `ProgressBar` write OSC sequences, and
+modifyOtherKeys plus Kitty keyboard flags are always requested. Answers "what
+does setting this View field actually send to my terminal".
+"""
+predecessor = "4.2"
+content.kind = "lines"
+content.spans = [
+  { path = "cursed_renderer.go", start = 87, end = 88, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 90, end = 90, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 91, end = 91, render = { kind = "ellipsis" } },
+  { path = "cursed_renderer.go", start = 103, end = 103, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 109, end = 109, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 115, end = 131, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 136, end = 136, render = { kind = "full" } },
+  { path = "cursed_renderer.go", start = 138, end = 138, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "cursed_renderer.go: insertAbove + viewEquals purpose"
-justification = "insertAbove backs Program.Println/Printf's unmanaged output; viewEquals is the diff check that gates whether flush() redraws at all — both are non-obvious enough to be worth a direct pointer even without their full bodies (each pointer is followed by an ellipsis marking the elided rest of the body)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 706
-end = 711
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 712
-end = 712
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 803
-end = 803
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "cursed_renderer.go"
-start = 804
-end = 804
-render = { kind = "ellipsis" }
+descriptor = "Platform matrix: build tags and per-OS terminal functions"
+justification = """
+Eight build-tagged files implement four things differently per platform:
+`initInput` (raw mode, plus VT enabling on Windows), `suspendSupported` and
+`suspendProcess` (SIGTSTP versus a no-op), `listenForResize` (SIGWINCH
+versus closing the channel immediately), and `checkOptimizedMovements`
+(termios flags in four variants). The tty/signals build-tag lines plus every
+per-platform signature make the matrix legible and tell an agent exactly
+which file to edit for a platform-specific change (the four `termios_*.go`
+variants are distinguished by filename).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tty_unix.go", start = 1, end = 1, render = { kind = "truncated", pattern = "^//go:build \\S+" } },
+  { path = "tty_unix.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "tty_unix.go", start = 37, end = 37, render = { kind = "full" } },
+  { path = "tty_unix.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "tty_windows.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "tty_windows.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "tty_windows.go", start = 62, end = 64, render = { kind = "full" } },
+  { path = "signals_unix.go", start = 1, end = 1, render = { kind = "truncated", pattern = "^//go:build \\S+" } },
+  { path = "signals_unix.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "signals_windows.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "signals_windows.go", start = 6, end = 8, render = { kind = "full" } },
+  { path = "termios_unix.go", start = 11, end = 13, render = { kind = "full" } },
+  { path = "termios_bsd.go", start = 11, end = 12, render = { kind = "full" } },
+  { path = "termios_other.go", start = 7, end = 7, render = { kind = "full" } },
+  { path = "termios_windows.go", start = 8, end = 10, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 5 — Platform / terminal glue
-# ============================================================
+[[batches]]
+id = "4.5"
+descriptor = "`tty.go`: terminal acquisition, input loop, resize detection"
+justification = """
+The program-side terminal plumbing: every function in `tty.go` — suspend,
+initTerminal, restoreTerminalState, restoreInput, initInputReader, readLoop,
+waitForReadLoop, checkResize and the exported `OpenTTY` — plus the two lines
+inside `initInputReader` that build ultraviolet's `NewCancelReader` and
+`NewTerminalReader`, which is where input actually comes from. Names plus line
+numbers turn "why is my program not seeing resizes" into one targeted read.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tty.go", start = 12, end = 12, render = { kind = "full" } },
+  { path = "tty.go", start = 24, end = 24, render = { kind = "full" } },
+  { path = "tty.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "tty.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "tty.go", start = 56, end = 56, render = { kind = "full" } },
+  { path = "tty.go", start = 69, end = 69, render = { kind = "full" } },
+  { path = "tty.go", start = 74, end = 74, render = { kind = "full" } },
+  { path = "tty.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "tty.go", start = 97, end = 97, render = { kind = "full" } },
+  { path = "tty.go", start = 109, end = 109, render = { kind = "full" } },
+  { path = "tty.go", start = 130, end = 130, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 5
+# Documentation, examples, tests and CI. Appendix material in ranking terms,
+# but the upgrade-guide tables and the examples index are the highest-value
+# docs in the tree for an agent working on someone else's Bubble Tea code.
 
 [[batches]]
 id = "5.1"
-descriptor = "input.go: translateInputEvent"
-justification = "The single exhaustive table mapping every ultraviolet event type to its tea.*Msg equivalent — ground truth for 'what Msg type will I get for event X', and catastrophic-omission-critical (partial inclusion would hide real message types)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "input.go"
-start = 1
-end = 54
-render = { kind = "full" }
+descriptor = "`examples/` and `tutorials/` directory listings"
+justification = """
+Sixty-three example programs and two tutorials, each in its own directory
+(the `examples/README.md` index writes up 38 of them). Both trees are
+separate Go modules — `examples/go.mod` and `tutorials/go.mod` — that
+`replace` the parent with `../`. When the question is "how do I do X with
+Bubble Tea" the answer is usually a directory name in this listing plus one
+read of its `main.go`, but only if the agent knows the full set exists.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "tutorials", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "exec.go: Exec/ExecProcess signatures"
-justification = "How to run an interactive subprocess (e.g. an editor) from inside a Bubble Tea program without corrupting terminal state — a common real feature request, demonstrated in examples/exec."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "exec.go"
-start = 15
-end = 26
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "exec.go"
-start = 50
-end = 52
-render = { kind = "full" }
+descriptor = "`UPGRADE_GUIDE_V2.md`: complete section map"
+justification = """
+Every `##` heading of the 573-line migration guide, in order: import paths,
+declarative views, `View` return type, key messages, paste, mouse, removed
+options, removed commands, removed methods, renamed APIs, new options,
+before/after, quick reference, feedback. Any "did X change in v2" question
+lands on a section with one read.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 8, end = 8, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 25, end = 25, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 39, end = 39, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 60, end = 60, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 104, end = 104, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 194, end = 194, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 214, end = 214, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 285, end = 285, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 299, end = 299, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 318, end = 318, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 334, end = 334, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 341, end = 341, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 350, end = 350, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 459, end = 459, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 559, end = 559, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "logging.go: LogToFile"
-justification = "Since a running Bubble Tea program owns stdout, file logging is the standard debugging technique (also documented in the README)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "logging.go"
-start = 11
-end = 14
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "logging.go"
-start = 23
-end = 25
-render = { kind = "full" }
+descriptor = "The v1→v2 migration checklist"
+justification = """
+Twelve checkboxes that summarise the entire breaking-change surface: import
+paths, `View() string` → `View() tea.View`, `KeyMsg` → `KeyPressMsg`, key
+field renames, `" "` → `"space"`, mouse message changes, button constant
+renames, options and commands replaced by View fields, removed program
+methods, `WindowSize()` → `RequestWindowSize`, `Sequentially` → `Sequence`.
+The densest paragraph in the repository for anyone porting v1 code.
+"""
+predecessor = "5.2"
+content.kind = "lines"
+content.spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 12, end = 23, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "Platform-glue signature roster (tty/termios/signals across OSes)"
-justification = "One signature per platform-specific file (raw-mode entry, cursor-optimization detection, resize-signal listening) — shows that unix and windows variants both exist for each concern without paying for any body. Directly answers 'why isn't SIGWINCH handled on Windows' class questions via the visible pairing."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tty_unix.go"
-start = 15
-end = 15
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-[[batches.content.spans]]
-path = "tty_windows.go"
-start = 13
-end = 13
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-[[batches.content.spans]]
-path = "termios_unix.go"
-start = 11
-end = 11
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-[[batches.content.spans]]
-path = "termios_windows.go"
-start = 8
-end = 8
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-[[batches.content.spans]]
-path = "signals_unix.go"
-start = 15
-end = 15
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-[[batches.content.spans]]
-path = "signals_windows.go"
-start = 8
-end = 8
-render = { kind = "truncated", pattern = "^func \\([^)]+\\) \\w+\\(" }
-
-# ============================================================
-# Tier 6 — Tests
-# ============================================================
+descriptor = "README section map"
+justification = """
+Every `##` heading of the 402-line README plus the tutorial's `###`
+subsections: the model, initialization, update, view and "all together now"
+walkthrough, what's next, debugging with Delve and file logging, the
+companion-library list, in-the-wild users, contributing, feedback,
+acknowledgments and license. Tells an agent which part of the README to read
+and, equally, that the README is a tutorial rather than an API reference.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 32, end = 32, render = { kind = "full" } },
+  { path = "README.md", start = 43, end = 43, render = { kind = "full" } },
+  { path = "README.md", start = 86, end = 86, render = { kind = "full" } },
+  { path = "README.md", start = 99, end = 99, render = { kind = "full" } },
+  { path = "README.md", start = 131, end = 131, render = { kind = "full" } },
+  { path = "README.md", start = 199, end = 199, render = { kind = "full" } },
+  { path = "README.md", start = 242, end = 242, render = { kind = "full" } },
+  { path = "README.md", start = 257, end = 257, render = { kind = "full" } },
+  { path = "README.md", start = 270, end = 270, render = { kind = "full" } },
+  { path = "README.md", start = 295, end = 295, render = { kind = "full" } },
+  { path = "README.md", start = 315, end = 315, render = { kind = "full" } },
+  { path = "README.md", start = 329, end = 329, render = { kind = "full" } },
+  { path = "README.md", start = 366, end = 366, render = { kind = "full" } },
+  { path = "README.md", start = 372, end = 372, render = { kind = "full" } },
+  { path = "README.md", start = 380, end = 380, render = { kind = "full" } },
+  { path = "README.md", start = 392, end = 392, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "6.1"
-descriptor = "testdata/: golden file roster"
-justification = "Names every golden fixture under TestClearMsg/ and TestViewModel/ — shows the golden-test naming convention without pulling in any golden file content."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "testdata/TestClearMsg"
-entries = "all"
-[[batches.content.groups]]
-parent = "testdata/TestViewModel"
-entries = "all"
+id = "5.5"
+descriptor = "Test suite: every test function, and the golden-file fixtures"
+justification = """
+The complete `Test*`/`Benchmark*` roster across the six colocated test files
+plus the `testdata/` golden directories they compare against. Tells an agent
+what is already covered (program lifecycle, context cancellation, batch and
+sequence deadlocks, panics, exec, options, screen/view output, logging) and
+where to add a case — `go test` names truncated at the parameter list.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tea_test.go", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 270, end = 270, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 303, end = 303, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 337, end = 337, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 364, end = 364, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 400, end = 400, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 436, end = 436, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 489, end = 489, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 514, end = 514, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 536, end = 536, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 548, end = 548, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 579, end = 579, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tea_test.go", start = 647, end = 647, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "screen_test.go", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "screen_test.go", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "commands_test.go", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "commands_test.go", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "commands_test.go", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "commands_test.go", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "exec_test.go", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "exec_test.go", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "options_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "logging_test.go", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "cursed_renderer_test.go", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
-id = "6.2"
-descriptor = "Test function name roster (all _test.go files)"
-justification = "Every top-level Test function across all seven test files, truncated to name only — a cheap catastrophic-omission hedge for 'is there a test for X'."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "commands_test.go"
-start = 8
-end = 8
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "commands_test.go"
-start = 19
-end = 19
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "commands_test.go"
-start = 30
-end = 30
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "commands_test.go"
-start = 35
-end = 35
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "cursed_renderer_test.go"
-start = 32
-end = 32
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "logging_test.go"
-start = 10
-end = 10
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "options_test.go"
-start = 11
-end = 11
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "screen_test.go"
-start = 61
-end = 61
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "screen_test.go"
-start = 161
-end = 161
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "exec_test.go"
-start = 60
-end = 60
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "exec_test.go"
-start = 121
-end = 121
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 69
-end = 69
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 92
-end = 92
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 117
-end = 117
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 171
-end = 171
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 225
-end = 225
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 270
-end = 270
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 303
-end = 303
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 337
-end = 337
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 364
-end = 364
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 400
-end = 400
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 436
-end = 436
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 461
-end = 461
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 489
-end = 489
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 514
-end = 514
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 536
-end = 536
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 548
-end = 548
-render = { kind = "truncated", pattern = "^func \\w+" }
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 579
-end = 579
-render = { kind = "truncated", pattern = "^func \\w+" }
-
-[[batches]]
-id = "6.3"
-descriptor = "tea_test.go: TestTeaModel"
-justification = "The simplest test driving a real Program through NewProgram/Run with piped input/output — the template an agent would copy to write a new test. Overrides the 6.2 Truncated line for TestTeaModel's signature."
-predecessor = "6.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tea_test.go"
-start = 69
-end = 90
-render = { kind = "full" }
-
-# ============================================================
-# Tier 7 — Examples & tutorials
-# ============================================================
-
-[[batches]]
-id = "7.1"
-descriptor = "examples/: full directory listing"
-justification = "Names all ~65 example programs plus the module files at examples/ root. Critical catastrophic-omission hedge: examples/README.md (batch 7.2) only curates ~37 of these — without this listing the agent would wrongly assume the uncurated ones (autocomplete, canvas, capability, cellbuffer, clickable, colorprofile, cursor-style, doom-fire, dynamic-textarea, eyes, file-picker, focus-blur, keyboard-enhancements, prevent-quit, print-key, progress-bar, query-term, set-terminal-color, set-window-title, space, spinners, splash, suspend, table-resize, vanish, window-size) don't exist."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "examples"
-entries = "all"
-
-[[batches]]
-id = "7.2"
-descriptor = "examples/README.md: curated catalog excerpt"
-justification = "One-line descriptions of the first three curated examples (Alt Screen Toggle, Chat, Composable Views) — the fastest way to find 'is there an example that does X' for the examples the README bothers to document; an ellipsis at the next heading marks that the rest of the catalog (~34 more entries) follows the same format at later lines not rendered here for budget."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/README.md"
-start = 1
-end = 27
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "examples/README.md"
-start = 29
-end = 29
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "7.3"
-descriptor = "tutorials/: directory listing"
-justification = "Names both tutorial programs (basics/, commands/) and the tutorials-local go.mod/go.sum."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "tutorials"
-entries = "all"
-
-[[batches]]
-id = "7.4"
-descriptor = "examples/simple/main.go: main()"
-justification = "The smallest complete example program — a good template for 'show me a minimal Bubble Tea program'. main() is rendered whole, including its LogToFile call, so that symbol is literally visible here rather than just asserted; Quit and Suspend are the two Update-driven behaviors this program exits through (see batches 2.6/2.11 for their tea.go definitions), not re-rendered in this batch's own excerpt. Init/Update/View/the model type/tick are not rendered, for budget."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/simple/main.go"
-start = 1
-end = 29
-render = { kind = "full" }
-
-# ============================================================
-# Tier 8 — v1 -> v2 upgrade guide
-# ============================================================
-
-[[batches]]
-id = "8.1"
-descriptor = "UPGRADE_GUIDE_V2.md: intro + migration checklist"
-justification = "The top-level checklist an agent handed a 'migrate this v1 program' task would work through item by item. Each item's trailing markdown anchor link (`#section-slug`) is truncated off — not actionable in a non-hyperlinked snapshot — while every item's visible text stays intact."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "UPGRADE_GUIDE_V2.md"
-start = 8
-end = 11
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "UPGRADE_GUIDE_V2.md"
-start = 12
-end = 23
-render = { kind = "truncated", pattern = "^- \\[ \\] \\[[^\\]]+\\]" }
-
-[[batches]]
-id = "8.2"
-descriptor = "UPGRADE_GUIDE_V2.md: View field table"
-justification = "A table mapping every View field to what it does — denser and cheaper than re-deriving the same information from tea.go's full View godoc, and the natural complement to the field-name-only roster in batch 2.1."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "UPGRADE_GUIDE_V2.md"
-start = 87
-end = 102
-render = { kind = "full" }
-
-[[batches]]
-id = "8.3"
-descriptor = "UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables"
-justification = "The two most invasive v1->v2 API changes (KeyMsg/MouseMsg become interfaces, field renames Type->Code/Runes->Text/Alt->Mod, button constant renames) as flat lookup tables — exactly what an agent fixing v1-vintage code needs verbatim."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "UPGRADE_GUIDE_V2.md"
-start = 140
-end = 149
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "UPGRADE_GUIDE_V2.md"
-start = 255
-end = 265
-render = { kind = "full" }
-
-# ============================================================
-# Tier 9 — Build / lint / CI configuration
-# ============================================================
-
-[[batches]]
-id = "9.1"
-descriptor = "Taskfile.yaml + .golangci.yml"
-justification = "The canonical task runner (task lint / task test, wrapping golangci-lint and go test -race) plus the complete list of enabled linters — answers 'how do I build/test/lint this repo' directly from config (the exclusions/settings/formatters sections that follow are lower-value and omitted for budget)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "Taskfile.yaml"
-start = 1
-end = 14
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".golangci.yml"
-start = 1
-end = 27
-render = { kind = "full" }
-
-[[batches]]
-id = "9.3"
-descriptor = ".github/ subdirectory listings"
-justification = "Completes the .github/ class-closure hinted at in batch 1.1: every workflow file and every issue-template file, so the agent isn't left assuming build.yml is the only workflow."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = "all"
-
-[[batches]]
-id = "9.4"
-descriptor = "LICENSE: license identification"
-justification = "Just enough to identify the license type (MIT, matching the README footer link) without paying for the full boilerplate text."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "LICENSE"
-start = 1
-end = 1
-render = { kind = "full" }
+id = "5.6"
+descriptor = "CI workflow inventory and golden-test fixture directories"
+justification = """
+The complete set of GitHub workflow files (build, lint, coverage, examples,
+release, dependabot-sync, lint-sync) and the `testdata/` golden directories
+`TestClearMsg` and `TestViewModel`. Cheap closure on two small classes: what
+CI runs, and which golden fixtures a renderer change would have to
+regenerate.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".github/workflows", entries = "all" },
+  { parent = "testdata", entries = "all" },
+]

@@ -1,0 +1,1641 @@
+fixture = "rough-viz"
+revision_pin = "17c7ea86"
+summary = """
+roughViz.js (npm package rough-viz@2.0.5): a vanilla-JS charting library that
+renders hand-drawn/"sketchy" SVG charts using D3 (v5-era submodules) for
+scales/data and roughjs for the wobbly rendering. Nine chart classes (Bar,
+BarH, Donut, Line, Network, Force, Pie, Scatter, StackedBar) all extend a
+small `Chart` base class and are ~85-95% copy-pasted boilerplate around that
+shared skeleton (resizeHandler/remove/redraw/initChartValues/resolveData/
+addAxes/makeAxesRough/setTitle/addInteraction/initRoughObjects/
+drawFromObject/drawFromFile), with the real per-chart logic concentrated in a
+handful of distinctive methods. Two of the nine (Network, Force) are real,
+exported, demo'd-on-the-website chart types that README.md's chart-type table
+and API section never document. The query distribution this NS serves:
+"what chart types exist and what are their options", "why does X look/behave
+this way" (tracing a specific rendering/interaction detail to its exact
+line), "add a new chart type" (needs the shared-pattern insight so the agent
+copies the right skeleton instead of reinventing it), "fix/extend chart Y"
+(needs Y's distinctive span, not the boilerplate), "how do I build/test/run
+this", and "is there real test coverage" (most chart tests are inert
+placeholder stubs; only roughCeiling has a real unit test). Also flags two
+concrete latent bugs (Scatter's dead addScaleLine referencing an undefined
+helper; Network's drawFromObject referencing an unset this.extent) and one
+dead, syntactically-invalid util (saveToPng.js) discoverable by a debugging
+or code-review session.
+"""
+
+# ---------------------------------------------------------------------------
+# TIER 1 — orientation
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = "Complete top-level entry set first — every later batch's path prefix should be traceable to something the agent already saw here."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "dist/ listing"
+justification = "Built es/umd bundles (package.json main/module/unpkg/jsdelivr all point here). .gitignore excludes dist/ upstream — generated, not source; listing only, never worth a content batch."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "dist"
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "src/utils/ listing"
+justification = "5 helper modules shared unevenly across chart classes."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src/utils"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "assets/ listing"
+justification = "5 font binary files (base64-embedded in src/utils/addFonts.js) plus a stray .DS_Store — binary, listing only."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "assets"
+entries = "all"
+
+[[batches]]
+id = "1.5"
+descriptor = "tests/ + tests/utils/ listing"
+justification = "6 test files total, only 1 of which is a real test (10.1/10.2) — complete listing so that finding is legible against the full set."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/utils"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = "website/ + website/public/ listing"
+justification = "A separate, self-contained Vite demo app (own package.json/vite.config.js) exercising all 9 chart types — distinct from the library's own root-level build config."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "website"
+entries = "all"
+[[batches.content.groups]]
+parent = "website/public"
+entries = "all"
+
+[[batches]]
+id = "1.7"
+descriptor = "src/ listing"
+justification = "The 9 chart-class files, Chart.js base class, index.js barrel, utils/ and index.html — complete listing prevents assuming an unlisted chart file doesn't exist."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+
+[[batches]]
+id = "1.8"
+descriptor = "src/index.js — the real export list"
+justification = "Ground-truth list of the 9 chart classes actually shipped (Bar, BarH, Donut, Line, Network, Force, Pie, Scatter, StackedBar) — this is what README's 7-entry chart-types table (1.10) is missing 2 entries from."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.js"
+start = 1
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "package.json — identity + scripts"
+justification = "Package identity and the 4 npm scripts (dev/build/serve/test) that answer 'how do I build/test/run this'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "1.10"
+descriptor = "README.md — chart-types table"
+justification = "README's own chart-type catalog — compare against 1.8's actual 9 exports to see the 2-type gap (Network, Force) directly. (Trimmed to the table itself; the one-line 'why sketchy charts' rationale is skipped as lower-value prose.)"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 13
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "1.11"
+descriptor = "package.json — dependencies + devDependencies"
+justification = "10 runtime deps (9 d3-* submodules + roughjs) and 5 devDeps — the exact version constraints, split from identity/scripts (1.9) so early budgets get the more decision-relevant half first if forced to choose."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 34
+end = 53
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 2 — base class, shared utils, README API map
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "Chart.js — class + constructor"
+justification = "Every one of the 9 chart classes extends this. The constructor sets the options every subclass inherits (title, font, fillStyle, bowing, simplification, interactive, dataFormat)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Chart.js"
+start = 1
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "Chart.js — setSvg + resolveFont"
+justification = "setSvg (the shared viewBox/margin-translate <svg><g> scaffold) and resolveFont (the font===0/1/'gaegu'/'indie flower'/other resolution used by every subclass's initChartValues/resolveFont call)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Chart.js"
+start = 26
+end = 62
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "utils/colors.js — default palette, full"
+justification = "The 12-color default palette used by Donut/Pie/Network/Force and re-declared independently in Scatter as `defaultColors` (7.1) — the exact color-order any 'what color is arc N' question needs."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils/colors.js"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "utils/roughCeiling.js — full, the one utility with a real test"
+justification = "Tiny clamp helper every chart class calls to derive its effective `roughness`; the only module in the repo with a genuine, non-stub unit test (10.1/10.2)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils/roughCeiling.js"
+start = 1
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "utils/addFonts.js — structure, base64 payload elided"
+justification = "Only 22 real lines (two font-face style blocks, Gaegu + Indie Flower) but 4 of those lines are 26KB-69KB base64 font payloads — ellipsis markers stand in for those so the agent knows the shape without paying for embedded binary data."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 1
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 6
+end = 6
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 7
+end = 7
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 8
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 17
+end = 17
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 18
+end = 18
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/utils/addFonts.js"
+start = 19
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "utils/saveToPng.js — full (dead, syntactically invalid)"
+justification = "`export saveToPng(filename = \"chart.png\") {` on line 1 is missing `function`/an arrow — this cannot parse as valid JS as written, and it is imported nowhere in the repo. Cheap (30 lines) and exactly the kind of thing a debugging/code-review session needs surfaced directly."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils/saveToPng.js"
+start = 1
+end = 30
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "utils/addLegend.js — signature + positioning setup (trimmed)"
+justification = "Shared legend routine used by Donut/Pie/Line/Network/Force (not Bar/BarH/StackedBar/Scatter, which have no legend support). Trimmed to the left/right-position background-box setup; the per-item rect+text loop that follows (lines 20-76, same `parent.legendPosition === 'left'` branching pattern already established here) is elided below."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils/addLegend.js"
+start = 1
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils/addLegend.js"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "2.8"
+descriptor = "README.md — API section map (heading + Required/Optional locations)"
+justification = "Location-only pass over the README's API section: the 7 `### roughViz.X` headings it documents (Network and Force, real exports per 1.8, are absent) plus the Required/Optional sub-heading line for each, and the closing Contributors/Acknowledgements/License headings."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 125
+end = 125
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 126
+end = 126
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 150
+end = 150
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 176
+end = 176
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 177
+end = 177
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 201
+end = 201
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 227
+end = 227
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 228
+end = 228
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 252
+end = 252
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 273
+end = 273
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 274
+end = 274
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 287
+end = 287
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 315
+end = 315
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 316
+end = 316
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 340
+end = 340
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 361
+end = 361
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 362
+end = 362
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 386
+end = 386
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 415
+end = 415
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 416
+end = 416
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 432
+end = 432
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 459
+end = 459
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 466
+end = 466
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 474
+end = 474
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "README.md — roughViz.Bar Required + Optional (prose only, code samples elided)"
+justification = "Bar's Optional list (starting at axisFontSize, shown through interactive before the ellipsis) is the most complete/representative — every other documented chart's Optional list is a near-subset/variant of this one. The two inline ```js code samples are skipped (redundant with 2.11's usage example)."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 125
+end = 131
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 150
+end = 161
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 162
+end = 162
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "2.10"
+descriptor = "README.md — roughViz.StackedBar Required (data-shape contrast)"
+justification = "StackedBar's is the one genuine data-contract divergence from Bar/Donut/Pie/Scatter: data must be an array of row-objects plus a `labels` string naming the label key, not a {labels, values} pair — the exact shape 8.x's source spans implement."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 416
+end = 430
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "README.md — how-to-use (construction example)"
+justification = "The fastest path to 'how do I actually use this library': a full `new roughViz.Bar/Donut({...})` construction example — the concrete usage pattern every chart class's own constructor (3.2 etc.) elaborates on."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 93
+end = 121
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 3 — Bar.js (canonical chart implementation)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "Bar.js — method locations"
+justification = "Full method roster for the most 'canonical' chart class — every other chart class's location batch (4.1, 5.1/5.2, 6.1, 7.1, 8.1, 9.1/9.2) should be read as a diff against this shape."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 59
+end = 59
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 98
+end = 98
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 121
+end = 121
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 149
+end = 149
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 173
+end = 173
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 206
+end = 206
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 256
+end = 256
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 293
+end = 293
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 314
+end = 314
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 402
+end = 402
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 425
+end = 425
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 462
+end = 462
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 497
+end = 497
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Bar.js — constructor"
+justification = "Every default (color='red', highlight='coral', padding=0.1, margin, etc.) an agent needs before changing Bar's behavior or arguing about its defaults vs the README's documented ones (2.9)."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Bar.js"
+start = 19
+end = 54
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 4 — BarH.js (near-duplicate of Bar, orientation-flipped)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "BarH.js — method locations"
+justification = "Same method roster as Bar.js (3.1) — confirms BarH is structurally the same class shape; only the orientation-specific rect math (4.2) differs enough to be worth rendering in full. Constructor differs only in default margin ({top:50,right:20,bottom:50,left:100} vs Bar's {top:20,right:10,bottom:20,left:20})."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 59
+end = 59
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 119
+end = 119
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 144
+end = 144
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 167
+end = 167
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 200
+end = 200
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 250
+end = 250
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 289
+end = 289
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 310
+end = 310
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 393
+end = 393
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 416
+end = 416
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 452
+end = 452
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 487
+end = 487
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "BarH.js — drawFromFile (horizontal rect math)"
+justification = "The actual orientation flip vs Bar.js: rectangles start at x=0 with width=xScale(value) and height=yScale.bandwidth(), instead of Bar's y=yScale(value)/width=xScale.bandwidth() — this is the one place 'horizontal' is implemented."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/BarH.js"
+start = 452
+end = 484
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 5 — Donut.js / Pie.js (near-duplicate pair)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "Donut.js — method locations"
+justification = "No addScales/addLabels/addAxes/makeAxesRough here (arc charts have no axes) — the method roster itself shows the axis-chart vs arc-chart split in this codebase."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 70
+end = 70
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 91
+end = 91
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 113
+end = 113
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 149
+end = 149
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 170
+end = 170
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 248
+end = 248
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 268
+end = 268
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 345
+end = 345
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 424
+end = 424
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "Pie.js — method locations"
+justification = "Same roster as Donut.js (5.1) — Pie and Donut are structurally the same arc-chart class; the only real difference is the donut hole (5.3)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 57
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 66
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 74
+end = 74
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 155
+end = 155
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 176
+end = 176
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 254
+end = 254
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 273
+end = 273
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 335
+end = 335
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Pie.js"
+start = 402
+end = 402
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "Donut.js — the donut hole (drawFromObject tail)"
+justification = "The one real Donut-vs-Pie difference: after drawing the colored arcs, a white solid-fill circle (rc.circle with fillStyle:'solid') is stamped on top to punch the donut hole. Pie's equivalent method (5.2:location 273) has no such circle."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Donut.js"
+start = 296
+end = 311
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 6 — Line.js
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "Line.js — method locations"
+justification = "Has the same axis-chart roster as Bar (addScales/addAxes/makeAxesRough) plus a module-level allDataExtent helper (6.2) not attached to the class at all — worth flagging since Scatter's dead addScaleLine (7.2) calls a same-named helper it never imports."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 31
+end = 31
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 85
+end = 85
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 94
+end = 94
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 102
+end = 102
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 123
+end = 123
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 169
+end = 169
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 215
+end = 215
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 248
+end = 248
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 298
+end = 298
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 337
+end = 337
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 357
+end = 357
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 475
+end = 475
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 497
+end = 497
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 566
+end = 566
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 633
+end = 633
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "Line.js — allDataExtent helper (module-level, not a Chart method)"
+justification = "Computes a combined [min,max] across every series key in a multi-y-column dataset — the only definition of this name in the whole src/ tree; Scatter.js's dead addScaleLine (7.2) calls an identically-named function that does NOT exist in its own file/imports."
+predecessor = "6.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Line.js"
+start = 14
+end = 21
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 7 — Scatter.js (incl. the dead addScaleLine bug)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "Scatter.js — method locations"
+justification = "Has its own defaultColors array (not utils/colors.js's palette) and an addScaleLine method (7.2) that duplicates Line.js's addScales in miniature — the roster surfaces both before the bug is examined in full."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 31
+end = 31
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 77
+end = 77
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 86
+end = 86
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 94
+end = 94
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 115
+end = 115
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 137
+end = 137
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 162
+end = 162
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 205
+end = 205
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 261
+end = 261
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 294
+end = 294
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 344
+end = 344
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 383
+end = 383
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 403
+end = 403
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 520
+end = 520
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 543
+end = 543
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 618
+end = 618
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 662
+end = 662
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "Scatter.js — addScaleLine (dead code, undefined-reference bug)"
+justification = "Line 165 calls `allDataExtent(this.data)` — but `allDataExtent` is defined only in Line.js (6.2) and is never imported or declared in Scatter.js. This method is also never called anywhere else in the file (dead), so the bug is latent rather than currently crashing, but calling it would throw a ReferenceError."
+predecessor = "7.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Scatter.js"
+start = 162
+end = 203
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 8 — StackedBar.js
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "8.1"
+descriptor = "StackedBar.js — method locations"
+justification = "Two methods no other chart class has: getTotal (row-total accumulator) and updateColorMapping (stable per-key color assignment) — used by stacking() itself (8.2), the core algorithm."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 58
+end = 58
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 67
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 96
+end = 96
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 130
+end = 130
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 139
+end = 139
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 188
+end = 188
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 225
+end = 225
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 258
+end = 258
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 299
+end = 299
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 336
+end = 336
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 357
+end = 357
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 439
+end = 439
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 460
+end = 460
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 496
+end = 496
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 517
+end = 517
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 536
+end = 536
+render = { kind = "full" }
+
+[[batches]]
+id = "8.2"
+descriptor = "StackedBar.js — stacking() (the actual stack layout)"
+justification = "The core algorithm: walks each row's keys accumulating yStack, drawing one rc.rectangle per segment and stashing its x/y/width/height as DOM attributes for later reuse — the one method that makes this chart 'stacked' rather than grouped."
+predecessor = "8.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/StackedBar.js"
+start = 459
+end = 491
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 9 — Network.js / Force.js (undocumented in README, real exports)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "9.1"
+descriptor = "Network.js — method locations"
+justification = "Real export (1.8), demoed on the website (12.2/12.4), but absent from README's chart-types table and API section (2.8) — no addScales/addAxes at all (force-directed layout has no cartesian axes); resolveData here ignores the string/csv/tsv branching every other chart's resolveData has."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 25
+end = 25
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 67
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 76
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 84
+end = 84
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 131
+end = 131
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 143
+end = 143
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 164
+end = 164
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 202
+end = 202
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 222
+end = 222
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 362
+end = 362
+render = { kind = "full" }
+
+[[batches]]
+id = "9.2"
+descriptor = "Force.js — method locations"
+justification = "Same undocumented-in-README status as Network.js (9.1); nearly the same method roster minus links/forceLink (Force has no edges, just colliding/centering nodes) — the two are siblings, not the same class."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 59
+end = 59
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 124
+end = 124
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 135
+end = 135
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 156
+end = 156
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 195
+end = 195
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 215
+end = 215
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/Force.js"
+start = 346
+end = 346
+render = { kind = "full" }
+
+[[batches]]
+id = "9.3"
+descriptor = "Network.js — drawFromObject radius-scale setup (incl. the this.extent bug)"
+justification = "Line 230's `this.extent[0]` is referenced when `typeof this.radius === 'number'`, but `this.extent` is never assigned anywhere in the class (only `this.radiusExtent` is) — a latent TypeError on that code path. Force.js's equivalent branch (9.2:location 215) uses `this.radiusExtent` correctly."
+predecessor = "9.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/Network.js"
+start = 222
+end = 239
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 10 — tests
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "10.1"
+descriptor = "tests/utils/roughCeiling.test.js — test-case locations"
+justification = "The describe block plus all 7 real test-case descriptions — the only test file in the repo that actually tests the thing it imports. Full test-name roster before picking representative bodies (10.2)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 3
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 4
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 32
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 39
+end = 39
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 46
+end = 46
+render = { kind = "full" }
+
+[[batches]]
+id = "10.2"
+descriptor = "tests/utils/roughCeiling.test.js — two representative full cases"
+justification = "The baseline case (below ceiling, returns as-is) and the roughness=0 edge case (0 is falsy but must NOT fall through to the default) — the one case in the suite that would actually catch a `||`-instead-of-`??` regression in roughCeiling.js (2.4)."
+predecessor = "10.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 4
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/utils/roughCeiling.test.js"
+start = 39
+end = 44
+render = { kind = "full" }
+
+[[batches]]
+id = "10.3"
+descriptor = "tests/Bar.test.js — full (placeholder stub, byte-identical to Donut/Pie/Scatter)"
+justification = "Imports are commented out and the only assertion is `expect(0.15).toEqual(0.15)` — a tautology, not a real test. Confirmed byte-identical (md5) to Donut.test.js, Pie.test.js, and Scatter.test.js: 4 of the 6 test files in this repo are this exact same non-test. 'Run the tests' gives near-zero real coverage for 8 of the 9 chart classes."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/Bar.test.js"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "10.4"
+descriptor = "tests/BarH.test.js — full (the one stub with different wording)"
+justification = "Same tautological `expect(0.15).toEqual(0.15)` pattern as 10.3 but with different describe/test text ('Filter function' / search-by-link-term) that has nothing to do with BarH or bar charts at all — looks copy-pasted from an unrelated project's test file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/BarH.test.js"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "10.5"
+descriptor = "jest.config.js — the 5 non-comment lines (config that actually applies)"
+justification = "188 lines, all but ~5 are jest's stock commented-out defaults. The real content: testEnvironment is set to 'node' here, but package.json's test script (1.9) passes `--env=jsdom` on the CLI — a discrepancy worth knowing before assuming jsdom APIs (document, window) are available under a bare `jest` invocation that ignores the npm script."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "jest.config.js"
+start = 4
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "jest.config.js"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "jest.config.js"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "jest.config.js"
+start = 135
+end = 135
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "jest.config.js"
+start = 188
+end = 188
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 11 — build/tooling configs
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "11.1"
+descriptor = "vite.config.js (root) — full"
+justification = "The library build: entry src/index.js, output formats es/umd/cjs named roughviz.<format>.js (into dist/, per 1.11's package.json fields), terser minification — the whole `npm run build` story in 19 lines."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "vite.config.js"
+start = 1
+end = 19
+render = { kind = "full" }
+
+[[batches]]
+id = "11.2"
+descriptor = ".eslintrc — full"
+justification = "extends strongloop + babel-eslint parser, max-len 100, prefer-const enforced as error, no-new disabled (relevant since every chart's `new roughViz.X(...)` for side effect alone is exactly the no-new pattern this config explicitly permits)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".eslintrc"
+start = 1
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "11.3"
+descriptor = ".gitignore — full"
+justification = "Excludes dist/, jest.config.js, and .eslintrc from the real upstream repo — meaning the jest.config.js (10.5) and .eslintrc (11.2) content in this checkout are local/snapshot artifacts, not necessarily what's tracked upstream."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".gitignore"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "11.4"
+descriptor = "website/package.json — full"
+justification = "A separate package (name 'rvtest') from the library's own package.json (1.9/1.11) — depends on rough-viz@^2.0.3 as a consumer, plus d3-array/d3-selection directly for its own data-gen logic (12.4)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/package.json"
+start = 1
+end = 20
+render = { kind = "full" }
+
+[[batches]]
+id = "11.5"
+descriptor = "website/vite.config.js — full"
+justification = "Svelte plugin registered but the actual demo (main.js/roughDemo.js, 12.1/12.3/12.4) is plain JS/DOM with no .svelte files anywhere in website/ — the svelte plugin here looks vestigial/unused."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/vite.config.js"
+start = 1
+end = 8
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 12 — website demo app
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "12.1"
+descriptor = "website/main.js — full"
+justification = "The tiny logo Bar chart rendered independently of the big interactive demo (roughDemo.js) — imports `{ Bar }` straight from the `rough-viz` package name, i.e. this website depends on the published npm package, not on ../src directly."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/main.js"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "12.2"
+descriptor = "website/index.html — chart-type menu"
+justification = "The menu lists all 9 chart types (Bar, BarH, Donut, Force, Line, Network, Pie, Scatter, StackedBar) — corroborates 1.8's index.js export list against README's 7-entry table (1.10/2.8) rather than either alone."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/index.html"
+start = 141
+end = 156
+render = { kind = "full" }
+
+[[batches]]
+id = "12.3"
+descriptor = "website/roughDemo.js — function locations"
+justification = "585-line file; location pass over its 9 top-level functions (2 data generators + 7 UI-wiring functions) before picking which body (12.4) matters for a given query."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 78
+end = 78
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 96
+end = 96
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 131
+end = 131
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 169
+end = 169
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 352
+end = 352
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 533
+end = 533
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 543
+end = 543
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 552
+end = 552
+render = { kind = "full" }
+
+[[batches]]
+id = "12.4"
+descriptor = "website/roughDemo.js — initial Force chart construction"
+justification = "The default-on-load chart (selectedViz starts as 'Force' per index.html menu, 12.2) — a concrete, realistic `new Force({...})` call to copy from, including collision/radiusExtent/textCallback options that README never documents (Force isn't in README at all, per 2.8)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "website/roughDemo.js"
+start = 115
+end = 129
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------------
+# TIER 13 — misc cross-check
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "13.1"
+descriptor = "Copyright-year cross-check: README.md License section vs LICENSE file"
+justification = "README.md's own License section says 'Copyright (c) 2019 Jared Wilber' while the actual LICENSE file says 'Copyright (c) 2020 Jared Wilber' — a one-year drift between the two, cheap to surface directly rather than have an agent discover it by chance."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 477
+end = 477
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "LICENSE"
+start = 1
+end = 1
+render = { kind = "full" }

@@ -1,29 +1,86 @@
 fixture = "cmdk"
 revision_pin = "dd2250ed"
-summary = "cmdk (⌘K) is a small, dependency-light headless React component library (pnpm monorepo: cmdk/ library, test/ Playwright harness, website/ Next.js demo site) implementing an accessible, filterable command-menu/combobox. Its defining constraint is full compound-component composability: consumers render <Command.Item>/<Command.Group> as real JSX (not data arrays or render props), and the library keeps every item mounted in the React tree while toggling DOM visibility + reordering by fuzzy-match score. The whole runtime lives in one file, cmdk/src/index.tsx (~1090 lines): a Context+external-store (useSyncExternalStore) state machine that tracks item/group registration, computes filter scores via cmdk/src/command-score.ts, sorts the live DOM via imperative appendChild reordering, and drives keyboard navigation (arrows, vim binds, Home/End, groups). Expect queries across the full range: 'how does filtering/sorting work', 'add a prop to Item', 'why is selection order X', 'how do I test a new interaction', 'how do I style a new part', 'how do I build/run this'. README.md is the authoritative prop/behavior spec (not auto-injected) and is cheaper to read than re-deriving behavior from source, so its structure and FAQ are scheduled alongside the source. Given a strict token budget relative to this repo's size, the ranking favors directory/heading/signature rosters (cheap, prevent catastrophic omission, put every location one hop away) over exhaustively rendering every file's body, reserving full-body rendering for the handful of most-asked-about chunks: the filter/sort algorithm, keyboard handling, the Item component, and the command-score weights."
+summary = """
+⌘K (`cmdk`) is a React command-menu / combobox component library, published as the
+npm package `cmdk` v1.1.1 from a three-package pnpm workspace: `cmdk/` (the library:
+exactly two source files, `src/index.tsx` and `src/command-score.ts`), `test/` (a
+Next.js app of fixture pages driven by Playwright e2e specs at `test/*.test.ts`), and
+`website/` (a Next.js marketing/demo site with four themed command menus and the
+drop-in stylesheets the README points users at).
+
+The whole runtime is one 1091-line file. Its distinctive design — argued out in
+ARCHITECTURE.md — is that every Item/Group stays mounted in the React tree while the
+*DOM* is authoritative: items add/remove themselves from the DOM by search score,
+selection is tracked by `value` (not index, because Strict Mode breaks index tracking),
+and sorting is done by physically re-appending DOM nodes. So the ranking spends most of
+its budget on `cmdk/src/index.tsx`: first its public shape (the `Command.*` export
+object, the component roster, and the JSDoc'd props types that ARE the API reference),
+then the state/context vocabulary, the filter/sort machinery rendered across lines 362-426
+and 434-470 with the DOM re-append loop shown in full, and the per-component render bodies
+with their `cmdk-*` data attributes (which double as the CSS styling API).
+
+Alongside the source it buys the two documents that state what the source cannot: the
+README FAQ (React 18+ required, no virtualization, `shouldFilter={false}` for manual
+filtering, no RSC support, no built-in ⌘K listener) with its verbatim testing steps,
+and ARCHITECTURE's rejected-API rationale.
+
+Plausible sessions: "why isn't my item filtering?", "add a prop", "what keybindings
+exist?", "how do I style X / what selector do I use?", "how is score computed?",
+"add an e2e test", "run the tests", "controlled value semantics". The ranking front-loads
+repo identity + build/test entry points (tier 1), then the public API surface and the FAQ
+with rosters before bodies so nothing looks missing (tier 2), then the design rationale
+and the store/keydown vocabulary (tier 3), then the filter/sort implementation and the
+rendered markup of every part (tier 4), the scoring algorithm (tier 5), the Playwright
+suite — spec titles as a behavioural contract, one spec and one fixture page rendered
+whole as executable examples, and the runner and CI configs (tier 6), and finally the
+website listings (tier 7). Rosters use `entries="all"` listings and name-only spans, and elided
+regions carry an explicit ellipsis, so the agent never infers that an unlisted component,
+prop, script, test file or page doesn't exist. Not bought here, deliberately: README prose
+bodies beyond the lede, FAQ and Testing sections (the section map gives exact line ranges
+for the rest), the bodies of the smaller type aliases and of Command's own setup block
+(every one of them is named with its line number), the second half of the keydown switch
+(its bindings are enumerated by the keybind spec titles instead), pnpm-lock.yaml, the
+website's SCSS and demo bodies, and the recursive body of commandScoreInner.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "License header"
-justification = "MIT + author, cheapest possible answer to licensing/attribution questions common in dependency-audit or vendoring tasks."
-
+descriptor = "Repo root listing"
+justification = "Cheapest possible orientation: the complete set of root entries reveals the three workspace packages (cmdk/, test/, website/), the two docs (README.md, ARCHITECTURE.md), the playwright config at the root, and the tooling dotfiles. entries=\"all\" so no root file can be wrongly inferred absent."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "LICENSE.md"
-start = 1
-end = 3
-render = { kind = "full" }
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.2"
-descriptor = "pnpm workspace member list"
-justification = "Names the exact 3 packages (website, test, cmdk) composing the monorepo, grounding the root listing's directories as a pnpm workspace rather than unrelated folders."
-
+descriptor = "README one-line identity + install"
+justification = "One sentence answers 'what is this repo': a composable React command menu / combobox that filters and sorts rendered items. Paired with the Install section and its `pnpm install cmdk` command it frames every downstream query."
 [batches.content]
 kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 11
+end = 13
+render = { kind = "full" }
 
+[[batches]]
+id = "1.3"
+descriptor = "pnpm workspace membership"
+justification = "Four lines that certify the workspace is exactly {website, test, cmdk} - the complement of the root listing, telling the agent which root dirs are packages and which are not."
+[batches.content]
+kind = "lines"
 [[batches.content.spans]]
 path = "pnpm-workspace.yaml"
 start = 1
@@ -31,397 +88,169 @@ end = 4
 render = { kind = "full" }
 
 [[batches]]
-id = "1.3"
-descriptor = "Repo root listing"
-justification = "Full breadth of the root directory in one cheap fs batch: three-package pnpm monorepo (cmdk/, test/, website/), the two docs (README.md, ARCHITECTURE.md), and tooling dotfiles. Prevents the agent from assuming any top-level file/dir doesn't exist."
-
+id = "1.4"
+descriptor = "Listings of all three packages + library source dir"
+justification = "Breadth for the price of a few dozen tokens: shows the library is only two source files, that test/ holds seven *.test.ts specs plus a pages/ dir, and that website/ is a Next.js app. entries=\"all\" everywhere to avoid certifying a partial class."
 [batches.content]
 kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = "all"
-
-[[batches]]
-id = "2.1"
-descriptor = "website/components/code listing"
-justification = "Names the syntax-highlighting component's two files (index.tsx, code.module.scss)."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components/code"
-entries = "all"
-
-[[batches]]
-id = "2.2"
-descriptor = "website/components/icons listing"
-justification = "Names the icon-component file and its stylesheet; pairs with the icon-signature roster later so the agent knows both that it exists and what it contains."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components/icons"
-entries = "all"
-
-[[batches]]
-id = "2.3"
-descriptor = "cmdk/src listing"
-justification = "The entire library's implementation is exactly these two files — index.tsx (the component tree + state machine) and command-score.ts (the fuzzy scorer). Confirms there is no hidden third source file."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmdk/src"
-entries = "all"
-
-[[batches]]
-id = "2.4"
-descriptor = "website/styles/cmdk listing"
-justification = "The 4 theme stylesheets (framer/linear/raycast/vercel .scss) that back the 4 demo components of the same names — lets the agent match a demo component to its styling file by name alone."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/styles/cmdk"
-entries = "all"
-
-[[batches]]
-id = "2.5"
-descriptor = "website/components/cmdk listing"
-justification = "The 4 themed demo implementations (framer/linear/raycast/vercel.tsx) shown on the homepage theme switcher — full roster so the agent knows all 4 exist even though only one (vercel) is rendered in depth later."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components/cmdk"
-entries = "all"
-
-[[batches]]
-id = "2.6"
-descriptor = "website/components listing"
-justification = "Top-level shape of the demo-site's shared component library: the 4 cmdk/ theme demos, the code/ highlighter, icons/, and the barrel index.ts."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/components"
-entries = "all"
-
-[[batches]]
-id = "2.7"
-descriptor = "cmdk/ package listing"
-justification = "The published-package directory: src/, package.json, tsup.config.ts — confirms the library package has no test files or extra build scripts colocated."
-
-[batches.content]
-kind = "fs"
-
 [[batches.content.groups]]
 parent = "cmdk"
 entries = "all"
-
-[[batches]]
-id = "2.8"
-descriptor = "website/pages listing"
-justification = "The Next.js pages router surface for the demo site: _app, _document, index — confirms there is exactly one route (the homepage)."
-
-[batches.content]
-kind = "fs"
-
 [[batches.content.groups]]
-parent = "website/pages"
+parent = "cmdk/src"
 entries = "all"
-
-[[batches]]
-id = "2.9"
-descriptor = "website/styles listing"
-justification = "Global stylesheet + per-theme index.module.scss + the cmdk/ theme subdirectory, rounding out the demo site's styling structure."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/styles"
-entries = "all"
-
-[[batches]]
-id = "2.10"
-descriptor = "website/public listing"
-justification = "Static assets (favicon, OG image, avatars, font) — cheap fs listing answers 'is there a logo/font asset already' without opening any binary."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/public"
-entries = "all"
-
-[[batches]]
-id = "2.11"
-descriptor = "test/pages listing"
-justification = "All 11 files under test/pages: the 10 Playwright fixture pages (dialog, group, huge, index, item-advanced, item, keybinds, numeric, portal, props), plus the shared _app.tsx wrapper — full roster so the agent knows exactly which interaction scenarios have a dedicated test page, and that _app.tsx is just the Next.js app shell rather than another scenario, before opening any one of them."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/pages"
-entries = "all"
-
-[[batches]]
-id = "2.12"
-descriptor = "test/ listing"
-justification = "The Playwright package: the 7 *.test.ts spec files, the pages/ fixture app, and its own package.json/tsconfig — full roster prevents assuming any spec file doesn't exist."
-
-[batches.content]
-kind = "fs"
-
 [[batches.content.groups]]
 parent = "test"
 entries = "all"
-
-[[batches]]
-id = "2.13"
-descriptor = "website/ listing"
-justification = "The demo site package as a whole: components/, pages/, public/, styles/, its own config files, and its own README — completes the 3-package breadth started at the root listing."
-
-[batches.content]
-kind = "fs"
-
 [[batches.content.groups]]
 parent = "website"
 entries = "all"
 
 [[batches]]
-id = "2.14"
-descriptor = "cmdk/tsup.config.ts"
-justification = "The entire build config for the published package: esm+cjs output, minified, .d.ts generated — answers 'how is this bundled' in 11 lines."
-
+id = "1.5"
+descriptor = "Published package identity + entry points"
+justification = "Answers 'what is published, at what version, from where': name cmdk, v1.1.1, MIT, main/module/types pointing at dist/index.js, dist/index.mjs and dist/index.d.ts, with only dist shipped. The build and dev scripts run tsup, and prepublishOnly explains why README.md is copied into cmdk/ at publish time. Two regions are elided: the conditional exports map at line 11 and the dependency block at lines 24-37, whose four @radix-ui packages are visible as import lines in 2.1."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "cmdk/tsup.config.ts"
+path = "cmdk/package.json"
 start = 1
-end = 11
+end = 10
 render = { kind = "full" }
-
-[[batches]]
-id = "2.15"
-descriptor = "test/package.json"
-justification = "The Playwright harness's own manifest: it depends on cmdk via `workspace:*` and runs a real Next.js dev server (next 13) — grounds how the e2e tests actually exercise the library."
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "test/package.json"
-start = 1
-end = 18
-render = { kind = "full" }
-
-[[batches]]
-id = "2.16"
-descriptor = "website/package.json dependencies"
-justification = "The demo site's real dependency list (framer-motion, next-themes, prism-react-renderer, @radix-ui/react-popover, sass) — explains the imports seen in the theme components without needing to open package.json directly."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "website/package.json"
+path = "cmdk/package.json"
 start = 11
+end = 11
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/package.json"
+start = 18
 end = 23
 render = { kind = "full" }
-
-[[batches]]
-id = "2.17"
-descriptor = "cmdk/package.json identity + exports + deps"
-justification = "The published package's own manifest: dual esm/cjs exports map, the only two real runtime dependencies (@radix-ui/react-dialog, react-primitive/id/compose-refs), and the react 18/19 peer range — answers 'what does this package actually ship and depend on'."
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "cmdk/package.json"
-start = 1
-end = 3
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "cmdk/package.json"
-start = 11
-end = 33
-render = { kind = "full" }
+start = 24
+end = 24
+render = { kind = "ellipsis" }
 
 [[batches]]
-id = "2.18"
-descriptor = "README lede"
-justification = "The one-line pitch ('command menu React component... accessible combobox... fully composable API') — cheapest possible answer to 'what is this library'. Placed after the cheap structural batches so its cost fits the growth envelope."
-
+id = "1.6"
+descriptor = "Root package.json: identity and every workspace script"
+justification = "'How do I build and run this', as one contiguous block rather than split across two batches: a private workspace root named cmdk-root whose `build` delegates to the cmdk package, `dev` rebuilds it in watch mode, `website`/`testsite` boot the two Next.js apps, `format`/`test:format` run prettier over a fixed glob, `preinstall` hard-blocks npm and yarn via only-allow, and `test` is plain `playwright test`. The whole scripts object is here, so no entry point can be inferred missing; it lands at this rank because its 230-odd tokens are only affordable once the cheaper structural batches are in."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 7
-render = { kind = "full" }
-
-[[batches]]
-id = "2.19"
-descriptor = "Root package.json scripts"
-justification = "Workspace-level scripts (build/dev/website/testsite/format/test) — the entry points for 'how do I build/run/format this repo' before diving into any one package's own scripts."
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "package.json"
-start = 4
+start = 1
 end = 13
 render = { kind = "full" }
 
 [[batches]]
-id = "3.1"
-descriptor = "README section-heading roster"
-justification = "Every H2/H3 in README.md (Install, Use, Parts and styling, each part's heading incl. its cmdk-* selector, Examples' 4 sub-patterns, FAQ, History, Testing) as bare heading lines. Cheap map of the whole spec's structure so the agent never assumes an undocumented part/example exists elsewhere — only 2 sections are expanded in full below; this roster covers the rest for a 1-hop jump to the right line."
-
+id = "1.7"
+descriptor = "README section map (all H2 + H3 headings)"
+justification = "Every heading, nothing else. Doubly valuable here because the H3 headings literally spell the CSS selector API - `[cmdk-root]`, `[cmdk-dialog]`/`[cmdk-overlay]`, `[cmdk-input]`, `[cmdk-list]`, `[cmdk-item]` with `[data-disabled?]`/`[data-selected?]`, `[cmdk-group]` `[hidden?]`, `[cmdk-separator]`, `[cmdk-empty]`, `[cmdk-loading]` - so a styling question is answered outright, and any other README question is one read of a known line range away."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 9
-end = 9
-render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 15
 end = 15
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 82
 end = 82
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 86
 end = 86
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 153
 end = 153
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 180
 end = 180
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 190
 end = 190
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 212
 end = 212
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 242
 end = 242
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 256
 end = 256
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 260
 end = 260
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 264
 end = 264
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 274
 end = 274
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 285
 end = 285
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 289
 end = 289
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 338
 end = 338
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 361
 end = 361
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 397
 end = 397
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 426
 end = 426
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 430
 end = 430
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 456
 end = 456
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "README.md"
 start = 462
@@ -429,19 +258,31 @@ end = 462
 render = { kind = "full" }
 
 [[batches]]
-id = "3.2"
-descriptor = "ARCHITECTURE.md core rationale"
-justification = "The load-bearing design decision: the DOM is authoritative, item order comes from React render order, and why an object-data-array / render-prop / React.Children API was rejected. This is the one fact not derivable from index.tsx itself (it explains *why* the imperative appendChild sorting in Command exists) and directly informs 'why is this built this way' / 'can we switch to a data-array API' questions."
-
+id = "1.8"
+descriptor = "ARCHITECTURE: the core invariant + section map"
+justification = "The single highest-value prose in the repo: every item and group stays rendered in the React tree, the DOM is authoritative, and selection order follows DOM order. Without it an agent misreads the sort code as ordinary list rendering. Section headings (Approach / Discarded approach / Example / Performance / Groups) make the rest one targeted read."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
 path = "ARCHITECTURE.md"
-start = 46
-end = 56
+start = 44
+end = 48
 render = { kind = "full" }
-
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 50
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 60
+end = 60
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 92
+end = 92
+render = { kind = "full" }
 [[batches.content.spans]]
 path = "ARCHITECTURE.md"
 start = 96
@@ -449,285 +290,865 @@ end = 98
 render = { kind = "full" }
 
 [[batches]]
-id = "3.3"
-descriptor = "README testing steps"
-justification = "The exact operational sequence to run the real e2e suite: install deps + Playwright browsers, build the library, then `pnpm test` — answers 'how do I run the tests' without needing to cross-reference package.json scripts and playwright.config.ts by hand."
-predecessor = "3.1"
-
+id = "1.9"
+descriptor = "README testing steps (verbatim)"
+justification = "The exact operational sequence under the Testing heading located by 1.7: `pnpm install` plus `pnpm playwright install` for the browsers, then `pnpm build` because the suite runs against the local library build, then `pnpm test`. Answers 'how do I run the tests' with zero follow-up and without cross-referencing package.json and playwright.config.ts by hand; the ordering constraint (build before test) is stated nowhere in the scripts themselves."
+predecessor = "1.7"
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
 path = "README.md"
-start = 462
+start = 464
 end = 481
 render = { kind = "full" }
 
 [[batches]]
-id = "3.4"
-descriptor = "README FAQ"
-justification = "Dense, non-derivable-from-source facts asked constantly in practice: React 18+ required (uses useId/useSyncExternalStore), no virtualization (fine to ~2-3k items), shouldFilter=false for manual filtering, no RSC support, no built-in ⌘K listener. Cheapest way to answer 'does this support X' without reading source."
-predecessor = "3.1"
-
+id = "2.1"
+descriptor = "index.tsx imports + 'use client'"
+justification = "First eight lines of the only runtime file: the 'use client' directive, the four Radix imports (Dialog, Primitive, useId, composeRefs) that are the library's entire external footprint, and the local ./command-score import that ties the two source files together."
 [batches.content]
 kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 1
+end = 8
+render = { kind = "full" }
 
+[[batches]]
+id = "2.2"
+descriptor = "Public export surface (Command.* object + named exports)"
+justification = "The definitive API: the pkg object assigning List/Item/Input/Group/Separator/Dialog/Empty/Loading onto Command, plus useCommandState, defaultFilter, and the CommandRoot/CommandList/... aliases. Every consumer question starts here, and rendering the whole block means no export can be inferred missing. Deliberately ranked ahead of every test-runner and CI detail: the exported surface is what the majority of sessions touch."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 930
+end = 953
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "README FAQ (all twelve entries)"
+justification = "The densest block of facts in the repo that source cannot answer, and the questions users actually open with: React 18 is required (useId / useSyncExternalStore), there is no virtualization (good to 2,000-3,000 items), manual filtering means `shouldFilter={false}`, it is not a React server component (2.1's 'use client' shows only half of that), there is no built-in ⌘K listener, plus the accessibility, hydration, Strict Mode, concurrent mode and React Native answers. Rendered as the complete Q&A class so a missing question cannot be read as an unanswered one."
+predecessor = "1.7"
+[batches.content]
+kind = "lines"
 [[batches.content.spans]]
 path = "README.md"
-start = 430
+start = 432
 end = 454
 render = { kind = "full" }
 
 [[batches]]
-id = "4.1"
-descriptor = "index.tsx component + helper location roster"
-justification = "Truncated first-line signature of every one of the 9 exported parts (Command, Item, Group, Separator, Input, List, Dialog, Empty, Loading) and every internal helper fn (findNextSibling/findPreviousSibling/useAsRef/useLayoutEffect/useLazyRef/useCmdk/useValue/useScheduleLayoutEffect/renderChildren/SlottableWithNestedChildren) with exact line numbers. Given the tight token budget most of these bodies aren't rendered elsewhere in this NS — this roster is what keeps them a single grep/read away instead of an unbounded search, and prevents assuming any part/helper doesn't exist."
-
+id = "2.4"
+descriptor = "Component declaration roster (all nine forwardRef components)"
+justification = "Name-only truncated span at each component's declaration line: Command, Item, Group, Separator, Input, List, Dialog, Empty, Loading - with their element type and props type. Gives exact line coordinates for every component in a 1091-line file, so 'where is Group implemented' is a zero-search hop. Bodies land later with this as predecessor."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 169
 end = 169
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 664
 end = 664
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 729
 end = 729
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 774
 end = 774
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 787
 end = 787
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 833
 end = 833
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 882
 end = 882
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 899
 end = 899
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 909
 end = 909
-render = { kind = "truncated", pattern = "^[^(]+" }
+render = { kind = "truncated", pattern = "^const \\w+ = React\\.forwardRef<[^>]+>" }
 
+[[batches]]
+id = "2.5"
+descriptor = "Props type roster (all twelve type aliases)"
+justification = "Name-only span at every `type X =` line in the header block: Children, DivProps, LoadingProps, EmptyProps, SeparatorProps, DialogProps, ListProps, ItemProps, GroupProps, InputProps, CommandFilter, CommandProps. Closes the type class cheaply and pins lines 10-121 as the file's API-reference region; the most-asked-about bodies follow with this as predecessor, and the rest are one read away at a known line."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 10
+end = 10
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 37
+end = 37
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 44
+end = 44
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 69
+end = 69
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 79
+end = 79
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 80
+end = 80
+render = { kind = "truncated", pattern = "^type \\w+" }
+
+[[batches]]
+id = "2.6"
+descriptor = "Per-component JSDoc blocks"
+justification = "The doc comment above each of Item, Group, Separator, Input, List, Dialog, Empty and Loading - one or three lines each, describing selection-on-pointer-enter, group heading behaviour, separator visibility rules, the --cmdk-list-height variable, the Radix Dialog wrapper, auto-rendering Empty, and Loading's progress prop. Highest semantic density per token in the file; many usage questions end here with zero follow-up."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 659
+end = 663
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 725
+end = 728
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 770
+end = 773
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 783
+end = 786
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 829
+end = 832
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 879
+end = 881
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 896
+end = 898
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 906
+end = 908
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "CommandProps: label, shouldFilter, filter, defaultValue"
+justification = "Root component props with their JSDoc, the half most often asked about: turning automatic filtering/sorting off, supplying a custom filter that returns 0..1 (defaulting to the command-score library), and the initial value. Overrides the 2.5 name-only span at line 80."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 80
+end = 101
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings"
+justification = "The remainder of CommandProps through the closing brace at line 121 - controlled selection, arrow-key looping, disabling pointer selection, and the vimBindings toggle that gates ctrl+n/j/p/k. Completes the prop class so none of the root props can be inferred absent, and its @defaultValue tags are where the real defaults are documented."
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 102
+end = 121
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "ItemProps (full, with JSDoc)"
+justification = "Item is the prop surface consumers touch most: disabled, onSelect(value), the value-inference rule (children then rendered textContent, with the warning that changing textContent requires a stable value), keywords for filter aliases, and forceMount. Also shows which DivProps keys are Omit-ed."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 44
+end = 59
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "GroupProps, SeparatorProps, EmptyProps"
+justification = "heading / value / forceMount for Group (with the rule that a value is required when there is no heading), alwaysRender for Separator, and the empty EmptyProps alias. Small classes rendered whole rather than sampled."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 23
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 60
+end = 68
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "InputProps + CommandFilter signature"
+justification = "The controlled-search surface (value / onValueChange, with value/onChange/type Omit-ed from the underlying input) and the exact filter contract `(value, search, keywords?) => number`. Together they answer the two most common 'why is my controlled X not working' questions."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 69
+end = 79
+render = { kind = "full" }
+
+[[batches]]
+id = "3.1"
+descriptor = "ARCHITECTURE: the three rejected APIs and why selection tracks value"
+justification = "The rationale paragraphs under the 'Discarded approach' heading located by 1.8, and the one design fact neither the source nor the README states: React.Children iteration cannot peek inside a composed <BlogItems />, an object-based data array grows unboundedly with edge-case keys, a render prop collapses into if-else chains - and the original index-based selection was abandoned because Strict Mode runs useEffect twice and useRef cannot give stable ids, which is why the store tracks the selected item by its `value`. All four paragraphs, so no rejected alternative looks unconsidered; 'can we switch to a data-array API' is answered here with zero follow-up."
+predecessor = "1.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 52
+end = 52
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 54
+end = 54
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 56
+end = 56
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Internal types: Context, State, Store, Group"
+justification = "The state shape every part reads through useCommandState: search, value, selectedItemId, and filtered { count, items: Map<id, score>, groups: Set<id> }, plus the Store's subscribe/snapshot/setState/emit contract and the Context's registration callbacks. Reading these makes the rest of the file legible; they are also what a `useCommandState(state => ...)` selector must target."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 123
+end = 152
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "DOM selector constants + the three React contexts"
+justification = "GROUP_SELECTOR / GROUP_ITEMS_SELECTOR / GROUP_HEADING_SELECTOR / ITEM_SELECTOR / VALID_ITEM_SELECTOR (which excludes aria-disabled items), the custom `cmdk-item-select` event name, the data-value attribute, defaultFilter delegating to commandScore, and the CommandContext/StoreContext/GroupContext definitions. These fourteen lines are the vocabulary the whole DOM-authoritative design is written in."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 154
+end = 167
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "Roster of Command's internal functions"
+justification = "The declaration line of every function defined inside the Command component: score, sort, selectFirstItem, filterItems, scrollSelectedIntoView, getSelectedItem, getValidItems, updateSelectedToIndex, updateSelectedByItem, updateSelectedByGroup, last, next, prev - the last three as one-line arrows that already reveal the meta/alt modifier split. Thirteen exact line numbers inside a 1091-line file, so any 'where does selection/filtering happen' question becomes one targeted read. The first entry at line 362 also bounds Command's unrendered setup block above it."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 362
+end = 362
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 368
+end = 368
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 428
+end = 428
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 435
+end = 435
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 472
+end = 472
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 488
+end = 488
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 492
+end = 492
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 498
+end = 498
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 504
+end = 504
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 524
+end = 524
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 541
+end = 541
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 543
+end = 543
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 558
+end = 558
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "Store: subscribe/snapshot and the 'search' setState branch"
+justification = "How a keystroke propagates: setState('search') filters and sorts synchronously before emitting, then schedules selectFirstItem. The Object.is short-circuit explains why redundant sets are free. This is the entry point for every 'why did my list not update' investigation. The ellipsis at line 244 marks the sibling 'value' branch and emit(), which run to line 276 and are one targeted read away."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 225
+end = 243
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 244
+end = 244
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "3.6"
+descriptor = "Root keydown handler: IME guard, vim down bindings, ArrowDown"
+justification = "Keybindings are a documented feature surface and a frequent question. This shows the composition guard (isComposing / keyCode 229 for CJK IME), the fact that consumer onKeyDown runs first and defaultPrevented aborts, and the ctrl+n / ctrl+j vim-down bindings gated on vimBindings alongside ArrowDown. The ellipsis at line 605 marks the rest of the switch, which runs to line 639; the bindings it contains are enumerated by name in the keybind spec titles at 6.6."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 579
+end = 581
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 582
+end = 582
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 586
+end = 604
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 605
+end = 605
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "4.1"
+descriptor = "score() and sort(): per-group maximum score and the ordering rules"
+justification = "Lines 362-397 rendered contiguously: score() resolves the pluggable filter (props.filter ?? defaultFilter) and returns 0 for an empty value; sort() bails out when search is empty or shouldFilter is explicitly false, then computes each group's maximum item score; and the comment block states the three ordering rules (items within groups to the bottom, ungrouped items above, groups after them). The re-append loop those rules describe follows immediately in 4.2."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 362
+end = 397
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "sort(): the DOM re-append loop"
+justification = "The least guessable part of the whole design, shown rather than gestured at: getValidItems() is sorted by descending score and each element is physically appendChild-ed back into either its group's cmdk-group-items container or the list inner element (climbing to the direct child of the group container when the item is nested deeper), then the groups themselves are re-appended in descending max-score order, closing sort() at line 426."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 398
+end = 426
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "filterItems(): scoring every item and deriving visible groups"
+justification = "The filtering core at lines 434-470: when search is empty or shouldFilter is explicitly false every item is counted visible and each item self-renders; otherwise every registered id is re-scored into filtered.items, items with rank > 0 are counted, and a group is visible if any of its items scores above zero. Directly answers the most common bug-report class; with 4.1 and 4.2 the only unrendered lines in the 362-470 region are selectFirstItem's four-line body at 428-432, whose declaration 3.4 already located."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 434
+end = 470
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "Item: value inference, render gate, select handlers"
+justification = "The most-touched component's logic: useValue derives the item value from props.value, children or textContent; the render predicate (forceMount, then filter() === false, then empty search, then filtered.items.get(id) > 0) decides whether the item exists in the DOM at all; an effect (elided body at line 687) subscribes the element to the cmdk-item-select event; onSelect() calls the consumer callback with the resolved value and select() writes it via store.setState('value', value.current, true), the third argument suppressing the scroll-into-view."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 678
+end = 686
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 687
+end = 687
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 693
+end = 704
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "Item: rendered element and its attributes"
+justification = "The exact DOM contract consumers style and test against: cmdk-item, role=option, aria-disabled/aria-selected plus mirrored data-disabled/data-selected, onPointerMove selecting unless disabled or disablePointerSelection, onClick firing onSelect. Test specs and website stylesheets both key off these attributes."
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 706
+end = 722
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "Group: render gate and heading/items markup"
+justification = "Groups never unmount - they get the hidden attribute instead (a styling gotcha the README calls out). Shows the render predicate over state.filtered.groups and the nested cmdk-group / cmdk-group-heading / cmdk-group-items structure with aria-labelledby wiring, which is exactly the structure the selector constants and sort() query for."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 736
+end = 738
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 740
+end = 740
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 749
+end = 765
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "Input and Separator markup"
+justification = "Input carries the combobox contract consumers and screen readers depend on: cmdk-input, autoComplete/autoCorrect/spellCheck off, role=combobox, aria-autocomplete=list, aria-controls to the list id, aria-labelledby to the label id, aria-activedescendant to the selected item id. Separator's one-line element completes the pair; the ellipsis at 817 marks Input's controlled onChange handler."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 780
+end = 780
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 802
+end = 816
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 817
+end = 817
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "4.8"
+descriptor = "List, Dialog, Empty and Loading markup"
+justification = "Closes the component-markup class so no part looks undocumented: List's role=listbox with aria-activedescendant plus the cmdk-list-sizer inner div that feeds the ResizeObserver behind --cmdk-list-height, Dialog's Radix Root/Portal/Overlay/Content nesting emitting cmdk-overlay and cmdk-dialog, Empty's cmdk-empty div, and Loading's role=progressbar with aria-valuenow/valuemin/valuemax."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 860
+end = 863
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 864
+end = 864
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 871
+end = 871
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 885
+end = 890
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 903
+end = 903
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/index.tsx"
+start = 914
+end = 918
+render = { kind = "full" }
+
+[[batches]]
+id = "4.9"
+descriptor = "Roster of module-level helpers"
+justification = "Declaration line of every helper below the exports: findNextSibling, findPreviousSibling, useAsRef, the useLayoutEffect SSR shim, useLazyRef, useCmdk (the exported useCommandState), useValue, useScheduleLayoutEffect, renderChildren, SlottableWithNestedChildren and the srOnlyStyles object. Closes the file's last symbol class and turns 'how does asChild work' or 'how are values computed' into a single read at a known line."
+[batches.content]
+kind = "lines"
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 963
 end = 963
 render = { kind = "truncated", pattern = "^[^(]+" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 972
 end = 972
 render = { kind = "truncated", pattern = "^[^(]+" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 981
 end = 981
 render = { kind = "truncated", pattern = "^[^(]+" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 991
 end = 991
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 993
 end = 993
 render = { kind = "truncated", pattern = "^[^(]+" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
-start = 1004
+start = 1003
 end = 1004
-render = { kind = "truncated", pattern = "^[^(]+" }
-
+render = { kind = "full" }
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 1010
 end = 1010
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
-start = 1046
+start = 1045
 end = 1046
 render = { kind = "full" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 1061
 end = 1061
 render = { kind = "truncated", pattern = "^[^(]+" }
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
 start = 1071
 end = 1071
 render = { kind = "full" }
-
-[[batches]]
-id = "4.2"
-descriptor = "CommandProps core knobs"
-justification = "The Command root's own config surface: label, shouldFilter, the custom filter fn contract (returns 0..1, third `keywords` arg), defaultValue. This is the prop block most 'how do I customize filtering/sorting' questions land on. The type literal continues past line 100 with value/onValueChange/loop/disablePointerSelection/vimBindings (loop and vimBindings are the controls behind README's `loop` prop and the ctrl+n/j/p/k vim binds exercised in 5.1); an ellipsis at line 101 marks the rest of the type as a 1-hop read instead of silently truncating it."
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "cmdk/src/index.tsx"
-start = 79
-end = 100
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 101
-end = 101
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "4.3"
-descriptor = "ItemProps + GroupProps"
-justification = "Full JSDoc'd prop shapes for the two most commonly composed parts: Item's disabled/onSelect/value/keywords/forceMount, Group's heading/value/forceMount. Second-most-common landing spot after CommandProps for 'what props does X take'."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 44
-end = 68
+start = 1081
+end = 1081
 render = { kind = "full" }
 
 [[batches]]
 id = "5.1"
-descriptor = "Command keyboard-navigation switch"
-justification = "The exact onKeyDown case list (n/j ctrl, ArrowDown, p/k ctrl, ArrowUp, Home, End, Enter) plus the IME-composition guard — directly grounds test/keybind.test.ts and any 'add a new keybind' or 'why didn't my keypress register' task."
-
+descriptor = "command-score: the full scoring weight table"
+justification = "The default filter's entire tuning surface in one screen: SCORE_CONTINUE_MATCH 1, SCORE_SPACE_WORD_JUMP 0.9, SCORE_NON_SPACE_WORD_JUMP 0.8, SCORE_CHARACTER_JUMP 0.17, SCORE_TRANSPOSITION 0.1, PENALTY_SKIPPED 0.999, PENALTY_CASE_MISMATCH 0.9999, PENALTY_DISTANCE_FROM_START 0.9, PENALTY_NOT_COMPLETE 0.99, plus the gap/space regexes that define word boundaries. Every constant is shown so none can be inferred absent; the ellipses mark the rationale comments between them, which is what makes this cheaper than rendering the block whole."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 579
-end = 638
+path = "cmdk/src/command-score.ts"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 3
+end = 3
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 6
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 7
+end = 7
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 12
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 14
+end = 14
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 16
+end = 16
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 28
+end = 28
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 35
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 38
+end = 38
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 47
+end = 52
 render = { kind = "full" }
 
 [[batches]]
 id = "5.2"
-descriptor = "Command filter/sort/select algorithm"
-justification = "The actual differentiator of this library: score() delegates to the pluggable filter, filterItems() recomputes per-item ranks and which groups have any visible item, sort() reorders the live DOM (items within/outside groups, then groups) by score via appendChild, and selectFirstItem() picks the new top item. The single highest-value chunk of source for 'how does filtering/sorting/selection actually work' — worth its size."
-
+descriptor = "command-score: exported signature and alias handling"
+justification = "Three lines that pin the module's public shape: formatInput's declaration, the exported commandScore(string, abbreviation, aliases) that defaultFilter calls, and the concatenation that appends aliases to the string before matching - which is exactly how an Item's keywords prop influences rank. The recursive matcher commandScoreInner occupies lines 54-148 if its details are needed."
+predecessor = "5.1"
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 362
-end = 470
+path = "cmdk/src/command-score.ts"
+start = 150
+end = 150
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 155
+end = 155
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 160
+end = 161
 render = { kind = "full" }
 
 [[batches]]
 id = "6.1"
-descriptor = "Empty component"
-justification = "6-line whole implementation: renders iff filtered.count === 0. Trivial but referenced by nearly every test/demo's 'No results found' text — cheap to include in full."
-predecessor = "4.1"
-
+descriptor = "Test fixture pages listing"
+justification = "The complete set of Next.js pages the e2e specs drive: _app, index, item, item-advanced, group, keybinds, numeric, dialog, props, portal, huge. Each spec navigates to one of these by path, so this listing plus a spec name is enough to find or add a scenario; it also reveals the perf page (huge) and the portal page, which have no dedicated spec."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 899
-end = 904
-render = { kind = "full" }
+kind = "fs"
+[[batches.content.groups]]
+parent = "test/pages"
+entries = "all"
 
 [[batches]]
 id = "6.2"
-descriptor = "Item component"
-justification = "The most frequently customized part: shows exactly how `value` is resolved (via useValue upstream), how selection/pointer-move/click wire into the shared store, and the full list of DOM attributes it sets (aria-disabled/aria-selected/data-disabled/data-selected/cmdk-item). Directly answers 'why doesn't my Item show as selected' or 'how do I add a new data attribute'."
-predecessor = "4.1"
-
+descriptor = "Spec names: basic behaviour"
+justification = "Test titles are the behavioural specification, and reading them answers semantic questions with zero follow-up: input props forwarded, item value derived from textContent, the value prop preferred over textContent, onSelect on click, first item selected by default and again whenever the search changes, filtering by search and by keywords, the Empty component appearing when nothing matches, and className forwarding to every part."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "cmdk/src/index.tsx"
-start = 664
-end = 723
-render = { kind = "full" }
+path = "test/basic.test.ts"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 29
+end = 29
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 41
+end = 41
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/basic.test.ts"
+start = 66
+end = 66
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
 
 [[batches]]
-id = "7.1"
-descriptor = "commandScore exported entrypoint"
-justification = "Shows the public signature (string, abbreviation, aliases) and that keyword aliases are simply concatenated onto the value before scoring — the one fact needed to understand Item's `keywords` prop end-to-end without reading the recursive matcher."
-
+id = "6.3"
+descriptor = "dialog.test.ts in full - the whole spec idiom"
+justification = "The smallest complete spec, rendered whole rather than as a title: import from '@playwright/test', a describe with a beforeEach that page.goto's the matching fixture page under test/pages, and assertions that locate `[cmdk-dialog]` / `[cmdk-overlay]` attribute selectors and expect a count. Twelve lines that make 'add an e2e test' a copy-and-adapt job with no follow-up read, and that show tier 4's cmdk-* attributes being used as the test handle."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 150
-end = 162
-render = { kind = "full" }
-
-[[batches]]
-id = "7.2"
-descriptor = "command-score weighting constants"
-justification = "The fuzzy-match scoring philosophy, entirely in the comments: continuous matches score 1, word-boundary jumps beat mid-word jumps, transpositions and skipped characters are penalized, exact-case beats case-insensitive. This explains *why* one item outranks another for a given query — the recursive matcher itself (commandScoreInner, not rendered here) is a 1-hop read away once this vocabulary is known."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 1
-end = 47
-render = { kind = "full" }
-
-[[batches]]
-id = "8.1"
-descriptor = "dialog.test.ts"
-justification = "Smallest, clearest example of the Playwright assertion style used throughout: goto a page, locate a `[cmdk-*]` attribute selector, assert count/text/attribute."
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "test/dialog.test.ts"
 start = 1
@@ -735,61 +1156,227 @@ end = 12
 render = { kind = "full" }
 
 [[batches]]
-id = "8.2"
-descriptor = "CI test pipeline steps"
-justification = "The exact CI sequence — pnpm install, pnpm build, pnpm test:format, playwright install --with-deps, pnpm test — is the ground truth for 'why did CI fail' and 'what must pass before merge', cheaper than reconstructing it from package.json scripts alone. The job's steps list doesn't end at line 29: an ellipsis at line 31 marks the remaining 'Upload test results' artifact step."
-
+id = "6.4"
+descriptor = "Spec names: item lifecycle and item-advanced"
+justification = "The mount/unmount contract that the DOM-authoritative design makes delicate: mounting an item that does or does not match the current search, unmounting the selected item or the only result, selection surviving new mounts, and forceMount keeping an item rendered under a non-matching search - plus item-advanced's re-render re-matching of an implicit textContent value. Both describe blocks and all nine tests of test/item.test.ts."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 9
-end = 29
-render = { kind = "full" }
-
+path = "test/item.test.ts"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
 [[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 31
-end = 31
-render = { kind = "ellipsis" }
+path = "test/item.test.ts"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 30
+end = 30
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/item.test.ts"
+start = 63
+end = 63
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
 
 [[batches]]
-id = "8.3"
-descriptor = "group.test.ts"
-justification = "The group-visibility contract under search + forceMount, directly exercising the filterItems()/sort() group logic shown in 5.2 — a good 'behavior contract' cross-reference for that algorithm."
-
+id = "6.5"
+descriptor = "Spec names: group, props matrix, numeric values"
+justification = "group.test.ts: group visibility driven by item matches, progressive group rendering, and forceMount keeping a group visible. props.test.ts drives the props page through query parameters (shouldFilter=false, customFilter=true, initialValue): results unchanged when filtering is disabled, matching against a custom filter, controlled value, keeping a controlled value when results are empty, controlled search, and keeping focus on the provided initial value. numeric.test.ts covers filtering on numeric and non-numeric input. With 6.2-6.4 that is six of the seven spec files; only keybind.test.ts remains, and it follows at 6.6."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
 path = "test/group.test.ts"
-start = 1
-end = 27
-render = { kind = "full" }
-
-[[batches]]
-id = "8.4"
-descriptor = "playwright.config.ts"
-justification = "Test runner shape: single webkit project only (not chromium/firefox), 5s per-test timeout, spins up `npm run dev` in test/ as the webServer — explains how `pnpm test` actually launches and against which engine, and why a failure might be webkit-specific."
-
-[batches.content]
-kind = "lines"
-
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
 [[batches.content.spans]]
-path = "playwright.config.ts"
-start = 1
-end = 27
-render = { kind = "full" }
+path = "test/group.test.ts"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/group.test.ts"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/group.test.ts"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 4
+end = 4
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 33
+end = 33
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/props.test.ts"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/numeric.test.ts"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/numeric.test.ts"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/numeric.test.ts"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
 
 [[batches]]
-id = "9.1"
-descriptor = "test/pages/dialog.tsx"
-justification = "The minimal real Command.Dialog usage (open/onOpenChange state, opened via an effect) that test/dialog.test.ts drives — a concrete, working alternative to README's dialog snippet, and Dialog's own component body is not rendered elsewhere in this NS."
-
+id = "6.6"
+descriptor = "Spec names: keybinds (four describe blocks)"
+justification = "The keybind spec is the largest and its four describe blocks - arrow keybinds, vim jk, vim np, no-vim - enumerate the full navigation contract: plain arrows move by item, Meta jumps to first/last, Alt moves by group, ctrl+j/k and ctrl+n/p mirror them, and everything ctrl-based goes dead under vimBindings={false}. The Meta and Alt semantics appear nowhere else in the ranking: they live inside next/prev, rostered at lines 543 and 558 by 3.4 but not rendered."
 [batches.content]
 kind = "lines"
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 37
+end = 37
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 42
+end = 42
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 71
+end = 71
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 84
+end = 84
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 92
+end = 92
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "^test\\.describe\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 110
+end = 110
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
+[[batches.content.spans]]
+path = "test/keybind.test.ts"
+start = 118
+end = 118
+render = { kind = "truncated", pattern = "^\\s*test\\('[^']+" }
 
+[[batches]]
+id = "6.7"
+descriptor = "test/pages/dialog.tsx - a working usage page"
+justification = "The complete fixture page 6.3's spec drives, and the only end-to-end consumer code in the ranking: importing { Command } from 'cmdk', holding open/onOpenChange state, and composing Command.Dialog > Command.Input + Command.List > Command.Empty + two Command.Items (one with an explicit value, one with an onSelect). Twenty-five lines that answer 'show me how this is actually used' outright, and the template for any new fixture page."
+[batches.content]
+kind = "lines"
 [[batches.content.spans]]
 path = "test/pages/dialog.tsx"
 start = 1
@@ -797,141 +1384,74 @@ end = 25
 render = { kind = "full" }
 
 [[batches]]
-id = "10.1"
-descriptor = "website icon component roster"
-justification = "Location-only roster (name + line) of every icon/logo component exported from website/components/icons/index.tsx (Figma/Raycast/YouTube/Slack/Vercel/Linear/Logo/Copy/Copied/GitHub/Framer). Consumed via the components/ barrel by website/pages/index.tsx (the theme-switcher's own tab icons and copy/GitHub chrome) and by the raycast.tsx demo (Logo/LinearIcon/FigmaIcon/SlackIcon/YouTubeIcon/RaycastIcon) — the vercel.tsx demo shown in depth at 10.2 defines its own local, same-named icon set instead, so this roster is the only place these exports themselves are visible."
-
+id = "6.8"
+descriptor = "Playwright config (whole file)"
+justification = "Tests live in ./test and run against a dev server booted with `npm run dev` in ./test at localhost:3000, one webkit project only, 5s timeout, CI-only retries and trace-on-first-retry (the reporter line is elided). Explains why every spec starts with page.goto('/<page>') and why a failure may be webkit-specific. Ranked down here with the rest of the test tier rather than ahead of the library source, which is what a session needs first."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 3
-end = 3
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 15
-end = 15
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 28
-end = 28
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 40
-end = 40
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 79
-end = 79
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 87
-end = 87
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 110
-end = 110
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 127
-end = 127
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 146
-end = 146
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 154
-end = 154
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/icons/index.tsx"
-start = 165
-end = 165
-render = { kind = "full" }
-
-[[batches]]
-id = "10.2"
-descriptor = "Vercel-theme demo: pages navigation state"
-justification = "The one demo (of 4) worth rendering in depth: shows the recurring 'nested pages' state pattern (a `pages` string-array stack, `popPage`, and a memoized `onKeyDown` that pops on Backspace) matching README's Nested-items example. An ellipsis at line 34 marks where the component's `bounce()` helper and its JSX return (which wires `onKeyDown` onto a real `<Command>` and renders the Home/Projects sub-views) continue, not rendered here. The other 3 themes (linear/raycast/framer) are named in the 2.5 roster for 1-hop follow-up."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "website/components/cmdk/vercel.tsx"
-start = 1
-end = 32
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "website/components/cmdk/vercel.tsx"
-start = 34
-end = 34
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "11.1"
-descriptor = "Format/lint-staged tooling"
-justification = "The pre-commit hook runs `pnpm lint-staged`, which (per root package.json, not shown here) runs prettier on staged files per .prettierrc.js's settings (no semicolons, single quotes, printWidth 120) — explains stylistic choices seen throughout the diffs and why .prettierignore's paths are exempt."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".husky/pre-commit"
-start = 1
-end = 4
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = ".prettierrc.js"
-start = 1
-end = 7
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = ".prettierignore"
+path = "playwright.config.ts"
 start = 1
 end = 5
 render = { kind = "full" }
+[[batches.content.spans]]
+path = "playwright.config.ts"
+start = 6
+end = 6
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "playwright.config.ts"
+start = 7
+end = 27
+render = { kind = "full" }
 
 [[batches]]
-id = "11.2"
-descriptor = "website Next.js + Vercel deploy config"
-justification = "reactStrictMode/swcMinify toggles plus the one Vercel header rule (immutable long-cache for the variable font) — grounds 'why is Strict Mode on' (relevant to ARCHITECTURE.md's Strict Mode discussion) and how the font is served."
-
+id = "6.9"
+descriptor = "CI workflow"
+justification = "The only CI pipeline, name and trigger plus the ubuntu job's run steps: pnpm install (CI=true) -> pnpm build -> pnpm test:format -> pnpm playwright install --with-deps -> pnpm test. The build precedes the e2e run because test/ consumes the workspace `cmdk` build output, and test:format means an unformatted file fails the pipeline. The elided lines are the checkout/pnpm/node setup actions and a report-upload step."
 [batches.content]
 kind = "lines"
-
 [[batches.content.spans]]
-path = "website/next.config.js"
+path = ".github/workflows/test.yml"
 start = 1
-end = 7
+end = 4
 render = { kind = "full" }
-
 [[batches.content.spans]]
-path = "website/vercel.json"
-start = 1
+path = ".github/workflows/test.yml"
+start = 5
+end = 5
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 9
 end = 13
 render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 14
+end = 14
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 22
+end = 29
+render = { kind = "full" }
+
+[[batches]]
+id = "7.1"
+descriptor = "Website source listings (demos, pages, drop-in stylesheets)"
+justification = "The third workspace package, enumerated: components/cmdk holds the four themed demo implementations (framer, linear, raycast, vercel), styles/cmdk holds the matching drop-in stylesheets the README's 'Drop in stylesheets' section sends users to, and pages/ is a three-file Next.js app. These are the largest real-world usage examples of the library in the repo, so 'show me a full example with groups, sub-commands and shortcuts' resolves to a known path in one hop."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "website/components"
+entries = "all"
+[[batches.content.groups]]
+parent = "website/components/cmdk"
+entries = "all"
+[[batches.content.groups]]
+parent = "website/styles/cmdk"
+entries = "all"
+[[batches.content.groups]]
+parent = "website/pages"
+entries = "all"

@@ -1,0 +1,695 @@
+fixture = "tock"
+revision_pin = "b29815f2"
+summary = """
+`tock` is a Go CLI time-tracking tool (Cobra command tree + a Bubble
+Tea TUI) built with a small hexagonal/clean-architecture split:
+`internal/core` (Activity model, DTOs, ActivityResolver/
+ActivityRepository/NotesRepository ports, sentinel errors),
+`internal/services/activity` (the one business-logic orchestrator),
+two interchangeable storage backends under
+`internal/adapters/repositories` (a Bartib-compatible flat-text file
+backend and a TimeWarrior JSON-lines backend, plus a per-activity
+notes/tags sidecar), and `internal/adapters/cli` (13 Cobra
+subcommands - start/stop/add/remove/continue/current/last/report/
+analyze/ical/watch/list/calendar/version - plus the interactive
+bubbletea prompts, theme palette, and calendar/list TUI models).
+Config loads via Viper from `~/.config/tock/tock.yaml` with a
+documented env-var override layer (`TOCK_*`). The query distribution
+this NS serves: "how do I add/modify a command's flags", "where does
+X activity field flow from CLI to storage", "how do I add a third
+storage backend", "what's the on-disk file format", "how is the
+calendar TUI laid out", "how do I build/lint/test/release this", and
+debugging a specific command's control flow. Depth is spent on the
+domain core, the two storage backends, and the CRUD-shaped commands
+that touch them; the TUI rendering internals (calendar layout math,
+theme swatches, bar charts) get one representative excerpt each since
+they're high-token/low-branching and one file read away.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Root fixture listing"
+justification = "Cheapest possible breadth: every top-level entry (cmd/, internal/, docs/, assets/, demo/, .github/, build/lint/release config, README) before any body content, so nothing below has to re-establish what exists at root."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" }
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README one-line pitch"
+justification = "The author's own pitch: \"powerful time tracking tool for the command line\", plaintext logs, interactive TUI - the fastest way to answer 'what is this tool'. Title/badges/feature-bullets/nav-links are skipped (URLs and restated-elsewhere content, not worth the token cost here)."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 12, end = 14, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "go.mod identity (module + Go version)"
+justification = "Module path and the Go 1.25.6 toolchain floor. The ellipsis at line 5 flags that a `require (` block of 11 direct + ~27 indirect deps follows (cobra/pflag/viper, bubbletea/bubbles/lipgloss, go-faster/errors, samber/lo, testify, yaml.v3 among the direct ones) without paying to list every module path here."
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+  { path = "go.mod", start = 5, end = 5, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "Makefile target names + commands (lint + test)"
+justification = "The only two build entry points, both Dockerized: `make linter` runs golangci-lint v2.6.2 against .golangci.yaml, `make test` runs `go test` with coverage inside golang:1.25.6-alpine. The repeated GOCACHE/GOMODCACHE volume-mount lines identical across both targets are elided. (Ranked just ahead of the pricier Project Structure batch below to keep budget growth gradual.)"
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 2, end = 2, render = { kind = "full" } },
+  { path = "Makefile", start = 7, end = 7, render = { kind = "full" } },
+  { path = "Makefile", start = 9, end = 9, render = { kind = "full" } },
+  { path = "Makefile", start = 13, end = 13, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README Project Structure"
+justification = "The author's own module-layout map (cmd/tock, internal/core, internal/services, internal/adapters/*, internal/config) - note the doc says `internal/adapters/file/` and `internal/extras/` where the actual paths are `internal/adapters/repositories/file/` and `internal/extra/` (verbatim per the no-paraphrase rule; the FS listings in tier 2 give the real paths). The preceding Technology Stack section (Cobra, Bubble Tea/Bubbles/Lipgloss, Go 1.25+, lines 692-696) is skipped here to keep this batch small; those facts recur structurally in go.mod (tier 1.3) and the fs listings."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 698, end = 707, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "2.1"
+descriptor = "internal/ directory listing"
+justification = "Names all six internal packages (adapters, config, core, extra, services, timeutil) so no later single-package batch reads as exhaustive of internal/."
+content = { kind = "fs", groups = [
+  { parent = "internal", entries = "all" }
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "cmd/tock/ + internal/adapters/ listings"
+justification = "The binary entry-point directory (just main.go) and the adapters split (cli vs repositories) in one cheap batch."
+content = { kind = "fs", groups = [
+  { parent = "cmd/tock", entries = "all" },
+  { parent = "internal/adapters", entries = "all" }
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "internal/adapters/cli/ listing"
+justification = "All 19 CLI-layer files at once (13 command files, root.go wiring, interactive.go/theme.go helpers, calendar_sidebar.go/list_gui.go TUI support, update.go/version.go) - the single largest package, so its full membership must be visible before any per-file batch below."
+content = { kind = "fs", groups = [
+  { parent = "internal/adapters/cli", entries = "all" }
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "internal/adapters/repositories/ + backend subdirs"
+justification = "The three storage backends (file, notes, timewarrior) and each one's own two files (impl + _test.go) in one batch, so the test files are visible from the very first look at this package."
+content = { kind = "fs", groups = [
+  { parent = "internal/adapters/repositories", entries = "all" },
+  { parent = "internal/adapters/repositories/file", entries = "all" },
+  { parent = "internal/adapters/repositories/notes", entries = "all" },
+  { parent = "internal/adapters/repositories/timewarrior", entries = "all" }
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "internal/core/ + subpackage listings"
+justification = "The domain layer's four subpackages (dto, errors, models, ports) plus the generated mocks/ directory under ports/, all in one batch."
+content = { kind = "fs", groups = [
+  { parent = "internal/core", entries = "all" },
+  { parent = "internal/core/dto", entries = "all" },
+  { parent = "internal/core/errors", entries = "all" },
+  { parent = "internal/core/models", entries = "all" },
+  { parent = "internal/core/ports", entries = "all" },
+  { parent = "internal/core/ports/mocks", entries = "all" }
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "internal/services/ + subpackage listings"
+justification = "The two business-logic packages: activity/ (service.go + service_test.go) and ics/ (the iCal generator, no test file - worth knowing up front)."
+content = { kind = "fs", groups = [
+  { parent = "internal/services", entries = "all" },
+  { parent = "internal/services/activity", entries = "all" },
+  { parent = "internal/services/ics", entries = "all" }
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "internal/config/, timeutil/, extra/ listings"
+justification = "The three remaining leaf packages, each a single impl file + test file pair."
+content = { kind = "fs", groups = [
+  { parent = "internal/config", entries = "all" },
+  { parent = "internal/timeutil", entries = "all" },
+  { parent = "internal/extra", entries = "all" }
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = ".github/ + workflows/ listings"
+justification = "The CI surface: dependabot.yml, the PR template, and the two workflow files (ci.yml, release.yml)."
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" }
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "assets/ + demo/ listings"
+justification = "The README's embedded screenshots/GIF (demo.png, demo_2.png, demo_3.png, demo.gif - binary, no content batch follows) and the asciinema demo script directory, named so they aren't mistaken for missing."
+content = { kind = "fs", groups = [
+  { parent = "assets", entries = "all" },
+  { parent = "demo", entries = "all" }
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "docs/commands.md table of contents"
+justification = "The command-reference doc's own outline (Core Commands / Viewing & Reporting / Data & Analysis / Global Flags groupings) - a second, task-oriented grouping of the 13 subcommands distinct from root.go's registration order. Ranked after the directory topology (rather than in tier 1) so its cost clears the growth envelope."
+content = { kind = "lines", spans = [
+  { path = "docs/commands.md", start = 1, end = 21, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "3.1"
+descriptor = "cmd/tock/main.go"
+justification = "The entire entry point: nine lines, `cli.Execute()`. Confirms there is no other init/wiring outside the cli package."
+content = { kind = "lines", spans = [
+  { path = "cmd/tock/main.go", start = 1, end = 9, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "models.Activity (the one domain entity)"
+justification = "The single domain struct every layer passes around: Description/Project/StartTime/EndTime(nil=running)/Notes/Tags. ID() (HHMMSS of StartTime), Duration()/DurationString()/MarshalJSON (the custom --json `duration` field injection) follow immediately at lines 19-51."
+content = { kind = "lines", spans = [
+  { path = "internal/core/models/activity.go", start = 1, end = 17, render = { kind = "full" } },
+  { path = "internal/core/models/activity.go", start = 19, end = 19, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "core/ports (the three storage/business interfaces)"
+justification = "ActivityResolver (the service-layer contract CLI commands call), ActivityRepository (what a storage backend must implement), and NotesRepository (the notes/tags sidecar contract) - the seam every new storage backend or command must satisfy."
+content = { kind = "lines", spans = [
+  { path = "internal/core/ports/ports.go", start = 1, end = 32, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "core/dto request/filter shapes"
+justification = "StartActivityRequest/StopActivityRequest/AddActivityRequest, and ActivityFilter (FromDate/ToDate/Project/Description/IsRunning, all pointer-optional) - the four request/filter shapes CLI commands build. Report/ProjectReport (the read-side aggregate GetReport returns) are lines 40-50, one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/core/dto/activity_dto.go", start = 1, end = 38, render = { kind = "full" } },
+  { path = "internal/core/dto/activity_dto.go", start = 40, end = 40, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "core/errors sentinels"
+justification = "The four sentinel errors (ErrActivityNotFound, ErrNoActiveActivity, ErrActivityAlreadyStarted, ErrCancelled) checked with errors.Is across the CLI and repository layers."
+content = { kind = "lines", spans = [
+  { path = "internal/core/errors/errors.go", start = 1, end = 10, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "4.1"
+descriptor = "tock.yaml.example (concrete config sample)"
+justification = "A fully-commented example config file - cheaper, more concrete evidence of the config schema than reading config.go's struct tags: backend choice, in full. The file backend's own `path:` key (14-18), timewarrior/check_updates/export (20-35), and the heavily-commented calendar.*/theme blocks (37-96) are the same shape repeated per-field with more comments, one file-read away."
+content = { kind = "lines", spans = [
+  { path = "tock.yaml.example", start = 1, end = 12, render = { kind = "full" } },
+  { path = "tock.yaml.example", start = 14, end = 14, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "config.Config struct + sub-structs"
+justification = "The mapstructure-tagged Config struct, whose own field types name all five nested config structs (FileConfig/TimewarriorConfig/ThemeConfig/CalendarConfig/ExportConfig), plus CalendarConfig in full. The other five structs' own field lists (ExportConfig/ICalConfig/FileConfig/TimewarriorConfig/ThemeConfig) are lines 33-58."
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 1, end = 31, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "config.go: option funcs + defaults + every TOCK_* BindEnv call"
+justification = "Every `v.SetDefault`/`v.BindEnv` call in file order - the authoritative, complete list of env vars config.Load actually binds (matches README's documented `TOCK_*` list in tier 11.2). WithConfigPath/WithConfigName/WithConfigFile (the Load(...opts) knobs root.go's --config flag uses) are lines 62-78."
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 100, end = 124, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 126, end = 126, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "config_test.go test names"
+justification = "TestLoadDefaults / TestLoadFromFile / TestEnvironmentOverrides / TestInitialCreationFromEnv - the four behaviors config.Load() is held to."
+content = { kind = "lines", spans = [
+  { path = "internal/config/config_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/config/config_test.go", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/config/config_test.go", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/config/config_test.go", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "activity.service: Start"
+justification = "The Start() state transition: stops any other running activity first (single-active-activity invariant enforced here, not in the repo), then saves the new activity. The optional notes/tags-sidecar save (same pattern Stop uses, tier 5.2) is lines 59-65."
+content = { kind = "lines", spans = [
+  { path = "internal/services/activity/service.go", start = 24, end = 57, render = { kind = "full" } },
+  { path = "internal/services/activity/service.go", start = 59, end = 59, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "activity.service: Stop"
+justification = "Stop() picks the latest running activity (not just 'the' running one - supports the multi-running edge case Start() otherwise prevents) and rejects an end time before its start. The save + notes-sidecar-update tail (matching Start's pattern) is lines 97-116."
+content = { kind = "lines", spans = [
+  { path = "internal/services/activity/service.go", start = 68, end = 86, render = { kind = "full" } },
+  { path = "internal/services/activity/service.go", start = 87, end = 87, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "activity.service: Add/List/GetReport/GetRecent/GetLast/Remove signatures + enrichActivities"
+justification = "One truncated line per remaining ActivityResolver method - names-surface so the full method set is visible without paying for every body - plus the private enrichActivities helper (notes/tags backfill both List and GetRecent call through); GetReport's project-aggregation logic is the one worth a full read if a report-shape question comes up (one hop from here)."
+content = { kind = "lines", spans = [
+  { path = "internal/services/activity/service.go", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 141, end = 141, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 186, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 210, end = 210, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 214, end = 214, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/services/activity/service.go", start = 218, end = 218, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "services/ics: iCal generation"
+justification = "Generate()/WrapCalendar() build the VCALENDAR wrapper by hand (no external ics library). GenerateEvent (the VEVENT body) and escapeProperty (RFC 5545 special-character escaping) are lines 28-77."
+content = { kind = "lines", spans = [
+  { path = "internal/services/ics/generator.go", start = 1, end = 17, render = { kind = "full" } },
+  { path = "internal/services/ics/generator.go", start = 18, end = 18, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.1"
+descriptor = "cli.NewRootCmd (composition root, wiring)"
+justification = "The DI seam: PersistentPreRunE loads config, builds the time formatter, and resolves backend/filePath precedence; the full AddCommand list - the authoritative registration order of all 13 subcommands - is shown in full. The repo/notes/service construction in between (initRepository, notesRepo, activity.NewService - lines 57-82) and Execute()/getService/getConfig/getTimeFormatter/getServiceForCompletion/the two shell-completion helpers that fill out the rest of the file are one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/root.go", start = 36, end = 56, render = { kind = "full" } },
+  { path = "internal/adapters/cli/root.go", start = 90, end = 104, render = { kind = "full" } },
+  { path = "internal/adapters/cli/root.go", start = 107, end = 107, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "cli.NewStartCmd (cmd shape + time-parse logic)"
+justification = "`tock start [project] [description] [notes] [tags]`: cmd shape + the --time parse-or-now pattern every start-a-timer command shares. Its ValidArgsFunction (lines 27-36, the flag-completion pattern every CLI command with one shares) and the positional-arg/interactive-picker fallback (52-90) are one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/start.go", start = 17, end = 20, render = { kind = "full" } },
+  { path = "internal/adapters/cli/start.go", start = 37, end = 50, render = { kind = "full" } },
+  { path = "internal/adapters/cli/start.go", start = 115, end = 119, render = { kind = "full" } },
+  { path = "internal/adapters/cli/start.go", start = 121, end = 121, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "cli.NewStopCmd"
+justification = "`tock stop`: resolves EndTime (now or --time), builds a StopActivityRequest, calls service.Stop - the shortest command flow in the tree. The result-printing + flag registration tail is lines 44-63."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/stop.go", start = 14, end = 26, render = { kind = "full" } },
+  { path = "internal/adapters/cli/stop.go", start = 27, end = 27, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "cli.NewAddCmd (definition + flags only)"
+justification = "`tock add`: -d/-p/-s/-e/--duration/--note/--tag. Its ValidArgsFunction (lines 32-41, identical shape to start.go's in tier 6.2) lists every flag as a completion. runAdd's interactive-wizard body (resolveStartTime/resolveEndTimeOrDuration) is lines 64-177."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/add.go", start = 26, end = 28, render = { kind = "full" } },
+  { path = "internal/adapters/cli/add.go", start = 42, end = 57, render = { kind = "full" } },
+  { path = "internal/adapters/cli/add.go", start = 59, end = 59, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "cli.NewContinueCmd (definition + flags)"
+justification = "`tock continue [N]` (alias `c`): flags. Its ValidArgsFunction (lines 32-53, listing recent activities with ShellCompDirectiveKeepOrder so completion order = recency, not alphabetical) and the Nth-from-last resolution + re-Start body (55-121) are one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/continue.go", start = 20, end = 31, render = { kind = "full" } },
+  { path = "internal/adapters/cli/continue.go", start = 124, end = 130, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "cli.NewRemoveCmd (definition)"
+justification = "`tock remove [DATE-INDEX]` (alias `rm`): --yes to skip, otherwise a bufio.Stdin y/N confirmation prompt (Long help text spells out the usage). The prompt-printing/read loop (lines 39-88) and parseRemoveIndex/findActivityByIndex (the `YYYY-MM-DD-NN` key parsing shared with report/ical/list, lines 95-155) are one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/remove.go", start = 22, end = 28, render = { kind = "full" } },
+  { path = "internal/adapters/cli/remove.go", start = 29, end = 29, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "cli.NewCurrentCmd (definition + flags)"
+justification = "`tock current`: --json, or --format with a Go text/template over a currentCmdActivity wrapper exposing .Duration/.DurationHMS (documented inline in Long help text)."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/current.go", start = 35, end = 42, render = { kind = "full" } },
+  { path = "internal/adapters/cli/current.go", start = 117, end = 120, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "cli.NewLastCmd"
+justification = "`tock last` (alias `lt`): --json / -n <count>, backed by service.GetRecent. The JSON branch + tabwriter/reverse-loop rendering is lines 51-72."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/last.go", start = 21, end = 34, render = { kind = "full" } },
+  { path = "internal/adapters/cli/last.go", start = 35, end = 35, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.9"
+descriptor = "cli.NewReportCmd (definition + flags)"
+justification = "`tock report`: --today/--yesterday/--date/-p/-d/-s(summary)/--total-only/--json - the widest flag surface of any read-side command. runReportCmd's date-range + `YYYY-MM-DD-NN` ID-assignment body is at lines 61-202."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/report.go", start = 31, end = 37, render = { kind = "full" } },
+  { path = "internal/adapters/cli/report.go", start = 45, end = 54, render = { kind = "full" } },
+  { path = "internal/adapters/cli/report.go", start = 56, end = 56, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.10"
+descriptor = "cli.runUpdateCheck (update-check throttle gate)"
+justification = "Called via `defer` from start/stop/add/continue: throttled to once a week via cfg.LastUpdateCheck, persists the check timestamp back through the same viper.Viper the config loader built, prints an update-available notice. checkUpdate (the GitHub releases/latest API call, no auth) is lines 22-43."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/update.go", start = 45, end = 50, render = { kind = "full" } },
+  { path = "internal/adapters/cli/update.go", start = 52, end = 52, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "6.11"
+descriptor = "cli version/commit/date ldflags vars"
+justification = "The three package-level vars goreleaser's `-X` ldflags overwrite at release build time (see .goreleaser.yaml, tier 10.3). NewVersionCmd (`tock version` just prints these plus runtime.Version()) is lines 16-24, one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/version.go", start = 1, end = 14, render = { kind = "full" } },
+  { path = "internal/adapters/cli/version.go", start = 16, end = 16, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.1"
+descriptor = "cli watchModel + keyMap (state for `tock watch`)"
+justification = "`tock watch [--stop]`: watchModel holds the activity/pause state plus a help.Model/keyMap (q, space). NewWatchCmd (the currently-running lookup + bubbletea program setup) is lines 19-73; Update (pause=Stop, resume=Start) and the 7-segment big-digit View are lines 121-276."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/watch.go", start = 77, end = 93, render = { kind = "full" } },
+  { path = "internal/adapters/cli/watch.go", start = 95, end = 95, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "cli.NewICalCmd (definition + flags)"
+justification = "`tock ical [key or date]`: three export shapes gated on args/--path/--open (single activity, bulk-all, or one day), each requiring --path or --open (macOS-only) explicitly (Long help text, not shown, spells the three shapes out). handleFullExport/parseKeyOrDate/handleSingleExport/handleBulkExport/openFileInCalendar are at lines 78-307."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/ical.go", start = 23, end = 29, render = { kind = "full" } },
+  { path = "internal/adapters/cli/ical.go", start = 30, end = 30, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "cli.NewAnalyzeCmd + AnalysisStats"
+justification = "`tock analyze [-n days]`: AnalysisStats' field names say what's measured - Deep Work Score, Chronotype, context-switch count, a focus-session histogram. NewAnalyzeCmd/analyzeData's computation/renderAnalysis's lipgloss layout are lines 20-69 and 84-321."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/analyze.go", start = 70, end = 82, render = { kind = "full" } },
+  { path = "internal/adapters/cli/analyze.go", start = 84, end = 84, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "cli reportModel (state for `tock calendar`)"
+justification = "`tock calendar`: the full-dashboard TUI entry point. reportModel holds monthReports (day -> *dto.Report cache), a bubbles/viewport for the details pane, and width-tiered layout state. NewCalendarCmd/Init are lines 25-47 and 79-82; Update/View (3 breakpoints: <70/70-119/>=120 cols) and renderCalendar/renderDetails/updateViewportContent/fetchMonthData/getWeeklyDuration/handleKeyMsg fill out the remaining 480 lines of this file - one grep for `func (m \\*reportModel)` away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/calendar.go", start = 48, end = 62, render = { kind = "full" } },
+  { path = "internal/adapters/cli/calendar.go", start = 64, end = 64, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = "cli calendar_sidebar.go: renderSidebar (fixed-height-budget layout)"
+justification = "The sidebar's height-budget logic (productivity stats always shown, weekly-activity chart only if >=17 lines remain, top-projects only if >=4 remain). renderProductivityStats/renderWeeklyActivity/renderTopProjects (the bar-chart-drawing bodies) are lines 51-266."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/calendar_sidebar.go", start = 27, end = 42, render = { kind = "full" } },
+  { path = "internal/adapters/cli/calendar_sidebar.go", start = 44, end = 44, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.6"
+descriptor = "cli list_gui model (state for `tock list`)"
+justification = "`tock list` (alias `ls`): a bubbles/table single-day view; model holds the selected date + the current day's activities. NewListCmd/initTable (the 7-column Key/Time/Project/Description/Duration/Tags/Notes layout) are lines 22-99; updateActivities/navigate/renderTable/Update/View are lines 101-244."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/list_gui.go", start = 45, end = 56, render = { kind = "full" } },
+  { path = "internal/adapters/cli/list_gui.go", start = 57, end = 57, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.7"
+descriptor = "cli.SelectActivityMetadata (interactive picker entry point)"
+justification = "The shared interactive project/description picker `start`/`add` fall back to when either is missing. selectProject/selectTask (picks a project - offering every unique past project plus \"Create New\" - then a task scoped to it) and RunInteractiveInput/RunInteractiveList (the two underlying bubbletea prompt models) are lines 36-312, one file-read away."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/interactive.go", start = 17, end = 34, render = { kind = "full" } },
+  { path = "internal/adapters/cli/interactive.go", start = 36, end = 36, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "7.8"
+descriptor = "cli theme.go: Theme/Styles structs + DarkTheme"
+justification = "The 7-color Theme struct (Primary/Secondary/Text/SubText/Faint/Highlight/Tag) every palette (DarkTheme/LightTheme/ANSIDarkTheme/ANSILightTheme/CustomTheme) fills in. Styles (13 precomputed lipgloss.Style fields for the calendar TUI), the palette funcs, GetTheme's auto-detection, and InitStyles are lines 21-231."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/cli/theme.go", start = 10, end = 19, render = { kind = "full" } },
+  { path = "internal/adapters/cli/theme.go", start = 22, end = 22, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.1"
+descriptor = "file/parser.go: ParseActivity (the plaintext activity format)"
+justification = "ParseActivity defines the Bartib-compatible on-disk format README's 'File Format' section shows by example (`START [- END] | Project | Description`, pipe-delimited): splits on `|`, then on ` - ` to distinguish a finished activity from a still-running one. FormatActivity (the inverse) and parseTime are lines 64-80."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/file/parser.go", start = 20, end = 28, render = { kind = "full" } },
+  { path = "internal/adapters/repositories/file/parser.go", start = 30, end = 30, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "file/repository.go: Find"
+justification = "Find() streams the flat file line-by-line, silently skipping unparseable lines, then applies every ActivityFilter field in sequence (Project/Description/FromDate/ToDate/IsRunning). FindLast/Save/Remove/read+writeLines are lines 93-271."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/file/repository.go", start = 27, end = 40, render = { kind = "full" } },
+  { path = "internal/adapters/repositories/file/repository.go", start = 42, end = 42, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.3"
+descriptor = "file package test names"
+justification = "TestParseActivity/TestFormatActivity (format round-trip) and the seven Repository_* tests, including two edge cases worth knowing about up front: Save_UpdateMiddle (in-place update, not append) and Remove_WhitespaceHandling (blank-line collapsing)."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/file/parser_test.go", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/parser_test.go", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 103, end = 103, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 123, end = 123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 235, end = 235, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 290, end = 290, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/file/repository_test.go", start = 334, end = 334, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "8.4"
+descriptor = "notes/repository.go: Save (per-activity notes/tags sidecar)"
+justification = "Save() writes `<basePath>/<YYYY-MM-DD>/<activityID>.txt`, with an optional YAML `---`-delimited frontmatter block for tags - this is the sidecar root.go wires up alongside whichever ActivityRepository backend is chosen (see 6.1's notesPath construction). Get() (the inverse, including frontmatter parsing) is lines 73-108."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/notes/repository.go", start = 36, end = 46, render = { kind = "full" } },
+  { path = "internal/adapters/repositories/notes/repository.go", start = 47, end = 47, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.5"
+descriptor = "notes package test names"
+justification = "SaveAndGet (round-trip), Get_NotFound (empty, no error), Save_NoTags (no frontmatter block written), Save_Update (overwrite semantics)."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/notes/repository_test.go", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/notes/repository_test.go", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/notes/repository_test.go", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/notes/repository_test.go", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "8.6"
+descriptor = "timewarrior/repository.go: Find + filter helpers"
+justification = "One JSON-lines file per month (`YYYY-MM.data`); Find() iterates every month file in the requested range via getMonthFilePath, matchesFilter re-implements the same predicate set as the file backend's Find. FindLast/Save/Remove/twInterval-mapping/inc-line-parsing are lines 112-417."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/timewarrior/repository.go", start = 43, end = 50, render = { kind = "full" } },
+  { path = "internal/adapters/repositories/timewarrior/repository.go", start = 51, end = 51, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.7"
+descriptor = "timewarrior/repository.go: parseIncLine (native undo-log format)"
+justification = "Hand-parses TimeWarrior's native `inc <start> [- <end>] [# tags] [# annotation]` undo-log format (an alternative to the JSON-lines format 8.6 reads). The token-position walk (end-time/tags/annotation) and the quote-respecting tokenize helper are lines 358-417."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/timewarrior/repository.go", start = 349, end = 352, render = { kind = "full" } },
+  { path = "internal/adapters/repositories/timewarrior/repository.go", start = 353, end = 353, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "8.8"
+descriptor = "timewarrior package test names"
+justification = "Eight tests including three that pin down cross-cutting behavior other than the happy path: Find_IsRunning_WithHistoricalData, ReadIncFormat, and Find_CrossMonth (the multi-month-file iteration 8.6 implements)."
+content = { kind = "lines", spans = [
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 177, end = 177, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 213, end = 213, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 260, end = 260, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 302, end = 302, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 339, end = 339, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/adapters/repositories/timewarrior/repository_test.go", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "9.1"
+descriptor = "timeutil.Formatter: type + display-format getters"
+justification = "The two-value TimeFormat enum (Format24Hour default / Format12Hour) every display-format decision in this package switches on. NewFormatter/GetDisplayFormat/GetDisplayFormatWithDate (the two Go layout strings, `15:04` vs `03:04 PM`) are lines 18-52."
+content = { kind = "lines", spans = [
+  { path = "internal/timeutil/timeutil.go", start = 1, end = 16, render = { kind = "full" } },
+  { path = "internal/timeutil/timeutil.go", start = 19, end = 19, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "timeutil.ParseTime (24h-first-then-12h fallback chain)"
+justification = "ParseTime always tries 24-hour first even in 12-hour mode (README's documented 24h-as-fallback behavior) before falling through to the 12-hour layout list (not shown). ParseTimeWithDate (date+time variant) and FormatDuration are lines 101-167."
+content = { kind = "lines", spans = [
+  { path = "internal/timeutil/timeutil.go", start = 54, end = 65, render = { kind = "full" } },
+  { path = "internal/timeutil/timeutil.go", start = 68, end = 68, render = { kind = "ellipsis" } }
+] }
+
+[[batches]]
+id = "9.3"
+descriptor = "timeutil_test.go test names"
+justification = "Seven tests: constructor, both display-format getters, and 24h/12h variants of both ParseTime and ParseTimeWithDate - the matrix this package is actually tested against."
+content = { kind = "lines", spans = [
+  { path = "internal/timeutil/timeutil_test.go", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "internal/timeutil/timeutil_test.go", start = 265, end = 265, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "9.4"
+descriptor = "extra.CalculateEndTime + its test name"
+justification = "The one function in `internal/extra`: resolves `add`'s --end-or---duration flag pair into a concrete end time, rejecting an end before start. The --duration-parsing branch (used when --end is omitted) is lines 24-32."
+content = { kind = "lines", spans = [
+  { path = "internal/extra/extra.go", start = 11, end = 16, render = { kind = "full" } },
+  { path = "internal/extra/extra.go", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "internal/extra/extra_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } }
+] }
+
+[[batches]]
+id = "10.1"
+descriptor = ".github/workflows/ci.yml"
+justification = "Runs on push/PR to master or main. The `lint` job (golangci-lint-action v2.6.2, matching .golangci.yaml's version) and `test` job (`go test -v ./...`, no coverage gate unlike the Makefile's local target) are lines 9-35."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/ci.yml", start = 1, end = 6, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "10.2"
+descriptor = ".github/workflows/release.yml"
+justification = "Triggered on `v*` tags. The `build` job cross-compiles macOS amd64+arm64 binaries directly with `go build` (note the artifact names say `janus-darwin-*`, not `tock-darwin-*` - verbatim per source, lines 14-18); the `release` job (36-57) hands off to GoReleaser (tier 10.3) for the real multi-platform release."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/release.yml", start = 1, end = 10, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "10.3"
+descriptor = ".goreleaser.yaml"
+justification = "The authoritative release build: darwin+linux x amd64+arm64, CGO_ENABLED=0, version/commit/date injected via `-X` ldflags into the exact three cli package vars tier 6.11 shows, tar.gz archives, and a homebrew-tap formula publish step."
+content = { kind = "lines", spans = [
+  { path = ".goreleaser.yaml", start = 1, end = 11, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "10.4"
+descriptor = ".mockery.yaml (mocked interfaces)"
+justification = "Mockery generates mocks for exactly the three core/ports interfaces named here (explains internal/core/ports/mocks/'s three files, tier 2.5)."
+content = { kind = "lines", spans = [
+  { path = ".mockery.yaml", start = 1, end = 9, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "10.5"
+descriptor = ".golangci.yaml: version/issues/formatters"
+justification = "golangci-lint v2 config format, max-same-issues=50, and the two enabled formatters (goimports with a local-prefixes group for this module, golines at max-len 140) - the two auto-fixers `make linter` applies with --fix. The ~70-entry `linters.enable` list and its per-linter settings block follow at lines 29+."
+content = { kind = "lines", spans = [
+  { path = ".golangci.yaml", start = 1, end = 9, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "10.6"
+descriptor = "install.sh (OS/arch detection + fetch-and-install)"
+justification = "The curl-pipe-sh installer README's Quick Start links to. OS/arch detection (Linux/Darwin x x86_64/arm64), latest-release lookup via the GitHub API, and download+extract to /usr/local/bin (sudo fallback if not writable) are lines 12-86."
+content = { kind = "lines", spans = [
+  { path = "install.sh", start = 1, end = 10, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "11.1"
+descriptor = "README Quick Start / Installation options"
+justification = "Section headings for all five install paths (Homebrew, Go Install, Build from source, Install Script, Download Binary) - what a new user or CI script actually runs, distinct from the release-engineering side (tier 10.2/10.3). Bodies (33-62) are one file-read away."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 26, end = 26, render = { kind = "full" } },
+  { path = "README.md", start = 28, end = 28, render = { kind = "full" } },
+  { path = "README.md", start = 30, end = 30, render = { kind = "full" } },
+  { path = "README.md", start = 41, end = 41, render = { kind = "full" } },
+  { path = "README.md", start = 47, end = 47, render = { kind = "full" } },
+  { path = "README.md", start = 53, end = 53, render = { kind = "full" } },
+  { path = "README.md", start = 59, end = 59, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "11.2"
+descriptor = "README Configuration: priority order + env var list"
+justification = "The full four-tier priority order (flags > env > file > defaults, matching config.Load()'s implementation in tier 4.3); the `TOCK_*` environment-variable table (already covered by source in tier 4.3) is lines 128-178."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 116, end = 126, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "11.3"
+descriptor = "README Theming section"
+justification = "Section lede; the theme.name enum (dark/light/ansi_dark/ansi_light/custom), auto-detection order, and the `TOCK_COLOR_*` env vars that back CustomTheme (tier 7.8) are lines 243-282."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 238, end = 242, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "11.4"
+descriptor = "README File Format spec"
+justification = "The two-line plaintext File Format spec that 8.1's parser.go implements, shown by example."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 608, end = 618, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "11.6"
+descriptor = "docs/commands.md: `start` section lede + usage"
+justification = "The `start` section's heading + one-line description + usage signature; its **Examples**/**Flags** blocks (29-53) and the stop/add sections (57-116) are one file-read away. A real doc defect worth knowing before grepping further: the TOC (tier 2.10) promises a `### watch` section and a `## Global Flags` section; neither exists anywhere in the doc body (verbatim, not paraphrased)."
+content = { kind = "lines", spans = [
+  { path = "docs/commands.md", start = 25, end = 33, render = { kind = "full" } }
+] }
+
+[[batches]]
+id = "12.1"
+descriptor = "core/ports/mocks: the three mock type declarations"
+justification = "MockActivityResolver/MockActivityRepository/MockNotesRepository - mockery-generated testify mocks for the tier 3.3 interfaces, one struct-decl line each so their existence and location are known without paying for ~900 lines of generated Expecter boilerplate."
+content = { kind = "lines", spans = [
+  { path = "internal/core/ports/mocks/mock_activityresolver.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "internal/core/ports/mocks/mock_activityrepository.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "internal/core/ports/mocks/mock_notesrepository.go", start = 29, end = 29, render = { kind = "full" } }
+] }

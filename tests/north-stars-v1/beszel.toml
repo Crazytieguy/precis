@@ -1,0 +1,752 @@
+fixture = "beszel"
+revision_pin = "c1c1cd1b"
+summary = """
+Beszel is a Go monorepo for a lightweight self-hosted server-monitoring
+platform: a `hub` (web app built on PocketBase) and an `agent` (runs on each
+monitored machine, reports via WebSocket-with-SSH-fallback using CBOR-encoded
+payloads). Domain entities (system/container/systemd/smart stats) are shared
+between agent and hub through `internal/common` and `internal/entities`.
+The hub persists data as PocketBase collections (schema lives in
+`internal/migrations`), runs alerting (`internal/alerts`), downsampling
+(`internal/records`), and a React+Vite+TS dashboard (`internal/site`,
+i18n via lingui, 32 locales). Deployment surfaces: Docker images, a Helm
+chart, Debian packaging, and systemd install scripts under `supplemental/`.
+
+This is a large repo (~390 files) against a tight token budget, so this NS
+leans hard on breadth: directory listings establish what exists everywhere,
+while a smaller number of line-level batches go deep only on the highest-
+traffic paths (wire protocol, core entity schemas, agent/hub struct shapes,
+the hub API route table, and the agent<->hub connection handshake). The
+query distribution this serves: protocol/entity changes, new metrics or
+collectors, hub API/alerting work, frontend feature work, build/release/
+deployment questions, and debugging either binary.
+"""
+
+# ===========================================================================
+# Ranking note: directory-listing (Fs) batches and small line-level content
+# batches are interleaved rather than front-loaded/back-loaded. Fs listings
+# are individually cheap and establish breadth; the growth-envelope cap means
+# the biggest single-subsystem dives (struct definitions, the agent_connect
+# handshake, the API route table) can only land once cumulative cost is large
+# enough to absorb them, so they appear later even though several are
+# high-value — see each batch's justification for why it's ranked where it is.
+# ===========================================================================
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = "What's at the top of the repo: agent/, internal/, supplemental/, go.mod, Makefile, etc. Cheapest possible catastrophic-omission hedge, ranked first."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "internal/entities/ directory listing"
+justification = "Names the four shared entity packages (container, smart, system, systemd) before any of them is opened."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/entities"
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = ".github/workflows/ directory listing"
+justification = "Names all four CI workflow files (release, docker-images, inactivity-actions, vulncheck) before any is opened."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "SECURITY.md — full"
+justification = "Tiny, self-contained: how to report a vulnerability."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 1
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "1.5"
+descriptor = "supplemental/ directory listing"
+justification = "Deployment/packaging assets (debian, docker, guides, kubernetes, licenses, scripts, CHANGELOG) live entirely outside internal/ and agent/; needs its own breadth pass."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "supplemental"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = ".github/ directory listing"
+justification = "Community/CI surface: workflows/, issue+discussion templates, CODEOWNERS, funding.yml, PR template."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+
+[[batches]]
+id = "1.7"
+descriptor = "internal/common/common-ssh.go — full"
+justification = "Allowed SSH key-exchange/MAC/cipher lists shared by the agent's SSH server and the hub's SSH client — small, load-bearing for handshake debugging."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/common/common-ssh.go"
+start = 1
+end = 10
+render = { kind = "full" }
+
+[[batches]]
+id = "1.8"
+descriptor = "internal/site/src/ directory listing"
+justification = "Top-level fanout of the frontend source (components/, lib/, locales/, main.tsx, types.d.ts) before drilling into any one piece."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src"
+entries = "all"
+
+[[batches]]
+id = "1.9"
+descriptor = "internal/site/src/lib/ directory listing"
+justification = "Every shared frontend module (alerts.ts, api.ts, enums.ts, i18n.ts, languages.ts, shiki.ts, stores.ts, systemsManager.ts, time.ts, use-intersection-observer.ts, utils.ts) named up front."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/lib"
+entries = "all"
+
+[[batches]]
+id = "1.10"
+descriptor = "beszel.go — version/AppName constants"
+justification = "Version/AppName/MinVersionCbor/MinVersionAgentResponse are referenced throughout hub<->agent compatibility logic."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "beszel.go"
+start = 1
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "1.11"
+descriptor = "internal/hub/ws/, transport/, expirymap/ directory listings"
+justification = "Names every file in the three small packages implementing the request/response layer over the hub<->agent WebSocket connection, plus the generic TTL-map utility they share."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/hub/ws"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/hub/transport"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/hub/expirymap"
+entries = "all"
+
+[[batches]]
+id = "1.12"
+descriptor = "internal/hub/systems/ directory listing"
+justification = "Names every file in the package that owns the actual per-machine connection lifecycle (system.go, system_manager.go, tests/helpers)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/hub/systems"
+entries = "all"
+
+[[batches]]
+id = "1.13"
+descriptor = "internal/records/ + internal/migrations/ directory listings"
+justification = "Names every file in the downsampling/retention package and the PocketBase migrations package — small packages, easy to under-represent."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/records"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/migrations"
+entries = "all"
+
+[[batches]]
+id = "1.14"
+descriptor = "README lede (head)"
+justification = "The concept paragraph plus the badge/screenshot links — cheapest framing for 'what is this project'. Trimmed short since prose is expensive per line; the Features/Architecture sections are one read away."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "1.15"
+descriptor = "internal/ directory listing"
+justification = "Top-level fanout of hub-side code: alerts, cmd, common, dockerfiles, entities, ghupdate, hub, migrations, records, site, tests, users."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal"
+entries = "all"
+
+[[batches]]
+id = "1.16"
+descriptor = "internal/site/src/locales/en/ directory listing"
+justification = "Shows the lingui .po translation-file naming convention (en/en.po) that every other locale directory follows."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/locales/en"
+entries = "all"
+
+[[batches]]
+id = "1.17"
+descriptor = "internal/tests/ directory listing"
+justification = "internal/tests/api.go and hub.go are NOT *_test.go files but the shared ApiScenario/TestHub harness every hub package's tests import — easy to miss since it doesn't match the *_test.go naming pattern."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/tests"
+entries = "all"
+
+[[batches]]
+id = "1.18"
+descriptor = "README architecture (hub/agent split)"
+justification = "The hub/agent split in one paragraph is exactly the semantic context needed before touching any subsystem."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 25
+end = 30
+render = { kind = "full" }
+
+[[batches]]
+id = "1.19"
+descriptor = "internal/site/ top-level listing"
+justification = "The frontend is a distinct Vite/React/TS project nested under internal/; its own package.json, src/, public/ need to be visible as a unit."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site"
+entries = "all"
+
+[[batches]]
+id = "1.20"
+descriptor = "internal/hub/ directory listing"
+justification = "Names every file directly under internal/hub/ (agent_connect.go, api.go, collections.go, config/, expirymap/, heartbeat/, hub.go, server*.go, systems/, transport/, update.go, utils/, ws/) before drilling into any subpackage."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/hub"
+entries = "all"
+
+[[batches]]
+id = "1.21"
+descriptor = "README supported metrics list (head)"
+justification = "The first lines of the exhaustive metrics list (CPU/mem/disk usage) is a cheap sample of 'what does this monitor'; ellipsis signals the remaining bullets (network, load average, temperature, GPU, battery, containers, S.M.A.R.T.) rather than implying the list ends here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 42
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "readme.md"
+start = 48
+end = 48
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.22"
+descriptor = "internal/alerts/ directory listing"
+justification = "Names every alerts-package file (api/battery/cache/disk/history/quiet-hours/smart/status/system + tests) before opening any one — the hub subsystem with the most files."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/alerts"
+entries = "all"
+
+[[batches]]
+id = "1.23"
+descriptor = "internal/hub/utils/utils.go — full"
+justification = "The BESZEL_HUB_-prefixed env-var lookup helper used throughout hub config; tiny."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/hub/utils/utils.go"
+start = 1
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "1.24"
+descriptor = "internal/site/src/locales/ directory listing — all 32 supported languages"
+justification = "Every locale directory beszel ships (ar, bg, cs, da, de, en, es, fa, fr, he, hr, hu, id, it, ja, ko, nl, no, pl, pt, ro, ru, sl, sr, sv, th, tr, uk, vi, zh, zh-CN, zh-HK) — a classic catastrophic-omission risk if only a couple were mentioned."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/locales"
+entries = "all"
+
+[[batches]]
+id = "1.25"
+descriptor = "internal/site/src/components/ directory listing"
+justification = "Names every top-level component file and subdirectory (alerts/, charts/, containers-table/, login/, routes/, systemd-table/, systems-table/, ui/, plus navbar/logo/command-palette/etc.)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/components"
+entries = "all"
+
+[[batches]]
+id = "1.26"
+descriptor = "supplemental/CHANGELOG.md — most recent release-note entries (head)"
+justification = "The top of the 0.18.7 entry is the cheapest answer to 'what changed recently' without grepping GitHub."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "supplemental/CHANGELOG.md"
+start = 1
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "1.27"
+descriptor = "internal/site/src/components/ui/ directory listing"
+justification = "The full shadcn/radix-ui primitive roster (button, dialog, select, sheet, table, toast, tooltip, etc.) — hedges against assuming only a few UI primitives exist."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/components/ui"
+entries = "all"
+
+[[batches]]
+id = "1.28"
+descriptor = "supplemental/ subdirectory breadth"
+justification = "One level deeper for every supplemental/ subdirectory (scripts, debian, docker/*, kubernetes chart + templates, licenses) so install scripts, packaging files, and the Helm chart's template roster are all discoverable."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "supplemental/scripts"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/debian"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/docker/agent"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/docker/hub"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/docker/same-system"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/kubernetes/beszel-hub/charts"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/kubernetes/beszel-hub/charts/templates"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/licenses/LibreHardwareMonitor"
+entries = "all"
+[[batches.content.groups]]
+parent = "supplemental/licenses/smartmontools"
+entries = "all"
+
+[[batches]]
+id = "1.29"
+descriptor = "PocketBase collection roster — all 14 collection names"
+justification = "The schema-snapshot file is 1714 lines of field JSON; showing every top-level collection-name line (alerts, alerts_history, container_stats, fingerprints, system_stats, user_settings, systems, users, containers, systemd_services, quiet_hours, smart_devices, system_details, universal_tokens) names the whole DB schema cheaply without paying for field-by-field JSON."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 151
+end = 151
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 269
+end = 269
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 359
+end = 359
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 441
+end = 441
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 531
+end = 531
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 604
+end = 604
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 735
+end = 735
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 874
+end = 874
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 1163
+end = 1163
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 1256
+end = 1256
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 1451
+end = 1451
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 1628
+end = 1628
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/migrations/0_collections_snapshot_0_19_0_dev_1.go"
+start = 1697
+end = 1697
+render = { kind = "full" }
+
+[[batches]]
+id = "1.30"
+descriptor = "agent/ subpackage breadth (battery, deltatracker, health, lhm, test-data, tools, utils, zfs)"
+justification = "Every agent subpackage's files, including the C# LibreHardwareMonitor helper, smartctl-fetch tool, and fixture JSON under test-data/ — the agent/ top-level listing (ranked later, once budget allows) only shows agent/'s immediate children, not these nested dirs."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "agent/battery"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/deltatracker"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/health"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/lhm"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/test-data"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/test-data/smart"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/tools/fetchsmartctl"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/utils"
+entries = "all"
+[[batches.content.groups]]
+parent = "agent/zfs"
+entries = "all"
+
+[[batches]]
+id = "1.31"
+descriptor = "components/routes/ (+ system/, settings/) directory listings"
+justification = "Names every page-level route component (home, containers, smart, system, per-metric system/ charts, settings/ subpages) — answers 'what pages does the dashboard have'."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/site/src/components/routes"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/site/src/components/routes/system"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/site/src/components/routes/system/charts"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/site/src/components/routes/settings"
+entries = "all"
+
+[[batches]]
+id = "1.32"
+descriptor = "docker-compose samples (hub, agent)"
+justification = "Two tiny, concrete compose files are the cheapest evidence of the runtime config surface (ports, volumes, env vars PORT/KEY/NVIDIA_*)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "supplemental/docker/hub/docker-compose.yml"
+start = 1
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "supplemental/docker/agent/docker-compose.yml"
+start = 1
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "1.33"
+descriptor = "agent/ directory listing"
+justification = "Every file in the agent package (collectors, platform-variant files, test files) — the largest single directory in the repo, so ranked once cumulative breadth budget can absorb it."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "agent"
+entries = "all"
+
+[[batches]]
+id = "1.34"
+descriptor = "internal/entities/systemd/systemd.go — Service struct"
+justification = "The Service struct is the whole systemd-monitoring data model consumers reach for; the ServiceState/SubState enums and the CPU%-from-cgroup-nsec math are left one hop away in this small file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/systemd/systemd.go"
+start = 68
+end = 79
+render = { kind = "full" }
+
+[[batches]]
+id = "1.35"
+descriptor = "internal/entities/container/container.go — Stats struct"
+justification = "The persisted per-container record shape (cpu/mem/bandwidth/health/status) is what most container-stats debugging or charting work touches; the Docker API response structs, DockerHealth enum, and CPU%-math functions are left one hop away in the same small file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/container/container.go"
+start = 140
+end = 158
+render = { kind = "full" }
+
+[[batches]]
+id = "1.36"
+descriptor = "agent.Agent struct definition"
+justification = "The Agent struct's fields are the map of every subsystem manager (docker, GPU, SMART, systemd, sensors, cache, connection, handler registry) it owns — the single best orientation point for the whole agent binary."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "agent/agent.go"
+start = 24
+end = 51
+render = { kind = "full" }
+
+[[batches]]
+id = "1.37"
+descriptor = "hub.Hub struct + NewHub"
+justification = "Hub embeds core.App and every subsystem manager (alerts/users/records/systems/heartbeat) as fields — the single best map of what the hub owns and how each manager is constructed."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/hub/hub.go"
+start = 27
+end = 54
+render = { kind = "full" }
+
+[[batches]]
+id = "1.38"
+descriptor = "internal/common/common-ws.go — WebSocketAction enum + HubRequest (part 1)"
+justification = "The action-type enum (GetData, CheckFingerprint, GetContainerLogs/Info, GetSmartData, GetSystemdInfo) and the generic request envelope — the top half of the single source of truth for the CBOR wire format shared by hub and agent."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/common/common-ws.go"
+start = 1
+end = 33
+render = { kind = "full" }
+
+[[batches]]
+id = "1.39"
+descriptor = "internal/common/common-ws.go — AgentResponse struct (part 2)"
+justification = "The response envelope, with its legacy-typed-field fallbacks for pre-0.19 hubs (SystemData/Fingerprint/String/SmartData/ServiceInfo alongside the new generic Data field) — pairs with the WebSocketAction/HubRequest batch just above; ellipsis signals the per-action request/response types (FingerprintRequest/Response, DataRequestOptions, ContainerLogsRequest, ContainerInfoRequest, SystemdInfoRequest) that fill out the rest of the file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/common/common-ws.go"
+start = 35
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/common/common-ws.go"
+start = 47
+end = 47
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.40"
+descriptor = "internal/entities/system/system.go — Stats struct (part 1: CPU/mem fields)"
+justification = "The first fields of every metric the agent reports and the hub stores/charts — cpu, memory (incl. ZFS ARC/swap). High-frequency target for 'what fields does system_stats have'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 13
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "1.41"
+descriptor = "internal/entities/system/system.go — Stats struct (part 2: disk/net fields)"
+justification = "Disk usage/IO and network fields continue the metrics schema from the CPU/mem fields batch just above; ellipsis signals the remaining GPU/battery/temperature/per-core fields still inside the same struct rather than implying it ends here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 24
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 33
+end = 33
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.42"
+descriptor = "internal/entities/system/system.go — Info struct (head)"
+justification = "Info is the compact per-poll payload shown in the all-systems dashboard list (as opposed to the once-per-connection Details struct) — a distinct, frequently-touched shape from Stats. Trimmed to the first fields since this struct's comments make it expensive per line; ellipsis signals the remaining fields (bandwidth/connection-type/extra-fs/services/battery) rather than implying the struct ends here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 130
+end = 140
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 141
+end = 141
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.43"
+descriptor = "internal/entities/system/system.go — Details + CombinedData structs"
+justification = "Details is the static once-per-connection payload (hostname/kernel/cores/arch); CombinedData is the top-level agent->hub response envelope wrapping Stats+Info+Containers+SystemdServices+Details."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/system/system.go"
+start = 160
+end = 182
+render = { kind = "full" }
+
+[[batches]]
+id = "1.44"
+descriptor = "agent/connection_manager.go — ConnectionManager struct + state/event constants"
+justification = "Names the WS/SSH dual-transport state machine (Disconnected/WebSocketConnected/SSHConnected, and the four connection events) that every connectivity bug or transport change has to reason about."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "agent/connection_manager.go"
+start = 19
+end = 54
+render = { kind = "full" }
+
+[[batches]]
+id = "1.45"
+descriptor = "internal/hub/agent_connect.go — agentConnect (handshake HTTP entry point)"
+justification = "This is the actual HTTP handler an agent's WebSocket client connects to: token/version header validation, universal-token lookup, fingerprint-record lookup, WS upgrade. The single most likely target for 'why won't my agent connect to the hub'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/hub/agent_connect.go"
+start = 51
+end = 101
+render = { kind = "full" }
+
+[[batches]]
+id = "1.46"
+descriptor = "internal/hub/api.go — full /api/beszel/* route table"
+justification = "Every custom hub HTTP route in one place: first-run/create-user, info/update-check, test-notification, heartbeat status/test, config-yaml, agent-connect, universal-token, user-alerts, smart/refresh, systemd/info, container logs/info. The single best answer to 'what HTTP API does the hub expose'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/hub/api.go"
+start = 87
+end = 138
+render = { kind = "full" }
+
+[[batches]]
+id = "1.47"
+descriptor = "internal/entities/smart/smart.go — common smartctl JSON types (head)"
+justification = "SmartctlInfo/DeviceInfo/UserCapacity/StatusInfo are the shared vocabulary before the file forks into ATA/NVMe/SCSI-specific structs; ellipsis signals the much larger per-protocol section (~450 more lines) rather than implying this is the whole file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/entities/smart/smart.go"
+start = 1
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/entities/smart/smart.go"
+start = 27
+end = 27
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.48"
+descriptor = "Makefile — build-agent / build-hub / build targets"
+justification = "The exact `go build` invocations for both binaries, including the NVML/glibc build-tag flag and the conditional .NET/web-UI pre-steps — the highest-value slice of 'how do I build this'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 88
+end = 99
+render = { kind = "full" }
+
+[[batches]]
+id = "1.49"
+descriptor = "Makefile — lint/test/tidy/clean targets"
+justification = "golangci-lint, `go test -tags=testing ./...`, go mod tidy — the canonical lint/test commands, small and cheap."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 47
+end = 59
+render = { kind = "full" }
+
+[[batches]]
+id = "1.50"
+descriptor = "internal/users/users.go — role/settings defaults (head)"
+justification = "InitializeUserRole/InitializeUserSettings (default role+chart-time+email on record creation) — small, self-contained. Ellipsis signals that CreateFirstUser (the one-time first-run signup endpoint) immediately follows in the same file rather than implying the file ends here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/users/users.go"
+start = 24
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/users/users.go"
+start = 58
+end = 58
+render = { kind = "ellipsis" }

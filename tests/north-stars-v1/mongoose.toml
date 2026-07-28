@@ -1,0 +1,378 @@
+fixture = "mongoose"
+revision_pin = "1d373ce5"
+summary = """
+Mongoose is a single event-driven C/C++ networking library (cesanta/mongoose):
+one mg_mgr + mg_connection model with MG_EV_* callbacks drives TCP/UDP, HTTP,
+WebSocket, MQTT (3.1.1/5), DNS/mDNS, SNTP, Modbus, JSON-RPC, and TLS (builtin
+or mbedTLS/OpenSSL/WolfSSL), plus an optional built-in TCP/IP stack with 38
+embedded MAC/PHY/Wi-Fi driver backends. Canonical source of truth is the
+per-module split under src/*.{c,h} (~118 files); root mongoose.c/mongoose.h
+are the generated single-file amalgamation end users copy into their own
+build (see resources/pack.js / test/pack.c for the generation tooling).
+Ranking serves: (a) "how do I wire up protocol X" (dense public headers for
+the README-advertised protocols: HTTP/MQTT/WS/JSON/SNTP, plus entry points
+for the less-advertised ones: DNS/mDNS, Modbus — JSON-RPC/rpc.h, like most
+other subsystems, is named via the src/ listing only, one grep away), (b) "what config
+knob controls Y" (config.h, arch.h), (c) build/test/CI entry points, and
+(d) breadth-first orientation across src/, drivers/, test/, and tutorials/
+so an agent never has to guess what else exists before drilling in. Given a
+hard token budget, depth is deliberately biased toward the core event model
+and the two headline protocols (HTTP, MQTT); most other subsystems (TLS
+internals, the built-in TCP/IP stack, OTA, the device-dashboard framework,
+per-chip drivers) are named via filesystem listings only, one grep away.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Repository root listing"
+justification = "Cheapest possible orientation: every top-level entry (LICENSE, README, mongoose.c/.h amalgamation, resources/, src/, test/, tutorials/) at near-zero budget."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "test/dirtest/ listing"
+justification = "Tiny fixture dir (fuzz.c + version.h) used by the directory-listing test in unit_test.c; cheap enough to slot in immediately after the root listing."
+content = { kind = "fs", groups = [ { parent = "test/dirtest", entries = "all" } ] }
+
+[[batches]]
+id = "1.3"
+descriptor = "test/wizard/ listing"
+justification = "Names the Makefile + test.sh backing the 'Mongoose Wizard' board-config generator mentioned in tutorials/README.md (5.1)."
+content = { kind = "fs", groups = [ { parent = "test/wizard", entries = "all" } ] }
+
+[[batches]]
+id = "1.4"
+descriptor = ".github/ISSUE_TEMPLATE/ listing"
+justification = "Names the issue template (issue.md) and its config (config.yml) — cheap process detail for 'how do I file a bug'."
+content = { kind = "fs", groups = [ { parent = ".github/ISSUE_TEMPLATE", entries = "all" } ] }
+
+[[batches]]
+id = "1.5"
+descriptor = ".clang-format (full)"
+justification = "6-line file: BasedOnStyle Google + a few overrides. Answers 'what code style/formatter' with zero follow-up."
+content = { kind = "lines", spans = [ { path = ".clang-format", start = 1, end = 6, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "1.6"
+descriptor = "resources/downloads/ listing"
+justification = "Names the STM32CubeMX .ioc board files and init.sh/Makefile backing hardware-specific quick-starts (see resources/AGENTS.md, not expanded here per host-injected-file policy)."
+content = { kind = "fs", groups = [ { parent = "resources/downloads", entries = "all" } ] }
+
+[[batches]]
+id = "1.7"
+descriptor = "test/certs/ listing"
+justification = "Names the test TLS material (ca/server/client .crt/.key + generate.sh) used by the TLS unit test (test_tls, see 3.5) and tls_multirec fixture."
+content = { kind = "fs", groups = [ { parent = "test/certs", entries = "all" } ] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README: H2 section-heading roster"
+justification = "All 7 second-level headings in README.md (Supported platforms, Usage Examples, Commercial use, Security, How to report security vulnerabilities, Articles, Contributions) at their exact line numbers, without pulling in body text — cheap orientation for which section to open for a given query."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 37, end = 37, render = { kind = "full" } },
+  { path = "README.md", start = 66, end = 66, render = { kind = "full" } },
+  { path = "README.md", start = 162, end = 162, render = { kind = "full" } },
+  { path = "README.md", start = 176, end = 176, render = { kind = "full" } },
+  { path = "README.md", start = 201, end = 201, render = { kind = "full" } },
+  { path = "README.md", start = 206, end = 206, render = { kind = "full" } },
+  { path = "README.md", start = 226, end = 226, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "README: title + lede paragraph"
+justification = "The H1 title and the 6-line identity paragraph (event-driven, cross-platform, on the market since 2004). Skips the 4 badge-image lines (3-6, long CI/coverage badge URLs with no semantic content, plus their surrounding blank lines 2/7) to keep cost down. The paragraph ends '...Features include:' — an Ellipsis at line 15 signals the bulleted feature list (cross-platform, built-in protocols, TLS, built-in TCP/IP stack, ...) that follows rather than implying no such list exists."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 8, end = 13, render = { kind = "full" } },
+  { path = "README.md", start = 15, end = 15, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "test/data/ listing"
+justification = "Names the fixtures the HTTP/static-file tests serve against (index.html, range.txt, gzip.txt(.gz), a UTF-8-named file, ssi/ dir, packed ws.hex) — grounds what test_http_server/test_http_range/test_packed actually read from disk."
+content = { kind = "fs", groups = [ { parent = "test/data", entries = "all" } ] }
+
+[[batches]]
+id = "1.11"
+descriptor = ".github/workflows/ + resources/ listing"
+justification = "All 9 CI workflow files (quicktest/test/nightly/nightly_tests/fuzz/cifuzz/codeql/zephyr/on_demand) and the resources/ tooling dir (pack.js, html2c.js, dashboard.js, watch.js, inline.js, I-CUBE-Mongoose) as classes."
+content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" }, { parent = "resources", entries = "all" } ] }
+
+[[batches]]
+id = "1.12"
+descriptor = "LICENSE (dual GPLv2/commercial, full)"
+justification = "Full 16-line license file. Answers licensing questions (a frequent onboarding query for a dual-licensed embedded lib) with zero follow-up."
+content = { kind = "lines", spans = [ { path = "LICENSE", start = 1, end = 16, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "1.13"
+descriptor = "src/drivers/ full file listing"
+justification = "The 38 embedded MAC/PHY/Wi-Fi driver source files (stm32f, stm32h, w5500, imxrt, xmc, rw612, cyw, nxp_wifi, st67w6, ...) named as a class, so 'is there a driver for chip X' is answered by one grep instead of assuming absence."
+content = { kind = "fs", groups = [ { parent = "src/drivers", entries = "all" } ] }
+
+[[batches]]
+id = "1.14"
+descriptor = "test/ full listing"
+justification = "Names the unit test (unit_test.c), fuzz targets, Makefile, per-toolchain example dirs (arduino, cube, keil, zephyr, xpresso, pico-sdk, esp-idf...), and setup scripts (mosquitto/mqtt, ga docker) as a class up front."
+content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+
+[[batches]]
+id = "1.15"
+descriptor = "tutorials/ full listing"
+justification = "Top-level tutorial categories (http, mqtt, tcp, udp, websocket, tls, tcpip, arduino, micropython, and per-vendor stm32/nxp/ti/wch/infineon/renesas/pico-sdk/zephyr dirs) so 'is there a tutorial for protocol/board X' doesn't require a blind search."
+content = { kind = "fs", groups = [ { parent = "tutorials", entries = "all" } ] }
+
+[[batches]]
+id = "2.1"
+descriptor = "arch.h: MG_ARCH_* platform enumeration"
+justification = "All 17 supported architecture defines (UNIX, WIN32, ESP32/8266, FreeRTOS, ThreadX, Zephyr, ARMGCC, CMSIS-RTOS1/2, TI-RTOS, Pico-SDK, ARMCC, RT-Thread, ARM-CGT, Cube) plus the deprecated NEWLIB alias — the complete platform-selector class, in one place."
+content = { kind = "lines", spans = [ { path = "src/arch.h", start = 1, end = 21, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.2"
+descriptor = "event.h: the MG_EV_* event enum (full)"
+justification = "The single most load-bearing file conceptually: every mg_connection event handler switches on this enum. Full 34-line file so the complete event vocabulary (open/poll/connect/http/ws/mqtt/sntp/mdns/modbus/user) is visible in one shot, each with its ev_data type documented inline."
+content = { kind = "lines", spans = [ { path = "src/event.h", start = 1, end = 34, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.3"
+descriptor = "src/ full file listing"
+justification = "Catastrophic-omission hedge: all ~118 files under src/ (protocol .c/.h pairs, arch_*.h, tls_*, ota_*, and the drivers/ subdir) named up front so later per-module content batches don't imply the unlisted ones don't exist."
+content = { kind = "fs", groups = [ { parent = "src", entries = "all" } ] }
+
+[[batches]]
+id = "2.4"
+descriptor = "net.h: mg_mgr struct"
+justification = "mg_mgr is the top-level object every program owns (mg_mgr_init/poll/free); shows its exact fields (conns list, dns4/6, timers, tls_ctx, userdata). mg_dns/mg_addr (lines 1-25, referenced by loc/rem in mg_connection, 2.5) are omitted wholesale to bound cost — one grep on the already-named src/net.h (2.3) resolves them."
+content = { kind = "lines", spans = [
+  { path = "src/net.h", start = 11, end = 11, render = { kind = "ellipsis" } },
+  { path = "src/net.h", start = 27, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "net.h: mg_connection struct"
+justification = "The per-connection object passed to every event handler: recv/send iobufs, the bitfield of is_listening/is_client/is_tls/is_websocket/... flags that most protocol logic branches on. Grounds 'how do I tell if a connection is X' without grepping net.c."
+content = { kind = "lines", spans = [ { path = "src/net.h", start = 50, end = 86, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.6"
+descriptor = "README worked example: minimal HTTP file server"
+justification = "The canonical 'cc main.c mongoose.c' HTTP static-file-server snippet, using mg_mgr_init/mg_http_listen/mg_http_serve_dir/mg_mgr_poll together. Zero-follow-up answer for 'how do I start a basic mongoose HTTP server'."
+content = { kind = "lines", spans = [ { path = "README.md", start = 74, end = 96, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.7"
+descriptor = "README worked example: MQTT event handler (pub/sub)"
+justification = "Full ev_handler from the README's MQTT client (mg_mqtt_sub/mg_mqtt_pub, MG_EV_MQTT_OPEN/MSG/CLOSE branches). Trimmed to the handler only (drops the reconnect-timer/main-loop boilerplate, which mirrors the HTTP example's main loop in 2.6) to bound cost."
+content = { kind = "lines", spans = [ { path = "README.md", start = 111, end = 140, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.8"
+descriptor = "config.h: feature-toggle flags (part 1, hedged)"
+justification = "The first 60 lines of the single build-time config surface: MG_ENABLE_LOG, the mutually-exclusive stack choice (TCPIP/LWIP/FREERTOS_TCP/RL), MG_ENABLE_SOCKET/POLL/EPOLL/FATFS/SSI/IPV6/MD5. An Ellipsis at line 61 signals more toggles follow (WINSOCK, DIRLIST, ASSERT, IO/buffer sizes, TCP/IP address defaults, MG_ENABLE_CHACHA20 — not rendered here to bound cost) rather than implying this is the complete knob set."
+content = { kind = "lines", spans = [
+  { path = "src/config.h", start = 1, end = 60, render = { kind = "full" } },
+  { path = "src/config.h", start = 61, end = 61, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.1"
+descriptor = "test/Makefile: canonical build/test targets (roster)"
+justification = "Name+deps line for 18 of the top-level Make targets (all, tall, test, mip_test/mip_tap_test/mip_port_test, mg_prefix, musl, unamalgamated, fuzz/fuzz_tls, coverage, valgrind, armhf/arm/riscv, mingw, tutorials); the remaining targets (misra, install/uninstall, clean*, ...) are dropped from this roster to bound cost, not to imply they don't exist — test/Makefile is already named in 1.14. Answers 'how do I build/test this' precisely without reading the whole 300+ line Makefile."
+content = { kind = "lines", spans = [
+  { path = "test/Makefile", start = 81, end = 81, render = { kind = "full" } },
+  { path = "test/Makefile", start = 84, end = 84, render = { kind = "full" } },
+  { path = "test/Makefile", start = 86, end = 86, render = { kind = "full" } },
+  { path = "test/Makefile", start = 90, end = 90, render = { kind = "full" } },
+  { path = "test/Makefile", start = 99, end = 99, render = { kind = "full" } },
+  { path = "test/Makefile", start = 112, end = 112, render = { kind = "full" } },
+  { path = "test/Makefile", start = 115, end = 115, render = { kind = "full" } },
+  { path = "test/Makefile", start = 122, end = 122, render = { kind = "full" } },
+  { path = "test/Makefile", start = 126, end = 126, render = { kind = "full" } },
+  { path = "test/Makefile", start = 136, end = 136, render = { kind = "full" } },
+  { path = "test/Makefile", start = 147, end = 147, render = { kind = "full" } },
+  { path = "test/Makefile", start = 162, end = 162, render = { kind = "full" } },
+  { path = "test/Makefile", start = 170, end = 170, render = { kind = "full" } },
+  { path = "test/Makefile", start = 174, end = 174, render = { kind = "ellipsis" } },
+  { path = "test/Makefile", start = 182, end = 182, render = { kind = "full" } },
+  { path = "test/Makefile", start = 208, end = 208, render = { kind = "full" } },
+  { path = "test/Makefile", start = 212, end = 212, render = { kind = "full" } },
+  { path = "test/Makefile", start = 228, end = 228, render = { kind = "full" } },
+  { path = "test/Makefile", start = 264, end = 264, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "CI: quicktest.yml essentials workflow (excerpt)"
+justification = "Shows the fast-path CI job matrix (gcc/clang++, test/mip_test targets, SSL='' / BUILTIN) and the path-filtered trigger. Grounds 'what does CI actually run' for the everyday push case; the other 8 workflows are named (not expanded) in 1.11. An Ellipsis at line 21 signals the file continues (this job's steps, plus the s390/armhf/... jobs) well past this excerpt, in this 727-line file."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/quicktest.yml", start = 1, end = 20, render = { kind = "full" } },
+  { path = ".github/workflows/quicktest.yml", start = 21, end = 21, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "resources/pack.js: static-filesystem packer (excerpt)"
+justification = "Explains how mg_fs_packed / mg_packed_files (referenced from src/fs.h) get generated: pack.js turns arbitrary files into a C byte-array + mg_mem_file table, optionally gzipped. Answers 'how do I embed a web UI/static assets' at the tool level. Cuts off inside the argv.map() callback (the gzip branch); an Ellipsis at line 17 signals the rest of the callback plus the stdout-template writer that follows, in this 43-line file."
+content = { kind = "lines", spans = [
+  { path = "resources/pack.js", start = 1, end = 16, render = { kind = "full" } },
+  { path = "resources/pack.js", start = 17, end = 17, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "test/pack.c: alternative data-packer CLI (excerpt)"
+justification = "A second, standalone (non-Node) packer used to build fs.c from a list of files, with usage documented in its header comment. Complements 3.3 for the C-only toolchain case. Cuts off mid-way through the header's numbered usage list (steps 1-2 of 4); an Ellipsis at line 13 signals steps 3-4 (which name the mg_unpack() accessor function) continue below."
+content = { kind = "lines", spans = [
+  { path = "test/pack.c", start = 1, end = 12, render = { kind = "full" } },
+  { path = "test/pack.c", start = 13, end = 13, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "unit_test.c: test function roster, part 1 of 2 (29 entries)"
+justification = "Name-only roster of the first 29 of 57 test_*/main functions in the 4606-line unit test file, truncated at the opening paren (test_match through test_http_chunked). Directly maps 'is FEATURE tested' to an exact function name/line (test_mqtt, test_ws, test_http_server, test_tls, test_dns, ...); part 2 (3.6) continues the class through end of file, so no roster entry is silently dropped."
+content = { kind = "lines", spans = [
+  { path = "test/unit_test.c", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 263, end = 263, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 306, end = 306, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 356, end = 356, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 568, end = 568, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 609, end = 609, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 690, end = 690, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 790, end = 790, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 802, end = 802, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 998, end = 998, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1079, end = 1079, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1415, end = 1415, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1450, end = 1450, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1556, end = 1556, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1675, end = 1675, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1722, end = 1722, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1746, end = 1746, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2007, end = 2007, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2057, end = 2057, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2250, end = 2250, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2591, end = 2591, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2609, end = 2609, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2680, end = 2680, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2946, end = 2946, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2986, end = 2986, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3062, end = 3062, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "unit_test.c: test function roster, part 2 of 2 (28 entries)"
+justification = "Continues 3.5's roster with the remaining 28 test_*/main functions (test_http_chunked_case through main), truncated at the opening paren: test_invalid_listen_addr, test_ws_fragmentation, test_json, test_rpc, the md5/sha1/sha256/sha384 family, test_x25519/rsa/crypto, test_modbus, and main itself. Together with 3.5, closes the full 57-entry class with no gap."
+content = { kind = "lines", spans = [
+  { path = "test/unit_test.c", start = 3086, end = 3086, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3101, end = 3101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3182, end = 3182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3203, end = 3203, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3244, end = 3244, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3299, end = 3299, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3313, end = 3313, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3386, end = 3386, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3412, end = 3412, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3430, end = 3430, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3462, end = 3462, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3727, end = 3727, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3808, end = 3808, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3882, end = 3882, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3895, end = 3895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3905, end = 3905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3920, end = 3920, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3930, end = 3930, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3945, end = 3945, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3952, end = 3952, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3972, end = 3972, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3979, end = 3979, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4002, end = 4002, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4053, end = 4053, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4068, end = 4068, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4124, end = 4124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4273, end = 4273, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4475, end = 4475, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.1"
+descriptor = "http.h: request/response structs (full)"
+justification = "struct mg_http_header (name/value), mg_http_message (method/uri/query/headers/body), mg_http_serve_opts (root_dir/ssi_pattern/mime_types/fs), and mg_http_part (multipart) — the four data shapes every HTTP handler touches. Complete for this file's struct class (function decls omitted wholesale, not partially, to bound cost — one grep on src/http.h resolves any specific signature)."
+content = { kind = "lines", spans = [ { path = "src/http.h", start = 1, end = 38, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.2"
+descriptor = "mqtt.h: opts + message structs"
+justification = "mg_mqtt_opts (user/pass/client_id/topic/message/qos/version/props) and mg_mqtt_message (the parsed-message shape delivered on MG_EV_MQTT_MSG/CMD) — the two structs an MQTT integration actually touches. mg_mqtt_prop, the raw MQTT_CMD_*/MQTT_PROP_* wire-constant tables, and the function declarations are omitted wholesale (not partially) to bound cost; src/mqtt.h is already named in 2.3."
+content = { kind = "lines", spans = [
+  { path = "src/mqtt.h", start = 62, end = 62, render = { kind = "ellipsis" } },
+  { path = "src/mqtt.h", start = 69, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "ws.h: WebSocket API (full)"
+justification = "Full 26-line file: WEBSOCKET_OP_* frame types, mg_ws_message, and mg_ws_connect/upgrade/send/wrap/printf. Small enough to include whole; covers WS end to end."
+content = { kind = "lines", spans = [ { path = "src/ws.h", start = 1, end = 26, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.4"
+descriptor = "json.h: JSON query API (full)"
+justification = "Full 24-line file: mg_json_get/get_tok/get_num/get_bool/get_long/get_str/get_hex/get_b64/unescape/next — Mongoose's JSONPath-lite reader used throughout http/mqtt/rpc/dash code, not a full JSON DOM."
+content = { kind = "lines", spans = [ { path = "src/json.h", start = 1, end = 24, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.5"
+descriptor = "sntp.h: SNTP client (full)"
+justification = "Tiny (10-line) full file: mg_sntp_connect/request/parse and mg_now(). Complete SNTP surface in one batch."
+content = { kind = "lines", spans = [ { path = "src/sntp.h", start = 1, end = 10, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.6"
+descriptor = "str.h: mg_str + glob matcher (full)"
+justification = "struct mg_str (buf+len, the ubiquitous non-owning string view) plus mg_match's glob-style pattern matching (mg_match/mg_span) used for URI routing everywhere in http/dash examples."
+content = { kind = "lines", spans = [ { path = "src/str.h", start = 1, end = 23, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.7"
+descriptor = "Secondary protocols: DNS/mDNS, Modbus entry points"
+justification = "Function-only rosters (structs omitted wholesale) for two protocols the README bullets don't name but MG_EV_MDNS_*/MG_EV_MODBUS_REQ (2.2) wire up: dns.h's mg_resolve/mg_dns_parse/mg_mdns_listen/mg_mdns_query and modbus.h's mg_modbus_listen. rpc.h (JSON-RPC, see src/ listing 2.3) and struct definitions are one grep away in the already-named src/ files."
+content = { kind = "lines", spans = [
+  { path = "src/dns.h", start = 67, end = 75, render = { kind = "full" } },
+  { path = "src/modbus.h", start = 33, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "tutorials/README.md: how to navigate examples (excerpt)"
+justification = "Explains the per-example convention: each dir has its own README.md linking to a mongoose.ws tutorial, embedded ones link a Wizard. Lets an agent generalize from the one example dir it drills into (5.2/5.3) to any other tutorial category. Ends at '...Steps to get the most out of this code base:'; an Ellipsis at line 12 signals the numbered navigation steps that follow (in this 41-line file) rather than implying the list stops here."
+content = { kind = "lines", spans = [
+  { path = "tutorials/README.md", start = 1, end = 10, render = { kind = "full" } },
+  { path = "tutorials/README.md", start = 12, end = 12, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "tutorials/http/ listing"
+justification = "All HTTP example categories (http-server, http-client, file-transfer/upload variants, reverse-proxy, streaming-client, redirect-to-https, uart-bridge, video-stream, wifi-router-dashboard) named as a class, one hop from the top-level tutorials/ listing (1.15)."
+content = { kind = "fs", groups = [ { parent = "tutorials/http", entries = "all" } ] }
+
+[[batches]]
+id = "5.3"
+descriptor = "tutorials/http/http-server/ listing (golden-reference example)"
+justification = "The Makefile golden-reference example named in tutorials/README.md (5.1): shows the concrete per-example shape (main.c, Makefile, mongoose.c/.h symlinks, per-toolchain subdirs arduino/esp8266/zephyr, README.md) that every other example dir follows."
+content = { kind = "fs", groups = [ { parent = "tutorials/http/http-server", entries = "all" } ] }
+
+[[batches]]
+id = "5.4"
+descriptor = "tutorials/mqtt/ listing"
+justification = "Names the MQTT example categories (mqtt-client, mqtt-client-aws-iot, mqtt-dashboard, mqtt-over-ws-client, mqtt-server, ota-over-mqtt), complementing the MQTT protocol content in 4.2/2.6 with concrete runnable examples."
+content = { kind = "fs", groups = [ { parent = "tutorials/mqtt", entries = "all" } ] }

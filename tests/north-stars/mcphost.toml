@@ -1,478 +1,819 @@
 fixture = "mcphost"
 revision_pin = "191dcea1"
 summary = """
-mcphost is a Go CLI ("mark3labs/mcphost") that hosts LLM<->MCP (Model Context
-Protocol) conversations: it loads a config of MCP servers (local/stdio, remote/
-streamable-HTTP, or in-process builtin), wires an LLM provider (Anthropic,
-OpenAI, Google Gemini, Ollama, plus undocumented Azure/Vertex-Anthropic paths),
-and runs an interactive or non-interactive agentic tool-calling loop with a
-Bubble Tea TUI. Secondary surfaces: a YAML-frontmatter "script" mode for
-reproducible automations, a hooks system (shell commands fired on tool-use/
-prompt/stop lifecycle events) for policy/logging, OAuth+API-key auth for
-Anthropic, session save/load, and a Go SDK (`sdk/`) that reuses the CLI's own
-init path for in-process embedding. This NS ranks for the full span of dev
-tasks: understanding the architecture, adding/debugging a provider or builtin
-tool, tracing the config/script/hook formats, and orienting in tests. Several
-source/doc divergences are surfaced deliberately (stale README claims, likely-
-dead duplicate code, catalog-vs-implementation gaps) since these are exactly
-where an agent's uninformed guess would be wrong.
+mcphost is a Go CLI (cobra + charmbracelet TUI) that hosts LLMs and wires them
+to Model Context Protocol servers. Its substance is a thin main.go / cmd/
+cobra layer over ten internal/ packages: config (the .mcphost.yml schema,
+transport mapping, ${env://VAR} substitution), models (provider dispatch
+across anthropic/openai/google/ollama/azure/vertex plus a generated model
+catalogue), tools (the MCP client and tool manager), builtin (in-process MCP
+servers), agent (the tool-calling loop), hooks (lifecycle shell hooks),
+session, auth (Anthropic OAuth), tokens, and ui. A sdk/ package exposes the
+same behaviour in-process.
+
+The ranking serves the whole plausible query distribution at session start:
+what the tool is and can do (README lede and feature list); where things live
+(complete fs listings for every directory in the tree); the CLI contract
+(cobra command tree and the entire flag registration block); the configuration
+schema (MCPServerConfig, Config, GetTransportType, Validate and the
+${env://VAR} substitution engine); then the runtime pipeline (agent -> MCPToolManager -> MCP clients ->
+providers), the builtin servers, the hooks system, script mode, the session
+file format, the SDK and slash-command surfaces, and finally release
+packaging. Symbol rosters are file-scoped and complete for the file
+they name, so an agent can grep one name and land in one hop.
 """
 
-# ============================= Tier 1: Orientation =============================
+# ---------------------------------------------------------------------------
+# Tier 1 — what this is, and where its substance lives.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "First hop for almost any query: what's here. Cheap breadth batch that also certifies the root fs class (AGENTS.md, .precis-pin, .goreleaser.yaml etc are all visible so the agent never has to guess whether an unlisted root file exists)."
-content = { kind = "fs", groups = [
-    { parent = ".", entries = "all" },
-] }
+descriptor = "README title and one-line identity"
+justification = "The cheapest possible statement of what the repository is: a CLI host that lets LLMs interact with external tools over the Model Context Protocol. No query can even be framed without it."
+[batches.content]
+kind = "lines"
+spans = [{ path = "README.md", start = 1, end = 3, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.2"
-descriptor = "README title"
-justification = "One-line identity confirmation before spending budget on the fuller overview."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
-] }
+descriptor = "Complete repository root listing"
+justification = "Establishes at a glance that this is a Go module (go.mod/go.sum/main.go) with an sdk/, a cmd/ layer, an internal/ tree, examples/, contribute/ and a .goreleaser.yaml release path. entries=all so no root file is silently implied absent."
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.3"
-descriptor = "go.mod module identity"
-justification = "Module path + Go version/toolchain -- cheapest possible confirmation of the module name and Go version constraint before any dependency detail."
-content = { kind = "lines", spans = [
-    { path = "go.mod", start = 1, end = 5, render = { kind = "full" } },
-] }
+descriptor = "Complete internal/ package listing"
+justification = "The repository's substance is one directory of Go packages — agent, auth, builtin, config, hooks, models, session, tokens, tools, ui. Naming all of them at once is the highest-value-per-token orientation batch here: almost every follow-up read starts by choosing one."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "internal", entries = "all" }]
 
-# ==================== Tier 2: Full-tree breadth (catastrophic-omission hedge) ====================
+[[batches]]
+id = "1.4"
+descriptor = "Complete cmd/ and sdk/ listings"
+justification = "cmd/ is the whole CLI surface (root, script, auth, hooks plus colocated tests); sdk/ is the public Go API with its own README and two runnable examples. Listing all children stops the agent assuming the SDK examples or the deepseek/integration test files do not exist."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "cmd", entries = "all" },
+  { parent = "sdk", entries = "all" },
+  { parent = "sdk/examples", entries = "all" },
+  { parent = "sdk/examples/basic", entries = "all" },
+  { parent = "sdk/examples/scripting", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Module path, Go version and toolchain"
+justification = "Fixes the import prefix github.com/mark3labs/mcphost that every internal import in the tree uses, plus the Go floor. Saves a hop on any 'what is the import path' or 'which Go version' question."
+[batches.content]
+kind = "lines"
+spans = [{ path = "go.mod", start = 1, end = 5, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.6"
+descriptor = "All README section headings (locations only)"
+justification = "The README is 989 lines and is the de-facto user manual. Naming every H2 turns 'where is X documented' into one ranged read instead of a scan, and marks the boundaries that later README batches cut along."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "README.md", start = 41, end = 41, render = { kind = "full" } },
+  { path = "README.md", start = 60, end = 60, render = { kind = "full" } },
+  { path = "README.md", start = 77, end = 77, render = { kind = "full" } },
+  { path = "README.md", start = 85, end = 85, render = { kind = "full" } },
+  { path = "README.md", start = 124, end = 124, render = { kind = "full" } },
+  { path = "README.md", start = 130, end = 130, render = { kind = "full" } },
+  { path = "README.md", start = 176, end = 176, render = { kind = "full" } },
+  { path = "README.md", start = 488, end = 488, render = { kind = "full" } },
+  { path = "README.md", start = 892, end = 892, render = { kind = "full" } },
+  { path = "README.md", start = 967, end = 967, render = { kind = "full" } },
+  { path = "README.md", start = 971, end = 971, render = { kind = "full" } },
+  { path = "README.md", start = 981, end = 981, render = { kind = "full" } },
+  { path = "README.md", start = 985, end = 985, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "README feature list, first half"
+justification = "Semantic capability inventory: interactive and non-interactive modes, script mode, concurrent MCP servers, allowedTools/excludedTools filtering, dynamic tool discovery. Refines the Features heading already placed by 1.6."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [{ path = "README.md", start = 61, end = 68, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.8"
+descriptor = "README feature list, second half"
+justification = "Closes the feature class: history window, OAuth for Anthropic, the hooks system, environment variable substitution, and the builtin filesystem/bash/todo/http servers. Ranked immediately after 1.7 so no threshold cut leaves the list half-shown."
+[batches.content]
+kind = "lines"
+spans = [{ path = "README.md", start = 69, end = 76, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.9"
+descriptor = "Complete listings for the config / agent / tools / models packages"
+justification = "These four packages carry the load-bearing logic. Every file in each is shown, including the generated models_data.go and the three per-vendor model adapter subpackages, so the agent knows both the shape of each package and which of its files are tests."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "internal/config", entries = "all" },
+  { parent = "internal/agent", entries = "all" },
+  { parent = "internal/tools", entries = "all" },
+  { parent = "internal/models", entries = "all" },
+  { parent = "internal/models/anthropic", entries = "all" },
+  { parent = "internal/models/gemini", entries = "all" },
+  { parent = "internal/models/openai", entries = "all" },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Complete listings for the builtin / hooks / session / auth / tokens / ui packages"
+justification = "Closes the internal/ tree opened by 1.3 and 1.9: every remaining package's files, including the hooks testdata fixtures and the ui/progress subpackage. Without it an agent could conclude there is no todo builtin or no oauth.go."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "internal/builtin", entries = "all" },
+  { parent = "internal/hooks", entries = "all" },
+  { parent = "internal/hooks/testdata", entries = "all" },
+  { parent = "internal/session", entries = "all" },
+  { parent = "internal/auth", entries = "all" },
+  { parent = "internal/tokens", entries = "all" },
+  { parent = "internal/ui", entries = "all" },
+  { parent = "internal/ui/progress", entries = "all" },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "Complete listings for examples/, contribute/ and .github/"
+justification = "Final filesystem closure: the example hook scripts, the script-mode examples, the contributor build/boost helpers with their demo configs, and the two CI workflows. Cheap, and it stops the agent re-walking the tree."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/hooks", entries = "all" },
+  { parent = "examples/scripts", entries = "all" },
+  { parent = "contribute", entries = "all" },
+  { parent = "contribute/conf", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 2 — the CLI contract: entry point, command tree, every flag.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "Top package-dir listings (cmd/, internal/, sdk/, examples/, contribute/)"
-justification = "Immediate children of every first-level source dir, in one batch, so the agent never infers a missing package from a partial listing. internal/'s 10 subpackages in particular set up every later tier's structure."
-content = { kind = "fs", groups = [
-    { parent = "cmd", entries = "all" },
-    { parent = "internal", entries = "all" },
-    { parent = "sdk", entries = "all" },
-    { parent = "examples", entries = "all" },
-    { parent = "contribute", entries = "all" },
-    { parent = ".github/workflows", entries = "all" },
-] }
+descriptor = "main.go entry point"
+justification = "The entire process entry: a hand-rolled --version/-v short-circuit before cobra ever runs, then cmd.GetRootCommand(version) executed through charmbracelet's fang. Explains why --version is not a cobra flag."
+[batches.content]
+kind = "lines"
+spans = [{ path = "main.go", start = 12, end = 25, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.2"
-descriptor = "internal/{agent,auth,builtin,config,hooks} file listings"
-justification = "First half of internal/'s subpackages, full file breadth including the *_test.go files colocated in each -- so test presence/absence per package is visible from the start rather than surfacing only if a later batch happens to mention it."
-content = { kind = "fs", groups = [
-    { parent = "internal/agent", entries = "all" },
-    { parent = "internal/auth", entries = "all" },
-    { parent = "internal/builtin", entries = "all" },
-    { parent = "internal/config", entries = "all" },
-    { parent = "internal/hooks", entries = "all" },
-] }
+descriptor = "Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init)"
+justification = "Every cobra.Command declared anywhere in cmd/, with its Use and Short line. Partial inclusion here would be the classic catastrophic omission — an agent seeing only auth would conclude `mcphost hooks init` does not exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/script.go", start = 29, end = 30, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 18, end = 19, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 38, end = 39, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 59, end = 60, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 79, end = 80, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 17, end = 18, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 26, end = 27, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 58, end = 59, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 80, end = 81, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "internal/{models,session,tokens,tools} + models subpackage listings"
-justification = "Second half of internal/'s subpackages, plus the three models/ provider subpackages (anthropic, openai, gemini) that a plain internal/models listing wouldn't reveal."
-content = { kind = "fs", groups = [
-    { parent = "internal/models", entries = "all" },
-    { parent = "internal/models/anthropic", entries = "all" },
-    { parent = "internal/models/openai", entries = "all" },
-    { parent = "internal/models/gemini", entries = "all" },
-    { parent = "internal/session", entries = "all" },
-    { parent = "internal/tokens", entries = "all" },
-    { parent = "internal/tools", entries = "all" },
-] }
+descriptor = "Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet"
+justification = "The authoritative flag definitions with shorthands, defaults and help strings — strictly better than the README's prose table, which omits several real flags. First of four spans covering the entire registration block."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 282, end = 295, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.4"
-descriptor = "internal/ui/{.,progress} file listing"
-justification = "internal/ui is the single largest subpackage by file count (17 files incl. two test files and a progress/ subpackage) -- full listing up front so no renderer/component is assumed absent."
-content = { kind = "fs", groups = [
-    { parent = "internal/ui", entries = "all" },
-    { parent = "internal/ui/progress", entries = "all" },
-] }
+descriptor = "Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags"
+justification = "Continues the flag class: the behaviour toggles the README never lists (--no-exit, --approve-tool-run) and the three session flags --save-session, --load-session and -s/--session. Ranked immediately after 2.3 so no threshold cut leaves the toggle set half-revealed."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 296, end = 315, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.5"
-descriptor = "sdk/examples, examples/{hooks,scripts}, contribute/conf, hooks testdata listings"
-justification = "The remaining leaf directories (SDK usage examples, hook/script examples, legacy contribute config samples, and hooks-package testdata fixtures) so every example/sample file is discoverable without a wildcard find."
-content = { kind = "fs", groups = [
-    { parent = "sdk/examples/basic", entries = "all" },
-    { parent = "sdk/examples/scripting", entries = "all" },
-    { parent = "examples/hooks", entries = "all" },
-    { parent = "examples/scripts", entries = "all" },
-    { parent = "contribute/conf", entries = "all" },
-    { parent = "internal/hooks/testdata", entries = "all" },
-] }
+descriptor = "Provider and TLS flag registration"
+justification = "--provider-url, --provider-api-key and --tls-skip-verify, with the security warning in the help text. These are the flags that make any OpenAI-compatible endpoint usable, so they carry disproportionate query weight."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 317, end = 320, render = { kind = "full" } }]
 
-# ============================= Tier 3: README overview + go.mod deps + CLI entry =============================
+[[batches]]
+id = "2.6"
+descriptor = "Generation-parameter and Ollama flag registration, with the hidden flag"
+justification = "Closes the flag class: max-tokens, temperature, top-p, top-k and stop-sequences with their exact defaults, plus --num-gpu-layers and --main-gpu and the MarkHidden call that explains why --num-gpu-layers never appears in help output."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 322, end = 332, render = { kind = "full" } }]
+
+# ---------------------------------------------------------------------------
+# Tier 3 — the configuration model.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "README Overview: host/client/server framing"
-justification = "The MCP host/client/server mental model in the author's own words -- cheap zero-follow-up context for 'what does this architecture mean' before any code."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 41, end = 52, render = { kind = "full" } },
-] }
+descriptor = "MCPServerConfig: complete field set including the legacy block"
+justification = "The per-server schema every config file and every script frontmatter is written against — type, command, environment, url, name, options, allowedTools, excludedTools — plus the legacy transport/args/env/headers fields. Both halves shown so nobody infers legacy keys were dropped."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/config/config.go", start = 17, end = 32, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.2"
-descriptor = "README Overview: supported models bullet list"
-justification = "Names the 4 documented provider families (Claude/OpenAI/Gemini/Ollama) -- sets up the later discovery that source code actually wires up 6 providers, 2 undocumented."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 53, end = 59, render = { kind = "full" } },
-] }
+descriptor = "Config struct: application-level keys"
+justification = "Top-level config keys with their JSON and YAML tags, including ones the README never documents — compact, no-exit, approve-tool-run, theme, markdown-theme. This is the file-format counterpart to the flag batches in tier 2."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/config/config.go", start = 155, end = 169, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.3"
-descriptor = "go.mod direct deps (part 1: content-processing libs + eino model layer)"
-justification = "First half of the direct (non-indirect) dependency block: html-to-markdown/goquery for HTML-to-text conversion (backing the http/fetch builtins), bytedance/sonic for fast JSON, fang/lipgloss for CLI polish and TUI styling, and cloudwego/eino plus its Claude/Ollama/OpenAI adapters -- the model+tool abstraction layer used throughout internal/agent and internal/tools -- and eino-contrib/jsonschema for tool-schema handling."
-content = { kind = "lines", spans = [
-    { path = "go.mod", start = 7, end = 17, render = { kind = "full" } },
-] }
+descriptor = "Config struct: generation-parameter and TLS keys"
+justification = "The tail of the Config struct — max-tokens, temperature, top-p, top-k, stop-sequences and tls-skip-verify. Ranked directly after 3.2 so the struct is never left visibly truncated at a threshold cut."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/config/config.go", start = 170, end = 180, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.4"
-descriptor = "go.mod direct deps (part 2: schema/MCP/CLI-framework libs + remainder)"
-predecessor = "3.3"
-justification = "Second half, closing out the require() block: kin-openapi (more tool-schema handling), mcp-filesystem-server (backing the builtin fs server) and mcp-go (the MCP protocol library), spf13/cobra+viper (the CLI framework and config binding), tidwall/gjson (JSON-path filtering used by the http builtin's fetch_filtered_json), plus terminal support, google.golang.org/genai (the Gemini SDK), and yaml.v3."
-content = { kind = "lines", spans = [
-    { path = "go.mod", start = 18, end = 27, render = { kind = "full" } },
-] }
+descriptor = "GetTransportType: type-to-transport mapping and legacy inference"
+justification = "The single function that resolves local/remote/builtin into stdio/streamable/inprocess and infers a transport from a bare legacy command or url. It is the hinge between the documented config vocabulary and client construction in internal/tools."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/config/config.go", start = 185, end = 212, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.5"
-descriptor = "main.go (full)"
-justification = "The entire entry point: a --version/-v pre-check before cobra even initializes, then cmd.GetRootCommand + fang.Execute. Tiny and answers 'where does execution start' in one hop."
-content = { kind = "lines", spans = [
-    { path = "main.go", start = 1, end = 26, render = { kind = "full" } },
-] }
+descriptor = "Config.Validate: required fields per transport and filter exclusivity"
+justification = "Encodes every configuration error the tool can emit — allowedTools and excludedTools are mutually exclusive, command is required for stdio, url for sse and streamable, name for inprocess. Directly answers 'why is my config rejected'."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/config/config.go", start = 218, end = 247, render = { kind = "full" } }]
 
-# ============================= Tier 4: cmd/ CLI surface =============================
+[[batches]]
+id = "3.6"
+descriptor = "Substitution engine: the two regexes plus every symbol in substitution.go"
+justification = "The ${env://VAR:-default} and ${var:-default} patterns are shown verbatim, then every declaration in the file is named: parseVariableWithDefault, EnvSubstituter with SubstituteEnvVars, ArgsSubstituter with NewArgsSubstituter and SubstituteArgs, HasEnvVars and HasScriptArgs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/config/substitution.go", start = 11, end = 14, render = { kind = "full" } },
+  { path = "internal/config/substitution.go", start = 18, end = 18, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/substitution.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "internal/config/substitution.go", start = 34, end = 34, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/substitution.go", start = 65, end = 65, render = { kind = "full" } },
+  { path = "internal/config/substitution.go", start = 71, end = 71, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/substitution.go", start = 78, end = 78, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/substitution.go", start = 109, end = 109, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/substitution.go", start = 115, end = 115, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Remaining top-level symbols of internal/config/config.go and all of merger.go (locations)"
+justification = "Closes the symbol class of the config package: UnmarshalJSON (the legacy-format shim), AdaptiveColor, Theme and MarkdownTheme, LoadSystemPrompt, EnsureConfigExists, createDefaultConfig, the generic FilepathOr helper, the configPath global with SetConfigPath, plus merger.go's MergeConfigs, LoadAndValidateConfig and fixEnvironmentCase."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/config/config.go", start = 37, end = 37, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/config.go", start = 109, end = 109, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 116, end = 116, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 137, end = 137, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 249, end = 249, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/config.go", start = 271, end = 271, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 296, end = 296, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/config.go", start = 406, end = 406, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/config.go", start = 454, end = 454, render = { kind = "full" } },
+  { path = "internal/config/config.go", start = 459, end = 459, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/merger.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/merger.go", start = 28, end = 28, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/config/merger.go", start = 48, end = 48, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 4 — the runtime pipeline: agent, MCP tool manager, execution modes.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "cmd/root.go package-level flag vars"
-justification = "Every CLI flag's backing Go variable in one place (model, prompt, quiet, session paths, gen params, ollama-specific, hooks/TLS) -- a location batch for the full flag surface before the registration/defaults detail."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 27, end = 64, render = { kind = "full" } },
-] }
+descriptor = "Agent struct and its seven callback handler types"
+justification = "The complete extension surface of the agent package in one batch: ToolCallHandler, ToolExecutionHandler, ToolResultHandler, ResponseHandler, StreamingResponseHandler, ToolCallContentHandler and ToolApprovalHandler, plus the Agent fields they operate against. Both callers (cmd and sdk) are written to these signatures."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/agent/agent.go", start = 39, end = 39, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 43, end = 43, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 47, end = 47, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 51, end = 51, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 55, end = 55, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 59, end = 59, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 63, end = 63, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 67, end = 76, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "cmd/root.go rootCmd identity (Use/Short)"
-predecessor = "4.1"
-justification = "Cobra command name + one-line description; cheapest confirmation of the CLI's self-description. The rootCmd struct literal continues past Short with a long Long help-text block and a RunE -- flagged with an ellipsis rather than rendered, since Long mostly restates README prose the agent already has."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 92, end = 94, render = { kind = "full" } },
-    { path = "cmd/root.go", start = 95, end = 95, render = { kind = "ellipsis" } },
-] }
+descriptor = "Every top-level symbol of internal/agent/agent.go (locations)"
+justification = "Names the rest of the file: AgentConfig, NewAgent, GenerateWithLoopResult, GenerateWithLoop and GenerateWithLoopAndStreaming, GetTools, GetLoadingMessage, GetLoadedServerNames, the four private generate variants, the escListenerModel bubbletea model behind ESC cancellation with listenForESC, and Close."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/agent/agent.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 81, end = 81, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 125, end = 125, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 135, end = 135, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 144, end = 144, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 303, end = 303, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 309, end = 309, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 315, end = 315, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 320, end = 320, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 338, end = 338, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 362, end = 362, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 387, end = 387, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 456, end = 456, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 460, end = 460, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 464, end = 464, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 479, end = 479, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 484, end = 484, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/agent.go", start = 536, end = 536, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "cmd/root.go: hidden Ollama-only flags"
-predecessor = "4.1"
-justification = "--num-gpu-layers and --main-gpu are registered then MarkHidden -- real flags that work but are absent from `mcphost --help` and from README's Flags list. A 'how do I control GPU offload' query would otherwise dead-end."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 329, end = 332, render = { kind = "full" } },
-] }
+descriptor = "The tool-calling loop: step bound, tool-call branch and the approval gate"
+justification = "The heart of the agent — the `for step := 0; a.maxSteps == 0 || step < a.maxSteps` header that explains what --max-steps 0 means, the branch on response.ToolCalls, and the onToolApproval gate that pushes a rejection message back as a tool message when the user declines."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/agent/agent.go", start = 181, end = 182, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 199, end = 209, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "cmd/root.go InitConfig(): config file search-path precedence"
-justification = "The actual precedence order for locating .mcphost/.mcp config files: cwd searched before home dir, .mcphost tried before legacy .mcp -- resolves 'which config file wins' precisely; README states the filename list but not this search-order mechanics."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 163, end = 198, render = { kind = "full" } },
-] }
+descriptor = "agent factory: AgentCreationOptions fields and both functions"
+justification = "The option set cmd and sdk both fill in to build an Agent — ModelConfig, MCPConfig, SystemPrompt, MaxSteps, StreamingEnabled, ShowSpinner, Quiet, SpinnerFunc, DebugLogger — plus the SpinnerFunc type, CreateAgent and ParseModelName, which is the whole symbol set of factory.go."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/agent/factory.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 27, end = 27, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 37, end = 37, render = { kind = "full" } },
+  { path = "internal/agent/factory.go", start = 43, end = 43, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/agent/factory.go", start = 76, end = 76, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "cmd/root.go InitConfig(): hooks bootstrap"
-predecessor = "4.4"
-justification = "Where hooks config gets loaded and stashed into viper under the 'hooks' key for later retrieval by runNormalMode/runScriptMode -- the load-bearing glue between the hooks package and the CLI's execution path."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 204, end = 216, render = { kind = "full" } },
-] }
+descriptor = "Every top-level symbol of internal/tools/mcp.go (locations)"
+justification = "The whole symbol class of mcp.go: the MCPToolManager, toolMapping and mcpToolImpl types, NewMCPToolManager, SetModel, SetDebugLogger, the samplingHandler that lets MCP servers call back into the LLM, LoadTools, loadServerTools, Info, InvokableRun, GetTools, GetLoadedServerNames, Close, shouldExcludeTool, createMCPClient, initializeClient, createBuiltinClient, debugLogConnectionInfo and the two JSON-schema fixups."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/tools/mcp.go", start = 27, end = 27, render = { kind = "full" } },
+  { path = "internal/tools/mcp.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "internal/tools/mcp.go", start = 46, end = 46, render = { kind = "full" } },
+  { path = "internal/tools/mcp.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 73, end = 73, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 81, end = 81, render = { kind = "full" } },
+  { path = "internal/tools/mcp.go", start = 89, end = 89, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 149, end = 149, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 178, end = 178, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 275, end = 275, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 284, end = 284, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 338, end = 338, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 345, end = 345, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 357, end = 357, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 362, end = 362, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 375, end = 375, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 502, end = 502, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 523, end = 523, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 542, end = 542, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 570, end = 570, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/tools/mcp.go", start = 587, end = 587, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "README: Flags + Authentication Subcommands + Model Generation Parameters tables"
-justification = "The doc-facing, categorized flag reference (incl. defaults) as a user would read it -- complements 4.1/4.3's source-level ground truth with the grouped/annotated doc form."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 795, end = 822, render = { kind = "full" } },
-] }
+descriptor = "AgenticLoopConfig head and every mode-driving function in cmd/root.go (locations)"
+justification = "The one struct that unifies interactive and non-interactive execution — its mode fields IsInteractive, InitialPrompt, ContinueAfterRun and ApproveToolRun shown, the UI and context-data fields marked elided — plus the functions consuming it: runMCPHost, runNormalMode, addMessagesToHistory, replaceMessagesHistory, runAgenticLoop, runAgenticStep, executeStopHook, runInteractiveLoop, runNonInteractiveMode and runInteractiveMode."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/root.go", start = 758, end = 758, render = { kind = "full" } },
+  { path = "cmd/root.go", start = 760, end = 763, render = { kind = "full" } },
+  { path = "cmd/root.go", start = 766, end = 766, render = { kind = "ellipsis" } },
+  { path = "cmd/root.go", start = 770, end = 770, render = { kind = "ellipsis" } },
+  { path = "cmd/root.go", start = 361, end = 361, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 365, end = 365, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 777, end = 777, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 794, end = 794, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 811, end = 811, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 879, end = 879, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 1195, end = 1195, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 1229, end = 1229, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 1316, end = 1316, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 1349, end = 1349, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
-[[batches]]
-id = "4.7"
-descriptor = "cmd/root.go runNormalMode(): flag-combination validation"
-justification = "The two flag-combination errors enforced at runtime: --quiet and --no-exit both require --prompt/-p. Small, precise, and not stated this explicitly anywhere in README."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 369, end = 376, render = { kind = "full" } },
-] }
-
-# ============================= Tier 5: Config schema =============================
+# ---------------------------------------------------------------------------
+# Tier 5 — providers and the model catalogue.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "internal/config/config.go: MCPServerConfig struct fields"
-justification = "The single struct every mcpServers entry unmarshals into -- new-format (type/command/environment/url/name/options/allowedTools/excludedTools) and legacy fields (transport/args/env/headers) side by side, with json+yaml tags. Ground truth for 'what config keys exist'."
-content = { kind = "lines", spans = [
-    { path = "internal/config/config.go", start = 14, end = 32, render = { kind = "full" } },
-] }
+descriptor = "CreateProvider: the complete list of supported providers"
+justification = "The switch that decides which backend a provider:model string reaches — anthropic, openai, google, ollama, azure, google-vertex-anthropic, and the error for anything else. Two of those appear nowhere in the README, so this is the only honest answer to 'which providers are supported'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/models/providers.go", start = 153, end = 153, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 191, end = 192, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 197, end = 197, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 202, end = 202, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 207, end = 209, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 214, end = 214, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 220, end = 220, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 226, end = 227, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "internal/config/config.go: Config struct (top-level app settings)"
-justification = "Every top-level config-file key (model, max-steps, debug, system-prompt, provider-api-key/url, streaming, theme, model-gen params, tls-skip-verify) with its json/yaml tag -- the complete key roster so no config key is assumed absent."
-content = { kind = "lines", spans = [
-    { path = "internal/config/config.go", start = 152, end = 180, render = { kind = "full" } },
-] }
+descriptor = "Every top-level symbol of internal/models/providers.go (locations)"
+justification = "The 938-line provider file's whole symbol class: the ClaudeCodePrompt const required for OAuth, resolveModelAlias, ProviderConfig, ProviderResult, validateModelConfig, the six create*Provider constructors, the Ollama load/pull/GPU-fallback helpers, createHTTPClientWithTLSConfig, createOAuthHTTPClient and the bearerTransport/oauthTransport RoundTrippers with injectClaudeCodePrompt."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/models/providers.go", start = 32, end = 32, render = { kind = "truncated", pattern = '^\t[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 36, end = 36, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 70, end = 70, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 124, end = 124, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 232, end = 232, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 247, end = 247, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 296, end = 296, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 358, end = 358, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 419, end = 419, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 482, end = 482, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 539, end = 539, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 551, end = 551, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 590, end = 590, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 617, end = 617, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 622, end = 622, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 659, end = 659, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 704, end = 704, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 712, end = 712, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 717, end = 717, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 723, end = 723, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 821, end = 821, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 838, end = 838, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 857, end = 857, render = { kind = "full" } },
+  { path = "internal/models/providers.go", start = 862, end = 862, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/providers.go", start = 891, end = 891, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "internal/config/config.go: Validate()"
-predecessor = "5.1"
-justification = "The validation rules enforced per transport: command required for stdio, url required for sse/streamable, name required for inprocess (builtin), and allowedTools+excludedTools are mutually exclusive -- the exact error text an agent will see when a server entry is misconfigured."
-content = { kind = "lines", spans = [
-    { path = "internal/config/config.go", start = 218, end = 244, render = { kind = "full" } },
-] }
+descriptor = "ModelsRegistry: model validation and suggestion API"
+justification = "Every symbol of registry.go — NewModelsRegistry, ValidateModel, GetRequiredEnvVars, ValidateEnvironment, SuggestModels, GetSupportedProviders, GetModelsForProvider, the globalRegistry and GetGlobalRegistry. This is where 'unknown model, did you mean...' errors and per-provider API-key requirements come from."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/models/registry.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "internal/models/registry.go", start = 27, end = 27, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 44, end = 44, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 73, end = 73, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 92, end = 92, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 143, end = 143, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 179, end = 179, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 197, end = 197, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/models/registry.go", start = 207, end = 207, render = { kind = "full" } },
+  { path = "internal/models/registry.go", start = 216, end = 216, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "README: Builtin Servers config shape + available builtin names"
-predecessor = "5.1"
-justification = "The unified builtin-server config shape (type:builtin, name, options) plus the roster of the 4 builtin server names (fs/bash/todo/http) and their per-server options -- the fastest answer to 'how do I enable the bash/todo/http builtin tool'."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 296, end = 332, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.5"
-descriptor = "README: Transport Types + one Legacy STDIO example"
-predecessor = "5.3"
-justification = "The 4 named transport types plus one worked legacy-format example -- enough to recognize the other 3 legacy shapes (SSE/Docker/StreamableHTTP) by analogy without spending budget on all four."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 391, end = 404, render = { kind = "full" } },
-    { path = "README.md", start = 449, end = 461, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.6"
-descriptor = "internal/config/substitution.go: env-var and script-arg substitution patterns"
-justification = "The two regexes and two substituter types backing `${env://VAR}`/`${env://VAR:-default}` (config files) and `${VAR}`/`${VAR:-default}` (scripts) -- the exact syntax, not just README's description of it."
-content = { kind = "lines", spans = [
-    { path = "internal/config/substitution.go", start = 10, end = 30, render = { kind = "full" } },
-    { path = "internal/config/substitution.go", start = 65, end = 65, render = { kind = "full" } },
-    { path = "internal/config/substitution.go", start = 66, end = 66, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "5.7"
-descriptor = "README: Environment Variable Substitution syntax"
-predecessor = "5.6"
-justification = "One worked example (${env://GITHUB_TOKEN} required, ${env://DEBUG:-false} optional) inside a real mcpServers block -- the doc-facing complement to 5.6's regex ground truth."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 189, end = 209, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.8"
-descriptor = "internal/config/merger.go: MergeConfigs + LoadAndValidateConfig"
-justification = "How a script's frontmatter mcpServers overrides the base config (whole-map replace, not merge) and how viper unmarshal + Validate compose into the one config-loading entry point used by both interactive and script mode."
-content = { kind = "lines", spans = [
-    { path = "internal/config/merger.go", start = 13, end = 45, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.9"
-descriptor = "contribute/conf/demo.yml (legacy sample config)"
-justification = "A real, minimal legacy-format config file checked into the repo (filesystem + weather servers via bare command/args) -- concrete grounding for the legacy STDIO shape, cheaper evidence than reading the parser."
-content = { kind = "lines", spans = [
-    { path = "contribute/conf/demo.yml", start = 1, end = 14, render = { kind = "full" } },
-] }
-
-# ============================= Tier 6: agent + MCP tool plumbing =============================
+descriptor = "The generated model catalogue: generator types and the DO-NOT-EDIT header"
+justification = "internal/models/models_data.go is 35,035 lines of generated data — by far the largest file in the repo and a trap for an agent that tries to read it. This shows the generator's ModelInfo, Cost, Limit and ProviderInfo types plus the generated file's header."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/models/generate_models.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "internal/models/generate_models.go", start = 37, end = 37, render = { kind = "full" } },
+  { path = "internal/models/generate_models.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "internal/models/generate_models.go", start = 60, end = 60, render = { kind = "full" } },
+  { path = "internal/models/models_data.go", start = 1, end = 3, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.1"
-descriptor = "internal/agent/agent.go: Agent + AgentConfig structs"
-justification = "The Agent type's actual fields (toolManager, model, maxSteps, streamingEnabled, providerType inferred from the model string) and the config used to build one -- the core object every cmd/ entry point creates via agent.CreateAgent."
-content = { kind = "lines", spans = [
-    { path = "internal/agent/agent.go", start = 20, end = 35, render = { kind = "full" } },
-    { path = "internal/agent/agent.go", start = 65, end = 75, render = { kind = "full" } },
-] }
+descriptor = "Builtin server registry: the complete set of in-process servers"
+justification = "NewRegistry registers fs, bash, todo, fetch and http. This is the authoritative answer to 'what builtin servers exist' — note it includes fetch, which the README's builtin list omits. The five register*Server calls in its body are the only place that set is enumerated."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/builtin/registry.go", start = 40, end = 56, render = { kind = "full" } }]
 
 [[batches]]
 id = "6.2"
-descriptor = "Agent loop + tool-manager entry-point locations"
+descriptor = "Every top-level symbol of internal/builtin/registry.go (locations)"
+justification = "Closes registry.go: BuiltinServerWrapper with Initialize and GetServer, the Registry type, CreateServer, ListServers, and the five register*Server functions whose option handling (allowed_directories and friends) lives one read away."
 predecessor = "6.1"
-justification = "Signature-only pointers into the three biggest functions an agent/tool-loop question lands on: the unified tool-calling loop, agent creation w/ ollama spinner, and the low-level streaming reader -- one hop from each signature to its full body via internal/agent/{agent,factory,streaming}.go."
-content = { kind = "lines", spans = [
-    { path = "internal/agent/agent.go", start = 144, end = 146, render = { kind = "full" } },
-    { path = "internal/agent/factory.go", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "internal/agent/streaming.go", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/builtin/registry.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 21, end = 21, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/registry.go", start = 28, end = 28, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/registry.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 61, end = 61, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/registry.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/registry.go", start = 81, end = 81, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 123, end = 123, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 136, end = 136, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 149, end = 149, render = { kind = "full" } },
+  { path = "internal/builtin/registry.go", start = 162, end = 162, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "internal/tools/mcp.go: tool name prefixing (serverName__toolName)"
-justification = "Explains a visible-everywhere emergent behavior: every tool the agent sees is prefixed `<serverName>__<originalName>` to avoid cross-server name collisions, with the mapping kept in toolMap for InvokableRun to reverse. Answers 'why do my tool names have double underscores' in one span."
-content = { kind = "lines", spans = [
-    { path = "internal/tools/mcp.go", start = 244, end = 266, render = { kind = "full" } },
-    { path = "internal/tools/mcp.go", start = 284, end = 284, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "Bash builtin: output/timeout limits and the complete banned-command list"
+justification = "The bash server's security posture stated exactly: a 30000-character output cap, a two-minute default and ten-minute maximum timeout, and every banned command from curl and wget through nc, telnet and the browsers. A partial list here would be actively dangerous to reason from."
+[batches.content]
+kind = "lines"
+spans = [{ path = "internal/builtin/bash.go", start = 14, end = 37, render = { kind = "full" } }]
 
 [[batches]]
 id = "6.4"
-descriptor = "internal/tools/connection_pool.go: pool config + defaults"
-justification = "The 5 tunables governing MCP connection reuse/health-checking (5min idle, 3 retries, 30s health-check interval, 3 max errors, 2s reconnect delay) -- load-bearing defaults for anyone debugging a flaky or slow-to-recover MCP server connection."
-content = { kind = "lines", spans = [
-    { path = "internal/tools/connection_pool.go", start = 18, end = 40, render = { kind = "full" } },
-] }
+descriptor = "The http builtin: its four tools and every symbol in http.go (locations)"
+justification = "The largest builtin (717 lines) registers four tools, one each behind executeHTTPFetch, executeHTTPFetchSummarize, executeHTTPFetchExtract and executeHTTPFetchFilteredJSON — the middle two use LLM sampling through httpServerModel, the last uses gjson path filtering. Names every function and all four tool-description consts."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/builtin/http.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 36, end = 36, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 116, end = 116, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 260, end = 260, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 283, end = 283, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 302, end = 302, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 346, end = 346, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 403, end = 403, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 483, end = 483, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 509, end = 509, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 645, end = 645, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 652, end = 652, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 669, end = 669, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 683, end = 683, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/builtin/http.go", start = 698, end = 698, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
-[[batches]]
-id = "6.5"
-descriptor = "Likely-dead duplicate: MCPToolManager.createMCPClient vs MCPConnectionPool.createMCPClient"
-predecessor = "6.4"
-justification = "internal/tools/mcp.go defines its own createMCPClient plus ~170 lines of further unexported client-construction helpers that closely duplicate connection_pool.go's versions -- but MCPToolManager.loadServerTools actually calls m.connectionPool.GetConnection, never m.createMCPClient. The mcp.go copy looks unreachable/dead. High-value catch for a refactor or 'why is there duplicate client-construction logic' query -- flagged here rather than left for the agent to discover via two separate full-body reads."
-content = { kind = "lines", spans = [
-    { path = "internal/tools/mcp.go", start = 178, end = 178, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "internal/tools/mcp.go", start = 183, end = 183, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "internal/tools/mcp.go", start = 375, end = 378, render = { kind = "full" } },
-    { path = "internal/tools/connection_pool.go", start = 262, end = 277, render = { kind = "full" } },
-] }
-
-# ============================= Tier 7: builtin MCP servers =============================
+# ---------------------------------------------------------------------------
+# Tier 7 — the hooks system.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "7.1"
-descriptor = "internal/builtin/registry.go: the 5 registered builtin server names"
-justification = "NewRegistry wires exactly 5 in-process servers (fs, bash, todo, fetch, http) -- the authoritative roster for any `type: builtin, name: ...` config value, cheaper than deriving it from grepping registerXServer calls."
-content = { kind = "lines", spans = [
-    { path = "internal/builtin/registry.go", start = 42, end = 55, render = { kind = "full" } },
-] }
+descriptor = "HookEvent: the complete set of hook events"
+justification = "Exactly four events exist in code — PreToolUse, PostToolUse, UserPromptSubmit and Stop — despite the README also advertising SubagentStop and Notification. Rendering each constant, plus IsValid and RequiresMatcher, is the only way to keep an agent from acting on the README's larger list."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/hooks/events.go", start = 7, end = 7, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 12, end = 12, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 18, end = 19, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 23, end = 23, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/events.go", start = 34, end = 34, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "Two different builtin tools both named \"fetch\""
-predecessor = "7.1"
-justification = "builtin/fetch.go's \"fetch\" builtin server and builtin/http.go's \"http\" builtin server each register their own tool literally named \"fetch\", with different parameter shapes (fetch.go: text/markdown/html; http.go: html/markdown + bodyOnly, plus AI-powered fetch_summarize/fetch_extract/fetch_filtered_json siblings). Enabling both builtins would collide on tool name pre-prefixing; a config/tools question about \"the fetch tool\" is ambiguous without this."
-content = { kind = "lines", spans = [
-    { path = "internal/builtin/fetch.go", start = 31, end = 31, render = { kind = "full" } },
-    { path = "internal/builtin/http.go", start = 43, end = 43, render = { kind = "full" } },
-] }
+descriptor = "Hook configuration schema: HookConfig, HookMatcher, HookEntry"
+justification = "The complete YAML schema for hooks.yml — the event-keyed map, the matcher with its _merge directive, and each entry's type/command/timeout — plus LoadHooksConfig, getConfigDir and mergeHookConfigs, which is the rest of the file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/hooks/config.go", start = 14, end = 16, render = { kind = "full" } },
+  { path = "internal/hooks/config.go", start = 21, end = 25, render = { kind = "full" } },
+  { path = "internal/hooks/config.go", start = 30, end = 34, render = { kind = "full" } },
+  { path = "internal/hooks/config.go", start = 41, end = 41, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/config.go", start = 97, end = 97, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/config.go", start = 113, end = 113, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "7.3"
-descriptor = "internal/builtin/bash.go: banned command prefixes"
-justification = "The run_shell_cmd builtin tool refuses commands starting with any of ~17 banned prefixes (curl, wget, nc, telnet, browsers, etc.) -- security-relevant ground truth for 'why did my bash tool call get rejected'."
-content = { kind = "lines", spans = [
-    { path = "internal/builtin/bash.go", start = 20, end = 38, render = { kind = "full" } },
-] }
+descriptor = "Hook wire protocol: CommonInput and HookOutput"
+justification = "The JSON a hook script receives on stdin (session_id, transcript_path, cwd, hook_event_name, timestamp, model, interactive) and the JSON it may return to control MCPHost (continue, stopReason, suppressOutput, decision, reason). Anyone writing a hook needs exactly these two structs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/hooks/schemas.go", start = 10, end = 18, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 62, end = 68, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.4"
-descriptor = "internal/builtin/todo.go + http.go: remaining tool-name locations"
-predecessor = "7.2"
-justification = "The todo builtin's two tools (todowrite/todoread) and http builtin's three AI-powered siblings (fetch_summarize/fetch_extract/fetch_filtered_json) -- location pointers so the full builtin tool surface (7 tools across fs/bash/todo/fetch/http) is enumerable without opening every file."
-content = { kind = "lines", spans = [
-    { path = "internal/builtin/todo.go", start = 44, end = 44, render = { kind = "full" } },
-    { path = "internal/builtin/todo.go", start = 78, end = 78, render = { kind = "full" } },
-    { path = "internal/builtin/http.go", start = 68, end = 68, render = { kind = "full" } },
-    { path = "internal/builtin/http.go", start = 80, end = 80, render = { kind = "full" } },
-    { path = "internal/builtin/http.go", start = 93, end = 93, render = { kind = "full" } },
-] }
+descriptor = "Per-event hook input structs"
+justification = "Closes the schemas.go type class opened by 7.3: PreToolUseInput with tool_name and tool_input, PostToolUseInput, UserPromptSubmitInput and StopInput with stop_hook_active, response, stop_reason and meta."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/hooks/schemas.go", start = 23, end = 26, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 50, end = 55, render = { kind = "full" } },
+]
 
-# ============================= Tier 8: model providers =============================
+[[batches]]
+id = "7.5"
+descriptor = "Hook executor and validator symbol rosters"
+justification = "executor.go's Executor with NewExecutor, SetModel, SetInteractive, PopulateCommonFields, ExecuteHooks, executeHook, matchesPattern, extractToolName, hookResult, processResults, mergeHookOutputs and getCurrentWorkingDir; plus validator.go's three security regexes with validateHookCommand, containsDangerousPattern, ValidateHookConfig and validateHookEntry."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/hooks/executor.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "internal/hooks/executor.go", start = 30, end = 30, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 40, end = 40, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 48, end = 48, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 57, end = 57, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 77, end = 77, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 122, end = 122, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 169, end = 169, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 190, end = 190, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 201, end = 201, render = { kind = "full" } },
+  { path = "internal/hooks/executor.go", start = 209, end = 209, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 241, end = 241, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/executor.go", start = 259, end = 259, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/validator.go", start = 10, end = 14, render = { kind = "full" } },
+  { path = "internal/hooks/validator.go", start = 17, end = 17, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/validator.go", start = 44, end = 44, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/validator.go", start = 75, end = 75, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "internal/hooks/validator.go", start = 110, end = 110, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
+
+[[batches]]
+id = "7.6"
+descriptor = "README: hooks.yml file locations and the --no-hooks escape hatch"
+justification = "Where hook configuration is looked for — .mcphost/hooks.yml for project hooks, then $XDG_CONFIG_HOME/mcphost/hooks.yml — which no source batch states, plus the security warning and --no-hooks. Complements the schema in 7.2."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 671, end = 673, render = { kind = "full" } },
+  { path = "README.md", start = 702, end = 707, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 8 — script mode, sessions, the SDK, the TUI, and OAuth.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "8.1"
-descriptor = "internal/models/providers.go: CreateProvider's actual provider roster"
-justification = "README documents 4 provider families (Claude/OpenAI/Gemini/Ollama), but CreateProvider's switch wires up 6: anthropic, openai, google, ollama, azure, and google-vertex-anthropic. The `azure` and `google-vertex-anthropic` model-string prefixes are fully implemented but appear nowhere in README -- a real catalog/doc gap, cheaply shown via the case labels alone."
-content = { kind = "lines", spans = [
-    { path = "internal/models/providers.go", start = 193, end = 194, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 200, end = 200, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 206, end = 206, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 212, end = 212, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 214, end = 214, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 220, end = 220, render = { kind = "full" } },
-    { path = "internal/models/providers.go", start = 226, end = 227, render = { kind = "full" } },
-] }
+descriptor = "Script mode: a worked frontmatter example and the variable rules"
+justification = "The scriptCmd Long help carries a complete script — YAML frontmatter with model, max-steps and mcpServers between --- fences, then a prompt with ${name:-World} placeholders — and the --args:variable convention. Close to zero-follow-up for 'how do I write an mcphost script'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/script.go", start = 35, end = 44, render = { kind = "full" } },
+  { path = "cmd/script.go", start = 49, end = 52, render = { kind = "full" } },
+]
 
-# ============================= Tier 9: hooks system =============================
+[[batches]]
+id = "8.2"
+descriptor = "Every top-level symbol of cmd/script.go (locations)"
+justification = "The script pipeline in name order: overrideConfigWithFrontmatter, parseCustomVariables, runScriptCommand, parseScriptFile, readRemainingLines, parseScriptContent, the Variable type, findVariables, findVariablesWithDefaults, validateVariables, substituteVariables and runScriptMode."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/script.go", start = 84, end = 84, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 148, end = 148, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 208, end = 208, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 255, end = 255, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 279, end = 279, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 288, end = 288, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 423, end = 423, render = { kind = "full" } },
+  { path = "cmd/script.go", start = 431, end = 431, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 442, end = 442, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 480, end = 480, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 499, end = 499, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "cmd/script.go", start = 511, end = 511, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "Session file format: Session, Metadata, Message and ToolCall fields"
+justification = "The on-disk JSON schema written by --save-session and read by --load-session: version, created_at, updated_at, metadata (mcphost_version, provider, model), and per-message id, role, content, timestamp, tool_calls and tool_call_id. Field lines only; the doc comments between them are elided."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/session/session.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 27, end = 27, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 52, end = 52, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 54, end = 54, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 56, end = 56, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 58, end = 58, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 60, end = 60, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 66, end = 66, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 68, end = 68, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 70, end = 70, render = { kind = "full" } },
+  { path = "internal/session/session.go", start = 72, end = 72, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.4"
+descriptor = "The public SDK surface: Options and every exported symbol"
+justification = "The whole sdk package — the Options overrides (Model, SystemPrompt, ConfigFile, MaxSteps, Streaming, Quiet), then New, Prompt, PromptWithCallbacks, GetSessionManager, LoadSession, SaveSession, ClearSession, GetModelString and Close, plus the Message and ToolCall aliases that types.go re-exports from internal/session."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "sdk/mcphost.go", start = 28, end = 35, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 40, end = 40, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 130, end = 130, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 163, end = 163, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 201, end = 201, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 207, end = 207, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 218, end = 218, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 224, end = 224, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 230, end = 230, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/mcphost.go", start = 237, end = 237, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+  { path = "sdk/types.go", start = 10, end = 10, render = { kind = "full" } },
+  { path = "sdk/types.go", start = 14, end = 14, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.5"
+descriptor = "The complete slash-command table: names and descriptions"
+justification = "Every interactive command the TUI accepts — /help, /tools, /servers, /clear, /usage, /reset-usage, /quit — with its description. The README documents only five of these seven and omits /usage and /reset-usage entirely, so the source table is the one worth carrying; each entry's Aliases field sits on the line after its Category."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/ui/commands.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 18, end = 19, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 24, end = 25, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 30, end = 31, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 37, end = 38, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 43, end = 44, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 49, end = 50, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 55, end = 56, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.6"
+descriptor = "ui.SetupCLI: the AgentInterface contract and CLISetupOptions"
+justification = "The seam between cmd and ui: the three-method AgentInterface that cmd's agentUIAdapter implements, the CLISetupOptions the caller fills, and SetupCLI itself. Anyone adding UI state or a new display mode starts here, and internal/ui/cli.go is one grep away."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/ui/factory.go", start = 13, end = 31, render = { kind = "full" } },
+  { path = "internal/ui/factory.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^(func (\([^)]*\) )?|type |var |const )[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "9.1"
-descriptor = "internal/hooks/events.go: the actual 4 hook events (vs README's 6)"
-justification = "README's 'Available Hook Events' lists 6: PreToolUse, PostToolUse, UserPromptSubmit, Stop, SubagentStop, Notification. events.go defines only 4 -- SubagentStop and Notification are documented but do not exist as HookEvent constants anywhere in the codebase. A hook config matching on those two events would silently never fire. High-value doc/code divergence, shown here as the complete const block so the gap is obvious."
-content = { kind = "lines", spans = [
-    { path = "internal/hooks/events.go", start = 3, end = 19, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "internal/hooks/executor.go: blocking via exit code 2"
-predecessor = "9.1"
-justification = "A hook process that exits 2 unconditionally blocks the action and short-circuits output merging from other hooks for that event -- the exact mechanism `bash-validator.py`'s sys.exit(2) relies on, not documented in README's hooks section."
-content = { kind = "lines", spans = [
-    { path = "internal/hooks/executor.go", start = 209, end = 225, render = { kind = "full" } },
-] }
-
-# ============================= Tier 10: UI slash commands =============================
-
-[[batches]]
-id = "10.1"
-descriptor = "internal/ui/commands.go: the real slash-command registry (vs README's /history claim)"
-justification = "README's 'Interactive Commands' section lists /help, /tools, /servers, /history, /quit -- but /history does not exist anywhere in the actual SlashCommands registry or HandleSlashCommand switch (cli.go:406-435). The real set (shown here as the 7 primary command-name lines; aliases like /h, /c, /u live in the same struct literal one hop away) is /help, /tools, /servers, /clear, /usage, /reset-usage, /quit. A user typing /history gets 'unknown command'; this is the single highest-value doc/code mismatch for anyone answering an 'available commands' question."
-content = { kind = "lines", spans = [
-    { path = "internal/ui/commands.go", start = 18, end = 18, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 24, end = 24, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 30, end = 30, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 37, end = 37, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 43, end = 43, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 49, end = 49, render = { kind = "full" } },
-    { path = "internal/ui/commands.go", start = 55, end = 55, render = { kind = "full" } },
-] }
-
-# ============================= Tier 11: auth credential precedence =============================
-
-[[batches]]
-id = "11.1"
-descriptor = "internal/auth/credentials.go: API key precedence order"
-justification = "GetAnthropicAPIKey's doc comment states the exact precedence: --provider-api-key flag > stored OAuth/API-key credentials > ANTHROPIC_API_KEY env var. One-hop answer for 'why isn't my env var being used' (stored credentials from `mcphost auth login` win)."
-content = { kind = "lines", spans = [
-    { path = "internal/auth/credentials.go", start = 241, end = 244, render = { kind = "full" } },
-] }
-
-# ============================= Tier 12: session + SDK =============================
-
-[[batches]]
-id = "12.1"
-descriptor = "internal/session/session.go: Session/Message struct fields"
-justification = "The on-disk session JSON shape (version/timestamps/metadata/messages, and each Message's role/content/toolCalls/toolCallId) -- ground truth for anyone reading or hand-editing a --save-session file."
-content = { kind = "lines", spans = [
-    { path = "internal/session/session.go", start = 19, end = 30, render = { kind = "full" } },
-    { path = "internal/session/session.go", start = 48, end = 61, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "12.2"
-descriptor = "sdk/mcphost.go: New + Prompt entry points"
-predecessor = "12.1"
-justification = "The SDK's two most-used functions (sdk.New for CLI-equivalent init, host.Prompt for a turn) -- signature-only pointers since sdk/README.md already documents usage; this is the 'where in source' half of that pairing."
-content = { kind = "lines", spans = [
-    { path = "sdk/mcphost.go", start = 40, end = 40, render = { kind = "full" } },
-    { path = "sdk/mcphost.go", start = 130, end = 130, render = { kind = "full" } },
-] }
-
-# ============================= Tier 13: script mode =============================
-
-[[batches]]
-id = "13.1"
-descriptor = "cmd/script.go: substitution order (env vars, then script args)"
-justification = "parseScriptContent applies ${env://VAR} substitution first, then ${variable} script-arg substitution second -- so a script arg default can reference an already-resolved env var but not vice versa. This ordering is asserted by TestScriptProcessingOrder but never spelled out in README's Script Mode section."
-content = { kind = "lines", spans = [
-    { path = "cmd/script.go", start = 288, end = 306, render = { kind = "full" } },
-] }
+descriptor = "Release packaging: the goreleaser build matrix"
+justification = "How a binary is produced and tested: CGO disabled, linux/windows/darwin on amd64 and arm64 with windows/arm64 ignored, and the -X main.version ldflag that feeds main.go's version var. The CI workflow located by 1.11 is a single go test job."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".goreleaser.yaml", start = 5, end = 20, render = { kind = "full" } },
+]

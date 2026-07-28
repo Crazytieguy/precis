@@ -1,597 +1,3540 @@
 fixture = "posting"
 revision_pin = "56703a11"
 summary = """
-Posting is a terminal (Textual/TUI) HTTP API client — a keyboard-driven
-alternative to Postman/Insomnia that runs over SSH. It is a Python package
-(src/posting/, ~12k LOC) built on the Textual framework, packaged with
-`hatchling`/`uv`, entry point `posting` (src/posting/__main__.py). Requests
-live as human-readable `*.posting.yaml` files inside a "collection"
-directory (src/posting/collection.py); the app lets a user build, save,
-send (via httpx), script (pre/post-request Python hooks), and export
-(curl/YAML) those requests, with import from curl/OpenAPI/Postman. `docs/`
-is an mkdocs-material user guide/changelog/roadmap/FAQ; `tests/` is a
-pytest suite plus large Textual-snapshot (SVG) UI regression tests driven
-by fixtures under `tests/sample-*`.
+Posting is a keyboard-centric HTTP client that runs as a terminal UI, built on
+Textual and installed as the `posting` console script. Requests live on disk as
+`*.posting.yaml` files inside a collection directory; pydantic models in
+collection.py define that format, config.py defines a layered configuration
+system (YAML file, POSTING_* env vars, dotenv), and app.py hosts a single
+MainScreen composed of a collection browser, a request editor and a response
+area. Around that core sit variables and environments, user-authored Python
+pre/post-request scripts, user themes, a command palette, jump-mode navigation,
+and importers for curl, OpenAPI and Postman.
 
-The plausible query distribution spans: "how do I configure/theme/keymap
-this", "where is the send-request / curl-import / scripting code path",
-"what does the request YAML / collection model look like", "how do
-snapshot tests work and how do I run the test suite", "what CLI
-subcommands and keybindings exist", and ordinary feature-add/bugfix work
-inside app.py, collection.py, config.py, or one of the widgets/ modules.
-
-Given a ~10k-token budget against a ~12k-line source tree plus ~1.7k
-lines of docs and ~2.2k lines of tests, this NS deliberately favors
-breadth (exhaustive fs listings + signature/class "location catalogs")
-over depth almost everywhere, reserving full-body inclusion for the
-handful of code paths that are the load-bearing spine of the app
-(send_request, RequestModel.apply_template/to_curl, the scripting
-context object) and for the config-key reference table, which is the
-single densest piece of semantic documentation in the repo.
+The ranking front-loads identity and a complete filesystem map, then the CLI
+surface, the request/collection data model, the configuration surface, the
+application shell with its keybindings, the feature subsystems, and finally the
+test, documentation and packaging appendix. Rosters are preferred to prose
+wherever a class of symbols could otherwise look partial: every CLI subcommand,
+every Settings key, every screen binding, every widget class, every command
+palette entry and every builtin theme name appears in full, name-only where the
+bodies would be expensive.
 """
-
-# ---------------------------------------------------------------------
-# Tier 1 — fs breadth (cheapest content first, to build cumulative
-# gradually before any full-body batch is introduced)
-# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Fixture root listing"
-justification = "Every top-level file/dir in one look: README/CONTRIBUTING/LICENSE/Makefile/pyproject/docs/src/tests all confirmed to exist before going deeper."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "README lede: what Posting is"
+justification = "Five lines that answer 'what is this repo' - a Postman/Insomnia-like HTTP client that runs as a terminal UI, usable over SSH, storing requests as local YAML files. Without this an agent cannot frame any query; it is the highest value-per-token content in the repository."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 5
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = "src/posting/importing/ listing"
-justification = "The three import-pipeline modules (curl/open_api/postman) — cheapest of the src subdirectory listings."
-content = { kind = "fs", groups = [
-  { parent = "src/posting/importing", entries = "all" },
-] }
+descriptor = "Repository root listing"
+justification = "Cheapest possible orientation: the root entries establish a uv/pyproject Python project with src/, docs/, tests/, a Makefile and mkdocs.yml, and no setup.py or requirements.txt. Ranked second because every later batch is a pointer into this tree."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "widgets/collection/ listing"
-justification = "The collection-browser sidebar's two modules."
-content = { kind = "fs", groups = [
-  { parent = "src/posting/widgets/collection", entries = "all" },
-] }
+descriptor = "README feature list, part 1: in-app capabilities"
+justification = "Nine bullets naming the interaction features - jump-mode navigation, environments and variables, autocompletion, tree-sitter syntax highlighting, Vim keys, customizable keybindings, user-defined themes, running Python code around requests, and extensive configuration. Each maps onto a module surfaced in 1.5, so this is the semantic index over the source roster."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 19
+render = { kind = "full" }
 
 [[batches]]
 id = "1.4"
-descriptor = ".github/ + .github/workflows/ listing"
-justification = "CI workflow directory breadth — cheap, establishes that test/docs/coverage workflows exist."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-] }
+descriptor = "README feature list, part 2: interop and the command palette"
+justification = "The remaining bullets - opening content in $EDITOR/$PAGER, importing curl commands by pasting into the URL bar, exporting requests as curl, importing from Postman and OpenAPI specs, and the command palette - plus the pointer to posting.sh for the guide and roadmap. Split from 1.3 so a small budget still gets the whole in-app feature set, and ranked immediately after so nothing implies the list ended at line 19."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 20
+end = 26
+render = { kind = "full" }
 
 [[batches]]
 id = "1.5"
-descriptor = "widgets/response/ listing"
-justification = "The response-viewer widget modules (body/headers/cookies/trace/script output)."
-content = { kind = "fs", groups = [
-  { parent = "src/posting/widgets/response", entries = "all" },
-] }
+descriptor = "`src/posting/` module roster"
+justification = "The substance of the repository is one flat package directory. Every entry is named here (app.py, collection.py, config.py, themes.py, scripts.py, variables.py, commands.py, request_headers.py, posting.scss, ...) plus the `importing/` and `widgets/` sub-packages. This is the most navigation-enabling listing in the repo and is ranked ahead of every peripheral inventory."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting"
+entries = "all"
 
 [[batches]]
 id = "1.6"
-descriptor = "docs/ listing"
-justification = "Top-level mkdocs-site files (CHANGELOG, roadmap, faq, index, assets, guide/)."
-content = { kind = "fs", groups = [
-  { parent = "docs", entries = "all" },
-] }
+descriptor = "Widget package and importer package listings"
+justification = "The shared widget modules plus the three importer modules (curl.py, open_api.py, postman.py). Together with 1.5 this covers the next level of the source tree, and it shows that `importing/` has no `__init__.py` - a detail an agent would otherwise assume away."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets"
+entries = "all"
+
+[[batches.content.groups]]
+parent = "src/posting/importing"
+entries = "all"
 
 [[batches]]
 id = "1.7"
-descriptor = "widgets/request/ listing"
-justification = "The request-editor widget modules (headers/body/auth/query/path/scripts/options/url_bar/metadata)."
-content = { kind = "fs", groups = [
-  { parent = "src/posting/widgets/request", entries = "all" },
-] }
+descriptor = "Package identity, build backend and console-script entry point"
+justification = "Name, version 2.10.0, description, author, the hatchling build backend, and the `posting = \"posting.__main__:cli\"` console script - the line that tells an agent where execution begins. Ellipses at 8 and 52 mark the dependency block and the dependency groups as present-but-unrendered so nothing here reads as a complete pyproject."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 45
+end = 50
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 8
+end = 8
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 52
+end = 52
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "1.8"
-descriptor = "docs/guide/ listing"
-justification = "Every user-guide page name, one hop past 1.6."
-content = { kind = "fs", groups = [
-  { parent = "docs/guide", entries = "all" },
-] }
+descriptor = "Runtime dependency pins"
+justification = "The dependency block identifies the whole technology stack: Textual 6.1.0 (so this is a Textual app and its idioms apply), httpx pinned at 0.28.1 with a comment explaining the monkeypatch that forces the pin, pydantic and pydantic-settings, click with click-default-group, pyyaml, python-dotenv, watchfiles, openapi-pydantic, pyperclip. Framework choice constrains almost every design answer, so this ranks with identity rather than with packaging."
+predecessor = "1.7"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 8
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 20
+end = 20
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 22
+end = 22
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 24
+end = 24
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 10
+end = 10
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 21
+end = 21
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^ *\\\"[^>=~,]+" }
 
 [[batches]]
 id = "1.9"
-descriptor = "tests/ listing"
-justification = "Test suite top level: unit tests, snapshot fixtures, sample-* dirs — operational-coverage breadth."
-content = { kind = "fs", groups = [
-  { parent = "tests", entries = "all" },
-] }
+descriptor = "UI sub-package listings: request, response, collection"
+justification = "Completes the source tree. The three sub-packages mirror the panes of the app: the request-editor widgets (url_bar, header_editor, query_editor, path_editor, request_auth, request_body, request_scripts, request_options, ...), the response widgets, and the two collection-browser modules. A listing here is far cheaper than prose and makes 'which file owns the auth tab' a one-hop question."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/request"
+entries = "all"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/response"
+entries = "all"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/collection"
+entries = "all"
 
 [[batches]]
 id = "1.10"
-descriptor = "src/posting/widgets/ listing"
-justification = "Every top-level widget module name (plus the collection/request/response subpackages already broken down in 1.3/1.5/1.7)."
-content = { kind = "fs", groups = [
-  { parent = "src/posting/widgets", entries = "all" },
-] }
+descriptor = "Documentation tree listing"
+justification = "docs/ holds the mkdocs site published at posting.sh: CHANGELOG.md, roadmap.md, faq.md, index.md, and a guide/ directory whose filenames (configuration, environments, scripting, keymap, importing, themes, ...) are themselves a feature index. Cheap, and it prevents an agent from concluding the README is the only prose in the repo."
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+
+[[batches.content.groups]]
+parent = "docs/guide"
+entries = "all"
 
 [[batches]]
 id = "1.11"
-descriptor = "src/posting/ package listing"
-justification = "Every module directly under the package root — app.py, collection.py, config.py, commands.py, scripts.py, and every small utility module."
-content = { kind = "fs", groups = [
-  { parent = "src/posting", entries = "all" },
-] }
+descriptor = "Test tree and sample-collection listings"
+justification = "The test modules plus the fixture directories (sample-collections, sample-configs, sample-envs, sample-themes, sample-importable-collections) and `__snapshots__`. Naming them at once establishes that UI testing is snapshot-based and that every subsystem has hand-written sample data to read."
 
-[[batches]]
-id = "1.12"
-descriptor = "tests/ fixture sub-listing (sample-* dirs)"
-justification = "One level deeper than 1.9: what's inside sample-collections/sample-configs/sample-envs/sample-themes/sample-importable-collections/resources, so the agent knows concrete test fixtures exist before reading any one of them. (tests/__snapshots__/test_snapshots is not entered here — 1.9 already confirms it exists; its 59 SVG artifacts aren't textual content worth a follow-up.)"
-content = { kind = "fs", groups = [
-  { parent = "tests/sample-collections", entries = "all" },
-  { parent = "tests/sample-configs", entries = "all" },
-  { parent = "tests/sample-envs", entries = "all" },
-  { parent = "tests/sample-themes", entries = "all" },
-  { parent = "tests/sample-importable-collections", entries = "all" },
-  { parent = "tests/resources", entries = "all" },
-] }
+[batches.content]
+kind = "fs"
 
-[[batches]]
-id = "1.13"
-descriptor = "mkdocs.yml nav (guide table of contents)"
-justification = "Semantic labels for every docs/guide/*.md page in reading order — cheaper than inferring topics from filenames alone."
-content = { kind = "lines", spans = [
-  { path = "mkdocs.yml", start = 25, end = 43, render = { kind = "full" } },
-] }
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
 
-[[batches]]
-id = "1.14"
-descriptor = "tests/sample-collections/jsonplaceholder/ + scripts/ listing"
-justification = "One level deeper than 1.12's sample-collections group: the jsonplaceholder sub-collection's posts/todos/users breakdown and the scripts/ dir holding my_script.py (referenced by echo.posting.yaml's scripts: block, see 7.1)."
-content = { kind = "fs", groups = [
-  { parent = "tests/sample-collections/jsonplaceholder", entries = "all" },
-  { parent = "tests/sample-collections/scripts", entries = "all" },
-] }
-
-[[batches]]
-id = "1.15"
-descriptor = "docs/overrides/ + docs/stylesheets/ listing"
-justification = "The mkdocs-material customization points (custom home.html override, extra.css) named in 1.6's docs/ listing — confirms what's inside each without pulling their (non-Python) bodies."
-content = { kind = "fs", groups = [
-  { parent = "docs/overrides", entries = "all" },
-  { parent = "docs/stylesheets", entries = "all" },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 2 — project identity + operational coverage (ordered cheapest
-# batch first so the growth envelope holds without splitting)
-# ---------------------------------------------------------------------
+[[batches.content.groups]]
+parent = "tests/sample-collections"
+entries = "all"
 
 [[batches]]
 id = "2.1"
-descriptor = "sample config.yaml (concrete example)"
-justification = "A real config file used by the test suite — cheaper ground truth for 'what does a config file look like' than deriving it from the settings model."
-content = { kind = "lines", spans = [
-  { path = "tests/sample-configs/general.yaml", start = 1, end = 12, render = { kind = "full" } },
-] }
+descriptor = "Complete `posting` subcommand roster"
+justification = "Every command the CLI exposes: the click group `cli` with its DefaultGroup configuration (so a bare `posting` runs `default`), then `default`, `locate`, `import` and `sponsors`. Listing a subset would let an agent conclude the missing subcommands do not exist, so all four land together."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 1
+end = 1
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 45
+end = 47
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 64
+end = 64
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 80
+end = 80
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 108
+end = 109
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 177
+end = 179
+render = { kind = "full" }
 
 [[batches]]
 id = "2.2"
-descriptor = "__main__.py — every CLI command signature (location catalog)"
-justification = "cli / default / locate / import_spec / sponsors / make_posting — the whole `posting` CLI surface as a cheap signature catalog before any body is shown."
-content = { kind = "lines", spans = [
-  { path = "src/posting/__main__.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/__main__.py", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/__main__.py", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/__main__.py", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/__main__.py", start = 178, end = 178, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/__main__.py", start = 194, end = 194, render = { kind = "full" } },
-] }
+descriptor = "Every CLI argument and option"
+justification = "The click decorators for all four subcommands: `--collection/-c` and repeatable `--env/-e` on the default command, the `thing_to_locate` argument, and `spec_path` plus `--output/-o` and `--type/-t` on `import`. Paired with 2.1 this makes the entire command-line surface answerable without a follow-up read."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 51
+end = 55
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 58
+end = 62
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 77
+end = 78
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 97
+end = 97
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 99
+end = 102
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 105
+end = 106
+render = { kind = "full" }
 
 [[batches]]
 id = "2.3"
-descriptor = "locations.py — full (XDG paths)"
-justification = "Where Posting resolves its config file, default collection directory, and theme directory on disk (`posting locate` reads from here)."
-content = { kind = "lines", spans = [
-  { path = "src/posting/locations.py", start = 1, end = 35, render = { kind = "full" } },
-] }
+descriptor = "`make_posting`: CLI-to-app wiring"
+justification = "The function that turns CLI arguments into a running app - `Collection.from_directory`, implicit `posting.env` discovery in the working directory, `Settings(_env_file=...)`, `load_variables`, and construction of `Posting`. The tests and the snapshot harness call it directly, and it names the four objects the rest of the ranking elaborates."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 194
+end = 200
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 202
+end = 204
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 206
+end = 208
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/__main__.py"
+start = 210
+end = 210
+render = { kind = "full" }
 
 [[batches]]
 id = "2.4"
-descriptor = "__main__.py: make_posting() app construction"
-justification = "How a Collection + Settings + loaded variables become a running Posting App instance — the glue between the CLI (2.2) and app.py, imported directly by the test suite (posting_snapshot_app.py, test_load_env_file_dialog.py)."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/posting/__main__.py", start = 194, end = 214, render = { kind = "full" } },
-] }
+descriptor = "XDG locations: config file, themes and default collection"
+justification = "Where `config.yaml`, the themes directory and the default collection live, derived from xdg_config_home and xdg_data_home. 'Where does Posting keep its config?' is a very common question and this answers it outright; `posting locate` from 2.1 prints exactly these values."
 
-[[batches]]
-id = "2.5"
-descriptor = "Makefile — full"
-justification = "The three canonical test invocations (`make test`, `make test-snapshot-update`, `make test-ci`) that CONTRIBUTING.md mandates in place of raw pytest."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 1, end = 15, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
 
-[[batches]]
-id = "2.6"
-descriptor = ".github/workflows/test.yml (head)"
-justification = "The CI job: uv setup pinned to 0.6.3, `uv sync --all-extras --dev`, `uv run make test-ci`, coverage-comment action, and the start of the snapshot-report artifact upload — operational ground truth for how CI runs the test suite. The snapshot-report upload and a second pull-request-comment artifact-upload step continue below (ellipsis)."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/test.yml", start = 1, end = 39, render = { kind = "full" } },
-  { path = ".github/workflows/test.yml", start = 40, end = 40, render = { kind = "ellipsis" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 12
+end = 12
+render = { kind = "full" }
 
-[[batches]]
-id = "2.7"
-descriptor = "README.md — full"
-justification = "What Posting is, its headline feature list (jump mode, environments, scripts, themes, curl/Postman/OpenAPI import), and install instructions — the cheapest zero-follow-up context for 'what is this repo'."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 60, render = { kind = "full" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 13
+end = 13
+render = { kind = "full" }
 
-[[batches]]
-id = "2.8"
-descriptor = "pyproject.toml — identity, deps, build system, entry point (head)"
-justification = "Package name/version (2.10.0), most of the runtime dependency list, the `hatchling` build backend, and the `posting` console-script entry point — answers 'what does this depend on / how is it packaged' in one hop. Remaining optional-dependency groups (test/dev/docs) + pytest/coverage tool config continue below (ellipsis)."
-content = { kind = "lines", spans = [
-  { path = "pyproject.toml", start = 1, end = 30, render = { kind = "full" } },
-  { path = "pyproject.toml", start = 31, end = 31, render = { kind = "ellipsis" } },
-  { path = "pyproject.toml", start = 45, end = 50, render = { kind = "full" } },
-  { path = "pyproject.toml", start = 51, end = 51, render = { kind = "ellipsis" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 17
+end = 17
+render = { kind = "full" }
 
-[[batches]]
-id = "2.9"
-descriptor = "docs/guide/configuration.md — config-key reference table (core keys)"
-justification = "A markdown table mapping the most commonly touched config keys (theme, layout, use_host_environment, watch_*, response/heading sub-keys) to their env-var name, default, and description — denser than reading config.py's pydantic classes for 'how do I configure X'. The table continues below with url_bar/collection_browser/pager/SSL/focus/text_input/command_palette/xresources/curl-export keys (ellipsis)."
-content = { kind = "lines", spans = [
-  { path = "docs/guide/configuration.md", start = 105, end = 107, render = { kind = "full" } },
-  { path = "docs/guide/configuration.md", start = 111, end = 122, render = { kind = "full" } },
-  { path = "docs/guide/configuration.md", start = 123, end = 123, render = { kind = "ellipsis" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 19
+end = 19
+render = { kind = "full" }
 
-[[batches]]
-id = "2.10"
-descriptor = "config.py — every settings-class name (location catalog)"
-justification = "The pydantic class names backing 2.9's table (HeadingSettings, UrlBarSettings, ResponseSettings, FocusSettings, CertificateSettings, TextInputSettings, CommandPaletteSettings, CollectionBrowserSettings, Settings) with their line numbers, so the exact source location for any config key in 2.9's table is one hop away."
-content = { kind = "lines", spans = [
-  { path = "src/posting/config.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 106, end = 106, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/config.py", start = 219, end = 219, render = { kind = "full" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 24
+end = 24
+render = { kind = "full" }
 
-[[batches]]
-id = "2.11"
-descriptor = ".python-version — pinned interpreter"
-justification = "The exact Python version CI installs via `uv python install` (test.yml, 2.6) and that `uv sync` provisions locally — one-line, answers 'what Python version does this need' without cross-referencing pyproject's `requires-python` range."
-content = { kind = "lines", spans = [
-  { path = ".python-version", start = 1, end = 1, render = { kind = "full" } },
-] }
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 25
+end = 25
+render = { kind = "full" }
 
-# ---------------------------------------------------------------------
-# Tier 3 — app.py: the central Textual App (location catalog + spine)
-# ---------------------------------------------------------------------
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 29
+end = 29
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 30
+end = 30
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 34
+end = 34
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 35
+end = 35
+render = { kind = "full" }
 
 [[batches]]
 id = "3.1"
-descriptor = "app.py: class/method signature catalog (curated + full accessor-property list)"
-justification = "app.py is 1674 lines with ~85 methods across AppHeader/AppBody/MainScreen/Posting; only send_request (3.2) gets a full body below. This is a curated (not exhaustive — see ellipsis at 96) truncated-signature catalog of the two classes' composition/lifecycle entry points plus every one of MainScreen's 20 widget-accessor properties in full, so the agent isn't left assuming build_request_model, on_curl_message, action_toggle_jump_mode, command_export_to_curl, and watch_expanded_section don't exist — each is one grep away by name."
-content = { kind = "lines", spans = [
-  { path = "src/posting/app.py", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 96, end = 96, render = { kind = "ellipsis" } },
-  { path = "src/posting/app.py", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 115, end = 115, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 196, end = 196, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 211, end = 211, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 255, end = 255, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 354, end = 354, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 517, end = 517, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 545, end = 545, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 568, end = 568, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 663, end = 663, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 667, end = 667, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 673, end = 673, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 693, end = 693, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 712, end = 712, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 748, end = 748, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 759, end = 759, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 824, end = 824, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 906, end = 906, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 950, end = 950, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 969, end = 969, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 999, end = 999, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 1061, end = 1061, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1125, end = 1125, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1129, end = 1129, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1133, end = 1133, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1137, end = 1137, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1141, end = 1141, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1145, end = 1145, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1149, end = 1149, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1153, end = 1153, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1157, end = 1157, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1161, end = 1161, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1165, end = 1165, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1169, end = 1169, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1173, end = 1173, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1177, end = 1177, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1181, end = 1181, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1185, end = 1185, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1189, end = 1189, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1193, end = 1193, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1197, end = 1197, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1201, end = 1201, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1205, end = 1205, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1211, end = 1211, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 1239, end = 1239, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 1390, end = 1390, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1461, end = 1461, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1472, end = 1472, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1535, end = 1535, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1643, end = 1643, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/app.py", start = 1655, end = 1655, render = { kind = "full" } },
-] }
+descriptor = "collection.py type roster"
+justification = "Every top-level type and function in the 564-line module that defines Posting's domain model: the HttpRequestMethod literal and VALID_HTTP_METHODS, Auth and its BasicAuth, DigestAuth and BearerTokenAuth payloads, PathParam, Header, FormItem, QueryParam, Cookie, Options, RequestBody, request_sort_key, Scripts, RequestModel, Contact, License, ExternalDocs, APIInfo, Collection and load_request_from_yaml. Name-only, so it is cheap, and complete, so no later batch can imply a type is missing."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 19
+end = 20
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 23
+end = 23
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 61
+end = 61
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 66
+end = 66
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 70
+end = 70
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 75
+end = 75
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 81
+end = 81
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 87
+end = 87
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 93
+end = 93
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 103
+end = 103
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 111
+end = 111
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 133
+end = 133
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 138
+end = 138
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 154
+end = 155
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 401
+end = 401
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 407
+end = 407
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 412
+end = 412
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 417
+end = 417
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 427
+end = 427
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 553
+end = 553
+render = { kind = "full" }
 
 [[batches]]
 id = "3.2"
-descriptor = "app.py: send_request() — building + running the request"
-justification = "The single most central runtime path in the app: building the RequestModel, running the setup script, applying variable templates, and constructing the httpx.AsyncClient (cert/proxy/timeout/auth). The defensive NoMatches guard clause right after the signature is elided (ellipsis, not central to the pipeline); the send + on_response-script + exception-handling tail continues past the client construction (ellipsis) — one hop away at app.py:444 (see 3.1's catalog neighbourhood)."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/posting/app.py", start = 354, end = 354, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 355, end = 355, render = { kind = "ellipsis" } },
-  { path = "src/posting/app.py", start = 366, end = 422, render = { kind = "full" } },
-  { path = "src/posting/app.py", start = 423, end = 423, render = { kind = "ellipsis" } },
-] }
+descriptor = "The `.posting.yaml` on-disk request format"
+justification = "A sample request from the test collection: name, description, method, url, a block-scalar JSON body with content_type, basic auth, the first header entry and the options block. Requests are the user-visible data format of this application and one concrete file teaches it faster than the pydantic model does. Ellipses stand for the rest of the body, the remaining headers and the `params:` block."
 
-# ---------------------------------------------------------------------
-# Tier 4 — Domain model (collection.py) + commands + scripting engine
-# ---------------------------------------------------------------------
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 12
+end = 20
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 9
+end = 9
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 21
+end = 21
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 27
+end = 27
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "tests/sample-collections/echo-post-01.posting.yaml"
+start = 34
+end = 35
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "RequestModel field roster"
+justification = "Every field of the central model, name and type, truncated before the Field(...) default: name, description, method, url, path, body, auth, headers, params, path_params, cookies, posting_version, scripts and options. The `path` docstring and the opening line of the `cookies` docstring are rendered in full because both fields are `exclude=True` for non-obvious reasons."
+predecessor = "3.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 156
+end = 156
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 163
+end = 163
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 166
+end = 166
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 173
+end = 173
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 176
+end = 176
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 179
+end = 179
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 182
+end = 182
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 185
+end = 185
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 188
+end = 188
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 193
+end = 193
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 196
+end = 196
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 199
+end = 199
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 202
+end = 202
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 170
+end = 171
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 189
+end = 189
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "RequestModel behaviour roster"
+justification = "The seven methods of RequestModel by signature: apply_template (variable substitution), to_httpx, save_to_disk, delete_from_disk, to_curl (the export feature), and the ordering dunders `@total_ordering` builds on. Signatures only, so a follow-up read lands on an exact line."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 205
+end = 206
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 269
+end = 269
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 291
+end = 291
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 303
+end = 303
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 312
+end = 312
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 392
+end = 392
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 395
+end = 395
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "Key-value, option and script models"
+justification = "Header, whose name/value/enabled shape the other key-value models repeat; Options with follow_redirects, verify_ssl, attach_cookies, proxy_url and timeout; RequestBody with content, form_data and content_type; and the Scripts model whose setup, on_request and on_response fields are the only trace of the scripting feature in the data model."
+predecessor = "3.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 75
+end = 79
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 103
+end = 111
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 112
+end = 112
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 115
+end = 115
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 118
+end = 118
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 138
+end = 138
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 144
+end = 144
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 147
+end = 147
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 150
+end = 150
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "Collection tree: loading a directory, saving it back"
+justification = "Collection's fields (path, name, requests, children, readme), `from_directory` with the rglob over `*.posting.yaml` that discovers requests anywhere beneath the collection root, `request_sort_key`'s GET/POST/PUT/PATCH/DELETE ordering, `save_to_disk` and `load_request_from_yaml`. The answer to 'how does a folder become the collection browser'."
+predecessor = "3.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 133
+end = 134
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 427
+end = 433
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 480
+end = 480
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 496
+end = 499
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 500
+end = 500
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 541
+end = 541
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 553
+end = 553
+render = { kind = "full" }
 
 [[batches]]
 id = "4.1"
-descriptor = "collection.py: every class/function signature (location catalog)"
-justification = "The pydantic request/collection model (Auth + its to_httpx_auth/basic_auth/digest_auth/bearer_token_auth helpers, PathParam, Header, FormItem, QueryParam, Cookie + from_httpx, Options, RequestBody + to_httpx_args, the top-level request_sort_key function, Scripts, RequestModel with its to_httpx/save_to_disk/delete_from_disk/__lt__/__eq__ methods, Contact/License/ExternalDocs/APIInfo, Collection with its from_openapi_spec/generate_readme/from_directory/save_to_disk methods, and the top-level load_request_from_yaml) — every def/class line in the file catalogued as signatures so the two full-body excerpts below (4.2/4.3) don't imply the rest doesn't exist."
-content = { kind = "lines", spans = [
-  { path = "src/posting/collection.py", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 103, end = 103, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 205, end = 205, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 269, end = 269, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 291, end = 291, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 303, end = 303, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 312, end = 312, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 392, end = 392, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 407, end = 407, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 412, end = 412, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 417, end = 417, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 427, end = 427, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 435, end = 435, render = { kind = "full" } },
-  { path = "src/posting/collection.py", start = 442, end = 442, render = { kind = "full" } },
-  { path = "src/posting/collection.py", start = 481, end = 481, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 541, end = 541, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/collection.py", start = 553, end = 553, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "config.py structure and settings-source configuration"
+justification = "All nine settings models (HeadingSettings, UrlBarSettings, ResponseSettings, FocusSettings, CertificateSettings, TextInputSettings, CommandPaletteSettings, CollectionBrowserSettings, Settings), the SettingsConfigDict that fixes the `posting_` env prefix and `__` nested delimiter, and the SETTINGS ContextVar the whole app reads through."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 18
+end = 18
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 34
+end = 34
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 46
+end = 46
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 79
+end = 79
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 92
+end = 92
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 99
+end = 99
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 106
+end = 106
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 116
+end = 124
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 251
+end = 251
+render = { kind = "full" }
 
 [[batches]]
 id = "4.2"
-descriptor = "collection.py: RequestModel.apply_template() — variable substitution"
-justification = "Exactly which fields get $variable-templated before a request is sent (url, description, proxy_url, body, headers, params, auth's basic-auth branch — digest/bearer_token follow the identical Template().substitute() pattern, ellipsis), then path-param substitution + ensure_protocol — answers 'why didn't my $variable get substituted in field X'."
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "src/posting/collection.py", start = 205, end = 250, render = { kind = "full" } },
-  { path = "src/posting/collection.py", start = 251, end = 251, render = { kind = "ellipsis" } },
-  { path = "src/posting/collection.py", start = 259, end = 267, render = { kind = "full" } },
-] }
+descriptor = "Settings keys, part 1"
+justification = "Name and type for the first twelve top-level config keys: theme, theme_directory, load_user_themes, load_builtin_themes, layout, use_host_environment, watch_env_files, watch_collection_files, watch_themes, text_input, animation and response. Truncated before the default, since the reference table located by 4.4 carries defaults and prose. Ellipsis at 166 marks the rest of the class."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 129
+end = 129
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 132
+end = 132
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 136
+end = 136
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 140
+end = 140
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 143
+end = 143
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 148
+end = 148
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 151
+end = 151
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 154
+end = 154
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 157
+end = 157
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 163
+end = 163
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 166
+end = 166
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "4.3"
-descriptor = "collection.py: RequestModel.to_curl() (head)"
-justification = "The cURL-string builder's core (method, headers, query params, body) backing the command-palette curl-export feature; the remaining auth/cookies/options/proxy flags continue below (ellipsis) at collection.py:361 (one hop from 4.1's catalog)."
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "src/posting/collection.py", start = 312, end = 360, render = { kind = "full" } },
-  { path = "src/posting/collection.py", start = 361, end = 361, render = { kind = "ellipsis" } },
-] }
+descriptor = "Settings keys, part 2"
+justification = "The remaining thirteen keys: heading, url_bar, collection_browser, command_palette, pager, pager_json, editor, use_xresources, ssl, focus, keymap, curl_export_extra_args and spacing. config.py is the authoritative surface - keymap, spacing and curl_export_extra_args do not appear in the documentation's reference table at all."
+predecessor = "4.2"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 166
+end = 166
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 172
+end = 172
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 182
+end = 182
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 185
+end = 185
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 197
+end = 197
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 200
+end = 200
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 203
+end = 203
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 206
+end = 206
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 209
+end = 209
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 212
+end = 212
+render = { kind = "truncated", pattern = "^[^=]+" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 215
+end = 215
+render = { kind = "truncated", pattern = "^[^=]+" }
 
 [[batches]]
 id = "4.4"
-descriptor = "commands.py + scripts.py: every function/class signature (location catalog)"
-justification = "PostingProvider's command-palette entries (commands/discover/search) and its `posting` screen-accessor property, plus the scripting engine's public surface (Posting context class, execute_script, uncache_module) — catalogued so 4.5's excerpt doesn't imply the rest is absent."
-content = { kind = "lines", spans = [
-  { path = "src/posting/commands.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/commands.py", start = 16, end = 16, render = { kind = "full" } },
-  { path = "src/posting/commands.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/commands.py", start = 218, end = 218, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/commands.py", start = 238, end = 238, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/scripts.py", start = 23, end = 23, render = { kind = "full" } },
-  { path = "src/posting/scripts.py", start = 113, end = 113, render = { kind = "full" } },
-  { path = "src/posting/scripts.py", start = 121, end = 121, render = { kind = "full" } },
-  { path = "src/posting/scripts.py", start = 164, end = 164, render = { kind = "full" } },
-  { path = "src/posting/scripts.py", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/scripts.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "Configuration precedence and guide section map"
+justification = "`settings_customise_sources` shows POSTING_CONFIG_FILE relocating the YAML config and the YAML source being spliced ahead of env vars and dotenv; the guide states the same precedence in prose and documents the `POSTING_` prefix and `__` nesting convention. The heading spans also record that a reference table of every key, env var and default begins at line 101, without paying for its rows."
 
-[[batches]]
-id = "4.5"
-descriptor = "scripts.py: the `Posting` scripting-context object"
-justification = "The API surface exposed to user pre/post-request scripts (variables property, get/set/clear_variable, clear_all_variables, notify's full signature) — this is the `posting` argument documented in docs/guide/scripting.md and imported by user scripts as `from posting import Posting`. notify's docstring + body continue below (ellipsis)."
-predecessor = "4.4"
-content = { kind = "lines", spans = [
-  { path = "src/posting/scripts.py", start = 23, end = 93, render = { kind = "full" } },
-  { path = "src/posting/scripts.py", start = 94, end = 94, render = { kind = "ellipsis" } },
-] }
+[batches.content]
+kind = "lines"
 
-# ---------------------------------------------------------------------
-# Tier 5 — User guide highlights + widgets location catalog
-# ---------------------------------------------------------------------
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 218
+end = 218
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 227
+end = 231
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 240
+end = 244
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 245
+end = 245
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 11
+end = 11
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 29
+end = 29
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 31
+end = 34
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 39
+end = 39
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 60
+end = 60
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 71
+end = 71
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 86
+end = 86
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 90
+end = 90
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/configuration.md"
+start = 101
+end = 101
+render = { kind = "full" }
 
 [[batches]]
 id = "5.1"
-descriptor = "docs/guide/scripting.md — overview + script lifecycle"
-justification = "The user-facing explanation of the setup/on_request/on_response script lifecycle and the three function signatures Posting looks for — the semantic complement to scripts.py's implementation (4.4/4.5). Worked examples and the `Posting` API recap continue below (ellipsis)."
-content = { kind = "lines", spans = [
-  { path = "docs/guide/scripting.md", start = 1, end = 20, render = { kind = "full" } },
-  { path = "docs/guide/scripting.md", start = 21, end = 21, render = { kind = "ellipsis" } },
-] }
+descriptor = "app.py class roster and MainScreen reactive state"
+justification = "The four top-level classes of the 1674-line application module - AppHeader, AppBody, MainScreen and the `Posting` App subclass with COMMANDS={PostingProvider} and CSS_PATH pointing at posting.scss - plus the reactives that drive the UI: selected_method, current_layout, expanded_section and the private `_jumping` flag declared with bindings=True. Ellipses at 115 and 1211 mark the two BINDINGS blocks."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 93
+end = 94
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 108
+end = 109
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 112
+end = 114
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 115
+end = 115
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 185
+end = 185
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 187
+end = 187
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 189
+end = 189
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 193
+end = 193
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1205
+end = 1210
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1211
+end = 1211
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "5.2"
-descriptor = "widgets/: every widget class (location catalog)"
-justification = "One truncated line per class across every widgets/*.py, widgets/collection/*.py, widgets/request/*.py, widgets/response/*.py file — all 62 classes across 24 files that are otherwise only named in the fs listings (1.3/1.5/1.7/1.10). Prevents assuming a class doesn't exist just because its file isn't deep-dived."
-content = { kind = "lines", spans = [
-  { path = "src/posting/widgets/center_middle.py", start = 4, end = 4, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/confirmation.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/input.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/key_value.py", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/key_value.py", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/key_value_copy_modal.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/load_env_file_dialog.py", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/load_env_file_dialog.py", start = 216, end = 216, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/rich_log.py", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/rich_log.py", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/select.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/select.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/tabbed_content.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/tree.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/variable_autocomplete.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/variable_input.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/datatable.py", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/text_area.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/text_area.py", start = 137, end = 137, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/text_area.py", start = 366, end = 366, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/text_area.py", start = 608, end = 608, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/browser.py", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/browser.py", start = 552, end = 552, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/browser.py", start = 566, end = 566, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/new_request_modal.py", start = 22, end = 22, render = { kind = "full" } },
-  { path = "src/posting/widgets/collection/new_request_modal.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/new_request_modal.py", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/collection/new_request_modal.py", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/form_editor.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/form_editor.py", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/header_editor.py", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/header_editor.py", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/header_editor.py", start = 248, end = 248, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/method_selection.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/path_editor.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/path_editor.py", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/path_editor.py", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/query_editor.py", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/query_editor.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_auth.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_auth.py", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_auth.py", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_auth.py", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_body.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_body.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_editor.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_editor.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_metadata.py", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_options.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_scripts.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/request_scripts.py", start = 129, end = 129, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/url_bar.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/url_bar.py", start = 39, end = 39, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/url_bar.py", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/request/url_bar.py", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/cookies_table.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/response_area.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/response_area.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/response_body.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/response_headers.py", start = 4, end = 4, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/response_trace.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/widgets/response/script_output.py", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "Main screen keybindings, part 1"
+justification = "The first four MainScreen bindings as key, action, footer label and stable binding id: ctrl+j/alt+enter send_request, ctrl+t change_method, ctrl+o toggle_jump_mode, and the hidden ctrl+l focus of the URL input. The ids are what the `keymap` config remaps, so these lines serve both 'what are the shortcuts' and 'how do I rebind them'. Tooltip lines are elided as ellipses."
+predecessor = "5.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 115
+end = 115
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 117
+end = 117
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 118
+end = 118
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 119
+end = 119
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 120
+end = 120
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 121
+end = 121
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 124
+end = 124
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 125
+end = 125
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 126
+end = 126
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 127
+end = 127
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 128
+end = 128
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 131
+end = 131
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 132
+end = 132
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 133
+end = 133
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 134
+end = 134
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 135
+end = 135
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 138
+end = 138
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 139
+end = 139
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 140
+end = 140
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 141
+end = 141
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 142
+end = 142
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 143
+end = 143
+render = { kind = "full" }
 
 [[batches]]
 id = "5.3"
-descriptor = "widgets/request/url_bar.py: UrlInput.on_paste() — curl-paste import"
-justification = "The five-line handler that detects a pasted curl command in the URL bar and posts a CurlMessage — the concrete UI entry point for the curl-import feature (continues into app.py's on_curl_message, catalogued at 3.1 line 950, and CurlImport, catalogued at 6.1)."
+descriptor = "Main screen keybindings, part 2"
+justification = "The remaining five bindings: ctrl+s save_request, ctrl+n new_request, ctrl+m toggle_expanded, ctrl+h toggle_collection_browser and ctrl+P open_request_search_palette, with their show flags and ids, closing the list at line 183 so no shortcut can be assumed absent."
 predecessor = "5.2"
-content = { kind = "lines", spans = [
-  { path = "src/posting/widgets/request/url_bar.py", start = 118, end = 122, render = { kind = "full" } },
-] }
 
-# ---------------------------------------------------------------------
-# Tier 6 — Import pipelines + a couple of small standalone utilities
-# ---------------------------------------------------------------------
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 146
+end = 146
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 147
+end = 147
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 148
+end = 148
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 149
+end = 149
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 150
+end = 150
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 153
+end = 153
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 154
+end = 154
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 155
+end = 155
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 156
+end = 156
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 157
+end = 157
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 160
+end = 160
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 161
+end = 161
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 162
+end = 162
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 163
+end = 163
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 164
+end = 164
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 165
+end = 165
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 168
+end = 168
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 169
+end = 169
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 170
+end = 170
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 171
+end = 171
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 172
+end = 172
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 173
+end = 173
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 176
+end = 176
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 177
+end = 177
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 178
+end = 178
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 179
+end = 179
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 180
+end = 180
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 181
+end = 181
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 183
+end = 183
+render = { kind = "full" }
+
+[[batches]]
+id = "5.4"
+descriptor = "Global app keybindings"
+justification = "The app-level bindings that apply on every screen - ctrl+p command_palette, ctrl+c app.quit declared priority, f1 (and the ctrl+? variants) help, and the hidden f8 save_screenshot, closing the list at line 1235."
+predecessor = "5.1"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1211
+end = 1211
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1213
+end = 1213
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1214
+end = 1214
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1215
+end = 1215
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1216
+end = 1216
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1217
+end = 1217
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1220
+end = 1220
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1221
+end = 1221
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1222
+end = 1222
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1223
+end = 1223
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1224
+end = 1224
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1225
+end = 1225
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1228
+end = 1228
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1229
+end = 1229
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1230
+end = 1230
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1231
+end = 1231
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1232
+end = 1232
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1234
+end = 1234
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1235
+end = 1235
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "MainScreen method roster, part 1"
+justification = "Name-only locations for the construction, message-handling and action half of MainScreen: __init__, on_mount, on_screen_resume, compose, get_and_run_script, send_request, send_via_worker, the on_ handlers for method changes, responses, request selection, cache updates and URL and path-param jumps and renames, and the action_ handlers bound to the keys in 5.2 and 5.3. Every follow-up read has an exact line to jump to."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 196
+end = 196
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 211
+end = 211
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 232
+end = 232
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 255
+end = 255
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 271
+end = 271
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 354
+end = 354
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 513
+end = 513
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 517
+end = 517
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 522
+end = 522
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 527
+end = 527
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 545
+end = 545
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 561
+end = 561
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 568
+end = 568
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 606
+end = 606
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 626
+end = 626
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 663
+end = 663
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 667
+end = 667
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 673
+end = 673
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 678
+end = 678
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 693
+end = 693
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 696
+end = 696
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 704
+end = 704
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 712
+end = 712
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.6"
+descriptor = "MainScreen method roster, part 2"
+justification = "The rest of MainScreen: action_new_request, the watch_ methods for layout and expanded section, the change handlers for body, params and path params, build_httpx_request, on_url_changed, _sync_path_params_from_url, log_request_trace_event, build_request_model, on_curl_message, action_open_request_search_palette, load_request_model, action_toggle_jump_mode and watch__jumping. Completes the roster begun in 5.5."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 748
+end = 748
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 752
+end = 752
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 759
+end = 759
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 772
+end = 772
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 782
+end = 782
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 794
+end = 794
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 806
+end = 806
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 817
+end = 817
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 824
+end = 824
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 836
+end = 836
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 857
+end = 857
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 901
+end = 901
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 906
+end = 906
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 950
+end = 950
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 969
+end = 969
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 999
+end = 999
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1061
+end = 1061
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1064
+end = 1064
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.7"
+descriptor = "MainScreen.compose: the widget layout"
+justification = "Fifteen lines that lay out the entire screen - AppHeader, UrlBar, then an AppBody containing CollectionBrowser (displayed per config), RequestEditor and ResponseArea, with a Footer whose compact flag follows the spacing setting. The fastest route to a mental model of the UI, refining the compose entry located in 5.5."
+predecessor = "5.5"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 255
+end = 269
+render = { kind = "full" }
+
+[[batches]]
+id = "5.8"
+descriptor = "`Posting` App method roster"
+justification = "All nineteen methods on the App class: on_ready, watch_spacing, the three watchfiles workers (watch_environment_files, watch_collection_files, watch_themes), on_mount, get_default_screen, command_layout, command_toggle_spacing, action_open_web_docs, command_export_to_curl, command_copy_request_yaml, action_save_screenshot, the command-palette lifecycle hooks, search_commands, action_help and the overridden exit."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1285
+end = 1285
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1292
+end = 1292
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1303
+end = 1303
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1331
+end = 1331
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1362
+end = 1362
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1390
+end = 1390
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1453
+end = 1453
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1461
+end = 1461
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1464
+end = 1464
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1467
+end = 1467
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1472
+end = 1472
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1535
+end = 1535
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1576
+end = 1576
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1582
+end = 1582
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1592
+end = 1592
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1611
+end = 1611
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1620
+end = 1620
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1643
+end = 1643
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches.content.spans]]
+path = "src/posting/app.py"
+start = 1655
+end = 1655
+render = { kind = "full" }
 
 [[batches]]
 id = "6.1"
-descriptor = "importing/: key class/function signatures (partial location catalog)"
-justification = "curl.py (312 lines, 6 defs), open_api.py (536 lines, 19 defs), postman.py (234 lines, 15 defs) — a hand-picked subset of parser/model/entry-point signatures (CurlImport + to_request_model, resolve_url_variables, security_scheme_to_auth, JsonBodyGenerator, import_openapi_spec, sanitize_variables, process_item, import_postman_spec). This is deliberately not exhaustive given the token budget (unlike 4.1/5.2's complete rosters) — each rendered ellipsis marks a file with additional uncatalogued defs, one grep away by name."
-content = { kind = "lines", spans = [
-  { path = "src/posting/importing/curl.py", start = 22, end = 22, render = { kind = "full" } },
-  { path = "src/posting/importing/curl.py", start = 261, end = 261, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/curl.py", start = 156, end = 156, render = { kind = "ellipsis" } },
-  { path = "src/posting/importing/open_api.py", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/open_api.py", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/open_api.py", start = 153, end = 153, render = { kind = "full" } },
-  { path = "src/posting/importing/open_api.py", start = 315, end = 315, render = { kind = "full" } },
-  { path = "src/posting/importing/open_api.py", start = 382, end = 382, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/open_api.py", start = 88, end = 88, render = { kind = "ellipsis" } },
-  { path = "src/posting/importing/postman.py", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/postman.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/postman.py", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/posting/importing/postman.py", start = 178, end = 178, render = { kind = "full" } },
-  { path = "src/posting/importing/postman.py", start = 203, end = 203, render = { kind = "full" } },
-  { path = "src/posting/importing/postman.py", start = 34, end = 34, render = { kind = "ellipsis" } },
-] }
+descriptor = "Command palette: every command"
+justification = "The command names PostingProvider offers - layout vertical and horizontal, export as curl with and without setup scripts, export as YAML, view reset and expand request or response section, toggle collection browser, compact and standard spacing, theme preview, load env file, hide and show the keybindings sidebar, open web docs, and quit. The palette is a primary entry point to functionality, so an exhaustive name list is high value per token."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 31
+end = 31
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 50
+end = 50
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 59
+end = 59
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 69
+end = 69
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 81
+end = 81
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 90
+end = 90
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 99
+end = 99
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 118
+end = 118
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 129
+end = 129
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 131
+end = 131
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 150
+end = 150
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 159
+end = 159
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 169
+end = 169
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 178
+end = 178
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 187
+end = 187
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/commands.py"
+start = 195
+end = 195
+render = { kind = "full" }
 
 [[batches]]
 id = "6.2"
-descriptor = "urls.py: ensure_protocol() — full"
-justification = "The smallest complete illustration of the `:id`-style path-parameter/protocol-default helpers; extract_path_param_names/substitute_path_params (the escaping-aware counterparts) are one hop away at urls.py:24/49 (named in the fs listing at 1.11)."
-content = { kind = "lines", spans = [
-  { path = "src/posting/urls.py", start = 1, end = 21, render = { kind = "full" } },
-] }
+descriptor = "Request-editor widget class roster"
+justification = "Every class in `widgets/request/`, with file and line: FormTable and FormEditor, HeaderInput, HeaderEditor and HeadersTable, MethodSelector, PathParamsTable, PathParamsEditor and PathEditor, ParamsTable and QueryStringEditor, Form, UserNamePasswordForm, BearerTokenForm and RequestAuth, RequestBodyEditor and RequestBodyTextArea, RequestEditorTabbedContent and RequestEditor, RequestMetadata, RequestOptions, ScriptPathInput and RequestScripts, and CurlMessage, UrlInput, SendRequestButton and UrlBar. Turns 'where is the header table implemented' into a single jump."
 
-# ---------------------------------------------------------------------
-# Tier 7 — Concrete request-file examples
-# ---------------------------------------------------------------------
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/form_editor.py"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/form_editor.py"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/header_editor.py"
+start = 184
+end = 184
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/header_editor.py"
+start = 198
+end = 198
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/header_editor.py"
+start = 248
+end = 248
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/method_selection.py"
+start = 14
+end = 14
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/path_editor.py"
+start = 17
+end = 17
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/path_editor.py"
+start = 79
+end = 79
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/path_editor.py"
+start = 168
+end = 168
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/query_editor.py"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/query_editor.py"
+start = 49
+end = 49
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_auth.py"
+start = 18
+end = 18
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_auth.py"
+start = 27
+end = 27
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_auth.py"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_auth.py"
+start = 114
+end = 114
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_body.py"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_body.py"
+start = 50
+end = 50
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_editor.py"
+start = 29
+end = 29
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_editor.py"
+start = 33
+end = 33
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_metadata.py"
+start = 11
+end = 11
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_options.py"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_scripts.py"
+start = 17
+end = 17
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/request_scripts.py"
+start = 129
+end = 129
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/url_bar.py"
+start = 33
+end = 33
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/url_bar.py"
+start = 39
+end = 39
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/url_bar.py"
+start = 145
+end = 145
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/request/url_bar.py"
+start = 151
+end = 151
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "Response and collection-browser widget class roster"
+justification = "Every class in `widgets/response/` - CookiesSection, ResponseTabbedContent, ResponseArea, ResponseTextArea, ResponseHeadersTable, ResponseTrace and ScriptOutput - and in `widgets/collection/` - CollectionTree, RequestPreview, CollectionBrowser, NewRequestData, FileNameValidator, DirectoryValidator and NewRequestModal. Completes the pane-level class map begun in 6.2."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/cookies_table.py"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/response_area.py"
+start = 21
+end = 21
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/response_area.py"
+start = 25
+end = 25
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/response_body.py"
+start = 8
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/response_headers.py"
+start = 4
+end = 4
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/response_trace.py"
+start = 33
+end = 33
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/response/script_output.py"
+start = 20
+end = 20
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/browser.py"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/browser.py"
+start = 552
+end = 552
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/browser.py"
+start = 566
+end = 566
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/new_request_modal.py"
+start = 22
+end = 22
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/new_request_modal.py"
+start = 35
+end = 35
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/new_request_modal.py"
+start = 44
+end = 44
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/collection/new_request_modal.py"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "6.4"
+descriptor = "Shared widget class roster"
+justification = "Every class at the top level of `widgets/`: CenterMiddle, ConfirmationModal, PostingDataTable, PostingInput, KeyValueCopyModal, KeyValueInput and KeyValueEditor, EnvFilePathAutoComplete and LoadEnvFileDialog, RichLogIO and PostingRichLog, PostingSelectOverlay and PostingSelect, PostingTabbedContent, TextAreaFooter, PostingTextArea, ReadOnlyTextArea and TextEditor, PostingTree, VariableAutoComplete and VariableInput - the reusable Textual subclasses the pane widgets are built from."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/widgets/center_middle.py"
+start = 4
+end = 4
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/confirmation.py"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/datatable.py"
+start = 27
+end = 27
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/input.py"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/key_value_copy_modal.py"
+start = 15
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/key_value.py"
+start = 19
+end = 19
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/key_value.py"
+start = 127
+end = 127
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/load_env_file_dialog.py"
+start = 71
+end = 71
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/load_env_file_dialog.py"
+start = 216
+end = 216
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/rich_log.py"
+start = 7
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/rich_log.py"
+start = 37
+end = 37
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/select.py"
+start = 8
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/select.py"
+start = 38
+end = 38
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/tabbed_content.py"
+start = 5
+end = 5
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/text_area.py"
+start = 30
+end = 30
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/text_area.py"
+start = 137
+end = 137
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/text_area.py"
+start = 366
+end = 366
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/text_area.py"
+start = 608
+end = 608
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/tree.py"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/variable_autocomplete.py"
+start = 18
+end = 18
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/widgets/variable_input.py"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "6.5"
+descriptor = "Scripting API: the `Posting` object handed to user scripts"
+justification = "The class user scripts receive: the request and response attributes, the `variables` property, get_variable, set_variable, clear_variable and clear_all_variables for session variables, and notify. Documented public API re-exported from `posting/__init__.py`, so completeness matters more here than in internal modules."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 23
+end = 24
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 26
+end = 26
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 30
+end = 30
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 33
+end = 33
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 36
+end = 37
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 45
+end = 45
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 59
+end = 59
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 71
+end = 71
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 81
+end = 81
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/scripts.py"
+start = 86
+end = 86
+render = { kind = "full" }
+
+[[batches]]
+id = "6.6"
+descriptor = "Variables subsystem"
+justification = "The `$var` / `${var}` regex with its `$$` escape, the SharedVariables holder and the VARIABLES singleton, `load_variables` (dotenv files plus, optionally, the host environment) and `update_variables`, and the cursor-oriented helpers the URL bar and text areas use to find and highlight the variable under the caret."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 10
+end = 11
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 15
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 29
+end = 29
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 32
+end = 32
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 36
+end = 36
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 73
+end = 73
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 86
+end = 86
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 95
+end = 95
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 108
+end = 108
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 112
+end = 112
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 117
+end = 117
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 125
+end = 125
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/variables.py"
+start = 134
+end = 134
+render = { kind = "full" }
+
+[[batches]]
+id = "6.7"
+descriptor = "Theme model"
+justification = "The Theme pydantic model users write as YAML: name, the Textual colour slots, dark, and the Posting-specific text_area, syntax, url, variable and method style groups plus optional author, description and homepage metadata, ending at the `to_textual_theme` conversion whose body the ellipsis marks."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 106
+end = 119
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 122
+end = 122
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 130
+end = 130
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 133
+end = 133
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 136
+end = 136
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 140
+end = 142
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 144
+end = 144
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 145
+end = 145
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "6.8"
+descriptor = "Every builtin theme name"
+justification = "The eleven themes shipped in BUILTIN_THEMES - galaxy (the default), nebula, sunset, aurora, nautilus, cobalt, twilight, hacker, manuscript, hypernova and synthwave - with the dict's opening and closing lines so the set is visibly complete."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 365
+end = 366
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 383
+end = 383
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 399
+end = 399
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 419
+end = 419
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 439
+end = 439
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 452
+end = 452
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 468
+end = 468
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 481
+end = 481
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 503
+end = 503
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 531
+end = 531
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 559
+end = 559
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/themes.py"
+start = 587
+end = 587
+render = { kind = "full" }
+
+[[batches]]
+id = "6.9"
+descriptor = "Importer entry points"
+justification = "The three importers by entry point and shape: CurlImport with to_request_model, which is what runs when a curl command is pasted into the URL bar; JsonBodyGenerator and import_openapi_spec, with _get_openapi_models dispatching on the spec version; and PostmanCollection with create_env_file and import_postman_spec, which returns both the Collection and the parsed Postman collection so the CLI can write an env file."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/importing/curl.py"
+start = 22
+end = 22
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/curl.py"
+start = 261
+end = 261
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/open_api.py"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/open_api.py"
+start = 51
+end = 51
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/open_api.py"
+start = 315
+end = 315
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/open_api.py"
+start = 382
+end = 382
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/postman.py"
+start = 70
+end = 70
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/postman.py"
+start = 91
+end = 91
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/importing/postman.py"
+start = 203
+end = 203
+render = { kind = "full" }
+
+[[batches]]
+id = "6.10"
+descriptor = "URL and path-parameter helpers"
+justification = "The `:param` regex with its `::` escape, `ensure_protocol` (defaulting to http://), `extract_path_param_names` and `substitute_path_params`. Path parameters are a distinct feature with their own editor widget, guide section and test module."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/urls.py"
+start = 5
+end = 6
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/urls.py"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/urls.py"
+start = 24
+end = 24
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/urls.py"
+start = 49
+end = 49
+render = { kind = "full" }
+
+[[batches]]
+id = "6.11"
+descriptor = "HTTP header catalogue"
+justification = "request_headers.py is a 412-line data table of MDN header metadata driving header-name autocompletion. The RequestHeader TypedDict and the first entry show the record shape; the ellipsis and the closing bracket at 412 mark the remaining hundreds of entries. Included so an agent knows the catalogue exists and is data, not logic."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/request_headers.py"
+start = 4
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/request_headers.py"
+start = 12
+end = 19
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "src/posting/request_headers.py"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "src/posting/request_headers.py"
+start = 412
+end = 412
+render = { kind = "full" }
 
 [[batches]]
 id = "7.1"
-descriptor = "Sample request file: get-random-user (minimal)"
-justification = "The smallest possible .posting.yaml — just name + url — showing that every other RequestModel field (4.1) is optional."
-content = { kind = "lines", spans = [
-  { path = "tests/sample-collections/get-random-user.posting.yaml", start = 1, end = 2, render = { kind = "full" } },
-] }
+descriptor = "Test invocation: the Makefile is mandatory"
+justification = "The three Makefile targets and the CONTRIBUTING lines stating that tests MUST go through them - xdist-parallel for `not serial`, then a second serial pass with coverage appended. A raw `pytest` invocation is explicitly called out as broken, so this prevents a wasted debugging loop."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 2
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 63
+end = 63
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 69
+end = 69
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 70
+end = 70
+render = { kind = "full" }
 
 [[batches]]
 id = "7.2"
-descriptor = "Sample request file: echo (form body, header, scripts)"
-justification = "A fuller real .posting.yaml — form body, a custom header, and all three script hooks wired to scripts/my_script.py — the cheapest way to see the on-disk request format end-to-end, cross-referencing RequestModel's fields (4.1) and the Scripts model."
-content = { kind = "lines", spans = [
-  { path = "tests/sample-collections/echo.posting.yaml", start = 1, end = 17, render = { kind = "full" } },
-] }
+descriptor = "Development environment and snapshot testing"
+justification = "`uv sync` to build the venv, `TEXTUAL=devtools,debug` to attach the Textual dev tools, and the exact command that loads the in-repo sample collection with both sample env files - the fastest way to exercise the app. Plus the two lines that define snapshot testing: SVG screenshots compared against committed baselines, regenerated with `make test-snapshot-update`."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 26
+end = 26
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 31
+end = 31
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 52
+end = 52
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 76
+end = 76
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 84
+end = 84
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "Scripting and core workflow guide section maps"
+justification = "Heading locations across the scripting guide (script types, writing and editing scripts, script logs, the setup, pre-request and post-response examples, the `Posting` object) and the collections, requests and environments guides (the request YAML representation, path parameters and colon escaping, dotenv autoloading, environment-specific config)."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 14
+end = 14
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 22
+end = 22
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 40
+end = 40
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 51
+end = 51
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 79
+end = 79
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 106
+end = 106
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/scripting.md"
+start = 126
+end = 126
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/collections.md"
+start = 10
+end = 10
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/collections.md"
+start = 35
+end = 35
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/collections.md"
+start = 50
+end = 50
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/collections.md"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 28
+end = 28
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 46
+end = 46
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 64
+end = 64
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 80
+end = 80
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 94
+end = 94
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/requests.md"
+start = 102
+end = 102
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/environments.md"
+start = 10
+end = 10
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/environments.md"
+start = 37
+end = 37
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/environments.md"
+start = 41
+end = 41
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/environments.md"
+start = 81
+end = 81
+render = { kind = "full" }
+
+[[batches]]
+id = "7.4"
+descriptor = "Remaining guide section maps"
+justification = "Sections of the navigation, themes, external-tools, importing, keymap, command palette and help-system guides - jump mode, request search, automatic focus switching, theme creation with syntax and method styles, $EDITOR and $PAGER integration, curl export, the three import sources, and the key format and binding IDs that make `keymap` usable - plus the getting-started walkthrough. Completes the guide-heading map so no page is left looking empty."
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/guide/navigation.md"
+start = 3
+end = 3
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/navigation.md"
+start = 15
+end = 15
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/navigation.md"
+start = 34
+end = 34
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/navigation.md"
+start = 42
+end = 42
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/navigation.md"
+start = 49
+end = 49
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/themes.md"
+start = 7
+end = 7
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/themes.md"
+start = 49
+end = 49
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/themes.md"
+start = 75
+end = 75
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/themes.md"
+start = 89
+end = 89
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/external_tools.md"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/external_tools.md"
+start = 34
+end = 34
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/external_tools.md"
+start = 71
+end = 71
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 5
+end = 5
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 27
+end = 27
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 8
+end = 8
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 43
+end = 43
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 65
+end = 65
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/command_palette.md"
+start = 9
+end = 9
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/help_system.md"
+start = 5
+end = 5
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/index.md"
+start = 3
+end = 3
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/index.md"
+start = 73
+end = 73
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/index.md"
+start = 128
+end = 128
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "docs/guide/index.md"
+start = 195
+end = 195
+render = { kind = "full" }
+
+[[batches]]
+id = "7.5"
+descriptor = "Remaining packaging metadata and CI"
+justification = "The tail of pyproject.toml that 1.7 marked with ellipses - requires-python >= 3.11, license, all four project URLs, the dev dependency group with its test and docs includes, and the pytest `serial` marker - together with the CI trigger. The ellipsis at 28 stands for the keywords and classifiers. Appendix material: real, but the last thing an agent needs."
+predecessor = "1.7"
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 25
+end = 27
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 28
+end = 28
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 39
+end = 43
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 52
+end = 58
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 59
+end = 59
+render = { kind = "ellipsis" }
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 78
+end = 81
+render = { kind = "full" }
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 6
+render = { kind = "full" }

@@ -1,0 +1,1640 @@
+fixture = "sps"
+revision_pin = "5a10e7f4"
+summary = """
+sps is a from-scratch, async Rust reimplementation of Homebrew's package-manager \
+semantics: a 4-crate workspace (sps-common: shared models/config/error/dependency \
+graph; sps-core: build-from-source, bottle install/uninstall/upgrade, cask install \
+with 23 artifact-type handlers; sps-net: Homebrew API + OCI/GHCR bottle fetch; sps: \
+clap CLI + broadcast-event pipeline runner) that installs 'Formulae' (CLI tools) and \
+'Casks' (macOS .app/.pkg bundles) into an /opt/sps-style prefix. The README says the \
+author considers the project's own architecture a mistake and plans to scrap it for a \
+rewrite ('sps2') — so debugging/explaining-current-behavior and small targeted fixes \
+are far more likely session goals than large net-new features. The ranking below \
+serves: (1) orientation queries ('what does this do', 'how do I build/test it'), (2) \
+'where does X live' pointers across the ~100-file, ~22k-line source tree (dependency \
+resolution, bottle relocation, cask artifact installers, build-backend detection), and \
+(3) 'how does X actually work' deep dives on the handful of genuinely tricky \
+algorithms (dependency resolver strategy propagation, Mach-O/symlink relocation, TAR \
+path-traversal guarding, cask upgrade's app-bundle replacement strategy, homebrew-style \
+custom JSON Formula deserialization).
+"""
+
+# ============================================================
+# TIER 1 — Root identity, workspace shape, README operational surface
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Root filesystem listing"
+justification = "Every root entry at once (4 crate dirs, .github/, docs, manifests) so the agent never has to guess whether an unlisted top-level file/dir exists before deciding where to look."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "README: project status & planned-rewrite warning"
+justification = "The author's own top-of-README warning that this codebase is heading for a from-scratch rewrite ('sps2') materially changes what a reasonable response to 'should I add feature X' looks like."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 3
+end = 4
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "Root Cargo.toml: workspace members"
+justification = "Names the 4 workspace crates and confirms this is a single cargo workspace before any per-crate manifest is read."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "README: crate roles & feature status"
+justification = "Cheap prose answer to 'what is this project / what's implemented vs. planned' in the author's own words; both Project Structure bullets (sps-core, sps-cli) and the full Current Status list are shown so neither is left partially disclosed."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 34
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 36
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 44
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 46
+end = 46
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "1.5"
+descriptor = "README: CLI verb surface (usage examples)"
+justification = "A ready-made list of user-facing subcommands (install --build-from-source, list --formula/--cask, uninstall, upgrade) — answers 'how do I run X' cheaply, previewing the full Command enum at 5.4."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 81
+end = 81
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 90
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 102
+end = 105
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 108
+end = 108
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 111
+end = 114
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "README: build-from-source instructions"
+justification = "Cheapest possible answer to 'how do I build this' before any source is read: clone, cargo build --release, binary output path."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 128
+end = 133
+render = { kind = "full" }
+
+# ============================================================
+# TIER 2 — sps-common: shared models, config, error, dependency graph vocabulary
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "sps-common directory map"
+justification = "Full file roster for the crate every other crate depends on (top-level src/, dependency/, model/) so later pointers into sps-common land on a name already known to exist."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "sps-common/src"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-common/src/dependency"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-common/src/model"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "sps-common/Cargo.toml: package header"
+justification = "Names the crate, its BSD-3-Clause license and its role ('Shared utilities') cheaply before the deeper model batches."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/Cargo.toml"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "sps-common lib.rs: module map & top-level re-exports"
+justification = "The crate's public surface in 17 lines — every module name plus the handful of types (Cache, Config, Result, SpsError, Cask, Formula, InstalledArtifact) re-exported for downstream crates."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/lib.rs"
+start = 1
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "error.rs: the SpsError enum (head) & Result alias"
+justification = "Grounds 'what error type does everything return' — the enum has ~26 variants (full breadth given only as roster prose in the summary; the Ellipsis marker here signals more variants continue rather than implying only these exist) and the crate-wide Result alias."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 5
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 10
+end = 10
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 119
+end = 119
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "config.rs: Config struct & sps_root path-layout convention"
+justification = "The struct fields plus two sample path-helper methods establish the on-disk layout convention (Cellar, Caskroom, opt, cache, ...) — load-bearing for any 'where does sps put X on disk' question; Ellipsis signals ~20 more path-helper methods follow the same pattern."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 14
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 23
+end = 23
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 64
+end = 66
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "model/mod.rs: InstallTargetIdentifier"
+justification = "The tiny enum (Formula vs Cask, both Arc-wrapped) threaded through the entire pipeline as 'what am I installing' — cheap and load-bearing."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/mod.rs"
+start = 16
+end = 20
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "model/formula.rs: Formula struct core fields"
+justification = "The exact field shape of the central Formula record (version, revision) before the resolver (2.12) or the custom-Deserialize deep dive (6.8) reference it; Ellipsis signals bottle/dependencies/resources/requirements fields continue below."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 57
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 64
+end = 64
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 83
+end = 84
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "model/cask.rs: Cask struct core fields"
+justification = "Casks are the structurally quirkier of the two package kinds (union-typed url/sha256/depends_on fields); this shows the struct's identity fields plus where the artifact/zap fields sit, with Ellipsis marking the omitted middle fields (url/sha256/depends_on/conflicts_with/caveats)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/cask.rs"
+start = 116
+end = 126
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/model/cask.rs"
+start = 127
+end = 127
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-common/src/model/cask.rs"
+start = 152
+end = 153
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "model/version.rs & model/artifact.rs: version-string quirks & tracked-artifact kinds"
+justification = "Version.rs's wrapper struct is the seed of the homebrew-style '1.2.3_1' revision-suffix parsing fallback; artifact.rs's InstalledArtifact enum head+tail (with Ellipsis over the middle) is the class of things a manifest can record as installed — worth flagging so no artifact kind is assumed absent."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/version.rs"
+start = 10
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/model/artifact.rs"
+start = 9
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/model/artifact.rs"
+start = 14
+end = 14
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-common/src/model/artifact.rs"
+start = 38
+end = 39
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "model/tap.rs: Tap struct"
+justification = "Homebrew-tap support (user/repo path convention) is a small self-contained feature likely to come up in 'does this support custom taps' questions."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/tap.rs"
+start = 9
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "dependency/definition.rs + requirement.rs: DependencyTag, Dependency, Requirement"
+justification = "The bitflags vocabulary (RUNTIME/BUILD/TEST/OPTIONAL/RECOMMENDED) every dependency edge in the resolver graph carries, plus the 3-variant Requirement enum (macOS/Xcode/Other) — both tiny, both prerequisite reading for the resolver at 2.12."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/dependency/definition.rs"
+start = 9
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/dependency/requirement.rs"
+start = 6
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "2.12"
+descriptor = "dependency/resolver.rs: resolver vocabulary (status & edge-tag types)"
+justification = "The ResolutionStatus enum and should_consider_edge_globally's tag-gating logic are what the recursive-descent algorithm (deep-dived at 6.1-6.3) is built from — reading these first is what makes the algorithm legible rather than a wall of debug! calls."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/dependency/resolver.rs"
+start = 52
+end = 60
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/dependency/resolver.rs"
+start = 819
+end = 830
+render = { kind = "full" }
+
+[[batches]]
+id = "2.13"
+descriptor = "keg.rs: KegRegistry (struct + fn roster)"
+justification = "The struct plus location pointers to all five public methods of the type that answers 'is formula X installed and where' for the resolver, uninstaller, and upgrader alike — roster prevents assuming only get_installed_keg exists."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 20
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 128
+end = 128
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 217
+end = 219
+render = { kind = "full" }
+
+[[batches]]
+id = "2.14"
+descriptor = "cache.rs + formulary.rs: disk cache & in-memory formula.json cache"
+justification = "The two-layer caching story: cache.rs is the raw-file TTL cache (formula.json/cask.json land here after API fetches); formulary.rs is the on-top in-memory parsed-Formula cache the resolver calls into."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/cache.rs"
+start = 15
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/formulary.rs"
+start = 12
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/formulary.rs"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.15"
+descriptor = "pipeline.rs (common): JobAction & PlannedOperations vocabulary"
+justification = "JobAction is the exact 3-variant enum (Install/Upgrade/Reinstall) that decides every job's behavior downstream; PlannedOperations is the planner's output type the runner consumes. The much larger PipelineEvent enum (used by the status TUI at 5.13) sits between these two and is deliberately left unexpanded here for cost."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 19
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 189
+end = 193
+render = { kind = "full" }
+
+# ============================================================
+# TIER 3 — sps-core: build, install (bottle+cask), uninstall, upgrade, check
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "sps-core subsystem directory map"
+justification = "One combined listing of all 12 sub-directories in the largest crate (~9.5k lines) — build/, build/compile/, install/, install/bottle/, install/cask/, install/cask/artifacts/ (23 artifact-type files), check/, uninstall/, upgrade/, pipeline/, utils/ — so no subsystem's file roster is left partially shown."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "sps-core/src"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/install"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/install/bottle"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/install/cask"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/install/cask/artifacts"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/build"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/build/compile"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/check"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/uninstall"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/upgrade"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/pipeline"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps-core/src/utils"
+entries = "all"
+
+[[batches]]
+id = "3.2"
+descriptor = "sps-core/Cargo.toml: package header & internal deps"
+justification = "The package header (BSD-3-Clause, 'Core library for the sps package manager') — cheap crate identity before any archive/build-tool dependency is inferred from usage."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/Cargo.toml"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "sps-core lib.rs: module map"
+justification = "Names the 6 top-level modules (build, check, install, pipeline, uninstall, upgrade) plus the macOS-only utils module and the single UninstallOptions re-export — the crate's public shape in 20 lines."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/lib.rs"
+start = 1
+end = 20
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "build/compile/mod.rs: source-build entry point & build-system dispatch"
+justification = "download_source is the entry point for --build-from-source installs; detect_and_build's signature is the single dispatch point that answers 'which build backend will run for formula X' (the full priority-ordered if-else chain over CMake/Meson/autotools/go.mod/Perl/Cargo/setup.py/plain Makefile is deferred for cost; the roster at 3.5 names every backend it can pick)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/mod.rs"
+start = 36
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/mod.rs"
+start = 160
+end = 160
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "build backend roster: cargo/cmake/go/make/meson/perl/python signatures"
+justification = "One signature per build backend named in the dispatch table above — showing only 2 of the 7 in full elsewhere (6.7) would wrongly imply the other 5 don't exist or aren't independent files."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/cargo.rs"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/cmake.rs"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/go.rs"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/make.rs"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/make.rs"
+start = 110
+end = 110
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/meson.rs"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/perl.rs"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/python.rs"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "build/env.rs: kept-env allowlist & BuildEnvironment struct"
+justification = "The short ENV_VARS_TO_KEEP allowlist (13 vars: USER/HOME/TERM/...) is the more surprising half of the sanitized-build-env story since everything else is stripped by default; the struct shows exactly what a BuildEnvironment carries once constructed."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/build/env.rs"
+start = 123
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/env.rs"
+start = 128
+end = 128
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-core/src/build/env.rs"
+start = 141
+end = 148
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/env.rs"
+start = 149
+end = 149
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "3.7"
+descriptor = "build/env.rs: dependency-path -> CFLAGS/PKG_CONFIG_PATH wiring"
+justification = "The include/lib/pkgconfig/aclocal/cmake path buffers BuildEnvironment::new() declares right before it loops over every dependency's opt-path populating them — the start of the concrete mechanism behind 'why can't my build find dependency X's headers'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/build/env.rs"
+start = 205
+end = 212
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "install/mod.rs + install/bottle/mod.rs: install module map & bottle entry point"
+justification = "install/mod.rs declares bottle/cask/devtools/extract + one path helper; has_bottle_for_current_platform is the first branch point deciding bottle-vs-source before either path is deep-dived."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/mod.rs"
+start = 11
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/mod.rs"
+start = 33
+end = 35
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "install/bottle/exec.rs: download & install signatures"
+justification = "download_bottle delegates to a with-progress variant; get_bottle_for_platform/install_bottle are the two entry points a 1361-line file (sps-core's largest) otherwise leaves undiscoverable without a wide search."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/exec.rs"
+start = 25
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/exec.rs"
+start = 210
+end = 210
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/exec.rs"
+start = 331
+end = 331
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.10"
+descriptor = "install/bottle/link.rs: link/unlink signature roster"
+justification = "Names the exact two entry points (link_formula_artifacts / unlink_formula_artifacts) responsible for every symlink sps creates into Cellar/opt/bin — a 606-line file otherwise easy to assume is undocumented beyond these two calls."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/link.rs"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/link.rs"
+start = 476
+end = 476
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "install/bottle/macho.rs: Mach-O relocation patching (macOS vs. stub)"
+justification = "The macOS implementation's SkippedPath type records paths too long to relocate during Mach-O string-table patching — the failure mode when a dependency's install path grows longer than the space reserved in the original bottle."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/macho.rs"
+start = 53
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "install/cask/mod.rs + artifacts/mod.rs: cask manifest & 23-artifact roster"
+justification = "CaskInstallManifest is the on-disk record read by every cask query (is_installed, list, uninstall, zap); artifacts/mod.rs's module list is the complete, exhaustive set of 23 cask artifact kinds sps knows how to install — critical to show whole since a partial list would hide real artifact types (e.g. mdimporter, qlplugin, screen_saver)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/mod.rs"
+start = 24
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/mod.rs"
+start = 1
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/mod.rs"
+start = 24
+end = 24
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "3.13"
+descriptor = "install/cask/artifacts/app.rs: primary .app installer signatures"
+justification = "app.rs is the largest (607 lines) and most-used cask artifact handler; find_primary_app_bundle_in_dir/install_app_from_staged are its two public entry points, previewing the upgrade-replacement algorithm deep-dived at 6.5."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/app.rs"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/app.rs"
+start = 49
+end = 49
+render = { kind = "full" }
+
+[[batches]]
+id = "3.14"
+descriptor = "install/cask/artifacts/zap.rs: zap-stanza installer & path-safety helpers"
+justification = "install_zap plus its 5 private validators (is_safe_path/is_valid_pkgid/is_valid_label/is_valid_command/expand_tilde) are the guardrails around a feature that runs `trash`/`launchctl`/`pkgutil --forget` based on cask-authored zap stanzas — the exact place a 'zap deleted the wrong thing' bug would live."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 216
+end = 216
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 238
+end = 238
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 243
+end = 243
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 248
+end = 248
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/zap.rs"
+start = 254
+end = 254
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.15"
+descriptor = "install/cask dmg.rs + helpers.rs: DMG mount/extract & robust path removal"
+justification = "mount_dmg/unmount_dmg/extract_dmg_to_stage are how sps gets files out of a .dmg cask download; remove_path_robustly is the shared removal primitive reused by both install and uninstall paths."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/dmg.rs"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/dmg.rs"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/dmg.rs"
+start = 153
+end = 153
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/helpers.rs"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/helpers.rs"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.16"
+descriptor = "install/extract.rs: archive-root inference & extraction dispatch"
+justification = "infer_archive_root_dir figures out whether a tar/zip has one common top-level dir to strip; extract_archive's signature is the shared entry point (its body dispatches on zip/gz/bz2/xz/tar) every downloaded archive funnels through — prerequisite context for the path-traversal-safety deep dive at 6.6."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/extract.rs"
+start = 18
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/extract.rs"
+start = 235
+end = 240
+render = { kind = "full" }
+
+[[batches]]
+id = "3.17"
+descriptor = "install/devtools.rs: macOS toolchain discovery signatures"
+justification = "find_compiler/get_arch_flag are two of the four xcrun/sw_vers shell-outs that decide CC and -arch for every from-source build; Ellipsis over the body signals find_sdk_path/get_macos_version follow the same xcrun-based pattern."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/devtools.rs"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/devtools.rs"
+start = 10
+end = 10
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps-core/src/install/devtools.rs"
+start = 160
+end = 164
+render = { kind = "full" }
+
+[[batches]]
+id = "3.18"
+descriptor = "uninstall/common.rs + uninstall/formula.rs: safety allowlist & formula uninstall"
+justification = "is_safe_path's signature plus its '..'-rejection guard (the allowlist of eligible roots it checks next is a small, hardcoded set of user/app directories, not expanded here for cost) is the single guardrail preventing a zap/uninstall from deleting arbitrary paths; formula.rs's signature+first step shows the unlink-then-remove-keg algorithm it guards."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/common.rs"
+start = 119
+end = 124
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/formula.rs"
+start = 10
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/formula.rs"
+start = 24
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "3.19"
+descriptor = "uninstall/cask.rs: soft-uninstall/zap engine roster"
+justification = "829 lines, the 2nd-largest file in sps-core; this shows uninstall_cask_artifacts's doc comment + signature plus a signature roster of every other public/private fn (zap_cask_artifacts, process_artifact_uninstall_core, forget_pkgutil_receipt, unload_and_remove_launchd, trash_path, run_zap_script, log_command_output, cleanup_private_store) so none of this file's real breadth is left implied-but-unlisted."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 37
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 134
+end = 134
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 497
+end = 497
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 576
+end = 576
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 610
+end = 610
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 678
+end = 678
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 696
+end = 696
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 730
+end = 730
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 763
+end = 763
+render = { kind = "full" }
+
+[[batches]]
+id = "3.20"
+descriptor = "upgrade/{bottle,cask,source}.rs: per-install-method upgrade signatures"
+justification = "Names all three upgrade-strategy entry points (bottle/cask/source) side by side so none is left looking unimplemented; each does uninstall-old-then-install-new internally, with a distinct 4th parameter (an http_client, a JobAction::Upgrade, or dependency opt-paths respectively) hinting at the difference."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/upgrade/bottle.rs"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/upgrade/cask.rs"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/upgrade/source.rs"
+start = 19
+end = 19
+render = { kind = "full" }
+
+[[batches]]
+id = "3.21"
+descriptor = "check/{installed,update}.rs: installed-package scan & update diffing"
+justification = "installed.rs's PackageType/InstalledPackageInfo is the record every scan of Cellar+Caskroom produces; update.rs's UpdateInfo is what check_for_updates emits by diffing those against formula.json/cask.json — the two records `sps list --outdated` is built from."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/check/installed.rs"
+start = 13
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/check/update.rs"
+start = 22
+end = 29
+render = { kind = "full" }
+
+[[batches]]
+id = "3.22"
+descriptor = "pipeline/{engine,worker}.rs: core worker-pool manager & job execution"
+justification = "start_worker_pool_manager sizes the thread pool (physical cores - 1, capped at 6) and receives WorkerJobs from a crossbeam channel; execute_sync_job is the worker-side entry point that delegates to do_execute_sync_steps (not expanded here for cost) for the actual install/upgrade work."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/pipeline/engine.rs"
+start = 16
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/pipeline/worker.rs"
+start = 21
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "3.23"
+descriptor = "utils/{xattr,applescript}.rs: quarantine attributes & AppleScript app-quit"
+justification = "has_quarantine_attribute is how sps checks macOS Gatekeeper's com.apple.quarantine marking on extracted apps; quit_app_gracefully is the osascript-driven 'ask the app to quit before we replace/remove it' step used during cask upgrade/uninstall."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/utils/xattr.rs"
+start = 26
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/utils/applescript.rs"
+start = 75
+end = 79
+render = { kind = "full" }
+
+# ============================================================
+# TIER 4 — sps-net: Homebrew API + OCI/GHCR fetch + validation
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "sps-net directory map"
+justification = "The whole networking crate is 5 files (~850 lines); a full roster is cheap and covers it completely."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "sps-net/src"
+entries = "all"
+
+[[batches]]
+id = "4.2"
+descriptor = "sps-net/Cargo.toml: package header"
+justification = "Confirms sps-net depends on sps-common (not the reverse) and its role ('Networking library') before api.rs/oci.rs."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/Cargo.toml"
+start = 1
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "sps-net lib.rs: module map"
+justification = "Names the 4 submodules (api/http/oci/validation) — the crate boundary a consumer actually imports across."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/src/lib.rs"
+start = 1
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "api.rs: Homebrew API fetch surface roster"
+justification = "All 9 public fetch functions (raw JSON fetchers, all-formulas/all-casks bulk fetchers, single-formula/cask typed fetchers) named together — the complete list of ways sps talks to formulae.brew.sh, so no fetch variant is left looking unsupported."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 36
+end = 36
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 69
+end = 69
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 104
+end = 104
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 165
+end = 165
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 220
+end = 220
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 228
+end = 228
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "sps-net/src/api.rs"
+start = 259
+end = 259
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "4.5"
+descriptor = "http.rs: formula-source/resource download signatures"
+justification = "ProgressCallback's type plus the 4 fetch_formula_source_or_bottle*/fetch_resource* entry points that download.rs and build_from_source both call into."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/src/http.rs"
+start = 18
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/http.rs"
+start = 24
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/http.rs"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/http.rs"
+start = 147
+end = 147
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/http.rs"
+start = 155
+end = 155
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "oci.rs: OCI/GHCR manifest structs & blob-fetch signatures"
+justification = "OciManifestIndex and the private OciAuth enum's first two variants (None/AnonymousBearer — ExplicitBearer/Basic also exist, not shown here) show this crate can pull bottles from an OCI-compatible registry (e.g. ghcr.io), not just formulae.brew.sh — an easy-to-miss alternate fetch path."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/src/oci.rs"
+start = 37
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/oci.rs"
+start = 65
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/oci.rs"
+start = 190
+end = 190
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "4.7"
+descriptor = "validation.rs: checksum & URL-scheme validation"
+justification = "verify_checksum (SHA256) and validate_url (rejects non-https) are two of the three gates every downloaded artifact passes through — small, self-contained, security-relevant."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-net/src/validation.rs"
+start = 67
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-net/src/validation.rs"
+start = 121
+end = 126
+render = { kind = "full" }
+
+# ============================================================
+# TIER 5 — sps: CLI binary, subcommands, async pipeline runner
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "sps directory map"
+justification = "Full roster of the CLI binary crate's src/, cli/ (9 subcommand files), and pipeline/ (runner/planner/downloader) so every subcommand and pipeline-stage file is known before any one is opened."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "sps/src"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps/src/cli"
+entries = "all"
+[[batches.content.groups]]
+parent = "sps/src/pipeline"
+entries = "all"
+
+[[batches]]
+id = "5.2"
+descriptor = "sps/Cargo.toml: bin target & UI dependency stack"
+justification = "clap/colored/dialoguer/prettytable-rs name the exact CLI/output stack — answers 'what TUI or table-printing library does this use' before reading status.rs or list.rs."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/Cargo.toml"
+start = 1
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/Cargo.toml"
+start = 13
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/Cargo.toml"
+start = 38
+end = 41
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "main.rs: entrypoint skeleton"
+justification = "The async main()'s first branch (Init is special-cased so Config::load failures don't block `sps init`) and the auto-update trigger condition (install/search/info/upgrade only) — the two most-asked-about pieces of the entrypoint."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/main.rs"
+start = 56
+end = 60
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/main.rs"
+start = 141
+end = 145
+render = { kind = "full" }
+
+[[batches]]
+id = "5.4"
+descriptor = "cli.rs: the exhaustive Command enum"
+justification = "The 9-variant Command enum (Init/Search/List/Info/Update/Install/Uninstall/Reinstall/Upgrade) IS the command surface; every subcommand file (5.5-5.12) is a leaf reachable only from here, so partial coverage of this enum would misstate what verbs exist."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 43
+end = 54
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "cli/install.rs: InstallArgs flags"
+justification = "The --skip-deps/--cask/--formula flags for what is very likely the single most common subcommand in real sessions; Ellipsis signals include_optional/skip_recommended/build_from_source continue below."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/install.rs"
+start = 15
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/install.rs"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^[^/]+" }
+[[batches.content.spans]]
+path = "sps/src/cli/install.rs"
+start = 24
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/install.rs"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/install.rs"
+start = 27
+end = 27
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "5.6"
+descriptor = "cli/upgrade.rs: UpgradeArgs flags & --all resolution"
+justification = "--all resolves the installed-package list itself rather than taking names — a real, easy-to-hit behavioral detail of `sps upgrade --all`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/upgrade.rs"
+start = 11
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/upgrade.rs"
+start = 25
+end = 27
+render = { kind = "full" }
+
+[[batches]]
+id = "5.7"
+descriptor = "cli/uninstall.rs: Uninstall struct & run start"
+justification = "The --zap flag and the per-name loop that continues past individual failures rather than aborting the whole batch."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/uninstall.rs"
+start = 16
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/uninstall.rs"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/uninstall.rs"
+start = 30
+end = 32
+render = { kind = "full" }
+
+[[batches]]
+id = "5.8"
+descriptor = "cli/reinstall.rs + cli/update.rs: ReinstallArgs & manual metadata-update"
+justification = "reinstall's PipelineFlags construction in run() hard-codes its optional/recommended-dependency behavior rather than inheriting it from the original install (body not expanded here for cost); update.rs's `sps update` is the manual counterpart to main.rs's automatic formula.json/cask.json refresh."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/reinstall.rs"
+start = 11
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/reinstall.rs"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/update.rs"
+start = 13
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "5.9"
+descriptor = "cli/search.rs: Search struct & run dispatch"
+justification = "Shows --formula/--cask are mutually exclusive (clap conflicts_with) and how the query routes to run_search."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/search.rs"
+start = 14
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/search.rs"
+start = 29
+end = 33
+render = { kind = "full" }
+
+[[batches]]
+id = "5.10"
+descriptor = "cli/list.rs: List struct & flags"
+justification = "The --formula/--cask/--outdated flags of a 422-line file that otherwise consists mostly of print_*_table formatting helpers."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/list.rs"
+start = 15
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/list.rs"
+start = 25
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "5.11"
+descriptor = "cli/info.rs: Info struct & formula/cask fallback"
+justification = "`sps info <name>` tries formula lookup first and silently falls back to cask lookup on NotFound/Generic errors — a fallback behavior an agent debugging 'info shows the wrong package type' needs to know exists."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/info.rs"
+start = 13
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/info.rs"
+start = 49
+end = 52
+render = { kind = "full" }
+
+[[batches]]
+id = "5.12"
+descriptor = "cli/init.rs: InitArgs & already-initialized check"
+justification = "`sps init` refuses to re-run unless --force is passed once the root marker file already exists — the part relevant to 'why did init refuse to run'; Ellipsis signals the privileged group/permission bootstrap that follows is not expanded here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/init.rs"
+start = 15
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/init.rs"
+start = 38
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/init.rs"
+start = 73
+end = 73
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "5.13"
+descriptor = "cli/status.rs: JobStatus enum & StatusDisplay state"
+justification = "The JobStatus enum's states from Waiting through Linking (Ellipsis signals Success/Failed complete the 9-state enum) and jobs/job_order plus the byte-count field StatusDisplay tracks (further speed/timing fields sit alongside it, not shown for cost) for the live terminal progress UI that renders PipelineEvents (2.15) during install/upgrade/reinstall."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 12
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 94
+end = 96
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 101
+end = 101
+render = { kind = "full" }
+
+[[batches]]
+id = "5.14"
+descriptor = "pipeline/runner.rs: CommandType & PipelineFlags"
+justification = "PipelineFlags is the exact 3-field struct every subcommand (install/reinstall/upgrade) builds differently before calling the shared run_pipeline — the one place to check 'does this command actually respect --include-optional' for any given verb."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/pipeline/runner.rs"
+start = 30
+end = 42
+render = { kind = "full" }
+
+[[batches]]
+id = "5.15"
+descriptor = "pipeline/planner.rs + downloader.rs: planning & download-coordinator structs"
+justification = "IntermediatePlan is the planner's working state before it becomes PlannedOperations (2.15); DownloadCoordinator is the JoinSet-based concurrent-download stage between planning and worker dispatch — the two pipeline stages that sit either side of the dependency resolver (2.12/6.1-6.3)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps/src/pipeline/planner.rs"
+start = 27
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/pipeline/planner.rs"
+start = 526
+end = 526
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps/src/pipeline/downloader.rs"
+start = 21
+end = 23
+render = { kind = "full" }
+
+# ============================================================
+# TIER 6 — deep dives: the algorithms most likely to need debugging
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "resolver.rs: bottle-vs-source install-strategy decision"
+justification = "determine_node_install_strategy's opening check is why a dependency might build from source even when a bottle exists (force_source_build_targets overrides) — the start of the answer to 'why is X being rebuilt from source'; the edge-tag gate deciding whether test/optional/recommended edges are walked at all (should_consider_edge_globally) is shown already at 2.12."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/dependency/resolver.rs"
+start = 96
+end = 106
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "resolver.rs: resolve_recursive (graph-walk body, start)"
+justification = "The actual recursive-descent implementation's opening: cycle detection via a `visiting` set checked before anything else runs — the mechanism behind every 'dependency cycle detected' bug report."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/dependency/resolver.rs"
+start = 570
+end = 585
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "resolver.rs: topological_sort (Kahn's-algorithm body)"
+justification = "topological_sort restricts its in-degree/adjacency construction to only 'relevant' (not NotFound/Failed) nodes before the Kahn's-algorithm queue runs — the setup step that later decides whether an unprocessed node is a real cycle or one that was legitimately globally-skipped."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/dependency/resolver.rs"
+start = 643
+end = 655
+render = { kind = "full" }
+
+[[batches]]
+id = "6.4"
+descriptor = "install/bottle/link.rs: link_formula_artifacts body (start)"
+justification = "The actual symlinking algorithm's start: the opt-path symlink creation and the STANDARD_KEG_DIRS constant it's built around — what actually runs on every successful bottle/source install."
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/bottle/link.rs"
+start = 15
+end = 28
+render = { kind = "full" }
+
+[[batches]]
+id = "6.5"
+descriptor = "install/cask/artifacts/app.rs: upgrade app-bundle replacement rationale"
+justification = "Contains an explicit, load-bearing design-rationale comment block ('CRITICAL: Homebrew-Style App Bundle Replacement Strategy... DO NOT CHANGE TO fs::rename()') explaining why upgrades use rm+cp -pR instead of a rename to preserve xattrs/code-signing/Gatekeeper state — exactly the kind of non-obvious constraint an agent must not silently violate when touching this code."
+predecessor = "3.13"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/app.rs"
+start = 118
+end = 129
+render = { kind = "full" }
+
+[[batches]]
+id = "6.6"
+descriptor = "install/extract.rs: TAR path-traversal safety checks"
+justification = "The exact strip-then-validate logic (reject '..' components / disallowed prefix components, then verify the final joined path still starts_with target_dir) guarding every TAR entry extracted from a downloaded archive — the place a 'zip-slip'-style vulnerability would have to be fixed or would regress."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/install/extract.rs"
+start = 406
+end = 415
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/install/extract.rs"
+start = 429
+end = 439
+render = { kind = "full" }
+
+[[batches]]
+id = "6.7"
+descriptor = "build/compile/cargo.rs & go.rs: two build backends shown in full"
+justification = "Concrete samples of the shortest and most representative backends (cargo.rs: 40 lines; go.rs: shown here through its GOPATH-free `cmd/<formula>` package-path heuristic) so 'how does a build backend actually work' has a real answer instead of only a signature pointer; the other 5 backends remain roster-only at 3.5 by design (similar shape, lower marginal value per token)."
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/cargo.rs"
+start = 12
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/go.rs"
+start = 13
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "6.8"
+descriptor = "model/formula.rs: custom Deserialize — version sanitization & resource parsing"
+justification = "Two real Homebrew-API-JSON quirks handled by hand: non-semver version strings get truncated/zero-padded field-by-field rather than rejected, and each 'resources' array entry's key is authoritative over any name field inside the value — both are exactly the kind of implicit parsing behavior that breaks silently if 'simplified'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 136
+end = 142
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 247
+end = 253
+render = { kind = "full" }
+
+[[batches]]
+id = "6.9"
+descriptor = "uninstall/cask.rs: zap_cask_artifacts body (start)"
+justification = "zap_cask_artifacts's entry point — its body (not shown here for cost) flips is_installed=false in the manifest before doing anything destructive, so a crash mid-zap still ends in 'not installed' state; this pointer plus the roster at 3.19 is a 1-hop path to that ordering choice."
+predecessor = "3.19"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/cask.rs"
+start = 134
+end = 140
+render = { kind = "full" }
+
+# ============================================================
+# TIER 7 — operational / project meta
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = ".github/workflows/rust.yml: CI toolchains & checks"
+justification = "The trigger conditions (push to main, version tags, PRs) — answers 'how would my change be checked'; the single-runner-with-nightly-then-stable-toolchain-swap shape isn't expanded here for cost."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/rust.yml"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = ".github/dependabot.yml"
+justification = "Weekly cargo + github-actions update groups — cheap, answers 'is dependency bumping automated here'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/dependabot.yml"
+start = 1
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "CONTRIBUTING.md: quick-start & dev-environment requirements"
+justification = "States concretely what README/CI only imply: macOS-only development and MSRV 1.76.0 via rustup — the fullest single answer to 'how do I set up a dev environment for this'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 1
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "7.4"
+descriptor = "rustfmt.toml: formatting rules"
+justification = "Small but load-bearing: the unstable options (group_imports, imports_granularity=Module, wrap_comments) are exactly why CONTRIBUTING.md insists on a nightly toolchain for `cargo fmt`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "rustfmt.toml"
+start = 1
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "7.5"
+descriptor = "README: contributing pointer & license footer"
+justification = "Names one of the exact areas the author says still needs help (Cask/Bottle + --build-from-source testing); the dual-license story is confirmed directly from LICENSE.md/NOTICE.md at 7.6 instead of repeated here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 155
+end = 155
+render = { kind = "full" }
+
+[[batches]]
+id = "7.6"
+descriptor = "LICENSE.md + NOTICE.md headers"
+justification = "Confirms the license text itself (BSD-3-Clause for sps) rather than just the README's pointer to it; NOTICE.md credits Homebrew's own license separately (not expanded here for cost) — ranked last as the least likely single query in a coding-agent session."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "LICENSE.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "NOTICE.md"
+start = 1
+end = 3
+render = { kind = "full" }

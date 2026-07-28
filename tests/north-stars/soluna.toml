@@ -1,149 +1,1080 @@
 fixture = "soluna"
 revision_pin = "be822052"
 summary = """
-Soluna is a C + Lua 2D game engine/framework ("Sokol + Lua = Soluna"): a
-small sokol_app/sokol_gfx-based C host (src/entry.c, src/luamods.c) embeds
-a Lua runtime (src/lualib, src/service) running on the `ltask` multithreaded
-task scheduler (3rd/ltask, vendored empty in this fixture as a git
-submodule). Game code is a single Lua entry file (see test/*.lua, chosen by
-a `.game` datalist config or `entry=` CLI arg) that returns a `callback`
-table of frame/input handlers and draws through a `batch` object using
-sprite/material modules (soluna.material.quad/text/mask/perspective_quad).
-The public Lua API is hand-documented as LuaLS ---@meta stubs under docs/
-(one file per `soluna.*` submodule) but two C modules, soluna.image and
-soluna.font, expose materially more functions than their docs/ stub lists
-— this NS surfaces the real luaL_Reg tables next to the docs so an agent
-doesn't assume the stub is exhaustive. Query distribution: "how do I
-use module X" (docs/ + real signatures), "how do I build/run/configure"
-(Makefile, .game files, settingdefault.dl), "where does frame/event data
-flow" (entry.c -> module registry -> Lua services), and C-level debugging
-of the renderer/sprite-packing/font layers. Given the 10k-token budget
-relative to this repo's size (~12.5k lines of C alone), this NS trades
-depth for breadth: full bodies for the highest-traffic docs/example
-files, location/signature pointers for everything else, with directory
-listings guaranteeing no C module or example is silently unlisted.
+Soluna is a 2D game framework: you write a game as a Lua script that returns a
+callback table, and the engine — a C host built on sokol (window/gfx/args) plus
+ltask (multithreaded services) — drives it. The repository has four distinct
+substances, and the ranking interleaves them by value-per-token rather than by
+directory: (1) the *game-authoring contract* — the `callback` table, the `args`
+/ `Batch` object passed to the entry script, the `.game` settings file and its
+complete default key set; (2) the *Lua API surface* — LuaCATS `---@meta` stubs
+under `docs/` mirroring the C modules registered in `src/luamods.c`, plus the
+pure-Lua runtime in `src/lualib/`; (3) the *service architecture* — `src/service/*.lua`
+(start, render, loader, settings, log, gamepad) running as ltask services, booted
+by `src/lualib/main.lua` over the C host in `src/entry.c`; (4) the *build
+and delivery machinery* — a Windows-only `Makefile`, a cross-platform luamake
+`make.lua` (including the emcc/WASM link flags), `clibs/*/make.lua` module
+descriptors, the `script/` code generators, the composite GitHub action, and the
+Hugo site under `web/` that publishes the live examples.
+
+Early ranks buy repository identity and a complete map of the directories that
+hold each substance; the middle ranks buy the semantics a game author or an
+engine hacker needs without opening files (module registry, settings keys,
+callback names, service entry points); the late ranks are precise location
+rosters into the large C sources and the build/web appendix, so that "where is
+X" is one grep away rather than a directory crawl.
 """
 
-# ============================================================
-# TIER 1 — orientation: directory map + repo identity
-# (ordered small-to-large to satisfy the growth envelope; the
-#  README lede and the big src/ listing are demoted to where
-#  cumulative cost can absorb them, not because they're low value)
-# ============================================================
+# ---------------------------------------------------------------------------
+# Tier 1 — identity and the repository map.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Repository root listing"
-justification = "First thing any session needs: the top-level shape of the repo (engine C source, vendored 3rd/, clibs/ build glue, docs/ API reference, test/ examples, web/ demo site, Makefile/make.lua dual build story)."
-[batches.content]
-kind = "fs"
-groups = [ { parent = ".", entries = "all" } ]
-
-[[batches]]
-id = "1.2"
-descriptor = "asset/, bin/, build/ listing"
-justification = "asset/ holds the sample sprite atlas + logo used by test/*.lua; bin/ and build/ are the (gitignored) output dirs for the compiled binary and object files, plus a vendored bin/sokol-tools-bin for shader compilation."
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "asset", entries = "all" },
-  { parent = "bin", entries = "all" },
-  { parent = "bin/sokol-tools-bin", entries = "all" },
-  { parent = "build", entries = "all" },
+descriptor = "What Soluna is: name, one-line pitch, and what it is built on"
+justification = """
+Rank 1 must answer "what is this repository". These three README lines give the
+name, the 2D-game-framework-in-Lua pitch with its
+platform list (Windows/Linux/macOS/WASM), and the two load-bearing dependencies
+(sokol, ltask) that explain most of the rest of the tree. Nothing else in the
+repo states this; every later batch is easier to interpret after it.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 7, end = 7, render.kind = "full" },
+  { path = "README.md", start = 13, end = 13, render.kind = "full" },
+  { path = "README.md", start = 15, end = 15, render.kind = "full" },
 ]
 
 [[batches]]
+id = "1.2"
+descriptor = "Complete root directory listing"
+justification = """
+The single cheapest orientation purchase: every entry at the root, naming each
+top-level directory (src, docs, test, clibs, script, web, asset, 3rd, bin,
+build, .github) and every root file (both READMEs, Makefile, make.lua,
+.gitmodules, LICENSE, editorconfig/gitignore). `entries = "all"` so the agent
+can trust that nothing at the root is hidden — the dual build systems
+(Makefile *and* make.lua) and the vendored `3rd/` submodule tree are both
+visible from here.
+"""
+content.kind = "fs"
+content.groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
 id = "1.3"
-descriptor = "3rd/ + clibs/ listing: vendored deps and their build glue"
-justification = "3rd/* are git submodules (ltask, sokol, lua, stb, datalist, yoga, zlib) checked out empty in this fixture snapshot; clibs/*/make.lua is the luamake glue that compiles each one. Listing both together prevents mistaking the empty 3rd/* dirs for missing dependencies (see 1.11's .gitmodules for the upstream URLs)."
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "3rd/datalist", entries = "all" },
-  { parent = "3rd/ltask", entries = "all" },
-  { parent = "3rd/lua", entries = "all" },
-  { parent = "3rd/sokol", entries = "all" },
-  { parent = "3rd/stb", entries = "all" },
-  { parent = "3rd/yoga", entries = "all" },
-  { parent = "3rd/zlib", entries = "all" },
-  { parent = "clibs/datalist", entries = "all" },
-  { parent = "clibs/ltask", entries = "all" },
-  { parent = "clibs/lua", entries = "all" },
-  { parent = "clibs/soluna", entries = "all" },
-  { parent = "clibs/yoga", entries = "all" },
-  { parent = "clibs/zip", entries = "all" },
+descriptor = "README section headings (all H2/H3)"
+justification = """
+Names every section of the front-door document without paying for any body
+text, so the agent knows the README covers documentation pointers, prebuilt
+binaries, source builds, CI integration, downstream projects and licensing —
+and knows it covers nothing else. Cheap hedge against assuming the README is
+only a pitch.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 19, end = 19, render.kind = "full" },
+  { path = "README.md", start = 25, end = 25, render.kind = "full" },
+  { path = "README.md", start = 29, end = 29, render.kind = "full" },
+  { path = "README.md", start = 33, end = 33, render.kind = "full" },
+  { path = "README.md", start = 53, end = 53, render.kind = "full" },
+  { path = "README.md", start = 57, end = 57, render.kind = "full" },
 ]
 
 [[batches]]
 id = "1.4"
-descriptor = "src/platform/ per-OS IME glue listing"
-justification = "IME (input-method-editor, for CJK text entry) has a dedicated per-platform .c/.m/.h/.js file under src/platform/{linux,macos,wasm,windows}; listing all 4 prevents assuming IME support is Windows-only after only seeing entry.c's #ifdef includes."
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "src/platform", entries = "all" },
-  { parent = "src/platform/linux", entries = "all" },
-  { parent = "src/platform/macos", entries = "all" },
-  { parent = "src/platform/wasm", entries = "all" },
-  { parent = "src/platform/windows", entries = "all" },
+descriptor = "README: where the docs and examples live, and how to build"
+justification = """
+Fills in the two headings that route the agent: the Documentation list points
+at `./docs` (API reference) and `./test` (examples), and the build sentence
+states the split that the whole build tier depends on — `make` for Windows,
+`luamake` for all platforms, with `.github/actions/soluna` as the worked
+reference. Also names the zh-CN translation and the live-examples site.
+"""
+predecessor = "1.3"
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 9, end = 11, render.kind = "full" },
+  { path = "README.md", start = 21, end = 23, render.kind = "full" },
+  { path = "README.md", start = 31, end = 31, render.kind = "full" },
 ]
 
 [[batches]]
 id = "1.5"
-descriptor = "src/ Lua subdirs listing: lualib, service, data"
-justification = "src/lualib (framework-side Lua modules embedded into the binary), src/service (ltask services: render, loader, gamepad, settings, log, start) and src/data (settingdefault.dl) are the three Lua-side subdirs under src/; listing all three prevents assuming only the files referenced elsewhere in this NS exist."
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "src/lualib", entries = "all" },
+descriptor = "Complete listings of src/lualib and src/service"
+justification = """
+Where the engine's own Lua lives. `src/service/` is the six-service
+architecture (start, render, loader, settings, log, gamepad); `src/lualib/`
+is the twelve embedded runtime modules (main, soluna, packageloader,
+spritebundle, fontmgr, layout, text, coroutine, icon, initsetting, util,
+print_r). Both `all`, because inferring "there is no gamepad service" from a
+partial listing would be a wrong-decision-grade error. Ranked above the C
+listing because this is the layer a game author and most engine tasks touch.
+"""
+content.kind = "fs"
+content.groups = [
   { parent = "src/service", entries = "all" },
-  { parent = "src/data", entries = "all" },
+  { parent = "src/lualib", entries = "all" },
 ]
 
 [[batches]]
 id = "1.6"
-descriptor = "test/ directory listing (runnable examples)"
-justification = "18 example entry scripts + 3 .game config files, each runnable via `bin/soluna.exe entry=test/<name>.lua` per the header comments. This is the fixture's 'how do I use the engine end-to-end' evidence; tier 6 below shows several of them in full."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "test", entries = "all" } ]
+descriptor = "Complete listing of docs/ — the LuaCATS API reference"
+justification = """
+Twenty `---@meta` stub files whose names *are* the public Lua module list
+(soluna, app, args, callback, file, image, text, font, font_system, layout,
+coroutine, crypt, datalist, lfs, url, zip, and the five material_* modules).
+For "does Soluna expose X?" this listing alone often answers the question, and
+otherwise it turns the follow-up into a single 20-to-50-line file read.
+"""
+content.kind = "fs"
+content.groups = [{ parent = "docs", entries = "all" }]
 
 [[batches]]
 id = "1.7"
-descriptor = "docs/ directory listing (Lua API reference stubs)"
-justification = "20 LuaLS ---@meta files, one per soluna.* submodule (soluna, app, args/Batch, callback, file, image, font, font_system, text, layout, material.*, datalist, lfs, zip, crypt, url, coroutine). Tier 3 below shows 7 of these in full; the other 13 are a 1-hop read away by name."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "docs", entries = "all" } ]
+descriptor = "Complete listing of test/ — runnable example entries and .game files"
+justification = """
+`test/` is the examples gallery the README points to: eighteen entry scripts
+plus three `.game` setting files. Names alone map features to demos (ime,
+layout, mask, mtex, perspective_quad, sprite, spritepack, text, intersect,
+icon, image, file, bundle, window, hello, setting, version, test) and reveal
+that `.game` files sit beside their `.lua` entries — the fact that motivates
+the settings batches later.
+"""
+content.kind = "fs"
+content.groups = [{ parent = "test", entries = "all" }]
 
 [[batches]]
 id = "1.8"
-descriptor = "README lede: what Soluna is"
-justification = "Answers 'what is this repo' in one hop: a Sokol+Lua 2D game framework with multithreading via ltask, targeting Windows/Linux/macOS/WebAssembly."
-[batches.content]
-kind = "lines"
-spans = [ { path = "README.md", start = 1, end = 17, render = { kind = "full" } } ]
+descriptor = "The eight vendored submodules (.gitmodules paths)"
+justification = """
+`3rd/` and `bin/sokol-tools-bin` are empty checkouts in the fixture, so the
+only place the dependency set is legible is `.gitmodules`. These eight `path`
+lines name every submodule: ltask, sokol, lua, stb, datalist, yoga, zlib and
+the sokol shader compiler. Explains the include paths in the Makefile and the
+`clibs/*` wrappers, and prevents the agent from hunting for vendored source
+that is not checked in.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = ".gitmodules", start = 2, end = 2, render.kind = "full" },
+  { path = ".gitmodules", start = 5, end = 5, render.kind = "full" },
+  { path = ".gitmodules", start = 8, end = 8, render.kind = "full" },
+  { path = ".gitmodules", start = 11, end = 11, render.kind = "full" },
+  { path = ".gitmodules", start = 14, end = 14, render.kind = "full" },
+  { path = ".gitmodules", start = 17, end = 17, render.kind = "full" },
+  { path = ".gitmodules", start = 20, end = 20, render.kind = "full" },
+  { path = ".gitmodules", start = 23, end = 23, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "README build/doc pointers"
-justification = "Points to docs/ as API reference, test/ as examples, and names the two build paths (`make` on Windows, `luamake` everywhere) plus the .github/actions/soluna composite action as the canonical build recipe."
-[batches.content]
-kind = "lines"
-spans = [ { path = "README.md", start = 19, end = 31, render = { kind = "full" } } ]
+descriptor = "Complete listing of src/ C and C++ translation units"
+justification = """
+The engine's flat C core: all thirty-six `.c`/`.cpp` files in `src/`. This is
+the repository's largest body of substance and its grouping is legible from
+names alone — material_* (five render materials plus blit/util), font*/truetype
+(text stack), image/sdfimage, render*/drawmgr/spritemgr/srbuffer/batch (draw
+pipeline), and the Lua binding leaves (lcrypt, lfs, luazip, luayoga, luamods,
+openlibs, embedlua). Restricted to translation units so the class is honest;
+headers, shaders and subdirectories follow at 1.10.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = [
+    "batch.c", "drawmgr.c", "embedlua.c", "entry.c", "file.c",
+    "font.c", "font_manager.c", "font_system.c", "gamepad.c", "image.c",
+    "lcrypt.c", "lfs.c", "lsha1.c", "luamods.c", "luayoga.c",
+    "luazip.c", "material_blit.c", "material_default.c", "material_mask.c",
+    "material_perspective_quad.c", "material_quad.c", "material_text.c",
+    "material_util.c", "openlibs.c", "openurl.c", "render.c",
+    "render_bindings.c", "render_uniform.c", "sdfimage.c", "spritemgr.c",
+    "srbuffer.c", "transform.c", "truetype.c", "winfile.c", "writelog.c",
+    "yogaone.cpp",
+  ] },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "web/ + script/ + .github/ directory listing"
-justification = "web/ is a Hugo static site (GitHub Pages demo + generated API docs), script/ holds the 4 Lua-run build-tooling scripts (build_web.lua generates that site, datalist2c.lua/lua2c.lua embed compiled datalist/Lua bytecode into the C binary, hashversion.lua stamps the git rev into the build), and .github/ holds the nightly multi-OS build workflow, the pages-deploy workflow, and the reusable composite build action referenced from the README."
-[batches.content]
-kind = "fs"
-groups = [
+descriptor = "Rest of src/: headers, GLSL shaders, and subdirectories"
+justification = """
+Closes the `src/` class that 1.9 opened: the eighteen headers (including the
+cross-cutting ones an agent will need — appevent.h, ime_state.h,
+ime_char_filter.h, loginfo.h, luabuffer.h, tmpbuffer.h, mutex.h, version.h),
+the six `.glsl` shader sources that the sokol-shdc step compiles, and the four
+subdirectories (data, lualib, service, platform). Without this the agent would
+conclude `src/` is C-only and miss both the shader pipeline and `src/data/`.
+"""
+predecessor = "1.9"
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = [
+    "appevent.h", "batch.h", "font_define.h", "font_manager.h",
+    "ime_char_filter.h", "ime_state.h", "loginfo.h", "luabuffer.h",
+    "material_util.h", "mutex.h", "render_bindings.h", "sprite_submit.h",
+    "spritemgr.h", "srbuffer.h", "tmpbuffer.h", "transform.h",
+    "truetype.h", "version.h",
+    "blit.glsl", "colorquad.glsl", "maskquad.glsl", "perspective_quad.glsl",
+    "sdftext.glsl", "texquad.glsl",
+    "data", "lualib", "platform", "service",
+  ] },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 2 — the game-authoring contract: what a Soluna game actually is.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "A complete minimal game: test/window.lua"
+justification = """
+Thirteen lines that demonstrate the entire user-facing contract at once — the
+two command lines that launch a game (`bin/soluna.exe entry=test/window.lua`
+and `bin/soluna.exe test/window.game`), `require "soluna"`, a settings call,
+and the `return callback` table with a `frame` function. This is the single
+highest-value-per-token semantic purchase in the repository: after it the agent
+can answer "how do I write/run a Soluna game" with zero follow-ups.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "test/window.lua", start = 1, end = 13, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Every callback a game may implement (docs/callback.lua roster)"
+justification = """
+The complete `Callback` class: frame, key, char, mouse_button, mouse_move,
+mouse_scroll and window_resize, as their declaration lines. Listing a subset
+would let the agent conclude e.g. that there is no scroll hook, so all seven
+land together. Parameter semantics are deliberately deferred to 2.8 — the names
+alone already resolve most "which hook do I use" questions.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/callback.lua", start = 4, end = 4, render.kind = "full" },
+  { path = "docs/callback.lua", start = 11, end = 11, render.kind = "full" },
+  { path = "docs/callback.lua", start = 18, end = 18, render.kind = "full" },
+  { path = "docs/callback.lua", start = 24, end = 24, render.kind = "full" },
+  { path = "docs/callback.lua", start = 31, end = 31, render.kind = "full" },
+  { path = "docs/callback.lua", start = 38, end = 38, render.kind = "full" },
+  { path = "docs/callback.lua", start = 45, end = 45, render.kind = "full" },
+  { path = "docs/callback.lua", start = 52, end = 52, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "The complete default settings table (src/data/settingdefault.dl)"
+justification = """
+Fourteen key/value lines that are simultaneously the configuration reference
+and a worked example of the datalist (`.dl`) format used across the repo. Every
+knob a `.game` file may override is here — sprite_max, texture_size,
+srbuffer_size, batch_size, draw_instance, entry, project, service_path, width,
+height, high_dpi, window_title, background, tmpbuffer_size — rendered whole so
+no key can be wrongly assumed absent. Answers "what is configurable" outright.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/data/settingdefault.dl", start = 1, end = 14, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "All three .game setting files in test/"
+justification = """
+Shows the `.game` file's actual syntax — `key : value`, `#` comments, dotted
+keys — and that it is what selects the `entry` script. Complete for the class:
+these are the only three `.game` files in the repo, so together with 2.3 the
+agent has both the format and the full key vocabulary.
+"""
+predecessor = "2.3"
+content.kind = "lines"
+content.spans = [
+  { path = "test/hello.game", start = 1, end = 3, render.kind = "full" },
+  { path = "test/window.game", start = 1, end = 1, render.kind = "full" },
+  { path = "test/mtex.game", start = 1, end = 3, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "The `soluna` core module surface (docs/soluna.lua declarations)"
+justification = """
+`require "soluna"` is the first line of nearly every example, so its complete
+member set is high-traffic: fields `platform`, `version`, `version_api` and
+functions `settings`, `set_window_title`, `set_icon`, `gamedir`,
+`load_sprites`. Declaration lines only; the annotated types and parameter docs
+follow at 2.6 so a small budget still gets the full member list.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/soluna.lua", start = 15, end = 16, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 22, end = 22, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 28, end = 28, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 34, end = 34, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 40, end = 40, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 46, end = 46, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 52, end = 52, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 59, end = 59, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 66, end = 66, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Types and parameter docs for the `soluna` module"
+justification = """
+Refines 2.5 with the information that cannot be guessed: the `Sprite` and
+`SpriteBundle` aliases (a sprite id may be an integer *or* an array of frames),
+the closed platform enum `"windows"|"macos"|"linux"|"wasm"`, that
+`gamedir(name)` defaults to `settings.project` and returns an absolute path,
+and that `load_sprites` takes a `.dl` sprite definition file.
+"""
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/soluna.lua", start = 10, end = 10, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 13, end = 13, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 21, end = 21, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 27, end = 27, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 33, end = 33, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 39, end = 39, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 45, end = 45, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 51, end = 51, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 57, end = 58, render.kind = "full" },
+  { path = "docs/soluna.lua", start = 64, end = 65, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "The `Batch` draw object and the `Args` passed to the entry script"
+justification = """
+The entry script receives `...` = an `Args` table with `width`, `height` and
+`batch`; `Batch` has exactly two methods, `add` and `layer`. That two-method
+surface is the whole immediate-mode drawing API, and is not derivable from any
+directory listing. Declaration lines and the `Args` field block together, so
+the class of `Batch` methods is closed.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/args.lua", start = 4, end = 4, render.kind = "full" },
+  { path = "docs/args.lua", start = 18, end = 18, render.kind = "full" },
+  { path = "docs/args.lua", start = 41, end = 41, render.kind = "full" },
+  { path = "docs/args.lua", start = 43, end = 47, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "A worked drawing example: test/sprite.lua (setup and frame loop)"
+justification = """
+The canonical example. Head: the run command, `soluna.load_sprites
+"asset/sprites.dl"`, and the start of a `soluna.preload` call. Tail: unpacking
+`args.batch`/`args.width`/`args.height` from `...` and a `callback.frame` that
+nests `batch:layer(...)` transforms — concretely demonstrating the push/pop
+discipline (each `layer()` with no args closes one) that `docs/args.lua`
+describes abstractly. The elided middle is the literal
+preload/sprite-table argument.
+"""
+predecessor = "2.7"
+content.kind = "lines"
+content.spans = [
+  { path = "test/sprite.lua", start = 1, end = 8, render.kind = "full" },
+  { path = "test/sprite.lua", start = 9, end = 9, render.kind = "ellipsis" },
+  { path = "test/sprite.lua", start = 35, end = 54, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "What batch:add accepts (docs/args.lua)"
+justification = """
+`add` is polymorphic in a way no signature reveals: a sprite id from a bundle,
+a material userdata produced by `mattext.block`/`matquad.quad`, or a raw
+binary string of pre-packed vertex data whose size must be a multiple of
+2 x sizeof(draw_primitive). Debugging "why did my draw call fail" starts here.
+"""
+predecessor = "2.7"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/args.lua", start = 7, end = 17, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "The five batch:layer overloads (docs/args.lua)"
+justification = """
+`layer` is variadic with five documented forms — no args closes the current
+layer, then rotation / (x,y) / (scale,x,y) / (scale,rotation,x,y) — layers
+nest, and scale may not be 0. The arity-dependent meaning is the single most
+error-prone rule in the API and is documented only here; the four
+`---@param` lines that follow are covered by the signature already shown at 2.7.
+"""
+predecessor = "2.9"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/args.lua", start = 20, end = 36, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "Callback parameter semantics (docs/callback.lua prose)"
+justification = """
+Refines the 2.2 roster with the three encodings an agent cannot guess and would
+otherwise have to derive from C: key `state` is 0=release/1=press/2=repeat,
+`char` arrives as a UTF-8 string, and mouse `button` is 0=left/1=right/2=middle.
+The remaining hooks' parameters (frame count, mouse x/y, scroll deltas, resize
+width/height) are self-describing from the 2.2 declaration lines.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/callback.lua", start = 15, end = 17, render.kind = "full" },
+  { path = "docs/callback.lua", start = 22, end = 23, render.kind = "full" },
+  { path = "docs/callback.lua", start = 28, end = 30, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 3 — the Lua module universe: the C registry and the docs/ rosters.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "The Lua module registry (src/luamods.c): ltask, app, render, materials"
+justification = """
+The keystone of the C-to-Lua boundary: one table mapping every preloaded module
+name to its `luaopen_` entry point. This half covers ltask and its
+root/bootstrap/mqueue submodules, `soluna.app`, `soluna.embedsource`,
+`soluna.log`, image, render, spritemgr, drawmgr and all six
+`soluna.material.*` modules (default, text, quad, mask, perspective_quad,
+blit). It resolves any `require "soluna.X"` to the C file that
+implements it in one hop, and closes the class of built-in modules — which the
+`docs/` listing alone does not (e.g. `soluna.embedsource` and
+`soluna.material.blit` have no doc stub). Split at the datalist entry; 3.2
+replaces the ellipsis with the remainder.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/luamods.c", start = 37, end = 55, render.kind = "full" },
+  { path = "src/luamods.c", start = 56, end = 56, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Rest of the module registry: datalist, file, fonts, gamepad, lfs, sdf, yoga, url, crypt, zip"
+justification = """
+Replaces the 3.1 ellipsis and closes the registry table: `soluna.datalist`,
+`soluna.file`, the four `soluna.font.*` entries, `soluna.gamepad` and
+`soluna.gamepad.device`, `soluna.lfs` (which is `luaopen_localfs`, a rename an
+agent would otherwise never guess), `soluna.image.sdf`, `soluna.layout.yoga`,
+`soluna.url`, `soluna.crypt` (`luaopen_skynet_crypt`) and `soluna.zip`, down to
+the `{ NULL, NULL }` terminator. Ranked immediately after
+3.1 because a half-registry invites exactly the wrong inference.
+"""
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/luamods.c", start = 56, end = 72, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "The `soluna.app` host module (docs/app.lua)"
+justification = """
+The privileged module that talks to the sokol host rather than to a service:
+`app.quit()`, `app.set_ime_font(name, size)` and `app.set_ime_rect(rect)` with
+its optional-field vocabulary (x, y, width/w, height/h, text_color/color, nil
+to clear). IME is the repository's largest platform-specific concern — four
+`src/platform/*` shims and a 396-line `test/ime.lua` — and this is its Lua-side
+entry point.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/app.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/app.lua", start = 15, end = 15, render.kind = "full" },
+  { path = "docs/app.lua", start = 24, end = 24, render.kind = "full" },
+  { path = "docs/app.lua", start = 30, end = 35, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Declaration roster: image, font, font.system, text, layout, coroutine"
+justification = """
+Every documented function of the six asset/presentation modules, as class +
+declaration lines: `image.load`/`image.resize`, `font.import`/`name`/`cobj`,
+`font_system.ttfdata`, `text.init`, `layout.load`/`calc`,
+`coroutine.create`/`resume`/`yield`. Six files' worth of surface for the price
+of one small batch, and each entry carries its own line number so reading the
+surrounding doc comment is a single targeted follow-up.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/image.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/image.lua", start = 17, end = 17, render.kind = "full" },
+  { path = "docs/image.lua", start = 33, end = 33, render.kind = "full" },
+  { path = "docs/font.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/font.lua", start = 14, end = 14, render.kind = "full" },
+  { path = "docs/font.lua", start = 21, end = 21, render.kind = "full" },
+  { path = "docs/font.lua", start = 27, end = 27, render.kind = "full" },
+  { path = "docs/font_system.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/font_system.lua", start = 15, end = 15, render.kind = "full" },
+  { path = "docs/text.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/text.lua", start = 17, end = 17, render.kind = "full" },
+  { path = "docs/layout.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/layout.lua", start = 22, end = 22, render.kind = "full" },
+  { path = "docs/layout.lua", start = 32, end = 32, render.kind = "full" },
+  { path = "docs/coroutine.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/coroutine.lua", start = 18, end = 18, render.kind = "full" },
+  { path = "docs/coroutine.lua", start = 30, end = 30, render.kind = "full" },
+  { path = "docs/coroutine.lua", start = 40, end = 40, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "The material modules: every documented constructor"
+justification = """
+Materials are the objects `batch:add` accepts besides sprite ids, so this
+closes the loop opened at 2.9. All four documented material modules together —
+`matquad.quad(width, height, color)`, `matmask.mask(sprite, color)`,
+`mattext.block(fontcobj, fontid, size, color, alignment)`,
+`matproj.sprite(sprite, options)` — plus the full `options` field block for the
+perspective quad (quad corner array, scale/shear, perspective factors `q`,
+ARGB color), which is the only material with a non-trivial argument shape.
+"""
+predecessor = "2.9"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/material_quad.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/material_quad.lua", start = 20, end = 20, render.kind = "full" },
+  { path = "docs/material_mask.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/material_mask.lua", start = 19, end = 19, render.kind = "full" },
+  { path = "docs/material_text.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/material_text.lua", start = 31, end = 31, render.kind = "full" },
+  { path = "docs/material_perspective_quad.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/material_perspective_quad.lua", start = 10, end = 17, render.kind = "full" },
+  { path = "docs/material_perspective_quad.lua", start = 29, end = 29, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Declaration roster: file, lfs, zip, url, crypt, datalist"
+justification = """
+The remaining six documented modules, completing the `docs/` class begun at
+3.3: `file.load`/`attributes`/`exist`/`local_exist`/`local_load`/`dir` (note
+the local-vs-packaged pairs, which matter once a game ships inside a zip),
+`lfs.attributes`/`dir`, `zip.open`, `url.open`, `crypt.hexencode`/`sha1`,
+`datalist.parse`/`quote`. With 3.3, 3.4 and 3.5 every `docs/*.lua` stub has now
+been touched, so no documented module can be wrongly assumed absent.
+"""
+predecessor = "3.4"
+content.kind = "lines"
+content.spans = [
+  { path = "docs/file.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/file.lua", start = 15, end = 15, render.kind = "full" },
+  { path = "docs/file.lua", start = 22, end = 22, render.kind = "full" },
+  { path = "docs/file.lua", start = 29, end = 29, render.kind = "full" },
+  { path = "docs/file.lua", start = 36, end = 36, render.kind = "full" },
+  { path = "docs/file.lua", start = 43, end = 43, render.kind = "full" },
+  { path = "docs/file.lua", start = 50, end = 50, render.kind = "full" },
+  { path = "docs/lfs.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/lfs.lua", start = 15, end = 15, render.kind = "full" },
+  { path = "docs/lfs.lua", start = 22, end = 22, render.kind = "full" },
+  { path = "docs/zip.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/zip.lua", start = 19, end = 19, render.kind = "full" },
+  { path = "docs/url.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/url.lua", start = 14, end = 14, render.kind = "full" },
+  { path = "docs/crypt.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/crypt.lua", start = 17, end = 17, render.kind = "full" },
+  { path = "docs/crypt.lua", start = 26, end = 26, render.kind = "full" },
+  { path = "docs/datalist.lua", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/datalist.lua", start = 15, end = 15, render.kind = "full" },
+  { path = "docs/datalist.lua", start = 22, end = 22, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 4 — the engine's own Lua: services, boot, and the runtime library.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "src/lualib/soluna.lua — the core module's real implementation"
+justification = """
+The counterpart to the 2.5 doc stub, and the clearest single window on the
+architecture: the three requires at the top (`ltask`, `soluna.app`,
+`ltask.mqueue`) show that the whole module is a facade over ltask services and
+the app message queue rather than over C. It also exposes two members the docs
+omit — `gamepad_init` and `preload` — and computes `soluna.version` at load
+time via a local `version()`. Declaration lines only, so the shape is visible
+without paying for the bodies.
+"""
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "src/lualib/soluna.lua", start = 1, end = 9, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 11, end = 11, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 28, end = 28, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 36, end = 36, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 40, end = 40, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 44, end = 44, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 53, end = 53, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 73, end = 73, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 79, end = 79, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 93, end = 93, render.kind = "full" },
+  { path = "src/lualib/soluna.lua", start = 99, end = 99, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "How a game boots: src/service/start.lua init()"
+justification = """
+The sequence that turns a `.game` file into a running game: gamepad init, the
+`settings` unique service, optional `ltask.servicepath`, the `loader` service
+seeded with `sprite_max`/`texture_size` from settings, then `setting.entry`
+read through `soluna.file` and compiled with `load(source, "@"..entry, "t")`.
+Anyone debugging "my entry script did not run" or adding a startup step lands
+exactly here.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/start.lua", start = 78, end = 104, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Callback wiring and the complete dispatchable event list (start.lua)"
+justification = """
+The authoritative event vocabulary — a literal array naming all eleven
+messages the engine will route into a game's callback table: mouse_move,
+mouse_button, mouse_scroll, mouse, touch_begin, touch_end, touch_moved,
+touch_cancelled, window_resize, char, key. Note this is a strict superset of
+the seven hooks documented in `docs/callback.lua` (touch events and `mouse` are
+undocumented), so it is the list to trust. Also shows the sprite batch being allocated
+and released, and that returning a non-table from the entry script closes the
+window.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/start.lua", start = 116, end = 151, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "The per-frame loop of a running game (start.lua)"
+justification = """
+Four steps per frame: reset the batch, call the game's `frame` callback, send
+`submit_batch` to the render service with the batch pointer, then a blocking
+`ltask.call(render, "frame", count)`. Wrapped in `xpcall` so a Lua error
+permanently disables the frame callback. This is the hot path for any
+performance or rendering-order question, and the send/call asymmetry is the
+detail that explains frame pacing.
+"""
+predecessor = "4.3"
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/start.lua", start = 152, end = 192, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "src/lualib/main.lua — the ltask bootstrap set and app init"
+justification = """
+The root Lua chunk the C host runs. `api.start` names the three unique
+bootstrap services started before anything else — timer, log, loader — and
+`api.init` shows the packaging story: `main.zip` (or `args[1]`) is probed by
+the package loader, then `initsetting.init(args)` produces the settings that
+`soluna_app.init_desc` turns into the sokol window description. Explains where
+command-line args and zip-packaged games are handled.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/lualib/main.lua", start = 159, end = 198, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "The render service: material ids and every service entry point"
+justification = """
+`src/service/render.lua` is the largest Lua file (462 lines) and would be
+expensive to explore blind. This gives its five material-id constants
+(DEFAULT/TEXT/QUAD/MASK/PERSPECTIVE_QUAD, the numbering the C materials agree
+on), the module requires that enumerate which C modules the renderer drives,
+and the declaration line of every exported entry point: `app`, `frame`, `quit`,
+`load_sprites`, `init`, `resize`. Any render question becomes one targeted read
+at a known line.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/render.lua", start = 1, end = 21, render.kind = "full" },
+  { path = "src/service/render.lua", start = 143, end = 145, render.kind = "full" },
+  { path = "src/service/render.lua", start = 215, end = 215, render.kind = "full" },
+  { path = "src/service/render.lua", start = 231, end = 231, render.kind = "full" },
+  { path = "src/service/render.lua", start = 252, end = 252, render.kind = "full" },
+  { path = "src/service/render.lua", start = 454, end = 454, render.kind = "full" },
+  { path = "src/service/render.lua", start = 458, end = 458, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "The loader service: sprite bank and bundle entry points"
+justification = """
+Complete exported surface of `src/service/loader.lua` — `init` (allocates the
+sprite bank from `max_sprite`/`texture_size` and hands its pointer back),
+`loadbundle`, `pack`, `write`, `preload` — plus the `filecache` metatable whose
+`__index` is `spritebundle.loadimage`, the lazy-image-load trick that makes the
+asset pipeline work. Pairs with `soluna.load_sprites`/`soluna.preload` from 2.5.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/loader.lua", start = 1, end = 17, render.kind = "full" },
+  { path = "src/service/loader.lua", start = 61, end = 61, render.kind = "full" },
+  { path = "src/service/loader.lua", start = 69, end = 69, render.kind = "full" },
+  { path = "src/service/loader.lua", start = 91, end = 91, render.kind = "full" },
+  { path = "src/service/loader.lua", start = 101, end = 101, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "The three small services: settings and gamepad in full, log in outline"
+justification = """
+Short enough to render whole, which makes them the best available worked
+examples of the ltask service idiom (a local `S` table of message handlers,
+`ltask.fork` for background loops, `return S`). Substantively: settings is a
+one-shot `initsetting.init(args, true)` holder; gamepad is a listener registry
+polled via `device.update()`; log forks a loop that calls its local
+`writelog()` every 20 ticks (and again on `S.quit`), dispatching to
+`writelog.sokol` or `writelog.ltask` depending on record id. Completes `src/service/` — with 4.2/4.3/4.4
+(start), 4.6 (render) and 4.7 (loader), all six services have been covered.
+"""
+predecessor = "1.5"
+content.kind = "lines"
+content.spans = [
+  { path = "src/service/settings.lua", start = 1, end = 18, render.kind = "full" },
+  { path = "src/service/gamepad.lua", start = 1, end = 24, render.kind = "full" },
+  { path = "src/service/log.lua", start = 1, end = 9, render.kind = "full" },
+  { path = "src/service/log.lua", start = 10, end = 10, render.kind = "ellipsis" },
+  { path = "src/service/log.lua", start = 31, end = 42, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "Function roster: spritebundle, packageloader, initsetting, icon, util, text"
+justification = """
+Name-only locations for six runtime modules, so that "where is the sprite
+cropping done / how are zip packages searched / who patches settings keys"
+resolves in one read. Includes internal helpers because they are the actual
+targets: `crop_`/`unpack_size`/`crop`/`load_list` in spritebundle,
+`load_zips`/`find_file`/`gen_list`/`fileload`/`search_file` in packageloader —
+together with the `file_load`, `file_exist`, `file.dir`, `file.attributes` and
+`file.searchpath` overrides it installs, which is how `soluna.file` reads out
+of a packaged zip — `patch` and
+`settings_filename` in initsetting, plus the public `M.load`/`M.loadimage`,
+`S.init`, `icon.bundle`/`icon.symbol`, `util.func_chain` and
+`text.init`/`user_color`/`icon_id`/`convert`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/lualib/spritebundle.lua", start = 9, end = 9, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 14, end = 14, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 40, end = 40, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 49, end = 49, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 95, end = 95, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 105, end = 105, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/spritebundle.lua", start = 117, end = 117, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 14, end = 14, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 49, end = 49, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 75, end = 75, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 79, end = 79, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 86, end = 86, render.kind = "full" },
+  { path = "src/lualib/packageloader.lua", start = 109, end = 109, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 130, end = 130, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 143, end = 143, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 163, end = 163, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/packageloader.lua", start = 169, end = 169, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/initsetting.lua", start = 10, end = 10, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/initsetting.lua", start = 44, end = 44, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/initsetting.lua", start = 62, end = 62, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/icon.lua", start = 10, end = 10, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/icon.lua", start = 27, end = 27, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/util.lua", start = 9, end = 9, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/util.lua", start = 13, end = 13, render.kind = "full" },
+  { path = "src/lualib/util.lua", start = 20, end = 20, render.kind = "full" },
+  { path = "src/lualib/text.lua", start = 9, end = 9, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/text.lua", start = 27, end = 27, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/text.lua", start = 41, end = 41, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/text.lua", start = 53, end = 53, render.kind = "truncated", render.pattern = "^[^(]+" },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "Function roster: coroutine, layout, fontmgr, print_r"
+justification = """
+Closes `src/lualib/` (main and soluna were covered at 4.5 and 4.1). The
+coroutine entries matter beyond location: the ltask-aware wrapper defines
+`create`, `resume`, `status`, `yield`, `wrap` and `close`, three more than
+`docs/coroutine.lua` documents. `layout.load`/`layout.calc` and the yoga
+document/element metamethods sit here; `fontmgr` exposes `utf16toutf8`,
+`import`, `alloc_fontid`, `matching`, `fetch_name`, `fetch_id` and `enum_name`;
+`print_r` is the debug printer used by nearly every example under `test/`.
+"""
+predecessor = "4.9"
+content.kind = "lines"
+content.spans = [
+  { path = "src/lualib/coroutine.lua", start = 19, end = 19, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/coroutine.lua", start = 51, end = 51, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/coroutine.lua", start = 69, end = 69, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/coroutine.lua", start = 82, end = 82, render.kind = "full" },
+  { path = "src/lualib/coroutine.lua", start = 96, end = 96, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/coroutine.lua", start = 107, end = 107, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 13, end = 13, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 24, end = 24, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 28, end = 28, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 32, end = 32, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 36, end = 36, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 40, end = 40, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 47, end = 47, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 53, end = 53, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 59, end = 59, render.kind = "full" },
+  { path = "src/lualib/layout.lua", start = 66, end = 66, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 93, end = 93, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 116, end = 116, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 128, end = 128, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/layout.lua", start = 151, end = 151, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 15, end = 15, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 214, end = 214, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 252, end = 252, render.kind = "full" },
+  { path = "src/lualib/fontmgr.lua", start = 258, end = 258, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 264, end = 264, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 290, end = 290, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/fontmgr.lua", start = 297, end = 297, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 8, end = 8, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 31, end = 31, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 71, end = 71, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 100, end = 100, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 140, end = 140, render.kind = "truncated", render.pattern = "^[^(]+" },
+  { path = "src/lualib/print_r.lua", start = 144, end = 144, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — platform shims and the two build systems.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "Complete listing of src/platform and all four OS subdirectories"
+justification = """
+The only place in the tree where per-OS code lives, and the answer to "is this
+ported to X". Each of windows/macos/linux gets an IME header plus a `.c`/`.m`
+implementation, while wasm gets a header and two Emscripten JS libraries
+(`soluna_ime.js`, `soluna_openurl.js`) — an asymmetry that explains the
+`--js-library` link flags in `make.lua`. Listed exhaustively so an absent
+platform file cannot be inferred from a partial view.
+"""
+predecessor = "1.10"
+content.kind = "fs"
+content.groups = [
+  { parent = "src/platform", entries = "all" },
+  { parent = "src/platform/windows", entries = "all" },
+  { parent = "src/platform/macos", entries = "all" },
+  { parent = "src/platform/linux", entries = "all" },
+  { parent = "src/platform/wasm", entries = "all" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "Remaining directories: clibs, script, asset, bin, build, 3rd"
+justification = """
+Closes the filesystem map opened at 1.2. `clibs/` holds one `make.lua` per
+native module (yoga, datalist, lua, zip, ltask, soluna) plus the soluna
+sub-tools (shader2c, runlua, compile_lua, compile_shader); `script/` holds the
+four generators (lua2c, datalist2c, hashversion, build_web); `asset/` is the
+demo art plus `sprites.dl`; `bin/` and `build/` are placeholder output
+directories; `3rd/` shows the seven submodule mount points as empty
+directories, confirming the vendored source is not checked in.
+"""
+predecessor = "1.2"
+content.kind = "fs"
+content.groups = [
+  { parent = "clibs", entries = "all" },
+  { parent = "clibs/soluna", entries = "all" },
+  { parent = "clibs/yoga", entries = "all" },
+  { parent = "clibs/datalist", entries = "all" },
+  { parent = "clibs/lua", entries = "all" },
+  { parent = "clibs/zip", entries = "all" },
+  { parent = "clibs/ltask", entries = "all" },
+  { parent = "script", entries = "all" },
+  { parent = "asset", entries = "all" },
+  { parent = "bin", entries = "all" },
+  { parent = "build", entries = "all" },
+  { parent = "3rd", entries = "all" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "Makefile: the Windows/gcc build in outline"
+justification = """
+The `make` half of the dual build. Names the output (`bin/soluna.exe` from `BIN`/`APPNAME`), the
+default `CC?=gcc`, the bootstrap `LUA_EXE` used to run the code generators,
+the sokol shader compiler path
+(`SHDC`, under `bin/sokol-tools-bin`), the `git rev-parse HEAD` version stamp,
+the final link line over MAIN_O/PLATFORM_O/LTASK_O/LUA_O/DATALIST_O/yoga/zlib,
+and `clean`. Enough to
+answer "how is this built on Windows" and to locate any rule by line.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "Makefile", start = 3, end = 6, render.kind = "full" },
+  { path = "Makefile", start = 9, end = 12, render.kind = "full" },
+  { path = "Makefile", start = 35, end = 35, render.kind = "full" },
+  { path = "Makefile", start = 149, end = 153, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "make.lua: platform detection and output layout"
+justification = """
+The luamake half — the build that actually covers all platforms. Resolves the
+five build identities the repo recognises (mingw, clang-cl, msvc, the plain
+`lm.os` values, and emcc) and shows that binaries land in
+`bin/<platform>/<mode>`. This is the variable every downstream build question
+depends on, including how the WASM build is distinguished from a native one.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "make.lua", start = 1, end = 2, render.kind = "full" },
+  { path = "make.lua", start = 14, end = 37, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "make.lua: how clibs modules and the final executable are wired"
+justification = """
+The build's composition rule: every `clibs/*/make.lua` except `soluna` is
+imported automatically by scanning the directory, each contributing a
+`<name>_src` dependency, `clibs/soluna/make.lua` is imported explicitly last,
+and `lm:exe "soluna"` links the lot. Explains what adding a new native module
+requires — drop a directory under `clibs/` — without reading any of the six
+module make files.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = "make.lua", start = 119, end = 136, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "make.lua: the Emscripten/WASM link configuration"
+justification = """
+The most consequential and least guessable block in the build: the emdawnwebgpu
+port, pthread pool sizing from `navigator.hardwareConcurrency`, IDBFS for
+persistent storage, `ALLOW_MEMORY_GROWTH`, `FORCE_FILESYSTEM`, the exported
+runtime methods, the two `--js-library` flags pointing at
+`src/platform/wasm/*.js`, and the debug-only assertion/stack-check flags. Any
+browser-target question resolves here with no follow-up.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = "make.lua", start = 83, end = 107, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 6 — the C host boundary.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "The full `soluna.app` C surface in src/entry.c"
+justification = """
+`luaopen_soluna_app` registers thirteen entries, of which `docs/app.lua`
+documents only three. The undocumented ten are exactly the engine-internal
+primitives the boot path depends on and that an agent reading `main.lua` or
+`start.lua` will otherwise be unable to resolve: `mqueue`, `unpackmessage`,
+`sendmessage`, `unpackevent`, `set_window_title`, `set_icon`, `close_window`,
+`version`, `init_desc`, plus `platform` which is patched in as a literal
+string after `luaL_newlib`. This is also the entry point into `src/entry.c`
+itself — the 918-line sokol host holding `sokol_main` and the
+init/frame/cleanup/event callbacks.
+"""
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "src/entry.c", start = 542, end = 563, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 7 — CI and the published web lab.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "Complete listing of .github: workflows and the composite action"
+justification = """
+Two workflows (`nightly.yml`, `pages.yml`) and one reusable composite action
+(`actions/soluna/action.yml`). Cheap, and it closes the CI class: there is no
+separate test or release workflow, so nightly is both. The README tells
+downstream projects to consume the composite action, which makes its location
+worth knowing precisely.
+"""
+predecessor = "1.2"
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/actions", entries = "all" },
+  { parent = ".github/actions/soluna", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "The composite action's four outputs (action.yml)"
+justification = """
+The public contract other repositories build against, as advertised in the
+README snippet: all four outputs — `SOLUNA_BINARY`, `SOLUNA_PATH`,
+`SOLUNA_WASM_PATH`, `SOLUNA_JS_PATH` — with their descriptions. The complete
+output set, so an integrator cannot assume a fifth exists; the single
+`soluna_path` input and the build steps stay one read away in the same file.
+"""
+predecessor = "7.1"
+content.kind = "lines"
+content.spans = [
+  { path = ".github/actions/soluna/action.yml", start = 10, end = 22, render.kind = "full" },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "Complete listing of web/ content, assets and static files"
+justification = """
+The Hugo site behind the README's Live Examples link: `config.toml`, the
+markdown sections (`_index.md`, `docs/_index.md`, `examples/_index.md`,
+`playframe.md`), the browser-side glue (`play.js`, `playframe.js`, `htmx.js`,
+`site.css`, `coi-serviceworker.min.js` — the COOP/COEP shim WASM threading
+needs) and the two bundled TTFs. Layout templates are listed separately at 6.4.
+"""
+predecessor = "1.2"
+content.kind = "fs"
+content.groups = [
   { parent = "web", entries = "all" },
-  { parent = "web/assets", entries = "all" },
   { parent = "web/content", entries = "all" },
   { parent = "web/content/docs", entries = "all" },
   { parent = "web/content/examples", entries = "all" },
+  { parent = "web/assets", entries = "all" },
+  { parent = "web/static", entries = "all" },
+  { parent = "web/static/fonts", entries = "all" },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "Complete listing of web/layouts (Hugo templates and shortcodes)"
+justification = """
+Closes the `web/` class: the `_default` templates (baseof, single, term,
+terms), the section templates (docs/list, examples/list, examples/single,
+playframe/single), the two partials (nav, footer) and the nine shortcodes
+(hero, section, heading, plain_list, pre, small, menubar, relurl) that the
+content markdown invokes. Last because it is the most peripheral substance in
+the repository, but omitting it would leave `web/` looking template-less.
+"""
+predecessor = "7.3"
+content.kind = "fs"
+content.groups = [
   { parent = "web/layouts", entries = "all" },
   { parent = "web/layouts/_default", entries = "all" },
   { parent = "web/layouts/docs", entries = "all" },
@@ -151,369 +1082,4 @@ groups = [
   { parent = "web/layouts/partials", entries = "all" },
   { parent = "web/layouts/playframe", entries = "all" },
   { parent = "web/layouts/shortcodes", entries = "all" },
-  { parent = "web/static", entries = "all" },
-  { parent = "web/static/fonts", entries = "all" },
-  { parent = "script", entries = "all" },
-  { parent = ".github", entries = "all" },
-  { parent = ".github/actions/soluna", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-]
-
-[[batches]]
-id = "1.11"
-descriptor = ".gitmodules: vendored dependency URLs"
-justification = "Directly explains why 1.3's 3rd/* dirs are empty in this checkout (submodules not initialized) and gives the exact upstream repo for each — the fastest answer to 'where does the sokol/yoga/zlib/lua/ltask code come from'."
-[batches.content]
-kind = "lines"
-spans = [ { path = ".gitmodules", start = 1, end = 24, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.12"
-descriptor = "src/ directory listing (engine C source + subdirs)"
-justification = "src/ is the engine: 35 .c files + 1 .cpp file (one Lua C module each, see tier 2's module registry), shared headers, 6 .glsl shaders, and 4 subdirs. Full listing prevents assuming any single .c file drilled into later (image.c, font.c, spritemgr.c, ...) is the only one that exists."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "src", entries = "all" } ]
-
-# ============================================================
-# TIER 2 — module registry: the full native-module map
-# ============================================================
-
-[[batches]]
-id = "2.1"
-descriptor = "luamods.c: forward declarations of every luaopen_* module"
-justification = "The extern declaration list names every Lua<->C module entry point in the binary (ltask.*, soluna.app/image/render/spritemgr/font*/material.*/gamepad*/lfs/url/crypt/zip/...) — a complete roster before the modules[] table (2.2) maps each to its require()-able name."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/luamods.c", start = 1, end = 36, render = { kind = "full" } } ]
-
-[[batches]]
-id = "2.2"
-descriptor = "luamods.c: the name -> module registration table"
-justification = "The single most load-bearing catastrophic-omission guard in this repo: every native module is registered here as {\"soluna.x\", luaopen_x}, e.g. {\"soluna.image\", luaopen_image}. Anyone asking 'what native modules exist' or 'which .c file implements soluna.X' should land here before any individual docs/*.lua file (tier 3), which only covers 20 of these ~30 names."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/luamods.c", start = 37, end = 81, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 3 — public Lua API reference (docs/*.lua LuaLS stubs)
-# curated to the modules every game script touches; the other
-# 13 docs/ files are named in 1.7 and are a 1-hop read away.
-# ============================================================
-
-[[batches]]
-id = "3.1"
-descriptor = "docs/soluna.lua: core `soluna` module API"
-justification = "The top-level `soluna` module (platform, version, settings(), set_window_title, set_icon, gamedir, load_sprites) is require()'d by essentially every test/*.lua sample. Highest-value single doc file."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/soluna.lua", start = 1, end = 68, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.2"
-descriptor = "docs/callback.lua: frame-loop callback contract"
-justification = "Documents the `callback` table every game entry script returns (frame, key, char, mouse_button, mouse_move, mouse_scroll, window_resize) — the shape every test/*.lua sample implements."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/callback.lua", start = 1, end = 54, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.3"
-descriptor = "docs/args.lua: Batch/Args types (batch:add, batch:layer)"
-justification = "Documents the `Batch` object (add/layer) and the `Args` table (width/height/batch) passed into every game entry script as `...` — the drawing API used in every test/*.lua example."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/args.lua", start = 1, end = 49, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.4"
-descriptor = "docs/file.lua: soluna.file (load/exist/dir/attributes)"
-justification = "File I/O used throughout examples (file.load, file.exist) and internally by font/text/layout modules. Only load/exist are the real C exports; dir/attributes/local_* are monkey-patched onto this table at runtime by src/lualib/packageloader.lua when a zip package is mounted — this stub documents the augmented, game-facing shape."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/file.lua", start = 1, end = 52, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.5"
-descriptor = "docs/image.lua: soluna.image (load, resize)"
-justification = "Covers image.load/resize only; the real C module (see 4.1) additionally exposes info/crop/canvas/canvas_size/new/blit/makeindex used internally by the sprite packer."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/image.lua", start = 1, end = 35, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.6"
-descriptor = "docs/font.lua: soluna.font (import, name, cobj)"
-justification = "Covers the 3 functions a game script typically needs to load a TTF and get a font id; the C module (see 4.2/4.3) exposes 8 more used internally by the render service and text layout."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/font.lua", start = 1, end = 29, render = { kind = "full" } } ]
-
-[[batches]]
-id = "3.7"
-descriptor = "docs/material_quad.lua: colored rectangle sprites"
-justification = "Simplest of the 5 material modules (matquad.quad(w,h,color) -> sprite for batch:add) and the one used across the most test/*.lua samples (mtex.lua, intersect.lua, layout.lua)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "docs/material_quad.lua", start = 1, end = 22, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 4 — gap-filling: real export surfaces beyond docs/*.lua
-# ============================================================
-
-[[batches]]
-id = "4.1"
-descriptor = "soluna.image real export table (image.c)"
-justification = "Ground truth for 3.5: confirms load/resize and reveals the 8 additional exports (load_alpha, info, crop, canvas, canvas_size, new, blit, makeindex) that src/lualib/spritebundle.lua and src/service/loader.lua use internally to build the sprite atlas."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/image.c", start = 577, end = 595, render = { kind = "full" } } ]
-
-[[batches]]
-id = "4.2"
-descriptor = "soluna.font real export table (font.c)"
-justification = "Ground truth for 3.6: the game-facing `font` table actually exposes texture/texture_write/touch/size/submit/texture_size/import_icon/list in addition to docs' import/name/cobj — used internally by src/service/render.lua and material.text."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/font.c", start = 159, end = 184, render = { kind = "full" } } ]
-
-[[batches]]
-id = "4.3"
-descriptor = "soluna.font.manager real export table (font.c)"
-justification = "A second, render-service-only luaL_Reg table in the same file (init/shutdown) that a game script never calls directly but src/service/render.lua's font.init()/font.shutdown() does — has no docs/*.lua stub since it's engine-internal."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/font.c", start = 248, end = 259, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 5 — boot & architecture
-# ============================================================
-
-[[batches]]
-id = "5.1"
-descriptor = "entry.c: per-platform sokol backend selection"
-justification = "The very first thing entry.c does is pick a sokol_gfx backend by platform (D3D11/Metal/WGPU/GLCORE) — directly answers 'why does this fail to build/run on platform X'."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/entry.c", start = 12, end = 32, render = { kind = "full" } } ]
-
-[[batches]]
-id = "5.2"
-descriptor = "entry.c: app_context struct (the C-side global state)"
-justification = "The single piece of C-side state (lua_State*, log/mqueue callbacks) threaded through the whole sokol_app callback lifecycle (app_init/app_frame/app_cleanup/app_event, further down this file) — the starting point for any 'how does C hand off to Lua per frame' question."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/entry.c", start = 89, end = 99, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 6 — example / test game scripts
-# ============================================================
-
-[[batches]]
-id = "6.1"
-descriptor = "test/hello.lua + hello.game: minimal entry pair"
-justification = "The smallest possible game: a 1-line entry script plus its .game config naming it as the entry point — the 'first thing to run' pair per README/1.9's build pointers."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "test/hello.lua", start = 1, end = 1, render = { kind = "full" } },
-  { path = "test/hello.game", start = 1, end = 3, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "6.2"
-descriptor = "test/window.lua + window.game: minimal callback shape"
-justification = "Smallest example that returns a real `callback` table (matching docs/callback.lua, 3.2) with no drawing at all — the shape to start from for any new game script."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "test/window.lua", start = 1, end = 14, render = { kind = "full" } },
-  { path = "test/window.game", start = 1, end = 1, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "6.3"
-descriptor = "test/test.lua + version.lua + setting.lua: smoke-test scripts"
-justification = "Three trivial (1-3 line) scripts grouped together: test.lua exercises the injected print_r global, version.lua prints soluna.version, setting.lua prints soluna.settings() — the fastest possible checks that the engine boots and config loads."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "test/test.lua", start = 1, end = 1, render = { kind = "full" } },
-  { path = "test/version.lua", start = 1, end = 2, render = { kind = "full" } },
-  { path = "test/setting.lua", start = 1, end = 3, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "6.4"
-descriptor = "test/sprite.lua: sprite bundle + batch:layer/add example"
-justification = "The canonical sprite-drawing example: soluna.load_sprites (both from a .dl bundle and an inline preloaded-pixel table), nested batch:layer transforms, batch:add — the worked usage of docs/soluna.lua (3.1) and docs/args.lua (3.3)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "test/sprite.lua", start = 1, end = 55, render = { kind = "full" } } ]
-
-[[batches]]
-id = "6.5"
-descriptor = "test/intersect.lua: batch:point + material.quad hit-testing"
-justification = "Small, complete example of nested batch:layer transforms combined with batch:point (transform-aware hit testing) — the only example exercising batch:point, otherwise undocumented in docs/args.lua (3.3)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "test/intersect.lua", start = 1, end = 36, render = { kind = "full" } } ]
-
-[[batches]]
-id = "6.6"
-descriptor = "test/ime.lua: complete callback-handler locations (396-line file)"
-justification = "IME text-input demo is by far the largest test/*.lua file; rather than including it in full, this locates the complete set of `callback.*` handlers it defines (window_resize, mouse_move, mouse_button, char, key, frame) — the 1-hop pointer for anyone debugging IME/text-input specifically, without paying for the whole file's cost here."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "test/ime.lua", start = 285, end = 285, render = { kind = "full" } },
-  { path = "test/ime.lua", start = 290, end = 290, render = { kind = "full" } },
-  { path = "test/ime.lua", start = 295, end = 295, render = { kind = "full" } },
-  { path = "test/ime.lua", start = 306, end = 306, render = { kind = "full" } },
-  { path = "test/ime.lua", start = 323, end = 323, render = { kind = "full" } },
-  { path = "test/ime.lua", start = 348, end = 348, render = { kind = "full" } },
-]
-
-# ============================================================
-# TIER 7 — config & settings
-# ============================================================
-
-[[batches]]
-id = "7.1"
-descriptor = "src/data/settingdefault.dl: concrete default config"
-justification = "The single cheapest, most concrete piece of evidence for the settings/config format: every default key (sprite_max, texture_size, srbuffer_size, batch_size, draw_instance, entry, project, service_path, width/height, high_dpi, window_title, background, tmpbuffer_size) in the actual datalist syntax a .game file overrides."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/data/settingdefault.dl", start = 1, end = 15, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 8 — service-layer implementation locations
-# ============================================================
-
-[[batches]]
-id = "8.1"
-descriptor = "src/service/render.lua: public message-handler locations (462-line file)"
-justification = "render.lua is the largest Lua file in the repo (renderer state machine driving all 5 material types) — too large for full inclusion here. This locates its complete `S.*` message-handler surface (app, frame, register_batch, submit_batch, quit, load_sprites, init, resize) so a rendering-pipeline question has an exact line to start from."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/service/render.lua", start = 145, end = 145, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 215, end = 215, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 228, end = 228, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 229, end = 229, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 231, end = 231, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 252, end = 252, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 454, end = 454, render = { kind = "full" } },
-  { path = "src/service/render.lua", start = 458, end = 458, render = { kind = "full" } },
-]
-
-# ============================================================
-# TIER 9 — remaining lualib internals
-# ============================================================
-
-[[batches]]
-id = "9.1"
-descriptor = "src/lualib/spritebundle.lua: public M.load/M.loadimage signatures"
-justification = "soluna.spritebundle (used directly in test/bundle.lua) has exactly two exported functions atop its private cropping/packing helpers; locating them here is enough to know the module's shape without paying for the full 143-line cropping-math body."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lualib/spritebundle.lua", start = 105, end = 105, render = { kind = "full" } },
-  { path = "src/lualib/spritebundle.lua", start = 117, end = 117, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "9.2"
-descriptor = "src/lualib/util.lua: func_chain helper"
-justification = "Tiny (24-line) shared utility: a callable ordered-list of functions (`func_chain`), used by src/service/start.lua's cleanup handling to run per-frame teardown callbacks registered by init code."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/lualib/util.lua", start = 1, end = 24, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 10 — remaining C module export tables
-# ============================================================
-
-[[batches]]
-id = "10.1"
-descriptor = "soluna.spritemgr + soluna.drawmgr export tables"
-justification = "spritemgr.newbank/newbatch (the sprite atlas + per-frame draw batch constructors, used directly in test/spritepack.lua and indirectly via soluna.load_sprites) and drawmgr.new (groups a raw draw-primitive stream by material/texture for the render service) — neither has a docs/*.lua stub since both are internal-engine, not game-facing, APIs."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/spritemgr.c", start = 501, end = 512, render = { kind = "full" } },
-  { path = "src/drawmgr.c", start = 171, end = 180, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "10.2"
-descriptor = "soluna.render export table: low-level GPU primitives"
-justification = "The sokol_gfx-backed low-level rendering module (pass/submit/image/buffer/sampler/draw/srbuffer/buffer_size/bindings/view/uniform/tmp_buffer) that src/service/render.lua's S.init (see 8.1) builds all 5 material pipelines on top of. No docs/*.lua stub exists for it — it's render-service-internal, not game-facing."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/render.c", start = 655, end = 675, render = { kind = "full" } } ]
-
-[[batches]]
-id = "10.3"
-descriptor = "soluna.zip export table"
-justification = "docs/zip.lua (1.7) only documents `open`; the real module also exposes compress/uncompress. zip.open()'s return value is itself a userdata object with further read/write methods defined elsewhere in luazip.c, not captured here."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/luazip.c", start = 684, end = 695, render = { kind = "full" } } ]
-
-[[batches]]
-id = "10.4"
-descriptor = "soluna.url export table"
-justification = "Single-function module (open only) matching its docs/url.lua stub exactly — included for completeness alongside 10.3 since both ship in the same 'small utility module' class."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/openurl.c", start = 88, end = 97, render = { kind = "full" } } ]
-
-# ============================================================
-# TIER 11 — build & CI
-# ============================================================
-
-[[batches]]
-id = "11.1"
-descriptor = "nightly.yml: CI build triggers"
-justification = "Trigger excerpt: nightly.yml builds+releases a nightly binary per OS (windows/macos/ubuntu matrix) on push/PR/schedule (daily cron) via the .github/actions/soluna composite action (named in 1.10's fs listing). The ellipsis at line 17 marks the remaining ~199 lines of job/step bodies as elided for budget."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".github/workflows/nightly.yml", start = 1, end = 16, render = { kind = "full" } },
-  { path = ".github/workflows/nightly.yml", start = 17, end = 17, render = { kind = "ellipsis" } },
-]
-
-[[batches]]
-id = "11.2"
-descriptor = "pages.yml: CI docs/demo-site deploy trigger"
-justification = "Runs after a successful nightly build to regenerate the web/ Hugo site (via script/build_web.lua) and deploy to GitHub Pages — completes the CI picture started in 11.1. The ellipsis at line 15 marks the remaining ~63 lines of job/step bodies as elided for budget."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".github/workflows/pages.yml", start = 1, end = 14, render = { kind = "full" } },
-  { path = ".github/workflows/pages.yml", start = 15, end = 15, render = { kind = "ellipsis" } },
-]
-
-# ============================================================
-# TIER 12 — misc project metadata
-# ============================================================
-
-[[batches]]
-id = "12.1"
-descriptor = ".editorconfig: Lua formatting conventions"
-justification = "Tabs, double-quoted strings, 120-col limit, EmmyLuaCodeStyle conventions for every .lua file in the repo — the answer to 'what style should new Lua code follow'."
-[batches.content]
-kind = "lines"
-spans = [ { path = ".editorconfig", start = 1, end = 10, render = { kind = "full" } } ]
-
-[[batches]]
-id = "12.2"
-descriptor = ".gitignore + README license line"
-justification = "Confirms build/ and bin/*.exe (1.2) plus web/public and web/static/runtime (1.10) are generated artifacts, not checked-in source; README's closing line names the MIT license."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".gitignore", start = 1, end = 13, render = { kind = "full" } },
-  { path = "README.md", start = 57, end = 59, render = { kind = "full" } },
 ]

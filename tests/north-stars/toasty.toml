@@ -1,952 +1,1156 @@
 fixture = "toasty"
 revision_pin = "0fb6be95"
 summary = """
-Toasty is a Rust ORM (async, incubating status) that targets both SQL
-(SQLite/PostgreSQL/MySQL) and NoSQL (DynamoDB) databases without hiding
-per-database capabilities. It is a Cargo workspace of ~13 crates: toasty-core
-(zero-dependency schema/statement-AST/driver-interface foundation),
-toasty-codegen (the `#[derive(Model)]` proc-macro expansion), toasty-macros
-(macro entry crate), toasty (the query engine + user-facing API), toasty-sql
-(AST-to-SQL serialization with per-database `Flavor`s),
-toasty-driver-{sqlite,postgresql,mysql,dynamodb} (per-database Driver impls),
-toasty-driver-integration-suite(-macros) (cross-driver test matrix),
-toasty-cli (migration CLI library), and std-util. The query engine compiles
-a `Statement` AST through Simplify -> Lower (HIR) -> Plan (MIR) -> Execution
-Planning (Actions) -> Execute (interpreter over a variable store). The
-plausible query distribution spans: (a) "how do I do X with the query
-builder" (stmt/ builders, examples/), (b) "where does change-type-Y go"
-(docs/CHANGE_GUIDE.md flows across the 5-layer crate stack), (c) adding a
-primitive type or query feature (cascades through toasty-core ->
-toasty-codegen -> toasty engine -> toasty-sql -> every driver's value.rs),
-(d) per-database capability/behavior differences (driver/capability.rs
-consts), (e) migration/config workflows (toasty-cli, Toasty.toml,
-examples/todo-with-cli), (f) build/test/CI, (g) debugging via the Error type
-hierarchy. CLAUDE.md (auto-injected) already gives navigation prose pointing
-at docs/CHANGE_GUIDE.md and per-crate CONTEXT.md files, so this NS favors
-real directory listings, exact enum/struct shapes with line coordinates, and
-a cross-database capability table over re-summarizing that navigation prose.
-Several per-crate CONTEXT.md files reference an `engine/planner/` module, and
-docs/design/pagination.md references an `engine/exec/var_store.rs`, neither of
-which exist in the current tree (actual dirs are `engine/plan/`,
-`engine/mir/`, `engine/exec/`, whose real file is `var.rs`) — the fs listings
-in this NS are the ground truth where those docs have drifted. Given this fixture's
-size (~500 files), this NS trades some narrative doc/example depth for
-wide, cheap fs-listing breadth plus tight, line-precise excerpts of the
-highest-fan-out types (Expr, Value, Capability), since those two together
-minimize both zero-follow-up misses and follow-up hop count per token.
+Toasty is an incubating Rust ORM (Cargo workspace, 13 crates under
+`crates/`) that targets both SQL databases (SQLite, PostgreSQL, MySQL)
+and NoSQL (DynamoDB) without hiding database capabilities. Users declare
+models as Rust structs annotated with `#[derive(toasty::Model)]`;
+`toasty-macros`/`toasty-codegen` expand those into typed query, create
+and update builders; `toasty-core` holds the shared schema + statement
+AST + `Driver` contract; the `toasty` crate's `engine/` compiles
+statements through verify -> simplify -> lower (HIR) -> plan (MIR) ->
+execute; `toasty-sql` serializes statements for the SQL drivers.
+
+The ranking assumes `CLAUDE.md` is already in context (it supplies the
+layer map, the "which crate for what" table, and build/test commands),
+so it spends its budget on what that file does not give: the actual
+public symbol names, module rosters, trait signatures, generated-method
+shapes, and precise file/line locations. Order is: repository identity
+and the crate map; the user-facing `toasty` API surface; runnable
+example models; the `toasty-core` contracts every layer speaks; the
+query-engine pipeline internals; codegen, SQL serialization and driver
+implementations; then tests, tooling and build configuration.
 """
 
-# --- Tier 1: cheap breadth (directory listings + tiny files) ---
+# ---------------------------------------------------------------------------
+# Tier 1 — repository identity and the crate map
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Every top-level entry (workspace crates dir, docs, examples, scripts, CI, compose, test.db, LICENSE) in one cheap glance; omitting any risks the agent assuming it doesn't exist."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+descriptor = "README lede: Toasty is a Rust ORM for SQL and NoSQL"
+justification = """
+Rank 1 must answer "what is this repository". The title plus the
+four-line description give the name and the one property that
+distinguishes Toasty from other Rust ORMs: it targets SQL *and* NoSQL
+(DynamoDB, Cassandra) and deliberately does not hide database
+capabilities. Everything downstream is framed by it.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 6, end = 9, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "docs/ directory listing"
-justification = "All documentation files/subdirs so the agent knows what's available before diving into any single doc."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "docs"
-entries = "all"
+descriptor = "Repository root listing (complete)"
+justification = """
+The cheapest breadth purchase in the fixture: names every top-level
+entry, so the agent knows `crates/`, `docs/`, `examples/`, `benches/`,
+`scripts/`, `tests/`, `compose.yaml` and the checked-in `test.db` exist
+without a single `ls`. `entries = "all"` guarantees class closure at the
+root.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "toasty-core/src/driver/ directory listing"
-justification = "capability.rs/operation.rs/response.rs plus the operation/ subdir, whose one-file-per-variant contents mirror the Operation enum named in 4.2 — the full driver-facing contract every Driver impl must satisfy."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/driver"
-entries = "all"
+descriptor = "The 13 workspace crates under crates/ (complete)"
+justification = """
+Where the substance lives. Naming every crate at once — core, codegen,
+macros, sql, cli, the four drivers, the integration-suite pair,
+std-util — is the highest-value listing in the fixture, and it closes
+the class so the agent never assumes a driver or helper crate is
+missing. Ranked immediately after the root listing because almost every
+plausible task ("add a type", "fix MySQL", "change the macro") starts by
+picking a crate.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates", entries = "all" },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "engine/plan/ directory listing"
-justification = "Execution-planning submodules (execution, nested_merge, statement) — note this is 'plan/', not the 'planner/' path some CONTEXT.md files reference."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/plan"
-entries = "all"
+descriptor = "README incubating-status caveat and section headings"
+justification = """
+Two facts in one cheap batch: the explicit "not ready for production,
+API still evolving" warning (which should temper any API-stability
+advice the agent gives), and the six section headings that map the rest
+of the README — usage, SQL vs NoSQL policy, app-model vs db-schema
+decoupling, status/roadmap, license, contribution — with line numbers to
+jump to.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 3, end = 4, render = { kind = "full" } },
+  { path = "README.md", start = 11, end = 11, render = { kind = "full" } },
+  { path = "README.md", start = 76, end = 76, render = { kind = "full" } },
+  { path = "README.md", start = 91, end = 91, render = { kind = "full" } },
+  { path = "README.md", start = 98, end = 98, render = { kind = "full" } },
+  { path = "README.md", start = 111, end = 111, render = { kind = "full" } },
+  { path = "README.md", start = 117, end = 117, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "engine/lower/ directory listing"
-justification = "The 4 lowering submodules (insert, paginate, relation, returning)."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/lower"
-entries = "all"
+descriptor = "docs/ tree: every documentation file (complete)"
+justification = """
+`CLAUDE.md` names ARCHITECTURE.md / CHANGE_GUIDE.md / CONTEXT.md but not
+the four subdirectories. Listing `docs/` plus all four children in one
+batch reveals the architecture, design, guide and roadmap documents
+together — otherwise the agent would reasonably conclude the three
+top-level docs are all the documentation there is.
+"""
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/architecture", entries = "all" },
+  { parent = "docs/design", entries = "all" },
+  { parent = "docs/guide", entries = "all" },
+  { parent = "docs/roadmap", entries = "all" },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "engine/index/ directory listing"
-justification = "The 2 files (index_match, index_plan) implementing the cost-based index-selection algorithm CONTEXT.md describes only in prose."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/index"
-entries = "all"
+descriptor = "toasty crate public exports, first half of src/lib.rs"
+justification = """
+`crates/toasty/src/lib.rs` is the front door of the whole project. Lines
+1-16 give the `apply_update` / `batch` / `cursor` / `db` / `engine` /
+`model` module split and the `ApplyUpdate`, `CreateMany`, `Cursor`,
+`Db`, `Embed`, `Model`, `Register` exports. Split from the tail so a
+small budget still lands the most-used names.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/lib.rs", start = 1, end = 16, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = ".github/workflows/ directory listing"
-justification = "Both workflow files (ci.yml, claude.yml) — confirms there's exactly one automation workflow beyond the CI matrix."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = "all"
+descriptor = "toasty crate public exports, remainder of src/lib.rs"
+justification = """
+Completes the export roster: `Page`, the three relation types
+(`BelongsTo`, `HasMany`, `HasOne`), `schema`, `stmt::Statement`, the
+`toasty_macros` `create`/`query`/`Embed`/`Model` re-exports, and
+`Error`/`Result` from `toasty-core`; then the `codegen_support` module
+header and the `driver` re-export module, the two surfaces generated
+code and driver authors depend on. Without this the agent would read
+lines 1-16 as the complete public API.
+"""
+predecessor = "1.6"
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/lib.rs", start = 17, end = 34, render = { kind = "full" } },
+  { path = "crates/toasty/src/lib.rs", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/lib.rs", start = 57, end = 59, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "1.8"
-descriptor = "toasty/src/relation/ directory listing"
-justification = "All 4 relation files (belongs_to, has_many, has_one, option) — the complete relationship-kind roster."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/relation"
-entries = "all"
-
-[[batches]]
-id = "1.9"
-descriptor = "examples/ directory listing"
-justification = "All 4 example crates (composite-key, hello-toasty, todo-with-cli, user-has-one-profile) — the complete 'copy a working pattern' roster."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "examples"
-entries = "all"
-
-[[batches]]
-id = "1.10"
-descriptor = "rust-toolchain.toml"
-justification = "Pins the exact toolchain channel (stable) — cheap, first thing a build question needs."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "rust-toolchain.toml"
-start = 1
-end = 2
-render = { kind = "full" }
-
-[[batches]]
-id = "1.11"
-descriptor = "crates/ directory listing"
-justification = "All 13 crate directories at a glance — the authoritative crate roster (cross-checked against the workspace Cargo.toml in 3.1)."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates"
-entries = "all"
-
-[[batches]]
-id = "1.12"
-descriptor = "toasty-core/src/ module listing"
-justification = "Top-level module breakdown (driver, error, schema, stmt + their .rs siblings) of the zero-dependency foundation crate every other crate depends on."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src"
-entries = "all"
-
-[[batches]]
-id = "1.13"
-descriptor = "toasty-core/src/schema/ directory listing"
-justification = "All schema submodules (app/, builder/, db/, mapping/, verify/) — app-vs-db-vs-mapping is the crux of Toasty's model/schema split."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema"
-entries = "all"
-
-[[batches]]
-id = "1.14"
-descriptor = "docs/roadmap/, docs/guide/, docs/design/ directory listings"
-justification = "All 8 narrower docs — cheap breadth so an agent chasing e.g. jiff/decimal/enum/composite-key/pagination questions knows exactly which doc to open next."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "docs/roadmap"
-entries = "all"
-[[batches.content.groups]]
-parent = "docs/guide"
-entries = "all"
-[[batches.content.groups]]
-parent = "docs/design"
-entries = "all"
-
-[[batches]]
-id = "1.15"
-descriptor = "Driver crates' src/ listings (all 4 databases)"
-justification = "Side-by-side sqlite/postgresql/mysql/dynamodb driver source files in one batch — surfaces the file-shape asymmetry (dynamodb has op/; postgresql adds type.rs and statement_cache.rs; sqlite and mysql have only lib.rs+value.rs) before it can look like an omission."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-driver-sqlite/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "crates/toasty-driver-postgresql/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "crates/toasty-driver-mysql/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "crates/toasty-driver-dynamodb/src"
-entries = "all"
-
-[[batches]]
-id = "1.16"
-descriptor = "tests/ workspace crate + tests/tests/ directory listings"
-justification = "The full-stack database test crate's shape: tests/src/ (shared harness) and tests/tests/ (per-database entry files + ui.rs) — where docs/CONTEXT.md says 'full-stack database tests go'."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "tests"
-entries = "all"
-[[batches.content.groups]]
-parent = "tests/tests"
-entries = "all"
-
-[[batches]]
-id = "1.17"
-descriptor = "toasty-core/src/schema/app/ directory listing"
-justification = "All app-level schema files (model, field, fk, pk, relation/, constraint/, embedded, index, auto, arg) — every model-level concept in one place."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema/app"
-entries = "all"
-
-[[batches]]
-id = "1.18"
-descriptor = "toasty-sql/src/serializer/ directory listing"
-justification = "All serialization submodules (statement, expr, cte, ty, value, params, ident, column, column_def, delim, fmt, name, flavor) — complete roster of what 'SQL generation' work touches."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-sql/src/serializer"
-entries = "all"
-
-[[batches]]
-id = "1.19"
-descriptor = "toasty/src/stmt/ directory listing"
-justification = "All ~15 typed statement-builder files wrapping toasty_core::stmt — complete roster so 'where's the Update builder' resolves in one hop."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/stmt"
-entries = "all"
-
-[[batches]]
-id = "1.20"
-descriptor = "toasty/src/engine/ directory listing"
-justification = "All pipeline modules (eval, exec/, hir, index/, kv, lower/, mir/, plan/, simplify/, ty, verify) — the ground truth against which the stale 'engine/planner/' references in CONTEXT.md should be checked."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine"
-entries = "all"
-
-[[batches]]
-id = "1.21"
-descriptor = "toasty-sql/src/stmt/ directory listing"
-justification = "SQL-specific DDL statement types (create_table, alter_table/alter_column, drop_*, create_index, pragma) distinct from toasty_core::stmt — the vocabulary migrations use."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-sql/src/stmt"
-entries = "all"
-
-[[batches]]
-id = "1.22"
-descriptor = "engine/exec/ directory listing"
-justification = "All ~15 action-executor files (one per Action variant) — the interpreter's complete instruction set."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/exec"
-entries = "all"
-
-[[batches]]
-id = "1.23"
-descriptor = "engine/mir/ directory listing"
-justification = "All MIR operation-node files — the concrete implementation of the operation types."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/mir"
-entries = "all"
-
-[[batches]]
-id = "1.24"
-descriptor = "toasty-core/src/error/ directory listing"
-justification = "All 15 error-kind modules — the full taxonomy behind the single opaque Error type."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/error"
-entries = "all"
-
-[[batches]]
-id = "1.25"
-descriptor = "toasty-cli/src/migration/ directory listing"
-justification = "All 8 per-subcommand implementation files (apply/config/drop/generate/history_file/reset/snapshot/snapshot_file) — the file names alone reveal the CLI's migration subcommand roster."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-cli/src/migration"
-entries = "all"
-
-[[batches]]
-id = "1.26"
-descriptor = "tests/tests/ui/ directory listing"
-justification = "The trybuild compile-fail UI tests, each paired with a .stderr — the complete roster of compile-time invariants codegen enforces."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "tests/tests/ui"
-entries = "all"
-
-[[batches]]
-id = "1.27"
-descriptor = "engine/simplify/ directory listing"
-justification = "All ~19 simplification-rule files (one per expression/pattern type) — toasty/CONTEXT.md claims '15+ optimization rules'; this listing is the actual, complete roster."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/simplify"
-entries = "all"
-
-[[batches]]
-id = "1.28"
-descriptor = "toasty-driver-integration-suite/src/tests/ directory listing"
-justification = "The ~29-file cross-driver behavioral test matrix (belongs_to_*, has_many_*, has_one_crud_basic, embedded, decimal/bigdecimal, jiff, tys, sync_send...) run against every driver — complete roster prevents assuming a scenario is untested when it isn't."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-driver-integration-suite/src/tests"
-entries = "all"
-
-[[batches]]
-id = "1.29"
-descriptor = "toasty-core/src/stmt/ directory listing"
-justification = "84 statement-AST files (every Expr* / stmt node module) — CONTEXT.md claims '26+ expression types'; this is the true, complete roster."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/stmt"
-entries = "all"
-
-# --- Tier 2: small full-file source (crate contracts) ---
+# ---------------------------------------------------------------------------
+# Tier 2 — the user-facing `toasty` API surface
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "Per-crate CONTEXT.md purpose blurbs"
-justification = "One-paragraph 'why this crate exists' from toasty/toasty-core's CONTEXT.md — cheap multi-file batch giving instant crate framing (toasty-codegen's own purpose blurb is skipped here since its lib.rs entry points (2.4) and attribute roster (11.1) already ground its role in real code)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/CONTEXT.md"
-start = 1
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/CONTEXT.md"
-start = 1
-end = 4
-render = { kind = "full" }
+descriptor = "crates/toasty source tree (complete)"
+justification = """
+The one crate a user actually writes against. Listing the crate root and
+every source subdirectory — `db/`, `batch/`, `relation/`, `stmt/`, plus
+the `engine` / `engine.rs` pair and the crate's `CONTEXT.md` — makes
+every subsequent "where does X live" question a single read. The `stmt/`
+listing doubles as the roster of typed builder modules and shows the
+feature-gated `primitive_jiff.rs`.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty", entries = "all" },
+  { parent = "crates/toasty/src", entries = "all" },
+  { parent = "crates/toasty/src/db", entries = "all" },
+  { parent = "crates/toasty/src/batch", entries = "all" },
+  { parent = "crates/toasty/src/relation", entries = "all" },
+  { parent = "crates/toasty/src/stmt", entries = "all" },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "toasty-core/src/lib.rs"
-justification = "The crate's full public module/re-export surface in 18 lines."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/lib.rs"
-start = 1
-end = 18
-render = { kind = "full" }
+descriptor = "Complete method roster of `Db` (src/db.rs)"
+justification = """
+`Db` is the object every query goes through. One truncated span per
+method start names all thirteen — `builder`, `all`, `first`, `get`,
+`delete`, `exec`, `exec_one`, `exec_insert_one`, `push_schema`,
+`reset_db`, `driver`, `schema`, `capability` — plus the `Drop` impl.
+Showing only some of them would let the agent conclude the rest do not
+exist; the ellipsis at line 19 signals the struct body is elided.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/db.rs", start = 18, end = 18, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/db.rs", start = 31, end = 31, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/db.rs", start = 128, end = 128, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 132, end = 132, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 136, end = 136, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 141, end = 141, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "schema/app/field/primitive.rs — FieldPrimitive"
-justification = "The tiny struct (ty + optional storage_ty hint) that's the field-level counterpart to stmt::Value/stmt::Type — load-bearing for 'adding a primitive type' work."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/schema/app/field/primitive.rs"
-start = 1
-end = 12
-render = { kind = "full" }
+descriptor = "Doc comments on the `Db` methods"
+justification = """
+Interleaves with 2.2 in the rendered output to turn a name roster into
+semantics: which method returns all matching records, which one is
+`#[doc(hidden)]` and "used by generated code", that `push_schema`
+creates tables and indices, and that `reset_db` drops and recreates the
+whole database *without* applying migrations. These distinctions are the
+difference between a correct answer and a follow-up read.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/db.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 68, end = 68, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 79, end = 80, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 98, end = 101, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 113, end = 113, render = { kind = "full" } },
+  { path = "crates/toasty/src/db.rs", start = 123, end = 123, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "toasty-codegen/src/lib.rs — macro entry points"
-justification = "The two entry functions (generate_model / generate_embed) that #[derive(Model)] and #[derive(Embed)] expand into."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 1
-end = 18
-render = { kind = "full" }
+descriptor = "`Db::builder()` — the complete `Builder` API (src/db/builder.rs)"
+justification = """
+Every example and test starts with `Db::builder().register::<T>()
+.connect(url)`. This shows the struct, its two fields, and all five
+public methods in full — `register`, `table_name_prefix`,
+`build_app_schema`, `connect`, `build` — so "how do I open a database
+with a custom driver or table prefix" needs no follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/db/builder.rs", start = 16, end = 17, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 22, end = 22, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 25, end = 26, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 28, end = 29, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 34, end = 35, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 40, end = 40, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 44, end = 44, render = { kind = "full" } },
+  { path = "crates/toasty/src/db/builder.rs", start = 48, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "`Register`, `Model` and `Embed` trait signatures (src/model.rs)"
+justification = """
+The three traits generated code implements. Shows `Register::id()` /
+`schema()`, the four associated builder types on `Model` (`Query`,
+`Create`, `Update<'a>`, `UpdateQuery`) and `load`, and that `Embed`
+merely extends `Register`. Anyone touching codegen, writing a manual
+impl, or debugging a trait-bound error needs exactly these lines.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/model.rs", start = 26, end = 26, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 33, end = 34, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 41, end = 43, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 46, end = 46, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 49, end = 49, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 52, end = 52, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 57, end = 58, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 65, end = 65, render = { kind = "full" } },
+  { path = "crates/toasty/src/model.rs", start = 68, end = 68, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "What an embedded type is (model.rs doc on `Embed`)"
+justification = """
+Refines the bare `Embed: Register` signature from 2.5 with the
+distinction the type signatures cannot express: embedded types have no
+table and no primary key, cannot be queried independently or used as
+relation targets, and are flattened into the parent model's table
+columns. This is a
+frequently-asked design question that the snapshot can answer outright.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/model.rs", start = 60, end = 64, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "The derive macros and their attributes (toasty-macros/src/lib.rs)"
+justification = """
+Answers "which attributes may I write on a model struct" definitively:
+`#[proc_macro_derive(Model, attributes(key, auto, column, index, unique,
+table, has_many, has_one, belongs_to))]`, and `Embed` with only
+`column`. It also exposes an easily-missed fact: the `query!` and `create!`
+function-like macros re-exported from `toasty` are `println!("TODO")`
+stubs, so an agent will not build on them by mistake.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-macros/src/lib.rs", start = 6, end = 11, render = { kind = "full" } },
+  { path = "crates/toasty-macros/src/lib.rs", start = 17, end = 19, render = { kind = "full" } },
+  { path = "crates/toasty-macros/src/lib.rs", start = 25, end = 25, render = { kind = "ellipsis" } },
+  { path = "crates/toasty-macros/src/lib.rs", start = 30, end = 32, render = { kind = "full" } },
+  { path = "crates/toasty-macros/src/lib.rs", start = 35, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Typed statement builder exports (crates/toasty/src/stmt.rs)"
+justification = """
+The `pub use` roster of the typed statement layer: `Association`,
+`Delete`, `Expr`, `Insert`, `IntoExpr`, `IntoInsert`, `IntoSelect`,
+`Paginate`, `Path`, `Auto`/`Primitive`, `Select`, `ToStatement`,
+`Update`, plus the `OrderBy`/`Projection`/`Value` re-exports from core
+and the `jiff`-gated primitive module. These are the names that appear
+in generated code and in user filter expressions.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/stmt.rs", start = 2, end = 2, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 5, end = 5, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 11, end = 11, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 17, end = 17, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 20, end = 20, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 26, end = 26, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 29, end = 32, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 35, end = 35, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 38, end = 38, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 41, end = 41, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 43, end = 43, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt.rs", start = 51, end = 51, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "`Path<T>` filter and ordering operators (src/stmt/path.rs)"
+justification = """
+How a user writes a predicate. The complete public operator set on
+`Path<T>` — `root`, `from_field_index`, `chain`, `eq`, `ne`, `gt`, `ge`,
+`lt`, `le`, `in_set`, `in_query`, `asc`, `desc`, `is_none`, `is_some` —
+in one roster. Partial coverage here would be actively misleading
+(an agent that saw only `eq`/`ne` would hand-roll range filters).
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/stmt/path.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 19, end = 19, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 39, end = 39, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 49, end = 49, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 101, end = 101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/path.rs", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "`Select<M>` query builder and `Expr<T>` combinators"
+justification = """
+The query object and the boolean-expression combinators, side by side
+because they are always used together. `Select`: `unit`, `from_expr`,
+`filter`, `and`, `union`, `include`, `order_by`, `delete`, `all` —
+note `include` is how eager loading is requested. `Expr`:
+`from_untyped`, `and`, `and_all`, `or`, `not`, `in_list`, `is_none`,
+`is_some`.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/stmt/select.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 13, end = 14, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 44, end = 44, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 49, end = 49, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 65, end = 65, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/select.rs", start = 71, end = 71, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 7, end = 7, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 40, end = 40, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 51, end = 51, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 67, end = 67, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 72, end = 72, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 97, end = 97, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/expr.rs", start = 101, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "The `Relation` trait and the three relation wrapper types"
+justification = """
+`relation.rs` re-exports `BelongsTo`, `HasMany`, `HasOne` (already seen
+in `lib.rs`), adds a `pub mod option`, and defines the `Relation` trait whose eight associated types
+(`Model`, `Expr`, `Query`, `Many`, `ManyField`, `One`, `OneField`,
+`OptionOne`) are what generated relation structs must supply. Paired
+with `HasMany`'s four-method surface (`load`, `get`, `is_unloaded`,
+`unload`) — `BelongsTo` and `HasOne` expose the same four — which
+reveals the lazy-loading contract: `get` panics when the association is
+not loaded.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/relation.rs", start = 10, end = 10, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 16, end = 16, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 18, end = 18, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 21, end = 21, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 26, end = 26, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 28, end = 28, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 32, end = 32, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 35, end = 35, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 37, end = 37, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation.rs", start = 42, end = 42, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 9, end = 9, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 13, end = 13, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 31, end = 32, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_many.rs", start = 43, end = 43, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/belongs_to.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "crates/toasty/src/relation/has_one.rs", start = 8, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "Result streaming: `Cursor<M>` and `Page<M>`"
+justification = """
+How results come back. `Cursor::next`/`collect` (async streaming, with
+the `FromCursor` collection bound) and the `Page<M>` struct with
+`has_next` / `has_prev` / `next` / `prev`. The cursor-based `Paginate`
+builder that produces a `Page` is named in 2.8 and located by the
+`crates/toasty/src/stmt` listing; `docs/guide/pagination.md` is the
+long-form treatment.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/cursor.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty/src/cursor.rs", start = 12, end = 12, render = { kind = "full" } },
+  { path = "crates/toasty/src/cursor.rs", start = 25, end = 25, render = { kind = "full" } },
+  { path = "crates/toasty/src/cursor.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "crates/toasty/src/page.rs", start = 10, end = 12, render = { kind = "full" } },
+  { path = "crates/toasty/src/page.rs", start = 13, end = 13, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/page.rs", start = 40, end = 40, render = { kind = "full" } },
+  { path = "crates/toasty/src/page.rs", start = 45, end = 45, render = { kind = "full" } },
+  { path = "crates/toasty/src/page.rs", start = 65, end = 65, render = { kind = "full" } },
+  { path = "crates/toasty/src/page.rs", start = 93, end = 93, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "Write-side builders: `CreateMany` and `Association` linking"
+justification = """
+Completes the statement-builder class begun in 2.8/2.10 on the write
+side: `CreateMany::{new,item,exec}` for batch creation, and
+`Association::{many,many_via_one,insert,remove,one}` — the
+linking/unlinking API behind `user.todos().remove(...)` and
+`user.todos().create()`. The untyped `stmt::Insert`/`stmt::Update`
+builders they wrap are mostly consumed by generated code; their files
+are located by the `crates/toasty/src/stmt` listing in 2.1.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/batch/create.rs", start = 3, end = 3, render = { kind = "full" } },
+  { path = "crates/toasty/src/batch/create.rs", start = 10, end = 10, render = { kind = "full" } },
+  { path = "crates/toasty/src/batch/create.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "crates/toasty/src/batch/create.rs", start = 24, end = 24, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 13, end = 13, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 27, end = 27, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 53, end = 53, render = { kind = "full" } },
+  { path = "crates/toasty/src/stmt/association.rs", start = 68, end = 68, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3 — runnable examples: the API in use
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "Workspace Cargo.toml member list"
-justification = "Enumerates all 19 workspace members (crates/examples/tests/benches) by path — the authoritative crate roster, cheaper than inferring it from directory names."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 34
-render = { kind = "full" }
+descriptor = "examples/ tree, all four examples (complete)"
+justification = """
+Names every example and its files in one cheap batch: `hello-toasty`,
+`composite-key`, `user-has-one-profile`, and `todo-with-cli` — the last
+of which also carries `Toasty.toml`, a `toasty/` directory with
+`history.toml`, `migrations/0000_migration.sql` and
+`snapshots/0000_snapshot.toml`. That migration layout is the only
+worked instance of the CLI's on-disk format in the repository.
+"""
+content = { kind = "fs", groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/hello-toasty", entries = "all" },
+  { parent = "examples/hello-toasty/src", entries = "all" },
+  { parent = "examples/composite-key", entries = "all" },
+  { parent = "examples/composite-key/src", entries = "all" },
+  { parent = "examples/user-has-one-profile", entries = "all" },
+  { parent = "examples/user-has-one-profile/src", entries = "all" },
+  { parent = "examples/todo-with-cli", entries = "all" },
+  { parent = "examples/todo-with-cli/src", entries = "all" },
+  { parent = "examples/todo-with-cli/src/bin", entries = "all" },
+  { parent = "examples/todo-with-cli/toasty", entries = "all" },
+  { parent = "examples/todo-with-cli/toasty/migrations", entries = "all" },
+  { parent = "examples/todo-with-cli/toasty/snapshots", entries = "all" },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "toasty/Cargo.toml — feature flags"
-justification = "The exact opt-in feature flags (sqlite/mysql/postgresql/dynamodb select the driver; rust_decimal/bigdecimal/jiff/serde are cross-cutting) — directly answers 'how do I enable database X' or 'why is jiff::Zoned not available'. jiff's own dependency list is elided (ellipsis at line 25) since rust_decimal/bigdecimal just above it already show the shape (dep + per-driver feature forwarding)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/Cargo.toml"
-start = 1
-end = 24
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty/Cargo.toml"
-start = 25
-end = 25
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "crates/toasty/Cargo.toml"
-start = 30
-end = 30
-render = { kind = "truncated", pattern = "^serde = " }
+descriptor = "Canonical model definitions (examples/hello-toasty/src/main.rs:1-31)"
+justification = """
+The single most copied piece of code in the repository, and the ground
+truth for what a model looks like: `#[derive(Debug, toasty::Model)]`,
+`#[key] #[auto] id: uuid::Uuid`, `#[unique] email`, `#[has_many] todos:
+toasty::HasMany<Todo>`, `#[index] user_id`, and
+`#[belongs_to(key = user_id, references = id)]`. Note this differs from
+the README snippet, which still shows the older `Id<Self>` key type —
+the example is the compiling version.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/hello-toasty/src/main.rs", start = 1, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "Opening a database: builder, connection URL, push_schema"
+justification = """
+The four lines everyone needs before any query: `Db::builder()`,
+`.register::<T>()` per model, `.connect(...)` reading
+`TOASTY_CONNECTION_URL` with a `sqlite::memory:` default, and
+`db.push_schema()` to create tables. Together with 2.4 this makes
+"write a script against Toasty" a zero-follow-up task.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/hello-toasty/src/main.rs", start = 33, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "CRUD and relation walkthrough (hello-toasty main body)"
+justification = """
+Shows the generated API actually being called: `User::create()
+.name(..).email(..).exec(&db)`, the generated `get_by_id` / `get_by_email`
+finders, `user.update().name(..).exec(&db)`, `u2.todos().create()`,
+async iteration over `todos.next()`, and `user.delete(&db)`. Ellipses mark the elided narration lines
+so the file is not read as contiguous.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/hello-toasty/src/main.rs", start = 49, end = 53, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 60, end = 60, render = { kind = "ellipsis" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 64, end = 64, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 69, end = 69, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 79, end = 79, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 89, end = 89, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 93, end = 96, render = { kind = "full" } },
+  { path = "examples/hello-toasty/src/main.rs", start = 103, end = 103, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Composite keys and has_one: the two variant example models"
+justification = """
+The remaining two model shapes, which the hello-toasty example does not
+cover and which no doc states compactly: `#[key(partition = user_id,
+local = id)]` on the struct for a composite/partitioned key, and
+`toasty::HasOne<Option<Profile>>` paired with
+`BelongsTo<Option<User>>` plus a `#[unique] user_id: Option<uuid::Uuid>`
+for a nullable one-to-one. Answers "how do I model X" for the cases the
+first example omits.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/composite-key/src/main.rs", start = 16, end = 20, render = { kind = "full" } },
+  { path = "examples/composite-key/src/main.rs", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "examples/user-has-one-profile/src/main.rs", start = 1, end = 2, render = { kind = "full" } },
+  { path = "examples/user-has-one-profile/src/main.rs", start = 3, end = 3, render = { kind = "ellipsis" } },
+  { path = "examples/user-has-one-profile/src/main.rs", start = 9, end = 10, render = { kind = "full" } },
+  { path = "examples/user-has-one-profile/src/main.rs", start = 13, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "todo-with-cli: `create_db`, the CLI binary, and Toasty.toml"
+justification = """
+The only example that uses `toasty-cli`. Its `lib.rs` tail shows a
+`completed: bool` model field and the `create_db()` helper connecting to `sqlite:./test.db` (which is why a
+`test.db` sits in the repository root); `bin/cli.rs`, located by the listing in 3.1, wires
+`Config::load()` and `ToastyCli::with_config(db, config)` together in
+nineteen lines. Also renders `Toasty.toml`, the complete config
+file format (`path`, `prefix_style`, `checksums`,
+`statement_breakpoints`).
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/todo-with-cli/src/lib.rs", start = 27, end = 27, render = { kind = "ellipsis" } },
+  { path = "examples/todo-with-cli/src/lib.rs", start = 28, end = 43, render = { kind = "full" } },
+  { path = "examples/todo-with-cli/Toasty.toml", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 4 — toasty-core: the contracts every other crate speaks
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "toasty-sql/src/serializer/flavor.rs — Flavor enum"
-justification = "The 3-way (Postgresql/Sqlite/Mysql) dialect switch every serializer function branches on, plus the constructors each driver calls."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-sql/src/serializer/flavor.rs"
-start = 1
-end = 41
-render = { kind = "full" }
+descriptor = "toasty-core source tree: driver, error, schema (complete)"
+justification = """
+`toasty-core` has zero dependencies on the other Toasty crates and is
+the contract between all of them. This listing closes three classes at
+once: the eight driver `operation/` files, the fifteen `error/` variant
+files (whose names *are* the constructor names — `record_not_found.rs`
+gives `Error::record_not_found`), and the `schema/` split into `app/`,
+`db/`, `mapping/`, `builder/` and `verify/` with their nested
+`constraint/`, `field/` and `relation/` directories. It also reveals the
+crate's own `tests/` (`stmt_infer.rs`, `stmt_projection.rs`).
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-core", entries = "all" },
+  { parent = "crates/toasty-core/src", entries = "all" },
+  { parent = "crates/toasty-core/src/driver", entries = "all" },
+  { parent = "crates/toasty-core/src/driver/operation", entries = "all" },
+  { parent = "crates/toasty-core/src/error", entries = "all" },
+  { parent = "crates/toasty-core/src/schema", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/app", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/app/constraint", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/app/field", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/app/relation", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/builder", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/db", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/mapping", entries = "all" },
+  { parent = "crates/toasty-core/src/schema/verify", entries = "all" },
+  { parent = "crates/toasty-core/tests", entries = "all" },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "driver/operation.rs — the Operation enum"
-justification = "All 8 operations (Insert, DeleteByKey, FindPkByIndex, GetByKey, QueryPk, QuerySql, Transaction, UpdateByKey) a Driver::exec() must handle."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/driver/operation.rs"
-start = 25
-end = 50
-render = { kind = "full" }
+descriptor = "toasty-core public surface (src/lib.rs, complete file)"
+justification = """
+Eighteen lines that fix the whole crate's shape: a `#[macro_use]`
+`macros` module, `pub mod driver` with `Connection` re-exported, `Error`,
+`pub mod schema` with `Schema`, `pub mod stmt`, the
+`Result<T, E = Error>` alias every signature in the workspace uses, and
+the `async_trait` re-export driver implementors need.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/lib.rs", start = 1, end = 18, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "error.rs — the ErrorKind enum"
-justification = "All 15 error kinds Toasty's single opaque Error can wrap — pairs with the error/ directory listing (1.24) to confirm the roster is complete, useful for any debugging session."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/error.rs"
-start = 52
-end = 69
-render = { kind = "full" }
+descriptor = "The `Schema` triple: app schema, db schema, mapping"
+justification = """
+The README's "application data model vs. database schema" claim, made
+concrete: `Schema { app: app::Schema, db: Arc<db::Schema>, mapping:
+Mapping }`, plus the module roster (`app`, `builder`, `db`, `mapping`,
+`name`, `verify`) and the lookup helpers `mapping_for`, `table_for`,
+`table_id_for` that translate a `ModelId` into a table. Anyone touching
+schema mapping starts here.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/schema.rs", start = 1, end = 1, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 3, end = 4, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 11, end = 12, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 21, end = 31, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 33, end = 34, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-core/src/schema.rs", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "The `Driver` trait — the database extension point"
+justification = """
+Implementing a driver is an explicitly supported task (there is a
+CONTEXT.md for it). This is the exact contract: `url`, `capability`,
+`connect`, the defaulted `max_connections`, `generate_migration` from a
+`SchemaDiff`, and `reset_db` — plus the module exports `Capability`,
+`StorageTypes`, `Response`, `Rows`, `Operation` that sit above it.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/driver.rs", start = 1, end = 8, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 17, end = 20, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 29, end = 29, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 32, end = 33, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 38, end = 38, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 41, end = 42, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "The `Connection` trait: exec, push_schema, migrations"
+justification = """
+The per-connection half of the driver contract, which the `Driver` trait
+hands out via `connect()`. Four methods —
+`exec(&Arc<Schema>, Operation) -> Response`, `push_schema`,
+`applied_migrations() -> Vec<AppliedMigration>`, and
+`apply_migration(id, name, &Migration)` — define everything a database
+backend must be able to do. Ranked right after 4.4 so a cut between them
+still leaves a coherent "driver contract" slice.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/driver.rs", start = 44, end = 47, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 51, end = 51, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 54, end = 54, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver.rs", start = 57, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "The eight driver `Operation` enum variants"
+justification = """
+The vocabulary the planner emits and every driver must switch on:
+`Insert`, `DeleteByKey`, `FindPkByIndex`, `GetByKey`, `QueryPk`,
+`QuerySql`, `Transaction`, `UpdateByKey`. Complete enum — a partial view here would mislead
+anyone adding a driver or reading a plan dump.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 26, end = 26, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 28, end = 28, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 31, end = 31, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 34, end = 34, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 37, end = 37, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 40, end = 40, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 43, end = 43, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 46, end = 46, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 49, end = 49, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/operation.rs", start = 50, end = 50, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "The statement AST node roster (crates/toasty-core/src/stmt/, complete)"
+justification = """
+Eighty-plus one-node-per-file modules listed at once: every `expr_*`
+variant (`expr_and`, `expr_binary_op`, `expr_cast`, `expr_in_subquery`,
+`expr_like`, `expr_pattern`, ...), the query/mutation nodes (`query`,
+`select`, `insert`, `update`, `delete`, `join`, `cte`, `returning`,
+`limit`, `offset`, `order_by`), the value types (`value_record`,
+`value_list`, `value_stream`, `sparse_record`), `substitute`, `visit` /
+`visit_mut`, and `ty` / `ty_jiff`. This is the cheapest possible way to
+learn the whole AST vocabulary and land any "where is `ExprX` defined"
+question in exactly one read.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-core/src/stmt", entries = "all" },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "The top-level `Statement` enum (toasty-core/src/stmt.rs)"
+justification = """
+The root of the AST: four variants — `Delete`, `Insert`, `Query`,
+`Update` — with the docs distinguishing them. Every engine phase begins by matching on this enum, so it anchors the
+whole tier-5 pipeline.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/stmt.rs", start = 252, end = 265, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "`Capability`: the complete feature-advertisement field set"
+justification = """
+Toasty "does not hide the database" — this struct is how that policy is
+implemented, and it is consulted by the planner and the schema builder.
+All sixteen fields in one batch: `sql`, `storage_types`,
+`schema_mutations`, `cte_with_update`, `select_for_update`,
+`returning_from_mutation`, `primary_key_ne_predicate`, `auto_increment`,
+`native_varchar`, `native_timestamp`, `native_date`, `native_time`,
+`native_datetime`, `native_decimal`, `bigdecimal_implemented`,
+`decimal_arbitrary_precision`. Showing a subset would invite an agent to
+invent a flag that does not exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 3, end = 4, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 9, end = 9, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 12, end = 12, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 15, end = 15, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 19, end = 19, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 22, end = 22, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 25, end = 25, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 28, end = 28, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 33, end = 33, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 42, end = 42, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 45, end = 45, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 50, end = 50, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 57, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.10"
+descriptor = "`StorageTypes`, `SchemaMutations`, and the four per-database presets"
+justification = """
+Completes the capability class: the column-type defaults a driver must
+declare — `default_string_type`, `varchar`, `default_uuid_type`, an
+ellipsis standing for the remaining per-type defaults, and
+`max_unsigned_integer` — the two `SchemaMutations` flags, and the line locations of the four
+`Capability::{SQLITE, POSTGRESQL, MYSQL, DYNAMODB}` const presets plus
+the
+`validate` and `native_type_for` helpers —
+so "what does MySQL support" is one jump, not a search.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 61, end = 61, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 63, end = 63, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 67, end = 67, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 70, end = 70, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 73, end = 73, render = { kind = "ellipsis" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 98, end = 99, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 103, end = 105, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 109, end = 110, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 120, end = 120, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 156, end = 156, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 164, end = 164, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 189, end = 189, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 211, end = 211, render = { kind = "full" } },
+  { path = "crates/toasty-core/src/driver/capability.rs", start = 233, end = 233, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.11"
+descriptor = "The fifteen `ErrorKind` variants (toasty-core/src/error.rs)"
+justification = """
+Error handling is called out in the README as an area under active
+development, so the taxonomy matters. The complete
+`ErrorKind` enum in one batch. Each variant corresponds to a file listed in
+4.1, and most carry a matching `Error::<snake_case>()` constructor and
+`is_<snake_case>()` predicate in that file, so this single batch plus the
+4.1 listing makes the error API navigable in one hop.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-core/src/error.rs", start = 51, end = 68, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5 — the query engine
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "toasty/src/engine.rs — Engine struct + exec() pipeline entry"
-justification = "The concrete entry point tying the 4-phase pipeline (verify/lower/plan/execute), as the doc comment itself enumerates, to real code. Narrative doc-comment lines around the numbered list are elided (line 26) since the list itself is the load-bearing content."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/src/engine.rs"
-start = 25
-end = 25
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty/src/engine.rs"
-start = 26
-end = 26
-render = { kind = "ellipsis" }
-[[batches.content.spans]]
-path = "crates/toasty/src/engine.rs"
-start = 31
-end = 45
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty/src/engine.rs"
-start = 58
-end = 83
-render = { kind = "full" }
+descriptor = "crates/toasty/src/engine tree (complete)"
+justification = """
+The engine is the project's centre of gravity and its directory names
+*are* its documentation. One listing gives the phase modules
+(`simplify.rs`, `lower.rs`, `hir.rs`, `mir.rs`, `plan.rs`, `exec.rs`,
+`verify.rs`, `index.rs`, `kv.rs`, `ty.rs`) and closes three otherwise
+easy-to-truncate classes: the nineteen `simplify/` rewrite rules
+(`expr_and.rs` ... `lift_in_subquery.rs`, `lift_pk_select.rs`,
+`rewrite_root_path_expr.rs`), the fifteen `mir/` node kinds, and the
+fifteen `exec/` action implementations. "Where does rule/action X live"
+becomes a single read.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty/src/engine", entries = "all" },
+  { parent = "crates/toasty/src/engine/eval", entries = "all" },
+  { parent = "crates/toasty/src/engine/exec", entries = "all" },
+  { parent = "crates/toasty/src/engine/index", entries = "all" },
+  { parent = "crates/toasty/src/engine/lower", entries = "all" },
+  { parent = "crates/toasty/src/engine/mir", entries = "all" },
+  { parent = "crates/toasty/src/engine/plan", entries = "all" },
+  { parent = "crates/toasty/src/engine/simplify", entries = "all" },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "schema/app/model.rs — Model, ModelKind, ModelRoot"
-justification = "The core in-memory model representation (root vs embedded, primary key access) that both codegen and the engine build on."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/schema/app/model.rs"
-start = 1
-end = 37
-render = { kind = "full" }
+descriptor = "`Engine`: the four-phase pipeline doc and `exec` entry point"
+justification = """
+The authoritative, in-source statement of the pipeline — verification
+(debug builds only), lowering to HIR with dependency tracking, planning
+to a MIR operation graph, execution against the driver — followed by the
+`Engine` struct (schema + connection pool) and the body of `exec` that
+actually runs `lower_stmt` -> `plan_hir_statement` -> `exec_plan`. Note
+this doc lists four phases while `docs/architecture/query-engine.md`
+splits execution planning out as a fifth; both are real.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/engine.rs", start = 27, end = 36, render = { kind = "full" } },
+  { path = "crates/toasty/src/engine.rs", start = 38, end = 38, render = { kind = "full" } },
+  { path = "crates/toasty/src/engine.rs", start = 39, end = 39, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/src/engine.rs", start = 62, end = 62, render = { kind = "full" } },
+  { path = "crates/toasty/src/engine.rs", start = 74, end = 78, render = { kind = "full" } },
+  { path = "crates/toasty/src/engine.rs", start = 82, end = 82, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "toasty/src/model.rs — Register + Model traits"
-justification = "The two traits every generated root model implements (Register::schema/id, Model::load + builder-associated types) — the contract codegen satisfies and the engine consumes."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 1
-end = 58
-render = { kind = "full" }
+descriptor = "engine.rs module roster and private-module boundary"
+justification = """
+Shows which engine modules exist and how visible they are — `pub(crate)
+mod eval` versus private `exec`, `hir`, `index`, `kv`, `lower`, `mir`,
+`plan`, `simplify`, `ty`, `verify` — plus the two types hoisted into
+scope, `HirStatement` and `Simplify`. Cheap, and it tells an agent that
+none of this is reachable from outside the `toasty` crate.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/src/engine.rs", start = 1, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "The engine as a mini-program: query-engine.md execution model"
+justification = """
+The one idea an engine contributor most needs and that no signature
+conveys: the compiled output is a mini program for an interpreter —
+actions as instructions, variables as registers, an interpreter reading
+each one, and no control flow yet — illustrated by a worked `$0 = ExecSQL(...)`,
+`$2 = NestedMerge($0, $1, by: user_id)` program. Turns the `exec/` and
+`mir/` file names from 5.1 into a model the agent can reason with.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/architecture/query-engine.md", start = 13, end = 16, render = { kind = "full" } },
+  { path = "docs/architecture/query-engine.md", start = 17, end = 17, render = { kind = "ellipsis" } },
+  { path = "docs/architecture/query-engine.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "docs/architecture/query-engine.md", start = 30, end = 36, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6 — codegen, SQL serialization, driver implementations
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "6.1"
-descriptor = "stmt/expr.rs — Expr enum variant roster (names only)"
-justification = "Every variant name of the central AST expression enum, one per line with the doc-comment prose dropped — a location-only roster (analogous to a fn-signature listing) so no variant looks omitted, at a fraction of the cost of the full doc-commented enum."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 15
-end = 15
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 18
-end = 18
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 21
-end = 21
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 24
-end = 24
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 27
-end = 27
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 31
-end = 31
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 34
-end = 34
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 38
-end = 38
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 42
-end = 42
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 45
-end = 45
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 48
-end = 48
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 51
-end = 51
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 55
-end = 55
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 58
-end = 58
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 61
-end = 61
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 64
-end = 64
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 67
-end = 67
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 70
-end = 70
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 73
-end = 73
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 76
-end = 76
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 80
-end = 80
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 83
-end = 83
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 86
-end = 86
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 89
-end = 89
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/expr.rs"
-start = 92
-end = 92
-render = { kind = "full" }
+descriptor = "toasty-codegen tree: attribute parsing and expansion (complete)"
+justification = """
+The macro implementation, split into `schema/` (parsing the attributes
+seen in 2.7 — `auto.rs`, `belongs_to.rs`, `column.rs`, `fk.rs`,
+`has_many.rs`, `has_one.rs`, `index.rs`, `key_attr.rs`, `model_attr.rs`,
+`pk.rs`, `error.rs`, ...) and `expand/` (emitting `model.rs`, `query.rs`,
+`create.rs`, `update.rs`, `relation.rs`, `fields.rs`, `filters.rs`,
+`schema.rs`). Each attribute the user can write has a named file here,
+so "why is my `#[belongs_to]` rejected" is one read away.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-codegen", entries = "all" },
+  { parent = "crates/toasty-codegen/src", entries = "all" },
+  { parent = "crates/toasty-codegen/src/expand", entries = "all" },
+  { parent = "crates/toasty-codegen/src/schema", entries = "all" },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "stmt/value.rs — Value enum variant roster (names only)"
-justification = "Every runtime value variant name (primitives, Uuid, Decimal/BigDecimal, jiff temporal types, Record/List/Bytes/SparseRecord) with doc comments dropped — same location-only technique as 6.1; the type new primitive-type work must extend everywhere per docs/CHANGE_GUIDE.md."
-predecessor = "6.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 8
-end = 8
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 11
-end = 11
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 14
-end = 14
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 17
-end = 17
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 23
-end = 23
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 26
-end = 26
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 29
-end = 29
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 32
-end = 32
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 35
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 39
-end = 39
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 42
-end = 42
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 45
-end = 45
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 48
-end = 48
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 51
-end = 51
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 54
-end = 54
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 59
-end = 59
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 64
-end = 64
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 69
-end = 69
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 74
-end = 74
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 79
-end = 79
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 84
-end = 84
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty-core/src/stmt/value.rs"
-start = 89
-end = 89
-render = { kind = "full" }
+descriptor = "The codegen entry points: `generate_model` / `generate_embed`"
+justification = """
+The entire public surface of `toasty-codegen` — two functions that parse
+a `syn::ItemStruct`, build `schema::Model::from_ast(&item, embedded)`
+and hand it to `expand::root_model` / `expand::embedded_model`. This is
+the exact seam between `toasty-macros` (2.7) and the expansion code, and
+it shows the single `bool` that distinguishes a root model from an
+embedded one.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-codegen/src/lib.rs", start = 1, end = 2, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/lib.rs", start = 6, end = 18, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.3"
-descriptor = "driver/capability.rs — per-database capability consts (SQLITE/POSTGRESQL/MYSQL/DYNAMODB)"
-justification = "The actual cross-database difference table as code (and, via the fully-literal SQLITE block, the complete list of Capability field names too): only PostgreSQL/MySQL have native date/time types, DynamoDB has no SQL/auto_increment/returning, MySQL disables returning_from_mutation. Answers 'does database X support feature Y' with zero follow-up."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-core/src/driver/capability.rs"
-start = 163
-end = 254
-render = { kind = "full" }
+descriptor = "The inherent methods generated on every model"
+justification = """
+What `#[derive(Model)]` actually adds to a user's struct, quoted from
+the expander: `create()`, `create_many()`, `update(&mut self)`, `all()`,
+`filter(expr)`, and `async delete(self, db)`. These are the names used
+in the examples but defined nowhere a grep for `fn create` on a user
+model would find — a classic "where does this method come from" question
+that this batch answers outright. The per-index finders come from
+`expand/filters.rs`, whose `#get_method_ident` / `#update_method_ident` /
+`#delete_method_ident` / `#filter_method_ident` /
+`#filter_method_batch_ident` templates are shown here — they are what
+produce `User::get_by_email` and friends.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 44, end = 44, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 48, end = 48, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 52, end = 52, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 60, end = 60, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 64, end = 64, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/model.rs", start = 68, end = 68, render = { kind = "full" } },
+  { path = "crates/toasty-codegen/src/expand/filters.rs", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-codegen/src/expand/filters.rs", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-codegen/src/expand/filters.rs", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-codegen/src/expand/filters.rs", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-codegen/src/expand/filters.rs", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "6.4"
-descriptor = "toasty-driver-sqlite/src/lib.rs — Sqlite enum + Driver impl"
-justification = "toasty-driver-sqlite/CONTEXT.md calls this driver 'the template for all drivers'; its Driver trait impl (url/capability/connect/max_connections) grounds that claim and previews what a 5th driver would need."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-driver-sqlite/src/lib.rs"
-start = 59
-end = 82
-render = { kind = "full" }
+descriptor = "toasty-sql tree: serializer and DDL statement types (complete)"
+justification = """
+Where a statement becomes a SQL string. The `serializer/` listing names
+the per-fragment modules (`flavor.rs` for dialects, `statement.rs`,
+`expr.rs`, `column.rs`, `column_def.rs`, `cte.rs`, `ident.rs`, `name.rs`,
+`params.rs`, `ty.rs`, `value.rs`, `delim.rs`, `fmt.rs`) and `stmt/`
+names the DDL types (`create_table`, `alter_table`, `add_column`,
+`alter_column`, `drop_column`, `create_index`, `drop_index`,
+`copy_table`, `pragma`, ...) — the vocabulary migrations are built from.
+The crate's own `tests/` are migration golden tests.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-sql", entries = "all" },
+  { parent = "crates/toasty-sql/src", entries = "all" },
+  { parent = "crates/toasty-sql/src/serializer", entries = "all" },
+  { parent = "crates/toasty-sql/src/stmt", entries = "all" },
+  { parent = "crates/toasty-sql/tests", entries = "all" },
+] }
 
 [[batches]]
 id = "6.5"
-descriptor = "toasty/src/db.rs — all/first/get query methods"
-justification = "The most commonly-called methods on a live connection (all/first/get) — directly answers 'how do I run a query against a Db'; exec/delete/admin methods are reachable one hop away via the fs listing + this excerpt's neighborhood."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/src/db.rs"
-start = 31
-end = 61
-render = { kind = "full" }
+descriptor = "toasty-sql public surface (src/lib.rs, complete file)"
+justification = """
+Eight lines naming everything a SQL driver imports: the `migration`
+module (re-exported flat), `serializer::{Params, Serializer,
+TypedValue}`, and `stmt::Statement`. Cheap, and it disambiguates
+`toasty_sql::Statement` from `toasty_core::stmt::Statement` (4.8) — a
+confusion that otherwise costs a read.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-sql/src/lib.rs", start = 1, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "The four driver crates and their source files (complete)"
+justification = """
+Closes the driver class at file level: `toasty-driver-sqlite` (with the
+CONTEXT.md that is the template for new drivers), `-postgresql` (which
+additionally has `statement_cache.rs` and `type.rs`), `-mysql`, and
+`-dynamodb` (with an `op/` directory instead of SQL). The recurring
+`value.rs` in each is where per-database value conversion lives — the
+file to edit when adding a primitive type.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-driver-sqlite", entries = "all" },
+  { parent = "crates/toasty-driver-sqlite/src", entries = "all" },
+  { parent = "crates/toasty-driver-postgresql", entries = "all" },
+  { parent = "crates/toasty-driver-postgresql/src", entries = "all" },
+  { parent = "crates/toasty-driver-mysql", entries = "all" },
+  { parent = "crates/toasty-driver-mysql/src", entries = "all" },
+  { parent = "crates/toasty-driver-dynamodb", entries = "all" },
+  { parent = "crates/toasty-driver-dynamodb/src", entries = "all" },
+  { parent = "crates/toasty-driver-dynamodb/src/op", entries = "all" },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "The SQLite driver as the reference `Driver` implementation"
+justification = """
+Grounds the abstract trait of 4.4/4.5 in the smallest concrete case:
+the `Sqlite` enum, the `impl Driver for
+Sqlite` block with its `generate_migration`, and the `impl Connection` block whose `exec` / `push_schema` /
+`applied_migrations` / `apply_migration` line numbers are exactly where
+a new driver author looks first.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 60, end = 60, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 123, end = 123, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 143, end = 144, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 248, end = 248, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 256, end = 256, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 288, end = 288, render = { kind = "full" } },
+  { path = "crates/toasty-driver-sqlite/src/lib.rs", start = 343, end = 343, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "toasty-cli tree: the migration subcommand files (complete)"
+justification = """
+The `toasty` binary's actual command surface, which no doc in the
+repository states: `migration` with `apply`, `generate`, `snapshot`,
+`drop` and `reset` subcommands, each with its own file under
+`src/migration/` alongside `history_file.rs` and `snapshot_file.rs` —
+the on-disk formats seen in `examples/todo-with-cli/toasty/` (3.1).
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-cli", entries = "all" },
+  { parent = "crates/toasty-cli/src", entries = "all" },
+  { parent = "crates/toasty-cli/src/migration", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 7 — test infrastructure and build configuration
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "7.1"
-descriptor = "toasty/src/stmt/select.rs — Select<M> query builder"
-justification = "The chainable query-builder methods filter/and/union/include in the exact form user code calls, plus a location marker for order_by (line 59, elided since its one-line body just stores the argument) — directly answers 'how do I filter/order a query' with zero follow-up."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/select.rs"
-start = 1
-end = 58
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/select.rs"
-start = 59
-end = 59
-render = { kind = "ellipsis" }
+descriptor = "The workspace `tests/` crate and `benches/` (complete)"
+justification = """
+Database tests live in a workspace member, not in `crates/*/tests`.
+This listing closes that class: `tests/src/` (the harness — `db_test.rs`,
+`setup.rs`, `macros.rs`, `logging_driver.rs`, `exec_log.rs`,
+`isolation.rs`, `helpers.rs`, `prelude.rs`, and a `db/` with one file per
+backend) and `tests/tests/` (the per-backend entry points plus
+`ui/`, a trybuild suite whose `.rs`/`.stderr` pairs pin the macro's
+compile errors). `benches/association.rs` is the only benchmark.
+"""
+content = { kind = "fs", groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/src", entries = "all" },
+  { parent = "tests/src/db", entries = "all" },
+  { parent = "tests/tests", entries = "all" },
+  { parent = "tests/tests/ui", entries = "all" },
+  { parent = "benches", entries = "all" },
+] }
 
 [[batches]]
 id = "7.2"
-descriptor = "toasty/src/page.rs — Page<M> cursor-pagination struct"
-justification = "The concrete, currently-implemented Page<M> shape (items/next_cursor/prev_cursor + has_next/has_prev) — grounds the pagination story in real code."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty/src/page.rs"
-start = 1
-end = 47
-render = { kind = "full" }
+descriptor = "The driver integration suite and its test roster (complete)"
+justification = """
+The shared conformance suite every driver runs. Its `src/tests/`
+directory is effectively a feature matrix in file names —
+`belongs_to_*`, `has_many_*`, `has_one_crud_basic`, `one_model_*`,
+`embedded`, `preload`, `field_auto`, `field_column_name`,
+`field_column_type`, `bigdecimal`, `decimal`, `jiff`, `tys`, `sync_send`,
+`reset_db` — so "is behaviour X covered, and where" is answered without
+a search. Paired with the `-macros` crate that generates the registry
+(`driver_test.rs`, `test_registry.rs`, `test_variants.rs`).
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/toasty-driver-integration-suite", entries = "all" },
+  { parent = "crates/toasty-driver-integration-suite/src", entries = "all" },
+  { parent = "crates/toasty-driver-integration-suite/src/tests", entries = "all" },
+  { parent = "crates/toasty-driver-integration-suite-macros", entries = "all" },
+  { parent = "crates/toasty-driver-integration-suite-macros/src", entries = "all" },
+] }
 
 [[batches]]
-id = "8.1"
-descriptor = "hello-toasty example — model definitions"
-justification = "The README's own example, verbatim from source: #[derive(Model)] with #[key]/#[auto]/#[unique]/#[has_many]/#[belongs_to] — the canonical model-definition pattern every other example/doc references."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/hello-toasty/src/main.rs"
-start = 1
-end = 31
-render = { kind = "full" }
-
-[[batches]]
-id = "8.2"
-descriptor = "composite-key example — partition/local key model"
-justification = "The only place in the fixture demonstrating #[key(partition = ..., local = ...)] composite keys — directly answers composite-key questions that docs/roadmap/composite-keys.md only discusses as a gap list."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/composite-key/src/main.rs"
-start = 1
-end = 30
-render = { kind = "full" }
-
-[[batches]]
-id = "8.3"
-descriptor = "todo-with-cli example — Toasty.toml migration config"
-justification = "The concrete migration config sample (migration path/prefix_style/checksums/statement_breakpoints) that toasty-cli's Config::load() reads — cheaper evidence of the config format than reading the parser."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/todo-with-cli/Toasty.toml"
-start = 1
-end = 5
-render = { kind = "full" }
-
-[[batches]]
-id = "9.1"
-descriptor = "CI workflow — job matrix"
-justification = "Just the job names (check/clippy/test-sqlite/test-mysql/test-postgresql/test-dynamodb/test-all-os/examples) as location markers, mirroring the fn-signature-location convention — 'does CI test dynamodb' resolves immediately; full per-job YAML is a follow-up read of ci.yml at these lines."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 18
-end = 19
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 35
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 49
-end = 49
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 62
-end = 62
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 90
-end = 90
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 117
-end = 117
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 132
-end = 132
-render = { kind = "full" }
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 153
-end = 153
-render = { kind = "full" }
-
-[[batches]]
-id = "10.1"
-descriptor = "docs/CHANGE_GUIDE.md — 'Where Changes Go' quick reference"
-justification = "The table mapping change-type to primary/secondary crates — the fastest answer to 'which crate(s) do I touch for change X'; CLAUDE.md only points at this file rather than including its content. (The file's second table, 'Change Flow by Type', continues past this span and isn't rendered here.)"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "docs/CHANGE_GUIDE.md"
-start = 1
-end = 16
-render = { kind = "full" }
-
-[[batches]]
-id = "11.1"
-descriptor = "toasty-codegen CONTEXT.md — field + relationship attribute roster"
-justification = "Every field/relationship attribute the derive macro recognizes (#[key]/#[auto]/#[unique]/#[index]/#[db(varchar(size))], #[belongs_to]/#[has_many(pair=)]/#[has_one]) in one place — the attribute vocabulary the examples use; the model-level #[key(partition=,local=)] composite-key attribute is already demonstrated in real code at 8.2."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "crates/toasty-codegen/CONTEXT.md"
-start = 77
-end = 86
-render = { kind = "full" }
+id = "7.3"
+descriptor = "The `toasty` crate's complete feature-flag set"
+justification = """
+Which backends and value types are opt-in, and what each flag pulls in.
+`CLAUDE.md` mentions the four database features but not `rust_decimal`,
+`bigdecimal`, `jiff` or `serde` — the `rust_decimal` body is rendered
+under an ellipsis to show the shape — each of these three fans out to
+matching features on `toasty-core`, `toasty-driver-postgresql` and
+`toasty-driver-mysql`, exactly the detail a "why doesn't my decimal
+column compile" question turns on. Ranked last because it is
+build configuration, but it is the kind of appendix an agent genuinely
+needs before running anything.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/toasty/Cargo.toml", start = 6, end = 12, render = { kind = "full" } },
+  { path = "crates/toasty/Cargo.toml", start = 13, end = 13, render = { kind = "ellipsis" } },
+  { path = "crates/toasty/Cargo.toml", start = 18, end = 18, render = { kind = "full" } },
+  { path = "crates/toasty/Cargo.toml", start = 24, end = 24, render = { kind = "full" } },
+  { path = "crates/toasty/Cargo.toml", start = 30, end = 30, render = { kind = "full" } },
+] }

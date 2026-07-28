@@ -1,0 +1,475 @@
+fixture = "xh"
+revision_pin = "b928cf08"
+summary = """
+xh is a single-binary Rust CLI HTTP client (an HTTPie reimplementation) built on reqwest's
+blocking client. src/main.rs orchestrates: parse CLI (src/cli.rs, clap derive) -> assemble a
+request body/headers from HTTPie-style REQUEST_ITEM syntax (src/request_items.rs) -> attach
+auth/session/cookies (src/auth.rs, src/session.rs, src/netrc.rs) -> execute through a small
+generic middleware chain (src/middleware.rs) that layers redirect-following (src/redirect.rs)
+and digest-auth retry -> print/format/color the exchange (src/printer.rs, src/formatting/) or
+stream it to disk (src/download.rs). Supporting modules: src/decoder.rs (gzip/deflate/br/zstd
+with empty-body error suppression), src/content_disposition.rs (RFC 5987 filename parsing),
+src/nested_json.rs (the `key[0][x]=v` JSON-path mini-language), src/to_curl.rs (--curl
+translation), src/message_signature.rs (feature-gated RFC 9421 signing), src/generation.rs
+(derives man page + shell completions from the same clap metadata at runtime via --generate).
+build.rs precompiles syntect syntaxes/themes into OUT_DIR. Tests: tests/cli.rs is a ~250-test
+integration suite run against a hand-rolled hyper test server (tests/server/mod.rs); tests/cases/
+holds topically-split suites (auth_message_signature, compress_request_body, download, logging,
+unix_socket, xml). Query distribution: adding/changing a CLI flag or REQUEST_ITEM syntax rule,
+debugging auth/redirect/session/download/decompression edge cases, understanding the session
+JSON format, --curl translation gaps, build/test/release workflow, and "how is X tested".
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = "First thing any agent needs: what's actually at the top level, so partial guesses about config/docs/build files aren't made. Cheap, unconditionally useful."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README lede"
+justification = "One-line identity of the crate and a pointer to the demo, framing every subsequent batch."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 5, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ listing"
+justification = "Every top-level source file, including the formatting/ subpackage — avoids the agent assuming unlisted modules (e.g. message_signature.rs) don't exist."
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "src/formatting/ listing"
+justification = "The formatting subpackage's three files, so a highlighting/color question doesn't stop at 'formatting/ exists'."
+content = { kind = "fs", groups = [
+  { parent = "src/formatting", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "tests/ listing"
+justification = "Shows the integration-test file, the topical cases/ suite, the hand-rolled server harness and the static fixtures dir side by side."
+content = { kind = "fs", groups = [
+  { parent = "tests", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "tests/cases/ listing"
+justification = "The topically-split integration suites (auth_message_signature is feature-gated) — lets a 'is X tested' query jump straight to a file instead of grepping tests/cli.rs."
+content = { kind = "fs", groups = [
+  { parent = "tests/cases", entries = "all" },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "doc/ and completions/ listings"
+justification = "Generated-artifact directories (man page + markdown source + templates; shell completions for 6 shells) that RELEASE-CHECKLIST.md references by exact regeneration command."
+content = { kind = "fs", groups = [
+  { parent = "doc", entries = "all" },
+  { parent = "completions", entries = "all" },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "assets/ and .github/workflows/ listings"
+justification = "Syntax/theme data consumed by build.rs, plus the two CI workflow files — orientation for build-system and CI questions."
+content = { kind = "fs", groups = [
+  { parent = "assets", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "tests/fixtures/ listing"
+justification = "Static binary/text fixtures (certs, keys, pre-compressed response bodies) used by the online test suite — avoids an agent assuming test data is generated on the fly."
+content = { kind = "fs", groups = [
+  { parent = "tests/fixtures", entries = "all" },
+  { parent = "tests/fixtures/certs", entries = "all" },
+  { parent = "tests/fixtures/keys", entries = "all" },
+  { parent = "tests/fixtures/responses", entries = "all" },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "Cargo.toml [package] block"
+justification = "Version, edition, MSRV, license and the crates.io description in one place; grounds any question about what xh declares itself to be. (`documentation`/`homepage` lines are elided: identical `repository` URL, kept.)"
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 1, end = 8, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 11, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "main.rs module map"
+justification = "The `mod` list is the whole crate's module graph at a glance, including the http-message-signatures cfg-gate on message_signature — cheaper than inferring structure from the src/ listing alone."
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 1, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.1"
+descriptor = "Cargo.toml [features] block"
+justification = "The cargo feature flags (default set, native-tls, rustls, http3, http-message-signatures, network-interface, online/ipv6-tests) that gate large chunks of src/ and tests/cases/ behind #[cfg(feature = ...)] — needed before any 'why is this code unreachable' question makes sense."
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 99, end = 105, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 110, end = 113, render = { kind = "full" } },
+] }
+[[batches]]
+id = "2.2"
+descriptor = "CHANGELOG.md: Unreleased + latest release"
+justification = "What's actively in flight (XML pretty-printing, message signatures, reqwest v0.13 upgrade) versus what's already shipped in 0.25.3 — grounds 'is feature X done yet' questions without reading the full 404-line history."
+content = { kind = "lines", spans = [
+  { path = "CHANGELOG.md", start = 1, end = 18, render = { kind = "full" } },
+] }
+[[batches]]
+id = "2.3"
+descriptor = "RELEASE-CHECKLIST.md (full)"
+justification = "The exact release procedure, including the six `--generate` invocations that regenerate doc/xh.1{,.md} and completions/* — cheap, concrete operational coverage for 'how do I cut a release'."
+content = { kind = "lines", spans = [
+  { path = "RELEASE-CHECKLIST.md", start = 1, end = 21, render = { kind = "full" } },
+] }
+[[batches]]
+id = "2.4"
+descriptor = "FAQ.md (Q&A prose, RFC 7230 blockquote elided)"
+justification = "Single Q&A explaining why header values sometimes render mangled (ISO-8859-1 vs UTF-8 display) — directly answers a support-style question and is cross-referenced by src/formatting/headers.rs's error path. The verbatim RFC 7230 blockquote plus its citation link (lines 5-7) is elided; the file's own prose (lines 3, 9-11) already states what it backs, and the RFC is fetchable on demand."
+content = { kind = "lines", spans = [
+  { path = "FAQ.md", start = 1, end = 4, render = { kind = "full" } },
+  { path = "FAQ.md", start = 5, end = 5, render = { kind = "ellipsis" } },
+  { path = "FAQ.md", start = 6, end = 6, render = { kind = "ellipsis" } },
+  { path = "FAQ.md", start = 7, end = 7, render = { kind = "ellipsis" } },
+  { path = "FAQ.md", start = 8, end = 21, render = { kind = "full" } },
+] }
+[[batches]]
+id = "2.5"
+descriptor = "README: Request Items syntax"
+justification = "The six-symbol grammar (=, :=, ==, @, :, ;) that request_items.rs::RequestItem::from_str implements — this is the semantic core of xh's CLI and the single most likely 'how do I do X' lookup."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 132, end = 148, render = { kind = "full" } },
+] }
+[[batches]]
+id = "2.6"
+descriptor = "README: URL shorthand, https-by-default, HTTPie compat mode"
+justification = "Explains the `:8000`/`://host` URL shorthands, the xhs/https/xhttps binary-name and XH_HTTPIE_COMPAT_MODE triggers implemented in cli.rs's construct_url/try_parse_from — otherwise-surprising behavior worth documenting once, cheaply, in prose."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 149, end = 171, render = { kind = "full" } },
+  { path = "README.md", start = 178, end = 182, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "README: Usage flag list, part A (global/output flags)"
+justification = "The full one-line-per-flag reference from `xh --help` (json/form/multipart/raw/pretty/print/verbose/quiet/stream/compress/output/download flags) — cheaper, more complete evidence of the CLI surface than reading cli.rs's derive attributes, and the natural first stop for almost any 'does xh support X flag' question."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 67, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "README: Usage flag list, part B (network/auth/TLS/misc flags)"
+justification = "Continuation of the flag roster: session, auth, redirects, proxy, TLS/verify, interface binding, unix sockets, --curl, --generate — completes the class opened in 2.7 so no flag is implied to not exist."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 98, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.1"
+descriptor = "cli.rs: Cli struct top (doc + clap config)"
+justification = "The `#[clap(...)]` config on the top-level parser (disable_help_flag, args_override_self, custom styles) explains xh's two-tier help (`--help` vs `xh help`) and its 'last flag wins' semantics before any field is read."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 44, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "cli.rs: Cli struct field roster (all ~60 fields)"
+justification = "Every `pub` field of the Cli struct, one line each — the Rust name behind each README flag (e.g. --verify -> Verify, --stream -> stream_raw/stream). Partial disclosure here would wrongly suggest some flags aren't backed by a struct field; this is the exhaustive location roster a flag-adding or flag-renaming task needs."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 58, end = 58, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 64, end = 64, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 70, end = 70, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 76, end = 76, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 80, end = 80, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 97, end = 97, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 114, end = 114, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 118, end = 118, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 130, end = 130, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 148, end = 148, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 152, end = 152, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 156, end = 156, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 171, end = 171, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 179, end = 179, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 183, end = 183, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 187, end = 187, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 193, end = 193, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 197, end = 197, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 208, end = 208, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 211, end = 211, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 215, end = 215, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 221, end = 221, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 231, end = 231, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 238, end = 238, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 242, end = 242, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 245, end = 245, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 249, end = 249, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 258, end = 258, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 262, end = 262, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 266, end = 266, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 269, end = 269, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 273, end = 273, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 282, end = 282, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 285, end = 285, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 289, end = 289, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 293, end = 293, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 299, end = 299, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 313, end = 313, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 321, end = 321, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 325, end = 325, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 331, end = 331, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 338, end = 338, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 342, end = 342, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 346, end = 346, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 350, end = 350, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 354, end = 354, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 362, end = 362, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 368, end = 368, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 372, end = 372, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 376, end = 376, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 382, end = 382, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 392, end = 392, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 398, end = 398, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 402, end = 402, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 424, end = 424, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 428, end = 428, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 487, end = 487, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 491, end = 491, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 495, end = 495, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 499, end = 499, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "cli.rs: try_parse_from — method/URL split, bin_name, compat-mode triggers"
+justification = "The trickiest bit of argument handling: how the leading positional arg is split into an optional METHOD (only if all-alphabetic) vs the URL, and how bin_name flips https/httpie_compat_mode. Directly explains behavior in README 2.6 at the code level."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 556, end = 587, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 588, end = 588, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "cli.rs: process_relations — flag-implication rules"
+justification = "Where `--verbose` implies `--all`, `--download` implies `--follow` + `--check-status`, `--session-read-only` forces `--session` onto the read-only path, and the `--no-check-status`/`--no-stream` negation resolves against the raw flag — the exact, complete place to check before assuming two flags are independent."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 606, end = 653, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 654, end = 654, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "cli.rs: --no-OPTION negation mechanism"
+justification = "Explains the auto-generated `--no-foo` for every long flag (README says 'Each option can be reset with a --no-OPTION argument' without saying how) — a one-off clap trick worth pointing at directly rather than rediscovering by grepping clap docs."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 657, end = 681, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 682, end = 682, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "cli.rs: CLI value-type location roster"
+justification = "Declaration line for every enum/struct backing an option value (AuthType, MessageSignature, MessageSignatureComponents, MessageSignatureAlgorithm, TlsVersion, Pretty, FormatOptions, Theme, Print, Timeout, Proxy, Resolve, Verify, BodyType, HttpVersion, Generate) — names + locations only, so none is assumed missing; bodies are pulled in individually below where they're surprising enough to warrant it."
+content = { kind = "lines", spans = [
+  { path = "src/cli.rs", start = 806, end = 806, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 814, end = 814, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 894, end = 894, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 916, end = 916, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 946, end = 946, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 973, end = 973, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 995, end = 995, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1055, end = 1055, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1079, end = 1079, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1189, end = 1189, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1217, end = 1217, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1254, end = 1254, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1291, end = 1291, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1334, end = 1334, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1342, end = 1342, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 1356, end = 1356, render = { kind = "full" } },
+] }
+
+
+[[batches]]
+id = "4.1"
+descriptor = "main.rs: entry point + error rendering"
+justification = "How the test-mode user agent is chosen, and how main() turns run()'s Result into stderr output plus an ExitCode via error_reporting."
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 59, end = 66, render = { kind = "full" } },
+  { path = "src/main.rs", start = 83, end = 94, render = { kind = "full" } },
+  { path = "src/main.rs", start = 95, end = 95, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "main.rs: stdin vs --raw vs request-item body precedence"
+justification = "The exact conflict rules ('Request body (from stdin) and request data cannot be mixed', multipart-from-stdin rejection) that explain several otherwise-mysterious 'cannot be mixed' error messages users hit."
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 116, end = 133, render = { kind = "full" } },
+  { path = "src/main.rs", start = 134, end = 134, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "main.rs: --check-status exit code mapping"
+justification = "The concrete exit-code contract for scripting (3/4/5 on redirect/4xx/5xx) — exactly the kind of fact a scripting-focused query needs verbatim rather than inferred."
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 724, end = 737, render = { kind = "full" } },
+  { path = "src/main.rs", start = 738, end = 738, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "request_items.rs: RequestItem enum"
+justification = "The parsed representation of every REQUEST_ITEM variant (header/unset-header/url-param/data-field/json-field/form-file, each with a from-file counterpart) — the data model behind README 2.5's grammar."
+content = { kind = "lines", spans = [
+  { path = "src/request_items.rs", start = 23, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "request_items.rs: separator table + longest-match split"
+justification = "The literal precedence table (`==@` before `=@` before `==`, etc.) that decides how an ambiguous item like `foo:=@bar` is tokenized — the ground truth for any 'why did xh parse my item as X and not Y' question."
+content = { kind = "lines", spans = [
+  { path = "src/request_items.rs", start = 52, end = 74, render = { kind = "full" } },
+  { path = "src/request_items.rs", start = 75, end = 75, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "request_items.rs: body-type dispatch"
+justification = "Which of body_as_json/body_as_form/body_as_multipart/body_from_file actually runs for a given --json/--form/--multipart flag combined with whether any file fields (@filename) are present."
+content = { kind = "lines", spans = [
+  { path = "src/request_items.rs", start = 452, end = 460, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.1"
+descriptor = "session.rs: current Cookie schema"
+justification = "The on-disk shape of one entry in a session file's current-format cookies array (name/value/expires/path/secure/domain, optional fields omitted when absent) — cheaper ground truth than reading the whole migrate() function."
+content = { kind = "lines", spans = [
+  { path = "src/session.rs", start = 59, end = 71, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "session.rs: concrete session-file JSON sample (legacy, auto-migrated)"
+justification = "A complete, real session file (HTTPie's older map-style cookies/headers, which Session::load_session migrates on read) straight from the test suite — answers 'what does a session file look like' with zero extra hops, per the operational-coverage principle that a config sample beats reading the parser."
+content = { kind = "lines", spans = [
+  { path = "src/session.rs", start = 402, end = 415, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.1"
+descriptor = "middleware.rs: Middleware trait"
+justification = "The generic trait's dispatch methods (handle/next) that both redirect-following and digest-auth-retry implement — understand this once and both middlewares read the same way."
+content = { kind = "lines", spans = [
+  { path = "src/middleware.rs", start = 68, end = 73, render = { kind = "full" } },
+  { path = "src/middleware.rs", start = 75, end = 75, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "redirect.rs: 301/302/303 redirect handling"
+justification = "What happens on a 301/Moved/303/SeeOther redirect: header scrubbing (cross-domain-only for auth/cookie headers, unconditional for signature/content headers) and the method/body drop to GET (HEAD is preserved, everything else becomes GET) — the rule behind a 'why did my POST become a GET after redirect' question. The match continues past this arm (307/308 preserve method+body unlike 301-303; elided here) — flagged rather than silently cut off."
+content = { kind = "lines", spans = [
+  { path = "src/redirect.rs", start = 109, end = 127, render = { kind = "full" } },
+  { path = "src/redirect.rs", start = 128, end = 128, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "netrc.rs: lookup semantics (doc comment)"
+justification = "Bulleted HTTPie-compatibility quirks (entries need both login+password, default entry doesn't merge fields, position-independent default) that aren't obvious from the parser state machine alone."
+content = { kind = "lines", spans = [
+  { path = "src/netrc.rs", start = 5, end = 13, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "auth.rs: Auth enum"
+justification = "The parsed auth representation (Bearer/Basic/Digest, matching cli.rs's AuthType) — auth.rs is otherwise untouched by earlier batches despite being named in the top-level summary ('attach auth/session/cookies'); also locates the DigestAuthMiddleware struct (its fields and its Middleware impl, implementing Middleware from 7.1, retrying with a computed digest answer on a 401 WWW-Authenticate challenge, are elided here) — the digest-auth retry the summary names, for a 'why did xh send two requests for --auth-type=digest' question."
+content = { kind = "lines", spans = [
+  { path = "src/auth.rs", start = 14, end = 19, render = { kind = "full" } },
+  { path = "src/auth.rs", start = 63, end = 63, render = { kind = "full" } },
+  { path = "src/auth.rs", start = 64, end = 64, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "8.1"
+descriptor = "download.rs: filename-source probes"
+justification = "The two probes get_file_name() falls back through before defaulting to 'index' + a guessed extension: the Content-Disposition header (via content_disposition.rs) and the URL's last non-empty path segment. The rest of the function (sanitizing, then the guess_extension() fallback) is elided rather than silently cut off."
+content = { kind = "lines", spans = [
+  { path = "src/download.rs", start = 28, end = 44, render = { kind = "full" } },
+  { path = "src/download.rs", start = 46, end = 46, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "decoder.rs: CompressionType + Content-Encoding/Transfer-Encoding detection"
+justification = "Which header wins when both Content-Encoding and Transfer-Encoding are present, and the Content-Length:0 short-circuit — small self-contained decision worth citing verbatim."
+content = { kind = "lines", spans = [
+  { path = "src/decoder.rs", start = 37, end = 59, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.1"
+descriptor = "formatting/headers.rs: latin1 fallback rendering"
+justification = "The code implementing FAQ.md's 'why do some HTTP headers show up mangled' answer: a non-ASCII header value is latin1-decoded and (in a terminal) control characters are replaced. Pairs directly with batch 2.4."
+content = { kind = "lines", spans = [
+  { path = "src/formatting/headers.rs", start = 169, end = 184, render = { kind = "full" } },
+  { path = "src/formatting/headers.rs", start = 185, end = 185, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "printer.rs: Printer struct fields"
+justification = "printer.rs is the 839-line module the summary's 'print/format/color the exchange' step names but no earlier batch touches: this is the state every print_* call reads — the format/indent/sort toggles derived from --json/--form and --format-options, plus color, theme, stream mode and the output Buffer."
+content = { kind = "lines", spans = [
+  { path = "src/printer.rs", start = 119, end = 129, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.1"
+descriptor = "tests/cases/xml.rs: test roster"
+justification = "Every XML-formatting scenario covered (pretty-printing, text/xml content-type, format-disabled, custom indent, invalid-XML fallback, declaration preservation, --pretty=none passthrough, streaming skips formatting, mixed-content preservation, already-formatted passthrough, xhtml content-type) — a complete, cheap 'is XML behavior X tested' answer for one topical file."
+content = { kind = "lines", spans = [
+  { path = "tests/cases/xml.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 50, end = 50, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 68, end = 68, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 92, end = 92, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 106, end = 106, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 127, end = 127, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 141, end = 141, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 155, end = 155, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 175, end = 175, render = { kind = "full" } },
+  { path = "tests/cases/xml.rs", start = 197, end = 197, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.1"
+descriptor = "nested_json.rs: JSON-path grammar"
+justification = "The complete formal grammar for the `app[container][0][id]=090-5` nested-JSON key syntax that README 2.5 references but doesn't spell out — the production rules tokenize()/parse_path() implement, including the append_path rule (`[]`) that the other productions reference."
+content = { kind = "lines", spans = [
+  { path = "src/nested_json.rs", start = 1, end = 13, render = { kind = "full" } },
+] }

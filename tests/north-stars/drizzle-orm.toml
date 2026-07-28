@@ -1,872 +1,706 @@
 fixture = "drizzle-orm"
 revision_pin = "48e54060"
 summary = """
-drizzle-orm is a pnpm/turbo monorepo for a TypeScript-first, zero-dependency
-SQL ORM. The workspace has ~9 published packages: the core `drizzle-orm`
-library (dialect-agnostic query builder + 5 dialect cores: pg/mysql/sqlite/
-gel/singlestore, each fanning out to ~25 thin per-driver adapters), the
-`drizzle-kit` CLI (schema diffing + migration generation), 4 schema-generator
-siblings (drizzle-zod/valibot/typebox/arktype, near-identical shape),
-drizzle-seed (fake-data seeding), and eslint-plugin-drizzle. Sessions on this
-repo range across: adding/using a new column type or SQL operator, wiring a
-new database driver, understanding the relational query API, migration/CLI
-workflows, schema-generator parity across zod/valibot/typebox/arktype, and
-monorepo build/test/release plumbing (turbo + pnpm workspaces). The dominant
-catastrophic-omission risk here is the repo's fractal parallelism: 5 dialect
-cores with identical file rosters, ~25 driver adapters with identical
-4-file shape, and 4 schema-generator packages with identical 8-file shape —
-showing depth for one member of any of these classes without also
-establishing that the others exist (via listings) would mislead an agent
-into thinking a dialect/driver/generator is unsupported.
+drizzle-orm is the upstream monorepo of Drizzle: a headless, zero-dependency
+TypeScript ORM (`drizzle-orm`), its migration CLI (`drizzle-kit`), schema-
+validator bridges (`drizzle-zod`/`-typebox`/`-valibot`/`-arktype`), a data
+seeder (`drizzle-seed`), an ESLint plugin, and a large integration-test
+package, wired together as a pnpm + turbo workspace.
+
+The substance is `drizzle-orm/src`: dialect cores (`pg-core`, `mysql-core`,
+`sqlite-core`, `singlestore-core`, `gel-core`) that hold the table/column/
+query-builder/dialect logic, ~30 thin driver adapters (`node-postgres`,
+`neon-http`, `d1`, `bun-sqlite`, ...) that each export a `drizzle()` factory,
+and a dialect-agnostic root (`table.ts`, `column.ts`, `column-builder.ts`,
+`sql/`, `relations.ts`) that every dialect builds on. Every `src/**/*.ts` file
+becomes a published subpath export, so the file layout *is* the public API map.
+
+The ranking front-loads (1) what the repo is and where each package/dialect
+lives, (2) the dialect-agnostic core primitives an agent must understand to
+read any dialect, (3) the `sql` expression vocabulary, (4) pg-core as the
+reference dialect in depth, then the other dialect cores and drivers,
+drizzle-kit's CLI/config surface, the companion packages, and finally the
+test/build/tooling layout. Rosters are name-only truncated spans so that
+"does X exist, and where?" is answered without paying for bodies.
 """
 
-# ============================= TIER 1 — root & operational =============================
+# ---------------------------------------------------------------- tier 1
+# What the repository is, and the map of where its substance lives.
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing (workspace packages + top-level dirs)"
-justification = "The 15 non-file root entries: the 9 pnpm workspace packages plus docs/changelogs/misc/patches/.github/eslint (eslint/ is a separate internal-only package from the published eslint-plugin-drizzle/). Split from root files (1.2) purely to satisfy the growth envelope at rank 0 — both are the same catastrophic-omission-safe fs atom class."
-content.kind = "fs"
-content.groups = [{ parent = ".", entries = [".github", "changelogs", "docs", "drizzle-arktype", "drizzle-kit", "drizzle-orm", "drizzle-seed", "drizzle-typebox", "drizzle-valibot", "drizzle-zod", "eslint", "eslint-plugin-drizzle", "integration-tests", "misc", "patches"] }]
+descriptor = "README lede: what Drizzle is"
+justification = "One line of identity plus the framing sentence. Cheapest possible orientation for a repo whose name alone is ambiguous between the ORM and the monorepo."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 8, end = 8, render = { kind = "full" } },
+  { path = "README.md", start = 18, end = 19, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Root file listing (config + docs)"
-predecessor = "1.1"
-justification = "The 17 root-level files (package.json, pnpm-workspace.yaml, turbo.json, README, CONTRIBUTING, LICENSE, lint/format/tsconfig, ...) — completes the root roster started in 1.1."
-content.kind = "fs"
-content.groups = [{ parent = ".", entries = [".eslintignore", ".eslintrc.yaml", ".gitignore", ".markdownlint.yaml", ".npmrc", ".nvmrc", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "dprint.json", "LICENSE", "package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "README.md", "SECURITY.md", "tsconfig.json", "turbo.json"] }]
+descriptor = "pnpm workspace package list"
+justification = "The canonical, complete set of workspace packages — nine names in ten lines. Tells the agent which top-level directory owns any given concern before any listing is spent."
+content = { kind = "lines", spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 10, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "pnpm workspace member roster"
-justification = "Authoritative list of the 9 pnpm workspace packages (vs. non-package root dirs like docs/changelogs/misc visible in 1.1). Disambiguates 'package' from 'directory'."
-content.kind = "lines"
-content.spans = [{ path = "pnpm-workspace.yaml", start = 1, end = 10, render.kind = "full" }]
+descriptor = "drizzle-orm package identity + version"
+justification = "Name, version (0.45.3), ESM-only `type: module`, entrypoint fields and `sideEffects: false` — the facts needed to reason about imports, bundling, and which release this source corresponds to."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/package.json", start = 2, end = 5, render = { kind = "full" } },
+  { path = "drizzle-orm/package.json", start = 15, end = 18, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "CI workflow file listing"
-justification = "Operational coverage: which GitHub Actions workflows exist (release routing, latest/feature release, codeql, unpublish) before reading any one of them."
-content.kind = "fs"
-content.groups = [{ parent = ".github/workflows", entries = "all" }]
+descriptor = "Repository root listing (complete)"
+justification = "Every immediate child of the root: the nine workspace packages plus docs/, changelogs/, patches/, eslint/, misc/, .github/ and the tooling dotfiles. Prevents the agent assuming an unlisted top-level directory does not exist."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "README pitch (one line)"
-justification = "The project's own one-line self-description — minimal framing for 'what is this repo' before spending budget on CONTRIBUTING's structural map (1.6)."
-content.kind = "lines"
-content.spans = [{ path = "README.md", start = 19, end = 20, render.kind = "full" }]
+descriptor = "drizzle-orm root barrel exports"
+justification = "`src/index.ts` in full — the exact 14 modules re-exported from a bare `drizzle-orm` import, and by omission the fact that dialect cores and drivers are NOT in the root barrel but are separate subpaths."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/index.ts", start = 1, end = 14, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "Root package.json workspace scripts"
-justification = "The canonical entry points for build/test/lint across the whole monorepo — turbo-driven, filtered per package. Answers 'how do I build/test this' before any package-specific detail."
-content.kind = "lines"
-content.spans = [{ path = "package.json", start = 4, end = 14, render.kind = "full" }]
+descriptor = "CONTRIBUTING: how to read drizzle-orm/src"
+justification = "The maintainers' own rule for interpreting the src directory: `pg-core`/`mysql-core`/`sqlite-core` are per-dialect cores, `sql/` holds expressions and the SQL template, and every other folder is a driver. Makes the next listing self-explaining."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 157, end = 168, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "turbo.json task-name roster"
-justification = "Names of every turbo pipeline task (per-package #build tasks, test, test:types, pack, //#lint). All the per-package #build tasks share one near-identical inputs/outputs shape (src/**/*.ts, package.json, tsconfig*, scripts/build.ts) — the roster alone is the useful artifact; showing only some names would hide that e.g. drizzle-seed also has a #build task."
-content.kind = "lines"
-content.spans = [
-  { path = "turbo.json", start = 4, end = 4, render.kind = "full" },
-  { path = "turbo.json", start = 17, end = 17, render.kind = "full" },
-  { path = "turbo.json", start = 32, end = 32, render.kind = "full" },
-  { path = "turbo.json", start = 51, end = 51, render.kind = "full" },
-  { path = "turbo.json", start = 73, end = 73, render.kind = "full" },
-  { path = "turbo.json", start = 95, end = 95, render.kind = "full" },
-  { path = "turbo.json", start = 117, end = 117, render.kind = "full" },
-  { path = "turbo.json", start = 139, end = 139, render.kind = "full" },
-  { path = "turbo.json", start = 161, end = 161, render.kind = "full" },
-  { path = "turbo.json", start = 183, end = 183, render.kind = "full" },
-  { path = "turbo.json", start = 205, end = 205, render.kind = "full" },
-  { path = "turbo.json", start = 228, end = 228, render.kind = "full" },
-  { path = "turbo.json", start = 241, end = 241, render.kind = "full" },
-]
+descriptor = "README: database/runtime support and ecosystem"
+justification = "Which databases and runtimes are in scope, and that drizzle-kit (migrations) and Drizzle Studio are companion tools rather than part of the ORM. Link-heavy lines are truncated to their claims."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 20, end = 20, render = { kind = "full" } },
+  { path = "README.md", start = 22, end = 22, render = { kind = "truncated", pattern = "^\\*\\*Drizzle supports every PostgreSQL, MySQL and SQLite database\\*\\*" } },
+  { path = "README.md", start = 24, end = 24, render = { kind = "truncated", pattern = "^\\*\\*Drizzle is serverless-ready by design\\*\\*[^.]*\\." } },
+  { path = "README.md", start = 27, end = 27, render = { kind = "truncated", pattern = "^While you can use Drizzle as a JavaScript library, it shines with TypeScript\\." } },
+  { path = "README.md", start = 29, end = 29, render = { kind = "full" } },
+  { path = "README.md", start = 30, end = 30, render = { kind = "truncated", pattern = "^While Drizzle ORM remains a thin typed layer on top of SQL" } },
+  { path = "README.md", start = 32, end = 32, render = { kind = "truncated", pattern = "^Drizzle comes with a powerful \\[\\*\\*Drizzle Kit\\*\\*\\]" } },
+  { path = "README.md", start = 34, end = 34, render = { kind = "truncated", pattern = "^We also have \\[\\*\\*Drizzle Studio\\*\\*\\]" } },
+  { path = "README.md", start = 36, end = 37, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.8"
-descriptor = "CONTRIBUTING.md — repository structure (drizzle-orm, drizzle-kit, drizzle-typebox)"
-justification = "The repo's own authoritative one-paragraph-per-directory map, starting with drizzle-orm/kit/typebox; the remaining 6 entries (valibot/zod/eslint-plugin-drizzle/changelogs/examples/integration-tests) continue at 2.10 once budget allows. Directly answers 'what does each top-level dir do' more precisely than inference from names alone."
-content.kind = "lines"
-content.spans = [
-  { path = "CONTRIBUTING.md", start = 85, end = 95, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 97, end = 97, render.kind = "ellipsis" },
-]
+descriptor = "drizzle-orm/src listing (complete): dialect cores + every driver"
+justification = "The single highest-value listing in the repo: five dialect cores, ~30 driver adapters, and the dialect-agnostic root modules, all in one flat directory. Because every src file is also a published subpath, this doubles as the public entrypoint map (`drizzle-orm/pg-core`, `drizzle-orm/neon-http`, ...)."
+content = { kind = "fs", groups = [
+  { parent = "drizzle-orm/src", entries = "all" },
+] }
 
-# ============================= TIER 2 — workspace package manifests =============================
+[[batches]]
+id = "1.9"
+descriptor = "CONTRIBUTING: role of each top-level package (part 1)"
+justification = "Maintainer-written one-line role for drizzle-orm/, drizzle-kit/, drizzle-typebox/, drizzle-valibot/ and drizzle-zod/. Converts the root listing from names into meaning — the zero-follow-up answer to 'where does X live?'."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 83, end = 103, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "CONTRIBUTING: role of each top-level package (part 2)"
+justification = "Completes the directory-role list: eslint-plugin-drizzle/, changelogs/, examples/ and integration-tests/. Ranked immediately after part 1 so any cut above it still leaves a visibly partial, not falsely complete, list."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 104, end = 118, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "Build step that turns every src file into a package export"
+justification = "Explains why import paths mirror the src tree: the build globs `src/**/*.ts` and synthesises one `exports` entry per file. Without it the checked-in package.json (which has no `exports` block) contradicts every documented import path."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/scripts/build.ts", start = 7, end = 8, render = { kind = "full" } },
+  { path = "drizzle-orm/scripts/build.ts", start = 25, end = 28, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 2
+# The dialect-agnostic core: the primitives every dialect and driver builds on.
 
 [[batches]]
 id = "2.1"
-descriptor = "drizzle-orm/package.json — identity + scripts"
-justification = "The flagship package's own scripts (build via prisma-generate + scripts/build.ts, test via vitest, test:types via tsc) — the package-level counterpart to 1.6's root scripts."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/package.json", start = 1, end = 11, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 12, end = 12, render.kind = "ellipsis" },
-]
+descriptor = "entityKind protocol and `is()`"
+justification = "Drizzle never uses `instanceof`; every runtime type check goes through the `entityKind` symbol and `is(value, Class)`. Twelve lines that unlock reading any other file in the ORM."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/entity.ts", start = 1, end = 12, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "drizzle-kit/package.json — identity, bin, scripts"
-justification = "drizzle-kit is a CLI (bin.cjs) — its scripts (cli, test, build, build:dev) are the dev-loop entry points for the second-largest package in the workspace."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-kit/package.json", start = 1, end = 3, render.kind = "full" },
-  { path = "drizzle-kit/package.json", start = 31, end = 34, render.kind = "full" },
-  { path = "drizzle-kit/package.json", start = 35, end = 35, render.kind = "ellipsis" },
-  { path = "drizzle-kit/package.json", start = 37, end = 40, render.kind = "full" },
-  { path = "drizzle-kit/package.json", start = 41, end = 41, render.kind = "ellipsis" },
-]
+descriptor = "Table: config shape, `_` metadata and $inferSelect/$inferInsert"
+justification = "The base class every dialect's table extends, plus the two type-inference handles users touch daily. The ellipsis marks the internal symbol-keyed members that continue in the class body."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/table.ts", start = 8, end = 13, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 49, end = 63, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 65, end = 65, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "Schema-generator sibling packages — identity"
-justification = "The 4 schema-generator packages (zod/valibot/typebox/arktype) share one purpose (generate a validation-library schema from a Drizzle table) and — as tier 9 shows — an identical src/ file layout. Showing all 4 names+descriptions together up front prevents assuming only one of them is real. Descriptions shown for zod/valibot (representative); typebox/arktype's own descriptions follow the same 'Generate X schemas from Drizzle ORM schemas' template."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-zod/package.json", start = 1, end = 4, render.kind = "full" },
-  { path = "drizzle-valibot/package.json", start = 1, end = 4, render.kind = "full" },
-  { path = "drizzle-typebox/package.json", start = 1, end = 2, render.kind = "full" },
-  { path = "drizzle-arktype/package.json", start = 1, end = 2, render.kind = "full" },
-]
+descriptor = "table.ts public export roster (complete)"
+justification = "Name-only span for every remaining top-level export of table.ts — isTable, getTableName, getTableUniqueName, AnyTable, InferModel/InferSelectModel/InferInsertModel/InferEnum and friends. Answers 'is there a helper for X on tables?' with no follow-up read."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/table.ts", start = 15, end = 15, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/table.ts", start = 120, end = 122, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 141, end = 141, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/table.ts", start = 143, end = 143, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/table.ts", start = 147, end = 147, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/table.ts", start = 151, end = 151, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/table.ts", start = 155, end = 155, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 191, end = 191, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 197, end = 197, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 202, end = 202, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.ts", start = 207, end = 207, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "drizzle-seed + eslint-plugin-drizzle — identity"
-justification = "The remaining two published packages: a fake-data seeding tool and an ESLint plugin for common Drizzle pitfalls — rounding out the full set of 6 non-core, non-kit workspace packages named in 1.3."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-seed/package.json", start = 1, end = 5, render.kind = "full" },
-  { path = "eslint-plugin-drizzle/package.json", start = 1, end = 4, render.kind = "full" },
-]
+descriptor = "ColumnBuilder: the complete column-modifier chain"
+justification = "`$type`, `notNull`, `default`, `$defaultFn`/`$default`, `$onUpdateFn`/`$onUpdate`, `primaryKey`, `generatedAlwaysAs`, `setName` — every method users chain when declaring a column, in one name-only roster. Highest-traffic API surface in the library."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/column-builder.ts", start = 185, end = 185, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 225, end = 225, render = { kind = "truncated", pattern = "^\t[$A-Za-z_]+" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 234, end = 234, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 246, end = 246, render = { kind = "truncated", pattern = "^\t[$A-Za-z_]+" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 258, end = 258, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 269, end = 269, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 278, end = 278, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 289, end = 289, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 296, end = 296, render = { kind = "truncated", pattern = "^\t[$A-Za-z_]+" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 305, end = 305, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column-builder.ts", start = 313, end = 313, render = { kind = "truncated", pattern = "^\t[$A-Za-z_]+" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "integration-tests/package.json — scripts"
-justification = "How the cross-dialect integration suite is invoked (test:vitest, test:esm, test:data-api via sst) — the test-running counterpart to the source-level dialect coverage explored later."
-content.kind = "lines"
-content.spans = [{ path = "integration-tests/package.json", start = 1, end = 12, render.kind = "full" }]
+descriptor = "Column: runtime fields and driver-value mapping"
+justification = "The abstract base of every dialect column: the config fields serializers read (name, notNull, default, isUnique, generated, ...) and the three methods a custom column must implement/override. Ellipsis marks the protected config and constructor between them."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/column.ts", start = 63, end = 63, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column.ts", start = 68, end = 68, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column.ts", start = 70, end = 87, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column.ts", start = 89, end = 89, render = { kind = "ellipsis" } },
+  { path = "drizzle-orm/src/column.ts", start = 113, end = 113, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column.ts", start = 115, end = 115, render = { kind = "full" } },
+  { path = "drizzle-orm/src/column.ts", start = 119, end = 119, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.6"
-descriptor = "CONTRIBUTING.md — contributing to drizzle-orm (project structure)"
-justification = "Names the dialect cores explicitly and the sql/ package as the two things a drizzle-orm PR usually touches, plus how every other folder maps to one specific driver."
-content.kind = "lines"
-content.spans = [{ path = "CONTRIBUTING.md", start = 157, end = 163, render.kind = "full" }]
+descriptor = "sql/sql.ts export roster (complete)"
+justification = "Every top-level export of the 722-line heart of the library — the `sql` tag, SQL/SQL.Aliased, Param/Placeholder/Name, the DriverValue encoder/decoder/mapper protocol, View, and the Query types. One batch that makes any 'where is X defined' question a single jump."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/sql.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 32, end = 32, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 43, end = 43, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 45, end = 45, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 103, end = 103, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 478, end = 478, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 485, end = 485, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 70, end = 70, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 89, end = 89, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 374, end = 374, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 382, end = 382, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 398, end = 398, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 402, end = 408, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 410, end = 410, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 415, end = 415, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 419, end = 419, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 423, end = 423, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 427, end = 427, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 433, end = 433, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 453, end = 453, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 463, end = 463, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 497, end = 497, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 567, end = 567, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 595, end = 595, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 608, end = 608, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 612, end = 612, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 634, end = 634, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 638, end = 638, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 693, end = 693, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 697, end = 697, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 701, end = 701, render = { kind = "truncated", pattern = "^export (?:abstract )?(?:class|function|const|type|interface|namespace) [A-Za-z_$]+" } },
+] }
 
 [[batches]]
 id = "2.7"
-descriptor = "CONTRIBUTING.md — contributing to drizzle-kit (project structure)"
-justification = "Maps the start of drizzle-kit's own project structure: cli/, cli/schema.ts, cli/commands/, extensions/, serializer/ — headers only (descriptions elided) to control cost; 8.1/8.2/8.3/8.7/8.8's fs listings + own justifications already ground each of these directories' actual contents."
-content.kind = "lines"
-content.spans = [
-  { path = "CONTRIBUTING.md", start = 211, end = 211, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 213, end = 214, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 218, end = 218, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 222, end = 222, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 226, end = 226, render.kind = "full" },
-]
+descriptor = "The `sql` template tag, Query and SQLWrapper"
+predecessor = "2.6"
+justification = "Refines the roster where it matters most: the tagged-template signature users write (both overloads), the `{ sql, params }` / typings shape every dialect produces, and the SQLWrapper interface that Table, Column, View, Subquery and SQL all implement."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/sql.ts", start = 45, end = 52, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 65, end = 68, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 478, end = 478, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 485, end = 485, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.8"
-descriptor = "drizzle-orm peerDependencies — supported driver ecosystem"
-justification = "Every third-party DB client drizzle-orm can wrap (pg, postgres, mysql2, better-sqlite3, gel, knex, kysely, @libsql/client, @neondatabase/serverless, etc.) — named entries shown, the rest (alphabetically interleaved) elided via ellipsis. This is the authoritative 'which databases/drivers are supported' answer, grounding the driver-adapter directories explored later (tier 7)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/package.json", start = 47, end = 47, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 48, end = 48, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 51, end = 51, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 52, end = 52, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 53, end = 53, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 54, end = 54, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 65, end = 65, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 66, end = 66, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 68, end = 71, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 72, end = 72, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 73, end = 74, render.kind = "full" },
-  { path = "drizzle-orm/package.json", start = 75, end = 75, render.kind = "ellipsis" },
-  { path = "drizzle-orm/package.json", start = 77, end = 77, render.kind = "full" },
-]
+descriptor = "`sql` namespace helpers: raw, join, empty, fromList, identifier, placeholder, param"
+predecessor = "2.6"
+justification = "The complete set of escape hatches hanging off the `sql` tag — the answer to 'how do I inject a raw fragment / join a list / name an identifier', which is one of the most common Drizzle questions."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/sql.ts", start = 498, end = 498, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 503, end = 503, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 511, end = 511, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 528, end = 528, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 551, end = 551, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 555, end = 555, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 559, end = 559, render = { kind = "truncated", pattern = "^\texport function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 565, end = 565, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "2.9"
-descriptor = "drizzle-orm build script — subpath exports generation"
-justification = "Explains the mechanism behind `import ... from 'drizzle-orm/pg-core'`-style subpath imports: every src/**/*.ts becomes its own package.json exports entry at build time. Directly answers 'how does drizzle-orm/<dialect> resolve' without needing to find a hand-written exports map (there isn't one)."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/scripts/build.ts", start = 1, end = 10, render.kind = "full" }]
+descriptor = "SQL class: chunks, decoder and its method set"
+predecessor = "2.6"
+justification = "How a built query is represented (`queryChunks`, `usedTables`, `decoder`) and the complete public method list — append, toQuery, getSQL, as, mapWith, inlineParams, if. Needed to follow any dialect's query construction."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/sql.ts", start = 103, end = 108, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 112, end = 112, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 115, end = 115, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 118, end = 118, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 132, end = 132, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 137, end = 137, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 148, end = 148, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 325, end = 325, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 329, end = 329, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 349, end = 349, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 358, end = 358, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/sql.ts", start = 369, end = 369, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.10"
-descriptor = "CONTRIBUTING.md — repository structure, continued (valibot/zod/eslint-plugin-drizzle/changelogs/examples/integration-tests)"
-predecessor = "1.8"
-justification = "Completes the directory map 1.8 started under budget constraints: drizzle-valibot/, drizzle-zod/, eslint-plugin-drizzle/, changelogs/, examples/, integration-tests/ — closes the roster so no top-level dir from 1.1 is left without its own mention in CONTRIBUTING's map. Headers only (descriptions elided) to control cost."
-content.kind = "lines"
-content.spans = [
-  { path = "CONTRIBUTING.md", start = 97, end = 97, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 101, end = 101, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 105, end = 105, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 109, end = 109, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 113, end = 113, render.kind = "full" },
-  { path = "CONTRIBUTING.md", start = 117, end = 117, render.kind = "full" },
-]
+descriptor = "relations(): the one/many relation DSL"
+justification = "How users declare relations (`relations(table, ({ one, many }) => ...)`), the `{ fields, references, relationName }` config, and the Relation/Relations/One/Many classes those calls produce. This is the entry point of the relational query API."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/relations.ts", start = 33, end = 33, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 51, end = 51, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 100, end = 100, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 406, end = 414, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 502, end = 506, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 521, end = 521, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 545, end = 545, render = { kind = "full" } },
+] }
 
-# ============================= TIER 3 — drizzle-orm/src core architecture =============================
+[[batches]]
+id = "2.11"
+descriptor = "Relational query config: the DBQueryConfig option keys"
+justification = "The option keys accepted by `db.query.<table>.findMany({...})` — columns/with/extras/where/orderBy/limit/offset — and the two factories (getOperators, getOrderByOperators) whose return objects are handed to the where/orderBy callbacks; their contents are the operators rostered in 3.1. Ellipses mark the elided type machinery between the keys."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/relations.ts", start = 159, end = 159, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 188, end = 188, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 210, end = 210, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 216, end = 216, render = { kind = "ellipsis" } },
+  { path = "drizzle-orm/src/relations.ts", start = 217, end = 217, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 222, end = 222, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 237, end = 237, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 251, end = 251, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 261, end = 261, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 271, end = 271, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 274, end = 274, render = { kind = "full" } },
+  { path = "drizzle-orm/src/relations.ts", start = 276, end = 276, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "DrizzleConfig, Casing, and the error hierarchy"
+justification = "The options object every `drizzle()` factory accepts (logger/schema/casing/cache) and the three error classes users catch — DrizzleError, DrizzleQueryError (carries query + params), TransactionRollbackError."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/utils.ts", start = 234, end = 241, render = { kind = "full" } },
+  { path = "drizzle-orm/src/errors.ts", start = 3, end = 4, render = { kind = "full" } },
+  { path = "drizzle-orm/src/errors.ts", start = 13, end = 18, render = { kind = "full" } },
+  { path = "drizzle-orm/src/errors.ts", start = 27, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "src-root helper roster: utils, alias, casing, subquery, operations"
+justification = "One name-only line per export across the dialect-agnostic helper modules — mapResultRow, orderSelectedFields, mapUpdateSet, getTableColumns, getViewSelectedFields, getTableLikeName, isConfig, the alias proxies, snake/camel casing, Subquery/WithSubquery and the SelectedFields types every dialect's select builder speaks."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/utils.ts", start = 15, end = 15, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 76, end = 76, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 115, end = 115, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 207, end = 207, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 211, end = 211, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 216, end = 216, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/utils.ts", start = 256, end = 256, render = { kind = "full" } },
+  { path = "drizzle-orm/src/utils.ts", start = 286, end = 286, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/alias.ts", start = 91, end = 91, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/alias.ts", start = 98, end = 98, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/alias.ts", start = 102, end = 102, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/casing.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "drizzle-orm/src/casing.ts", start = 14, end = 14, render = { kind = "full" } },
+  { path = "drizzle-orm/src/casing.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "drizzle-orm/src/subquery.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "drizzle-orm/src/subquery.ts", start = 43, end = 43, render = { kind = "full" } },
+  { path = "drizzle-orm/src/selection-proxy.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "drizzle-orm/src/operations.ts", start = 27, end = 27, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/operations.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/operations.ts", start = 42, end = 42, render = { kind = "truncated", pattern = "^export type [A-Za-z_$]+" } },
+] }
+
+[[batches]]
+id = "2.14"
+descriptor = "Cross-cutting plumbing: logging, migrations, prepared queries, versioning"
+justification = "The Logger/LogWriter contract and its three implementations, the migration-folder reader shared by every driver's `migrate()`, the PreparedQuery interface, QueryPromise, and the small marker modules (version, batch, primary-key, runnable-query, view-common, table.utils) that close out the src root."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/logger.ts", start = 3, end = 5, render = { kind = "full" } },
+  { path = "drizzle-orm/src/logger.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "drizzle-orm/src/logger.ts", start = 11, end = 11, render = { kind = "full" } },
+  { path = "drizzle-orm/src/logger.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "drizzle-orm/src/logger.ts", start = 41, end = 41, render = { kind = "full" } },
+  { path = "drizzle-orm/src/migrator.ts", start = 9, end = 13, render = { kind = "full" } },
+  { path = "drizzle-orm/src/migrator.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "drizzle-orm/src/session.ts", start = 3, end = 7, render = { kind = "full" } },
+  { path = "drizzle-orm/src/query-promise.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "drizzle-orm/src/version.ts", start = 2, end = 4, render = { kind = "full" } },
+  { path = "drizzle-orm/src/batch.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "drizzle-orm/src/primary-key.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "drizzle-orm/src/runnable-query.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "drizzle-orm/src/view-common.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "drizzle-orm/src/table.utils.ts", start = 2, end = 2, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 3
+# The dialect-agnostic SQL expression vocabulary re-exported from the root.
 
 [[batches]]
 id = "3.1"
-descriptor = "drizzle-orm/src top-level listing"
-justification = "The master roster of the core package: ~20 dialect-agnostic files (table.ts, column.ts, relations.ts, sql/, ...), 5 dialect-core dirs, and ~25 driver-adapter dirs. This single listing is the anchor that makes every later depth-only batch about one dialect/driver safe from catastrophic-omission — all siblings are already named here."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-orm/src", entries = "all" }]
+descriptor = "Condition operators: complete roster of sql/expressions/conditions.ts"
+justification = "Every comparison/logical/array operator Drizzle ships — eq, ne, and, or, not, gt/gte/lt/lte, inArray/notInArray, isNull/isNotNull, exists/notExists, between/notBetween, like/notLike/ilike/notIlike, arrayContains/arrayContained/arrayOverlaps. Name-only, so 'does Drizzle have an X operator and where is it?' costs zero follow-ups."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 17, end = 17, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 62, end = 62, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 84, end = 84, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 104, end = 104, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 143, end = 143, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 177, end = 177, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 195, end = 195, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 215, end = 215, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 233, end = 233, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 251, end = 251, render = { kind = "truncated", pattern = "^export const [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 281, end = 281, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 322, end = 322, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 352, end = 352, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 372, end = 372, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 396, end = 396, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 421, end = 421, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 459, end = 459, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 500, end = 500, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 529, end = 529, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 551, end = 551, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 574, end = 574, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 596, end = 596, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 632, end = 632, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 680, end = 680, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 727, end = 727, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "drizzle-orm/src/index.ts — public re-export roster"
-justification = "The 14 dialect-agnostic modules that make up the drizzle-orm package root export (alias, column-builder, column, entity, errors, logger, operations, query-promise, relations, sql, subquery, table, utils, view-common) — literally the top-level public API surface."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/index.ts", start = 1, end = 14, render.kind = "full" }]
+descriptor = "Aggregates, vector distances, ordering, and the sql/ barrel"
+justification = "The rest of the expression surface: count/countDistinct/avg/avgDistinct/sum/sumDistinct/max/min, the six pgvector distance helpers, asc/desc, and the `sql/` barrel. Completes the class begun in 3.1."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 35, end = 35, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 51, end = 51, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 67, end = 67, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 83, end = 83, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 99, end = 99, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 113, end = 113, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 127, end = 127, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 61, end = 61, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 93, end = 93, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 125, end = 125, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 150, end = 150, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 170, end = 170, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/select.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/expressions/select.ts", start = 43, end = 43, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sql/index.ts", start = 1, end = 3, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "3.3"
-descriptor = "entity.ts — entityKind/is() runtime type-check pattern"
-justification = "The `entityKind` symbol + `is()` function is the cross-cutting runtime-type-check idiom used by every class in the codebase (every dialect's Table/Column/Dialect subclasses declare a static entityKind). Foundational to reading any other class; is()'s body (an instanceof fast path + prototype-chain walk) is elided."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/entity.ts", start = 1, end = 12, render.kind = "full" },
-  { path = "drizzle-orm/src/entity.ts", start = 13, end = 13, render.kind = "ellipsis" },
-]
-
-[[batches]]
-id = "3.4"
-descriptor = "table.ts — Table class definition"
-justification = "The dialect-agnostic `Table` base class every PgTable/MySqlTable/SQLiteTable/GelTable/SingleStoreTable extends — its internal symbols (Columns, Schema, IsAlias, etc.) recur throughout the codebase."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/table.ts", start = 49, end = 64, render.kind = "full" }]
-
-[[batches]]
-id = "3.5"
-descriptor = "table.ts — table helper functions"
-justification = "isTable/getTableName/getTableUniqueName — the small free functions used to inspect any Table instance regardless of dialect."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/table.ts", start = 120, end = 122, render.kind = "full" }, { path = "drizzle-orm/src/table.ts", start = 143, end = 149, render.kind = "full" }]
-
-[[batches]]
-id = "3.6"
-descriptor = "utils.ts — DrizzleConfig, the shape every drizzle() call takes"
-justification = "Every dialect's `drizzle(client, config)` factory (tier 7) accepts this same config shape: logger, schema, casing, cache. One of the highest-value small spans in the repo for 'how do I configure the client' queries."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/utils.ts", start = 234, end = 241, render.kind = "full" }]
-
-[[batches]]
-id = "3.7"
-descriptor = "utils.ts — exported function roster (runtime functions only; the file's other ~30 exports are type-level helpers)"
-justification = "Every one of utils.ts's exported runtime functions (getTableColumns, getTableLikeName, isConfig, mapResultRow, ...) — none omitted. Scoped to functions since the file's remaining exports are compile-time-only type helpers with no separate runtime roster value."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/utils.ts", start = 15, end = 15, render.kind = "full" },
-  { path = "drizzle-orm/src/utils.ts", start = 76, end = 76, render.kind = "full" },
-  { path = "drizzle-orm/src/utils.ts", start = 97, end = 97, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 115, end = 115, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 181, end = 181, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 207, end = 207, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 211, end = 211, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 216, end = 216, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/utils.ts", start = 256, end = 256, render.kind = "full" },
-  { path = "drizzle-orm/src/utils.ts", start = 286, end = 286, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "column.ts — Column class fields"
-justification = "The dialect-agnostic `Column` base class (name, notNull, hasDefault, isUnique, generated, ...) that every dialect's column classes extend — the runtime counterpart to the type-level ColumnBaseConfig. Named fields shown, remainder elided (ellipses)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/column.ts", start = 63, end = 68, render.kind = "full" },
-  { path = "drizzle-orm/src/column.ts", start = 72, end = 72, render.kind = "full" },
-  { path = "drizzle-orm/src/column.ts", start = 73, end = 73, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/column.ts", start = 75, end = 75, render.kind = "full" },
-  { path = "drizzle-orm/src/column.ts", start = 76, end = 76, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/column.ts", start = 79, end = 80, render.kind = "full" },
-  { path = "drizzle-orm/src/column.ts", start = 81, end = 81, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/column.ts", start = 86, end = 86, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.9"
-descriptor = "column-builder.ts — ColumnDataType and Dialect union types"
-justification = "The two type-level enums that classify every column and dialect in the codebase — 'string'|'number'|...|'localDateTime' for data types, 'pg'|'mysql'|'sqlite'|'singlestore'|'common'|'gel' for dialects. Directly answers 'what dialects does this support' in one line."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/column-builder.ts", start = 10, end = 28, render.kind = "full" }]
-
-[[batches]]
-id = "3.10"
-descriptor = "operations.ts — SelectedFields* type roster"
-justification = "Name-only roster of every type this file exports — RequiredKeyOnly, OptionalKeyOnly, SelectedFieldsFlat, SelectedFieldsFlatFull, SelectedFields, SelectedFieldsOrdered — the shapes returned from .select({...}) across every dialect and query builder. Generic bodies omitted; each declaration's own name states its purpose."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/operations.ts", start = 6, end = 6, render.kind = "full" },
-  { path = "drizzle-orm/src/operations.ts", start = 12, end = 12, render.kind = "full" },
-  { path = "drizzle-orm/src/operations.ts", start = 27, end = 27, render.kind = "full" },
-  { path = "drizzle-orm/src/operations.ts", start = 32, end = 32, render.kind = "full" },
-  { path = "drizzle-orm/src/operations.ts", start = 37, end = 37, render.kind = "full" },
-  { path = "drizzle-orm/src/operations.ts", start = 42, end = 42, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.11"
-descriptor = "subquery.ts — Subquery/WithSubquery class shapes"
-justification = "Subquery/WithSubquery — the CTE/subquery wrapper types used by every dialect's query builder .with()/.as() API. Class headers shown; internal `_` shape + constructor body elided (ellipsis)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/subquery.ts", start = 4, end = 4, render.kind = "full" },
-  { path = "drizzle-orm/src/subquery.ts", start = 5, end = 5, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/subquery.ts", start = 12, end = 16, render.kind = "full" },
-  { path = "drizzle-orm/src/subquery.ts", start = 18, end = 18, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/subquery.ts", start = 43, end = 48, render.kind = "full" },
-  { path = "drizzle-orm/src/subquery.ts", start = 50, end = 50, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.12"
-descriptor = "casing.ts — toSnakeCase/toCamelCase"
-justification = "Backs the `casing: 'snake_case'` DrizzleConfig option (3.6). Answers 'how does automatic column casing work' with toSnakeCase's concrete implementation; toCamelCase (same regex-splitting shape, different join) shown by signature only."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/casing.ts", start = 1, end = 11, render.kind = "full" },
-  { path = "drizzle-orm/src/casing.ts", start = 14, end = 14, render.kind = "full" },
-  { path = "drizzle-orm/src/casing.ts", start = 15, end = 15, render.kind = "ellipsis" },
-]
-
-[[batches]]
-id = "3.13"
-descriptor = "migrator.ts — migration config/journal shapes"
-justification = "KitConfig/MigrationConfig/MigrationMeta — the interfaces every dialect's migrate() function (driven by drizzle-kit-generated journal files) takes and reads."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/migrator.ts", start = 4, end = 19, render.kind = "full" }]
-
-# ============================= TIER 4 — SQL core semantics =============================
+# ---------------------------------------------------------------- tier 4
+# pg-core: the reference dialect, in the depth an agent needs to work in it.
+# The other four cores mirror this structure file-for-file (tier 5).
 
 [[batches]]
 id = "4.1"
-descriptor = "sql/sql.ts — Query/SQLWrapper interfaces"
-justification = "Query{sql,params}/SQLWrapper{getSQL()} are the two interfaces every queryable value in the codebase (Table, Column, View, Subquery, SQL, Param, Placeholder) implements or produces. Foundational vocabulary for reading any dialect/driver code."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/sql/sql.ts", start = 45, end = 54, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 65, end = 68, render.kind = "full" },
-]
+descriptor = "pg-core barrel: every module of the dialect core"
+justification = "`pg-core/index.ts` in full is simultaneously the export surface of `drizzle-orm/pg-core` and the module map of the largest directory in the repo (alias, checks, columns, db, dialect, foreign-keys, indexes, policies, primary-keys, query-builders, roles, schema, sequence, session, subquery, table, unique-constraint, utils, view)."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/pg-core/index.ts", start = 1, end = 21, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "sql/sql.ts — the `sql` tagged-template function"
-justification = "The `sql\\`...\\`` tag is the escape hatch for raw/parameterized SQL used throughout the codebase and in user schemas alike. This is its concrete implementation, not just its type."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/sql/sql.ts", start = 478, end = 478, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 479, end = 479, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 485, end = 486, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 487, end = 487, render.kind = "ellipsis" },
-]
+descriptor = "pgTable and the table-declaration signature"
+justification = "The single most-written API in any Drizzle codebase: `pgTable(name, columns, extraConfig)`, what extraConfig may return (indexes, checks, FKs, PKs, unique constraints, policies), the PgTable class, and pgTableCreator for name prefixing."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/pg-core/table.ts", start = 13, end = 19, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/table.ts", start = 33, end = 34, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/table.ts", start = 139, end = 148, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/table.ts", start = 244, end = 244, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/table.ts", start = 248, end = 248, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "sql/sql.ts — sql namespace helpers (raw/join/identifier/placeholder/param)"
-predecessor = "4.2"
-justification = "sql.raw/sql.join/sql.identifier/sql.placeholder/sql.param — the roster of helpers hung off the `sql` tag function itself (predecessor)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/sql/sql.ts", start = 511, end = 511, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 528, end = 528, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 551, end = 551, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 555, end = 555, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/sql.ts", start = 559, end = 559, render.kind = "full" },
-]
+descriptor = "Complete PostgreSQL column-type vocabulary"
+justification = "`getPgColumnBuilders()` names all 31 pg column builders in one block — bigint through varchar plus the postgis `geometry` and the pgvector `bit`/`halfvec`/`sparsevec`/`vector`. Any 'which column types can I declare' question resolves here with no follow-up."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/pg-core/columns/all.ts", start = 34, end = 67, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "sql/index.ts — sql/ package re-export map"
-justification = "sql/ re-exports expressions/ + functions/ + sql.ts — the three-way split explored in 4.5-4.6."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/sql/index.ts", start = 1, end = 3, render.kind = "full" }]
+descriptor = "pg-core schema-object factories (roster)"
+justification = "Every non-table declaration helper, one name-only line each: pgSchema, pgEnum, pgView, pgMaterializedView, pgSequence, pgRole, pgPolicy, index, uniqueIndex, foreignKey, primaryKey, unique, check, customType, alias, plus getTableConfig, the introspection helper that reads a declared table back out. Shows the file *and* line for each without paying for bodies."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/pg-core/schema.ts", start = 64, end = 64, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/columns/enum.ts", start = 144, end = 144, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/pg-core/view.ts", start = 408, end = 408, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/view.ts", start = 417, end = 417, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/sequence.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/roles.ts", start = 39, end = 39, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/policies.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/indexes.ts", start = 245, end = 245, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/indexes.ts", start = 249, end = 249, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/foreign-keys.ts", start = 98, end = 98, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/primary-keys.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/unique-constraint.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/checks.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/columns/custom.ts", start = 203, end = 203, render = { kind = "truncated", pattern = "^export function [A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/pg-core/alias.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/utils.ts", start = 19, end = 19, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.5"
-descriptor = "sql/expressions — comparison/logical operator roster"
-justification = "Every SQL condition operator drizzle-orm ships (eq, ne, gt, gte, lt, lte, and, or, not, isNull, isNotNull, inArray, notInArray, between, notBetween, like/notLike/ilike/notIlike, exists/notExists, arrayContains/arrayContained/arrayOverlaps, plus asc/desc for ordering). A 'what operators exist' query is answered directly here without opening any file."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 62, end = 62, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 84, end = 84, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 104, end = 104, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 143, end = 143, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 177, end = 177, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 195, end = 195, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 215, end = 215, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 233, end = 233, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 251, end = 251, render.kind = "truncated", render.pattern = "^[^=]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 269, end = 269, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 310, end = 310, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 352, end = 352, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 372, end = 372, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 396, end = 396, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 421, end = 421, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 444, end = 444, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 485, end = 485, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 529, end = 529, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 551, end = 551, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 574, end = 574, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 596, end = 596, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 620, end = 620, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 668, end = 668, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/conditions.ts", start = 715, end = 715, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/expressions/select.ts", start = 23, end = 23, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/expressions/select.ts", start = 43, end = 43, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
+descriptor = "PgDatabase: the complete `db.*` method set"
+justification = "Everything reachable from a `drizzle()` handle — the `query` relational namespace, $count, with, select/selectDistinct/selectDistinctOn, insert, update, delete, refreshMaterializedView, execute, transaction. The canonical answer to 'what can db do?'."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 36, end = 36, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 50, end = 54, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 150, end = 150, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 178, end = 178, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 435, end = 436, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 469, end = 470, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 505, end = 505, render = { kind = "full" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 549, end = 549, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+<[A-Za-z ]+extends PgTable>\\(table: TTable\\)" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 577, end = 577, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+<[A-Za-z ]+extends PgTable>\\(table: TTable\\)" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 605, end = 605, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+<[A-Za-z ]+extends PgTable>\\(table: TTable\\)" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 609, end = 609, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+<[A-Za-z ]+extends PgMaterializedView>" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 615, end = 615, render = { kind = "truncated", pattern = "^\t[A-Za-z_$]+" } },
+  { path = "drizzle-orm/src/pg-core/db.ts", start = 636, end = 636, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "4.6"
-descriptor = "sql/functions — aggregate + vector function roster"
-justification = "count/countDistinct/avg/avgDistinct/sum/sumDistinct/max/min (SQL aggregates) plus l2Distance/l1Distance/innerProduct/cosineDistance/hammingDistance/jaccardDistance (pgvector similarity functions) — the full sql/functions/ surface."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 19, end = 19, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 35, end = 35, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 51, end = 51, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 67, end = 67, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 83, end = 83, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 99, end = 99, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 113, end = 113, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/aggregate.ts", start = 127, end = 127, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 31, end = 31, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 61, end = 61, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 93, end = 93, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 125, end = 125, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 150, end = 150, render.kind = "full" },
-  { path = "drizzle-orm/src/sql/functions/vector.ts", start = 170, end = 170, render.kind = "full" },
-]
-
-# ============================= TIER 5 — relations & generic query-builder layer =============================
+# ---------------------------------------------------------------- tier 5
+# The other dialect cores and the driver adapters that wrap them.
 
 [[batches]]
 id = "5.1"
-descriptor = "relations.ts — public relations() API entry point"
-justification = "`relations(table, ({ one, many }) => ({...}))` is the documented way to declare relational-query-API relationships between tables — the single most-searched-for symbol for 'how do relations work' sessions."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/relations.ts", start = 502, end = 512, render.kind = "full" }]
+descriptor = "Table factories of the other four dialect cores"
+justification = "mysqlTable, sqliteTable, singlestoreTable and gelTable with their *Creator variants, each with a file:line. Establishes that pg-core's shape (tier 4) transfers verbatim and gives the exact entry point per dialect."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/mysql-core/table.ts", start = 221, end = 221, render = { kind = "full" } },
+  { path = "drizzle-orm/src/mysql-core/table.ts", start = 225, end = 225, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sqlite-core/table.ts", start = 219, end = 219, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sqlite-core/table.ts", start = 223, end = 223, render = { kind = "full" } },
+  { path = "drizzle-orm/src/singlestore-core/table.ts", start = 208, end = 208, render = { kind = "full" } },
+  { path = "drizzle-orm/src/singlestore-core/table.ts", start = 212, end = 212, render = { kind = "full" } },
+  { path = "drizzle-orm/src/gel-core/table.ts", start = 249, end = 249, render = { kind = "full" } },
+  { path = "drizzle-orm/src/gel-core/table.ts", start = 253, end = 253, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "relations.ts — Relation/One/Many class roster"
-predecessor = "5.1"
-justification = "The runtime classes `relations()`'s one/many helpers (5.1) construct: abstract Relation, One, Many. Establishes the class hierarchy behind the relations() config object."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/relations.ts", start = 32, end = 40, render.kind = "full" },
-  { path = "drizzle-orm/src/relations.ts", start = 65, end = 65, render.kind = "full" },
-  { path = "drizzle-orm/src/relations.ts", start = 100, end = 100, render.kind = "full" },
-]
+descriptor = "MySQL and SQLite column-type vocabularies"
+justification = "The per-dialect counterparts of 4.3: every MySQL builder (bigint … year, including mysqlEnum) and the six SQLite ones (blob, customType, integer, numeric, real, text). Together with 4.3 this closes the 'which types can I declare' class for the three mainstream dialects."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/mysql-core/columns/all.ts", start = 27, end = 56, render = { kind = "full" } },
+  { path = "drizzle-orm/src/sqlite-core/columns/all.ts", start = 8, end = 17, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "relations.ts — getOperators() (relational query `where` callback API)"
-justification = "The operators object passed into `db.query.table.findMany({ where: (t, { eq, and }) => ... })` callbacks — distinct from the SQL-expression operators in 4.5 in that this is the relational-query-builder's own callback surface. Truncated mid-object (ellipsis) since the rest duplicates 4.5's already-established operator names."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/relations.ts", start = 159, end = 168, render.kind = "full" },
-  { path = "drizzle-orm/src/relations.ts", start = 169, end = 169, render.kind = "ellipsis" },
-]
+descriptor = "Driver adapter anatomy (node-postgres as the template)"
+justification = "The recurring driver shape: driver.ts (a `drizzle()` overload set plus `drizzle.mock`), a session.ts re-exported alongside it by index.ts, and migrator.ts whose `migrate(db, config)` just delegates to readMigrationFiles. Most driver folders are exactly these four files; a few (libsql, prisma, expo-sqlite, aws-data-api) add more."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 43, end = 45, render = { kind = "full" } },
+  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 91, end = 91, render = { kind = "full" } },
+  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 142, end = 143, render = { kind = "full" } },
+  { path = "drizzle-orm/src/node-postgres/migrator.ts", start = 5, end = 10, render = { kind = "full" } },
+  { path = "drizzle-orm/src/node-postgres/index.ts", start = 1, end = 2, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "query-builders/query-builder.ts — TypedQueryBuilder (full file)"
-justification = "The dialect-agnostic abstract base every dialect's SelectBuilder/InsertBuilder/etc. ultimately implements (getSQL/getSelectedFields). Tiny, whole-file, foundational."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/query-builders/query-builder.ts", start = 1, end = 19, render.kind = "full" }]
+descriptor = "Query cache API"
+justification = "The newer opt-in caching layer referenced by DrizzleConfig.cache: the abstract Cache contract (strategy/get/put/onMutate), the NoopCache default, and the Upstash implementation shipped in the box."
+content = { kind = "lines", spans = [
+  { path = "drizzle-orm/src/cache/core/cache.ts", start = 5, end = 8, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/core/cache.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/core/cache.ts", start = 27, end = 27, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/core/cache.ts", start = 39, end = 39, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/core/cache.ts", start = 44, end = 44, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/upstash/cache.ts", start = 60, end = 60, render = { kind = "full" } },
+  { path = "drizzle-orm/src/cache/upstash/cache.ts", start = 204, end = 204, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "5.5"
-descriptor = "query-builders/ directory listing"
-justification = "Only 2 files (query-builder.ts covered in 5.4, select.types.ts not yet) — closes the listing for this small shared directory before the much larger per-dialect query-builders/ dirs are explored in tier 6."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-orm/src/query-builders", entries = "all" }]
-
-[[batches]]
-id = "5.6"
-descriptor = "cache/readme.md — query caching overview"
-justification = "Documents the `cache` DrizzleConfig option (3.6): opt-in caching hooks and the built-in upstashCache(). Otherwise-undiscoverable feature explained only in this file; the longer explanatory paragraph is elided (ellipsis)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/cache/readme.md", start = 1, end = 3, render.kind = "full" },
-  { path = "drizzle-orm/src/cache/readme.md", start = 4, end = 4, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/cache/readme.md", start = 7, end = 7, render.kind = "full" },
-]
-
-[[batches]]
-id = "5.7"
-descriptor = "cache/ directory listing"
-justification = "core/ (cache.ts, types.ts, index.ts) + upstash/ (cache.ts, index.ts) — the implementation behind 5.6's readme, so a follow-up for 'show me the Cache base class' lands in one hop."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-orm/src/cache", entries = "all" }, { parent = "drizzle-orm/src/cache/core", entries = "all" }, { parent = "drizzle-orm/src/cache/upstash", entries = "all" }]
-
-# ============================= TIER 6 — dialect cores (comparative structure) =============================
+# ---------------------------------------------------------------- tier 6
+# drizzle-kit: the migration/introspection CLI and its config file.
 
 [[batches]]
 id = "6.1"
-descriptor = "All 5 dialect-core directory listings (pg/mysql/sqlite/gel/singlestore)"
-justification = "The single most important catastrophic-omission mitigation in this fixture: all 5 dialect cores (pg-core, mysql-core, sqlite-core, gel-core, singlestore-core) share the identical file roster (table.ts, dialect.ts, session.ts, db.ts, columns/, query-builders/, view*.ts, ...). Listing all 5 together in one batch makes every later depth-only batch (which necessarily picks one dialect to expand) unambiguous about the other 4 having the same shape."
-content.kind = "fs"
-content.groups = [
-  { parent = "drizzle-orm/src/pg-core", entries = "all" },
-  { parent = "drizzle-orm/src/mysql-core", entries = "all" },
-  { parent = "drizzle-orm/src/sqlite-core", entries = "all" },
-  { parent = "drizzle-orm/src/gel-core", entries = "all" },
-  { parent = "drizzle-orm/src/singlestore-core", entries = "all" },
-]
+descriptor = "drizzle-kit CLI: every command and its registration"
+justification = "The complete command set with the CLI name each one is registered under — generate, migrate, push, check, up, introspect (exported as `pull`), drop, studio, export (exported as `exportRaw`) — plus the `run([...])` registration list, which also carries the hidden legacy `<cmd>:<dialect>` aliases."
+content = { kind = "lines", spans = [
+  { path = "drizzle-kit/src/cli/schema.ts", start = 50, end = 51, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 115, end = 116, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 247, end = 248, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 406, end = 407, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 426, end = 427, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 470, end = 471, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 633, end = 634, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 652, end = 653, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 807, end = 809, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/index.ts", start = 45, end = 47, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "3 of 5 dialects' columns/ directory listings (pg/mysql/sqlite)"
-predecessor = "6.1"
-justification = "One file per column type per dialect (pg-core/columns has postgis_extension/ and vector_extension/ subdirs too). Shown for 3 of 5 dialects to control cost — 6.1's listing already named gel-core's and singlestore-core's columns/ subdirectory as existing. Ranked before the rosters (6.3) it backs, since it's cheaper."
-content.kind = "fs"
-content.groups = [
-  { parent = "drizzle-orm/src/pg-core/columns", entries = "all" },
-  { parent = "drizzle-orm/src/mysql-core/columns", entries = "all" },
-  { parent = "drizzle-orm/src/sqlite-core/columns", entries = "all" },
-]
+descriptor = "drizzle.config.ts: defineConfig and the Config keys"
+justification = "The config file every drizzle-kit user writes: the shared keys (dialect, out, breakpoints, tablesFilter, extensionsFilters, schemaFilter, schema, verbose, strict, casing, migrations, introspect, entities) and the fact that dbCredentials is a dialect-discriminated union. Ellipsis marks the per-dialect credential branches that follow."
+content = { kind = "lines", spans = [
+  { path = "drizzle-kit/src/index.ts", start = 109, end = 121, render = { kind = "full" } },
+  { path = "drizzle-kit/src/index.ts", start = 126, end = 126, render = { kind = "full" } },
+  { path = "drizzle-kit/src/index.ts", start = 129, end = 129, render = { kind = "full" } },
+  { path = "drizzle-kit/src/index.ts", start = 134, end = 134, render = { kind = "ellipsis" } },
+  { path = "drizzle-kit/src/index.ts", start = 347, end = 349, render = { kind = "full" } },
+  { path = "drizzle-kit/src/schemaValidator.ts", start = 7, end = 10, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.3"
-descriptor = "Column-type roster across all 5 dialects"
-predecessor = "6.2"
-justification = "Each dialect's columns/all.ts exports a getXColumnBuilders() naming every column type it ships (pg: 32 types incl. postgis/vector extensions, head + the vector-extension tail shown, middle elided; mysql: 25, head shown, rest elided; sqlite: 6, shown in full — it's small enough not to need trimming). Shown for 3 of the 5 dialects to control cost — 6.2's file listing already names gel-core's and singlestore-core's column files (a close proxy for their type names), so this isn't a catastrophic omission."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/pg-core/columns/all.ts", start = 34, end = 40, render.kind = "full" },
-  { path = "drizzle-orm/src/pg-core/columns/all.ts", start = 41, end = 41, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/pg-core/columns/all.ts", start = 65, end = 69, render.kind = "full" },
-  { path = "drizzle-orm/src/mysql-core/columns/all.ts", start = 27, end = 31, render.kind = "full" },
-  { path = "drizzle-orm/src/mysql-core/columns/all.ts", start = 32, end = 32, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/mysql-core/columns/all.ts", start = 55, end = 56, render.kind = "full" },
-  { path = "drizzle-orm/src/sqlite-core/columns/all.ts", start = 9, end = 16, render.kind = "full" },
-]
+descriptor = "CONTRIBUTING: how drizzle-kit is organised"
+justification = "Maintainer-written map of the kit pipeline — cli/schema.ts holds brocli command definitions, cli/commands/ the business logic, serializer/ (and extensions/) reads Drizzle schemas and introspects databases into JSON, snapshotsDiffer.ts diffs snapshots, jsonStatements.ts types the statements, sqlgenerator.ts renders SQL, introspect-*.ts writes TypeScript back out. Turns a 20-file src tree into a readable pipeline."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 213, end = 221, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 226, end = 226, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 228, end = 228, render = { kind = "truncated", pattern = "^\\s+all the necessary logic to read from the Drizzle ORM schema and convert it to a common JSON format" } },
+  { path = "CONTRIBUTING.md", start = 230, end = 230, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 232, end = 232, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 234, end = 234, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 236, end = 236, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 238, end = 238, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 240, end = 240, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 242, end = 242, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 244, end = 244, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.4"
-descriptor = "3 of 5 dialects' query-builders/ directory listings (mysql/pg/gel)"
-predecessor = "6.1"
-justification = "Every dialect's query-builders/ dir has the same select/insert/update/delete/count/query/query-builder shape (pg and gel additionally have raw.ts + refresh-materialized-view.ts). Shown for 3 of 5 to control cost — 6.1's listing already named sqlite-core's and singlestore-core's query-builders/ subdirectory as existing."
-content.kind = "fs"
-content.groups = [
-  { parent = "drizzle-orm/src/mysql-core/query-builders", entries = "all" },
-  { parent = "drizzle-orm/src/pg-core/query-builders", entries = "all" },
-  { parent = "drizzle-orm/src/gel-core/query-builders", entries = "all" },
-]
+descriptor = "drizzle-kit package identity and the head of generate's options"
+justification = "The published CLI (`bin: drizzle-kit`, version 0.31.10, built on @drizzle-team/brocli + esbuild) and the first options of `generate` — config, dialect, driver, casing, schema, out, name, breakpoints — as the concrete template for the other eight commands; the ellipsis marks the remaining options."
+content = { kind = "lines", spans = [
+  { path = "drizzle-kit/package.json", start = 2, end = 3, render = { kind = "full" } },
+  { path = "drizzle-kit/package.json", start = 31, end = 33, render = { kind = "full" } },
+  { path = "drizzle-kit/package.json", start = 45, end = 50, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 52, end = 60, render = { kind = "full" } },
+  { path = "drizzle-kit/src/cli/schema.ts", start = 61, end = 61, render = { kind = "ellipsis" } },
+] }
 
-[[batches]]
-id = "6.5"
-descriptor = "pg-core/table.ts — pgTable/pgTableCreator entry points"
-justification = "The concrete `pgTable` const and `pgTableCreator` factory that user schemas call to declare a Postgres table."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/pg-core/table.ts", start = 244, end = 248, render.kind = "full" }]
-
-[[batches]]
-id = "6.7"
-descriptor = "pg-core/schema.ts — PgSchema class header + pgSchema() factory"
-justification = "How Postgres schemas (namespaces) are declared: the PgSchema class header and the pgSchema() factory function user code actually calls — the pg-specific counterpart to the dialect-agnostic Table (3.4). PgSchema's table/view/enum/sequence members are omitted (each just delegates to the dialect-agnostic factory already shown elsewhere)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/pg-core/schema.ts", start = 9, end = 9, render.kind = "full" },
-  { path = "drizzle-orm/src/pg-core/schema.ts", start = 10, end = 10, render.kind = "ellipsis" },
-  { path = "drizzle-orm/src/pg-core/schema.ts", start = 64, end = 72, render.kind = "full" },
-]
-
-[[batches]]
-id = "6.8"
-descriptor = "pg-core/utils.ts — getTableConfig() signature"
-justification = "Backs docs/table-introspect-api.md (tier 10): the introspection function that returns a PgTable's structural metadata (columns, indexes, keys, etc. — full field list documented there)."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/pg-core/utils.ts", start = 19, end = 19, render.kind = "full" }]
-
-[[batches]]
-id = "6.9"
-descriptor = "pg-core/dialect.ts — PgDialect class header"
-justification = "The class responsible for compiling query-builder ASTs to Postgres SQL text — its constructor takes only a CasingCache, meaning virtually all its logic is in its (unshown) methods; this anchors a follow-up read at the right line."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/pg-core/dialect.ts", start = 59, end = 71, render.kind = "full" }]
-
-[[batches]]
-id = "6.10"
-descriptor = "pg-core/query-builders/select.ts — exported class roster"
-justification = "PgSelectBuilder / PgSelectQueryBuilderBase / PgSelectBase — the class chain behind db.select(), in the largest single file in any dialect core (1346 lines). A locations-only roster here is the right granularity given the file's size."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/pg-core/query-builders/select.ts", start = 62, end = 62, render.kind = "full" },
-  { path = "drizzle-orm/src/pg-core/query-builders/select.ts", start = 153, end = 153, render.kind = "full" },
-  { path = "drizzle-orm/src/pg-core/query-builders/select.ts", start = 1054, end = 1054, render.kind = "full" },
-]
-
-# ============================= TIER 7 — driver adapters =============================
+# ---------------------------------------------------------------- tier 7
+# The companion packages that sit on top of drizzle-orm.
 
 [[batches]]
 id = "7.1"
-descriptor = "node-postgres/driver.ts — canonical drizzle() factory"
-justification = "The `drizzle(connection, config)` entry point, shown here for the node-postgres (pg) driver, is the pattern every one of the ~25 driver adapters follows (accepts a connection string or a client instance; a third {client|connection, ...config}-object overload is elided). One representative in full is the right depth given 3.1 already established all sibling driver directories exist."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 91, end = 100, render.kind = "full" },
-  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 101, end = 101, render.kind = "ellipsis" },
-]
+descriptor = "Validator bridges: drizzle-zod and its three siblings"
+justification = "createSelectSchema / createInsertSchema / createUpdateSchema / createSchemaFactory in drizzle-zod, plus the feature list. drizzle-typebox, drizzle-valibot and drizzle-arktype repeat this package shape file-for-file — the same column.ts / schema.ts / schema.types.ts / utils.ts modules behind the same factory names — so this batch stands in for all four."
+content = { kind = "lines", spans = [
+  { path = "drizzle-zod/README.md", start = 15, end = 17, render = { kind = "full" } },
+  { path = "drizzle-zod/src/schema.ts", start = 94, end = 94, render = { kind = "full" } },
+  { path = "drizzle-zod/src/schema.ts", start = 105, end = 105, render = { kind = "full" } },
+  { path = "drizzle-zod/src/schema.ts", start = 113, end = 113, render = { kind = "full" } },
+  { path = "drizzle-zod/src/schema.ts", start = 121, end = 121, render = { kind = "full" } },
+  { path = "drizzle-zod/src/index.ts", start = 1, end = 6, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "7.2"
-descriptor = "node-postgres/driver.ts — drizzle.mock()"
-predecessor = "7.1"
-justification = "The `drizzle.mock()` escape hatch hung off the same drizzle() function (7.1) — for constructing a schema-typed db object without a real connection, e.g. for type-checking or codegen scripts."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/node-postgres/driver.ts", start = 142, end = 146, render.kind = "full" }]
+descriptor = "drizzle-seed and eslint-plugin-drizzle entry points"
+justification = "The two remaining published packages: `seed(db, schema)` / `reset(db, schema)` / getGeneratorsFunctions / seedForDrizzleStudio, and the ESLint plugin's two rules (enforce-delete-with-where, enforce-update-with-where) with its `all` / `recommended` configs."
+content = { kind = "lines", spans = [
+  { path = "drizzle-seed/src/index.ts", start = 212, end = 212, render = { kind = "full" } },
+  { path = "drizzle-seed/src/index.ts", start = 216, end = 216, render = { kind = "full" } },
+  { path = "drizzle-seed/src/index.ts", start = 346, end = 346, render = { kind = "full" } },
+  { path = "drizzle-seed/src/index.ts", start = 441, end = 441, render = { kind = "full" } },
+  { path = "eslint-plugin-drizzle/package.json", start = 2, end = 4, render = { kind = "full" } },
+  { path = "eslint-plugin-drizzle/src/index.ts", start = 9, end = 16, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "7.3"
-descriptor = "Driver adapter → underlying client library (grounding table)"
-justification = "Every driver-adapter directory's first substantive import names the third-party client it wraps. Cheap (one line per file) and directly answers 'which driver do I install for database X' for most of the ~25 adapters at once — the ones omitted (pure-HTTP adapters, the 4 protocol-relay '-proxy' adapters covered by 7.4, and a few niche/duplicate-family entries like op-sqlite/sql.js/singlestore) don't add distinct grounding value per token here."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-orm/src/better-sqlite3/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/gel/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/libsql/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/mysql2/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/neon-http/driver.ts", start = 2, end = 2, render.kind = "full" },
-  { path = "drizzle-orm/src/node-postgres/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/pglite/driver.ts", start = 1, end = 1, render.kind = "full" },
-  { path = "drizzle-orm/src/postgres-js/driver.ts", start = 1, end = 1, render.kind = "full" },
-]
-
-[[batches]]
-id = "7.4"
-descriptor = "pg-proxy/driver.ts — RemoteCallback (the '-proxy' adapter pattern)"
-justification = "pg-proxy, mysql-proxy, sqlite-proxy and singlestore-proxy (all named in 3.1) don't wrap a client library at all — they take a user-supplied (sql, params, method) => Promise<{rows}> callback, letting the caller relay queries over any transport (e.g. HTTP to a serverless function). Shown once as representative of all 4."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-orm/src/pg-proxy/driver.ts", start = 20, end = 25, render.kind = "full" }]
-
-[[batches]]
-id = "7.5"
-descriptor = "prisma/ and knex/, kysely/ — interop directory listings"
-justification = "prisma/ wraps an existing PrismaClient per dialect (pg/mysql/sqlite subdirs, not a top-level driver.ts like the others); knex/ and kysely/ are type-only interop shims (map an existing Knex/Kysely instance's row types to Drizzle's InferSelectModel), not query drivers at all. Listing them together prevents conflating 'interop with another query builder' with 'a database driver'."
-content.kind = "fs"
-content.groups = [
-  { parent = "drizzle-orm/src/prisma", entries = "all" },
-  { parent = "drizzle-orm/src/prisma/pg", entries = "all" },
-  { parent = "drizzle-orm/src/prisma/mysql", entries = "all" },
-  { parent = "drizzle-orm/src/prisma/sqlite", entries = "all" },
-  { parent = "drizzle-orm/src/knex", entries = "all" },
-  { parent = "drizzle-orm/src/kysely", entries = "all" },
-]
+# ---------------------------------------------------------------- tier 8
+# Tests, task running and repo tooling.
 
 [[batches]]
 id = "8.1"
-descriptor = "drizzle-kit/src top-level listing"
-justification = "Anchors the CLI's own module map before diving into cli/ (8.2+) or serializer/ (8.7): api.ts (programmatic API), the 5 introspect-*.ts files (one per dialect: pg/mysql/sqlite/gel/singlestore), snapshotsDiffer.ts, sqlgenerator.ts, jsonStatements.ts."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-kit/src", entries = "all" }]
+descriptor = "integration-tests/tests listing (complete)"
+justification = "Where behaviour is actually verified: per-dialect suites (pg/, mysql/, sqlite/, singlestore/, gel/, bun/), relational/, replicas/, seeder/, extensions/, imports/, xata/ and the shared utils. CONTRIBUTING states these are Docker-backed integration tests, so this is the first place a feature/bugfix PR must add cases."
+content = { kind = "fs", groups = [
+  { parent = "integration-tests/tests", entries = "all" },
+] }
 
 [[batches]]
 id = "8.2"
-descriptor = "cli/index.ts — command roster (run() call)"
-justification = "The literal CLI entry point: generate, migrate, pull, push, studio, up, check, drop, exportRaw are every top-level `drizzle-kit <command>`. Directly answers 'what commands does drizzle-kit have' with zero ambiguity; the deprecated `generate:pg`-style legacy aliases above this call are lower-value and left unshown."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-kit/src/cli/index.ts", start = 1, end = 4, render.kind = "full" }, { path = "drizzle-kit/src/cli/index.ts", start = 45, end = 48, render.kind = "full" }]
+descriptor = "drizzle-orm's own tests and type-tests (complete)"
+justification = "The package-local unit tests (exports, is, makePgArray/parsePgArray, relation, type-hints, casing/) and the type-level test tree exercised by `pnpm test:types` — including a per-dialect folder plus knex/kysely/common/utils. Without both listings an agent can wrongly conclude drizzle-orm has only integration tests."
+content = { kind = "fs", groups = [
+  { parent = "drizzle-orm/tests", entries = "all" },
+  { parent = "drizzle-orm/type-tests", entries = "all" },
+] }
 
 [[batches]]
 id = "8.3"
-descriptor = "cli/schema.ts — command definition roster"
-predecessor = "8.2"
-justification = "Location of each command's actual definition (options + handler) backing the names in 8.2 — a locations batch so a follow-up on any one command (e.g. 'what flags does push take') is one read away."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-kit/src/cli/schema.ts", start = 50, end = 50, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 115, end = 115, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 247, end = 247, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 406, end = 406, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 426, end = 426, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 470, end = 470, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 633, end = 633, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 652, end = 652, render.kind = "full" },
-  { path = "drizzle-kit/src/cli/schema.ts", start = 807, end = 807, render.kind = "full" },
-]
+descriptor = "Task running: root scripts, turbo pipeline, formatter"
+justification = "How anything is built or checked from the root — the turbo-driven npm scripts (build/test/test:types/lint via dprint), the turbo task ids (`//#lint`, `test:types`, per-package `#build`, `pack`, `test`), with `lint` delegating to dprint."
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 4, end = 14, render = { kind = "full" } },
+  { path = "turbo.json", start = 3, end = 4, render = { kind = "full" } },
+  { path = "turbo.json", start = 17, end = 17, render = { kind = "full" } },
+  { path = "turbo.json", start = 32, end = 32, render = { kind = "full" } },
+  { path = "turbo.json", start = 228, end = 228, render = { kind = "full" } },
+  { path = "turbo.json", start = 241, end = 241, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "8.4"
-descriptor = "cli/schema.ts — `generate` command's flags"
-predecessor = "8.3"
-justification = "Expands the 'generate' entry from 8.3's roster: config, dialect, driver, casing, schema, out, name, breakpoints, custom, prefix. The concrete flag surface for the single most-used drizzle-kit command."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-kit/src/cli/schema.ts", start = 50, end = 67, render.kind = "full" }]
-
-[[batches]]
-id = "8.5"
-descriptor = "drizzle-kit config file sample (real fixture file)"
-justification = "A real, working drizzle.config.ts (schema path, dialect, dbCredentials.url) — cheaper and more concrete evidence of the config format than reading defineConfig's type definition would be."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-kit/tests/cli/drizzle.config.ts", start = 1, end = 9, render.kind = "full" }]
-
-[[batches]]
-id = "8.6"
-descriptor = "drizzle-kit/src/index.ts — defineConfig() signature"
-predecessor = "8.5"
-justification = "The typed helper the config sample (8.5) is built with — one line, but it's the exact symbol a schema-authoring session would search for."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-kit/src/index.ts", start = 347, end = 347, render.kind = "full" }]
-
-[[batches]]
-id = "8.7"
-descriptor = "cli/commands/ directory listing"
-justification = "One file per dialect per operation (mysqlUp/mysqlIntrospect/mysqlPushUtils, pgUp/pgIntrospect/pgPushUtils, sqliteUp/sqliteIntrospect/sqlitePushUtils, singlestoreUp/..., libSqlPushUtils) plus check/drop/introspect/migrate/push/utils — closes the roster CONTRIBUTING.md (2.7) pointed at."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-kit/src/cli/commands", entries = "all" }]
-
-[[batches]]
-id = "8.8"
-descriptor = "serializer/ and extensions/ directory listings"
-justification = "serializer/ (per-dialect *Schema.ts / *Serializer.ts / *Imports.ts triples, plus studio.ts) is the schema-to-JSON-snapshot layer CONTRIBUTING.md (2.7) names; extensions/ holds the two Postgres extension helpers (getTablesFilterByExtensions, vector)."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-kit/src/serializer", entries = "all" }, { parent = "drizzle-kit/src/extensions", entries = "all" }]
-
-# ============================= TIER 9 — schema-generator packages, seed, lint plugin =============================
-
-[[batches]]
-id = "9.1"
-descriptor = "All 4 schema-generator packages' src/ listings"
-justification = "drizzle-zod, drizzle-valibot, drizzle-typebox, drizzle-arktype (identities in 2.3) share an identical 8-file src/ layout (column.ts, column.types.ts, constants.ts, index.ts, schema.ts, schema.types(.internal).ts, utils.ts). One combined listing establishes this parity before any single one is expanded."
-content.kind = "fs"
-content.groups = [
-  { parent = "drizzle-zod/src", entries = "all" },
-  { parent = "drizzle-valibot/src", entries = "all" },
-  { parent = "drizzle-typebox/src", entries = "all" },
-  { parent = "drizzle-arktype/src", entries = "all" },
-]
-
-[[batches]]
-id = "9.2"
-descriptor = "drizzle-zod/src/schema.ts — createSelectSchema/createInsertSchema/createUpdateSchema roster"
-justification = "The 3 public factory functions (plus createSchemaFactory for customizing the underlying zod instance) every consumer of drizzle-zod calls — shown for zod as the representative of the 4 parallel packages (9.1 already established the other 3 share this file)."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-zod/src/schema.ts", start = 94, end = 94, render.kind = "truncated", render.pattern = "^[^:]+" },
-  { path = "drizzle-zod/src/schema.ts", start = 105, end = 105, render.kind = "truncated", render.pattern = "^[^:]+" },
-  { path = "drizzle-zod/src/schema.ts", start = 113, end = 113, render.kind = "truncated", render.pattern = "^[^:]+" },
-  { path = "drizzle-zod/src/schema.ts", start = 121, end = 121, render.kind = "full" },
-]
-
-[[batches]]
-id = "9.3"
-descriptor = "drizzle-zod/src/index.ts (full file) — package re-export map"
-predecessor = "9.2"
-justification = "Shows exactly which of schema.ts's (9.2) and the other internal modules' symbols are actually public — bufferSchema/jsonSchema/literalSchema named explicitly, the rest star-exported."
-content.kind = "lines"
-content.spans = [{ path = "drizzle-zod/src/index.ts", start = 1, end = 6, render.kind = "full" }]
-
-[[batches]]
-id = "9.4"
-descriptor = "eslint-plugin-drizzle/src/index.ts — plugin's 2 rules"
-justification = "enforce-delete-with-where and enforce-update-with-where are the plugin's entire rule set, plus its 'all'/'recommended' config presets — fully answers 'what does this eslint plugin check'. Import lines elided (ellipsis); the imported names are self-explanatory from where they're used below."
-content.kind = "lines"
-content.spans = [
-  { path = "eslint-plugin-drizzle/src/index.ts", start = 1, end = 1, render.kind = "ellipsis" },
-  { path = "eslint-plugin-drizzle/src/index.ts", start = 9, end = 16, render.kind = "full" },
-]
-
-[[batches]]
-id = "9.5"
-descriptor = "eslint-plugin-drizzle/src/ directory listing"
-predecessor = "9.4"
-justification = "Where the 2 rules named in 9.4 and their shared AST/options helpers physically live (configs/, utils/) — closes the listing for this small package."
-content.kind = "fs"
-content.groups = [{ parent = "eslint-plugin-drizzle/src", entries = "all" }, { parent = "eslint-plugin-drizzle/src/configs", entries = "all" }, { parent = "eslint-plugin-drizzle/src/utils", entries = "all" }]
-
-[[batches]]
-id = "9.6"
-descriptor = "drizzle-seed/src/index.ts — seed() public API"
-justification = "seed(db, schema, options) — the top-level entry point of the seeding package, generic over Pg/MySql/SQLite databases and schema shapes — for a 'how do I seed test data' session."
-content.kind = "lines"
-content.spans = [
-  { path = "drizzle-seed/src/index.ts", start = 346, end = 350, render.kind = "full" },
-  { path = "drizzle-seed/src/index.ts", start = 351, end = 351, render.kind = "ellipsis" },
-  { path = "drizzle-seed/src/index.ts", start = 362, end = 364, render.kind = "full" },
-]
-
-[[batches]]
-id = "9.7"
-descriptor = "drizzle-seed/src/ directory listing"
-predecessor = "9.6"
-justification = "datasets/ (fake-data source tables), services/, types/ — where seed()'s (9.6) supporting data and logic live."
-content.kind = "fs"
-content.groups = [{ parent = "drizzle-seed/src", entries = "all" }]
-
-# ============================= TIER 10 — docs, changelogs, integration-tests, misc =============================
-
-[[batches]]
-id = "10.1"
-descriptor = "docs/ directory listing"
-justification = "Only 4 hand-written docs beyond the per-package READMEs: custom-types(.lite).md, joins.md, table-introspect-api.md. Small, cheap, closes the class before 10.2-10.4 quote from 3 of them."
-content.kind = "fs"
-content.groups = [{ parent = "docs", entries = "all" }]
-
-[[batches]]
-id = "10.2"
-descriptor = "docs/table-introspect-api.md — getTableConfig/getTableColumns usage examples"
-justification = "getTableConfig/getTableColumns usage examples, directly grounding 6.8's pg-core/utils.ts signature and utils.ts's getTableColumns (3.7) with concrete before/after code. getTableConfig's full returned-field list and the getTableColumns example's boilerplate table definition are both elided (ellipsis)."
-content.kind = "lines"
-content.spans = [
-  { path = "docs/table-introspect-api.md", start = 1, end = 9, render.kind = "full" },
-  { path = "docs/table-introspect-api.md", start = 10, end = 10, render.kind = "ellipsis" },
-  { path = "docs/table-introspect-api.md", start = 18, end = 24, render.kind = "full" },
-  { path = "docs/table-introspect-api.md", start = 26, end = 26, render.kind = "ellipsis" },
-  { path = "docs/table-introspect-api.md", start = 31, end = 32, render.kind = "full" },
-]
-
-[[batches]]
-id = "10.3"
-descriptor = "docs/joins.md — one-to-many join example"
-justification = "The canonical 'how do I write a join' walkthrough (raw SQL vs. Drizzle side by side) that a query-authoring session is very likely to need verbatim. Schema setup and the repetitive tail of each SELECT's column list are elided (ellipsis)."
-content.kind = "lines"
-content.spans = [
-  { path = "docs/joins.md", start = 1, end = 1, render.kind = "full" },
-  { path = "docs/joins.md", start = 3, end = 3, render.kind = "ellipsis" },
-  { path = "docs/joins.md", start = 19, end = 26, render.kind = "full" },
-  { path = "docs/joins.md", start = 27, end = 27, render.kind = "ellipsis" },
-  { path = "docs/joins.md", start = 31, end = 40, render.kind = "full" },
-  { path = "docs/joins.md", start = 41, end = 41, render.kind = "ellipsis" },
-  { path = "docs/joins.md", start = 45, end = 48, render.kind = "full" },
-]
-
-[[batches]]
-id = "10.4"
-descriptor = "docs/custom-types.md — heading roster"
-justification = "A 214-line guide on the ColumnBuilder/Column pattern for defining new column types (referenced implicitly by 6.3's column rosters) — every heading in the file, full body omitted since it's long; establishes every subtopic (builder pattern, PG text example incl. jsonb/int usage, CITEXT custom type) so a follow-up read targets the right section without assuming any subsection doesn't exist."
-content.kind = "lines"
-content.spans = [
-  { path = "docs/custom-types.md", start = 1, end = 1, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 9, end = 9, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 21, end = 21, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 46, end = 46, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 57, end = 57, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 67, end = 67, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 78, end = 78, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 106, end = 106, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 156, end = 156, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 161, end = 161, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 166, end = 166, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 199, end = 199, render.kind = "full" },
-  { path = "docs/custom-types.md", start = 208, end = 208, render.kind = "full" },
-]
-
-[[batches]]
-id = "10.5"
-descriptor = "misc/ and patches/ directory listings"
-justification = "misc/readme/ (2 logo SVGs referenced by README.md's <img> tags) and patches/typescript@5.6.3.patch (a pnpm patch applied to a pinned TypeScript version) — small, easily-overlooked root dirs from 1.1, closed here so their purpose isn't left to guesswork."
-content.kind = "fs"
-content.groups = [{ parent = "misc", entries = "all" }, { parent = "misc/readme", entries = "all" }, { parent = "patches", entries = "all" }]
+descriptor = "docs/ listing and what each in-repo doc covers"
+justification = "The four checked-in docs are not README duplicates: custom-types.md is the authoritative guide to writing a new column type (the extension point behind `customType`), joins.md and table-introspect-api.md document APIs with no other in-repo prose. Their titles plus a sample section heading make them findable."
+content = { kind = "lines", spans = [
+  { path = "docs/custom-types.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/custom-types.lite.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/joins.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/table-introspect-api.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/table-introspect-api.md", start = 3, end = 3, render = { kind = "full" } },
+] }

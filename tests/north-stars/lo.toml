@@ -1,821 +1,4328 @@
 fixture = "lo"
 revision_pin = "ea94cc5c"
 summary = """
-`samber/lo` is a Lodash-style Go generics utility library: ~300 immutable
-helpers over slices/maps/strings/math/tuples/channels/errors/retry in the
-root `lo` package, plus four sibling variants (`it` lazy iter.Seq versions,
-`mutable` in-place versions, `parallel` goroutine versions, experimental
-`exp/simd` SIMD-accelerated numeric/intersect kernels gated on Go 1.26).
-Every exported helper is a small, independently-testable pure function with
-a one/two-line doc comment and a Go Playground link; there is no framework,
-no shared mutable state, and (outside `exp/`) zero third-party runtime
-dependencies. The query distribution is dominated by: "does a helper for X
-already exist / what's its exact signature", "show me how helper Y is
-implemented", "which package (core/it/mutable/parallel) should I use for Z",
-"how do I build/test/lint this", and "how is the docs site's per-helper
-metadata kept in sync with source". A large docusaurus site under `docs/`
-mirrors the README with one generated markdown file per helper.
+`samber/lo` is a Lodash-style utility library for Go 1.18+ generics: several
+hundred standalone helper functions over slices, maps, strings, channels,
+tuples, time and errors. There is no framework, no runtime state and almost
+no internal machinery -- the repository *is* its API surface, spread across
+a flat root package (`lo`) plus four sibling flavours of the same helpers:
+`it/` (Go 1.23 `iter.Seq`), `mutable/` (in-place), `parallel/` (goroutine
+per element) and `exp/simd/` (AVX/AVX2/AVX-512, Go 1.26 + GOEXPERIMENT).
+Around it sit a colocated test suite (`*_test.go` and `*_example_test.go`
+next to every source file), a separate `benchmark/` package, and a
+Docusaurus site under `docs/` whose per-helper pages are generated from 444
+frontmatter files in `docs/data/` and checked by Node scripts.
+
+The ranking is therefore dominated by *name-and-location rosters*: for a
+library of this shape the most valuable thing a snapshot can carry is
+"which helpers exist, and at which file:line", because nearly every
+plausible session ("add helper X", "why does Y behave like this", "is there
+already something that does Z", "port helper W to the iterator package")
+starts by locating a helper or proving one is absent. Rosters are complete
+for the line range they claim, so a missing name is real evidence of
+absence; where a file is a pure arity/type family (`Zip2..Zip9`,
+`SumInt8..SumFloat64`) the family is rendered head + elision marker + tail
+rather than in full, which shows the shape at a fraction of the cost.
+Identity, the package split and the directory skeleton come first (tier 1);
+then the core package's rosters, most-used files first (tier 2); then the
+sibling packages and `internal/` (tier 3); then test, example and benchmark
+conventions (tier 4); the experimental SIMD module (tier 5); the docs
+pipeline (tier 6); and finally CI, lint and repo metadata (tier 7).
+Function bodies are almost never included -- they are short and formulaic,
+and one `Read` away once a roster has given the exact line.
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "README title + tagline"
-justification = "Cheapest possible identity signal: repo title and the one-line pitch (Lodash-style Go generics library). Everything else builds on this."
+descriptor = "What lo is: README title and one-line pitch"
+justification = """
+Rank 1 must answer "what am I looking at" in as few tokens as possible.
+README.md's title line names the domain (iterate over slices, maps,
+channels) and line 13 is the project's own one-sentence pitch: a
+Lodash-style Go library built on 1.18+ generics. Lines 4-11 are a
+shields.io badge wall and are deliberately never scheduled anywhere in
+this document.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 2, end = 2, render.kind = "full" },
-  { path = "README.md", start = 13, end = 13, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 2
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 13
+end = 13
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = "go.mod: module path + Go floor"
-justification = "Module path and the go 1.18 floor, explaining the generics-first design and the internal/constraints Go-version shims seen later."
+descriptor = "Scope statement: what the library actually covers"
+justification = """
+The rest of the lede in one line: the domains covered (slices, maps,
+strings, channels, functions), "dozens of handy methods", and the
+readability-over-cleverness framing. Together with rank 1 this is the
+whole elevator pitch, in three source lines.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "go.mod", start = 1, end = 3, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 15
+end = 15
+render = { kind = "full" }
 
 [[batches]]
 id = "1.3"
-descriptor = ".github/ and .github/workflows/ listings"
-justification = "Catastrophic-omission guard for CI: names of every workflow (test, test.simd, lint, doc, release, security) and the dependabot/FUNDING/PR-template files, before drilling into any one of them."
-content.kind = "fs"
-content.groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-  { parent = ".github/PULL_REQUEST_TEMPLATE", entries = "all" },
-]
+descriptor = "The helper taxonomy: all fifteen category headers"
+justification = """
+Fifteen one-line headers partition several hundred helpers into the
+library's own vocabulary: slices, maps, math, strings, tuples, time and
+duration, channels, intersection, search, conditional, type manipulation,
+function, concurrency, error handling, constraints. Extremely cheap, and
+it is the vocabulary everything else uses -- the same names appear as
+root source file stems (`slice.go`, `find.go`, ...), as `subCategory`
+values in `docs/data/*.md` frontmatter and as `docs/docs/core/*.md`
+pages. The bulleted helper names under each header (lines 107-388) are
+left to the per-file rosters of tier 2, which carry line numbers too.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 346
+end = 346
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 351
+end = 351
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 370
+end = 370
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 385
+end = 385
+render = { kind = "full" }
 
 [[batches]]
 id = "1.4"
-descriptor = "docs/ top-level directory listing"
-justification = "Catastrophic-omission guard for the docs site: docs/docs (category prose), docs/data (one generated .md per helper), docs/src, docs/static, docs/plugins, docs/scripts (consistency-check scripts), plus docusaurus.config.ts/package.json/sidebars.ts. docs/CLAUDE.md's body is intentionally not scheduled (host-injected doc)."
-content.kind = "fs"
-content.groups = [
-  { parent = "docs", entries = "all" },
-]
+descriptor = "The four public import paths and a call example"
+justification = """
+The most load-bearing semantic fact after "it is a helper library": the
+same helpers exist in four flavours behind four import paths, with the
+conventional aliases `lop`, `lom`, `loi`. README's usage block states all
+four together in one import block, followed by a `lo.Uniq` call showing
+the plain-function (not method-chain) calling style. Without this an agent writes `lo.Map`
+where it wanted `lom.Map`, and treats `it/`, `mutable/`, `parallel/` as
+internals rather than peers.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 70
+end = 79
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 84
+end = 86
+render = { kind = "full" }
 
 [[batches]]
 id = "1.5"
-descriptor = "README subpackage import aliases"
-justification = "The canonical import block (lo / lop=parallel / lom=mutable / loi=it) is the single most load-bearing snippet for 'which package do I import' — every task touching a variant package needs this alias convention."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 72, end = 79, render.kind = "full" },
-]
+descriptor = "Complete root directory listing"
+justification = """
+The repository is one flat root package, so this single listing is the
+map of the project: every topical source file (`slice.go`, `find.go`,
+`map.go`, `tuples.go`, `intersect.go`, `errors.go`, `channel.go`,
+`concurrency.go`, `retry.go`, `condition.go`, `string.go`, `math.go`,
+`time.go`, `func.go`, `type_manipulation.go`, `types.go`,
+`constraints.go`), each one's colocated `_test.go` sibling, the two
+`*_example_test.go` files, the eight subdirectories, and the build/lint
+metadata. Listing every immediate child rather than a sample is what
+makes later absence claims trustworthy.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.6"
-descriptor = "Root directory listing"
-justification = "Catastrophic-omission guard: every top-level file and directory (17 Go source files + their _test.go siblings, benchmark/, docs/, exp/, internal/, it/, mutable/, parallel/, plus config/CI/license files) in one shot, so no follow-up 'ls' is needed to learn the repo's shape."
+descriptor = "Sibling helper packages: it/, mutable/, parallel/ listings"
+justification = """
+Having learned the four import paths, an agent needs each flavour's size
+and file split. Complete listings show `it/` is a near-full mirror of the
+root package (nine sources plus `_test.go` and `_example_test.go` files),
+while `mutable/` and `parallel/` are single-source packages -- which
+decides how much work "add the mutable variant too" actually is, and
+shows that `it/` has a `seq.go` with no root-package counterpart.
+"""
 content.kind = "fs"
-content.groups = [
-  { parent = ".", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "it"
+entries = "all"
+[[batches.content.groups]]
+parent = "mutable"
+entries = "all"
+[[batches.content.groups]]
+parent = "parallel"
+entries = "all"
 
 [[batches]]
 id = "1.7"
-descriptor = "go.mod: direct dependencies"
-justification = "The 4 direct runtime/test deps (testify, go-funk, goleak, x/text) with pinned versions — 'what does this depend on'."
-content.kind = "lines"
-content.spans = [
-  { path = "go.mod", start = 9, end = 14, render.kind = "full" },
-]
+descriptor = "internal/ and exp/ listings"
+justification = """
+Completes the Go package skeleton. Three `internal/` support packages --
+`constraints` (the pre-`cmp` Ordered constraint), `xrand`, `xtime` --
+whose per-version filenames (`ordered_go118.go`, `ordered_go121.go`,
+`ordered_go122.go`) advertise the build-tag strategy this library uses to
+keep a Go 1.18 floor, plus `exp/simd`, which carries its own `go.mod` and
+is therefore a separate module. Without this an agent assumes
+`constraints` is `golang.org/x/exp/constraints` and adds a dependency the
+project explicitly refuses.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "internal"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/constraints"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/xrand"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/xtime"
+entries = "all"
+[[batches.content.groups]]
+parent = "exp"
+entries = "all"
+[[batches.content.groups]]
+parent = "exp/simd"
+entries = "all"
 
 [[batches]]
 id = "1.8"
-descriptor = "go.mod: indirect dependencies"
-justification = "The transitive deps pulled in by testify (go-spew, kr/text, pretty, go-difflib, check.v1, yaml.v3) — completes the dependency picture."
-content.kind = "lines"
-content.spans = [
-  { path = "go.mod", start = 16, end = 23, render.kind = "full" },
-]
+descriptor = "Non-Go trees: docs/, benchmark/, .github/ listings"
+justification = """
+The remaining top-level directories, listed completely. `docs/` is a
+Docusaurus site (`data/`, `docs/`, `plugins/`, `scripts/`, `src/`,
+`static/`, plus `docusaurus.config.ts`, `sidebars.ts`, `package.json`),
+`benchmark/` is a separate Go package of
+`{package}_{category}_bench_test.go` files, and `.github/` holds six
+workflows plus dependabot config and PR templates. Note that
+`docs/CLAUDE.md` and `benchmark/CLAUDE.md` appear here: the harness
+already injects their bodies, so no batch in this document spends budget
+on their contents -- only on what they do not cover.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = "benchmark"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
 
 [[batches]]
 id = "1.9"
-descriptor = "LICENSE: MIT, copyright holder"
-justification = "Licensing is a common first question for any dependency/compliance task; one line settles it (MIT, Samuel Berthe 2022-2025)."
+descriptor = "Scope caveat, versioning contract, zero dependencies, Go floor"
+justification = """
+Constraints on any change an agent might propose. First the author's
+admission that 5-10 helpers overlap the stdlib `slices` and `maps`
+packages -- load-bearing for the recurring "does this helper belong
+here" question. Then: v1 under strict SemVer,
+no breaking changes to exported APIs before v2 *except* under `exp/`, and
+no dependencies outside the standard library. go.mod backs that up --
+module path `github.com/samber/lo`, `go 1.18` as the compile floor, and a
+comment marking the require block that follows as dev-only and excluded
+from releases. That combination is why
+new helpers must be hand-rolled rather than delegated to a library.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "LICENSE", start = 1, end = 3, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 17
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 62
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "go.mod"
+start = 6
+end = 9
+render = { kind = "full" }
 
 [[batches]]
 id = "1.10"
-descriptor = "README: SemVer + exp/ stability carve-out"
-justification = "States the stability contract explicitly: no breaking changes to exported APIs before v2.0.0, except packages under exp/ — directly explains why exp/simd's API is allowed to be unstable/experimental."
+descriptor = "Makefile: every target name"
+justification = """
+"How do I build / test / lint / bench this" is a near-universal opening
+question, and the Makefile answers it in thirteen target names. The whole
+set is listed so that the absence of a `fmt` or `docs` target is
+informative; the interesting recipe bodies (race testing, the SIMD
+version guard) are refined by a later batch.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 62, end = 66, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "Makefile"
+start = 5
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 17
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 24
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 50
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 56
+end = 56
+render = { kind = "full" }
 
 [[batches]]
 id = "1.11"
-descriptor = "Makefile: lint/audit/doc targets"
-justification = "golangci-lint invocation (mirrors .golangci.yml), dependency audit (nancy), and `make doc` for the docusaurus site. Tool-install one-liners (`tools:`) are skipped as low-value verbatim `go install` boilerplate."
+descriptor = "README section skeleton: all H2 headings"
+justification = """
+README.md is 5107 lines with 236 `###` helper sections. Its eight `##`
+headings show that lines 100-5036 are one enormous "Spec" catalogue and
+that everything else -- install, usage, benchmark numbers, contributing,
+contributors, sponsorship, license -- is a thin frame around it. That
+tells an agent to grep inside the spec rather than read the file, and
+that the file does contain benchmark results and contribution notes worth
+grepping for.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "Makefile", start = 38, end = 57, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 100
+end = 100
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5036
+end = 5036
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5073
+end = 5073
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5093
+end = 5093
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5097
+end = 5097
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5103
+end = 5103
+render = { kind = "full" }
 
 [[batches]]
-id = "1.12"
-descriptor = ".golangci.yml: enabled/disabled linters"
-justification = "Which linters gate a change (govet, staticcheck, gocyclo, funlen, exhaustive, paralleltest, modernize...) and the one explicitly disabled (lll) — the concrete lint bar, without the deeper settings/exclusions detail."
+id = "2.1"
+descriptor = "Anatomy of a helper: Filter and FilterErr in full"
+justification = """
+One worked example teaches the conventions that every roster entry below
+obeys, and it costs eight lines: a doc comment whose first sentence
+starts with the helper name, a trailing `// Play: https://go.dev/play/p/`
+link (required by the docs pipeline), the generic signature style
+`[T any, Slice ~[]T]` that preserves named slice types, the
+`(item T, index int)` callback shape, and the `Err` suffix convention --
+`FilterErr` is shown with its `Play` line and signature, the two lines
+that differ from `Filter`. Reading these makes every later `func Name…`
+roster entry legible without opening the file.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = ".golangci.yml", start = 1, end = 45, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "slice.go"
+start = 10
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 26
+end = 27
+render = { kind = "full" }
 
 [[batches]]
-id = "1.13"
-descriptor = ".github/workflows/test.yml: CI test matrix"
-justification = "Concrete CI sample: the Go version matrix (1.18 through 1.26 plus stable) every PR must pass, and that `make build`/`make test`/`make coverage` are the exact invoked commands — grounds 'will my change break CI' without opening the Actions UI."
+id = "2.2"
+descriptor = "slice.go roster 1/2: transform, group, build (L12-L709)"
+justification = """
+`slice.go` is the largest file in the core package (1307 lines, 80
+exported helpers) and the one a session is most likely to touch. Part 1
+names every exported function declared in lines 12-709: the
+map/filter/reduce family and its `Err` variants, `ForEach`, `Times`,
+`Uniq`/`UniqBy`, the `GroupBy`/`PartitionBy`/`Chunk`/`Window`/`Sliding`
+shaping helpers, `Flatten`/`Concat`/`Interleave`/`Shuffle`/`Reverse`,
+`Fill`/`Repeat`/`RepeatBy`, and the slice-to-map constructors (`KeyBy`,
+`Associate`/`SliceToMap`, `FilterSliceToMap`, `Keyify` and their `I` and
+`Err` variants). Name plus exact line means one `Read` with an offset
+lands on any body. `Filter`/`FilterErr` at lines 12 and 27 are already
+rendered in full by the predecessor batch.
+"""
+predecessor = "2.1"
 content.kind = "lines"
-content.spans = [
-  { path = ".github/workflows/test.yml", start = 1, end = 51, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "slice.go"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 57
+end = 57
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 94
+end = 94
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 110
+end = 110
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 124
+end = 124
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 141
+end = 141
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 152
+end = 152
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 192
+end = 192
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 201
+end = 201
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 212
+end = 212
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 225
+end = 225
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 245
+end = 245
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 267
+end = 267
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 290
+end = 290
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 305
+end = 305
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 322
+end = 322
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 336
+end = 336
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 354
+end = 354
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 385
+end = 385
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 412
+end = 412
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 437
+end = 437
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 454
+end = 454
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 461
+end = 461
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 472
+end = 472
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 499
+end = 499
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 539
+end = 539
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 548
+end = 548
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 555
+end = 555
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 567
+end = 567
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 579
+end = 579
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 591
+end = 591
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 607
+end = 607
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 621
+end = 621
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 639
+end = 639
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 649
+end = 649
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 665
+end = 665
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 674
+end = 674
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 683
+end = 683
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 694
+end = 694
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 709
+end = 709
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
-id = "1.14"
-descriptor = "Makefile: build/test/bench/coverage targets"
-justification = "Canonical operational entry points, including the GO_SIMD_SUPPORT detection that conditionally builds/tests exp/simd only on Go>=1.26 — explains why exp/simd has its own go.mod and is silently skipped on older toolchains."
+id = "2.3"
+descriptor = "slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297)"
+justification = """
+The rest of `slice.go`: the take/drop family (`Drop`, `DropRight`,
+`DropWhile`, `DropRightWhile`, `DropByIndex`, `Take`, `TakeWhile`,
+`TakeFilter`), the reject family, the counting helpers
+(`Count`/`CountBy`/`CountValues`/`CountValuesBy`), `Subset`/`Slice`,
+`Replace`/`ReplaceAll`, `Clone`, `Compact`, the `IsSorted` predicates,
+and the string-like slice surgery block `Splice`/`Cut`/`CutPrefix`/
+`CutSuffix`/`Trim`/`TrimLeft`/`TrimPrefix`/`TrimRight`/`TrimSuffix`.
+Split from part 1 only for budget granularity; together the two batches
+are the complete exported surface of the file.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "Makefile", start = 1, end = 22, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "slice.go"
+start = 721
+end = 721
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 737
+end = 737
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 752
+end = 752
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 766
+end = 766
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 779
+end = 779
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 806
+end = 806
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 822
+end = 822
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 862
+end = 862
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 889
+end = 889
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 904
+end = 904
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 926
+end = 926
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 941
+end = 941
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 958
+end = 958
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 972
+end = 972
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 987
+end = 987
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1005
+end = 1005
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1018
+end = 1018
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1030
+end = 1030
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1053
+end = 1053
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1076
+end = 1076
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1092
+end = 1092
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1098
+end = 1098
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1113
+end = 1113
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1129
+end = 1129
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1140
+end = 1140
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1155
+end = 1155
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1162
+end = 1162
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1188
+end = 1188
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1214
+end = 1214
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1225
+end = 1225
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1234
+end = 1234
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1261
+end = 1261
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1272
+end = 1272
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1286
+end = 1286
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 1297
+end = 1297
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
-id = "1.15"
-descriptor = "docs site: package-variant guide (core + it)"
-justification = "This docusaurus page is the clearest single explanation of why sibling packages exist. The root `lo` package (300+ immutable helpers) and `lo/it` (lazy iter.Seq helpers, Go 1.23+); `mutable`/`parallel` are covered where their own source is scheduled in tier 3."
+id = "2.4"
+descriptor = "find.go roster 1/2: index, find, uniques (L13-L270)"
+justification = """
+`find.go` (1015 lines, 47 exported helpers) is the second-most-consulted
+file and the one whose contents are hardest to guess, because the search
+vocabulary is idiosyncratic. Part 1 covers `IndexOf`/`LastIndexOf`,
+`HasPrefix`/`HasSuffix` (slice prefixes, not strings), the `Find` family
+including `FindErr`, `FindIndexOf`, `FindLastIndexOf`, `FindOrElse`,
+`FindKey` and `FindKeyBy`, and the uniqueness pair
+`FindUniques`/`FindDuplicates` with their `By` variants.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "docs/docs/getting-started.md", start = 9, end = 55, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "find.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 88
+end = 88
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 107
+end = 107
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 121
+end = 121
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 136
+end = 136
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 148
+end = 148
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 173
+end = 173
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 204
+end = 204
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 238
+end = 238
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 270
+end = 270
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "2.5"
+descriptor = "find.go roster 2/2: min/max, first/last/nth, sampling (L352-L988)"
+justification = """
+The rest of `find.go`: the full `Min`/`Max` cross product with `Index`
+and `By` suffixes, the time-specialised `Earliest`/`Latest` pair, the
+positional accessors `First`/`Last`/`Nth` with their `Or` and `OrEmpty`
+fallbacks, and the random-sampling helpers
+`Sample`/`SampleBy`/`Samples`/`SamplesBy`. Answers "is there a helper
+that returns the index of the max" or "how do I take the last element
+safely" without any search.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "find.go"
+start = 307
+end = 307
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 352
+end = 352
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 375
+end = 375
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 403
+end = 403
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 428
+end = 428
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 457
+end = 457
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 486
+end = 486
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 519
+end = 519
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 542
+end = 542
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 568
+end = 568
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 599
+end = 599
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 622
+end = 622
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 654
+end = 654
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 683
+end = 683
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 715
+end = 715
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 746
+end = 746
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 778
+end = 778
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 801
+end = 801
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 827
+end = 827
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 857
+end = 857
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 870
+end = 870
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 877
+end = 877
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 888
+end = 888
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 901
+end = 901
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 908
+end = 908
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 920
+end = 920
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 943
+end = 943
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 955
+end = 955
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 966
+end = 966
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 972
+end = 972
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 982
+end = 982
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "find.go"
+start = 988
+end = 988
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "2.6"
+descriptor = "map.go roster: every map helper"
+justification = """
+`map.go` (536 lines, 35 exported helpers): `Keys`/`Values` and their
+`Uniq` forms, `HasKey`/`ValueOr`, the `PickBy`/`OmitBy` families with
+their `Keys`, `Values` and `Err` variants, `Entries`/`ToPairs` and
+`FromEntries`/`FromPairs` (both alias pairs shown, since either name can
+appear in existing code), `Invert`, `Assign`, `ChunkEntries`, and the
+`MapKeys`/`MapValues`/`MapEntries`/`MapToSlice`/`FilterMapToSlice`/
+`FilterKeys`/`FilterValues` transformers with their `Err` variants.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "map.go"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 47
+end = 47
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 54
+end = 54
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 96
+end = 96
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 133
+end = 133
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 145
+end = 145
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 159
+end = 159
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 171
+end = 171
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 187
+end = 187
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 200
+end = 200
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 215
+end = 215
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 231
+end = 231
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 237
+end = 237
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 250
+end = 250
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 258
+end = 258
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 270
+end = 270
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 289
+end = 289
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 314
+end = 314
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 326
+end = 326
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 342
+end = 342
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 354
+end = 354
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 370
+end = 370
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 383
+end = 383
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 399
+end = 399
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 411
+end = 411
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 430
+end = 430
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 448
+end = 448
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 467
+end = 467
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 482
+end = 482
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 500
+end = 500
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "map.go"
+start = 522
+end = 522
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "2.7"
+descriptor = "condition.go complete: Ternary plus the If/Switch builder types"
+justification = """
+The only place in the core package where the API is a *chain* rather than
+a flat function, so its shape cannot be guessed from a name list. This
+roster shows `Ternary`/`TernaryF`, the unexported value-receiver struct
+`ifElse[T]` with its exported `ElseIf`/`ElseIfF`/`Else`/`ElseF` methods,
+and `switchCase[T, R]` with `Case`/`CaseF`/`Default`/`DefaultF` -- i.e.
+that `If(...)` and `Switch(...)` return builders you must terminate with
+`Else`/`Default`, and that the builder types are deliberately unexported.
+155 lines of source compressed into fifteen names.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "condition.go"
+start = 6
+end = 6
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 33
+end = 33
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 44
+end = 44
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 55
+end = 55
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 66
+end = 66
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 87
+end = 87
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 128
+end = 128
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 139
+end = 139
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "condition.go"
+start = 149
+end = 149
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "2.8"
+descriptor = "type_manipulation.go roster: pointer, zero-value, coalesce"
+justification = """
+21 helpers that are pure convention and therefore easy to reinvent by
+accident: `IsNil`/`IsNotNil`, `ToPtr`/`FromPtr`/`FromPtrOr`/`Nil`/
+`EmptyableToPtr`, the slice-of-pointer conversions, `ToAnySlice`/
+`FromAnySlice`, `Empty`/`IsEmpty`/`IsNotEmpty`, and the whole `Coalesce`
+family (`Coalesce`, `CoalesceOrEmpty`, `CoalesceSlice`,
+`CoalesceSliceOrEmpty`, `CoalesceMap`, `CoalesceMapOrEmpty`). Complete.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 7
+end = 7
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 41
+end = 41
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 53
+end = 53
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 63
+end = 63
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 85
+end = 85
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 99
+end = 99
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 115
+end = 115
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 140
+end = 140
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 147
+end = 147
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 154
+end = 154
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 161
+end = 161
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 175
+end = 175
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 182
+end = 182
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 193
+end = 193
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 204
+end = 204
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "type_manipulation.go"
+start = 215
+end = 215
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.9"
-descriptor = "constraints.go: Clonable constraint (full file)"
-justification = "Tiny but load-bearing: the Clonable[T] constraint that Fill/Repeat require their element type to satisfy — the first thing an agent hits when Fill/Repeat won't compile for a plain struct."
+descriptor = "intersect.go roster: set predicates and set algebra"
+justification = """
+19 helpers covering the two things named "intersect" here: membership
+predicates (`Contains`/`ContainsBy`, `Every`/`EveryBy`, `Some`/`SomeBy`,
+`None`/`NoneBy`, `ElementsMatch`/`ElementsMatchBy`) and set algebra
+(`Intersect`/`IntersectBy`, `Difference`, `Union`, the `Without` family,
+`WithoutEmpty`, `WithoutNth`). Frequently the answer to "does this
+already exist" for predicate-shaped requests.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "constraints.go", start = 1, end = 6, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "intersect.go"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 29
+end = 29
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 47
+end = 47
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 78
+end = 78
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 90
+end = 90
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 107
+end = 107
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 119
+end = 119
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 162
+end = 162
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 210
+end = 210
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 235
+end = 235
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 259
+end = 259
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 274
+end = 274
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 288
+end = 288
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 308
+end = 308
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 314
+end = 314
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 331
+end = 331
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "intersect.go"
+start = 339
+end = 339
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.10"
-descriptor = "slice.go: exported-function roster"
-justification = "Every exported function in slice.go (Filter..TrimSuffix, 80 total) as a name-only location batch. Catastrophic-omission guard for the single most central file (filter/map/reduce/group/chunk/take/drop/subset/trim families) — establishes that a helper exists and its exact file+line before any full-body read."
+descriptor = "errors.go roster: Must, Try, Validate, and the Assert vars"
+justification = """
+The error-handling surface, 380 lines flattened to its names: `Validate`,
+the `Must`/`Must0..6` panic wrappers, `Try`/`Try0..6`, `TryOr`/`TryOr1..6`,
+`TryWithErrorValue`, `TryCatch`, `TryCatchWithErrorValue`, `ErrorsAs`.
+The three arity families are rendered head, elision marker and tail
+(`Must0`..`Must6`, `Try0`..`Try6`, `TryOr1`..`TryOr6`) since their
+members differ only in arity.
+Crucially the roster also carries the three package-level `var`s --
+`MustChecker`, `Assert`, `Assertf` -- which are variables rather than
+functions, so they are swappable in tests and invisible to a
+`func Assert` grep. Exactly the obscure detail a roster should put one
+hop away.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "slice.go", start = 12, end = 12, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 27, end = 27, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 45, end = 45, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 57, end = 57, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 73, end = 73, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 94, end = 94, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 110, end = 110, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 124, end = 124, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 141, end = 141, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 152, end = 152, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 167, end = 167, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 177, end = 177, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 192, end = 192, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 201, end = 201, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 212, end = 212, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 225, end = 225, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 245, end = 245, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 267, end = 267, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 290, end = 290, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 305, end = 305, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 322, end = 322, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 336, end = 336, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 354, end = 354, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 385, end = 385, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 412, end = 412, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 437, end = 437, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 454, end = 454, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 461, end = 461, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 472, end = 472, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 499, end = 499, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 539, end = 539, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 548, end = 548, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 555, end = 555, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 567, end = 567, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 579, end = 579, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 591, end = 591, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 607, end = 607, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 621, end = 621, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 639, end = 639, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 649, end = 649, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 665, end = 665, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 674, end = 674, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 683, end = 683, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 694, end = 694, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 709, end = 709, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 721, end = 721, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 737, end = 737, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 752, end = 752, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 766, end = 766, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 779, end = 779, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 806, end = 806, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 822, end = 822, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 862, end = 862, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 889, end = 889, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 904, end = 904, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 926, end = 926, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 941, end = 941, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 958, end = 958, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 972, end = 972, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 987, end = 987, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1005, end = 1005, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1018, end = 1018, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1030, end = 1030, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1053, end = 1053, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1076, end = 1076, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1092, end = 1092, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1098, end = 1098, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1113, end = 1113, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1129, end = 1129, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1140, end = 1140, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1155, end = 1155, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1162, end = 1162, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1188, end = 1188, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1214, end = 1214, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1225, end = 1225, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1234, end = 1234, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1261, end = 1261, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1272, end = 1272, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1286, end = 1286, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "slice.go", start = 1297, end = 1297, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "errors.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^var [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 65
+end = 65
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 91
+end = 91
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 112
+end = 112
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 118
+end = 118
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 137
+end = 137
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 170
+end = 170
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 188
+end = 188
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 197
+end = 197
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 203
+end = 203
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 254
+end = 254
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 293
+end = 293
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 314
+end = 314
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 335
+end = 335
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 343
+end = 343
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 351
+end = 351
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 359
+end = 359
+render = { kind = "truncated", pattern = "^var [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "errors.go"
+start = 373
+end = 373
+render = { kind = "truncated", pattern = "^var [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.11"
-descriptor = "map.go: exported-function roster"
-justification = "Every exported function in map.go (Keys..FilterValuesErr, 35 total) as a name-only location batch — the map-transformation surface (Pick/Omit/Entries/Assign/MapKeys/MapValues/MapEntries families)."
+descriptor = "channel.go roster: dispatcher, buffering, fan-in/fan-out"
+justification = """
+The channel toolkit, which is where this library stops being pure
+functions: the `DispatchingStrategy[T]` function type, `ChannelDispatcher`
+and its six shipped strategies (`RoundRobin`, `Random`, `WeightedRandom`,
+`First`, `Least`, `Most` -- a set you would otherwise discover only by
+reading), `SliceToChannel`/`ChannelToSlice`, `Generator`, the three
+`Buffer` variants, `FanIn` and `FanOut`.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "map.go", start = 5, end = 5, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 23, end = 23, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 47, end = 47, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 54, end = 54, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 72, end = 72, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 96, end = 96, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 105, end = 105, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 117, end = 117, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 133, end = 133, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 145, end = 145, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 159, end = 159, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 171, end = 171, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 187, end = 187, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 200, end = 200, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 215, end = 215, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 231, end = 231, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 237, end = 237, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 250, end = 250, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 258, end = 258, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 270, end = 270, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 289, end = 289, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 314, end = 314, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 326, end = 326, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 342, end = 342, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 354, end = 354, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 370, end = 370, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 383, end = 383, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 399, end = 399, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 411, end = 411, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 430, end = 430, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 448, end = 448, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 467, end = 467, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 482, end = 482, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 500, end = 500, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "map.go", start = 522, end = 522, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "channel.go"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 88
+end = 88
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 102
+end = 102
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 140
+end = 140
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 151
+end = 151
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 161
+end = 161
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 191
+end = 191
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 209
+end = 209
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 228
+end = 228
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 251
+end = 251
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 260
+end = 260
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "channel.go"
+start = 287
+end = 287
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.12"
-descriptor = "find.go: exported-function roster"
-justification = "Every exported function in find.go (IndexOf..SamplesBy, 47 total) as a name-only location batch — search/min-max/first-last/sample surface, the largest category after slice.go."
+descriptor = "tuples.go: eleven arity families, head and tail with elision"
+justification = """
+`tuples.go` is 1872 lines and 88 exported functions, but it is eleven
+perfectly regular families each spanning arities 2..9: `T`, `Unpack`,
+`Zip`, `ZipBy`, `ZipByErr`, `Unzip`, `UnzipBy`, `UnzipByErr`,
+`CrossJoin`, `CrossJoinBy`, `CrossJoinByErr`. Rendering the `2` and `9`
+members of each family with an elision marker between them costs a
+quarter of the full roster and conveys strictly more: which families
+exist, that every one stops at 9, and that `Err`-taking variants exist
+for `ZipBy`, `UnzipBy` and `CrossJoinBy` but not for the plain forms.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "find.go", start = 13, end = 13, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 26, end = 26, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 40, end = 40, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 56, end = 56, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 72, end = 72, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 88, end = 88, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 107, end = 107, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 121, end = 121, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 136, end = 136, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 148, end = 148, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 160, end = 160, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 173, end = 173, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 204, end = 204, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 238, end = 238, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 270, end = 270, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 307, end = 307, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 352, end = 352, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 375, end = 375, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 403, end = 403, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 428, end = 428, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 457, end = 457, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 486, end = 486, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 519, end = 519, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 542, end = 542, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 568, end = 568, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 599, end = 599, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 622, end = 622, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 654, end = 654, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 683, end = 683, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 715, end = 715, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 746, end = 746, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 778, end = 778, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 801, end = 801, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 827, end = 827, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 857, end = 857, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 870, end = 870, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 877, end = 877, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 888, end = 888, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 901, end = 901, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 908, end = 908, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 920, end = 920, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 943, end = 943, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 955, end = 955, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 966, end = 966, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 972, end = 972, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 982, end = 982, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "find.go", start = 988, end = 988, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "tuples.go"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 17
+end = 17
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 47
+end = 47
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 53
+end = 53
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 65
+end = 65
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 103
+end = 103
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 146
+end = 146
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 301
+end = 301
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 341
+end = 341
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 380
+end = 380
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 495
+end = 495
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 521
+end = 521
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 566
+end = 566
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 696
+end = 696
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 724
+end = 724
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 758
+end = 758
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 878
+end = 878
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 908
+end = 908
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 944
+end = 944
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1069
+end = 1069
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1101
+end = 1101
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1143
+end = 1143
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1283
+end = 1283
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1318
+end = 1318
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1334
+end = 1334
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1374
+end = 1374
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1383
+end = 1383
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1429
+end = 1429
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1579
+end = 1579
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1615
+end = 1615
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1669
+end = 1669
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "tuples.go"
+start = 1839
+end = 1839
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.13"
-descriptor = "intersect.go: exported-function roster"
-justification = "Every exported function in intersect.go (Contains..ElementsMatchBy, 19 total) — set-membership/intersection/union/difference surface."
+descriptor = "math.go and string.go rosters"
+justification = """
+Two small self-contained files, listed together because neither justifies
+its own rank. `math.go`: `Range`/`RangeFrom`/`RangeWithSteps`, `Clamp`,
+and the `Sum`/`Product`/`Mean` families with `By` and `ByErr` variants,
+plus `Mode`. `string.go`: `RandomString`, `Substring`, `ChunkString`,
+`RuneLength`, the four case converters (`PascalCase`, `CamelCase`,
+`KebabCase`, `SnakeCase`), `Words`, `Capitalize` and `Ellipsis`. Both are
+the complete exported surface of their file; the unexported `substring`
+and `nearestPowerOfTwo` are implementation detail.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "intersect.go", start = 5, end = 5, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 17, end = 17, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 29, end = 29, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 47, end = 47, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 60, end = 60, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 78, end = 78, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 90, end = 90, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 107, end = 107, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 119, end = 119, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 162, end = 162, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 210, end = 210, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 235, end = 235, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 259, end = 259, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 274, end = 274, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 288, end = 288, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 308, end = 308, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 314, end = 314, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 331, end = 331, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "intersect.go", start = 339, end = 339, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "math.go"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 36
+end = 36
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 71
+end = 71
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 82
+end = 82
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 92
+end = 92
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 103
+end = 103
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 127
+end = 127
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 138
+end = 138
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 152
+end = 152
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 163
+end = 163
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 175
+end = 175
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "math.go"
+start = 191
+end = 191
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 109
+end = 109
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 199
+end = 199
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 225
+end = 225
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 231
+end = 231
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 241
+end = 241
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 255
+end = 255
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 265
+end = 265
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 275
+end = 275
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 293
+end = 293
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "string.go"
+start = 301
+end = 301
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.14"
-descriptor = "math.go: exported-function roster"
-justification = "Every exported function in math.go (Range..Mode, 14 total) — the numeric-helper surface."
+descriptor = "concurrency.go roster: Async, Synchronize, WaitFor"
+justification = """
+The goroutine-flavoured helpers of the *core* package, distinct from the
+`parallel/` package: `Synchronize` with its `Do` method, `Async` plus the
+arity family `Async0..6` returning `Tuple`-carrying channels, and
+`WaitFor`/`WaitForWithContext`. Small, and it settles "does lo have a
+poll-until-condition helper" outright.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "math.go", start = 11, end = 11, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 23, end = 23, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 36, end = 36, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 71, end = 71, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 82, end = 82, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 92, end = 92, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 103, end = 103, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 117, end = 117, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 127, end = 127, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 138, end = 138, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 152, end = 152, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 163, end = 163, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 175, end = 175, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "math.go", start = 191, end = 191, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 21
+end = 21
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 62
+end = 62
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 82
+end = 82
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 92
+end = 92
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 102
+end = 102
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 112
+end = 112
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "concurrency.go"
+start = 121
+end = 121
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.15"
-descriptor = "string.go: exported-function roster"
-justification = "Every exported function in string.go (RandomString..Ellipsis, 11 total) — string-case-conversion and substring surface."
+descriptor = "retry.go roster: attempt, debounce, throttle, transaction"
+justification = """
+The stateful corner of the library, and the one whose API shape is least
+guessable from a name: constructor-style helpers `NewDebounce`,
+`NewDebounceBy`, `NewThrottle`, `NewThrottleWithCount`, `NewThrottleBy`,
+`NewThrottleByWithCount`, each returning a *pair* of closures; the four
+`Attempt*` retry variants; and the `Transaction[T]` type with
+`NewTransaction`, `Then` and `Process`. The exported type and its methods
+are in the roster so the chain form is visible.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "string.go", start = 35, end = 35, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 109, end = 109, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 199, end = 199, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 225, end = 225, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 231, end = 231, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 241, end = 241, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 255, end = 255, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 265, end = 265, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 275, end = 275, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 293, end = 293, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "string.go", start = 301, end = 301, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "retry.go"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 139
+end = 139
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 155
+end = 155
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 174
+end = 174
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 200
+end = 200
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 225
+end = 225
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 255
+end = 255
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 262
+end = 262
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 268
+end = 268
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 279
+end = 279
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 347
+end = 347
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 353
+end = 353
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 369
+end = 369
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "retry.go"
+start = 375
+end = 375
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.16"
-descriptor = "type_manipulation.go: exported-function roster"
-justification = "Every exported function in type_manipulation.go (IsNil..CoalesceMapOrEmpty, 21 total) — pointer/nil/zero-value/coalesce surface."
+descriptor = "time.go, func.go and constraints.go: complete small files"
+justification = """
+Three short files as complete rosters. `time.go` is the arity family
+`Duration` plus `Duration0..10`, elided head-to-tail -- knowing it is
+arity-indexed stops an agent proposing a variadic redesign. `func.go` is
+`Partial` plus `Partial1..5`, elided the same way.
+`constraints.go` is a six-line file whose entire content is the
+`Clonable[T]` interface used by `Fill` and `Repeat`, shown in full
+because truncating six lines would save nothing.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "type_manipulation.go", start = 7, end = 7, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 22, end = 22, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 28, end = 28, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 34, end = 34, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 41, end = 41, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 53, end = 53, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 63, end = 63, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 73, end = 73, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 85, end = 85, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 99, end = 99, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 115, end = 115, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 126, end = 126, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 140, end = 140, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 147, end = 147, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 154, end = 154, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 161, end = 161, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 175, end = 175, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 182, end = 182, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 193, end = 193, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 204, end = 204, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "type_manipulation.go", start = 215, end = 215, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "constraints.go"
+start = 3
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "func.go"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "func.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "func.go"
+start = 27
+end = 27
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "func.go"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "time.go"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "time.go"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "time.go"
+start = 55
+end = 55
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "time.go"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.17"
-descriptor = "errors.go: exported-function roster"
-justification = "Every exported function in errors.go (Validate..ErrorsAs, 28 total) — the Must0-6/Try0-6/TryOr0-6 error-handling families."
+descriptor = "types.go: Entry and the Tuple2..Tuple9 family"
+justification = """
+`types.go` declares the value types the rest of the API returns:
+`Entry[K, V]` (returned by `Entries`) and `Tuple2` through `Tuple9`. All
+nine type lines are rendered; the nine identical `Unpack` methods are
+shown as head, elision marker and tail, which is enough to establish that
+unpacking is a method rather than a free function and that the family
+stops at nine. Struct fields are the single letters `A`..`I` and are not
+worth rendering.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "errors.go", start = 13, end = 13, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 65, end = 65, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 72, end = 72, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 78, end = 78, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 84, end = 84, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 91, end = 91, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 98, end = 98, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 105, end = 105, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 112, end = 112, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 118, end = 118, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 137, end = 137, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 146, end = 146, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 152, end = 152, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 161, end = 161, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 170, end = 170, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 179, end = 179, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 188, end = 188, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 197, end = 197, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 203, end = 203, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 219, end = 219, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 236, end = 236, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 254, end = 254, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 273, end = 273, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 293, end = 293, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 314, end = 314, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 335, end = 335, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 343, end = 343, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "errors.go", start = 351, end = 351, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
+[[batches.content.spans]]
+path = "types.go"
+start = 4
+end = 4
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 10
+end = 10
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 49
+end = 49
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 64
+end = 64
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 75
+end = 75
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "types.go"
+start = 80
+end = 80
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 115
+end = 115
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "types.go"
+start = 129
+end = 129
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "2.18"
-descriptor = "retry.go: exported-function roster"
-justification = "Every exported function/type in retry.go (NewDebounce..NewThrottleByWithCount, 14 total) — debounce/throttle/attempt/transaction retry primitives."
+descriptor = "Full signatures for the three flagship slice helpers"
+justification = """
+A depth refinement over the slice.go roster: the complete generic
+signatures of `Map`, `Reduce` and `ForEach`. Names alone suffice to
+navigate, but these are the three an agent actually writes call sites for
+in the first minutes of a session, and their exact shape -- collection
+first, callback second, `(item T, index int)` callbacks, and `Reduce`
+taking the accumulator before the item with an explicit initial value --
+is the difference between compiling and not. Overrides the truncated
+roster entries at these three lines.
+"""
+predecessor = "2.2"
 content.kind = "lines"
-content.spans = [
-  { path = "retry.go", start = 56, end = 56, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 139, end = 139, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 155, end = 155, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 174, end = 174, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 200, end = 200, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 225, end = 225, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 255, end = 255, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 262, end = 262, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 268, end = 268, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 279, end = 279, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 347, end = 347, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 353, end = 353, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 369, end = 369, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "retry.go", start = 375, end = 375, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.19"
-descriptor = "channel.go: exported-function roster"
-justification = "Every exported function/type in channel.go (DispatchingStrategy..FanOut, 16 total) — channel fan-in/fan-out/dispatch/buffer primitives."
-content.kind = "lines"
-content.spans = [
-  { path = "channel.go", start = 12, end = 12, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 18, end = 18, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 73, end = 73, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 88, end = 88, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 102, end = 102, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 126, end = 126, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 140, end = 140, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 151, end = 151, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 161, end = 161, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 177, end = 177, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 191, end = 191, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 209, end = 209, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 228, end = 228, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 251, end = 251, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 260, end = 260, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "channel.go", start = 287, end = 287, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.20"
-descriptor = "concurrency.go: exported-function roster"
-justification = "Every exported function in concurrency.go (Synchronize..WaitForWithContext, 12 total) — goroutine coordination primitives."
-content.kind = "lines"
-content.spans = [
-  { path = "concurrency.go", start = 13, end = 13, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 21, end = 21, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 35, end = 35, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 45, end = 45, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 56, end = 56, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 62, end = 62, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 72, end = 72, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 82, end = 82, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 92, end = 92, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 102, end = 102, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 112, end = 112, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "concurrency.go", start = 121, end = 121, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.21"
-descriptor = "time.go: exported-function roster"
-justification = "Every exported function in time.go (Duration..Duration10, 12 total) — the timing-wrapper arity family."
-content.kind = "lines"
-content.spans = [
-  { path = "time.go", start = 9, end = 9, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 15, end = 15, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 23, end = 23, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 31, end = 31, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 39, end = 39, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 47, end = 47, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 55, end = 55, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 63, end = 63, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 71, end = 71, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 79, end = 79, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 87, end = 87, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "time.go", start = 95, end = 95, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.22"
-descriptor = "tuples.go: arity-2 roster per family + more-exist markers"
-justification = "tuples.go (1872 lines, 88 exported functions) is 11 mechanically-repeated arity families (T2..T9, Unpack2..9, Zip2..9, ZipBy2..9, ZipByErr2..9, Unzip2..9, UnzipBy2..9, UnzipByErr2..9, CrossJoin2..9, CrossJoinBy2..9, CrossJoinByErr2..9). Showing the arity-2 member of every family establishes the full set of families cheaply; bare ellipsis markers at 3 of the omitted higher-arity lines (T9, Zip9, CrossJoinByErr9) signal — without the cost of naming all 77 remaining variants — that each family continues up to arity 9, exactly mirroring lo.Tuple2..Tuple9 from types.go."
-content.kind = "lines"
-content.spans = [
-  { path = "tuples.go", start = 5, end = 5, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 53, end = 53, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 103, end = 103, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 341, end = 341, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 521, end = 521, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 724, end = 724, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 908, end = 908, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 1101, end = 1101, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 1318, end = 1318, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 1383, end = 1383, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 1615, end = 1615, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "tuples.go", start = 47, end = 47, render.kind = "ellipsis" },
-  { path = "tuples.go", start = 301, end = 301, render.kind = "ellipsis" },
-  { path = "tuples.go", start = 1839, end = 1839, render.kind = "ellipsis" }
-]
-
-[[batches]]
-id = "2.23"
-descriptor = "types.go: Entry/Tuple2..9/Unpack roster"
-justification = "Every value type returned by Entries/Zip*/CrossJoin*/tuple helpers across the whole library (root, it/, and used as lo.TupleN from lo/it) — Entry plus the Tuple2..Tuple9 family and their Unpack methods."
-content.kind = "lines"
-content.spans = [
-  { path = "types.go", start = 4, end = 4, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 10, end = 10, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 17, end = 17, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 22, end = 22, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 30, end = 30, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 35, end = 35, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 44, end = 44, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 49, end = 49, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 59, end = 59, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 64, end = 64, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 75, end = 75, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 80, end = 80, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 92, end = 92, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 97, end = 97, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 110, end = 110, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "types.go", start = 115, end = 115, render.kind = "truncated", render.pattern = "^type [A-Za-z0-9_]+" },
-  { path = "types.go", start = 129, end = 129, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.24"
-descriptor = "func.go: Partial/Partial1..5 roster"
-justification = "The complete partial-application family (Partial, Partial1..Partial5) — small file, full roster is cheap."
-content.kind = "lines"
-content.spans = [
-  { path = "func.go", start = 5, end = 5, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "func.go", start = 13, end = 13, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "func.go", start = 19, end = 19, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "func.go", start = 27, end = 27, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "func.go", start = 35, end = 35, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" },
-  { path = "func.go", start = 43, end = 43, render.kind = "truncated", render.pattern = "^func [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.25"
-descriptor = "condition.go: Ternary/If.../Switch... roster"
-justification = "The complete functional-conditional family: Ternary/TernaryF, the If/ElseIf/Else chain, and the Switch/Case/Default chain (13 exported names)."
-content.kind = "lines"
-content.spans = [
-  { path = "condition.go", start = 6, end = 6, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 16, end = 16, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 33, end = 33, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 44, end = 44, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 55, end = 55, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 66, end = 66, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 77, end = 77, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 87, end = 87, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 105, end = 105, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 117, end = 117, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 128, end = 128, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 139, end = 139, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" },
-  { path = "condition.go", start = 149, end = 149, render.kind = "truncated", render.pattern = "^func(?: \\([^)]*\\))? [A-Za-z0-9_]+" }
-]
-
-[[batches]]
-id = "2.26"
-descriptor = "slice.go body: Filter"
-predecessor = "2.10"
-justification = "Filter is the single most representative slice.go helper (predicate over index, allocate-and-append); reading it in full also shows the doc-comment+Play-link convention every other helper in this package follows."
-content.kind = "lines"
-content.spans = [
-  { path = "slice.go", start = 10, end = 22, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.27"
-descriptor = "slice.go body: GroupBy"
-predecessor = "2.10"
-justification = "GroupBy is the canonical 'bucket a slice into a map[K]Slice' helper and the shape GroupByErr/GroupByMap/parallel.GroupBy/it.GroupBy all vary from."
-content.kind = "lines"
-content.spans = [
-  { path = "slice.go", start = 289, end = 300, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.28"
-descriptor = "map.go body: Assign"
-predecessor = "2.11"
-justification = "Assign shows the left-to-right multi-map-merge algorithm (with a size-precomputing first pass) that OmitBy/PickBy/ChunkEntries variants build on conceptually."
-content.kind = "lines"
-content.spans = [
-  { path = "map.go", start = 268, end = 284, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.29"
-descriptor = "find.go body: Find"
-predecessor = "2.12"
-justification = "Find is the base case that FindIndexOf/FindLastIndexOf/FindOrElse/FindKey all specialize — a single linear scan with an early return."
-content.kind = "lines"
-content.spans = [
-  { path = "find.go", start = 70, end = 81, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.30"
-descriptor = "intersect.go body: Contains"
-predecessor = "2.13"
-justification = "Contains is the base case Every/Some/None/Intersect/Union all build set-membership tests on top of."
-content.kind = "lines"
-content.spans = [
-  { path = "intersect.go", start = 3, end = 13, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.31"
-descriptor = "math.go body: Range"
-predecessor = "2.14"
-justification = "Range shows the sign/step handling (via Ternary) that RangeFrom/RangeWithSteps reuse — grounds 'why does Range(-3) count down' without opening a play link."
-content.kind = "lines"
-content.spans = [
-  { path = "math.go", start = 9, end = 19, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.32"
-descriptor = "errors.go body: Must/Must0/Must1"
-predecessor = "2.17"
-justification = "Must is the panic-on-error primitive every Must2..Must6 (and the library's own internal MustChecker usage) is built from; Must1 shown to make the 'alias' relationship in the doc comment concrete."
-content.kind = "lines"
-content.spans = [
-  { path = "errors.go", start = 62, end = 80, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.33"
-descriptor = "func.go body: Partial"
-predecessor = "2.24"
-justification = "Partial is the base case Partial1..Partial5 all follow (fix the first arg, return a closure over the rest) — the whole family is one pattern read once."
-content.kind = "lines"
-content.spans = [
-  { path = "func.go", start = 3, end = 9, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.34"
-descriptor = "condition.go body: Ternary + TernaryF"
-predecessor = "2.25"
-justification = "The two base primitives (eager Ternary vs lazy TernaryF, with the nil-pointer-dereference caveat documented on Ternary) that the whole If/Switch chain-building idiom in this file extends."
-content.kind = "lines"
-content.spans = [
-  { path = "condition.go", start = 3, end = 22, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.35"
-descriptor = "types.go body: Entry + Tuple2 + Unpack"
-predecessor = "2.23"
-justification = "Concrete field names (Key/Value for Entry; A/B for Tuple2) and the Unpack() method shape that Tuple3..Tuple9 repeat verbatim at wider arity — settles 'what fields does an Entry/TupleN have' without guessing from the roster's truncated type-decl lines."
-content.kind = "lines"
-content.spans = [
-  { path = "types.go", start = 1, end = 19, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "slice.go"
+start = 45
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 141
+end = 141
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "slice.go"
+start = 192
+end = 192
+render = { kind = "full" }
 
 [[batches]]
 id = "3.1"
-descriptor = "it/, mutable/, parallel/ directory listings"
-justification = "Catastrophic-omission guard for the three sibling variant packages: it/ mirrors root with iter.Seq (seq.go/find.go/map.go/intersect.go/math.go/tuples.go/type_manipulation.go/string.go/channel.go, each with a _test.go sibling and all but channel.go/type_manipulation.go with an _example_test.go sibling too), mutable/ and parallel/ each have one slice.go."
-content.kind = "fs"
-content.groups = [
-  { parent = "it", entries = "all" },
-  { parent = "mutable", entries = "all" },
-  { parent = "parallel", entries = "all" },
-]
+descriptor = "it/ package header: the go1.23 build tag and its dependencies"
+justification = """
+Every file in `it/` opens with `//go:build go1.23` because the package is
+built on `iter.Seq`. That single tag explains why the package can exist
+in a module whose floor is Go 1.18, why its tests are skipped on older
+toolchains, and -- from the import block -- that `it` depends on both the
+root `lo` package and `mutable`, never the reverse. Twelve lines that
+prevent an agent from "fixing" the tag or introducing an import cycle.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1
+end = 12
+render = { kind = "full" }
 
 [[batches]]
 id = "3.2"
-descriptor = "internal/ directory listings"
-justification = "Catastrophic-omission guard for internal/: constraints (Go-version-gated Ordered shim), xrand (Go-version-gated random shim), xtime (injectable clock for deterministic time-based tests)."
-content.kind = "fs"
-content.groups = [
-  { parent = "internal", entries = "all" },
-  { parent = "internal/constraints", entries = "all" },
-  { parent = "internal/xrand", entries = "all" },
-  { parent = "internal/xtime", entries = "all" },
-]
+descriptor = "it/seq.go roster 1/2: sequence transforms (L16-L615)"
+justification = """
+`it/seq.go` (1189 lines, 78 exported helpers) is the heart of the
+iterator package and has no root-package counterpart file. Part 1 names
+the sequence-consuming and transforming helpers: `Length`, `Drain`,
+`Filter`/`Map`/`UniqMap`/`FilterMap`/`FlatMap` each paired with an `I`
+(indexed) variant, `Reduce`/`ReduceLast`, the `ForEach` family, `Times`,
+`Uniq`, `GroupBy`, `Chunk`/`Window`/`Sliding`/`PartitionBy`,
+`Flatten`/`Concat`/`Interleave`, `Shuffle`/`Reverse`, `Fill`/`Repeat`,
+and the seq-to-map constructors (`KeyBy`, `Associate`, `SeqToMap`,
+`FilterSeqToMap`, `Keyify`). The `I`-suffix pairing is the single
+convention that distinguishes this package from the core one.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 27
+end = 27
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 54
+end = 54
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 84
+end = 84
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 94
+end = 94
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 104
+end = 104
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 120
+end = 120
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 128
+end = 128
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 146
+end = 146
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 154
+end = 154
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 168
+end = 168
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 176
+end = 176
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 183
+end = 183
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 190
+end = 190
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 202
+end = 202
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 210
+end = 210
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 223
+end = 223
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 238
+end = 238
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 248
+end = 248
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 268
+end = 268
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 275
+end = 275
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 290
+end = 290
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 319
+end = 319
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 332
+end = 332
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 396
+end = 396
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 417
+end = 417
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 431
+end = 431
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 438
+end = 438
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 467
+end = 467
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 477
+end = 477
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 491
+end = 491
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 503
+end = 503
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 509
+end = 509
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 522
+end = 522
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 538
+end = 538
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 547
+end = 547
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 566
+end = 566
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 576
+end = 576
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 586
+end = 586
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 598
+end = 598
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 615
+end = 615
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "3.3"
-descriptor = "exp/simd/ and benchmark/ directory listings"
-justification = "Catastrophic-omission guard for the two remaining top-level packages: exp/simd (its own go.mod, Go-1.26-gated SIMD kernels for math/intersect) and benchmark/ (bench-only package covering core/it/mutable/parallel)."
-content.kind = "fs"
-content.groups = [
-  { parent = "exp/simd", entries = "all" },
-  { parent = "benchmark", entries = "all" },
-]
+descriptor = "it/seq.go roster 2/2: take/drop, count, trim, buffer (L627-L1169)"
+justification = """
+The rest of `it/seq.go`: `Drop`/`DropLast`/`DropWhile`/`DropLastWhile`/
+`DropByIndex`, `Take`/`TakeWhile`/`TakeFilter`, the reject family, the
+counting helpers, `Subset`/`Slice`, `Replace`/`ReplaceAll`, `Compact`,
+`IsSorted`, `Splice`, `CutPrefix`/`CutSuffix`, the `Trim` block
+including the seq-only
+`TrimFirst`/`TrimLast`, and `Buffer`. Note the names that deliberately
+differ from the core package (`DropLast` vs `DropRight`) -- a rename trap
+this roster makes visible.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 627
+end = 627
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 642
+end = 642
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 670
+end = 670
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 686
+end = 686
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 710
+end = 710
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 731
+end = 731
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 744
+end = 744
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 752
+end = 752
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 758
+end = 758
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 784
+end = 784
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 790
+end = 790
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 808
+end = 808
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 818
+end = 818
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 833
+end = 833
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 840
+end = 840
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 855
+end = 855
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 863
+end = 863
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 876
+end = 876
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 890
+end = 890
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 911
+end = 911
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 926
+end = 926
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 932
+end = 932
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 939
+end = 939
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 946
+end = 946
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 963
+end = 963
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1003
+end = 1003
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1058
+end = 1058
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1067
+end = 1067
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1075
+end = 1075
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1081
+end = 1081
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1120
+end = 1120
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1126
+end = 1126
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/seq.go"
+start = 1169
+end = 1169
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "3.4"
-descriptor = "mutable/slice.go body: Filter"
-justification = "Concretely shows what 'in-place' means for the mutable variant: a compaction loop that overwrites collection[j]=collection[i] and returns a re-sliced (shorter) view of the same backing array, versus root Filter's allocate-and-append (batch 2.26)."
+descriptor = "it/find.go roster: the iterator search surface"
+justification = """
+37 helpers mirroring core `find.go` over `iter.Seq`: `IndexOf`,
+`LastIndexOf`, `HasPrefix`/`HasSuffix`, the `Find` family, uniques and
+duplicates, the `Min`/`Max` cross product, `Earliest`/`Latest`,
+`First`/`Last`/`Nth` with fallbacks, and the sampling helpers. Complete,
+so a diff against the core roster answers "which search helpers have not
+been ported to `it` yet" -- a recurring contribution task in this repo.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "mutable/slice.go", start = 5, end = 20, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "it/find.go"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 74
+end = 74
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 103
+end = 103
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 133
+end = 133
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 154
+end = 154
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 205
+end = 205
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 215
+end = 215
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 238
+end = 238
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 246
+end = 246
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 255
+end = 255
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 276
+end = 276
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 296
+end = 296
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 304
+end = 304
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 312
+end = 312
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 320
+end = 320
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 329
+end = 329
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 350
+end = 350
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 370
+end = 370
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 378
+end = 378
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 385
+end = 385
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 396
+end = 396
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 404
+end = 404
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 415
+end = 415
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 429
+end = 429
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 437
+end = 437
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 448
+end = 448
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 472
+end = 472
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 484
+end = 484
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 493
+end = 493
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 501
+end = 501
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 510
+end = 510
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/find.go"
+start = 518
+end = 518
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "3.5"
-descriptor = "parallel/slice.go body: Map"
-justification = "Concretely shows what 'parallel' means: one goroutine per element writing into a pre-sized result slice under a sync.WaitGroup — order is preserved by index, not by completion time."
+descriptor = "it/map.go and it/type_manipulation.go rosters"
+justification = """
+`it/map.go` covers map<->sequence conversion: `Keys`/`Values` and their
+`Uniq` forms, `Entries`/`ToPairs`/`FromEntries`/`FromPairs`, `Invert`,
+`Assign`, `ChunkEntries`, `MapToSeq`, `FilterMapToSeq`,
+`FilterKeys`/`FilterValues`, and the `iter.Seq2` bridges `SeqToSeq2`,
+`Seq2KeyToSeq`, `Seq2ValueToSeq` -- the last three are the only place in
+the repository that names `Seq2` helpers.
+`it/type_manipulation.go` gives the pointer and coalesce helpers in their
+sequence forms (`ToSeqPtr`, `FromSeqPtr`, `ToAnySeq`, `CoalesceSeq`...).
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "parallel/slice.go", start = 5, end = 27, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "it/map.go"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 67
+end = 67
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 90
+end = 90
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 111
+end = 111
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 122
+end = 122
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 128
+end = 128
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 140
+end = 140
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 157
+end = 157
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 184
+end = 184
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 199
+end = 199
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 212
+end = 212
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 225
+end = 225
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 237
+end = 237
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 251
+end = 251
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/map.go"
+start = 263
+end = 263
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 20
+end = 20
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 39
+end = 39
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 57
+end = 57
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 67
+end = 67
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 74
+end = 74
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/type_manipulation.go"
+start = 86
+end = 86
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "3.6"
-descriptor = "it/seq.go body: FilterI"
-justification = "Concretely shows the lo/it push-iterator idiom: a func(yield func(T) bool) closure that early-returns when yield reports the consumer stopped — the shape every other it/ helper (Map, Reduce, Take...) is built on."
+descriptor = "it/intersect.go, it/math.go, it/channel.go, it/string.go rosters"
+justification = """
+The remaining `it/` sources, complete. `intersect.go`: the predicate set
+plus `Intersect`, `Union`, `Without` (note: no `Difference` here, unlike
+the core package). `math.go`: `Range` family, `Sum`, `Product`, `Mean`,
+`Mode`. `channel.go`: `SeqToChannel`, `SeqToChannel2`, `ChannelToSeq`.
+`string.go`: a single helper, `ChunkString`. Listing the small files
+together and in full is what makes "helper X is missing from `it`" a
+safe conclusion.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "it/seq.go", start = 38, end = 50, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "it/channel.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/channel.go"
+start = 29
+end = 29
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/channel.go"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 20
+end = 20
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 33
+end = 33
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 53
+end = 53
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 67
+end = 67
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 82
+end = 82
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 109
+end = 109
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 123
+end = 123
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 217
+end = 217
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 237
+end = 237
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 245
+end = 245
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 253
+end = 253
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 264
+end = 264
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/intersect.go"
+start = 274
+end = 274
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 79
+end = 79
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 90
+end = 90
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 97
+end = 97
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 108
+end = 108
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 115
+end = 115
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/math.go"
+start = 134
+end = 134
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/string.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
 
 [[batches]]
 id = "3.7"
-descriptor = "docs/data/core-filter.md: per-helper doc-metadata schema"
-justification = "One concrete instance of the generated-doc frontmatter schema (name/slug/sourceRef/category/subCategory/playUrl/similarHelpers/variantHelpers/position/signatures) that every file under docs/data/ follows — grounds docs/CLAUDE.md's authoring checklist in a real example without duplicating that host-injected file's body."
+descriptor = "it/tuples.go: four zip/cross-join families with elision"
+justification = """
+`it/tuples.go` is 613 lines and 32 exported functions, structured as four
+arity families 2..9: `Zip`, `ZipBy`, `CrossJoin`, `CrossJoinBy`. Head,
+elision marker and tail per family shows the shape and -- by contrast
+with the eleven families of the core `tuples.go` -- that `it` has no
+`T`, `Unpack`, `Unzip` or `Err` variants.
+"""
 content.kind = "lines"
-content.spans = [
-  { path = "docs/data/core-filter.md", start = 1, end = 21, render.kind = "full" },
-]
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 64
+end = 64
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 239
+end = 239
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 283
+end = 283
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 303
+end = 303
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 353
+end = 353
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 363
+end = 363
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 379
+end = 379
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 419
+end = 419
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 428
+end = 428
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 464
+end = 464
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "it/tuples.go"
+start = 589
+end = 589
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "3.8"
+descriptor = "mutable/ and parallel/: both packages in full"
+justification = """
+Two single-file packages, each small enough to roster completely, and
+both frequently the target of "add the variant" work. `mutable/slice.go`
+has exactly six helpers -- `Filter`, `FilterI`, `Map`, `MapI`, `Shuffle`,
+`Reverse` -- so the answer to "is there a mutable Reduce" is a definite
+no. `parallel/slice.go` has exactly five -- `Map`, `ForEach`, `Times`,
+`GroupBy`, `PartitionBy`. Also included: `mutable/slice.go`'s `Map`
+signature, which returns nothing (it mutates in place), the trap that
+makes the mutable package different from every other flavour.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 27
+end = 27
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 49
+end = 49
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 57
+end = 57
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "mutable/slice.go"
+start = 65
+end = 65
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "parallel/slice.go"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "parallel/slice.go"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "parallel/slice.go"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "parallel/slice.go"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "parallel/slice.go"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "3.9"
+descriptor = "internal/constraints: the numeric constraint set"
+justification = """
+`constraints.Ordered` appears in dozens of core signatures, so an agent
+needs to know it is vendored here rather than imported. This roster gives
+the five constraint interfaces of `constraints.go` (`Signed`, `Unsigned`,
+`Integer`, `Float`, `Complex`) plus both `Ordered` declarations and their
+build tags: on Go 1.21+ it is an alias for `cmp.Ordered`, below that a
+hand-written union. That pair of files is the template for every
+version-gated shim in this repository.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "internal/constraints/constraints.go"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/constraints/constraints.go"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/constraints/constraints.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/constraints/constraints.go"
+start = 33
+end = 33
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/constraints/constraints.go"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/constraints/ordered_go118.go"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/constraints/ordered_go118.go"
+start = 9
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/constraints/ordered_go121.go"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/constraints/ordered_go121.go"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "internal/xtime: the swappable Clock, and internal/xrand"
+justification = """
+`xtime` is the one piece of genuine machinery in the repository: a
+package-level `clock` variable behind `SetClock`, with `Now`, `Since`,
+`Until`, `Sleep` delegating to a `Clock` interface, so that the debounce,
+throttle and retry tests can run against `NewFakeClock()` instead of wall
+time. Anyone touching `retry.go` or writing a timing test needs this, and
+it is invisible from the public API. `xrand` is the matching shim for
+`math/rand` vs `math/rand/v2` (`Shuffle`, `IntN`, `Int64`); its two files
+carry the same three functions behind opposite build tags, so only the
+`go1.22` copy is rostered and the older file is represented by its tag
+line.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "internal/xrand/ordered_go118.go"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/xrand/ordered_go122.go"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/xrand/ordered_go122.go"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xrand/ordered_go122.go"
+start = 15
+end = 15
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xrand/ordered_go122.go"
+start = 21
+end = 21
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 30
+end = 30
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/fake.go"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 6
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 16
+end = 16
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 20
+end = 20
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "internal/xtime/time.go"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "4.1"
+descriptor = "TestMain: goleak plus the fake clock"
+justification = """
+The single most surprising thing about this test suite, and it lives in
+four lines of `lo_test.go`: every package test run installs a fake clock
+(`xtime.SetClock(xtime.NewFakeClock())`) and wraps the run in
+`goleak.VerifyTestMain`. So a new test that leaks a goroutine fails the
+*whole package*, and any test that measures elapsed time is measuring
+fake time. An agent that adds a timing test without knowing this will
+write something that cannot pass.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "lo_test.go"
+start = 14
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "Unit-test conventions: testify, t.Parallel, `is := assert.New(t)`"
+justification = """
+The shape every one of the ~20 colocated `_test.go` files follows, taken
+from the head of `slice_test.go`: `github.com/stretchr/testify/assert`,
+one `TestXxx` per helper named after it, `t.Parallel()` as the first
+statement (the `paralleltest` linter is enabled and will demand it), and
+the local `is := assert.New(t)` idiom rather than bare `assert.Equal`.
+Following this exactly is cheaper than discovering it from a lint
+failure.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "slice_test.go"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "slice_test.go"
+start = 15
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "Example tests: the godoc `// Output:` convention"
+justification = """
+`lo_example_test.go` is 4151 lines holding 283 `ExampleXxx` functions --
+one per helper -- and `retry_example_test.go` adds eleven more; the `it/`
+and `mutable/` packages have their own `*_example_test.go` files. These
+are executable documentation: `go test` compares stdout against the
+`// Output:` comment. The first example is rendered in full and an
+elision marker stands in for the other 282, so it is clear the file is a
+long uniform list rather than something to read.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "lo_example_test.go"
+start = 13
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lo_example_test.go"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "4.4"
+descriptor = "benchmark/: shared generators and the parametric bench shape"
+justification = """
+`benchmark/` is a separate package whose files never define helpers, only
+`BenchmarkXxx` functions over shared data generators. This roster names
+every generator in `helpers_test.go` and the `lengths` sizes they are run
+at, which is what `benchmark/CLAUDE.md` tells a contributor to reuse
+rather than reinvent -- but that file never says what the generators are
+called, so this batch is the missing half.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 11
+end = 11
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 27
+end = 27
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 29
+end = 29
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 39
+end = 39
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 47
+end = 47
+render = { kind = "truncated", pattern = "^type [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "benchmark/helpers_test.go"
+start = 69
+end = 69
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "5.1"
+descriptor = "exp/simd: what it requires and why it is a separate module"
+justification = """
+`exp/simd` is roughly a third of the repository's Go lines and is
+unbuildable on a normal toolchain: it needs Go 1.26 with
+`GOEXPERIMENT=simd` on amd64. Its own `go.mod` with a `replace` back to
+the repo root is what keeps that requirement out of the main module, and
+is why `make build`/`make test`/`make lint` shell into the directory
+separately. Three README lines plus the whole go.mod save an agent from
+a confusing build failure and from assuming the package is dead code.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "exp/simd/README.md"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "exp/simd/go.mod"
+start = 1
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "exp/simd/math.go: the seven dispatcher families with elision"
+justification = """
+The public entry points of the SIMD package are `math.go`'s 70
+dispatchers: seven operations -- `Sum`, `Mean`, `Min`, `Max`, `Clamp`,
+`SumBy`, `MeanBy` -- each instantiated for ten numeric types from `Int8`
+to `Float64`. Head, elision marker and tail per family establishes the
+naming rule (`<Op><Type>`) and the exact set of operations, which is what
+"add a SIMD helper for X" needs; the individual instantiations are
+mechanical.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 98
+end = 98
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 164
+end = 164
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 178
+end = 178
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 248
+end = 248
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 304
+end = 304
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 318
+end = 318
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 389
+end = 389
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 446
+end = 446
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 460
+end = 460
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 531
+end = 531
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 588
+end = 588
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 602
+end = 602
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 723
+end = 723
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 820
+end = 820
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 848
+end = 848
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 938
+end = 938
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 1008
+end = 1008
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 1023
+end = 1023
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 1098
+end = 1098
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 1158
+end = 1158
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "5.3"
+descriptor = "exp/simd: runtime feature detection and the fallback path"
+justification = """
+How a dispatcher chooses an instruction set: `cpu_amd64.go` defines the
+`simdFeature` ladder (None/AVX/AVX2/AVX512) and caches the detected level
+in `currentSimdFeature` at package init, and `math.go`'s `SumInt8` is the
+template every other dispatcher follows -- switch on the cached feature,
+call the width-specific implementation, and fall back to plain `lo.Sum`
+when no SIMD is available. Overrides the truncated `SumInt8` line of the
+predecessor batch with its body.
+"""
+predecessor = "5.2"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "exp/simd/cpu_amd64.go"
+start = 17
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "exp/simd/math.go"
+start = 13
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "5.4"
+descriptor = "exp/simd width-specific files: the <Op><Type>x<Lanes> naming rule"
+justification = """
+`math_avx.go`, `math_avx2.go`, `math_avx512.go` and
+`intersect_avx512.go` hold 240 more exported functions between them,
+generated by hand to one rule: the dispatcher name with an `x<lanes>`
+suffix (`SumInt8x16` for 128-bit, `SumInt8x32` for 256-bit, `SumInt8x64`
+for 512-bit). One head and one tail per file, with elision markers,
+pins that rule and the per-file lane width without paying for hundreds of
+near-identical names -- and shows that `intersect_avx512.go` carries the
+`Contains` family at all three widths despite its name.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "exp/simd/intersect_avx512.go"
+start = 10
+end = 10
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/intersect_avx512.go"
+start = 332
+end = 332
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/intersect_avx512.go"
+start = 940
+end = 940
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx.go"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx.go"
+start = 188
+end = 188
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx.go"
+start = 1594
+end = 1594
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx2.go"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx2.go"
+start = 188
+end = 188
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx2.go"
+start = 1845
+end = 1845
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx512.go"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx512.go"
+start = 188
+end = 188
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "exp/simd/math_avx512.go"
+start = 2195
+end = 2195
+render = { kind = "truncated", pattern = "^func [A-Za-z0-9_]+" }
+
+[[batches]]
+id = "6.1"
+descriptor = "docs/ npm scripts: every documentation checker"
+justification = """
+Adding a helper means passing these checks, and the `scripts` block of
+`docs/package.json` is the only place the full list appears. The elision
+marker stands for the ten stock Docusaurus scripts above them (`start`,
+`build`, `typecheck`...); the checkers are: `check-cross-references`,
+`check-duplicates-in-category`, `check-filename-matches-frontmatter`,
+`check-similar-exists`, `check-similar-keys-exist-in-directory`,
+`check-function-signatures`, plus `sync-function-signatures` -- which
+points at `./scripts/sync-function-signatures.js`, a file that does not
+exist in `docs/scripts/` (the directory has `check-function-signatures.js`
+instead). Worth knowing before an agent tries to run it. What these
+scripts validate -- the frontmatter schema of the 444 files in
+`docs/data/`, `sourceRef` line links, `variantHelpers`/`similarHelpers`
+cross-references -- is documented exhaustively in `docs/CLAUDE.md`, which
+the harness already injects, so no batch here spends budget re-deriving
+it from an example file.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = "docs/package.json"
+start = 10
+end = 10
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "docs/package.json"
+start = 16
+end = 22
+render = { kind = "truncated", pattern = "^ *\\\"[a-z-]+\\\"" }
+
+[[batches]]
+id = "6.2"
+descriptor = "docs/scripts and docs/docs listings"
+justification = """
+Complete listings of the two directories the previous batch implies: the
+eight Node checkers in `docs/scripts/` (including the `utils.js` they
+share and `check-helpers-visible-in-pages.js`, which has no npm script),
+and `docs/docs/`, whose hand-written pages are only `about.md`,
+`getting-started.md`, `glossary.md`, `contributing.md` plus one
+per-category directory. That contrast -- five prose pages, 444 data files
+-- is the shape of the docs site.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "docs/scripts"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/docs"
+entries = "all"
+
+[[batches]]
+id = "6.3"
+descriptor = "docs/docs category pages and the sidebar"
+justification = """
+Complete listings of the five category directories (`core` with sixteen
+topic pages mirroring the root source files, `iter`, `mutable`,
+`parallel`, `experimental`), each holding a `_category_.json`. These
+directories are wired into `docs/sidebars.ts` as `autogenerated`
+categories, so adding a page is a filesystem operation rather than a
+config edit -- and the sixteen `core/` page names are the same taxonomy
+as the root source files.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "docs/docs/core"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/docs/iter"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/docs/mutable"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/docs/parallel"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/docs/experimental"
+entries = "all"
+
+[[batches]]
+id = "7.1"
+descriptor = "Makefile recipes: race tests and the SIMD guard"
+justification = """
+Refines the target-name roster from tier 1 with the three recipes that
+actually matter: `build` and `test` run over `./...` and then
+conditionally re-enter `exp/simd` with `GOEXPERIMENT=simd`, guarded by a
+Go-version check whose purpose the file's opening comment states; `test`
+is `-race`; `lint` is
+`golangci-lint run --timeout 60s --max-same-issues 50`. This is the exact
+command set an agent should run before claiming a change is green.
+"""
+predecessor = "1.10"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 6
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 10
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 39
+end = 39
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "golangci-lint: the enabled linter set"
+justification = """
+The project lints hard, and unusual entries in the enabled set change how
+code must be written: `funlen`, `gocyclo`, `nestif` and `prealloc`
+constrain helper bodies; `godot` demands full stops on comments;
+`paralleltest`/`tparallel`/`thelper` demand the test conventions of tier
+4; `testifylint` and `modernize` will rewrite idioms. Tests are linted
+too (`tests: true`). Listed in full because a partial list would let an
+agent assume a linter is off when it is on.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 5
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 8
+end = 41
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "golangci-lint: thresholds and exclusions"
+justification = """
+The numbers behind the linters above -- `funlen` at 120 lines / 80
+statements, `gocyclo` at complexity 15, `goconst` at 3 occurrences -- and
+the exclusion that matters most when reading existing code:
+`dupl`/`goconst`/`funlen` are disabled inside `_test.go` files, which is
+why the test files repeat themselves freely. Also the two enabled
+formatters, `gofmt` and `gofumpt` with extra rules.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 49
+end = 58
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 83
+end = 87
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 93
+end = 96
+render = { kind = "full" }
+
+[[batches]]
+id = "7.4"
+descriptor = "CI: the Go version matrix"
+justification = """
+`test.yml` runs `make build` then `make test` across ten Go versions
+from 1.18 to 1.26 plus `stable` (coverage and codecov upload run on
+`stable` only). That
+matrix is the operational meaning of the "Go 1.18 floor" claim: any use
+of a post-1.18 stdlib symbol outside a build-tagged file breaks CI, which
+is precisely why `internal/constraints` and `internal/xrand` are split by
+version. The five sibling workflows are named in the tier-1 listing.
+"""
+content.kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 14
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 35
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 38
+end = 39
+render = { kind = "full" }
+
+[[batches]]
+id = "7.5"
+descriptor = "Contribution surface: PR templates and the contributor loop"
+justification = """
+Appendix material, complete for its class: the three files under
+`.github/PULL_REQUEST_TEMPLATE/` -- the existence of a dedicated
+*new helper* template is a genuine signal about what contributions to
+this repository look like. Lowest-value batch in the document; it exists
+so the `.github` tree is closed rather than half-shown, and it is the
+last thing any budget should buy.
+"""
+content.kind = "fs"
+[[batches.content.groups]]
+parent = ".github/PULL_REQUEST_TEMPLATE"
+entries = "all"

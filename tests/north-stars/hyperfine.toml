@@ -1,59 +1,162 @@
 fixture = "hyperfine"
 revision_pin = "f12f3d9f"
 summary = """
-hyperfine is a Rust CLI benchmarking tool (single binary crate, `src/main.rs` entry point).
-It parses a command line (`src/cli.rs`/clap) into `Options` (`src/options.rs`) and `Commands`
-(`src/command.rs`, with `{param}` substitution and cross-product expansion for -P/-L), then a
-`Scheduler` (`src/benchmark/scheduler.rs`) runs each `Benchmark` (`src/benchmark/mod.rs`): setup,
-warmup, timed runs via an `Executor` (raw process / shell / debug-mode mock, `src/benchmark/executor.rs`
-+ `src/timer/*` platform timers), producing a `BenchmarkResult` with mean/stddev/min/max, outlier
-warnings (`src/outlier_detection.rs`), a relative-speed summary (`src/benchmark/relative_speed.rs`),
-and pluggable exports (JSON/CSV/Markdown/AsciiDoc/org-mode, `src/export/*`). The query distribution
-this NS serves: "how do I use flag X", "what does the benchmark loop actually do at each phase
-(setup/warmup/prepare/timing/conclude/cleanup)", "how are run counts and relative speed computed",
-"how do I add/modify an export format or a CLI flag", "what does exported/console output look like",
-and platform-specific (Unix/Windows) timer/process-execution debugging.
+`hyperfine` 1.20.0 (sharkdp) is a single-binary Rust CLI that benchmarks shell
+commands: it runs each command N times, corrects for shell spawning overhead,
+computes mean/stddev/median/min/max plus modified-Z-score outlier detection,
+prints a relative-speed comparison, and exports results as CSV/JSON/Markdown/
+AsciiDoc/org-mode. Substance lives under `src/` in a real module hierarchy
+(`benchmark/`, `export/`, `output/`, `parameter/`, `timer/`, `util/`) plus four
+flat top-level modules (`cli`, `command`, `options`, `error`).
+
+The ranking is built around what a session actually asks for. First: what the
+crate is, the complete filesystem shape, and the `run()` pipeline in
+`src/main.rs` that wires cli -> Options/Commands/ExportManager -> Scheduler.
+Second: the CLI contract -- the complete 32-option roster in `src/cli.rs` with
+short aliases and enumerated value sets, because the user-visible surface is
+what most questions are phrased in. Third: the configuration model in
+`src/options.rs` (the option enums, the `Options` struct, its concrete
+defaults) and the two error enums whose messages are the user-facing
+diagnostics. Fourth: the measurement engine (`Scheduler`, the `Executor` trait
+and its Raw/Shell/Mock implementations, `Benchmark::run`, the timers) together
+with the `BenchmarkResult` field set that doubles as the documented JSON export
+schema. Then the exporter surface, then command/parameter construction, then
+the test suites and the build/CI/scripts operational layer.
+
+Deliberate non-duplication: `doc/hyperfine.1` restates the clap help text, so
+the option surface is bought once from `src/cli.rs` (the source of truth) and
+the manpage is only named in a listing. The long clap help paragraphs are
+likewise not re-bought where `src/options.rs` encodes the same semantics in
+doc-commented enum variants at a fraction of the cost. `README.md`'s twenty
+distribution-specific install snippets and the badge wall are appendix
+material and are not scheduled at all.
 """
 
-# ---------------------------------------------------------------------------
-# Tier 1: orientation — directory topology (cheap, front-loaded so the
-# growth envelope can afford larger content batches once cumulative builds up)
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------- tier 1
+# Identity, filesystem shape, and the top-level pipeline.
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Full inventory of top-level files/dirs (manifest, docs, license, CI, src/tests/scripts/doc trees) so no later batch's partial coverage looks like the whole repo."
-[batches.content]
-kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+descriptor = "Crate identity: package name, description, homepage, licence"
+justification = """
+Rank 1 must answer "what is this repository". The head of the `[package]`
+block names the crate `hyperfine`, gives the one-line description "A
+command-line benchmarking tool", the `command-line-utilities` category, the
+upstream homepage and the dual `MIT OR Apache-2.0` licence. Seven lines that
+nothing else in the tree substitutes for.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "Cargo.toml", start = 1, end = 7, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "src/ directory listing"
-justification = "All top-level source files and submodule directories under src/, establishing the module topology before any file content is shown."
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src", entries = "all" }]
+descriptor = "Repository root listing (complete)"
+justification = """
+Complete immediate-children listing of the root so nothing in the class is
+silently missing: both licence files, `CHANGELOG.md`, `CITATION.cff`,
+`Cargo.lock` (committed, so `cargo install --locked` works), `build.rs`, and
+the `doc/`, `scripts/`, `src/`, `tests/`, `.github/` directories. Cheap, and
+it is the map every later batch is indexed against.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "src/benchmark, src/export directory listings"
-justification = "Names of every file in the two largest submodules (benchmark execution, export formats) so later per-file batches in these dirs don't look like the whole submodule."
-[batches.content]
-kind = "fs"
-groups = [
+descriptor = "Cargo.toml: version 1.20.0, edition, MSRV, build script"
+justification = """
+Completes the `[package]` block started at 1.1 -- version `1.20.0`, `edition =
+"2018"`, `rust-version = "1.88.0"` (the MSRV the CI `min_version` job pins to)
+and `build = "build.rs"`, which tells a reader a build script exists and is
+load-bearing before they ever open it.
+"""
+predecessor = "1.1"
+content.kind = "lines"
+content.spans = [
+  { path = "Cargo.toml", start = 8, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "src/ listing: the flat modules and six subdirectories"
+justification = """
+The substance of the repository, ranked ahead of any peripheral inventory: a
+reader learns that `cli.rs`, `command.rs`, `options.rs`, `error.rs`,
+`outlier_detection.rs` and `main.rs` sit flat next to the `benchmark/`,
+`export/`, `output/`, `parameter/`, `timer/` and `util/` module directories.
+Complete, so the absence of a `lib.rs` is itself information: binary-only crate.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "README feature list, first five bullets (rest elided)"
+justification = """
+The cheapest semantic framing available: statistical analysis across runs,
+arbitrary shell commands, live progress feedback, warmup runs, cache-clearing
+preparation commands. Each maps onto a module a later tier buys, so this is
+the index a reader uses to decide where to look. The trailing `…` marks that
+the bullet list continues -- 1.6 replaces it. The badge wall (lines 2-4) and
+the twenty distribution-specific install stanzas are appendix material and are
+never scheduled.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 13, end = 13, render = { kind = "full" } },
+  { path = "README.md", start = 15, end = 19, render = { kind = "full" } },
+  { path = "README.md", start = 20, end = 20, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "README feature list, remaining bullets"
+justification = """
+Closes the feature class: outlier detection, the four export formats
+(CSV/JSON/Markdown/AsciiDoc), parameterized benchmarks, cross-platform. These
+four name the surfaces that tiers 5 and 6 develop, so leaving them behind an
+ellipsis would let a reader conclude hyperfine has no export or parameter
+support at all.
+"""
+predecessor = "1.5"
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 20, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "src/benchmark/ and src/export/ listings (complete)"
+justification = """
+The two largest module directories, listed in full. `benchmark/` names
+`scheduler.rs`, `executor.rs`, `benchmark_result.rs`, `relative_speed.rs` and
+`timing_result.rs`; `export/` names one file per output format plus the shared
+`markup.rs` and a `tests.rs`. Splitting the six subdirectory listings over two
+batches keeps each small enough to still be worth having at a low budget.
+"""
+content.kind = "fs"
+content.groups = [
   { parent = "src/benchmark", entries = "all" },
   { parent = "src/export", entries = "all" },
 ]
 
 [[batches]]
-id = "1.4"
-descriptor = "src/output, src/parameter, src/timer, src/util directory listings"
-justification = "Names of every file in the remaining four submodules (console formatting, parameter substitution, platform timers, small utilities)."
-[batches.content]
-kind = "fs"
-groups = [
+id = "1.8"
+descriptor = "src/output/, src/parameter/, src/timer/, src/util/ listings (complete)"
+justification = """
+Closes the `src/` subdirectory class. `timer/` in particular reveals the
+platform split (`unix_timer.rs`, `windows_timer.rs`, `wall_clock_timer.rs`)
+that no other cheap batch exposes, and `util/` names the five helper modules so
+"where does the time unit / exit-code handling live" is a zero-hop question.
+"""
+content.kind = "fs"
+content.groups = [
   { parent = "src/output", entries = "all" },
   { parent = "src/parameter", entries = "all" },
   { parent = "src/timer", entries = "all" },
@@ -61,98 +164,110 @@ groups = [
 ]
 
 [[batches]]
-id = "1.5"
-descriptor = "tests/, scripts/, doc/, .github/ directory listings"
-justification = "Names of every integration-test file, Python post-processing script, doc/manpage asset, and CI config file — the non-src operational surface of the repo."
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "tests", entries = "all" },
-  { parent = "scripts", entries = "all" },
-  { parent = "doc", entries = "all" },
-  { parent = ".github", entries = "all" },
-]
-
-[[batches]]
-id = "1.6"
-descriptor = "README lede + feature list"
-justification = "One-line description and the bullet list of supported features (statistical analysis, warmup, prepare, outlier detection, export formats, parameterized benchmarks) — the fastest way to learn what the tool does before diving into code."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "README.md", start = 6, end = 6, render = { kind = "full" } },
-  { path = "README.md", start = 13, end = 23, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "1.7"
-descriptor = "main.rs part 1 — module declarations + imports"
-justification = "The pub mod declarations (confirming the module topology from 1.2) and the top-level imports, before any logic."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/main.rs", start = 1, end = 17, render = { kind = "full" } }]
-
-[[batches]]
-id = "1.8"
-descriptor = "main.rs part 2 — run() setup"
-justification = "The start of run(): CLI parsing into Options/Commands/ExportManager, in call order."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/main.rs", start = 18, end = 34, render = { kind = "full" } }]
-
-[[batches]]
 id = "1.9"
-descriptor = "main.rs part 3 — scheduler dispatch + error printing"
-justification = "The rest of the orchestration: Scheduler::run_benchmarks -> print_relative_speed_comparison -> final_export, and how a top-level error is reported (colored, exit code 1)."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/main.rs", start = 35, end = 61, render = { kind = "full" } }]
+descriptor = "src/main.rs: module declarations and the types the entry point imports"
+justification = """
+The eleven `pub mod` declarations -- `benchmark`, `cli`, `command`, `error`,
+`export`, `options`, `outlier_detection`, `output`, `parameter`, `timer`,
+`util` -- complete and in one place. Eleven lines that fix the vocabulary
+every path in the rest of the crate is written in.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/main.rs", start = 17, end = 27, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "Cargo.toml part 1 — package metadata + feature flag"
-justification = "Crate name/version/MSRV/edition and the one opt-in nightly feature (windows_process_extensions_main_thread_handle) that changes how Windows process resumption works (see src/timer/windows_timer.rs)."
-[batches.content]
-kind = "lines"
-spans = [{ path = "Cargo.toml", start = 1, end = 17, render = { kind = "full" } }]
+descriptor = "src/main.rs: the run() pipeline"
+justification = """
+The literal control flow of the program in one screen: parse args, build
+`Options`, `Commands` and `ExportManager` from them,
+`validate_against_command_list`, then `Scheduler::run_benchmarks` /
+`print_relative_speed_comparison` / `final_export`. Refines 1.9, which named
+these types without showing how they compose.
+"""
+predecessor = "1.9"
+content.kind = "lines"
+content.spans = [
+  { path = "src/main.rs", start = 29, end = 51, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "Cargo.toml part 2 — ordinary + platform-conditional dependencies"
-justification = "The ordinary [dependencies] list plus the cfg(windows)/cfg(not(windows))/cfg(linux) conditional blocks that explain why timer/ has three platform-specific files (libc for Unix rusage, windows-sys + once_cell for the Windows job-object timer, nix for the Linux /dev/null splice path)."
-[batches.content]
-kind = "lines"
-spans = [{ path = "Cargo.toml", start = 19, end = 48, render = { kind = "full" } }]
+descriptor = "src/main.rs: main() error reporting and exit code"
+justification = """
+Nine lines showing that every error is funnelled through `anyhow` and printed
+as a red `Error:` prefix with `{:#}` (alternate Display, i.e. the whole cause
+chain) before `std::process::exit(1)`. This is the answer to "how does
+hyperfine report failures", and it is separable from the pipeline itself.
+"""
+predecessor = "1.10"
+content.kind = "lines"
+content.spans = [
+  { path = "src/main.rs", start = 53, end = 61, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "Cargo.toml part 2b — clap dependency"
-justification = "The clap version and its enabled cargo features (suggestions/color/wrap_help/cargo/help/usage/error-context) — the argument parser every flag in tier 2 goes through."
-predecessor = "1.11"
-[batches.content]
-kind = "lines"
-spans = [{ path = "Cargo.toml", start = 50, end = 61, render = { kind = "full" } }]
+descriptor = "tests/, doc/, scripts/ and .github/ listings (complete)"
+justification = """
+Closes the directory class outside `src/`: two integration-test binaries plus
+`common.rs` and `example_input_file.txt`; the `hyperfine.1` manpage and the
+three README images in `doc/`; seven Python analysis scripts with their own
+README and `ruff.toml`; and the single `CICD.yml` workflow next to
+`dependabot.yml`. Cheap breadth that makes "where are the tests / the manpage
+/ the plotting scripts" zero-hop.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "doc", entries = "all" },
+  { parent = "scripts", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
 
-[[batches]]
-id = "1.13"
-descriptor = "Cargo.toml part 3 — dev/build deps, release profile"
-justification = "Dev-dependencies (insta/assert_cmd/tempfile used throughout tests/), build-dependencies (clap_complete, used by build.rs), and the release profile (lto/strip/codegen-units=1)."
-[batches.content]
-kind = "lines"
-spans = [{ path = "Cargo.toml", start = 62, end = 81, render = { kind = "full" } }]
-
-# ---------------------------------------------------------------------------
-# Tier 2: CLI flag surface (src/cli.rs)
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------- tier 2
+# The CLI contract. `src/cli.rs` is the single source of truth for the option
+# surface; `doc/hyperfine.1` merely restates it and is not re-bought.
 
 [[batches]]
 id = "2.1"
-descriptor = "cli.rs — every flag's Arg::new(...) anchor line"
-justification = "Locations batch: the name of every one of the 31 clap Arg definitions (including the two hidden ones). Showing only some flag groups' full detail later would otherwise make an agent think undetailed flags don't exist; this fixes that for any budget cut inside tier 2."
-[batches.content]
-kind = "lines"
-spans = [
+descriptor = "src/cli.rs: get_cli_arguments() and the build_command() clap header"
+justification = """
+The one public entry point of the module (`pub fn get_cli_arguments`, whose
+generic bounds are elided) and the `Command::new("hyperfine")` header that sets
+`crate_version!`, `next_line_help(true)`, `hide_possible_values(true)`,
+`about("A command-line benchmarking tool.")`, `help_expected(true)` and
+`max_term_width(80)`. Small, and it establishes that everything below is clap
+builder code -- which is what makes the roster in 2.2 legible.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 9, end = 9, render = { kind = "ellipsis" } },
+  { path = "src/cli.rs", start = 17, end = 25, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Complete option roster: every Arg::new(...) in src/cli.rs"
+justification = """
+The definitive user-facing surface of the tool, as one row: all 32 arguments
+from the positional `command` through `warmup`, `min-runs`, `max-runs`,
+`runs`, `setup`, `reference`, `reference-name`, `prepare`, `conclude`,
+`cleanup`, `parameter-scan`, `parameter-step-size`, `parameter-list`, `shell`,
+`no-shell`, `ignore-failure`, `style`, `sort`, `time-unit`, the five
+`export-*` flags, `show-output`, `output`, `input`, `command-name`, and the
+two hidden ones (`min-benchmarking-time`, `debug-mode`). Deliberately complete:
+showing a subset would let a reader conclude the unlisted options do not
+exist. Each line also gives the exact coordinate at which that option's help
+text and constraints live, so any "what does --X do" question is one read away.
+"""
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
   { path = "src/cli.rs", start = 27, end = 27, render = { kind = "full" } },
   { path = "src/cli.rs", start = 39, end = 39, render = { kind = "full" } },
   { path = "src/cli.rs", start = 50, end = 50, render = { kind = "full" } },
@@ -187,286 +302,847 @@ spans = [
 ]
 
 [[batches]]
-id = "2.2"
-descriptor = "cli.rs — build_command() header + positional `command` arg"
-justification = "The command builder's top-level settings (next_line_help, max_term_width=80, etc.) and the single required positional argument (the benchmarked command line itself) with its full help text."
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/cli.rs", start = 1, end = 37, render = { kind = "full" } }]
-
-[[batches]]
 id = "2.3"
-descriptor = "cli.rs — --shell/-S and -N/--shell=none"
-justification = "Full semantics of shell selection: default/custom/none, and that -N is exactly an alias for --shell=none — a flag pair whose exact string/format rules aren't guessable from the flag name alone."
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/cli.rs", start = 203, end = 225, render = { kind = "full" } }]
+descriptor = "Complete short-alias roster for the CLI options"
+justification = """
+The sixteen `.short(...)` calls, complete: `-w -m -M -r -s -p -C -c -P -D -L
+-S -N -i -u -n`. Each sits within a line or two of its `Arg::new` from 2.2, so
+the pairing reads off the line numbers with no extra tokens. Ranked right
+after the roster because half of README's examples and most real invocations
+use the short forms, and there is nowhere else in the tree they are enumerated
+except the generated manpage.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.rs", start = 41, end = 41, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 60, end = 60, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 69, end = 69, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 78, end = 78, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 110, end = 110, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 126, end = 126, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 143, end = 143, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 157, end = 157, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 175, end = 175, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 189, end = 189, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 206, end = 206, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 221, end = 221, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 234, end = 234, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 274, end = 274, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 384, end = 384, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "cli.rs — --ignore-failure/-i"
-justification = "The all-non-zero vs comma-separated exit-code-list value grammar for --ignore-failure, including the require_equals(true)/default_missing_value quirk (bare -i means 'all-non-zero')."
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/cli.rs", start = 226, end = 238, render = { kind = "full" } }]
+descriptor = "Enumerated value sets, defaults, and the two hidden options"
+justification = """
+The closed vocabularies a user can actually type, which nothing else in the
+repository lists together: `--style` accepts auto/basic/full/nocolor/color/
+none, `--sort` accepts auto/command/mean-time with `auto` as a hidden default,
+`--time-unit` accepts microsecond/millisecond/second, and `--ignore-failure`
+is `require_equals` with `all-non-zero` as its default-missing value. The two
+`.hide(true)` lines mark `--min-benchmarking-time` and `--debug-mode` as
+undocumented-but-real, which explains why they never appear in `--help` or the
+manpage. Six coordinates, very high answer density per token.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.rs", start = 231, end = 233, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 244, end = 244, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 259, end = 261, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 277, end = 277, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 397, end = 397, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 406, end = 406, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 3: options.rs — parsed Options struct + key non-obvious parsing logic
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "2.5"
+descriptor = "Complete set of inter-option conflicts and requirements"
+justification = """
+Every `conflicts_with*` / `requires` / `overrides_with` call in the file:
+`--runs` excludes `--min-runs`/`--max-runs`; `--reference-name` requires
+`--reference`; `--parameter-step-size` requires `--parameter-scan`;
+`--parameter-list` excludes both parameter-scan options; `--shell` overrides
+itself (last wins); `-N` excludes `--shell` and `--debug-mode`;
+`--show-output` excludes `--style`; `--output` excludes `--show-output`. These
+are the rules behind most "why did clap reject my invocation" questions and
+are invisible from `--help` output.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.rs", start = 68, end = 68, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 105, end = 105, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 178, end = 178, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 193, end = 193, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 209, end = 209, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 223, end = 223, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 332, end = 332, render = { kind = "full" } },
+  { path = "src/cli.rs", start = 343, end = 343, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 3
+# The configuration model: how flags become an `Options` value, the closed
+# vocabularies that value is built from, and the errors it can produce.
 
 [[batches]]
 id = "3.1"
-descriptor = "options.rs — Options struct field names (locations)"
-justification = "One line per config field on the struct that everything else in the crate reads (run_bounds, warmup_count, executor_kind, command_output_policies, ...) — the config surface in one glance, without the enums/Default noise."
-[batches.content]
-kind = "lines"
-spans = [
+descriptor = "src/options.rs: the Options struct, run bounds through setup_command"
+justification = """
+`Options` is the single settings value every other subsystem reads, and its
+doc-commented fields are the most compact statement of what hyperfine can be
+told to do: `run_bounds`, `warmup_count`, `min_benchmarking_time`,
+`command_failure_action`, `reference_command`/`reference_name`,
+`preparation_command`, `conclusion_command`, `setup_command`. The trailing `…`
+marks that the struct continues; 3.2 replaces it.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 197, end = 198, render = { kind = "full" } },
   { path = "src/options.rs", start = 200, end = 200, render = { kind = "full" } },
   { path = "src/options.rs", start = 203, end = 203, render = { kind = "full" } },
-  { path = "src/options.rs", start = 206, end = 206, render = { kind = "full" } },
+  { path = "src/options.rs", start = 205, end = 206, render = { kind = "full" } },
   { path = "src/options.rs", start = 209, end = 209, render = { kind = "full" } },
   { path = "src/options.rs", start = 212, end = 212, render = { kind = "full" } },
   { path = "src/options.rs", start = 215, end = 215, render = { kind = "full" } },
-  { path = "src/options.rs", start = 218, end = 218, render = { kind = "full" } },
-  { path = "src/options.rs", start = 221, end = 221, render = { kind = "full" } },
-  { path = "src/options.rs", start = 224, end = 224, render = { kind = "full" } },
-  { path = "src/options.rs", start = 227, end = 227, render = { kind = "full" } },
-  { path = "src/options.rs", start = 230, end = 230, render = { kind = "full" } },
-  { path = "src/options.rs", start = 233, end = 233, render = { kind = "full" } },
-  { path = "src/options.rs", start = 236, end = 236, render = { kind = "full" } },
-  { path = "src/options.rs", start = 239, end = 239, render = { kind = "full" } },
-  { path = "src/options.rs", start = 242, end = 242, render = { kind = "full" } },
-  { path = "src/options.rs", start = 245, end = 245, render = { kind = "full" } },
-  { path = "src/options.rs", start = 248, end = 248, render = { kind = "full" } },
+  { path = "src/options.rs", start = 217, end = 218, render = { kind = "full" } },
+  { path = "src/options.rs", start = 220, end = 221, render = { kind = "full" } },
+  { path = "src/options.rs", start = 223, end = 224, render = { kind = "full" } },
+  { path = "src/options.rs", start = 225, end = 225, render = { kind = "ellipsis" } },
 ]
 
 [[batches]]
 id = "3.2"
-descriptor = "options.rs — --runs/--min-runs/--max-runs resolution"
-justification = "The exact precedence rule when min/max/exact run counts interact (e.g. an explicit --max-runs below the default min silently lowers the min instead of erroring) — a subtlety not stated in the --help text."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/options.rs", start = 288, end = 315, render = { kind = "full" } }]
+descriptor = "src/options.rs: remaining Options fields (output, sort, executor, I/O, time unit)"
+justification = """
+Closes the field class: `cleanup_command`, `output_style`, the two separate
+sort orders (`sort_order_speed_comparison` vs `sort_order_exports` -- the
+reason `--sort=auto` behaves differently on screen and in exported tables),
+`executor_kind`, `command_input_policy`, `command_output_policies` (a Vec, one
+per command) and `time_unit`. Stopping at 3.1 would leave a reader believing
+the struct has no notion of output style or executors at all.
+"""
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 226, end = 227, render = { kind = "full" } },
+  { path = "src/options.rs", start = 230, end = 230, render = { kind = "full" } },
+  { path = "src/options.rs", start = 232, end = 233, render = { kind = "full" } },
+  { path = "src/options.rs", start = 235, end = 236, render = { kind = "full" } },
+  { path = "src/options.rs", start = 239, end = 239, render = { kind = "full" } },
+  { path = "src/options.rs", start = 241, end = 242, render = { kind = "full" } },
+  { path = "src/options.rs", start = 244, end = 245, render = { kind = "full" } },
+  { path = "src/options.rs", start = 248, end = 249, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "options.rs — output style auto-detection"
-justification = "Why colors/progress-bar/spinner behave differently across environments: --output=inherit or a non-terminal stdout forces Basic; TERM=dumb/unknown or NO_COLOR forces NoColor; otherwise Full. Not documented anywhere in --help."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/options.rs", start = 358, end = 383, render = { kind = "full" } }]
+descriptor = "src/options.rs: impl Default for Options -- the concrete default values"
+justification = """
+The numbers people actually ask for: warmup 0, `min_benchmarking_time = 3.0`
+seconds, `RaiseError` on command failure, `OutputStyleOption::Full`, speed
+comparison sorted by mean time while exports keep command order, null output
+and input policies, automatic time unit. Combined with `RunBounds::default()`
+this is where README's "at least 10 runs and at least 3 seconds" is actually
+implemented.
+"""
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 251, end = 273, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "options.rs — validate_against_command_list: --prepare/--conclude counts"
-justification = "The N-commands-vs-1-or-N-times rule for --prepare/--conclude (each must be given once for all commands or exactly once per command, counting a --reference as one more command) — the exact logic behind the integration tests in tier 9."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/options.rs", start = 470, end = 489, render = { kind = "full" } }]
+descriptor = "src/options.rs: DEFAULT_SHELL per platform, the Shell enum and its parser"
+justification = """
+`DEFAULT_SHELL` is `"sh"` off Windows and `"cmd.exe"` on it -- one of the most
+frequently asked platform facts about this tool -- and `Shell` is
+`Default(&'static str) | Custom(Vec<String>)`. The elided continuation holds
+its `Display`, `parse_from_str` (which splits `--shell "bash --norc"` with
+`shell_words`) and `command()` implementations. This is the type behind
+`-S/--shell`, `--shell=none` and `-N`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 16, end = 30, render = { kind = "full" } },
+  { path = "src/options.rs", start = 31, end = 31, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "options.rs — validate_against_command_list: --output count + normalization"
-justification = "The same N-or-1-times rule for --output, plus the normalization step that expands a single --output value to one copy per command before the benchmark loop reads command_output_policies[self.number]."
+descriptor = "src/options.rs: ExecutorKind (Raw / Shell / Mock) and its default"
+justification = """
+The three-way dispatch that `Scheduler::run_benchmarks` switches on: `Raw`
+(from `-N`/`--shell=none`), `Shell(Shell)` (the default) and
+`Mock(Option<String>)` (the hidden `--debug-mode`, which fabricates times for
+`sleep <n>` commands). Twelve lines that make the executor tier in 4.x
+immediately legible.
+"""
 predecessor = "3.4"
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/options.rs", start = 490, end = 502, render = { kind = "full" } }]
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 184, end = 195, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 4: command construction & parameter substitution
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "3.6"
+descriptor = "src/options.rs: OutputStyleOption and SortOrder vocabularies"
+justification = """
+The doc-commented variants behind `--style` (`Basic`, `Full`, `NoColor`,
+`Color`, `Disabled`) and `--sort` (`Command`, `MeanTime`). Buying them here
+rather than the corresponding forty lines of clap help prose in `src/cli.rs`
+is the cheaper way to answer "what does --style=nocolor actually change".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 82, end = 105, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "src/options.rs: CommandInputPolicy and CommandOutputPolicy"
+justification = """
+The `--input` and `--output`/`--show-output` value domains as types:
+`Null | File(PathBuf)` for stdin (the `#[default]`), and `Null | Pipe |
+File(PathBuf) | Inherit` for stdout/stderr, each variant carrying the doc
+comment that says what it does. Cheaper and sharper than the twenty-line
+`<WHERE> can be:` help paragraph in `src/cli.rs`, and it is the type
+`--show-output` and `--output=pipe` resolve to.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 122, end = 130, render = { kind = "full" } },
+  { path = "src/options.rs", start = 147, end = 162, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "src/options.rs: CmdFailureAction and RunBounds (default min = 10)"
+justification = """
+`CmdFailureAction` is `RaiseError | IgnoreAllFailures |
+IgnoreSpecificFailures(Vec<i32>)`, which is the whole semantics of
+`--ignore-failure[=1,2]`; `RunBounds { min, max: Option<u64> }` with
+`Default { min: 10, max: None }` is where the documented "at least 10 runs"
+lives. Both are small closed types that later engine batches assume.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/options.rs", start = 69, end = 79, render = { kind = "full" } },
+  { path = "src/options.rs", start = 107, end = 114, render = { kind = "full" } },
+  { path = "src/options.rs", start = 116, end = 119, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "src/error.rs: the complete OptionsError variant set with messages"
+justification = """
+Ten variants, each carrying its user-visible `#[error(...)]` string: empty
+runs range, too many `--command-name`s, unexpected command-name count, int and
+float parsing failures, empty shell, shell parse error, unknown output policy
+(with the `./name` hint) and a missing `--input` file. Error text is what
+users paste into issues, so having the full set searchable in-snapshot removes
+a whole class of grep round-trips.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/error.rs", start = 36, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "src/error.rs: the complete ParameterScanError variant set"
+justification = """
+The other half of the error class -- omitting it would imply `OptionsError` is
+the only error enum. Seven variants covering int/decimal parse failures, empty
+range, too-large range (the 100_000 cap enforced in `RangeStep::new`), zero
+step, the "step size is required for floating point bounds" rule, and the
+command-name count mismatch (`StepRequired`'s long message body is the one
+elided line).
+"""
+predecessor = "3.10"
+content.kind = "lines"
+content.spans = [
+  { path = "src/error.rs", start = 6, end = 17, render = { kind = "full" } },
+  { path = "src/error.rs", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "src/error.rs", start = 19, end = 22, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 4
+# The measurement engine: who runs commands, how many times, and how the
+# raw timings are turned into statistics.
 
 [[batches]]
 id = "4.1"
-descriptor = "command.rs — replace_parameters_in (the {param} substitution algorithm)"
-justification = "How {name} placeholders in a command/prepare/conclude/setup/cleanup string get replaced — a manual longest-match scan chosen specifically to avoid double-substitution when one parameter's value contains another's placeholder text (see the worked example in the doc comment)."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/command.rs", start = 106, end = 131, render = { kind = "full" } }]
+descriptor = "src/benchmark/executor.rs: the Executor trait"
+justification = """
+The central abstraction of the whole program, with its three doc-commented
+methods: `run_command_and_measure`, `calibrate` (documented as "measure the
+shell spawning time separately in order to subtract it") and `time_overhead`.
+Anyone touching how commands are executed starts here, and the doc comments
+explain hyperfine's headline correctness claim in situ.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 35, end = 49, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 51, end = 51, render = { kind = "ellipsis" } },
+  { path = "src/benchmark/executor.rs", start = 55, end = 56, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "parameter/tokenize.rs — tokenize() function body"
-justification = "The comma/backslash-escaping scanner behind -L/--parameter-list VALUES (e.g. `a\\,b,c` -> [\"a,b\", \"c\"]); small, self-contained, and the exact escaping rule isn't stated in --help."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/parameter/tokenize.rs", start = 1, end = 31, render = { kind = "full" } }]
+descriptor = "The three Executor implementations and their state"
+justification = """
+Complete implementor set -- `RawExecutor { options }`, `ShellExecutor {
+options, shell, shell_spawning_time: Option<TimingResult> }` and
+`MockExecutor { shell: Option<String> }` -- so a reader cannot conclude there
+are only one or two. The `shell_spawning_time` field is the storage behind the
+calibration described in 4.1, and `MockExecutor` is what `--debug-mode` and
+the `scheduler`/integration tests run against.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 122, end = 124, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 169, end = 173, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 302, end = 306, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------------
-# Tier 5: benchmark execution core
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "4.3"
+descriptor = "BenchmarkIteration and the $HYPERFINE_ITERATION values"
+justification = """
+`NonBenchmarkRun | Warmup(u64) | Benchmark(u64)` plus `to_env_var_value`,
+which is the exact spelling of the `$HYPERFINE_ITERATION` variable users see:
+`None` for hooks, `warmup-{i}` during warmup, and the bare index during the
+benchmark. Documented nowhere else in the tree except one clap help paragraph.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 19, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "The shared command runner: stdio wiring and injected environment variables"
+justification = """
+`run_command_and_measure_common` is where every execution path converges. It
+shows the stdin/stdout/stderr wiring taken from the input and output policies,
+and both injected environment variables --
+`HYPERFINE_RANDOMIZED_ENVIRONMENT_OFFSET` (the Mytkowicz-2009 mitigation) and
+`HYPERFINE_ITERATION` -- before delegating to `timer::execute_and_measure`.
+"""
+predecessor = "4.3"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 58, end = 59, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 60, end = 60, render = { kind = "ellipsis" } },
+  { path = "src/benchmark/executor.rs", start = 66, end = 68, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 70, end = 77, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "Non-zero exit handling and the failure message users actually see"
+justification = """
+The `match` that turns `CmdFailureAction` into a should-fail decision per run
+(`RaiseError`, `IgnoreAllFailures`, `IgnoreSpecificFailures(codes)`) and the
+exact `bail!` text naming the failing iteration and suggesting
+`-i/--ignore-failure` and `--show-output`. High search value: that string is
+what users paste when asking why their benchmark aborted.
+"""
+predecessor = "4.4"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 85, end = 89, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 90, end = 90, render = { kind = "ellipsis" } },
+  { path = "src/benchmark/executor.rs", start = 107, end = 115, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Shell-spawning calibration: 50 probe runs, and where the overhead is subtracted"
+justification = """
+README promises hyperfine "always corrects for the shell spawning time"; these
+are the three places that implement it -- the subtraction of
+`shell_spawning_time` from real/user/system in `ShellExecutor::
+run_command_and_measure`, the `const COUNT: u64 = 50` calibration loop (whose
+body is elided), and `time_overhead` returning the calibrated mean.
+"""
+predecessor = "4.2"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/executor.rs", start = 214, end = 219, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 232, end = 234, render = { kind = "full" } },
+  { path = "src/benchmark/executor.rs", start = 235, end = 235, render = { kind = "ellipsis" } },
+  { path = "src/benchmark/executor.rs", start = 297, end = 299, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "src/benchmark/scheduler.rs: Scheduler state and executor selection"
+justification = """
+`Scheduler` holds the commands, options, export manager and the accumulating
+`Vec<BenchmarkResult>`; its `new` takes exactly those three borrows, and
+`run_benchmarks` opens by boxing one of `RawExecutor`/`MockExecutor`/
+`ShellExecutor` off `options.executor_kind`. The concrete link between the
+configuration tier and the executor tier.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/scheduler.rs", start = 13, end = 18, render = { kind = "full" } },
+  { path = "src/benchmark/scheduler.rs", start = 21, end = 21, render = { kind = "full" } },
+  { path = "src/benchmark/scheduler.rs", start = 34, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "run_benchmarks(): reference command first, calibrate once, export after each benchmark"
+justification = """
+The ordering rules that the whole `tests/execution_order_tests.rs` suite
+exists to pin: the optional `--reference` command is chained ahead of the user
+commands so it is benchmarked first, `executor.calibrate()` runs once before
+any benchmark, and results are re-exported after every individual benchmark
+with the inline rationale ("we would risk losing them if a later benchmark
+fails"). `final_export` is the non-intermediate counterpart.
+"""
+predecessor = "4.7"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/scheduler.rs", start = 41, end = 59, render = { kind = "full" } },
+  { path = "src/benchmark/scheduler.rs", start = 156, end = 158, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster"
+justification = """
+The per-command driver. `MIN_EXECUTION_TIME = 5e-3` is the 5 ms threshold
+behind the "command took less than 5 ms" warning; the struct binds one
+`Command` to the shared `Options` and `&dyn Executor`. The doc-commented
+method roster is complete -- `run_intermediate_command`, `run_setup_command`,
+`run_cleanup_command`, `run_preparation_command`, `run_conclusion_command`,
+`run` -- so the `--setup`/`--prepare`/`--conclude`/`--cleanup` hooks are all
+visible with their exact line coordinates.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/mod.rs", start = 31, end = 39, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 56, end = 57, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 74, end = 75, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 95, end = 96, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 116, end = 117, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 128, end = 129, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 140, end = 141, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "How the number of runs is decided"
+justification = """
+The single most-asked behavioural question about hyperfine: `runs_in_min_time
+= min_benchmarking_time / (measured + executor overhead + preparation +
+conclusion overhead)`, then `max(runs_in_min_time, run_bounds.min)` clamped by
+`run_bounds.max`. Nineteen lines that make README's "at least 10 runs and at
+least 3 seconds" precise, including the fact that hook overhead counts.
+"""
+predecessor = "4.10"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/mod.rs", start = 259, end = 277, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "The three warning triggers inside Benchmark::run"
+justification = """
+The three conditions that make hyperfine print a warning: any timing below
+`MIN_EXECUTION_TIME` while running under a shell, any non-zero exit across the
+runs, and `modified_zscores` exceeding `OUTLIER_THRESHOLD` -- routed to
+`SlowInitialRun` when it is the first run that is anomalous and
+`OutliersDetected` otherwise. `OutlierWarningOptions` is built here from
+whether `--warmup`/`--prepare` are in use, which is what selects the
+remediation hint in the printed text.
+"""
+predecessor = "4.10"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/mod.rs", start = 396, end = 401, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 409, end = 410, render = { kind = "full" } },
+  { path = "src/benchmark/mod.rs", start = 423, end = 429, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.13"
+descriptor = "src/outlier_detection.rs: the modified Z-score method and its threshold"
+justification = """
+`OUTLIER_THRESHOLD = 1.4826 * 10.0` is documented in place as the MAD-to-stddev conversion factor times ten
+standard deviations, and `pub fn modified_zscores(xs: &[f64]) -> Vec<f64>` is
+the only function the engine calls (its body is elided). This is the whole
+statistical basis of the outlier warnings, in about fifteen lines.
+"""
+predecessor = "4.12"
+content.kind = "lines"
+content.spans = [
+  { path = "src/outlier_detection.rs", start = 1, end = 2, render = { kind = "full" } },
+  { path = "src/outlier_detection.rs", start = 3, end = 3, render = { kind = "ellipsis" } },
+  { path = "src/outlier_detection.rs", start = 10, end = 13, render = { kind = "full" } },
+  { path = "src/outlier_detection.rs", start = 20, end = 21, render = { kind = "full" } },
+  { path = "src/outlier_detection.rs", start = 22, end = 22, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------- tier 5
+# The result data model and the exporter surface -- i.e. the documented
+# machine-readable outputs other tools consume.
 
 [[batches]]
 id = "5.1"
-descriptor = "benchmark/mod.rs — run-count determination formula"
-justification = "How the actual number of timed runs is computed: min_benchmarking_time / (first run's time + overheads), clamped to [run_bounds.min, run_bounds.max] — the formula behind the 10-runs/3-seconds default behavior and the --min-runs/--max-runs/--runs flags."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/mod.rs", start = 259, end = 277, render = { kind = "full" } }]
+descriptor = "src/benchmark/benchmark_result.rs: the complete BenchmarkResult field set (= the JSON export schema)"
+justification = """
+`BenchmarkResult` is serialized straight to JSON, so this field list *is* the
+documented export schema that `scripts/*.py`, Chronologer and Bencher read:
+`command`, `mean`, `stddev`, `median`, `user`, `system`, `min`, `max`,
+`times`, `memory_usage_byte`, `exit_codes`, `parameters`. Complete, with the
+`#[serde(...)]` attributes that decide which fields are skipped or omitted
+when empty.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/benchmark_result.rs", start = 10, end = 13, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 17, end = 18, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 21, end = 21, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 27, end = 27, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 33, end = 33, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 42, end = 43, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 46, end = 47, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/benchmark/benchmark_result.rs", start = 53, end = 55, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "benchmark/scheduler.rs — run_benchmarks (executor selection + run order)"
-justification = "How ExecutorKind maps to a concrete Executor (Raw/Mock/Shell), why calibrate() runs once up front, and that a --reference command is chained before the benchmarked commands and re-exports results after every single benchmark."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/scheduler.rs", start = 34, end = 59, render = { kind = "full" } }]
+descriptor = "src/benchmark/timing_result.rs: TimingResult in full"
+justification = """
+The four-field per-run measurement (`time_real`, `time_user`, `time_system`,
+`memory_usage_byte`) that every `Executor` returns and that
+`BenchmarkResult`'s aggregates are computed from. The whole file is fifteen
+lines, so it is bought outright rather than sampled.
+"""
+predecessor = "5.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/timing_result.rs", start = 4, end = 17, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "benchmark/executor.rs — Executor trait"
-justification = "The three-method interface (run_command_and_measure / calibrate / time_overhead) that RawExecutor, ShellExecutor, and MockExecutor each implement differently — the seam to touch when adding a new execution mode."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/executor.rs", start = 35, end = 56, render = { kind = "full" } }]
+descriptor = "src/benchmark/relative_speed.rs: annotated result type and the complete public function set"
+justification = """
+`BenchmarkResultWithRelativeSpeed { result, relative_speed,
+relative_speed_stddev, is_reference, relative_ordering }` is what both the
+terminal summary and every markup exporter iterate over. The five public
+functions are listed by name only -- `compare_mean_time`, `fastest_of`,
+`compute_with_check_from_reference`, `compute_with_check`, `compute` -- so no
+caller can assume a missing one does not exist; the uncertainty-propagation
+formula for the ratio stddev sits between them at lines 54-64.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/benchmark/relative_speed.rs", start = 6, end = 14, render = { kind = "full" } },
+  { path = "src/benchmark/relative_speed.rs", start = 16, end = 16, render = { kind = "truncated", pattern = "^pub fn [^(]+" } },
+  { path = "src/benchmark/relative_speed.rs", start = 20, end = 20, render = { kind = "truncated", pattern = "^pub fn [^(]+" } },
+  { path = "src/benchmark/relative_speed.rs", start = 86, end = 86, render = { kind = "full" } },
+  { path = "src/benchmark/relative_speed.rs", start = 98, end = 98, render = { kind = "full" } },
+  { path = "src/benchmark/relative_speed.rs", start = 112, end = 112, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "benchmark/executor.rs — ShellExecutor shell-spawn-time calibration"
-justification = "Why every benchmark's reported time is shell overhead-corrected: calibrate() times 50 empty shell invocations up front (loop body elided, marked) and time_overhead() returns their mean, which run_command_and_measure subtracts from every subsequent measurement."
-predecessor = "5.3"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/benchmark/executor.rs", start = 232, end = 244, render = { kind = "full" } },
-  { path = "src/benchmark/executor.rs", start = 249, end = 249, render = { kind = "ellipsis" } },
-  { path = "src/benchmark/executor.rs", start = 289, end = 301, render = { kind = "full" } },
+descriptor = "src/export/mod.rs: the ExportType enum -- the five output formats"
+justification = """
+The five export formats as a closed enum -- `Asciidoc`, `Csv`, `Json`,
+`Markdown`, `Orgmode` -- each doc-commented, and each mapping one-to-one onto
+the like-named file listed in 1.7. The answer to "what formats exist and where
+is each implemented".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/export/mod.rs", start = 26, end = 43, render = { kind = "full" } },
 ]
 
-# ---------------------------------------------------------------------------
-# Tier 6: statistics & console/warning formatting
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "5.5"
+descriptor = "src/export/mod.rs: the Exporter trait and ExportManager"
+justification = """
+`trait Exporter { fn serialize(&self, results, unit, sort_order) ->
+Result<Vec<u8>> }` is the extension point a new format implements, and
+`ExportManager { exporters, time_unit, sort_order }` is what owns them.
+Anyone adding an export format needs exactly these two declarations.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = "src/export/mod.rs", start = 45, end = 54, render = { kind = "full" } },
+  { path = "src/export/mod.rs", start = 66, end = 71, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "Flag-to-exporter wiring and the '-' means stdout convention"
+justification = """
+The five `add_exporter("export-<fmt>", ExportType::<Fmt>)` calls are the exact
+bridge from the CLI roster in 2.2 to the enum in 5.4, and the `if filename ==
+"-" { ExportTarget::Stdout }` branch is an undocumented-in-README convention
+that users repeatedly ask about.
+"""
+predecessor = "5.5"
+content.kind = "lines"
+content.spans = [
+  { path = "src/export/mod.rs", start = 93, end = 97, render = { kind = "full" } },
+  { path = "src/export/mod.rs", start = 113, end = 116, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "src/export/markup.rs: the shared table shape and the blanket Exporter impl"
+justification = """
+The three markup formats (Markdown, AsciiDoc, org-mode) share one table
+generator, so this is where the column set `Command | Mean | Min | Max |
+Relative` and the `[unit]` notation actually come from -- the same header row
+README shows. The `MarkupExporter` required-method names are listed complete,
+and the blanket `impl<T: MarkupExporter> Exporter for T` explains why the
+three format files contain no `serialize` of their own.
+"""
+predecessor = "5.5"
+content.kind = "lines"
+content.spans = [
+  { path = "src/export/markup.rs", start = 34, end = 39, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 83, end = 83, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 85, end = 85, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 87, end = 87, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 91, end = 91, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 95, end = 95, render = { kind = "full" } },
+  { path = "src/export/markup.rs", start = 108, end = 110, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "The five exporter types, and the CSV column set"
+justification = """
+One declaration line per implementation -- `AsciidocExporter`, `CsvExporter`,
+`JsonExporter`, `MarkdownExporter`, `OrgmodeExporter` -- so the implementor
+class is closed, the `HyperfineSummary { results }` wrapper that gives JSON
+export its top-level `{"results": [...]}` shape, plus the literal CSV header
+row (`command, mean, stddev,
+median, user, system, min, max` then one `parameter_<name>` column per
+parameter) and the in-code note that per-run times and exit codes cannot be
+represented in CSV. That caveat is the reason `--export-json` exists.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = "src/export/asciidoc.rs", start = 5, end = 5, render = { kind = "full" } },
+  { path = "src/export/csv.rs", start = 13, end = 13, render = { kind = "full" } },
+  { path = "src/export/json.rs", start = 12, end = 14, render = { kind = "full" } },
+  { path = "src/export/json.rs", start = 17, end = 17, render = { kind = "full" } },
+  { path = "src/export/markdown.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "src/export/orgmode.rs", start = 5, end = 5, render = { kind = "full" } },
+  { path = "src/export/csv.rs", start = 25, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.9"
+descriptor = "src/output/format.rs: automatic time-unit selection, and the Unit type"
+justification = """
+The rule behind every printed number: below 1 ms render as microseconds, below
+1 s as milliseconds, otherwise seconds -- unless `--time-unit` forces one.
+Paired with `Unit::{Second, MilliSecond, MicroSecond}` and the
+`Second = Scalar = f64` aliases that appear in nearly every signature in the
+crate.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/output/format.rs", start = 18, end = 25, render = { kind = "full" } },
+  { path = "src/util/units.rs", start = 3, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.10"
+descriptor = "src/output/warnings.rs: the complete Warnings set"
+justification = """
+`FastExecutionTime`, `NonZeroExitCode`, `SlowInitialRun(Second,
+OutlierWarningOptions)` and `OutliersDetected(OutlierWarningOptions)` -- the
+four warnings hyperfine can print, with the `warmup_in_use`/`prepare_in_use`
+flags that select which remediation hint the message ends with. The long
+`Display` bodies are elided; the enum is what makes them findable.
+"""
+predecessor = "4.12"
+content.kind = "lines"
+content.spans = [
+  { path = "src/output/warnings.rs", start = 7, end = 18, render = { kind = "full" } },
+  { path = "src/output/warnings.rs", start = 20, end = 20, render = { kind = "full" } },
+  { path = "src/output/warnings.rs", start = 21, end = 21, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------- tier 6
+# Command construction and the parameterization machinery.
 
 [[batches]]
 id = "6.1"
-descriptor = "outlier_detection.rs — modified Z-score algorithm"
-justification = "The exact outlier rule (median absolute deviation based, threshold 1.4826*10) that drives the 'first run was an outlier' / 'outliers detected' console warnings — the reference paper is cited but the formula itself is the load-bearing part."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/outlier_detection.rs", start = 8, end = 13, render = { kind = "full" } },
-  { path = "src/outlier_detection.rs", start = 21, end = 38, render = { kind = "full" } },
+descriptor = "src/command.rs: the Command type and its complete method roster"
+justification = """
+`Command { name, expression, parameters }` is the unit of work everything else
+operates on, and the roster names all nine of its methods -- `new`,
+`new_parametrized`, `get_name`, `get_name_with_unused_parameters`,
+`get_command_line`, `get_command`, `get_parameters`, `get_unused_parameters`,
+`replace_parameters_in`. Names only (truncated at the opening paren) so the
+class is closed cheaply and each method's body is one read away.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/command.rs", start = 20, end = 22, render = { kind = "full" } },
+  { path = "src/command.rs", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/command.rs", start = 27, end = 27, render = { kind = "full" } },
+  { path = "src/command.rs", start = 30, end = 31, render = { kind = "full" } },
+  { path = "src/command.rs", start = 34, end = 34, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 42, end = 42, render = { kind = "full" } },
+  { path = "src/command.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 61, end = 61, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 81, end = 81, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 96, end = 96, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 100, end = 100, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 106, end = 106, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
 ]
 
 [[batches]]
 id = "6.2"
-descriptor = "benchmark/relative_speed.rs — ratio + stddev propagation formula"
-justification = "The core 'N.NN times faster/slower' number and its ± stddev, including the explicit independence assumption for the uncertainty-propagation formula (and the None fallback when either side lacks a stddev) — the exact math behind the Summary section and markup-export Relative column."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/relative_speed.rs", start = 46, end = 64, render = { kind = "full" } }]
+descriptor = "How {param} placeholders are substituted, and why naively"
+justification = """
+The parameter substitution users see as `{threads}` in their command strings,
+with the inline comment explaining the non-obvious constraint: replacement
+walks the string manually rather than chaining `str::replace`, so that
+`-L foo 'a,{bar}' -L bar 'baz,quux'` can never double-substitute. This
+comment is the single best explanation of the semantics in the repository.
+"""
+predecessor = "6.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/command.rs", start = 107, end = 108, render = { kind = "full" } },
+  { path = "src/command.rs", start = 113, end = 118, render = { kind = "full" } },
+  { path = "src/command.rs", start = 119, end = 119, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "benchmark/benchmark_result.rs — BenchmarkResult schema, part 1 (command/mean/stddev/median/user/system)"
-justification = "The struct that is the common currency between the benchmark loop, console summary, and every exporter (JSON/CSV/markup); this half covers command and command_with_unused_parameters (skipped in JSON) through median, plus the user/system CPU-time fields."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/benchmark_result.rs", start = 7, end = 33, render = { kind = "full" } }]
+descriptor = "src/command.rs: Commands and its complete method roster, with the three construction modes"
+justification = """
+`Commands<'a>(Vec<Command<'a>>)` and all six methods --
+`from_cli_arguments`, `iter`, `num_commands`, `find_duplicates`,
+`build_parameter_scan_commands`, `get_parameter_scan_commands`. The three
+rendered branch lines show the dispatch order that decides the benchmark
+matrix: `--parameter-scan`, else `--parameter-list` (cross-product over all
+listed parameters), else one command per positional argument.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/command.rs", start = 133, end = 134, render = { kind = "full" } },
+  { path = "src/command.rs", start = 137, end = 137, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 145, end = 145, render = { kind = "full" } },
+  { path = "src/command.rs", start = 155, end = 155, render = { kind = "full" } },
+  { path = "src/command.rs", start = 234, end = 234, render = { kind = "full" } },
+  { path = "src/command.rs", start = 250, end = 250, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 254, end = 254, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 260, end = 260, render = { kind = "truncated", pattern = "^ *(pub )?fn [^(]+" } },
+  { path = "src/command.rs", start = 271, end = 271, render = { kind = "full" } },
+  { path = "src/command.rs", start = 312, end = 312, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.4"
-descriptor = "benchmark/benchmark_result.rs — remaining fields (min/max/times/memory/exit_codes/parameters)"
-justification = "The second half of the struct: min/max, the optional times/memory_usage_byte vectors that JSON export includes but CSV skips, exit_codes, and the parameters map used for -P/-L benchmarks."
-predecessor = "6.3"
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/benchmark/benchmark_result.rs", start = 34, end = 55, render = { kind = "full" } }]
+descriptor = "src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize()"
+justification = """
+The three small pieces the parameter feature rests on: `ParameterValue::{Text,
+Numeric(Number)}` with the `ParameterNameAndValue<'a>` alias used throughout
+`command.rs`; `RangeStep<T> { state, end, step }` with `RangeStep::new` and
+the `MAX_PARAMETERS = 100_000` guard that produces
+`ParameterScanError::TooLarge`; and `tokenize`, which splits `-L` value lists
+on commas with backslash escaping. `Number::{Int, Decimal}` is why
+`--parameter-scan` accepts both integers and decimals.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/parameter/mod.rs", start = 7, end = 11, render = { kind = "full" } },
+  { path = "src/parameter/mod.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/parameter/range_step.rs", start = 33, end = 38, render = { kind = "full" } },
+  { path = "src/parameter/range_step.rs", start = 41, end = 41, render = { kind = "full" } },
+  { path = "src/parameter/range_step.rs", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/parameter/tokenize.rs", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/util/number.rs", start = 10, end = 13, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "6.5"
-descriptor = "output/format.rs — automatic time-unit selection thresholds"
-justification = "The exact cutoffs (< 1 ms -> µs, < 1 s -> ms, else s) used whenever --time-unit isn't given — answers 'why did my result print in ms instead of s' with no follow-up needed."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/output/format.rs", start = 18, end = 26, render = { kind = "full" } }]
+# ---------------------------------------------------------------- tier 7
+# Operational layer: build script, CI entry points, test harness.
 
 [[batches]]
 id = "7.1"
-descriptor = "export/mod.rs — ExportType enum + Exporter trait"
-justification = "The five export formats and the one-method interface (serialize) each of json/csv/markdown/orgmode/asciidoc implements — the seam to touch when adding a new export format."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/export/mod.rs", start = 26, end = 54, render = { kind = "full" } }]
+descriptor = "build.rs: shell completions generated from the same clap command"
+justification = """
+Explains the otherwise surprising `include!("src/cli.rs")` at the top of the
+build script: completions for Bash, Fish, Zsh, PowerShell and Elvish are
+generated at build time from the very `build_command()` shown in 2.1, into
+`$SHELL_COMPLETIONS_DIR` or `$OUT_DIR`. This is why `src/cli.rs` must stay
+free of crate-internal imports, and it is the answer to "where do the
+completions come from".
+"""
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  { path = "build.rs", start = 3, end = 5, render = { kind = "full" } },
+  { path = "build.rs", start = 8, end = 8, render = { kind = "full" } },
+  { path = "build.rs", start = 15, end = 22, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "export/json.rs — full file"
-justification = "The JSON export is the richest/most-consumed format (all scripts/ tools read it): a `{\"results\": [...]}` wrapper around the full BenchmarkResult list, pretty-printed."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/export/json.rs", start = 1, end = 33, render = { kind = "full" } }]
-
-# ---------------------------------------------------------------------------
-# Tier 8: error types
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "error.rs — OptionsError variants (exact user-facing error strings)"
-justification = "Every error message the CLI can print for a bad option combination (empty runs range, too many --command-name, unknown output policy, missing --input file, ...) in one place — a `grep` for the error text an agent sees always lands here."
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/error.rs", start = 36, end = 58, render = { kind = "full" } }]
-
-# ---------------------------------------------------------------------------
-# Tier 9: tests
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "9.1"
-descriptor = "tests/common.rs — full file (test harness)"
-justification = "Every integration test builds its Command through this one `hyperfine()` helper (cwd = tests/, binary via assert_cmd::cargo) — the shared fixture behind 9.2/9.3."
-[batches.content]
-kind = "lines"
-spans = [{ path = "tests/common.rs", start = 1, end = 13, render = { kind = "full" } }]
-
-[[batches]]
-id = "9.2"
-descriptor = "tests/execution_order_tests.rs — fullest execution-order exemplar"
-justification = "The most complete ordering test (setup+prepare+reference+conclude+cleanup combined) proves the exact phase order per iteration: setup once, then (prepare, command, conclude) repeated per run, cleanup once — this is the ground truth behind the README's execution-order diagram. The two-command repeat blocks that follow (same pattern, once per benchmarked command, through the closing `.run();`) are elided and marked."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "tests/execution_order_tests.rs", start = 419, end = 442, render = { kind = "full" } },
-  { path = "tests/execution_order_tests.rs", start = 443, end = 443, render = { kind = "ellipsis" } },
+descriptor = ".github/workflows/CICD.yml: the complete job set and the commands each runs"
+justification = """
+All five jobs named -- `crate_metadata`, `ensure_cargo_fmt`, `min_version`,
+`build`, `winget` -- with the triggers (push to master, tags, PRs) and the
+literal `cargo clippy --locked --all-targets` / `cargo test --locked` commands
+run against the MSRV. Together with the target matrix line this answers "how
+is this built and checked" without opening the 357-line file.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/CICD.yml", start = 12, end = 14, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 17, end = 18, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 45, end = 46, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 55, end = 56, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 68, end = 71, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 73, end = 73, render = { kind = "full" } },
+  { path = ".github/workflows/CICD.yml", start = 347, end = 348, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "9.3"
-descriptor = "tests/integration_tests.rs — console output exemplar (time-unit formatting)"
-justification = "Exact expected console strings ('Time (mean ± σ):      1.234 s ±', '123.0 ms', '1234.0 ms', '1234000.0 µs') for every --time-unit value and the auto-detected default — concrete ground truth for 'what does the output actually look like'."
-[batches.content]
-kind = "lines"
-spans = [{ path = "tests/integration_tests.rs", start = 407, end = 436, render = { kind = "full" } }]
-
-# ---------------------------------------------------------------------------
-# Tier 10: platform-specific process execution & timing (src/timer/)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "10.1"
-descriptor = "timer/mod.rs — execute_and_measure: platform-conditional process creation/timer start"
-justification = "Why process creation differs by platform in this one function every benchmark run goes through: on Unix, unix_timer::CPUTimer starts before the child spawns; on Windows, the child is created suspended (CREATE_SUSPENDED) instead, spawned, and only then does windows_timer::CPUTimer::start_suspended_process attach a job object to it (the resume-and-account logic lives inside that constructor, in src/timer/windows_timer.rs, not shown here). The spawn/output-drain/wait/stop tail (generic across platforms) is elided and marked."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/timer/mod.rs", start = 83, end = 102, render = { kind = "full" } },
-  { path = "src/timer/mod.rs", start = 104, end = 104, render = { kind = "ellipsis" } },
+id = "7.3"
+descriptor = "tests/: the shared harness helpers and the debug-mode test idiom"
+justification = """
+`tests/common.rs` in full -- `hyperfine_raw_command()` / `hyperfine()` built
+via `assert_cmd`, with `current_dir("tests/")`, which is why fixture paths in
+tests are relative to `tests/` -- plus the `hyperfine_debug()` helper that
+prepends `--debug-mode --style=none` so the integration suite can assert on
+fabricated `sleep` timings without really sleeping. Every test in both
+binaries starts from one of these three functions.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "tests/common.rs", start = 5, end = 13, render = { kind = "full" } },
+  { path = "tests/integration_tests.rs", start = 10, end = 16, render = { kind = "full" } },
 ]
-
-# ---------------------------------------------------------------------------
-# Tier 11: concrete sample output
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "11.1"
-descriptor = "README.md — Markdown export sample table"
-justification = "A concrete rendered example of --export-markdown's output (Command/Mean/Min/Max/Relative columns, ± stddev formatting), all three example rows — pairs with export/markup.rs's table-building code (src/export/markup.rs, listed in 1.3) for a zero-follow-up answer to 'what does the export look like'."
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 137, end = 143, render = { kind = "full" } }]

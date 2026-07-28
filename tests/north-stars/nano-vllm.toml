@@ -1,168 +1,145 @@
 fixture = "nano-vllm"
 revision_pin = "2f214426"
 summary = """
-nano-vllm is a ~1500-line, single-package reimplementation of vLLM's inference \
-engine, hard-wired to one model family (Qwen3). It has no test suite, no CI, \
-and no config file format of its own -- it's driven entirely by Python kwargs \
-into LLM(...)/SamplingParams(...). A session against this repo could be \
-'explain the prefix-caching scheme', 'add a sampling knob', 'why does TP rank 1 \
-hang on startup', 'what's the exact benchmark invocation', or 'trace a request \
-from add_request to token output'. Given the repo's line-density (long, \
-type-hinted, chained-call Python), a frozen North Star can only afford to spend \
-full-body tokens on a fraction of it, so the ranking leans hard on cheap \
-name-only "locations" catalogs (every class/method name in a file) to fix each \
-file's surface for free, and reserves full bodies for a small set of genuinely \
-load-bearing spans, in this order of priority: (1) project identity and the \
-full file tree; (2) the three-class public API (LLM/SamplingParams/Config); \
-(3) the engine's own control flow -- Scheduler's prefill/decode loop, \
-BlockManager's hash-based prefix-caching allocator, Sequence's block-arithmetic \
-properties -- nano-vllm's actual novel content, not boilerplate transformer \
-code; (4) ModelRunner's per-step dispatch and its shared-memory multi-process \
-RPC (the most surprising infra decision, alongside CUDA-graph capture which is \
-named but not spent on); (5) the tensor-parallel embedding/attention/linear \
-primitives and the Qwen3Attention/Qwen3ForCausalLM wiring, plus name-only \
-locations for layers/layernorm.py and layers/rotary_embedding.py (the two \
-layers/ files everything else in this tier's roster is built around but that \
-carry no novel logic of their own); (6) the two runnable scripts that ground \
-'how do I actually run this' in concrete commands. Every rendered span in this \
-draft ends at a natural boundary -- end of file, or the line before the next \
-top-level def/class/section -- rather than mid-body; there are no ellipsis \
-spans because none were needed, not because coverage was skipped.
+nano-vllm is a from-scratch reimplementation of vLLM's offline inference
+engine in ~1200 lines of Python, packaged as `nanovllm`. Its public
+surface is two names — `LLM` (a bare subclass of `LLMEngine`) and
+`SamplingParams` — while every tunable lives on the `Config` dataclass
+that `LLMEngine.__init__` filters kwargs into.
+
+The substance is split three ways and the ranking follows that split.
+(1) `nanovllm/engine/`: `LLMEngine` (tokenizer + tensor-parallel worker
+spawn + the `generate`/`step` loop), `Scheduler` (a waiting/running
+deque pair implementing prefill-then-decode batching with preemption),
+`Sequence` (per-request token state, block bookkeeping, and the
+`__getstate__`/`__setstate__` pair that makes it cheap to pickle to TP
+workers), `BlockManager` (paged KV blocks with xxhash-keyed prefix
+caching), and `ModelRunner` (CUDA setup, KV-cache sizing from free GPU
+memory, prefill/decode tensor marshalling, CUDA-graph capture, and a
+shared-memory RPC to rank>0 workers). (2) `nanovllm/layers/` +
+`nanovllm/models/qwen3.py`: the tensor-parallel building blocks
+(Column/Row/QKV/Merged linear shards, vocab-parallel embedding and LM
+head, RMSNorm, rotary embedding, a Triton KV-cache store kernel wrapped
+around flash-attn) and the single supported architecture assembled from
+them. (3) `nanovllm/utils/`: a process-global `Context` dataclass that
+smuggles per-step attention metadata into layer code, and a safetensors
+weight loader driven by `packed_modules_mapping`.
+
+Ranking priorities: identity and the two-name public API first, then the
+directory map and per-file symbol rosters so any "where is X" question is
+one grep away, then engine semantics (scheduler policy, prefix caching,
+sequence state) which are what the repository exists to demonstrate, then
+model execution and the layer/model code, and finally the benchmark claim. The
+cap forces real omissions: bench.py and example.py bodies, LICENSE and
+.gitignore are left to the root listing, and several conventional layer
+bodies stay at roster granularity.
+Non-obvious things worth surfacing early because the code does not
+announce them: subpackages have no `__init__.py`, greedy sampling is
+asserted away in `SamplingParams`, and `kvcache_block_size` is asserted
+to be a multiple of 256 while `Sequence.block_size` is hardcoded to 256.
 """
 
-# ---------------------------------------------------------------------------
-# Tier 1 -- identity: what this repo is, its shape, and its packaging.
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------
+# Tier 1 — identity, public API, and the knobs a caller actually sets.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Root file tree"
-justification = "Cheapest possible batch that fixes the repo's scope: 9 top-level entries (README, LICENSE, pyproject.toml, example.py, bench.py, assets/, nanovllm/, plus the two dotfiles). Anchors every later path reference and forecloses 'is there a Makefile / Dockerfile / tests dir' guessing -- there isn't one."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "Project name and one-line description"
+justification = "Cheapest possible statement of what the repository is: the `# Nano-vLLM` heading and the sentence 'A lightweight vLLM implementation built from scratch.' Every downstream query is framed by knowing this is an inference engine, not a client library."
+content = { kind = "lines", spans = [ { path = "README.md", start = 9, end = 11, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "nanovllm/ package listing"
-justification = "The 8 direct children of the package root (__init__.py, config.py, llm.py, sampling_params.py, engine/, layers/, models/, utils/) -- the load-bearing structural fact that 'engine' (scheduling/orchestration) and 'layers'+'models' (the actual neural net) are separate subtrees."
-content = { kind = "fs", groups = [ { parent = "nanovllm", entries = "all" } ] }
-
-[[batches]]
-id = "1.3"
-descriptor = "nanovllm/engine/ listing"
-justification = "5 files: block_manager.py, llm_engine.py, model_runner.py, scheduler.py, sequence.py -- the whole orchestration subsystem's file roster, so 'where's the scheduling logic' resolves to a filename instead of a search."
-content = { kind = "fs", groups = [ { parent = "nanovllm/engine", entries = "all" } ] }
-
-[[batches]]
-id = "1.4"
-descriptor = "nanovllm/layers/ listing"
-justification = "7 files: activation, attention, embed_head, layernorm, linear, rotary_embedding, sampler -- shows every neural-net building block that exists so a partial later listing (e.g. only attention.py content) can't be mistaken for the whole set."
-content = { kind = "fs", groups = [ { parent = "nanovllm/layers", entries = "all" } ] }
-
-[[batches]]
-id = "1.5"
-descriptor = "nanovllm/models/ listing"
-justification = "Exactly one file, qwen3.py -- confirms this fork supports a single model family rather than the multi-architecture registry vLLM itself has; forecloses 'which models does this support' guessing."
-content = { kind = "fs", groups = [ { parent = "nanovllm/models", entries = "all" } ] }
-
-[[batches]]
-id = "1.6"
-descriptor = "nanovllm/utils/ listing"
-justification = "2 files: context.py (the global inference-step context object) and loader.py (safetensors weight loading) -- small but load-bearing glue that model_runner.py and attention.py both import."
-content = { kind = "fs", groups = [ { parent = "nanovllm/utils", entries = "all" } ] }
-
-[[batches]]
-id = "1.7"
-descriptor = "assets/ listing"
-justification = "Closes the class opened by the root listing's `assets/` entry: it contains exactly one file, logo.png (the README badge image), not a hidden fonts/icons bundle."
-content = { kind = "fs", groups = [ { parent = "assets", entries = "all" } ] }
-
-[[batches]]
-id = "1.8"
-descriptor = "README: title, description, key features"
-justification = "The three bullet points (fast offline inference, ~1200-line readable codebase, prefix caching / TP / torch.compile / CUDA graph optimization suite) are the fastest way for an agent to learn what nano-vllm claims to be before touching source."
-content = { kind = "lines", spans = [ { path = "README.md", start = 9, end = 17, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.9"
-descriptor = "README: installation"
-justification = "The single `pip install git+https://...` command -- answers 'how do I install this' in one line without a follow-up grep of pyproject.toml."
-content = { kind = "lines", spans = [ { path = "README.md", start = 19, end = 23, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.10"
-descriptor = "README: quick start usage snippet"
-justification = "The canonical 6-line usage pattern (`from nanovllm import LLM, SamplingParams`, construct, generate) that every 'how do I call this' or 'add a feature to generate()' task will pattern-match against before opening example.py."
-content = { kind = "lines", spans = [ { path = "README.md", start = 34, end = 44, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.11"
-descriptor = "README: model download command"
-justification = "The exact `huggingface-cli download` invocation (Qwen/Qwen3-0.6B, --local-dir ~/huggingface/Qwen3-0.6B/) that both example.py and bench.py assume is already on disk -- answers 'where do I get the weights' before an agent has to infer it from the hardcoded path in example.py."
-content = { kind = "lines", spans = [ { path = "README.md", start = 25, end = 32, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.12"
-descriptor = "README: benchmark results table"
-justification = "The vLLM-vs-nano-vLLM throughput table (133,966 output tokens, 1361.84 vs 1434.13 tok/s) -- grounds any 'is this actually faster / why is it faster' question in the numbers the maintainer already measured; the '## Benchmark' / 'See bench.py for benchmark' header (46-49) is redundant with 8.2's full script and is skipped, as is the intervening hardware/sequence-count bullet list."
-content = { kind = "lines", spans = [ { path = "README.md", start = 56, end = 61, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.13"
-descriptor = "pyproject.toml: project identity, python version, dependencies"
-justification = "Package name/version, the `>=3.10,<3.13` python constraint, and the 5-entry dependency list (torch, triton, transformers, flash-attn, xxhash) -- the exact set an agent needs before touching an import or debugging an install failure. Lines 8-12 (authors, license, license-files, readme, description) are skipped as redundant with 1.15 (LICENSE) and the descriptor/README batches already covering this ground."
+descriptor = "All README H2 section headings"
+justification = "Six single lines naming every section of the only prose document in the repo (Key Features, Installation, Model Download, Quick Start, Benchmark, Star History). Closes the documentation class for a few tokens and tells the agent exactly which README line to read for setup vs. usage vs. numbers."
 content = { kind = "lines", spans = [
-  { path = "pyproject.toml", start = 5, end = 7, render = { kind = "full" } },
-  { path = "pyproject.toml", start = 13, end = 20, render = { kind = "full" } },
+  { path = "README.md", start = 13, end = 13, render = { kind = "full" } },
+  { path = "README.md", start = 19, end = 19, render = { kind = "full" } },
+  { path = "README.md", start = 25, end = 25, render = { kind = "full" } },
+  { path = "README.md", start = 34, end = 34, render = { kind = "full" } },
+  { path = "README.md", start = 46, end = 46, render = { kind = "full" } },
+  { path = "README.md", start = 64, end = 64, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "1.14"
-descriptor = "pyproject.toml: build backend"
-justification = "setuptools build-backend declaration -- the authoritative answer for 'how does this get built' (the `packages.find`/`nanovllm*` include-pattern tail end of the file is lower-traffic and skipped)."
-content = { kind = "lines", spans = [ { path = "pyproject.toml", start = 1, end = 3, render = { kind = "full" } } ] }
+id = "1.3"
+descriptor = "Complete repository root listing"
+justification = "Every immediate child of the fixture root — README.md, LICENSE, pyproject.toml, .gitignore, the two runnable scripts bench.py and example.py, the assets/ directory, the nanovllm/ package and the fixture's .precis-pin marker. Small, and it forecloses the 'is there a tests/ or docs/ directory?' question (there is not)."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
 
 [[batches]]
-id = "1.15"
-descriptor = "LICENSE identification"
-justification = "MIT license, single line of attribution -- enough to answer a licensing question without spending tokens on the full boilerplate grant/warranty paragraphs."
-content = { kind = "lines", spans = [ { path = "LICENSE", start = 1, end = 3, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 2 -- public API: the three classes almost every task touches.
-# ---------------------------------------------------------------------------
+id = "1.4"
+descriptor = "Complete nanovllm/ package listing"
+justification = "The package's immediate children: config.py, sampling_params.py, llm.py, __init__.py and the four subpackages engine/, layers/, models/, utils/. This is the top-level map of the ~1200 lines the README advertises."
+content = { kind = "fs", groups = [ { parent = "nanovllm", entries = "all" } ] }
 
 [[batches]]
-id = "2.1"
-descriptor = "nanovllm/__init__.py: package exports"
-justification = "The entire public surface in 2 lines: `LLM` and `SamplingParams` are the only symbols the package exports; everything else is internal."
-content = { kind = "lines", spans = [ { path = "nanovllm/__init__.py", start = 1, end = 2, render = { kind = "full" } } ] }
+id = "1.5"
+descriptor = "The complete public API: __init__.py and llm.py"
+justification = "Both files in full — seven lines total. `nanovllm/__init__.py` exports exactly `LLM` and `SamplingParams` and nothing else, and `llm.py` shows that `LLM` is an empty subclass of `LLMEngine`, so the whole user-facing API is really `LLMEngine`'s methods. Answers 'what can I import?' with zero follow-up and redirects every API question to engine/llm_engine.py."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/__init__.py", start = 1, end = 2, render = { kind = "full" } },
+  { path = "nanovllm/llm.py", start = 1, end = 5, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "2.2"
-descriptor = "nanovllm/llm.py: LLM class"
-justification = "The full definition of `LLM` is a one-line subclass of LLMEngine with no overrides -- tells an agent immediately that 'add a method to LLM' really means 'add it to LLMEngine' (tier 3)."
-content = { kind = "lines", spans = [ { path = "nanovllm/llm.py", start = 1, end = 5, render = { kind = "full" } } ] }
+id = "1.6"
+descriptor = "README Key Features bullets"
+justification = "The three bullets naming the optimizations the codebase claims — prefix caching, tensor parallelism, torch compilation, CUDA graph — and the ~1,200-line size claim. This is the vocabulary the rest of the ranking uses, and it tells an agent which subsystems to expect before it has seen any source."
+content = { kind = "lines", spans = [ { path = "README.md", start = 14, end = 17, render = { kind = "full" } } ] }
 
 [[batches]]
-id = "2.3"
-descriptor = "nanovllm/sampling_params.py: SamplingParams dataclass"
-justification = "All 3 sampling fields (temperature, max_tokens, ignore_eos) plus the __post_init__ assertion that forbids greedy (temperature <= 1e-10) -- the exact place to add a new decoding knob like top_p or repetition_penalty."
+id = "1.7"
+descriptor = "README Quick Start usage snippet"
+justification = "The complete worked example: construct `LLM(path, enforce_eager=True, tensor_parallel_size=1)`, build `SamplingParams(temperature=..., max_tokens=...)`, call `llm.generate(prompts, sampling_params)`, read `outputs[0][\"text\"]`. Together with 1.5 this makes the most common query class — 'how do I use this' — zero-follow-up, and it documents the one deliberate divergence from vLLM's API (generate returns dicts)."
+content = { kind = "lines", spans = [ { path = "README.md", start = 36, end = 44, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "1.8"
+descriptor = "SamplingParams in full"
+justification = "The entire sampling_params.py: the three fields (`temperature=1.0`, `max_tokens=64`, `ignore_eos=False`) and the `__post_init__` assertion that forbids greedy sampling. One of the two public types, small enough to render whole, and the temperature assertion is exactly the kind of surprising constraint an agent would otherwise burn a search on."
 content = { kind = "lines", spans = [ { path = "nanovllm/sampling_params.py", start = 1, end = 11, render = { kind = "full" } } ] }
 
 [[batches]]
-id = "2.4"
-descriptor = "nanovllm/config.py: Config dataclass"
-justification = "All 11 dataclass fields (model, max_num_batched_tokens, max_num_seqs, max_model_len, gpu_memory_utilization, tensor_parallel_size, enforce_eager, hf_config, eos, kvcache_block_size, num_kvcache_blocks) plus the __post_init__ that loads hf_config and clamps max_model_len -- the one place every LLM(**kwargs) constructor argument is validated."
-content = { kind = "lines", spans = [ { path = "nanovllm/config.py", start = 1, end = 26, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 3 -- engine orchestration: nano-vllm's actual novel content.
-# ---------------------------------------------------------------------------
+id = "1.9"
+descriptor = "Config dataclass — every field with its default"
+justification = "All eleven fields of `Config` with their defaults — the required model path plus max_num_batched_tokens, max_num_seqs, max_model_len, gpu_memory_utilization, tensor_parallel_size, enforce_eager, hf_config, eos, kvcache_block_size, num_kvcache_blocks. `LLMEngine.__init__` accepts exactly these as kwargs, so this is the complete tuning surface of the engine; showing a subset would strongly imply the rest do not exist."
+content = { kind = "lines", spans = [ { path = "nanovllm/config.py", start = 1, end = 18, render = { kind = "full" } } ] }
 
 [[batches]]
-id = "3.1"
-descriptor = "llm_engine.py: LLMEngine method locations"
-justification = "Name-only catalog of every LLMEngine method (__init__, exit, add_request, step, is_finished, generate) so a low-budget session still knows the engine's full method surface before any body is spent; overridden line-by-line as bodies land in 3.2 (lines 48, 56) and 3.3 (line 59)."
+id = "1.10"
+descriptor = "Config.__post_init__ validation and derivation"
+justification = "The invariants that constrain every knob in 1.9: model must be a local directory, kvcache_block_size must be a multiple of 256, tensor_parallel_size is capped at 8, max_model_len is clamped to the HF config's max_position_embeddings, and max_num_batched_tokens must be at least max_model_len. Debugging 'why did my config assert' lands here directly."
+content = { kind = "lines", spans = [ { path = "nanovllm/config.py", start = 20, end = 26, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------------
+# Tier 2 — the map: remaining directory listings, a complete symbol
+# roster for every source file, and the import wiring between them.
+# Nothing here is a body; everything here is "where does X live".
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "Complete nanovllm/engine/ listing"
+justification = "The five files that make up the serving loop — llm_engine.py, scheduler.py, sequence.py, block_manager.py, model_runner.py. Ranked ahead of the other subpackage listings because this is where the repository's distinctive content lives; note the absence of an __init__.py, which is true of every subpackage here."
+content = { kind = "fs", groups = [ { parent = "nanovllm/engine", entries = "all" } ] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Listings for layers/, models/, utils/ and assets/"
+justification = "Every remaining directory in the repository in one cheap batch: the seven layer modules, the single model file qwen3.py (so 'which architectures are supported' is answered by the listing alone), the two utils, and the logo asset. Closes the directory class opened by 1.3/1.4/2.1."
+content = { kind = "fs", groups = [
+  { parent = "nanovllm/layers", entries = "all" },
+  { parent = "nanovllm/models", entries = "all" },
+  { parent = "nanovllm/utils", entries = "all" },
+  { parent = "assets", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "LLMEngine method roster"
+justification = "Every method of the class that `LLM` inherits, name-only: __init__, exit, add_request, step, is_finished, generate. Since 1.5 showed `LLM` adds nothing, this is the complete public method surface of the package; a partial list here would be actively misleading."
 content = { kind = "lines", spans = [
   { path = "nanovllm/engine/llm_engine.py", start = 15, end = 15, render = { kind = "full" } },
   { path = "nanovllm/engine/llm_engine.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -174,23 +151,9 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "3.2"
-descriptor = "llm_engine.py: step, is_finished"
-justification = "step() is the one-iteration unit generate() drives: ask the scheduler for the next batch (prefill or decode), hand it to model_runner.call(\"run\", ...), postprocess the sampled tokens, and report which sequences finished plus a signed token count generate() uses for throughput accounting. is_finished() is the trivial scheduler-queue check that ends the loop."
-predecessor = "3.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 48, end = 58, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.3"
-descriptor = "llm_engine.py: generate()"
-justification = "The user-facing driver loop: adds every prompt as a request, then calls step() until is_finished(), tracking prefill vs. decode throughput for the tqdm postfix and re-sorting completed outputs back into request order at the end -- the single most likely place to trace 'what happens when I call llm.generate'. (__init__'s multiprocess TP spawn is named in 3.1 but not spent here -- ModelRunner's own bring-up in 5.x covers that ground.)"
-predecessor = "3.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 59, end = 93, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.4"
-descriptor = "scheduler.py: Scheduler method locations"
-justification = "Name-only catalog of Scheduler's 6 methods (__init__, is_finished, add, schedule, preempt, postprocess) -- schedule()'s body (3.5) is the one worth full tokens; the rest (queue state init, preemption, postprocessing) stay at the name level here."
+id = "2.4"
+descriptor = "Scheduler method roster"
+justification = "All seven names in scheduler.py: the class plus __init__, is_finished, add, schedule, preempt, postprocess. Tiny, and it pins the line numbers of the two methods most likely to be asked about (schedule at 24, preempt at 60)."
 content = { kind = "lines", spans = [
   { path = "nanovllm/engine/scheduler.py", start = 8, end = 8, render = { kind = "full" } },
   { path = "nanovllm/engine/scheduler.py", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -202,46 +165,9 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "3.5"
-descriptor = "scheduler.py: schedule() -- prefill/decode batching algorithm"
-justification = "The core algorithm: try to admit waiting sequences into a prefill batch up to max_num_batched_tokens/max_num_seqs (bailing out via block_manager.can_allocate), and only if none were admitted, fall back to decoding the running queue, preempting the last-scheduled sequence if a block can't be appended. This is the single highest-value span in the whole repo for a scheduling/OOM/starvation question."
-predecessor = "3.4"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/scheduler.py", start = 24, end = 58, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.6"
-descriptor = "sequence.py: SequenceStatus and Sequence method/property locations"
-justification = "Name-only catalog of the 3-state enum plus every Sequence method and property (__init__, __len__, __getitem__, is_finished, num_completion_tokens, prompt_token_ids, completion_token_ids, num_cached_blocks, num_blocks, last_block_num_tokens, block, append_token, __getstate__, __setstate__) -- this class has more distinct members than any other engine class, so its full roster matters even though only the block-arithmetic half (3.7) gets a full body here."
-content = { kind = "lines", spans = [
-  { path = "nanovllm/engine/sequence.py", start = 8, end = 11, render = { kind = "full" } },
-  { path = "nanovllm/engine/sequence.py", start = 14, end = 14, render = { kind = "full" } },
-  { path = "nanovllm/engine/sequence.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/engine/sequence.py", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "3.7"
-descriptor = "sequence.py: properties, block(), append_token()"
-justification = "The block-arithmetic properties (num_blocks, last_block_num_tokens, num_cached_blocks) that block_manager.py and model_runner.py both depend on, plus append_token() -- the only place a generated token is added to a Sequence. Ranked over __init__/pickling since these are the members other files' logic directly reads."
-predecessor = "3.6"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/sequence.py", start = 37, end = 72, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.8"
-descriptor = "block_manager.py: Block/BlockManager method locations"
-justification = "Name-only catalog of both classes' methods (Block: __init__/update/reset; BlockManager: __init__/compute_hash/_allocate_block/_deallocate_block/can_allocate/allocate/deallocate/can_append/may_append) so the full prefix-caching API surface is visible before its most important body (3.10) is spent."
+id = "2.5"
+descriptor = "Block and BlockManager method roster"
+justification = "Both classes in block_manager.py with every method named: Block.update/reset, and BlockManager's compute_hash classmethod, the private _allocate_block/_deallocate_block, and the five-method public protocol can_allocate/allocate/deallocate/can_append/may_append that Scheduler drives. The private/public split is only visible if all of them are listed together."
 content = { kind = "lines", spans = [
   { path = "nanovllm/engine/block_manager.py", start = 8, end = 8, render = { kind = "full" } },
   { path = "nanovllm/engine/block_manager.py", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -249,6 +175,7 @@ content = { kind = "lines", spans = [
   { path = "nanovllm/engine/block_manager.py", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/block_manager.py", start = 26, end = 26, render = { kind = "full" } },
   { path = "nanovllm/engine/block_manager.py", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/block_manager.py", start = 35, end = 35, render = { kind = "full" } },
   { path = "nanovllm/engine/block_manager.py", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/block_manager.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/block_manager.py", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -260,43 +187,40 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "3.9"
-descriptor = "block_manager.py: BlockManager.__init__, compute_hash"
-justification = "BlockManager.__init__ builds the free/used block_id pools sized from config.num_kvcache_blocks; compute_hash xxhashes a block's token_ids chained with the previous block's hash as prefix -- the hash chain that makes prefix caching content-addressable rather than position-addressable."
-predecessor = "3.8"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 26, end = 41, render = { kind = "full" } } ] }
+id = "2.6"
+descriptor = "SequenceStatus members and the complete Sequence member roster"
+justification = "The three-state enum rendered in full (WAITING/RUNNING/FINISHED), Sequence's two class attributes (block_size = 256, counter = count()), and the name of every method and @property on Sequence — including the seven properties that make block arithmetic look like attribute access and the __getstate__/__setstate__ pair used to ship sequences to TP workers. Listing a subset would leave an agent inventing helpers that already exist."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/sequence.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 9, end = 11, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 14, end = 16, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 45, end = 45, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 53, end = 53, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 61, end = 61, render = { kind = "full" } },
+  { path = "nanovllm/engine/sequence.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/sequence.py", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
-id = "3.10"
-descriptor = "block_manager.py: allocate() and its helpers -- the prefix-cache lookup"
-justification = "The heart of the whole caching scheme: allocate() walks a sequence's blocks, looks each hash up in hash_to_block_id, and on a hit increments ref_count instead of copying data, falling back to cache_miss=True (sticky once a miss occurs) for the rest of the sequence. This is the span to read for any 'why didn't my prefix get cached' debugging session."
-predecessor = "3.8"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 43, end = 82, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 4 -- utils: small cross-cutting glue that model_runner/attention rely on.
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "4.1"
-descriptor = "utils/context.py: Context dataclass + get/set/reset_context"
-justification = "A single mutable module-level `_CONTEXT` (is_prefill, cu_seqlens_q/k, slot_mapping, context_lens, block_tables) that model_runner.py sets once per step and attention.py reads inside every layer's forward() -- the exact mechanism by which per-step batching metadata reaches the attention kernel without being threaded through every call."
-content = { kind = "lines", spans = [ { path = "nanovllm/utils/context.py", start = 1, end = 27, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "4.2"
-descriptor = "utils/loader.py: load_model weight loading"
-justification = "Iterates every *.safetensors file, and for each weight name checks Qwen3ForCausalLM.packed_modules_mapping (q_proj/k_proj/v_proj -> qkv_proj, gate_proj/up_proj -> gate_up_proj) to route to a custom weight_loader(param, tensor, shard_id) or fall back to a plain copy_ -- the answer to 'why is this checkpoint key not loading'."
-content = { kind = "lines", spans = [ { path = "nanovllm/utils/loader.py", start = 1, end = 28, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 5 -- model_runner.py: per-step dispatch + shared-memory multi-process RPC.
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "5.1"
-descriptor = "model_runner.py: ModelRunner method locations"
-justification = "Name-only catalog of all 15 ModelRunner methods (__init__, exit, loop, read_shm, write_shm, call, warmup_model, allocate_kv_cache, prepare_block_tables, prepare_prefill, prepare_decode, prepare_sample, run_model, run, capture_cudagraph) -- this is the repo's largest file (251 lines), the one most at risk of a partial listing giving a false sense of completeness, and the reason only 2 of its methods get full bodies below."
+id = "2.7"
+descriptor = "ModelRunner method roster"
+justification = "All fifteen methods of the largest file in the repository (251 lines), name-only, with their line numbers: exit, loop, read_shm, write_shm, call, warmup_model, allocate_kv_cache, prepare_block_tables, prepare_prefill, prepare_decode, prepare_sample, run_model, run, capture_cudagraph — plus the two @torch.inference_mode() decorators. This is the single highest-leverage pointer batch in the document: it turns any 'where is CUDA graph capture / KV cache sizing / the TP RPC' question into one targeted read."
 content = { kind = "lines", spans = [
   { path = "nanovllm/engine/model_runner.py", start = 15, end = 15, render = { kind = "full" } },
   { path = "nanovllm/engine/model_runner.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -311,205 +235,398 @@ content = { kind = "lines", spans = [
   { path = "nanovllm/engine/model_runner.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/model_runner.py", start = 164, end = 164, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/model_runner.py", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/model_runner.py", start = 189, end = 189, render = { kind = "full" } },
   { path = "nanovllm/engine/model_runner.py", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/engine/model_runner.py", start = 208, end = 208, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/engine/model_runner.py", start = 216, end = 216, render = { kind = "full" } },
   { path = "nanovllm/engine/model_runner.py", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "5.2"
-descriptor = "model_runner.py: run() and run_model() -- the per-step dispatch"
-justification = "run() picks prepare_prefill or prepare_decode, calls run_model, then samples (rank 0 only) and resets the context; run_model() itself branches on `is_prefill or enforce_eager or bs > 512` to call the eager model directly versus replaying a captured CUDA graph after copying inputs into its fixed buffers. This is the answer to 'what actually happens when a batch executes' -- ranked as the single highest-value model_runner span since nearly every model_runner question routes through it."
-predecessor = "5.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/model_runner.py", start = 189, end = 214, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "5.3"
-descriptor = "model_runner.py: exit, loop, read_shm, write_shm, call -- the shared-memory RPC"
-justification = "The full RPC mechanism behind tensor parallelism: rank 0's call() pickles (method_name, *args) into a length-prefixed SharedMemory buffer and sets one Event per worker; each worker's loop() blocks on its Event, unpickles, and re-invokes call() locally, exiting only on method_name==\"exit\". A distinctive, easy-to-miss architectural choice (no torch.distributed RPC, no sockets) worth surfacing verbatim rather than described; __init__'s own setup of this same SharedMemory segment is named in 5.1 but not spent here."
-predecessor = "5.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/engine/model_runner.py", start = 50, end = 89, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 6 -- layers: the neural-net building blocks (mostly TP-sharded nn.Modules).
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "6.1"
-descriptor = "layers/activation.py: SiluAndMul"
-justification = "The entire SwiGLU activation in one @torch.compile'd forward -- chunks the MLP's gate_up_proj output in half and applies silu(gate)*up. Trivially cheap, closes the 'what activation function' question completely."
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/activation.py", start = 1, end = 14, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "6.2"
-descriptor = "layers/sampler.py: Sampler"
-justification = "The whole sampling algorithm in 4 lines: divide logits by temperature, softmax, then argmax of probs/Exponential(1) noise (the Gumbel-max trick) instead of torch.multinomial -- worth surfacing verbatim since it's a non-obvious way to implement temperature sampling and directly relevant to any 'why are outputs not reproducible / add top-k' task."
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/sampler.py", start = 1, end = 15, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "6.3"
-descriptor = "layers/layernorm.py + layers/rotary_embedding.py: class/function locations"
-justification = "Closes the last gap in the layers/ 7-file roster opened by 1.4: RMSNorm (layernorm.py) and RotaryEmbedding/apply_rotary_emb/get_rope (rotary_embedding.py) back every attention and decoder-layer norm/rope call in models/qwen3.py (7.x) but otherwise never appear past the bare directory listing -- a partial later listing of 'every neural-net building block' (as 1.4 itself promises) would silently certify these two files out of existence. Name-only for both: cheaper than a full body since neither is this repo's novel content, but their locations still need to be pinned down."
+id = "2.8"
+descriptor = "Complete top-level symbol roster for nanovllm/layers/"
+justification = "Every module-level class and function across all seven layer files: SiluAndMul; the @triton.jit store_kvcache_kernel, store_kvcache and Attention; VocabParallelEmbedding and ParallelLMHead; RMSNorm; divide, LinearBase and its five subclasses (Replicated/Column/MergedColumn/QKV/RowParallelLinear); apply_rotary_emb, RotaryEmbedding and the @lru_cache'd get_rope; Sampler. One batch that makes the whole tensor-parallel toolkit discoverable and forecloses 'is there a class for X shard layout' guessing."
 content = { kind = "lines", spans = [
-  { path = "nanovllm/layers/layernorm.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/layernorm.py", start = 7, end = 7, render = { kind = "full" } },
-  { path = "nanovllm/layers/layernorm.py", start = 17, end = 17, render = { kind = "full" } },
-  { path = "nanovllm/layers/layernorm.py", start = 29, end = 29, render = { kind = "full" } },
-  { path = "nanovllm/layers/layernorm.py", start = 42, end = 42, render = { kind = "full" } },
-  { path = "nanovllm/layers/rotary_embedding.py", start = 6, end = 6, render = { kind = "full" } },
-  { path = "nanovllm/layers/rotary_embedding.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/rotary_embedding.py", start = 19, end = 19, render = { kind = "full" } },
-  { path = "nanovllm/layers/rotary_embedding.py", start = 38, end = 38, render = { kind = "full" } },
-  { path = "nanovllm/layers/rotary_embedding.py", start = 52, end = 52, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.4"
-descriptor = "layers/embed_head.py: class/method locations"
-justification = "Name-only catalog of both classes (VocabParallelEmbedding, ParallelLMHead) and their __init__/weight_loader/forward methods -- fixes the file's 2-class roster before spending tokens on only the input-embedding half (6.5); ParallelLMHead's own forward (slice-to-last-token, gather-across-ranks) is named here but not rendered."
-content = { kind = "lines", spans = [
-  { path = "nanovllm/layers/embed_head.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/embed_head.py", start = 11, end = 11, render = { kind = "full" } },
-  { path = "nanovllm/layers/embed_head.py", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/embed_head.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/embed_head.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/embed_head.py", start = 47, end = 47, render = { kind = "full" } },
-  { path = "nanovllm/layers/embed_head.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "6.5"
-descriptor = "layers/embed_head.py: VocabParallelEmbedding"
-justification = "Shards the vocab dimension across TP ranks (num_embeddings_per_partition, vocab_start_idx/end_idx), masks out-of-shard token ids to 0 before the local F.embedding lookup, and all-reduces -- the class every forward pass starts with, and the first place to look for a 'vocab_size not divisible by tp_size' assertion failure."
-predecessor = "6.4"
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/embed_head.py", start = 9, end = 42, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "6.6"
-descriptor = "layers/attention.py: class/method locations"
-justification = "Name-only catalog fixing both symbols in this file (the store_kvcache_kernel Triton kernel + store_kvcache wrapper, and the Attention class) before spending tokens only on Attention.forward (6.7) -- the kernel's exact pointer arithmetic is named here but not rendered."
-content = { kind = "lines", spans = [
+  { path = "nanovllm/layers/activation.py", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/attention.py", start = 10, end = 10, render = { kind = "full" } },
   { path = "nanovllm/layers/attention.py", start = 11, end = 11, render = { kind = "full" } },
   { path = "nanovllm/layers/attention.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/attention.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/attention.py", start = 45, end = 45, render = { kind = "full" } },
-  { path = "nanovllm/layers/attention.py", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/embed_head.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/embed_head.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/layernorm.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/linear.py", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/rotary_embedding.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "nanovllm/layers/rotary_embedding.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/layers/rotary_embedding.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "nanovllm/layers/rotary_embedding.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "nanovllm/layers/sampler.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "6.7"
-descriptor = "layers/attention.py: Attention.forward -- prefill/decode/prefix-cache dispatch"
-justification = "The exact three-way branch: prefill writes q/k/v into the KV cache then calls flash_attn_varlen_func (using cached k/v instead of the fresh ones when context.block_tables is set, i.e. prefix-cache hit), decode calls flash_attn_with_kvcache against the full cache. This is the span for 'why is a cached prefix producing wrong attention output'."
-predecessor = "6.6"
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/attention.py", start = 43, end = 75, render = { kind = "full" } } ] }
+id = "2.9"
+descriptor = "qwen3.py class roster and packed_modules_mapping"
+justification = "The five nn.Modules that make up the only supported architecture — Qwen3Attention, Qwen3MLP, Qwen3DecoderLayer, Qwen3Model, Qwen3ForCausalLM — plus the packed_modules_mapping dict in full, which is the contract the safetensors loader uses to fuse q/k/v into qkv_proj and gate/up into gate_up_proj. That dict is the single most-referenced-but-hard-to-find constant in the repo."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/models/qwen3.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/models/qwen3.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/models/qwen3.py", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/models/qwen3.py", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/models/qwen3.py", start = 185, end = 192, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "6.8"
-descriptor = "layers/linear.py: class/method locations"
-justification = "Name-only catalog of all 7 top-level definitions (divide, LinearBase, ReplicatedLinear, ColumnParallelLinear, MergedColumnParallelLinear, QKVParallelLinear, RowParallelLinear) and their __init__/weight_loader/forward methods -- these five *ParallelLinear classes are nano-vllm's whole tensor-parallel sharding vocabulary, and only two of them (6.9, 6.10) get full-body treatment, so this roster is what keeps the other three from looking like they don't exist."
+id = "2.10"
+descriptor = "The Context dataclass and the utils/ function roster"
+justification = "utils/context.py's Context with all eight fields (is_prefill, cu_seqlens_q/k, max_seqlen_q/k, slot_mapping, context_lens, block_tables), the module-global _CONTEXT instance, and the names get_context/set_context/reset_context; plus loader.py's default_weight_loader and load_model. Context is the hidden channel by which ModelRunner passes per-step attention metadata to layer code, so seeing its fields explains an otherwise mysterious coupling."
 content = { kind = "lines", spans = [
-  { path = "nanovllm/layers/linear.py", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/utils/context.py", start = 5, end = 16, render = { kind = "full" } },
+  { path = "nanovllm/utils/context.py", start = 18, end = 18, render = { kind = "full" } },
+  { path = "nanovllm/utils/context.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/utils/context.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "nanovllm/utils/loader.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/utils/loader.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Import blocks of llm_engine.py and scheduler.py"
+justification = "The dependency graph at the top of the call chain: llm_engine pulls in Config, SamplingParams, Sequence, Scheduler and ModelRunner plus tqdm, transformers' AutoTokenizer and torch.multiprocessing (the tensor-parallel spawn), while scheduler pulls in only Config, Sequence/SequenceStatus and BlockManager. Two headers that tell an agent the layering without opening a body."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/llm_engine.py", start = 1, end = 12, render = { kind = "full" } },
+  { path = "nanovllm/engine/scheduler.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "Import blocks of model_runner.py and block_manager.py"
+justification = "Completes the engine header set opened by 2.11: model_runner's imports name Qwen3ForCausalLM, Sampler, the set_context/get_context/reset_context helpers, load_model, torch.distributed and multiprocessing SharedMemory — the whole execution stack in twelve lines — while block_manager's xxhash and numpy imports are the first visible sign of hash-based prefix caching."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/model_runner.py", start = 1, end = 12, render = { kind = "full" } },
+  { path = "nanovllm/engine/block_manager.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "Import blocks of qwen3.py and attention.py"
+justification = "qwen3.py's imports enumerate exactly which layer primitives the model is assembled from (SiluAndMul, Attention, RMSNorm, QKVParallelLinear/MergedColumnParallelLinear/RowParallelLinear, get_rope, VocabParallelEmbedding, ParallelLMHead), and attention.py's header shows the two external kernels the engine leans on, flash_attn_varlen_func and flash_attn_with_kvcache, alongside triton. Together they explain the hard GPU dependencies."
+content = { kind = "lines", spans = [
+  { path = "nanovllm/models/qwen3.py", start = 1, end = 11, render = { kind = "full" } },
+  { path = "nanovllm/layers/attention.py", start = 1, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.14"
+descriptor = "pyproject project metadata and dependency list"
+justification = "Name, version 0.2.0, MIT license, requires-python >=3.10,<3.13, and the five runtime dependencies torch>=2.4.0, triton>=3.0.0, transformers>=4.51.0, flash-attn and xxhash. This is the complete dependency class — an agent proposing an alternative attention backend or a Python 3.13 CI matrix needs exactly these lines."
+content = { kind = "lines", spans = [ { path = "pyproject.toml", start = 5, end = 20, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.15"
+descriptor = "README installation and model-download commands"
+justification = "The `pip install git+https://...` one-liner and the huggingface-cli command that fetches Qwen/Qwen3-0.6B into ~/huggingface/Qwen3-0.6B/ — the same path both bench.py and example.py hardcode. Setup questions resolve here with no follow-up."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 21, end = 23, render = { kind = "full" } },
+  { path = "README.md", start = 27, end = 32, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 3 — engine semantics. The serving loop, the scheduling policy,
+# per-sequence state, and the paged-KV / prefix-cache allocator. This is
+# what the repository exists to demonstrate, so bodies are rendered in
+# full here rather than summarized.
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "LLMEngine.step and is_finished"
+justification = "Ten lines that are the whole engine in miniature: schedule() returns (seqs, is_prefill), model_runner.call(\"run\", ...) executes them, scheduler.postprocess appends the sampled tokens, finished sequences are harvested as (seq_id, completion_token_ids), and num_tokens is signed to distinguish prefill throughput from decode. Ranked first in this tier because it names the collaborators every later batch elaborates."
+predecessor = "2.3"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 48, end = 57, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Scheduler construction and queue predicates"
+justification = "Scheduler.__init__ copying max_num_seqs / max_num_batched_tokens / eos off Config, constructing the BlockManager from num_kvcache_blocks and kvcache_block_size, and declaring the two deques `waiting` and `running` that are the entire scheduler state — plus is_finished and add. Explains the data structure before the policy."
+predecessor = "2.4"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/scheduler.py", start = 10, end = 22, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.3"
+descriptor = "Scheduler.schedule — the prefill pass"
+justification = "The first half of the scheduling policy: pull from `waiting` while under max_num_seqs, stop when num_batched_tokens + len(seq) would exceed max_num_batched_tokens or block_manager.can_allocate fails, allocate, count only uncached tokens toward the batch budget (`len(seq) - seq.num_cached_tokens`), flip status to RUNNING, and return early with is_prefill=True if anything was scheduled. Prefill strictly preempts decode — a policy question an agent will otherwise mis-answer."
+predecessor = "2.4"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/scheduler.py", start = 24, end = 42, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Scheduler.schedule — the decode pass and preempt"
+justification = "The while/else loop that appends one token slot per running sequence, evicting the most recently queued sequence (`self.running.pop()`) when can_append fails and falling back to preempting the sequence itself when it is the only one left, then `assert scheduled_seqs` and restoring order with extendleft(reversed(...)). preempt's body shows eviction is a full deallocate plus re-queue at the front of `waiting`, i.e. recompute-not-swap."
+predecessor = "2.4"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/scheduler.py", start = 43, end = 63, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Scheduler.postprocess — the stop condition"
+justification = "Where generation actually terminates: append_token, then finish when (not ignore_eos and token_id == self.eos) or num_completion_tokens == max_tokens, deallocating blocks and removing from `running`. The one place that reads SamplingParams.ignore_eos and max_tokens at runtime."
+predecessor = "2.4"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/scheduler.py", start = 65, end = 71, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Sequence.__init__ — per-request state"
+justification = "The full field set of a request: seq_id from a class-level itertools.count, status, a copied token_ids list, last_token, num_tokens / num_prompt_tokens / num_cached_tokens, the block_table, and the three sampling fields flattened off SamplingParams. Nearly every other engine batch reads these names, so it earns a high rank in this tier."
+predecessor = "2.6"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/sequence.py", start = 18, end = 29, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.7"
+descriptor = "LLMEngine.generate signature and request submission"
+justification = "The real signature of the only method users call — prompts as list[str] or list[list[int]], sampling_params scalar-or-list, use_tqdm — plus the broadcast of a scalar SamplingParams across prompts and the add_request loop. Refines the truncated roster line from 2.3 into something callable without a follow-up read."
+predecessor = "2.3"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 59, end = 72, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.8"
+descriptor = "LLMEngine.generate — drive loop and output assembly"
+justification = "The while-not-is_finished loop, the prefill/decode throughput split derived from the sign of num_tokens and pushed into the tqdm postfix, and the finish: outputs re-sorted by seq_id and decoded into `{\"text\": ..., \"token_ids\": ...}` dicts. Explains the return shape the README's `outputs[0][\"text\"]` relies on."
+predecessor = "3.7"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 73, end = 93, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.9"
+descriptor = "LLMEngine.__init__ — config filtering and TP worker spawn"
+justification = "How kwargs are filtered against Config's dataclass field names (silently dropping unknown keys), how ranks 1..tensor_parallel_size-1 are launched as spawn-context processes each constructing their own ModelRunner with an Event, why rank 0 keeps the event list, and that config.eos is patched from the tokenizer after ModelRunner construction. The single densest piece of surprising control flow in the engine."
+predecessor = "2.3"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 17, end = 34, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.10"
+descriptor = "LLMEngine.exit and add_request"
+justification = "Completes LLMEngine's method bodies: exit calls into the runner's \"exit\" RPC, drops the runner and joins the worker processes (registered with atexit in __init__), and add_request tokenizes a str prompt or accepts token ids directly before wrapping them in a Sequence. With 3.1/3.7/3.8/3.9 every method named in roster 2.3 now has a body."
+predecessor = "2.3"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/llm_engine.py", start = 36, end = 46, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.11"
+descriptor = "BlockManager.__init__ and compute_hash"
+justification = "The allocator's four data structures — the Block list, hash_to_block_id, the free_block_ids deque and used_block_ids set — and the xxhash64 hashing that chains a prefix hash into the digest, which is precisely the mechanism that makes prefix caching work across sequences."
+predecessor = "2.5"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 28, end = 41, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.12"
+descriptor = "BlockManager.can_allocate and allocate — the prefix-cache hit path"
+justification = "The most intricate function in the repository: per block, hash only full blocks (partial blocks get h = -1), look up hash_to_block_id, treat a token_ids mismatch as a miss, latch cache_miss so no block after a miss can hit, bump seq.num_cached_tokens by block_size on a hit, ref-count a block already in used_block_ids instead of re-allocating, and publish the hash. Anyone debugging prefix caching needs exactly these lines."
+predecessor = "2.5"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 56, end = 82, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.13"
+descriptor = "BlockManager.deallocate, can_append and may_append"
+justification = "The decode-time half of the allocator: reverse-order ref-count decrement on release, the terse can_append test `len(free) >= (len(seq) % block_size == 1)`, and may_append's three-way branch that either grabs a new block when a sequence crosses a boundary, seals and hashes the just-filled last block, or asserts the block is still open. Completes the public allocator protocol begun in 3.12."
+predecessor = "2.5"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 84, end = 112, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.14"
+descriptor = "Block class body"
+justification = "Block's four fields (block_id, ref_count, hash, token_ids) and its update/reset methods — the record type 3.11-3.13 manipulate. Ranked after the allocator protocol because the fields are already legible from their use sites; the private _allocate_block/_deallocate_block helpers stay at roster granularity (2.5) since they are pure free/used set bookkeeping."
+predecessor = "2.5"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/block_manager.py", start = 9, end = 23, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.15"
+descriptor = "Sequence block arithmetic and append_token"
+justification = "The property bodies that are not guessable from their names: num_cached_blocks and num_blocks doing ceiling division against the hardcoded block_size = 256, last_block_num_tokens, the block(i) slice with its bounds assert, and append_token keeping token_ids/last_token/num_tokens in step. The earlier one-line accessors (__len__, __getitem__, is_finished, num_completion_tokens, prompt_token_ids, completion_token_ids) stay at roster granularity — their names are their definitions."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/sequence.py", start = 32, end = 32, render = { kind = "ellipsis" } },
+  { path = "nanovllm/engine/sequence.py", start = 53, end = 73, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.16"
+descriptor = "Sequence.__getstate__ / __setstate__ — the TP pickling contract"
+justification = "The asymmetric state tuple that ships sequences to rank>0 workers: only counts, block_table and either the full token_ids (prefill, when num_completion_tokens == 0) or just last_token (decode). Non-obvious, easy to break, and the reason worker processes never see full prompts during decode."
+predecessor = "2.6"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/sequence.py", start = 74, end = 83, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------------
+# Tier 4 — model execution. ModelRunner's bodies, in value order rather
+# than file order; the methods left at roster granularity (2.7) are the
+# mechanical ones (warmup_model, prepare_block_tables, prepare_sample,
+# exit, and the shared-memory RPC pair).
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "ModelRunner.run and run_model — the per-step dispatch"
+justification = "run marshals prefill or decode inputs, computes temperatures only on rank 0, calls run_model, samples only on rank 0, and resets the context; run_model chooses between the eager path (`self.model.compute_logits(self.model(...))`) and CUDA-graph replay, falling back to eager when is_prefill, enforce_eager, or batch size > 512, and shows how graph_vars buffers are refilled from the Context before graph.replay(). The concrete answer to 'how does one forward step actually execute'."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/model_runner.py", start = 189, end = 206, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 208, end = 214, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "ModelRunner.__init__ — distributed init and startup order"
+justification = "dist.init_process_group(\"nccl\", \"tcp://localhost:2333\") with the hardcoded rendezvous address, cuda device selection by rank, the default-dtype/device juggling around model construction, then the fixed startup sequence Qwen3ForCausalLM -> load_model -> Sampler -> warmup_model -> allocate_kv_cache -> capture_cudagraph, and finally the SharedMemory(name=\"nanovllm\", size=2**20) creation on rank 0 versus rank>0 attaching and entering loop(). Explains both the TP topology and why ordering here is load-bearing."
+predecessor = "2.7"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/model_runner.py", start = 17, end = 48, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.3"
+descriptor = "ModelRunner.allocate_kv_cache — sizing the paged cache"
+justification = "The memory arithmetic that turns gpu_memory_utilization into Config.num_kvcache_blocks: read free/total from cuda.mem_get_info, subtract used, peak and current allocations, compute block_bytes as 2 * num_hidden_layers * block_size * num_kv_heads * head_dim * dtype.itemsize, then assert the result is positive and bind kv_cache[0]/kv_cache[1] slices onto every module exposing k_cache/v_cache. This is the answer to 'why did I get an OOM / zero blocks' and it is not deducible from anywhere else."
+predecessor = "2.7"
+content = { kind = "lines", spans = [ { path = "nanovllm/engine/model_runner.py", start = 100, end = 118, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.4"
+descriptor = "ModelRunner.prepare_prefill — varlen batching and slot mapping"
+justification = "How prefill inputs are flattened: only uncached tokens are appended (`seq[seq.num_cached_tokens:]`), cu_seqlens_q/cu_seqlens_k accumulate the ragged offsets flash-attn needs, slot_mapping is built from block_table entries starting at num_cached_blocks with the last block truncated to last_block_num_tokens, the empty-block_table warmup case is skipped, and block_tables are only materialized when cu_seqlens_k exceeds cu_seqlens_q (the prefix-cache signal). The leading ellipsis stands in for the accumulator declarations and the trailing one for the repetitive pinned-memory tensor conversions before set_context publishes the metadata."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/model_runner.py", start = 126, end = 126, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 127, end = 127, render = { kind = "ellipsis" } },
+  { path = "nanovllm/engine/model_runner.py", start = 135, end = 155, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 156, end = 156, render = { kind = "ellipsis" } },
+  { path = "nanovllm/engine/model_runner.py", start = 161, end = 162, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "ModelRunner.prepare_decode — one token per sequence"
+justification = "The decode mirror of 4.4: a single last_token per sequence, position len(seq) - 1, context_lens, and the one-slot slot_mapping arithmetic `block_table[-1] * block_size + last_block_num_tokens - 1`, then prepare_block_tables and a set_context(False, ...) that leaves the cu_seqlens fields unset. The ellipsis marks the elided pinned-tensor conversions."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/model_runner.py", start = 164, end = 173, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 174, end = 174, render = { kind = "ellipsis" } },
+  { path = "nanovllm/engine/model_runner.py", start = 178, end = 180, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "ModelRunner.capture_cudagraph — the graph ladder"
+justification = "The captured batch-size ladder `[1, 2, 4, 8] + range(16, max_bs + 1, 16)` capped at 512, max_num_blocks derived from max_model_len, and capture in descending batch order: a warmup call, then torch.cuda.graph(graph, self.graph_pool), with the pool taken from the first graph and reused. Directly explains the graphs/graph_bs the run_model replay path in 4.1 indexes into; the two ellipses mark the preallocated static buffers the captured graphs alias (visible by name at lines 234-237) and the graph_vars dict that binds them."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/engine/model_runner.py", start = 216, end = 221, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 222, end = 222, render = { kind = "ellipsis" } },
+  { path = "nanovllm/engine/model_runner.py", start = 228, end = 242, render = { kind = "full" } },
+  { path = "nanovllm/engine/model_runner.py", start = 244, end = 244, render = { kind = "ellipsis" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 5 — layers and the model. The tensor-parallel primitives here are
+# conventional (they mirror vLLM's), so this tier buys method-level
+# closure first and then spends its remaining budget only on the bodies
+# that are genuinely non-obvious.
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "Complete method roster for layers/linear.py"
+justification = "Every method on LinearBase and its five subclasses: which classes define a weight_loader (ReplicatedLinear, ColumnParallelLinear, MergedColumnParallelLinear, QKVParallelLinear, RowParallelLinear) and which define a forward (LinearBase itself, Replicated, Column, Row — MergedColumn and QKV inherit Column's). That inheritance pattern is the whole design of the file and cannot be seen from the class names alone."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
   { path = "nanovllm/layers/linear.py", start = 14, end = 14, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 39, end = 39, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 56, end = 56, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 78, end = 78, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 98, end = 98, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/layers/linear.py", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 133, end = 133, render = { kind = "full" } },
   { path = "nanovllm/layers/linear.py", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/layers/linear.py", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "6.9"
-descriptor = "layers/linear.py: divide, LinearBase"
-justification = "The shared base every *ParallelLinear class inherits: registers a plain (output_size, input_size) weight and wires up `weight.weight_loader`, which every subclass overrides with its own sharding math -- the baseline to compare QKVParallelLinear's sharding (6.10) against."
-predecessor = "6.8"
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/linear.py", start = 7, end = 34, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "6.10"
-descriptor = "layers/linear.py: QKVParallelLinear.weight_loader"
-justification = "The most distinctive of the five parallel-linear classes' weight_loaders: dispatches on loaded_shard_id in {\"q\",\"k\",\"v\"} to compute separate shard offsets and sizes (using num_heads vs. the possibly-smaller num_kv_heads, so GQA's fewer kv heads shard correctly) before narrowing and copying -- the class backing Qwen3Attention.qkv_proj, and the first place to look for a GQA head-count mismatch."
-predecessor = "6.8"
-content = { kind = "lines", spans = [ { path = "nanovllm/layers/linear.py", start = 114, end = 128, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 7 -- models/qwen3.py: the one supported model architecture.
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "models/qwen3.py: class/method locations"
-justification = "Name-only catalog of all 5 classes (Qwen3Attention, Qwen3MLP, Qwen3DecoderLayer, Qwen3Model, Qwen3ForCausalLM) and their __init__/forward methods, in the one file defining the entire model graph -- fixes the decoder-layer-to-final-lm-head shape before either full-body batch (7.2, 7.3) is spent; Qwen3MLP/Qwen3DecoderLayer/Qwen3Model bodies are named here but not rendered."
+id = "5.2"
+descriptor = "Complete method roster for models/qwen3.py"
+justification = "The __init__/forward pair on each of Qwen3Attention, Qwen3MLP, Qwen3DecoderLayer and Qwen3Model, and Qwen3ForCausalLM's __init__, forward and compute_logits — the last being the entry point ModelRunner.run_model calls. Completes the class roster of 2.9 down to method granularity so any 'where does the model do X' question is a single targeted read."
+predecessor = "2.9"
 content = { kind = "lines", spans = [
-  { path = "nanovllm/models/qwen3.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/models/qwen3.py", start = 16, end = 16, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 71, end = 71, render = { kind = "full" } },
-  { path = "nanovllm/models/qwen3.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/models/qwen3.py", start = 92, end = 92, render = { kind = "full" } },
-  { path = "nanovllm/models/qwen3.py", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "nanovllm/models/qwen3.py", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "nanovllm/models/qwen3.py", start = 112, end = 112, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 121, end = 121, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 145, end = 145, render = { kind = "full" } },
-  { path = "nanovllm/models/qwen3.py", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/models/qwen3.py", start = 163, end = 163, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 172, end = 172, render = { kind = "full" } },
-  { path = "nanovllm/models/qwen3.py", start = 185, end = 185, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "nanovllm/models/qwen3.py", start = 194, end = 194, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 204, end = 204, render = { kind = "full" } },
   { path = "nanovllm/models/qwen3.py", start = 211, end = 211, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "7.2"
-descriptor = "models/qwen3.py: Qwen3Attention.__init__ -- QKV/RoPE/attention module wiring"
-justification = "Constructs QKVParallelLinear (sized off total_num_heads/total_num_kv_heads for GQA), RowParallelLinear o_proj, get_rope's RotaryEmbedding, the Attention module (6.7), and optional per-head q_norm/k_norm RMSNorm (6.3) skipped when qkv_bias is set, matching Qwen3's actual config toggle -- the wiring to read for any attention-shape or GQA-config question specific to this model. Split from forward (7.3) since the combined class was nearly double the cost of any neighboring batch in the file."
-predecessor = "7.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/models/qwen3.py", start = 14, end = 69, render = { kind = "full" } } ] }
+id = "5.3"
+descriptor = "Attention.forward — paged KV write and flash-attn dispatch"
+justification = "The one line of Attention.__init__ that matters elsewhere — `self.k_cache = self.v_cache = torch.tensor([])`, the empty placeholders allocate_kv_cache later rebinds — and then the forward branch that writes K/V into the paged cache via store_kvcache whenever the caches are non-empty, swaps k/v for the whole cache when a prefix-cache block_table is present, and dispatches to flash_attn_varlen_func with cu_seqlens for prefill versus flash_attn_with_kvcache with cache_seqlens for decode. The junction between the block manager's bookkeeping and actual GPU attention."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "nanovllm/layers/attention.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "nanovllm/layers/attention.py", start = 59, end = 75, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "7.3"
-descriptor = "models/qwen3.py: Qwen3Attention.forward"
-justification = "The per-token compute this wiring drives: split fused qkv, reshape to per-head, apply q_norm/k_norm and rotary_emb conditionally, call Attention, flatten heads back through o_proj -- reads directly against 7.2's constructor to answer 'what actually runs on a forward pass' for this model's attention."
-predecessor = "7.1"
+id = "5.4"
+descriptor = "Qwen3Attention.forward — QKV split, q/k norm, RoPE"
+justification = "The one model method with real logic: a single qkv_proj split into q/k/v by q_size/kv_size, reshaping to (-1, num_heads, head_dim), the Qwen3-specific per-head q_norm/k_norm RMSNorms applied only when qkv_bias is false, rotary application, the Attention call and the o_proj flatten. Anyone porting a second architecture reads this first."
+predecessor = "5.2"
 content = { kind = "lines", spans = [ { path = "nanovllm/models/qwen3.py", start = 71, end = 87, render = { kind = "full" } } ] }
 
 [[batches]]
-id = "7.4"
-descriptor = "models/qwen3.py: Qwen3ForCausalLM, packed_modules_mapping"
-justification = "packed_modules_mapping (q_proj/k_proj/v_proj -> qkv_proj shard \"q\"/\"k\"/\"v\"; gate_proj/up_proj -> gate_up_proj shard 0/1) is the exact table utils/loader.py (4.2) consults to route HF checkpoint weight names onto this repo's fused/sharded parameter names -- also handles tied embeddings via config.tie_word_embeddings. (Qwen3MLP, Qwen3DecoderLayer, and Qwen3Model are named in 7.1 but not spent here.)"
-predecessor = "7.1"
-content = { kind = "lines", spans = [ { path = "nanovllm/models/qwen3.py", start = 185, end = 215, render = { kind = "full" } } ] }
-
-# ---------------------------------------------------------------------------
-# Tier 8 -- runnable scripts: how to actually invoke this.
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "example.py: full usage script"
-justification = "The complete, runnable counterpart to the README quick-start snippet (1.10): loads an AutoTokenizer, applies its chat template per-prompt before calling llm.generate, and prints prompt/completion pairs -- the concrete script to run or copy for a manual smoke test."
-content = { kind = "lines", spans = [ { path = "example.py", start = 1, end = 33, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "8.2"
-descriptor = "bench.py: throughput benchmark script"
-justification = "Generates 256 random-length token-id sequences directly (bypassing the tokenizer), runs one warmup generate() call, then times a second `generate(..., use_tqdm=False)` call to compute tokens/sec -- the exact script backing the README's benchmark table (1.12), and the template for writing a new perf benchmark against this engine. The commented-out vLLM-swap lines (5, 19-20) are dead alternative-usage comments, not live code, and are elided."
+id = "5.5"
+descriptor = "store_kvcache and its Triton kernel boundary"
+justification = "The host-side wrapper: derive D = num_heads * head_dim, assert the stride layout that lets the kernel treat K/V as contiguous rows, assert slot_mapping.numel() == N, and launch one program per token. The ellipsis at layers/attention.py:12 marks the elided body of the @triton.jit kernel located by roster 2.8, whose call signature is spelled out by the launch on the last rendered line."
+predecessor = "2.8"
 content = { kind = "lines", spans = [
-  { path = "bench.py", start = 1, end = 4, render = { kind = "full" } },
-  { path = "bench.py", start = 6, end = 18, render = { kind = "full" } },
-  { path = "bench.py", start = 21, end = 32, render = { kind = "full" } },
+  { path = "nanovllm/layers/attention.py", start = 12, end = 12, render = { kind = "ellipsis" } },
+  { path = "nanovllm/layers/attention.py", start = 33, end = 40, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "Sampler.forward — the exponential-noise argmax trick"
+justification = "Six lines that are easy to misread as top-k sampling: logits are divided by per-sequence temperatures, softmaxed, then divided by an Exponential(1) sample clamped at 1e-10 and argmaxed — the Gumbel-max reparameterization of multinomial sampling, torch.compile'd. Explains why SamplingParams asserts temperature > 1e-10 and why there is no greedy path."
+predecessor = "2.8"
+content = { kind = "lines", spans = [ { path = "nanovllm/layers/sampler.py", start = 10, end = 15, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "5.7"
+descriptor = "ParallelLMHead.forward — last-token selection and logit gather"
+justification = "Where prefill collapses to one hidden state per sequence using `context.cu_seqlens_q[1:] - 1`, and how tensor-parallel logits are gathered onto rank 0 (returning None on other ranks — the reason ModelRunner only samples on rank 0). Two behaviours that surprise readers of the sampling path."
+predecessor = "2.8"
+content = { kind = "lines", spans = [ { path = "nanovllm/layers/embed_head.py", start = 56, end = 66, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------------
+# Tier 6 — the measured claim. Everything else left uncovered (LICENSE,
+# .gitignore, the pyproject build-system/urls stanzas, and the bodies of
+# bench.py and example.py) is either boilerplate or a direct restatement
+# of the Quick Start already rendered at 1.7.
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "README benchmark pointer and throughput table"
+justification = "The 'See `bench.py` for benchmark' pointer plus the results table itself — vLLM at 133,966 output tokens in 98.37s (1361.84 tok/s) versus Nano-vLLM's 93.41s (1434.13 tok/s). The project's central quantitative claim, and the numbers any performance-regression discussion has to start from. Last because it is a claim about the code rather than part of it."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "README.md", start = 58, end = 61, render = { kind = "full" } },
 ] }

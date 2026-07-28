@@ -1,378 +1,3194 @@
 fixture = "mongoose"
 revision_pin = "1d373ce5"
-summary = """
-Mongoose is a single event-driven C/C++ networking library (cesanta/mongoose):
-one mg_mgr + mg_connection model with MG_EV_* callbacks drives TCP/UDP, HTTP,
-WebSocket, MQTT (3.1.1/5), DNS/mDNS, SNTP, Modbus, JSON-RPC, and TLS (builtin
-or mbedTLS/OpenSSL/WolfSSL), plus an optional built-in TCP/IP stack with 38
-embedded MAC/PHY/Wi-Fi driver backends. Canonical source of truth is the
-per-module split under src/*.{c,h} (~118 files); root mongoose.c/mongoose.h
-are the generated single-file amalgamation end users copy into their own
-build (see resources/pack.js / test/pack.c for the generation tooling).
-Ranking serves: (a) "how do I wire up protocol X" (dense public headers for
-the README-advertised protocols: HTTP/MQTT/WS/JSON/SNTP, plus entry points
-for the less-advertised ones: DNS/mDNS, Modbus — JSON-RPC/rpc.h, like most
-other subsystems, is named via the src/ listing only, one grep away), (b) "what config
-knob controls Y" (config.h, arch.h), (c) build/test/CI entry points, and
-(d) breadth-first orientation across src/, drivers/, test/, and tutorials/
-so an agent never has to guess what else exists before drilling in. Given a
-hard token budget, depth is deliberately biased toward the core event model
-and the two headline protocols (HTTP, MQTT); most other subsystems (TLS
-internals, the built-in TCP/IP stack, OTA, the device-dashboard framework,
-per-chip drivers) are named via filesystem listings only, one grep away.
-"""
+summary = "Mongoose 7.21 (Cesanta): an embedded C/C++ network library - event-driven non-blocking TCP, UDP, HTTP, WebSocket and MQTT, plus an optional built-in TCP/IP stack, a built-in TLS 1.3 stack and OTA firmware updates for bare-metal MCUs. The tree has an unusual shape that this ranking front-loads: the real sources are the ~118 flat files in src/ (plus src/drivers/), while the root mongoose.c/mongoose.h are generated amalgamations produced by rules in test/Makefile. Order: (1) identity, root layout, version, the canonical usage example and the amalgamation rules; (2) the src/ roster split into closed classes - core, protocols, built-in stack, TLS, OTA, arch, drivers - plus the test/, tutorials/, resources/ and CI listings; (3) the core API (event table, mg_connection, mg_mgr, mg_str, iobuf, timers, logging); (4) the protocol headers that carry the most traffic - HTTP, WebSocket, MQTT, TLS, JSON/JSON-RPC - with full signatures for HTTP and name rosters elsewhere; (5) compile-time configuration and the build/test entry points; (6) the built-in TCP/IP stack and its driver contracts; (7) implementation landmarks inside the big .c files; (8) the unit-test harness and the files of a runnable example. Headers not reached here (dns.h, ota.h, dash.h, printf.h, fs.h, modbus.h, sntp.h, url.h, base64.h, wifi.h, l2.h, phy.h) are named in the tier-2 listings, so they are one file read away."
 
 [[batches]]
 id = "1.1"
-descriptor = "Repository root listing"
-justification = "Cheapest possible orientation: every top-level entry (LICENSE, README, mongoose.c/.h amalgamation, resources/, src/, test/, tutorials/) at near-zero budget."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "README identity lede: what Mongoose is"
+justification = "Rank 1 must answer 'what is this repo'. The title plus the first sentences name the domain (a network library for C/C++), the programming model (event-driven, non-blocking) and the protocol set (TCP, UDP, HTTP, WebSocket, MQTT). Every downstream query is framed by this."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 8
+end = 9
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.2"
-descriptor = "test/dirtest/ listing"
-justification = "Tiny fixture dir (fuzz.c + version.h) used by the directory-listing test in unit_test.c; cheap enough to slot in immediately after the root listing."
-content = { kind = "fs", groups = [ { parent = "test/dirtest", entries = "all" } ] }
+descriptor = "Repository root listing (complete)"
+justification = "The whole top level in one cheap batch: the amalgamated mongoose.c / mongoose.h pair sitting next to src/, plus test/, tutorials/, resources/, .github/, LICENSE and .clang-format. Listing every child at once stops the agent assuming an unlisted one is absent, and the amalgam-beside-src shape is the most surprising fact about this tree."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "test/wizard/ listing"
-justification = "Names the Makefile + test.sh backing the 'Mongoose Wizard' board-config generator mentioned in tutorials/README.md (5.1)."
-content = { kind = "fs", groups = [ { parent = "test/wizard", entries = "all" } ] }
+descriptor = "Version and the single-file integration story"
+justification = "MG_VERSION is the one line that dates the tree (7.21); the README bullets say the supported way to consume Mongoose is to copy mongoose.c and mongoose.h into your source tree, which is why those two generated files are checked in at the root. The site link is where the real documentation lives."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/version.h"
+start = 1
+end = 1
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 24
+end = 25
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 35
+end = 35
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.4"
-descriptor = ".github/ISSUE_TEMPLATE/ listing"
-justification = "Names the issue template (issue.md) and its config (config.yml) — cheap process detail for 'how do I file a bug'."
-content = { kind = "fs", groups = [ { parent = ".github/ISSUE_TEMPLATE", entries = "all" } ] }
+descriptor = "README feature bullets: portability and protocols"
+justification = "The cross-platform claim (Linux/UNIX, MacOS, Windows, Android; ST, NXP, ESP32, Nordic, TI, Microchip, Infineon, Renesas chips) and the built-in protocol list. Cheap semantic context for 'does it support X' questions that would otherwise cost a grep through src/."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 15
+end = 23
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.5"
-descriptor = ".clang-format (full)"
-justification = "6-line file: BasedOnStyle Google + a few overrides. Answers 'what code style/formatter' with zero follow-up."
-content = { kind = "lines", spans = [ { path = ".clang-format", start = 1, end = 6, render = { kind = "full" } } ] }
+descriptor = "README feature bullets: built-in TCP/IP stack, TLS, OTA"
+justification = "The second half of the same bullet class: the built-in TCP/IP stack with bare-metal drivers, the driver families (STM32F/H, NXP RT1xxx, TI TM4C, Microchip SAME54, Wiznet W5500), the built-in TLS 1.3 stack with mbedTLS/OpenSSL alternatives, and built-in firmware updates. Split from the previous batch for size; together the bullet class is complete."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 33
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.6"
-descriptor = "resources/downloads/ listing"
-justification = "Names the STM32CubeMX .ioc board files and init.sh/Makefile backing hardware-specific quick-starts (see resources/AGENTS.md, not expanded here per host-injected-file policy)."
-content = { kind = "fs", groups = [ { parent = "resources/downloads", entries = "all" } ] }
+descriptor = "README section headings (all H2 locations)"
+justification = "Names every top-level README section with no body: supported platforms, usage examples, commercial use, security, vulnerability reporting, articles, contributions. One hop from here to any of them."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 37
+end = 37
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 66
+end = 66
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 162
+end = 162
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 176
+end = 176
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 201
+end = 201
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 206
+end = 206
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "README.md"
+start = 226
+end = 226
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.7"
-descriptor = "test/certs/ listing"
-justification = "Names the test TLS material (ca/server/client .crt/.key + generate.sh) used by the TLS unit test (test_tls, see 3.5) and tls_multirec fixture."
-content = { kind = "fs", groups = [ { parent = "test/certs", entries = "all" } ] }
+descriptor = "Canonical usage example: HTTP server in 20 lines"
+justification = "The README's first code block is the library's whole mental model on one screen: an event handler switching on MG_EV_HTTP_MSG, mg_http_serve_dir with mg_http_serve_opts, mg_mgr_init plus an infinite mg_mgr_poll loop, and the 'cc main.c mongoose.c' build comment. The highest zero-follow-up batch in the document for 'how do I use this'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 74
+end = 95
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "1.8"
-descriptor = "README: H2 section-heading roster"
-justification = "All 7 second-level headings in README.md (Supported platforms, Usage Examples, Commercial use, Security, How to report security vulnerabilities, Articles, Contributions) at their exact line numbers, without pulling in body text — cheap orientation for which section to open for a given query."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 37, end = 37, render = { kind = "full" } },
-  { path = "README.md", start = 66, end = 66, render = { kind = "full" } },
-  { path = "README.md", start = 162, end = 162, render = { kind = "full" } },
-  { path = "README.md", start = 176, end = 176, render = { kind = "full" } },
-  { path = "README.md", start = 201, end = 201, render = { kind = "full" } },
-  { path = "README.md", start = 206, end = 206, render = { kind = "full" } },
-  { path = "README.md", start = 226, end = 226, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "README: title + lede paragraph"
-justification = "The H1 title and the 6-line identity paragraph (event-driven, cross-platform, on the market since 2004). Skips the 4 badge-image lines (3-6, long CI/coverage badge URLs with no semantic content, plus their surrounding blank lines 2/7) to keep cost down. The paragraph ends '...Features include:' — an Ellipsis at line 15 signals the bulleted feature list (cross-platform, built-in protocols, TLS, built-in TCP/IP stack, ...) that follows rather than implying no such list exists."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "README.md", start = 8, end = 13, render = { kind = "full" } },
-  { path = "README.md", start = 15, end = 15, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "test/data/ listing"
-justification = "Names the fixtures the HTTP/static-file tests serve against (index.html, range.txt, gzip.txt(.gz), a UTF-8-named file, ssi/ dir, packed ws.hex) — grounds what test_http_server/test_http_range/test_packed actually read from disk."
-content = { kind = "fs", groups = [ { parent = "test/data", entries = "all" } ] }
-
-[[batches]]
-id = "1.11"
-descriptor = ".github/workflows/ + resources/ listing"
-justification = "All 9 CI workflow files (quicktest/test/nightly/nightly_tests/fuzz/cifuzz/codeql/zephyr/on_demand) and the resources/ tooling dir (pack.js, html2c.js, dashboard.js, watch.js, inline.js, I-CUBE-Mongoose) as classes."
-content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" }, { parent = "resources", entries = "all" } ] }
-
-[[batches]]
-id = "1.12"
-descriptor = "LICENSE (dual GPLv2/commercial, full)"
-justification = "Full 16-line license file. Answers licensing questions (a frequent onboarding query for a dual-licensed embedded lib) with zero follow-up."
-content = { kind = "lines", spans = [ { path = "LICENSE", start = 1, end = 16, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "1.13"
-descriptor = "src/drivers/ full file listing"
-justification = "The 38 embedded MAC/PHY/Wi-Fi driver source files (stm32f, stm32h, w5500, imxrt, xmc, rw612, cyw, nxp_wifi, st67w6, ...) named as a class, so 'is there a driver for chip X' is answered by one grep instead of assuming absence."
-content = { kind = "fs", groups = [ { parent = "src/drivers", entries = "all" } ] }
-
-[[batches]]
-id = "1.14"
-descriptor = "test/ full listing"
-justification = "Names the unit test (unit_test.c), fuzz targets, Makefile, per-toolchain example dirs (arduino, cube, keil, zephyr, xpresso, pico-sdk, esp-idf...), and setup scripts (mosquitto/mqtt, ga docker) as a class up front."
-content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
-
-[[batches]]
-id = "1.15"
-descriptor = "tutorials/ full listing"
-justification = "Top-level tutorial categories (http, mqtt, tcp, udp, websocket, tls, tcpip, arduino, micropython, and per-vendor stm32/nxp/ti/wch/infineon/renesas/pico-sdk/zephyr dirs) so 'is there a tutorial for protocol/board X' doesn't require a blind search."
-content = { kind = "fs", groups = [ { parent = "tutorials", entries = "all" } ] }
+descriptor = "How mongoose.c / mongoose.h are generated from src/"
+justification = "The two Makefile rules that build the root amalgamation: mongoose.c is src/license.h plus every src/*.c and src/drivers/*.c concatenated with #line markers; mongoose.h is the ordered concatenation of the public headers. Without this an agent may edit the generated root files instead of src/. The recipe lines are truncated because their tails are one long shell pipeline."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 250
+end = 250
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 251
+end = 251
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^.{0,200}"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 253
+end = 253
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 254
+end = 254
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^.{0,260}"
 
 [[batches]]
 id = "2.1"
-descriptor = "arch.h: MG_ARCH_* platform enumeration"
-justification = "All 17 supported architecture defines (UNIX, WIN32, ESP32/8266, FreeRTOS, ThreadX, Zephyr, ARMGCC, CMSIS-RTOS1/2, TI-RTOS, Pico-SDK, ARMCC, RT-Thread, ARM-CGT, Cube) plus the deprecated NEWLIB alias — the complete platform-selector class, in one place."
-content = { kind = "lines", spans = [ { path = "src/arch.h", start = 1, end = 21, render = { kind = "full" } } ] }
+descriptor = "src/ core runtime and utility modules"
+justification = "The library's substance is one flat src/ directory; this is its core class - the event loop (net.c, sock.c, event.c), buffers, timers, string and printf helpers, logging, hashes, JSON and the filesystem backends - listed complete so the agent can name a module before opening it. Ranked ahead of every peripheral inventory on purpose."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["arch.h", "config.h", "license.h", "version.h", "profile.h", "net.c", "net.h", "sock.c", "event.c", "event.h", "iobuf.c", "iobuf.h", "timer.c", "timer.h", "queue.c", "queue.h", "str.c", "str.h", "fmt.c", "fmt.h", "printf.c", "printf.h", "log.c", "log.h", "util.c", "util.h", "url.c", "url.h", "base64.c", "base64.h", "md5.c", "md5.h", "sha1.c", "sha1.h", "sha256.c", "sha256.h", "json.c", "json.h", "fs.c", "fs.h", "fs_posix.c", "fs_packed.c", "fs_fat.c"]
 
 [[batches]]
 id = "2.2"
-descriptor = "event.h: the MG_EV_* event enum (full)"
-justification = "The single most load-bearing file conceptually: every mg_connection event handler switches on this enum. Full 34-line file so the complete event vocabulary (open/poll/connect/http/ws/mqtt/sntp/mdns/modbus/user) is visible in one shot, each with its ev_data type documented inline."
-content = { kind = "lines", spans = [ { path = "src/event.h", start = 1, end = 34, render = { kind = "full" } } ] }
+descriptor = "src/ protocol and service modules"
+justification = "The second class in src/: HTTP (plus SSI), WebSocket, MQTT, DNS/mDNS, SNTP, Modbus, JSON-RPC, the device dashboard, OTA and the TLS front door (tls.h). Pairs .c with .h so 'where does protocol X live' needs no search."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["http.c", "http.h", "ssi.c", "ssi.h", "ws.c", "ws.h", "mqtt.c", "mqtt.h", "dns.c", "dns.h", "sntp.c", "sntp.h", "modbus.c", "modbus.h", "rpc.c", "rpc.h", "dash.c", "dash.h", "ota.c", "ota.h", "tls.h"]
 
 [[batches]]
 id = "2.3"
-descriptor = "src/ full file listing"
-justification = "Catastrophic-omission hedge: all ~118 files under src/ (protocol .c/.h pairs, arch_*.h, tls_*, ota_*, and the drivers/ subdir) named up front so later per-module content batches don't imply the unlisted ones don't exist."
-content = { kind = "fs", groups = [ { parent = "src", entries = "all" } ] }
+descriptor = "src/ built-in TCP/IP stack modules"
+justification = "The MG_ENABLE_TCPIP world: net_builtin.c/h, the L2 layer (l2.c/h, l2_eth.c, l2_ppp.c), the Wi-Fi API and the drivers/ subdirectory. This is what makes Mongoose unusual next to other C HTTP servers."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["net_builtin.c", "net_builtin.h", "l2.c", "l2.h", "l2_eth.c", "l2_ppp.c", "wifi.h", "wifi_dummy.c", "drivers"]
 
 [[batches]]
 id = "2.4"
-descriptor = "net.h: mg_mgr struct"
-justification = "mg_mgr is the top-level object every program owns (mg_mgr_init/poll/free); shows its exact fields (conns list, dns4/6, timers, tls_ctx, userdata). mg_dns/mg_addr (lines 1-25, referenced by loc/rem in mg_connection, 2.5) are omitted wholesale to bound cost — one grep on the already-named src/net.h (2.3) resolves them."
-content = { kind = "lines", spans = [
-  { path = "src/net.h", start = 11, end = 11, render = { kind = "ellipsis" } },
-  { path = "src/net.h", start = 27, end = 48, render = { kind = "full" } },
-] }
+descriptor = "src/ TLS backends and crypto primitives"
+justification = "The complete tls_* class: the built-in TLS 1.3 stack (tls_builtin.c) with its primitives (x25519, aes128, chacha20, rsa, uecc) plus the mbedTLS, OpenSSL and dummy adapters. Answers 'which TLS backends exist' with no follow-up."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["tls_aes128.c", "tls_aes128.h", "tls_builtin.c", "tls_chacha20.c", "tls_chacha20.h", "tls_dummy.c", "tls_mbed.c", "tls_mbed.h", "tls_openssl.c", "tls_openssl.h", "tls_rsa.c", "tls_rsa.h", "tls_uecc.c", "tls_uecc.h", "tls_x25519.c", "tls_x25519.h"]
 
 [[batches]]
 id = "2.5"
-descriptor = "net.h: mg_connection struct"
-justification = "The per-connection object passed to every event handler: recv/send iobufs, the bitfield of is_listening/is_client/is_tls/is_websocket/... flags that most protocol logic branches on. Grounds 'how do I tell if a connection is X' without grepping net.c."
-content = { kind = "lines", spans = [ { path = "src/net.h", start = 50, end = 86, render = { kind = "full" } } ] }
+descriptor = "src/ OTA firmware-update backends"
+justification = "The complete ota_*/flash class - one file per MCU family (STM32 F/H5/H7, i.MX RT, MCXN, RW612, ESP32, Pico-SDK, CH32V307) behind the shared flash.c helper. Shows at a glance that OTA support is per-target."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["ota_ch32v307.c", "ota_dummy.c", "ota_esp32.c", "ota_imxrt.c", "ota_mcxn.c", "ota_picosdk.c", "ota_rw612.c", "ota_stm32f.c", "ota_stm32h5.c", "ota_stm32h7.c", "flash.c", "flash.h"]
 
 [[batches]]
 id = "2.6"
-descriptor = "README worked example: minimal HTTP file server"
-justification = "The canonical 'cc main.c mongoose.c' HTTP static-file-server snippet, using mg_mgr_init/mg_http_listen/mg_http_serve_dir/mg_mgr_poll together. Zero-follow-up answer for 'how do I start a basic mongoose HTTP server'."
-content = { kind = "lines", spans = [ { path = "README.md", start = 74, end = 96, render = { kind = "full" } } ] }
+descriptor = "src/ architecture and foreign-stack headers"
+justification = "The complete arch_*/net_* class: one header per supported toolchain or RTOS (unix, win32, esp32, esp8266, freertos, threadx, zephyr, rtx, rtthread, tirtos, picosdk, armgcc, armcgt, cube) plus the FreeRTOS-TCP, lwIP and ARM-RL socket shims. Porting questions land here in one hop."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = ["arch_armcgt.h", "arch_armgcc.h", "arch_cube.h", "arch_esp32.h", "arch_esp8266.h", "arch_freertos.h", "arch_picosdk.h", "arch_rtthread.h", "arch_rtx.h", "arch_threadx.h", "arch_tirtos.h", "arch_unix.h", "arch_win32.h", "arch_zephyr.h", "net_ft.h", "net_lwip.h", "net_rl.h"]
 
 [[batches]]
 id = "2.7"
-descriptor = "README worked example: MQTT event handler (pub/sub)"
-justification = "Full ev_handler from the README's MQTT client (mg_mqtt_sub/mg_mqtt_pub, MG_EV_MQTT_OPEN/MSG/CLOSE branches). Trimmed to the handler only (drops the reconnect-timer/main-loop boilerplate, which mirrors the HTTP example's main loop in 2.6) to bound cost."
-content = { kind = "lines", spans = [ { path = "README.md", start = 111, end = 140, render = { kind = "full" } } ] }
+descriptor = "src/drivers/ listing (complete)"
+justification = "Every MAC/PHY/Wi-Fi driver shipped with the built-in stack, paired .c/.h: stm32f, stm32h, imxrt, ra, same54, tm4c, tms570, xmc, xmc7, rw612, cmsis, w5100, w5500, cyw, pico-w, nxp_wifi, st67w6, at_cmd, sdio and the shared phy.c/h. A partial list here would make an agent conclude a board is unsupported."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src/drivers"
+entries = "all"
 
 [[batches]]
 id = "2.8"
-descriptor = "config.h: feature-toggle flags (part 1, hedged)"
-justification = "The first 60 lines of the single build-time config surface: MG_ENABLE_LOG, the mutually-exclusive stack choice (TCPIP/LWIP/FREERTOS_TCP/RL), MG_ENABLE_SOCKET/POLL/EPOLL/FATFS/SSI/IPV6/MD5. An Ellipsis at line 61 signals more toggles follow (WINSOCK, DIRLIST, ASSERT, IO/buffer sizes, TCP/IP address defaults, MG_ENABLE_CHACHA20 — not rendered here to bound cost) rather than implying this is the complete knob set."
-content = { kind = "lines", spans = [
-  { path = "src/config.h", start = 1, end = 60, render = { kind = "full" } },
-  { path = "src/config.h", start = 61, end = 61, render = { kind = "ellipsis" } },
-] }
+descriptor = "test/ listing (complete)"
+justification = "The test tree in one batch: unit_test.c and the mip_* built-in-stack tests, the fuzzers, the Makefile that drives every CI matrix entry, the certs/ and data/ fixtures, and the per-toolchain build probes (arduino, cube, keil, zephyr, esp-idf, pico-sdk, xpresso, cgt+make, gcc+make, wizard, tls_multirec)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+
+[[batches]]
+id = "2.9"
+descriptor = "tutorials/ listing (complete)"
+justification = "3.7k files of examples live here; the immediate children are the index into them - protocol families (http, mqtt, websocket, tcp, udp, tls, smtp, webui, tcpip, core) and vendor board groups (stm32, nxp, ti, renesas, infineon, wch, arduino, pico-sdk, zephyr, micropython) plus device-dashboard."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tutorials"
+entries = "all"
+
+[[batches]]
+id = "2.10"
+descriptor = "resources/ and .github/workflows/ listings"
+justification = "resources/ holds the web-asset toolchain behind the dashboard workflow (html2c.js, pack.js, inline.js, watch.js, dashboard.js, downloads/, I-CUBE-Mongoose/, AGENTS.md); .github/workflows/ names the nine CI entry points. Two small closed classes worth naming once."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "resources"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
 
 [[batches]]
 id = "3.1"
-descriptor = "test/Makefile: canonical build/test targets (roster)"
-justification = "Name+deps line for 18 of the top-level Make targets (all, tall, test, mip_test/mip_tap_test/mip_port_test, mg_prefix, musl, unamalgamated, fuzz/fuzz_tls, coverage, valgrind, armhf/arm/riscv, mingw, tutorials); the remaining targets (misra, install/uninstall, clean*, ...) are dropped from this roster to bound cost, not to imply they don't exist — test/Makefile is already named in 1.14. Answers 'how do I build/test this' precisely without reading the whole 300+ line Makefile."
-content = { kind = "lines", spans = [
-  { path = "test/Makefile", start = 81, end = 81, render = { kind = "full" } },
-  { path = "test/Makefile", start = 84, end = 84, render = { kind = "full" } },
-  { path = "test/Makefile", start = 86, end = 86, render = { kind = "full" } },
-  { path = "test/Makefile", start = 90, end = 90, render = { kind = "full" } },
-  { path = "test/Makefile", start = 99, end = 99, render = { kind = "full" } },
-  { path = "test/Makefile", start = 112, end = 112, render = { kind = "full" } },
-  { path = "test/Makefile", start = 115, end = 115, render = { kind = "full" } },
-  { path = "test/Makefile", start = 122, end = 122, render = { kind = "full" } },
-  { path = "test/Makefile", start = 126, end = 126, render = { kind = "full" } },
-  { path = "test/Makefile", start = 136, end = 136, render = { kind = "full" } },
-  { path = "test/Makefile", start = 147, end = 147, render = { kind = "full" } },
-  { path = "test/Makefile", start = 162, end = 162, render = { kind = "full" } },
-  { path = "test/Makefile", start = 170, end = 170, render = { kind = "full" } },
-  { path = "test/Makefile", start = 174, end = 174, render = { kind = "ellipsis" } },
-  { path = "test/Makefile", start = 182, end = 182, render = { kind = "full" } },
-  { path = "test/Makefile", start = 208, end = 208, render = { kind = "full" } },
-  { path = "test/Makefile", start = 212, end = 212, render = { kind = "full" } },
-  { path = "test/Makefile", start = 228, end = 228, render = { kind = "full" } },
-  { path = "test/Makefile", start = 264, end = 264, render = { kind = "full" } },
-] }
+descriptor = "Event handler type and event dispatch"
+justification = "The callback signature every Mongoose program writes, plus mg_call and mg_error - the whole of event.h above the enum."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/event.h"
+start = 3
+end = 8
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "3.2"
-descriptor = "CI: quicktest.yml essentials workflow (excerpt)"
-justification = "Shows the fast-path CI job matrix (gcc/clang++, test/mip_test targets, SSL='' / BUILTIN) and the path-filtered trigger. Grounds 'what does CI actually run' for the everyday push case; the other 8 workflows are named (not expanded) in 1.11. An Ellipsis at line 21 signals the file continues (this job's steps, plus the s390/armhf/... jobs) well past this excerpt, in this 727-line file."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/quicktest.yml", start = 1, end = 20, render = { kind = "full" } },
-  { path = ".github/workflows/quicktest.yml", start = 21, end = 21, render = { kind = "ellipsis" } },
-] }
+descriptor = "Connection event enum, part 1: lifecycle events"
+justification = "MG_EV_ERROR through MG_EV_CLOSE with the ev_data type each one carries in its trailing comment. This table is what an event handler is written against, and the comments make it zero-follow-up."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/event.h"
+start = 9
+end = 19
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "3.3"
-descriptor = "resources/pack.js: static-filesystem packer (excerpt)"
-justification = "Explains how mg_fs_packed / mg_packed_files (referenced from src/fs.h) get generated: pack.js turns arbitrary files into a C byte-array + mg_mem_file table, optionally gzipped. Answers 'how do I embed a web UI/static assets' at the tool level. Cuts off inside the argv.map() callback (the gzip branch); an Ellipsis at line 17 signals the rest of the callback plus the stdout-template writer that follows, in this 43-line file."
-content = { kind = "lines", spans = [
-  { path = "resources/pack.js", start = 1, end = 16, render = { kind = "full" } },
-  { path = "resources/pack.js", start = 17, end = 17, render = { kind = "ellipsis" } },
-] }
+descriptor = "Connection event enum, part 2: protocol events"
+justification = "The rest of the same enum - HTTP, WebSocket, MQTT, SNTP, wakeup, mDNS and Modbus events, ending at MG_EV_USER. Split from the previous batch only for size; together they are the complete event class."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/event.h"
+start = 20
+end = 34
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "3.4"
-descriptor = "test/pack.c: alternative data-packer CLI (excerpt)"
-justification = "A second, standalone (non-Node) packer used to build fs.c from a list of files, with usage documented in its header comment. Complements 3.3 for the C-only toolchain case. Cuts off mid-way through the header's numbered usage list (steps 1-2 of 4); an Ellipsis at line 13 signals steps 3-4 (which name the mg_unpack() accessor function) continue below."
-content = { kind = "lines", spans = [
-  { path = "test/pack.c", start = 1, end = 12, render = { kind = "full" } },
-  { path = "test/pack.c", start = 13, end = 13, render = { kind = "ellipsis" } },
-] }
+descriptor = "Core manager/connection API (net.h)"
+justification = "mg_mgr_init/poll/free, mg_listen, mg_connect, mg_wrapfd, mg_connect_resolved, mg_send, mg_printf, mg_vprintf and mg_aton - the entry points nearly every program calls, with full signatures."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 88
+end = 102
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "3.5"
-descriptor = "unit_test.c: test function roster, part 1 of 2 (29 entries)"
-justification = "Name-only roster of the first 29 of 57 test_*/main functions in the 4606-line unit test file, truncated at the opening paren (test_match through test_http_chunked). Directly maps 'is FEATURE tested' to an exact function name/line (test_mqtt, test_ws, test_http_server, test_tls, test_dns, ...); part 2 (3.6) continues the class through end of file, so no roster entry is silently dropped."
-content = { kind = "lines", spans = [
-  { path = "test/unit_test.c", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 263, end = 263, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 306, end = 306, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 356, end = 356, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 568, end = 568, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 609, end = 609, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 690, end = 690, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 790, end = 790, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 802, end = 802, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 998, end = 998, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1079, end = 1079, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1415, end = 1415, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1450, end = 1450, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1556, end = 1556, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1675, end = 1675, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1722, end = 1722, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 1746, end = 1746, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2007, end = 2007, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2057, end = 2057, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2250, end = 2250, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2591, end = 2591, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2609, end = 2609, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2680, end = 2680, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2946, end = 2946, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 2986, end = 2986, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3062, end = 3062, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "struct mg_connection"
+justification = "The central object: linkage, local and remote address, the recv/send/prof/rtls iobufs, the user and protocol handler pairs, c->data, and the whole is_* bitfield block (is_tls, is_udp, is_websocket, is_draining, is_closing, is_resp and the rest) that protocol code branches on. Field comments are dropped where the field name already says it."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 50
+end = 50
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 51
+end = 51
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 52
+end = 52
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 53
+end = 53
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 54
+end = 54
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 55
+end = 55
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 57
+end = 57
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 58
+end = 58
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 59
+end = 59
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 60
+end = 60
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 61
+end = 61
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 62
+end = 62
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 63
+end = 63
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 64
+end = 64
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 65
+end = 65
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 66
+end = 66
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 67
+end = 67
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 68
+end = 68
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 69
+end = 69
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 70
+end = 70
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 71
+end = 71
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 72
+end = 72
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 73
+end = 73
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 74
+end = 74
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 75
+end = 75
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 76
+end = 76
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 77
+end = 77
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 78
+end = 78
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 79
+end = 79
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 80
+end = 80
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 81
+end = 81
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 82
+end = 82
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 83
+end = 83
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 84
+end = 84
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 85
+end = 85
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 86
+end = 86
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "3.6"
-descriptor = "unit_test.c: test function roster, part 2 of 2 (28 entries)"
-justification = "Continues 3.5's roster with the remaining 28 test_*/main functions (test_http_chunked_case through main), truncated at the opening paren: test_invalid_listen_addr, test_ws_fragmentation, test_json, test_rpc, the md5/sha1/sha256/sha384 family, test_x25519/rsa/crypto, test_modbus, and main itself. Together with 3.5, closes the full 57-entry class with no gap."
-content = { kind = "lines", spans = [
-  { path = "test/unit_test.c", start = 3086, end = 3086, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3101, end = 3101, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3182, end = 3182, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3203, end = 3203, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3244, end = 3244, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3299, end = 3299, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3313, end = 3313, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3386, end = 3386, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3412, end = 3412, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3430, end = 3430, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3462, end = 3462, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3727, end = 3727, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3808, end = 3808, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3882, end = 3882, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3895, end = 3895, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3905, end = 3905, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3920, end = 3920, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3930, end = 3930, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3945, end = 3945, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3952, end = 3952, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3972, end = 3972, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 3979, end = 3979, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4002, end = 4002, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4053, end = 4053, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4068, end = 4068, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4124, end = 4124, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4273, end = 4273, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "test/unit_test.c", start = 4475, end = 4475, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "struct mg_mgr"
+justification = "The event manager: connection list, DNS4/DNS6 servers, timers, userdata, tls_ctx, mqtt_id, epoll_fd, the wakeup pipe and the built-in-stack interface pointer (ifp). Explains what mg_mgr_poll walks."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 27
+end = 27
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 28
+end = 28
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 29
+end = 30
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 31
+end = 31
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 33
+end = 33
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 34
+end = 34
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 35
+end = 35
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 36
+end = 36
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 37
+end = 37
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 38
+end = 38
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 39
+end = 39
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 40
+end = 40
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 41
+end = 41
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 42
+end = 42
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 43
+end = 43
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 44
+end = 44
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 45
+end = 45
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 46
+end = 46
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 47
+end = 48
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "3.7"
+descriptor = "struct mg_addr"
+justification = "The IPv4/IPv6 address union carried by c->loc and c->rem, with the port, scope_id and is_ip6 fields; the union every listen, connect and accept path fills in."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 18
+end = 21
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 22
+end = 22
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "3.8"
+descriptor = "net.h integration and utility entry points"
+justification = "The easy-to-miss tail of net.h, as a name roster: mg_alloc_conn, mg_close_conn and mg_open_listener for custom network stacks, plus mg_wakeup, mg_wakeup_init, mg_timer_add, mg_connect_svc and mg_multicast_restore. Including the tail keeps net.h's declared-symbol class closed rather than implying the API ends at mg_aton."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net.h"
+start = 105
+end = 105
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 106
+end = 106
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 107
+end = 107
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 110
+end = 110
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 111
+end = 111
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 112
+end = 112
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 114
+end = 114
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net.h"
+start = 117
+end = 117
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "3.9"
+descriptor = "struct mg_str and the string API"
+justification = "Mongoose passes non-NUL-terminated slices everywhere; struct mg_str plus mg_match, mg_span, mg_strcmp/mg_strcasecmp, mg_strdup and mg_str_to_num are the vocabulary every parser in the tree uses. Note the mg_str() macro that shadows the C++ constructor."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/str.h"
+start = 5
+end = 12
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/str.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 21
+end = 21
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/str.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "3.10"
+descriptor = "struct mg_iobuf and buffer API"
+justification = "The buffer type behind a connection's incoming and outgoing data - buf, size, len, align - with mg_iobuf_init/resize/free/add/del, which is how protocol code consumes and appends bytes."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 5
+end = 5
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 6
+end = 6
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 7
+end = 7
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 9
+end = 9
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 10
+end = 10
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/iobuf.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "3.11"
+descriptor = "Timer struct, flags and API"
+justification = "MG_TIMER_ONCE/REPEAT/RUN_NOW/CALLED/AUTODELETE inside struct mg_timer, with fn and arg - the reconnect-timer pattern the README's MQTT example builds. The four function declarations right below the struct are marked elided."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 5
+end = 5
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 6
+end = 6
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 7
+end = 7
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 9
+end = 9
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 10
+end = 10
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 16
+end = 17
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/timer.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+id = "3.12"
+descriptor = "Logging API and the MG_INFO/MG_ERROR macros"
+justification = "The MG_LL_* levels, mg_log_level, mg_log_set, mg_hexdump and mg_log_set_fn, then the four MG_ERROR/MG_INFO/MG_DEBUG/MG_VERBOSE macros that appear in every source file. The MG_LOG macro body between them is plumbing and is elided."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/log.h"
+start = 7
+end = 8
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/log.h"
+start = 10
+end = 10
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/log.h"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/log.h"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/log.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/log.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/log.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "src/log.h"
+start = 39
+end = 42
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "4.1"
-descriptor = "http.h: request/response structs (full)"
-justification = "struct mg_http_header (name/value), mg_http_message (method/uri/query/headers/body), mg_http_serve_opts (root_dir/ssi_pattern/mime_types/fs), and mg_http_part (multipart) — the four data shapes every HTTP handler touches. Complete for this file's struct class (function decls omitted wholesale, not partially, to bound cost — one grep on src/http.h resolves any specific signature)."
-content = { kind = "lines", spans = [ { path = "src/http.h", start = 1, end = 38, render = { kind = "full" } } ] }
+descriptor = "HTTP message and serve-options structs"
+justification = "struct mg_http_message (method, uri, query, proto, headers, body, head), struct mg_http_serve_opts (root_dir, ssi_pattern, extra_headers, mime_types, page404, fs). The serve_opts field list alone answers a large share of static-file questions. The multipart-part struct follows at the elided line 33."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 9
+end = 14
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 16
+end = 17
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 20
+end = 23
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 26
+end = 26
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 27
+end = 27
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 28
+end = 28
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 29
+end = 29
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 30
+end = 30
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 33
+end = 33
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 id = "4.2"
-descriptor = "mqtt.h: opts + message structs"
-justification = "mg_mqtt_opts (user/pass/client_id/topic/message/qos/version/props) and mg_mqtt_message (the parsed-message shape delivered on MG_EV_MQTT_MSG/CMD) — the two structs an MQTT integration actually touches. mg_mqtt_prop, the raw MQTT_CMD_*/MQTT_PROP_* wire-constant tables, and the function declarations are omitted wholesale (not partially) to bound cost; src/mqtt.h is already named in 2.3."
-content = { kind = "lines", spans = [
-  { path = "src/mqtt.h", start = 62, end = 62, render = { kind = "ellipsis" } },
-  { path = "src/mqtt.h", start = 69, end = 97, render = { kind = "full" } },
-] }
+descriptor = "HTTP server/client entry points (full signatures)"
+justification = "mg_http_listen, mg_http_connect, mg_http_serve_dir, mg_http_serve_file and mg_http_reply - the five calls the tutorials and the README example are built from, with parameter types."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 43
+end = 52
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "4.3"
-descriptor = "ws.h: WebSocket API (full)"
-justification = "Full 26-line file: WEBSOCKET_OP_* frame types, mg_ws_message, and mg_ws_connect/upgrade/send/wrap/printf. Small enough to include whole; covers WS end to end."
-content = { kind = "lines", spans = [ { path = "src/ws.h", start = 1, end = 26, render = { kind = "full" } } ] }
+descriptor = "Rest of the HTTP function surface"
+justification = "The remaining declared HTTP functions as a name roster: mg_http_parse, mg_http_get_request_len, the chunked writers, header and query-var accessors, mg_url_decode/encode, basic auth, multipart iteration, mg_http_upload and mg_http_status. With the previous batch this closes http.h's symbol class."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 39
+end = 39
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 40
+end = 40
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 41
+end = 41
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 42
+end = 42
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 53
+end = 53
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 54
+end = 54
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 55
+end = 55
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 57
+end = 57
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 58
+end = 58
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 59
+end = 59
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 60
+end = 60
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/http.h"
+start = 61
+end = 61
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 62
+end = 62
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 63
+end = 63
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.h"
+start = 64
+end = 64
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
 
 [[batches]]
 id = "4.4"
-descriptor = "json.h: JSON query API (full)"
-justification = "Full 24-line file: mg_json_get/get_tok/get_num/get_bool/get_long/get_str/get_hex/get_b64/unescape/next — Mongoose's JSONPath-lite reader used throughout http/mqtt/rpc/dash code, not a full JSON DOM."
-content = { kind = "lines", spans = [ { path = "src/json.h", start = 1, end = 24, render = { kind = "full" } } ] }
+descriptor = "WebSocket API (whole header)"
+justification = "The opcodes, struct mg_ws_message and mg_ws_connect/upgrade/send/wrap/printf/vprintf - the entire WebSocket surface."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 3
+end = 8
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 22
+end = 22
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/ws.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
 
 [[batches]]
 id = "4.5"
-descriptor = "sntp.h: SNTP client (full)"
-justification = "Tiny (10-line) full file: mg_sntp_connect/request/parse and mg_now(). Complete SNTP surface in one batch."
-content = { kind = "lines", spans = [ { path = "src/sntp.h", start = 1, end = 10, render = { kind = "full" } } ] }
+descriptor = "struct mg_mqtt_opts"
+justification = "What an MQTT client fills in: user, pass, client_id, topic, message, qos, version (4 or 5), keepalive, retransmit_id, retain, clean and the MQTT5 property arrays. Its two sibling structs in the same header - the MQTT5 property descriptor at line 62 and the received-message struct at line 87 - are marked elided rather than spent."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 62
+end = 62
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 69
+end = 69
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 70
+end = 70
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 71
+end = 71
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 72
+end = 72
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 73
+end = 73
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 74
+end = 74
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 75
+end = 75
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 76
+end = 76
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 77
+end = 77
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 78
+end = 78
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 79
+end = 79
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 80
+end = 80
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 81
+end = 81
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 82
+end = 82
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 83
+end = 83
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 84
+end = 84
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 85
+end = 85
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 87
+end = 87
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 id = "4.6"
-descriptor = "str.h: mg_str + glob matcher (full)"
-justification = "struct mg_str (buf+len, the ubiquitous non-owning string view) plus mg_match's glob-style pattern matching (mg_match/mg_span) used for URI routing everywhere in http/dash examples."
-content = { kind = "lines", spans = [ { path = "src/str.h", start = 1, end = 23, render = { kind = "full" } } ] }
+descriptor = "MQTT function surface"
+justification = "mg_mqtt_connect/listen/login/pub/sub/unsub/parse/send_header/ping/pong/disconnect and mg_mqtt_next_prop - the complete MQTT API as a name roster."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 99
+end = 99
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 102
+end = 102
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 104
+end = 104
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 105
+end = 105
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 106
+end = 106
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 107
+end = 107
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 108
+end = 108
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 109
+end = 109
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 111
+end = 111
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 112
+end = 112
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 113
+end = 113
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/mqtt.h"
+start = 114
+end = 114
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
 
 [[batches]]
 id = "4.7"
-descriptor = "Secondary protocols: DNS/mDNS, Modbus entry points"
-justification = "Function-only rosters (structs omitted wholesale) for two protocols the README bullets don't name but MG_EV_MDNS_*/MG_EV_MODBUS_REQ (2.2) wire up: dns.h's mg_resolve/mg_dns_parse/mg_mdns_listen/mg_mdns_query and modbus.h's mg_modbus_listen. rpc.h (JSON-RPC, see src/ listing 2.3) and struct definitions are one grep away in the already-named src/ files."
-content = { kind = "lines", spans = [
-  { path = "src/dns.h", start = 67, end = 75, render = { kind = "full" } },
-  { path = "src/modbus.h", start = 33, end = 34, render = { kind = "full" } },
-] }
+descriptor = "TLS backend selector, options and API"
+justification = "MG_TLS_NONE/MBED/OPENSSL/WOLFSSL/BUILTIN/CUSTOM with the MG_TLS default, struct mg_tls_opts (ca, cert, key, name, skip_verification) and mg_tls_init/free/send/recv/pending/flush/handshake. The selector explains why every src/tls_*.c defines the same symbols. The private context hooks and the low-level IO contract the backends sit on continue at the elided line 34."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 3
+end = 3
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 4
+end = 5
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 6
+end = 6
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 7
+end = 7
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 9
+end = 12
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 18
+end = 21
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 22
+end = 22
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 26
+end = 26
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 27
+end = 27
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 28
+end = 28
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 29
+end = 29
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 30
+end = 30
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 31
+end = 31
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls.h"
+start = 34
+end = 34
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+id = "4.8"
+descriptor = "JSON and JSON-RPC APIs"
+justification = "mg_json_get with its typed getters (num, bool, long, str, hex, b64), mg_json_next and the MG_JSON_* error codes; on the RPC side struct mg_rpc (method pattern plus handler) with mg_rpc_add/del/process and the ok and err response helpers that the device dashboard and the json-rpc-over-websocket tutorial use. The request descriptor above it is marked elided at line 6."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/json.h"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/json.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 21
+end = 21
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/json.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 6
+end = 6
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 16
+end = 17
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 21
+end = 21
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 26
+end = 26
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 29
+end = 29
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 30
+end = 30
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 31
+end = 31
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/rpc.h"
+start = 33
+end = 33
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
 
 [[batches]]
 id = "5.1"
-descriptor = "tutorials/README.md: how to navigate examples (excerpt)"
-justification = "Explains the per-example convention: each dir has its own README.md linking to a mongoose.ws tutorial, embedded ones link a Wizard. Lets an agent generalize from the one example dir it drills into (5.2/5.3) to any other tutorial category. Ends at '...Steps to get the most out of this code base:'; an Ellipsis at line 12 signals the numbered navigation steps that follow (in this 41-line file) rather than implying the list stops here."
-content = { kind = "lines", spans = [
-  { path = "tutorials/README.md", start = 1, end = 10, render = { kind = "full" } },
-  { path = "tutorials/README.md", start = 12, end = 12, render = { kind = "ellipsis" } },
-] }
+descriptor = "Compile-time feature toggles with defaults (config.h)"
+justification = "Mongoose is configured entirely by -D flags; these are the MG_ENABLE_* switches with their defaults and comments - LOG, CUSTOM_CALLOC, CUSTOM_LOG, TCPIP, LWIP, FREERTOS_TCP, RL, SOCKET, POLL, EPOLL, FATFS, SSI, IPV6, MD5, WINSOCK, DIRLIST, CUSTOM_RANDOM, CUSTOM_MILLIS, ASSERT. The highest-traffic configuration question in the repo. The file continues past the elided line 85 with buffer sizing, path, socket-type and built-in-stack address defaults - one file read away."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 4
+end = 4
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 28
+end = 28
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 36
+end = 36
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 40
+end = 40
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 44
+end = 44
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 48
+end = 48
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 52
+end = 52
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 60
+end = 60
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 66
+end = 66
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 70
+end = 70
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 74
+end = 74
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 78
+end = 78
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 82
+end = 82
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/config.h"
+start = 85
+end = 85
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 id = "5.2"
-descriptor = "tutorials/http/ listing"
-justification = "All HTTP example categories (http-server, http-client, file-transfer/upload variants, reverse-proxy, streaming-client, redirect-to-https, uart-bridge, video-stream, wifi-router-dashboard) named as a class, one hop from the top-level tutorials/ listing (1.15)."
-content = { kind = "fs", groups = [ { parent = "tutorials/http", entries = "all" } ] }
+descriptor = "Architecture selector constants"
+justification = "MG_ARCH_CUSTOM through MG_ARCH_CUBE - the value an integrator sets as MG_ARCH, one per supported RTOS/toolchain, matching the src/arch_*.h files one for one. The unix/win32 auto-detection and the custom-config escape hatch follow at the elided line 23."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 3
+end = 3
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 4
+end = 4
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 5
+end = 8
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 9
+end = 9
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 10
+end = 10
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 14
+end = 14
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 20
+end = 20
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 21
+end = 21
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/arch.h"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 id = "5.3"
-descriptor = "tutorials/http/http-server/ listing (golden-reference example)"
-justification = "The Makefile golden-reference example named in tutorials/README.md (5.1): shows the concrete per-example shape (main.c, Makefile, mongoose.c/.h symlinks, per-toolchain subdirs arduino/esp8266/zephyr, README.md) that every other example dir follows."
-content = { kind = "fs", groups = [ { parent = "tutorials/http/http-server", entries = "all" } ] }
+descriptor = "Golden-reference example Makefile (desktop)"
+justification = "tutorials/README.md points here as the Makefile every desktop example copies: SOURCES = main.c mongoose.c, the CFLAGS / CFLAGS_MONGOOSE / CFLAGS_EXTRA split (with -DMG_TLS=MG_TLS_BUILTIN) and the build rule. This is how a new example - or a bug repro - is built."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tutorials/http/http-server/Makefile"
+start = 1
+end = 11
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "tutorials/http/http-server/Makefile"
+start = 24
+end = 25
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "5.4"
-descriptor = "tutorials/mqtt/ listing"
-justification = "Names the MQTT example categories (mqtt-client, mqtt-client-aws-iot, mqtt-dashboard, mqtt-over-ws-client, mqtt-server, ota-over-mqtt), complementing the MQTT protocol content in 4.2/2.6 with concrete runnable examples."
-content = { kind = "fs", groups = [ { parent = "tutorials/mqtt", entries = "all" } ] }
+descriptor = "The test, coverage and valgrind targets"
+justification = "How the suite is run: test builds $(SRCS) into ./unit_test and runs it with ASAN_OPTIONS, coverage rebuilds it with -coverage and reports gcov, valgrind runs the same binary under memcheck."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 147
+end = 149
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 162
+end = 164
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 170
+end = 172
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.5"
+descriptor = "Building the unamalgamated sources"
+justification = "The target that compiles ../src/*.c together with unit_test.c and the generated packed_fs.c, instead of the amalgamated mongoose.c - the build to use when editing src/, and the CI guard that the split sources still compile standalone."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/Makefile"
+start = 121
+end = 124
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.6"
+descriptor = "Code style configuration"
+justification = "The whole .clang-format: Google base style, no short functions on one line, space after C-style cast, preserved include blocks - the answer to 'how should new code be formatted'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".clang-format"
+start = 1
+end = 6
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "6.1"
+descriptor = "Built-in stack driver interface and events"
+justification = "struct mg_tcpip_driver (init, tx, rx, poll) - the contract every src/drivers/*.c implements - plus mg_tcpip_event_handler_t and the MG_TCPIP_EV_* enum (link state change, DHCP DNS/SNTP, ARP, 1s timer, Wi-Fi scan results and errors, driver events)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 12
+end = 14
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 15
+end = 15
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 18
+end = 23
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 26
+end = 26
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 27
+end = 27
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 28
+end = 28
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 29
+end = 29
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 30
+end = 30
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 31
+end = 31
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 33
+end = 33
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 34
+end = 34
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 35
+end = 35
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 36
+end = 36
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 37
+end = 37
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 38
+end = 38
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "6.2"
+descriptor = "struct mg_tcpip_if: the interface object"
+justification = "What a bare-metal user fills in: mac, ip/mask/gw, the tx buffer, the enable_dhcp_client/server and frame-check flags, driver and driver_data, the event handlers, recv_queue, dhcp_name, mtu and framesize. The struct continues past the elided line 62 with the IPv6 fields, the frame counters and the link-state ladder."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 41
+end = 41
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 42
+end = 42
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 43
+end = 43
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 44
+end = 44
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 45
+end = 45
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 46
+end = 46
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 47
+end = 47
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 48
+end = 48
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 49
+end = 49
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 50
+end = 50
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 51
+end = 51
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 52
+end = 52
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 53
+end = 53
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 54
+end = 54
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 55
+end = 55
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 57
+end = 57
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 58
+end = 58
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 59
+end = 59
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 60
+end = 60
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 61
+end = 61
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^/]+"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 62
+end = 62
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+id = "6.3"
+descriptor = "Built-in stack API and the driver instance roster"
+justification = "mg_tcpip_init/free/qwrite/arp_request plus every extern mg_tcpip_driver_* symbol (stm32f, w5500, w5100, tm4c, tms570, stm32h, imxrt, same54, cmsis, ra, xmc, xmc7, pico_w, rw612, cyw, nxp_wifi, st67w6, atcmd) - the value you assign to ifp->driver. The SPI abstraction and the alignment macros continue at the elided line 124."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 99
+end = 121
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/net_builtin.h"
+start = 124
+end = 124
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+id = "6.4"
+descriptor = "Built-in stack implementation landmarks"
+justification = "Where the packet path lives inside the 2.2k-line net_builtin.c: ARP, ICMP, the DHCP client and server RX paths, NDP/ICMPv6, rx_udp and rx_tcp, tx_tcp, mg_tcpip_rx, the one-second poll, mg_tcpip_init/free and this build's own mg_mgr_poll at 2178."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 368
+end = 368
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 483
+end = 483
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 579
+end = 579
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 620
+end = 620
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 652
+end = 652
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 722
+end = 722
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 953
+end = 953
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 1132
+end = 1132
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 1166
+end = 1166
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 1560
+end = 1560
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 1804
+end = 1804
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 1900
+end = 1900
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 2023
+end = 2023
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 2053
+end = 2053
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/net_builtin.c"
+start = 2178
+end = 2178
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "7.1"
+descriptor = "sock.c: the BSD-socket event loop"
+justification = "The MG_ENABLE_SOCKET half of the library, as a name roster with line numbers: mg_io_send and mg_send, listener setup, the read/write/close/connect handlers, accept, the select/poll/epoll iotest, the socketpair-based mg_wakeup and mg_mgr_poll itself at 754; smaller address and buffer helpers between them are elided. The file to read for desktop-side behaviour."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 55
+end = 55
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 98
+end = 98
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 144
+end = 144
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 161
+end = 161
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 175
+end = 175
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 209
+end = 209
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 232
+end = 232
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 294
+end = 294
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 326
+end = 326
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 365
+end = 365
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 376
+end = 376
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 389
+end = 389
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 405
+end = 405
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 422
+end = 422
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 472
+end = 472
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 530
+end = 530
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 668
+end = 668
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 720
+end = 720
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 742
+end = 742
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/sock.c"
+start = 754
+end = 754
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "7.2"
+descriptor = "http.c: entry points and static-file internals"
+justification = "Where the main HTTP functions are implemented, plus the static helpers behind mg_http_serve_dir - header parsing, status strings, the static_cb sender, MIME guessing, Range parsing, directory listing, the uri_to_path rewrite and the http_cb protocol handler at 1018. Small predicates between these landmarks are elided."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/http.c"
+start = 11
+end = 11
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "src/http.c"
+start = 97
+end = 97
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 162
+end = 162
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 188
+end = 188
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 198
+end = 198
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 234
+end = 234
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 270
+end = 270
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 362
+end = 362
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 369
+end = 369
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 376
+end = 376
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 446
+end = 446
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 478
+end = 478
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 538
+end = 538
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 562
+end = 562
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 578
+end = 578
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 718
+end = 718
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 787
+end = 787
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 847
+end = 847
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 862
+end = 862
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 949
+end = 949
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 1018
+end = 1018
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 1131
+end = 1131
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/http.c"
+start = 1136
+end = 1136
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "7.3"
+descriptor = "Built-in TLS entry points"
+justification = "Where tls_builtin.c implements the mg_tls_* contract inside a 2.6k-line file - the handshake at 1941, init at 2366, then send, recv, pending, flush and the shared ctx lifecycle."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 1941
+end = 1941
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2366
+end = 2366
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2501
+end = 2501
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2521
+end = 2521
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2544
+end = 2544
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2568
+end = 2568
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2573
+end = 2573
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2582
+end = 2582
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+[[batches.content.spans]]
+path = "src/tls_builtin.c"
+start = 2586
+end = 2586
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "[a-z_][a-z_0-9]*\\("
+
+[[batches]]
+id = "8.1"
+descriptor = "Unit-test harness and entry point"
+justification = "The ASSERT macro every test uses (prints file:line, then aborts) and the head of main() - log level from $V, then the test groups with their DASHBOARD() labels. test/unit_test.c is 4.6k lines of test_* functions called from here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/unit_test.c"
+start = 22
+end = 30
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/unit_test.c"
+start = 4475
+end = 4482
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/unit_test.c"
+start = 4484
+end = 4484
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+id = "8.2"
+descriptor = "Files of a runnable example and of the dashboard tutorials"
+justification = "Where to start from working code: tutorials/http/http-server holds main.c with symlinked mongoose.c/mongoose.h, certs/ and the arduino, esp8266 and zephyr variants beside it; tutorials/device-dashboard holds the minimal and full dashboard projects that resources/AGENTS.md refers to."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tutorials/http/http-server"
+entries = "all"
+[[batches.content.groups]]
+parent = "tutorials/device-dashboard"
+entries = "all"

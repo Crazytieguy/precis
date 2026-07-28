@@ -1,0 +1,451 @@
+fixture = "preact-signals"
+revision_pin = "cca91a3c"
+summary = """
+preact-signals is a pnpm monorepo implementing the @preact/signals reactive
+state-management library and its ecosystem: a framework-agnostic core
+(packages/core), Preact and React bindings (packages/preact, packages/react
++ runtime/utils subpackages), Babel transforms that auto-track signals in
+components (react-transform, preact-transform), an eslint/oxlint plugin
+catching signal misuse, and a distinctive "AI-native" debugging stack
+(packages/debug, devtools-adapter, devtools-ui, vite-plugin
+"@preact/signals-agent-vite", a Chrome extension, and a repo-root
+skills/signals-debugging skill) that streams structured signal/network/page
+events to a local HTTP API for coding-agent consumption. The ranking serves
+the full spread of plausible sessions against this repo: understanding the
+core reactivity algorithm (dependency tracking, lazy computed refresh,
+batching), using/debugging a framework integration, extending or fixing a
+Babel transform or lint rule, and operating the AI-debugging HTTP surface.
+Given the repo's size relative to the token cap, the ranking leans on cheap
+breadth (directory listings, exported-signature rosters) over exhaustive
+body dumps, reserving full-body depth for the handful of spots (core's
+dependency tracking and lazy recompute, the debug-patch mechanism) that are
+most load-bearing for understanding *why* the system behaves as it does.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — orientation, workspace shape & package roster
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Root filesystem listing"
+justification = "Every top-level file/dir (packages/, docs/, extension/, scripts/, skills/, test/, tools/, config files). Cheapest possible first orientation of the whole repo shape."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "packages/ directory listing"
+justification = "All 10 top-level workspace packages. Must be shown in full — partial listing would let an agent assume a package (e.g. vite-plugin or eslint-plugin-signals) doesn't exist."
+content = { kind = "fs", groups = [
+  { parent = "packages", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Root CONTRIBUTING.md (release process)"
+justification = "Tiny, high-value operational doc: how releases are cut (changesets PR + npm approval gate)."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 1, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "pnpm-workspace.yaml — package globs"
+justification = "The workspace package globs, incl. nested packages/preact/utils, react/utils, react/runtime, docs/**, extension, and the test-dir exclusion."
+content = { kind = "lines", spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "pnpm-workspace.yaml — release/patch/override policy"
+justification = "minimumReleaseAge, blockExoticSubdeps, dependency overrides, and the two patched dependencies — load-bearing for any dependency-upgrade question."
+content = { kind = "lines", spans = [
+  { path = "pnpm-workspace.yaml", start = 14, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Root package.json — build script"
+justification = "Name/private plus the top-level build script — the entry point for \"how do I build this\"."
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 1, end = 3, render = { kind = "full" } },
+  { path = "package.json", start = 6, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "Root package.json — lint/test/ci scripts + prepare hook"
+justification = "The scripts an agent runs day-to-day beyond building: lint (oxlint+tsc), test (vitest), the ci:build/ci:test aggregates, and the prepare hook (husky install + playwright browser install) that a fresh clone needs before either works."
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 30, end = 32, render = { kind = "full" } },
+  { path = "package.json", start = 34, end = 34, render = { kind = "full" } },
+  { path = "package.json", start = 37, end = 38, render = { kind = "full" } },
+  { path = "package.json", start = 43, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "Package roster part 1: core, preact, react, debug, devtools-adapter, devtools-ui, vite-plugin"
+justification = "Name+description for 7 of the 14 packages, split from the full roster purely to satisfy the early-batch growth envelope; together with 1.9 this is one coherent roster and should be read as such."
+content = { kind = "lines", spans = [
+  { path = "packages/core/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/core/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/preact/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/preact/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/react/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/react/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/debug/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/debug/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/devtools-adapter/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/devtools-adapter/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/devtools-ui/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/devtools-ui/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/vite-plugin/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/vite-plugin/package.json", start = 5, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "Package roster part 2: eslint-plugin-signals, react-transform, preact-transform, preact/utils, react/utils, react/runtime, extension"
+justification = "Name+description for the remaining 7 packages. See 1.8 — this completes the roster so no package's purpose is left unknown."
+content = { kind = "lines", spans = [
+  { path = "packages/eslint-plugin-signals/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/eslint-plugin-signals/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/react-transform/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/react-transform/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/preact-transform/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "packages/preact-transform/package.json", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/preact/utils/package.json", start = 2, end = 3, render = { kind = "full" } },
+  { path = "packages/react/utils/package.json", start = 2, end = 3, render = { kind = "full" } },
+  { path = "packages/react/runtime/package.json", start = 2, end = 3, render = { kind = "full" } },
+  { path = "extension/package.json", start = 2, end = 2, render = { kind = "full" } },
+  { path = "extension/package.json", start = 4, end = 4, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "Per-package directory listings part 1: core, preact, react, debug, devtools-adapter, devtools-ui, vite-plugin"
+justification = "Immediate children (src/, test/, README.md, package.json, CHANGELOG.md) of 7 packages. Establishes that test/ dirs exist everywhere (avoids the colocated-test-file omission failure mode) before any deep dive."
+content = { kind = "fs", groups = [
+  { parent = "packages/core", entries = "all" },
+  { parent = "packages/preact", entries = "all" },
+  { parent = "packages/react", entries = "all" },
+  { parent = "packages/debug", entries = "all" },
+  { parent = "packages/devtools-adapter", entries = "all" },
+  { parent = "packages/devtools-ui", entries = "all" },
+  { parent = "packages/vite-plugin", entries = "all" },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "Per-package directory listings part 2: eslint-plugin-signals, react-transform, preact-transform, preact/utils, react/utils, react/runtime, extension"
+justification = "Immediate children of the remaining 7 packages. See 1.10 — completes the src-file breadth map for every package."
+content = { kind = "fs", groups = [
+  { parent = "packages/eslint-plugin-signals", entries = "all" },
+  { parent = "packages/react-transform", entries = "all" },
+  { parent = "packages/preact-transform", entries = "all" },
+  { parent = "packages/preact/utils", entries = "all" },
+  { parent = "packages/react/utils", entries = "all" },
+  { parent = "packages/react/runtime", entries = "all" },
+  { parent = "extension", entries = "all" },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "Root README part 1 — concept + Core/Debug/Preact API map"
+justification = "The two-sentence concept statement plus the link-map into core's and preact's guide sections. Split from 1.13 purely for the growth envelope."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.13"
+descriptor = "Root README part 2 — React API map + License"
+justification = "The link-map into react's guide sections (Babel transform, useSignals hook, Show/For, limitations) plus the license pointer. Completes the cross-package doc map started in 1.12."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 24, end = 46, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 2 — packages/core: the reactivity engine (the algorithmic heart of the repo)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "core/src/index.ts public API + class signature map"
+justification = "Location batch: every exported primitive (signal, computed, effect, batch, untracked, action, createModel) and the three internal classes (Signal/Computed/Effect), each as its own line. Gives the whole public surface + class hierarchy before any body is read; later body batches build on this as predecessor."
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 95, end = 95, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 118, end = 118, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 269, end = 269, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 469, end = 471, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 597, end = 597, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 769, end = 772, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 849, end = 849, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 949, end = 949, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 968, end = 970, render = { kind = "full" } },
+  { path = "packages/core/src/index.ts", start = 1066, end = 1068, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "core: flags + dependency Node type"
+justification = "The bit-flags (RUNNING/NOTIFIED/OUTDATED/DISPOSED/HAS_ERROR/TRACKING) and the doubly-linked-list Node shape that every Computed/Effect uses to track its sources. Foundational vocabulary for reading any later body span."
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 1, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "core: addDependency part 1 — inserting a new dependency node"
+justification = "Half of the single most load-bearing function for understanding why signals are fast: the branch that runs when `signal` is a dependency the current context hasn't seen before, with the ASCII-art diagram showing the new node being appended as the list's tail."
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 177, end = 218, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "core: addDependency part 2 — reusing an existing dependency node"
+justification = "The other branch of addDependency: reusing a node from a previous evaluation and re-splicing it to the tail of the linked list, with the matching ASCII-art diagram. Split from 2.3 purely for the growth envelope and the surprisingly-large-batch signal — read as one function."
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 219, end = 255, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "core: Signal.value getter/setter + signal() factory"
+justification = "The actual read (subscribe via addDependency) / write (version bump + notify targets, cycle-detection at 100 batch iterations) implementation behind every `.value` access in the whole ecosystem."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 428, end = 475, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "core: Computed._refresh (lazy recompute algorithm)"
+justification = "The full decision tree for whether/when a computed re-runs its function: RUNNING-cycle guard, TRACKING fast path, globalVersion fast path, then prepareSources/run/cleanupSources. This is the piece most debugging or perf questions about computed() will need."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 624, end = 675, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "core: Effect._callback/_start/_notify"
+justification = "How an effect runs its callback with cleanup (_callback), sets up its evaluation context and cycle-detection (_start), and schedules itself into the batched-effect queue (_notify) — the scheduling internals behind the effect() factory whose signature is already located at 2.1."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "packages/core/src/index.ts", start = 887, end = 923, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3 — packages/preact: the Preact integration
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "Preact integration — hook signature map"
+justification = "Location batch over preact/src/index.ts's four exported hooks (useSignal/useComputed/useSignalEffect/useModel) — the framework-facing entry points before any body dive."
+content = { kind = "lines", spans = [
+  { path = "packages/preact/src/index.ts", start = 437, end = 437, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/preact/src/index.ts", start = 446, end = 446, render = { kind = "full" } },
+  { path = "packages/preact/src/index.ts", start = 503, end = 503, render = { kind = "full" } },
+  { path = "packages/preact/src/index.ts", start = 526, end = 526, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Preact integration — utils + internal-type signature map"
+justification = "Location batch over preact/utils's Show/For/useLiveSignal/useSignalRef plus two of internal.ts's augmented-type names — completes the @preact/signals public surface started in 3.1."
+content = { kind = "lines", spans = [
+  { path = "packages/preact/utils/src/index.tsx", start = 20, end = 20, render = { kind = "full" } },
+  { path = "packages/preact/utils/src/index.tsx", start = 41, end = 41, render = { kind = "full" } },
+  { path = "packages/preact/utils/src/index.tsx", start = 75, end = 75, render = { kind = "full" } },
+  { path = "packages/preact/utils/src/index.tsx", start = 81, end = 81, render = { kind = "full" } },
+  { path = "packages/preact/src/internal.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "packages/preact/src/internal.ts", start = 47, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "preact/README.md — rendering optimizations (text-node bypass)"
+justification = "The one-sentence explanation of why passing a signal directly (vs .value) into JSX bypasses the vdom diff and binds straight to the DOM text node — the one piece of this integration not obvious from a signature-only view."
+content = { kind = "lines", spans = [
+  { path = "packages/preact/README.md", start = 98, end = 100, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 4 — packages/react + react-transform: the React integration
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "React integration — runtime hook signature map"
+justification = "Location batch over react/runtime's exported hooks (useSignals/useSignal/useComputed/useSignalEffect/useModel) — the framework-facing entry points before any body dive."
+content = { kind = "lines", spans = [
+  { path = "packages/react/runtime/src/index.ts", start = 410, end = 410, render = { kind = "full" } },
+  { path = "packages/react/runtime/src/index.ts", start = 417, end = 417, render = { kind = "full" } },
+  { path = "packages/react/runtime/src/index.ts", start = 426, end = 426, render = { kind = "full" } },
+  { path = "packages/react/runtime/src/index.ts", start = 435, end = 435, render = { kind = "full" } },
+  { path = "packages/react/runtime/src/index.ts", start = 463, end = 463, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "React integration — utils + react-transform signature map"
+justification = "Location batch over react/utils's Show/For/useLiveSignal/useSignalRef and react-transform's plugin entry + options interface — completes the React-side public surface started in 4.1."
+content = { kind = "lines", spans = [
+  { path = "packages/react/utils/src/index.tsx", start = 28, end = 28, render = { kind = "full" } },
+  { path = "packages/react/utils/src/index.tsx", start = 48, end = 48, render = { kind = "full" } },
+  { path = "packages/react/utils/src/index.tsx", start = 86, end = 86, render = { kind = "full" } },
+  { path = "packages/react/utils/src/index.tsx", start = 94, end = 94, render = { kind = "full" } },
+  { path = "packages/react-transform/src/index.ts", start = 775, end = 775, render = { kind = "full" } },
+  { path = "packages/react-transform/src/index.ts", start = 842, end = 842, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "react-transform/src/index.ts — shouldTransform decision logic"
+justification = "The actual decision logic for which functions get the useSignals() injection: mode auto/manual/all, @useSignals/@noUseSignals leading-comment opt in/out. The single highest-value chunk of this 950-line plugin for \"why wasn't my component transformed\" debugging."
+predecessor = "4.2"
+content = { kind = "lines", spans = [
+  { path = "packages/react-transform/src/index.ts", start = 327, end = 362, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "react/README.md — Babel Transform setup"
+justification = "The prose explaining the recommended way to opt a React component into signal-tracking via the Babel transform — the one piece not obvious from source alone."
+content = { kind = "lines", spans = [
+  { path = "packages/react/README.md", start = 42, end = 66, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5 — the AI-native debugging feature: debug, devtools-adapter,
+# devtools-ui, vite-plugin (signals-agent-vite), extension, and the
+# repo-root debugging skill.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "skills/signals-debugging/SKILL.md — debug-event taxonomy"
+justification = "Not an auto-injected host skill path (only .claude/skills, .agent/skills, .cursor/rules are), so its body is fair game. This is the semantic map of the whole debug-event taxonomy (signals/network/page sources, and what each event type means) — the load-bearing prose tying packages/debug + vite-plugin together."
+content = { kind = "lines", spans = [
+  { path = "skills/signals-debugging/SKILL.md", start = 1, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "skills/signals-debugging/SKILL.md — Vite agent HTTP workflow"
+justification = "The curl-based session-create/fetch/reset workflow against @preact/signals-agent-vite's debug API — directly actionable steps for live debugging, complementing the endpoint list in 5.3. The numbered list continues past the curl steps into timeline-building/analysis guidance, hedged with an ellipsis rather than reproduced here."
+content = { kind = "lines", spans = [
+  { path = "skills/signals-debugging/SKILL.md", start = 57, end = 79, render = { kind = "full" } },
+  { path = "skills/signals-debugging/SKILL.md", start = 81, end = 81, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "vite-plugin/README.md — exposed HTTP surface"
+justification = "The exact REST/SSE endpoint list (sessions, events, stream, reset) — the contract the skill doc's curl examples hit."
+content = { kind = "lines", spans = [
+  { path = "packages/vite-plugin/README.md", start = 62, end = 69, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "vite-plugin/src/index.ts — signalsVite() options interface"
+justification = "The plugin's option surface (endpointBase/maxEvents/autoImportDebug/autoTransform/framework) — what a project actually configures when adopting the plugin."
+content = { kind = "lines", spans = [
+  { path = "packages/vite-plugin/src/index.ts", start = 20, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "vite-plugin/src/shared.ts — event type vocabulary"
+justification = "The three discriminated-union variants (SignalsAgentSignalEvent/NetworkEvent/PageEvent, each extending a common SignalsAgentEventBase) plus the SignalsAgentEvent union they compose — the wire format every consumer (server.ts, client-module.ts, skill doc) is built around."
+content = { kind = "lines", spans = [
+  { path = "packages/vite-plugin/src/shared.ts", start = 26, end = 35, render = { kind = "full" } },
+  { path = "packages/vite-plugin/src/shared.ts", start = 37, end = 46, render = { kind = "full" } },
+  { path = "packages/vite-plugin/src/shared.ts", start = 48, end = 55, render = { kind = "full" } },
+  { path = "packages/vite-plugin/src/shared.ts", start = 57, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "debug/src/index.ts — Signal._subscribe monkey-patch (core mechanism)"
+justification = "The core mechanism of the whole debug package: how it wraps Signal.prototype._subscribe to install a tracking effect on first subscriber, without changing any public core API — the pattern any similar instrumentation would need to replicate. The patched function's body continues past this excerpt (value-change bookkeeping, unsubscribe wiring), hedged with an ellipsis."
+content = { kind = "lines", spans = [
+  { path = "packages/debug/src/index.ts", start = 49, end = 74, render = { kind = "full" } },
+  { path = "packages/debug/src/index.ts", start = 79, end = 79, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "debug/README.md — install + setDebugOptions API"
+justification = "The install snippet and the setDebugOptions() option shape (grouped/enabled/spacing) — the one config surface an agent would actually set."
+content = { kind = "lines", spans = [
+  { path = "packages/debug/README.md", start = 1, end = 16, render = { kind = "full" } },
+  { path = "packages/debug/README.md", start = 55, end = 56, render = { kind = "full" } },
+  { path = "packages/debug/README.md", start = 57, end = 59, render = { kind = "truncated", pattern = "^\\s*\\w+\\??: \\w+;" } },
+  { path = "packages/debug/README.md", start = 60, end = 61, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "devtools-adapter — DevToolsAdapter interface (shared contract)"
+justification = "The single interface every adapter implementation (browser-extension/direct/postMessage) and all of devtools-ui is written against: connect/disconnect/sendConfig/requestState/on/getConnectionStatus/isSignalsAvailable."
+content = { kind = "lines", spans = [
+  { path = "packages/devtools-adapter/src/types.ts", start = 106, end = 144, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.9"
+descriptor = "devtools-adapter/README.md — BrowserExtensionAdapter usage"
+justification = "Usage snippet for the adapter used inside a Chrome DevTools extension panel (fs-listed at 1.9/1.11 with the rest of the roster) — how createBrowserExtensionAdapter()/connect() is wired up."
+content = { kind = "lines", spans = [
+  { path = "packages/devtools-adapter/README.md", start = 11, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.10"
+descriptor = "devtools-ui/src/index.ts (full — package export barrel)"
+justification = "The exact public export surface of @preact/signals-devtools-ui: DevToolsPanel/mount, the three createModel-based stores, Graph types, and all 9 components. Cheap and complete."
+content = { kind = "lines", spans = [
+  { path = "packages/devtools-ui/src/index.ts", start = 1, end = 47, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6 — eslint-plugin-signals
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "eslint-plugin-signals/README.md — rules table"
+justification = "All 5 rules with severity + one-line description in a single table. Cheap, complete roster of the whole plugin's surface."
+content = { kind = "lines", spans = [
+  { path = "packages/eslint-plugin-signals/README.md", start = 1, end = 7, render = { kind = "full" } },
+  { path = "packages/eslint-plugin-signals/README.md", start = 9, end = 13, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "eslint rule doc-comment (no-conditional-value-read)"
+justification = "The rule's doc-comment opening, explaining exactly what it catches and why (an untracked guard condition means the reactive scope may never re-run) — complementing the full-roster table in 6.1 with one rule's detailed rationale."
+content = { kind = "lines", spans = [
+  { path = "packages/eslint-plugin-signals/src/rules/no-conditional-value-read.mjs", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 7 — remaining misc
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "Root test/browser/ helper listing"
+justification = "Confirms the root-level test/browser/ dir (mockFs.js, babel.js, nodeGlobals.js) shared across package test suites exists, alongside the per-package test/ dirs already surfaced in 1.9 — closes the loop on colocated-test-file visibility."
+content = { kind = "fs", groups = [
+  { parent = "test/browser", entries = "all" },
+] }

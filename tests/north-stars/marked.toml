@@ -1,2191 +1,718 @@
 fixture = "marked"
 revision_pin = "a7affc3b"
 summary = """
-marked is a fast, low-level, dependency-light CommonMark/GFM markdown-to-HTML \
-compiler written in TypeScript (src/*.ts, compiled by tsc + esbuild into lib/), \
-shipped as a library (`marked` npm package, ESM+UMD), a CLI (bin/marked.js), and \
-a Vercel demo endpoint (api/dingus.js). The pipeline is Lexer (block+inline \
-tokenizing via regex rules in rules.ts) -> Parser -> Renderer, all overridable \
-through marked.use({renderer, tokenizer, hooks, walkTokens, extensions}). The \
-query distribution this NS serves: (a) "how do I configure/extend marked" \
-(options, tokenizer/renderer/hooks/extensions API), (b) "where does markdown \
-construct X get parsed/rendered" (tokenizer/renderer method + regex locations), \
-(c) "how do I build/test/run the CLI", (d) general orientation/debugging across \
-the lexer -> parser -> renderer pipeline and its ~700-file CommonMark/GFM/ReDoS \
-spec-test corpus under test/specs/.
+`marked` v18 is a markdown-to-HTML compiler written in TypeScript, shipped as an
+ESM/UMD library, a `Marked` class for scoped instances, and a `marked` CLI. The
+substance is thirteen files in `src/`: a fixed pipeline of
+`Lexer` -> `Tokenizer` (regex grammars in `rules.ts`) -> `Parser` -> `Renderer`,
+wrapped by `Instance.ts` (the `Marked` class, `use()` extension merging, sync and
+async parse paths) and re-exported by `src/marked.ts`. Everything user-facing is
+an override point: renderer methods, tokenizer methods, hooks, `walkTokens`, and
+custom `extensions`, all typed in `MarkedOptions.ts` and documented in `docs/`.
+
+The ranking front-loads (a) what the package is and where its files are, (b) the
+complete public export surface and per-class method rosters — because the single
+most common task class here is "override/extend method X", and a partial roster
+would make the agent believe a method does not exist — and (c) the option set and
+its defaults. After that come pipeline semantics (block and inline precedence
+order in the lexer, the parser's renderer-extension dispatch, the parse paths and
+extension-merging logic in `Instance.ts`), then the grammar layer — the rule-key
+set of each flavor and the complete token union — then the CLI as documented by
+its man page source, and finally the test/docs directory tree and the TypeScript
+settings src/ is written against. Spec fixtures under `test/specs/` are data, not
+code, and are represented by their directory grouping only.
 """
+
+# ---------------------------------------------------------------- Tier 1
+# Identity, filesystem topology, and complete symbol rosters. Cheap,
+# breadth-first: after this tier an agent knows what the package is, every
+# file that exists, and every name the package exports.
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "First orientation: proves the top-level shape (src/ lib code, bin/ CLI, api/ demo endpoint, docs/ site, man/ page, test/ suite, build/lint/release config) before anything else. Excludes .precis-pin, which is fixture-harness metadata, not part of the marked repo."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ""
-entries = [".devcontainer", ".editorconfig", ".gitattributes", ".github", ".gitignore", ".releaserc.json", "api", "bin", "CHANGELOG.md", "docs", "esbuild.config.js", "eslint.config.js", "LICENSE", "man", "package-lock.json", "package.json", "README.md", "SECURITY.md", "src", "test", "tsconfig-type-test.json", "tsconfig.json", "vercel.json"]
+descriptor = "Package identity: name, description, author, version"
+justification = "The single cheapest answer to \"what is this repo?\". `marked` is a well-known name but the version (18.0.3) and the one-line description pin the exact artifact under discussion, which every downstream question depends on."
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 2, end = 5, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "src/ + bin/ + api/ directory listings"
-justification = "The three directories that hold marked's actual runtime code (compiler internals, CLI, serverless demo). Listing all 13 src/ files up front pre-empts any \"is there also a X.ts\" guess later."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["defaults.ts", "helpers.ts", "Hooks.ts", "Instance.ts", "Lexer.ts", "marked.ts", "MarkedOptions.ts", "Parser.ts", "Renderer.ts", "rules.ts", "TextRenderer.ts", "Tokenizer.ts", "Tokens.ts"]
-
-[[batches.content.groups]]
-parent = "bin"
-entries = ["main.js", "marked.js"]
-
-[[batches.content.groups]]
-parent = "api"
-entries = ["dingus.js"]
+descriptor = "README title and the four capability bullets"
+justification = "Four lines of prose that state the design posture — speed, low-level non-caching compiler, all features of the supported flavors, and that it runs in browser / server / CLI. This is the semantic framing no file listing can supply, and it tells the agent a CLI exists at all."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "README.md", start = 13, end = 16, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "docs/ directory listing"
-justification = "docs/ is the marked.js.org site source (rendered by marked itself via docs/build.js); listing it up front shows the doc set (INDEX/USING_ADVANCED/USING_PRO/CONTRIBUTING/AUTHORS/...) plus the demo/css/img/js asset subtrees, so later doc-content batches aren't mistaken for the whole picture."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["_document.html", ".eslintrc.json", "AUTHORS.md", "broken.md", "build.js", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "css", "demo", "favicon.ico", "img", "INDEX.md", "js", "PUBLISHING.md", "USING_ADVANCED.md", "USING_PRO.md"]
+descriptor = "Complete listing of src/"
+justification = "The repository's substance is one flat directory of thirteen TypeScript files whose names are the architecture (Lexer, Tokenizer, Parser, Renderer, TextRenderer, Hooks, Instance, rules, Tokens, MarkedOptions, defaults, helpers, marked). Ranked before the root listing because this is where nearly every code question lands."
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "test/ top-level + test/unit/ + test/unit/fixtures/ listings"
-justification = "Shows the test suite is node:test-based (unit/*.test.js), plus the spec-corpus harness scripts (run-spec-tests.js, rules.js, bench.js, recheck.ts, update-specs.js) and the CLI-config fixtures used by bin.test.js, before any test content is discussed."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = [".eslintrc.json", "bench.js", "cjs-test.cjs", "recheck.ts", "rules.js", "run-spec-tests.js", "specs", "types", "umd-test.js", "unit"]
-
-[[batches.content.groups]]
-parent = "test/unit"
-entries = ["bin.test.js", "Hooks.test.js", "instance.test.js", "Lexer.test.js", "marked.test.js", "Parser.test.js", "utils.js", "fixtures"]
-
-[[batches.content.groups]]
-parent = "test/unit/fixtures"
-entries = ["bin-config.js", "bin-config#hash.js", "bin-input.md"]
+descriptor = "Complete listing of the repository root"
+justification = "Establishes the top-level shape — src, bin, test, docs, man, api, plus build/lint/TS/deploy config — and closes the class so the agent does not assume an unlisted root file is missing. `entries = \"all\"` guarantees no silent omission."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "test/specs/ subdirectory listing"
-justification = "The 5 spec-corpus categories (commonmark, gfm, new, original, redos) each hold many paired .md/.html fixture files (redos also has .cjs harnesses); showing the complete category list avoids implying only a subset of markdown flavors is tested. Category meanings are covered later alongside CONTRIBUTING.md's own table for them."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/specs"
-entries = ["commonmark", "gfm", "new", "original", "redos"]
+descriptor = "src/marked.ts: the named value exports"
+justification = "The exact set of callable things importable from `marked`: options, setOptions, use, walkTokens, parseInline, parse, parser, lexer. Answers \"what can I import\" with zero follow-up, and it is the entry point every other src file hangs off."
+content = { kind = "lines", spans = [
+  { path = "src/marked.ts", start = 103, end = 110, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = ".github/ directory listing"
-justification = "CI/community-health surface (workflows, issue/PR templates, dependabot) exists and is named, before any workflow content is discussed."
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "ISSUE_TEMPLATE", "ISSUE_TEMPLATE.md", "PULL_REQUEST_TEMPLATE", "PULL_REQUEST_TEMPLATE.md", "workflows"]
+descriptor = "src/marked.ts: class and type re-exports"
+justification = "Completes the export class started in 1.5 — the underscore-prefixed internals (_Lexer, _Parser, _Tokenizer, _Renderer, _TextRenderer, _Hooks) are re-exported under public names, plus `Marked` and the wildcard type re-exports from MarkedOptions.ts and Tokens.ts. Splitting from 1.5 keeps both batches small; together they are the whole public surface."
+predecessor = "1.5"
+content = { kind = "lines", spans = [
+  { path = "src/marked.ts", start = 111, end = 120, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "README.md logo + title + badges"
-justification = "Canonical one-glance identity: what marked is and its npm/CI/security badges."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Listings of bin/, man/, api/, test/"
+justification = "Where the non-library substance lives: the two-file CLI, the man page source, the Vercel dingus endpoint, and the test harness scripts plus the spec/unit/type subdirectories. Cheap breadth that makes follow-up reads precise."
+content = { kind = "fs", groups = [
+  { parent = "bin", entries = "all" },
+  { parent = "man", entries = "all" },
+  { parent = "api", entries = "all" },
+  { parent = "test", entries = "all" },
+] }
 
 [[batches]]
 id = "1.8"
-descriptor = "README.md pitch bullets"
-justification = "The 4-bullet elevator pitch (speed, low-level compiler, spec-complete, CLI+browser) right after the badges."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 10
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Listing of docs/"
+justification = "docs/ is both the published website source and the canonical prose documentation (INDEX, USING_ADVANCED, USING_PRO, CONTRIBUTING, PUBLISHING, AUTHORS, broken.md) plus its build script and template. Documentation questions are a large slice of the query distribution and this tells the agent which file to open."
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+] }
 
 [[batches]]
 id = "1.9"
-descriptor = "README.md license"
-justification = "Cheap, high-certainty answer to \"what license/who owns this\" without opening LICENSE."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 104
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Roster: every exported class in src/, name only"
+justification = "One truncated line per class declaration across seven files. Listing classes as a closed set prevents the agent from inventing or overlooking one, and each line carries its file and line number so the follow-up read is a single precise hop. Truncation drops the noisy `<ParserOutput = string, RendererOutput = string>` tail that repeats on every one."
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 17, end = 17, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/Lexer.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/Tokenizer.ts", start = 63, end = 63, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/Parser.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/Renderer.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/TextRenderer.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+  { path = "src/Hooks.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^export class [_A-Za-z]+" } },
+] }
 
 [[batches]]
 id = "1.10"
-descriptor = "package.json identity + engines"
-justification = "Name/version/module-vs-browser-vs-types entry points, bin/man wiring, and the supported Node engine range: grounds \"what version is this / how is it packaged\" without opening package-lock.json."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 1
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 100
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "package.json: entry points, bin, man, exports map"
+justification = "How the package is consumed: `lib/marked.esm.js` for main/module, `lib/marked.umd.js` for browser, `lib/marked.d.ts` for types, `bin/marked.js` as the `marked` command. Crucial and non-obvious: everything under `lib/` is a build artifact absent from the repo, so imports in bin/ and test/ point at files that do not exist until `npm run build`."
+predecessor = "1.1"
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 6, end = 14, render = { kind = "full" } },
+  { path = "package.json", start = 15, end = 15, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 20, end = 27, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.11"
-descriptor = "package.json build scripts"
-justification = "Operational coverage: exact build entry points (build, build:esbuild, build:man, build:types, build:docs, build:reset, lint, rules, bench)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 77
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Roster: every exported function in src/helpers.ts"
+justification = "Seven shared utilities (escapeHtmlEntities, cleanUrl, splitCells, rtrim, trimTrailingBlankLines, findClosingBracket, expandTabs) rendered as full signatures — they are short, and the parameter names are the whole story. A closed list stops the agent from adding a duplicate helper."
+content = { kind = "lines", spans = [
+  { path = "src/helpers.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 38, end = 38, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 88, end = 88, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 112, end = 112, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 126, end = 126, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 151, end = 151, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.12"
-descriptor = "package.json test scripts"
-justification = "Operational coverage: exact test entry points (test, test:unit, test:specs, test:cjs, test:umd, test:types, test:lint, test:redos, test:update) an agent needs before running anything; the `:only`-suffixed variants (test:only/test:specs:only/test:unit:only) are elided since they're single-run conveniences over the same underlying commands."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 87
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 93
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 97
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/rules.ts: the four module-level exports"
+justification = "rules.ts is the largest non-Tokenizer file and its shape is entirely in four exports: an `other` map of miscellaneous regexes (body elided), `block` and `inline` each keyed by grammar flavor, and the `Rules` interface the Tokenizer is typed against. The flavor keys — normal / gfm / pedantic / breaks — answer the recurring \"where does the pedantic behaviour come from\" question outright."
+content = { kind = "lines", spans = [
+  { path = "src/rules.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "src/rules.ts", start = 482, end = 486, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 488, end = 493, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 495, end = 499, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.13"
-descriptor = "man page: CLI synopsis + flag reference"
-justification = "The single most concrete answer to \"what CLI flags does marked support\": the dense synopsis line plus the full flag-by-flag OPTIONS list (output/input/string/config/tokens/no-clobber/pedantic/gfm/breaks/silent), which bin/main.js's arg parser implements literally."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "man/marked.1.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "man/marked.1.md"
-start = 30
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/defaults.ts and src/Tokens.ts: module-level exports"
+justification = "Closes the src roster for the two remaining non-class modules: `_getDefaults` / `_defaults` / `changeDefaults`, and the `MarkedToken` union, `Token`, the `Tokens` namespace, `Links` and `TokensList`. Bodies are marked elided so the agent knows the unions continue rather than assuming these are the whole definitions."
+content = { kind = "lines", spans = [
+  { path = "src/defaults.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "src/defaults.ts", start = 7, end = 7, render = { kind = "ellipsis" } },
+  { path = "src/defaults.ts", start = 21, end = 21, render = { kind = "full" } },
+  { path = "src/defaults.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/defaults.ts", start = 24, end = 24, render = { kind = "ellipsis" } },
+  { path = "src/Tokens.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 4, end = 4, render = { kind = "ellipsis" } },
+  { path = "src/Tokens.ts", start = 28, end = 30, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 32, end = 32, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 33, end = 33, render = { kind = "ellipsis" } },
+  { path = "src/Tokens.ts", start = 217, end = 217, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 219, end = 221, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.14"
-descriptor = "Security policy + changelog pointer"
-justification = "Cheap, complete answer to \"how do I report a vuln / where's the changelog\"; CHANGELOG.md is a 1-line pointer to GitHub releases (semantic-release manages it, see .releaserc.json), not an in-repo log."
+descriptor = "src/MarkedOptions.ts: every exported interface and type alias"
+justification = "The extension type vocabulary — TokenizerThis, TokenizerExtensionFunction, TokenizerStartFunction, TokenizerExtension, RendererThis, RendererExtensionFunction, RendererExtension, TokenizerAndRendererExtension, MarkedExtension, MarkedOptions. Rendered in full because the function-type aliases are the exact contract a custom extension must satisfy, and `MarkedOptions extends Omit<MarkedExtension, ...>` explains why the two differ."
+content = { kind = "lines", spans = [
+  { path = "src/MarkedOptions.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 35, end = 35, render = { kind = "truncated", pattern = "^export type [A-Za-z]+" } },
+  { path = "src/MarkedOptions.ts", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 117, end = 117, render = { kind = "full" } },
+] }
 
-[batches.content]
-kind = "lines"
+[[batches]]
+id = "1.15"
+descriptor = "package.json scripts: bench, build, lint, rules (lines 77-86)"
+justification = "The build half of the script block: `build` fans out to esbuild (`build:esbuild`), `tsc` + dts-bundle-generator (`build:types`) and marked-man (`build:man`), `build:docs` runs docs/build.js, `build:reset` rimrafs ./lib and ./public. Names the tools the root config files configure, and shows why nothing runs before a build."
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 77, end = 86, render = { kind = "full" } },
+] }
 
-[[batches.content.spans]]
-path = "SECURITY.md"
-start = 1
-end = 11
+[[batches]]
+id = "1.16"
+descriptor = "package.json scripts: the test fan-out (lines 87-99)"
+justification = "Completes the script class started in 1.15 — `npm test` chains build:reset, build:docs, then test:specs, test:unit, test:umd, test:cjs, test:types, test:lint, each of which is a separate runnable script here. Answers \"how do I run just the unit tests\" or \"where do spec tests come from\" with no follow-up."
+predecessor = "1.15"
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 87, end = 99, render = { kind = "full" } },
+] }
 
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "CHANGELOG.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
+# ---------------------------------------------------------------- Tier 2
+# The configuration and override surface: what the options are, what they
+# default to, and the complete method roster of every class a user is
+# expected to subclass, override, or hook into.
 
 [[batches]]
 id = "2.1"
-descriptor = "USING_ADVANCED.md heading locations"
-justification = "Complete section map (instance / parse / options / old-options / known-extensions / user-examples / inline / highlight / workers, with its Node Worker Thread / Web Worker subsections / cli-extensions) of marked's own options reference doc, so no section is assumed absent; several bodies are pulled in full next, others (user-examples, workers) are left as one-hop pointers given budget."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 177
-end = 177
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 210
-end = 210
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 245
-end = 245
-
-[batches.content.spans.render]
-kind = "full"
-
+descriptor = "src/defaults.ts: the default options object"
+justification = "Thirteen cheap lines that give every option's shipped default value — async false, gfm true, everything else false or null. Replaces the ellipsis left at defaults.ts:7 in batch 1.13. Highest value-per-token in the repo for the very common \"what happens if I pass nothing\" question."
+predecessor = "1.13"
+content = { kind = "lines", spans = [
+  { path = "src/defaults.ts", start = 7, end = 19, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "USING_ADVANCED.md: current options table"
-justification = "The single highest-density answer to \"what options does marked accept\": every current option (async/breaks/gfm/pedantic/renderer/silent/tokenizer/walkTokens) with type, default, and the version it was introduced — complements MarkedOptions.ts's doc comments with version history not present in source."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 48
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
+descriptor = "MarkedExtension: the complete option key set"
+justification = "The authoritative closed list of everything `marked.use({...})` accepts — async, breaks, extensions, gfm, hooks, pedantic, renderer, silent, tokenizer, walkTokens — with their TypeScript types. Note this is strictly larger than the options table in the docs, which omits `hooks` and `extensions`; a reader with only the docs table would wrongly conclude they do not exist."
+predecessor = "1.14"
+content = { kind = "lines", spans = [
+  { path = "src/MarkedOptions.ts", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 61, end = 61, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 66, end = 68, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 73, end = 73, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 84, end = 84, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 89, end = 89, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 101, end = 101, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 106, end = 106, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 114, end = 114, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "USING_ADVANCED.md: inline markdown + highlighting pointers"
-justification = "Two short, frequently-needed answers: `marked.parseInline()` for inline-only rendering, and that code-highlighting is delegated to the separate `marked-highlight` package (not a built-in option)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 156
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_ADVANCED.md"
-start = 168
-end = 170
-
-[batches.content.spans.render]
-kind = "full"
-
+descriptor = "docs/USING_PRO.md: the Marked pipeline, in order"
+justification = "The project's own numbered description of how input becomes HTML — lexer feeds segments to tokenizers, tokenizers emit tokens, walkTokens post-processes the tree, parser feeds tokens to renderers — plus the distinction between `use({renderer})` (override) and `use({extensions: [{renderer}]})` (add). This is the semantic glue that turns the src/ file names into a mental model, and it is not derivable from any signature."
+content = { kind = "lines", spans = [
+  { path = "docs/USING_PRO.md", start = 71, end = 80, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "USING_PRO.md heading locations"
-justification = "Complete section map of the extensibility guide (terminology, use(), pipeline, renderer, tokenizer, walkTokens, hooks, custom extensions, async, lexer, parser, lexer/parser access) — the canonical \"how do I extend marked\" doc. Several bodies follow in full; the worked-example-heavy ones (custom-extensions worked example, hooks examples, async examples, lexer/parser output dumps) are left as one-hop pointers given budget, since the reference tables/signatures below already answer most extension-shape questions."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 157
-end = 157
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 249
-end = 249
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 282
-end = 282
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 420
-end = 420
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 573
-end = 573
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 645
-end = 645
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 650
-end = 650
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 654
-end = 654
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Roster: every method of _Renderer, with parameters"
+justification = "The most-overridden surface in the package. All twenty-two renderer methods plus the `parser` back-reference field, truncated after the parameter list so the destructured token fields (`{ text, lang, escaped }`, `{ href, title, tokens }`) survive while the repeated `: RendererOutput {` tail is dropped. Partial coverage here would be actively harmful — an agent that does not see `checkbox` or `tablecell` will assume the token type is unrenderable."
+content = { kind = "lines", spans = [
+  { path = "src/Renderer.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 21, end = 21, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 43, end = 43, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 48, end = 48, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 52, end = 52, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 64, end = 64, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 79, end = 79, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 83, end = 83, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 89, end = 89, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 93, end = 93, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 124, end = 124, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 128, end = 128, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 140, end = 140, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 144, end = 144, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 148, end = 148, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 152, end = 152, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 156, end = 156, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 160, end = 160, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 175, end = 175, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Renderer.ts", start = 193, end = 193, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "USING_PRO.md: Marked/Custom Extension terminology table"
-justification = "Disambiguates the two overloaded senses of \"extension\" in this codebase before anything else in the doc is read: a MarkedExtension (the `marked.use()` argument) vs. a Custom Extension (one entry of its `extensions` array) — resolves a naming ambiguity visible again in MarkedOptions.ts's TokenizerAndRendererExtension type."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 6
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Roster: every method of _Tokenizer, with parameters"
+justification = "The other half of the override surface, and the map from markdown construct to code location: block matchers (space, code, fences, heading, hr, blockquote, list, html, def, table, lheading, paragraph, text) then inline matchers (escape, tag, link, reflink, emStrong, codespan, br, del, autolink, url, inlineText). Because Tokenizer.ts is 962 lines, these line numbers are what makes any \"how is X parsed\" follow-up a single precise read."
+content = { kind = "lines", spans = [
+  { path = "src/Tokenizer.ts", start = 65, end = 66, render = { kind = "full" } },
+  { path = "src/Tokenizer.ts", start = 72, end = 72, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 82, end = 82, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 98, end = 98, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 113, end = 113, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 139, end = 139, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 149, end = 149, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 233, end = 233, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 484, end = 484, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 499, end = 499, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 515, end = 515, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 578, end = 578, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 592, end = 592, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 607, end = 607, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 619, end = 619, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 630, end = 630, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 655, end = 655, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 716, end = 716, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 734, end = 734, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 805, end = 805, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 822, end = 822, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 832, end = 832, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 885, end = 885, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 913, end = 913, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/Tokenizer.ts", start = 950, end = 950, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+] }
 
 [[batches]]
 id = "2.6"
-descriptor = "USING_PRO.md: marked.use() merge semantics"
-justification = "The precise override/merge rule for every `marked.use()` argument shape (options overwrite; renderer/tokenizer/hooks/walkTokens/extensions merge; last-registered wins; return `false` to fall back) — this is exactly what Instance.ts's `use()` method (covered later) implements, so it is the cheap prose-first answer before reading that code."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 57
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "Roster: every method of _TextRenderer"
+justification = "The ten-method stripped-down renderer used for image alt text (`parseInline(tokens, this.parser.textRenderer)`). Cheap, and the closed list explains why it has no block-level methods — a recurring source of confusion when overriding."
+content = { kind = "lines", spans = [
+  { path = "src/TextRenderer.ts", start = 8, end = 9, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 17, end = 17, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 21, end = 21, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 29, end = 29, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 33, end = 33, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 41, end = 41, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+  { path = "src/TextRenderer.ts", start = 45, end = 45, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+] }
 
 [[batches]]
 id = "2.7"
-descriptor = "USING_PRO.md: renderer method list (block + inline)"
-justification = "The complete, exact-name inventory of every overridable renderer method (space/code/blockquote/.../text), split into block- and inline-level — the definitive answer to \"what can I override\" for a `marked.use({renderer: {...}})` call, cheap because each is a one-line signature."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 142
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 158
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/Hooks.ts: fields and the pass-through hook sets"
+justification = "`passThroughHooks` and `passThroughHooksRespectAsync` are static Sets naming exactly which hooks chain their return value into the previous hook, and which of those await. Instance.use() branches on them (Instance.ts:205, 208), so this is the key to why `preprocess` composes differently from `provideLexer`."
+content = { kind = "lines", spans = [
+  { path = "src/Hooks.ts", start = 8, end = 26, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.8"
-descriptor = "USING_PRO.md: tokenizer method list (block + inline)"
-justification = "Same, for the tokenizer: the complete inventory of overridable tokenizer methods (space/code/fences/.../inlineText), split block/inline — matches src/Tokenizer.ts's actual method set covered later."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 216
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 232
-end = 248
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/Hooks.ts: all six hook methods and their default bodies"
+justification = "preprocess, postprocess, processAllTokens, emStrongMask, provideLexer, provideParser — every hook, with the default body that shows its contract: an identity function for the four pass-through hooks, and a `_Lexer.lex` / `_Lexer.lexInline` (resp. `_Parser.parse` / `parseInline`) selection keyed on `block` for the two provider hooks. The whole hook interface, complete, with no follow-up needed to write one."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/Hooks.ts", start = 31, end = 33, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 38, end = 40, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 45, end = 47, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 49, end = 54, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 59, end = 61, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 66, end = 68, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.9"
-descriptor = "USING_PRO.md: hooks signature table"
-justification = "The 6 hook signatures (preprocess/postprocess/processAllTokens/emStrongMask/provideLexer/provideParser) with one-line descriptions — matches _Hooks class methods covered later in src/Hooks.ts, giving the \"why would I use this hook\" framing before the code."
+descriptor = "src/Instance.ts: the Marked class shape and method roster"
+justification = "The user-facing class: the `defaults` field, `parse` / `parseInline` bound from `parseMarkdown`, the re-exposed component classes, and the full method list (walkTokens, use, setOptions, lexer, parser, plus private parseMarkdown and onError). Shows at a glance that `parse` is a property built at construction time — the reason overriding it behaves oddly — and gives line anchors into a 369-line file."
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 18, end = 29, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 31, end = 31, render = { kind = "truncated", pattern = "^  constructor" } },
+  { path = "src/Instance.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*" } },
+  { path = "src/Instance.ts", start = 76, end = 76, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 262, end = 262, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 267, end = 267, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 271, end = 271, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 275, end = 275, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 349, end = 349, render = { kind = "full" } },
+] }
 
-[batches.content]
-kind = "lines"
+[[batches]]
+id = "2.10"
+descriptor = "src/Lexer.ts: class shape and method roster"
+justification = "Fields first — `tokens: TokensList`, `inlineQueue`, and the `state` object with `inLink` / `inRawBlock` / `top`, which tokenizers read and write — then every entry point: static `rules`, `lex`, `lexInline`, instance `lex`, the two `blockTokens` overloads plus its implementation, `inline`, `inlineTokens`, and the private `infiniteLoopError`. Explains the two-phase design (block pass queues inline work) that surprises most readers."
+content = { kind = "lines", spans = [
+  { path = "src/Lexer.ts", start = 11, end = 21, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^  constructor" } },
+  { path = "src/Lexer.ts", start = 62, end = 62, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 72, end = 72, render = { kind = "truncated", pattern = "^  static [a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 80, end = 80, render = { kind = "truncated", pattern = "^  static [a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 88, end = 88, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 105, end = 107, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 295, end = 295, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 303, end = 303, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 486, end = 486, render = { kind = "full" } },
+] }
 
-[[batches.content.spans]]
-path = "docs/USING_PRO.md"
-start = 283
-end = 296
+[[batches]]
+id = "2.11"
+descriptor = "src/Parser.ts: class shape and method roster"
+justification = "Completes the pipeline-class rosters: `options`, `renderer`, `textRenderer` fields, the static `parse` / `parseInline` convenience constructors, and the two instance loops. Small file, small batch, and it makes the Renderer wiring (`this.renderer.parser = this`) locatable."
+content = { kind = "lines", spans = [
+  { path = "src/Parser.ts", start = 11, end = 13, render = { kind = "full" } },
+  { path = "src/Parser.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^  constructor" } },
+  { path = "src/Parser.ts", start = 26, end = 26, render = { kind = "truncated", pattern = "^  static [a-zA-Z]+" } },
+  { path = "src/Parser.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^  static [a-zA-Z]+" } },
+  { path = "src/Parser.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "src/Parser.ts", start = 129, end = 129, render = { kind = "truncated", pattern = "^  [a-zA-Z]+\\([^)]*\\)" } },
+] }
 
-[batches.content.spans.render]
-kind = "full"
+[[batches]]
+id = "2.12"
+descriptor = "MarkedOptions: resolved option types and the internal extensions record"
+justification = "The difference between what a user passes (`MarkedExtension`: plain objects) and what the pipeline sees (`MarkedOptions`: constructed `_Hooks` / `_Renderer` / `_Tokenizer` instances), plus the fully-expanded internal `extensions` record — renderers, childTokens, inline, block, startInline, startBlock — which is what `use()` builds and what the Lexer consults. Needed by anyone writing a custom extension or debugging why one never fires."
+predecessor = "1.14"
+content = { kind = "lines", spans = [
+  { path = "src/MarkedOptions.ts", start = 121, end = 121, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 128, end = 128, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 133, end = 133, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 138, end = 149, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 154, end = 154, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "docs/USING_ADVANCED.md: options table, async through gfm"
+justification = "Prose semantics and the version each option landed in — what `async` actually changes about the return type, that `breaks` requires `gfm`, and which version each landed in. The type-level roster in 2.2 cannot express these interactions; this is the batch that answers option questions with zero follow-up."
+content = { kind = "lines", spans = [
+  { path = "docs/USING_ADVANCED.md", start = 49, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.14"
+descriptor = "docs/USING_ADVANCED.md: options table, pedantic through walkTokens"
+justification = "Completes the documented option table started in 2.13 — pedantic (which turns off and overrides gfm), renderer, silent, tokenizer, walkTokens with their `new Renderer()` / `new Tokenizer()` defaults. Split only for cost; ranked immediately after so a cut between them still leaves a visibly partial table rather than a wrong one."
+predecessor = "2.13"
+content = { kind = "lines", spans = [
+  { path = "docs/USING_ADVANCED.md", start = 54, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.15"
+descriptor = "docs/USING_PRO.md: merge semantics of marked.use()"
+justification = "States the rule that all options overwrite except renderer, tokenizer, hooks, walkTokens and extensions, which merge; that overrides run last-assigned-first and can `return false` to fall through; and what each of the merging options actually does. These are behavioural facts an agent will otherwise get wrong, and they are stated nowhere in src/."
+content = { kind = "lines", spans = [
+  { path = "docs/USING_PRO.md", start = 57, end = 63, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 64, end = 64, render = { kind = "ellipsis" } },
+] }
+
+# ---------------------------------------------------------------- Tier 3
+# Pipeline semantics: the order things are tried, how hooks and
+# extensions interleave with the built-in path, and how errors surface.
 
 [[batches]]
 id = "3.1"
-descriptor = "marked.ts: public export surface"
-justification = "src/marked.ts is the package's single entry point (package.json main/module both point at its compiled output); this is the implementation signature of the `marked()` function itself (the default export, called directly as `marked(src)`), plus the exact list of every named export and every property hung on it (Parser/Renderer/Lexer/Tokenizer/Hooks classes, .parse/.parser/.lexer static shortcuts) — the ground truth for \"what can I import from 'marked'\"."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/marked.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/marked.ts"
-start = 93
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/Lexer.ts: how gfm / pedantic / breaks select a grammar"
+justification = "Nineteen lines that resolve the whole flavor question: rules start at block.normal + inline.normal, `pedantic` swaps both to the pedantic set and short-circuits gfm, `gfm` swaps the block set and picks inline.breaks or inline.gfm on `breaks`. The single most-asked \"why does option X change parsing\" question, answered outright."
+predecessor = "2.10"
+content = { kind = "lines", spans = [
+  { path = "src/Lexer.ts", start = 39, end = 57, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "Instance.ts: Marked class skeleton + method locations"
-justification = "The `Marked` class (src/Instance.ts) is what markedInstance/`new Marked()` actually is: shows its exact instance fields (defaults/options/parse/parseInline/Parser/Renderer/Tokenizer/Hooks) plus, as cheap truncated pointers, exactly which lines implement use()/setOptions()/lexer()/parser()/parseMarkdown()/onError() for later deep dives."
+descriptor = "src/Lexer.ts: block-construct precedence order in blockTokens"
+justification = "The exact order the block tokenizers are tried — extensions first, then space, code, fences, heading, hr, blockquote, list, html, def, table, lheading, then top-level paragraph and finally text. Precedence is the answer to most \"why did my markdown parse as Y\" questions and it is impossible to infer from the Tokenizer roster alone. Bodies elided with ellipsis markers so the sampling is visible."
+predecessor = "2.10"
+content = { kind = "lines", spans = [
+  { path = "src/Lexer.ts", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 125, end = 125, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 136, end = 136, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 137, end = 137, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 150, end = 150, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 151, end = 151, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 165, end = 165, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 166, end = 166, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 172, end = 172, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 173, end = 173, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 179, end = 179, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 180, end = 180, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 186, end = 186, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 187, end = 187, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 193, end = 193, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 194, end = 194, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 200, end = 200, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 201, end = 201, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 207, end = 207, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 208, end = 208, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 225, end = 225, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 226, end = 226, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 232, end = 232, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 233, end = 233, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 271, end = 271, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 272, end = 272, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 255, end = 255, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 256, end = 256, render = { kind = "ellipsis" } },
+] }
 
-[batches.content]
-kind = "lines"
+[[batches]]
+id = "3.3"
+descriptor = "src/Lexer.ts: inline precedence order and the emStrongMask hook"
+justification = "The inline counterpart — extensions, escape, tag, link, reflink, emStrong, codespan, br, del, autolink, url (only when not already inside a link), inlineText — plus line 336, where the `emStrongMask` hook gets to blank out regions before em/strong delimiter scanning. Explains both ordering surprises and the masking pass that makes reflinks and code spans invisible to emphasis."
+predecessor = "2.10"
+content = { kind = "lines", spans = [
+  { path = "src/Lexer.ts", start = 336, end = 336, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 357, end = 357, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 358, end = 358, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 369, end = 369, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 370, end = 370, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 376, end = 376, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 377, end = 377, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 383, end = 383, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 384, end = 384, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 390, end = 390, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 391, end = 391, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 403, end = 403, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 404, end = 404, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 410, end = 410, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 411, end = 411, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 417, end = 417, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 418, end = 418, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 424, end = 424, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 425, end = 425, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 431, end = 431, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 432, end = 432, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 461, end = 461, render = { kind = "truncated", pattern = "^ +if \\(token = this\\.tokenizer\\.[a-zA-Z]+" } },
+  { path = "src/Lexer.ts", start = 462, end = 462, render = { kind = "ellipsis" } },
+  { path = "src/Lexer.ts", start = 438, end = 438, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 439, end = 439, render = { kind = "ellipsis" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 17
-end = 34
+[[batches]]
+id = "3.4"
+descriptor = "src/Parser.ts: renderer-extension dispatch and the fallback token lists"
+justification = "Both parse loops consult `options.extensions.renderers[token.type]` first and only fall through to the built-in switch when the extension returns false *and* the type is in a hardcoded list — the block list at line 53 and the inline list at line 139. Those two literals are the authoritative statement of which token types a custom renderer may shadow, and they are easy to miss inside 200 lines of switch."
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+  { path = "src/Parser.ts", start = 49, end = 57, render = { kind = "full" } },
+  { path = "src/Parser.ts", start = 58, end = 58, render = { kind = "ellipsis" } },
+  { path = "src/Parser.ts", start = 137, end = 139, render = { kind = "full" } },
+  { path = "src/Parser.ts", start = 140, end = 140, render = { kind = "ellipsis" } },
+] }
 
-[batches.content.spans.render]
-kind = "full"
+[[batches]]
+id = "3.5"
+descriptor = "src/Instance.ts: parse entry — option merge and input guards"
+justification = "Where `parseMarkdown` merges call-site options over defaults, refuses `async: false` when an extension forced async, rejects non-string input, and stamps `hooks.options` / `hooks.block` before running. These are the exact error strings a user will paste into a bug report, so having them in context short-circuits the search."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 283, end = 287, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 288, end = 288, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 290, end = 301, render = { kind = "full" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 76
-end = 76
+[[batches]]
+id = "3.6"
+descriptor = "src/Instance.ts: the async parse path"
+justification = "The canonical hook order for async parsing: preprocess, provideLexer (or _Lexer.lex / lexInline), processAllTokens, walkTokens under Promise.all, provideParser, postprocess, with `.catch(throwError)`. This fourteen-line block is the ground truth for any question about where a hook runs or why a promise is returned."
+predecessor = "3.5"
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 308, end = 321, render = { kind = "full" } },
+] }
 
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+[[batches]]
+id = "3.7"
+descriptor = "src/Instance.ts: the synchronous parse path"
+justification = "The mirror-image sync path inside try/catch. Ranked just after the async one so the pair is comparable — the difference (no Promise.all around walkTokens, hooks called directly) is exactly what a reader needs when deciding whether an extension can be sync."
+predecessor = "3.6"
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 323, end = 337, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 338, end = 338, render = { kind = "ellipsis" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 262
-end = 262
+[[batches]]
+id = "3.8"
+descriptor = "src/Instance.ts: structure of use() — the five extension categories"
+justification = "A skeleton of the 185-line merge routine: the per-pack loop, then the four labelled sections — addon `extensions`, overwrite `renderer` / `tokenizer`, `hooks`, and `walkTokens` — and the final `{ ...this.defaults, ...opts }` assignment. Cheap, and it turns \"why did my override not take effect\" into a one-hop read at a named line rather than a scan."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 77, end = 79, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 80, end = 80, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 86, end = 87, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 88, end = 88, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 140, end = 141, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 142, end = 142, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 165, end = 165, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 166, end = 166, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 191, end = 192, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 194, end = 194, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 242, end = 243, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 245, end = 245, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 256, end = 257, render = { kind = "full" } },
+] }
 
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+[[batches]]
+id = "3.9"
+descriptor = "src/Instance.ts: onError — silent mode and the report-this suffix"
+justification = "Every error out of marked gets \"\\nPlease report this to https://github.com/markedjs/marked.\" appended, and under `silent` is returned as an escaped `<p>An error occurred:</p><pre>...` fragment instead of thrown. Explains surprising HTML output and the async/sync split of rejection versus throw."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/Instance.ts", start = 350, end = 360, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 362, end = 362, render = { kind = "ellipsis" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 267
-end = 267
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 271
-end = 271
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 275
-end = 275
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Instance.ts"
-start = 349
-end = 349
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+# ---------------------------------------------------------------- Tier 4
+# The grammar layer and the token vocabulary it produces: what names exist
+# in each rule set, how rule sets are composed, and the complete token union.
 
 [[batches]]
 id = "4.1"
-descriptor = "Tokens.ts: token-kind union"
-justification = "The exhaustive list of every token type name marked ever produces (MarkedToken union + Tokens.Generic escape hatch) — the ground truth for \"what token types exist\" before any renderer/tokenizer/walkTokens discussion; every name here maps 1:1 to a Renderer/Tokenizer method covered later."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 1
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/Tokens.ts: the complete MarkedToken union"
+justification = "Every token type the parser can be handed, as a closed list: Blockquote, Br, Checkbox, Code, Codespan, Def, Del, Em, Escape, Heading, Hr, HTML, Image, Link, List, ListItem, Paragraph, Space, Strong, Table, Tag, Text. Replaces the ellipsis left at Tokens.ts:4. Anyone writing a walkTokens callback or a renderer override needs exactly this, and the interface for each is a single hop away in the same file."
+predecessor = "1.13"
+content = { kind = "lines", spans = [
+  { path = "src/Tokens.ts", start = 4, end = 26, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "Tokens.ts: interface locations"
-justification = "One line per `Tokens.*` interface declaration (Blockquote..Text) plus the Links/TokensList aliases — a location batch so no token's field shape is assumed to not exist; the exact fields for any one type are a single follow-up read away at the given line."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 123
-end = 123
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 160
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 195
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 208
-end = 208
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Tokens.ts"
-start = 217
-end = 221
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/rules.ts: the edit() regex-composition helper"
+justification = "rules.ts is unreadable without this: regexes are built from source strings with named placeholders substituted by `.replace('label', _inlineLabel)` chains and finalised by `.getRegex()`, with `noopTest` standing in for disabled rules. Fifteen lines that make the other 480 parseable, and they explain why grepping for a literal pattern in the file often fails."
+content = { kind = "lines", spans = [
+  { path = "src/rules.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 3, end = 16, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "MarkedOptions.ts: extension-function type shapes"
-justification = "The exact function signatures a custom extension must satisfy: `TokenizerExtension`/`TokenizerExtensionFunction` (name/level/start/tokenizer/childTokens) and `RendererExtension`/`RendererExtensionFunction` — the literal type marked.use({extensions:[...]}) entries are checked against, complementing USING_PRO.md's prose definition list."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 8
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/rules.ts: blockNormal — the block rule key set"
+justification = "The twelve block rule names (blockquote, code, def, fences, heading, hr, html, lheading, list, newline, paragraph, table, text) and the `BlockKeys` type derived from them, which every flavor variant is typed as `Record<BlockKeys, RegExp>`. Note `table: noopTest` here — tables are a GFM-only rule, a fact readers routinely get wrong."
+content = { kind = "lines", spans = [
+  { path = "src/rules.ts", start = 173, end = 189, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "MarkedOptions.ts: MarkedExtension field signatures"
-justification = "The literal TS field for every top-level marked.use()/setOptions() option (async/breaks/extensions/gfm/hooks/pedantic/renderer/silent/tokenizer/walkTokens), without the doc-comment prose already given by USING_ADVANCED.md's options table — cheap because each is a single-line (or, for extensions, 3-line) field decl."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 66
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
+descriptor = "src/rules.ts: inlineNormal — the inline rule key set"
+justification = "The inline counterpart and the `InlineKeys` type: anyPunctuation, autolink, blockSkip, br, code, del, delLDelim, delRDelim, emStrongLDelim, emStrongRDelimAst, emStrongRDelimUnd, escape, link, nolink, punctuation, reflink, reflinkSearch, tag, text, url, plus `_backpedal`. The `noopTest` entries (del, url, the del delimiters, _backpedal) show precisely which inline features exist only under GFM."
+content = { kind = "lines", spans = [
+  { path = "src/rules.ts", start = 404, end = 428, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.5"
-descriptor = "MarkedOptions.ts: resolved runtime extensions shape"
-justification = "Once merged by use(), `options.extensions` is this concrete shape (renderers/childTokens maps + inline/block/startInline/startBlock arrays) — this is what Lexer.ts and Parser.ts actually read at `this.options.extensions?.*`, and is not documented anywhere in prose."
+descriptor = "src/rules.ts: what each flavor overrides"
+justification = "The four variant objects reduced to their override keys with bodies elided — blockGfm (lheading, table, paragraph), blockPedantic (html, def), inlineGfm (emStrong delimiters, del, url, text), inlineBreaks (br, text). Given 3.1 already showed which variant a given option selects, this closes the loop: it says exactly which rules differ, so a flavor-behaviour question needs at most one targeted read."
+predecessor = "1.12"
+content = { kind = "lines", spans = [
+  { path = "src/rules.ts", start = 209, end = 212, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 213, end = 213, render = { kind = "ellipsis" } },
+  { path = "src/rules.ts", start = 224, end = 224, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 230, end = 231, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 232, end = 232, render = { kind = "ellipsis" } },
+  { path = "src/rules.ts", start = 257, end = 257, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 448, end = 453, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 454, end = 454, render = { kind = "ellipsis" } },
+  { path = "src/rules.ts", start = 463, end = 463, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 469, end = 471, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 472, end = 472, render = { kind = "ellipsis" } },
+  { path = "src/rules.ts", start = 476, end = 476, render = { kind = "full" } },
+] }
 
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/MarkedOptions.ts"
-start = 138
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "4.6"
-descriptor = "defaults.ts: default option values"
-justification = "The literal default for every option (gfm:true, everything else false/null) returned by `_getDefaults()`/`marked.getDefaults()` — the ground truth for \"what does marked do out of the box\", and the module-level mutable `_defaults` that `changeDefaults()` swaps out on every `marked.use()`."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/defaults.ts"
-start = 1
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "4.7"
-descriptor = "TextRenderer.ts: full file"
-justification = "The complete alternate renderer used for image alt-text/table-of-contents-style plain-text extraction (`parser.parseInline(tokens, textRenderer)`): every method just returns `.text`, unlike _Renderer's HTML wrapping. Small enough (48 lines) to include whole rather than as a pointer."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/TextRenderer.ts"
-start = 1
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "4.8"
-descriptor = "Hooks.ts: passThroughHooks sets + method locations"
-justification = "The two sets that decide hook-merge behavior — passThroughHooks (chains outer-then-inner) vs. the other 2 hooks (fall back on `false`, like renderer/tokenizer overrides) and passThroughHooksRespectAsync (which 3 hooks await under `async:true`) — plus cheap pointers to each hook's one-line no-op default body, grounding USING_PRO.md's hooks table in the actual implementation."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 15
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/Hooks.ts"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches]]
-id = "4.9"
-descriptor = "helpers.ts: exported helper locations"
-justification = "One line per exported helper (escapeHtmlEntities/cleanUrl/splitCells/rtrim/trimTrailingBlankLines/findClosingBracket/expandTabs) used throughout Tokenizer.ts/Renderer.ts — location-only given budget, but names+lines are enough to grep the ReDoS-safe rtrim or the cell-splitting logic on demand."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 151
-end = 151
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
+# ---------------------------------------------------------------- Tier 5
+# The command-line surface. Documented only in the man page source, which
+# `marked --help` renders; the implementation is two files under bin/.
 
 [[batches]]
 id = "5.1"
-descriptor = "Lexer.ts: block + inline tokenizer dispatch order"
-justification = "The single most valuable fact about src/Lexer.ts, at near-zero cost: the exact try-in-this-order sequence blockTokens()/inlineTokens() use, shown via each branch's own inline comment (newline/code/fences/heading/hr/blockquote/list/html/def/table (gfm)/lheading/top-level paragraph/text, then extensions/escape/tag/link/reflink, nolink/em & strong/code/br/del (gfm)/autolink/url (gfm)/text) — this precedence, not documented in prose anywhere, is what answers most \"why did my markdown parse as X instead of Y\" questions. The comment labels sometimes differ from the tokenizer method name they precede (e.g. `this.tokenizer.space()` is commented `// newline`, `this.tokenizer.paragraph()` is commented `// top-level paragraph`)."
+descriptor = "man/marked.1.md: name, synopsis, description"
+justification = "The CLI's whole flag vocabulary in one synopsis line — -o, -i, -s, -c, --help, --version, --tokens, --no-clobber, --pedantic, --gfm, --breaks, --no-etc..., --silent, [filename] — plus what the tool claims to be. Cheap, and it makes the option detail that follows navigable."
+content = { kind = "lines", spans = [
+  { path = "man/marked.1.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "man/marked.1.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "man/marked.1.md", start = 9, end = 10, render = { kind = "full" } },
+] }
 
-[batches.content]
-kind = "lines"
+[[batches]]
+id = "5.2"
+descriptor = "man/marked.1.md: OPTIONS, -o through -n"
+justification = "Semantics for the six flags that take arguments or change I/O: output defaults to stdout, input falls back to the last positional argument then stdin, -s takes a literal markdown string, -c overrides the default `~/.marked.json` / `~/.marked.js` / `~/.marked/index.js` search, -t dumps a token list instead of HTML, -n refuses to clobber. These are behaviours, not just names, so they answer CLI questions with no follow-up."
+predecessor = "5.1"
+content = { kind = "lines", spans = [
+  { path = "man/marked.1.md", start = 32, end = 49, render = { kind = "full" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 135
-end = 135
+[[batches]]
+id = "5.3"
+descriptor = "man/marked.1.md: OPTIONS, --pedantic through --help"
+justification = "Completes the option class started in 5.2 — the parser-option passthroughs (--pedantic, --gfm, --breaks), the generic `--no-<anything>` inversion rule that mirrors any marked option, --silent, and -h. The inversion rule is the non-obvious one: it is what makes the flag set open-ended rather than the fixed list a partial reading would suggest."
+predecessor = "5.2"
+content = { kind = "lines", spans = [
+  { path = "man/marked.1.md", start = 51, end = 68, render = { kind = "full" } },
+] }
 
-[batches.content.spans.render]
-kind = "full"
+[[batches]]
+id = "5.4"
+descriptor = "bin/main.js: structure and the config-file search order"
+justification = "The CLI implementation is one exported `main(nodeProcess)` (process injected so tests can mock it) wrapping start/help/version and the helpers getData, resolveFile, fileExists, runConfig, getStdin, camelize. Includes the literal default-config list, and note `help()` shells out to `man` on the built `man/marked.1`. Line anchors turn any CLI-behaviour question into one read of a 284-line file."
+content = { kind = "lines", spans = [
+  { path = "bin/main.js", start = 22, end = 22, render = { kind = "full" } },
+  { path = "bin/main.js", start = 26, end = 26, render = { kind = "full" } },
+  { path = "bin/main.js", start = 52, end = 52, render = { kind = "full" } },
+  { path = "bin/main.js", start = 60, end = 60, render = { kind = "full" } },
+  { path = "bin/main.js", start = 100, end = 102, render = { kind = "full" } },
+  { path = "bin/main.js", start = 103, end = 103, render = { kind = "ellipsis" } },
+  { path = "bin/main.js", start = 155, end = 155, render = { kind = "full" } },
+  { path = "bin/main.js", start = 168, end = 168, render = { kind = "full" } },
+  { path = "bin/main.js", start = 172, end = 172, render = { kind = "full" } },
+  { path = "bin/main.js", start = 176, end = 176, render = { kind = "full" } },
+  { path = "bin/main.js", start = 210, end = 214, render = { kind = "full" } },
+  { path = "bin/main.js", start = 241, end = 241, render = { kind = "full" } },
+  { path = "bin/main.js", start = 267, end = 267, render = { kind = "full" } },
+] }
 
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 178
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 192
-end = 192
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 206
-end = 206
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 238
-end = 238
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 270
-end = 270
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 356
-end = 356
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 368
-end = 368
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 375
-end = 375
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 382
-end = 382
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 389
-end = 389
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 402
-end = 402
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 409
-end = 409
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 416
-end = 416
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 423
-end = 423
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 430
-end = 430
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 437
-end = 437
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Lexer.ts"
-start = 444
-end = 444
-
-[batches.content.spans.render]
-kind = "full"
-
+# ---------------------------------------------------------------- Tier 6
+# Repository infrastructure: where the tests and website assets live, and
+# the TypeScript settings the whole build depends on.
 
 [[batches]]
 id = "6.1"
-descriptor = "Tokenizer.ts: method locations"
-justification = "The complete, exact-line inventory of every _Tokenizer method (space/code/fences/heading/hr/blockquote/list/html/def/table/lheading/paragraph/text/escape/tag/link/reflink/emStrong/codespan/br/del/autolink/url/inlineText) — mitigates omission (agent would otherwise assume only the ones discussed elsewhere exist) and turns any \"where is X tokenized\" question into a single grep/read at the given line."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 233
-end = 233
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 484
-end = 484
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 499
-end = 499
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 515
-end = 515
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 578
-end = 578
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 592
-end = 592
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 607
-end = 607
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 619
-end = 619
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 630
-end = 630
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 655
-end = 655
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 716
-end = 716
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 734
-end = 734
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 805
-end = 805
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 822
-end = 822
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 832
-end = 832
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 885
-end = 885
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 913
-end = 913
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Tokenizer.ts"
-start = 950
-end = 950
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
+descriptor = "Listings of the test tree and the docs website assets"
+justification = "Closes the directory classes opened by the test/ and docs/ listings in 1.7 and 1.8: the seven node:test unit files plus their fixtures, the type-level test, the five spec corpora (commonmark, gfm, new, original, redos — the first two are JSON spec dumps, the rest per-case .md/.html pairs), and the demo/css/js/img assets the docs build copies. Cheap breadth that stops the agent from either missing a test file or trying to enumerate hundreds of spec fixtures."
+content = { kind = "fs", groups = [
+  { parent = "test/unit", entries = "all" },
+  { parent = "test/unit/fixtures", entries = "all" },
+  { parent = "test/types", entries = "all" },
+  { parent = "test/specs", entries = "all" },
+  { parent = "docs/demo", entries = "all" },
+  { parent = "docs/js", entries = "all" },
+] }
 
 [[batches]]
-id = "7.1"
-descriptor = "Parser.ts: block + inline switch case labels"
-justification = "The exact set of token types Parser.parse()/parseInline() dispatch to a renderer method (space/hr/heading/code/table/blockquote/list/checkbox/html/def/paragraph/text, then escape/html/link/image/checkbox/strong/em/codespan/br/del/text) — confirms the 1:1 Tokens.ts-name -> Renderer-method mapping and that an unrecognized type throws/logs rather than silently dropping content."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 160
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "src/Parser.ts"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-
-[[batches]]
-id = "7.2"
-descriptor = "Renderer.ts: method locations"
-justification = "The complete, exact-line inventory of every _Renderer method (space/code/blockquote/html/def/heading/hr/list/listitem/checkbox/paragraph/table/tablerow/tablecell/strong/em/codespan/br/del/link/image/text) — the source-of-truth complement to USING_PRO.md's renderer method list, letting an \"override the heading renderer\" task jump straight to a line instead of scanning the 198-line file."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 124
-end = 124
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 160
-end = 160
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-[[batches.content.spans]]
-path = "src/Renderer.ts"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = "^[^(]+"
-
-[[batches]]
-id = "8.1"
-descriptor = "rules.ts: block/inline grammar variant exports"
-justification = "Shows the actual grammar-variant structure Lexer.ts selects between (block.normal/gfm/pedantic, inline.normal/gfm/breaks/pedantic) and the Rules interface shape — the concrete meaning of the `rules` object threaded through every Tokenizer method, without paying for the ~450 lines of individual regex definitions above it (each is reachable by name via the Tokenizer.ts method-location batch's `this.rules.block.X` / `this.rules.inline.X` references)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/rules.ts"
-start = 482
-end = 499
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-id = "9.1"
-descriptor = "bin/marked.js + api/dingus.js: full files"
-justification = "The two thinnest real integration points against the compiled library: the CLI's actual entry point (`main(process)`, 16 lines) and the Vercel demo endpoint (`marked(text)` behind a GET-only JSON handler, 19 lines) — both small enough to include whole and both directly answer \"how is marked actually invoked here\" for their respective surfaces."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bin/marked.js"
-start = 1
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "api/dingus.js"
-start = 1
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-
-
-
-[[batches]]
-id = "10.1"
-descriptor = "test/unit/*.test.js: top-level describe() locations"
-justification = "The top-level `describe()` for each of the 6 node:test suites, plus Lexer.test.js's table/list/html/def/inline sub-suites (its largest, most-asked-about categories) — cheap one-hop pointers to \"where are the tests for X\" without assuming only some suites exist."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/unit/marked.test.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 312
-end = 312
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 623
-end = 623
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 1532
-end = 1532
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 1589
-end = 1589
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Lexer.test.js"
-start = 1627
-end = 1627
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Parser.test.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/Hooks.test.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/instance.test.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-[[batches.content.spans]]
-path = "test/unit/bin.test.js"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
+id = "6.2"
+descriptor = "tsconfig.json: the compiler settings src/ is written against"
+justification = "strict, verbatimModuleSyntax, allowImportingTsExtensions (why every import in src/ ends in `.ts`), NodeNext resolution, noEmit — the build emits through esbuild and dts-bundle-generator instead. Explains import style and why `tsc` alone produces nothing, both of which an agent editing src/ will otherwise get wrong."
+content = { kind = "lines", spans = [
+  { path = "tsconfig.json", start = 3, end = 12, render = { kind = "full" } },
+] }

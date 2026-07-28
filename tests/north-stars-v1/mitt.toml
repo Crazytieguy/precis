@@ -1,0 +1,374 @@
+fixture = "mitt"
+revision_pin = "6b416705"
+summary = """
+mitt: a tiny (~200b gzipped) functional pubsub/event-emitter for
+JavaScript/TypeScript, published as the npm package `mitt`. The entire
+runtime is one file, `src/index.ts` (123 lines): a handful of exported
+type aliases, an `Emitter<Events>` interface, and a `mitt()` factory
+closing over a `Map` of type -> handler-list, with `on`/`off`/`emit`
+plus a `'*'` wildcard type. There is no build-from-source step needed
+to read or reason about it; `dist/` is git-ignored and produced by
+`microbundle` from this single file. Tests are two files: behavioral
+specs in `test/index_test.ts` (mocha/chai/sinon, 204 lines) and a
+type-level contract check in `test/test-types-compilation.ts` (78
+lines, using `@ts-expect-error` to assert what should and shouldn't
+typecheck against a sample `Events` map).
+
+The plausible query distribution: "how does mitt guarantee type safety
+across event names/payloads" (interface + type-compilation tests),
+"does `on`/`off`/`emit` normalize case, dedupe handlers, support
+symbols" (behavioral tests), "how do I build/test/lint this", "what's
+the published package shape" (package.json exports/files/scripts),
+and general "explain this file to me" reading of the ~123-line source.
+Given how small and single-purpose this repo is, the ranking front-
+loads the entire source (cheap, under 2k tokens for everything), then
+package.json's identity and build/test/lint entry points (the fastest
+answer to "how do I run this" ahead of reading any test body), then
+spends the next chunk of budget on the two test files' semantics,
+then rounds out with the rest of the npm package surface, lint/build/
+CI config, and the README's install/usage prose (skipping the
+README's generated API section and the badge markup, which either
+duplicate the source JSDoc already surfaced in tier 2 or add no
+semantic value beyond what package.json/LICENSE already state). Every
+file here is either included in full or, for src/index.ts's export
+roster (2.1), rendered as complete truncated location lines - every
+span ends at a natural syntactic or section boundary (end of a type/
+interface/function/test-block, or end of file), so this draft has no
+rendered ellipsis spans.
+"""
+
+# ---------------------------------------------------------------
+# Tier 1 — orientation: what files exist, what the repo is/does.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = "Every top-level entry (dotfiles, LICENSE, README, package.json, src/, test/, tsconfig.json, .github/) in one cheap batch so the agent never has to `ls` the root; catastrophic-omission hedge for the whole repo."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "src/, test/, and .github/ contents"
+justification = "The four non-root directories are tiny (1-2 entries each); listing them all together up front confirms src/ has exactly one file and test/ exactly two, so the agent doesn't wonder if more exist."
+content = { kind = "fs", groups = [ { parent = "src", entries = "all" }, { parent = "test", entries = "all" }, { parent = ".github", entries = "all" }, { parent = ".github/workflows", entries = "all" } ] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README identity: title, tagline, runtime claims"
+justification = "The '# Mitt' heading, the one-line pitch ('Tiny 200b functional event emitter / pubsub'), and the runtime-support sentence (browser-first, any JS runtime, zero dependencies, IE9+) - the fastest possible answer to 'what is this library', ahead of any code."
+content = { kind = "lines", spans = [ { path = "README.md", start = 9, end = 11, render = { kind = "full" } }, { path = "README.md", start = 19, end = 19, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README feature bullets"
+justification = "The five selling-point bullets (microscopic size, wildcard '*' events, EventEmitter-familiar naming, no reliance on `this`, name trivia) - the library's headline semantics, including the first mention of the wildcard event type."
+content = { kind = "lines", spans = [ { path = "README.md", start = 13, end = 17, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README table of contents"
+justification = "Cheap heading-location hedge: names every README section (Install/Usage/Examples & Demos/API/Contribute/License) so the agent knows what prose exists elsewhere in the file without pulling section bodies yet."
+content = { kind = "lines", spans = [ { path = "README.md", start = 21, end = 28, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 2 — the entire runtime source, src/index.ts (123 lines).
+# This is the actual deliverable of the repo; cheap enough to
+# include in full. A truncated export roster lands first as a
+# class-closure hedge, then the type surface and interface, then
+# the factory's implementation method by method.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "src/index.ts export roster (all 8 exports, names only)"
+justification = "One truncated line per export - the six type aliases (EventType, Handler, WildcardHandler, EventHandlerList, WildCardEventHandlerList, EventHandlerMap), the Emitter interface, and the default-exported mitt function - so even the smallest budget that reaches source sees the complete export surface with exact line locations. Complete by construction: these are the only `export` statements in the file."
+content = { kind = "lines", spans = [
+  { path = "src/index.ts", start = 1, end = 1, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 5, end = 5, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 12, end = 12, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 18, end = 18, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+  { path = "src/index.ts", start = 46, end = 46, render = { kind = "truncated", pattern = "^export (type|interface|default function) [A-Za-z]+" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Type aliases: EventType, Handler, WildcardHandler"
+justification = "Full definitions of the three handler-side aliases: EventType = string | symbol (the key domain), Handler<T> (single-event callback), and WildcardHandler<T> receiving (type, event). Refines the roster's truncated lines 1/5/6 with the actual right-hand sides."
+predecessor = "2.1"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 1, end = 9, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap"
+justification = "Full definitions of the three storage-side aliases, ending with EventHandlerMap - the Map<keyof Events | '*', list> shape that is both the `all` property's type and the optional argument to mitt(). Refines the roster's truncated lines 12/13/18."
+predecessor = "2.1"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 11, end = 21, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Emitter<Events> interface (full)"
+justification = "The full public interface contract: `all`, and every on/off/emit overload (including the '*' wildcard overloads and the emit-with-no-arg overload gated on `undefined extends Events[Key]`). This is what a consumer's type-checker actually sees; answers 'what can I call on an emitter' without reading the implementation."
+predecessor = "2.1"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 23, end = 39, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.5"
+descriptor = "mitt() factory: JSDoc + signature"
+justification = "The default export's doc comment and signature, `mitt<Events>(all?): Emitter<Events>` - the entry point every usage example calls. Ranked before the body so a small budget still gets the one function this whole package exports, in full."
+predecessor = "2.1"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 41, end = 48, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.6"
+descriptor = "mitt() body: GenericEventHandler, all init, return-object open"
+justification = "The local `GenericEventHandler` union type, the `all = all || new Map()` default-map fallback, and the start of the returned object literal (including the `all` property + its doc comment) - the shared state every method below closes over."
+predecessor = "2.5"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 49, end = 58, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.7"
+descriptor = "on() implementation"
+justification = "Full body: looks up the handler array for `type` in `all`, appends or initializes it. Answers 'does on() replace or append handlers' (append) and 'what happens on the first registration' (lazy array creation) without the agent tracing it manually."
+predecessor = "2.6"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 60, end = 73, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.8"
+descriptor = "off() implementation"
+justification = "Full body: splices out one matching handler via `indexOf`, or clears the whole list when `handler` is omitted. Answers 'does off() without a handler arg remove everything for that type' (yes) and 'what if the handler isn't registered' (indexOf -1 >>> 0 = 0, splices index 0 - a real footgun worth surfacing verbatim)."
+predecessor = "2.6"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 75, end = 91, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "2.9"
+descriptor = "emit() implementation"
+justification = "Full body: invokes type-matched handlers via a `.slice().map()` snapshot (so handlers added/removed mid-emit don't affect the current dispatch), then invokes '*' handlers afterward with `(type, evt)`. This is the exact ordering/snapshotting guarantee an agent needs before relying on emit()'s reentrancy behavior."
+predecessor = "2.6"
+content = { kind = "lines", spans = [ { path = "src/index.ts", start = 93, end = 123, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 3 — package.json's operational core: identity + how to
+# build/test/lint, ahead of test bodies and the rest of the manifest.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "package.json: identity + entry points"
+justification = "name/version/description plus every module-format entry point (module/main/jsnext:main/umd:main/source/typings) and the conditional `exports` map - answers 'which built file does `import mitt from \"mitt\"` actually resolve to' under Node vs bundler vs UMD."
+content = { kind = "lines", spans = [ { path = "package.json", start = 1, end = 17, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "3.2"
+descriptor = "package.json: scripts"
+justification = "The concrete build/test/lint/release pipeline: `npm test` runs typecheck+lint+mocha+test-types in sequence, `npm run build` cleans then bundles via microbundle then regenerates README docs. Direct answer to 'how do I build or test this repo' without opening any tool's own config."
+content = { kind = "lines", spans = [ { path = "package.json", start = 18, end = 29, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 4 — the two test files: behavioral spec, then type contract.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "index_test.ts: imports + top-level mitt() factory tests"
+justification = "How the test suite is wired (chai + sinon-chai) plus the two tests on the bare factory function itself: it's callable, and it accepts a pre-existing Map to seed initial handlers - a usage pattern not shown in the README."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 1, end = 23, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.2"
+descriptor = "index_test.ts: shared Events type + beforeEach instance setup"
+justification = "The `Events` type used by every test below it (a deliberately adversarial set of near-collisions: foo/FOO/Foo, bar/Bar, baz:bat!/baz:baT!, plus a symbol key) plus the shared `events`/`inst` fixtures created fresh per test - necessary context for reading any test that follows."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 25, end = 43, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.3"
+descriptor = "index_test.ts: properties block"
+justification = "One assertion: `inst.all` is exposed and is a Map. Tiny, but it's the only test documenting that the factory's internal map is a public, inspectable property."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 45, end = 49, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.4"
+descriptor = "index_test.ts: on() - registration and append semantics"
+justification = "Covers on() as a function, registering a handler for a new type, registering under an arbitrary string like 'constructor' (no special-casing of object-prototype keys), and appending a second handler to an existing type without clobbering the first."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 51, end = 77, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.5"
+descriptor = "index_test.ts: on() - case sensitivity, symbols, duplicates"
+justification = "Three load-bearing behavioral guarantees: event-type strings are case-sensitive (FOO != foo), symbols work as event types, and registering the identical handler twice for the same type stores it twice (no implicit dedup, matching Node's EventEmitter) - all easy to get wrong when re-implementing or wrapping mitt."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 79, end = 106, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.6"
+descriptor = "index_test.ts: off() - single-handler removal, case sensitivity"
+justification = "off() as a function, removing a specific handler, and the case-sensitivity mirror of the on() tests (removing 'FOO' doesn't touch 'foo'; a differently-cased near-miss like off('baz:baT!') leaves the 'baz:bat!' list untouched)."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 108, end = 136, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.7"
+descriptor = "index_test.ts: off() - first-match-only and type-wide removal"
+justification = "Two subtler guarantees: calling off() twice on a duplicate-registered handler removes it one occurrence at a time (not all at once), and off(type) with no handler arg clears every handler for that type while leaving other types untouched."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 138, end = 158, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.8"
+descriptor = "index_test.ts: emit() - dispatch and case sensitivity"
+justification = "emit() as a function, the handler receiving the emitted event payload with a guaranteed-undefined second arg, and the case-sensitivity guarantee mirrored for dispatch (emitting 'Foo' vs 'FOO' invokes distinct handler lists)."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 160, end = 187, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.9"
+descriptor = "index_test.ts: emit() - wildcard ('*') handler invocation"
+justification = "Confirms '*' handlers fire for every emitted type, receive `(type, event)` (not just the event), and fire on every subsequent emit call, not just once - the concrete evidence behind the wildcard-handler contract in the Emitter interface."
+content = { kind = "lines", spans = [ { path = "test/index_test.ts", start = 189, end = 204, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.10"
+descriptor = "test-types-compilation.ts: setup"
+justification = "The sample `Events` map (foo: string, someEvent: SomeEventData, bar?: number) and the three handler variables (barHandler/fooHandler/wildcardHandler) that every `@ts-expect-error` assertion below is checked against - required context to make sense of any one assertion in isolation."
+content = { kind = "lines", spans = [ { path = "test/test-types-compilation.ts", start = 1, end = 20, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.11"
+descriptor = "test-types-compilation.ts: on() type inference checks"
+justification = "Compile-time proof of exactly which handler/type pairings typecheck for on(): a handler typed for the wrong event errors, but a handler whose param type is a supertype of the wildcard union (e.g. fooHandler(x: string) against '*') is accepted - the precise variance rule the Emitter overloads encode."
+content = { kind = "lines", spans = [ { path = "test/test-types-compilation.ts", start = 22, end = 39, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.12"
+descriptor = "test-types-compilation.ts: off() type inference checks"
+justification = "Same variance rule re-asserted for off(), confirming the two methods' overload sets are checked identically (as the Emitter interface's parallel signatures imply)."
+content = { kind = "lines", spans = [ { path = "test/test-types-compilation.ts", start = 41, end = 58, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.13"
+descriptor = "test-types-compilation.ts: emit() type inference checks"
+justification = "The emit()-specific rule not present on on()/off(): a key whose value type doesn't extend `undefined` requires an event argument (emit('foo') errors, emit('bar') doesn't since bar is optional/undefined-extending) - directly exercises the conditional-type overload in the Emitter interface."
+content = { kind = "lines", spans = [ { path = "test/test-types-compilation.ts", start = 60, end = 78, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 5 — the rest of package.json (publish metadata, tool config,
+# dependency roster).
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "package.json: repository/keywords/homepage/authors/license/files"
+justification = "Publish metadata: what npm registry fields are set, and - operationally relevant - `files: [dist, index.d.ts]` is the exact allowlist of what ships in the published tarball (source/tests are excluded)."
+content = { kind = "lines", spans = [ { path = "package.json", start = 30, end = 45, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "5.2"
+descriptor = "package.json: mocha and prettier config blocks"
+justification = "Mocha is configured to compile .ts specs via ts-node/register+esm and to only pick up `test/*_test.ts` (explaining why test-types-compilation.ts, lacking that suffix, is run separately via the test-types script, not by mocha); prettier's singleQuote+no-trailing-comma style is the formatting convention new code should match."
+content = { kind = "lines", spans = [ { path = "package.json", start = 46, end = 61, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "5.3"
+descriptor = "package.json: devDependencies (full list)"
+justification = "The complete dependency roster (chai/mocha/sinon for tests, the two @typescript-eslint packages + eslint-config-developit for lint, microbundle for bundling, documentation for README generation, ts-node/typescript for the toolchain) shown in full so no dependency is implied absent; a partial list here would be exactly the catastrophic-omission failure mode."
+content = { kind = "lines", spans = [ { path = "package.json", start = 62, end = 85, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 6 — build/lint/CI/editor configuration.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "tsconfig.json (full)"
+justification = "strict:true + noEmit + declaration:true (the .d.ts is generated by tsc from src/index.ts, matching package.json's `typings: index.d.ts`), and the include globs `src/*.ts`/`test/*.ts` - fully shown since the file is 15 lines."
+content = { kind = "lines", spans = [ { path = "tsconfig.json", start = 1, end = 15, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.2"
+descriptor = ".eslintrc: ignores, extends, parser, env, globals"
+justification = "What eslint skips (node_modules/dist/index.d.ts), the three rule-sets it extends (typescript-eslint recommended x2 + the 'developit' shared config, which is not vendored in this repo and must be resolved from node_modules), the parser/env setup, and the one whitelisted global (`expect`, needed because mocha/chai's BDD assertions aren't otherwise declared)."
+content = { kind = "lines", spans = [ { path = ".eslintrc", start = 1, end = 24, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.3"
+descriptor = ".eslintrc: rule overrides"
+justification = "The explicit rule overrides on top of the extended configs - notably five @typescript-eslint rules turned off (no-explicit-any, explicit-function-return-type, explicit-module-boundary-types, no-empty-function, no-non-null-assertion), which explains why the `all!` non-null assertions throughout src/index.ts pass lint."
+content = { kind = "lines", spans = [ { path = ".eslintrc", start = 25, end = 52, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.4"
+descriptor = ".editorconfig (full)"
+justification = "Tabs by default, but 2-space for package.json/rc-files/yml and markdown - explains the indentation-style split visible when comparing src/index.ts (tabs) against package.json/.eslintrc (spaces)."
+content = { kind = "lines", spans = [ { path = ".editorconfig", start = 1, end = 18, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.5"
+descriptor = ".gitignore (full)"
+justification = "Confirms dist/, index.d.ts, and node_modules are all build artifacts excluded from version control (index.d.ts is generated by `tsc --declaration`, not hand-written) - answers 'why isn't the .d.ts file in the repo' before the agent goes looking for it."
+content = { kind = "lines", spans = [ { path = ".gitignore", start = 1, end = 9, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.6"
+descriptor = "CI workflow: main.yml (full)"
+justification = "The canonical CI entry point: on every PR and push to main, install + `npm run build --if-present` + `npm test` on Node 14 - the ground truth for 'what does CI actually run', which npm test's script chain (3.2) only partially conveys without this trigger/runtime context."
+content = { kind = "lines", spans = [ { path = ".github/workflows/main.yml", start = 1, end = 25, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "6.7"
+descriptor = "CI workflow: compressed-size.yml (full)"
+justification = "A second, PR-only workflow that reports gzip size deltas for dist/*.{js,mjs,cjs} - operationally relevant given the README's headline claim is a specific byte-size budget (~200b gzipped)."
+content = { kind = "lines", spans = [ { path = ".github/workflows/compressed-size.yml", start = 1, end = 12, render = { kind = "full" } } ] }
+
+# ---------------------------------------------------------------
+# Tier 7 — README prose beyond the lede/ToC, plus the remaining
+# repo-meta files. The README's generated API section (lines
+# 123-177) is intentionally omitted: it's documentation.js output
+# reproducing the same JSDoc already surfaced verbatim in tier 2.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "README: Install section"
+justification = "The literal install command and the three consumption forms (ES module import, CommonJS require, UMD <script> tag pulling window.mitt from unpkg) - answers 'how do I add this to my project' for each module system without inferring it from package.json's exports map alone."
+content = { kind = "lines", spans = [ { path = "README.md", start = 30, end = 54, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.2"
+descriptor = "README: Usage section (core example)"
+justification = "The canonical usage snippet: create an emitter, on()/emit() a named event, on() the '*' wildcard, clear all handlers via `emitter.all.clear()`, and unregister via a saved handler reference - the first thing most 'how do I use mitt' sessions want verbatim."
+content = { kind = "lines", spans = [ { path = "README.md", start = 56, end = 79, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.3"
+descriptor = "README: TypeScript usage section"
+justification = "Shows both consumption idioms for typed usage: inferring handler param types from `mitt<Events>()`, and the alternative of annotating a variable with the exported `Emitter<Events>` type - plus the reminder that tsconfig `strict: true` is required for the inference to kick in, directly relevant to why a consumer's on()-handler param types might silently widen without it."
+content = { kind = "lines", spans = [ { path = "README.md", start = 81, end = 111, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.4"
+descriptor = "README: Examples & Demos"
+justification = "Pointer to the one external live demo (a Preact + Mitt CodePen) - low-frequency but essentially free to include."
+content = { kind = "lines", spans = [ { path = "README.md", start = 113, end = 119, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.5"
+descriptor = "README: Contribute section"
+justification = "The fork/clone/branch/install/commit/push/PR workflow expected of contributors - relevant to 'how do I submit a change here' sessions, ranked last among README content since it's process rather than the library itself."
+content = { kind = "lines", spans = [ { path = "README.md", start = 179, end = 201, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.6"
+descriptor = "PULL_REQUEST_TEMPLATE.md (full)"
+justification = "The checklist and prompts GitHub pre-populates into any PR description against this repo (purpose checkboxes, what changed, breaking-change callout) - relevant context if the task is to open or review a PR."
+content = { kind = "lines", spans = [ { path = ".github/PULL_REQUEST_TEMPLATE.md", start = 1, end = 19, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.7"
+descriptor = "LICENSE (full)"
+justification = "Full MIT license text - package.json's `license: MIT` field (5.1) already gives the SPDX identifier; this is the complete text for sessions that specifically need it (e.g. license-compliance checks)."
+content = { kind = "lines", spans = [ { path = "LICENSE", start = 1, end = 21, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "7.8"
+descriptor = "README: License section"
+justification = "The README's own closing '## License' heading and its one-line MIT pointer - named in the table of contents (1.5) as one of the six sections, so it's covered here for closure even though it adds nothing beyond package.json's license field (5.1) and the full LICENSE text (7.7), which is why it ranks last."
+content = { kind = "lines", spans = [ { path = "README.md", start = 203, end = 205, render = { kind = "full" } } ] }

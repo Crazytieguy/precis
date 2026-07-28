@@ -1,475 +1,2501 @@
 fixture = "xh"
 revision_pin = "b928cf08"
 summary = """
-xh is a single-binary Rust CLI HTTP client (an HTTPie reimplementation) built on reqwest's
-blocking client. src/main.rs orchestrates: parse CLI (src/cli.rs, clap derive) -> assemble a
-request body/headers from HTTPie-style REQUEST_ITEM syntax (src/request_items.rs) -> attach
-auth/session/cookies (src/auth.rs, src/session.rs, src/netrc.rs) -> execute through a small
-generic middleware chain (src/middleware.rs) that layers redirect-following (src/redirect.rs)
-and digest-auth retry -> print/format/color the exchange (src/printer.rs, src/formatting/) or
-stream it to disk (src/download.rs). Supporting modules: src/decoder.rs (gzip/deflate/br/zstd
-with empty-body error suppression), src/content_disposition.rs (RFC 5987 filename parsing),
-src/nested_json.rs (the `key[0][x]=v` JSON-path mini-language), src/to_curl.rs (--curl
-translation), src/message_signature.rs (feature-gated RFC 9421 signing), src/generation.rs
-(derives man page + shell completions from the same clap metadata at runtime via --generate).
-build.rs precompiles syntect syntaxes/themes into OUT_DIR. Tests: tests/cli.rs is a ~250-test
-integration suite run against a hand-rolled hyper test server (tests/server/mod.rs); tests/cases/
-holds topically-split suites (auth_message_signature, compress_request_body, download, logging,
-unix_socket, xml). Query distribution: adding/changing a CLI flag or REQUEST_ITEM syntax rule,
-debugging auth/redirect/session/download/decompression edge cases, understanding the session
-JSON format, --curl translation gaps, build/test/release workflow, and "how is X tested".
+`xh` is a Rust CLI HTTP client — a reimplementation of HTTPie's design with a
+focus on startup speed and a single static binary. The substance is a flat
+`src/` of ~20 modules: `cli.rs` (a very large clap-derive `Cli` struct plus the
+value types its options parse into), `request_items.rs` (HTTPie's
+`key=value` / `key:=value` / `key==value` / `header:value` / `@file` item
+grammar), `main.rs::run` (builds a `reqwest::blocking::Client`, assembles the
+request, runs it through a middleware chain, prints), `printer.rs` +
+`formatting/` (colored, syntax-highlighted, pretty-printed output), and
+supporting modules for sessions, netrc, auth, redirects, downloads,
+content decoding, curl translation and man/completion generation.
+
+Ranking serves the full spread of session-opening queries. Earliest: what the
+project is and where its code lives (root + `src/` listings, README lede).
+Then the user-facing contract — the complete option surface from the README's
+`--help` transcript, the request-item grammar, and the man-page template's
+EXIT STATUS / ENVIRONMENT / FILES sections, since env vars, exit codes and
+config/session paths are asked about constantly and appear nowhere else.
+Then `main.rs::run`'s orchestration in ordered slices, then a per-module
+public-symbol roster across every remaining file in `src/` (so "where is X
+handled" is one grep away), then build/test/release/CI appendix material.
+Locations are preferred over bodies throughout; bodies are spent only where
+the behaviour is not inferable from the name.
 """
+
+# ---------------------------------------------------------------- tier 1
+# Identity and the repository map: what xh is, and where its substance lives.
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "First thing any agent needs: what's actually at the top level, so partial guesses about config/docs/build files aren't made. Cheap, unconditionally useful."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "README lede: what xh is"
+justification = """
+Rank 1 must answer \"what is this repository\". Lines 5-7 of the README are the
+one-sentence definition (friendly/fast HTTP request tool, reimplements HTTPie,
+performance focus); line 1 is the project name. The badge lines are elided with
+a rendered ellipsis rather than dropped silently.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 3
+end = 3
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5
+end = 7
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = "README lede"
-justification = "One-line identity of the crate and a pointer to the demo, framing every subsequent batch."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "README.md", start = 5, end = 9, render = { kind = "full" } },
-] }
+descriptor = "Repository root listing"
+justification = """
+Complete immediate-children listing of the repo root. Cheapest possible
+orientation: tells the agent that source is in `src/`, that there are
+`doc/`, `completions/`, `assets/` and `tests/` trees, standalone install
+scripts, a CHANGELOG, an FAQ and a release checklist. `entries = \"all\"`
+guarantees class closure — no reader can wrongly infer a root file is absent.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "src/ listing"
-justification = "Every top-level source file, including the formatting/ subpackage — avoids the agent assuming unlisted modules (e.g. message_signature.rs) don't exist."
-content = { kind = "fs", groups = [
-  { parent = "src", entries = "all" },
-] }
+descriptor = "src/ and src/formatting/ listings"
+justification = """
+The repository's substance is one large flat `src/` directory; this surfaces
+that grouping immediately rather than deferring it behind peripheral trees.
+Module filenames here (`cli`, `request_items`, `printer`, `session`, `netrc`,
+`redirect`, `download`, `decoder`, `to_curl`, `generation`,
+`message_signature`, `nested_json`, ...) are themselves a topic map, and
+`src/formatting/` is the only subdirectory. Both use `entries = \"all\"`.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+[[batches.content.groups]]
+parent = "src/formatting"
+entries = "all"
 
 [[batches]]
 id = "1.4"
-descriptor = "src/formatting/ listing"
-justification = "The formatting subpackage's three files, so a highlighting/color question doesn't stop at 'formatting/ exists'."
-content = { kind = "fs", groups = [
-  { parent = "src/formatting", entries = "all" },
-] }
+descriptor = "Cargo.toml package identity"
+justification = """
+Crate name, version (0.25.3), author, Rust edition 2024 / MSRV 1.85, MIT
+license and the one-line description. Answers \"what version / what edition /
+who owns this\" with no follow-up, and grounds the agent's assumptions about
+available language features. The remaining `[package]` keys (URLs, keywords,
+categories) are elided behind a rendered ellipsis and ranked later.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 9
+end = 9
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "1.5"
-descriptor = "tests/ listing"
-justification = "Shows the integration-test file, the topical cases/ suite, the hand-rolled server harness and the static fixtures dir side by side."
-content = { kind = "fs", groups = [
-  { parent = "tests", entries = "all" },
-] }
+descriptor = "README section headings"
+justification = """
+Every `##`/`###` heading in README.md, bodies excluded. Tells the agent which
+topics the README covers — installation, the full usage transcript, request
+items, URL shorthand, HTTPS-by-default, strict compatibility mode, examples,
+HTTPie comparison — and the exact line to jump to for each. Cheap breadth
+hedge: listing only some headings would imply the others do not exist.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 66
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 132
+end = 132
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 149
+end = 149
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 167
+end = 167
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 178
+end = 178
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 183
+end = 183
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 211
+end = 211
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 213
+end = 213
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 221
+end = 221
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 228
+end = 228
+render = { kind = "full" }
 
 [[batches]]
 id = "1.6"
-descriptor = "tests/cases/ listing"
-justification = "The topically-split integration suites (auth_message_signature is feature-gated) — lets a 'is X tested' query jump straight to a file instead of grepping tests/cli.rs."
-content = { kind = "fs", groups = [
-  { parent = "tests/cases", entries = "all" },
-] }
+descriptor = "tests/ tree listing"
+justification = """
+Complete listings of `tests/`, `tests/cases/` and `tests/server/`. xh's tests
+are integration tests that spawn the built binary against a local hyper
+server; knowing that `tests/cli.rs` is the giant top-level suite and that
+`tests/cases/` holds the topic-specific suites (download, logging, xml,
+unix_socket, compress_request_body, auth_message_signature) is the difference
+between finding the right test file in one hop and grepping the whole tree.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/cases"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/server"
+entries = "all"
 
-[[batches]]
-id = "1.7"
-descriptor = "doc/ and completions/ listings"
-justification = "Generated-artifact directories (man page + markdown source + templates; shell completions for 6 shells) that RELEASE-CHECKLIST.md references by exact regeneration command."
-content = { kind = "fs", groups = [
-  { parent = "doc", entries = "all" },
-  { parent = "completions", entries = "all" },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = "assets/ and .github/workflows/ listings"
-justification = "Syntax/theme data consumed by build.rs, plus the two CI workflow files — orientation for build-system and CI questions."
-content = { kind = "fs", groups = [
-  { parent = "assets", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "tests/fixtures/ listing"
-justification = "Static binary/text fixtures (certs, keys, pre-compressed response bodies) used by the online test suite — avoids an agent assuming test data is generated on the fly."
-content = { kind = "fs", groups = [
-  { parent = "tests/fixtures", entries = "all" },
-  { parent = "tests/fixtures/certs", entries = "all" },
-  { parent = "tests/fixtures/keys", entries = "all" },
-  { parent = "tests/fixtures/responses", entries = "all" },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "Cargo.toml [package] block"
-justification = "Version, edition, MSRV, license and the crates.io description in one place; grounds any question about what xh declares itself to be. (`documentation`/`homepage` lines are elided: identical `repository` URL, kept.)"
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 1, end = 8, render = { kind = "full" } },
-  { path = "Cargo.toml", start = 11, end = 15, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = "main.rs module map"
-justification = "The `mod` list is the whole crate's module graph at a glance, including the http-message-signatures cfg-gate on message_signature — cheaper than inferring structure from the src/ listing alone."
-content = { kind = "lines", spans = [
-  { path = "src/main.rs", start = 1, end = 22, render = { kind = "full" } },
-] }
+# ---------------------------------------------------------------- tier 2
+# The user-facing CLI surface: the complete option set, then the cli.rs
+# structures that back it.
 
 [[batches]]
 id = "2.1"
-descriptor = "Cargo.toml [features] block"
-justification = "The cargo feature flags (default set, native-tls, rustls, http3, http-message-signatures, network-interface, online/ipv6-tests) that gate large chunks of src/ and tests/cases/ behind #[cfg(feature = ...)] — needed before any 'why is this code unreachable' question makes sense."
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 99, end = 105, render = { kind = "full" } },
-  { path = "Cargo.toml", start = 110, end = 113, render = { kind = "full" } },
-] }
+descriptor = "README usage synopsis and positional arguments"
+justification = """
+`Usage: xh [OPTIONS] <[METHOD] URL> [REQUEST_ITEM]...` plus the two positional
+arguments. This is the invocation shape every query about xh presupposes, and
+it is four lines. The trailing ellipsis signals that the `Options:` block
+continues below rather than letting a small-budget reader assume the transcript
+ends here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 68
+end = 72
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 74
+end = 74
+render = { kind = "ellipsis" }
+
 [[batches]]
 id = "2.2"
-descriptor = "CHANGELOG.md: Unreleased + latest release"
-justification = "What's actively in flight (XML pretty-printing, message signatures, reqwest v0.13 upgrade) versus what's already shipped in 0.25.3 — grounds 'is feature X done yet' questions without reading the full 404-line history."
-content = { kind = "lines", spans = [
-  { path = "CHANGELOG.md", start = 1, end = 18, render = { kind = "full" } },
-] }
+descriptor = "Options 1/4: body serialization and output formatting"
+justification = """
+First quarter of the README's verbatim `xh --help` transcript: `--json`,
+`--form`, `--multipart`, `--raw`, `--pretty`, `--format-options`, `--style`,
+`--response-charset`, `--response-mime`, `--print`, with their short flags and
+possible values. Choosing the README transcript as the single place the option
+surface is presented — rather than re-deriving it from `cli.rs` attributes —
+keeps each flag stated exactly once, at its cheapest and most readable form.
+Split into four adjacent batches so a small budget still gets a coherent
+prefix; the ellipsis marks that the list continues.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 74
+end = 84
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 85
+end = 85
+render = { kind = "ellipsis" }
+
 [[batches]]
 id = "2.3"
-descriptor = "RELEASE-CHECKLIST.md (full)"
-justification = "The exact release procedure, including the six `--generate` invocations that regenerate doc/xh.1{,.md} and completions/* — cheap, concrete operational coverage for 'how do I cut a release'."
-content = { kind = "lines", spans = [
-  { path = "RELEASE-CHECKLIST.md", start = 1, end = 21, render = { kind = "full" } },
-] }
+descriptor = "Options 2/4: what to print, streaming, download, sessions"
+justification = """
+`--headers`/`--body`/`--meta`/`--verbose`/`--debug`/`--all`/`--history-print`/
+`--quiet`/`--stream`/`--compress`/`--output`/`--download`/`--continue`/
+`--session`/`--session-read-only`. This block covers the two features with the
+most dedicated source modules behind them (`download.rs`, `session.rs`), so it
+ranks ahead of the network/TLS block.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 85
+end = 99
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 100
+end = 100
+render = { kind = "ellipsis" }
+
 [[batches]]
 id = "2.4"
-descriptor = "FAQ.md (Q&A prose, RFC 7230 blockquote elided)"
-justification = "Single Q&A explaining why header values sometimes render mangled (ISO-8859-1 vs UTF-8 display) — directly answers a support-style question and is cross-referenced by src/formatting/headers.rs's error path. The verbatim RFC 7230 blockquote plus its citation link (lines 5-7) is elided; the file's own prose (lines 3, 9-11) already states what it backs, and the RFC is fetchable on demand."
-content = { kind = "lines", spans = [
-  { path = "FAQ.md", start = 1, end = 4, render = { kind = "full" } },
-  { path = "FAQ.md", start = 5, end = 5, render = { kind = "ellipsis" } },
-  { path = "FAQ.md", start = 6, end = 6, render = { kind = "ellipsis" } },
-  { path = "FAQ.md", start = 7, end = 7, render = { kind = "ellipsis" } },
-  { path = "FAQ.md", start = 8, end = 21, render = { kind = "full" } },
-] }
+descriptor = "Options 3/4: auth, redirects, proxies, TLS"
+justification = """
+`--auth-type`/`--auth`/`--ignore-netrc`/`--offline`/`--check-status`/
+`--follow`/`--max-redirects`/`--timeout`/`--proxy`/`--verify`/`--cert`/
+`--cert-key`/`--ssl`/`--https`. Names the auth mechanisms (basic, bearer,
+digest) and TLS versions inline, which answers most auth/TLS framing questions
+without opening `auth.rs` or `main.rs`.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 100
+end = 113
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 114
+end = 114
+render = { kind = "ellipsis" }
+
 [[batches]]
 id = "2.5"
-descriptor = "README: Request Items syntax"
-justification = "The six-symbol grammar (=, :=, ==, @, :, ;) that request_items.rs::RequestItem::from_str implements — this is the semantic core of xh's CLI and the single most likely 'how do I do X' lookup."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 132, end = 148, render = { kind = "full" } },
-] }
+descriptor = "Options 4/4: HTTP version, DNS/interface, curl, generate, --no-OPTION"
+justification = """
+Final quarter — `--http-version`, `--resolve`, `--interface`, `--ipv4`/
+`--ipv6`, `--unix-socket`, `--ignore-stdin`, `--curl`, `--curl-long`,
+`--generate`, `--help`, `--version` — and the closing note that *every* option
+can be reset with a `--no-OPTION` argument, which is a load-bearing and
+non-obvious behaviour. Completing the block here closes the option class: after
+this batch no reader can wrongly conclude a flag does not exist.
+"""
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 114
+end = 128
+render = { kind = "full" }
+
 [[batches]]
 id = "2.6"
-descriptor = "README: URL shorthand, https-by-default, HTTPie compat mode"
-justification = "Explains the `:8000`/`://host` URL shorthands, the xhs/https/xhttps binary-name and XH_HTTPIE_COMPAT_MODE triggers implemented in cli.rs's construct_url/try_parse_from — otherwise-surprising behavior worth documenting once, cheaply, in prose."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 149, end = 171, render = { kind = "full" } },
-  { path = "README.md", start = 178, end = 182, render = { kind = "full" } },
-] }
+descriptor = "cli.rs: Cli struct declaration and clap configuration"
+justification = """
+Where the option surface is actually defined: the crate's own doc comment, the
+`#[derive(clap::Parser)]` attributes (`version`, `long_version`,
+`disable_help_flag`, `args_override_self`, custom `styles`) and the opening of
+`pub struct Cli`. Establishes
+that flags are struct fields with doc-comment help, so \"where is `--foo`
+defined\" is one grep in one known file.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 44
+end = 56
+render = { kind = "full" }
 
 [[batches]]
 id = "2.7"
-descriptor = "README: Usage flag list, part A (global/output flags)"
-justification = "The full one-line-per-flag reference from `xh --help` (json/form/multipart/raw/pretty/print/verbose/quiet/stream/compress/output/download flags) — cheaper, more complete evidence of the CLI surface than reading cli.rs's derive attributes, and the natural first stop for almost any 'does xh support X flag' question."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 67, end = 97, render = { kind = "full" } },
-] }
+descriptor = "cli.rs: complete roster of declared types"
+justification = """
+Declaration line of every type in `cli.rs` other than `Cli` itself (covered by
+2.6): `Config`, `AuthType`, `MessageSignature`, `MessageSignatureComponents`,
+`MessageSignatureAlgorithm`, `TlsVersion`, `Pretty`, `FormatOptions`, `Theme`,
+`Print`, `Timeout`, `Proxy`, `Resolve`, `Verify`, `VerifyParser`, `BodyType`,
+`HttpVersion`, `Generate`. These are the parsed value types the rest of the
+crate consumes, and their line numbers make each one a single jump. Name-only,
+so this costs a fraction of the ~1400 lines it indexes; partial listing would
+imply the omitted types do not exist.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 738
+end = 738
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 806
+end = 806
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 814
+end = 814
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 894
+end = 894
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 916
+end = 916
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 946
+end = 946
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 973
+end = 973
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 995
+end = 995
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1055
+end = 1055
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1079
+end = 1079
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1189
+end = 1189
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1217
+end = 1217
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1254
+end = 1254
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1291
+end = 1291
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1305
+end = 1305
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1334
+end = 1334
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1342
+end = 1342
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1356
+end = 1356
+render = { kind = "full" }
 
 [[batches]]
 id = "2.8"
-descriptor = "README: Usage flag list, part B (network/auth/TLS/misc flags)"
-justification = "Continuation of the flag roster: session, auth, redirects, proxy, TLS/verify, interface binding, unix sockets, --curl, --generate — completes the class opened in 2.7 so no flag is implied to not exist."
+descriptor = "cli.rs: complete roster of functions"
+justification = """
+Every `fn` declared at `cli.rs`'s top level or in `impl Cli`, name-only:
+`Cli::parse`, `parse_from`, `try_parse_from`, `process_relations`, `into_app`,
+`logger_config`, plus the free functions `default_cli_args`, `parse_method`,
+`construct_url`, `parse_encoding`, `safe_exit`, `long_version`. This is the
+argument-processing pipeline in twelve lines and tells the agent that config
+file loading (`default_cli_args`), URL construction and encoding-label
+normalisation all live here rather than elsewhere.
+"""
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 503
+end = 503
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 516
+end = 516
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 527
+end = 527
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 606
+end = 606
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 657
+end = 657
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 691
+end = 691
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 742
+end = 742
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 771
+end = 771
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 782
+end = 782
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1381
+end = 1381
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1422
+end = 1422
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1428
+end = 1428
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.9"
+descriptor = "--print format grammar and the Print struct"
+justification = """
+The `H`/`B`/`h`/`b`/`m` character grammar for `--print`, from the option's
+`long_help`, together with the five boolean fields of
+`struct Print` that it parses into. The README transcript only says \"String
+specifying what the output should contain\"; this is the actual contract, and
+it governs `main.rs`'s entire printing section.
+"""
 predecessor = "2.7"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 98, end = 128, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 137
+end = 146
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 1080
+end = 1085
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "--pretty and --format-options value grammars"
+justification = """
+The four `--pretty` modes with their meanings and the NO_COLOR / non-tty
+defaults, plus the complete `--format-options` key set
+(`json.indent`, `json.format`, `xml.indent`, `xml.format`, `headers.sort`).
+Both are `long_help` strings not reproduced in the README, and
+both are frequent subjects of \"how do I turn off colour / change indentation\"
+questions. The `FormatOptions` struct fields that mirror these keys are at
+cli.rs:995 (batch 2.7).
+"""
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 87
+end = 95
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 104
+end = 110
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "--generate value grammar"
+justification = """
+The eight `--generate` kinds (six shell completions, `man`, `man-markdown`)
+from the option's `long_help`. This is how `completions/` and `doc/xh.1*` are
+produced, so it connects two whole directories seen in the root listing to the
+code that writes them (`generation.rs`); the matching `Generate` enum is at
+cli.rs:1356 in batch 2.7.
+"""
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 410
+end = 421
+render = { kind = "full" }
+
+[[batches]]
+id = "2.12"
+descriptor = "cli.rs: how every option gets a --no-OPTION variant"
+justification = """
+`Cli::into_app` synthesises a hidden `--no-<long>` argument for every
+non-positional option, which is why the README can promise blanket
+resettability and why order of occurrence matters (`--x=y --no-x --x=z` — the
+last one wins). Non-obvious, frequently surprising, and not derivable from any
+flag listing. The generation loop and the `after_help` strings that advertise
+the behaviour are elided behind an ellipsis at cli.rs:667.
+"""
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 660
+end = 666
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/cli.rs"
+start = 667
+end = 667
+render = { kind = "ellipsis" }
+
+# ---------------------------------------------------------------- tier 3
+# The rest of the user-facing contract: request-item grammar, environment,
+# exit codes, on-disk files, build features.
 
 [[batches]]
 id = "3.1"
-descriptor = "cli.rs: Cli struct top (doc + clap config)"
-justification = "The `#[clap(...)]` config on the top-level parser (disable_help_flag, args_override_self, custom styles) explains xh's two-tier help (`--help` vs `xh help`) and its 'last flag wins' semantics before any field is read."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 44, end = 56, render = { kind = "full" } },
-] }
+descriptor = "README: request-item syntax"
+justification = """
+The second half of xh's interface. Every separator — `=`, `:=`, `==`, `@`,
+`:`, `;` — with its meaning, plus the `@file` value-from-file prefix, stdin
+bodies and the `app[container][0][id]=` JSON-path form. Nothing else in the
+snapshot explains why `name=ahmed` becomes a JSON field, and questions about
+xh's argument handling almost always land here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 134
+end = 147
+render = { kind = "full" }
 
 [[batches]]
 id = "3.2"
-descriptor = "cli.rs: Cli struct field roster (all ~60 fields)"
-justification = "Every `pub` field of the Cli struct, one line each — the Rust name behind each README flag (e.g. --verify -> Verify, --stream -> stream_raw/stream). Partial disclosure here would wrongly suggest some flags aren't backed by a struct field; this is the exhaustive location roster a flag-adding or flag-renaming task needs."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 58, end = 58, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 64, end = 64, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 70, end = 70, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 76, end = 76, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 80, end = 80, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 97, end = 97, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 114, end = 114, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 118, end = 118, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 124, end = 124, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 130, end = 130, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 148, end = 148, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 152, end = 152, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 156, end = 156, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 160, end = 160, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 171, end = 171, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 179, end = 179, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 183, end = 183, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 187, end = 187, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 193, end = 193, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 197, end = 197, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 208, end = 208, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 211, end = 211, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 215, end = 215, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 221, end = 221, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 231, end = 231, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 238, end = 238, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 242, end = 242, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 245, end = 245, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 249, end = 249, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 258, end = 258, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 262, end = 262, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 266, end = 266, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 269, end = 269, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 273, end = 273, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 282, end = 282, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 285, end = 285, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 289, end = 289, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 293, end = 293, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 299, end = 299, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 313, end = 313, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 321, end = 321, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 325, end = 325, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 331, end = 331, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 338, end = 338, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 342, end = 342, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 346, end = 346, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 350, end = 350, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 354, end = 354, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 362, end = 362, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 368, end = 368, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 372, end = 372, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 376, end = 376, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 382, end = 382, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 392, end = 392, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 398, end = 398, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 402, end = 402, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 424, end = 424, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 428, end = 428, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 487, end = 487, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 491, end = 491, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 495, end = 495, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 499, end = 499, render = { kind = "full" } },
-] }
+descriptor = "request_items.rs: RequestItem variants and content-type constants"
+justification = """
+The parsed form of the grammar in 3.1: `HttpHeader`, `HttpHeaderFromFile`,
+`HttpHeaderToUnset`, `UrlParam`, `UrlParamFromFile`, `DataField`,
+`DataFieldFromFile`, `JsonField`, `JsonFieldFromFile`, `FormFile` — the full
+variant set, plus the `FORM_CONTENT_TYPE` / `JSON_CONTENT_TYPE` /
+`JSON_ACCEPT` constants that decide the outgoing Content-Type and Accept
+headers. Complete enum body, so no variant can be presumed missing.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 18
+end = 47
+render = { kind = "full" }
 
 [[batches]]
 id = "3.3"
-descriptor = "cli.rs: try_parse_from — method/URL split, bin_name, compat-mode triggers"
-justification = "The trickiest bit of argument handling: how the leading positional arg is split into an optional METHOD (only if all-alphabetic) vs the URL, and how bin_name flips https/httpie_compat_mode. Directly explains behavior in README 2.6 at the code level."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 556, end = 587, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 588, end = 588, render = { kind = "ellipsis" } },
-] }
+descriptor = "doc/md-template.md: man page section roster"
+justification = """
+`doc/md-template.md` is the hand-written source for both `doc/xh.1` and
+`doc/xh.1.md` (which are generated by `--generate man` / `man-markdown`), and
+it is the only place several parts of the contract are documented. All eleven
+`##` headings, name-only: NAME, SYNOPSIS, DESCRIPTION, POSITIONAL ARGUMENTS,
+OPTIONS, EXIT STATUS, ENVIRONMENT, FILES, EXAMPLES, REPORTING BUGS, SEE ALSO.
+Tells the agent those sections exist before spending tokens on their bodies.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 5
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 21
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 57
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 92
+end = 92
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 109
+end = 109
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 156
+end = 156
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 159
+end = 159
+render = { kind = "full" }
 
 [[batches]]
 id = "3.4"
-descriptor = "cli.rs: process_relations — flag-implication rules"
-justification = "Where `--verbose` implies `--all`, `--download` implies `--follow` + `--check-status`, `--session-read-only` forces `--session` onto the read-only path, and the `--no-check-status`/`--no-stream` negation resolves against the raw flag — the exact, complete place to check before assuming two flags are independent."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 606, end = 653, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 654, end = 654, render = { kind = "ellipsis" } },
-] }
+descriptor = "Exit status codes"
+justification = """
+All seven exit codes and their meanings (0 success, 1 usage/syntax/network,
+2 timeout, 3 unexpected 3xx, 4 4xx, 5 5xx, 6 too many redirects). Eight lines
+that answer a question with no other cheap source — the codes are scattered
+across `main.rs`'s `check_status` block and `error_reporting::exit_code` — and
+they matter to anyone scripting or debugging xh.
+"""
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 49
+end = 55
+render = { kind = "full" }
 
 [[batches]]
 id = "3.5"
-descriptor = "cli.rs: --no-OPTION negation mechanism"
-justification = "Explains the auto-generated `--no-foo` for every long flag (README says 'Each option can be reset with a --no-OPTION argument' without saying how) — a one-off clap trick worth pointing at directly rather than rediscovering by grepping clap docs."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 657, end = 681, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 682, end = 682, render = { kind = "ellipsis" } },
-] }
+descriptor = "Environment variables 1/2: config dir, compat mode, CA bundles, proxies"
+justification = """
+`XH_CONFIG_DIR` (with its per-platform defaults), `XH_HTTPIE_COMPAT_MODE`,
+`REQUESTS_CA_BUNDLE` / `CURL_CA_BUNDLE`, and `ALL_PROXY` / `HTTP_PROXY` /
+`HTTPS_PROXY`. These are read in `utils::config_dir`, `cli.rs` and `main.rs`
+respectively and would otherwise take three greps to reconstruct. Ellipsis
+marks that the variable list continues.
+"""
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 59
+end = 78
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 80
+end = 80
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "3.6"
-descriptor = "cli.rs: CLI value-type location roster"
-justification = "Declaration line for every enum/struct backing an option value (AuthType, MessageSignature, MessageSignatureComponents, MessageSignatureAlgorithm, TlsVersion, Pretty, FormatOptions, Theme, Print, Timeout, Proxy, Resolve, Verify, BodyType, HttpVersion, Generate) — names + locations only, so none is assumed missing; bodies are pulled in individually below where they're surprising enough to warrant it."
-content = { kind = "lines", spans = [
-  { path = "src/cli.rs", start = 806, end = 806, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 814, end = 814, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 894, end = 894, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 916, end = 916, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 946, end = 946, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 973, end = 973, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 995, end = 995, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1055, end = 1055, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1079, end = 1079, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1189, end = 1189, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1217, end = 1217, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1254, end = 1254, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1291, end = 1291, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1334, end = 1334, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1342, end = 1342, render = { kind = "full" } },
-  { path = "src/cli.rs", start = 1356, end = 1356, render = { kind = "full" } },
-] }
+descriptor = "Environment variables 2/2: NO_PROXY, NETRC, NO_COLOR, RUST_LOG"
+justification = """
+Completes the environment-variable class begun in 3.5. `NETRC` relocates the
+auto-login file read by `netrc.rs`; `NO_COLOR` and `RUST_LOG` control
+`buffer.rs`'s colour guess and `Cli::logger_config`'s env_logger setup. Ranked
+immediately after its sibling so the class is never left visibly half-shown for
+long.
+"""
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 80
+end = 90
+render = { kind = "full" }
 
+[[batches]]
+id = "3.7"
+descriptor = "On-disk files: config.json, .netrc, session directory"
+justification = """
+`~/.config/xh/config.json` with its single `default_options` key and a worked
+example, `~/.netrc` / `~/_netrc`, and `~/.config/xh/sessions` grouped by domain
+and port. This is the persistent-state model behind `cli.rs::default_cli_args`,
+`netrc.rs` and `session.rs` in fifteen lines.
+"""
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc/md-template.md"
+start = 94
+end = 107
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "request_items.rs: Body variants and RequestItems"
+justification = """
+`RequestItems { items, body_type }` — the collected request items plus the
+`BodyType` selected by `--json`/`--form`/`--multipart` — and the complete
+`Body` enum (`Json`, `Form`, `Multipart`, `Raw`, `File`) that `main.rs` matches
+on when attaching a body to the reqwest builder. The bridge between CLI parsing
+and request construction.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 208
+end = 224
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "request_items.rs: complete function roster"
+justification = """
+Every function and remaining type declared at `request_items.rs`'s top level,
+name-only:
+`RequestItem::from_str`, `PartWithParams`, `parse_part_params`,
+`rsplit_once_any`, `Body::is_empty`/`pick_method`, and `RequestItems`'
+`has_form_files`, `headers`, `query`, `body_as_json`, `body_as_form`,
+`body_as_multipart`, `body_from_file`, `body`, `is_multipart`, `pick_method`,
+`is_body_empty`, plus the free `file_to_part`. Shows at a glance that body
+construction fans out by serialization mode and that header/query extraction
+are separate passes over the same item list.
+"""
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 139
+end = 139
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 162
+end = 162
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 191
+end = 191
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 227
+end = 227
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 243
+end = 243
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 253
+end = 253
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 259
+end = 259
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 295
+end = 295
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 308
+end = 308
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 338
+end = 338
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 361
+end = 361
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 400
+end = 400
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 452
+end = 452
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 465
+end = 465
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 478
+end = 478
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 486
+end = 486
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/request_items.rs"
+start = 508
+end = 508
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.10"
+descriptor = "Cargo.toml: feature flags"
+justification = """
+The complete `[features]` table: `default = [\"online-tests\", \"rustls\",
+\"network-interface\"]`, the `native-tls` / `rustls` TLS choice, `http3`,
+`http-message-signatures`, `network-interface`, `online-tests` and
+`ipv6-tests` (an elided comment explains why `network-interface` cannot be
+auto-disabled). Explains the
+`#[cfg(feature = ...)]` blocks the agent will meet all over `main.rs`,
+`cli.rs`, `redirect.rs` and `tests/cases/mod.rs`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 99
+end = 104
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 106
+end = 106
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 110
+end = 113
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "README: URL shorthand rules"
+justification = """
+Scheme-optional URLs, leading `:` as localhost shorthand, the leading `://`
+trick for pasting a URL, and worked resolutions. This is the behaviour
+implemented by `cli.rs::construct_url` (rostered at 2.8) and is a common source
+of \"why did my URL become that\" questions.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 151
+end = 155
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 159
+end = 162
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "README: HTTPS-by-default binary names and strict compatibility mode"
+justification = """
+Invoking the binary as `xhs`, `https` or `xhttps` switches the default scheme
+to HTTPS; invoking it as `http`/`https`, or setting `XH_HTTPIE_COMPAT_MODE`,
+enables HTTPie compatibility mode, whose only current difference is that
+`--check-status` is off by default. Behaviour keyed on argv[0] is invisible to
+anyone reading the option list, so it earns its own rank.
+"""
+predecessor = "3.11"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 169
+end = 170
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 180
+end = 181
+render = { kind = "full" }
+
+# ---------------------------------------------------------------- tier 4
+# main.rs: how an invocation becomes a request, a response and an exit code.
 
 [[batches]]
 id = "4.1"
-descriptor = "main.rs: entry point + error rendering"
-justification = "How the test-mode user agent is chosen, and how main() turns run()'s Result into stderr output plus an ExitCode via error_reporting."
-content = { kind = "lines", spans = [
-  { path = "src/main.rs", start = 59, end = 66, render = { kind = "full" } },
-  { path = "src/main.rs", start = 83, end = 94, render = { kind = "full" } },
-  { path = "src/main.rs", start = 95, end = 95, render = { kind = "ellipsis" } },
-] }
+descriptor = "main.rs: module graph and entry points"
+justification = """
+The `mod` block is the authoritative module list — including that
+`message_signature` is `#[cfg(feature = \"http-message-signatures\")]`-gated,
+which the bare directory listing cannot show — followed by the file's four
+functions: `get_user_agent`, `main`, `run` and `setup_backtraces`. Establishes
+that essentially all orchestration lives in one `run()` and gives its line.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 2
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 68
+end = 68
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 99
+end = 99
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 795
+end = 795
+render = { kind = "full" }
 
 [[batches]]
 id = "4.2"
-descriptor = "main.rs: stdin vs --raw vs request-item body precedence"
-justification = "The exact conflict rules ('Request body (from stdin) and request data cannot be mixed', multipart-from-stdin rejection) that explain several otherwise-mysterious 'cannot be mixed' error messages users hit."
-content = { kind = "lines", spans = [
-  { path = "src/main.rs", start = 116, end = 133, render = { kind = "full" } },
-  { path = "src/main.rs", start = 134, end = 134, render = { kind = "ellipsis" } },
-] }
+descriptor = "main(): startup and top-level error reporting"
+justification = """
+The whole of `main`: `Cli::parse`, optional backtrace setup, `logger_config`
+init, the version/features debug line, then the error path — `\"{bin_name}:
+error: {err:?}\"` on stderr, the extra hints from
+`error_reporting::additional_messages`, and the exit code from
+`error_reporting::exit_code`. Explains xh's diagnostic output format, which is
+what a user pastes when reporting a bug.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 68
+end = 77
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 85
+end = 95
+render = { kind = "full" }
 
 [[batches]]
 id = "4.3"
-descriptor = "main.rs: --check-status exit code mapping"
-justification = "The concrete exit-code contract for scripting (3/4/5 on redirect/4xx/5xx) — exactly the kind of fact a scripting-focused query needs verbatim rather than inferred."
-content = { kind = "lines", spans = [
-  { path = "src/main.rs", start = 724, end = 737, render = { kind = "full" } },
-  { path = "src/main.rs", start = 738, end = 738, render = { kind = "ellipsis" } },
-] }
+descriptor = "run(): --generate and --curl short-circuits, URL and headers"
+justification = """
+The first fifteen lines of `run` decide the whole shape of the program:
+`--generate` hands off to `generation::generate` and returns, `--curl` hands
+off to `to_curl::print_curl_translation` and returns, otherwise headers and
+query parameters are pulled out of the request items, the URL is assembled by
+`url_with_query`, and stdin usage is decided from `--ignore-stdin` and tty
+detection (main.rs:114).
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 100
+end = 113
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "run(): body source selection and default method"
+justification = """
+Precedence between a stdin body, `--raw` and `key=value` items, including the
+error message users actually hit (\"Request body (from stdin) and request data
+(key=value) cannot be mixed. Pass --ignore-stdin...\"), then the `Body::Raw`/`request_items.body()` fork and
+`body.pick_method()` supplying GET-or-POST when no method was given. Directly
+answers a recurring class of \"why did xh reject / why did it POST\" questions.
+"""
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 116
+end = 116
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 121
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 128
+end = 128
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 137
+end = 144
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "run(): output buffer, Print resolution and Printer construction"
+justification = """
+`Buffer::new` over `--download` / `--output` / tty detection, the fallback from
+`--print` to `Print::new` (its argument list elided), `args.style` defaulting
+the theme, `buffer.guess_pretty()` when `--pretty` is absent, the fold over
+repeated `--format-options`, and finally `Printer::new`. This is where the
+entire output-formatting policy is decided, in one screen.
+"""
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 636
+end = 644
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 645
+end = 645
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 652
+end = 660
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "run(): middleware chain assembly and request execution"
+justification = """
+`ClientWithMiddleware::new` wrapping the built client, the `--all` printer
+callback (body elided with an ellipsis), then `RedirectFollower::new(max_redirects.unwrap_or(10), ...)` under
+`--follow`, `DigestAuthMiddleware` when digest auth was selected, and finally
+`client.execute(request)`. The single place the redirect/digest/printing
+layering is visible; `middleware.rs` alone does not show the order.
+"""
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 674
+end = 676
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 677
+end = 677
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 701
+end = 703
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 704
+end = 704
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 711
+end = 719
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "run(): --check-status status-to-exit-code mapping"
+justification = """
+The implementation behind the exit codes documented in 3.4: 3xx without
+`--follow` becomes exit 3, 416 with a resume in flight means the download is
+already complete, 4xx becomes 4, 5xx becomes 5 — and a `HTTP <code> <reason>`
+warning is logged when the status would not otherwise reach the terminal.
+Also shows that `--check-status` defaults to on unless
+`httpie_compat_mode` is active.
+"""
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 723
+end = 732
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 733
+end = 733
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "src/main.rs"
+start = 736
+end = 737
+render = { kind = "full" }
+
+# ---------------------------------------------------------------- tier 5
+# Per-module symbol rosters across the rest of src/. Breadth: makes "where is
+# X handled" a single grep in a single named file.
 
 [[batches]]
 id = "5.1"
-descriptor = "request_items.rs: RequestItem enum"
-justification = "The parsed representation of every REQUEST_ITEM variant (header/unset-header/url-param/data-field/json-field/form-file, each with a from-file counterpart) — the data model behind README 2.5's grammar."
-content = { kind = "lines", spans = [
-  { path = "src/request_items.rs", start = 23, end = 47, render = { kind = "full" } },
-] }
+descriptor = "printer.rs: Printer state and its complete public API"
+justification = """
+`struct Printer`'s fields — the resolved `format_json`, `json_indent_level`,
+`format_xml`, `xml_indent_level`, `sort_headers`, `color`, `theme`, `stream`
+and `buffer` — plus every public method: `new`, `print_separator`,
+`print_request_headers`, `print_response_headers`, `print_request_body`,
+`print_response_body`, `print_response_meta`. `main.rs` calls exactly these, so
+this is the seam between orchestration and output.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 119
+end = 130
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 132
+end = 132
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 347
+end = 347
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 353
+end = 353
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 407
+end = 407
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 420
+end = 420
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 437
+end = 437
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 517
+end = 517
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
 id = "5.2"
-descriptor = "request_items.rs: separator table + longest-match split"
-justification = "The literal precedence table (`==@` before `=@` before `==`, etc.) that decides how an ambiguous item like `foo:=@bar` is tokenized — the ground truth for any 'why did xh parse my item as X and not Y' question."
-content = { kind = "lines", spans = [
-  { path = "src/request_items.rs", start = 52, end = 74, render = { kind = "full" } },
-  { path = "src/request_items.rs", start = 75, end = 75, render = { kind = "ellipsis" } },
-] }
+descriptor = "printer.rs: ContentType dispatch and the module's free functions"
+justification = """
+The complete `ContentType` enum (`Json`, `Html`, `Xml`, `JavaScript`, `Css`,
+`Text`, `UrlencodedForm`, `Multipart`, `EventStream`, `Unknown`) that selects a
+syntect syntax, plus every free function in the file: `get_content_type`,
+`valid_json`, `decode_blob`, `decode_blob_unconditional`, `decode_stream`,
+`detect_encoding`, `get_tld`, `get_charset`. Answers \"how does xh decide to
+pretty-print / how does it pick a charset\".
+"""
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 536
+end = 547
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 608
+end = 608
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 615
+end = 615
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 624
+end = 624
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 649
+end = 649
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 663
+end = 663
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 698
+end = 698
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 732
+end = 732
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/printer.rs"
+start = 742
+end = 742
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
 id = "5.3"
-descriptor = "request_items.rs: body-type dispatch"
-justification = "Which of body_as_json/body_as_form/body_as_multipart/body_from_file actually runs for a given --json/--form/--multipart flag combined with whether any file fields (@filename) are present."
-content = { kind = "lines", spans = [
-  { path = "src/request_items.rs", start = 452, end = 460, render = { kind = "full" } },
-] }
+descriptor = "buffer.rs: output sink abstraction and its platform split"
+justification = """
+The module doc's opening lines establish that `Buffer` owns all program
+output, to terminal, pipe or file, with colour via termcolor. It has two `cfg`-selected `mod imp` implementations, one per
+platform — a structural fact no listing reveals — and both sites are pointed
+at here, along with the shared
+`Buffer::new` / `print` / `guess_pretty` and the `is_terminal` / `is_redirect`
+predicates `main.rs` and `printer.rs` branch on.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 29
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 80
+end = 80
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 84
+end = 84
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 161
+end = 162
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 289
+end = 289
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 304
+end = 304
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/buffer.rs"
+start = 308
+end = 308
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.4"
+descriptor = "formatting/mod.rs: complete item roster"
+justification = """
+Every item in the formatting entry module: the `headers` and `palette`
+submodule declarations, `get_json_formatter`, `format_xml`,
+`serde_json_format`, the lazily-loaded `THEMES` / `PS_BASIC` / `PS_LARGE`
+syntect dumps built by `build.rs`, the `Highlighter` wrapper around `Buffer`,
+`convert_style` / `convert_color`, and the `supports_hyperlinks` /
+`create_hyperlink` helpers used for terminal links.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 17
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 20
+end = 20
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 30
+end = 30
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 48
+end = 48
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 57
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 65
+end = 65
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 124
+end = 124
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 135
+end = 135
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 170
+end = 170
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/mod.rs"
+start = 175
+end = 175
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.5"
+descriptor = "formatting/headers.rs and palette.rs: header colouring"
+justification = """
+`HeaderFormatter` and its `print_request_headers` / `print_response_headers` /
+`print_headers` / `print_http_version` entry points, the `titlecase_header` and
+`sanitize_header_value` helpers behind the FAQ's mangled-header answer, and the
+`palette!` macro (palette.rs:8) whose invocation at headers.rs:13 lifts named
+colours out of a syntect theme — this is how xh colours headers by hand rather
+than through syntect highlighting.
+"""
+predecessor = "5.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/formatting/palette.rs"
+start = 8
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 39
+end = 39
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 70
+end = 70
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 101
+end = 101
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 130
+end = 130
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 216
+end = 216
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/formatting/headers.rs"
+start = 240
+end = 240
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.6"
+descriptor = "session.rs: Session and its complete public API"
+justification = """
+`struct Session { url, path, read_only, content }` plus every public method —
+`load_session`, `headers`, `save_headers`, `auth`, `save_auth`, `cookies`,
+`save_cookies`, `persist` — and the free helpers `xh_version`, `is_path`,
+`path_from_url` (the last decides the `sessions/<domain>_<port>` layout the man
+page documents).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 159
+end = 164
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 196
+end = 196
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 206
+end = 206
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 229
+end = 229
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 255
+end = 255
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 279
+end = 279
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 315
+end = 315
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 346
+end = 346
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 362
+end = 362
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 370
+end = 370
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 374
+end = 374
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.7"
+descriptor = "session.rs: on-disk session file schema"
+justification = """
+The serde types that define the session JSON: `Meta`, `Auth`, `LegacyCookie`,
+`Cookie`, `Cookies`, `Header`, `Headers`, `Content` (with its four fields), and
+`Content::migrate`. The `Legacy*` and split `Cookies`/`Headers` enums exist to
+read old HTTPie and old xh session files, so this is where backward
+compatibility questions land.
+"""
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 60
+end = 60
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 75
+end = 75
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 89
+end = 89
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 96
+end = 96
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 110
+end = 116
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/session.rs"
+start = 119
+end = 119
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.8"
+descriptor = "auth.rs and netrc.rs: credential sources"
+justification = """
+`enum Auth { Bearer, Basic, Digest }` with `Auth::from_str` and
+`Auth::from_netrc`, the `parse_auth` USER[:PASS] splitter (which prompts for a
+missing password) and `DigestAuthMiddleware`; then netrc's `Entry { login,
+password }` and `find_entry`, plus `open_netrc` and the `Parser` that reads it.
+Together these are every place a credential can enter a request.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/auth.rs"
+start = 14
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/auth.rs"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/auth.rs"
+start = 39
+end = 39
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/auth.rs"
+start = 48
+end = 48
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/auth.rs"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/netrc.rs"
+start = 40
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/netrc.rs"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/netrc.rs"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/netrc.rs"
+start = 77
+end = 77
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/netrc.rs"
+start = 86
+end = 86
+render = { kind = "full" }
+
+[[batches]]
+id = "5.9"
+descriptor = "middleware.rs and redirect.rs: the request pipeline"
+justification = """
+`ResponseMeta` (request and content-download durations, the source of
+`--meta`), the `ResponseExt` accessors, the `Middleware` trait with
+its `handle`/`next`/`print` methods, and `ClientWithMiddleware`. Then
+`RedirectFollower` and the header-stripping rules that make redirects safe:
+`is_cross_domain_redirect`, `remove_sensitive_headers`,
+`remove_content_headers`, `remove_signature_headers`, plus `TooManyRedirects`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/middleware.rs"
+start = 7
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/middleware.rs"
+start = 12
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/middleware.rs"
+start = 68
+end = 69
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/middleware.rs"
+start = 89
+end = 89
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 14
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 79
+end = 79
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 96
+end = 96
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 150
+end = 150
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/redirect.rs"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.10"
+descriptor = "download.rs: complete item roster"
+justification = """
+`download_file` and every helper around it: `get_content_length`,
+`get_file_name`, `get_file_size`, `open_new_file` (the \"find a name that
+doesn't exist yet\" rule), `total_for_content_range` (resume validation), and
+the names of the four indicatif progress templates — `BAR_TEMPLATE`,
+`UNCOLORED_BAR_TEMPLATE`, `SPINNER_TEMPLATE`, `UNCOLORED_SPINNER_TEMPLATE`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 80
+end = 80
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 110
+end = 110
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 159
+end = 159
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 161
+end = 161
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 163
+end = 164
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/download.rs"
+start = 166
+end = 166
+render = { kind = "full" }
+
+[[batches]]
+id = "5.11"
+descriptor = "decoder.rs: response body decompression"
+justification = """
+`enum CompressionType { Gzip, Deflate, Brotli, Zstd }`, `get_compression_type`
+(which reads Content-Encoding), `decompress`, and the `OuterReader` /
+`InnerReader` / `Status` / `DecodeError` / `LazyZstdDecoder` machinery, whose
+purpose (documented at decoder.rs:61-82) is to suppress decode errors on empty
+response bodies, notably for HEAD requests.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 11
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 37
+end = 37
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 88
+end = 88
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 122
+end = 122
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 155
+end = 155
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 172
+end = 172
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/decoder.rs"
+start = 213
+end = 213
+render = { kind = "full" }
+
+[[batches]]
+id = "5.12"
+descriptor = "to_curl.rs: --curl translation"
+justification = """
+`print_curl_translation`, the `Command` builder (`long`, `args`, `env`,
+`warnings`) with its `opt` / `arg` / `header` / `env` / `warn` methods and
+`Display` impl, and `translate`, the ~390-line function that walks a parsed
+`Cli` and emits the equivalent curl invocation. The `warnings` field is why
+untranslatable options degrade with a message instead of failing.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 25
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 33
+end = 33
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 42
+end = 42
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 54
+end = 54
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 63
+end = 63
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 69
+end = 69
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/to_curl.rs"
+start = 83
+end = 83
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.13"
+descriptor = "generation.rs: man pages and shell completions"
+justification = """
+`generate` dispatching the eight `Generate` kinds, the two `include_str!`
+templates (`../doc/man-template.roff`, `../doc/md-template.md`), and
+`generate_markdown` / `generate_manpages` / `parse_help` / `ParsedHelp`, which
+re-parse clap's rendered help text into roff and markdown. This is the code
+that regenerates `completions/*` and `doc/xh.1*` per the release checklist.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 9
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 321
+end = 321
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/generation.rs"
+start = 328
+end = 328
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.14"
+descriptor = "nested_json.rs: complete item roster"
+justification = """
+`enum PathAction`, `parse_path`, `insert`, the `Token` lexer and `tokenize`,
+`arr_insert` / `remove_from_arr` (array padding and removal semantics), and the
+`syntax_error` / `highlight_error` / `TypeError` diagnostics that point at the
+offending character of a JSON path. Implements the `app[container][0][id]=`
+syntax introduced in 3.1.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 66
+end = 66
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 94
+end = 98
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 100
+end = 100
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 160
+end = 160
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 221
+end = 221
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 229
+end = 229
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 237
+end = 237
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 245
+end = 245
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/nested_json.rs"
+start = 262
+end = 262
+render = { kind = "full" }
+
+[[batches]]
+id = "5.15"
+descriptor = "utils.rs: complete item roster"
+justification = """
+The crate's shared helpers, each of which is referenced from several modules:
+`unescape`, `clone_request`, the `test_mode` / `test_pretend_term` /
+`test_default_color` env hooks the integration tests depend on, `random_string`,
+`config_dir`, `get_home_dir`, `expand_tilde`, `url_with_query`, the exported
+`vec_of_strings!` macro, `BUFFER_SIZE` (128 KiB) with `copy_largebuf`, the
+`HeaderValueExt` trait, `BadHeaderValue` and `reason_phrase`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 12
+end = 12
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 39
+end = 39
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 49
+end = 49
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 62
+end = 62
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 67
+end = 67
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 102
+end = 102
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 116
+end = 116
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 127
+end = 127
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 140
+end = 140
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 152
+end = 152
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 162
+end = 162
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 183
+end = 183
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 204
+end = 204
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/utils.rs"
+start = 230
+end = 230
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "5.16"
+descriptor = "message_signature.rs: RFC 9421 signing (optional feature)"
+justification = """
+The `http-message-signatures`-gated module: `sign_request`,
+`resolve_components` (the `@method, @authority, @target-uri` default),
+`ensure_content_digest`, `build_signature_params`, `component_uniqueness_key`,
+`normalize_component_id`, `buffer_request_body`, `parse_key_input`,
+`build_signing_key` / `build_hmac_signing_key` /
+`build_signing_key_with_algorithm`, `parse_pem_secret_key` and the
+`MessageSigningKey` enum. Reached from the hidden `--unstable-m-sig-*` flags.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 145
+end = 145
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 206
+end = 206
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 217
+end = 217
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 230
+end = 230
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 243
+end = 243
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 284
+end = 284
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 297
+end = 297
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 334
+end = 334
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/message_signature.rs"
+start = 343
+end = 343
+render = { kind = "full" }
+
+[[batches]]
+id = "5.17"
+descriptor = "content_disposition.rs, redacted.rs, error_reporting.rs"
+justification = """
+The three smallest modules, closing out `src/`: Content-Disposition filename
+parsing (`parse_filename_from_content_disposition`, `parse_regular_filename`,
+`parse_encoded_filename` for RFC 5987 `filename*`); `SecretString`, a `String`
+whose `Debug` impl hides its contents so `--auth` values never reach the debug
+log; and `error_reporting`'s `additional_messages` / `exit_code` /
+`format_rustls_error`, which turn rustls certificate errors into readable text.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/content_disposition.rs"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/content_disposition.rs"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/content_disposition.rs"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/redacted.rs"
+start = 6
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/error_reporting.rs"
+start = 3
+end = 3
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/error_reporting.rs"
+start = 23
+end = 23
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/error_reporting.rs"
+start = 63
+end = 63
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+# ---------------------------------------------------------------- tier 6
+# Generated artefacts, build script, test harness: appendix material.
 
 [[batches]]
 id = "6.1"
-descriptor = "session.rs: current Cookie schema"
-justification = "The on-disk shape of one entry in a session file's current-format cookies array (name/value/expires/path/secure/domain, optional fields omitted when absent) — cheaper ground truth than reading the whole migrate() function."
-content = { kind = "lines", spans = [
-  { path = "src/session.rs", start = 59, end = 71, render = { kind = "full" } },
-] }
+descriptor = "doc/, completions/ and CI workflow listings"
+justification = """
+Complete listings of the two directories holding generated artefacts —
+`doc/` (`man-template.roff`, `md-template.md` and the generated `xh.1` /
+`xh.1.md`) and `completions/` (all six shells) — plus `.github/workflows/`.
+Pairs with `generation.rs` and the release checklist: it shows which files are
+regenerated rather than edited, which is exactly the mistake an agent would
+otherwise make.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "doc"
+entries = "all"
+[[batches.content.groups]]
+parent = "completions"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
 
 [[batches]]
 id = "6.2"
-descriptor = "session.rs: concrete session-file JSON sample (legacy, auto-migrated)"
-justification = "A complete, real session file (HTTPie's older map-style cookies/headers, which Session::load_session migrates on read) straight from the test suite — answers 'what does a session file look like' with zero extra hops, per the operational-coverage principle that a config sample beats reading the parser."
-content = { kind = "lines", spans = [
-  { path = "src/session.rs", start = 402, end = 415, render = { kind = "full" } },
-] }
+descriptor = "build.rs: syntax/theme packdumps and XH_FEATURES"
+justification = """
+`build_syntax` compiles `assets/syntax/basic` and `assets/syntax/large` into
+the `basic.packdump` / `large.packdump` binaries that `formatting/mod.rs`
+loads, `feature_status` / `features` emit
+`cargo:rustc-env=XH_FEATURES`, which `main.rs` and `cli.rs::long_version`
+print. Explains two otherwise-mysterious compile-time dependencies.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "build.rs"
+start = 9
+end = 9
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "build.rs"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "build.rs"
+start = 30
+end = 30
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "build.rs"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "build.rs"
+start = 55
+end = 56
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "build.rs"
+start = 62
+end = 62
+render = { kind = "full" }
 
 [[batches]]
-id = "7.1"
-descriptor = "middleware.rs: Middleware trait"
-justification = "The generic trait's dispatch methods (handle/next) that both redirect-following and digest-auth-retry implement — understand this once and both middlewares read the same way."
-content = { kind = "lines", spans = [
-  { path = "src/middleware.rs", start = 68, end = 73, render = { kind = "full" } },
-  { path = "src/middleware.rs", start = 75, end = 75, render = { kind = "ellipsis" } },
-] }
+id = "6.3"
+descriptor = "Integration test harness"
+justification = """
+`tests/cli.rs` declares `mod cases` and `mod server`, defines the `RequestExt`
+helper for asserting on received requests, and builds commands through
+`get_base_command` / `get_command` / `redirecting_command` / `color_command`
+(which set `XH_TEST_MODE`, `XH_TEST_MODE_TERM` and `XH_TEST_MODE_COLOR` — the
+env hooks `utils.rs` reads). `tests/server/mod.rs` exposes `Server` with
+`http`, `http_unix` and `http_v6` constructors. Everything needed to write a
+new test without reading 3800 lines first.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 25
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 68
+end = 68
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 101
+end = 101
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 109
+end = 109
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/cli.rs"
+start = 116
+end = 116
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/server/mod.rs"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/server/mod.rs"
+start = 141
+end = 141
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/server/mod.rs"
+start = 154
+end = 154
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/server/mod.rs"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
-id = "7.2"
-descriptor = "redirect.rs: 301/302/303 redirect handling"
-justification = "What happens on a 301/Moved/303/SeeOther redirect: header scrubbing (cross-domain-only for auth/cookie headers, unconditional for signature/content headers) and the method/body drop to GET (HEAD is preserved, everything else becomes GET) — the rule behind a 'why did my POST become a GET after redirect' question. The match continues past this arm (307/308 preserve method+body unlike 301-303; elided here) — flagged rather than silently cut off."
-content = { kind = "lines", spans = [
-  { path = "src/redirect.rs", start = 109, end = 127, render = { kind = "full" } },
-  { path = "src/redirect.rs", start = 128, end = 128, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "7.3"
-descriptor = "netrc.rs: lookup semantics (doc comment)"
-justification = "Bulleted HTTPie-compatibility quirks (entries need both login+password, default entry doesn't merge fields, position-independent default) that aren't obvious from the parser state machine alone."
-content = { kind = "lines", spans = [
-  { path = "src/netrc.rs", start = 5, end = 13, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.4"
-descriptor = "auth.rs: Auth enum"
-justification = "The parsed auth representation (Bearer/Basic/Digest, matching cli.rs's AuthType) — auth.rs is otherwise untouched by earlier batches despite being named in the top-level summary ('attach auth/session/cookies'); also locates the DigestAuthMiddleware struct (its fields and its Middleware impl, implementing Middleware from 7.1, retrying with a computed digest answer on a 401 WWW-Authenticate challenge, are elided here) — the digest-auth retry the summary names, for a 'why did xh send two requests for --auth-type=digest' question."
-content = { kind = "lines", spans = [
-  { path = "src/auth.rs", start = 14, end = 19, render = { kind = "full" } },
-  { path = "src/auth.rs", start = 63, end = 63, render = { kind = "full" } },
-  { path = "src/auth.rs", start = 64, end = 64, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.1"
-descriptor = "download.rs: filename-source probes"
-justification = "The two probes get_file_name() falls back through before defaulting to 'index' + a guessed extension: the Content-Disposition header (via content_disposition.rs) and the URL's last non-empty path segment. The rest of the function (sanitizing, then the guess_extension() fallback) is elided rather than silently cut off."
-content = { kind = "lines", spans = [
-  { path = "src/download.rs", start = 28, end = 44, render = { kind = "full" } },
-  { path = "src/download.rs", start = 46, end = 46, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.2"
-descriptor = "decoder.rs: CompressionType + Content-Encoding/Transfer-Encoding detection"
-justification = "Which header wins when both Content-Encoding and Transfer-Encoding are present, and the Content-Length:0 short-circuit — small self-contained decision worth citing verbatim."
-content = { kind = "lines", spans = [
-  { path = "src/decoder.rs", start = 37, end = 59, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.1"
-descriptor = "formatting/headers.rs: latin1 fallback rendering"
-justification = "The code implementing FAQ.md's 'why do some HTTP headers show up mangled' answer: a non-ASCII header value is latin1-decoded and (in a terminal) control characters are replaced. Pairs directly with batch 2.4."
-content = { kind = "lines", spans = [
-  { path = "src/formatting/headers.rs", start = 169, end = 184, render = { kind = "full" } },
-  { path = "src/formatting/headers.rs", start = 185, end = 185, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "printer.rs: Printer struct fields"
-justification = "printer.rs is the 839-line module the summary's 'print/format/color the exchange' step names but no earlier batch touches: this is the state every print_* call reads — the format/indent/sort toggles derived from --json/--form and --format-options, plus color, theme, stream mode and the output Buffer."
-content = { kind = "lines", spans = [
-  { path = "src/printer.rs", start = 119, end = 129, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.1"
-descriptor = "tests/cases/xml.rs: test roster"
-justification = "Every XML-formatting scenario covered (pretty-printing, text/xml content-type, format-disabled, custom indent, invalid-XML fallback, declaration preservation, --pretty=none passthrough, streaming skips formatting, mixed-content preservation, already-formatted passthrough, xhtml content-type) — a complete, cheap 'is XML behavior X tested' answer for one topical file."
-content = { kind = "lines", spans = [
-  { path = "tests/cases/xml.rs", start = 6, end = 6, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 30, end = 30, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 50, end = 50, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 68, end = 68, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 92, end = 92, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 106, end = 106, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 127, end = 127, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 141, end = 141, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 155, end = 155, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 175, end = 175, render = { kind = "full" } },
-  { path = "tests/cases/xml.rs", start = 197, end = 197, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "11.1"
-descriptor = "nested_json.rs: JSON-path grammar"
-justification = "The complete formal grammar for the `app[container][0][id]=090-5` nested-JSON key syntax that README 2.5 references but doesn't spell out — the production rules tokenize()/parse_path() implement, including the append_path rule (`[]`) that the other productions reference."
-content = { kind = "lines", spans = [
-  { path = "src/nested_json.rs", start = 1, end = 13, render = { kind = "full" } },
-] }
+id = "6.4"
+descriptor = "assets/ and tests/fixtures/ listings"
+justification = """
+Closes the last two unlisted directory classes. `assets/` holds the
+`.sublime-syntax` grammars (split into `basic/` and `large/` packdumps) and the
+four `.tmTheme` files that back `--style=auto|solarized|monokai|fruity`;
+`tests/fixtures/` names its three subdirectories (`certs/`, `keys/`,
+`responses/`) holding TLS material and pre-compressed response bodies. Cheap,
+and without it an agent could reasonably assume a theme does not exist.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "assets"
+entries = "all"
+[[batches.content.groups]]
+parent = "assets/syntax/basic"
+entries = "all"
+[[batches.content.groups]]
+parent = "assets/syntax/large"
+entries = "all"
+[[batches.content.groups]]
+parent = "assets/themes"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/fixtures"
+entries = "all"

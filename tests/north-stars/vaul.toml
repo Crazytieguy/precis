@@ -1,476 +1,1339 @@
 fixture = "vaul"
 revision_pin = "3e97aac6"
 summary = """
-vaul is a small single-package React component library (npm name `vaul`,
-v1.1.2) implementing an accessible, gesture-driven drawer/bottom-sheet
-built on top of @radix-ui/react-dialog. All library source lives flat in
-src/ (~2.3k LoC across 11 files + 1 stylesheet); there is no internal
-package split. A sibling `test/` directory is a separate pnpm workspace
-package: a Next.js demo app (one route per feature under
-test/src/app/*/page.tsx) exercised by Playwright specs in test/tests/.
-The root README has been reduced to a single 'this repo is unmaintained'
-notice, so it carries no usage docs — the DialogProps JSDoc in
-src/index.tsx and the demo pages are the only usage documentation in the
-repo. Plausible sessions: extending/debugging drawer interaction physics
-(drag, snap points, velocity thresholds), the iOS Safari scroll/position
-workarounds, adding a new prop or demo page, wiring up a new e2e test,
-or general "how does X work" / "where is Y" questions about a UI-gesture
-library with real DOM-imperative logic rather than typical CRUD/backend
-shape.
+`vaul` is a drawer component for React (npm package `vaul`, v1.1.2, MIT,
+by Emil Kowalski) built as a thin behavioural layer on top of
+`@radix-ui/react-dialog`. The shipped library is the 13 files under
+`src/`: `index.tsx` (1148 lines) holds every exported component —
+`Root`, `NestedRoot`, `Content`, `Overlay`, `Handle`, `Portal` plus
+re-exported Radix `Trigger`/`Close`/`Title`/`Description`, bundled into
+the `Drawer` namespace object — while the drag/scroll/keyboard/snap
+mechanics live in sibling hook modules (`use-snap-points`,
+`use-prevent-scroll`, `use-position-fixed`, `use-scale-background`,
+`use-controllable-state`, `use-composed-refs`) with `helpers.ts`,
+`browser.ts`, `constants.ts`, `context.ts`, `types.ts` underneath.
+`src/style.css` is shipped alongside the JS and is a real part of the
+contract: the component writes `data-vaul-*` attributes that the CSS
+keys off. The repo is a two-package pnpm/turbo workspace; `test/` is a
+Next.js app of one demo route per feature, driven by Playwright specs in
+`test/tests/`. The README is a three-line "this repo is unmaintained"
+notice, so nothing about the project's identity, API or behaviour is
+documented anywhere except the source — which drives this ranking:
+identity and the public component/prop surface first, then the internal
+module map, then the drag/snap/scroll mechanics, the CSS contract, and
+finally the demo app, e2e suite and build tooling.
+
+The query distribution served: "how do I use this / what props exist"
+(tiers 1-2), "where does behaviour X live" (tier 3's per-module symbol
+rosters), "why does the drawer do Y when I drag/scroll/open the
+keyboard" (tier 4), "what CSS/data attributes must I honour" (tier 5),
+"how is this tested / how do I reproduce a bug" (tier 6), and build /
+config questions (tier 7).
 """
+
+# ---------------------------------------------------------------- tier 1
+# Identity, repository layout, and the public component surface.
 
 [[batches]]
 id = "1.1"
-descriptor = "Fixture root listing"
-justification = "First orientation: every top-level entry, so the agent knows this is a single npm package (src/, package.json) with a sibling test/ workspace, plus tooling dotfiles. Cheapest possible catastrophic-omission hedge — anchors all later path references."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "Package identity: name, version, description, entry points"
+justification = """
+The README says nothing about what this project is, so `package.json`'s
+`name`/`description`/`version` is the only statement of identity in the
+repository. Six lines that answer "what am I looking at" and
+"ESM+CJS+types dual-published library, not an app" — the cheapest
+high-value content here, so rank 1.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 7, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "package.json — name/version/description"
-justification = "The three identity fields. Tiny, near-zero cost, and answers 'what is this package called / what version' immediately."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 2, end = 4, render = { kind = "full" } },
-] }
+descriptor = "Complete repository root listing"
+justification = """
+Every immediate child of the root, so the agent sees at once that there
+is a `src/` library, a `test/` sibling package, pnpm-workspace + turbo
+(hence a monorepo), a playwright config at the root, and that the only
+markdown is README/LICENSE. Listing a subset here would let the agent
+conclude, e.g., that there is no CI or no workspace file, so `all`.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "README.md (full)"
-justification = "Only 3 lines: the repo is an unmaintained hobby project. Critical zero-follow-up fact — many 'why hasn't X been fixed' or 'should I invest effort here' questions are answered by this alone, and it's cheap enough to include in full rather than gesture at it."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
-] }
+descriptor = "Complete src/ listing — the shipped library"
+justification = """
+All 13 library files. The filenames are unusually self-describing
+(`use-snap-points`, `use-prevent-scroll`, `use-position-fixed`,
+`use-scale-background`), so this listing alone routes a large share of
+"where does X live" questions to a single file, and it reveals that
+`style.css` sits inside `src/` as shipped source. Cheap and structural,
+hence rank 3.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "src/ directory listing"
-justification = "All 12 files in the library's only source directory (11 .ts/.tsx + style.css). Prevents the agent from assuming any hook/helper file it hasn't seen mentioned doesn't exist."
-content = { kind = "fs", groups = [
-  { parent = "src", entries = "all" },
-] }
+descriptor = "The `Drawer` namespace object — the entire public component set"
+justification = """
+`export const Drawer = { Root, NestedRoot, Content, Overlay, Trigger,
+Portal, Handle, Close, Title, Description }` is how consumers actually
+use the library. Twelve lines that enumerate the whole component API and
+show which parts (`Trigger`, `Close`, `Title`, `Description`) are Radix
+primitives passed straight through. Highest semantic value per token in
+the repo after identity.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 1137, end = 1148, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json — scripts"
-justification = "Build/dev/test/format entry points (type-check, build via bunchee, dev --watch, playwright test). Operational coverage: 'how do I build/test this' answered without opening a Makefile-equivalent search."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 22, end = 30, render = { kind = "full" } },
-] }
+descriptor = "README: the unmaintained notice (whole file)"
+justification = """
+The entire README, all three lines. Load-bearing negative information:
+the project is explicitly unmaintained, there is no usage documentation
+in-repo, and an agent should not go looking for docs it will not find.
+Also warns against "just open a PR upstream" style suggestions.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "test/ workspace top-level listing"
-justification = "The sibling pnpm-workspace package: Next.js config files, src/ and tests/ subdirs, its own package.json. Establishes the demo-app/e2e-test workspace exists and its shape before diving into either half."
-content = { kind = "fs", groups = [
-  { parent = "test", entries = "all" },
-] }
+descriptor = "Every top-level export declaration in src/index.tsx (names only)"
+justification = """
+A location roster over the complete set of top-level declarations in the
+1148-line `index.tsx`: the two snap-point prop interfaces, `DialogProps`,
+`Root`, `Overlay`, `ContentProps`, `Content`, `HandleProps`, `Handle`,
+`NestedRoot`, `PortalProps`, `Portal` (the twelfth, `Drawer`, landed in
+1.4). Showing only some of these would imply the rest do not exist;
+together they give the agent a line-numbered index of the file so any
+follow-up read is one precise hop.
+"""
 
-[[batches]]
-id = "1.7"
-descriptor = "test/src/app/ demo route listing"
-justification = "All 16 demo-page route directories (plus layout.tsx/page.tsx/globals.css) under the Next app router. Names alone (with-snap-points, non-dismissible, different-directions, nested-drawers, ...) tell the agent every feature that has a runnable demo, which doubles as an inventory of the library's supported configurations."
-content = { kind = "fs", groups = [
-  { parent = "test/src/app", entries = "all" },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = "test/tests/ Playwright spec listing"
-justification = "All 9 spec files + shared helpers.ts/constants.ts. Tells the agent exactly which demo routes have e2e coverage (and by omission, which don't — e.g. no spec for open-another-drawer, parent-container, scrollable-page, with-modal-false, different-directions, default-open)."
-content = { kind = "fs", groups = [
-  { parent = "test/tests", entries = "all" },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "package.json — entry points + files"
-justification = "Dual CJS/ESM/types exports map and the `files` allowlist published to npm. Answers 'how is this package consumed/imported' without opening dist/ or a bundler config."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 5, end = 21, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "package.json — devDependencies"
-justification = "Dev tooling versions: Playwright, the Radix dialog primitive vaul wraps, bunchee bundler, eslint/prettier/typescript. Useful for 'what version of X does the build use' without grepping package.json directly."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 47, end = 60, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = "package.json — peerDependencies + runtime dependency"
-justification = "React/ReactDOM peer range (16.8 through 19, including RCs) and the single runtime dependency (@radix-ui/react-dialog). Answers compat questions ('does this support React 19') and confirms Radix Dialog is the only non-dev dependency."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 61, end = 69, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.1"
-descriptor = "Drawer export object (full public API surface)"
-justification = "The single object every consumer imports (`import { Drawer } from 'vaul'`): Root, NestedRoot, Content, Overlay, Trigger, Portal, Handle, Close, Title, Description. This is the entire public API map in 12 lines — the single highest-value batch in the repo for 'what does this library export' and must list every member or the agent will assume the rest don't exist."
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 1137, end = 1148, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.2"
-descriptor = "index.tsx top-level export locations"
-justification = "One line per top-level interface/type/function/const declaration in src/index.tsx (WithFadeFromProps, WithoutFadeFromProps, DialogProps, Root, Overlay, ContentProps, Content, HandleProps, Handle, NestedRoot, PortalProps, Portal) — the file's full export inventory before any body is expanded (all are exported except PortalProps, a module-local type alias used only by Portal's own signature). Hedges against assuming any component lacks an exported type or vice versa; every later batch that expands one of these bodies declares this as predecessor."
-content = { kind = "lines", spans = [
+[batches.content]
+kind = "lines"
+spans = [
   { path = "src/index.tsx", start = 27, end = 27, render = { kind = "full" } },
   { path = "src/index.tsx", start = 40, end = 40, render = { kind = "full" } },
   { path = "src/index.tsx", start = 50, end = 50, render = { kind = "full" } },
   { path = "src/index.tsx", start = 139, end = 139, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 803, end = 803, render = { kind = "truncated", pattern = "^export const Overlay = React.forwardRef<[^,]+" } },
-  { path = "src/index.tsx", start = 831, end = 831, render = { kind = "truncated", pattern = "^export type ContentProps" } },
-  { path = "src/index.tsx", start = 833, end = 833, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 989, end = 989, render = { kind = "truncated", pattern = "^export type HandleProps" } },
-  { path = "src/index.tsx", start = 996, end = 996, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 1098, end = 1098, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 1128, end = 1128, render = { kind = "truncated", pattern = "^type PortalProps" } },
+  { path = "src/index.tsx", start = 803, end = 803, render = { kind = "truncated", pattern = "^export const \\w+" } },
+  { path = "src/index.tsx", start = 831, end = 831, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 833, end = 833, render = { kind = "truncated", pattern = "^export const \\w+" } },
+  { path = "src/index.tsx", start = 989, end = 989, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 996, end = 996, render = { kind = "truncated", pattern = "^export const \\w+" } },
+  { path = "src/index.tsx", start = 1098, end = 1098, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 1128, end = 1128, render = { kind = "full" } },
   { path = "src/index.tsx", start = 1130, end = 1130, render = { kind = "full" } },
-] }
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "src/index.tsx imports: Radix dialog, style.css, and the first hook modules"
+justification = """
+Lines 1-10: the `'use client'` directive, `@radix-ui/react-dialog` as
+`DialogPrimitive` (the primitive this whole library wraps), the
+side-effect `import './style.css'`, the drawer context, and the named
+bindings from `use-prevent-scroll`, `use-composed-refs`, `use-snap-points`
+and `helpers`. Establishes both the external dependency and the fact that
+the CSS ships with the JS.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 1, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "src/index.tsx imports: the constants set and the remaining hook modules"
+predecessor = "1.7"
+justification = """
+Lines 11-25 finish the import block: the complete named list of the eight
+tuning constants (`TRANSITIONS`, `VELOCITY_THRESHOLD`, `CLOSE_THRESHOLD`,
+`SCROLL_LOCK_TIMEOUT`, `BORDER_RADIUS`, `NESTED_DISPLACEMENT`,
+`WINDOW_TOP_OFFSET`, `DRAG_CLASS`), plus `DrawerDirection`,
+`useControllableState`, `useScaleBackground`, `usePositionFixed`, and
+`isIOS`/`isMobileFirefox`. Splitting here keeps the first half cheap while
+still delivering the whole module map by this rank.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 11, end = 25, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "package.json scripts — build, dev, test, format"
+justification = """
+The complete `scripts` block: `bunchee` is the bundler, `build` runs
+type-check then bunchee then copies `src/style.css` to the package root,
+`dev:test` drives the demo app through turbo, and `test` is
+`playwright test`. Answers "how do I build/run/test this" outright.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 22, end = 30, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 2
+# The public prop surface: DialogProps, the snap-point prop union, and
+# every default value. This is what most "how do I use vaul" questions
+# actually want, and it exists nowhere but the source.
+
+[[batches]]
+id = "2.1"
+descriptor = "Snap-point prop union: the fields of WithFadeFromProps / WithoutFadeFromProps"
+predecessor = "1.6"
+justification = """
+The two interfaces whose headers landed in 1.6 are the discriminated
+union spliced onto `DialogProps`: `snapPoints: (number | string)[]` with
+a required `fadeFromIndex: number`, or optional `snapPoints?` with
+`fadeFromIndex?: never`. That "you may only pass fadeFromIndex when
+snapPoints is present" rule is a real trap for callers. Ellipsis markers
+sit at 28 and 41 so the agent can see the doc comments exist and were
+elided, not that they are absent.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 28, end = 28, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 33, end = 33, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 34, end = 34, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 41, end = 41, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 46, end = 46, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 47, end = 47, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "DialogProps declarations, first half (lines 51-85), doc comments elided"
+predecessor = "1.6"
+justification = """
+Every prop declared between `export type DialogProps = {` (shown in 1.6)
+and line 85, with its exact type: `activeSnapPoint`,
+`setActiveSnapPoint`, `children`, `open`, `closeThreshold`,
+`noBodyStyles`, `onOpenChange`, `shouldScaleBackground`,
+`setBackgroundColorOnScale`, `scrollLockTimeout`, `fixed`, `handleOnly`.
+The JSDoc blocks are ellipsis-marked rather than dropped so the agent
+knows documented defaults exist at those exact lines; batches 2.7-2.8
+restore them. Split in two so a small budget still gets a real slice of
+the prop table.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 51, end = 54, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 55, end = 55, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 60, end = 60, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 61, end = 61, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 64, end = 66, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 67, end = 67, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 71, end = 71, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 72, end = 72, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 76, end = 76, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 77, end = 77, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 80, end = 80, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 81, end = 81, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 85, end = 85, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "WithFadeFromProps / WithoutFadeFromProps (full)"
-justification = "The discriminated-union half of DialogProps controlling the snap-point fade-overlay behavior (`snapPoints` + `fadeFromIndex` vs. optional-only). Small, and needed to make sense of the `&` intersection at the end of DialogProps."
+descriptor = "DialogProps declarations, second half (lines 86-137) plus the union tail"
 predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 27, end = 48, render = { kind = "full" } },
-] }
+justification = """
+Closes the prop class: `dismissible`, `onDrag`, `onRelease`, `modal`,
+`nested`, `onClose`, `direction`, `defaultOpen`, `disablePreventScroll`,
+`repositionInputs`, `snapToSequentialPoint`, `container`,
+`onAnimationEnd`, `preventScrollRestoration`, `autoFocus`, ending on
+`} & (WithFadeFromProps | WithoutFadeFromProps);` at 137 which ties the
+type back to 2.1. Without this half the agent would infer the prop list
+stops at `handleOnly`.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 86, end = 86, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 91, end = 93, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 94, end = 94, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 98, end = 100, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 101, end = 101, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 105, end = 105, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 106, end = 106, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 110, end = 110, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 111, end = 111, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 115, end = 115, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 116, end = 116, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 121, end = 121, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 122, end = 122, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 128, end = 129, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 130, end = 130, render = { kind = "ellipsis" } },
+  { path = "src/index.tsx", start = 134, end = 137, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "DialogProps — core open/behavior props (open .. dismissible)"
-justification = "First third of the DialogProps JSDoc table — the only usage documentation for this library (README carries none). Covers activeSnapPoint, open/onOpenChange, closeThreshold, noBodyStyles, shouldScaleBackground, setBackgroundColorOnScale, scrollLockTimeout, fixed, handleOnly, dismissible. High zero-follow-up value for 'what props does Drawer.Root take'."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 50, end = 91, render = { kind = "full" } },
-] }
+descriptor = "Root's destructured parameter list — every prop's default value"
+predecessor = "1.6"
+justification = """
+Lines 140-169: the actual runtime defaults, in one block —
+`shouldScaleBackground = false`, `setBackgroundColorOnScale = true`,
+`closeThreshold = CLOSE_THRESHOLD`, `scrollLockTimeout =
+SCROLL_LOCK_TIMEOUT`, `dismissible = true`, `handleOnly = false`,
+`fadeFromIndex = snapPoints && snapPoints.length - 1`, `modal = true`,
+`direction = 'bottom'`, `defaultOpen = false`, `disablePreventScroll =
+true`, `snapToSequentialPoint = false`, `preventScrollRestoration =
+false`, `repositionInputs = true`, `autoFocus = false`. Note
+`disablePreventScroll` defaults to `true` here while its JSDoc says
+`@default false` — the kind of discrepancy that only shows up when the
+defaults are rendered next to the types.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 140, end = 169, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "DialogProps — drag/modal/direction props (onDrag .. direction)"
-justification = "Continues the DialogProps JSDoc table: onDrag/onRelease callback shapes, modal, nested, onClose, direction (top/bottom/left/right, default bottom)."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 92, end = 105, render = { kind = "full" } },
-] }
+descriptor = "Snap-point prop documentation (fills 2.1's ellipses)"
+predecessor = "2.1"
+justification = """
+Restores lines 28-32, 34-36 and 41-45: snap points are "numbers from 0 to
+100 that correspond to % of the screen", ordered least-visible first,
+px strings allowed, and `fadeFromIndex` defaults to the last snap point.
+Snap points are vaul's headline feature and the semantics are guessable
+in several wrong ways, so this doc is worth more than the remaining
+prop docs.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 28, end = 32, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 34, end = 36, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 41, end = 45, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "DialogProps — snap/animation/misc props (defaultOpen .. autoFocus)"
-justification = "Second half of the DialogProps JSDoc table: defaultOpen, disablePreventScroll, repositionInputs, snapToSequentialPoint, container, onAnimationEnd, preventScrollRestoration, autoFocus, plus the WithFadeFromProps|WithoutFadeFromProps intersection. Completes the prop surface started in 2.4 so no prop is silently missing from the agent's picture."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 106, end = 137, render = { kind = "full" } },
-] }
+descriptor = "Docs for dismissible, modal and direction (fills 2.3's ellipses)"
+predecessor = "2.3"
+justification = """
+Lines 86-90, 94-97, 101-104. The three toggles that change what the
+drawer *is*: `dismissible: false` disables drag/outside-click/esc and
+must be paired with `open`; `modal: false` lets the user interact with
+the page behind it; `direction` accepts top/bottom/left/right and
+defaults to bottom. Highest-value prose in the prop table.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 86, end = 90, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 94, end = 97, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 101, end = 104, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "Root() destructured props + defaults"
-justification = "The concrete default values for every DialogProps field (shouldScaleBackground=false, dismissible=true, direction='bottom', modal=true, etc.) — answers 'what's the default for X' precisely, which the JSDoc @default tags in 2.4/2.5 only partially cover (e.g. fadeFromIndex's computed default isn't a literal)."
+descriptor = "Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout"
 predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 139, end = 169, render = { kind = "full" } },
-] }
+justification = """
+Lines 55-59, 61-63, 67-70, 72-75 — the tuning knobs with numeric
+defaults (`closeThreshold` 0.25 as a fraction of drawer height,
+`scrollLockTimeout` documented as 500ms) and the two body-styling
+opt-outs. These explain values an agent would otherwise have to infer
+from `constants.ts`.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 55, end = 59, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 61, end = 63, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 67, end = 70, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 72, end = 75, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "Overlay component (full)"
-justification = "Small forwardRef component: renders null when !modal, otherwise wires data-vaul-* attributes consumed by src/style.css. Complete in 27 lines, cheap to include whole rather than split."
+descriptor = "Docs for fixed and handleOnly"
 predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 803, end = 829, render = { kind = "full" } },
-] }
+justification = """
+Lines 77-79 and 81-84, the last two ellipses in 2.2's half: `fixed`
+changes the keyboard strategy from moving the drawer to resizing it,
+and `handleOnly` restricts dragging to `<Drawer.Handle />`. Kept as its
+own small batch so the 2.2 half is fully de-elided by a cheap step.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 77, end = 79, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 81, end = 84, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.9"
-descriptor = "ContentProps type + Content()'s destructured context fields"
-justification = "Content's prop type (a passthrough of Radix's ContentProps) and the full list of context values it pulls from useDrawerContext — the shape of what Content needs before its pointer-handler locations are hedged in the next batch."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 831, end = 861, render = { kind = "full" } },
-] }
+descriptor = "Docs for defaultOpen, disablePreventScroll and repositionInputs"
+predecessor = "2.3"
+justification = """
+Lines 106-109, 111-114, 116-120. `defaultOpen` skips the enter
+animation; `disablePreventScroll` and `repositionInputs` govern the iOS
+keyboard/scroll-lock behaviour that `use-prevent-scroll.ts` implements —
+the documented `@default true when snapPoints is defined` for
+`repositionInputs` is otherwise invisible.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 106, end = 109, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 111, end = 114, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 116, end = 120, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.10"
-descriptor = "HandleProps type + Handle()'s destructured context fields"
-justification = "Handle's prop type (preventCycle + passthrough div props) and the context fields it consumes, ahead of its tap-cycling body in a later tier."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 989, end = 1014, render = { kind = "full" } },
-] }
+descriptor = "Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs"
+predecessor = "2.3"
+justification = """
+Lines 122-127 and 130-133, the final two elided doc blocks in
+`DialogProps`. After this batch every ellipsis introduced by 2.1-2.3 has
+been replaced, so the prop table is complete and the agent never has to
+open `index.tsx` to answer a props question.
+"""
 
-[[batches]]
-id = "2.11"
-descriptor = "NestedRoot() (full)"
-justification = "Thin wrapper around Root forcing `nested`, and throwing if rendered outside a parent Drawer — small (29 lines) and self-contained enough to show whole rather than split into signature/body."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 1098, end = 1126, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 122, end = 127, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 130, end = 133, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "2.12"
-descriptor = "Portal component (full)"
-justification = "8-line component: defaults `container` to the one on DrawerContext so nested/custom-container portals work without prop drilling. Trivial to include whole."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 1128, end = 1135, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.13"
-descriptor = "Content()'s rendered JSX — pointer/focus handler + isDeltaInDirection locations"
-justification = "The other half of Content nobody sees from 2.9 alone: isDeltaInDirection (the swipe-start direction-lock gate) and the 8 JSX event props on the underlying DialogPrimitive.Content — onPointerDown, onOpenAutoFocus, onPointerDownOutside, onFocusOutside, onPointerMove, onPointerUp, onPointerOut, onContextMenu — which is where Root's onPress/onDrag/onRelease (tier 3) actually get wired to real DOM pointer events. Without this, an agent could reasonably assume Content is a passive wrapper with no gesture wiring of its own. Location-only (cheap hedge) rather than full bodies, matching the budget available at this rank."
-predecessor = "2.9"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 863, end = 863, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 895, end = 895, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 919, end = 919, render = { kind = "truncated", pattern = "^      onPointerDown=" } },
-  { path = "src/index.tsx", start = 925, end = 925, render = { kind = "truncated", pattern = "^      onOpenAutoFocus=" } },
-  { path = "src/index.tsx", start = 932, end = 932, render = { kind = "truncated", pattern = "^      onPointerDownOutside=" } },
-  { path = "src/index.tsx", start = 944, end = 944, render = { kind = "truncated", pattern = "^      onFocusOutside=" } },
-  { path = "src/index.tsx", start = 950, end = 950, render = { kind = "truncated", pattern = "^      onPointerMove=" } },
-  { path = "src/index.tsx", start = 967, end = 967, render = { kind = "truncated", pattern = "^      onPointerUp=" } },
-  { path = "src/index.tsx", start = 973, end = 973, render = { kind = "truncated", pattern = "^      onPointerOut=" } },
-  { path = "src/index.tsx", start = 977, end = 977, render = { kind = "truncated", pattern = "^      onContextMenu=" } },
-] }
+# ---------------------------------------------------------------- tier 3
+# The internal module map: every src/*.ts module's symbol roster and
+# shared contracts, so "where does X live / what does this hook return"
+# resolves in at most one hop.
 
 [[batches]]
 id = "3.1"
-descriptor = "Root() internal handler locations"
-justification = "One line per named local closure inside Root: onSnapPointChange, getScale, onPress, shouldDrag, onDrag, onVisualViewportChange (the keyboard-resize handler installed inside a resize-listener effect), closeDrawer, resetDrawer, cancelDrag, onRelease, onNestedOpenChange, onNestedDrag, onNestedRelease. Root is 660+ lines of closures with no other index — this is the map that makes 'where does dragging/releasing/closing/keyboard-avoidance happen' a one-hop lookup instead of a full-file read, and every deeper batch below declares it as predecessor."
-predecessor = "2.7"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 258, end = 258, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 262, end = 262, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 281, end = 281, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 357, end = 357, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 477, end = 477, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 536, end = 536, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 551, end = 551, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 591, end = 591, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 600, end = 600, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 680, end = 680, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 709, end = 709, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/index.tsx", start = 724, end = 724, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "src/constants.ts in full — every tuning constant and its value"
+justification = """
+All 18 lines. `TRANSITIONS` (0.5s, cubic-bezier 0.32/0.72/0/1),
+`VELOCITY_THRESHOLD` 0.4, `CLOSE_THRESHOLD` 0.25, `SCROLL_LOCK_TIMEOUT`
+100, `BORDER_RADIUS` 8, `NESTED_DISPLACEMENT` 16, `WINDOW_TOP_OFFSET`
+26, `DRAG_CLASS` 'vaul-dragging'. Every magic number in the drag and
+animation code resolves here, and the whole file is cheaper than most
+single spans — so it goes first in the tier and closes the constant
+class outright.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/constants.ts", start = 1, end = 18, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "onPress() (full)"
-justification = "Pointer-down entry point: bails if !dismissible && !snapPoints, captures drawer dimensions, sets pointer capture, records the iOS touchend workaround for issue #483. Small (18 lines) and self-contained."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 262, end = 279, render = { kind = "full" } },
-] }
+descriptor = "src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction"
+justification = """
+The whole seven-line shared type module: `DrawerDirection` is the string
+union `'top' | 'bottom' | 'left' | 'right'`, `SnapPoint` is
+`{ fraction, height }`, `AnyFunction` backs `helpers.chain`. Trivially
+cheap and it is the vocabulary every other module's signature uses.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/types.ts", start = 1, end = 7, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "shouldDrag() (full) — the gesture-permission gate"
-justification = "Decides whether a pointer-move drags the drawer vs. lets the underlying element handle it: bails for <select>, data-vaul-no-drag, left/right directions, the 500ms post-open animation window, highlighted text, and — the trickiest part — climbs the DOM looking for a scrollable ancestor not yet scrolled to its top. This is the answer to 'why doesn't dragging work over my scrollable list', worth its full 75 lines as one unit."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 281, end = 355, render = { kind = "full" } },
-] }
+descriptor = "src/helpers.ts — all eight exported helper signatures"
+justification = """
+Complete export roster with full signatures: `isInView`, `set` (with its
+`ignoreCache` flag and WeakMap-backed original-style cache), `reset`,
+`isVertical`, `getTranslate` (reads the computed matrix/matrix3d),
+`dampenValue`, `assignStyle`, `chain`. These names appear all over
+`index.tsx`; showing a subset would imply the others do not exist.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/helpers.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 72, end = 72, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 90, end = 90, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 94, end = 94, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 108, end = 108, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "closeDrawer() / cancelDrag() (full) + resetDrawer() signature and transform reset"
-justification = "The three drag-terminal actions. closeDrawer/cancelDrag shown whole; resetDrawer shown through its translate3d(0,0,0) snap-back, with an ellipsis marking the omitted background-scale restoration branch that closes out the function (lower-signal CSS string-building, not core control flow)."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 536, end = 565, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 567, end = 567, render = { kind = "ellipsis" } },
-  { path = "src/index.tsx", start = 591, end = 598, render = { kind = "full" } },
-] }
+descriptor = "src/browser.ts — the complete platform-detection roster"
+justification = """
+All seven exports on one screen: `isMobileFirefox`, `isMac`, `isIPhone`,
+`isSafari`, `isIPad`, `isIOS`, `testPlatform`. Platform branching is
+pervasive in this library (iOS scroll locking, Safari body-position
+fixing, mobile-Firefox height handling), so knowing exactly which
+predicates exist prevents an agent from inventing an `isAndroid`.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 10, end = 10, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/browser.ts", start = 34, end = 34, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "onRelease() — velocity/closeThreshold close-or-reset decision"
-justification = "The final decision in the no-snap-points release path: a fast flick beyond VELOCITY_THRESHOLD closes immediately, otherwise the swiped distance is compared against `closeThreshold * visible drawer dimension` (direction-aware). Answers 'why did/didn't the drawer close on release' precisely."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 644, end = 663, render = { kind = "full" } },
-] }
+descriptor = "DrawerContextValue, first half — refs and pointer callbacks"
+justification = """
+`src/context.ts` lines 4-20: the interface every sub-component reads via
+`useDrawerContext()`. This half carries `drawerRef`/`overlayRef` and the
+whole pointer-callback contract (`onPress`, `onRelease`, `onDrag`,
+`onNestedDrag`, `onNestedOpenChange`, `onNestedRelease`) plus
+`dismissible`, `isOpen`, `isDragging`, `keyboardIsOpen`. This is the
+internal API between `Root` and `Content`/`Overlay`/`Handle`.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/context.ts", start = 4, end = 20, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "Root() small effects — enter-animation flag + non-modal pointer-events"
-justification = "Two cheap, easy-to-miss effects: flips shouldAnimate.current true one frame after mount (avoids animating on first paint) and forces body pointer-events back to 'auto' when modal=false so background content stays interactive."
-content = { kind = "lines", spans = [
-  { path = "src/index.tsx", start = 470, end = 474, render = { kind = "full" } },
-  { path = "src/index.tsx", start = 739, end = 746, render = { kind = "full" } },
-] }
+descriptor = "DrawerContextValue, second half — snap points, direction, container"
+predecessor = "3.5"
+justification = """
+Lines 21-35 close the interface: `snapPointsOffset`, `snapPoints`,
+`activeSnapPointIndex`, `modal`, `shouldFade`, `activeSnapPoint`,
+`setActiveSnapPoint`, `closeDrawer`, `openProp`, `onOpenChange`,
+`direction`, `shouldScaleBackground`, `setBackgroundColorOnScale`,
+`noBodyStyles`, `handleOnly`, `container`, `autoFocus`, `shouldAnimate`.
+Split from 3.5 only for cost; leaving it out would misrepresent the
+context as pointer-only.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/context.ts", start = 21, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "DrawerContext creation and the useDrawerContext accessor"
+predecessor = "3.6"
+justification = """
+Line 37's `React.createContext<DrawerContextValue>({` and line 67's
+closing brace bracket a default-value object that is elided with an
+ellipsis at 38 — the agent can see it exists without paying for 29 lines
+of `() => {}` stubs. Lines 69-75 give `useDrawerContext`, including the
+`'useDrawerContext must be used within a Drawer.Root'` error string an
+agent may be asked to debug.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/context.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/context.ts", start = 38, end = 38, render = { kind = "ellipsis" } },
+  { path = "src/context.ts", start = 67, end = 67, render = { kind = "full" } },
+  { path = "src/context.ts", start = 69, end = 75, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "useSnapPoints: entry point and its complete return surface"
+justification = """
+`src/use-snap-points.ts` line 7 plus the return object at 280-290:
+`isLastSnapPoint`, `activeSnapPoint`, `shouldFade`,
+`getPercentageDragged`, `setActiveSnapPoint`, `activeSnapPointIndex`,
+`onRelease`, `onDrag`, `snapPointsOffset`. That list is exactly what
+`Root` destructures, so it is the fastest route into the snap-point
+subsystem; an ellipsis at line 8 marks the elided parameter block.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-snap-points.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "src/use-snap-points.ts", start = 8, end = 8, render = { kind = "ellipsis" } },
+  { path = "src/use-snap-points.ts", start = 280, end = 290, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "useSnapPoints parameter object (fills 3.8's ellipsis)"
+predecessor = "3.8"
+justification = """
+Lines 8-29: the destructured names and their types —
+`activeSnapPointProp`, `setActiveSnapPointProp`, `snapPoints`,
+`drawerRef`, `overlayRef`, `fadeFromIndex`, `onSnapPointChange`,
+`direction = 'bottom'`, `container`, `snapToSequentialPoint`. Shows that
+the hook is driven entirely by props plus two refs, which is what a
+caller needs before reusing or refactoring it.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-snap-points.ts", start = 8, end = 29, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "usePositionFixed: the iOS rationale comment, its signature and return"
+justification = """
+`src/use-position-fixed.ts` line 4 (the module-level
+`previousBodyPosition` global — a cross-instance singleton and a real
+gotcha), the 6-13 doc block explaining that `position: fixed` on `body`
+is the workaround for iOS bugs #435 and #433, the signature at 15-21
+(with an ellipsis at 22 for the mirrored type block), the `activeUrl` /
+`scrollPos` state at 30-31, and the `{ restorePositionSetting }` return
+at 144. Answers "why does vaul mess with body styles" with zero
+follow-ups.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-position-fixed.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "src/use-position-fixed.ts", start = 6, end = 13, render = { kind = "full" } },
+  { path = "src/use-position-fixed.ts", start = 15, end = 21, render = { kind = "full" } },
+  { path = "src/use-position-fixed.ts", start = 22, end = 22, render = { kind = "ellipsis" } },
+  { path = "src/use-position-fixed.ts", start = 30, end = 31, render = { kind = "full" } },
+  { path = "src/use-position-fixed.ts", start = 144, end = 144, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "use-prevent-scroll.ts exported surface and its provenance"
+justification = """
+Line 1 records that this file is vendored from react-aria's
+`usePreventScroll` — decisive context for "should I change this".
+Then `KEYBOARD_BUFFER`, `useIsomorphicLayoutEffect`, the
+`PreventScrollOptions` interface (10-14), `isScrollable`,
+`getScrollParent`, `usePreventScroll` and `isInput` — the complete
+export list of the 300-line module.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-prevent-scroll.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 10, end = 14, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 34, end = 34, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 68, end = 68, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 294, end = 294, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "use-prevent-scroll.ts module-private declarations"
+predecessor = "3.11"
+justification = """
+Closes the symbol class for this file: the local `chain` (16, distinct
+from `helpers.chain`), the `visualViewport` capture (27), the
+`nonTextInputTypes` set (47, ellipsis at 48 for its nine entries), the
+`preventScrollCount`/`restore` module state (60-61), and the four
+private functions `preventScrollMobileSafari`, `setStyle`, `addEvent`,
+`scrollIntoView`. Without these the file looks like four small exports
+rather than a 300-line mobile-Safari workaround.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-prevent-scroll.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 27, end = 27, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 47, end = 47, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "src/use-prevent-scroll.ts", start = 60, end = 61, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 118, end = 118, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 243, end = 243, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 257, end = 257, render = { kind = "full" } },
+  { path = "src/use-prevent-scroll.ts", start = 272, end = 272, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "use-controllable-state.ts — the controlled/uncontrolled prop machinery"
+justification = """
+Line 1's provenance note (vendored from Radix), the
+`UseControllableStateParams` / `SetStateFn` types at 5-11, and all three
+functions `useCallbackRef`, `useUncontrolledState`,
+`useControllableState`. This hook is why both `open`/`onOpenChange` and
+`activeSnapPoint`/`setActiveSnapPoint` work controlled or uncontrolled —
+a recurring source of "why doesn't my state update" questions.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-controllable-state.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/use-controllable-state.ts", start = 5, end = 11, render = { kind = "full" } },
+  { path = "src/use-controllable-state.ts", start = 13, end = 13, render = { kind = "full" } },
+  { path = "src/use-controllable-state.ts", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/use-controllable-state.ts", start = 39, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "useScaleBackground and use-composed-refs — the two smallest modules"
+justification = """
+`use-scale-background.ts` 8-11: the hook reads `direction`, `isOpen`,
+`shouldScaleBackground`, `setBackgroundColorOnScale`, `noBodyStyles`
+from context and snapshots the body background colour. `use-composed-refs.ts`
+line 1 (vendored from Radix compose-refs) plus `setRef`, `composeRefs`,
+`useComposedRefs` and the export statement at 36 — the complete symbol
+set of both files, folded into one batch because neither justifies its
+own.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/use-scale-background.ts", start = 8, end = 11, render = { kind = "full" } },
+  { path = "src/use-composed-refs.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/use-composed-refs.ts", start = 11, end = 11, render = { kind = "full" } },
+  { path = "src/use-composed-refs.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/use-composed-refs.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/use-composed-refs.ts", start = 36, end = 36, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 4
+# Root's internals and the drag/release mechanics — the "why does the
+# drawer behave like this" tier.
 
 [[batches]]
 id = "4.1"
-descriptor = "constants.ts (full)"
-justification = "Every tunable magic number in the library in one 18-line file: TRANSITIONS (duration/easing), VELOCITY_THRESHOLD, CLOSE_THRESHOLD, SCROLL_LOCK_TIMEOUT, BORDER_RADIUS, NESTED_DISPLACEMENT, WINDOW_TOP_OFFSET, DRAG_CLASS. Every one of these is referenced from Root's interaction logic already shown in tier 3 — cheap and high-value to ground them concretely rather than leave them as bare identifiers."
-content = { kind = "lines", spans = [
-  { path = "src/constants.ts", start = 1, end = 18, render = { kind = "full" } },
-] }
+descriptor = "Every member declared inside Root (names + effect locations)"
+justification = """
+A location roster for the 660-line `Root` body: the memoised
+`onSnapPointChange`, `getScale`, `onPress`, `shouldDrag`, `onDrag`,
+`closeDrawer`, `resetDrawer`, `cancelDrag`, `onRelease`,
+`onNestedOpenChange`, `onNestedDrag`, `onNestedRelease`, the four
+`React.useEffect` blocks at 470/476/665/739, and the `return (` at 748
+where the JSX starts. Any "where is the drag/close/nested logic"
+question becomes a single precise read after this.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 217, end = 217, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 258, end = 258, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 262, end = 262, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 281, end = 281, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 357, end = 357, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 470, end = 470, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 476, end = 476, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 536, end = 536, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 551, end = 551, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 591, end = 591, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 600, end = 600, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 665, end = 665, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 680, end = 680, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 709, end = 709, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 724, end = 724, render = { kind = "truncated", pattern = "^  (?:function|const) \\w+" } },
+  { path = "src/index.tsx", start = 739, end = 739, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 748, end = 748, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "types.ts (full)"
-justification = "The library's only shared type aliases outside index.tsx/context.ts: DrawerDirection, SnapPoint, AnyFunction. 7 lines, essentially free."
-content = { kind = "lines", spans = [
-  { path = "src/types.ts", start = 1, end = 7, render = { kind = "full" } },
-] }
+descriptor = "Root's state and refs — the whole drag bookkeeping set"
+justification = """
+Lines 198-215. The three pieces of state in full (`hasBeenOpened`,
+`isDragging`, `justReleased`) and then, name-only, every ref the drag
+machine keeps: `overlayRef`,
+`openTime`, `dragStartTime`, `dragEndTime`, `lastTimeDragPrevented`,
+`isAllowedToDrag`, `nestedOpenChangeTimer`, `pointerStart`,
+`keyboardIsOpen`, `shouldAnimate`, `previousDiffFromInitial`,
+`drawerRef`, `drawerHeightRef`, `drawerWidthRef`, `initialDrawerHeight`.
+The names alone document the algorithm, and they are the vocabulary of
+every function in 4.1.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 198, end = 200, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 201, end = 215, render = { kind = "truncated", pattern = "^  const \\w+" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "Hook/helper function locations across src/"
-justification = "One line per function in every remaining src/ file not yet covered: helpers.ts (isInView, set, reset, isVertical, getTranslate, dampenValue, assignStyle, chain), browser.ts (isMobileFirefox, isMac, isIPhone, isSafari, isIPad, isIOS, testPlatform), use-snap-points.ts (useSnapPoints, onResize, snapToPoint, onRelease, onDrag, getPercentageDragged), use-prevent-scroll.ts (useIsomorphicLayoutEffect, chain, usePreventScroll, preventScrollMobileSafari, isScrollable, getScrollParent, setStyle, addEvent, scrollIntoView, isInput), use-position-fixed.ts (usePositionFixed, setPositionFixed, onScroll, restorePositionSetting), use-scale-background.ts (useScaleBackground, getScale), use-controllable-state.ts (useControllableState, useUncontrolledState, useCallbackRef), use-composed-refs.ts (useComposedRefs, composeRefs, setRef), context.ts (DrawerContext, useDrawerContext). This single batch turns the entire remaining ~950-line implementation surface into one-grep-away lookups without reading any file whole."
-content = { kind = "lines", spans = [
-  { path = "src/helpers.ts", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/helpers.ts", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 1, end = 1, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/browser.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-snap-points.ts", start = 7, end = 7, render = { kind = "full" } },
-  { path = "src/use-snap-points.ts", start = 46, end = 46, render = { kind = "full" } },
-  { path = "src/use-snap-points.ts", start = 116, end = 116, render = { kind = "truncated", pattern = "^  const snapToPoint" } },
-  { path = "src/use-snap-points.ts", start = 159, end = 159, render = { kind = "full" } },
-  { path = "src/use-snap-points.ts", start = 227, end = 227, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-snap-points.ts", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 8, end = 8, render = { kind = "truncated", pattern = "^export const useIsomorphicLayoutEffect" } },
-  { path = "src/use-prevent-scroll.ts", start = 16, end = 16, render = { kind = "truncated", pattern = "^function chain\\([^:]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 118, end = 118, render = { kind = "full" } },
-  { path = "src/use-prevent-scroll.ts", start = 243, end = 243, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 257, end = 257, render = { kind = "full" } },
-  { path = "src/use-prevent-scroll.ts", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-prevent-scroll.ts", start = 294, end = 294, render = { kind = "full" } },
-  { path = "src/use-position-fixed.ts", start = 15, end = 15, render = { kind = "full" } },
-  { path = "src/use-position-fixed.ts", start = 33, end = 33, render = { kind = "full" } },
-  { path = "src/use-position-fixed.ts", start = 73, end = 73, render = { kind = "full" } },
-  { path = "src/use-position-fixed.ts", start = 99, end = 99, render = { kind = "full" } },
-  { path = "src/use-scale-background.ts", start = 8, end = 8, render = { kind = "full" } },
-  { path = "src/use-scale-background.ts", start = 13, end = 13, render = { kind = "full" } },
-  { path = "src/use-controllable-state.ts", start = 39, end = 39, render = { kind = "truncated", pattern = "^export function useControllableState" } },
-  { path = "src/use-controllable-state.ts", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-controllable-state.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-composed-refs.ts", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-composed-refs.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/use-composed-refs.ts", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/context.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^export const DrawerContext" } },
-  { path = "src/context.ts", start = 69, end = 69, render = { kind = "full" } },
-] }
+descriptor = "Root's useSnapPoints wiring — what it destructures and what it passes"
+justification = """
+Lines 222-231 join tier 3's hook contract to its only caller:
+`activeSnapPoint`, `activeSnapPointIndex`, `setActiveSnapPoint`,
+`onRelease: onReleaseSnapPoints`, `snapPointsOffset`,
+`onDrag: onDragSnapPoints`, `shouldFade`,
+`getPercentageDragged: getSnapPointsPercentageDragged` — and the
+renaming is exactly what makes the drag code hard to follow otherwise.
+The argument object passed back in is elided with an ellipsis at 232;
+its shape is already given by 3.9.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 222, end = 231, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 232, end = 232, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "DrawerContextValue — internal-only fields (refs, callbacks, imperative state)"
-justification = "The context fields that don't already appear as DialogProps in tier 2: drawerRef/overlayRef, the onPress/onRelease/onDrag/onNestedDrag/onNestedOpenChange/onNestedRelease callback shapes, isDragging/keyboardIsOpen/shouldAnimate state, shouldFade, closeDrawer, snapPointsOffset/activeSnapPointIndex. This is the internal wiring surface Content/Overlay/Handle depend on via useDrawerContext, deliberately excluding the ~14 fields (dismissible, isOpen, modal, direction, container, ...) that are 1:1 echoes of props already shown."
-predecessor = "4.3"
-content = { kind = "lines", spans = [
-  { path = "src/context.ts", start = 5, end = 12, render = { kind = "full" } },
-  { path = "src/context.ts", start = 15, end = 17, render = { kind = "full" } },
-  { path = "src/context.ts", start = 19, end = 19, render = { kind = "full" } },
-  { path = "src/context.ts", start = 21, end = 21, render = { kind = "full" } },
-  { path = "src/context.ts", start = 24, end = 24, render = { kind = "full" } },
-  { path = "src/context.ts", start = 34, end = 34, render = { kind = "full" } },
-] }
+descriptor = "Scroll-lock and body-position wiring, including the isDisabled predicate"
+justification = """
+Lines 244-256. The `usePreventScroll({ isDisabled: ... })` condition is
+a seven-term disjunction (`!isOpen || isDragging || !modal ||
+justReleased || !hasBeenOpened || !repositionInputs ||
+!disablePreventScroll`) that decides whether iOS scroll locking runs at
+all — the single most common source of "scrolling is broken" reports —
+followed by the `usePositionFixed` argument list.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 244, end = 256, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "helpers.ts — set()/reset()/isVertical() (full)"
-justification = "The three most-called DOM utilities in the codebase: set() imperatively assigns inline styles (with an original-value cache for reset()), and isVertical() is the top/bottom-vs-left/right direction switch used throughout Root, useSnapPoints, and useScaleBackground."
-predecessor = "4.3"
-content = { kind = "lines", spans = [
-  { path = "src/helpers.ts", start = 23, end = 70, render = { kind = "full" } },
-] }
+descriptor = "shouldDrag: the early-out guards"
+predecessor = "4.1"
+justification = """
+Lines 282-298 (the signature itself landed in 4.1): the locals it computes (`highlightedText`, `swipeAmount`
+via `getTranslate`), the `SELECT` element workaround for issue #483, and
+the `data-vaul-no-drag` opt-out attribute — the documented way consumers
+exempt a subtree from dragging, and impossible to discover elsewhere in
+the repo. An ellipsis at 299 marks the elided remainder, restored by 4.6.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 282, end = 298, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 299, end = 299, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "use-prevent-scroll.ts — Mobile Safari workaround rationale (comment) + isInput()"
-justification = "The 6-point numbered comment explaining why naive overflow:hidden doesn't work on Mobile Safari (toolbar collapse, keyboard covering viewport, input-focus auto-scroll, next/prev keyboard nav) — this is the *design rationale* for the whole file's imperative touch-event handling, far cheaper to convey as prose than by reading all 300 lines of implementation. isInput() (used from index.tsx too) is included as it's small and central."
-predecessor = "4.3"
-content = { kind = "lines", spans = [
-  { path = "src/use-prevent-scroll.ts", start = 92, end = 104, render = { kind = "full" } },
-  { path = "src/use-prevent-scroll.ts", start = 294, end = 300, render = { kind = "full" } },
-] }
+descriptor = "shouldDrag: direction, open-animation window and scroll-lock timeout"
+predecessor = "4.5"
+justification = """
+Lines 300-331. Horizontal drawers always drag; dragging is refused for
+500ms after `openTime`; a positive `swipeAmount` always drags; selected
+text blocks dragging; and `lastTimeDragPrevented` + `scrollLockTimeout`
+implement the "just scrolled, so don't drag" rule. This is the body of
+the prop documented back in 2.7.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 300, end = 331, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.7"
-descriptor = "use-position-fixed.ts — rationale comment + signature"
-justification = "The doc comment explaining *why* this hook exists (body position:fixed works around two linked iOS bugs, #435 and #433) plus the hook's parameter shape. Cheap, high-value 'why does this exist' answer without needing the 130-line Safari-specific implementation that follows."
-predecessor = "4.3"
-content = { kind = "lines", spans = [
-  { path = "src/use-position-fixed.ts", start = 1, end = 29, render = { kind = "full" } },
-] }
+descriptor = "shouldDrag: the scrollable-ancestor climb"
+predecessor = "4.6"
+justification = """
+Lines 333-355 close the function: walk up the DOM, and if any ancestor
+is scrollable and not at `scrollTop === 0` refuse the drag, except that
+an element with `role=\"dialog\"` always drags. This is the answer to
+"my scrollable drawer content won't drag / drags when it shouldn't", and
+it completes shouldDrag so no part of it is left silently elided.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 333, end = 355, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "onRelease: teardown and velocity computation"
+predecessor = "4.1"
+justification = """
+Lines 601-616, under the signature shown in 4.1: removing `DRAG_CLASS`, clearing `isAllowedToDrag`, and
+computing `velocity = |distMoved| / timeTaken` from the drag start/end
+timestamps. Velocity is the quantity `VELOCITY_THRESHOLD` and the
+snap-point release logic both compare against. Ellipsis at 617 flags the
+elided tail.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 601, end = 616, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 617, end = 617, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "onRelease: the close-vs-snap-back decision ladder"
+predecessor = "4.8"
+justification = """
+Lines 639-663, the no-snap-points branch: an upward (or rightward) drag
+just calls `resetDrawer()`, `velocity > VELOCITY_THRESHOLD` closes,
+and a swipe past `closeThreshold` of the visible drawer height — or
+width, for left/right drawers — closes; anything else snaps back. Also
+shows exactly what `open` value the `onRelease` prop receives in each
+case.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 639, end = 663, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "The data-vaul-* attributes emitted by Overlay and Content"
+justification = """
+Lines 816-824 and 902-908: `data-vaul-overlay`, `data-vaul-snap-points`,
+`data-vaul-snap-points-overlay`, `data-vaul-animate`,
+`data-vaul-drawer-direction`, `data-vaul-drawer`,
+`data-vaul-delayed-snap-points`, `data-vaul-custom-container`. These
+attributes are simultaneously the CSS contract of tier 5, the selectors
+the Playwright suite drives, and the hooks consumers style against — so
+the set belongs together in one batch.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 816, end = 824, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 902, end = 908, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "Handle: click-to-cycle snap points"
+justification = """
+Lines 1036-1048 of `handleCycleSnapPoints` plus the two timing
+constants at 993-994 (`LONG_HANDLE_PRESS_TIMEOUT` 250,
+`DOUBLE_TAP_TIMEOUT` 120): with no snap points a tap closes only a
+non-dismissible drawer, and on the last snap point a tap closes a
+dismissible one. The advance-to-next-point tail is ellipsis-marked at
+1049. Non-obvious behaviour with its own demo route and e2e spec.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 993, end = 994, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 1036, end = 1048, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 1049, end = 1049, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "NestedRoot: how a nested drawer is wired to its parent"
+justification = """
+Lines 1099-1111. `NestedRoot` pulls `onNestedDrag`/`onNestedOpenChange`/
+`onNestedRelease` out of the parent's context, throws
+`'Drawer.NestedRoot must be placed in another drawer'` when there is
+none, and renders a `Root` with `nested` set and `onClose` calling
+`onNestedOpenChange(false)`; the remaining chained callbacks are
+ellipsis-marked at 1112. Explains the nesting feature and why the
+parent scales away by `NESTED_DISPLACEMENT`.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.tsx", start = 1099, end = 1111, render = { kind = "full" } },
+  { path = "src/index.tsx", start = 1112, end = 1112, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------- tier 5
+# src/style.css — shipped alongside the JS and keyed off the data-vaul-*
+# attributes from 4.10.
 
 [[batches]]
 id = "5.1"
-descriptor = "style.css — shared [data-vaul-drawer] base rule"
-justification = "The base rule every drawer gets regardless of direction/snap-points: touch-action:none, will-change:transform, the shared transition/animation timing. Establishes that CSS-side animation is driven entirely by data-vaul-* attributes set from index.tsx/context.ts, before any of the ~15 per-direction/per-state selector variants that follow it in the file."
-content = { kind = "lines", spans = [
+descriptor = "The base [data-vaul-drawer] rule and the shape of the variant rules"
+justification = """
+Lines 1-7 are the rule every drawer gets: `touch-action: none`,
+`will-change: transform`, and the 0.5s cubic-bezier(0.32, 0.72, 0, 1)
+transition/animation timing that matches `TRANSITIONS` in `constants.ts`
+— so an agent editing timing knows both places to touch. Line 9 shows
+the shape of the per-direction, per-`data-state` variant selectors, with
+an ellipsis at 10 for its declaration.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
   { path = "src/style.css", start = 1, end = 7, render = { kind = "full" } },
-] }
+  { path = "src/style.css", start = 9, end = 9, render = { kind = "full" } },
+  { path = "src/style.css", start = 10, end = 10, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "style.css selector inventory — which attribute combinations are styled"
+predecessor = "5.1"
+justification = """
+One representative selector per rule family: snap-point transforms (37),
+delayed snap-point transforms (53), the overlay's own transition (69), the
+`::after` overscroll filler on the drawer (93, with an ellipsis at 100
+for its four per-direction variants), the snap-point overlay override
+(138), and the handle/hit-area rules (142, 160) plus the
+pointer-capability media query at 176. Tells the agent which
+`data-vaul-*` states have styling attached without paying for 256 lines.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/style.css", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/style.css", start = 53, end = 53, render = { kind = "full" } },
+  { path = "src/style.css", start = 69, end = 69, render = { kind = "full" } },
+  { path = "src/style.css", start = 93, end = 93, render = { kind = "full" } },
+  { path = "src/style.css", start = 100, end = 100, render = { kind = "ellipsis" } },
+  { path = "src/style.css", start = 138, end = 138, render = { kind = "full" } },
+  { path = "src/style.css", start = 142, end = 142, render = { kind = "full" } },
+  { path = "src/style.css", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/style.css", start = 176, end = 176, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "Every @keyframes name in style.css"
+justification = """
+The complete animation set: `fadeIn`, `fadeOut`, and slideFrom/slideTo
+for all four directions. These names are referenced by the
+`animation-name` declarations elided in 5.1's variant rules, so listing
+them all closes that class and makes "which animation runs when" a
+one-line grep.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/style.css", start = 183, end = 183, render = { kind = "full" } },
+  { path = "src/style.css", start = 192, end = 192, render = { kind = "full" } },
+  { path = "src/style.css", start = 198, end = 198, render = { kind = "full" } },
+  { path = "src/style.css", start = 207, end = 207, render = { kind = "full" } },
+  { path = "src/style.css", start = 213, end = 213, render = { kind = "full" } },
+  { path = "src/style.css", start = 222, end = 222, render = { kind = "full" } },
+  { path = "src/style.css", start = 228, end = 228, render = { kind = "full" } },
+  { path = "src/style.css", start = 237, end = 237, render = { kind = "full" } },
+  { path = "src/style.css", start = 243, end = 243, render = { kind = "full" } },
+  { path = "src/style.css", start = 252, end = 252, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 6
+# The test/ workspace package: a Next.js demo route per feature plus the
+# Playwright suite that drives those routes.
 
 [[batches]]
 id = "6.1"
-descriptor = "test/src/app/page.tsx — demo index (full)"
-justification = "The human-facing landing page of the demo app: a plain list of Links to all 12 linked demo routes. Doubles as a curated feature index in the maintainer's own words (e.g. 'With scaled background', 'Non-dismissible') — cheaper and more semantically direct than inferring intent from each route's code."
-content = { kind = "lines", spans = [
-  { path = "test/src/app/page.tsx", start = 1, end = 22, render = { kind = "full" } },
-] }
+descriptor = "Complete listing of test/src/app — one demo route per feature"
+justification = """
+The 19 children of the Next app directory: `layout.tsx`, `page.tsx`,
+`globals.css` and sixteen route folders whose names are the feature
+matrix (`with-snap-points`, `with-modal-false`, `nested-drawers`,
+`non-dismissible`, `scrollable-with-inputs`, `different-directions`,
+`parent-container`, …). This is the fastest way to answer "is there a
+reproduction for X" and it must be complete, or the agent will conclude
+a feature has no demo.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test/src/app", entries = "all" },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "Per-demo distinguishing Drawer.Root/Handle line, one per test/src/app/*/page.tsx route"
-justification = "One real source line per demo route showing exactly which prop(s)/composition it exercises: shouldScaleBackground, snapPoints+activeSnapPoint, modal=false, dismissible=false, defaultOpen, direction, container, Drawer.Handle, Drawer.NestedRoot, the redirect Link, and the two remaining routes (scrollable-page, scrollable-with-inputs) that test scroll/keyboard behavior rather than a Root prop. Turns 'which demo exercises feature X' into a zero-follow-up lookup instead of opening all 17 files."
-content = { kind = "lines", spans = [
-  { path = "test/src/app/with-scaled-background/page.tsx", start = 83, end = 83, render = { kind = "full" } },
-  { path = "test/src/app/without-scaled-background/page.tsx", start = 13, end = 13, render = { kind = "full" } },
-  { path = "test/src/app/with-snap-points/page.tsx", start = 17, end = 17, render = { kind = "full" } },
-  { path = "test/src/app/with-modal-false/page.tsx", start = 17, end = 17, render = { kind = "full" } },
-  { path = "test/src/app/scrollable-with-inputs/page.tsx", start = 16, end = 16, render = { kind = "full" } },
-  { path = "test/src/app/nested-drawers/page.tsx", start = 44, end = 44, render = { kind = "full" } },
-  { path = "test/src/app/non-dismissible/page.tsx", start = 10, end = 10, render = { kind = "full" } },
-  { path = "test/src/app/initial-snap/page.tsx", start = 17, end = 17, render = { kind = "full" } },
-  { path = "test/src/app/controlled/page.tsx", start = 108, end = 108, render = { kind = "full" } },
-  { path = "test/src/app/default-open/page.tsx", start = 9, end = 9, render = { kind = "full" } },
-  { path = "test/src/app/with-redirect/page.tsx", start = 29, end = 29, render = { kind = "full" } },
-  { path = "test/src/app/different-directions/page.tsx", start = 14, end = 14, render = { kind = "full" } },
-  { path = "test/src/app/with-handle/page.tsx", start = 27, end = 27, render = { kind = "full" } },
-  { path = "test/src/app/open-another-drawer/page.tsx", start = 6, end = 6, render = { kind = "full" } },
-  { path = "test/src/app/parent-container/page.tsx", start = 25, end = 25, render = { kind = "full" } },
-  { path = "test/src/app/scrollable-page/page.tsx", start = 7, end = 7, render = { kind = "full" } },
-] }
+descriptor = "Complete listing of test/tests — the Playwright spec set"
+justification = """
+All eleven files: `base`, `controlled`, `initial-snap`, `nested`,
+`non-dismissible`, `with-handle`, `with-redirect`,
+`with-scaled-background`, `without-scaled-background` specs plus the
+shared `helpers.ts` and `constants.ts`. Shows both what is covered and —
+by contrast with 6.1's route list — what is not.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test/tests", entries = "all" },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Listing of the test/ package root"
+justification = """
+Completes the picture of the second workspace package: its own
+`package.json`, `tsconfig.json`, `.eslintrc.json`, `next.config.js`,
+`postcss.config.js`, `tailwind.config.ts`, `README.md`, the `public/`
+and `src/` and `tests/` directories. Cheap, and it stops the agent
+assuming demo config is inherited from the root package.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test", entries = "all" },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "Spec-suite to demo-route map for every Playwright file"
+justification = """
+For each of the nine spec files, its `page.goto('/...')` in `beforeEach`
+and its `test.describe(...)` title. That pairing is the index from
+"behaviour I am changing" to "route to open and suite to run", and it
+covers every spec file so no suite looks absent.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/tests/base.spec.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "test/tests/base.spec.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "test/tests/controlled.spec.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "test/tests/controlled.spec.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "test/tests/initial-snap.spec.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "test/tests/initial-snap.spec.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "test/tests/nested.spec.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "test/tests/nested.spec.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "test/tests/non-dismissible.spec.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "test/tests/non-dismissible.spec.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "test/tests/with-handle.spec.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "test/tests/with-handle.spec.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "test/tests/with-redirect.spec.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "test/tests/with-redirect.spec.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "test/tests/with-scaled-background.spec.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "test/tests/with-scaled-background.spec.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "test/tests/without-scaled-background.spec.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "test/tests/without-scaled-background.spec.ts", start = 7, end = 7, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "Playwright runner configuration: server, devices, testDir"
+justification = """
+From `playwright.config.ts`: `testDir: './test'` and the 30s timeout
+(13-14), the `baseURL` and the `webServer` block that boots the Next
+demo on :3000 from `./test` (36-43), and the two device projects the
+suite runs on — iPhone 13 Pro and Pixel 5 (46-53), i.e. touch emulation
+only, which explains why the specs use pointer gestures.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "playwright.config.ts", start = 13, end = 14, render = { kind = "full" } },
+  { path = "playwright.config.ts", start = 36, end = 43, render = { kind = "full" } },
+  { path = "playwright.config.ts", start = 46, end = 53, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "Shared e2e helpers: openDrawer and ANIMATION_DURATION"
+justification = """
+`test/tests/helpers.ts` 4-9 and `test/tests/constants.ts` — every spec
+opens a drawer by clicking `data-testid=\"trigger\"`, waiting
+`ANIMATION_DURATION` (500) and asserting `data-testid=\"content\"` is
+visible. Knowing the two testids and the wait constant is most of what
+writing a new spec requires.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/tests/helpers.ts", start = 4, end = 9, render = { kind = "full" } },
+  { path = "test/tests/constants.ts", start = 1, end = 1, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 7
+# Packaging, workspace and tooling. Appendix material: needed for build
+# and release questions, not for understanding the drawer.
 
 [[batches]]
 id = "7.1"
-descriptor = "playwright.config.ts — webServer + device projects"
-justification = "How `pnpm test` actually runs: spins up `npm run dev` inside test/ against localhost:3000, then runs the suite against emulated iPhone 13 Pro and Pixel 5 device profiles. Answers 'how do I run/debug the e2e suite locally' without needing to reverse-engineer it from the CI workflow."
-content = { kind = "lines", spans = [
-  { path = "playwright.config.ts", start = 38, end = 55, render = { kind = "full" } },
-] }
+descriptor = "package.json publishing surface: files and the exports map"
+justification = """
+Lines 8-21: `files: ["dist", "style.css"]` and the dual `import`/
+`require` conditional exports with separate `.d.mts`/`.d.ts` types.
+Explains why `copy-assets` exists and what consumers can actually
+import — the first thing to check for a packaging bug.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 8, end = 21, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "CI workflow — install/build/test steps"
-justification = "The exact pnpm/playwright commands CI runs after checkout/node setup: install pnpm 8.8.0, `pnpm install`, `pnpm build`, `npx playwright install`, `pnpm test`. The ground truth for 'how does CI build and test this' and for reproducing a CI failure locally."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/playwright.yml", start = 18, end = 22, render = { kind = "full" } },
-] }
+descriptor = "Runtime and peer dependencies, and the pinned package manager"
+justification = """
+Lines 61-68: peer ranges accepting React 16.8 through 19 rc,
+`packageManager: pnpm@8.8.0`, and the single runtime dependency
+`@radix-ui/react-dialog ^1.1.1`. Line 47 shows that a
+`devDependencies` block exists and the ellipsis at 48 marks its thirteen
+entries as elided rather than absent — the toolchain versions are one
+grep away when a build question needs them.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 47, end = 47, render = { kind = "full" } },
+  { path = "package.json", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 61, end = 68, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "Workspace and task-runner config: pnpm-workspace.yaml and turbo.json"
+justification = """
+The whole of `pnpm-workspace.yaml` (packages: `.` and `test`) and
+`turbo.json`'s pipeline (`build` depends on `^build`, outputs `dist/**`
+and `.next/**`; `dev` is uncached). Two tiny files that together define
+how the monorepo builds.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 3, render = { kind = "full" } },
+  { path = "turbo.json", start = 2, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "Root tsconfig.json — compiler settings for the shipped library"
+justification = """
+Lines 2-10: `jsx: react`, `target: es2018`, `moduleResolution: node`,
+`strict: true`, lib es2015+dom, and `include: ["src"]` — the library is
+type-checked in isolation from the demo app, which has its own tsconfig
+(see 6.3). Needed before touching types or adding a source file.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tsconfig.json", start = 2, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "Listing of .github/workflows"
+justification = """
+Closes the CI class before 7.6 renders the workflow's body: the root
+listing in 1.2 reveals `.github/` exists, and this shows `playwright.yml`
+is the only workflow in it — so the agent does not go looking for a
+publish or lint pipeline that does not exist. Four tokens.
+"""
+
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github/workflows", entries = "all" },
+]
+
+[[batches]]
+id = "7.6"
+descriptor = "CI: the Playwright workflow steps"
+justification = """
+`.github/workflows/playwright.yml` lines 11-22: the
+`mcr.microsoft.com/playwright:v1.41.2` container, Node 20, pnpm 8.8.0,
+`pnpm install` → `pnpm build` → `npx playwright install` → `pnpm test`.
+The one place that states the supported Node/pnpm versions and proves
+the e2e suite is the project's only gate.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/playwright.yml", start = 11, end = 22, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.7"
+descriptor = "Prettier configuration — the formatting any new code must match"
+justification = """
+`.prettierrc.js` in full: semicolons, single quotes, two-space tabs,
+trailing commas everywhere and a 120-column print width. `pnpm format`
+runs Prettier over the whole repo, so code written without these
+settings will be reformatted; ranked last because it affects nothing but
+diff noise, but it is the one config an agent writing code here must
+obey.
+"""
+
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".prettierrc.js", start = 1, end = 7, render = { kind = "full" } },
+]

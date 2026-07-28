@@ -1,442 +1,768 @@
 fixture = "act"
 revision_pin = "123167dc"
 summary = """
-`act` is a Go CLI (github.com/nektos/act) that runs GitHub Actions workflows
-locally, mostly by driving Docker containers. Shape: a Cobra CLI (cmd/)
-parses flags into an `Input`/`Config`; `pkg/model` parses `.github/workflows/*.yml`
-and `action.yml` into `Workflow`/`Job`/`Step`/`Action`; `pkg/model.Planner`
-turns that into a `Plan` of `Stage`s of parallel `Run`s; `pkg/runner` is the
-execution engine (`RunContext` holds job state, `pkg/runner/step*.go` has one
-implementation per step kind); `pkg/container` wraps the Docker API (plus a
-host-exec fallback and a `WITHOUT_DOCKER` build-tag stub); `pkg/exprparser`
-implements the `${{ }}` GitHub Actions expression language; `pkg/artifacts`
-and `pkg/artifactcache` are local HTTP servers standing in for the real
-actions/upload-artifact and actions/cache backends. CLAUDE.md already gives
-an agent this architecture narrative and the common dev commands, so this
-ranking buys the complement within a tight token budget: the CLI flag
-surface, exact struct/interface shapes with line coordinates, concrete
-workflow/action.yml/`.actrc` samples, and enough of the CI/lint config to
-ground CLAUDE.md's prose. Given the fixture's size (~18K LOC across 8
-packages) far exceeds what a single NS can afford verbatim, this ranking
-front-loads package-existence breadth (every package directory listed before
-any single package's internals are shown in depth) and then prioritizes the
-CLI entrypoint and the model/runner core data shapes over exhaustive per-file
-function rosters — a follow-up `grep`/read against a listed file is assumed
-to be an acceptable single hop. Expected query distribution: "how do I
-run/configure act on my workflow", "why did step X behave this way", "add a
-new CLI flag / step kind", "how does the docker vs host-exec vs
-WITHOUT_DOCKER path differ", and general code tours of a specific package.
+`act` (nektos/act) is a Go CLI that runs GitHub Actions workflows locally: it
+reads `.github/workflows/*.yml`, builds a `Plan` of stages and jobs, and runs
+each job in a Docker container (or on the host) while emulating the GitHub
+runner's env vars, contexts, expression language, artifact upload/download
+and actions cache.
+
+The repository is one binary (`main.go` -> `cmd/`) over twelve `pkg/`
+libraries. Its substance sits in three places: `cmd/root.go` (an 806-line
+Cobra command with ~65 flags and the whole run pipeline), `pkg/model/` (the
+YAML workflow/action object model plus the planner) and `pkg/runner/` (the
+execution engine: `RunContext`, the four step implementations, expression
+evaluation, composite actions and reusable workflows). `pkg/container/`
+hides Docker and the host execution environment behind one interface;
+`pkg/common/` holds the `Executor` combinator every phase composes with; the
+rest implement the expression interpreter, JSON-schema validation, the
+artifact and artifact-cache HTTP servers, workspace collection, pattern
+filtering, `gh` token lookup and PATH resolution.
+
+Ranking intent. A repo-root `CLAUDE.md` is auto-loaded by the harness and
+already narrates the execution flow and the package roles in prose, so this
+ranking spends its budget on what prose cannot give: exact locations,
+complete symbol rosters (so the agent never infers a missing sibling),
+struct and interface field lists, the flag surface, and the small dispatch
+sites — the step factory, expression contexts and functions, the cache
+routes, the build-tag split — that answer "where is X decided?" in one hop.
+The repository is ~39k lines and the budget is not, so the ranking
+systematically prefers breadth (listings, rosters, declarations) over long
+function bodies; every batch that shows part of a class either shows all of
+it or hands the rest to a named successor. Tier 1 is identity and the
+filesystem map, tier 2 the CLI surface a user types, tier 3 the
+workflow/action data model, tier 4 the execution engine, tier 5 the
+container abstraction, tier 6 the supporting packages, tier 7 build and CI
+metadata.
 """
 
-# ============================================================
-# Tier 1 — orientation
-# ============================================================
+# ---------------------------------------------------------------- tier 1 ----
+# Identity and the shape of the repository: the cheapest answers to "what is
+# this?" and "where does anything live?".
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing — source and docs"
-justification = "The source/docs half of the root listing (cmd/, pkg/, main.go(+test), README/CLAUDE/CONTRIBUTING/IMAGES, go.mod/go.sum, Makefile, LICENSE, VERSION*) — kept small so a tiny budget still gets the codebase shape."
-content = { kind = "fs", groups = [
-    { parent = ".", entries = ["cmd", "pkg", "main.go", "main_test.go", "README.md", "CLAUDE.md", "CONTRIBUTING.md", "IMAGES.md", "go.mod", "go.sum", "Makefile", "LICENSE", "VERSION", "VERIFICATION"] },
-]}
+descriptor = "README tagline + what act is"
+justification = "Rank 1 must be tiny and must say what the project is. Line 5 is the slogan, line 7 the one-sentence purpose (run your GitHub Actions locally). Every downstream query is framed by these two lines."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "Root directory listing — tooling config and packaging"
-justification = "The other half: linter/formatter dotfiles (.golangci.yml, .editorconfig, .prettierrc.yml, .markdownlint.yml, .mega-linter.yml, .codespellrc, .gitleaks*), release tooling (.goreleaser.yml, install.sh, act-cli.nuspec, codecov.yml), .github/, .vscode/ — split from 1.1 so neither root-listing batch is oversized for an early rank."
-predecessor = "1.1"
-content = { kind = "fs", groups = [
-    { parent = ".", entries = [".actrc", ".codespellrc", ".editorconfig", ".github", ".gitignore", ".gitleaks.toml", ".gitleaksignore", ".golangci.yml", ".goreleaser.yml", ".markdownlint.yml", ".mega-linter.yml", ".mergify.yml", ".prettierignore", ".prettierrc.yml", ".vscode", "act-cli.nuspec", "codecov.yml", "install.sh"] },
-]}
+descriptor = "main.go: process entry point"
+justification = "Ten lines that pin the binary's entry path: the embedded VERSION file, the graceful cancellation context from pkg/common and the delegation to cmd.Execute(ctx, version). Establishes that main is a thin shell over cmd/."
+[batches.content]
+kind = "lines"
+spans = [{ path = "main.go", start = 10, end = 19, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.3"
-descriptor = "go.mod — module + Go version"
-justification = "Module path and the go1.25 toolchain requirement — the two facts needed before touching build tooling."
-content = { kind = "lines", spans = [
-    { path = "go.mod", start = 1, end = 4, render = { kind = "full" } },
-]}
+descriptor = "pkg/: complete package list"
+justification = "The twelve library packages are the repository's decomposition. Listing all of them rather than a readable subset stops the agent concluding that e.g. artifactcache or workflowpattern does not exist, and gives every later grep a target."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg", entries = "all" }]
 
 [[batches]]
 id = "1.4"
-descriptor = "Binary entrypoint (main.go) + VERSION"
-justification = "The `//go:embed VERSION` directive and func main (creates the cancellation context, calls cmd.Execute) — the one place 'where does execution start' resolves to."
-content = { kind = "lines", spans = [
-    { path = "main.go", start = 10, end = 19, render = { kind = "full" } },
-    { path = "VERSION", start = 1, end = 1, render = { kind = "full" } },
-]}
+descriptor = "cmd/: complete file list"
+justification = "The CLI package is small and flat; naming every file (including the colocated root_test.go / execute_test.go and testdata/) shows where flags, notices, secrets, list and graph output live before anything is read."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "cmd", entries = "all" }]
 
-# ============================================================
-# Tier 2 — package breadth (every package directory, cheapest first)
-# ============================================================
+[[batches]]
+id = "1.5"
+descriptor = "Repository root: complete entry list"
+justification = "Makefile, go.mod/go.sum, install.sh, VERSION, the three docs, and the whole dotfile set (.actrc, .golangci.yml, .goreleaser.yml, .mergify.yml, .mega-linter.yml, .gitleaks*, .vscode, .github). A partial root listing would make the agent assume tooling is absent; this closes the class."
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
+id = "1.6"
+descriptor = "pkg/model/: complete file list"
+justification = "The object-model package: workflow.go, planner.go, action.go, github_context.go, job_context.go, step_result.go, anchors.go and their colocated tests. Core substance, so its roster lands before any peripheral inventory."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/model", entries = "all" }]
+
+[[batches]]
+id = "1.7"
+descriptor = "pkg/runner/: complete file list"
+justification = "The largest package and the one an agent will spend most time in: run_context.go, runner.go, the step_* family, action*.go, expression.go, command.go, logger.go, reusable_workflow.go, every colocated *_test.go, plus the embedded JS assets (hashfiles/, res/) and testdata/."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/runner", entries = "all" }]
+
+[[batches]]
+id = "1.8"
+descriptor = "README: how act works, end to end"
+justification = "One dense paragraph: read the workflows, determine the set of actions to run, use the Docker API to pull or build images, compute the execution path from the declared dependencies, then run a container per action with GitHub-compatible env and filesystem. The cheapest zero-follow-up architecture answer."
+[batches.content]
+kind = "lines"
+spans = [{ path = "README.md", start = 18, end = 18, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.9"
+descriptor = "Module path, Go version, released version"
+justification = "Fixes the import prefix (github.com/nektos/act) that every internal import uses, the language version, and the version string main.go embeds. Needed before any build or dependency question can be framed."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+  { path = "VERSION", start = 1, end = 1, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 2 ----
+# The CLI surface: what a user types and where configuration comes from.
 
 [[batches]]
 id = "2.1"
-descriptor = "pkg/exprparser/ directory listing"
-justification = "Both non-test files (interpreter.go, functions.go) plus testdata/ (used by hashFiles()) — the cheapest package listing, so package-existence breadth starts accumulating at minimal cost."
-content = { kind = "fs", groups = [
-    { parent = "pkg/exprparser", entries = "all" },
-]}
+descriptor = "cmd.Execute: CLI entry"
+justification = "The function main.go calls: allocate an Input, build the root command, exit non-zero through the overridable exitFunc that the tests swap. The natural next hop from 1.2."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 44, end = 54, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.2"
-descriptor = "pkg/artifacts/ and pkg/artifactcache/ directory listings"
-justification = "The two local-server packages behind `--artifact-server-path` and the (enabled-by-default) cache server, enumerated for discoverability even though their bodies aren't budget-affordable here — a follow-up read of handler.go/server.go is one hop from this listing."
-content = { kind = "fs", groups = [
-    { parent = "pkg/artifacts", entries = "all" },
-    { parent = "pkg/artifactcache", entries = "all" },
-]}
+descriptor = "Root cobra.Command definition"
+justification = "The Use/Short strings encode user-visible semantics stated nowhere else: the positional argument is an event name, no event defaults to `on: push` unless the workflows handle exactly one event. Also names the RunE / PersistentPreRun / PersistentPostRun hooks whose implementations 2.7 locates."
+[batches.content]
+kind = "lines"
+spans = [{ path = "cmd/root.go", start = 56, end = 66, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.3"
-descriptor = "pkg/model/ directory listing"
-justification = "All 7 non-test files (workflow.go, planner.go, action.go, github_context.go, anchors.go, job_context.go, step_result.go) plus its testdata/ tree, enumerated together so none look missing."
-content = { kind = "fs", groups = [
-    { parent = "pkg/model", entries = "all" },
-]}
+descriptor = "Command-local flags: names and shorthands"
+justification = "Every command-local flag registration truncated to its name and shorthand: --watch/-w, --validate, --strict, --list/-l, --graph/-g, --job/-j, --bug-report, --man-page, --remote-name, --secret/-s, --var, --env, --input, --platform/-P, --reuse/-r, --bind/-b, --pull/-p, --rebuild, --detect-event, --eventpath/-e, --defaultbranch, --privileged, --userns, --use-gitignore, --container-cap-add/-drop, --rm, the two GHE replacement flags and --matrix. Flag existence is the most-asked CLI fact and a partial list actively misleads, so the whole block lands at once; descriptions and defaults are deferred."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/root.go", start = 68, end = 75, render = { kind = "truncated", pattern = '"[a-z][a-z0-9-]+"(, "[a-zA-Z]")?' } },
+  { path = "cmd/root.go", start = 77, end = 98, render = { kind = "truncated", pattern = '"[a-z][a-z0-9-]+"(, "[a-zA-Z]")?' } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "cmd/ directory listing"
-justification = "All 8 non-test + 2 test files and testdata/ in one shot — the CLI package is small enough to enumerate completely rather than risk hiding e.g. secrets.go or notices.go behind a partial view."
-content = { kind = "fs", groups = [
-    { parent = "cmd", entries = "all" },
-    { parent = "cmd/testdata", entries = "all" },
-]}
+descriptor = "Persistent flags: names and shorthands"
+justification = "The other half of the same class, ranked immediately after so no threshold cut leaves it half-shown: --actor/-a, --workflows/-W, --no-recurse, --directory/-C, --verbose/-v, --json, --log-prefix-job-id, --quiet/-q, --dryrun/-n, --secret-file, --var-file, --insecure-secrets, --env-file, --input-file, --container-architecture, --container-daemon-socket, --container-options, --github-instance, the three --artifact-server-* flags, --no-skip-checkout, --no-cache-server and the four --cache-server-* flags, --action-cache-path, --action-offline-mode, --network, --use-new-action-cache, --local-repository, --list-options and --concurrent-jobs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/root.go", start = 99, end = 132, render = { kind = "truncated", pattern = '"[a-z][a-z0-9-]+"(, "[a-zA-Z]")?' } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "pkg/common/ and pkg/common/git/ directory listing"
-justification = "Full enumeration of both dirs so the small utility files (auth.go, dryrun.go, outbound_ip.go, job_error.go, line_writer.go) aren't hidden behind the one this NS pulls content from."
-content = { kind = "fs", groups = [
-    { parent = "pkg/common", entries = "all" },
-    { parent = "pkg/common/git", entries = "all" },
-]}
+descriptor = "Input struct + path accessor roster"
+justification = "Input is where every flag binds and is what becomes runner.Config; its ~60 field names mirror the flag names already listed, so the body renders as an ellipsis and only the declaration plus the name of each path accessor is paid for. Envfile/Secretfile/Varfile/Workdir/WorkflowsPath/EventPath/Inputfile are all resolved through the unexported resolve() against the absolute --directory."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/input.go", start = 9, end = 10, render = { kind = "full" } },
+  { path = "cmd/input.go", start = 11, end = 11, render = { kind = "ellipsis" } },
+  { path = "cmd/input.go", start = 70, end = 70, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 85, end = 85, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 90, end = 90, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 94, end = 94, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 99, end = 99, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 104, end = 104, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 109, end = 109, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/input.go", start = 114, end = 114, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings"
-justification = "All five smaller supporting packages enumerated together, including lookpath's platform-specific build-tag files (lp_unix/lp_windows/lp_plan9/lp_js) and schema's embedded JSON files — discoverability for packages this budget can't otherwise afford to open in depth."
-content = { kind = "fs", groups = [
-    { parent = "pkg/gh", entries = "all" },
-    { parent = "pkg/lookpath", entries = "all" },
-    { parent = "pkg/filecollector", entries = "all" },
-    { parent = "pkg/workflowpattern", entries = "all" },
-    { parent = "pkg/schema", entries = "all" },
-]}
+descriptor = "Config-file discovery: .actrc locations"
+justification = "configLocations() in full — the XDG act/actrc file, ~/.actrc and ./.actrc, in that deliberately enforced order — plus cmd/dir.go's UserHomeDir/CacheHomeDir globals those paths and the default cache directories are built from. Answers the whole 'where do I put -P images / why is that flag already set' family; args() at line 155 splices these files ahead of os.Args."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/root.go", start = 137, end = 153, render = { kind = "full" } },
+  { path = "cmd/dir.go", start = 10, end = 13, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "pkg/container/ directory listing"
-justification = "All 20 non-test .go files (plus DOCKER_LICENSE) including the build-tag-gated variants (docker_stub.go, util_windows.go, util_plan9.go, util_openbsd_mips64.go) and testdata/ — enumerated together so build-tag alternatives aren't mistaken for dead code."
-content = { kind = "fs", groups = [
-    { parent = "pkg/container", entries = "all" },
-]}
+descriptor = "cmd package: complete function roster"
+justification = "Name-only roster of every remaining top-level function in cmd/: args, bugReport, generateManPage, listOptions, readArgsFile, setup/cleanup, parseEnvs, readYamlFile, readEnvs/readEnvsEx, parseMatrix, newRunCommand (root.go:391, the 320-line run pipeline every non-trivial follow-up lands in), defaultImageSurvey, watchAndRun, plus printList, drawGraph, newPlatforms, newSecrets/AsMap, the version-notice helpers and dir.go's init. Closes the package's symbol class and points at every follow-up."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cmd/root.go", start = 155, end = 155, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 167, end = 167, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 256, end = 256, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 268, end = 268, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 278, end = 278, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 304, end = 304, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 314, end = 314, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 320, end = 320, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 333, end = 333, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 345, end = 345, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 349, end = 349, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 373, end = 373, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 391, end = 391, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 716, end = 716, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/root.go", start = 759, end = 759, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/dir.go", start = 15, end = 15, render = { kind = "full" } },
+  { path = "cmd/graph.go", start = 10, end = 10, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/list.go", start = 11, end = 11, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/notices.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/notices.go", start = 57, end = 57, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/notices.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/notices.go", start = 121, end = 121, render = { kind = "full" } },
+  { path = "cmd/notices.go", start = 130, end = 130, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/notices.go", start = 138, end = 138, render = { kind = "full" } },
+  { path = "cmd/platforms.go", start = 7, end = 7, render = { kind = "full" } },
+  { path = "cmd/secrets.go", start = 14, end = 14, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "cmd/secrets.go", start = 40, end = 40, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "2.8"
-descriptor = "pkg/runner/ directory listing"
-justification = "All 18 non-test files of the largest package (runner.go, run_context.go, step*.go, action*.go, expression.go, command.go, job_executor.go, reusable_workflow.go, local_repository_cache.go, logger.go) plus res/ and hashfiles/ JS helpers, enumerated together — closes out package-existence breadth before any per-package depth follows."
-content = { kind = "fs", groups = [
-    { parent = "pkg/runner", entries = "all" },
-    { parent = "pkg/runner/res", entries = "all" },
-    { parent = "pkg/runner/hashfiles", entries = "all" },
-]}
-
-# ============================================================
-# Tier 3 — README / build prose
-# ============================================================
+# ---------------------------------------------------------------- tier 3 ----
+# The workflow/action object model: what a parsed workflow, job and step look
+# like, and how a Plan is built from them.
 
 [[batches]]
 id = "3.1"
-descriptor = "README — how it works"
-justification = "The one-paragraph execution summary (reads .github/workflows/, uses the Docker API to pull/build images and run containers per the dependency graph) — the shortest path to 'what does act actually do when invoked'."
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 16, end = 18, render = { kind = "full" } },
-]}
+descriptor = "pkg/model: complete type roster"
+justification = "Every type declared in the package, one line each: Workflow, WorkflowStrict, the workflow_dispatch and workflow_call types, Job, Strategy, Defaults, RunDefaults, JobType, ContainerSpec, Step, StepType, WorkflowPlanner/Plan/Stage/Run/WorkflowFiles/workflowPlanner, the action.yml types (ActionRunsUsing, ActionRuns, Action, Input, Output), GithubContext, JobContext, stepStatus and StepResult. Cheap, complete, and it turns every later render in this tier into a refinement rather than a discovery."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/model/workflow.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 87, end = 87, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 105, end = 105, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 113, end = 113, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 154, end = 154, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 161, end = 161, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 166, end = 166, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 171, end = 171, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 196, end = 196, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 216, end = 216, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 225, end = 225, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 230, end = 230, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 501, end = 501, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 555, end = 555, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 569, end = 569, render = { kind = "full" } },
+  { path = "pkg/model/workflow.go", start = 645, end = 645, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 53, end = 53, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 196, end = 196, render = { kind = "full" } },
+  { path = "pkg/model/action.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "pkg/model/action.go", start = 72, end = 72, render = { kind = "full" } },
+  { path = "pkg/model/action.go", start = 89, end = 89, render = { kind = "full" } },
+  { path = "pkg/model/action.go", start = 120, end = 120, render = { kind = "full" } },
+  { path = "pkg/model/action.go", start = 127, end = 127, render = { kind = "full" } },
+  { path = "pkg/model/github_context.go", start = 12, end = 12, render = { kind = "full" } },
+  { path = "pkg/model/job_context.go", start = 3, end = 3, render = { kind = "full" } },
+  { path = "pkg/model/step_result.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "pkg/model/step_result.go", start = 41, end = 41, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "README — user guide / contributing / manual build"
-justification = "Points to the external user guide (nektosact.com), the Support discussions link, CONTRIBUTING.md, and the four manual-build steps (install Go 1.20+, clone, `make test`, `make install`) — cheap operational pointer complementing CLAUDE.md's command list."
+descriptor = "Workflow struct"
+justification = "The top-level YAML shape — File, Name, RawOn, Env, Jobs, Defaults. Small and load-bearing: RawOn being a raw yaml.Node is the reason On()/OnEvent()/WorkflowDispatchConfig() exist at all."
 predecessor = "3.1"
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 24, end = 41, render = { kind = "full" } },
-]}
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/model/workflow.go", start = 18, end = 27, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.3"
-descriptor = "Makefile — pr/build/format targets"
-justification = "Exact recipes behind `make build`, `make format(-all)`, and the `make pr` full-checklist target CLAUDE.md names — ldflags-injected version, go fmt, npx prettier."
-content = { kind = "lines", spans = [
-    { path = "Makefile", start = 22, end = 36, render = { kind = "full" } },
-]}
+descriptor = "Planner interface + Plan/Stage/Run"
+justification = "The four-method WorkflowPlanner interface (PlanEvent, PlanJob, PlanAll, GetEvents) and the plan shape it produces: a Plan is Stages executed in series, a Stage holds Runs executed in parallel, and a Run is (Workflow, JobID) whose Job() resolves the model. This is the vocabulary of every 'why did this job run' question and of the printList/drawGraph output."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/model/planner.go", start = 16, end = 38, render = { kind = "full" } },
+  { path = "pkg/model/planner.go", start = 48, end = 51, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "Makefile — test/lint targets"
-justification = "`make test` (go test ./... then runs act itself), and the lint-go/lint-js/lint-md/lint-rest split (golangci-lint, `npx standard`, `npx markdownlint`, dockerized megalinter) — what `make lint`/`make pr` actually invoke."
-predecessor = "3.3"
-content = { kind = "lines", spans = [
-    { path = "Makefile", start = 38, end = 64, render = { kind = "full" } },
-]}
+descriptor = "Job struct: every supported job key"
+justification = "name, needs, runs-on, env, if, steps, timeout-minutes, services, strategy, container, defaults, outputs, uses, with, secrets and the runtime Result field, each with its YAML tag. The single highest-value struct for 'does act support job key X'. The Raw* fields are yaml.Nodes decoded lazily by accessors further down workflow.go (Needs, RunsOn, Environment, Container, Secrets, Matrix)."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/model/workflow.go", start = 195, end = 213, render = { kind = "full" } }]
 
-# ============================================================
-# Tier 4 — CI job + dependency roster
-# ============================================================
+[[batches]]
+id = "3.5"
+descriptor = "Step struct: every supported step key"
+justification = "id, if, name, uses, run, working-directory, shell (plus the internal WorkflowShell resolved from job/workflow defaults), env, with, continue-on-error, timeout-minutes. The step-level counterpart of 3.4."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/model/workflow.go", start = 568, end = 583, render = { kind = "full" } }]
+
+[[batches]]
+id = "3.6"
+descriptor = "StepType constants"
+justification = "The seven step kinds act distinguishes — run, docker:// URL, local action, remote action, local reusable workflow, remote reusable workflow, invalid — each with the doc comment stating the `uses` syntax that selects it. Step.Type() at workflow.go:691 implements the prefix tests that pick one, and the step factory switches on exactly these constants."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/model/workflow.go", start = 644, end = 668, render = { kind = "full" } }]
+
+[[batches]]
+id = "3.7"
+descriptor = "GithubContext: complete field-name roster"
+justification = "Field names only (each JSON tag is the snake_case form) for everything act exposes as the `github` expression context: event, event_path, workflow, run_attempt/run_id/run_number, actor, repository, event_name, sha, ref/ref_name/ref_type, head_ref/base_ref, token, workspace, action/action_path/action_ref/action_repository, job/job_name, repository_owner, retention_days, runner_perflog, runner_tracking_id, server_url, api_url, graphql_url. Answers a whole class of 'is github.X populated by act' questions outright."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/model/github_context.go", start = 13, end = 42, render = { kind = "truncated", pattern = '^\s+[A-Za-z0-9]+' } }]
+
+# ---------------------------------------------------------------- tier 4 ----
+# The execution engine: the Executor combinator, the runner configuration,
+# RunContext and the step machinery.
 
 [[batches]]
 id = "4.1"
-descriptor = "CI checks.yml — lint job"
-justification = "The exact PR-gating lint job: golangci-lint-action + megalinter/megalinter go flavor — the ground truth behind `make lint`'s CI enforcement."
-content = { kind = "lines", spans = [
-    { path = ".github/workflows/checks.yml", start = 1, end = 33, render = { kind = "full" } },
-]}
+descriptor = "Executor type + complete combinator roster"
+justification = "`type Executor func(ctx) error` is the abstraction every phase of act composes with, with the Conditional predicate beside it. Then the name of every constructor and method: NewInfoExecutor, NewDebugExecutor, NewPipelineExecutor, NewConditionalExecutor, NewErrorExecutor, NewParallelExecutor, NewFieldExecutor, ThenError, Then, OnError, If, IfNot, IfBool, Finally, Not, plus the Warning error that Then treats as non-fatal. Complete by construction, so no combinator can be assumed missing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/common/executor.go", start = 29, end = 33, render = { kind = "full" } },
+  { path = "pkg/common/executor.go", start = 12, end = 12, render = { kind = "full" } },
+  { path = "pkg/common/executor.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "pkg/common/executor.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 36, end = 36, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 88, end = 88, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 95, end = 95, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 134, end = 134, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 141, end = 141, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 160, end = 160, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 179, end = 179, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 198, end = 198, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 208, end = 208, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 218, end = 218, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 225, end = 225, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/executor.go", start = 237, end = 237, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "go.mod — primary direct dependencies"
-justification = "The first ~16 lines of the primary require block (cobra, docker/cli, go-git, actionlint, bolthold, survey, ...) — the dependency roster an agent needs before touching imports. Ellipsis signals the block (and a second direct-ish require block, and the indirect block) continues without spending tokens enumerating all ~50 remaining entries."
-content = { kind = "lines", spans = [
-    { path = "go.mod", start = 5, end = 20, render = { kind = "full" } },
-    { path = "go.mod", start = 21, end = 21, render = { kind = "ellipsis" } },
-]}
+descriptor = "pkg/runner: complete type roster"
+justification = "Every type in the engine package, one line each: Runner, Config, caller, runnerImpl, RunContext, MappableOutput, step, stepStage, stepFactory(+Impl), stepRun/localEnv, stepDocker, stepActionLocal, stepActionRemote, remoteAction, actionStep with the readAction/runAction/actionYamlReader/fileWriter seams, ExpressionEvaluator, expressionEvaluator, ActionCache/GoGitActionCache/GitFileInfo/GoGitActionCacheOfflineMode/LocalRepositoryCache, the logger types, jobInfo, remoteReusableWorkflow and compositeSteps. The cheapest possible map of a 30-file package."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/runner/runner.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "pkg/runner/runner.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "pkg/runner/runner.go", start = 80, end = 80, render = { kind = "full" } },
+  { path = "pkg/runner/runner.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "pkg/runner/run_context.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "pkg/runner/run_context.go", start = 62, end = 62, render = { kind = "full" } },
+  { path = "pkg/runner/step.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "pkg/runner/step.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "pkg/runner/step_factory.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "pkg/runner/step_factory.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "pkg/runner/step_run.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "pkg/runner/step_run.go", start = 148, end = 148, render = { kind = "full" } },
+  { path = "pkg/runner/step_docker.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "pkg/runner/step_action_local.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "pkg/runner/step_action_remote.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "pkg/runner/step_action_remote.go", start = 253, end = 253, render = { kind = "full" } },
+  { path = "pkg/runner/action.go", start = 24, end = 24, render = { kind = "full" } },
+  { path = "pkg/runner/action.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "pkg/runner/action.go", start = 34, end = 34, render = { kind = "full" } },
+  { path = "pkg/runner/action.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "pkg/runner/action.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "pkg/runner/expression.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "pkg/runner/expression.go", start = 231, end = 231, render = { kind = "full" } },
+  { path = "pkg/runner/action_cache.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "pkg/runner/action_cache.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "pkg/runner/action_cache.go", start = 92, end = 92, render = { kind = "full" } },
+  { path = "pkg/runner/action_cache_offline_mode.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "pkg/runner/local_repository_cache.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 60, end = 60, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 64, end = 64, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 144, end = 144, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "pkg/runner/logger.go", start = 183, end = 183, render = { kind = "full" } },
+  { path = "pkg/runner/job_executor.go", start = 12, end = 12, render = { kind = "full" } },
+  { path = "pkg/runner/reusable_workflow.go", start = 149, end = 149, render = { kind = "full" } },
+  { path = "pkg/runner/action_composite.go", start = 126, end = 126, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 5 — cmd package content
-# ============================================================
+[[batches]]
+id = "4.3"
+descriptor = "Runner interface and New()"
+justification = "The engine's entire public surface: one method, NewPlanExecutor(plan) -> common.Executor, plus New(config) which runs configure(). Shows how cmd/root.go drives the engine; NewReusableWorkflowRunner builds a second Runner for `uses:` workflows."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/runner/runner.go", start = 16, end = 19, render = { kind = "full" } },
+  { path = "pkg/runner/runner.go", start = 90, end = 97, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "runner.Config: fields (first half, rest elided)"
+justification = "Config is the contract between the CLI and the engine and every field carries an explanatory trailing comment: actor, workdir, action cache dir and offline mode, bind workdir, event name/path, default branch, reuse containers, force pull/rebuild, the log flags, env/inputs/secrets/vars, token, insecure secrets. The struct continues to line 65 with the container, platform, artifact-server, network and matrix settings; those fields shadow flags already named at 2.4, so they are left behind a rendered ellipsis rather than paid for twice."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/runner/runner.go", start = 21, end = 43, render = { kind = "full" } },
+  { path = "pkg/runner/runner.go", start = 44, end = 44, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "RunContext struct"
+justification = "The per-job state object nearly every engine function takes: Config, Matrix, Run, EventJSON, Env/GlobalEnv/ExtraPath, CurrentStep, StepResults, IntraActionState, ExprEval, JobContainer and ServiceContainers, OutputMappings, JobName, ActionPath, Parent (composite and reusable-workflow nesting), Masks, the cleanup executor, caller and Cancelled."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/runner/run_context.go", start = 31, end = 56, render = { kind = "full" } }]
+
+[[batches]]
+id = "4.6"
+descriptor = "stepFactory: StepType -> implementation"
+justification = "The complete switch mapping model.StepType onto stepRun, stepActionLocal, stepActionRemote and stepDocker (with readActionImpl/runActionImpl injected into the action steps) plus the two error paths; the stepFactory interface itself is at 4.2. The best single 'how does a YAML step become code' hop, and it names the file to open next."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/runner/step_factory.go", start = 15, end = 44, render = { kind = "full" } }]
+
+[[batches]]
+id = "4.7"
+descriptor = "step interface and stage enum"
+justification = "Every step implementation satisfies pre()/main()/post() plus the getters (run context, github context, step model, env, if-expression); stepStage distinguishes Pre/Main/Post, which is how act models action pre/post hooks. maxSymlinkDepth, the local/remote action symlink limit, sits here too."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/runner/step.go", start = 21, end = 52, render = { kind = "full" } }]
+
+[[batches]]
+id = "4.8"
+descriptor = "run_context.go: method roster (container lifecycle)"
+justification = "run_context.go is 1177 lines; this is the name-and-line index for lines 58-707 — AddMask, String, GetEnv, jobContainerName, networkName, getDockerDaemonSocketMountPath, GetBindsAndMounts, startHostEnvironment, startJobContainer, execJobContainer, InitializeNodeTool, GetNodeToolFullPath, ApplyExtraPath, UpdateExtraPath, stopJobContainer, the service-container pull/start/wait/stop group, ActionCacheDir, interpolateOutputs, start/stop/closeContainer, IsHostEnv, matrix, result, steps and Executor. Turns 'where is X in run_context' into one jump; the ellipsis at line 734 marks the file's remaining ~19 methods (image selection, env merging, the github/job/steps context builders and the credential helpers), which stay unlisted."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/runner/run_context.go", start = 58, end = 58, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 67, end = 67, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 78, end = 78, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 92, end = 92, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 98, end = 98, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 108, end = 108, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 127, end = 127, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 186, end = 186, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 255, end = 255, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 439, end = 439, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 445, end = 445, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 454, end = 454, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 489, end = 489, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 518, end = 518, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 553, end = 553, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 562, end = 562, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 572, end = 572, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 586, end = 586, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 610, end = 610, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 620, end = 620, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 633, end = 633, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 651, end = 651, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 664, end = 664, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 675, end = 675, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 681, end = 681, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 685, end = 685, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 694, end = 694, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 698, end = 698, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 702, end = 702, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 707, end = 707, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/runner/run_context.go", start = 734, end = 734, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "ActionCache implementations"
+justification = "The two-method ActionCache interface (Fetch, GetTarArchive) with its go-git implementation, the offline-mode wrapper and the LocalRepositoryCache that redirects repo@ref to a local folder for --local-repository. Three implementations of one interface, complete, in twenty lines — this is what --use-new-action-cache selects."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/runner/action_cache.go", start = 24, end = 33, render = { kind = "full" } },
+  { path = "pkg/runner/action_cache_offline_mode.go", start = 13, end = 16, render = { kind = "full" } },
+  { path = "pkg/runner/local_repository_cache.go", start = 19, end = 24, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------- tier 5 ----
+# Where jobs actually execute: the container abstraction, its Docker and host
+# implementations, and the build-tag split.
 
 [[batches]]
 id = "5.1"
-descriptor = "Input struct — flag-bound fields (part 1: run behavior)"
-justification = "The first half of the unexported field roster cobra flags bind into: actor/workdir/workflows/event/container-reuse/secrets/vars/envs/inputs/platforms/dryrun/pull/rebuild flags."
-content = { kind = "lines", spans = [
-    { path = "cmd/input.go", start = 9, end = 39, render = { kind = "full" } },
-]}
+descriptor = "pkg/container: complete file list"
+justification = "Three axes an agent will not guess: the docker_* implementation files, a WITHOUT_DOCKER stub, and per-OS util variants (windows, plan9, openbsd_mips64), plus a vendored DOCKER_LICENSE for the adapted docker/cli option parsing in docker_cli.go. Listing every entry makes the rest of the tier navigable."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/container", entries = "all" }]
 
 [[batches]]
 id = "5.2"
-descriptor = "Input struct — flag-bound fields (part 2: container/cache/misc)"
-justification = "The remaining Input fields: container capabilities, artifact- and cache-server address/path/port, GHE action replacement, local-repository override, concurrent-jobs (container architecture/daemon-socket are the tail of 5.1's span, not this one) — this is the single place that answers 'does Input already have a field for X' before an agent adds a duplicate. Extended one line past the last field to the struct's closing brace so it doesn't read as truncated mid-body."
-predecessor = "5.1"
-content = { kind = "lines", spans = [
-    { path = "cmd/input.go", start = 40, end = 68, render = { kind = "full" } },
-]}
+descriptor = "Container interface"
+justification = "The contract every execution backend implements: Create, Copy, CopyTarStream, CopyDir, GetContainerArchive, Pull, Start, Exec, UpdateFromEnv, UpdateFromImageEnv, Remove, Close, ReplaceLogWriter, GetHealth. Adding a backend, or mocking one in a test, starts here."
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/container/container_types.go", start = 41, end = 58, render = { kind = "full" } }]
 
 [[batches]]
 id = "5.3"
-descriptor = "cmd/root.go — Flag struct, Execute, createRootCommand header"
-justification = "Execute() is the fn main.go calls; createRootCommand's cobra.Command literal (Use/Short/Args/RunE/PersistentPreRun etc.) is the root command's shape before its flag registrations."
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 37, end = 66, render = { kind = "full" } },
-]}
+descriptor = "ExecutionsEnvironment interface"
+justification = "The whole file: Container plus the path-translation methods that let one code path serve both containers and the host — ToContainerPath, GetActPath, GetPathVariableName, DefaultPathVariable, JoinPathVariable, GetRunnerContext, IsEnvironmentCaseInsensitive. RunContext.JobContainer and ServiceContainers have this type."
+[batches.content]
+kind = "lines"
+spans = [{ path = "pkg/container/executions_environment.go", start = 1, end = 14, render = { kind = "full" } }]
 
 [[batches]]
 id = "5.4"
-descriptor = "cmd/root.go — most-queried CLI flags"
-justification = "A representative, high-traffic subset of the ~60 flag registrations (list/graph/job, secret/env/input/platform, workflows-path/directory, verbose/json/quiet/dryrun, concurrent-jobs) with real defaults and help text. Predecessor is the complete Input field roster (5.1/5.2), so the full set of flag-bound names is already established; this shows real bodies for the ones an agent is most likely to look up. Line-number gaps between entries signal more flags exist between them."
-predecessor = "5.2"
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 71, end = 73, render = { kind = "full" } },
-    { path = "cmd/root.go", start = 78, end = 82, render = { kind = "full" } },
-    { path = "cmd/root.go", start = 100, end = 107, render = { kind = "full" } },
-    { path = "cmd/root.go", start = 132, end = 132, render = { kind = "full" } },
-]}
+descriptor = "Docker backend vs docker-less stub: the build-tag split"
+justification = "The two opposing build constraints with the exported entry points on each side — NewContainer, GetDockerClient, GetHostInfo, RunnerArch in docker_run.go against the stub's mirrored ImageExistsLocally, RemoveImage, NewDockerBuild/Pull/Volume/Network executors, NewContainer, RunnerArch and GetHostInfo. Showing the mirror complete is what tells a contributor that a new docker-backed function needs a stub twin; HostEnvironment (host_environment.go:28) is the third implementation."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/container/docker_run.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "pkg/container/docker_run.go", start = 44, end = 49, render = { kind = "full" } },
+  { path = "pkg/container/docker_run.go", start = 218, end = 218, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_run.go", start = 242, end = 242, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_run.go", start = 261, end = 261, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "pkg/container/docker_stub.go", start = 16, end = 16, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 27, end = 27, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 34, end = 34, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 41, end = 41, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 49, end = 49, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 59, end = 59, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/container/docker_stub.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+]
 
 [[batches]]
 id = "5.5"
-descriptor = "platforms.go — default runs-on image mapping"
-justification = "The hardcoded `ubuntu-latest/22.04/20.04/18.04 -> node:16-*` image defaults, overridable via repeated `-P` flags — the concrete answer to 'what image does act use for runs-on: ubuntu-latest' without reading Docker pull logs."
-content = { kind = "lines", spans = [
-    { path = "cmd/platforms.go", start = 7, end = 22, render = { kind = "full" } },
-]}
+descriptor = "Docker socket discovery"
+justification = "CommonSocketLocations verbatim — /var/run/docker.sock, podman, colima, the two XDG runtime paths, the Windows named pipe, rootless docker under $HOME/.docker — plus the GetSocketAndHost entry point cmd/root.go calls before every run. The direct answer to 'why can't act find my Docker', and the same list --bug-report prints."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/container/docker_socket.go", start = 12, end = 20, render = { kind = "full" } },
+  { path = "pkg/container/docker_socket.go", start = 57, end = 62, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 6 — pkg/common content
-# ============================================================
+# ---------------------------------------------------------------- tier 6 ----
+# Supporting packages: the expression language, the servers and the utility
+# libraries.
 
 [[batches]]
 id = "6.1"
-descriptor = "Executor / Conditional / Warning types"
-justification = "CLAUDE.md names the Executor pattern conceptually; this is the exact type (`func(ctx context.Context) error`) and its Warning sentinel-error wrapper that every step/job/action function in the codebase returns."
-content = { kind = "lines", spans = [
-    { path = "pkg/common/executor.go", start = 12, end = 33, render = { kind = "full" } },
-]}
+descriptor = "Supporting packages: complete file lists (A)"
+justification = "Rosters for exprparser, schema (including the two embedded JSON schemas), artifacts (including the generated artifact.pb.go and its testdata) and artifactcache. Cheap breadth: every follow-up in this tier gets an exact file to open."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "pkg/exprparser", entries = "all" },
+  { parent = "pkg/schema", entries = "all" },
+  { parent = "pkg/artifacts", entries = "all" },
+  { parent = "pkg/artifactcache", entries = "all" },
+]
 
-# ============================================================
-# Tier 7 — pkg/model content
-# ============================================================
+[[batches]]
+id = "6.2"
+descriptor = "Supporting packages: complete file lists (B)"
+justification = "The remaining directories: common and its git subpackage, filecollector, gh, lookpath (with the per-OS lp_*.go files and vendored LICENSE) and workflowpattern. With 1.3-1.7, 5.1 and 6.1 every source directory in the repository has now been listed in full."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "pkg/common", entries = "all" },
+  { parent = "pkg/common/git", entries = "all" },
+  { parent = "pkg/filecollector", entries = "all" },
+  { parent = "pkg/gh", entries = "all" },
+  { parent = "pkg/lookpath", entries = "all" },
+  { parent = "pkg/workflowpattern", entries = "all" },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Context names the expression interpreter resolves"
+justification = "The case arms of evaluateVariable on their own lines: github, env, job, jobs, steps, runner, secrets, vars, strategy, matrix, needs, inputs, plus the infinity/nan literals. A complete answer to 'is <context> available in act' for a few tokens per name — anything else falls through to 'Unavailable context'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/exprparser/interpreter.go", start = 155, end = 155, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 157, end = 157, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 159, end = 159, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 161, end = 161, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 166, end = 166, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 168, end = 168, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 170, end = 170, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 172, end = 172, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 176, end = 176, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 178, end = 178, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 180, end = 180, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 182, end = 182, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 184, end = 184, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "Expression functions act implements"
+justification = "The complete callee switch — contains, startswith, endswith, format, join, tojson, fromjson, hashfiles, always, success, failure, cancelled. Any other name reaches the default arm and errors as not implemented, so this list is exhaustive by construction; the implementations are the correspondingly named methods in pkg/exprparser/functions.go."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/exprparser/interpreter.go", start = 624, end = 624, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 626, end = 626, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 628, end = 628, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 630, end = 630, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 632, end = 632, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 637, end = 637, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 639, end = 639, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 641, end = 641, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 646, end = 646, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 648, end = 648, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 656, end = 656, render = { kind = "full" } },
+  { path = "pkg/exprparser/interpreter.go", start = 664, end = 664, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "Artifact cache server: routes and lifecycle"
+justification = "StartHandler's signature (dir, external URL, outbound IP, port, logger) and the complete route table under /_apis/artifactcache — GET /cache, POST /caches, PATCH and POST /caches/:id, GET /artifacts/:id, POST /clean — plus ExternalURL and Close. This is the server behind the ACTIONS_CACHE_URL that cmd/root.go injects into every job's env."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/artifactcache/handler.go", start = 28, end = 30, render = { kind = "full" } },
+  { path = "pkg/artifactcache/handler.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "pkg/artifactcache/handler.go", start = 96, end = 103, render = { kind = "full" } },
+  { path = "pkg/artifactcache/handler.go", start = 133, end = 133, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/artifactcache/handler.go", start = 140, end = 140, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "Artifact server: Serve + the v4 route base"
+justification = "Serve() returns a cancel func and does nothing unless --artifact-server-path is set; it mounts uploads(), downloads() and RoutesV4() on one httprouter. The v1 endpoints live under /_apis/pipelines/workflows/:runId (server.go:96-256) and the v4 twirp ArtifactService methods under the route base shown here (artifacts_v4.go:154-193)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/artifacts/server.go", start = 278, end = 287, render = { kind = "full" } },
+  { path = "pkg/artifacts/artifacts_v4.go", start = 106, end = 106, render = { kind = "full" } },
+  { path = "pkg/artifacts/artifacts_v4.go", start = 147, end = 147, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.7"
+descriptor = "pkg/common: complete exported-function roster"
+justification = "The utility package by name and line: Logger/WithLogger, Dryrun/WithDryrun (--dryrun), the job error and cancellation helpers including EarlyCancelContext and CreateGracefulJobCancellationContext (called by main.go), CartesianProduct (matrix expansion), CopyFile/CopyDir, LineHandler/NewLineWriter (step output plumbing), GetOutboundIP (the default artifact and cache server bind address), CreateAuthorizationToken/ParseAuthorizationToken for the cache server, and NewPen/DrawArrow/DrawBoxes/Draw/GetWidth, the box art behind --graph. Every exported function of the package except the Executor combinators already rendered at 4.1."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/common/logger.go", start = 14, end = 14, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/logger.go", start = 25, end = 25, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/dryrun.go", start = 12, end = 12, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/dryrun.go", start = 23, end = 23, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 16, end = 16, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 26, end = 26, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 31, end = 31, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 36, end = 36, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 40, end = 40, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/job_error.go", start = 51, end = 51, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/context.go", start = 42, end = 42, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/cartesian.go", start = 4, end = 4, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/file.go", start = 10, end = 10, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/file.go", start = 37, end = 37, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/line_writer.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "pkg/common/line_writer.go", start = 17, end = 17, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/outbound_ip.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "pkg/common/auth.go", start = 38, end = 38, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/auth.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/draw.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/draw.go", start = 98, end = 98, render = { kind = "full" } },
+  { path = "pkg/common/draw.go", start = 110, end = 110, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/draw.go", start = 127, end = 127, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/draw.go", start = 141, end = 141, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+]
+
+[[batches]]
+id = "6.8"
+descriptor = "pkg/common/git: repo detection and cloning"
+justification = "The sentinel errors (ErrShortRef, ErrNoRepo) and every exported package-level function: FindGitRevision, FindGitRef, FindGithubRepo, CloneIfRequired, NewGitCloneExecutor with its input struct. This package supplies github.repository/ref/sha from a developer's checkout and is what --remote-name, --defaultbranch and remote action cloning depend on."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pkg/common/git/git.go", start = 33, end = 34, render = { kind = "full" } },
+  { path = "pkg/common/git/git.go", start = 55, end = 55, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/git/git.go", start = 87, end = 87, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/git/git.go", start = 164, end = 164, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/git/git.go", start = 223, end = 230, render = { kind = "full" } },
+  { path = "pkg/common/git/git.go", start = 232, end = 232, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+  { path = "pkg/common/git/git.go", start = 300, end = 300, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
+]
+
+# ---------------------------------------------------------------- tier 7 ----
+# Build and dependency metadata: appendix material, cheap once the code is
+# understood.
 
 [[batches]]
 id = "7.1"
-descriptor = "Workflow struct — top-level YAML shape"
-justification = "The struct every `.github/workflows/*.yml` file unmarshals into (File/Name/RawOn/Env/Jobs/Defaults) — the entry point for 'what top-level workflow keys does act understand'."
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 18, end = 26, render = { kind = "full" } },
-]}
+descriptor = "CI, issue-template and editor directories"
+justification = "Complete listings for .github and its subdirectories (workflows, ISSUE_TEMPLATE, the choco packaging action), .vscode, and the testdata directories of cmd, artifacts and artifactcache. pkg/runner/testdata holds 115 sample-workflow directories and is deliberately not expanded; its existence is already visible from 1.7."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".github/actions", entries = "all" },
+  { parent = ".github/actions/choco", entries = "all" },
+  { parent = ".vscode", entries = "all" },
+  { parent = "cmd/testdata", entries = "all" },
+  { parent = "pkg/artifacts/testdata", entries = "all" },
+  { parent = "pkg/artifactcache/testdata", entries = "all" },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "Job struct — per-job YAML shape"
-justification = "The per-job fields (needs/runs-on/env/if/steps/services/strategy/container/secrets/outputs/uses/with) — the shape an agent edits when authoring or debugging a job."
-predecessor = "7.1"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 195, end = 213, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.3"
-descriptor = "Strategy / Defaults / RunDefaults structs"
-justification = "The Strategy.matrix/fail-fast/max-parallel knobs and the Defaults.run.shell/working-directory inheritance fields referenced by Job.Strategy and Job.Defaults."
-predecessor = "7.2"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 216, end = 233, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.4"
-descriptor = "Step struct — per-step YAML shape"
-justification = "The per-step fields (id/if/name/uses/run/shell/env/with/continue-on-error/timeout-minutes) — the shape an agent edits when authoring or debugging a workflow step."
-predecessor = "7.2"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 568, end = 583, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.5"
-descriptor = "GithubContext struct — every github.* expression field"
-justification = "All 30 fields of the `github` context object exposed to `${{ github.* }}` expressions and step env (sha/ref/actor/repository/workspace/action_path/server_url/...) — the answer to 'is github.<x> available' without grepping the setter functions."
-content = { kind = "lines", spans = [
-    { path = "pkg/model/github_context.go", start = 12, end = 43, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.6"
-descriptor = "action.go — ActionRuns struct"
-justification = "The `runs:` section of action.yml (main/pre/post entrypoints with their -if guards, docker image/env/args, composite steps) — the schema an agent checks before adding a new action.yml `runs.*` field."
-content = { kind = "lines", spans = [
-    { path = "pkg/model/action.go", start = 71, end = 86, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.7"
-descriptor = "action.go — Action / Input / Output structs"
-justification = "The top-level action.yml shape (name/description/inputs/outputs/runs/branding) and the per-input/output Description/Required/Default/Value fields."
-predecessor = "7.6"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/action.go", start = 89, end = 100, render = { kind = "full" } },
-    { path = "pkg/model/action.go", start = 120, end = 130, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "7.8"
-descriptor = "planner.go — Plan/Stage/Run + WorkflowPlanner interface"
-justification = "The output shape of workflow planning that runner.go consumes: Plan{Stages}, Stage{Runs} (serial), Run{Workflow,JobID} (parallel within a stage), and the WorkflowPlanner interface (PlanEvent/PlanJob/PlanAll/GetEvents)."
-content = { kind = "lines", spans = [
-    { path = "pkg/model/planner.go", start = 17, end = 57, render = { kind = "full" } },
-]}
-
-# ============================================================
-# Tier 8 — concrete config samples (workflow/action/actrc)
-# ============================================================
-
-[[batches]]
-id = "8.1"
-descriptor = "Example workflow file (integration fixture)"
-justification = "A real, complete `.github/workflows/*.yml` (pkg/runner/testdata/basic/push.yml) exercising env, multiple jobs with `needs:`, a `docker://` step, expression interpolation, and a local action reference — cheaper, more concrete evidence of the workflow-file shape than the Go struct fields alone. Extended through the `build` job's body so the `needs: [check]` line and its `uses: ./actions/action1` local-action reference are actually rendered, not just the job's `runs-on:` header."
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/testdata/basic/push.yml", start = 1, end = 29, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "8.2"
-descriptor = "Example action.yml (docker action)"
-justification = "A complete action.yml (docker-local) showing inputs-with-default, outputs, and `runs: {using: docker, image, env, args}` — the concrete counterpart to the Action/ActionRuns struct fields (7.6/7.7). Span runs to the file's last line so `args:`'s actual value is rendered, not just its key."
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/testdata/actions/docker-local/action.yml", start = 1, end = 17, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "8.3"
-descriptor = "Sample .actrc / secrets files"
-justification = "Four tiny real config files showing the exact `.actrc` line syntax (one flag per line, `--flag=value` and `--flag value` both used, and split.actrc's single `--container-options` flag carrying several space-separated `--volume` sub-values on that one line) an agent needs before hand-writing one."
-content = { kind = "lines", spans = [
-    { path = "cmd/testdata/env.actrc", start = 1, end = 2, render = { kind = "full" } },
-    { path = "cmd/testdata/simple.actrc", start = 1, end = 2, render = { kind = "full" } },
-    { path = "cmd/testdata/split.actrc", start = 1, end = 1, render = { kind = "full" } },
-    { path = "cmd/testdata/secrets.yml", start = 1, end = 4, render = { kind = "full" } },
-]}
-
-# ============================================================
-# Tier 9 — pkg/runner content
-# ============================================================
-
-[[batches]]
-id = "9.1"
-descriptor = "Runner interface + Config struct (part 1: run behavior)"
-justification = "Config is the runner-side mirror of cmd.Input (5.1/5.2) with doc comments on every field — often more useful than Input since it explains *why* each knob exists, not just its flag name. First half: actor/workdir/action-cache, event, container reuse/pull/rebuild, logging."
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/runner.go", start = 16, end = 36, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "9.2"
-descriptor = "Config struct (part 2: container/artifact-server/misc)"
-justification = "The container-daemon/capabilities/network fields and the artifact-server address/path/port fields — the rest of the Config knobs mirroring cmd's `--container-*`/`--artifact-server-*` flags. (Config has no cache-server fields at all — the cache server is wired up directly from cmd.Input, not threaded through runner.Config — so this batch doesn't claim any.)"
-predecessor = "9.1"
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/runner.go", start = 37, end = 65, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "9.3"
-descriptor = "step_factory.go — Step.Type() to step-kind dispatch (full file)"
-justification = "The single switch that turns a model.Step's Type() into the concrete stepRun/stepActionLocal/stepActionRemote/stepDocker struct — the exact answer to 'which step implementation handles my step', small enough (38 lines) to show whole."
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/step_factory.go", start = 9, end = 46, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "9.4"
-descriptor = "RunContext struct — per-job execution state"
-justification = "The struct threaded through every step of a job's lifecycle (Env/GlobalEnv/ExtraPath/StepResults/IntraActionState/JobContainer/ServiceContainers/Masks/caller-for-reusable-workflows) — the answer to 'where does step X's output/env end up' before reading step.go."
-content = { kind = "lines", spans = [
-    { path = "pkg/runner/run_context.go", start = 31, end = 56, render = { kind = "full" } },
-]}
-
-# ============================================================
-# Tier 10 — pkg/container content
-# ============================================================
-
-[[batches]]
-id = "10.1"
-descriptor = "Container interface — the execution-backend contract"
-justification = "The interface every execution environment (Docker container, host-exec, WITHOUT_DOCKER stub) implements (Create/Copy/Exec/Start/Pull/Remove/GetHealth/...) — the contract to satisfy when adding a new backend."
-content = { kind = "lines", spans = [
-    { path = "pkg/container/container_types.go", start = 42, end = 58, render = { kind = "full" } },
-]}
-
-# ============================================================
-# Tier 11 — pkg/exprparser content
-# ============================================================
-
-[[batches]]
-id = "11.1"
-descriptor = "functions.go — every builtin GitHub Actions expression function"
-justification = "The complete catalog of `${{ }}` builtin functions act implements: contains/startsWith/endsWith/format/join/toJSON/fromJSON/hashFiles/success/always/cancelled/failure (job- and step-scoped variants) — directly answers 'what functions are available in expressions', a near-certain query given this is a scripting-language surface users write into every workflow."
-content = { kind = "lines", spans = [
-    { path = "pkg/exprparser/functions.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 47, end = 47, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 67, end = 67, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 140, end = 140, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 155, end = 155, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 168, end = 168, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 183, end = 183, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 255, end = 255, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 259, end = 259, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 272, end = 272, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 276, end = 276, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 289, end = 289, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-    { path = "pkg/exprparser/functions.go", start = 293, end = 293, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
-]}
+descriptor = "Key direct dependencies"
+justification = "The libraries behind each subsystem, picked out of the direct require block with the remaining entries left as rendered ellipses: survey (the default-image prompt), docker/cli, go-git (action and reusable-workflow cloning), httprouter (both HTTP servers), rhysd/actionlint (the expression parser act builds on), logrus (aliased as log everywhere), cobra, testify, bolthold and bbolt (the artifact-cache index) and yaml.v3. Answers 'which library does act use for X' without reading go.mod."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "go.mod", start = 5, end = 6, render = { kind = "full" } },
+  { path = "go.mod", start = 7, end = 7, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 11, end = 11, render = { kind = "full" } },
+  { path = "go.mod", start = 12, end = 12, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 14, end = 14, render = { kind = "full" } },
+  { path = "go.mod", start = 15, end = 15, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 16, end = 16, render = { kind = "full" } },
+  { path = "go.mod", start = 17, end = 17, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 23, end = 23, render = { kind = "full" } },
+  { path = "go.mod", start = 25, end = 26, render = { kind = "full" } },
+  { path = "go.mod", start = 27, end = 27, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 28, end = 30, render = { kind = "full" } },
+  { path = "go.mod", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "go.mod", start = 32, end = 32, render = { kind = "full" } },
+]

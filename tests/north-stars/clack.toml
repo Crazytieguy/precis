@@ -1,596 +1,874 @@
 fixture = "clack"
 revision_pin = "adb6af9f"
 summary = """
-Clack (bombshell-dev/clack) is a pnpm-workspace monorepo publishing two
-npm packages: `@clack/core` (packages/core), the headless/unstyled
-`Prompt` base class + primitive subclasses driving a readline-based
-interactive CLI prompt engine, and `@clack/prompts` (packages/prompts),
-an opinionated, ANSI-styled wrapper exposing one factory function per
-prompt type (text, password, confirm, select, multiselect, autocomplete,
-path, date, ...) plus terminal-UI utilities (spinner, progress, log,
-stream, note, box, taskLog, group, tasks). The query distribution
-spans: using/composing the public `@clack/prompts` API in a CLI;
-extending or debugging the low-level `@clack/core` primitives (event
-system, keypress handling, diff-based re-render); adding a new prompt
-type; fixing rendering/ANSI edge cases; running the monorepo's
-build/test/lint tooling; and understanding the release process
-(changesets, CI, pkg.pr.new previews). Given the size of this monorepo
-relative to typical budgets, this NS leans hard on exhaustive fs
-listings + single-line signature rosters for breadth (so every file
-and every export is a known, named, one-hop-away location), reserving
-full-body inclusion for the handful of files/excerpts with the highest
-density of non-obvious behavior (the date-segment editor, shared
-cross-file types, the base Prompt class's readline/keypress control
-flow). The event-subscription plumbing and the diff-based render loop
-are represented through their call sites plus the standalone diffLines
-utility rather than full-body inclusion — cheaper coverage given this
-monorepo's size relative to typical budgets. Several batches below end
-with a rendered `…` marker rather than a full-body extension where the
-remaining lines are lower-value per token; the marker signals more
-content exists at that file/position without spending budget on it.
-"""
+Clack is a pnpm/TypeScript monorepo publishing two npm packages for
+interactive terminal prompts: `@clack/core` (packages/core) — headless,
+unstyled primitives built on a base `Prompt` class that wires
+`node:readline` keypresses to a typed event emitter and a diff-based frame
+renderer — and `@clack/prompts` (packages/prompts) — the opinionated,
+pre-styled component layer most users import (`text`, `password`, `confirm`,
+`date`, `select`, `autocomplete`, `multiselect`, `path`, `spinner`, `log`,
+`taskLog`, `group`, ...). `examples/` holds runnable demos, both packages
+carry vitest suites, releases go through changesets, builds through unbuild,
+lint/format through biome.
 
-# ---------------------------------------------------------------------
-# Tier 1 — root orientation
-# ---------------------------------------------------------------------
+Ranking priorities, in order: (1) the two-package split and where each
+package's source lives; (2) both `index.ts` export barrels plus closed
+per-symbol rosters, so no public API can be assumed absent; (3) the shared
+contracts — `ClackEvents`, `PromptOptions`, the `Prompt` method roster,
+`CommonOptions`, `ClackSettings`; (4) per-prompt option interfaces, rendered
+as field lines with ellipses standing in for jsdoc, because "what options
+does X take" is the single most common question and jsdoc is expensive;
+(5) the two implementation bodies carrying the most non-obvious behaviour,
+`Prompt.prompt()` and `Prompt.onKeypress`; (6) docs, tests and tooling.
+Roster batches are authored closed over their class so a partial listing
+never implies absence.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Root README tagline"
-justification = "The one-line pitch. Cheapest possible first batch."
-content = { kind = "lines", spans = [
+descriptor = "Repo identity: the one-line description of what Clack is"
+justification = "README.md:7 — \"stylish interactive prompts for JavaScript CLIs\" — is the only line in the root README that states the project's purpose; everything around it is logo and badge markup. One line, rank 1."
+[batches.content]
+kind = "lines"
+spans = [
   { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
-] }
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "Root directory listing"
-justification = "Full top-level fs listing prevents assuming e.g. .changeset/, examples/, or biome.json don't exist."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "The two published packages and how they differ"
+justification = "README.md:9 and :11 characterise `@clack/prompts` as opinionated ready-to-use components and `@clack/core` as headless unstyled primitives, and link each to its package directory. This split governs where every later batch lives, so it comes before any listing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 9, end = 9, render = { kind = "full" } },
+  { path = "README.md", start = 11, end = 11, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "packages/ listing"
-justification = "Confirms exactly two publishable packages: core and prompts."
-content = { kind = "fs", groups = [
-  { parent = "packages", entries = "all" },
-] }
+descriptor = "Complete root directory listing"
+justification = "The top-level shape: `packages/`, `examples/`, the biome/tsconfig/knip/pnpm-workspace config set, CONTRIBUTING.md and the dotfiles. entries=all guarantees closure — a partial root listing would let an agent conclude there is no knip.json or .changeset directory."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "examples/ listing"
-justification = "Both example projects (basic, changesets) exist under examples/."
-content = { kind = "fs", groups = [
-  { parent = "examples", entries = "all" },
-] }
+descriptor = "Package directories: packages/, packages/core, packages/prompts"
+justification = "Names the two workspace packages and their per-package furniture — README, package.json, tsconfig, build.config.ts, CHANGELOG, LICENSE, and prompts' vitest.config.ts and __mocks__. This is the repo's substance, so it precedes examples and CI inventories."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages", entries = "all" },
+  { parent = "packages/core", entries = "all" },
+  { parent = "packages/prompts", entries = "all" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = ".github/ + workflows/ listing"
-justification = "Both GitHub-automation dirs listed together: issue templates, dependabot config, and all 6 CI workflow files."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-] }
+descriptor = "Complete source roster of packages/prompts/src"
+justification = "The flat prompts/src directory holds nearly every user-facing symbol, one file per component (autocomplete.ts, box.ts, common.ts, group.ts, limit-options.ts, log.ts, ...). Listing it whole makes \"which file implements X\" a zero-search question and forecloses the assumption that an unlisted component does not exist."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/prompts/src", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "Changesets pending-changeset roster"
-justification = "Lists all 3 currently pending changeset files together — omitting any one would wrongly imply it doesn't exist."
-content = { kind = "fs", groups = [
-  { parent = ".changeset", entries = "all" },
-] }
+descriptor = "Complete source roster of packages/core/src (+ prompts/ and utils/)"
+justification = "Core's source splits three ways: the barrel and types.ts at the top, ten prompt classes under src/prompts/, and src/utils/. All three listings together so the split is visible in one shot rather than inferred from one of them."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/core/src", entries = "all" },
+  { parent = "packages/core/src/prompts", entries = "all" },
+  { parent = "packages/core/src/utils", entries = "all" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "README package pointers"
-justification = "Names both packages with a one-line role each (prompts = ready-to-use components, core = headless primitives) and their subdirectory READMEs."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 9, end = 9, render = { kind = "full" } },
-  { path = "README.md", start = 11, end = 11, render = { kind = "full" } },
-] }
+descriptor = "@clack/prompts headline and component inventory"
+justification = "packages/prompts/README.md:9-14 states that the package is a pre-styled wrapper around @clack/core and enumerates the shipped components — `text`, `password`, `confirm`, `date`, `select`, `autocomplete`, `selectKey`, `multiselect`, `path`, `spinner`. Natural-language framing for the package an agent is most likely asked about."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/README.md", start = 9, end = 14, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "pnpm-workspace.yaml"
-justification = "Workspace globs (examples/*, packages/*) and pnpm behavior flags — answers 'is X a workspace package' precisely."
-content = { kind = "lines", spans = [
-  { path = "pnpm-workspace.yaml", start = 1, end = 10, render = { kind = "full" } },
-] }
+descriptor = "packages/prompts/src/index.ts — core re-exports and the first half of the module barrel"
+justification = "Lines 1-14 re-export `isCancel`/`settings`/`updateSettings`/`ClackSettings` straight from @clack/core, then `export *` the modules from autocomplete through multi-line. Split in two so a small budget still learns that the barrel is a pure re-export surface."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/index.ts", start = 1, end = 14, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "Root package.json scripts"
-justification = "The canonical build/test/lint/dev entry points for the whole monorepo (including test/pretest) — cheaper, more precise evidence than CONTRIBUTING.md prose."
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 5, end = 16, render = { kind = "full" } },
-] }
+descriptor = "packages/prompts/src/index.ts — remainder of the module barrel"
+justification = "Lines 15-26 complete the `export *` list — multi-select, note, password, path, progress-bar, select, select-key, spinner, stream, task, task-log, text. With the previous batch this is the closed set of modules `import * as p from '@clack/prompts'` exposes, matching the file roster one-to-one."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/index.ts", start = 15, end = 26, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "ci.yml jobs"
-justification = "The actual CI command list (build, types, test, deps) — concrete operational ground truth for 'what does CI check'."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/ci.yml", start = 16, end = 27, render = { kind = "full" } },
-] }
+descriptor = "@clack/core framing and the render-callback idiom"
+justification = "packages/core/README.md:3-7 states that core is low-level primitives, that `TextPrompt`/`SelectPrompt`/`ConfirmPrompt` plus the base `Prompt` are what it exposes, and that each `Prompt` accepts a `render` function. The core programming model is stated in prose nowhere else in the repo."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/README.md", start = 3, end = 7, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "CONTRIBUTING.md repo-structure tree"
-justification = "The ASCII tree is a compact mental-model anchor not duplicated elsewhere."
-content = { kind = "lines", spans = [
-  { path = "CONTRIBUTING.md", start = 112, end = 123, render = { kind = "full" } },
-] }
+descriptor = "packages/core/src/index.ts — prompt classes A-M"
+justification = "Lines 1-12 name AutocompletePrompt, ConfirmPrompt, DatePrompt, GroupMultiSelectPrompt, MultiLinePrompt and MultiSelectPrompt, each paired with its options type and source module. The barrel is split three ways so no single batch dominates the early budget."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/index.ts", start = 1, end = 12, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 2 — @clack/core package overview
-# ---------------------------------------------------------------------
+[[batches]]
+id = "1.12"
+descriptor = "packages/core/src/index.ts — prompt classes P-T"
+justification = "Lines 13-22 complete the class list with PasswordPrompt, the base `Prompt` and its `PromptOptions`, SelectPrompt, SelectKeyPrompt and TextPrompt. Ranked right after the first half so the eleven classes are never split across a budget cut for long."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/index.ts", start = 13, end = 22, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "packages/core/src/index.ts — non-class exports (state, utils, settings)"
+justification = "Lines 23-26 complete the barrel: `ClackState as State`, the utility exports `block`, `getColumns`, `getRows`, `isCancel`, `wrapTextWithPrefix`, and `ClackSettings`/`settings`/`updateSettings`. Without these four lines the previous batch reads as if core exported only classes."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/index.ts", start = 23, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "Root package.json scripts — the full command surface"
+justification = "Lines 4-16 give every command an agent needs: `build` (pnpm --filter @clack/*), `stub`, `dev`, `format`/`lint` (biome), `types` (tsc --noEmit), `deps` (knip), and `test` with its `pretest: pnpm run build` dependency, which is the non-obvious part."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 4, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.15"
+descriptor = "examples/ tree, all three directories"
+justification = "CONTRIBUTING points contributors at examples/ as the way to exercise changes; examples/basic holds sixteen runnable .ts demos (spinner variants, autocomplete, task-log, progress, path, date). Listing all of them makes \"is there an example for X\" answerable without a search."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/basic", entries = "all" },
+  { parent = "examples/changesets", entries = "all" },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "packages/core/src listing"
-justification = "Top-level shape of core's source: index.ts (barrel), prompts/, types.ts, utils/."
-content = { kind = "fs", groups = [
-  { parent = "packages/core/src", entries = "all" },
-] }
+descriptor = "core/src/types.ts in full — ClackState and the ClackEvents contract"
+justification = "25 lines defining the state machine every prompt moves through (`'initial' | 'active' | 'cancel' | 'submit' | 'error'`) and the complete typed event surface (`cursor`, `key`, `value`, `userInput`, `confirm`, `finalize`, `beforePrompt`, ...). Most core questions — what states exist, what can I hook — are answered here with zero follow-up."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/types.ts", start = 1, end = 25, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "packages/core/src/prompts listing"
-justification = "All 10 prompt-primitive source files named together — prevents assuming any one prompt type lacks a core primitive."
-content = { kind = "fs", groups = [
-  { parent = "packages/core/src/prompts", entries = "all" },
-] }
+descriptor = "PromptOptions — the base constructor contract"
+justification = "packages/core/src/prompts/prompt.ts:17-25. Every core prompt's options type extends this and every prompts/ component funnels into it: `render()`, `initialValue`, `initialUserInput`, `validate`, `input`, `output`, `signal`. Nine lines that explain the plumbing of the whole library."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/prompt.ts", start = 17, end = 25, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "packages/core/src/utils listing"
-justification = "The 4 utility modules (cursor, index, settings, string) named together."
-content = { kind = "fs", groups = [
-  { parent = "packages/core/src/utils", entries = "all" },
-] }
+descriptor = "Prompt class declaration and its fields"
+justification = "prompt.ts:27-44 shows the private machinery (`rl`, `_render`, `_track`, `_prevFrame`, `_subscribers`, `_cursor`) next to the public state a `render()` callback reads (`state`, `error`, `value`, `userInput`). Subclass authors and render-function authors both need exactly this."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/prompt.ts", start = 27, end = 44, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "packages/core/package.json (exports + deps)"
-justification = "Exports map (dist/index.mjs, .d.mts) and runtime deps (fast-wrap-ansi, sisteransi) — the exact published surface of @clack/core."
-content = { kind = "lines", spans = [
-  { path = "packages/core/package.json", start = 1, end = 13, render = { kind = "full" } },
-  { path = "packages/core/package.json", start = 58, end = 61, render = { kind = "full" } },
-] }
+descriptor = "Complete method roster of the Prompt base class"
+justification = "One declaration line per method in prompt.ts — constructor, unsubscribe, setSubscriber, on, once, emit, prompt, _isActionKey, _shouldSubmit, _setValue, _setUserInput, _clearUserInput, onKeypress, close, restoreCursor, render — with visibility modifiers intact. Names and line numbers only; closed, so no overridable hook such as `_shouldSubmit` can be assumed absent."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/prompt.ts", start = 45, end = 45, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 63, end = 63, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 71, end = 71, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 85, end = 85, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 94, end = 94, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 103, end = 103, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 123, end = 123, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 177, end = 177, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 181, end = 181, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 185, end = 185, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 190, end = 190, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 199, end = 199, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 204, end = 204, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 258, end = 258, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 269, end = 269, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 276, end = 276, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "packages/core/README.md usage example"
-justification = "The minimal core usage example (raw TextPrompt with a render() function) plus the isCancel() guard every caller of .prompt() needs — the smallest illustration of the render contract every subclass implements."
-content = { kind = "lines", spans = [
-  { path = "packages/core/README.md", start = 9, end = 22, render = { kind = "full" } },
-] }
+descriptor = "Complete roster of @clack/prompts interactive components"
+justification = "The twelve exported prompt functions, name-truncated, one line each: autocomplete, autocompleteMultiselect, confirm, date, groupMultiselect, multiline, multiselect, password, path, select, selectKey, text. Pins every component to a file:line and, being closed, prevents \"there is no groupMultiselect\" errors."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/autocomplete.ts", start = 121, end = 121, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 304, end = 304, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/confirm.ts", start = 61, end = 61, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/date.ts", start = 19, end = 19, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 90, end = 90, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/multi-line.ts", start = 36, end = 36, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/multi-select.ts", start = 31, end = 31, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/password.ts", start = 47, end = 47, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/path.ts", start = 58, end = 58, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/select.ts", start = 85, end = 85, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/select-key.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/text.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "packages/core/src/types.ts"
-justification = "ClackState union and the full ClackEvents<TValue> event-name-to-signature map — needed to understand any prompt's .on()/.emit() surface."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/types.ts", start = 1, end = 25, render = { kind = "full" } },
-] }
+descriptor = "Complete roster of @clack/prompts non-interactive output and utility APIs"
+justification = "The other half of the callable surface, which the component roster alone would hide: intro/outro/cancel (messages.ts), note, box, spinner, progress, tasks, taskLog, group, limitOptions, and the `log` and `stream` objects. Ranked immediately after the components so a budget cut never separates the two halves."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/box.ts", start = 123, end = 123, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/group.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/limit-options.ts", start = 41, end = 41, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/log.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "packages/prompts/src/messages.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/messages.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/messages.ts", start = 20, end = 20, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/note.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/progress-bar.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "packages/prompts/src/spinner.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "packages/prompts/src/stream.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/prompts/src/task.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+  { path = "packages/prompts/src/task-log.ts", start = 47, end = 47, render = { kind = "truncated", pattern = "^export const [a-zA-Z]+" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "packages/core/src/index.ts (public export roster)"
-justification = "The exhaustive list of what @clack/core exports — every prompt class + its Options type, plus state/settings/util re-exports."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/index.ts", start = 1, end = 26, render = { kind = "full" } },
-] }
+descriptor = "Complete roster of exported types in @clack/prompts, rendered in full"
+justification = "Every `export interface` / `export type` declaration line across prompts/src, unabbreviated so the `extends` clauses stay visible — this is how an agent learns that nearly everything extends `CommonOptions`, that `ProgressOptions extends SpinnerOptions`, `MultiLineOptions extends TextOptions`, and that autocomplete has two distinct option types. Header lines only; bodies are ranked below."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/autocomplete.ts", start = 84, end = 84, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 267, end = 267, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "packages/prompts/src/common.ts", start = 70, end = 70, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "packages/prompts/src/date.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "packages/prompts/src/date.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 11, end = 11, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/limit-options.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "packages/prompts/src/log.ts", start = 13, end = 13, render = { kind = "full" } },
+  { path = "packages/prompts/src/multi-line.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/prompts/src/multi-select.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "packages/prompts/src/note.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "packages/prompts/src/password.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "packages/prompts/src/path.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/prompts/src/progress-bar.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/prompts/src/progress-bar.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 68, end = 68, render = { kind = "full" } },
+  { path = "packages/prompts/src/select-key.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "packages/prompts/src/spinner.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "packages/prompts/src/spinner.ts", start = 25, end = 25, render = { kind = "full" } },
+  { path = "packages/prompts/src/task.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 14, end = 14, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 21, end = 21, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 25, end = 25, render = { kind = "full" } },
+  { path = "packages/prompts/src/text.ts", start = 8, end = 8, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 3 — the Prompt base class (prompt.ts): the shared engine every
-# prompt subclass extends.
-# ---------------------------------------------------------------------
+[[batches]]
+id = "2.8"
+descriptor = "CommonOptions body — the four options every prompt accepts"
+justification = "common.ts:71-75, the body under the header rendered above: `input`, `output`, `signal`, `withGuide`. Tiny, and inherited by essentially every options interface in the package, so it pays for itself across all the later option batches."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/common.ts", start = 71, end = 75, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Complete roster of core prompt classes and their option interfaces"
+justification = "For each of the ten subclasses under core/src/prompts/, the exported options-interface line and the `export default class ... extends Prompt<...>` line, plus date.ts's exported `DateFormat` union. Reveals the generic constraints (e.g. `SelectPrompt<T extends { value: any; disabled?: boolean }>`) and pins each class to a file:line."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/autocomplete.ts", start = 49, end = 49, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/autocomplete.ts", start = 63, end = 63, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/confirm.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/confirm.ts", start = 10, end = 10, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/date.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/date.ts", start = 120, end = 120, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/date.ts", start = 130, end = 130, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/group-multiselect.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/group-multiselect.ts", start = 11, end = 11, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/multi-line.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/multi-line.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/multi-select.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/multi-select.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/password.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/password.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/select.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/select.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/select-key.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/select-key.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/text.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/text.ts", start = 9, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "core/src/utils/index.ts — the exported utility surface"
+justification = "The re-export lines for settings.js/string.js, then `CANCEL_SYMBOL`, `isCancel`, `setRawMode`, `BlockOptions`, the `block` declaration line, `getColumns`/`getRows` with their 80/20 fallbacks, and the `wrapTextWithPrefix` signature. Bodies of `block` and `wrapTextWithPrefix` sit behind ellipsis markers."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/utils/index.ts", start = 10, end = 11, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 15, end = 25, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 27, end = 32, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 34, end = 34, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/index.ts", start = 87, end = 99, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 101, end = 108, render = { kind = "full" } },
+  { path = "packages/core/src/utils/index.ts", start = 109, end = 109, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "Core settings: the Action set and the live defaults object"
+justification = "settings.ts:1-2 defines `Action` as up/down/left/right/space/enter/cancel; 40-56 is the mutable `settings` singleton with the vim-style alias map (k/j/h/l), `\\x03` and `escape` mapped to cancel, the cancel/error messages and `withGuide`. Line 57 opens the `date` localisation block whose default message bodies are elided."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/utils/settings.ts", start = 1, end = 2, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 40, end = 57, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 58, end = 58, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 67, end = 67, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "ClackSettings — the public configuration surface, field by field"
+justification = "settings.ts:69-116 is the type accepted by `updateSettings`. Rendered as its field lines — `aliases`, `messages.cancel`/`messages.error`, `withGuide`, `date.monthNames` and the five `date.messages` overrides — with ellipses standing in for the jsdoc defaults. Configuration is a large slice of the query distribution and this closes it cheaply."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/utils/settings.ts", start = 69, end = 69, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 70, end = 70, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 77, end = 77, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 79, end = 79, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 82, end = 82, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 83, end = 83, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 87, end = 87, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 88, end = 88, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 92, end = 93, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 95, end = 95, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 97, end = 97, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 100, end = 103, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 104, end = 104, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 105, end = 105, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 106, end = 106, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 107, end = 107, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 108, end = 108, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 109, end = 109, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 110, end = 110, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 111, end = 111, render = { kind = "full" } },
+  { path = "packages/core/src/utils/settings.ts", start = 112, end = 112, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/utils/settings.ts", start = 113, end = 116, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "Prompt: PromptOptions + fields + constructor"
-justification = "The base options contract (render, initialValue, validate, input/output/signal), the instance fields every subclass inherits, and the constructor's initial opts destructuring; the remaining state wiring (event-handler binding, private field assignment) continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/prompt.ts", start = 17, end = 48, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/prompt.ts", start = 49, end = 49, render = { kind = "ellipsis" } },
-] }
+descriptor = "common.ts environment helpers"
+justification = "prompts/src/common.ts:6-11 — `unicode`, `isCI()`, `isTTY(output)`, `unicodeOr(c, fallback)`. These gate every glyph choice in the package and are what spinner and taskLog branch on for CI/non-TTY behaviour."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/common.ts", start = 6, end = 11, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "Prompt: protected extension hooks"
-justification = "_isActionKey / _shouldSubmit / _setValue / _setUserInput / _clearUserInput are the exact override points subclasses use (e.g. AutocompletePrompt overrides _isActionKey for Tab-fill)."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/prompt.ts", start = 177, end = 202, render = { kind = "full" } },
-] }
+descriptor = "S_* glyph table, part 1: step, bar, radio, checkbox and mask glyphs"
+justification = "common.ts:12-28 — S_STEP_ACTIVE/CANCEL/ERROR/SUBMIT, the S_BAR family that draws the guide rail down the left of every prompt, S_RADIO_*, S_CHECKBOX_* and S_PASSWORD_MASK — each with its non-unicode fallback. Split from the remainder only to keep the batch in line with its neighbours; the two halves are adjacent so the table is never left half-shown for long."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/common.ts", start = 12, end = 28, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "Prompt.prompt(): main promise/readline loop"
-justification = "readline.createInterface setup, abort-signal wiring, and the initial render kickoff — the actual async entry point every `await text(...)` runs through; the submit/cancel promise resolution continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/prompt.ts", start = 123, end = 160, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/prompt.ts", start = 161, end = 161, render = { kind = "ellipsis" } },
-] }
+descriptor = "S_* glyph table, part 2: box-drawing and log-level glyphs"
+justification = "common.ts:30-40 completes the table — S_BAR_H, the four S_CORNER_* glyphs, S_CONNECT_LEFT (used by `note` and `box`), and S_INFO/S_SUCCESS/S_WARN/S_ERROR for the log levels. With the previous batch this is the closed set of characters the UI is drawn from; a partial table would be actively misleading."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/common.ts", start = 30, end = 40, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "Prompt.onKeypress(): key-event state machine"
-justification = "The central dispatch: action-key/alias lookup and validate-on-submit — where a 'why didn't my keypress do X' investigation starts; cancel detection and finalize emission continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/prompt.ts", start = 204, end = 243, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/prompt.ts", start = 244, end = 244, render = { kind = "ellipsis" } },
-] }
+descriptor = "symbol() and symbolBar() — state to coloured glyph mapping"
+justification = "common.ts:42-54 is `symbol(state)`, called by every component's render function; line 56 opens the parallel `symbolBar(state)` whose identically-shaped switch is elided. This is the bridge between core's `ClackState` and the glyph and colour actually printed."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/common.ts", start = 42, end = 54, render = { kind = "full" } },
+  { path = "packages/prompts/src/common.ts", start = 56, end = 56, render = { kind = "full" } },
+  { path = "packages/prompts/src/common.ts", start = 57, end = 57, render = { kind = "ellipsis" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 4 — core prompt subclasses (packages/core/src/prompts/*)
-# ---------------------------------------------------------------------
+[[batches]]
+id = "3.5"
+descriptor = "TextOptions fields"
+justification = "text.ts's option fields — `message`, `placeholder`, `defaultValue`, `initialValue`, `validate` — with ellipses for the jsdoc between them. `text` is the most-used component and this options set is inherited wholesale by `multiline`, so it leads the per-prompt option batches."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/text.ts", start = 9, end = 9, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/text.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/prompts/src/text.ts", start = 14, end = 14, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/text.ts", start = 17, end = 17, render = { kind = "full" } },
+  { path = "packages/prompts/src/text.ts", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/text.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "packages/prompts/src/text.ts", start = 24, end = 24, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/text.ts", start = 28, end = 28, render = { kind = "full" } },
+  { path = "packages/prompts/src/text.ts", start = 30, end = 30, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/text.ts", start = 34, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Option<Value> skeleton and SelectOptions body"
+justification = "select.ts's `Option<Value>` is the shared item type for select, multiselect, groupMultiselect, selectKey, autocomplete and path. Rendered as field lines only — `value`, `label`, `hint`, `disabled` across both the primitive and non-primitive branches, with ellipses for jsdoc — followed by SelectOptions' `message`/`options`/`initialValue`/`maxItems`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/select.ts", start = 17, end = 17, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 21, end = 21, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 22, end = 22, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 27, end = 27, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 28, end = 28, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 34, end = 34, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 41, end = 43, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 44, end = 44, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 47, end = 47, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 51, end = 51, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 58, end = 58, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 59, end = 59, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/select.ts", start = 65, end = 66, render = { kind = "full" } },
+  { path = "packages/prompts/src/select.ts", start = 69, end = 73, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Compact option bodies: date, selectKey, multiselect, multiline"
+justification = "Four short option bodies grouped because none justifies a batch alone: DateOptions (`format`, `locale`, `minDate`, `maxDate`), SelectKeyOptions (`caseSensitive`), MultiSelectOptions (`initialValues`, `required`, `cursorAt`, `maxItems`) and MultiLineOptions' single added `showSubmit` field."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/date.ts", start = 9, end = 17, render = { kind = "full" } },
+  { path = "packages/prompts/src/select-key.ts", start = 7, end = 11, render = { kind = "full" } },
+  { path = "packages/prompts/src/multi-select.ts", start = 17, end = 23, render = { kind = "full" } },
+  { path = "packages/prompts/src/multi-line.ts", start = 10, end = 10, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/multi-line.ts", start = 16, end = 17, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "SpinnerOptions and SpinnerResult bodies"
+justification = "spinner.ts:16-23 (`indicator: 'dots' | 'timer'`, `onCancel`, `cancelMessage`, `errorMessage`, `frames`, `delay`, `styleFrame`) and 26-33, the complete returned handle: `start`, `stop`, `cancel`, `error`, `message`, `clear`, `isCancelled`. The handle is used far more often than it is defined, and `progress()` extends both."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/spinner.ts", start = 16, end = 23, render = { kind = "full" } },
+  { path = "packages/prompts/src/spinner.ts", start = 26, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "log object: LogMessageOptions body and every log method"
+justification = "log.ts:14-17 gives `symbol`/`spacing`/`secondarySymbol`, then one line per member of the `log` object — message, info, success, step, warn, warning (the documented alias for warn), error. Closing the method set matters because `log.step` and `log.warning` are easy to assume absent."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/log.ts", start = 14, end = 17, render = { kind = "full" } },
+  { path = "packages/prompts/src/log.ts", start = 20, end = 20, render = { kind = "full" } },
+  { path = "packages/prompts/src/log.ts", start = 58, end = 58, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/log.ts", start = 61, end = 61, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/log.ts", start = 64, end = 64, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/log.ts", start = 67, end = 67, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/log.ts", start = 70, end = 71, render = { kind = "full" } },
+  { path = "packages/prompts/src/log.ts", start = 74, end = 74, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "stream object: every streaming log method"
+justification = "stream.ts's members mirror `log` but take an `Iterable<string> | AsyncIterable<string>` — message, info, success, step, warn, warning, error — plus the file's TODO recording that a custom `output` writable is unsupported because the implementation depends on `process.stdout.columns`, which a feature request would otherwise rediscover."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/stream.ts", start = 7, end = 8, render = { kind = "full" } },
+  { path = "packages/prompts/src/stream.ts", start = 13, end = 15, render = { kind = "full" } },
+  { path = "packages/prompts/src/stream.ts", start = 35, end = 35, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/stream.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/stream.ts", start = 41, end = 41, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/stream.ts", start = 44, end = 44, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+  { path = "packages/prompts/src/stream.ts", start = 47, end = 48, render = { kind = "full" } },
+  { path = "packages/prompts/src/stream.ts", start = 51, end = 51, render = { kind = "truncated", pattern = "^\t[a-zA-Z]+" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "taskLog option fields and the handle it returns"
+justification = "task-log.ts:15-19 (`title`, `limit`, `spacing`, `retainLog`), the `raw` and `showLog` fields of the two companion option types, and the members of the returned object at 185-225 — `message`, `group(name)` which itself returns a nested `{ message, error, success }`, and the terminal `error`/`success`. The nested group handle is invisible from the type roster."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/task-log.ts", start = 15, end = 19, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 22, end = 23, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 26, end = 27, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 186, end = 186, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 189, end = 189, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 196, end = 197, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 200, end = 200, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 206, end = 206, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 214, end = 214, render = { kind = "full" } },
+  { path = "packages/prompts/src/task-log.ts", start = 225, end = 225, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "PasswordOptions and ConfirmOptions fields"
+justification = "password.ts's `message`, `mask`, `validate`, `clearOnError` and confirm.ts's `message`, `active`, `inactive`, `initialValue`, `vertical`, field lines only with ellipses for the jsdoc that documents their defaults (Yes/No, ▪/•)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/password.ts", start = 9, end = 9, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/password.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/prompts/src/password.ts", start = 14, end = 14, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/password.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/password.ts", start = 20, end = 20, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/password.ts", start = 24, end = 24, render = { kind = "full" } },
+  { path = "packages/prompts/src/password.ts", start = 26, end = 26, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/password.ts", start = 30, end = 31, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 16, end = 16, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/confirm.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/confirm.ts", start = 25, end = 25, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 27, end = 27, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/confirm.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 33, end = 33, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/confirm.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "packages/prompts/src/confirm.ts", start = 39, end = 39, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/confirm.ts", start = 43, end = 44, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "Autocomplete option fields (shared base, single-select, multi-select)"
+justification = "The unexported `AutocompleteSharedOptions` base — `message`, the `options` array-or-getter, `maxItems`, `placeholder`, `validate`, `filter` — plus `AutocompleteOptions`' `initialValue`/`initialUserInput` and `AutocompleteMultiSelectOptions`' `initialValues`/`required`. Nothing else in the snapshot reveals the shared base, and `path` is built on top of it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/autocomplete.ts", start = 47, end = 47, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 51, end = 51, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 53, end = 53, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 59, end = 59, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 61, end = 61, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 64, end = 64, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 66, end = 66, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 70, end = 70, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 72, end = 72, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 76, end = 76, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 78, end = 78, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 81, end = 82, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 85, end = 85, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 88, end = 88, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 90, end = 90, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 93, end = 94, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 268, end = 268, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 271, end = 271, render = { kind = "full" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 273, end = 273, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/autocomplete.ts", start = 277, end = 278, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "PathOptions and GroupMultiSelectOptions fields"
+justification = "path.ts's `message`, `root`, `directory`, `initialValue`, `validate` and group-multi-select.ts's `message`, the `Record<string, Option<Value>[]>` options shape, `initialValues`, `maxItems`, `required`, `cursorAt`, `selectableGroups`, `groupSpacing`. Both prompts carry behaviour in their options that is not guessable from the names alone."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/path.ts", start = 10, end = 10, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/path.ts", start = 13, end = 13, render = { kind = "full" } },
+  { path = "packages/prompts/src/path.ts", start = 15, end = 15, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/path.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/path.ts", start = 20, end = 20, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/path.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "packages/prompts/src/path.ts", start = 25, end = 25, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/path.ts", start = 33, end = 33, render = { kind = "full" } },
+  { path = "packages/prompts/src/path.ts", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/path.ts", start = 39, end = 40, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 24, end = 24, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 27, end = 27, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 29, end = 29, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 32, end = 32, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 34, end = 34, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 39, end = 39, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 43, end = 43, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 45, end = 45, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 48, end = 48, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 50, end = 50, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 56, end = 56, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group-multi-select.ts", start = 60, end = 61, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "Remaining exported type bodies: progress, group, tasks, note, limitOptions"
+justification = "Closes the type class opened by the 2.7 roster with the bodies under those headers: `style`/`max`/`size` and `advance` for the progress types, the `Exclude<Awaited<T[P]>, symbol>` mapping and the `onCancel` callback that make `group` infer its result object, `title`/`task`/`enabled` for a task, `format` for a note, and `options`/`cursor`/`style` for limitOptions. After this batch every entry in that roster has a rendered body."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/progress-bar.ts", start = 13, end = 16, render = { kind = "full" } },
+  { path = "packages/prompts/src/progress-bar.ts", start = 19, end = 20, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 12, end = 13, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/group.ts", start = 22, end = 23, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/prompts/src/group.ts", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/task.ts", start = 5, end = 5, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/task.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "packages/prompts/src/task.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/prompts/src/task.ts", start = 17, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/src/note.ts", start = 20, end = 21, render = { kind = "full" } },
+  { path = "packages/prompts/src/limit-options.ts", start = 7, end = 9, render = { kind = "full" } },
+  { path = "packages/prompts/src/limit-options.ts", start = 10, end = 10, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/limit-options.ts", start = 13, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "BoxOptions fields — the box styling knobs"
+justification = "box.ts's `BoxAlignment`-typed `contentAlign` and `titleAlign`, plus `width`, `titlePadding`, `contentPadding`, `rounded` and `formatBorder`, with ellipses for the jsdoc that records each default. Ranked last among the option batches because `box` is the newest and least central component."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/src/box.ts", start = 38, end = 38, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 44, end = 44, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 48, end = 48, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 50, end = 50, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 56, end = 56, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 60, end = 60, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 62, end = 62, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 66, end = 66, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 68, end = 68, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 72, end = 72, render = { kind = "full" } },
+  { path = "packages/prompts/src/box.ts", start = 74, end = 74, render = { kind = "ellipsis" } },
+  { path = "packages/prompts/src/box.ts", start = 77, end = 78, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "core prompt-subclass declaration roster"
-justification = "One line per subclass declaration across all 10 files — the exact class name + generic constraint for each, cross-checked against the 2.2 file listing."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/select.ts", start = 9, end = 9, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/text.ts", start = 9, end = 9, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/confirm.ts", start = 10, end = 10, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/password.ts", start = 7, end = 7, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/select-key.ts", start = 8, end = 8, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/multi-select.ts", start = 16, end = 16, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/group-multiselect.ts", start = 11, end = 11, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/multi-line.ts", start = 15, end = 15, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/autocomplete.ts", start = 63, end = 63, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/date.ts", start = 130, end = 130, render = { kind = "full" } },
-] }
+descriptor = "Prompt.prompt() — the prompt lifecycle"
+justification = "prompt.ts:123-175, the heart of the library: an abort-signal listener that flips the state to `cancel` and closes (the already-aborted branch at 126-132 is elided), `readline.createInterface` setup, keypress wiring, raw mode, resize-driven re-render, and the `once('submit')`/`once('cancel')` handlers that restore the cursor and resolve. Debugging questions about hangs, cancellation or teardown start here, and nothing else in the snapshot shows the sequence."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/prompt.ts", start = 123, end = 125, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 126, end = 126, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 133, end = 151, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 152, end = 152, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 156, end = 175, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "core SelectPrompt (select.ts, full)"
-predecessor = "4.1"
-justification = "Smallest, clearest subclass example: options array, cursor navigation via findCursor, value derived from cursor. Template for the rest of the family (multi-select/select-key/group-multiselect are one hop away via 2.2/4.1)."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/select.ts", start = 1, end = 47, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.3"
-descriptor = "core DatePrompt: smart digit-placement excerpt"
-justification = "The trickiest logic in the whole repo — clear-on-type into a filled segment and smart month/day first-digit placement. A likely target for any date-prompt bug report; this is a slice of the larger #onKey handler (line 270+), the rest of which continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/prompts/date.ts", start = 339, end = 353, render = { kind = "full" } },
-  { path = "packages/core/src/prompts/date.ts", start = 354, end = 354, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 5 — core utils
-# ---------------------------------------------------------------------
+descriptor = "Prompt.onKeypress — alias dispatch, validation and cancellation"
+justification = "The decision points of prompt.ts's key handler: 216-226 turns `settings.aliases` and `settings.actions` into `cursor` events and emits `confirm` for y/n, 231-247 runs `opts.validate`, sets the `error` state, promotes to `submit`, and maps `isActionKey([...], 'cancel')` to the cancel state. The readline-sync preamble at 205-211 and the finalize/close tail at 248-255 are elided."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/src/prompts/prompt.ts", start = 205, end = 205, render = { kind = "ellipsis" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 216, end = 226, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 231, end = 247, render = { kind = "full" } },
+  { path = "packages/core/src/prompts/prompt.ts", start = 248, end = 248, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "utils/cursor.ts: findCursor (full)"
-justification = "The disabled-option-skipping wraparound cursor logic shared by select/multiselect/groupMultiselect/autocomplete. (findTextCursor's 2D line/col math is below, in the same file.)"
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/utils/cursor.ts", start = 1, end = 18, render = { kind = "full" } },
-] }
+descriptor = "Every heading in the @clack/prompts README"
+justification = "One line per heading: the Basics/Components/Utilities structure plus a section per component and utility (Text through Progress, then Grouping, Tasks, Logs, Stream, Task Log). Cheap, and it tells the agent exactly which documented section to open without first checking whether one exists."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/prompts/README.md", start = 16, end = 16, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 47, end = 47, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 49, end = 49, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 66, end = 66, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 82, end = 82, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 94, end = 94, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 109, end = 109, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 126, end = 126, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 145, end = 145, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 166, end = 166, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 183, end = 183, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 223, end = 223, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 248, end = 248, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 261, end = 261, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 274, end = 274, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 291, end = 291, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 293, end = 293, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 327, end = 327, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 345, end = 345, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 359, end = 359, render = { kind = "full" } },
+  { path = "packages/prompts/README.md", start = 376, end = 376, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "utils/string.ts: diffLines (full)"
-justification = "The line-array diff feeding Prompt.render()'s partial-redraw path — tiny but load-bearing."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/utils/string.ts", start = 1, end = 19, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "utils/settings.ts: Action type + default aliases"
-justification = "The Action union and the concrete default vim-style aliases (k/j/h/l, Ctrl-C, Escape) on the module-level `settings` object — the exact defaults any 'what keys work by default' question needs; the rest of `settings` (messages, date locale) continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/core/src/utils/settings.ts", start = 1, end = 2, render = { kind = "full" } },
-  { path = "packages/core/src/utils/settings.ts", start = 40, end = 51, render = { kind = "full" } },
-  { path = "packages/core/src/utils/settings.ts", start = 52, end = 52, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 6 — @clack/core tests
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "6.1"
-descriptor = "packages/core/test listing (top + prompts/ + utils/)"
-justification = "Full test-file roster: mock-readable.ts, mock-writable.ts, one .test.ts per core prompt subclass (matching 2.2's source roster), and utils/cursor.test.ts."
-content = { kind = "fs", groups = [
+descriptor = "Test tree: both packages' suites, snapshots and mocks"
+justification = "Complete listings of packages/core/test (+ prompts/, utils/), packages/prompts/test (+ __snapshots__/) and packages/prompts/__mocks__. Shows the one-test-file-per-prompt convention, the vitest snapshot corpus, the mock-readable/mock-writable and test-utils helpers, and the memfs `fs.cjs` mock the path tests depend on."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "packages/core/test", entries = "all" },
   { parent = "packages/core/test/prompts", entries = "all" },
   { parent = "packages/core/test/utils", entries = "all" },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 7 — @clack/prompts package overview
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "packages/prompts/src listing"
-justification = "All 23 source files named at once — the definitive file roster; omitting any would wrongly imply that component isn't implemented."
-content = { kind = "fs", groups = [
-  { parent = "packages/prompts/src", entries = "all" },
-] }
-
-[[batches]]
-id = "7.2"
-descriptor = "packages/prompts/package.json (deps)"
-justification = "Depends on @clack/core via workspace:*, plus fast-string-width/fast-wrap-ansi/sisteransi — the exact runtime dependency surface of @clack/prompts."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/package.json", start = 1, end = 6, render = { kind = "full" } },
-  { path = "packages/prompts/package.json", start = 58, end = 63, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.3"
-descriptor = "packages/prompts/src/index.ts (public export roster)"
-justification = "The full re-export list — every user-facing function/type this package ships, plus the 4 things re-exported straight through from @clack/core."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/index.ts", start = 1, end = 26, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.4"
-descriptor = "prompts common.ts: CommonOptions + symbol glyphs sample"
-justification = "The base CommonOptions every prompts/src Options interface extends, plus a sample of the unicode/ASCII-fallback glyph constants (S_STEP_*, S_BAR*) reused across every render() body."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/common.ts", start = 1, end = 10, render = { kind = "full" } },
-  { path = "packages/prompts/src/common.ts", start = 70, end = 75, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 8 — @clack/prompts: simple text-like components (options shapes)
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "prompts TextOptions (text.ts interface)"
-justification = "message/placeholder/defaultValue — the base shape multiline extends and the pattern every other component's Options interface follows (JSDoc per field, no positional args); initialValue/validate fields continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/text.ts", start = 8, end = 22, render = { kind = "full" } },
-  { path = "packages/prompts/src/text.ts", start = 24, end = 24, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.2"
-descriptor = "prompts PasswordOptions (password.ts interface)"
-justification = "Adds `mask` (default the S_PASSWORD_MASK glyph) and `validate` on top of TextOptions' shape; one more field (clearOnError) continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/password.ts", start = 8, end = 24, render = { kind = "full" } },
-  { path = "packages/prompts/src/password.ts", start = 26, end = 26, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.3"
-descriptor = "prompts ConfirmOptions (confirm.ts interface)"
-justification = "message plus the active-label default ('Yes'); the inactive-label, initialValue, and vertical-layout fields continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/confirm.ts", start = 15, end = 26, render = { kind = "full" } },
-  { path = "packages/prompts/src/confirm.ts", start = 27, end = 27, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "8.4"
-descriptor = "prompts MultiLineOptions (multi-line.ts interface)"
-justification = "Extends TextOptions with just `showSubmit` (double-Enter vs explicit [submit] button) — a one-field diff worth seeing explicitly."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/multi-line.ts", start = 9, end = 17, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.5"
-descriptor = "prompts DateOptions (date.ts interface)"
-justification = "format/locale/min/maxDate/validate — the options composing on top of core's DatePrompt (4.3's digit-entry engine)."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/date.ts", start = 8, end = 17, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 9 — @clack/prompts: selection components
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "9.1"
-descriptor = "prompts Option<Value> type (select.ts)"
-justification = "The shared Option<Value> conditional type (label/hint/disabled) used by select/multiselect/groupMultiselect/selectKey — the single most cross-referenced type in the package. Shown here is the Primitive-Value branch, where label is optional; the second branch (non-primitive Value, label required) continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/select.ts", start = 16, end = 42, render = { kind = "full" } },
-  { path = "packages/prompts/src/select.ts", start = 43, end = 43, render = { kind = "ellipsis" } },
-  { path = "packages/prompts/src/select.ts", start = 68, end = 73, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "prompts MultiSelectOptions (multi-select.ts interface)"
-justification = "Adds initialValues/maxItems/required/cursorAt on top of the shared Option<Value>[] shape; `required` defaults true here (vs false for autocompleteMultiselect, see 10.2)."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/multi-select.ts", start = 16, end = 23, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.3"
-descriptor = "prompts SelectKeyOptions (select-key.ts interface)"
-justification = "caseSensitive flag on top of the shared Option shape — the one distinguishing field of the direct single-key-press selector."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/select-key.ts", start = 6, end = 11, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.4"
-descriptor = "prompts group(): sequential-execution body"
-justification = "The for-loop that awaits each prompt in turn, threading {results} of all prior prompts into the next — the composition primitive both examples/ projects use; cancellation handling continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/group.ts", start = 60, end = 72, render = { kind = "full" } },
-  { path = "packages/prompts/src/group.ts", start = 73, end = 73, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "9.5"
-descriptor = "prompts GroupMultiSelectOptions (group-multi-select.ts interface)"
-justification = "message plus options as Record<string, Option<Value>[]> (grouped, not flat) — the shape that distinguishes it from plain multiselect; the remaining option fields continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/group-multi-select.ts", start = 18, end = 28, render = { kind = "full" } },
-  { path = "packages/prompts/src/group-multi-select.ts", start = 29, end = 29, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 10 — @clack/prompts: autocomplete + path (search-driven prompts)
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "10.1"
-descriptor = "prompts AutocompleteSharedOptions"
-justification = "message plus options as an array OR a function (dynamic getter, @see-linked to docs) and maxItems — the base shape both autocomplete and autocompleteMultiselect extend; the remaining option fields continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/autocomplete.ts", start = 47, end = 64, render = { kind = "full" } },
-  { path = "packages/prompts/src/autocomplete.ts", start = 65, end = 65, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "10.2"
-descriptor = "prompts AutocompleteMultiSelectOptions"
-justification = "initialValues + required (defaulting false, unlike multiselect's true default seen in 9.2) — the multi-select variant's distinguishing fields."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/autocomplete.ts", start = 267, end = 278, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.3"
-descriptor = "prompts PathOptions (path.ts interface)"
-justification = "message plus root (the starting suggestion directory) — path extends autocomplete with a dynamic readdirSync-backed options() getter (defined further down the same file) rather than a static list; the directory/initialValue/validate fields continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/path.ts", start = 9, end = 18, render = { kind = "full" } },
-  { path = "packages/prompts/src/path.ts", start = 20, end = 20, render = { kind = "ellipsis" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 11 — @clack/prompts: terminal-UI utilities (non-input)
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "11.1"
-descriptor = "prompts spinner.ts: SpinnerOptions + SpinnerResult"
-justification = "indicator ('dots'/'timer'), onCancel/cancelMessage/errorMessage, and the returned start/stop/cancel/error/message/clear/isCancelled contract every caller (including progress()) builds on."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/spinner.ts", start = 15, end = 33, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "11.2"
-descriptor = "prompts task.ts (full)"
-justification = "tasks() sequential-execution helper: enabled:false skip, and result-or-title fallback message per task — tiny (32 lines), self-contained."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/task.ts", start = 1, end = 32, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "11.3"
-descriptor = "prompts messages.ts: cancel/intro/outro (full)"
-justification = "The 3 session-bookend functions every example script calls — exact prefix/color/guide-bar behavior per function; tiny (25 lines)."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/messages.ts", start = 1, end = 25, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "11.4"
-descriptor = "prompts log.ts: log.message() signature + defaults"
-justification = "LogMessageOptions plus the full parameter-default list (symbol/secondarySymbol/output/spacing/withGuide) every log.info/success/step/warn/error convenience wrapper passes through — no JSDoc @example exists for this module anywhere else in source. The multi-line formatting loop itself continues below, elided here."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/log.ts", start = 13, end = 29, render = { kind = "full" } },
-  { path = "packages/prompts/src/log.ts", start = 30, end = 30, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "11.5"
-descriptor = "prompts limit-options.ts: LimitOptionsParams"
-justification = "The columnPadding/rowPadding contract every select-family render() (select/multiselect/groupMultiselect/autocomplete) must supply correctly to limitOptions() — a likely first stop for 'why did an option disappear from the list'. task-log.ts's/box.ts's own option shapes are one hop away via the 7.1 listing."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/src/limit-options.ts", start = 6, end = 13, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 12 — @clack/prompts tests
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "12.1"
-descriptor = "packages/prompts/test listing (+ __snapshots__ + __mocks__)"
-justification = "Full test-file roster (one .test.ts per component, matching 7.1's source roster) alongside the snapshots dir and the package-level fs mock dir."
-content = { kind = "fs", groups = [
   { parent = "packages/prompts/test", entries = "all" },
   { parent = "packages/prompts/test/__snapshots__", entries = "all" },
   { parent = "packages/prompts/__mocks__", entries = "all" },
-] }
+]
 
 [[batches]]
-id = "12.2"
-descriptor = "prompts __mocks__/fs.cjs"
-justification = "The one-line memfs-backed fs mock used by path.test.ts's filesystem-dependent suggestions — explains the memfs devDep from 7.2."
-content = { kind = "lines", spans = [
-  { path = "packages/prompts/__mocks__/fs.cjs", start = 1, end = 2, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 13 — examples/
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "13.1"
-descriptor = "examples/basic listing"
-justification = "All 15 standalone example scripts named together (autocomplete, date, path, progress, 4 spinner variants, stream, task-log, text-validation, ...) plus its package.json/tsconfig.json — hedges against assuming only index.ts exists."
-content = { kind = "fs", groups = [
-  { parent = "examples/basic", entries = "all" },
-] }
+id = "5.3"
+descriptor = "GitHub automation, changesets and editor config inventory"
+justification = "Listings of .github, .github/workflows, .github/ISSUE_TEMPLATE, .github/assets, .changeset and .vscode. Names all seven workflows (ci, publish, preview, format, issue, detect-agent, require-allow-edits) and the pending changeset files, so \"is there a workflow for X\" needs no search."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".github/assets", entries = "all" },
+  { parent = ".changeset", entries = "all" },
+  { parent = ".vscode", entries = "all" },
+]
 
 [[batches]]
-id = "13.2"
-descriptor = "examples/changesets listing"
-justification = "The second example project (its own package.json/tsconfig.json alongside index.ts) — confirms it's a separate workspace member."
-content = { kind = "fs", groups = [
-  { parent = "examples/changesets", entries = "all" },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 14 — build tooling, linting, and release metadata
-# ---------------------------------------------------------------------
+id = "5.4"
+descriptor = "TypeScript configuration"
+justification = "tsconfig.json: strict, node16 modules and resolution, `erasableSyntaxOnly`, `verbatimModuleSyntax`, `noUnusedLocals`/`noUnusedParameters`, and the `@clack/core`/`@clack/prompts` path aliases that point straight at each package's src/index.ts — which is why examples and tests type-check against source rather than dist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tsconfig.json", start = 3, end = 23, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "14.1"
-descriptor = "biome.json (formatter core)"
-justification = "The exact style enforced by `pnpm format`/`pnpm lint`: tabs, single quotes, 100-col lines — concrete config sample, cheaper ground truth than Biome's own docs. The rest of the formatter block plus linter/assist/overrides sections continue below, elided here."
-content = { kind = "lines", spans = [
-  { path = "biome.json", start = 1, end = 9, render = { kind = "full" } },
-  { path = "biome.json", start = 10, end = 10, render = { kind = "ellipsis" } },
-] }
+id = "5.5"
+descriptor = "pnpm workspace wiring"
+justification = "pnpm-workspace.yaml in full: the `examples/*` + `packages/*` globs that make examples first-class workspace members, `linkWorkspacePackages` and `preferWorkspacePackages` (why `@clack/core: workspace:*` resolves to source), `autoInstallPeers: false` and the esbuild/oxc-resolver build allowlist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 10, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "14.2"
-descriptor = "unbuild preset (build.preset.ts)"
-justification = "The shared unbuild preset (declaration:'node16', esbuild minify, inlineDependencies) both packages' build.config.ts extend."
-content = { kind = "lines", spans = [
+id = "5.6"
+descriptor = "CI: what \"green\" means for this repo"
+justification = ".github/workflows/ci.yml's trigger and job: the `bombshell-dev` owner guard and the four commands — `build`, `types`, `test`, `deps` — handed to a pinned bombshell-dev/automation reusable workflow. The concurrency block at 11-15 is elided."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/ci.yml", start = 1, end = 9, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 11, end = 11, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/ci.yml", start = 16, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "Build pipeline and vitest configuration"
+justification = "build.preset.ts in full — `clean`, `declaration: 'node16'`, `sourcemap`, ESM-only via `emitCJS: false`, `inlineDependencies`, esbuild `minify` — which is the shared unbuild preset both packages' build.config.ts point at; and vitest.config.ts, which forces `FORCE_COLOR: '1'` and installs `vitest-ansi-serializer`, the reason the snapshot files contain raw ANSI."
+[batches.content]
+kind = "lines"
+spans = [
   { path = "build.preset.ts", start = 1, end = 15, render = { kind = "full" } },
-] }
+  { path = "packages/prompts/vitest.config.ts", start = 1, end = 9, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "14.3"
-descriptor = "knip.json (unused-code detection config)"
-justification = "Configures `pnpm deps` (knip --production): per-example entry-point globs and per-package src/index.ts+test globs."
-content = { kind = "lines", spans = [
-  { path = "knip.json", start = 1, end = 15, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "14.4"
-descriptor = ".changeset/config.json"
-justification = "Public npm access, no auto-commit, internal-dependency bumps default to patch, @example/* excluded from versioning — the exact changesets behavior CONTRIBUTING.md describes only in prose."
-content = { kind = "lines", spans = [
-  { path = ".changeset/config.json", start = 1, end = 11, render = { kind = "full" } },
-] }
+id = "5.8"
+descriptor = "Published package versions and dependency sets"
+justification = "Each manifest's version line plus its full dependency block: core on fast-wrap-ansi + sisteransi, prompts additionally on `@clack/core: workspace:*` and fast-string-width, with is-unicode-supported, memfs, vitest and vitest-ansi-serializer as devDependencies. Answers 'what does clack actually depend on' and pins the released versions."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/core/package.json", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/core/package.json", start = 58, end = 64, render = { kind = "full" } },
+  { path = "packages/prompts/package.json", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/prompts/package.json", start = 58, end = 69, render = { kind = "full" } },
+]

@@ -1,403 +1,340 @@
 fixture = "audiobookshelf"
 revision_pin = "eee377e0"
 summary = """
-Audiobookshelf: a self-hosted audiobook/podcast media server. Node.js/Express
-+ Sequelize (sqlite) backend under server/ (routers -> controllers ->
-managers/scanner/models), a Nuxt2/Vue2 SPA client under client/, mocha/chai
-unit tests under test/server, and Cypress component tests under
-client/cypress. Query distribution: server route/business-logic changes
-(controllers, managers, scanner, models), client UI changes (pages,
-components, store), metadata-provider/scanning behavior, DB migrations, and
-build/deploy/config questions (Docker, docker-compose, dev container).
+Audiobookshelf v2.34.0: a self-hosted audiobook and podcast server. Two
+halves live in one repo — an Express/Sequelize/SQLite Node server under
+`server/` (routers -> controllers -> Sequelize models, plus managers,
+scanner, metadata providers and a large vendored `server/libs/` tree) and
+a Nuxt 2 / Vue SPA under `client/` (pages, ~185 auto-imported components,
+Vuex store, socket.io + axios plugins, 40 locale files). `index.js` is the
+process entrypoint; `test/` holds the mocha suite; `docs/` holds the
+OpenAPI spec.
+
+The ranking front-loads what the repo is and where its substance lives
+(root/server/client listings, the run + build scripts, the entrypoint's
+options), then per-directory rosters that turn "where does X live" into a
+single grep, then the HTTP API route table (the most-queried surface),
+then the runtime core (Server boot, Database accessors, auth routes,
+ServerSettings keys, socket events), then client internals, and finally
+packaging and CI configuration. Test and OpenAPI trees are rostered early,
+with the roster batches, since locating them is what an agent needs most.
 """
 
-# ===========================================================================
-# Tier 1 — full-repository fs breadth. Every directory in the fixture is
-# listed here (via the "all" sentinel, so nothing is silently omitted) before
-# any file content is scheduled: cheap, and it's the foundation every later
-# "which X exist" question relies on. Vendored/generated leaves (server/libs
-# package internals beyond their top-level dir, build/debian's packaging
-# skeleton) are listed only one level deep — they're copied third-party
-# artifacts, not authored source, so deeper recursion there wouldn't serve a
-# coding session. Order within this tier is mostly cost-driven (small
-# subtrees first) rather than importance-driven — importance is what the
-# later content tiers encode.
-# ===========================================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "The full top-level shape (server/client split, docs, build packaging, test, config files) before anything else."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "What the project is: readme About lede"
+justification = "Rank 1 must answer 'what is this repo' in one line: readme.md:17 — 'Audiobookshelf is a self-hosted audiobook and podcast server.' Everything else in the ranking is a refinement of that sentence."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 15, end = 17, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "server/ top-level listing"
-justification = "Backend module breakdown: routers/controllers/managers/models/objects/scanner/providers/finders/auth/utils/libs plus the four root orchestration files (Server.js, Database.js, Auth.js, SocketAuthority.js, Watcher.js, Logger.js)."
-content = { kind = "fs", groups = [ { parent = "server", entries = "all" } ] }
+descriptor = "package.json identity: name, version, entrypoint"
+justification = "Pins the concrete artifact — name `audiobookshelf`, version 2.34.0, buildNumber, and `main` = index.js — so version-sensitive questions (migrations are keyed to server version) and 'what is the entrypoint' resolve immediately."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 6, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "client/ top-level listing"
-justification = "Nuxt2 app layout: pages/components/store/layouts/middleware/mixins/plugins/players plus nuxt.config.js/package.json/cypress.config.js."
-content = { kind = "fs", groups = [ { parent = "client", entries = "all" } ] }
+descriptor = "Repository root listing (complete)"
+justification = "The complete set of root children — server/, client/, docs/, test/, build/, images/, index.js, prod.js, Dockerfile, docker-compose.yml, docker-template.xml, custom-metadata-provider-specification.yaml, tailwind.config.js and the dotfiles. entries = all, so the agent can trust that nothing at root is hidden from it."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "server/{auth,routers,finders,providers} listings"
-justification = "The four small backend directories: auth strategies (Local/Oidc/TokenManager), the 3 HTTP routers, the 3 metadata finders, the 9 metadata providers."
-content = { kind = "fs", groups = [
-  { parent = "server/auth", entries = "all" },
-  { parent = "server/routers", entries = "all" },
-  { parent = "server/finders", entries = "all" },
-  { parent = "server/providers", entries = "all" },
-] }
+descriptor = "server/ top-level listing (complete)"
+justification = "The server half's shape: the singleton modules Server.js, Database.js, Auth.js, SocketAuthority.js, Logger.js, Watcher.js alongside the auth/, controllers/, finders/, libs/, managers/, migrations/, models/, objects/, providers/, routers/, scanner/, utils/ directories. Ranked right after the root listing because this directory is where the repository's substance sits."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server", entries = "all" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "server/{scanner,objects,...} listings"
-justification = "The library-scan pipeline (12 files) and the in-memory (non-Sequelize) domain objects split into files/metadata/settings."
-content = { kind = "fs", groups = [
+descriptor = "client/ top-level listing (complete)"
+justification = "The other half: nuxt.config.js, package.json, cypress.config.js, postcss.config.js and the assets/, components/, cypress/, layouts/, middleware/, mixins/, pages/, players/, plugins/, static/, store/, strings/ directories — a conventional Nuxt 2 layout, established before any client file is opened."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "client", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Feature list, part 1 (streaming, podcasts, users, uploads)"
+justification = "The product's capability surface is the cheapest semantic context in the repo and frames nearly every feature/debugging query. Split across two adjacent batches so a small budget still gets part of it; this half covers open-source apps, on-the-fly streaming of all audio formats, podcast search + auto-download, multi-user permissions, per-user progress sync, watcher-driven library updates, bulk upload and backups."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 19, end = 29, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Feature list, part 2 (PWA, cast, metadata, m4b, ebooks, RSS)"
+justification = "Continuation of 1.6 to the end of the bullet list: PWA, Chromecast, metadata/cover fetching from several sources, chapter editor via Audnexus, m4b merge, metadata/cover embedding, epub/pdf/cbr/cbz ereader with send-to-device, and open RSS feeds. Ranked adjacent so a cut between them still leaves a visibly-continuing list."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 30, end = 38, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "npm scripts: run, client build, test"
+justification = "The commands an agent will actually need: `dev` (nodemon --watch server index.js -- --dev), `start`, `start-dev`, `client` (cd client && npm ci && npm run generate), `prod`, plus `test` = mocha and `coverage` = nyc mocha. The packaging targets in between are elided with an ellipsis marker rather than silently dropped; 6.1 replaces it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 7, end = 12, render = { kind = "full" } },
+  { path = "package.json", start = 13, end = 13, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 20, end = 22, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "index.js: the complete CLI option table"
+justification = "Every command-line flag the binary accepts — config/metadata/port/host/source/dev/prod-with-dev-env with their short aliases — as one closed list, plus the `server/libs/commandLineArgs` parser it feeds. Listed together so an unlisted flag can be trusted not to exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "index.js", start = 1, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "index.js: config resolution and Server construction"
+justification = "The flag > env > default precedence for PORT 3333, HOST, CONFIG_PATH, METADATA_PATH, SOURCE 'debian' and ROUTER_BASE_PATH '/audiobookshelf', ending in `new server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH)` + `Server.start()`. Successor to 1.9: what the parsed options become, and the answer to most deployment-config questions."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "index.js", start = 38, end = 53, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "Server runtime + dev dependency stack"
+justification = "package.json:40-68 names the entire stack: express with express-session/express-rate-limit/cookie-parser, sequelize + sqlite3, socket.io, passport + passport-jwt + openid-client, axios, nodemailer, xml2js, htmlparser2, ssrf-req-filter — and the mocha/chai/sinon/nyc/nodemon dev set. Establishes which framework idioms apply before any server file is read."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 40, end = 68, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.12"
+descriptor = "client/package.json: scripts (nuxt generate, cypress)"
+justification = "The client is a separate npm project with its own lifecycle: `dev` = nuxt, `build`/`start`/`generate`, and `test` = compile-tailwind + `cypress run --component --browser chrome`. Explains what `npm run client` at root actually triggers and how the frontend tests run."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "client/package.json", start = 7, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "readme top-level section headings"
+justification = "The six `#` sections after About (Organizing your audiobooks, Installation, Reverse Proxy Set Up, Run from source, Contributing, How to Support) tell the agent that the remaining ~430 readme lines are install / reverse-proxy / contributor material, so it can jump to a line range instead of reading the file whole."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 70, end = 70, render = { kind = "full" } },
+  { path = "readme.md", start = 78, end = 78, render = { kind = "full" } },
+  { path = "readme.md", start = 84, end = 84, render = { kind = "full" } },
+  { path = "readme.md", start = 350, end = 350, render = { kind = "full" } },
+  { path = "readme.md", start = 352, end = 352, render = { kind = "full" } },
+  { path = "readme.md", start = 450, end = 450, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.1"
+descriptor = "server/routers + server/controllers rosters (complete)"
+justification = "The HTTP layer's file-level map: three routers (ApiRouter, HlsRouter, PublicRouter) and all 23 controllers from ApiKeyController to UserController. Cheapest possible answer to 'where is the endpoint for X handled' — controller names are one-to-one with API resources, so an agent can grep exactly one file next. Ranked first in the roster tier because request handling is the most-asked-about surface."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/routers", entries = "all" },
+  { parent = "server/controllers", entries = "all" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "server/models roster (complete Sequelize entity set)"
+justification = "All 25 Sequelize models — User, Session, ApiKey, Library, LibraryFolder, LibraryItem, Book, Podcast, PodcastEpisode, Series, Author, the BookSeries/BookAuthor/CollectionBook/PlaylistMediaItem join tables, Collection, Playlist, MediaProgress, PlaybackSession, Device, Feed, FeedEpisode, Setting, CustomMetadataProvider, MediaItemShare. This is the domain vocabulary of the whole codebase; showing it complete prevents the agent inferring an entity does not exist."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/models", entries = "all" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "server/managers roster (complete)"
+justification = "The 18 long-lived service singletons the Server constructs — AbMerge, ApiCache, AudioMetadata, Backup, Binary, Cache, Cover, CoverSearch, Cron, Email, Log, Migration, Notification, PlaybackSession, Podcast, RssFeed, Share, Task. Background behaviour (downloads, cron, backups, ffmpeg binaries) always lives here, so this roster is the entry point for 'why did X happen in the background'."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/managers", entries = "all" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "server/scanner + server/finders + server/providers rosters"
+justification = "The library-ingest and metadata-match pipeline in three closed lists: scanner/ (LibraryScanner, LibraryItemScanner, LibraryItemScanData, BookScanner, PodcastScanner, AudioFileScanner, AbsMetadataFileScanner, NfoFileScanner, OpfFileScanner, LibraryScan, ScanLogger, Scanner, MediaProbeData), finders/ (Author, Book, Podcast) and providers/ (Audible, Audnexus, AudiobookCovers, CustomProviderAdapter, FantLab, GoogleBooks, iTunes, MusicBrainz, OpenLibrary). Answers 'which files implement scanning / metadata lookup' in one hop."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "server/scanner", entries = "all" },
+  { parent = "server/finders", entries = "all" },
+  { parent = "server/providers", entries = "all" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "server/utils tree roster (complete, with subdirectories)"
+justification = "The shared-helper surface an agent must know before writing server code: utils/ itself (fileUtils, scandir, ffmpegHelpers, prober, podcastUtils, libraryHelpers, htmlSanitizer, constants, globals, index, rateLimiterFactory, zipHelpers, ...) plus the queries/ (libraryFilters, libraryItemsBookFilters, libraryItemsPodcastFilters, authorFilters, seriesFilters, adminStats, userStats), parsers/ (opf, nfo, epub, comic, OPML, name/series string), generators/ and migrations/ subdirectories. Prevents re-implementing an existing helper."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/utils", entries = "all" },
+  { parent = "server/utils/queries", entries = "all" },
+  { parent = "server/utils/parsers", entries = "all" },
+  { parent = "server/utils/generators", entries = "all" },
+  { parent = "server/utils/migrations", entries = "all" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "server/auth + server/objects tree rosters"
+justification = "auth/ holds the three strategy modules (TokenManager, LocalAuthStrategy, OidcAuthStrategy) that Auth.js composes. objects/ is the pre-Sequelize plain-object layer that still backs settings and runtime state: Backup, DailyLog, DeviceInfo, Notification, PlaybackSession, PodcastEpisodeDownload, Stream, Task, TrackProgressMonitor, plus files/ (AudioFile, AudioTrack, EBookFile, LibraryFile), metadata/ (AudioMetaTags, FileMetadata) and settings/ (ServerSettings, NotificationSettings, EmailSettings). Knowing objects/ exists next to models/ prevents editing the wrong layer."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/auth", entries = "all" },
   { parent = "server/objects", entries = "all" },
   { parent = "server/objects/files", entries = "all" },
   { parent = "server/objects/metadata", entries = "all" },
   { parent = "server/objects/settings", entries = "all" },
-] }
+]
 
 [[batches]]
-id = "1.6"
-descriptor = "client/{store,plugins,middleware,mixins,layouts,players} listings"
-justification = "The 6 small client architecture directories: Vuex store modules, Nuxt plugins, the single auth middleware, shared mixins, layouts, and the 5-file audio/cast player abstraction."
-content = { kind = "fs", groups = [
+id = "2.7"
+descriptor = "server/migrations roster (complete, version-named)"
+justification = "Every umzug migration script by name, from v2.15.0-series-column-unique through v2.33.0-add-discover-query-indexes, plus this directory's own readme.md and changelog.md. The `<server_version>-<name>.js` convention is legible from the listing alone, so 'what changed in the schema at version X' and 'where do I add a migration' both resolve here."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/migrations", entries = "all" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "client/pages roster (complete SPA route tree)"
+justification = "Nuxt maps pages/ to routes, so this listing is the client's URL map: index, login, account, oops, batch, upload, share/_slug, item/_id, author/_id, collection/_id, playlist/_id, audiobook/_id/{chapters,edit,manage}, library/_library/{index,search,narrators,stats,series/_id,bookshelf/_id,podcast/*} and the config/ subtree (libraries, users, sessions, backups, log, notifications, email, authentication, rss-feeds, stats, api-keys, item-metadata-utils/*). Answers 'which page renders URL X' with zero follow-up."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "client/pages", entries = "all" },
+  { parent = "client/pages/audiobook/_id", entries = "all" },
+  { parent = "client/pages/item/_id", entries = "all" },
+  { parent = "client/pages/library/_library", entries = "all" },
+  { parent = "client/pages/library/_library/podcast", entries = "all" },
+  { parent = "client/pages/config", entries = "all" },
+  { parent = "client/pages/config/users", entries = "all" },
+  { parent = "client/pages/config/item-metadata-utils", entries = "all" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "client component categories + store/plugins/players/mixins rosters"
+justification = "The 13 component categories (app, cards, content, controls, covers, modals, player, prompt, readers, stats, tables, ui, widgets) tell the agent how ~185 auto-imported components are organised without paying for their names; the store/ (index, libraries, user, users, globals, tasks, scanners), plugins/ (constants, axios, i18n, toast, utils, init.client, chromecast, version), players/ (PlayerHandler, LocalAudioPlayer, CastPlayer, castUtils, AudioTrack), mixins/, middleware/ and layouts/ rosters are complete."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "client/components", entries = "all" },
   { parent = "client/store", entries = "all" },
   { parent = "client/plugins", entries = "all" },
-  { parent = "client/middleware", entries = "all" },
-  { parent = "client/mixins", entries = "all" },
-  { parent = "client/layouts", entries = "all" },
   { parent = "client/players", entries = "all" },
-] }
+  { parent = "client/mixins", entries = "all" },
+  { parent = "client/middleware", entries = "all" },
+  { parent = "client/layouts", entries = "all" },
+]
 
 [[batches]]
-id = "1.7"
-descriptor = "client/cypress/ full listing"
-justification = "The component-test harness: support files (component-index.html/commands.js), image fixtures, and the actual .cy.js specs (currently cards + one utils test) — a small, easily-outgrown suite whose exact coverage matters for 'is X tested'."
-content = { kind = "fs", groups = [
-  { parent = "client/cypress", entries = "all" },
-  { parent = "client/cypress/fixtures", entries = "all" },
-  { parent = "client/cypress/fixtures/images", entries = "all" },
-  { parent = "client/cypress/support", entries = "all" },
-  { parent = "client/cypress/tests", entries = "all" },
-  { parent = "client/cypress/tests/components", entries = "all" },
-  { parent = "client/cypress/tests/components/cards", entries = "all" },
-  { parent = "client/cypress/tests/utils", entries = "all" },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = ".github/ full listing"
-justification = "All 11 CI workflows by filename (unit-tests, integration-test, component-tests, docker-build, codeql, i18n-integration, lint-openapi, notify-abs-windows, apply_comments, close_blank_issues, close-issues-on-release) plus the 3 issue templates — the CI surface a 'why did my PR check fail' query needs located."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "build/, .devcontainer/, .vscode/, images/ listings"
-justification = "Debian packaging tree (top level only — DEBIAN/etc/lib/usr are packaging-skeleton boilerplate, not authored source), the dev-container definition, the 4 pre-defined VSCode debug/build targets, and the readme-referenced banner/screenshot images."
-content = { kind = "fs", groups = [
-  { parent = "build", entries = "all" },
-  { parent = "build/debian", entries = "all" },
-  { parent = ".devcontainer", entries = "all" },
-  { parent = ".vscode", entries = "all" },
-  { parent = "images", entries = "all" },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "server/{controllers,managers,models} listings"
-justification = "The three largest flat backend directories: 23 REST controllers, 18 business-logic managers, 24 Sequelize models — the census that later signature-location batches refine."
-content = { kind = "fs", groups = [
-  { parent = "server/controllers", entries = "all" },
-  { parent = "server/managers", entries = "all" },
-  { parent = "server/models", entries = "all" },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = "server/utils/{generators,migrations,parsers,queries} listings"
-justification = "The utils grab-bag's 4 sub-packages: RSS/OPML/HLS generators, the legacy v1->v2 db migration, per-format metadata parsers (opf/nfo/epub/comic/opml), and Sequelize filter-query builders."
-content = { kind = "fs", groups = [
-  { parent = "server/utils", entries = "all" },
-  { parent = "server/utils/generators", entries = "all" },
-  { parent = "server/utils/migrations", entries = "all" },
-  { parent = "server/utils/parsers", entries = "all" },
-  { parent = "server/utils/queries", entries = "all" },
-] }
-
-[[batches]]
-id = "1.12"
-descriptor = "server/migrations/ + server/libs/ listings"
-justification = "The 15 versioned umzug db migrations (+ changelog.md/readme.md convention docs) and the ~40 vendored third-party packages under server/libs (each pinned/copied in-tree rather than via npm — only the top-level package names matter for a coding session, not their internals)."
-content = { kind = "fs", groups = [
-  { parent = "server/migrations", entries = "all" },
-  { parent = "server/libs", entries = "all" },
-] }
-
-[[batches]]
-id = "1.13"
-descriptor = "client/pages/ full route tree listing"
-justification = "Every Nuxt file-based route, including the nested dynamic segments (audiobook/_id, library/_library/{bookshelf,podcast,series}, config/{api-keys,item-metadata-utils,users/_id}) — this IS the client's URL map; partial listing would misrepresent which routes exist."
-content = { kind = "fs", groups = [
-  { parent = "client/pages", entries = "all" },
-  { parent = "client/pages/audiobook", entries = "all" },
-  { parent = "client/pages/audiobook/_id", entries = "all" },
-  { parent = "client/pages/author", entries = "all" },
-  { parent = "client/pages/batch", entries = "all" },
-  { parent = "client/pages/collection", entries = "all" },
-  { parent = "client/pages/config", entries = "all" },
-  { parent = "client/pages/config/api-keys", entries = "all" },
-  { parent = "client/pages/config/item-metadata-utils", entries = "all" },
-  { parent = "client/pages/config/users", entries = "all" },
-  { parent = "client/pages/config/users/_id", entries = "all" },
-  { parent = "client/pages/item", entries = "all" },
-  { parent = "client/pages/item/_id", entries = "all" },
-  { parent = "client/pages/library", entries = "all" },
-  { parent = "client/pages/library/_library", entries = "all" },
-  { parent = "client/pages/library/_library/bookshelf", entries = "all" },
-  { parent = "client/pages/library/_library/podcast", entries = "all" },
-  { parent = "client/pages/library/_library/series", entries = "all" },
-  { parent = "client/pages/playlist", entries = "all" },
-  { parent = "client/pages/share", entries = "all" },
-  { parent = "client/pages/upload", entries = "all" },
-] }
-
-[[batches]]
-id = "1.14"
-descriptor = "client/components/ shallow listings"
-justification = "The 11 flat component subdirectories (app shell, cards, content, controls, cover thumbnails, player, prompt/dialog, ebook readers, stats charts, generic ui inputs, misc widgets) — everything except modals/ and tables/, which nest further and get their own batches."
-content = { kind = "fs", groups = [
-  { parent = "client/components", entries = "all" },
-  { parent = "client/components/app", entries = "all" },
-  { parent = "client/components/cards", entries = "all" },
-  { parent = "client/components/content", entries = "all" },
-  { parent = "client/components/controls", entries = "all" },
-  { parent = "client/components/covers", entries = "all" },
-  { parent = "client/components/player", entries = "all" },
-  { parent = "client/components/prompt", entries = "all" },
-  { parent = "client/components/readers", entries = "all" },
-  { parent = "client/components/stats", entries = "all" },
-  { parent = "client/components/ui", entries = "all" },
-  { parent = "client/components/widgets", entries = "all" },
-] }
-
-[[batches]]
-id = "1.15"
-descriptor = "client/components/modals/ full listing"
-justification = "Every modal component including the 10 domain subfolders (authors/bookmarks/changelog/collections/emails/item(+tabs)/libraries/notification/player/playlists/podcast(+tabs)/rssfeed) — modals are the client's primary edit-surface, so partial listing here would hide real edit dialogs."
-content = { kind = "fs", groups = [
-  { parent = "client/components/modals", entries = "all" },
-  { parent = "client/components/modals/authors", entries = "all" },
-  { parent = "client/components/modals/bookmarks", entries = "all" },
-  { parent = "client/components/modals/changelog", entries = "all" },
-  { parent = "client/components/modals/collections", entries = "all" },
-  { parent = "client/components/modals/emails", entries = "all" },
-  { parent = "client/components/modals/item", entries = "all" },
-  { parent = "client/components/modals/item/tabs", entries = "all" },
-  { parent = "client/components/modals/libraries", entries = "all" },
-  { parent = "client/components/modals/notification", entries = "all" },
-  { parent = "client/components/modals/player", entries = "all" },
-  { parent = "client/components/modals/playlists", entries = "all" },
-  { parent = "client/components/modals/podcast", entries = "all" },
-  { parent = "client/components/modals/podcast/tabs", entries = "all" },
-  { parent = "client/components/modals/rssfeed", entries = "all" },
-] }
-
-[[batches]]
-id = "1.16"
-descriptor = "client/components/tables/ full listing"
-justification = "Data-table components plus their 4 domain subfolders (collection/library/playlist/podcast row variants)."
-content = { kind = "fs", groups = [
-  { parent = "client/components/tables", entries = "all" },
-  { parent = "client/components/tables/collection", entries = "all" },
-  { parent = "client/components/tables/library", entries = "all" },
-  { parent = "client/components/tables/playlist", entries = "all" },
-  { parent = "client/components/tables/podcast", entries = "all" },
-] }
-
-[[batches]]
-id = "1.17"
-descriptor = "client/{assets,static}/ top-level listing"
-justification = "CSS/ebook-reader helper assets and static public files. Depth stops at the immediate children (fonts/libarchive/libs/textures show up as directory entries here already) — their own internals are vendored font/wasm/lib binaries, not authored source worth a separate batch."
-content = { kind = "fs", groups = [
-  { parent = "client/assets", entries = "all" },
-  { parent = "client/assets/ebooks", entries = "all" },
-  { parent = "client/static", entries = "all" },
-] }
-
-[[batches]]
-id = "1.18"
-descriptor = "test/ full listing"
-justification = "Every mocha spec under test/server, mirroring server/'s controllers/finders/managers/objects/providers/utils/migrations subfolders — confirms exactly which server modules have unit test coverage today."
-content = { kind = "fs", groups = [
-  { parent = "test", entries = "all" },
+id = "2.10"
+descriptor = "test/ tree roster (complete mocha suite)"
+justification = "The whole test corpus is a mirror of server/ under test/server: Logger.test.js plus controllers/, finders/, managers/, migrations/, objects/, providers/ and utils/ (+ utils/parsers). Shows both what is covered and, by absence, what is not — and gives the exact path to copy when adding a test."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "test/server", entries = "all" },
   { parent = "test/server/controllers", entries = "all" },
   { parent = "test/server/finders", entries = "all" },
   { parent = "test/server/managers", entries = "all" },
-  { parent = "test/server/managers/migrations", entries = "all" },
   { parent = "test/server/migrations", entries = "all" },
   { parent = "test/server/objects", entries = "all" },
   { parent = "test/server/providers", entries = "all" },
   { parent = "test/server/utils", entries = "all" },
   { parent = "test/server/utils/parsers", entries = "all" },
-] }
+]
 
 [[batches]]
-id = "1.19"
-descriptor = "docs/ listing (OpenAPI spec tree)"
-justification = "The hand-authored OpenAPI fragments (root.yaml + schemas.yaml + per-controller yaml) that bundle into openapi.json. docs/objects/'s own listing already surfaces its 5 subfolders (entities/files/mediaTypes/metadata/settings) as entries, so they aren't expanded separately."
-content = { kind = "fs", groups = [
+id = "2.11"
+descriptor = "docs/ OpenAPI spec tree roster (complete)"
+justification = "The API contract lives here as an exploded spec: root.yaml + schemas.yaml + openapi.json at the top, controllers/ (Author, Email, Library, Notification, Podcast, Series) and objects/ (Library, LibraryItem, Folder, Notification) with entities/, files/, mediaTypes/, metadata/, settings/ subdirectories. An agent changing an endpoint must also touch these files; the roster makes that discoverable."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "docs", entries = "all" },
   { parent = "docs/controllers", entries = "all" },
   { parent = "docs/objects", entries = "all" },
-] }
-
-# ===========================================================================
-# Tier 2 — identity & operational entry points. What the product is, and how
-# to build/run/test/deploy it, in concrete config/code (not readme prose,
-# which is already paraphrased for free in `summary` above).
-# ===========================================================================
-
-[[batches]]
-id = "2.1"
-descriptor = "readme.md heading map"
-justification = "All H1 and H3 headings (About/Features/Demo/Android/iOS/Reverse-proxy-per-vendor/Run-from-source/Contributing/How-to-Support) so the agent knows what's documented without assuming sections that aren't there — cheap breadth; the vendor-specific reverse-proxy recipes under it are left to on-demand reads."
-content = { kind = "lines", spans = [
-  { path = "readme.md", start = 15, end = 15, render = { kind = "full" } },
-  { path = "readme.md", start = 19, end = 19, render = { kind = "full" } },
-  { path = "readme.md", start = 44, end = 44, render = { kind = "full" } },
-  { path = "readme.md", start = 50, end = 50, render = { kind = "full" } },
-  { path = "readme.md", start = 54, end = 54, render = { kind = "full" } },
-  { path = "readme.md", start = 60, end = 60, render = { kind = "full" } },
-  { path = "readme.md", start = 70, end = 70, render = { kind = "full" } },
-  { path = "readme.md", start = 78, end = 78, render = { kind = "full" } },
-  { path = "readme.md", start = 84, end = 84, render = { kind = "full" } },
-  { path = "readme.md", start = 90, end = 90, render = { kind = "full" } },
-  { path = "readme.md", start = 96, end = 96, render = { kind = "full" } },
-  { path = "readme.md", start = 131, end = 131, render = { kind = "full" } },
-  { path = "readme.md", start = 196, end = 196, render = { kind = "full" } },
-  { path = "readme.md", start = 200, end = 200, render = { kind = "full" } },
-  { path = "readme.md", start = 246, end = 246, render = { kind = "full" } },
-  { path = "readme.md", start = 258, end = 258, render = { kind = "full" } },
-  { path = "readme.md", start = 267, end = 267, render = { kind = "full" } },
-  { path = "readme.md", start = 310, end = 310, render = { kind = "full" } },
-  { path = "readme.md", start = 350, end = 350, render = { kind = "full" } },
-  { path = "readme.md", start = 352, end = 352, render = { kind = "full" } },
-  { path = "readme.md", start = 356, end = 356, render = { kind = "full" } },
-  { path = "readme.md", start = 360, end = 360, render = { kind = "full" } },
-  { path = "readme.md", start = 420, end = 420, render = { kind = "full" } },
-  { path = "readme.md", start = 436, end = 436, render = { kind = "full" } },
-  { path = "readme.md", start = 450, end = 450, render = { kind = "full" } },
-] }
+  { parent = "docs/objects/entities", entries = "all" },
+  { parent = "docs/objects/files", entries = "all" },
+  { parent = "docs/objects/mediaTypes", entries = "all" },
+  { parent = "docs/objects/metadata", entries = "all" },
+  { parent = "docs/objects/settings", entries = "all" },
+]
 
 [[batches]]
-id = "2.2"
-descriptor = "readme.md reverse-proxy websocket/subfolder callout"
-justification = "The one operationally load-bearing fact in the reverse-proxy section: websockets are required and the subfolder path is hardcoded to /audiobookshelf. Overrides the 1.3 heading line within this range."
-predecessor = "2.1"
-content = { kind = "lines", spans = [ { path = "readme.md", start = 84, end = 88, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.3"
-descriptor = "package.json scripts"
-justification = "Every npm script (dev/start/prod/build-win/docker/test/coverage) — the single cheapest 'how do I run/build/test this' answer."
-content = { kind = "lines", spans = [ { path = "package.json", start = 1, end = 22, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.4"
-descriptor = "index.js CLI entry (flags + Server construction)"
-justification = "The actual `node index.js` entry point: CLI flags (-c/-m/-p/-h/-s/-d/-r) and the Server construction call. The dev-env-loading block (lines 22-36, copying dev.js fields onto env vars) is elided — 2.6 shows dev.js's own shape, and the copy-loop itself is low-signal boilerplate."
-content = { kind = "lines", spans = [
-  { path = "index.js", start = 1, end = 21, render = { kind = "full" } },
-  { path = "index.js", start = 22, end = 22, render = { kind = "ellipsis" } },
-  { path = "index.js", start = 38, end = 53, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.5"
-descriptor = "prod.js exists as index.js's --prod-with-dev-env-less sibling"
-justification = "Names the file location and its one hard behavioral difference from index.js: NODE_ENV is force-set to 'production' unconditionally (index.js's --dev/--prod-with-dev-env flags don't exist here) — `npm run prod` uses this entry instead of index.js. The rest of the near-identical CLI body isn't worth a second full dump."
-content = { kind = "lines", spans = [ { path = "prod.js", start = 13, end = 13, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.6"
-descriptor = ".devcontainer/dev.js example"
-justification = "The readme-referenced example dev-environment config (Port/ConfigPath/MetadataPath/FFmpeg paths) that index.js loads when running in dev mode — the concrete shape an agent needs to create their own dev.js."
-content = { kind = "lines", spans = [ { path = ".devcontainer/dev.js", start = 1, end = 10, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.7"
-descriptor = "Dockerfile stage markers"
-justification = "The 3 FROM lines + stage comments locate the multi-stage build (client generate -> server npm ci -> alpine runtime) cheaply; 2.9 expands the runtime stage in full."
-content = { kind = "lines", spans = [
-  { path = "Dockerfile", start = 4, end = 5, render = { kind = "full" } },
-  { path = "Dockerfile", start = 12, end = 13, render = { kind = "full" } },
-  { path = "Dockerfile", start = 43, end = 44, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.8"
-descriptor = "docker-compose.yml"
-justification = "The canonical self-host compose file: port mapping (13378->80) and the 4 bind-mounted volumes (audiobooks/podcasts/metadata/config) — most real deployments are compose-based, so this is a very common orientation need."
-content = { kind = "lines", spans = [ { path = "docker-compose.yml", start = 1, end = 27, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.9"
-descriptor = "Dockerfile runtime stage"
-justification = "The final image's env vars (PORT/CONFIG_PATH/METADATA_PATH/SOURCE/NUSQLITE3_*), the ffmpeg/tini runtime deps, and the tini entrypoint — what actually governs a running container, as opposed to the build-only stages 2.7 located."
-predecessor = "2.7"
-content = { kind = "lines", spans = [ { path = "Dockerfile", start = 43, end = 73, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.10"
-descriptor = "client/package.json scripts"
-justification = "The client's own scripts (dev/build/generate/test via cypress component tests + tailwind compile) — the client builds and tests independently of the server; its dependency list is left for an on-demand read."
-content = { kind = "lines", spans = [ { path = "client/package.json", start = 1, end = 16, render = { kind = "full" } } ] }
-
-# ===========================================================================
-# Tier 3 — server composition root: how the pieces in tiers 1-2 actually
-# wire together at process start. Deliberately thin (Truncated/partial)
-# given the remaining token budget; each batch targets one high-density,
-# high-value fact rather than a full method body.
-# ===========================================================================
+id = "2.12"
+descriptor = "server/libs roster: 35 vendored third-party packages"
+justification = "server/libs is not first-party code — it is 35 vendored dependencies (archiver, async, bcryptjs, busboy, commandLineArgs, dateAndTime, expressFileupload, fastSort, fluentFfmpeg, fsExtra, fusejs, imageType, isexe, jsonwebtoken, jwa, jws, libarchive, memorystore, nodeCron, nodeFfprobe, nodeStreamZip, passportLocal, readChunk, requestIp, rss, sanitizeHtml, umzug, watcher, which, xml, ...) that first-party code requires by relative path. Ranked here so the agent stops treating hundreds of libs/ files as project source, and knows `require('./libs/fsExtra')` is a vendored graceful-fs, not npm."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/libs", entries = "all" },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "Server.js constructor: manager + router composition"
-justification = "The literal composition root — every manager (email/backup/abMerge/playbackSession/podcast/audioMetadata/cron/apiCache/binary) and the 3 routers, constructed and wired to `this`. This is the fastest way to see 'what subsystems exist and who owns them' for the whole backend."
-content = { kind = "lines", spans = [ { path = "server/Server.js", start = 99, end = 120, render = { kind = "full" } } ] }
+descriptor = "Server.js: how the three routers are mounted"
+justification = "The frame every route path in this tier hangs off: express.urlencoded (5mb) and express.json (10mb, skipped for /internal-api), then `/api` behind `this.auth.ifAuthNeeded(this.authMiddleware)`, `/hls`, `/public`, and express.static — all under `global.RouterBasePath` ('/audiobookshelf'). Without these lines an agent mis-guesses the effective URL of every controller route."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/Server.js", start = 300, end = 300, render = { kind = "full" } },
+  { path = "server/Server.js", start = 313, end = 323, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "Server.js init() startup sequence"
-justification = "The exact subsystem startup order (playback-orphan cleanup -> binary check -> Database.init -> JWT secret -> LogManager -> user-data cleanup -> CacheManager -> ShareManager -> BackupManager -> RssFeedManager -> CronManager -> ApiCacheManager -> Watcher) — load-bearing for 'why did X not exist yet when Y ran' startup-ordering bugs."
-predecessor = "3.1"
-content = { kind = "lines", spans = [ { path = "server/Server.js", start = 142, end = 184, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.3"
-descriptor = "Database.js init() sequence"
-justification = "The db bring-up order: checkHasDb -> connect -> MigrationManager (versioned umzug migrations) -> buildModels -> addTriggers -> loadData -> ANALYZE. Ties the server/migrations/ directory (tier 1) to the code path that actually runs it."
-content = { kind = "lines", spans = [ { path = "server/Database.js", start = 181, end = 208, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.4"
-descriptor = "ApiRouter.js route-group section map"
-justification = "All 23 comment-delimited route groups in registration order (Library/Item/User/Collection/Playlist/Me/Backup/FileSystem/Author/Series/PlaybackSession/Podcast/Notification/Email/Search/Cache/Tools/RSSFeed/CustomMetadataProvider/Share/Stats/ApiKey/Misc) — the API's own table of contents; a 'does an endpoint for X exist' question starts here, not with a 576-line file read."
-content = { kind = "lines", spans = [
+descriptor = "API resource groups: the 23 section headers of ApiRouter.init"
+justification = "One line per group comment in ApiRouter.init — Library, Item, User, Collection, Playlist, Current User (Me), Backup, File System, Author, Series, Playback Session, Podcast, Notification (Admin and up), Email (Admin and up), Search, Cache, Tools, RSS Feed, Custom Metadata Provider, Share, Stats, API Key, Misc. A cheap closed table of contents for the REST surface, and the hedge that keeps the per-group route batches below from reading as the whole API if the budget cuts between them. The `(Admin and up)` annotations also carry the coarse permission model."
+[batches.content]
+kind = "lines"
+spans = [
   { path = "server/routers/ApiRouter.js", start = 66, end = 66, render = { kind = "full" } },
   { path = "server/routers/ApiRouter.js", start = 100, end = 100, render = { kind = "full" } },
   { path = "server/routers/ApiRouter.js", start = 131, end = 131, render = { kind = "full" } },
@@ -421,198 +358,285 @@ content = { kind = "lines", spans = [
   { path = "server/routers/ApiRouter.js", start = 325, end = 325, render = { kind = "full" } },
   { path = "server/routers/ApiRouter.js", start = 331, end = 331, render = { kind = "full" } },
   { path = "server/routers/ApiRouter.js", start = 339, end = 339, render = { kind = "full" } },
-] }
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "API routes: libraries"
+justification = "The largest group, in ApiRouter order: CRUD on /libraries, then /libraries/:id/{items,issues,episode-downloads,series,collections,playlists,personalized,filterdata,search,stats,authors,narrators,matchall,scan,recent-episodes,opml,remove-metadata,podcast-titles,download} plus /libraries/order. Method+path only; every handler is a LibraryController method, and 2.1 already located that file."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 68, end = 73, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 75, end = 97, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "API routes: library items"
+justification = "The /items surface: the five batch endpoints (delete, update, get, quickmatch, scan) and the per-item routes for media, cover upload/update/remove, match, play and play/:episodeId, tracks, scan, metadata-object, chapters, ffprobe/:fileid, file/:fileid (+download), ebook/:fileid and ebook status. This is the busiest resource in the app and the one most often extended."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 102, end = 106, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 108, end = 128, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "SocketAuthority socket-event census"
-justification = "Every event name a connected client can emit (auth/cancel_scan/search_covers/cancel_cover_search/set_log_listener/remove_log_listener/disconnect/message_all_users/ping) — this IS the realtime API surface, parallel to 3.4's HTTP surface."
-content = { kind = "lines", spans = [
-  { path = "server/SocketAuthority.js", start = 188, end = 188, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 201, end = 201, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 210, end = 210, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 213, end = 213, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 239, end = 239, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/SocketAuthority.js", start = 249, end = 249, render = { kind = "full" } },
-] }
+descriptor = "API routes: users, collections, playlists"
+justification = "Three complete groups: /users (+ /users/online, openid-unlink, listening-sessions, listening-stats), /collections with book add/remove and batch add/remove, and /playlists with item add/remove, batch add/remove and create-from-collection."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 133, end = 141, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 146, end = 154, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 159, end = 168, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "Auth.js initAuthRoutes: auth HTTP surface"
-justification = "The non-/api auth routes (POST /login, POST /auth/refresh, GET /auth/openid[/mobile-redirect|/callback|/config], POST /logout) — separate from 3.4's /api tree and easy to miss since Auth.js isn't in server/routers/."
-content = { kind = "lines", spans = [
-  { path = "server/Auth.js", start = 320, end = 320, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/Auth.js", start = 329, end = 329, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/Auth.js", start = 360, end = 360, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/Auth.js", start = 378, end = 378, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/Auth.js", start = 381, end = 382, render = { kind = "full" } },
-  { path = "server/Auth.js", start = 456, end = 456, render = { kind = "truncated", pattern = "^[^,]+" } },
-  { path = "server/Auth.js", start = 475, end = 475, render = { kind = "truncated", pattern = "^[^,]+" } },
-] }
+descriptor = "API routes: /me, backups, filesystem"
+justification = "The current-user surface — listening sessions and stats, media progress (single, batch, delete), bookmarks, password change (rate-limited), items-in-progress, series continue-listening toggles, year stats, ereader devices — plus the backup endpoints (list, create, delete, download, apply, upload, path) and the two filesystem endpoints."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 173, end = 190, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 195, end = 201, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 206, end = 207, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
 
-# ===========================================================================
-# Tier 4 — domain-logic signature census. Truncated (name-only) spans across
-# the core scan pipeline and the metadata-provider extension points — the
-# two areas most likely to need a precise method-location pointer during a
-# feature/debugging session, given the remaining budget.
-# ===========================================================================
+[[batches]]
+id = "3.7"
+descriptor = "API routes: authors, series, playback sessions"
+justification = "Author routes (findOne/update/delete, match, image get/upload/delete), the two series routes, and the playback-session routes — /sessions listing and delete, /sessions/open, batch delete, /session/local and /session/local-all sync, and the three open-session endpoints guarded by openSessionMiddleware. The in-file TODO at line 235 explaining that the /session/:id endpoints only serve open sessions is rendered in full because it is a live caveat for anyone touching them."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 212, end = 218, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 223, end = 224, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 229, end = 234, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 235, end = 235, render = { kind = "full" } },
+  { path = "server/routers/ApiRouter.js", start = 236, end = 238, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "API routes: podcasts, notifications, emails"
+justification = "Podcast management (create, feed lookup, OPML parse/create, checknew, downloads, clear-queue, search-episode, download-episodes, match-episodes, episode get/patch/delete), the admin notification endpoints (get/update settings, notificationdata, test, create/delete/update, per-notification test) and the email endpoints (settings, test, ereader-devices, send-ebook-to-device)."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 243, end = 255, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 260, end = 267, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 272, end = 276, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "API routes: search, cache, tools, feeds, providers, share, stats, api-keys"
+justification = "The remaining eight groups in one batch, each complete: /search/{covers,books,podcast,authors,chapters,providers}; /cache/purge and /cache/items/purge; /tools m4b encode + embed-metadata (single and batch); /feeds open for item/collection/series and close; /custom-metadata-providers CRUD; /share/mediaitem create/delete; /stats/year/:year and /stats/server; /api-keys CRUD."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 281, end = 286, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 291, end = 292, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 297, end = 300, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 305, end = 309, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 314, end = 316, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 321, end = 322, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 327, end = 328, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+  { path = "server/routers/ApiRouter.js", start = 333, end = 336, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "API routes: misc (upload, settings, tags, genres, auth-settings)"
+justification = "The catch-all group handled by MiscController: /upload, /tasks, PATCH /settings and /sorting-prefixes, /authorize, tag and genre list/rename/delete, /validate-cron, GET+PATCH /auth-settings, /watcher/update and /logger-data. Several server-wide settings mutations live only here, so omitting it would hide them."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/ApiRouter.js", start = 341, end = 356, render = { kind = "truncated", pattern = "[a-z]+\\([^,)]*" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "Auth routes registered by Auth.initAuthRoutes"
+justification = "The authentication endpoints live outside ApiRouter, on the base router: POST /login (rate-limited, passport local), POST /auth/refresh, GET /auth/openid, /auth/openid/mobile-redirect, the multi-line /auth/openid/callback registration, GET /auth/openid/config and POST /logout. Without this batch the API surface would look complete at 3.10 while omitting every login path."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/Auth.js", start = 320, end = 320, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+  { path = "server/Auth.js", start = 329, end = 329, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+  { path = "server/Auth.js", start = 360, end = 360, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+  { path = "server/Auth.js", start = 378, end = 378, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+  { path = "server/Auth.js", start = 381, end = 382, render = { kind = "full" } },
+  { path = "server/Auth.js", start = 456, end = 456, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+  { path = "server/Auth.js", start = 475, end = 475, render = { kind = "truncated", pattern = "router\\.[a-z]+\\('[^']*'" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "PublicRouter and HlsRouter: the two non-/api routers in full"
+justification = "PublicRouter.init is the complete unauthenticated surface — /share/:slug plus its track/cover/download/progress endpoints and /session/:id/track/:index — and HlsRouter registers exactly one route, /:stream/:file, delegating to streamFileRequest. Both are small enough to render whole, which closes the router class opened at 3.1."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/routers/PublicRouter.js", start = 15, end = 22, render = { kind = "full" } },
+  { path = "server/routers/HlsRouter.js", start = 20, end = 22, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "Scan pipeline method census (Scanner/LibraryScanner/BookScanner/PodcastScanner)"
-justification = "Every public method across the 4 files that actually drive a library scan (quick-match, full library scan, per-folder rescan, new/existing book & podcast metadata extraction, plus in-progress/cancellation state and author/series cleanup) — the entry points for any 'why didn't my scan pick up X' or 'add a new scan step' task."
-content = { kind = "lines", spans = [
-  { path = "server/scanner/Scanner.js", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 359, end = 359, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 391, end = 391, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 435, end = 435, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/Scanner.js", start = 472, end = 472, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 302, end = 302, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 469, end = 469, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/LibraryScanner.js", start = 492, end = 492, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 444, end = 444, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 650, end = 650, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 815, end = 815, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 898, end = 898, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 941, end = 941, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/BookScanner.js", start = 980, end = 980, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/PodcastScanner.js", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/PodcastScanner.js", start = 264, end = 264, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/PodcastScanner.js", start = 373, end = 373, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/scanner/PodcastScanner.js", start = 415, end = 415, render = { kind = "truncated", pattern = "^[^({]+" } },
-] }
+descriptor = "Server.init(): the boot sequence, in order"
+justification = "The single clearest statement of subsystem ownership and ordering: binaryManager (skipped on docker), Database.init, tokenManager.initTokenSecret, logManager.init, cleanUserData, CacheManager.ensureCachePaths, ShareManager.init, backupManager.init, RssFeedManager.init, then libraries -> cronManager.init, apiCacheManager.init, and finally the watcher (disabled when serverSettings.scannerDisableWatcher, otherwise wired to LibraryScanner.scanFilesChanged). Any 'why isn't X initialized / where does startup do Y' question lands here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/Server.js", start = 155, end = 185, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "Metadata-provider method census (8 providers)"
-justification = "Every search/lookup method across Audible/AudiobookCovers/Audnexus/FantLab/GoogleBooks/iTunes/MusicBrainz/OpenLibrary — these are the concrete extension points a 'add support for provider X' or 'why did matching against Y return nothing' task needs located."
-content = { kind = "lines", spans = [
-  { path = "server/providers/Audible.js", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/Audible.js", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/AudiobookCovers.js", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/Audnexus.js", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/Audnexus.js", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/Audnexus.js", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/FantLab.js", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/GoogleBooks.js", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/iTunes.js", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/iTunes.js", start = 164, end = 164, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/MusicBrainz.js", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/OpenLibrary.js", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/OpenLibrary.js", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/providers/OpenLibrary.js", start = 109, end = 109, render = { kind = "truncated", pattern = "^[^({]+" } },
-] }
+descriptor = "Database.js model accessor roster (complete)"
+justification = "First-party code never imports models directly; it goes through `Database.<name>Model`. This is every accessor on the Database singleton — models, user, session, apiKey, library, libraryFolder, author, series, book, bookSeries, bookAuthor, podcast, podcastEpisode (declared twice, at 96 and 106 — a real duplicate), libraryItem, mediaProgress, collection, collectionBook, playlist, playlistMediaItem, feed, feedEpisode, playbackSession, customMetadataProvider, mediaItemShare, device — so the agent can write `Database.libraryItemModel` without opening the file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/Database.js", start = 36, end = 36, render = { kind = "full" } },
+  { path = "server/Database.js", start = 41, end = 41, render = { kind = "full" } },
+  { path = "server/Database.js", start = 46, end = 46, render = { kind = "full" } },
+  { path = "server/Database.js", start = 51, end = 51, render = { kind = "full" } },
+  { path = "server/Database.js", start = 56, end = 56, render = { kind = "full" } },
+  { path = "server/Database.js", start = 61, end = 61, render = { kind = "full" } },
+  { path = "server/Database.js", start = 66, end = 66, render = { kind = "full" } },
+  { path = "server/Database.js", start = 71, end = 71, render = { kind = "full" } },
+  { path = "server/Database.js", start = 76, end = 76, render = { kind = "full" } },
+  { path = "server/Database.js", start = 81, end = 81, render = { kind = "full" } },
+  { path = "server/Database.js", start = 86, end = 86, render = { kind = "full" } },
+  { path = "server/Database.js", start = 91, end = 91, render = { kind = "full" } },
+  { path = "server/Database.js", start = 96, end = 96, render = { kind = "full" } },
+  { path = "server/Database.js", start = 101, end = 101, render = { kind = "full" } },
+  { path = "server/Database.js", start = 106, end = 106, render = { kind = "full" } },
+  { path = "server/Database.js", start = 111, end = 111, render = { kind = "full" } },
+  { path = "server/Database.js", start = 116, end = 116, render = { kind = "full" } },
+  { path = "server/Database.js", start = 121, end = 121, render = { kind = "full" } },
+  { path = "server/Database.js", start = 126, end = 126, render = { kind = "full" } },
+  { path = "server/Database.js", start = 131, end = 131, render = { kind = "full" } },
+  { path = "server/Database.js", start = 136, end = 136, render = { kind = "full" } },
+  { path = "server/Database.js", start = 141, end = 141, render = { kind = "full" } },
+  { path = "server/Database.js", start = 146, end = 146, render = { kind = "full" } },
+  { path = "server/Database.js", start = 151, end = 151, render = { kind = "full" } },
+  { path = "server/Database.js", start = 156, end = 156, render = { kind = "full" } },
+  { path = "server/Database.js", start = 161, end = 161, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "Auth strategy method census (TokenManager/LocalAuthStrategy/OidcAuthStrategy)"
-justification = "The 3 auth backends' public surface: JWT issuance/rotation/refresh-token handling (TokenManager), local password hashing/verification (LocalAuthStrategy), and the OIDC PKCE/redirect/group-claim flow (OidcAuthStrategy) — precise pointers for the single most support-request-heavy area (login failures)."
-content = { kind = "lines", spans = [
-  { path = "server/auth/TokenManager.js", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/TokenManager.js", start = 137, end = 137, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/TokenManager.js", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/TokenManager.js", start = 188, end = 188, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/TokenManager.js", start = 285, end = 285, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/LocalAuthStrategy.js", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/LocalAuthStrategy.js", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/LocalAuthStrategy.js", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 169, end = 169, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/auth/OidcAuthStrategy.js", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^({]+" } },
-] }
+descriptor = "ServerSettings: scanner, metadata, rate-limit and backup defaults"
+justification = "The first half of the authoritative config-key list, with defaults and the file's own group comments: tokenSecret, scanner* (parseSubtitle, findCovers, coverProvider 'google', preferMatchedMetadata, disableWatcher), storeCoverWithItem / storeMetadataWithItem / metadataFileFormat, rateLimitLoginRequests 10 + rateLimitLoginWindow + allowIframe, and the backup group (backupPath under MetadataPath, backupSchedule false, backupsToKeep 2, maxBackupSize 1). These names appear verbatim in PATCH /api/settings and in the client's config pages."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/objects/settings/ServerSettings.js", start = 10, end = 36, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "custom-metadata-provider-specification.yaml: /search contract"
-justification = "The OpenAPI contract every self-hosted custom metadata provider must implement (GET /search?query&author, api-key auth carried in the AUTHORIZATION header per components.securitySchemes) — the concrete config-file evidence CustomProviderAdapter.js (4.2's sibling) codes against, cheaper to read here than reverse-engineering it from the adapter."
-content = { kind = "lines", spans = [
-  { path = "custom-metadata-provider-specification.yaml", start = 17, end = 36, render = { kind = "full" } },
-  { path = "custom-metadata-provider-specification.yaml", start = 78, end = 82, render = { kind = "full" } },
-] }
+descriptor = "ServerSettings: logger, bookshelf, podcast, sorting and misc defaults"
+justification = "Continuation of 4.3 to the end of the non-auth settings: loggerDailyLogsToKeep 7 / loggerScannerLogsToKeep 2, homeBookshelfView + bookshelfView, podcastEpisodeSchedule '0 * * * *', sortingIgnorePrefix + sortingPrefixes ['the','a'], chromecastEnabled, dateFormat 'MM/dd/yyyy', timeFormat, language 'en-us', allowedOrigins, logLevel, and version/buildNumber pulled from package.json."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/objects/settings/ServerSettings.js", start = 37, end = 62, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "client/store/index.js Vuex root state"
-justification = "The root store module's full state shape (streaming/player-queue/modal/ereader/developer-mode flags) — the client-side single source of truth that most Vue components and the player subsystem read from."
-content = { kind = "lines", spans = [ { path = "client/store/index.js", start = 5, end = 32, render = { kind = "full" } } ] }
+descriptor = "ServerSettings: the auth / OpenID key names"
+justification = "The remaining settings block, key names only: authLoginCustomMessage, authActiveAuthMethods, and the full authOpenID* set (issuer/authorization/token/userinfo/jwks/logout URLs, clientID, clientSecret, tokenSigningAlgorithm, buttonText, autoLaunch, autoRegister, matchExistingBy, mobileRedirectURIs, groupClaim, advancedPermsClaim, subfolderForRedirectURLs). Closes the settings class started at 4.3 — without it an agent would conclude OIDC has no settings."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/objects/settings/ServerSettings.js", start = 64, end = 64, render = { kind = "full" } },
+  { path = "server/objects/settings/ServerSettings.js", start = 65, end = 66, render = { kind = "truncated", pattern = "this\\.[A-Za-z]+" } },
+  { path = "server/objects/settings/ServerSettings.js", start = 68, end = 68, render = { kind = "full" } },
+  { path = "server/objects/settings/ServerSettings.js", start = 69, end = 85, render = { kind = "truncated", pattern = "this\\.[A-Za-z]+" } },
+]
 
-# ===========================================================================
-# Tier 5 — the remaining token budget: a small, curated cross-section of the
-# two biggest domain-model files, the two biggest REST controllers, two
-# central managers, and one concrete test-file convention example. These are
-# representative pointers, not exhaustive census — server/models,
-# server/controllers and server/managers' full rosters are already closed by
-# tier 1's fs listings; per-file method census beyond this selection didn't
-# fit the 10k cap without crowding out everything above.
-# ===========================================================================
+[[batches]]
+id = "4.6"
+descriptor = "SocketAuthority: emitter helpers + the complete inbound event list"
+justification = "The socket.io side of the API, which the route table does not cover: the emitter helpers (emitter, clientEmitter, adminEmitter, requireAdminSocket, libraryItemEmitter, libraryItemsEmitter) and every inbound event handled on connection — auth, cancel_scan, search_covers, cancel_cover_search, set_log_listener, remove_log_listener, disconnect, message_all_users, ping. Needed for any live-update or client-sync question."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/SocketAuthority.js", start = 57, end = 57, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 68, end = 68, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 81, end = 81, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 89, end = 89, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 104, end = 104, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 119, end = 119, render = { kind = "truncated", pattern = "^\\s*[a-zA-Z]+\\(" } },
+  { path = "server/SocketAuthority.js", start = 188, end = 188, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 191, end = 191, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 197, end = 198, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 201, end = 201, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 210, end = 210, render = { kind = "full" } },
+  { path = "server/SocketAuthority.js", start = 213, end = 213, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 239, end = 239, render = { kind = "truncated", pattern = "socket\\.on\\('[^']*'" } },
+  { path = "server/SocketAuthority.js", start = 249, end = 249, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "LibraryItem + Book model method sample"
-justification = "A representative slice of the two most heavily depended-on Sequelize models: LibraryItem's filtered/sorted listing, personalized shelves, and JSON-expansion methods; Book's playback-title/author derivation, direct-play capability check, and updateFromRequest (the client edit-form's write path)."
-content = { kind = "lines", spans = [
-  { path = "server/models/LibraryItem.js", start = 294, end = 294, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/LibraryItem.js", start = 338, end = 338, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/LibraryItem.js", start = 581, end = 581, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/LibraryItem.js", start = 864, end = 864, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/LibraryItem.js", start = 1035, end = 1035, render = { kind = "full" } },
-  { path = "server/models/Book.js", start = 213, end = 213, render = { kind = "full" } },
-  { path = "server/models/Book.js", start = 278, end = 278, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/Book.js", start = 313, end = 313, render = { kind = "full" } },
-  { path = "server/models/Book.js", start = 370, end = 370, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/models/Book.js", start = 672, end = 672, render = { kind = "truncated", pattern = "^[^({]+" } },
-] }
+descriptor = "client/components/ui + widgets rosters (complete)"
+justification = "Components are auto-imported by Nuxt (`components: true`), so an agent writing a client feature must know which primitives already exist before inventing one: ui/ holds the 29 form and menu primitives (Btn, IconBtn, Checkbox, Dropdown, ContextMenuDropdown, MultiSelect*, TextInput*, TextareaInput, SelectInput, InputDropdown, QueryInput, RangeInput, TimePicker, ToggleSwitch, ToggleBtns, RichTextEditor, VueTrix, Tooltip, LoadingIndicator, LibrariesDropdown, LibraryIcon, MediaIconPicker, EditableText, FileInput, ReadIconBtn) and widgets/ the 17 composite ones (BookDetailsEdit, PodcastDetailsEdit, CronExpressionBuilder, RssFeedMetadataBuilder, SeriesInputWidget, ItemSlider, MoreMenu, Alert, indicators, ...)."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "client/components/ui", entries = "all" },
+  { parent = "client/components/widgets", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "LibraryItemController + LibraryController method sample"
-justification = "A representative slice of the two largest controllers (1247 and 1497 lines): item find/delete/download/cover/match/batch-update and library create/update/scan/getLibraryItems/getAuthors — the highest-traffic REST surface for both single-item and whole-library operations."
-content = { kind = "lines", spans = [
-  { path = "server/controllers/LibraryItemController.js", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 169, end = 169, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 208, end = 208, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 397, end = 397, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 522, end = 522, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryItemController.js", start = 626, end = 626, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryController.js", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryController.js", start = 255, end = 255, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryController.js", start = 604, end = 604, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryController.js", start = 1021, end = 1021, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/controllers/LibraryController.js", start = 1262, end = 1262, render = { kind = "truncated", pattern = "^[^({]+" } },
-] }
+descriptor = "nuxt.config.js: dev proxy, env and module wiring"
+justification = "Explains how the SPA reaches the server in both modes: routerBasePath '/audiobookshelf', serverHostUrl localhost:3333 in dev, and the proxy table built from serverPaths ['api/','public/','hls/','auth/','feed/','status','login','logout','init'] — the definitive list of paths the client forwards to the Node server — plus ssr:false, target static, dev-mode detection, env.serverUrl / env.chromecastReceiver and telemetry off. The first thing to read when client requests 404 in development."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "client/nuxt.config.js", start = 1, end = 16, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "5.3"
-descriptor = "CronManager + BackupManager method sample"
-justification = "How scheduled work happens: CronManager's per-library scan cron + podcast-episode-check cron scheduling, and BackupManager's init/scheduleCron/runBackup/removeBackup — the two managers most likely involved in a 'why did the nightly backup/scan not run' report."
-content = { kind = "lines", spans = [
-  { path = "server/managers/CronManager.js", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/managers/CronManager.js", start = 121, end = 121, render = { kind = "full" } },
-  { path = "server/managers/CronManager.js", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^({]+" } },
-  { path = "server/managers/BackupManager.js", start = 50, end = 50, render = { kind = "full" } },
-  { path = "server/managers/BackupManager.js", start = 75, end = 75, render = { kind = "full" } },
-  { path = "server/managers/BackupManager.js", start = 333, end = 333, render = { kind = "full" } },
-  { path = "server/managers/BackupManager.js", start = 393, end = 393, render = { kind = "full" } },
-] }
+id = "6.1"
+descriptor = "package.json: the packaging and docker build targets"
+justification = "Replaces the ellipsis left at package.json:13 by 1.8 with the real content: build-win / build-win-no-compress via pkg node20-win-x64, build-linux via build/linuxpackager, the three docker buildx targets (multi-arch push, amd64-local, arm64-local) and deploy-linux. Ranked last-tier because release engineering is a narrower query class than running or testing the app."
+predecessor = "1.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 13, end = 19, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "5.4"
-descriptor = "test/server/Logger.test.js: mocha/chai/sinon convention example"
-justification = "The concrete unit-test shape used throughout test/server: mocha describe/beforeEach, sinon.stub for console methods + the module's own getters, and sinon.restore() in afterEach — copy this pattern rather than reinventing it for a new test file."
-content = { kind = "lines", spans = [ { path = "test/server/Logger.test.js", start = 1, end = 36, render = { kind = "full" } } ] }
+id = "6.2"
+descriptor = "CI, dev-container, editor and packaging directory rosters"
+justification = "The remaining first-party tooling, each listing complete: .github/workflows (11 workflows including unit-tests.yml, component-tests.yml, integration-test.yml, docker-build.yml, codeql.yml, lint-openapi.yml, i18n-integration.yml), .github/ISSUE_TEMPLATE, .devcontainer (Dockerfile, devcontainer.json, post-create.sh and the dev.js template the readme tells contributors to copy to the repo root), .vscode (the launch.json debug targets the readme names) and build/ (linuxpackager + the debian package skeleton). Answers 'what runs in CI' and 'how do I set up a dev environment' with one further read."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".devcontainer", entries = "all" },
+  { parent = ".vscode", entries = "all" },
+  { parent = "build", entries = "all" },
+]

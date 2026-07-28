@@ -1,702 +1,861 @@
 fixture = "nats-server"
 revision_pin = "8f41bed8"
 summary = """
-nats-server is the Go reference implementation of the NATS messaging server (github.com/nats-io/nats-server),
-a single `package server` (~140 .go files, ~370k lines incl. co-located _test.go files) plus a handful of
-support packages (conf config-format parser, logger, internal/{ldap,ocsp,fastrand,antithesis,testhelper}, and
-server-scoped leaf packages: avl/gsl/stree/thw/ats for JetStream storage data structures, and
-certstore/certidp/tpm/sysmem/pse for platform/security adapters). One process, one binary (`main.go` ->
-`server.NewServer` -> `server.Run`), configurable via CLI flags, a custom `conf` config-file format, or both.
-Core subsystems: client protocol handling + pub/sub routing (client.go, parser.go, sublist.go), accounts/
-security (accounts.go, auth.go, auth_callout.go, jwt.go, nkey.go), clustering (route.go, gateway.go, raft.go),
-leaf/edge federation (leafnode.go), JetStream (jetstream*.go, stream.go, consumer.go, store.go +
-memstore.go/filestore.go), protocol adapters (mqtt.go, websocket.go), and HTTP monitoring/system events
-(monitor.go, events.go). The query distribution this NS serves: "how do I configure/run/build/test this",
-"where does subsystem X live and what's its public surface", "how does the wire protocol/clustering/JetStream
-storage work", and debugging entry points (lock ordering, error catalog, CI test matrix). Given this repo's
-size (~300 files across ~20 directories, many platform-specific variants of the same file, colocated
-_test.go files), ranking prioritizes fs-listing closure and a curated set of the most load-bearing struct/
-const/interface shapes and config samples over exhaustive per-file function enumeration, which this NS's
-token budget cannot afford at the depth a repo this large would otherwise warrant. Where a subsystem isn't
-expanded in a code batch, its file(s) are still named in a tier-2 directory listing, one grep away.
-"""
+nats-server is the Go implementation of the NATS messaging server: a single binary (main.go) wrapped around one very large flat package, server/ - 71 implementation and data files, 73 colocated test files, twelve subpackages, ~370k lines in all - plus a hand-written config-language package (conf/), a logging package (logger/), small internal/ helpers, and a separate black-box integration suite in test/.
 
-# ============================================================================
-# TIER 1 — Root identity, build, CI, community/governance, deployment
-# ============================================================================
+The ranking is built around the fact that no snapshot can hold this repository. It front-loads identity and a complete filesystem map, then the user-facing surfaces that are small and self-describing (the CLI usage string, the config language with worked examples, the complete set of top-level config keys), then the file rosters that turn every later 'where is X' question into one targeted read. After that it proceeds subsystem by subsystem: server lifecycle, the seven connection kinds, lock ordering, the INFO protocol, the monitoring endpoints and their handlers, the protocol op handlers and the sublist, options internals, accounts, auth and the system-account subjects, JetStream with its storage and raft layers, the protocol parser and the MQTT design doc, and finally the integration-test harness, the CI test split and the README itself. Within a subsystem the preference is for declaration-line rosters - types, handlers, parsers, accept loops - over bodies: line numbers come free with every rendered line, and breadth beats depth when the alternative is grepping a 13k-line file.
+
+Ellipsis markers appear wherever a span stops inside a longer const block, struct, interface or switch, so a partial rendering never reads as a complete one.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "README lede (first sentence)"
-justification = "Cheapest possible 'what is this' answer, first thing any session needs; truncated to the first sentence to keep batch 1 small per the growth envelope, refined to the full paragraph by 1.8."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^.]+\\." } },
-] }
+descriptor = "What this repository is: NATS server, module path, Go toolchain"
+justification = "Rank 1 must answer 'what am I looking at'. One truncated sentence of the README lede plus go.mod's module line names the product (a NATS messaging server), the import path callers use (github.com/nats-io/nats-server/v2) and the Go version the tree is built against - the three facts every subsequent query is framed against, for well under a hundred tokens."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 5, end = 5, render = { kind = "truncated", pattern = '^.*?devices\.' } },
+  { path = "go.mod", start = 1, end = 1, render = { kind = "full" } },
+  { path = "go.mod", start = 3, end = 3, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "Root directory listing"
-justification = "Every later batch references a root-level file/dir; closure over the ~30 root entries prevents assuming any file/dir doesn't exist."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "Complete root directory listing"
+justification = "The cheapest breadth in the repository: every immediate child of the root, so the agent knows the tree is main.go plus server/, conf/, logger/, internal/ and test/ alongside the governance docs, and never has to list the root. entries=all, so no sibling can be silently missing."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "scripts/ fs listing"
-justification = "Only 3 scripts exist; closure prevents assuming e.g. a release script lives here (release automation is instead in .github/workflows/release.yaml, 1.13)."
-content = { kind = "fs", groups = [ { parent = "scripts", entries = "all" } ] }
+descriptor = "Server version, protocol level and network defaults (server/const.go)"
+justification = "Version, wire proto level, default client port and default bind host answer a large class of one-shot questions and are needed to interpret almost any bug report. Ellipses mark the elided constants inside the block, which continues to line 251 with payload, timeout and ping defaults."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/const.go", start = 67, end = 69, render = { kind = "full" } },
+  { path = "server/const.go", start = 70, end = 70, render = { kind = "ellipsis" } },
+  { path = "server/const.go", start = 76, end = 76, render = { kind = "full" } },
+  { path = "server/const.go", start = 77, end = 78, render = { kind = "full" } },
+  { path = "server/const.go", start = 79, end = 79, render = { kind = "ellipsis" } },
+  { path = "server/const.go", start = 85, end = 86, render = { kind = "full" } },
+  { path = "server/const.go", start = 87, end = 87, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "docker/ fs listing"
-justification = "Closure over the 2 deployment artifacts here (Dockerfile.nightly + a sample cluster conf) before either is expanded (1.7, 1.10)."
-content = { kind = "fs", groups = [ { parent = "docker", entries = "all" } ] }
+descriptor = "server/ subpackages (all 12 directories)"
+justification = "server/ is a flat ~370k-line package with twelve subpackages hidden among its files; naming them all up front tells the agent where the subject radix tree (stree), generic sublist (gsl), sequence sets (avl), timer wheel (thw), process and system statistics (pse, sysmem), certificate handling (certidp, certstore), TPM support and the test config fixtures live. Listed rather than all because the sibling files are rostered separately in 3.1 and 3.2."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server", entries = ["server/ats", "server/avl", "server/certidp", "server/certstore", "server/configs", "server/elastic", "server/gsl", "server/pse", "server/stree", "server/sysmem", "server/thw", "server/tpm"] },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "util/ fs listing"
-justification = "util/nats-server.service is the reference systemd unit; a hardened variant also exists (nats-server-hardened.service) — closure prevents missing it."
-content = { kind = "fs", groups = [ { parent = "util", entries = "all" } ] }
+descriptor = "The non-server Go packages: conf/ and logger/ (complete)"
+justification = "Two small self-contained packages an agent will otherwise hunt for: conf/ is the hand-written NATS configuration language lexer and parser, logger/ is the logging backend (file, stdout, syslog, Windows event log). Complete listings including their colocated *_test.go files and the sample .conf inputs."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "conf", entries = "all" },
+  { parent = "logger", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "CI directory listings (.github)"
-justification = "Closure over CI/community automation: 9 workflow files, issue templates, the nightly-release composite action — listing only tests.yaml would wrongly imply the other 8 workflows don't exist."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
-  { parent = ".github/actions/nightly-release", entries = "all" },
-] }
+descriptor = "internal/ helper packages, complete with their contents"
+justification = "internal/ holds five vendored-in helpers that are easy to miss and often the answer to 'where does X come from': antithesis fault-injection stubs, a fast PRNG, LDAP DN parsing for TLS certificate mapping, OCSP helpers and a test logging helper. Listing the directory plus every file inside closes the class in one cheap batch."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "internal", entries = "all" },
+  { parent = "internal/antithesis", entries = "all" },
+  { parent = "internal/fastrand", entries = "all" },
+  { parent = "internal/ldap", entries = "all" },
+  { parent = "internal/ocsp", entries = "all" },
+  { parent = "internal/testhelper", entries = "all" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "docker/nats-server.conf body"
-justification = "The canonical minimal cluster config (client port, monitor port, cluster block with routes) — cheaper ground truth for the config-file format than reading conf/parse.go; ellipsis signals the cluster's authorization sub-block that follows."
-content = { kind = "lines", spans = [
-  { path = "docker/nats-server.conf", start = 1, end = 13, render = { kind = "full" } },
-  { path = "docker/nats-server.conf", start = 14, end = 14, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = "README: full lede"
-predecessor = "1.1"
-justification = "Overrides 1.1's truncated first-sentence lede with the full paragraph (CNCF affiliation, 40+ client languages, deployment targets)."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "CONTRIBUTING.md guidelines"
-justification = "The draft-PR workflow (open as draft via the down-arrow next to 'Create pull request' until ready for review) — the single most distinctive, actionable NATS-specific convention beyond generic OSS PR etiquette."
-content = { kind = "lines", spans = [
-  { path = "CONTRIBUTING.md", start = 21, end = 23, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "runTestsOnTravis.sh: test-target dispatch (sample)"
-justification = "The ground truth for 'how do I run a specific CI test subset locally'; each CI job (1.17) shells out to this script by target name. Shows the head of the 'compile' branch (build + lint); ellipsis honestly signals the remaining ~17 elif branches (store_tests, js_tests, js_consumer_tests, raft_tests, js_cluster_tests_1-4, js_super_cluster_tests, mqtt_tests, msgtrace_tests, srv_pkg_non_js_tests, jwt_tests, non_srv_pkg_tests, etc., all named in 1.17's job roster) rather than a full 138-line dump."
-content = { kind = "lines", spans = [
-  { path = "scripts/runTestsOnTravis.sh", start = 1, end = 12, render = { kind = "full" } },
-  { path = "scripts/runTestsOnTravis.sh", start = 13, end = 13, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = ".golangci.yml: lint configuration"
-justification = "Enabled linters (forbidigo/govet/ineffassign/misspell/staticcheck/unused) plus run/output config — needed before proposing any lint-affecting change; ellipsis signals the remaining per-linter settings, per-path exclusion rules, and formatter config (goimports) rather than a full 89-line dump. `golangci-lint run --config=.golangci.yml` is this repo's `cargo lint`."
-content = { kind = "lines", spans = [
-  { path = ".golangci.yml", start = 1, end = 22, render = { kind = "full" } },
-  { path = ".golangci.yml", start = 23, end = 23, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.12"
-descriptor = "util/nats-server.service body"
-justification = "ExecStart/ExecReload(HUP)/ExecStop(SIGUSR2 lame-duck) — the systemd unit's process-control hooks; ellipsis signals the TimeoutStopSec=150 tuning (matched to the default 2-minute lame_duck_duration) and the Restart/User/Group settings that follow."
-content = { kind = "lines", spans = [
-  { path = "util/nats-server.service", start = 1, end = 13, render = { kind = "full" } },
-  { path = "util/nats-server.service", start = 14, end = 14, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.13"
-descriptor = "TODO.md"
-justification = "Long-standing roadmap/wishlist (auth for queue groups, protocol updates) — common source of 'is X planned' answers. Ellipsis signals ~39 more items: a handful still open (multi-tenant account isolation, pedantic-state control) followed by ~35 checked-off historical entries."
-content = { kind = "lines", spans = [
-  { path = "TODO.md", start = 1, end = 15, render = { kind = "full" } },
-  { path = "TODO.md", start = 16, end = 16, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.14"
-descriptor = "main.go: CLI flag usage text"
-justification = "Verbatim `-h` output covering the Server Options group's network/identity/monitoring/config flags (addr/port, name, pid, http monitor ports, config file, test-config flag); ellipsis honestly signals the remaining signal/client-advertise/ports-file flags and the Logging/JetStream/Authorization/TLS/Cluster/Profiling/Common option groups rather than implying only these exist. Complements the Options struct (3.3), the config-file surface."
-content = { kind = "lines", spans = [
-  { path = "main.go", start = 26, end = 38, render = { kind = "full" } },
-  { path = "main.go", start = 39, end = 39, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.15"
-descriptor = "main.go: process startup sequence"
-justification = "Shows the ConfigureOptions call and the -t/CheckConfig validate-and-exit path; ellipsis signals the remaining startup sequence (RedactArgs -> NewServer -> ConfigureLogger -> Run -> WaitForShutdown) rather than implying the process exits after config parsing — the best 'how does this process start' pointer into server/*.go."
-content = { kind = "lines", spans = [
-  { path = "main.go", start = 97, end = 113, render = { kind = "full" } },
-  { path = "main.go", start = 114, end = 114, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.16"
-descriptor = "Governance bundle: maintainers + code ownership + docs links + security policy"
-justification = "MAINTAINERS.md names, .github/CODEOWNERS path ownership (doc/, test/, locksordering.txt are server-dev owned), where the real docs live (docs.nats.io, FAQ), and README's vulnerability-reporting address, bundled since all four are tiny."
-content = { kind = "lines", spans = [
-  { path = "MAINTAINERS.md", start = 5, end = 10, render = { kind = "full" } },
-  { path = ".github/CODEOWNERS", start = 1, end = 5, render = { kind = "full" } },
-  { path = "README.md", start = 9, end = 15, render = { kind = "full" } },
-  { path = "README.md", start = 68, end = 71, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.17"
-descriptor = "tests.yaml: RACE env logic + CI job-name roster"
-justification = "The env.RACE/concurrency-group logic (lines 11, 16) explains why PR runs differ from main-branch runs; the 21 job-name lines (signoffs, lint, build variants, store, js-*, raft, mqtt, msgtrace, jwt, ...) are a location roster so the agent doesn't assume only a few CI jobs exist. Job bodies are dispatched via scripts/runTestsOnTravis.sh (1.10), the more actionable artifact."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/tests.yaml", start = 11, end = 11, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 16, end = 16, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 19, end = 19, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 59, end = 59, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 81, end = 81, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 100, end = 100, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 122, end = 122, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 142, end = 142, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 159, end = 159, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 176, end = 176, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 193, end = 193, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 210, end = 210, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 227, end = 227, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 244, end = 244, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 261, end = 261, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 278, end = 278, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 295, end = 295, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 312, end = 312, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 329, end = 329, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 346, end = 346, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 363, end = 363, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 380, end = 380, render = { kind = "full" } },
-  { path = ".github/workflows/tests.yaml", start = 397, end = 397, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.18"
-descriptor = "locksordering.txt: established lock order"
-justification = "The only document describing cross-struct mutex ordering (jetStream -> jsAccount -> Server -> client -> Account, etc.); load-bearing for concurrency debugging or any new-lock-introducing change. Ellipsis signals the remaining stream/consumer batching-lock chains (clMu/ddMu/batchMu)."
-content = { kind = "lines", spans = [
-  { path = "locksordering.txt", start = 1, end = 18, render = { kind = "full" } },
-  { path = "locksordering.txt", start = 19, end = 19, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "1.19"
-descriptor = "go.mod: module + dependency graph"
-justification = "Full dependency list (jwt, nkeys, nuid, go-tpm, klauspost/compress, highwayhash, x/crypto, x/sys, x/time) plus Go toolchain version — 'what does this depend on / what Go version' in one shot."
-content = { kind = "lines", spans = [
-  { path = "go.mod", start = 1, end = 19, render = { kind = "full" } },
-] }
-
-# ============================================================================
-# TIER 2 — Directory-structure closure (fs listings for every remaining dir)
-# ============================================================================
+descriptor = "Packaging, ops and CI directories (complete)"
+justification = "Closes the remaining root subtrees: docker/ (nightly image plus its sample config), scripts/ (coverage, test splitting, copyright), util/ (systemd units), doc/, logos/, and .github/ down to every workflow file. Cheap, and it means questions about release or CI plumbing start from a filename instead of a search."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docker", entries = "all" },
+  { parent = "scripts", entries = "all" },
+  { parent = "util", entries = "all" },
+  { parent = "doc", entries = "all" },
+  { parent = "logos", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "server/ directory listing (all entries)"
-justification = "The core package: ~140 .go files (many cross-platform variants: disk_avail_*.go, pse_*.go, mem_*.go, signal_*.go, websocket_go12{5,6}.go) plus 12 leaf packages and errors.json. Every later server/ batch references files here; closure prevents assuming unlisted platform variants or subpackages don't exist."
-content = { kind = "fs", groups = [ { parent = "server", entries = "all" } ] }
+descriptor = "How the binary is invoked (main.go:26-29)"
+justification = "The usage banner: nats-server takes options only, no subcommands. Four lines that frame every flag batch below and rule out a whole class of wrong guesses about the CLI shape."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 26, end = 29, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "test/ directory listing (all entries)"
-justification = "36 top-level black-box integration-test files (auth, cluster, routes, services, latency, pedantic/verbose protocol modes, monitor, ports) plus test/configs/ — distinct from the white-box server/*_test.go files (visible in 2.1)."
-content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+descriptor = "Core listening and identity flags (main.go:30-37)"
+justification = "Bind address, client port, server name, PID file and the two http monitoring ports - the flags present in almost every invocation, and the ones whose defaults 1.3 already gave."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 30, end = 37, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "conf/, logger/, logos/, internal/, doc/ listings"
-justification = "Five small top-level directories bundled for closure: conf/ (config-format parser), logger/ (Logger impl incl. syslog/Windows-event-log variants), logos/ (brand assets), internal/ (antithesis, ldap, ocsp, fastrand, testhelper), doc/ (points to the external ADR repo)."
-content = { kind = "fs", groups = [
-  { parent = "conf", entries = "all" },
-  { parent = "logger", entries = "all" },
-  { parent = "logos", entries = "all" },
-  { parent = "internal", entries = "all" },
-  { parent = "doc", entries = "all" },
-] }
+descriptor = "Config file, config test, signalling and advertise flags (main.go:38-43)"
+justification = "-c/--config and -t (validate and exit) are how the config file surfaced in 2.9 and 2.10 is actually used; -sl/--signal carries the ldm|stop|quit|term|reopen|reload vocabulary that recurs in server/const.go and signal.go; --client_advertise and --ports_file_dir round out the block."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 38, end = 43, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "server/ leaf-package listings (12 subpackages)"
-justification = "server/{ats,avl,certidp,certstore,configs,elastic,gsl,pse,stree,sysmem,thw,tpm} each hold a self-contained data structure or platform adapter; listing all 12 together prevents inferring that only the ones discussed elsewhere (avl, gsl, stree, thw) exist."
-content = { kind = "fs", groups = [
-  { parent = "server/ats", entries = "all" },
-  { parent = "server/avl", entries = "all" },
-  { parent = "server/certidp", entries = "all" },
-  { parent = "server/certstore", entries = "all" },
-  { parent = "server/configs", entries = "all" },
-  { parent = "server/elastic", entries = "all" },
-  { parent = "server/gsl", entries = "all" },
-  { parent = "server/pse", entries = "all" },
-  { parent = "server/stree", entries = "all" },
-  { parent = "server/sysmem", entries = "all" },
-  { parent = "server/thw", entries = "all" },
-  { parent = "server/tpm", entries = "all" },
-] }
+descriptor = "Logging flags (main.go:44-56)"
+justification = "Log file, logtime, syslog and remote syslog, the -D/-V/-VV/-DV/-DVV debug and trace matrix, log size limit and max traced message length - where every debugging session starts."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 44, end = 56, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "Config-fixture subdirectory listings"
-justification = "server/configs/{certs,reload,tls} and test/configs/certs hold the cert/reload fixtures used by config *_test.go tests; closure prevents assuming e.g. no reload-specific fixtures exist. (test/configs/{jetstream,nkeys}, visible in 2.2, hold analogous fixtures not separately expanded here.)"
-content = { kind = "fs", groups = [
-  { parent = "server/configs/certs", entries = "all" },
-  { parent = "server/configs/reload", entries = "all" },
-  { parent = "server/configs/tls", entries = "all" },
-  { parent = "test/configs/certs", entries = "all" },
-] }
+descriptor = "JetStream and authorization flags (main.go:57-65)"
+justification = "-js/--jetstream and -sd/--store_dir are the entry point into the whole JetStream half of the server; --user/--pass/--auth are the simplest auth surface. Small, high-traffic slice."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 57, end = 65, render = { kind = "full" } },
+]
 
-# ============================================================================
-# TIER 3 — Core server lifecycle & configuration surface
-# ============================================================================
+[[batches]]
+id = "2.6"
+descriptor = "TLS and cluster flags (main.go:66-81)"
+justification = "The TLS flag set (--tls, --tlscert, --tlskey, --tlsverify, --tlscacert) and the clustering flags (--routes, --cluster, --cluster_name, --no_advertise, --cluster_advertise, --connect_retries, --cluster_listen) - the two areas where CLI and config file surfaces most often have to be reconciled."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 66, end = 81, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Profiling and common flags (main.go:82-89)"
+justification = "Completes the usage string: --profile, -h/--help, -v/--version and --help_tls. Ranked separately so that the earlier slices stay small while no flag group is silently missing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 82, end = 89, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "func main(): the process startup path (main.go:97-123)"
+justification = "The lines that name the top-level APIs the binary uses - ConfigureOptions with PrintServerAndExit and PrintTLSHelpAndDie, CheckConfig with ConfigDigest, RedactArgs and NewServer - so this doubles as the index into package server for anyone embedding the server as a library. Ellipses mark the elided flag setup and the tail (ConfigureLogger, Run, WaitForShutdown)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "main.go", start = 97, end = 98, render = { kind = "full" } },
+  { path = "main.go", start = 99, end = 99, render = { kind = "ellipsis" } },
+  { path = "main.go", start = 104, end = 123, render = { kind = "full" } },
+  { path = "main.go", start = 124, end = 124, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "The NATS configuration language, described by its parser (conf/parse.go:14-26)"
+justification = "The package doc of conf/ is the only prose in the tree explaining the config file dialect: a JSON/YAML-influenced format with mixed arrays and nested maps, '=' or ':' or whitespace separators, '#' and '//' comments and optional semicolons. A zero-follow-up answer for 'what syntax does nats.conf use'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "conf/parse.go", start = 14, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "Worked configuration examples: an include, and a clustered config"
+justification = "conf/simple.conf shows the listen/authorization/include shape in six lines; the head of docker/nats-server.conf shows port, monitor_port and the opening of a cluster block. Grounds the syntax from 2.9 in real keys before the exhaustive key roster in 2.13 and 2.14. Ellipsis marks the rest of the docker config (the cluster port, its route authorization and routes)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "conf/simple.conf", start = 1, end = 6, render = { kind = "full" } },
+  { path = "docker/nats-server.conf", start = 2, end = 9, render = { kind = "full" } },
+  { path = "docker/nats-server.conf", start = 10, end = 10, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "Option assembly entry points in server/opts.go"
+justification = "Where flags, config file and defaults are combined. ConfigureOptions is what main.go calls; MergeOptions defines flag-over-file precedence; ProcessConfigFile, ProcessConfigString and processConfigFileLine are the parse path; ConfigDigest backs 'nats-server -t'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/opts.go", start = 945, end = 945, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/opts.go", start = 1049, end = 1049, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/opts.go", start = 1065, end = 1065, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/opts.go", start = 1075, end = 1075, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/opts.go", start = 1122, end = 1122, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/opts.go", start = 5829, end = 5829, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/opts.go", start = 6141, end = 6141, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "Signals, live config reload and their handlers"
+justification = "The Command constants are the vocabulary of 'nats-server --signal'; ProcessSignal delivers them; Reload and ReloadOptions are what a reload signal ends up calling. One batch answers 'how do I reload config' and 'what signals exist', and points at server/reload.go for the per-option reload rules."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/const.go", start = 22, end = 35, render = { kind = "full" } },
+  { path = "server/signal.go", start = 89, end = 89, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/reload.go", start = 1396, end = 1396, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/reload.go", start = 1417, end = 1417, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+]
+
+[[batches]]
+id = "2.13"
+descriptor = "Top-level config file keys, part 1 of 2 (opts.go switch cases 1128-1368)"
+justification = "Every case label of processConfigFileLine is a top-level key of nats.conf, shown with the line that implements it - including the aliases, which are otherwise invisible. Part 1: listen, port, server_name, host/net, debug, trace, mappings, accounts, authorization, http/https, cluster, gateway, leafnodes, store_dir, jetstream, logfile, syslog, pidfile, prof_port and the max_* limits. The closing ellipsis marks that the switch continues."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/opts.go", start = 1128, end = 1128, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1136, end = 1136, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1138, end = 1138, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1140, end = 1140, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1148, end = 1148, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1150, end = 1150, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1153, end = 1153, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1156, end = 1156, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1161, end = 1161, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1166, end = 1166, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1169, end = 1169, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1172, end = 1172, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1180, end = 1180, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1182, end = 1182, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1188, end = 1188, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1190, end = 1190, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1255, end = 1255, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1264, end = 1264, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1273, end = 1273, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1275, end = 1275, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1277, end = 1277, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1279, end = 1279, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1285, end = 1285, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1290, end = 1290, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1296, end = 1296, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1303, end = 1303, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1309, end = 1309, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1311, end = 1311, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1313, end = 1313, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1315, end = 1315, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1318, end = 1318, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1320, end = 1320, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1322, end = 1322, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1324, end = 1324, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1326, end = 1326, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1328, end = 1328, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1335, end = 1335, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1342, end = 1342, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1344, end = 1344, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1346, end = 1346, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1350, end = 1350, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1352, end = 1352, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1354, end = 1354, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1366, end = 1366, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1368, end = 1368, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1370, end = 1370, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.14"
+descriptor = "Top-level config file keys, part 2 of 2 (opts.go switch cases 1370-1893)"
+justification = "Completes the key class: tls, ocsp, allow_non_tls, write_deadline, write_timeout, lame_duck_*, operator, the resolver family, no_auth_user, system_account, trusted_keys, websocket, mqtt, server_tags, server_metadata, feature_flags, default_js_domain, ocsp_cache, max_closed_clients and proxies. Overrides 2.13's ellipsis with the real case line it stood for."
+predecessor = "2.13"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/opts.go", start = 1370, end = 1370, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1391, end = 1391, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1438, end = 1438, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1440, end = 1440, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1442, end = 1442, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1444, end = 1444, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1457, end = 1457, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1470, end = 1470, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1522, end = 1522, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1659, end = 1659, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1675, end = 1675, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1699, end = 1699, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1726, end = 1726, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1728, end = 1728, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1732, end = 1732, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1734, end = 1734, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1736, end = 1736, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1766, end = 1766, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1768, end = 1768, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1770, end = 1770, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1775, end = 1775, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1780, end = 1780, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1808, end = 1808, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1826, end = 1826, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1849, end = 1849, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1861, end = 1861, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1889, end = 1889, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1891, end = 1891, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1893, end = 1893, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "Server struct (identity/stats fields)"
-justification = "server.Server is the top-level object owning every subsystem; the first ~27 fields (stats, pinned-account tracking) are the highest-signal slice. Ellipsis honestly signals the remaining ~190 fields (raft-node registry, catchup-byte accounting, JS-routed-request queues, proxy trust state) rather than a full dump this budget can't afford."
-content = { kind = "lines", spans = [
-  { path = "server/server.go", start = 168, end = 178, render = { kind = "full" } },
-  { path = "server/server.go", start = 179, end = 179, render = { kind = "ellipsis" } },
-] }
+descriptor = "server/: all 71 implementation and data files"
+justification = "The substance of this repository is one flat package. This is its complete non-test file set - the client, route, gateway, leafnode, mqtt and websocket transports, accounts and auth, the jetstream_* family, stream, consumer, filestore, memstore and store, raft, monitor, opts, sublist and parser - plus errors.json and the two package READMEs. Filenames alone route almost any 'where is X' question to one file; the colocated tests are rostered next."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server", entries = ["server/accounts.go", "server/auth_callout.go", "server/auth.go", "server/ciphersuites.go", "server/client_proxyproto.go", "server/client.go", "server/const.go", "server/consumer.go", "server/cron.go", "server/dirstore.go", "server/disk_avail_netbsd.go", "server/disk_avail_openbsd.go", "server/disk_avail_solaris.go", "server/disk_avail_wasm.go", "server/disk_avail_windows.go", "server/disk_avail.go", "server/errors_gen.go", "server/errors.go", "server/errors.json", "server/events.go", "server/feature_flags.go", "server/filestore.go", "server/gateway.go", "server/ipqueue.go", "server/jetstream_api.go", "server/jetstream_batching.go", "server/jetstream_cluster.go", "server/jetstream_errors_generated.go", "server/jetstream_errors.go", "server/jetstream_events.go", "server/jetstream_versioning.go", "server/jetstream.go", "server/jwt.go", "server/leafnode.go", "server/log.go", "server/memstore.go", "server/monitor_sort_opts.go", "server/monitor.go", "server/mqtt.go", "server/msgtrace.go", "server/nkey.go", "server/ocsp_peer.go", "server/ocsp_responsecache.go", "server/ocsp.go", "server/opts.go", "server/parser.go", "server/proto.go", "server/raft.go", "server/rate_counter.go", "server/README-MQTT.md", "server/README.md", "server/reload.go", "server/ring.go", "server/route.go", "server/scheduler.go", "server/sdm.go", "server/sendq.go", "server/server.go", "server/service_windows.go", "server/service.go", "server/signal_wasm.go", "server/signal_windows.go", "server/signal.go", "server/store.go", "server/stream.go", "server/subject_transform.go", "server/sublist.go", "server/util.go", "server/websocket_go125.go", "server/websocket_go126.go", "server/websocket.go"] },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "NewServer: construction sequence (head)"
-justification = "Shows the concrete first steps of turning Options into a running Server: TLS check and the start of nkey identity creation — the 1-hop pointer for 'what happens between ConfigureOptions and Start()'. Ellipsis signals the rest of NewServer's construction (xkey setup, Info-protocol assembly, options validation) rather than implying construction stops here."
-content = { kind = "lines", spans = [
-  { path = "server/server.go", start = 695, end = 703, render = { kind = "full" } },
-  { path = "server/server.go", start = 704, end = 704, render = { kind = "ellipsis" } },
-] }
+descriptor = "server/: all 73 colocated *_test.go files"
+justification = "The other half of the package, and most of its ~370k lines. The names encode the CI test split (jetstream_cluster_1..4, norace_1/2, jetstream_super_cluster, mqtt_ex_*), the fuzz targets (parser_fuzz, server_fuzz, subject_fuzz) and the shared helpers (jetstream_helpers, raft_helpers, raft_chain_of_blocks_helpers) that a new test is expected to reuse. Without this roster an agent cannot tell whether a test file for a subsystem already exists."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server", entries = ["server/accounts_test.go", "server/auth_callout_test.go", "server/auth_test.go", "server/benchmark_publish_test.go", "server/certstore_windows_test.go", "server/client_proxyproto_test.go", "server/client_test.go", "server/closed_conns_test.go", "server/config_check_test.go", "server/core_benchmarks_test.go", "server/dirstore_test.go", "server/errors_test.go", "server/events_test.go", "server/feature_flags_test.go", "server/filestore_test.go", "server/gateway_test.go", "server/ipqueue_test.go", "server/jetstream_batching_test.go", "server/jetstream_benchmark_test.go", "server/jetstream_cluster_1_test.go", "server/jetstream_cluster_2_test.go", "server/jetstream_cluster_3_test.go", "server/jetstream_cluster_4_test.go", "server/jetstream_cluster_long_test.go", "server/jetstream_consumer_test.go", "server/jetstream_errors_test.go", "server/jetstream_helpers_test.go", "server/jetstream_jwt_test.go", "server/jetstream_leafnode_test.go", "server/jetstream_meta_benchmark_test.go", "server/jetstream_sourcing_scaling_test.go", "server/jetstream_super_cluster_test.go", "server/jetstream_test.go", "server/jetstream_tpm_test.go", "server/jetstream_versioning_test.go", "server/jwt_test.go", "server/leafnode_proxy_test.go", "server/leafnode_test.go", "server/log_test.go", "server/memstore_test.go", "server/monitor_test.go", "server/mqtt_ex_bench_test.go", "server/mqtt_ex_test_test.go", "server/mqtt_test.go", "server/msgtrace_test.go", "server/nkey_test.go", "server/norace_1_test.go", "server/norace_2_test.go", "server/opts_test.go", "server/parser_fuzz_test.go", "server/parser_test.go", "server/ping_test.go", "server/raft_chain_of_blocks_helpers_test.go", "server/raft_helpers_test.go", "server/raft_test.go", "server/rate_counter_test.go", "server/reload_test.go", "server/ring_test.go", "server/routes_test.go", "server/server_fuzz_test.go", "server/server_test.go", "server/service_test.go", "server/service_windows_test.go", "server/signal_test.go", "server/split_test.go", "server/store_test.go", "server/subject_fuzz_test.go", "server/subject_transform_test.go", "server/sublist_test.go", "server/test_test.go", "server/trust_test.go", "server/util_test.go", "server/websocket_test.go"] },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "Options struct (top config-file/CLI-flag fields)"
-justification = "Options is the config-file/CLI-flag target struct (json tags map 1:1 to conf-file keys, e.g. `Host string json:\"addr\"`) — the programmatic counterpart to the CLI usage text (1.14). Shows identity/network fields (ConfigFile/ServerName/Host/Port/DontListen/ClientAdvertise/Trace/Debug/TraceVerbose); ellipsis signals the ~140 remaining fields, including the Cluster/Gateway/LeafNode/JetStream/Websocket/MQTT sub-config field names (each a 1-hop grep into opts.go for the full sub-struct), TLS tuning, lame-duck timing, and resolver/JWT trust — rather than a full 194-line dump."
-content = { kind = "lines", spans = [
-  { path = "server/opts.go", start = 397, end = 406, render = { kind = "full" } },
-  { path = "server/opts.go", start = 407, end = 407, render = { kind = "ellipsis" } },
-] }
+descriptor = "test/: the black-box integration suite (complete)"
+justification = "A second, separate test package that drives a real server over TCP - where protocol-level and multi-server behaviour is tested (routes, gateways, leafnodes, tls, ocsp, operator/JWT, monitoring, ports files). test/test.go is its harness; bench_results.txt records baseline numbers."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test", entries = "all" },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "ClusterOpts (cluster config sub-struct)"
-predecessor = "3.3"
-justification = "Expands the `Cluster ClusterOpts` field named in 3.3; cluster/route config is one of the most common 'how do I configure X' targets, matching server/configs/cluster.conf visible in 2.4. Ellipsis signals the remaining ~17 fields (TLS tuning, pool size, compression, ping interval)."
-content = { kind = "lines", spans = [
-  { path = "server/opts.go", start = 65, end = 72, render = { kind = "full" } },
-  { path = "server/opts.go", start = 73, end = 73, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "HTTP monitoring endpoint path table"
-justification = "Const table of monitoring paths (root, /varz, /connz, /routez, /gatewayz, /leafz, /subsz); wired up in server.go's startMonitoring via s.basePath(<Path>). Ellipsis signals the remaining /stacksz, /accountz, /accstatz, /jsz, /healthz, /ipqueuesz, /raftz, /debug/vars paths rather than implying this is the complete HTTP surface."
-content = { kind = "lines", spans = [
-  { path = "server/server.go", start = 3007, end = 3015, render = { kind = "full" } },
-  { path = "server/server.go", start = 3016, end = 3016, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "opts.go public-function roster (location batch)"
-justification = "11-entry name-only roster of config-handling entry points: ProcessConfigFile (package-level and method), ProcessConfigString, ConfigDigest, Clone, GenTLSConfig, MergeOptions, RoutesFromStr, ConfigureOptions (the one main.go calls), RedactArgs, PrintTLSHelpAndDie."
-content = { kind = "lines", spans = [
-  { path = "server/opts.go", start = 51, end = 51, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 790, end = 790, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" } },
-  { path = "server/opts.go", start = 945, end = 945, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 1049, end = 1049, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" } },
-  { path = "server/opts.go", start = 1065, end = 1065, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" } },
-  { path = "server/opts.go", start = 1075, end = 1075, render = { kind = "truncated", pattern = "^func \\([^)]*\\) [A-Za-z0-9_]+" } },
-  { path = "server/opts.go", start = 5748, end = 5748, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 5829, end = 5829, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 5912, end = 5912, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 6141, end = 6141, render = { kind = "truncated", pattern = "^func [^(]+" } },
-  { path = "server/opts.go", start = 6557, end = 6557, render = { kind = "truncated", pattern = "^func [^(]+" } },
-] }
-
-# ============================================================================
-# TIER 4 — Client connection & wire protocol
-# ============================================================================
+descriptor = "Contents of the storage and index subpackages"
+justification = "The data-structure subpackages behind JetStream and subject matching: a subject radix tree (stree, split across node4/10/16/48/256), a generic sublist (gsl), sequence sets (avl), a timer hash wheel (thw), elastic buffers and absolute-time helpers (ats). Each is small and self-contained, so a filename is usually enough to land in the right file."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "server/stree", entries = "all" },
+  { parent = "server/gsl", entries = "all" },
+  { parent = "server/avl", entries = "all" },
+  { parent = "server/thw", entries = "all" },
+  { parent = "server/elastic", entries = "all" },
+  { parent = "server/ats", entries = "all" },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "client struct (identity/routing fields)"
-justification = "Every subscriber/publisher/route/gateway/leaf/websocket/mqtt connection is represented by this one `client` struct (kind-tagged via c.kind) — the central per-connection data model. Head fields cover identity and permissions; ellipsis signals the route/gw/leaf/ws/mqtt pointers (populated only for the matching kind) further down in the struct."
-content = { kind = "lines", spans = [
-  { path = "server/client.go", start = 258, end = 269, render = { kind = "full" } },
-  { path = "server/client.go", start = 270, end = 270, render = { kind = "ellipsis" } },
-] }
+descriptor = "Server lifecycle API, and where the Server struct is declared"
+justification = "The entry points main.go and every embedding test go through: New, NewServerFromConfig, NewServer, Run, Start, Shutdown, WaitForShutdown, AcceptLoop and the monitoring starter, plus the declaration line of the central Server struct. Ten anchor lines into the 4762-line server.go, and one into service.go where Run lives."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/server.go", start = 677, end = 677, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/server.go", start = 682, end = 682, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/server.go", start = 695, end = 695, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/service.go", start = 20, end = 20, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/server.go", start = 2237, end = 2237, render = { kind = "full" } },
+  { path = "server/server.go", start = 2558, end = 2558, render = { kind = "full" } },
+  { path = "server/server.go", start = 2748, end = 2748, render = { kind = "full" } },
+  { path = "server/server.go", start = 2753, end = 2753, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/server.go", start = 2987, end = 2987, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/server.go", start = 167, end = 168, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "parser.go: byte-level protocol parser state"
-justification = "parseState is the struct driving the hand-written incremental protocol state machine (one byte at a time, since a PUB/HPUB payload can span multiple TCP reads) — the concrete shape behind 'how does the server parse the wire protocol'. Its `pa pubArg` field points to the per-message parse-arg accumulator; ellipsis signals both the remaining parseState fields and the full pubArg shape."
-content = { kind = "lines", spans = [
-  { path = "server/parser.go", start = 24, end = 33, render = { kind = "full" } },
-  { path = "server/parser.go", start = 34, end = 34, render = { kind = "ellipsis" } },
-] }
+descriptor = "The seven kinds of connection (client.go:44-60)"
+justification = "CLIENT, ROUTER, GATEWAY, SYSTEM, LEAF, JETSTREAM, ACCOUNT is the most load-bearing distinction in the codebase: a single client struct serves all of them and behaviour branches on kind everywhere - in auth, in the parser, in monitoring. Ellipsis marks the immediately following constants, which further split CLIENT into NATS, MQTT and WS."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/client.go", start = 44, end = 60, render = { kind = "full" } },
+  { path = "server/client.go", start = 61, end = 61, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "sublist.go: subject-matching routing table (doc + consts)"
-justification = "Sublist is the core pub/sub routing structure (literal + wildcard `*`/`>` subject matching) used by every account for local interest; doc comment plus the wildcard/token-separator constants."
-content = { kind = "lines", spans = [
-  { path = "server/sublist.go", start = 26, end = 38, render = { kind = "full" } },
-] }
+descriptor = "Per-transport accept loops and connection factories"
+justification = "One line per transport telling the agent exactly where an inbound connection of each kind is born: routes (accept loop, solicit, create), gateways, leafnodes, MQTT, websocket, plus createClient and createClientEx for plain NATS clients. The highest-value navigation batch in the repository for anything connection-related."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/server.go", start = 3218, end = 3218, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/server.go", start = 3226, end = 3226, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/route.go", start = 2693, end = 2693, render = { kind = "full" } },
+  { path = "server/route.go", start = 2993, end = 2993, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/route.go", start = 1932, end = 1932, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/gateway.go", start = 487, end = 487, render = { kind = "full" } },
+  { path = "server/gateway.go", start = 511, end = 511, render = { kind = "full" } },
+  { path = "server/gateway.go", start = 805, end = 805, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/leafnode.go", start = 945, end = 945, render = { kind = "full" } },
+  { path = "server/leafnode.go", start = 1210, end = 1210, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/mqtt.go", start = 501, end = 501, render = { kind = "full" } },
+  { path = "server/mqtt.go", start = 542, end = 542, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/websocket.go", start = 1248, end = 1248, render = { kind = "full" } },
+  { path = "server/websocket.go", start = 1384, end = 1384, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "subject_transform.go: subject-mapping DSL"
-justification = "The `{{ Partition(...) }}`, `{{ Wildcard(...) }}` mapping-function regexes (ellipsis signals the remaining SplitFromLeft/SplitFromRight/SliceFromLeft/SliceFromRight/Split/Left/Right/Random variants) — the subject-mapping mini-language used by account import/export mappings and stream subject transforms (StreamConfig.SubjectTransform, 7.2)."
-content = { kind = "lines", spans = [
-  { path = "server/subject_transform.go", start = 27, end = 30, render = { kind = "full" } },
-  { path = "server/subject_transform.go", start = 31, end = 31, render = { kind = "ellipsis" } },
-] }
+descriptor = "Lock ordering rules (locksordering.txt:1-10)"
+justification = "A cross-session design constraint that exists nowhere in the source: the established hierarchy jetStream -> jsAccount -> Server -> client -> Account, the stream -> consumer chain and the independent jsa.usageMu. Any change touching locking needs this. Ellipsis marks the remaining rules (accountLeafList, reloadMu, jscmMu, clsMu, clMu/ddMu/batchMu) through line 49."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "locksordering.txt", start = 1, end = 10, render = { kind = "full" } },
+  { path = "locksordering.txt", start = 11, end = 11, render = { kind = "ellipsis" } },
+]
 
-# ============================================================================
-# TIER 5 — Accounts, authentication, security
-# ============================================================================
+[[batches]]
+id = "4.5"
+descriptor = "The INFO protocol struct (server.go:106-116)"
+justification = "Info is what the server sends to clients, routes, gateways and leafnodes on connect; its json tags are the on-the-wire field names, so this doubles as protocol documentation - server_id, server_name, version, proto, git_commit, go, host. Ellipsis marks the remaining fields through line 165, including auth_required, tls_required, max_payload, jetstream, the connect URLs and the route, gateway and leafnode specific blocks."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/server.go", start = 106, end = 116, render = { kind = "full" } },
+  { path = "server/server.go", start = 117, end = 117, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "HTTP monitoring endpoint paths (server.go:3008-3024)"
+justification = "The complete set of monitoring URLs - /varz, /connz, /routez, /gatewayz, /leafz, /subsz, /stacksz, /accountz, /accstatz, /jsz, /healthz, /ipqueuesz, /raftz and /debug/vars - as one const block. Operational questions get answered with no follow-up read."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/server.go", start = 3008, end = 3024, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "The handler behind each monitoring endpoint (monitor.go)"
+justification = "Pairs 4.6's paths with implementations: every exported Handle* method in monitor.go, by name. Each handler sits directly above the JSON response type it fills in (Varz, Connz, Routez and friends), so one read from these line numbers answers both 'who serves this' and 'what fields does it return'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/monitor.go", start = 731, end = 731, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 918, end = 918, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 1109, end = 1109, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 1156, end = 1156, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 1207, end = 1207, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 1498, end = 1498, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 1974, end = 1974, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 2335, end = 2335, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 2474, end = 2474, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 2544, end = 2544, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 2747, end = 2747, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 3377, end = 3377, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 3520, end = 3520, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/monitor.go", start = 4169, end = 4169, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "Client protocol operation handlers (parser.go, client.go)"
+justification = "The NATS protocol verbs mapped to the functions that implement them: the byte-level parse loop, then INFO, -ERR and CONNECT, PING and PONG, HPUB and PUB, SUB and UNSUB, and the inbound message plus match-and-deliver path. The dispatch map for anyone touching the wire protocol; the trailing ellipsis marks the further process* methods further down client.go."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/parser.go", start = 137, end = 137, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2102, end = 2102, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2118, end = 2118, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2186, end = 2186, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2655, end = 2655, render = { kind = "full" } },
+  { path = "server/client.go", start = 2707, end = 2707, render = { kind = "full" } },
+  { path = "server/client.go", start = 2770, end = 2770, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2848, end = 2848, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2924, end = 2924, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 2953, end = 2953, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 3404, end = 3404, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 4249, end = 4249, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 4279, end = 4279, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 5089, end = 5089, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/client.go", start = 5694, end = 5694, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "Subject interest matching: the Sublist API (sublist.go)"
+justification = "Every subscription lookup in the server goes through a Sublist. This is the SublistResult and Sublist declarations, the constructors (with and without the match cache), the mutation and lookup surface (Insert, Remove, Match, HasInterest) and the exported subject validation, mapping and collision helpers used by config parsing. Ellipses mark the further exported methods and helpers elided at those line positions."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/sublist.go", start = 59, end = 59, render = { kind = "full" } },
+  { path = "server/sublist.go", start = 65, end = 65, render = { kind = "full" } },
+  { path = "server/sublist.go", start = 117, end = 117, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 126, end = 126, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 137, end = 137, render = { kind = "ellipsis" } },
+  { path = "server/sublist.go", start = 368, end = 368, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 532, end = 532, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 538, end = 538, render = { kind = "ellipsis" } },
+  { path = "server/sublist.go", start = 544, end = 544, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 928, end = 928, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 1200, end = 1200, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 1205, end = 1205, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 1249, end = 1249, render = { kind = "ellipsis" } },
+  { path = "server/sublist.go", start = 1271, end = 1271, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 1339, end = 1339, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/sublist.go", start = 1435, end = 1435, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "Account struct (head)"
-justification = "Account is the multi-tenancy boundary. Head fields cover the per-account stats struct (client/gateway/route/leafnode totals) and the gwReplyMapping embed; ellipsis signals the sublist (sl), import/export maps, and JetStream account state (js) further down in the struct."
-content = { kind = "lines", spans = [
-  { path = "server/accounts.go", start = 52, end = 62, render = { kind = "full" } },
-  { path = "server/accounts.go", start = 63, end = 63, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "5.2"
-descriptor = "Authentication interface + User/NkeyUser"
-justification = "The pluggable-auth boundary (`Authentication.Check`) plus the two built-in credential shapes that Options.Users/Options.Nkeys (3.3) hold: NkeyUser's identity field (Nkey) and User's username/password/permissions head. Ellipsis signals the remaining NkeyUser fields (permissions, account, signing key, allowed-connection-types) and User fields (connection deadline, allowed-connection-types)."
-content = { kind = "lines", spans = [
-  { path = "server/auth.go", start = 40, end = 44, render = { kind = "full" } },
-  { path = "server/auth.go", start = 61, end = 63, render = { kind = "full" } },
-  { path = "server/auth.go", start = 64, end = 64, render = { kind = "ellipsis" } },
-  { path = "server/auth.go", start = 73, end = 77, render = { kind = "full" } },
-  { path = "server/auth.go", start = 78, end = 78, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "auth_callout.go: external auth-callout protocol"
-justification = "AuthCalloutSubject (`$SYS.REQ.USER.AUTH`) is the wire contract for delegating authentication to an external service — a distinct, opt-in auth mechanism from static Users/Nkeys/JWT."
-content = { kind = "lines", spans = [
-  { path = "server/auth_callout.go", start = 28, end = 33, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.4"
-descriptor = "jwt.go: operator-JWT trust bootstrap"
-justification = "ReadOperatorJWT (the sole exported function) plus the jwtPrefix marker (`eyJ`) is the entry point for the operator-mode trust model referenced by Options.TrustedOperators."
-content = { kind = "lines", spans = [
-  { path = "server/jwt.go", start = 28, end = 29, render = { kind = "full" } },
-  { path = "server/jwt.go", start = 32, end = 32, render = { kind = "truncated", pattern = "^func [^(]+" } },
-] }
-
-[[batches]]
-id = "5.5"
-descriptor = "ciphersuites.go (head)"
-justification = "Points to the init()-time function that builds the server's cipher-suite name/ID maps from Go's crypto/tls — backs the TLSConfigOpts.Ciphers config knob (referenced from Options, 3.3); body omitted (two loops over tls.CipherSuites()/InsecureCipherSuites() populating cipherMap/cipherMapByID by name and ID)."
-content = { kind = "lines", spans = [
-  { path = "server/ciphersuites.go", start = 13, end = 21, render = { kind = "full" } },
-] }
-
-# ============================================================================
-# TIER 6 — Clustering: routes, gateways, leaf nodes, Raft
-# ============================================================================
+descriptor = "The Options struct and its nested option blocks (opts.go)"
+justification = "Options is what both the CLI and the config file produce and what server.NewServer consumes. The head shows the field and json-tag style; the second span shows the four fields that delegate to whole sub-configs (ClusterOpts, GatewayOpts, LeafNodeOpts and the JetStream toggle). Ellipses mark the fields elided between and after them, which run to line 592."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/opts.go", start = 394, end = 402, render = { kind = "full" } },
+  { path = "server/opts.go", start = 403, end = 403, render = { kind = "ellipsis" } },
+  { path = "server/opts.go", start = 444, end = 447, render = { kind = "full" } },
+  { path = "server/opts.go", start = 448, end = 448, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "6.1"
-descriptor = "route.go: RouteType"
-justification = "Distinguishes Implicit (learned from route gossip) vs Explicit (configured) routes — the two ways a full-mesh cluster route comes into existence."
-content = { kind = "lines", spans = [
-  { path = "server/route.go", start = 36, end = 44, render = { kind = "full" } },
-] }
+descriptor = "Accounts: the isolation unit (accounts.go:50-63)"
+justification = "The doc comment states the model - accounts are subject namespaces that share nothing unless streams and services are exported and imported - and the struct head shows the per-account statistics and identity fields. Ellipsis marks the remaining fields to line 126, which include the account's own Sublist, internal client and send queue."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/accounts.go", start = 50, end = 63, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 64, end = 64, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "leafnode.go: leaf struct (head) + loop-detection prefix"
-justification = "Shows one of leafnode.go's guardrail consts (the insecure-TLS warning message) and the head of the `leaf` struct — the per-leafnode-connection role state, starting with a `remote *leafNodeCfg` pointer to the static config. Ellipsis signals the spoke-vs-hub flag (isSpoke), remote cluster/server/domain/account fields, and the loop-detection subject prefix (`$LDS.`, defined elsewhere in this same const block) that follow."
-content = { kind = "lines", spans = [
-  { path = "server/leafnode.go", start = 44, end = 46, render = { kind = "full" } },
-  { path = "server/leafnode.go", start = 68, end = 72, render = { kind = "full" } },
-  { path = "server/leafnode.go", start = 73, end = 73, render = { kind = "ellipsis" } },
-] }
+descriptor = "Import/export and account resolver types (accounts.go)"
+justification = "The declarations that make the account model concrete: streamImport, serviceImport, streamExport, serviceExport, MapDest for subject mapping, NewAccount, and the AccountResolver interface with all four implementations - MemAccResolver, URLAccResolver, DirAccResolver, CacheDirAccResolver - which is how operator-mode servers fetch account JWTs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/accounts.go", start = 148, end = 148, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 166, end = 166, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 231, end = 231, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 236, end = 236, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 666, end = 666, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 251, end = 251, render = { kind = "ellipsis" } },
+  { path = "server/accounts.go", start = 272, end = 272, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/accounts.go", start = 4045, end = 4045, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 4083, end = 4083, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 4107, end = 4107, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 4153, end = 4153, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 4604, end = 4604, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "raft.go: RaftNode interface (head)"
-justification = "The Raft consensus API used by JetStream clustering (Propose/InstallSnapshot/SendSnapshot/State/Leader/Campaign/StepDown/observer control) — the primary pointer for 'how does JetStream achieve consensus'. Ellipsis signals the remaining ~35 methods (peer/cluster-size management, apply-queue control, lifecycle) rather than implying only these exist."
-content = { kind = "lines", spans = [
-  { path = "server/raft.go", start = 40, end = 58, render = { kind = "full" } },
-  { path = "server/raft.go", start = 59, end = 59, render = { kind = "ellipsis" } },
-] }
+descriptor = "User, permission types and the authorization decision points (auth.go)"
+justification = "The Authentication and ClientAuthentication interfaces an embedder implements, then NkeyUser, User, SubjectPermission, ResponsePermission, Permissions and RoutePermissions, then the checks themselves: configureAuthorization, checkAuthentication, isClientAuthorized, processClientOrLeafAuthentication and the router, gateway and leafnode variants. Auth bugs land here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/auth.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "server/auth.go", start = 46, end = 46, render = { kind = "full" } },
+  { path = "server/auth.go", start = 62, end = 62, render = { kind = "full" } },
+  { path = "server/auth.go", start = 73, end = 73, render = { kind = "full" } },
+  { path = "server/auth.go", start = 127, end = 127, render = { kind = "full" } },
+  { path = "server/auth.go", start = 134, end = 134, render = { kind = "full" } },
+  { path = "server/auth.go", start = 141, end = 141, render = { kind = "full" } },
+  { path = "server/auth.go", start = 150, end = 150, render = { kind = "full" } },
+  { path = "server/auth.go", start = 266, end = 266, render = { kind = "full" } },
+  { path = "server/auth.go", start = 365, end = 365, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/auth.go", start = 382, end = 382, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/auth.go", start = 604, end = 604, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/auth.go", start = 1396, end = 1396, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/auth.go", start = 1437, end = 1437, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/auth.go", start = 1490, end = 1490, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+]
 
-# ============================================================================
-# TIER 7 — JetStream (streaming, consumers, clustering, storage)
-# ============================================================================
+[[batches]]
+id = "6.4"
+descriptor = "System account event and request subjects (events.go:41-48)"
+justification = "The head of the $SYS.* subject table: account claims lookup, pack, list, update and delete. Directly answers 'what subject do I publish to in order to ask the server X'. Ellipsis marks the rest of the block, which continues with the account CONNECT and DISCONNECT events and the server STATSZ, SHUTDOWN, LAMEDUCK, RELOAD, KICK and LDM request subjects."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/events.go", start = 41, end = 48, render = { kind = "full" } },
+  { path = "server/events.go", start = 49, end = 49, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "7.1"
-descriptor = "JetStreamConfig"
-justification = "The top-level JetStream server config (max memory/store, store dir) — the entry point for 'how is JetStream configured'. Ellipsis signals the remaining sync policy, domain, compression, and strict-parsing fields."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream.go", start = 43, end = 46, render = { kind = "full" } },
-  { path = "server/jetstream.go", start = 47, end = 47, render = { kind = "ellipsis" } },
-] }
+descriptor = "JetStream configuration (jetstream.go:42-52)"
+justification = "JetStreamConfig - max memory and store, store_dir, sync interval and sync_always, domain, compression and strict flags - is the struct behind -js, the jetstream{} config block and the /jsz output; the field lines are truncated at their trailing comments. Ellipsis marks the statistics and account-limit types that follow."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/jetstream.go", start = 42, end = 43, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 44, end = 52, render = { kind = "truncated", pattern = '^[^/]*' } },
+  { path = "server/jetstream.go", start = 53, end = 53, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "StreamConfig (head)"
-justification = "The user-facing stream configuration struct (name, subjects, retention policy head) — the primary shape for 'how do I configure a JetStream stream'. Ellipsis signals the ~60 remaining fields: discard/storage policy, replicas, mirror/sources, subject transform, republish, KV-supporting AllowDirect, sealed/deny-delete/deny-purge, TTL/counter/atomic-publish flags."
-content = { kind = "lines", spans = [
-  { path = "server/stream.go", start = 52, end = 57, render = { kind = "full" } },
-  { path = "server/stream.go", start = 58, end = 58, render = { kind = "ellipsis" } },
-] }
+descriptor = "Enabling and querying JetStream on a server (jetstream.go)"
+justification = "EnableJetStream and DisableJetStream, the predicates the rest of the codebase branches on (JetStreamEnabled, JetStreamEnabledForDomain, JetStreamConfig, StoreDir, JetStreamNumAccounts, JetStreamReservedResources) and the internal jetStream and jsAccount struct declarations that the lock-ordering rules in 4.4 refer to."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/jetstream.go", start = 193, end = 193, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 652, end = 652, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 913, end = 913, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 918, end = 918, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 1064, end = 1064, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 1076, end = 1076, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 1085, end = 1085, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 1096, end = 1096, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream.go", start = 104, end = 104, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 156, end = 156, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.3"
-descriptor = "ConsumerConfig (head)"
-justification = "The consumer configuration struct (durable/ephemeral naming, deliver-policy head) — the JetStream-consumer counterpart to StreamConfig (7.2). Ellipsis signals the remaining ack/replay policy and pull/push-specific/priority-group fields."
-content = { kind = "lines", spans = [
-  { path = "server/consumer.go", start = 88, end = 93, render = { kind = "full" } },
-  { path = "server/consumer.go", start = 94, end = 94, render = { kind = "ellipsis" } },
-] }
+descriptor = "The $JS.API subject namespace (jetstream_api.go:36-49)"
+justification = "The head of the JetStream API constant block: the $JS.API.> wildcard, the domain-prefixed form, JSApiPrefix and $JS.API.INFO. Ellipsis marks the rest of the block, which runs to line 315 and holds every remaining endpoint as a wildcard/template constant pair (STREAM.CREATE, CONSUMER.CREATE, DIRECT.GET and the rest)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/jetstream_api.go", start = 36, end = 49, render = { kind = "full" } },
+  { path = "server/jetstream_api.go", start = 50, end = 50, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "7.4"
-descriptor = "JetStream API subject catalog (sample)"
-justification = "$JS.API.> is JetStream's entire wire protocol; this const block is the ground truth for every subject a client can call. Shows the root wildcard subject, domain-prefix pattern, and API path prefix; ellipsis honestly signals the remaining ~240 lines (account info, stream create/update/list/info/delete/purge, snapshot/restore, message get/delete, consumer create/durable/info/delete, templates, cluster/meta-leader endpoints, advisory events) rather than a full 280-line dump."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream_api.go", start = 37, end = 45, render = { kind = "full" } },
-  { path = "server/jetstream_api.go", start = 46, end = 46, render = { kind = "ellipsis" } },
-] }
+descriptor = "Stream configuration and info types (stream.go)"
+justification = "Declaration lines for the stream half of the JetStream data model: StreamConfig and its request wrapper, StreamConsumerLimits, SubjectTransformConfig, RePublish, PubAck and JSPubAckResponse, StreamInfo, ClusterInfo, PeerInfo, StreamSourceInfo, StreamSource, ExternalStream, and the internal stream struct at 470; ellipses mark the declarations elided between them."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/stream.go", start = 43, end = 43, render = { kind = "full" } },
+  { path = "server/stream.go", start = 52, end = 52, render = { kind = "full" } },
+  { path = "server/stream.go", start = 168, end = 168, render = { kind = "full" } },
+  { path = "server/stream.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "server/stream.go", start = 180, end = 180, render = { kind = "full" } },
+  { path = "server/stream.go", start = 187, end = 187, render = { kind = "ellipsis" } },
+  { path = "server/stream.go", start = 244, end = 244, render = { kind = "full" } },
+  { path = "server/stream.go", start = 260, end = 260, render = { kind = "full" } },
+  { path = "server/stream.go", start = 284, end = 284, render = { kind = "ellipsis" } },
+  { path = "server/stream.go", start = 343, end = 343, render = { kind = "full" } },
+  { path = "server/stream.go", start = 371, end = 371, render = { kind = "full" } },
+  { path = "server/stream.go", start = 383, end = 383, render = { kind = "full" } },
+  { path = "server/stream.go", start = 395, end = 395, render = { kind = "full" } },
+  { path = "server/stream.go", start = 406, end = 406, render = { kind = "full" } },
+  { path = "server/stream.go", start = 420, end = 420, render = { kind = "ellipsis" } },
+  { path = "server/stream.go", start = 426, end = 426, render = { kind = "full" } },
+  { path = "server/stream.go", start = 470, end = 470, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.5"
-descriptor = "JetStream API response envelope (ApiResponse/ApiPaged)"
-justification = "The common envelopes every JS API response embeds; shows both patterns once so per-endpoint response structs (e.g. JSApiStreamCreateResponse) are recognizable without re-explaining the envelope each time."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream_api.go", start = 371, end = 375, render = { kind = "full" } },
-  { path = "server/jetstream_api.go", start = 397, end = 401, render = { kind = "full" } },
-] }
+descriptor = "Consumer configuration and policy types (consumer.go)"
+justification = "ConsumerInfo, ConsumerConfig, SequenceInfo, CreateConsumerRequest, ConsumerAction and the three policy enums (DeliverPolicy, AckPolicy, ReplayPolicy) plus the internal consumer struct - the vocabulary of every consumer question, from ack semantics to redelivery. Ellipses mark the priority-group and nak-options declarations elided between them."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/consumer.go", start = 55, end = 55, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 82, end = 82, render = { kind = "ellipsis" } },
+  { path = "server/consumer.go", start = 88, end = 88, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 144, end = 144, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 150, end = 150, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 157, end = 157, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 217, end = 217, render = { kind = "ellipsis" } },
+  { path = "server/consumer.go", start = 294, end = 294, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 331, end = 331, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 358, end = 358, render = { kind = "full" } },
+  { path = "server/consumer.go", start = 414, end = 414, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.6"
-descriptor = "jetstream_cluster.go: jetStreamCluster (meta-group state)"
-justification = "Holds the Raft meta-controller node and stream/consumer assignment maps for clustered JetStream — the entry point into how JetStream layers its own Raft-based placement on top of the generic RaftNode interface (6.3). Ellipsis signals the remaining inflight-proposal tracking fields."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream_cluster.go", start = 43, end = 48, render = { kind = "full" } },
-  { path = "server/jetstream_cluster.go", start = 49, end = 49, render = { kind = "ellipsis" } },
-] }
+descriptor = "The complete StreamStore interface (store.go:93-137)"
+justification = "The abstraction filestore.go and memstore.go both implement, complete but with signatures truncated to method names: store and load by sequence or subject, skip, remove and erase, purge, compact, truncate, the filtered-state and NumPending queries, encoded state, consumer store management, snapshot and utilization. The contract to read before touching either backend."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/store.go", start = 93, end = 93, render = { kind = "full" } },
+  { path = "server/store.go", start = 94, end = 135, render = { kind = "truncated", pattern = '^	[A-Za-z]+' } },
+  { path = "server/store.go", start = 136, end = 137, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.7"
-descriptor = "JetStream error helpers: ApiError + IsNatsErr"
-justification = "ApiError (the {code, err_code, description} JSON shape returned on any JS API failure) plus IsNatsErr's signature, the idiomatic way calling code checks a specific error code — the pattern used across the ~270 generated error constants (7.8); IsNatsErr's body (a lookup into the ApiErrors map by ID) is omitted."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream_errors.go", start = 29, end = 29, render = { kind = "full" } },
-  { path = "server/jetstream_errors.go", start = 32, end = 32, render = { kind = "full" } },
-  { path = "server/jetstream_errors.go", start = 55, end = 60, render = { kind = "full" } },
-] }
+descriptor = "File and memory store entry points (filestore.go, memstore.go)"
+justification = "FileStoreConfig (block size, cipher, compression, sync), the fileStore and msgBlock structs that define the on-disk layout, both file store constructors, and the memStore equivalents. Where a storage bug or a new store option starts, in a 13747-line file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/filestore.go", start = 57, end = 57, render = { kind = "full" } },
+  { path = "server/filestore.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "server/filestore.go", start = 220, end = 220, render = { kind = "full" } },
+  { path = "server/filestore.go", start = 382, end = 382, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/filestore.go", start = 386, end = 386, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "server/memstore.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "server/memstore.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+]
 
 [[batches]]
 id = "7.8"
-descriptor = "Generated JetStream error catalog (sample)"
-justification = "jetstream_errors_generated.go mechanically derives ~270 ErrorIdentifier constants from errors.json (7.9); the first slice establishes the exact `// <Name> <description>` / `<Name> ErrorIdentifier = <code>` shape so the agent can grep any specific error by name, with an ellipsis honestly signalling the remaining ~260 entries rather than implying only these exist."
-content = { kind = "lines", spans = [
-  { path = "server/jetstream_errors_generated.go", start = 1, end = 12, render = { kind = "full" } },
-  { path = "server/jetstream_errors_generated.go", start = 13, end = 13, render = { kind = "ellipsis" } },
-] }
+descriptor = "The Raft node interface (raft.go:39-52)"
+justification = "The consensus contract used by both the JetStream meta group and every stream and consumer group: propose and forward, snapshot and checkpoint, applied and processed progress, size and state. Ellipsis marks the remaining methods - leadership and term, peers and membership changes, the apply queue and lifecycle - through line 92."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/raft.go", start = 39, end = 52, render = { kind = "full" } },
+  { path = "server/raft.go", start = 53, end = 53, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "7.9"
-descriptor = "errors.json (source-of-truth sample)"
-justification = "errors.json is the hand-edited source `go generate` turns into jetstream_errors_generated.go (7.8) via errors_gen.go; its per-entry schema (constant/code/error_code/description/comment/help/url/deprecates) is the fastest way to know how to add or look up a JetStream error definition."
-content = { kind = "lines", spans = [
-  { path = "server/errors.json", start = 1, end = 11, render = { kind = "full" } },
-  { path = "server/errors.json", start = 12, end = 12, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "7.10"
-descriptor = "Storage abstraction: StreamStore interface (head)"
-justification = "The interface both memStore and fileStore (7.11) implement for message persistence — one representative method each for store (StoreMsg), load (LoadMsg), purge (Purge), compact (Compact), and snapshot (Snapshot). Ellipsis signals the remaining ~38 methods (subject-state queries, config update, consumer-store wiring) rather than a full dump."
-content = { kind = "lines", spans = [
-  { path = "server/store.go", start = 93, end = 94, render = { kind = "full" } },
-  { path = "server/store.go", start = 99, end = 99, render = { kind = "full" } },
-  { path = "server/store.go", start = 107, end = 107, render = { kind = "full" } },
-  { path = "server/store.go", start = 109, end = 109, render = { kind = "full" } },
-  { path = "server/store.go", start = 134, end = 134, render = { kind = "full" } },
-  { path = "server/store.go", start = 135, end = 135, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "7.11"
-descriptor = "memStore + fileStore struct heads"
-predecessor = "7.10"
-justification = "The two concrete StreamStore implementations, named by StorageType (MemoryStorage=33, FileStorage=22 in store.go): memStore backs in-memory streams and holds its stree.SubjectTree (fss) and avl.SequenceSet (dmap) and thw.HashWheel (ttls) fields directly (tier 11's data structures); fileStore backs on-disk streams and adds encryption keys (prf/oldprf/aek) and a block index (blks/bim)."
-content = { kind = "lines", spans = [
-  { path = "server/memstore.go", start = 33, end = 33, render = { kind = "full" } },
-  { path = "server/memstore.go", start = 38, end = 39, render = { kind = "full" } },
-  { path = "server/memstore.go", start = 49, end = 49, render = { kind = "full" } },
-  { path = "server/memstore.go", start = 50, end = 50, render = { kind = "ellipsis" } },
-  { path = "server/filestore.go", start = 174, end = 174, render = { kind = "full" } },
-  { path = "server/filestore.go", start = 189, end = 191, render = { kind = "full" } },
-  { path = "server/filestore.go", start = 193, end = 194, render = { kind = "full" } },
-  { path = "server/filestore.go", start = 195, end = 195, render = { kind = "ellipsis" } },
-] }
-
-# ============================================================================
-# TIER 8 — Protocol adapters: MQTT, WebSocket
-# ============================================================================
+descriptor = "Clustered JetStream: raft glue and assignment types"
+justification = "RaftConfig and the WAL interface, s.startRaftNode, then the jetStreamCluster struct with streamAssignment and consumerAssignment and the meta group setup - the join between raft.go and the 11237-line jetstream_cluster.go, and the vocabulary of every clustered-JetStream discussion."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/raft.go", start = 107, end = 107, render = { kind = "full" } },
+  { path = "server/raft.go", start = 306, end = 306, render = { kind = "full" } },
+  { path = "server/raft.go", start = 623, end = 623, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+  { path = "server/jetstream_cluster.go", start = 43, end = 43, render = { kind = "full" } },
+  { path = "server/jetstream_cluster.go", start = 169, end = 169, render = { kind = "full" } },
+  { path = "server/jetstream_cluster.go", start = 292, end = 292, render = { kind = "full" } },
+  { path = "server/jetstream_cluster.go", start = 968, end = 968, render = { kind = "truncated", pattern = '^func \([^)]*\) [A-Za-z]*' } },
+]
 
 [[batches]]
 id = "8.1"
-descriptor = "mqtt.go: mqtt struct (per-connection MQTT adapter state)"
-justification = "Hangs off `client.mqtt` (4.1) when c.kind indicates an MQTT connection; shows the reader/connect-protocol/publish sub-structs adapting the MQTT 3.1.1 wire format onto the same core client/account/sublist machinery native NATS clients use."
-content = { kind = "lines", spans = [
-  { path = "server/mqtt.go", start = 393, end = 398, render = { kind = "full" } },
-  { path = "server/mqtt.go", start = 399, end = 399, render = { kind = "ellipsis" } },
-] }
+descriptor = "The protocol parser state machine (parser.go:24-40)"
+justification = "parserState, parseState with its pre-allocated scratch and argument buffers, and the head of pubArg - the structures every inbound byte flows through. Ellipsis marks the rest of pubArg and the OP_* state constants that follow, which spell out CONNECT, PUB, HPUB, SUB, UNSUB, PING and PONG character by character."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/parser.go", start = 24, end = 40, render = { kind = "full" } },
+  { path = "server/parser.go", start = 41, end = 41, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "8.2"
-descriptor = "websocket.go: wsOpCode + RFC6455 frame constants"
-justification = "The websocket opcode enum (text/binary/close consts shown) — the concrete wire-format detail behind the Websocket client adapter, straight from RFC 6455. Ellipsis signals the remaining ping/pong opcodes and the frame-header/close-status constants from RFC 6455/7692 that follow."
-content = { kind = "lines", spans = [
-  { path = "server/websocket.go", start = 40, end = 46, render = { kind = "full" } },
-  { path = "server/websocket.go", start = 47, end = 47, render = { kind = "ellipsis" } },
-] }
-
-# ============================================================================
-# TIER 9 — Monitoring, system events, logging
-# ============================================================================
+descriptor = "MQTT support: contents of the internal design document"
+justification = "The heading skeleton of server/README-MQTT.md, the 600-line design doc: the concept sections, how MQTT sessions map onto JetStream streams and consumers, and the top-level lifecycle, implementation-notes and known-issues sections; ellipses mark the subsections nested under them. Section titles plus line numbers make any MQTT semantics question one targeted read."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/README-MQTT.md", start = 39, end = 39, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 41, end = 41, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 57, end = 57, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 64, end = 64, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 80, end = 80, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 101, end = 101, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 116, end = 116, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 125, end = 125, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 142, end = 142, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 151, end = 151, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 179, end = 179, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 181, end = 181, render = { kind = "ellipsis" } },
+  { path = "server/README-MQTT.md", start = 242, end = 242, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 244, end = 244, render = { kind = "ellipsis" } },
+  { path = "server/README-MQTT.md", start = 482, end = 482, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 484, end = 484, render = { kind = "ellipsis" } },
+  { path = "server/README-MQTT.md", start = 588, end = 588, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "9.1"
-descriptor = "Connz (connection-monitoring response shape)"
-justification = "The /connz endpoint (3.5) response fields: connection count/total/offset/limit and the per-connection ConnInfo list."
-content = { kind = "lines", spans = [
-  { path = "server/monitor.go", start = 48, end = 56, render = { kind = "full" } },
-] }
+descriptor = "The integration test harness (test/test.go)"
+justification = "DefaultTestOptions plus RunServer, RunDefaultServer, RunRandClientPortServer, RunServerCallback, LoadConfig, RunServerWithConfig and RunServerWithConfigOverrides - the functions every file in test/ starts with, and the ones a new integration test should reuse rather than reinvent."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/test.go", start = 43, end = 52, render = { kind = "full" } },
+  { path = "test/test.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 57, end = 57, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 76, end = 76, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 121, end = 121, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 130, end = 130, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+  { path = "test/test.go", start = 138, end = 138, render = { kind = "truncated", pattern = '^func [A-Za-z]*' } },
+]
 
 [[batches]]
 id = "9.2"
-descriptor = "Varz (server-wide monitoring snapshot, head)"
-justification = "The /varz endpoint's response struct: identity/version fields (ID, Name, Version) — the richest 'what does this server report about itself' shape. Ellipsis signals the remaining ~70 fields: Host/Port, auth/TLS flags, per-subsystem Cluster/Gateway/LeafNode/MQTT/Websocket/JetStream sub-varz, and timing config."
-content = { kind = "lines", spans = [
-  { path = "server/monitor.go", start = 1224, end = 1227, render = { kind = "full" } },
-  { path = "server/monitor.go", start = 1228, end = 1228, render = { kind = "ellipsis" } },
-] }
+descriptor = "How the test suite is split and run (scripts/runTestsOnTravis.sh)"
+justification = "Every job label this script accepts, which is also the complete list of CI test groups: compile, build_only, no_race_1/2, store, js, js_consumer, raft, js_cluster_1..4, js_super_cluster, mqtt, msgtrace, srv_pkg_non_js, jwt and non_srv_pkg. Each label's line number leads to the exact 'go test -run' invocation and build tags for that subset - the answer to 'how do I run just these tests'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "scripts/runTestsOnTravis.sh", start = 5, end = 5, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 16, end = 16, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 19, end = 19, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 27, end = 27, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 35, end = 35, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 42, end = 42, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 50, end = 50, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 56, end = 56, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 62, end = 62, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 70, end = 70, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 78, end = 78, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 87, end = 87, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 96, end = 96, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 103, end = 103, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 109, end = 109, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 115, end = 115, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 126, end = 126, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+  { path = "scripts/runTestsOnTravis.sh", start = 132, end = 132, render = { kind = "truncated", pattern = '^(el)?if \[ "\$1" = "[a-z_0-9]*"' } },
+]
 
 [[batches]]
 id = "9.3"
-descriptor = "events.go: $SYS.> system-account subject catalog"
-justification = "Const block of internal $SYS.> subjects (account claims lookup/update) — the wire contract for anyone subscribing to system events or writing a custom AccountResolver; ellipsis signals the remaining connect/disconnect events, lame-duck/shutdown, client-kick/auth-error/stats/reload/latency subjects."
-content = { kind = "lines", spans = [
-  { path = "server/events.go", start = 41, end = 46, render = { kind = "full" } },
-  { path = "server/events.go", start = 47, end = 47, render = { kind = "ellipsis" } },
-] }
+descriptor = "Test naming conventions (server/README.md:11-17)"
+justification = "The package's own README exists only to state the naming rules that keep tests from being silently skipped by the split in 9.2: all JetStream tests start with TestJetStream, cluster tests live in jetstream_cluster_test.go as TestJetStreamCluster*, super-cluster tests as TestJetStreamSuperCluster*. Required reading before adding a JetStream test."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "server/README.md", start = 11, end = 17, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "9.4"
-descriptor = "Logger interface (log.go)"
-justification = "The pluggable Logger interface (Noticef/Warnf/Fatalf/Errorf shown) that every s.Noticef(...)/c.Errorf(...) call across the codebase dispatches through; ellipsis signals the remaining Debugf/Tracef methods. logger/'s concrete implementations (log.go, syslog.go, syslog_windows.go) are visible via the 2.3 listing."
-content = { kind = "lines", spans = [
-  { path = "server/log.go", start = 27, end = 40, render = { kind = "full" } },
-  { path = "server/log.go", start = 41, end = 41, render = { kind = "ellipsis" } },
-] }
-
-# ============================================================================
-# TIER 10 — Config file format & hot reload
-# ============================================================================
-
-[[batches]]
-id = "10.1"
-descriptor = "conf/parse.go: config-format package doc"
-justification = "The `conf` package doc comment is the authoritative spec summary for the custom config-file format (mixed arrays/maps, '#'/'//' comments, ':'/'='/whitespace key-value separators, optional semicolons) that server/configs/*.conf and test/configs/*.conf fixtures use."
-content = { kind = "lines", spans = [
-  { path = "conf/parse.go", start = 14, end = 24, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.2"
-descriptor = "reload.go: option interface (hot-swappable settings)"
-justification = "Every reloadable config field implements this interface's Apply/IsLoggingChange predicates (shown) so Server.Reload() (triggered by SIGHUP / `-sl reload`) knows which subsystems to re-initialize without a full restart; ellipsis signals the remaining Is*Change() predicates (trace, auth, TLS, cluster perms/pool-size, JetStream, statsz)."
-content = { kind = "lines", spans = [
-  { path = "server/reload.go", start = 42, end = 50, render = { kind = "full" } },
-  { path = "server/reload.go", start = 51, end = 51, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "10.3"
-descriptor = "server/configs/accounts.conf: multi-tenant account config sample"
-justification = "The nkey identity + users list for one full account entry (synadia) — a verbatim answer to 'how do I configure multi-tenant accounts', complementing the Account struct (5.1). Ellipsis signals this account's exports/imports and the nats.io account block that follow, including richer import forms like prefixing."
-content = { kind = "lines", spans = [
-  { path = "server/configs/accounts.conf", start = 1, end = 11, render = { kind = "full" } },
-  { path = "server/configs/accounts.conf", start = 12, end = 12, render = { kind = "ellipsis" } },
-] }
-
-
-# ============================================================================
-# TIER 11 — Supporting data-structure & platform-adapter packages
-# ============================================================================
-
-[[batches]]
-id = "11.1"
-descriptor = "JetStream storage data structures: avl, gsl, stree, thw"
-justification = "Package-doc-level tour of the leaf packages storage.go/memstore.go/filestore.go (7.11) build on: avl.SequenceSet (memory-optimized uint set, ~80-100x cheaper than map[uint64]struct{}), gsl (a generic/independent re-implementation of the core sublist.go matching engine used by JetStream/MQTT), stree.SubjectTree (adaptive radix trie for subject-keyed lookups), thw.HashWheel (timing wheel for per-message TTLs, referenced as `ttls *thw.HashWheel` in both memStore and fileStore, 7.11)."
-content = { kind = "lines", spans = [
-  { path = "server/avl/seqset.go", start = 23, end = 25, render = { kind = "full" } },
-  { path = "server/gsl/gsl.go", start = 22, end = 25, render = { kind = "full" } },
-  { path = "server/stree/stree.go", start = 23, end = 24, render = { kind = "full" } },
-  { path = "server/thw/thw.go", start = 44, end = 45, render = { kind = "full" } },
-] }
-
-
-[[batches]]
-id = "11.2"
-descriptor = "Platform/security adapter packages (location bundle)"
-justification = "server/{certstore,certidp,tpm} are platform- or security-feature-specific adapters referenced from TLSConfigOpts (CertStore/CertMatchBy/OCSPPeerConfig fields): certstore (Windows/other OS certificate-store lookup), certidp (OCSP-based certificate identity/peer verification), tpm (TPM-backed JetStream encryption-key storage, stubbed on non-Windows via js_ek_tpm_other.go). server/{sysmem,pse} (cross-platform memory/process-stats detection) are visible via the 2.4 listing."
-content = { kind = "lines", spans = [
-  { path = "server/certstore/certstore.go", start = 24, end = 24, render = { kind = "full" } },
-  { path = "server/certstore/certstore.go", start = 30, end = 31, render = { kind = "full" } },
-  { path = "server/certidp/certidp.go", start = 31, end = 31, render = { kind = "full" } },
-  { path = "server/certidp/certidp.go", start = 35, end = 35, render = { kind = "full" } },
-  { path = "server/tpm/js_ek_tpm_other.go", start = 14, end = 21, render = { kind = "full" } },
-] }
-
-# ============================================================================
-# TIER 12 — Test infrastructure
-# ============================================================================
-
-[[batches]]
-id = "12.1"
-descriptor = "test/test.go: black-box test-harness helpers (head)"
-justification = "test/ (2.2) is the black-box integration suite; test.go's package clause, its import of server (the production package, not an internal test-only path), and the tLogger interface show it drives real server.Server instances over the network (not internal package access like server/*_test.go), the distinction an agent needs before choosing where to add a new integration vs. unit test."
-content = { kind = "lines", spans = [
-  { path = "test/test.go", start = 14, end = 14, render = { kind = "full" } },
-  { path = "test/test.go", start = 31, end = 31, render = { kind = "full" } },
-  { path = "test/test.go", start = 37, end = 40, render = { kind = "full" } },
-] }
+descriptor = "README in full, and what it covers"
+justification = "Completes the lede truncated at rank 1 (CNCF membership, 40+ client language implementations, on-prem/cloud/edge deployment) and lists every heading the README offers - Documentation, Contact, Contributing, Roadmap, Adopters, Security (whose subsections cover the 2025 Trail of Bits audit and vulnerability reporting) and License - so the agent knows this README is a signpost to nats.io rather than a manual."
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "README.md", start = 9, end = 9, render = { kind = "full" } },
+  { path = "README.md", start = 17, end = 17, render = { kind = "full" } },
+  { path = "README.md", start = 23, end = 23, render = { kind = "full" } },
+  { path = "README.md", start = 54, end = 54, render = { kind = "full" } },
+  { path = "README.md", start = 58, end = 58, render = { kind = "full" } },
+  { path = "README.md", start = 62, end = 62, render = { kind = "full" } },
+  { path = "README.md", start = 73, end = 73, render = { kind = "full" } },
+]

@@ -1,613 +1,788 @@
 fixture = "statsmodels"
 revision_pin = "3c102982"
 summary = """
-statsmodels is a large (2000+ file) real-world Python statistics/econometrics
-library: dozens of independent model families (OLS/GLS/WLS, GLM, GEE, discrete
-choice, mixed linear, robust, time series/state-space, survival, multivariate,
-nonparametric, imputation, GAM) all built on a shared base/model.py Model ->
-LikelihoodModel -> Results -> LikelihoodModelResults inheritance spine and a
-wrap.ResultsWrapper pattern. Public surface is curated through two parallel
-mechanisms: statsmodels/api.py (+ per-subpackage api.py files aliased into it)
-for `import statsmodels.api as sm`, and statsmodels/formula/api.py for the
-lower-case R-style-formula constructors (`smf.ols(...)`). Ranking here
-optimizes for: (1) fast dispatch from a model name (OLS, SARIMAX, GEE, ...) to
-its defining file+line via api.py/roster batches, since almost any task starts
-by locating one of ~150 public classes/functions scattered across ~30
-subpackages; (2) the repo-wide test convention (test_*.py colocated with a
-results/ dir of R/Stata-generated reference values) since correctness work
-leans on it; (3) build/lint/CI mechanics (meson+cython+pytest, ruff, Azure
-matrix) for environment/config questions. Catastrophic-omission risk is
-unusually high here because of the sheer subpackage count, so directory
-listings and api.py/class-roster batches are prioritized over deep
-single-file dives.
+statsmodels is a large Python statistics package: estimation and inference
+for statistical models (regression, GLM/GEE, discrete choice, robust,
+mixed effects, survival, multivariate, nonparametric) plus a wide library
+of statistical tests, time-series analysis including a full state-space
+framework, plotting, datasets and I/O. The substance is the `statsmodels/`
+package: ~25 domain subpackages, most carrying an `api.py` re-export
+module and a colocated `tests/` directory, all built on one pattern —
+`Model` -> `Results` -> `ResultsWrapper` defined in `statsmodels/base/`.
+
+The ranking front-loads (a) what the project is and how a caller uses it,
+(b) the filesystem map at root and package level, (c) the public name ->
+defining-module mapping in `statsmodels/api.py`, `formula/api.py`,
+`tsa/api.py` and the subpackage `api.py` files, because for this repo
+"where does symbol X live" is the dominant follow-up question, and (d) the
+base Model/Results class and method rosters that every estimator in the
+tree inherits. Flagship implementations (OLS/GLS/WLS, GLM + families,
+discrete models, tsa/statespace) come next at class-roster granularity,
+then the domain directory maps (tsa, statespace, stats, tools, graphics,
+iolib), then the docs tree and the build/test/lint configuration, and last
+the peripheral trees (examples/, tools/, .github/). Method and class
+rosters are rendered name-only — truncated at the opening paren where that
+saves tokens — so that each roster is complete for its class rather than a
+sample of it; ellipses mark elided tails wherever a batch stops inside a
+list or class body.
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "README lede"
-justification = "One-line identity ('complement to scipy for statistical computations') - the smallest possible zero-hop answer to 'what is this repo', ranked first so even a tiny budget gets it."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 7, end = 12, render.kind = "full" },
+descriptor = "README: what statsmodels is"
+justification = "The one-paragraph definition of the package, under its own heading. Cheapest possible answer to \"what is this repo\" and the frame every other batch is read against."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.rst", start = 7, end = 12, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "1.2"
-descriptor = "Repo root: top-level directories"
-justification = "Names the 6 top-level directories (statsmodels package, docs, examples, tools, archive, .github) before the (larger) file-level listing in 1.4 - lets a tiny budget still see the package/docs/examples/tools split."
-content.kind = "fs"
-content.groups = [
-  { parent = ".", entries = [".github", "archive", "docs", "examples", "statsmodels", "tools"] },
+descriptor = "The two import conventions (docs/source/index.rst)"
+justification = "`import statsmodels.api as sm` and `import statsmodels.formula.api as smf` are the two namespaces essentially all user code and all docs go through; naming them costs three lines and makes every later api.py batch legible. Ranked second because a reader who knows only what the package is still cannot address it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/source/index.rst", start = 21, end = 25, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "1.3"
-descriptor = "README doc links"
-justification = "Canonical doc URLs (stable/dev/release notes) - the second half of repo identity after the lede in 1.1. Bare URL pointers for dev/release-notes keep this cheap while still rendering all three, not just the stable one."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 15, end = 20, render.kind = "full" },
-  { path = "README.rst", start = 24, end = 24, render.kind = "full" },
-  { path = "README.rst", start = 28, end = 28, render.kind = "full" },
+descriptor = "Canonical formula fit, end to end"
+justification = "The rest of the introductory example: load a DataFrame, `smf.ols('Lottery ~ Literacy + np.log(Pop1831)', data=dat).fit()`, `print(results.summary())`. Establishes the model->fit->results->summary flow that every estimator in the tree follows, so later class rosters read as instances of a known pattern."
+predecessor = "1.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/source/index.rst", start = 27, end = 34, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "1.4"
-descriptor = "Repo root: top-level files"
-justification = "Completes the root-listing class started in 1.2: build/config files (pyproject.toml, meson.build, azure-pipelines.yml, .flake8, ...) and top-level docs (README.rst, CONTRIBUTING.rst, INSTALL.txt, CHANGES.md, LICENSE.txt) quoted piecemeal in the rest of tier 1."
-content.kind = "fs"
-content.groups = [
-  { parent = ".", entries = [
-      ".codacy.yml", ".flake8", ".gitattributes", ".gitignore", ".mailmap",
-      ".pep8speaks.yml", "azure-pipelines.yml", "CHANGES.md",
-      "CITATION.cff", "codecov.yml", "CONTRIBUTING.rst", "COPYRIGHTS.txt",
-      "github_deploy_key_statsmodels_statsmodels_github_io.enc", "INSTALL.txt",
-      "LICENSE.txt", "lint.sh", "MANIFEST.in", "meson.build", "meson.options",
-      "pyproject.toml", "README_l1.txt", "README.rst", "requirements-dev.txt",
-      "requirements-doc.txt", "requirements.txt",
-  ] },
-]
-
-[[batches]]
-id = "1.5"
-descriptor = "README main-features intro"
-justification = "Start of the maintainer feature list (linear regression sub-variants), continued in 1.6-1.8."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 34, end = 44, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.6"
-descriptor = "README features: mixed/GLM/GEE"
-justification = "Cross-sectional model domains in the maintainers' own grouping - cheaper semantic map than reading class rosters for 'does this repo support X' style questions."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 46, end = 50, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.7"
-descriptor = "README features: discrete/RLM"
-justification = "Continues 1.6: discrete-choice sub-variants (Logit/Probit/MNLogit/Poisson/NegBin/Zero-Inflated) and robust linear models."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 51, end = 59, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.8"
-descriptor = "README features: time series"
-justification = "Time series is the largest subsystem (tsa/, ~30% of the tree); this names its sub-domains (state-space, Markov switching, VAR/VECM, exponential smoothing) before any file is opened."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 60, end = 75, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.9"
-descriptor = "README features: survival + multivariate"
-justification = "Names the survival-analysis and multivariate domains (Cox models, Kaplan-Meier, PCA/Factor/MANOVA/CanCorr) - continues the feature-list class from 1.5-1.8."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 77, end = 88, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.10"
-descriptor = "README features: nonparametric/datasets/stats"
-justification = "Continues the feature-list class: nonparametric KDE, bundled datasets, and the breadth of statistical-test coverage (diagnostics, goodness-of-fit, multiple testing)."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 90, end = 97, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.11"
-descriptor = "README features: imputation/graphics/IO/misc/sandbox"
-justification = "Completes the feature-list class started in 1.5 - omitting this tail would let an agent wrongly conclude e.g. MICE imputation or the sandbox folder don't exist."
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 99, end = 117, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.12"
-descriptor = "pyproject.toml: name/description/keywords"
-justification = "Project identity metadata plus the keyword list, which doubles as a compact domain index (econometrics, time series, state space models, cointegration tests, ...)."
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 29, end = 51, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.13"
-descriptor = "pyproject.toml: runtime dependencies"
-justification = "The numpy/scipy/pandas/patsy/formulaic version constraints - the first thing a 'why won't this install' or 'what does this depend on' task needs."
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 58, end = 65, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.14"
-descriptor = "pyproject.toml: optional-dependencies (test/doc)"
-justification = "Exact extras groups (pytest+xdist+randomly for [test], sphinx+nbsphinx for [doc]) - answers 'how do I set up a dev env' precisely instead of via a generic guess. The [dev] group (ruff/flake8/isort/cython/meson) is in batch 1.22 - split out so this batch stays inside the growth envelope."
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 69, end = 102, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.15"
-descriptor = "pyproject.toml: pytest markers"
-justification = "The marker vocabulary (slow/smoke/matplotlib/high_memory/example/low_precision/todo) that conftest.py's CLI flags (batch 2.8) toggle - needed to write or select tests correctly."
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 298, end = 306, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.16"
-descriptor = "meson.build (root)"
-justification = "Confirms the actual build system is meson+cython (not setup.py/setuptools despite pyproject.toml's presence) and that statsmodels/_build/git_version.py supplies the version. The project() call alone establishes both, so the span stops there rather than pulling in the compiler-setup lines that follow."
-content.kind = "lines"
-content.spans = [
-  { path = "meson.build", start = 1, end = 8, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.17"
-descriptor = "INSTALL.txt: required + optional dependency versions"
-justification = "Plain-text dependency version headers (python/numpy/scipy/pandas/patsy/cython, then the optional X-12-ARIMA/matplotlib/sphinx/pytest) - a second, more skimmable source than pyproject.toml for a human-facing install question. Bare version-header lines rather than the surrounding URL/prose paragraphs keep this cheap."
-content.kind = "lines"
-content.spans = [
-  { path = "INSTALL.txt", start = 1, end = 4, render.kind = "full" },
-  { path = "INSTALL.txt", start = 8, end = 8, render.kind = "full" },
-  { path = "INSTALL.txt", start = 12, end = 12, render.kind = "full" },
-  { path = "INSTALL.txt", start = 16, end = 16, render.kind = "full" },
-  { path = "INSTALL.txt", start = 20, end = 20, render.kind = "full" },
-  { path = "INSTALL.txt", start = 24, end = 24, render.kind = "full" },
-  { path = "INSTALL.txt", start = 36, end = 36, render.kind = "full" },
-  { path = "INSTALL.txt", start = 45, end = 45, render.kind = "full" },
-  { path = "INSTALL.txt", start = 52, end = 52, render.kind = "full" },
-  { path = "INSTALL.txt", start = 58, end = 58, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.18"
-descriptor = "CONTRIBUTING.rst: PR requirements"
-justification = "States the concrete bar for a change to be accepted: one branch/one feature, clear commit messages, tests required, and docstrings required - governs any 'add a feature' task. The tests/docstrings bullets are truncated to their lead clause; the trailing URL citations aren't needed to convey the requirement."
-content.kind = "lines"
-content.spans = [
-  { path = "CONTRIBUTING.rst", start = 20, end = 20, render.kind = "full" },
-  { path = "CONTRIBUTING.rst", start = 22, end = 22, render.kind = "truncated", render.pattern = "^- \\*\\*One branch\\. One feature\\.\\*\\*" },
-  { path = "CONTRIBUTING.rst", start = 23, end = 23, render.kind = "truncated", render.pattern = "^- Commit messages should be clear and concise\\." },
-  { path = "CONTRIBUTING.rst", start = 24, end = 24, render.kind = "truncated", render.pattern = "^- Code submissions must always include tests\\." },
-  { path = "CONTRIBUTING.rst", start = 25, end = 25, render.kind = "truncated", render.pattern = "^- Each function, class, method, and attribute needs to be documented using docstrings\\." },
-]
-
-[[batches]]
-id = "1.19"
-descriptor = "lint.sh: ruff/flake8 invocation"
-justification = "Shows LINT=true ./lint.sh is the actual lint entry point, that ruff already runs unconditionally against statsmodels/ and docs/source/plots, and that flake8 statsmodels is the concrete flake8 invocation gated behind LINT."
-content.kind = "lines"
-content.spans = [
-  { path = "lint.sh", start = 7, end = 14, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.20"
-descriptor = ".github/workflows listing"
-justification = "Shows GitHub Actions is used only for wheel builds, CodeQL, emscripten/Pyodide builds, and doc publishing - the actual test matrix lives in Azure Pipelines (batch 1.21), which a partial workflow listing would obscure."
-content.kind = "fs"
-content.groups = [
-  { parent = ".github/workflows", entries = "all" },
-]
-
-[[batches]]
-id = "1.21"
-descriptor = "Azure CI: job matrix + actual test command"
-justification = "Names the per-OS template jobs and the concrete, copy-pasteable test command: `pip install --no-build-isolation --editable .` then `pytest -m ... --skip-examples -n auto --dist loadscope statsmodels` - the single highest-value 'how do I run the test suite' pointer in the repo."
-content.kind = "lines"
-content.spans = [
-  { path = "azure-pipelines.yml", start = 1, end = 12, render.kind = "full" },
-  { path = "tools/ci/azure/azure_template_posix.yml", start = 154, end = 155, render.kind = "full" },
-  { path = "tools/ci/azure/azure_template_posix.yml", start = 187, end = 192, render.kind = "full" },
-  { path = "tools/ci/azure/azure_template_posix.yml", start = 194, end = 194, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.22"
-descriptor = "pyproject.toml: optional-dependencies (dev)"
-justification = "The [dev] extras group split out of 1.14 to respect the growth envelope: cython/meson/meson-python/ninja for the build, matplotlib/colorama/joblib for running examples, and ruff/flake8/flake8-bugbear/isort for lint (matching lint.sh in batch 1.19)."
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 103, end = 123, render.kind = "full" },
-]
-
-[[batches]]
-id = "2.1"
-descriptor = "statsmodels/ package top-level listing"
-justification = "The ~28 subpackages (base, regression, genmod, discrete, tsa, stats, ...) plus api.py/__init__.py/conftest.py - the single most load-bearing listing in the fixture, since almost every deeper batch below refers back to one of these directories."
-content.kind = "fs"
-content.groups = [
+descriptor = "statsmodels/ package listing (complete)"
+justification = "Where the substance lives: every immediate child of the package root — the domain subpackages (base, regression, genmod, discrete, tsa, stats, graphics, ...) plus api.py, conftest.py, meson.build. Complete listing so the agent can rule subpackages in and out instead of guessing at names."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "statsmodels", entries = "all" },
 ]
 
 [[batches]]
+id = "1.5"
+descriptor = "Repository root listing (complete)"
+justification = "Every top-level entry: packaging (pyproject.toml, meson.build, meson.options, MANIFEST.in, requirements*.txt), lint/CI config, docs/, examples/, tools/, archive/, and the README/INSTALL/CONTRIBUTING/LICENSE set. Shows at a glance that the build is meson-based rather than setup.py, and gives a concrete target for every configuration question."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "README feature taxonomy: models (top-level bullets, sub-lists elided)"
+justification = "The authoritative claim of what is implemented, one line per family — linear regression, mixed LM, GLM, Bayesian mixed GLM, GEE, discrete models, RLM, time series — with an ellipsis where each nested sub-list sits so the agent knows the detail exists and where. Fastest map from a statistical concept to whether statsmodels covers it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.rst", start = 34, end = 37, render = { kind = "full" } },
+  { path = "README.rst", start = 39, end = 39, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 46, end = 51, render = { kind = "full" } },
+  { path = "README.rst", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 59, end = 60, render = { kind = "full" } },
+  { path = "README.rst", start = 62, end = 62, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 77, end = 77, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "README feature taxonomy: remaining bullets (survival through sandbox)"
+justification = "Completes the previous batch's list rather than leaving it looking whole: survival analysis, multivariate, nonparametric, datasets, statistics, imputation, mediation, graphics, I/O, misc models and the sandbox caveat that sandbox code is not production ready. Ellipses again mark the nested sub-lists."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.rst", start = 77, end = 77, render = { kind = "full" } },
+  { path = "README.rst", start = 79, end = 79, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 83, end = 83, render = { kind = "full" } },
+  { path = "README.rst", start = 85, end = 85, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 90, end = 92, render = { kind = "full" } },
+  { path = "README.rst", start = 94, end = 94, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 99, end = 101, render = { kind = "full" } },
+  { path = "README.rst", start = 103, end = 103, render = { kind = "full" } },
+  { path = "README.rst", start = 105, end = 105, render = { kind = "ellipsis" } },
+  { path = "README.rst", start = 108, end = 111, render = { kind = "full" } },
+  { path = "README.rst", start = 113, end = 113, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.1"
+descriptor = "statsmodels/api.py imports: version, subpackages, discrete models"
+justification = "`sm.<Name>` -> defining module is the dominant follow-up question in this repo, and api.py answers it in one place. The ellipsis at line 1 stands for the `__all__` name list occupying lines 1-73, which the imports below restate with their sources. First third: `from statsmodels._version import version as __version__`, the plain `from . import datasets, distributions, iolib, regression, robust, tools`, and the discrete estimators (ConditionalLogit/MNLogit/Poisson, the three ZeroInflated* count models, Logit/Probit/MNLogit/Poisson/NegativeBinomial(P)/GeneralizedPoisson) with the modules that define them."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/api.py", start = 1, end = 1, render = { kind = "ellipsis" } },
+  { path = "statsmodels/api.py", start = 76, end = 101, render = { kind = "full" } },
+]
+
+[[batches]]
 id = "2.2"
-descriptor = "statsmodels/api.py: sm.* namespace, part 1 (cross-sectional)"
-justification = "Exact source of `import statsmodels.api as sm` for discrete/duration/GAM/genmod/graphics/imputation - each public class mapped to its defining submodule. One-hop answer to 'where is sm.<X> defined'."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/api.py", start = 76, end = 129, render.kind = "full" },
+descriptor = "statsmodels/api.py imports: truncated counts, duration, emplike, formula, gam, genmod"
+justification = "Continues the same mapping so the previous batch is not mistaken for the whole namespace: HurdleCountModel/TruncatedLF*, `from .duration import api as duration` plus PHReg/SurvfuncRight, emplike, `from .formula import api as formula`, GLMGam, and the genmod block (GEE, GLM, BinomialBayesMixedGLM, NominalGEE, OrdinalGEE, PoissonBayesMixedGLM, cov_struct, families)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/api.py", start = 102, end = 124, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.3"
-descriptor = "statsmodels/api.py: sm.* namespace, part 2 (multivariate/regression/robust/stats/tools/tsa)"
-justification = "Completes the sm.* location map started in 2.2 - omitting this half would hide OLS/WLS/GLS/RLM/add_constant, among others, since they're import-ordered after the cross-sectional families."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/api.py", start = 130, end = 146, render.kind = "full" },
+descriptor = "statsmodels/api.py imports: graphics through tsa, and the `load` alias"
+justification = "Closes the api.py import block so the top-level namespace is complete rather than sampled: gofplots (ProbPlot, qqplot, qqline, qqplot_2samples), imputation (MI, BayesGaussMI, MICE, MICEData), Factor/MANOVA/PCA, nonparametric, `from .regression.linear_model import GLS, GLSAR, OLS, WLS`, MixedLM, QuantReg, RecursiveLS, RLM, stats, show_versions, add_constant/categorical, webdoc, tsa, and `load = load_pickle`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/api.py", start = 125, end = 146, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.4"
-descriptor = "statsmodels/formula/api.py: smf.* lowercase constructors"
-justification = "The R-style-formula surface (smf.ols, smf.glm, smf.mixedlm, ...) each mapped to a `Model.from_formula` alias with its defining module - this is the API used in essentially every doc example (see batch 2.6). Span covers the imports and every assignment (lines 1-34); the file's remaining lines 36-58 are just a `del` cleanup statement and an `__all__` list re-stating the same names already shown here, so they're not separately rendered."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/formula/api.py", start = 1, end = 34, render.kind = "full" },
+descriptor = "formula/api.py: the first smf.* entry points"
+justification = "The formula namespace is how most user code and most documentation calls this library. The first import line plus an ellipsis stand for the ten `import statsmodels.<pkg>.<mod> as lm_/dm_/gee_/...` aliases; lines 12-21 then give `gls`, `wls`, `ols`, `glsar`, `mixedlm`, `glm`, `rlm` bound to `Class.from_formula`, and the ellipsis at line 22 marks that the table continues."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/formula/api.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "statsmodels/formula/api.py", start = 2, end = 2, render = { kind = "ellipsis" } },
+  { path = "statsmodels/formula/api.py", start = 12, end = 21, render = { kind = "full" } },
+  { path = "statsmodels/formula/api.py", start = 22, end = 22, render = { kind = "ellipsis" } },
 ]
 
 [[batches]]
 id = "2.5"
-descriptor = "docs/source/api-structure.rst: interactive-import convention + dir(sm) example"
-justification = "The maintainers' own explanation of the recommended interactive-use convention (`import statsmodels.api as sm`) plus a worked `dir(sm)` example (hedged with an ellipsis since the printed namespace list continues past what's shown) - the cheapest correct grounding for the `sm.*` import style used throughout tier 2. The doc's other convention (direct per-submodule imports) isn't rendered here."
-content.kind = "lines"
-content.spans = [
-  { path = "docs/source/api-structure.rst", start = 16, end = 35, render.kind = "full" },
-  { path = "docs/source/api-structure.rst", start = 36, end = 36, render.kind = "ellipsis" },
+descriptor = "formula/api.py: remaining smf.* entry points"
+justification = "Completes the entry-point table rather than leaving a partial one looking whole: `mnlogit`, `logit`, `probit`, `poisson`, `negativebinomial`, `quantreg`, `phreg`, `ordinal_gee`, `nominal_gee`, `gee`, `glmgam`, `conditional_logit`/`conditional_mnlogit`/`conditional_poisson`. Answers \"does X have a formula interface\" for every model that has one."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/formula/api.py", start = 22, end = 32, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.6"
-descriptor = "docs/source/index.rst: canonical usage examples"
-justification = "The two worked examples every doc page assumes familiarity with: formula-based (`smf.ols('Lottery ~ Literacy + np.log(Pop1831)', data=dat).fit()`) and array-based (`sm.add_constant`, `sm.OLS(y, X).fit()`), both ending in `results.summary()`. Zero-follow-up answer to 'how do I fit a model here'."
-content.kind = "lines"
-content.spans = [
-  { path = "docs/source/index.rst", start = 18, end = 55, render.kind = "full" },
+descriptor = "tsa/api.py imports, part 1: AR/ARDL/ARIMA through state space"
+justification = "Time series is the largest domain in the tree. The ellipsis at line 1 marks the `__all__` list above (lines 1-63). First half of the import block maps AutoReg/AR, ARDL/UECM/ardl_select_order, ARIMA, ArmaProcess, datetools, ETSModel, the filters (bk_filter, cf_filter, hp_filter), STLForecast, ExponentialSmoothing/Holt/SimpleExpSmoothing, MarkovAutoregression/MarkovRegression, STL/seasonal_decompose and the statespace models (SARIMAX, VARMAX, DynamicFactor, DynamicFactorMQ, UnobservedComponents) onto their defining modules."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/tsa/api.py", start = 1, end = 1, render = { kind = "ellipsis" } },
+  { path = "statsmodels/tsa/api.py", start = 65, end = 89, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.7"
-descriptor = "statsmodels/__init__.py: version info + test() entry point"
-justification = "Tiny but load-bearing: defines __version_info__ (line 3) and the sm.test() pytest-runner entry point that api.py re-exports. Skips the debug_warnings toggle body (lines 4-15) as lower-value than the two exported symbols."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/__init__.py", start = 1, end = 3, render.kind = "full" },
-  { path = "statsmodels/__init__.py", start = 16, end = 39, render.kind = "full" },
+descriptor = "tsa/api.py imports, part 2: stattools tests, tsatools, VAR/VECM, x13"
+justification = "The rest of the same block: the hypothesis-test battery from `.stattools` (acf, acovf, adfuller, arma_order_select_ic, bds, breakvar_heteroskedasticity_test, ccf, ccovf, coint, kpss, leybourne, pacf/pacf_ols/pacf_yw, q_stat, range_unit_root_test, zivot_andrews), the data-shaping helpers add_lag/add_trend/detrend/lagmat/lagmat2ds, SVAR/VAR/VECM and the x13 wrappers."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/tsa/api.py", start = 90, end = 112, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.8"
-descriptor = "statsmodels/conftest.py: pytest CLI flags"
-justification = "The custom pytest options (--skip-slow/--only-slow, --skip-examples, --skip-matplotlib, --skip-smoke/--only-smoke, --skip-high-memory/--only-high-memory - only slow/smoke/high-memory get a symmetric --only- form) that every test invocation in tools/ci/ (batch 1.21) relies on but doesn't itself define."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/conftest.py", start = 41, end = 55, render.kind = "full" },
+descriptor = "Subpackage api.py surfaces: duration, othermod, gam, miscmodels, iolib"
+justification = "Import lines of the smaller subpackage api modules, so no subpackage's public surface is silently absent: PHReg/SurvfuncRight/CumIncidenceRight/survdiff, BetaModel, GLMGam/BSplines/CyclicCubicSplines/MultivariateGAMCVPath, PoissonGMLE/PoissonOffsetGMLE/PoissonZiGMLE/TLinearModel, savetxt/load_pickle/save_pickle/SimpleTable/csv2st."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/duration/api.py", start = 2, end = 3, render = { kind = "full" } },
+  { path = "statsmodels/othermod/api.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "statsmodels/gam/api.py", start = 1, end = 3, render = { kind = "full" } },
+  { path = "statsmodels/miscmodels/api.py", start = 2, end = 7, render = { kind = "full" } },
+  { path = "statsmodels/iolib/api.py", start = 8, end = 10, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.9"
-descriptor = "statsmodels/conftest.py: shared fixtures"
-justification = "close_figures and reset_randomstate are the two fixtures referenced throughout statsmodels' test files for matplotlib cleanup and reproducible RNG state - a prerequisite for writing or debugging almost any test here."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/conftest.py", start = 102, end = 110, render.kind = "full" },
-  { path = "statsmodels/conftest.py", start = 111, end = 111, render.kind = "ellipsis" },
-  { path = "statsmodels/conftest.py", start = 144, end = 162, render.kind = "full" },
+descriptor = "Subpackage api.py surfaces: multivariate, nonparametric, emplike"
+justification = "Completes the subpackage-api sweep begun in 2.8: CanCorr/Factor/FactorResults/MANOVA/PCA/factor_rotation, KDEUnivariate, KDEMultivariate(Conditional)/EstimatorSettings, KernelReg/KernelCensoredReg, kernels_asymmetric, `lowess`, `bandwidths`, and the empirical-likelihood set (emplikeAFT, DescStat/DescStatMV/DescStatUV, ANOVA, ELOriginRegress)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/multivariate/api.py", start = 10, end = 14, render = { kind = "full" } },
+  { path = "statsmodels/nonparametric/api.py", start = 13, end = 22, render = { kind = "full" } },
+  { path = "statsmodels/emplike/api.py", start = 14, end = 17, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "graphics/api.py: complete plotting surface"
+justification = "Every plotting entry point with its module: mean_diff_plot, beanplot/violinplot, plot_corr(_grid), interaction_plot, fboxplot/hdrboxplot/rainbowplot, qqplot, rainbow, the regressionplots family (abline_plot, influence_plot, plot_ccpr(_grid), plot_fit, plot_leverage_resid2, plot_partregress(_grid), plot_regress_exog) and `tsaplots as tsa`. Plot questions are frequent and otherwise cost a wide search."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/graphics/api.py", start = 1, end = 19, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.1"
-descriptor = "statsmodels/base/ directory listing"
-justification = "base/ holds the abstract Model/Results spine every model family inherits from, plus data handling (data.py), the formula bridge, penalization, and prediction-inference helpers - this listing is the map for the rest of tier 3."
-content.kind = "fs"
-content.groups = [
-  { parent = "statsmodels/base", entries = "all" },
+descriptor = "base/model.py: the class hierarchy every estimator inherits"
+justification = "The single most load-bearing structural fact in the repository: `Model` -> `LikelihoodModel` -> `GenericLikelihoodModel`, `Results` -> `LikelihoodModelResults` -> `GenericLikelihoodModelResults`, `LikelihoodResultsWrapper(wrap.ResultsWrapper)`, and the `ResultMixin` / `_LLRMixin` mixins. Nine lines, complete for the file, and every model module in the tree subclasses one of them."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 65, end = 65, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 279, end = 279, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 830, end = 830, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 1112, end = 1112, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 1276, end = 1276, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2498, end = 2498, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2516, end = 2516, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2665, end = 2665, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2802, end = 2802, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.2"
-descriptor = "base/model.py: class location roster"
-justification = "Locations of all 9 classes in the file the entire package's OO structure descends from: Model -> LikelihoodModel -> GenericLikelihoodModel, Results -> LikelihoodModelResults -> Generic*Results, plus the wrapper/mixin classes. Cheap hedge against assuming any one of these doesn't exist."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 65, end = 65, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 279, end = 279, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 830, end = 830, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1112, end = 1112, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1276, end = 1276, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2498, end = 2498, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2516, end = 2516, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2665, end = 2665, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2802, end = 2802, render.kind = "full" },
+descriptor = "statsmodels/base/ listing (complete)"
+justification = "The shared machinery directory in full: model.py, data.py, wrapper.py, optimizer.py, covtype.py, transform.py, elastic_net.py, the l1 solvers (l1_cvxopt, l1_slsqp, l1_solvers_common), _constraints, _penalties/_penalized, _prediction_inference, _parameter_inference, _screening, distributed_estimation and tests/. Tells the agent which cross-cutting concerns already have a home before it goes looking in a domain package."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "statsmodels/base", entries = "all" },
 ]
 
 [[batches]]
 id = "3.3"
-descriptor = "base/model.py: Model.__init__ signature + attrs"
-justification = "The universal (endog, exog, **kwargs) constructor contract that stores .data/.exog/.endog/.k_constant - the mechanism behind the array-based API style shown in batch 2.6."
-predecessor = "3.2"
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 100, end = 116, render.kind = "full" },
+descriptor = "endog/exog: the parameter vocabulary of every model"
+justification = "`_model_params_doc` in base/model.py is spliced into essentially every model docstring in the package, so this is the definition of the two names that appear in every signature: endog is the 1-d response, exog the nobs x k design matrix with no automatic intercept (see `statsmodels.tools.add_constant`). High semantic value per token for a reader who has never used the library."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 39, end = 46, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.4"
-descriptor = "base/model.py: Model.from_formula signature"
-justification = "The classmethod every smf.* alias (batch 2.4) ultimately calls to turn a formula string + DataFrame into (endog, exog) - the mechanism behind the formula-based API style shown in batch 2.6."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 156, end = 157, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 244, end = 248, render.kind = "full" },
+descriptor = "missing / hasconst / **kwargs conventions"
+justification = "The rest of the shared parameter documentation: `missing` in {'none','drop','raise'} defaulting to 'none', `hasconst` and how it drives k_constant and the reported statistics, and the `**kwargs` entry whose description is elided at line 61. These flags recur in every constructor in the tree."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 48, end = 60, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 61, end = 61, render = { kind = "ellipsis" } },
 ]
 
 [[batches]]
 id = "3.5"
-descriptor = "base/model.py: LikelihoodModel.fit() signature"
-justification = "The `fit(start_params, method='newton', maxiter, ...)` signature and its solver-name vocabulary (newton/nm/bfgs/lbfgs/powell/cg/ncg/basinhopping/minimize, documented in the method docstring) is inherited essentially unchanged by every likelihood-based model family (GLM, discrete, GEE, tsa) - a single high-reuse pointer."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 362, end = 374, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 387, end = 394, render.kind = "full" },
+descriptor = "Model: docstring lede and complete method roster"
+justification = "\"A (predictive) statistical model. Intended to be subclassed not used.\" followed by every method name on the base class (names only, truncated at the paren): __init__, _get_init_kwds, _check_kwargs, _handle_data, the `from_formula` classmethod, endog_names/exog_names, fit and predict. Complete for the class, so an agent can tell what is inherited from what is overridden in a subclass."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 66, end = 67, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 123, end = 123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 251, end = 251, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 258, end = 258, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 264, end = 264, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 270, end = 270, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
 id = "3.6"
-descriptor = "base/model.py: Results base class signatures"
-justification = "Results.__init__/predict/summary - the minimal contract every *Results subclass (RegressionResults, GLMResults, DiscreteResults, ...) builds on."
-predecessor = "3.2"
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 1124, end = 1124, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1209, end = 1209, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1266, end = 1266, render.kind = "full" },
+descriptor = "LikelihoodModel: the estimation interface"
+justification = "The docstring plus the complete method roster subclasses are expected to implement or override: initialize, loglike, score, information, hessian, the long shared `fit` (line 362) that dispatches to the optimizers, and the internal _fit_zeros / _fit_collinear helpers. This is the contract behind every `.fit()` call in the package."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 280, end = 282, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 284, end = 284, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 300, end = 300, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 315, end = 315, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 333, end = 333, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 346, end = 346, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 362, end = 362, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 653, end = 653, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 809, end = 809, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
 id = "3.7"
-descriptor = "base/model.py: LikelihoodModelResults inferential-method roster"
-justification = "Locations of the shared statistical-inference surface every Results subclass gets for free: cov_params, t_test, f_test, wald_test, wald_test_terms, conf_int, save/load. These are the methods `results.<tab>` completion (referenced in index.rst, batch 2.6) would surface."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/base/model.py", start = 1543, end = 1543, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1645, end = 1645, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1793, end = 1793, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 1892, end = 1892, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2056, end = 2056, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2290, end = 2290, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2370, end = 2370, render.kind = "full" },
-  { path = "statsmodels/base/model.py", start = 2398, end = 2398, render.kind = "full" },
+descriptor = "Results and LikelihoodModelResults: the complete results API"
+justification = "What a fitted model gives back, name-only and complete for both classes: Results (initialize, _transform_predict_exog, predict, summary) and LikelihoodModelResults (normalized_cov_params, use_t getter/setter, llf, bse, tvalues, pvalues, cov_params, t_test, f_test, wald_test, wald_test_terms, t_test_pairwise, _get_wald_nonlinear, conf_int, save, load, remove_data, _get_robustcov_results). \"Where do p-values / confidence intervals / robust covariances come from\" is a top-frequency question and this answers it with line numbers."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 1124, end = 1124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1131, end = 1131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1149, end = 1149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1209, end = 1209, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1266, end = 1266, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1434, end = 1434, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1466, end = 1466, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1470, end = 1470, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 1495, end = 1495, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1500, end = 1500, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1504, end = 1504, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1509, end = 1509, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1524, end = 1524, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1533, end = 1533, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1543, end = 1543, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 1645, end = 1645, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1793, end = 1793, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1892, end = 1892, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2056, end = 2056, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2200, end = 2200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2261, end = 2261, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2290, end = 2290, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2370, end = 2370, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2398, end = 2398, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2423, end = 2423, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "How results get wrapped back into pandas: LikelihoodResultsWrapper"
+justification = "The concrete wrapper declaration — `_attrs` mapping params/bse/pvalues/tvalues to \"columns\", resid/fittedvalues to \"rows\", normalized_cov_params to \"cov\", `_wrap_methods` for cov_params/conf_int, and the `wrap.populate_wrapper(LikelihoodResultsWrapper, LikelihoodModelResults)` call. Explains in fifteen lines why fitted results carry the caller's labels and where to register a new attribute so it keeps them."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 2499, end = 2514, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "base/wrapper.py: ResultsWrapper mechanism"
+justification = "The generic side of the same mechanism: the ResultsWrapper docstring, its `_wrap_attrs`/`_wrap_methods` class attributes, and the complete symbol roster of the module — __init__, __dir__, __getattribute__, __getstate__/__setstate__, save, load, plus the module functions union_dicts, make_wrapper and populate_wrapper."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/wrapper.py", start = 6, end = 12, render = { kind = "full" } },
+  { path = "statsmodels/base/wrapper.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 106, end = 106, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/wrapper.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "base/data.py: input-container classes and module functions"
+justification = "How raw inputs become model data: ModelData and its PatsyData / FormulaicData / PandasData subclasses, plus every module-level function (_asarray_2dcolumns, _asarray_2d_null_rows, _nan_rows, _make_endog_names, _make_exog_names, handle_missing, handle_data_class_factory, handle_data). `handle_data` is what `Model._handle_data` calls and `handle_data_class_factory` (line 673) is where ndarray/pandas/patsy/formulaic inputs pick their container, so this is the entry point for questions about missing-value handling, input types or pandas metadata."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/data.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 509, end = 509, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 514, end = 514, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 519, end = 519, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "statsmodels/base/data.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/data.py", start = 641, end = 641, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/data.py", start = 650, end = 650, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/data.py", start = 664, end = 664, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/data.py", start = 673, end = 673, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/data.py", start = 699, end = 699, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "GenericLikelihoodModel: writing a custom model"
+justification = "The docstring lede (\"Allows the fitting of any likelihood function via maximum likelihood\"; a subclass need only specify the log-likelihood) and the complete method roster: _set_extra_params_names, initialize, expandparams/reduceparams, loglike, nloglike, loglikeobs, score, score_obs, hessian, hessian_factor, fit. This is the documented extension point for user-defined models."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 831, end = 835, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 877, end = 877, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 913, end = 913, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 928, end = 928, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 953, end = 953, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 983, end = 983, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 987, end = 987, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 991, end = 991, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 995, end = 995, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1011, end = 1011, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1019, end = 1019, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1028, end = 1028, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1037, end = 1037, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 1061, end = 1061, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "ResultMixin, _LLRMixin and GenericLikelihoodModelResults rosters"
+justification = "Completes the model.py symbol sweep: ResultMixin supplies df_modelwc, aic, bic, score_obsv, hessv, covjac, covjhj, bsejhj, bsejac, bootstrap, get_nlfun; _LLRMixin supplies pseudo_rsquared, llr, llr_pvalue, set_null_options, llnull (the null-model machinery every discrete model reuses); GenericLikelihoodModelResults adds get_prediction and summary."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/base/model.py", start = 2519, end = 2519, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2537, end = 2537, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2542, end = 2542, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2547, end = 2547, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2552, end = 2552, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2557, end = 2557, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2570, end = 2570, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2584, end = 2584, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2589, end = 2589, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2593, end = 2593, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2654, end = 2654, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2670, end = 2670, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2684, end = 2684, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2691, end = 2691, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2705, end = 2705, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2747, end = 2747, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2849, end = 2849, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/base/model.py", start = 2889, end = 2889, render = { kind = "full" } },
+  { path = "statsmodels/base/model.py", start = 2962, end = 2962, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
 id = "4.1"
-descriptor = "statsmodels/regression/ directory listing"
-justification = "OLS/WLS/GLS/GLSAR live in linear_model.py; this listing also surfaces the sibling model files (mixed_linear_model, quantile_regression, recursive_ls, rolling) rostered in 4.3, plus further variants (dimred, process_regression, feasible_gls) not individually rostered."
-content.kind = "fs"
-content.groups = [
+descriptor = "Estimator subpackage listings: regression, discrete, genmod, families, robust, duration"
+justification = "File-granularity map of the core estimator packages, complete per directory: regression (linear_model, mixed_linear_model, quantile_regression, recursive_ls, rolling, process_regression, dimred, feasible_gls, _prediction, _tools), discrete (discrete_model, count_model, truncated_model, conditional_models, discrete_margins, diagnostic, _diagnostics_count), genmod (generalized_linear_model, generalized_estimating_equations, bayes_mixed_glm, cov_struct, qif, _tweedie_compound_poisson) with its families/ (family, links, varfuncs), robust (robust_linear_model, norms, scale, covariance, resistant_linear_model, _qn.pyx, _tables) and duration (hazard_regression, survfunc, _kernel_estimates). Turns most \"which file implements X\" questions into a single read, and shows every one of these packages carries a colocated tests/ directory."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "statsmodels/regression", entries = "all" },
+  { parent = "statsmodels/discrete", entries = "all" },
+  { parent = "statsmodels/genmod", entries = "all" },
+  { parent = "statsmodels/genmod/families", entries = "all" },
+  { parent = "statsmodels/robust", entries = "all" },
+  { parent = "statsmodels/duration", entries = "all" },
 ]
 
 [[batches]]
 id = "4.2"
-descriptor = "linear_model.py: class location roster"
-justification = "Locations of all 8 classes in the file backing sm.OLS/WLS/GLS/GLSAR: the RegressionModel base, the 4 model classes (GLS and WLS both extend RegressionModel; OLS extends WLS; GLSAR extends GLS), RegressionResults/OLSResults, and the wrapper."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/regression/linear_model.py", start = 213, end = 213, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 486, end = 486, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 733, end = 733, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 933, end = 933, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 1306, end = 1306, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 1659, end = 1659, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 3133, end = 3133, render.kind = "full" },
-  { path = "statsmodels/regression/linear_model.py", start = 3448, end = 3448, render.kind = "full" },
+descriptor = "regression/linear_model.py: module docstring and complete class roster"
+justification = "The flagship module. Its docstring states the four models (GLS, OLS, WLS, GLSAR(p)), that models take endog + exog and are fit via `fit`, and that subclasses with more complex covariance override `whiten`. The class roster then gives RegressionModel, GLS, WLS, OLS(WLS), GLSAR(GLS), RegressionResults, OLSResults and RegressionResultsWrapper with their base classes and line numbers — note OLS derives from WLS, which is a common source of confusion."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/regression/linear_model.py", start = 7, end = 19, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 213, end = 213, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 486, end = 486, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 733, end = 733, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 933, end = 933, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1306, end = 1306, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1659, end = 1659, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3133, end = 3133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3448, end = 3448, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
 id = "4.3"
-descriptor = "regression/: other model classes roster"
-justification = "Primary model class per remaining file in regression/ (mixed_linear_model, quantile_regression, recursive_ls, rolling) - completes the class-location coverage for the directory listed in 4.1 beyond linear_model.py."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/regression/mixed_linear_model.py", start = 620, end = 620, render.kind = "full" },
-  { path = "statsmodels/regression/quantile_regression.py", start = 36, end = 36, render.kind = "full" },
-  { path = "statsmodels/regression/recursive_ls.py", start = 34, end = 34, render.kind = "full" },
-  { path = "statsmodels/regression/rolling.py", start = 136, end = 136, render.kind = "full" },
-  { path = "statsmodels/regression/rolling.py", start = 441, end = 441, render.kind = "full" },
+descriptor = "RegressionResults: fit statistics roster"
+justification = "Name-only roster of the first half of RegressionResults, complete for lines 1712-2005: nobs, fittedvalues, wresid, resid, scale, ssr, centered_tss, uncentered_tss, ess, rsquared, rsquared_adj, mse_model, mse_resid, mse_total, fvalue, f_pvalue, bse, aic, bic, info_criteria, and conf_int. This is where every number printed in an OLS summary table is computed, so it converts \"where does rsquared_adj come from\" into a single targeted read."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/regression/linear_model.py", start = 1712, end = 1712, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1758, end = 1758, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1784, end = 1784, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1789, end = 1789, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1794, end = 1794, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1801, end = 1801, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1807, end = 1807, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1818, end = 1818, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1824, end = 1824, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1845, end = 1845, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1856, end = 1856, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1871, end = 1871, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1885, end = 1885, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1898, end = 1898, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1909, end = 1909, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1921, end = 1921, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1936, end = 1936, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1973, end = 1973, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1981, end = 1981, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1986, end = 1986, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 1996, end = 1996, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2005, end = 2005, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
-id = "5.1"
-descriptor = "genmod/, discrete/, genmod/families/ directory listings"
-justification = "GLM/GEE live in genmod/, discrete-choice models in discrete/, and the family/link machinery GLM/GEE dispatch on in genmod/families/ - one combined listing for the whole likelihood-family cluster."
-content.kind = "fs"
-content.groups = [
-  { parent = "statsmodels/genmod", entries = "all" },
-  { parent = "statsmodels/discrete", entries = "all" },
-  { parent = "statsmodels/genmod/families", entries = "all" },
+id = "4.4"
+descriptor = "RegressionResults: robust covariance, model comparison, summary; OLSResults extras"
+justification = "Completes the class rather than leaving the previous roster looking whole: eigenvals, condition_number, _HCCM/_abat_diagonal, cov_HC0-cov_HC3 and HC0_se-HC3_se, resid_pearson, _is_nested, compare_lm_test/compare_f_test/compare_lr_test, get_robustcov_results, get_prediction, summary and summary2 — plus OLSResults' get_influence, outlier_test, el_test and conf_int_el. Heteroskedasticity-robust standard errors and nested-model tests are frequent questions and this is their exact location."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/regression/linear_model.py", start = 2045, end = 2045, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2057, end = 2057, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2070, end = 2070, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2074, end = 2074, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2079, end = 2079, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2088, end = 2088, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2097, end = 2097, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2108, end = 2108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2119, end = 2119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2135, end = 2135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2150, end = 2150, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2166, end = 2166, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2182, end = 2182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2207, end = 2207, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2246, end = 2246, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2337, end = 2337, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2392, end = 2392, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2497, end = 2497, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2809, end = 2809, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 2822, end = 2822, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3017, end = 3017, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3172, end = 3172, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3191, end = 3191, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3245, end = 3245, render = { kind = "full" } },
+  { path = "statsmodels/regression/linear_model.py", start = 3355, end = 3355, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "5.2"
-descriptor = "GLM + GEE class location roster"
-justification = "Locations of sm.GLM/GLMResults and the GEE family (GEE, OrdinalGEE, NominalGEE) - GEE subclasses GLM, so these five are the load-bearing classes in genmod/."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/genmod/generalized_linear_model.py", start = 85, end = 85, render.kind = "full" },
-  { path = "statsmodels/genmod/generalized_linear_model.py", start = 1767, end = 1767, render.kind = "full" },
-  { path = "statsmodels/genmod/generalized_estimating_equations.py", start = 498, end = 498, render.kind = "full" },
-  { path = "statsmodels/genmod/generalized_estimating_equations.py", start = 2496, end = 2496, render.kind = "full" },
-  { path = "statsmodels/genmod/generalized_estimating_equations.py", start = 2826, end = 2826, render.kind = "full" },
+id = "4.5"
+descriptor = "discrete/discrete_model.py: estimator classes"
+justification = "The complete set of discrete-choice and count estimators in the file with their inheritance: DiscreteModel -> BinaryModel -> MultinomialModel, DiscreteModel -> CountModel, and the concrete Poisson, GeneralizedPoisson, Logit, Probit, MNLogit, NegativeBinomial and NegativeBinomialP. Eleven lines that place every name exported by `sm.Logit`/`sm.Poisson`/... at a line number in a 6255-line file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/discrete/discrete_model.py", start = 185, end = 185, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 521, end = 521, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 758, end = 758, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 1037, end = 1037, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 1338, end = 1338, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 1962, end = 1962, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 2622, end = 2622, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 2929, end = 2929, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 3255, end = 3255, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 3597, end = 3597, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 4224, end = 4224, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
-id = "5.3"
-descriptor = "discrete_model.py: model class roster (excludes *Results/*Wrapper)"
-justification = "Locations of the 11 discrete-choice model classes (DiscreteModel base, Binary/Multinomial/Count intermediate bases, Poisson/GeneralizedPoisson/Logit/Probit/MNLogit/NegativeBinomial/NegativeBinomialP concrete models). Each also has a matching *Results and *ResultsWrapper class in the same file not listed individually here."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/discrete/discrete_model.py", start = 185, end = 185, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 521, end = 521, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 758, end = 758, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 1037, end = 1037, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 1338, end = 1338, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 1962, end = 1962, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 2622, end = 2622, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 2929, end = 2929, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 3255, end = 3255, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 3597, end = 3597, render.kind = "full" },
-  { path = "statsmodels/discrete/discrete_model.py", start = 4224, end = 4224, render.kind = "full" },
+id = "4.6"
+descriptor = "discrete_model.py: results classes (wrapper tail elided)"
+justification = "The parallel results hierarchy — DiscreteResults, CountResults, NegativeBinomial(P)Results, GeneralizedPoissonResults, the L1* regularized variants, PoissonResults, OrderedResults, BinaryResults, LogitResults, ProbitResults, MultinomialResults and L1MultinomialResults — with an ellipsis at line 6152 marking the block of *ResultsWrapper declarations that follows to the end of the file. Explains why a fitted Logit returns a LogitResults rather than a RegressionResults, and where the L1-regularized variants live."
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/discrete/discrete_model.py", start = 4905, end = 4905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5522, end = 5522, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5565, end = 5565, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5596, end = 5596, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5603, end = 5603, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5616, end = 5616, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5638, end = 5638, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5734, end = 5734, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5738, end = 5738, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5742, end = 5742, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5746, end = 5746, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5753, end = 5753, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5885, end = 5885, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5927, end = 5927, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5953, end = 5953, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 5969, end = 5969, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 6131, end = 6131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/discrete/discrete_model.py", start = 6152, end = 6152, render = { kind = "ellipsis" } },
 ]
 
 [[batches]]
-id = "5.4"
-descriptor = "discrete/count_model.py + truncated_model.py + conditional_models.py: model roster"
-justification = "The count-model variants not in discrete_model.py: zero-inflated (count_model.py, base class GenericZeroInflated plus 3 concrete variants), truncated/hurdle (truncated_model.py, base class TruncatedLFGeneric plus 3 concrete Truncated variants and HurdleCountModel; the underscore-prefixed _RCensored* experimental variants and *Results/*Wrapper classes in the same file are excluded), and fixed-effects conditional models (conditional_models.py: ConditionalLogit/ConditionalPoisson/ConditionalMNLogit, excluding the private _ConditionalModel base and the *Results/*Wrapper classes, same convention as the other two files) - completes discrete/'s model-class coverage started in 5.3."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/discrete/count_model.py", start = 48, end = 48, render.kind = "full" },
-  { path = "statsmodels/discrete/count_model.py", start = 665, end = 665, render.kind = "full" },
-  { path = "statsmodels/discrete/count_model.py", start = 858, end = 858, render.kind = "full" },
-  { path = "statsmodels/discrete/count_model.py", start = 997, end = 997, render.kind = "full" },
-  { path = "statsmodels/discrete/truncated_model.py", start = 34, end = 34, render.kind = "full" },
-  { path = "statsmodels/discrete/truncated_model.py", start = 441, end = 441, render.kind = "full" },
-  { path = "statsmodels/discrete/truncated_model.py", start = 514, end = 514, render.kind = "full" },
-  { path = "statsmodels/discrete/truncated_model.py", start = 600, end = 600, render.kind = "full" },
-  { path = "statsmodels/discrete/truncated_model.py", start = 1052, end = 1052, render.kind = "full" },
-  { path = "statsmodels/discrete/conditional_models.py", start = 226, end = 226, render.kind = "full" },
-  { path = "statsmodels/discrete/conditional_models.py", start = 363, end = 363, render.kind = "full" },
-  { path = "statsmodels/discrete/conditional_models.py", start = 501, end = 501, render.kind = "full" },
+id = "4.7"
+descriptor = "GLM, exponential families and GEE covariance structures"
+justification = "Three complete class rosters that together answer most generalized-linear questions: generalized_linear_model.py (_ModuleVariable, GLM, GLMResults, GLMResultsWrapper), families/family.py (Family plus Poisson, Gaussian, Gamma, Binomial, InverseGaussian, NegativeBinomial, Tweedie — i.e. exactly which distributions are supported), and cov_struct.py (CovStruct plus Independence, Unstructured, Exchangeable, Nested, Stationary, Autoregressive, CategoricalCovStruct, GlobalOddsRatio, Ordinal/NominalIndependence, Equivalence — the correlation structures GEE accepts)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/genmod/generalized_linear_model.py", start = 68, end = 68, render = { kind = "full" } },
+  { path = "statsmodels/genmod/generalized_linear_model.py", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/generalized_linear_model.py", start = 1767, end = 1767, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/generalized_linear_model.py", start = 2844, end = 2844, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 28, end = 28, render = { kind = "full" } },
+  { path = "statsmodels/genmod/families/family.py", start = 384, end = 384, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 543, end = 543, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 713, end = 713, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 898, end = 898, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 1183, end = 1183, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 1348, end = 1348, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/families/family.py", start = 1580, end = 1580, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 201, end = 201, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 231, end = 231, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 317, end = 317, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 403, end = 403, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 596, end = 596, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 765, end = 765, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 1017, end = 1017, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 1052, end = 1052, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 1283, end = 1283, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 1314, end = 1314, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "statsmodels/genmod/cov_struct.py", start = 1343, end = 1343, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
-id = "6.1"
-descriptor = "statsmodels/tsa/ directory listing"
-justification = "The time-series subsystem's ~16 sub-packages (statespace, vector_ar, arima, holtwinters, regime_switching, stattools, filters, ardl, seasonal, ...) - tsa/ is the largest single subsystem by file count, so this listing is the map for the rest of tier 6."
-content.kind = "fs"
-content.groups = [
+id = "4.8"
+descriptor = "tsa/ listing (complete)"
+justification = "The largest subpackage, listed completely — ar_model, ardl/, arima/, arima_model, arima_process, arma_mle, deterministic, descriptivestats, exponential_smoothing/, filters/, forecasting/, holtwinters/, innovations/, interp/, mlemodel, regime_switching/, seasonal/, statespace/, stattools/, stl/, tsatools, varma_process, vector_ar/, x13, adfvalues, coint_tables, _bds, _leybourne, base/, tests/, api.py, meson.build and the _innovations.pyx Cython source. Converts almost any time-series question into one targeted read."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "statsmodels/tsa", entries = "all" },
 ]
 
 [[batches]]
-id = "6.2"
-descriptor = "tsa/api.py: name-to-module map (models)"
-justification = "Exact source of `import statsmodels.tsa.api as tsa`: each public time-series model class mapped to its defining submodule (AR/AutoReg, ARDL/UECM, ARIMA, ETSModel, filters, STLForecast, ExponentialSmoothing/Holt, Markov switching, STL, statespace models)."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/tsa/api.py", start = 69, end = 88, render.kind = "full" },
-]
-
-[[batches]]
-id = "6.3"
-descriptor = "tsa/statespace/, tsa/vector_ar/, tsa/arima/ directory listings"
-justification = "The three tsa sub-packages that carry the most-used concrete models (SARIMAX/UnobservedComponents/VARMAX/DynamicFactor, VAR/VECM/SVAR, ARIMA) - listed together since they share the MLEModel/TimeSeriesModel base rostered in 6.4."
-content.kind = "fs"
-content.groups = [
+id = "4.9"
+descriptor = "tsa/statespace/ listing (complete)"
+justification = "The state-space framework, complete: the model files (sarimax, varmax, dynamic_factor, dynamic_factor_mq, structural, exponential_smoothing) over the shared machinery (representation, kalman_filter, kalman_smoother, simulation_smoother, cfa_simulation_smoother, initialization, mlemodel, tools, news), plus the _*.pyx.in/.pxd Cython templates and the _filters/ and _smoothers/ subdirectories. Shows immediately which parts are Cython and therefore need a rebuild after edits."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "statsmodels/tsa/statespace", entries = "all" },
-  { parent = "statsmodels/tsa/vector_ar", entries = "all" },
-  { parent = "statsmodels/tsa/arima", entries = "all" },
 ]
 
 [[batches]]
-id = "6.4"
-descriptor = "SARIMAX/MLEModel/VAR/VECM/ARIMA class roster"
-justification = "Locations of the highest-traffic concrete time-series models: statespace.sarimax.SARIMAX and its MLEModel base, vector_ar's VAR/VECM, and arima.model.ARIMA (itself a thin SARIMAX subclass)."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/tsa/statespace/mlemodel.py", start = 93, end = 93, render.kind = "full" },
-  { path = "statsmodels/tsa/statespace/sarimax.py", start = 37, end = 37, render.kind = "full" },
-  { path = "statsmodels/tsa/vector_ar/var_model.py", start = 523, end = 523, render.kind = "full" },
-  { path = "statsmodels/tsa/vector_ar/vecm.py", start = 838, end = 838, render.kind = "full" },
-  { path = "statsmodels/tsa/arima/model.py", start = 26, end = 26, render.kind = "full" },
-]
-
-[[batches]]
-id = "6.5"
-descriptor = "tsa/holtwinters/ and tsa/regime_switching/ directory listings"
-justification = "The two remaining named-in-README (batch 1.8) time-series families not yet located: exponential smoothing and Markov-switching/regime-switching models."
-content.kind = "fs"
-content.groups = [
-  { parent = "statsmodels/tsa/holtwinters", entries = "all" },
-  { parent = "statsmodels/tsa/regime_switching", entries = "all" },
-]
-
-[[batches]]
-id = "6.6"
-descriptor = "tsa/base/tsa_model.py: TimeSeriesModel class roster"
-justification = "TimeSeriesModel/TimeSeriesModelResults/TimeSeriesResultsWrapper - the base every tsa model (AR, VAR, SARIMAX via MLEModel, ExponentialSmoothing, MarkovSwitching) ultimately extends, one level below base.model.LikelihoodModel."
-content.kind = "lines"
-content.spans = [
-  { path = "statsmodels/tsa/base/tsa_model.py", start = 449, end = 449, render.kind = "full" },
-  { path = "statsmodels/tsa/base/tsa_model.py", start = 857, end = 857, render.kind = "full" },
-  { path = "statsmodels/tsa/base/tsa_model.py", start = 863, end = 863, render.kind = "full" },
-]
-
-[[batches]]
-id = "7.1"
-descriptor = "Remaining cross-sectional model directories: multivariate/duration/nonparametric/graphics/imputation/robust/gam"
-justification = "Subpackages not yet listed in tiers 4-6 - PCA/Factor/MANOVA/CanCorr (multivariate), Cox/Kaplan-Meier (duration), KDE/kernel regression (nonparametric), plot functions (graphics), MICE (imputation), RLM (robust), GLMGam (gam). Combined since each is individually small; omitting any one would wrongly suggest that domain isn't implemented - robust/ and gam/ are two of the model families named in the top-level summary that would otherwise never get a directory listing."
-content.kind = "fs"
-content.groups = [
-  { parent = "statsmodels/multivariate", entries = "all" },
-  { parent = "statsmodels/duration", entries = "all" },
-  { parent = "statsmodels/nonparametric", entries = "all" },
-  { parent = "statsmodels/graphics", entries = "all" },
-  { parent = "statsmodels/imputation", entries = "all" },
-  { parent = "statsmodels/robust", entries = "all" },
-  { parent = "statsmodels/gam", entries = "all" },
-]
-
-[[batches]]
-id = "7.2"
-descriptor = "statsmodels/stats/ directory listing"
-justification = "The statistical-tests subsystem (diagnostics, multiple testing, power analysis, contingency tables, weightstats, ...) named in README (batch 1.10) - ~45 files, each usually a distinct named test/tool, making the listing itself the main location index."
-content.kind = "fs"
-content.groups = [
+id = "4.10"
+descriptor = "stats/ listing (complete)"
+justification = "The statistical-test library as files: anova, contingency_tables, contrast, correlation_tools, covariance, descriptivestats, diagnostic(+_gen), dist_dependence_measures, effect_size, gof, inter_rater, knockoff_regeffects, mediation, meta_analysis, moment_helpers, multicomp, multitest, multivariate(+_tools), nonparametric, oaxaca, oneway, outliers_influence, power, proportion, rates, regularized_covariance, robust_compare, sandwich_covariance, stattools, tabledist, weightstats, libqsturng/ and the private helpers. `sm.stats` questions land on a file in one hop from here."
+[batches.content]
+kind = "fs"
+groups = [
   { parent = "statsmodels/stats", entries = "all" },
 ]
 
 [[batches]]
-id = "8.1"
-descriptor = "statsmodels/datasets/ directory listing"
-justification = "The ~30 bundled example datasets (used throughout tests/examples/docs, in the pattern shown by the array-based usage example in batch 2.6) - each subdirectory is one dataset module with a data.py exposing load()/load_pandas()."
-content.kind = "fs"
-content.groups = [
-  { parent = "statsmodels/datasets", entries = "all" },
+id = "4.11"
+descriptor = "stats/api.py: which modules feed sm.stats"
+justification = "Ranked directly after the stats/ listing so the two read together: `sm.stats` re-exports well over a hundred names; rendering each import block's source module (with an ellipsis where its name list sits) gives the module map — contingency_tables, diagnostic, gof, moment_helpers, multicomp, sandwich_covariance, stattools, _adnorm/_knockoff/_lilliefors, anova, correlation_tools, descriptivestats, inter_rater, mediation, meta_analysis, multitest, multivariate, oaxaca, oneway, power, proportion, rates, weightstats and sandbox.stats.runs — at a fraction of the cost of the name lists, while showing the name lists exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/stats/api.py", start = 1, end = 2, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 3, end = 3, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 11, end = 16, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 17, end = 17, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 25, end = 26, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 27, end = 27, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 46, end = 49, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 50, end = 50, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 54, end = 55, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 56, end = 56, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 62, end = 62, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 63, end = 63, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 73, end = 74, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 75, end = 75, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 91, end = 91, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 92, end = 92, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 102, end = 102, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 103, end = 103, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 124, end = 124, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 125, end = 125, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 140, end = 140, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 141, end = 141, render = { kind = "ellipsis" } },
+  { path = "statsmodels/stats/api.py", start = 152, end = 153, render = { kind = "full" } },
+  { path = "statsmodels/stats/api.py", start = 154, end = 154, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "tools/, graphics/ and iolib/ listings"
+justification = "The cross-cutting utility packages: tools/ (tools.py with add_constant, numdiff, decorators, docstring, eval_measures, grouputils, linalg, parallel, rootfinding, sequences, sm_exceptions, testing, transform_model, typing, validation/, _test_runner), graphics/ (regressionplots, gofplots, tsaplots, boxplots, correlation, dotplots, factorplots, functional, mosaicplot, plot_grids, agreement, tukeyplot, utils) and iolib/ (summary, summary2, table, tableformatting, foreign, smpickle, openfile, stata_summary_examples). Covers helper-location questions — including where `Summary` output is built — that would otherwise need repository-wide greps."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "statsmodels/tools", entries = "all" },
+  { parent = "statsmodels/graphics", entries = "all" },
+  { parent = "statsmodels/iolib", entries = "all" },
+]
+
+[[batches]]
+id = "5.1"
+descriptor = "docs/source/ listing (complete)"
+justification = "The documentation tree in full: one .rst per statistical topic (regression, glm, gee, discretemod, rlm, mixed_linear, mixed_glm, gam, duration, multivariate, nonparametric, tsa, statespace, vector_ar, stats, anova, contingency_tables, diagnostic, distributions, emplike, gmm, graphics, imputation, iolib, miscmodels, treatment, ...) plus install/gettingstarted/user-guide/api/api-structure/faq/pitfalls/about/sandbox/large_data/missing/optimization/extending, conf.py and the spelling word lists. For any \"explain X\" question this names the prose file to read; it also shows the .rst.TXT files that are staged but not built."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docs/source", entries = "all" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "pyproject.toml: build backend and runtime dependencies"
+justification = "How the project is built and what it needs at runtime: the meson-python build backend with cython/numpy/scipy/setuptools_scm pins, and the install requirements — numpy>=1.22.3,<3, scipy (with 1.9.2 excluded), pandas>=1.4 (2.1.0 excluded), patsy>=0.5.6, packaging, formulaic>=1.1.0 — plus requires-python >= 3.9. Both patsy and formulaic being required explains the dual formula backend seen in base/data.py."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 1, end = 9, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 57, end = 67, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "pyproject.toml: pytest configuration and the marker vocabulary"
+justification = "How the suite runs and how tests are selected: minversion, `addopts = \"--strict --durations=30 --junitxml=test-data.xml\"`, `testpaths = \"statsmodels\"`, xfail_strict, an ellipsis over the long filterwarnings list, and the complete marker set — example, matplotlib, slow, smoke, high_memory, low_precision, todo. Any test-writing or test-running task needs these exact names."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 262, end = 267, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 268, end = 268, render = { kind = "ellipsis" } },
+  { path = "pyproject.toml", start = 297, end = 306, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "conftest.py: test-selection options"
+justification = "The repository-level pytest plugin declares --skip-slow/--only-slow, --skip-examples, one further option block elided at line 48, --skip-smoke/--only-smoke and --skip-high-memory/--only-high-memory; and the batch also renders the three fixture definitions the suite relies on — close_figures, reset_randomstate and the autouse check_figures_closed. Running a subset of a suite this large is a routine need."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "statsmodels/conftest.py", start = 41, end = 47, render = { kind = "full" } },
+  { path = "statsmodels/conftest.py", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "statsmodels/conftest.py", start = 52, end = 55, render = { kind = "full" } },
+  { path = "statsmodels/conftest.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "statsmodels/conftest.py", start = 145, end = 145, render = { kind = "full" } },
+  { path = "statsmodels/conftest.py", start = 189, end = 189, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "Peripheral trees: examples/, tools/, .github/, docs/, statsmodels/tests/"
+justification = "Complete listings for the non-package trees named in the root listing: examples/ (python/, notebooks/, incomplete/, run_all.py), tools/ (check_api.py, generate_formula_api.py, validate_docstrings.py, nbgenerate.py, export_notebooks_to_python.py, dataset_rst.py, ci/, releasing/, R2nparray/), .github/ (workflows/, ISSUE_TEMPLATE/, dependabot.yml, PULL_REQUEST_TEMPLATE.md), docs/ (source/, Makefile, make.bat, README.md) and the tiny package-level statsmodels/tests/ (test_package.py, test_x13.py) which shows that real tests live in per-subpackage tests/ directories instead."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "tools", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = "docs", entries = "all" },
+  { parent = "statsmodels/tests", entries = "all" },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "lint.sh: the lint gate"
+justification = "The three commands a patch has to pass, one line each: `ruff check statsmodels` (line 8), `flake8 statsmodels` (line 15, run when $LINT is set) and `isort --check-only statsmodels` (line 45). Their configuration lives in pyproject.toml [tool.ruff]/[tool.isort] and in .flake8; the surrounding shell in lint.sh also lints docs/source/plots and applies stricter rules to newly added files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lint.sh", start = 8, end = 8, render = { kind = "full" } },
+  { path = "lint.sh", start = 15, end = 15, render = { kind = "full" } },
+  { path = "lint.sh", start = 45, end = 45, render = { kind = "full" } },
 ]

@@ -1,659 +1,2199 @@
 fixture = "sqlite-vec"
 revision_pin = "563a3e60"
 summary = """
-sqlite-vec is a single-file (sqlite-vec.c, ~9.9k lines), pure-C SQLite
-extension implementing vector search: SQL scalar functions (vec_f32/int8/bit
-constructors, vec_distance_*, vec_add/sub/slice/normalize, vec_quantize_*),
-table functions (vec_each, vec_npy_each, vec_static_blobs/_entries), and the
-central vec0 virtual table (chunked shadow-table storage, brute-force KNN with
-optional partition-key sharding, metadata-column WHERE filters, and auxiliary
-columns). reference.yaml is the structured source of truth for the public SQL
-API (site/api-reference.md is generated from it). The project ships bindings
-for Python/Node/Ruby/Go/Rust, ~16 per-language example dirs (mostly the same
-KNN demo ported), a vitepress docs site, a large pytest + syrupy-snapshot test
-suite plus C/Rust unit-test scratch files, and a cross-platform CI/release
-build matrix. Session queries span the full spectrum: "how do I declare a
-partition key", "why is my KNN query slow", "add a new vec_ scalar function",
-"what does idxStr encode", "how do I build/test this", "port the demo to
-language X". The ranking front-loads the semantic API map (reference.yaml)
-and the vec0 column-type feature docs (breadth for the common "how do I use
-X" case), then the C source's structural skeleton (region map, struct/enum
-shapes, entrypoint registration table) so any deeper dig is 1-2 hops, then
-progressively more implementation-specific internals, tests, build/CI,
-bindings, examples, and the rest of the docs site.
-"""
+sqlite-vec is a single-file, dependency-free C SQLite extension for vector search. Effectively the whole implementation is sqlite-vec.c (9886 lines), partitioned by #pragma region into: SQL scalar functions (vector constructors, distance, quantization, arithmetic), the vec_each and vec_npy_each table functions, the vec0 virtual table, and the vec_static_blobs pair. vec0 is the substance: it stores vectors in chunked shadow tables with validity bitmaps, and supports metadata, auxiliary and partition-key columns, with a private single-character idxStr protocol carrying constraints from xBestIndex to xFilter across three query plans (fullscan, point, KNN). Everything else is scaffolding around that one file: a Makefile producing loadable/static/CLI/WASM artifacts, sqlite-dist.toml packaging to nine ecosystems, reference.yaml compiling into a VitePress docs site, per-language bindings and examples, and a four-language test suite.
 
-# ============================== TIER 1 — Orientation & operational ==============================
+The ranking front-loads identity and a navigational map of sqlite-vec.c, then the vec0 virtual table's contracts -- module table, shadow schemas, query plans, idxStr and operator alphabets, limits, struct shapes -- before its implementation rosters, then the SQL function surface and the other table functions, then build, packaging and CI, then tests, examples, bindings and docs. Symbol rosters are name-only truncations over stated complete line ranges, so that 'where is X' is one read away and no partially-shown class invites the wrong inference.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Every top-level file/dir — prevents assuming e.g. benchmarks/, bindings/, tmp-static.py don't exist just because deeper tiers dive into a subset."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "README identity: name + one-line pitch"
+justification = "What the project is, in the fewest possible tokens: the name and the one-sentence claim (tiny, 'fast enough' vector search SQLite extension that runs anywhere, successor to sqlite-vss). Every downstream query is framed by this."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5
+end = 6
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = ".gitignore (top artifact patterns)"
-justification = "Shows generated/vendored artifact patterns (dist/, vendor/, *.db, *.npy) — clarifies which repo-root-looking files are build outputs vs source."
-content = { kind = "lines", spans = [ { path = ".gitignore", start = 1, end = 12, render = { kind = "full" } } ] }
+descriptor = "README capability bullets"
+justification = "The three claims that define the feature surface: float/int8/binary vectors in vec0 virtual tables, pure C with no dependencies, and non-vector data via metadata, auxiliary or partition key columns. This is the vocabulary the rest of the repo is organised around, so it is worth more than any file listing at this price."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 15
+end = 18
+render = { kind = "full" }
 
 [[batches]]
 id = "1.3"
-descriptor = "README lede"
-justification = "First-contact framing: pure-C, no deps, runs anywhere, successor to sqlite-vss, pre-v1 stability warning."
-content = { kind = "lines", spans = [ { path = "README.md", start = 1, end = 7, render = { kind = "full" } } ] }
+descriptor = "Repository root listing (complete)"
+justification = "Every immediate child of the root. Establishes that the entire implementation is a single amalgamation file (sqlite-vec.c plus the sqlite-vec.h.tmpl header template) and that everything else is docs, build, bindings, examples, benchmarks and tests. Listing all entries rather than a selection prevents the agent from inferring that unlisted top-level files are absent."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = ""
+entries = "all"
 
 [[batches]]
 id = "1.4"
-descriptor = "scripts/vendor.sh"
-justification = "The prerequisite step every build target and CI job runs first, to fetch the SQLite amalgamation into vendor/."
-content = { kind = "lines", spans = [ { path = "scripts/vendor.sh", start = 1, end = 8, render = { kind = "full" } } ] }
+descriptor = "sqlite-vec.c region map"
+justification = "sqlite-vec.c is 9886 lines. The author partitioned it with #pragma region banners; these six lines are the table of contents for the whole implementation: scalar functions, vec_each, vec_npy_each, the vec0 virtual table, vec_static_blobs and vec_static_blob_entries. Extremely cheap, and it turns almost any 'where is X implemented' question into a single targeted read."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1077
+end = 1077
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2427
+end = 2427
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2620
+end = 2620
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3373
+end = 3373
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9109
+end = 9109
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9328
+end = 9328
+render = { kind = "full" }
 
 [[batches]]
 id = "1.5"
-descriptor = "Version + distribution-target manifest"
-justification = "Current version string (0.1.7-alpha.10) plus sqlite-dist.toml's full list of packaging targets (amalgamation, pip, npm, gem, datasette, sqlite_utils, spm, sqlpkg, github_releases)."
-content = { kind = "lines", spans = [
-  { path = "VERSION", start = 1, end = 1, render = { kind = "full" } },
-  { path = "sqlite-dist.toml", start = 10, end = 22, render = { kind = "full" } },
-] }
+descriptor = "The three public C entrypoints (complete set)"
+justification = "sqlite3_vec_init is the default extension entrypoint; sqlite3_vec_numpy_init (guarded by SQLITE_VEC_OMIT_FS) and sqlite3_vec_static_blobs_init are the opt-in ones. Showing all three together is the class-closure hedge: showing only the first would imply there is only one way to load the extension."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9751
+end = 9752
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9836
+end = 9837
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9853
+end = 9855
+render = { kind = "full" }
 
 [[batches]]
 id = "1.6"
-descriptor = "TODO roadmap"
-justification = "Full open-work list (partition UPDATE support, NOT NULL constraints, perf items) — tells 'is X implemented yet' queries the answer without a source dive."
-content = { kind = "lines", spans = [ { path = "TODO", start = 1, end = 17, render = { kind = "full" } } ] }
+descriptor = "ARCHITECTURE.md: status line and section map"
+justification = "The repo ships a contributor-facing internals document that opens by declaring itself 'Very much a WIP'. Its headings follow, bodies excluded: the whole shadow-table catalogue -- xyz_chunks, xyz_rowids, xyz_vector_chunksNN, xyz_auxiliary, xyz_metadatachunksNN, xyz_metadatatextNN -- and the idxStr heading at line 49, which opens a further run of subsections documenting each block kind; those are covered in machine-readable form by 2.9."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 22
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 29
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 34
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 39
+end = 39
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 44
+end = 44
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 49
+end = 49
+render = { kind = "full" }
 
 [[batches]]
 id = "1.7"
-descriptor = "Makefile: build + test targets"
-justification = "loadable/static/cli/all build targets plus `make test`/`test-loadable`/`test-unit` — the entry points for 'how do I build/test this'."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 59, end = 72, render = { kind = "full" } },
-  { path = "Makefile", start = 174, end = 180, render = { kind = "full" } },
-  { path = "Makefile", start = 183, end = 183, render = { kind = "full" } },
-  { path = "Makefile", start = 192, end = 192, render = { kind = "full" } },
-] }
+descriptor = "README sample usage: loading and creating a vec0 table"
+justification = "The canonical `.load ./vec0` plus `create virtual table vec_examples using vec0(sample_embedding float[8])`. The minimum an agent needs to write a working statement."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 64
+end = 68
+render = { kind = "full" }
 
 [[batches]]
 id = "1.8"
-descriptor = "README sample usage (vec0 create/insert)"
-justification = "The representative table-creation + JSON vector insert snippet — answers 'show me the basic usage' for schema + writes in one shot. The source immediately continues with a matching KNN query, elided here (concrete KNN examples are in 3.2/3.3/3.5)."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 63, end = 78, render = { kind = "full" } },
-  { path = "README.md", start = 79, end = 79, render = { kind = "ellipsis" } },
-] }
+descriptor = "README sample usage: inserting vectors"
+justification = "The insert half, with the comment stating that vectors may be supplied as JSON text or in a compact binary format -- the single most frequently needed fact about the data model."
+predecessor = "1.7"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 70
+end = 76
+render = { kind = "full" }
 
-# ============================== TIER 2 — reference.yaml semantic API map ==============================
+[[batches]]
+id = "1.9"
+descriptor = "README sample usage: the KNN query"
+justification = "The other half of the sample: `where sample_embedding match '[...]' order by distance limit 2`, selecting the implicit rowid and distance columns, completing the worked example."
+predecessor = "1.8"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 79
+end = 86
+render = { kind = "full" }
 
 [[batches]]
 id = "2.1"
-descriptor = "reference.yaml: section catalog + meta functions"
-justification = "The doc-generator's section taxonomy (constructors/op/distance/quantization/numpy/meta/entrypoints) — full desc for constructors (representative) and meta, titles only for the rest — plus the full vec_version()/vec_debug() entries — orients every later API lookup."
-content = { kind = "lines", spans = [
-  { path = "reference.yaml", start = 1, end = 10, render = { kind = "full" } },
-  { path = "reference.yaml", start = 11, end = 11, render = { kind = "ellipsis" } },
-  { path = "reference.yaml", start = 13, end = 14, render = { kind = "full" } },
-  { path = "reference.yaml", start = 15, end = 15, render = { kind = "ellipsis" } },
-  { path = "reference.yaml", start = 16, end = 17, render = { kind = "full" } },
-  { path = "reference.yaml", start = 18, end = 18, render = { kind = "ellipsis" } },
-  { path = "reference.yaml", start = 19, end = 20, render = { kind = "full" } },
-  { path = "reference.yaml", start = 21, end = 21, render = { kind = "ellipsis" } },
-  { path = "reference.yaml", start = 22, end = 26, render = { kind = "full" } },
-  { path = "reference.yaml", start = 27, end = 27, render = { kind = "ellipsis" } },
-  { path = "reference.yaml", start = 28, end = 38, render = { kind = "full" } },
-] }
+descriptor = "vec0Module: read-side method table (iVersion through xRowid)"
+justification = "The wiring of the main virtual table, first half: xCreate and xConnect map to vec0Create and vec0Connect, xBestIndex to vec0BestIndex, and the cursor protocol runs vec0Open, vec0Close, vec0Filter, vec0Next, vec0Eof, vec0Column and vec0Rowid. Names every read-path entry point the rest of tier 2 elaborates, at the exact line each is wired."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9053
+end = 9066
+render = { kind = "full" }
 
 [[batches]]
 id = "2.2"
-descriptor = "reference.yaml: full function-name roster (locations)"
-justification = "Name-only roster of every documented function across constructors/op/distance/quantization/vec0 — the cheap catastrophic-omission hedge before any single function's full doc is deep-dived below."
-content = { kind = "lines", spans = [
-  { path = "reference.yaml", start = 41, end = 41, render = { kind = "full" } },
-  { path = "reference.yaml", start = 55, end = 55, render = { kind = "full" } },
-  { path = "reference.yaml", start = 72, end = 72, render = { kind = "full" } },
-  { path = "reference.yaml", start = 84, end = 84, render = { kind = "full" } },
-  { path = "reference.yaml", start = 97, end = 97, render = { kind = "full" } },
-  { path = "reference.yaml", start = 109, end = 109, render = { kind = "full" } },
-  { path = "reference.yaml", start = 141, end = 141, render = { kind = "full" } },
-  { path = "reference.yaml", start = 173, end = 173, render = { kind = "full" } },
-  { path = "reference.yaml", start = 192, end = 192, render = { kind = "full" } },
-  { path = "reference.yaml", start = 227, end = 227, render = { kind = "full" } },
-  { path = "reference.yaml", start = 239, end = 239, render = { kind = "full" } },
-  { path = "reference.yaml", start = 259, end = 259, render = { kind = "full" } },
-  { path = "reference.yaml", start = 276, end = 276, render = { kind = "full" } },
-  { path = "reference.yaml", start = 293, end = 293, render = { kind = "full" } },
-  { path = "reference.yaml", start = 309, end = 309, render = { kind = "full" } },
-  { path = "reference.yaml", start = 324, end = 324, render = { kind = "full" } },
-] }
+descriptor = "vec0Module: write-side slots and the unimplemented ones"
+justification = "The tail of the same table: xUpdate, the begin/sync/commit/rollback hooks and xShadowName -- plus the deliberately-zero xFindFunction, xRename, xSavepoint, xRelease, xRollbackTo and xIntegrity slots, two of them carrying issue links. Answering 'what does vec0 not implement' needs this half specifically."
+predecessor = "2.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9067
+end = 9081
+render = { kind = "full" }
 
 [[batches]]
 id = "2.3"
-descriptor = "reference.yaml: vec_f32 constructor (worked exemplar)"
-justification = "One fully-documented constructor as the representative exemplar (vec_int8/vec_bit follow the same shape, per the 2.2 roster). 3 of its 5 usage examples are elided."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "reference.yaml", start = 40, end = 51, render = { kind = "full" } },
-  { path = "reference.yaml", start = 52, end = 52, render = { kind = "ellipsis" } },
-] }
+descriptor = "vec0 hard limits and column-index constants"
+justification = "The declared maxima (16 vector columns, 4 partition columns, 16 auxiliary, 16 metadata, 8192 dimensions, the 12/16-byte inline metadata text view) plus the fixed column offsets for id, distance and k. These are the numbers users hit as errors and the ones a feature change has to move."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3375
+end = 3378
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3433
+end = 3440
+render = { kind = "full" }
 
 [[batches]]
 id = "2.4"
-descriptor = "reference.yaml: vec0 entry"
-justification = "The doc-generator's (stubbed, `desc: TODO`) entry for vec0 itself, with its first example completed — real prose docs for vec0 live in site/features/vec0.md (tier 3)."
-content = { kind = "lines", spans = [ { path = "reference.yaml", start = 328, end = 336, render = { kind = "full" } } ] }
+descriptor = "Shadow table name macros (complete set)"
+justification = "Every shadow table a vec0 table creates: _info, _chunks, _rowids, _vector_chunksNN, _auxiliary, _metadatachunksNN, _metadatatextNN. Showing a subset would imply the others do not exist; these seven printf templates are the closure of that class."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3380
+end = 3380
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3382
+end = 3382
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3392
+end = 3392
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3414
+end = 3414
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3423
+end = 3423
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3425
+end = 3425
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3426
+end = 3426
+render = { kind = "full" }
 
-# ============================== TIER 3 — vec0 feature docs (usage-facing) ==============================
+[[batches]]
+id = "2.5"
+descriptor = "Shadow table CREATE TABLE DDL"
+justification = "The schemas behind 2.4: chunks (chunk_id, size, validity, rowids), the basic rowids table, the name of the text-primary-key rowids variant with its body elided, and the vector chunks table. Explains the chunked-with-validity-bitmap storage model with no follow-up read."
+predecessor = "2.4"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3384
+end = 3390
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3394
+end = 3400
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3405
+end = 3405
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3407
+end = 3407
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3417
+end = 3421
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "vec0 query plan enum"
+justification = "Three plans -- FULLSCAN '1', POINT '2', KNN '3' -- encoded as the first character of idxStr. The most load-bearing concept in the query path, and it is seven lines."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4601
+end = 4607
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "vec0BestIndex query-plan selection rules"
+justification = "The doc comment inside vec0BestIndex stating exactly when each plan is chosen: MATCH on a vector column plus ORDER BY distance plus LIMIT gives KNN, EQ on rowid gives point, otherwise fullscan. Answers 'why is my query doing a full scan' directly; the enclosing function's line is in 2.18."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5370
+end = 5380
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "vec0 user column kinds"
+justification = "The four kinds a vec0 constructor argument can produce -- VECTOR, PARTITION, AUXILIARY, METADATA -- with the inline syntax example for each. This enum is the pivot for every column-dispatch helper in the file."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3442
+end = 3454
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "idxStr block kinds (complete enum)"
+justification = "The private protocol between xBestIndex and xFilter: one character per constraint kind -- '{' KNN match, '}' k, '[' rowid in, ']' partition constraint, '*' distance constraint, '!' point id, '&' metadata constraint -- with the warning that ARCHITECTURE.md must be updated in lockstep."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5305
+end = 5324
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "Partition key operator encoding"
+justification = "Only a subset of SQLITE_INDEX_CONSTRAINT operators is supported on partition key columns, and each is squeezed into one idxStr character. The six enum values are rendered; the per-value example comments are elided behind an ellipsis. Answers 'which comparisons can I use on a partition key'."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5326
+end = 5328
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5331
+end = 5331
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5332
+end = 5332
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5335
+end = 5335
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5338
+end = 5338
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5341
+end = 5341
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5344
+end = 5344
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5347
+end = 5347
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5348
+end = 5348
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "Metadata and distance-constraint operator encodings"
+justification = "The remaining two operator alphabets: metadata columns add IN ('g') on top of the six comparisons, and KNN distance constraints support only GT/GE/LT/LE. Ranked immediately after 2.10 so the operator class is closed rather than half-shown."
+predecessor = "2.10"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5349
+end = 5357
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5360
+end = 5367
+render = { kind = "full" }
+
+[[batches]]
+id = "2.12"
+descriptor = "struct vec0_vtab: field roster"
+justification = "The runtime shape of an open vec0 table: counts per column kind, pkIsText, the schemaName/tableName/shadowRowidsName/shadowChunksName strings, the user_column_kinds and user_column_idxs dispatch arrays (their long index expressions truncated), the per-kind shadow name arrays, the four column-definition arrays and chunk_size. Ellipses mark the elided per-field comments; the cached statements follow in 2.13."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3456
+end = 3456
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3457
+end = 3457
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3459
+end = 3459
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3460
+end = 3460
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3464
+end = 3464
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3467
+end = 3467
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3470
+end = 3470
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3473
+end = 3473
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3476
+end = 3476
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3478
+end = 3478
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3481
+end = 3481
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3485
+end = 3485
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3489
+end = 3489
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3493
+end = 3493
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3497
+end = 3497
+render = { kind = "truncated", pattern = '^\s*\S+ \S+\[' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3499
+end = 3499
+render = { kind = "truncated", pattern = '^\s*\S+ \S+\[' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3502
+end = 3502
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3506
+end = 3506
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3511
+end = 3511
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3513
+end = 3513
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3514
+end = 3514
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3515
+end = 3515
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3516
+end = 3516
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3518
+end = 3518
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3519
+end = 3519
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "2.13"
+descriptor = "struct vec0_vtab: cached prepared statements"
+justification = "The five sqlite3_stmt members held open for the life of the table -- stmtLatestChunk, stmtRowidsInsertRowid, stmtRowidsInsertId, stmtRowidsUpdatePosition, stmtRowidsGetChunkPosition -- and the closing brace. Each carries a doc comment giving its SQL and bind parameters, elided here and marked with ellipses."
+predecessor = "2.12"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3520
+end = 3520
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3521
+end = 3521
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3523
+end = 3523
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3532
+end = 3532
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3535
+end = 3535
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3546
+end = 3546
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3549
+end = 3549
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3561
+end = 3561
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3564
+end = 3564
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3574
+end = 3574
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3575
+end = 3575
+render = { kind = "full" }
+
+[[batches]]
+id = "2.14"
+descriptor = "Column definition structs and distance metrics"
+justification = "enum Vec0DistanceMetrics (L2, cosine, L1) and VectorColumnDefinition (name, dimensions, element type, distance metric) in full, plus the declaration lines of the partition, auxiliary and metadata definition structs with their bodies elided. The parsed form of a vec0 constructor."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2236
+end = 2248
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2250
+end = 2250
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2252
+end = 2252
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2254
+end = 2254
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2256
+end = 2256
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2258
+end = 2258
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2260
+end = 2260
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2261
+end = 2261
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2263
+end = 2263
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2265
+end = 2265
+render = { kind = "full" }
+
+[[batches]]
+id = "2.15"
+descriptor = "Metadata column kinds"
+justification = "The four storable metadata types -- BOOLEAN, INTEGER, FLOAT, TEXT -- and the comment naming what is deliberately not yet supported (blob, date, datetime)."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2091
+end = 2097
+render = { kind = "full" }
+
+[[batches]]
+id = "2.16"
+descriptor = "vec0 constructor parser: function roster"
+justification = "The hand-written scanner (vec0_token_next, vec0_scanner_init, vec0_scanner_next) and the five vec0_parse_* functions, one per constructor-argument shape: table option, partition key definition, auxiliary column, metadata column, primary key, vector column. Names only, with line numbers."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1824
+end = 1824
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1886
+end = 1886
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1892
+end = 1892
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1900
+end = 1900
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1956
+end = 1956
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2033
+end = 2033
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2111
+end = 2111
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2171
+end = 2171
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2294
+end = 2294
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.17"
+descriptor = "chunk_size table option: validation and default"
+justification = "The only supported table option, matched by name in the constructor's argument loop. It must be divisible by 8 and is capped at SQLITE_VEC_CHUNK_SIZE_MAX 4096; when unset it defaults to 1024. Frequently asked, cheaply answered."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4819
+end = 4820
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4827
+end = 4841
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4855
+end = 4857
+render = { kind = "full" }
+
+[[batches]]
+id = "2.18"
+descriptor = "vec0 constructor and lifecycle functions (roster)"
+justification = "The definitions the module table in 2.1 points at but no other roster covers: vec0_init (the shared constructor body), vec0Create, vec0Connect, vec0Disconnect, vec0Destroy, vec0Open, vec0Close and vec0BestIndex. Closes the gap between 2.1's names and their locations."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4638
+end = 4638
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5166
+end = 5166
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5171
+end = 5171
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5177
+end = 5177
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5183
+end = 5183
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5285
+end = 5285
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5296
+end = 5296
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5368
+end = 5368
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.19"
+descriptor = "vec0 column dispatch helpers (roster)"
+justification = "The is-kind / to-kind-index pair for each of the four column kinds, plus vec0_column_distance_idx, vec0_column_k_idx, vec0_num_defined_user_columns and the free/cleanup pair. Complete set of top-level definitions between lines 3582 and 3718; these are what every xColumn and xUpdate path calls first."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3582
+end = 3582
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3600
+end = 3600
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3621
+end = 3621
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3632
+end = 3632
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3643
+end = 3643
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3652
+end = 3652
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3662
+end = 3662
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3670
+end = 3670
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3680
+end = 3680
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3689
+end = 3689
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3699
+end = 3699
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3708
+end = 3708
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3718
+end = 3718
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.20"
+descriptor = "vec0 storage helpers (roster)"
+justification = "Complete set of top-level function definitions between lines 3735 and 4409: chunk position lookup, rowid/id translation, per-kind value readers for vector, partition, auxiliary and metadata columns, latest-chunk lookup, rowid insertion, metadata chunk sizing and new-chunk allocation. The primitives over the shadow tables of 2.4."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3735
+end = 3735
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3805
+end = 3805
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3811
+end = 3811
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3849
+end = 3849
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3880
+end = 3880
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3962
+end = 3962
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4008
+end = 4008
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4048
+end = 4048
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4134
+end = 4134
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4205
+end = 4205
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4267
+end = 4267
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4334
+end = 4334
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4348
+end = 4348
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4409
+end = 4409
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.21"
+descriptor = "vec0 cursor and per-query-plan state"
+justification = "struct vec0_cursor tags exactly one query-state pointer with the query_plan from 2.6. The KNN state -- k, rowids, distances, current index -- is rendered in full; the fullscan and point state structs sit just above it at lines 4549 and 4587."
+predecessor = "2.6"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4564
+end = 4572
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 4609
+end = 4617
+render = { kind = "full" }
+
+[[batches]]
+id = "2.22"
+descriptor = "KNN primitives: bitmaps and merge (roster)"
+justification = "Complete set of top-level definitions between lines 5771 and 5867: merge_sorted_lists, which maintains the running top-k; the eight bitmap operations used for chunk validity and metadata filtering; and min_idx. Small, self-contained, and the first place to look for a KNN correctness or performance question."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5771
+end = 5771
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5806
+end = 5806
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5814
+end = 5814
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5823
+end = 5823
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5828
+end = 5828
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5835
+end = 5835
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5843
+end = 5843
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5847
+end = 5847
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5852
+end = 5852
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5867
+end = 5867
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.23"
+descriptor = "vec0 read path (roster)"
+justification = "Complete set of top-level definitions between lines 5899 and 7678: long metadata text handling, chunk iteration, metadata filter bitmap construction, the three vec0Filter_* implementations (knn, fullscan, point) and the vec0Filter dispatcher, vec0Rowid/vec0Next/vec0Eof, and the three vec0Column_* implementations plus vec0Column."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5899
+end = 5899
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 5948
+end = 5948
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 6049
+end = 6049
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 6368
+end = 6368
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 6534
+end = 6534
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 6939
+end = 6939
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7223
+end = 7223
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7269
+end = 7269
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7324
+end = 7324
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7356
+end = 7356
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7378
+end = 7378
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7414
+end = 7414
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7441
+end = 7441
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7516
+end = 7516
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7600
+end = 7600
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7678
+end = 7678
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "2.24"
+descriptor = "vec0 write path (roster)"
+justification = "Complete set of top-level definitions between lines 7708 and 9048: the vec0Update_Insert* step sequence, vec0_write_metadata_value and vec0_write_vector_to_vector_blob, the four vec0Update_Delete_* sub-steps, the auxiliary and vector update paths, the vec0Update dispatcher, vec0ShadowName, and the vec0Begin/vec0Sync/vec0Commit/vec0Rollback transaction hooks."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7708
+end = 7708
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7778
+end = 7778
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7932
+end = 7932
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 7969
+end = 7969
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8089
+end = 8089
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8248
+end = 8248
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8481
+end = 8481
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8544
+end = 8544
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8572
+end = 8572
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8600
+end = 8600
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8677
+end = 8677
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8738
+end = 8738
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8760
+end = 8760
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8838
+end = 8838
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8946
+end = 8946
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 8965
+end = 8965
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9015
+end = 9015
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9019
+end = 9019
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9044
+end = 9044
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9048
+end = 9048
+render = { kind = "truncated", pattern = '^[^(]+' }
 
 [[batches]]
 id = "3.1"
-descriptor = "site/features/vec0.md: 3 column-type summary table"
-justification = "The single highest-value semantic table in the fixture: metadata vs auxiliary vs partition-key columns, their benefits/limitations, in one glance — resolves most 'how should I model my table' questions with zero follow-up. The page's intro heading and declaration example above the table are elided (equivalent, more concrete constructors are in 1.8/3.4)."
-content = { kind = "lines", spans = [
-  { path = "site/features/vec0.md", start = 1, end = 1, render = { kind = "ellipsis" } },
-  { path = "site/features/vec0.md", start = 24, end = 32, render = { kind = "full" } },
-] }
+descriptor = "Registered SQL scalar functions (complete list)"
+justification = "The aFunc[] registration table: every scalar function the default entrypoint creates, names only, truncated before the C implementation, arity and flag columns. The authoritative answer to 'what SQL functions does sqlite-vec provide' -- reference.yaml and the generated docs both lag it."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9781
+end = 9781
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9782
+end = 9782
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9783
+end = 9783
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9784
+end = 9784
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9785
+end = 9785
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9786
+end = 9786
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9787
+end = 9787
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9788
+end = 9788
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9789
+end = 9789
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9790
+end = 9790
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9791
+end = 9791
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9792
+end = 9792
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9793
+end = 9793
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9794
+end = 9794
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9795
+end = 9795
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9796
+end = 9796
+render = { kind = "truncated", pattern = '\{"[^"]*"' }
 
 [[batches]]
 id = "3.2"
-descriptor = "site/features/vec0.md: metadata columns (intro + example)"
-justification = "Declaration syntax and the first worked example. The doc immediately follows with 'A sample KNN query on this table could look like:' — elided here (an equivalent metadata-filter KNN query is in 3.5)."
-content = { kind = "lines", spans = [
-  { path = "site/features/vec0.md", start = 33, end = 51, render = { kind = "full" } },
-  { path = "site/features/vec0.md", start = 52, end = 52, render = { kind = "ellipsis" } },
-] }
+descriptor = "Registered virtual table modules"
+justification = "aMod[] registers only vec0 and vec_each from the default entrypoint; vec_npy_each, vec_static_blobs and vec_static_blob_entries come from the other two entrypoints in 1.5. Prevents the wrong assumption that loading the extension gives you all five table functions."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9803
+end = 9809
+render = { kind = "full" }
 
 [[batches]]
 id = "3.3"
-descriptor = "site/features/vec0.md: partition key columns (core example)"
-justification = "Sharding semantics + the first worked example (user_id partition key), completed through its closing fence — the feature most likely to be misused without reading this. The motivating 'for example, say you're...' narrative and the doc's follow-up partition-constrained KNN query (`and user_id = 123`) are both elided here."
-content = { kind = "lines", spans = [
-  { path = "site/features/vec0.md", start = 110, end = 114, render = { kind = "full" } },
-  { path = "site/features/vec0.md", start = 115, end = 115, render = { kind = "ellipsis" } },
-  { path = "site/features/vec0.md", start = 122, end = 128, render = { kind = "full" } },
-  { path = "site/features/vec0.md", start = 130, end = 130, render = { kind = "ellipsis" } },
-] }
+descriptor = "vec_debug build string"
+justification = "The SQLITE_VEC_DEBUG_STRING template -- version, date, commit, build flags -- that the vec_debug() SQL function returns, and the SQLITE_VEC_DEBUG_BUILD value that reports whether AVX or NEON was compiled in. The first thing to ask a user to run when diagnosing a build."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9742
+end = 9748
+render = { kind = "full" }
 
 [[batches]]
 id = "3.4"
-descriptor = "test.sql: live vec0 constructor with partition + auxiliary columns"
-justification = "A real (not textbook) vec0 constructor combining a partition key, an auxiliary '+' column, and metadata columns in one table (vec_articles) — concrete syntax to copy-paste and adapt."
-content = { kind = "lines", spans = [ { path = "test.sql", start = 65, end = 75, render = { kind = "full" } } ] }
+descriptor = "Scalar function implementations (roster)"
+justification = "Complete set of top-level definitions in the `scalar functions` region, lines 1078-1789: vec_f32/vec_bit/vec_int8, vec_length, vec_type_name and vec_type, the four vec_distance_* wrappers, vec_quantize_binary and vec_quantize_int8, vec_add/vec_sub/vec_slice/vec_normalize/vec_to_json, and the _static_text_func helper behind vec_version and vec_debug."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1078
+end = 1078
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1096
+end = 1096
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1113
+end = 1113
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1131
+end = 1131
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1151
+end = 1151
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1193
+end = 1193
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1234
+end = 1234
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1275
+end = 1275
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1317
+end = 1317
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1329
+end = 1329
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1346
+end = 1346
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1415
+end = 1415
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1459
+end = 1459
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1516
+end = 1516
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1574
+end = 1574
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1690
+end = 1690
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1740
+end = 1740
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1789
+end = 1789
+render = { kind = "truncated", pattern = '^[^(]+' }
 
 [[batches]]
 id = "3.5"
-descriptor = "test.sql: metadata-filter KNN query"
-justification = "A metadata-constrained KNN query (genre/num_reviews/mean_rating filters) grounding the abstract WHERE-clause rules from 3.2 in a concrete query shape."
-content = { kind = "lines", spans = [ { path = "test.sql", start = 289, end = 301, render = { kind = "full" } } ] }
+descriptor = "Vector element types"
+justification = "The three element types -- FLOAT32, INT8, BIT -- that every constructor, distance function and vec0 column declaration is parameterised over."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 115
+end = 121
+render = { kind = "full" }
 
-# ============================== TIER 4 — sqlite-vec.c structural orientation ==============================
+[[batches]]
+id = "3.6"
+descriptor = "Distance functions, scalar and SIMD (roster)"
+justification = "Complete set of distance-function definitions between lines 128 and 556. The first five (l2_sqr_float_avx, l2_sqr_float_neon, l2_sqr_int8_neon, l1_int8_neon, l1_f32_neon) compile only under SQLITE_VEC_ENABLE_AVX or SQLITE_VEC_ENABLE_NEON; the rest are portable fallbacks and the distance_* adapters the SQL layer calls."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 128
+end = 128
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 227
+end = 227
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 266
+end = 266
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 326
+end = 326
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 361
+end = 361
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 377
+end = 377
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 392
+end = 392
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 406
+end = 406
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 415
+end = 415
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 430
+end = 430
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 439
+end = 439
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 454
+end = 454
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 463
+end = 463
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 481
+end = 481
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 514
+end = 514
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 540
+end = 540
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 556
+end = 556
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "3.7"
+descriptor = "Vector value conversion helpers (roster)"
+justification = "Complete set of top-level definitions between lines 587 and 1057: the growable Array, vtab_set_error, vector_subtype_name and type_name, the three per-type *_from_value parsers that accept JSON text or raw BLOBs, the generic vector_from_value, ensure_vector_match, and vec_npy_file. Where 'invalid vector' errors come from."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 587
+end = 587
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 591
+end = 591
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 614
+end = 614
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 629
+end = 629
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 646
+end = 646
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 656
+end = 656
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 667
+end = 667
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 685
+end = 685
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 687
+end = 687
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 811
+end = 811
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 831
+end = 831
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 964
+end = 964
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 998
+end = 998
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1048
+end = 1048
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 1057
+end = 1057
+render = { kind = "truncated", pattern = '^[^(]+' }
+
+[[batches]]
+id = "3.8"
+descriptor = "vec_each table function: structs, columns, methods, module"
+justification = "The simplest table function in the file -- iterate a vector's elements. The vtab and cursor struct declarations, the VEC_EACH_COLUMN_VALUE and VECTOR column indices, every xMethod definition between lines 2444 and 2561, and vec_eachModule. The template to copy when adding a table function."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2430
+end = 2430
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2435
+end = 2435
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2444
+end = 2444
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2455
+end = 2456
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2467
+end = 2467
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2473
+end = 2473
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2484
+end = 2484
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2493
+end = 2493
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2522
+end = 2522
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2544
+end = 2544
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2550
+end = 2550
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2555
+end = 2555
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2561
+end = 2561
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2588
+end = 2588
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "vec_npy_each: .npy readers and vtab entry points"
+justification = "The numpy-file table function, all of it behind SQLITE_VEC_OMIT_FS: the buffer-or-file input enum, parse_npy_header and the file and buffer readers, xConnect and xFilter, and vec_npy_eachModule. The tokenizer and scanner it uses live between these at lines 2641-2731."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2740
+end = 2740
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2881
+end = 2884
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 2936
+end = 2936
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3026
+end = 3026
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3078
+end = 3078
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3166
+end = 3166
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 3341
+end = 3341
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "vec_static_blobs / vec_static_blob_entries: entry points"
+justification = "The in-memory 'static blob' vector store loaded by sqlite3_vec_static_blobs_init: the MAX_STATIC_BLOBS limit, the vec_static_blob_from_raw constructor, and the two module tables that close each vtab's implementation. Enough to locate the feature."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9091
+end = 9091
+render = { kind = "truncated", pattern = '^[^(]+' }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9111
+end = 9111
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9297
+end = 9297
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-vec.c"
+start = 9698
+end = 9698
+render = { kind = "full" }
 
 [[batches]]
 id = "4.1"
-descriptor = "sqlite-vec.c: VectorElementType enum"
-justification = "The enum backing every vector's element-type subtype (223/224/225 = float32/bit/int8) — required vocabulary for reading any function body in this file."
-content = { kind = "lines", spans = [ { path = "sqlite-vec.c", start = 115, end = 121, render = { kind = "full" } } ] }
+descriptor = "Makefile: complete target roster"
+justification = "Every named target in the Makefile, rendered as its rule line: the artifact targets (loadable, static, cli, wasm, all), the generated header, format/lint/progress/evidence-of, the four test targets, site-dev/site-build, install/uninstall, clean and publish-release. The command surface a contributor needs."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 69
+end = 69
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 70
+end = 70
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 72
+end = 72
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 145
+end = 145
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 154
+end = 154
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 159
+end = 159
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 164
+end = 164
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 167
+end = 167
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 171
+end = 171
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 174
+end = 174
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 179
+end = 179
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 183
+end = 183
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 186
+end = 186
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 189
+end = 189
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 192
+end = 192
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 195
+end = 195
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 198
+end = 198
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 201
+end = 201
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 216
+end = 216
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 268
+end = 268
+render = { kind = "full" }
 
 [[batches]]
 id = "4.2"
-descriptor = "sqlite-vec.c: #pragma region map"
-justification = "The file's own section markers — scalar functions, vec_each, vec_npy_each, vec0 virtual table (the ~5700-line bulk of the file), vec_static_blobs, vec_static_blob_entries. Every other C-internals batch in tiers 5-6 is a piece of one of these; listing all of them together prevents assuming an unlisted region doesn't exist."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 1077, end = 1077, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 1796, end = 1796, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 2427, end = 2427, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 2618, end = 2618, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 2620, end = 2620, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 3371, end = 3371, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 3373, end = 3373, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9082, end = 9082, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9109, end = 9109, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9326, end = 9326, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9328, end = 9328, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9729, end = 9729, render = { kind = "full" } },
-] }
+descriptor = "Makefile: platform and SIMD detection"
+justification = "How the build picks dylib/so/dll, and the fact that AVX is enabled only on Darwin x86_64 and NEON only on Darwin arm64 unless OMIT_SIMD is set -- i.e. Linux builds ship the portable kernels of 3.6 by default. Explains a whole class of 'why is it slow' and 'why does this flag not apply' questions."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 17
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 38
+end = 45
+render = { kind = "full" }
 
 [[batches]]
 id = "4.3"
-descriptor = "sqlite-vec.c: sqlite3_vec_init entrypoint registration table"
-justification = "The authoritative map from SQL-level names to their C implementations: the aFunc[] table (vec_distance_l2, vec_add, ...) plus the aMod[] table's two name-to-module mappings (vec0, vec_each) — the best cross-reference between reference.yaml's names and this file's line numbers."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 9781, end = 9796, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 9807, end = 9808, render = { kind = "full" } },
-] }
+descriptor = "Compile-time options"
+justification = "The four documented flags -- SQLITE_VEC_ENABLE_AVX, SQLITE_VEC_ENABLE_NEON, SQLITE_VEC_OMIT_FS, SQLITE_VEC_STATIC -- plus the caveat that they are unstable and not covered by the semver policy. Pairs with 4.2 and with the #ifdef guards behind the rosters in 3.6 and 3.9."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/compiling.md"
+start = 56
+end = 63
+render = { kind = "full" }
 
-# ============================== TIER 5 — vec0 virtual table internals ==============================
+[[batches]]
+id = "4.4"
+descriptor = "Public header template"
+justification = "sqlite-vec.h is generated from this template by the Makefile: the SQLITE_VEC_API export macro (dllexport on Windows, empty when SQLITE_VEC_STATIC), the version, date and source macros substituted from VERSION and git, -- the only declaration that follows is the default entrypoint of 1.5, at line 34."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-vec.h.tmpl"
+start = 10
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "Build recipes for the shipped artifacts"
+justification = "The exact compiler invocations: the loadable extension (-fPIC -shared -Wall -Wextra -O3), the static library (-DSQLITE_CORE -DSQLITE_VEC_STATIC, then ar), and the header copy. Also shows both depend on the generated sqlite-vec.h."
+predecessor = "4.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 88
+end = 100
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "Distribution manifest"
+justification = "sqlite-dist.toml drives packaging: the package name and the complete target list -- github releases, sqlpkg, SPM, an amalgamation of exactly sqlite-vec.c plus sqlite-vec.h, pip (with the python extra-init shim), datasette, sqlite-utils, npm and a Ruby gem. Answers 'which package ecosystems does this publish to'."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "sqlite-dist.toml"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "sqlite-dist.toml"
+start = 10
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "TODO / roadmap"
+justification = "The maintainer's own deferred-work list: the xyz_info shadow table, partition UPDATE support, NULLs in metadata, `x in (...)` on partition keys, blob/date/datetime metadata types, and NOT NULL constraints on all three non-vector column kinds. The best single source for 'is this a bug or unimplemented'."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "TODO"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "TODO"
+start = 3
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "4.8"
+descriptor = "CI workflows"
+justification = "Three workflows -- release, site, test -- so the agent knows where the per-platform build matrices live before opening anything. The release workflow is where the supported-platform list is actually enumerated."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
 
 [[batches]]
 id = "5.1"
-descriptor = "ARCHITECTURE.md: vec0 shadow tables"
-justification = "The internal-docs enumeration of every shadow table vec0 creates (_chunks, _rowids, _vector_chunksNN, _auxiliary, _metadatachunksNN, _metadatatextNN) and their columns."
-content = { kind = "lines", spans = [ { path = "ARCHITECTURE.md", start = 11, end = 48, render = { kind = "full" } } ] }
+descriptor = "tests/ listing (complete)"
+justification = "Every immediate child of tests/: the pytest suites and their syrupy snapshot directory, the C unit test, the Rust integration test with its Cargo manifests and build script, the fuzz driver, the sqlite-vec-internal.h header, the uv/pyproject config, and the sub-suite directories. Shows the test story spans four languages."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
 
 [[batches]]
 id = "5.2"
-descriptor = "ARCHITECTURE.md: idxStr encoding intro"
-justification = "The byte-level framing of the idxStr string vec0BestIndex builds and vec0Filter consumes — header char (the 3 query-plan values: FULLSCAN/POINT/KNN) + 4-char blocks."
-content = { kind = "lines", spans = [ { path = "ARCHITECTURE.md", start = 49, end = 61, render = { kind = "full" } } ] }
+descriptor = "pytest fixture: how the tests load the extension"
+justification = "The one pytest fixture -- an in-memory sqlite3 connection that loads dist/vec0. Explains why `make loadable` must run before the Python suites, and is the recipe for reproducing any test by hand."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "tests/conftest.py"
+start = 5
+end = 12
+render = { kind = "full" }
 
 [[batches]]
 id = "5.3"
-descriptor = "sqlite-vec.c: vec0_user_column_kind enum"
-justification = "The 4 user-column kinds (vector/partition/auxiliary/metadata) vec0_vtab classifies every constructor argument into."
-content = { kind = "lines", spans = [ { path = "sqlite-vec.c", start = 3442, end = 3454, render = { kind = "full" } } ] }
+descriptor = "Feature test suites: complete test function roster"
+justification = "Every test function in the five feature-specific suites: general (shadow tables, _info), auxiliary columns, metadata columns -- the largest, including test_idxstr, test_vtab_in and test_stress -- partition keys, and KNN distance constraints. tests/test-loadable.py is a separate 2577-line legacy suite not covered here."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 79
+end = 79
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-auxiliary.py"
+start = 111
+end = 111
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-general.py"
+start = 10
+end = 10
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-general.py"
+start = 25
+end = 25
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-knn-distance-constraints.py"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 7
+end = 7
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 19
+end = 19
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 51
+end = 51
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 138
+end = 138
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 171
+end = 171
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 193
+end = 193
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 242
+end = 242
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 267
+end = 267
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 295
+end = 295
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 341
+end = 341
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 372
+end = 372
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 435
+end = 435
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-metadata.py"
+start = 575
+end = 575
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-partition-keys.py"
+start = 5
+end = 5
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-partition-keys.py"
+start = 21
+end = 21
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-partition-keys.py"
+start = 34
+end = 34
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
+[[batches.content.spans]]
+path = "tests/test-partition-keys.py"
+start = 56
+end = 56
+render = { kind = "truncated", pattern = '^def [a-z_0-9]+' }
 
 [[batches]]
 id = "5.4"
-descriptor = "sqlite-vec.c: per-column-kind definition structs"
-justification = "Vec0DistanceMetrics (the 3 metric values), VectorColumnDefinition (name/dimensions/element_type/distance_metric), Vec0PartitionColumnDefinition, and Vec0MetadataColumnDefinition — the field-level shape backing 5.3's 4 column kinds. Vec0AuxiliaryColumnDefinition (byte-identical to Vec0PartitionColumnDefinition: int type, char *name, int name_length) is elided."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 2236, end = 2254, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 2256, end = 2256, render = { kind = "ellipsis" } },
-  { path = "sqlite-vec.c", start = 2261, end = 2265, render = { kind = "full" } },
-] }
+descriptor = "examples/ listing (complete)"
+justification = "Every example directory -- the per-language usage surface: bun, c, deno, two Go variants (cgo and ncruces WASM), node (two), python, ruby, rust, sqlite, wasm, plus python-recipes, the nbc-headlines notebook walkthrough, and the two build shims the Makefile compiles against (sqlite3-cli, wasm)."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
 
 [[batches]]
 id = "5.5"
-descriptor = "sqlite-vec.c: idxStr kind enum"
-justification = "The literal char values (VEC0_IDXSTR_KIND_KNN_MATCH='{', etc.) backing ARCHITECTURE.md's idxStr spec (5.2). Decorative section-marker comments between values are elided; the per-value explanatory comments are kept."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 5305, end = 5305, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5309, end = 5312, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5314, end = 5314, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5316, end = 5317, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5320, end = 5320, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5323, end = 5324, render = { kind = "full" } },
-] }
+descriptor = "Python example, end to end"
+justification = "The shortest complete working program in the repo: load the extension via the sqlite_vec package, create a vec0 table with an embedding float[4] column, and run a MATCH / ORDER BY distance / LIMIT query with a struct-packed float32 query vector. Concrete counterpart to the SQL in 1.7-1.9."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "examples/simple-python/demo.py"
+start = 13
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "examples/simple-python/demo.py"
+start = 32
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "examples/simple-python/demo.py"
+start = 41
+end = 52
+render = { kind = "full" }
 
 [[batches]]
 id = "5.6"
-descriptor = "sqlite-vec.c: vec0 virtual-table method roster (locations)"
-justification = "Every sqlite3_module lifecycle method vec0 implements — Create/Connect/Disconnect/Destroy/Open/Close/BestIndex/Filter/Rowid/Next/Eof/Column(_fullscan/_point/_knn)/Update/ShadowName/Begin/Sync/Commit/Rollback — as a name-only roster so no method's existence is missed."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 5166, end = 5166, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5171, end = 5171, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5177, end = 5177, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5183, end = 5183, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5285, end = 5285, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5296, end = 5296, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 5368, end = 5368, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7324, end = 7324, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7356, end = 7356, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7378, end = 7378, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7414, end = 7414, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7441, end = 7441, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7516, end = 7516, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7600, end = 7600, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 7678, end = 7678, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 8946, end = 8946, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 8965, end = 8965, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 9015, end = 9015, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 9019, end = 9019, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 9044, end = 9044, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 9048, end = 9048, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "bindings/ listings (complete)"
+justification = "The three language bindings shipped from this repo: a Go patch against ncruces/go-sqlite3, the Python extra-init module that sqlite-dist.toml injects into the pip package, and the Rust crate with its templated Cargo.toml, cc build script and lib.rs."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "bindings"
+entries = "all"
+[[batches.content.groups]]
+parent = "bindings/go"
+entries = "all"
+[[batches.content.groups]]
+parent = "bindings/python"
+entries = "all"
+[[batches.content.groups]]
+parent = "bindings/rust"
+entries = "all"
+[[batches.content.groups]]
+parent = "bindings/rust/src"
+entries = "all"
 
 [[batches]]
 id = "5.7"
-descriptor = "sqlite-vec.c: KNN merge_sorted_lists (core algorithm)"
-justification = "How per-chunk top-k results get merged into a global top-k during a KNN scan — the core of 'how does KNN search actually work' at the algorithm level. The pairwise-comparison branch that closes the loop is elided (same shape as the two arms shown)."
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 5771, end = 5784, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 5785, end = 5785, render = { kind = "ellipsis" } },
-] }
-
-# ============================== TIER 6 — scalar & other table-function internals ==============================
-
-[[batches]]
-id = "6.1"
-descriptor = "sqlite-vec.c: scalar SQL function roster (locations)"
-justification = "Name-only roster of every C symbol in the '#pragma region scalar functions' block: 16 one-to-one implementations (matching reference.yaml's constructors/op/distance/quantization sections to exact source lines) plus the shared _static_text_func backing vec_version/vec_debug (registered via separate sqlite3_create_function_v2 calls just above 4.3's aFunc array, not through the array itself) — 18 registered scalar functions total from these 17 symbols."
-predecessor = "4.2"
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 1078, end = 1078, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1096, end = 1096, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1113, end = 1113, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1131, end = 1131, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1151, end = 1151, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1193, end = 1193, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1234, end = 1234, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1275, end = 1275, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1329, end = 1329, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1346, end = 1346, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1415, end = 1415, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1459, end = 1459, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1516, end = 1516, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1574, end = 1574, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1690, end = 1690, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1740, end = 1740, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 1789, end = 1789, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "Documentation site listings (complete)"
+justification = "Every page of the VitePress site: getting-started, features (knn, vec0), the eleven per-language 'using' pages, the guides/ directory, and api-reference, compiling and versioning, plus the build-ref generator that produces api-reference.md from reference.yaml."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "site"
+entries = "all"
+[[batches.content.groups]]
+parent = "site/features"
+entries = "all"
+[[batches.content.groups]]
+parent = "site/getting-started"
+entries = "all"
+[[batches.content.groups]]
+parent = "site/using"
+entries = "all"
 
 [[batches]]
-id = "6.2"
-descriptor = "sqlite-vec.c: vec_f32 body"
-justification = "Full implementation of the float32 constructor — refines the roster with the actual BLOB/JSON parsing + subtype-tagging logic; vec_bit/vec_int8 follow the same shape."
-predecessor = "6.1"
-content = { kind = "lines", spans = [ { path = "sqlite-vec.c", start = 1078, end = 1095, render = { kind = "full" } } ] }
+id = "5.8"
+descriptor = "vec0 column-type guide: the three non-vector options"
+justification = "The user-facing framing of metadata columns, partition keys and auxiliary columns, with one constructor showing all three syntaxes (bare `label text`, `partition key`, and the `+` prefix for auxiliary). The prose complement to the enums in 2.8 and 2.15."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/features/vec0.md"
+start = 5
+end = 23
+render = { kind = "full" }
 
 [[batches]]
-id = "6.3"
-descriptor = "sqlite-vec.c: vec_slice signature + bounds validation"
-justification = "The start/end bounds-checking logic behind the matryoshka-embedding truncation pattern (vec_slice + vec_normalize): the first of 5 validation branches (negative start/end, out-of-range start/end, start>end) after the argument parsing shown in the signature span; the remaining 4 follow the same `if (...) { sqlite3_result_error(...); goto done; }` shape."
-predecessor = "6.1"
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 1574, end = 1585, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 1592, end = 1599, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 1600, end = 1600, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "6.4"
-descriptor = "sqlite-vec.c: vec_quantize_binary signature + core loop"
-justification = "The bit-packing logic (0/1 per element based on sign) behind the binary-quantization scalar function, after the argument-parsing/validation shown in the signature span; the FLOAT32 case shown is mirrored by an INT8 case (elided) with a BIT case that's simply rejected as unsupported."
-predecessor = "6.1"
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 1346, end = 1358, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 1385, end = 1393, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 1394, end = 1394, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "6.5"
-descriptor = "sqlite-vec.c: vec_each table function (struct + full method roster)"
-justification = "Full cursor struct for the simplest table function in the file (`CREATE TABLE x(value, vector hidden)`) plus a name-only roster of all 10 sqlite3_module lifecycle methods it implements (Connect/Disconnect/Open/Close/BestIndex/Filter/Rowid/Next/Eof/Column) — a good orientation exemplar for the pattern vec0/vec_npy_each/vec_static_blobs also follow."
-predecessor = "4.2"
-content = { kind = "lines", spans = [
-  { path = "sqlite-vec.c", start = 2427, end = 2441, render = { kind = "full" } },
-  { path = "sqlite-vec.c", start = 2444, end = 2444, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2467, end = 2467, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2473, end = 2473, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2484, end = 2484, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2493, end = 2493, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2522, end = 2522, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2544, end = 2544, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2550, end = 2550, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2555, end = 2555, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "sqlite-vec.c", start = 2561, end = 2561, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-# ============================== TIER 7 — tests ==============================
-
-[[batches]]
-id = "7.1"
-descriptor = "tests/ directory listing"
-justification = "27 entries spanning pytest suites, syrupy snapshots, a Rust scratch harness, C unit tests, and 5 sub-project directories (afbd/correctness/fuzz/leak-fixtures/minimum) — must be seen together so no test category is assumed absent."
-content = { kind = "fs", groups = [ { parent = "tests", entries = "all" } ] }
-
-[[batches]]
-id = "7.2"
-descriptor = "tests/conftest.py: the shared db fixture"
-justification = "Every pytest test in tests/ depends on this fixture (loads dist/vec0 into an in-memory sqlite3 connection)."
-content = { kind = "lines", spans = [ { path = "tests/conftest.py", start = 1, end = 12, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "7.3"
-descriptor = "Feature-specific pytest test rosters, locations (metadata/auxiliary/partition-keys/knn-distance)"
-justification = "Name-only roster of every test function across test-metadata.py, test-auxiliary.py, test-partition-keys.py, and test-knn-distance-constraints.py — shows exactly which behaviors (constructor limits, types, updates, deletes, KNN, vtab_in, idxstr, stress, errors) are covered per feature."
-content = { kind = "lines", spans = [
-  { path = "tests/test-partition-keys.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-partition-keys.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-partition-keys.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-partition-keys.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-auxiliary.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-knn-distance-constraints.py", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 193, end = 193, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 242, end = 242, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 267, end = 267, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 295, end = 295, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 341, end = 341, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 435, end = 435, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "tests/test-metadata.py", start = 575, end = 575, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "7.4"
-descriptor = "tests/test-loadable.py: full test roster (locations)"
-justification = "The canonical 2577-line, 47-test end-to-end suite — every scalar function, every vec0 lifecycle behavior, and vec_each/vec_npy_each all get a dedicated test. This name-only roster is the single best 'is X tested and where' answer in the whole fixture."
-content = { kind = "lines", spans = [
-  { path = "tests/test-loadable.py", start = 149, end = 149, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 267, end = 267, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 281, end = 281, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 291, end = 291, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 298, end = 298, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 303, end = 303, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 309, end = 309, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 328, end = 328, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 385, end = 385, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 404, end = 404, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 427, end = 427, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 448, end = 448, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 510, end = 510, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 533, end = 533, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 582, end = 582, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 594, end = 594, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 650, end = 650, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 666, end = 666, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 694, end = 694, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 722, end = 722, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 735, end = 735, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 742, end = 742, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 750, end = 750, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 754, end = 754, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 954, end = 954, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1012, end = 1012, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1040, end = 1040, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1173, end = 1173, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1234, end = 1234, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1390, end = 1390, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1424, end = 1424, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1542, end = 1542, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1607, end = 1607, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1631, end = 1631, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1664, end = 1664, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1783, end = 1783, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1846, end = 1846, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 1926, end = 1926, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2003, end = 2003, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2158, end = 2158, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2211, end = 2211, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2327, end = 2327, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2419, end = 2419, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2471, end = 2471, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2513, end = 2513, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2542, end = 2542, render = { kind = "full" } },
-  { path = "tests/test-loadable.py", start = 2564, end = 2564, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.5"
-descriptor = "tests/test-loadable.py: test_limits (concrete numeric limits)"
-justification = "The only place the concrete enforced limits appear as literal values: max dimension 8192, max chunk_size ~8200, max KNN k 4096."
-predecessor = "7.4"
-content = { kind = "lines", spans = [ { path = "tests/test-loadable.py", start = 270, end = 277, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "7.6"
-descriptor = "tests/__snapshots__ directory listing"
-justification = "5 syrupy .ambr snapshot files, one per feature test file — confirms which test files use snapshot-based assertions vs plain asserts (test-loadable.py doesn't have one)."
-content = { kind = "fs", groups = [ { parent = "tests/__snapshots__", entries = "all" } ] }
-
-[[batches]]
-id = "7.7"
-descriptor = "Test sub-projects breadth: afbd, correctness, fuzz, leak-fixtures, minimum"
-justification = "5 self-contained test sub-directories not otherwise covered: libFuzzer harnesses (fuzz/), a recall-vs-exhaustive-search benchmark (correctness/), valgrind leak-check SQL scripts (leak-fixtures/), a minimal standalone C smoke test (minimum/), and an unrelated dataset-specific scratch tool (afbd/)."
-content = { kind = "fs", groups = [
-  { parent = "tests/afbd", entries = "all" },
-  { parent = "tests/correctness", entries = "all" },
-  { parent = "tests/fuzz", entries = "all" },
-  { parent = "tests/leak-fixtures", entries = "all" },
-  { parent = "tests/minimum", entries = "all" },
-] }
-
-# ============================== TIER 8 — CI / release ==============================
-
-[[batches]]
-id = "8.1"
-descriptor = ".github/ directory listing (workflows + sponsor logos)"
-justification = "3 workflow files and 13 sponsor-logo image assets (referenced by README's sponsor section)."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-  { parent = ".github/logos", entries = "all" },
-] }
-
-[[batches]]
-id = "8.2"
-descriptor = "CI job roster: test.yaml (full) + release.yaml (packaging-only jobs)"
-justification = "Every CI job name in test.yaml, in file order — the full test matrix (linux/macos/windows x86_64+aarch64, android, ios, wasm32, pyodide, cosmopolitan, ncruces-go, minimum) — plus release.yaml's dist and upload-crate jobs, the only two release.yaml jobs that don't reuse a test.yaml build-target name (release.yaml's other build-* jobs mirror test.yaml's platform matrix under the same names; its build-ncruces-go is disabled via `if: false`)."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/test.yaml", start = 9, end = 9, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 22, end = 22, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 38, end = 38, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 53, end = 53, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 73, end = 73, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 86, end = 86, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 121, end = 121, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 164, end = 164, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 180, end = 180, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 198, end = 198, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 229, end = 229, render = { kind = "full" } },
-  { path = ".github/workflows/test.yaml", start = 245, end = 245, render = { kind = "full" } },
-  { path = ".github/workflows/release.yaml", start = 182, end = 182, render = { kind = "full" } },
-  { path = ".github/workflows/release.yaml", start = 311, end = 311, render = { kind = "full" } },
-] }
-
-# ============================== TIER 9 — language bindings ==============================
-
-[[batches]]
-id = "9.1"
-descriptor = "bindings/ directory listing"
-justification = "Breadth over the 3 binding dirs (go/python/rust) and their contents before diving into any one — go/ only has the ncruces patch, python/ only has extra_init.py, rust/ is a full crate."
-content = { kind = "fs", groups = [
-  { parent = "bindings", entries = "all" },
-  { parent = "bindings/go", entries = "all" },
-  { parent = "bindings/go/ncruces", entries = "all" },
-  { parent = "bindings/python", entries = "all" },
-  { parent = "bindings/rust", entries = "all" },
-  { parent = "bindings/rust/src", entries = "all" },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "bindings/python/extra_init.py: serialization helpers"
-justification = "serialize_float32/serialize_int8 — the Python-specific glue for packing vectors into sqlite-vec's raw-bytes format, used by every Python example."
-content = { kind = "lines", spans = [ { path = "bindings/python/extra_init.py", start = 1, end = 9, render = { kind = "full" } } ] }
-
-# ============================== TIER 10 — examples ==============================
-
-[[batches]]
-id = "10.1"
-descriptor = "examples/ directory listing"
-justification = "16 example dirs — most are the same KNN demo ported per-language/runtime (simple-*), a few are distinct (nbc-headlines notebook pipeline, python-recipes, sqlite3-cli, wasm)."
-content = { kind = "fs", groups = [ { parent = "examples", entries = "all" } ] }
-
-[[batches]]
-id = "10.2"
-descriptor = "examples/simple-python/demo.py (canonical exemplar: setup, create, insert, KNN)"
-justification = "The most readable full instance of the recurring demo pattern: load extension (13-16), create vec0 table (32), insert loop over 5 float[4] vectors (34-39), and the KNN query itself (41-52) — every other simple-* dir ports this same shape into its language. The item-list literal and the printed sqlite/vec versions are elided as non-essential to the pattern."
-content = { kind = "lines", spans = [
-  { path = "examples/simple-python/demo.py", start = 1, end = 16, render = { kind = "full" } },
-  { path = "examples/simple-python/demo.py", start = 17, end = 17, render = { kind = "ellipsis" } },
-  { path = "examples/simple-python/demo.py", start = 32, end = 32, render = { kind = "full" } },
-  { path = "examples/simple-python/demo.py", start = 33, end = 33, render = { kind = "ellipsis" } },
-  { path = "examples/simple-python/demo.py", start = 34, end = 39, render = { kind = "full" } },
-  { path = "examples/simple-python/demo.py", start = 40, end = 40, render = { kind = "ellipsis" } },
-  { path = "examples/simple-python/demo.py", start = 41, end = 52, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.3"
-descriptor = "Per-language simple-* example directory contents"
-justification = "Full file listing for every simple-* example dir (entrypoint + build/package manifest) — confirms each ports the 10.2 demo pattern with language-appropriate tooling without opening every one."
-content = { kind = "fs", groups = [
-  { parent = "examples/simple-bun", entries = "all" },
-  { parent = "examples/simple-c", entries = "all" },
-  { parent = "examples/simple-deno", entries = "all" },
-  { parent = "examples/simple-go-cgo", entries = "all" },
-  { parent = "examples/simple-go-ncruces", entries = "all" },
-  { parent = "examples/simple-node", entries = "all" },
-  { parent = "examples/simple-node2", entries = "all" },
-  { parent = "examples/simple-ruby", entries = "all" },
-  { parent = "examples/simple-rust", entries = "all" },
-  { parent = "examples/simple-sqlite", entries = "all" },
-  { parent = "examples/simple-wasm", entries = "all" },
-] }
-
-[[batches]]
-id = "10.4"
-descriptor = "Non-simple example directories breadth"
-justification = "File listings for the 4 non-simple example directories: a 3-notebook scrape/build/search pipeline, a README for statically-compiling sqlite-vec into the sqlite3 CLI, the WASM demo page, and an OpenAI-embeddings recipe script."
-content = { kind = "fs", groups = [
-  { parent = "examples/nbc-headlines", entries = "all" },
-  { parent = "examples/sqlite3-cli", entries = "all" },
-  { parent = "examples/wasm", entries = "all" },
-  { parent = "examples/python-recipes", entries = "all" },
-] }
-
-# ============================== TIER 11 — docs site (remainder) ==============================
-
-[[batches]]
-id = "11.1"
-descriptor = "site/ tree listing (root, getting-started, guides, using, features)"
-justification = "The vitepress docs-site's full page inventory — critically, site/guides/ has 3 literally-empty stub pages (classifiers.md, hybrid-search.md, semantic-search.md) alongside substantive ones; listing every filename prevents assuming the stubs don't exist or, conversely, assuming they have real content."
-content = { kind = "fs", groups = [
-  { parent = "site", entries = "all" },
-  { parent = "site/features", entries = "all" },
-  { parent = "site/getting-started", entries = "all" },
-  { parent = "site/guides", entries = "all" },
-  { parent = "site/using", entries = "all" },
-] }
-
-[[batches]]
-id = "11.2"
-descriptor = "site/getting-started/introduction.md"
-justification = "The intro page is itself just unwritten section-header stubs (Intro to Vector Databases / Vector Search in SQLite / Getting help) — honestly reflects the doc's current WIP state rather than implying more exists."
-content = { kind = "lines", spans = [ { path = "site/getting-started/introduction.md", start = 1, end = 7, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "11.3"
-descriptor = "site/getting-started/installation.md: package-manager commands"
-justification = "Per-language install commands for pip/npm/bun/deno/gem — the fullest 'how do I install this' answer in the fixture. The remaining install targets (cargo, go ×2 build tags, datasette, sqlite-utils) follow the identical one-command-per-manager code-group pattern, elided here."
-content = { kind = "lines", spans = [
-  { path = "site/getting-started/installation.md", start = 6, end = 27, render = { kind = "full" } },
-  { path = "site/getting-started/installation.md", start = 28, end = 28, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "11.4"
-descriptor = "site/versioning.md"
-justification = "The semver policy that matters most for change-safety: only the functions/modules registered in the DEFAULT sqlite3_vec_init entrypoint (4.3) are API-stable; the separate, later sqlite3_vec_numpy_init entrypoint in sqlite-vec.c and all language bindings are explicitly unstable. The enumerated list of what counts as a 'breaking change' is elided."
-content = { kind = "lines", spans = [
-  { path = "site/versioning.md", start = 1, end = 9, render = { kind = "full" } },
-  { path = "site/versioning.md", start = 10, end = 10, render = { kind = "ellipsis" } },
-  { path = "site/versioning.md", start = 16, end = 19, render = { kind = "full" } },
-] }
-
-# ============================== TIER 12 — misc root ==============================
-
-[[batches]]
-id = "12.1"
-descriptor = "Dual license + security policy"
-justification = "Confirms MIT/Apache-2.0 dual licensing (first line of each LICENSE file, matching sqlite-dist.toml's 'MIT OR Apache') plus the 1-line SECURITY.md vulnerability-reporting contact, without spending budget on full license text."
-content = { kind = "lines", spans = [
-  { path = "LICENSE-APACHE", start = 1, end = 1, render = { kind = "full" } },
-  { path = "LICENSE-MIT", start = 1, end = 1, render = { kind = "full" } },
-  { path = "SECURITY.md", start = 1, end = 1, render = { kind = "full" } },
-] }
+id = "5.9"
+descriptor = "KNN query guide: the two supported forms"
+justification = "The plain `limit 10` form, which only works on SQLite 3.41+ and is otherwise replaced by a `k = 10` constraint, and the framing that vec0 is faster and more compact while manual scalar-function KNN over ordinary tables is more flexible. A gotcha not stated in the README."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/features/knn.md"
+start = 37
+end = 46
+render = { kind = "full" }

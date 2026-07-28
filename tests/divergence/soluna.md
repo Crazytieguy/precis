@@ -1,328 +1,332 @@
-Score(3000)=0.720 I=0.837 C=0.619 ns_rows≤3K=13/44 (reached=6 partial=3 missing=4)
+Score(3000)=0.556 I=0.793 C=0.389 ns_rows≤3K=21/48 (reached=6 partial=0 missing=15)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 61 | 61 | listing of '.' |  |  | 1.000 |
-| ns | 61 |  | 61 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 71 | 10 | listing of 'bin' |  |  | 1.000 |
-| walker |  | 84 | 13 | listing of 'asset' |  |  | 1.000 |
-| ns | 88 |  | 27 | asset/, bin/, build/ listing | 1.2 |  | 0.953 |
-| walker |  | 104 | 20 | listing of 'web' |  |  | 0.953 |
-| walker |  | 126 | 22 | listing of 'script' |  |  | 0.954 |
-| ns | 134 |  | 46 | 3rd/ + clibs/ listing: vendored deps and their build glue | 1.3 |  | 0.773 |
-| walker |  | 140 | 14 | lua decl names surface in make.lua |  |  | 0.773 |
-| walker |  | 140 | 0 | lua decl at make.lua:4 |  |  | 0.773 |
-| walker |  | 150 | 10 | listing of 'web/static' |  |  | 0.774 |
-| walker |  | 176 | 26 | listing of 'clibs' |  |  | 0.774 |
-| walker |  | 179 | 3 | listing of 'clibs/datalist' |  |  | 0.776 |
-| walker |  | 182 | 3 | listing of 'clibs/ltask' |  |  | 0.782 |
-| walker |  | 185 | 3 | listing of 'clibs/lua' |  |  | 0.792 |
-| walker |  | 188 | 3 | listing of 'clibs/yoga' |  |  | 0.806 |
-| walker |  | 191 | 3 | listing of 'clibs/zip' |  |  | 0.824 |
-| walker |  | 208 | 17 | listing of 'web/content' |  |  | 0.825 |
-| walker |  | 212 | 4 | listing of 'web/content/docs' |  |  | 0.825 |
-| walker |  | 223 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.825 |
-| walker |  | 223 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.825 |
-| ns | 224 |  | 90 | src/platform/ per-OS IME glue listing | 1.4 |  | 0.680 |
-| walker |  | 241 | 18 | listing of 'web/assets' |  |  | 0.681 |
-| walker |  | 309 | 68 | README headline in README.md |  |  | 0.682 |
-| ns | 311 |  | 87 | src/ Lua subdirs listing: lualib, service, data | 1.5 |  | 0.557 |
-| walker |  | 316 | 7 | listing of '.github' |  |  | 0.558 |
-| walker |  | 323 | 7 | listing of '.github/workflows' |  |  | 0.559 |
-| walker |  | 337 | 14 | lua decl names surface in script/datalist2c.lua |  |  | 0.559 |
-| walker |  | 337 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.559 |
-| walker |  | 351 | 14 | lua decl names surface in script/lua2c.lua |  |  | 0.559 |
-| walker |  | 351 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.559 |
-| walker |  | 363 | 12 | listing of 'web/static/fonts' |  |  | 0.559 |
-| walker |  | 388 | 25 | listing of 'clibs/soluna' |  |  | 0.656 |
-| ns | 398 |  | 87 | test/ directory listing (runnable examples) | 1.6 |  | 0.557 |
-| walker |  | 419 | 31 | listing of 'web/layouts' |  |  | 0.560 |
-| walker |  | 422 | 3 | listing of 'web/layouts/docs' |  |  | 0.560 |
-| walker |  | 425 | 3 | listing of 'web/layouts/playframe' |  |  | 0.561 |
-| walker |  | 432 | 7 | listing of 'web/layouts/partials' |  |  | 0.562 |
-| walker |  | 448 | 16 | listing of 'web/layouts/_default' |  |  | 0.564 |
-| ns | 488 |  | 90 | docs/ directory listing (Lua API reference stubs) | 1.7 |  | 0.500 |
-| walker |  | 538 | 90 | listing of 'docs' |  |  | 0.647 |
-| walker |  | 607 | 69 | headings outline in README.md |  |  | 0.648 |
-| walker |  | 627 | 20 | lua decl names surface in clibs/soluna/compile_lua.lua |  |  | 0.648 |
-| walker |  | 627 | 0 | lua decl at clibs/soluna/compile_lua.lua:4 |  |  | 0.648 |
-| walker |  | 666 | 39 | lua decl names surface in docs/args.lua |  |  | 0.648 |
-| walker |  | 666 | 0 | lua decl at docs/args.lua:18 |  |  | 0.648 |
-| walker |  | 666 | 0 | lua decl at docs/args.lua:41 |  |  | 0.648 |
-| walker |  | 700 | 34 | listing of 'web/layouts/shortcodes' |  |  | 0.654 |
-| ns | 705 |  | 217 | README lede: what Soluna is | 1.8 |  | 0.607 |
-| walker |  | 724 | 24 | listing of '3rd' |  |  | 0.607 |
-| walker |  | 838 | 114 | README.md section #0 |  |  | 0.660 |
-| walker |  | 864 | 26 | README.md section #5 |  |  | 0.660 |
-| ns | 878 |  | 173 | README build/doc pointers | 1.9 |  | 0.627 |
-| walker |  | 909 | 45 | README.md section #1 |  |  | 0.640 |
-| walker |  | 1034 | 125 | lua meta-file at docs/url.lua |  |  | 0.640 |
-| walker |  | 1065 | 31 | README.md section #4 |  |  | 0.640 |
-| walker |  | 1105 | 40 | README.md section #2 |  |  | 0.658 |
-| ns | 1118 |  | 240 | web/ + script/ + .github/ directory listing | 1.10 |  | 0.697 |
-| walker |  | 1259 | 154 | lua meta-file at docs/font_system.lua |  |  | 0.697 |
-| walker |  | 1301 | 42 | lua decl names surface in clibs/soluna/compile_shader.lua |  |  | 0.697 |
-| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:5 |  |  | 0.697 |
-| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:27 |  |  | 0.697 |
-| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:44 |  |  | 0.697 |
-| ns | 1455 |  | 337 | .gitmodules: vendored dependency URLs | 1.11 |  | 0.651 |
-| walker |  | 1626 | 325 | listing of 'src' |  |  | 0.669 |
-| walker |  | 1638 | 12 | c decl names surface in src/loginfo.h |  |  | 0.669 |
-| walker |  | 1643 | 5 | listing of 'src/data' |  |  | 0.669 |
-| walker |  | 1658 | 15 | c decl names surface in src/luabuffer.h |  |  | 0.669 |
-| walker |  | 1674 | 16 | listing of 'src/platform' |  |  | 0.675 |
-| walker |  | 1696 | 22 | listing of 'src/platform/wasm' |  |  | 0.686 |
-| walker |  | 1733 | 37 | c decl names surface in src/ime_state.h |  |  | 0.686 |
-| walker |  | 1750 | 17 | c decl names surface in src/version.h |  |  | 0.686 |
-| walker |  | 1769 | 19 | c decl at src/luabuffer.h:8 |  |  | 0.686 |
-| ns | 1776 |  | 321 | src/ directory listing (engine C source + subdirs) | 1.12 |  | 0.731 |
-| walker |  | 1809 | 40 | c decl names surface in src/spritemgr.h |  |  | 0.731 |
-| walker |  | 1851 | 42 | c decl names surface in src/render_bindings.h |  |  | 0.731 |
-| walker |  | 1871 | 20 | c decl at src/render_bindings.h:6 |  |  | 0.731 |
-| walker |  | 1895 | 24 | listing of 'src/service' |  |  | 0.738 |
-| walker |  | 1962 | 67 | c decl names surface in src/ime_char_filter.h |  |  | 0.738 |
-| walker |  | 1984 | 22 | c decl at src/ime_char_filter.h:41 |  |  | 0.738 |
-| walker |  | 2012 | 28 | c decl at src/ime_char_filter.h:27 |  |  | 0.738 |
-| walker |  | 2040 | 28 | c decl at src/ime_char_filter.h:47 |  |  | 0.738 |
-| walker |  | 2068 | 28 | c decl at src/ime_char_filter.h:52 |  |  | 0.738 |
-| walker |  | 2137 | 69 | c decl names surface in src/tmpbuffer.h |  |  | 0.738 |
-| walker |  | 2156 | 19 | c decl at src/tmpbuffer.h:7 |  |  | 0.738 |
-| walker |  | 2184 | 28 | c decl at src/tmpbuffer.h:15 |  |  | 0.738 |
-| walker |  | 2214 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.738 |
-| walker |  | 2224 | 10 | c includes in src/loginfo.h |  |  | 0.738 |
-| walker |  | 2239 | 15 | listing of 'src/platform/linux' |  |  | 0.748 |
-| walker |  | 2254 | 15 | listing of 'src/platform/windows' |  |  | 0.759 |
-| ns | 2274 |  | 498 | luamods.c: forward declarations of every luaopen_* module | 2.1 |  | 0.707 |
-| walker |  | 2326 | 72 | c decl names surface in src/platform/windows/soluna_windows_ime.h |  |  | 0.707 |
-| walker |  | 2409 | 83 | c decl names surface in src/batch.h |  |  | 0.707 |
-| walker |  | 2419 | 10 | c decl at src/batch.h:13 |  |  | 0.707 |
-| walker |  | 2429 | 10 | c includes in src/batch.h |  |  | 0.707 |
-| walker |  | 2446 | 17 | listing of 'src/platform/macos' |  |  | 0.720 |
-| walker |  | 2537 | 91 | c decl names surface in src/srbuffer.h |  |  | 0.720 |
-| walker |  | 2549 | 12 | c decl at src/srbuffer.h:7 |  |  | 0.720 |
-| walker |  | 2595 | 46 | c decl at src/spritemgr.h:16 |  |  | 0.720 |
-| walker |  | 2605 | 10 | c decl names surface in src/font_system.c |  |  | 0.720 |
-| walker |  | 2615 | 10 | c decl names surface in src/lfs.c |  |  | 0.720 |
-| walker |  | 2625 | 10 | c decl names surface in src/openurl.c |  |  | 0.720 |
-| walker |  | 2635 | 10 | c decl names surface in src/truetype.c |  |  | 0.720 |
-| walker |  | 2645 | 10 | c decl names surface in src/writelog.c |  |  | 0.720 |
-| walker |  | 2751 | 106 | c decl names surface in src/sprite_submit.h |  |  | 0.720 |
-| walker |  | 2762 | 11 | c decl at src/sprite_submit.h:27 |  |  | 0.720 |
-| walker |  | 2773 | 11 | c decl at src/sprite_submit.h:56 |  |  | 0.720 |
-| walker |  | 2785 | 12 | c decl at src/sprite_submit.h:9 |  |  | 0.720 |
-| walker |  | 2800 | 15 | c decl at src/sprite_submit.h:43 |  |  | 0.720 |
-| walker |  | 2818 | 18 | c decl at src/sprite_submit.h:66 |  |  | 0.720 |
-| walker |  | 2836 | 18 | c decl at src/sprite_submit.h:71 |  |  | 0.720 |
-| walker |  | 2857 | 21 | c decl at src/sprite_submit.h:15 |  |  | 0.720 |
-| walker |  | 2878 | 21 | c decl at src/sprite_submit.h:21 |  |  | 0.720 |
-| walker |  | 2899 | 21 | c decl at src/sprite_submit.h:76 |  |  | 0.720 |
-| walker |  | 2921 | 22 | c decl at src/sprite_submit.h:81 |  |  | 0.720 |
-| walker |  | 2936 | 15 | c includes in src/render_bindings.h |  |  | 0.720 |
-| ns | 3024 |  | 750 | luamods.c: the name -> module registration table | 2.2 |  | 0.667 |
-| walker |  | 3049 | 113 | c decl names surface in src/transform.h |  |  | 0.667 |
-| walker |  | 3062 | 13 | c decl at src/transform.h:16 |  |  | 0.667 |
-| walker |  | 3072 | 10 | c includes in src/transform.h |  |  | 0.667 |
-| walker |  | 3187 | 115 | c decl names surface in src/platform/linux/soluna_linux_ime.h |  |  | 0.667 |
-| walker |  | 3197 | 10 | c includes in src/platform/linux/soluna_linux_ime.h |  |  | 0.667 |
-| walker |  | 3251 | 54 | c decl at src/ime_state.h:7 |  |  | 0.667 |
-| walker |  | 3306 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.667 |
-| walker |  | 3361 | 55 | listing of 'src/lualib' |  |  | 0.713 |
-| walker |  | 3424 | 63 | c decl at src/loginfo.h:6 |  |  | 0.713 |
-| walker |  | 3444 | 20 | c includes in src/ime_state.h |  |  | 0.713 |
-| walker |  | 3464 | 20 | c includes in src/spritemgr.h |  |  | 0.713 |
-| walker |  | 3484 | 20 | c includes in src/srbuffer.h |  |  | 0.713 |
-| ns | 3633 |  | 609 | docs/soluna.lua: core `soluna` module API | 3.1 |  | 0.645 |
-| walker |  | 3641 | 157 | c decl names surface in src/font_define.h |  |  | 0.645 |
-| walker |  | 3651 | 10 | c decl at src/font_define.h:31 |  |  | 0.645 |
-| walker |  | 3666 | 15 | c decl at src/font_define.h:26 |  |  | 0.645 |
-| walker |  | 3674 | 8 | c includes in src/font_define.h |  |  | 0.645 |
-| walker |  | 3692 | 18 | c decl body at src/font_define.h:31 |  |  | 0.645 |
-| walker |  | 3759 | 67 | c decl at src/batch.h:6 |  |  | 0.645 |
-| walker |  | 3831 | 72 | c decl names surface in src/appevent.h |  |  | 0.645 |
-| walker |  | 3850 | 19 | c decl at src/appevent.h:11 |  |  | 0.645 |
-| walker |  | 3869 | 19 | c decl at src/appevent.h:33 |  |  | 0.645 |
-| walker |  | 3888 | 19 | c decl at src/appevent.h:58 |  |  | 0.645 |
-| walker |  | 3907 | 19 | c decl at src/appevent.h:84 |  |  | 0.645 |
-| walker |  | 3926 | 19 | c decl at src/appevent.h:99 |  |  | 0.645 |
-| walker |  | 3946 | 20 | c decl at src/appevent.h:115 |  |  | 0.645 |
-| walker |  | 3968 | 22 | c includes in src/tmpbuffer.h |  |  | 0.645 |
-| walker |  | 4005 | 37 | c decl at src/appevent.h:4 |  |  | 0.645 |
-| walker |  | 4028 | 23 | lua decl names surface in src/service/log.lua |  |  | 0.645 |
-| walker |  | 4028 | 0 | lua decl at src/service/log.lua:12 |  |  | 0.645 |
-| walker |  | 4028 | 0 | lua decl at src/service/log.lua:38 |  |  | 0.645 |
-| walker |  | 4051 | 23 | lua decl names surface in src/service/settings.lua |  |  | 0.645 |
-| walker |  | 4051 | 0 | lua decl at src/service/settings.lua:9 |  |  | 0.645 |
-| walker |  | 4051 | 0 | lua decl at src/service/settings.lua:14 |  |  | 0.645 |
-| ns | 4119 |  | 486 | docs/callback.lua: frame-loop callback contract | 3.2 |  | 0.603 |
-| walker |  | 4137 | 86 | c decl names surface in src/platform/macos/soluna_macos_ime.h |  |  | 0.603 |
-| walker |  | 4147 | 10 | c includes in src/platform/macos/soluna_macos_ime.h |  |  | 0.603 |
-| walker |  | 4226 | 79 | c decl at src/font_define.h:11 |  |  | 0.603 |
-| walker |  | 4251 | 25 | lua decl names surface in src/service/gamepad.lua |  |  | 0.603 |
-| walker |  | 4251 | 0 | lua decl at src/service/gamepad.lua:10 |  |  | 0.603 |
-| walker |  | 4251 | 0 | lua decl at src/service/gamepad.lua:15 |  |  | 0.603 |
-| walker |  | 4332 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.603 |
-| walker |  | 4413 | 81 | c decl at src/transform.h:6 |  |  | 0.603 |
-| walker |  | 4624 | 211 | c decl names surface in src/material_util.h |  |  | 0.603 |
-| ns | 4735 |  | 616 | docs/args.lua: Batch/Args types (batch:add, batch:layer) | 3.3 |  | 0.570 |
-| walker |  | 4835 | 211 | c decl names surface in src/truetype.h |  |  | 0.570 |
-| walker |  | 4847 | 12 | c decl at src/truetype.h:147 |  |  | 0.570 |
-| walker |  | 4861 | 14 | c decl at src/truetype.h:23 |  |  | 0.570 |
-| walker |  | 4875 | 14 | c decl at src/truetype.h:34 |  |  | 0.570 |
-| walker |  | 4889 | 14 | c decl at src/truetype.h:83 |  |  | 0.570 |
-| walker |  | 4903 | 14 | c decl at src/truetype.h:111 |  |  | 0.570 |
-| walker |  | 4918 | 15 | c decl at src/truetype.h:44 |  |  | 0.570 |
-| walker |  | 4936 | 18 | c decl at src/truetype.h:94 |  |  | 0.570 |
-| walker |  | 4958 | 22 | c decl at src/truetype.h:160 |  |  | 0.570 |
-| walker |  | 4981 | 23 | c decl at src/truetype.h:123 |  |  | 0.570 |
-| walker |  | 5010 | 29 | c decl at src/truetype.h:17 |  |  | 0.570 |
-| walker |  | 5035 | 25 | c decl at src/truetype.h:52 |  |  | 0.570 |
-| walker |  | 5119 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.570 |
-| walker |  | 5147 | 28 | lua decl names surface in src/lualib/icon.lua |  |  | 0.570 |
-| walker |  | 5147 | 0 | lua decl at src/lualib/icon.lua:10 |  |  | 0.570 |
-| walker |  | 5147 | 0 | lua decl at src/lualib/icon.lua:27 |  |  | 0.570 |
-| walker |  | 5177 | 30 | c includes in src/ime_char_filter.h |  |  | 0.570 |
-| ns | 5186 |  | 451 | docs/file.lua: soluna.file (load/exist/dir/attributes) | 3.4 |  | 0.541 |
-| walker |  | 5209 | 32 | c includes in src/luabuffer.h |  |  | 0.541 |
-| walker |  | 5244 | 35 | c includes in src/material_util.h |  |  | 0.541 |
-| walker |  | 5271 | 27 | c decl names surface in src/material_util.c |  |  | 0.541 |
-| walker |  | 5284 | 13 | c decl at src/openurl.c:88 |  |  | 0.541 |
-| walker |  | 5291 | 7 | lua decl body at src/service/settings.lua:14 |  |  | 0.541 |
-| walker |  | 5331 | 40 | c includes in src/sprite_submit.h |  |  | 0.541 |
-| walker |  | 5369 | 38 | lua decl names surface in src/lualib/util.lua |  |  | 0.541 |
-| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:9 |  |  | 0.541 |
-| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:13 |  |  | 0.541 |
-| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:20 |  |  | 0.541 |
-| walker |  | 5399 | 30 | c decl names surface in src/drawmgr.c |  |  | 0.541 |
-| walker |  | 5429 | 30 | c decl names surface in src/material_blit.c |  |  | 0.541 |
-| walker |  | 5443 | 14 | c decl at src/drawmgr.c:171 |  |  | 0.541 |
-| walker |  | 5457 | 14 | c decl at src/font_system.c:287 |  |  | 0.541 |
-| walker |  | 5471 | 14 | c decl at src/lfs.c:825 |  |  | 0.541 |
-| walker |  | 5490 | 19 | c decl body at src/font_define.h:26 |  |  | 0.541 |
-| walker |  | 5521 | 31 | c decl names surface in src/file.c |  |  | 0.541 |
-| walker |  | 5529 | 8 | lua decl body at src/service/log.lua:38 |  |  | 0.541 |
-| walker |  | 5571 | 42 | lua decl names surface in src/lualib/packageloader.lua |  |  | 0.541 |
-| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:14 |  |  | 0.541 |
-| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:163 |  |  | 0.541 |
-| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:169 |  |  | 0.541 |
-| walker |  | 5586 | 15 | c decl at src/file.c:53 |  |  | 0.541 |
-| walker |  | 5601 | 15 | c decl at src/material_blit.c:53 |  |  | 0.541 |
-| ns | 5606 |  | 420 | docs/image.lua: soluna.image (load, resize) | 3.5 |  | 0.523 |
-| walker |  | 5616 | 15 | c decl at src/writelog.c:76 |  |  | 0.523 |
-| walker |  | 5634 | 18 | c decl at src/material_blit.c:9 |  |  | 0.523 |
-| walker |  | 5668 | 34 | c decl names surface in src/transform.c |  |  | 0.523 |
-| walker |  | 5677 | 9 | c decl at src/transform.c:9 |  |  | 0.523 |
-| walker |  | 5712 | 35 | c decl names surface in src/srbuffer.c |  |  | 0.523 |
-| walker |  | 5723 | 11 | c decl at src/srbuffer.c:14 |  |  | 0.523 |
-| walker |  | 5739 | 16 | c decl at src/truetype.c:127 |  |  | 0.523 |
-| walker |  | 5785 | 46 | lua decl names surface in src/lualib/initsetting.lua |  |  | 0.523 |
-| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:10 |  |  | 0.523 |
-| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:44 |  |  | 0.523 |
-| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:62 |  |  | 0.523 |
-| walker |  | 5832 | 47 | lua decl names surface in src/lualib/main.lua |  |  | 0.523 |
-| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:19 |  |  | 0.523 |
-| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:50 |  |  | 0.523 |
-| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:159 |  |  | 0.523 |
-| walker |  | 5842 | 10 | lua decl at src/lualib/main.lua:183 |  |  | 0.523 |
-| ns | 5854 |  | 248 | docs/font.lua: soluna.font (import, name, cobj) | 3.6 |  | 0.510 |
-| ns | 6106 |  | 252 | docs/material_quad.lua: colored rectangle sprites | 3.7 |  | 0.500 |
-| walker |  | 6229 | 387 | c decl names surface in src/font_manager.h |  |  | 0.500 |
-| walker |  | 6229 | 0 | c decl at src/font_manager.h:22 |  |  | 0.500 |
-| walker |  | 6229 | 0 | c decl at src/font_manager.h:31 |  |  | 0.500 |
-| walker |  | 6235 | 6 | c decl doc at src/font_manager.h:31 |  |  | 0.500 |
-| walker |  | 6282 | 47 | c includes in src/font_manager.h |  |  | 0.500 |
-| walker |  | 6320 | 38 | c decl names surface in src/embedlua.c |  |  | 0.500 |
-| ns | 6328 |  | 222 | soluna.image real export table (image.c) | 4.1 |  | 0.492 |
-| walker |  | 6334 | 14 | c decl at src/embedlua.c:55 |  |  | 0.492 |
-| walker |  | 6372 | 38 | c decl names surface in src/openlibs.c |  |  | 0.492 |
-| walker |  | 6386 | 14 | c decl at src/openlibs.c:11 |  |  | 0.492 |
-| walker |  | 6424 | 38 | c decl names surface in src/render_uniform.c |  |  | 0.492 |
-| walker |  | 6437 | 13 | c decl at src/render_uniform.c:184 |  |  | 0.492 |
-| walker |  | 6454 | 17 | c decl at src/srbuffer.c:25 |  |  | 0.492 |
-| walker |  | 6493 | 39 | c decl names surface in src/material_default.c |  |  | 0.492 |
-| walker |  | 6507 | 14 | c decl at src/material_default.c:150 |  |  | 0.492 |
-| ns | 6633 |  | 305 | soluna.font real export table (font.c) | 4.2 |  | 0.482 |
-| walker |  | 6703 | 196 | lua meta-file at docs/lfs.lua |  |  | 0.482 |
-| ns | 6749 |  | 116 | soluna.font.manager real export table (font.c) | 4.3 |  | 0.477 |
-| walker |  | 6781 | 78 | declaration surface of src/yogaone.cpp |  |  | 0.477 |
-| ns | 6936 |  | 187 | entry.c: per-platform sokol backend selection | 5.1 |  | 0.469 |
-| walker |  | 6983 | 202 | lua meta-file at docs/datalist.lua |  |  | 0.469 |
-| walker |  | 7035 | 52 | lua decl names surface in src/lualib/text.lua |  |  | 0.469 |
-| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:9 |  |  | 0.469 |
-| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:27 |  |  | 0.469 |
-| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:41 |  |  | 0.469 |
-| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:53 |  |  | 0.469 |
-| walker |  | 7053 | 18 | c decl at src/srbuffer.c:122 |  |  | 0.469 |
-| ns | 7086 |  | 150 | entry.c: app_context struct (the C-side global state) | 5.2 |  | 0.466 |
-| ns | 7124 |  | 38 | test/hello.lua + hello.game: minimal entry pair | 6.1 |  | 0.464 |
-| ns | 7254 |  | 130 | test/window.lua + window.game: minimal callback shape | 6.2 |  | 0.459 |
-| walker |  | 7269 | 216 | lua meta-file at docs/zip.lua |  |  | 0.459 |
-| walker |  | 7279 | 10 | lua decl body at src/lualib/util.lua:9 |  |  | 0.459 |
-| walker |  | 7298 | 19 | c decl at src/srbuffer.c:50 |  |  | 0.459 |
-| ns | 7315 |  | 61 | test/test.lua + version.lua + setting.lua: smoke-test scripts | 6.3 |  | 0.457 |
-| walker |  | 7361 | 63 | c includes in src/truetype.h |  |  | 0.457 |
-| walker |  | 7408 | 47 | c decl body at src/transform.h:16 |  |  | 0.457 |
-| walker |  | 7428 | 20 | c decl at src/transform.c:31 |  |  | 0.457 |
-| walker |  | 7476 | 48 | c decl names surface in src/font.c |  |  | 0.457 |
-| walker |  | 7489 | 13 | c decl at src/font.c:159 |  |  | 0.457 |
-| walker |  | 7503 | 14 | c decl at src/font.c:248 |  |  | 0.458 |
-| walker |  | 7751 | 248 | lua meta-file at docs/font.lua |  |  | 0.490 |
-| ns | 7843 |  | 528 | test/sprite.lua: sprite bundle + batch:layer/add example | 6.4 |  | 0.471 |
-| walker |  | 8003 | 252 | lua meta-file at docs/material_mask.lua |  |  | 0.471 |
-| ns | 8244 |  | 401 | test/intersect.lua: batch:point + material.quad hit-testing | 6.5 |  | 0.460 |
-| walker |  | 8255 | 252 | lua meta-file at docs/material_quad.lua |  |  | 0.482 |
-| ns | 8325 |  | 81 | test/ime.lua: complete callback-handler locations (396-line file) | 6.6 |  | 0.480 |
-| ns | 8486 |  | 161 | src/data/settingdefault.dl: concrete default config | 7.1 |  | 0.476 |
-| walker |  | 8511 | 256 | lua meta-file at docs/crypt.lua |  |  | 0.476 |
-| walker |  | 8533 | 22 | c decl at src/transform.c:76 |  |  | 0.476 |
-| walker |  | 8545 | 12 | lua decl body at src/lualib/util.lua:20 |  |  | 0.476 |
-| ns | 8581 |  | 95 | src/service/render.lua: public message-handler locations (462-line file) | 8.1 |  | 0.473 |
-| walker |  | 8603 | 58 | c decl names surface in src/batch.c |  |  | 0.473 |
-| walker |  | 8613 | 10 | c decl at src/batch.c:13 |  |  | 0.473 |
-| ns | 8614 |  | 33 | src/lualib/spritebundle.lua: public M.load/M.loadimage signatures | 9.1 |  | 0.473 |
-| walker |  | 8626 | 13 | c decl at src/batch.c:29 |  |  | 0.473 |
-| walker |  | 8643 | 17 | c decl at src/batch.c:37 |  |  | 0.473 |
-| walker |  | 8664 | 21 | c decl at src/batch.c:8 |  |  | 0.473 |
-| walker |  | 8739 | 75 | lua decl names surface in src/lualib/print_r.lua |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:8 |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:31 |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:71 |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:100 |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:140 |  |  | 0.473 |
-| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:144 |  |  | 0.473 |
-| walker |  | 8751 | 12 | c includes in src/winfile.c |  |  | 0.473 |
-| walker |  | 8761 | 10 | declaration surface of bin/readme.txt |  |  | 0.473 |
-| ns | 8807 |  | 193 | src/lualib/util.lua: func_chain helper | 9.2 |  | 0.468 |
-| walker |  | 8840 | 79 | lua decl names surface in src/service/start.lua |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:22 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:26 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:31 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:48 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:59 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:78 |  |  | 0.468 |
-| walker |  | 8840 | 0 | lua decl at src/service/start.lua:176 |  |  | 0.468 |
-| walker |  | 8852 | 12 | lua decl doc at src/service/start.lua:59 |  |  | 0.468 |
-| walker |  | 8859 | 7 | lua decl body at src/service/start.lua:176 |  |  | 0.468 |
-| walker |  | 8884 | 25 | c decl at src/transform.c:66 |  |  | 0.468 |
-| walker |  | 8910 | 26 | c decl at src/material_util.c:24 |  |  | 0.468 |
-| walker |  | 8924 | 14 | lua decl body at src/service/start.lua:26 |  |  | 0.468 |
-| walker |  | 9011 | 87 | listing of 'test' |  |  | 0.497 |
-| ns | 9034 |  | 227 | soluna.spritemgr + soluna.drawmgr export tables | 10.1 |  | 0.491 |
-| ns | 9286 |  | 252 | soluna.render export table: low-level GPU primitives | 10.2 |  | 0.485 |
-| walker |  | 9384 | 373 | lua meta-file at docs/layout.lua |  |  | 0.485 |
-| ns | 9410 |  | 124 | soluna.zip export table | 10.3 |  | 0.482 |
-| walker |  | 9480 | 96 | lua decl names surface in src/lualib/fontmgr.lua |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:15 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:214 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:252 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:258 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:264 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:290 |  |  | 0.482 |
-| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:297 |  |  | 0.482 |
-| ns | 9508 |  | 98 | soluna.url export table | 10.4 |  | 0.479 |
-| ns | 9646 |  | 138 | nightly.yml: CI build triggers | 11.1 |  | 0.475 |
-| ns | 9750 |  | 104 | pages.yml: CI docs/demo-site deploy trigger | 11.2 |  | 0.471 |
-| ns | 9855 |  | 105 | .editorconfig: Lua formatting conventions | 12.1 |  | 0.468 |
-| walker |  | 9858 | 378 | lua meta-file at docs/app.lua |  |  | 0.468 |
-| walker |  | 9887 | 29 | c decl at src/material_util.c:43 |  |  | 0.468 |
-| walker |  | 9912 | 25 | c decl body at src/ime_char_filter.h:47 |  |  | 0.468 |
-| ns | 9996 |  | 141 | .gitignore + README license line | 12.2 |  | 0.465 |
+| walker |  | 61 | 61 | listing of '.' |  |  | 0.000 |
+| walker |  | 71 | 10 | listing of 'bin' |  |  | 0.000 |
+| walker |  | 84 | 13 | listing of 'asset' |  |  | 0.000 |
+| ns | 90 |  | 90 | What Soluna is: name, one-line pitch, and what it is built on | 1.1 |  | 0.000 |
+| walker |  | 104 | 20 | listing of 'web' |  |  | 0.000 |
+| walker |  | 126 | 22 | listing of 'script' |  |  | 0.000 |
+| walker |  | 140 | 14 | lua decl names surface in make.lua |  |  | 0.000 |
+| walker |  | 140 | 0 | lua decl at make.lua:4 |  |  | 0.000 |
+| walker |  | 150 | 10 | listing of 'web/static' |  |  | 0.000 |
+| ns | 151 |  | 61 | Complete root directory listing | 1.2 |  | 0.660 |
+| walker |  | 176 | 26 | listing of 'clibs' |  |  | 0.661 |
+| walker |  | 179 | 3 | listing of 'clibs/datalist' |  |  | 0.662 |
+| walker |  | 182 | 3 | listing of 'clibs/ltask' |  |  | 0.662 |
+| walker |  | 185 | 3 | listing of 'clibs/lua' |  |  | 0.662 |
+| walker |  | 188 | 3 | listing of 'clibs/yoga' |  |  | 0.662 |
+| walker |  | 191 | 3 | listing of 'clibs/zip' |  |  | 0.663 |
+| walker |  | 208 | 17 | listing of 'web/content' |  |  | 0.663 |
+| walker |  | 212 | 4 | listing of 'web/content/docs' |  |  | 0.664 |
+| ns | 220 |  | 69 | README section headings (all H2/H3) | 1.3 |  | 0.570 |
+| walker |  | 223 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.570 |
+| walker |  | 223 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.570 |
+| walker |  | 241 | 18 | listing of 'web/assets' |  |  | 0.571 |
+| walker |  | 309 | 68 | README headline in README.md |  |  | 0.580 |
+| walker |  | 316 | 7 | listing of '.github' |  |  | 0.580 |
+| walker |  | 323 | 7 | listing of '.github/workflows' |  |  | 0.580 |
+| ns | 336 |  | 116 | README: where the docs and examples live, and how to build | 1.4 | 1.3 | 0.515 |
+| walker |  | 337 | 14 | lua decl names surface in script/datalist2c.lua |  |  | 0.515 |
+| walker |  | 337 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.515 |
+| walker |  | 351 | 14 | lua decl names surface in script/lua2c.lua |  |  | 0.515 |
+| walker |  | 351 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.515 |
+| walker |  | 363 | 12 | listing of 'web/static/fonts' |  |  | 0.515 |
+| walker |  | 388 | 25 | listing of 'clibs/soluna' |  |  | 0.517 |
+| ns | 417 |  | 81 | Complete listings of src/lualib and src/service | 1.5 |  | 0.401 |
+| walker |  | 419 | 31 | listing of 'web/layouts' |  |  | 0.401 |
+| walker |  | 422 | 3 | listing of 'web/layouts/docs' |  |  | 0.401 |
+| walker |  | 425 | 3 | listing of 'web/layouts/playframe' |  |  | 0.401 |
+| walker |  | 432 | 7 | listing of 'web/layouts/partials' |  |  | 0.401 |
+| walker |  | 448 | 16 | listing of 'web/layouts/_default' |  |  | 0.401 |
+| ns | 507 |  | 90 | Complete listing of docs/ — the LuaCATS API reference | 1.6 |  | 0.331 |
+| walker |  | 538 | 90 | listing of 'docs' |  |  | 0.506 |
+| ns | 594 |  | 87 | Complete listing of test/ — runnable example entries and .game files | 1.7 |  | 0.434 |
+| walker |  | 607 | 69 | headings outline in README.md |  |  | 0.490 |
+| walker |  | 627 | 20 | lua decl names surface in clibs/soluna/compile_lua.lua |  |  | 0.490 |
+| walker |  | 627 | 0 | lua decl at clibs/soluna/compile_lua.lua:4 |  |  | 0.490 |
+| walker |  | 666 | 39 | lua decl names surface in docs/args.lua |  |  | 0.490 |
+| walker |  | 666 | 0 | lua decl at docs/args.lua:18 |  |  | 0.490 |
+| walker |  | 666 | 0 | lua decl at docs/args.lua:41 |  |  | 0.490 |
+| walker |  | 700 | 34 | listing of 'web/layouts/shortcodes' |  |  | 0.491 |
+| ns | 709 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.468 |
+| walker |  | 724 | 24 | listing of '3rd' |  |  | 0.469 |
+| walker |  | 838 | 114 | README.md section #0 |  |  | 0.632 |
+| walker |  | 864 | 26 | README.md section #5 |  |  | 0.632 |
+| ns | 892 |  | 183 | Complete listing of src/ C and C++ translation units | 1.9 |  | 0.529 |
+| walker |  | 909 | 45 | README.md section #1 |  |  | 0.547 |
+| ns | 1032 |  | 140 | Rest of src/: headers, GLSL shaders, and subdirectories | 1.10 | 1.9 | 0.491 |
+| walker |  | 1034 | 125 | lua meta-file at docs/url.lua |  |  | 0.491 |
+| walker |  | 1065 | 31 | README.md section #4 |  |  | 0.491 |
+| walker |  | 1105 | 40 | README.md section #2 |  |  | 0.491 |
+| ns | 1148 |  | 116 | A complete minimal game: test/window.lua | 2.1 |  | 0.469 |
+| walker |  | 1259 | 154 | lua meta-file at docs/font_system.lua |  |  | 0.469 |
+| ns | 1266 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.458 |
+| walker |  | 1301 | 42 | lua decl names surface in clibs/soluna/compile_shader.lua |  |  | 0.458 |
+| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:5 |  |  | 0.458 |
+| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:27 |  |  | 0.458 |
+| walker |  | 1301 | 0 | lua decl at clibs/soluna/compile_shader.lua:44 |  |  | 0.458 |
+| ns | 1422 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.439 |
+| ns | 1492 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.430 |
+| walker |  | 1626 | 325 | listing of 'src' |  |  | 0.679 |
+| ns | 1628 |  | 136 | The `soluna` core module surface (docs/soluna.lua declarations) | 2.5 |  | 0.661 |
+| walker |  | 1638 | 12 | c decl names surface in src/loginfo.h |  |  | 0.661 |
+| walker |  | 1643 | 5 | listing of 'src/data' |  |  | 0.661 |
+| walker |  | 1658 | 15 | c decl names surface in src/luabuffer.h |  |  | 0.661 |
+| walker |  | 1674 | 16 | listing of 'src/platform' |  |  | 0.661 |
+| walker |  | 1696 | 22 | listing of 'src/platform/wasm' |  |  | 0.661 |
+| walker |  | 1733 | 37 | c decl names surface in src/ime_state.h |  |  | 0.661 |
+| walker |  | 1750 | 17 | c decl names surface in src/version.h |  |  | 0.661 |
+| walker |  | 1769 | 19 | c decl at src/luabuffer.h:8 |  |  | 0.661 |
+| walker |  | 1809 | 40 | c decl names surface in src/spritemgr.h |  |  | 0.641 |
+| ns | 1809 |  | 181 | Types and parameter docs for the `soluna` module | 2.6 | 2.5 | 0.641 |
+| walker |  | 1851 | 42 | c decl names surface in src/render_bindings.h |  |  | 0.641 |
+| walker |  | 1871 | 20 | c decl at src/render_bindings.h:6 |  |  | 0.641 |
+| walker |  | 1895 | 24 | listing of 'src/service' |  |  | 0.650 |
+| ns | 1910 |  | 101 | The `Batch` draw object and the `Args` passed to the entry script | 2.7 |  | 0.638 |
+| walker |  | 1962 | 67 | c decl names surface in src/ime_char_filter.h |  |  | 0.638 |
+| walker |  | 1984 | 22 | c decl at src/ime_char_filter.h:41 |  |  | 0.638 |
+| walker |  | 2012 | 28 | c decl at src/ime_char_filter.h:27 |  |  | 0.638 |
+| walker |  | 2040 | 28 | c decl at src/ime_char_filter.h:47 |  |  | 0.638 |
+| walker |  | 2068 | 28 | c decl at src/ime_char_filter.h:52 |  |  | 0.638 |
+| walker |  | 2137 | 69 | c decl names surface in src/tmpbuffer.h |  |  | 0.638 |
+| walker |  | 2156 | 19 | c decl at src/tmpbuffer.h:7 |  |  | 0.638 |
+| walker |  | 2184 | 28 | c decl at src/tmpbuffer.h:15 |  |  | 0.638 |
+| ns | 2212 |  | 302 | A worked drawing example: test/sprite.lua (setup and frame loop) | 2.8 | 2.7 | 0.597 |
+| walker |  | 2214 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.597 |
+| walker |  | 2224 | 10 | c includes in src/loginfo.h |  |  | 0.597 |
+| walker |  | 2239 | 15 | listing of 'src/platform/linux' |  |  | 0.597 |
+| walker |  | 2254 | 15 | listing of 'src/platform/windows' |  |  | 0.598 |
+| walker |  | 2326 | 72 | c decl names surface in src/platform/windows/soluna_windows_ime.h |  |  | 0.598 |
+| ns | 2371 |  | 159 | What batch:add accepts (docs/args.lua) | 2.9 | 2.7 | 0.584 |
+| walker |  | 2409 | 83 | c decl names surface in src/batch.h |  |  | 0.584 |
+| walker |  | 2419 | 10 | c decl at src/batch.h:13 |  |  | 0.584 |
+| walker |  | 2429 | 10 | c includes in src/batch.h |  |  | 0.584 |
+| walker |  | 2446 | 17 | listing of 'src/platform/macos' |  |  | 0.584 |
+| walker |  | 2537 | 91 | c decl names surface in src/srbuffer.h |  |  | 0.584 |
+| walker |  | 2549 | 12 | c decl at src/srbuffer.h:7 |  |  | 0.584 |
+| walker |  | 2595 | 46 | c decl at src/spritemgr.h:16 |  |  | 0.584 |
+| walker |  | 2605 | 10 | c decl names surface in src/font_system.c |  |  | 0.584 |
+| walker |  | 2615 | 10 | c decl names surface in src/lfs.c |  |  | 0.584 |
+| walker |  | 2625 | 10 | c decl names surface in src/openurl.c |  |  | 0.584 |
+| ns | 2633 |  | 262 | The five batch:layer overloads (docs/args.lua) | 2.10 | 2.9 | 0.564 |
+| walker |  | 2635 | 10 | c decl names surface in src/truetype.c |  |  | 0.564 |
+| walker |  | 2645 | 10 | c decl names surface in src/writelog.c |  |  | 0.564 |
+| ns | 2737 |  | 104 | Callback parameter semantics (docs/callback.lua prose) | 2.11 | 2.2 | 0.556 |
+| walker |  | 2751 | 106 | c decl names surface in src/sprite_submit.h |  |  | 0.556 |
+| walker |  | 2762 | 11 | c decl at src/sprite_submit.h:27 |  |  | 0.556 |
+| walker |  | 2773 | 11 | c decl at src/sprite_submit.h:56 |  |  | 0.556 |
+| walker |  | 2785 | 12 | c decl at src/sprite_submit.h:9 |  |  | 0.556 |
+| walker |  | 2800 | 15 | c decl at src/sprite_submit.h:43 |  |  | 0.556 |
+| walker |  | 2818 | 18 | c decl at src/sprite_submit.h:66 |  |  | 0.556 |
+| walker |  | 2836 | 18 | c decl at src/sprite_submit.h:71 |  |  | 0.556 |
+| walker |  | 2857 | 21 | c decl at src/sprite_submit.h:15 |  |  | 0.556 |
+| walker |  | 2878 | 21 | c decl at src/sprite_submit.h:21 |  |  | 0.556 |
+| walker |  | 2899 | 21 | c decl at src/sprite_submit.h:76 |  |  | 0.556 |
+| walker |  | 2921 | 22 | c decl at src/sprite_submit.h:81 |  |  | 0.556 |
+| walker |  | 2936 | 15 | c includes in src/render_bindings.h |  |  | 0.556 |
+| walker |  | 3049 | 113 | c decl names surface in src/transform.h |  |  | 0.556 |
+| walker |  | 3062 | 13 | c decl at src/transform.h:16 |  |  | 0.556 |
+| walker |  | 3072 | 10 | c includes in src/transform.h |  |  | 0.556 |
+| ns | 3084 |  | 347 | The Lua module registry (src/luamods.c): ltask, app, render, materials | 3.1 |  | 0.535 |
+| walker |  | 3187 | 115 | c decl names surface in src/platform/linux/soluna_linux_ime.h |  |  | 0.535 |
+| walker |  | 3197 | 10 | c includes in src/platform/linux/soluna_linux_ime.h |  |  | 0.535 |
+| walker |  | 3251 | 54 | c decl at src/ime_state.h:7 |  |  | 0.535 |
+| walker |  | 3306 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.535 |
+| walker |  | 3361 | 55 | listing of 'src/lualib' |  |  | 0.591 |
+| ns | 3381 |  | 297 | Rest of the module registry: datalist, file, fonts, gamepad, lfs, sdf, yoga, url, crypt, zip | 3.2 | 3.1 | 0.573 |
+| walker |  | 3424 | 63 | c decl at src/loginfo.h:6 |  |  | 0.573 |
+| walker |  | 3444 | 20 | c includes in src/ime_state.h |  |  | 0.573 |
+| walker |  | 3464 | 20 | c includes in src/spritemgr.h |  |  | 0.573 |
+| walker |  | 3484 | 20 | c includes in src/srbuffer.h |  |  | 0.573 |
+| ns | 3533 |  | 152 | The `soluna.app` host module (docs/app.lua) | 3.3 |  | 0.565 |
+| walker |  | 3641 | 157 | c decl names surface in src/font_define.h |  |  | 0.565 |
+| walker |  | 3651 | 10 | c decl at src/font_define.h:31 |  |  | 0.565 |
+| walker |  | 3666 | 15 | c decl at src/font_define.h:26 |  |  | 0.565 |
+| walker |  | 3674 | 8 | c includes in src/font_define.h |  |  | 0.565 |
+| walker |  | 3692 | 18 | c decl body at src/font_define.h:31 |  |  | 0.565 |
+| walker |  | 3759 | 67 | c decl at src/batch.h:6 |  |  | 0.565 |
+| ns | 3793 |  | 260 | Declaration roster: image, font, font.system, text, layout, coroutine | 3.4 |  | 0.549 |
+| walker |  | 3831 | 72 | c decl names surface in src/appevent.h |  |  | 0.549 |
+| walker |  | 3850 | 19 | c decl at src/appevent.h:11 |  |  | 0.549 |
+| walker |  | 3869 | 19 | c decl at src/appevent.h:33 |  |  | 0.549 |
+| walker |  | 3888 | 19 | c decl at src/appevent.h:58 |  |  | 0.549 |
+| walker |  | 3907 | 19 | c decl at src/appevent.h:84 |  |  | 0.549 |
+| walker |  | 3926 | 19 | c decl at src/appevent.h:99 |  |  | 0.549 |
+| walker |  | 3946 | 20 | c decl at src/appevent.h:115 |  |  | 0.549 |
+| walker |  | 3968 | 22 | c includes in src/tmpbuffer.h |  |  | 0.549 |
+| walker |  | 4005 | 37 | c decl at src/appevent.h:4 |  |  | 0.549 |
+| walker |  | 4028 | 23 | lua decl names surface in src/service/log.lua |  |  | 0.549 |
+| walker |  | 4028 | 0 | lua decl at src/service/log.lua:12 |  |  | 0.549 |
+| walker |  | 4028 | 0 | lua decl at src/service/log.lua:38 |  |  | 0.549 |
+| walker |  | 4051 | 23 | lua decl names surface in src/service/settings.lua |  |  | 0.549 |
+| walker |  | 4051 | 0 | lua decl at src/service/settings.lua:9 |  |  | 0.549 |
+| walker |  | 4051 | 0 | lua decl at src/service/settings.lua:14 |  |  | 0.549 |
+| ns | 4127 |  | 334 | The material modules: every documented constructor | 3.5 | 2.9 | 0.536 |
+| walker |  | 4137 | 86 | c decl names surface in src/platform/macos/soluna_macos_ime.h |  |  | 0.536 |
+| walker |  | 4147 | 10 | c includes in src/platform/macos/soluna_macos_ime.h |  |  | 0.536 |
+| walker |  | 4226 | 79 | c decl at src/font_define.h:11 |  |  | 0.536 |
+| walker |  | 4251 | 25 | lua decl names surface in src/service/gamepad.lua |  |  | 0.536 |
+| walker |  | 4251 | 0 | lua decl at src/service/gamepad.lua:10 |  |  | 0.536 |
+| walker |  | 4251 | 0 | lua decl at src/service/gamepad.lua:15 |  |  | 0.536 |
+| walker |  | 4332 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.536 |
+| ns | 4406 |  | 279 | Declaration roster: file, lfs, zip, url, crypt, datalist | 3.6 | 3.4 | 0.521 |
+| walker |  | 4413 | 81 | c decl at src/transform.h:6 |  |  | 0.521 |
+| ns | 4622 |  | 216 | src/lualib/soluna.lua — the core module's real implementation | 4.1 | 2.5 | 0.507 |
+| walker |  | 4624 | 211 | c decl names surface in src/material_util.h |  |  | 0.507 |
+| walker |  | 4835 | 211 | c decl names surface in src/truetype.h |  |  | 0.507 |
+| walker |  | 4847 | 12 | c decl at src/truetype.h:147 |  |  | 0.507 |
+| walker |  | 4861 | 14 | c decl at src/truetype.h:23 |  |  | 0.507 |
+| walker |  | 4875 | 14 | c decl at src/truetype.h:34 |  |  | 0.507 |
+| walker |  | 4889 | 14 | c decl at src/truetype.h:83 |  |  | 0.507 |
+| walker |  | 4903 | 14 | c decl at src/truetype.h:111 |  |  | 0.507 |
+| ns | 4915 |  | 293 | How a game boots: src/service/start.lua init() | 4.2 |  | 0.489 |
+| walker |  | 4918 | 15 | c decl at src/truetype.h:44 |  |  | 0.489 |
+| walker |  | 4936 | 18 | c decl at src/truetype.h:94 |  |  | 0.489 |
+| walker |  | 4958 | 22 | c decl at src/truetype.h:160 |  |  | 0.489 |
+| walker |  | 4981 | 23 | c decl at src/truetype.h:123 |  |  | 0.489 |
+| walker |  | 5010 | 29 | c decl at src/truetype.h:17 |  |  | 0.489 |
+| walker |  | 5035 | 25 | c decl at src/truetype.h:52 |  |  | 0.489 |
+| walker |  | 5119 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.489 |
+| walker |  | 5147 | 28 | lua decl names surface in src/lualib/icon.lua |  |  | 0.489 |
+| walker |  | 5147 | 0 | lua decl at src/lualib/icon.lua:10 |  |  | 0.489 |
+| walker |  | 5147 | 0 | lua decl at src/lualib/icon.lua:27 |  |  | 0.489 |
+| walker |  | 5177 | 30 | c includes in src/ime_char_filter.h |  |  | 0.489 |
+| walker |  | 5209 | 32 | c includes in src/luabuffer.h |  |  | 0.489 |
+| walker |  | 5244 | 35 | c includes in src/material_util.h |  |  | 0.489 |
+| walker |  | 5271 | 27 | c decl names surface in src/material_util.c |  |  | 0.489 |
+| walker |  | 5284 | 13 | c decl at src/openurl.c:88 |  |  | 0.489 |
+| walker |  | 5291 | 7 | lua decl body at src/service/settings.lua:14 |  |  | 0.489 |
+| ns | 5298 |  | 383 | Callback wiring and the complete dispatchable event list (start.lua) | 4.3 | 2.2 | 0.468 |
+| walker |  | 5331 | 40 | c includes in src/sprite_submit.h |  |  | 0.468 |
+| walker |  | 5369 | 38 | lua decl names surface in src/lualib/util.lua |  |  | 0.468 |
+| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:9 |  |  | 0.468 |
+| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:13 |  |  | 0.468 |
+| walker |  | 5369 | 0 | lua decl at src/lualib/util.lua:20 |  |  | 0.468 |
+| walker |  | 5399 | 30 | c decl names surface in src/drawmgr.c |  |  | 0.468 |
+| walker |  | 5429 | 30 | c decl names surface in src/material_blit.c |  |  | 0.468 |
+| walker |  | 5443 | 14 | c decl at src/drawmgr.c:171 |  |  | 0.468 |
+| walker |  | 5457 | 14 | c decl at src/font_system.c:287 |  |  | 0.468 |
+| walker |  | 5471 | 14 | c decl at src/lfs.c:825 |  |  | 0.468 |
+| walker |  | 5490 | 19 | c decl body at src/font_define.h:26 |  |  | 0.468 |
+| walker |  | 5521 | 31 | c decl names surface in src/file.c |  |  | 0.468 |
+| walker |  | 5529 | 8 | lua decl body at src/service/log.lua:38 |  |  | 0.468 |
+| walker |  | 5571 | 42 | lua decl names surface in src/lualib/packageloader.lua |  |  | 0.468 |
+| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:14 |  |  | 0.468 |
+| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:163 |  |  | 0.468 |
+| walker |  | 5571 | 0 | lua decl at src/lualib/packageloader.lua:169 |  |  | 0.468 |
+| walker |  | 5586 | 15 | c decl at src/file.c:53 |  |  | 0.468 |
+| walker |  | 5601 | 15 | c decl at src/material_blit.c:53 |  |  | 0.468 |
+| walker |  | 5616 | 15 | c decl at src/writelog.c:76 |  |  | 0.468 |
+| walker |  | 5634 | 18 | c decl at src/material_blit.c:9 |  |  | 0.468 |
+| ns | 5649 |  | 351 | The per-frame loop of a running game (start.lua) | 4.4 | 4.3 | 0.447 |
+| walker |  | 5668 | 34 | c decl names surface in src/transform.c |  |  | 0.447 |
+| walker |  | 5677 | 9 | c decl at src/transform.c:9 |  |  | 0.447 |
+| walker |  | 5712 | 35 | c decl names surface in src/srbuffer.c |  |  | 0.447 |
+| walker |  | 5723 | 11 | c decl at src/srbuffer.c:14 |  |  | 0.447 |
+| walker |  | 5739 | 16 | c decl at src/truetype.c:127 |  |  | 0.447 |
+| walker |  | 5785 | 46 | lua decl names surface in src/lualib/initsetting.lua |  |  | 0.447 |
+| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:10 |  |  | 0.447 |
+| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:44 |  |  | 0.447 |
+| walker |  | 5785 | 0 | lua decl at src/lualib/initsetting.lua:62 |  |  | 0.447 |
+| walker |  | 5832 | 47 | lua decl names surface in src/lualib/main.lua |  |  | 0.447 |
+| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:19 |  |  | 0.447 |
+| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:50 |  |  | 0.447 |
+| walker |  | 5832 | 0 | lua decl at src/lualib/main.lua:159 |  |  | 0.447 |
+| walker |  | 5842 | 10 | lua decl at src/lualib/main.lua:183 |  |  | 0.447 |
+| ns | 6078 |  | 429 | src/lualib/main.lua — the ltask bootstrap set and app init | 4.5 |  | 0.429 |
+| walker |  | 6229 | 387 | c decl names surface in src/font_manager.h |  |  | 0.429 |
+| walker |  | 6229 | 0 | c decl at src/font_manager.h:22 |  |  | 0.429 |
+| walker |  | 6229 | 0 | c decl at src/font_manager.h:31 |  |  | 0.429 |
+| walker |  | 6235 | 6 | c decl doc at src/font_manager.h:31 |  |  | 0.429 |
+| walker |  | 6282 | 47 | c includes in src/font_manager.h |  |  | 0.429 |
+| walker |  | 6320 | 38 | c decl names surface in src/embedlua.c |  |  | 0.429 |
+| walker |  | 6334 | 14 | c decl at src/embedlua.c:55 |  |  | 0.429 |
+| walker |  | 6372 | 38 | c decl names surface in src/openlibs.c |  |  | 0.429 |
+| walker |  | 6386 | 14 | c decl at src/openlibs.c:11 |  |  | 0.429 |
+| walker |  | 6424 | 38 | c decl names surface in src/render_uniform.c |  |  | 0.429 |
+| walker |  | 6437 | 13 | c decl at src/render_uniform.c:184 |  |  | 0.429 |
+| ns | 6453 |  | 375 | The render service: material ids and every service entry point | 4.6 |  | 0.417 |
+| walker |  | 6454 | 17 | c decl at src/srbuffer.c:25 |  |  | 0.417 |
+| walker |  | 6493 | 39 | c decl names surface in src/material_default.c |  |  | 0.417 |
+| walker |  | 6507 | 14 | c decl at src/material_default.c:150 |  |  | 0.417 |
+| ns | 6695 |  | 242 | The loader service: sprite bank and bundle entry points | 4.7 | 4.1 | 0.409 |
+| walker |  | 6703 | 196 | lua meta-file at docs/lfs.lua |  |  | 0.410 |
+| walker |  | 6781 | 78 | declaration surface of src/yogaone.cpp |  |  | 0.410 |
+| walker |  | 6983 | 202 | lua meta-file at docs/datalist.lua |  |  | 0.413 |
+| walker |  | 7035 | 52 | lua decl names surface in src/lualib/text.lua |  |  | 0.414 |
+| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:9 |  |  | 0.414 |
+| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:27 |  |  | 0.414 |
+| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:41 |  |  | 0.414 |
+| walker |  | 7035 | 0 | lua decl at src/lualib/text.lua:53 |  |  | 0.414 |
+| walker |  | 7053 | 18 | c decl at src/srbuffer.c:122 |  |  | 0.414 |
+| ns | 7202 |  | 507 | The three small services: settings and gamepad in full, log in outline | 4.8 | 1.5 | 0.393 |
+| walker |  | 7269 | 216 | lua meta-file at docs/zip.lua |  |  | 0.395 |
+| walker |  | 7279 | 10 | lua decl body at src/lualib/util.lua:9 |  |  | 0.395 |
+| walker |  | 7298 | 19 | c decl at src/srbuffer.c:50 |  |  | 0.395 |
+| walker |  | 7361 | 63 | c includes in src/truetype.h |  |  | 0.395 |
+| walker |  | 7408 | 47 | c decl body at src/transform.h:16 |  |  | 0.395 |
+| walker |  | 7428 | 20 | c decl at src/transform.c:31 |  |  | 0.395 |
+| walker |  | 7476 | 48 | c decl names surface in src/font.c |  |  | 0.395 |
+| walker |  | 7489 | 13 | c decl at src/font.c:159 |  |  | 0.395 |
+| walker |  | 7503 | 14 | c decl at src/font.c:248 |  |  | 0.395 |
+| ns | 7524 |  | 322 | Function roster: spritebundle, packageloader, initsetting, icon, util, text | 4.9 |  | 0.397 |
+| walker |  | 7751 | 248 | lua meta-file at docs/font.lua |  |  | 0.399 |
+| ns | 7902 |  | 378 | Function roster: coroutine, layout, fontmgr, print_r | 4.10 | 4.9 | 0.389 |
+| ns | 7991 |  | 89 | Complete listing of src/platform and all four OS subdirectories | 5.1 | 1.10 | 0.401 |
+| walker |  | 8003 | 252 | lua meta-file at docs/material_mask.lua |  |  | 0.401 |
+| ns | 8136 |  | 145 | Remaining directories: clibs, script, asset, bin, build, 3rd | 5.2 | 1.2 | 0.427 |
+| walker |  | 8255 | 252 | lua meta-file at docs/material_quad.lua |  |  | 0.428 |
+| ns | 8361 |  | 225 | Makefile: the Windows/gcc build in outline | 5.3 |  | 0.424 |
+| walker |  | 8511 | 256 | lua meta-file at docs/crypt.lua |  |  | 0.428 |
+| walker |  | 8533 | 22 | c decl at src/transform.c:76 |  |  | 0.428 |
+| walker |  | 8545 | 12 | lua decl body at src/lualib/util.lua:20 |  |  | 0.428 |
+| walker |  | 8603 | 58 | c decl names surface in src/batch.c |  |  | 0.428 |
+| walker |  | 8613 | 10 | c decl at src/batch.c:13 |  |  | 0.428 |
+| walker |  | 8626 | 13 | c decl at src/batch.c:29 |  |  | 0.428 |
+| walker |  | 8643 | 17 | c decl at src/batch.c:37 |  |  | 0.428 |
+| ns | 8644 |  | 283 | make.lua: platform detection and output layout | 5.4 |  | 0.420 |
+| walker |  | 8664 | 21 | c decl at src/batch.c:8 |  |  | 0.420 |
+| walker |  | 8739 | 75 | lua decl names surface in src/lualib/print_r.lua |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:8 |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:31 |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:71 |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:100 |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:140 |  |  | 0.421 |
+| walker |  | 8739 | 0 | lua decl at src/lualib/print_r.lua:144 |  |  | 0.421 |
+| walker |  | 8751 | 12 | c includes in src/winfile.c |  |  | 0.421 |
+| walker |  | 8761 | 10 | declaration surface of bin/readme.txt |  |  | 0.421 |
+| walker |  | 8840 | 79 | lua decl names surface in src/service/start.lua |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:22 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:26 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:31 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:48 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:59 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:78 |  |  | 0.421 |
+| walker |  | 8840 | 0 | lua decl at src/service/start.lua:176 |  |  | 0.421 |
+| walker |  | 8852 | 12 | lua decl doc at src/service/start.lua:59 |  |  | 0.416 |
+| ns | 8852 |  | 208 | make.lua: how clibs modules and the final executable are wired | 5.5 | 5.4 | 0.416 |
+| walker |  | 8859 | 7 | lua decl body at src/service/start.lua:176 |  |  | 0.416 |
+| walker |  | 8884 | 25 | c decl at src/transform.c:66 |  |  | 0.416 |
+| walker |  | 8910 | 26 | c decl at src/material_util.c:24 |  |  | 0.416 |
+| walker |  | 8924 | 14 | lua decl body at src/service/start.lua:26 |  |  | 0.416 |
+| walker |  | 9011 | 87 | listing of 'test' |  |  | 0.448 |
+| ns | 9206 |  | 354 | make.lua: the Emscripten/WASM link configuration | 5.6 | 5.4 | 0.440 |
+| walker |  | 9384 | 373 | lua meta-file at docs/layout.lua |  |  | 0.443 |
+| walker |  | 9480 | 96 | lua decl names surface in src/lualib/fontmgr.lua |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:15 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:214 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:252 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:258 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:264 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:290 |  |  | 0.447 |
+| walker |  | 9480 | 0 | lua decl at src/lualib/fontmgr.lua:297 |  |  | 0.447 |
+| ns | 9507 |  | 301 | The full `soluna.app` C surface in src/entry.c | 6.1 | 3.3 | 0.441 |
+| ns | 9531 |  | 24 | Complete listing of .github: workflows and the composite action | 7.1 | 1.2 | 0.442 |
+| ns | 9730 |  | 199 | The composite action's four outputs (action.yml) | 7.2 | 7.1 | 0.438 |
+| ns | 9821 |  | 91 | Complete listing of web/ content, assets and static files | 7.3 | 1.2 | 0.449 |
+| walker |  | 9858 | 378 | lua meta-file at docs/app.lua |  |  | 0.458 |
+| walker |  | 9887 | 29 | c decl at src/material_util.c:43 |  |  | 0.458 |
+| walker |  | 9912 | 25 | c decl body at src/ime_char_filter.h:47 |  |  | 0.458 |
+| ns | 9928 |  | 107 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.470 |

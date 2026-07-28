@@ -1,1070 +1,837 @@
 fixture = "pretty-ts-errors"
 revision_pin = "980c274b"
-summary = "pretty-ts-errors is a VS Code extension (npm/turbo monorepo) that rewrites raw TypeScript/JS-Doc/Vue/etc diagnostic messages into readable, syntax-highlighted markdown/HTML for hover tooltips and a sidebar webview. Query distribution: extension activation/commands/providers (how it runs in VS Code), the diagnostic-to-HTML pipeline in packages/formatter + packages/vscode-formatter (the actual prettification algorithm: regex rule table, type-block reformatting via prettier, bracket-balancing for truncated types), build/lint/test entry points (turbo + per-package npm scripts + CI), and the shared packages/utils grab-bag. Given a tight token budget for a ~3000-line source tree, ranking favors breadth (full directory closure, per-file symbol rosters) over deep single-file dumps, with full bodies reserved for the handful of files that carry the core algorithm or the activation entry point."
+summary = """
+`pretty-ts-errors` is a VS Code extension (npm-workspaces + turbo monorepo)
+that rewrites TypeScript compiler diagnostics into readable, syntax-highlighted
+hovers and a sidebar webview. Substance is split four ways: `packages/formatter`
+(IDE-agnostic regex rule engine + prettier-based type re-formatting),
+`packages/vscode-formatter` (hover/sidebar renderers and their HTML component
+helpers), `packages/utils` (dedent + tiny type guards), and
+`apps/vscode-extension` (activation, diagnostic listener + cache, hover
+provider, webview sidebar with pin/lock modes, five commands, logger, build
+script and webview assets).
+
+The ranking front-loads identity and the four-workspace map (tier 1), then a
+filesystem roster covering every source directory in the repo (tier 2), then a
+name-level roster of every module-level symbol in all four workspaces plus the
+extension's `activate()` wiring and shared store (tier 3). Only then does it
+spend tokens on bodies: the formatter's rule engine and type-repair passes
+(tier 4), the hover/sidebar renderers and their code-block backends (tier 5),
+the VS Code manifest's declared surface (tier 6), and finally the remaining
+directory listings, the contributor guide's outline and the formatter's mock
+error corpus (tier 7). The intent is that "what is this / where does X live"
+needs zero follow-ups, and "how exactly does rule N, command N or component N
+work" needs exactly one read at a line number the snapshot already printed.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Every dev session starts by knowing what's at the repo root: monorepo config (package.json/turbo.json/tsconfig*), the two workspace roots (apps/, packages/), docs, examples, and dotfiles. Cheapest possible orientation batch."
+descriptor = "Repository identity: title + one-line pitch"
+justification = "The single most load-bearing fact: this repo is a VSCode extension that makes TypeScript errors human-readable. Two rendered lines, first rank."
 [batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+kind = "lines"
+spans = [
+  { path = "README.md", start = 9, end = 11, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "docs/ARCHITECTURE.md: opening framing"
-justification = "The doc's opening: states its purpose (explaining how the extension is structured and runs at VS Code runtime) before the canonical per-directory package map. Kept small so the growth envelope holds this early in the ranking; the actual monorepo statement and per-package roles continue in 1.14."
+descriptor = "Problem statement the project exists to solve"
+justification = "Explains *why* the formatter exists (TS error text degenerates into parenthesis soup and `\"...\"` elisions) — this framing is what lets an agent understand the whole formatter package later without reading it."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "docs/ARCHITECTURE.md"
-start = 1
-end = 4
-render = { kind = "full" }
+spans = [
+  { path = "README.md", start = 18, end = 19, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "README Features list: part 1"
-justification = "What the extension actually does, straight from the marketing copy: syntax-highlighted types and a jump-to-declaration button. Ellipsis marks that 2 more bullets follow immediately; they continue in 1.17 once the growth envelope allows it."
+descriptor = "Complete repository root listing"
+justification = "Cheapest possible breadth: shows the monorepo shape (apps/, packages/, docs/, examples/, assets/) plus every root config file, so no root-level file can be presumed absent."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 35
-end = 38
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 39
-end = 39
-render = { kind = "ellipsis" }
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "README 'Why isn't it trivial': point 1"
-justification = "The first of 3 real engineering constraints this repo works around: TS's non-valid-TS truncated type syntax ('... more ...', unbalanced brackets, cut off mid-expression when too long). Ellipsis marks that points 2-3 follow immediately; they (custom grammar, codicon hack) continue in 1.16 once the growth envelope allows it."
+descriptor = "ARCHITECTURE.md: every section heading (the workspace map)"
+justification = "Names all five sections of the architecture doc — `/`, `apps/vscode-extension`, `packages/formatter`, `packages/vscode-formatter`, `packages/utils` — so the agent learns the exact set of workspaces without reading the bodies. Headings-only keeps this tiny."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 62
-end = 65
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 66
-end = 66
-render = { kind = "ellipsis" }
+spans = [
+  { path = "docs/ARCHITECTURE.md", start = 8, end = 8, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 12, end = 12, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 16, end = 16, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 20, end = 20, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 24, end = 24, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "Root package.json: scripts"
-justification = "The monorepo's own scripts — build/dev/lint/test delegate to turbo, format/format:check invoke prettier directly — the top-level entry point for any build/test query. The engines constraint continues in 1.15 once the growth envelope allows it."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 1
-end = 10
-render = { kind = "full" }
-
-[[batches]]
-id = "1.6"
-descriptor = "turbo.json (full)"
-justification = "Task pipeline definitions (build/lint/dev/test) turbo uses to run across workspaces; tiny and directly answers 'how does the monorepo task runner work'."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "turbo.json"
-start = 1
-end = 17
-render = { kind = "full" }
-
-[[batches]]
-id = "1.7"
-descriptor = "apps/ and packages/ listings"
-justification = "The two workspace roots' immediate children, closing the class of 'which apps/packages exist' opened by ARCHITECTURE.md: apps/ holds exactly one app (vscode-extension, plus its own tree), packages/ holds the 3 shared packages."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "apps"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages"
-entries = "all"
-
-[[batches]]
-id = "1.8"
-descriptor = "vscode-extension src/ tree listing"
-justification = "Full file closure for the extension app's source: src/, src/commands/, src/provider/, and the unused-but-present src/test/ + src/test/suite/ VS Code test scaffold — so later per-file batches in tiers 6-8 can be trusted as exhaustive rather than a curated subset."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/src/commands"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/src/provider"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/src/test"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/src/test/suite"
-entries = "all"
-
-[[batches]]
-id = "1.9"
-descriptor = "packages/formatter tree listing"
-justification = "Full file closure for the core prettifier package: package root, src/, test/, test/__snapshots__/."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "packages/formatter"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/formatter/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/formatter/test"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/formatter/test/__snapshots__"
-entries = "all"
-
-[[batches]]
-id = "1.10"
-descriptor = "packages/vscode-formatter tree listing"
-justification = "Full file closure for the VS Code-specific HTML/markdown rendering package: root, src/, src/format/, src/components/, test/."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "packages/vscode-formatter"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/vscode-formatter/src"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/vscode-formatter/src/format"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/vscode-formatter/src/components"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/vscode-formatter/test"
-entries = "all"
-
-[[batches]]
-id = "1.11"
-descriptor = "packages/utils tree listing"
-justification = "Full file closure for the smallest package; confirms it's just an index.ts plus package/tsconfig."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "packages/utils"
-entries = "all"
-[[batches.content.groups]]
-parent = "packages/utils/src"
-entries = "all"
-
-[[batches]]
-id = "1.12"
-descriptor = "docs/, examples/, assets/ listings"
-justification = "Closes the doc/screenshot/example-fixture classes: docs (+ vscode-logs subfolder of screenshots), examples (sample error-triggering files per language), assets (+ mentions/ press screenshots)."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "docs"
-entries = "all"
-[[batches.content.groups]]
-parent = "docs/vscode-logs"
-entries = "all"
-[[batches.content.groups]]
-parent = "examples"
-entries = "all"
-[[batches.content.groups]]
-parent = "assets"
-entries = "all"
-[[batches.content.groups]]
-parent = "assets/mentions"
-entries = "all"
-
-[[batches]]
-id = "1.13"
-descriptor = "GitHub/VSCode/webview/misc dir listings"
-justification = "Closes the remaining directory classes: .github (+ issue template + workflow), .vscode, and the extension's webview/scripts/syntaxes/assets subtrees — so no dotfile or build-support directory is left partially enumerated."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = ".github"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = "all"
-[[batches.content.groups]]
-parent = ".vscode"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/webview"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/webview/vendor"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/scripts"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/syntaxes"
-entries = "all"
-[[batches.content.groups]]
-parent = "apps/vscode-extension/assets"
-entries = "all"
-
-[[batches]]
-id = "1.14"
-descriptor = "docs/ARCHITECTURE.md: apps/ + packages/* roles"
-justification = "Rest of the package map: the VS Code extension app's role and the formatter/vscode-formatter/utils package roles, placed after the directory-closure batches once cumulative budget allows a bigger batch."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "docs/ARCHITECTURE.md"
-start = 7
-end = 26
-render = { kind = "full" }
-
-[[batches]]
-id = "1.15"
-descriptor = "Root package.json: engines + name + workspaces"
-justification = "The minimum Node version, plus the npm workspaces glob (packages/*, apps/*) that makes this a monorepo and the package manager pin; placed after breadth batches per the growth envelope."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 11
-end = 13
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "package.json"
-start = 24
-end = 30
-render = { kind = "full" }
-
-[[batches]]
-id = "1.16"
-descriptor = "README 'Why isn't it trivial': points 2-3"
-justification = "The other 2 constraints, complete with point 3's screenshot reference: needing a custom 'type' TextMate grammar (grounds the later type.tmGrammar.json batch), and VSCode markdown's lack of inline code blocks (the codicon hack, grounds hoverCodeBlock.ts's roster entry)."
+descriptor = "ARCHITECTURE.md: what each workspace is responsible for"
+justification = "Refines 1.4's headings with the one-line role of each workspace — the cheapest semantic content in the repo, and it answers the most common orientation question (\"which package do I edit?\") with zero follow-ups."
 predecessor = "1.4"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 66
-end = 68
-render = { kind = "full" }
+spans = [
+  { path = "docs/ARCHITECTURE.md", start = 10, end = 10, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 14, end = 14, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 26, end = 26, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "1.17"
-descriptor = "README Features list: part 2"
-justification = "The remaining 2 feature bullets: the typescript.tv explanation-video link and the ts-error-translator plain-English link, completing the 4-bullet Features list opened in 1.3."
-predecessor = "1.3"
+id = "1.6"
+descriptor = "README section headings, complete"
+justification = "The README is mostly badges, video embeds and a hype table; naming all ten headings tells the agent which parts carry information (Features, Supports, Installation, \"Why isn't it trivial\") and which are marketing, so it never wastes a read on the hype section."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 39
-end = 40
-render = { kind = "full" }
+spans = [
+  { path = "README.md", start = 23, end = 23, render = { kind = "full" } },
+  { path = "README.md", start = 35, end = 35, render = { kind = "full" } },
+  { path = "README.md", start = 42, end = 42, render = { kind = "full" } },
+  { path = "README.md", start = 50, end = 50, render = { kind = "full" } },
+  { path = "README.md", start = 58, end = 58, render = { kind = "full" } },
+  { path = "README.md", start = 62, end = 62, render = { kind = "full" } },
+  { path = "README.md", start = 70, end = 70, render = { kind = "full" } },
+  { path = "README.md", start = 99, end = 99, render = { kind = "full" } },
+  { path = "README.md", start = 138, end = 138, render = { kind = "full" } },
+  { path = "README.md", start = 143, end = 143, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Feature list: the four user-visible behaviours"
+justification = "Enumerates the whole product surface — theme-coloured type highlighting plus the three action buttons (go-to-declaration, typescript.tv, ts-error-translator). Those buttons are literally what `components/actions.ts` renders, so this batch pre-explains code ranked much later."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 37, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Supported languages / diagnostic sources"
+justification = "The complete support matrix (Node+Deno TS, JSDoc, React/Solid/Qwik, Astro/Svelte/Vue, Ember/Glint). Pairs with `supportedLanguageIds.ts` and the manifest's `activationEvents`; having it early makes \"why isn't my file handled\" answerable without a search."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 44, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "README \"Why isn't it trivial\": the three design constraints"
+justification = "The repo's core design rationale, and it pre-explains three later code areas at once: TS error types are not valid TypeScript (hence `addMissingParentheses` and the sentinel substitutions), types cannot be highlighted normally (hence the custom `type` TextMate grammar), and VS Code strips hover styling (hence the codicon-wrapped code blocks). Nothing else in the repo buys this much understanding per token."
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 64, end = 67, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Root package.json: workspace globs and the task scripts"
+justification = "How the repo is built and tested at all: every turbo-fronted script (build/dev/lint/test/format) plus the `packages/*` + `apps/*` workspace globs and the node>=20 engine. This is the first thing a task like \"run the tests\" needs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 13, render = { kind = "full" } },
+  { path = "package.json", start = 24, end = 29, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "vscode-extension package.json: contributes.commands"
-justification = "The complete roster of user-facing commands the extension registers (revealSelection, showErrorInSidebar, pinError, unpinError) with their titles/enablement — the manifest-level counterpart to src/commands/*.ts, needed before trusting any single command file as exhaustive."
+descriptor = "Workspace directories: apps/ and packages/ contents"
+justification = "Closes the workspace class named by ARCHITECTURE.md: exactly one app and exactly three packages. Two listings, near-zero cost."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/package.json"
-start = 75
-end = 101
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "apps", entries = "all" },
+  { parent = "packages", entries = "all" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "vscode-extension package.json: scripts"
-justification = "The complete npm scripts block (compile/watch/package/lint/test/webview) used to build, package, and test the extension — the first thing a build/debug query needs. Shown in full rather than a subset so no script silently reads as nonexistent."
+descriptor = "Core formatter + utils source rosters"
+justification = "The five source files of the IDE-agnostic core. Ranked ahead of the other source listings because this is where the repo's actual algorithm lives; the file names alone (addMissingParentheses, formatTypeBlock, formatTypeWithPrettier, errorMessagePrettifier) already sketch the pipeline."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/package.json"
-start = 127
-end = 143
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "packages/formatter/src", entries = "all" },
+  { parent = "packages/utils/src", entries = "all" },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "formatter package.json scripts"
-justification = "The formatter package's build/test scripts (tsdown, vitest) — vscode-formatter and utils follow the same per-package npm-script convention (see 1.10/1.11 listings), so this one is the representative example rather than paying for all 3."
+descriptor = "vscode-formatter source roster (src, format/, components/)"
+justification = "All three directories at once so no component or format helper can be presumed missing — the `components/` set in particular is a class an agent will otherwise guess at when adding a new rendered element."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/package.json"
-start = 11
-end = 19
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "packages/vscode-formatter/src", entries = "all" },
+  { parent = "packages/vscode-formatter/src/format", entries = "all" },
+  { parent = "packages/vscode-formatter/src/components", entries = "all" },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "eslint.config.mjs: rules"
-justification = "The handful of rules tightened/relaxed from typescript-eslint defaults (no-unused-vars off, curly warn, eqeqeq smart) — what an agent asked to fix a lint error actually needs first."
+descriptor = "Extension source roster (src, commands/, provider/)"
+justification = "Names every module of the VS Code app, including the complete command set (copyError, enabledCommands, execute, pinError, revealSelection, showErrorInSidebar, unpinError, validate) and the four providers. Command and provider files are the classes most at risk of a wrong \"it doesn't exist\" inference."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "eslint.config.mjs"
-start = 40
-end = 46
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "apps/vscode-extension/src", entries = "all" },
+  { parent = "apps/vscode-extension/src/commands", entries = "all" },
+  { parent = "apps/vscode-extension/src/provider", entries = "all" },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "tsconfig.base.json: target/module/strictness"
-justification = "The compiler-target and strictness flags (ES2022, strict, noUncheckedIndexedAccess) every package's tsconfig extends; the part of the file most relevant to 'why does TS complain about this' questions."
+descriptor = "Extension app non-source assets: root, webview/, scripts/, syntaxes/"
+justification = "Reveals that the extension ships a hand-written webview (index.html/index.js/style.css plus a `vendor` asset directory), an esbuild build script with a process shim, and the custom `type` TextMate grammar the README's third design note refers to."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tsconfig.base.json"
-start = 1
-end = 11
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "apps/vscode-extension", entries = "all" },
+  { parent = "apps/vscode-extension/webview", entries = "all" },
+  { parent = "apps/vscode-extension/scripts", entries = "all" },
+  { parent = "apps/vscode-extension/syntaxes", entries = "all" },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = ".prettierrc + tsdown.config.mjs"
-justification = "Formatting rules (printWidth 80, no tabs) and the tsdown bundler config used to build the two library packages; both trivially short."
+descriptor = "Package manifest/config roster for the three packages"
+justification = "Shows which packages carry a README, a vitest config and a tsconfig — e.g. that `utils` has no tests and no README while both formatters do. Prevents an agent from inventing a `packages/utils/test` directory."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = ".prettierrc"
-start = 1
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "tsdown.config.mjs"
-start = 1
-end = 4
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "packages/formatter", entries = "all" },
+  { parent = "packages/vscode-formatter", entries = "all" },
+  { parent = "packages/utils", entries = "all" },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = ".github/workflows/pr-ci.yml: job steps"
-justification = "The 3 per-package test-invocation steps (formatter, vscode-formatter, then the vscode-extension's xvfb-wrapped VS Code test run) — the precise commands to run each package's tests locally. The preceding install/format:check/build steps and the trigger/concurrency yaml above are skipped at this budget; CONTRIBUTING.md's Testing section (2.8) points back at this same file as the source of truth for the full step list."
+descriptor = "Complete test-file roster across the repo"
+justification = "Every test location in one batch: two vitest suites plus the mocha/@vscode/test-electron scaffolding under the extension. Colocated-vs-directory test layout is exactly the kind of class that gets silently half-listed; here it is closed."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = ".github/workflows/pr-ci.yml"
-start = 42
-end = 49
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "packages/formatter/test", entries = "all" },
+  { parent = "packages/vscode-formatter/test", entries = "all" },
+  { parent = "apps/vscode-extension/src/test", entries = "all" },
+  { parent = "apps/vscode-extension/src/test/suite", entries = "all" },
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "CONTRIBUTING.md: Testing section"
-justification = "Points to the CI workflow as the source of truth for test commands and names where each package's tests live (packages/*/test, apps/vscode-extension's VS Code test scaffold)."
+descriptor = "docs/ and examples/ contents"
+justification = "Names the four docs (ARCHITECTURE, hide-original-errors, vscode-logs, the CSS hack file) and the four example error fixtures used for manual hover testing, including the `.type` sample that exercises the custom grammar."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
-start = 115
-end = 121
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "examples", entries = "all" },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "packages/formatter/src/index.ts (full)"
-justification = "The package's entire public surface: createErrorMessagePrettifier + CodeBlockFn, re-exported. 4 lines, tells an agent exactly what @pretty-ts-errors/formatter exports before it reads anything else in the package."
+descriptor = "packages/formatter public entry point (complete export block)"
+justification = "The whole public API of the core package is four lines: `createErrorMessagePrettifier` and the `CodeBlockFn` type. Knowing the surface is *this* small is the highest-leverage fact about the package."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/index.ts"
-start = 1
-end = 4
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/index.ts", start = 1, end = 4, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "errorMessagePrettifier.ts: CodeBlockFn + createErrorMessagePrettifier"
-justification = "The heart of the whole extension: a rule-driven regex-replace pipeline over the raw TS diagnostic string, parameterized on a `codeBlock` renderer so the same logic serves both hover (markdown) and sidebar (HTML) output."
+descriptor = "packages/vscode-formatter public entry point (complete export block)"
+justification = "Three exports — `prettifyDiagnosticForHover`, `prettifyDiagnosticForSidebar`, `initHighlighter` — which is exactly the hover / sidebar / shiki-init split the extension consumes. Closes the export class for this package."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/errorMessagePrettifier.ts"
-start = 1
-end = 31
-render = { kind = "full" }
+spans = [
+  { path = "packages/vscode-formatter/src/index.ts", start = 1, end = 3, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "errorMessagePrettifier.ts: getRules signature + first rule"
-justification = "getRules() returns 16 ordered {pattern, replacer} rules matching TS's English-language diagnostic phrasing (\"is missing the following properties from type '...'\", \"declare module '...'\", etc); showing the signature and the first rule conveys the shape and matching style without the full 120-line table's cost. Ellipsis marks that 15 more rules follow at line 57 onward; the local helper closures defined just above the rule array (formatTypeScriptBlock at 39, formatSimpleTypeBlock at 41, formatTypeOrModuleBlock at 43-50) used by later rules are skipped at this budget."
+descriptor = "packages/utils: every exported symbol"
+justification = "`objectKeys`, `invert`, `d` (dedent) and `has` are the only four. `d` and `has` are imported all over the other packages, so seeing them named here explains otherwise-cryptic call sites in every later batch."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/errorMessagePrettifier.ts"
-start = 38
-end = 38
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/formatter/src/errorMessagePrettifier.ts"
-start = 53
-end = 56
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/formatter/src/errorMessagePrettifier.ts"
-start = 57
-end = 57
-render = { kind = "ellipsis" }
+spans = [
+  { path = "packages/utils/src/index.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 36, end = 36, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "formatTypeBlock.ts: formatTypeBlock() + helper locations"
-justification = "formatTypeBlock() decides whether an extracted type string needs prettier reformatting at all (bare parens, simple primitives skip it) and whether the result renders inline or as a multi-line block. formatType()/convertToValidType()/convertToOriginalType() (locations only below) do the actual prettier round-trip with TS's '...'-truncation syntax patched to valid TS and back."
+descriptor = "packages/formatter: every module-level symbol in the four source files"
+justification = "Name-level closure over the core package, including the module-private ones (`getRules`, `Rule`, `convertToValidType`, `convertToOriginalType`, the `parentheses` table) an agent would otherwise never guess exist. One grep-free hop to any of them."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/formatTypeBlock.ts"
-start = 1
-end = 30
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/formatter/src/formatTypeBlock.ts"
-start = 34
-end = 34
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/formatter/src/formatTypeBlock.ts"
-start = 51
-end = 51
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/formatter/src/formatTypeBlock.ts"
-start = 64
-end = 64
-render = { kind = "truncated", pattern = "^[^(]+" }
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 33, end = 33, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 34, end = 34, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/formatter/src/formatTypeWithPrettier.ts", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 9, end = 10, render = { kind = "full" } },
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "formatTypeWithPrettier.ts (full)"
-justification = "The actual prettier/standalone call (typescript parser, printWidth 60, no semicolons) that formatTypeBlock.ts wraps; 14 lines, answers 'what prettier options format the type blocks'."
+descriptor = "packages/formatter: full signatures of the public functions"
+justification = "Refines 3.4's names into callable contracts — the `CodeBlockFn` triple `(code, language?, multiLine?)`, `createErrorMessagePrettifier`'s curried `(message) => Promise<string>` return, `formatTypeBlock(prefix, type, codeBlock)` and `formatType(type, { throwOnError })`. Enough to write a caller with zero follow-ups."
+predecessor = "3.4"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/formatTypeWithPrettier.ts"
-start = 1
-end = 14
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 3, end = 11, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 4, end = 8, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 31, end = 37, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeWithPrettier.ts", start = 5, end = 5, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "addMissingParentheses.ts (full)"
-justification = "TS truncates long types with '...' mid-expression, leaving unbalanced brackets/quotes that would break the prettier round-trip; this single self-contained function walks the string with a stack to close them. One of the cleverest, most self-contained pieces of domain logic in the repo."
+descriptor = "vscode-formatter format/: symbols, and which code-block backend each renderer binds"
+justification = "The two module-level bindings are the whole hover-vs-sidebar story: hover is `createErrorMessagePrettifier(hoverCodeBlock)`, sidebar is `createErrorMessagePrettifier(htmlCodeBlock)`. Also names `embedSymbolLinks` and `identSentences`, closing the format/ symbol set."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/formatter/src/addMissingParentheses.ts"
-start = 1
-end = 59
-render = { kind = "full" }
+spans = [
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 17, end = 18, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 24, end = 24, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 16, end = 17, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/embedSymbolLinks.ts", start = 4, end = 4, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/format/identSentences.ts", start = 3, end = 3, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "components/actions.ts: the complete set of action links"
+justification = "`divider`, `errorCodeExplanationLink`, `showErrorInSidebarLink`, `pinErrorLink`, `copyErrorLink`, `errorMessageTranslationLink` — the six exports that produce the README's button row. A partial listing here would make an agent think a button is unimplemented."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "components/: code-block and layout component symbols"
+justification = "Closes the remaining components: the two `CodeBlockFn` implementations (`hoverCodeBlock` with its private inline/multiline variants, `htmlCodeBlock` with the module-level shiki `highlighter` slot and `initHighlighter`), plus `errorTitle`, `miniLine`, `plainCodeBlock`, `spanBreak`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/errorTitle.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/miniLine.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/plainCodeBlock.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/vscode-formatter/src/components/spanBreak.ts", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "extension.ts: the complete activate()/deactivate() wiring"
+justification = "Thirty lines that are the extension's architecture: the `setContext` of supported language ids, logger registration, the debug-only selected-text hover provider, the diagnostics listener, the webview view provider, and all five command registrations in order. Highest zero-follow-up value in the app."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/extension.ts", start = 13, end = 42, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "formattedDiagnosticsStore.ts: the shared state, in full"
+justification = "One 18-line file holds the extension's only cross-component state — a `Map<fsPath, FormattedDiagnostic[]>` where each entry carries the VS Code `Range`, the rendered `MarkdownString[]`, and the original LSP diagnostic kept for on-demand sidebar formatting. Every provider and command reads it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/formattedDiagnosticsStore.ts", start = 4, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "supportedLanguageIds.ts in full"
+justification = "The exact ten language ids gating the extension (typescript…glimmer-ts). Cheap, and it is the concrete counterpart of the README's prose support matrix plus the manifest's activation events — a frequent target of \"add support for X\" tasks."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/supportedLanguageIds.ts", start = 1, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "Extension core modules: diagnostics.ts, hoverProvider, logger surface"
+justification = "Names the diagnostics pipeline's parts (`supportedDiagnosticSources`, `registerOnDidChangeDiagnostics`, `CACHE_SIZE_MAX`, the `cache` map, `getFormattedDiagnostic`, `registeredLanguages`, `ensureHoverProviderIsRegistered`), the `hoverProvider` object, the debug-only selected-text provider, and the full `logger` export with all eight methods."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 26, end = 26, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 84, end = 84, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 97, end = 97, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 99, end = 99, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 133, end = 133, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/hoverProvider.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/selectedTextHoverProvider.ts", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/logger.ts", start = 164, end = 173, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "commands/: every command id and its register function"
+justification = "Five command modules, each a `COMMAND_ID` constant plus a `register*` export, together with the `enabledCommands` whitelist and the shared `execute` wrapper every one of them funnels through. This is the class an agent most often needs complete — adding or invoking a command requires knowing all five ids exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/commands/copyError.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/copyError.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/pinError.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/pinError.ts", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/unpinError.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/unpinError.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/showErrorInSidebar.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/showErrorInSidebar.ts", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/revealSelection.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/revealSelection.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/enabledCommands.ts", start = 1, end = 9, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/execute.ts", start = 4, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "commands/validate.ts: the argument-coercion helpers"
+justification = "Commands are invoked from `command:` URIs inside rendered HTML, so every argument arrives as `unknown`. This names the complete guard set — `tryEnsureUri`/`tryEnsureRange` plus the `UriLike`/`RangeLike`/`PositionLike` shapes and their `is*Like` predicates — which is what any new command must reuse."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 33, end = 33, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 55, end = 55, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 68, end = 68, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "webviewViewProvider.ts: module-level declarations and the view registration"
+justification = "The sidebar's vocabulary in one place — the empty-state message, the second (`sidebarHtmlCache`) cache and its size cap, the `\"cursor\" | \"locked\"` view mode, `DiagnosticItem`/`PinnedError`, the singleton + `getViewProvider`, and the names `updateHasErrorsContext`, `registerWebviewViewProvider`, `diagnosticToItem`, `MarkdownWebviewViewProvider`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 23, end = 44, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 81, end = 81, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 103, end = 103, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "MarkdownWebviewViewProvider: all instance fields and all methods"
+justification = "The 406-line provider is the largest source file in the repo; this gives its full member roster (nine private fields including the two `skipNext*` re-entrancy guards, and every method from `ensureInitialized` through `refresh`) so any sidebar question lands on a line number in one hop."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 104, end = 113, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 117, end = 117, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 214, end = 214, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 242, end = 242, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 249, end = 249, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 320, end = 320, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 329, end = 329, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 335, end = 335, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 345, end = 345, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 358, end = 358, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.17"
+descriptor = "markdownWebviewProvider.ts: class members"
+justification = "Completes the provider pair: the HTML template loader, `getWebviewOptions`, `createOnDidReceiveMessage`, `getWebviewContent` and the private `patchCspSafeAttrs` that rewrites the webview's local-dev CSP and asset URLs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 7, end = 9, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 39, end = 39, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "packages/vscode-formatter/src/index.ts (full)"
-justification = "3-line public surface: prettifyDiagnosticForHover, prettifyDiagnosticForSidebar, initHighlighter — the package's whole external API."
+descriptor = "The prettifier engine: createErrorMessagePrettifier's rewrite loop"
+justification = "The heart of the product. Nineteen lines show that prettifying is an ordered sequential pass: for each rule, `matchAll` the pattern over the current output and splice in `await replacer(...captures)`, feeding the result into the next rule. Rule order therefore matters — a fact no signature conveys."
+predecessor = "3.5"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/index.ts"
-start = 1
-end = 3
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 12, end = 30, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "identSentences.ts (full)"
-justification = "Converts a multi-line diagnostic's leading-whitespace indentation (TS's way of nesting sub-errors) into an HTML table-based indent, since VSCode markdown can't render leading spaces; one of the two pre-processing steps run before the regex pipeline."
+descriptor = "All fifteen rewrite rules: every regex pattern, replacer bodies elided"
+justification = "The complete rule set in pattern form — quoted types, `declare module`, \"is missing the following properties\", the `types 'X' and 'Y'` pair, overload lines, module/file names, primitive types, keyword snippets, `return`/`operator`, and the catch-all single-quote rule. This is the answer key for \"does the formatter handle error message shape X\". Each replacer body is marked with `…` at its own line so the agent knows exactly where to read next."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/format/identSentences.ts"
-start = 1
-end = 34
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 55, end = 55, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 58, end = 58, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 59, end = 59, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 63, end = 64, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 65, end = 65, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 76, end = 76, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 77, end = 77, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 86, end = 86, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 87, end = 87, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 103, end = 103, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 104, end = 104, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 108, end = 108, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 109, end = 109, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 112, end = 112, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 113, end = 113, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 116, end = 117, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 118, end = 118, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 122, end = 123, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 124, end = 124, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 127, end = 128, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 129, end = 129, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 133, end = 134, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 135, end = 135, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 138, end = 139, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 140, end = 140, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 143, end = 143, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 144, end = 144, render = { kind = "ellipsis" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 148, end = 148, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 149, end = 149, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "embedSymbolLinks.ts: location"
-justification = "The other pre-processing step: parses a diagnostic's relatedInformation for \"'X' is declared here\" and rewrites the symbol into a clickable command:// link. Signature line only, given it's a smaller/self-explanatory sibling of identSentences.ts above."
+descriptor = "getRules' three code-block adapters"
+justification = "Explains the vocabulary every replacer uses: `formatTypeScriptBlock` (language `typescript`), `formatSimpleTypeBlock` (language `type`) and `formatTypeOrModuleBlock`, which quotes the captured text when the prefix is module/file/file name. Without these three the elided replacer bodies are unreadable."
+predecessor = "3.4"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/format/embedSymbolLinks.ts"
-start = 4
-end = 4
-render = { kind = "truncated", pattern = "^[^(]+" }
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 39, end = 51, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "prettifyDiagnosticForHover.ts (full)"
-justification = "The top-level hover pipeline: embedSymbolLinks -> identSentences -> the errorMessagePrettifier (parameterized with hoverCodeBlock) -> wrapped with errorTitle + action links. This is what diagnostics.ts calls to build every hover tooltip."
+descriptor = "formatTypeBlock: the fast paths and the single/multi-line decision"
+justification = "Shows the two short-circuits (bare `[]`/`{}` and the primitive-type regex) and the rule that a formatted type containing a newline becomes a `prefix:` multi-line block while a short one stays inline — the behaviour behind almost every hover layout bug."
+predecessor = "3.5"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts"
-start = 1
-end = 45
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 9, end = 30, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "prettifyDiagnosticForSidebar.ts: location"
-justification = "The sidebar-webview counterpart to prettifyDiagnosticForHover.ts (4.4): same embedSymbolLinks -> identSentences -> errorMessagePrettifier shape, just parameterized with htmlCodeBlock (shiki highlighting) instead of hoverCodeBlock. Exact line to diff against 4.4 rather than a second near-duplicate full body."
+descriptor = "formatType: wrap, prettier-format, unwrap, and swallow failures"
+justification = "The three-step trick that makes invalid TS-error types formattable, plus the `throwOnError` escape hatch used by the tests. Twelve lines that make the two `convert*` helpers' purpose obvious."
+predecessor = "3.5"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts"
-start = 23
-end = 23
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 38, end = 49, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "vscode-formatter components/: symbol roster"
-justification = "Name-only locations for every export across components/ (actions.ts's 5 link builders + divider, errorTitle, hoverCodeBlock, initHighlighter + htmlCodeBlock, miniLine, plainCodeBlock, spanBreak) so none of these small rendering-primitive files reads as nonexistent -- the codicon-hack (hoverCodeBlock) and shiki-highlight (htmlCodeBlock, initialized via initHighlighter -- the third export named in 4.1's index.ts) renderers 4.4/4.5 are parameterized with."
-predecessor = "1.10"
+descriptor = "formatTypeWithPrettier: the exact prettier options"
+justification = "`prettier/standalone` with the estree + typescript plugins, `printWidth: 60`, `arrowParens: \"avoid\"`, `semi: false`, `singleQuote: false`. These constants decide how every hover wraps, and they are a common tuning target."
+predecessor = "3.5"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 5
-end = 5
-render = { kind = "truncated", pattern = "^[^=]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 7
-end = 7
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 14
-end = 14
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 25
-end = 25
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 36
-end = 36
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/actions.ts"
-start = 45
-end = 45
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/errorTitle.ts"
-start = 4
-end = 4
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts"
-start = 46
-end = 46
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts"
-start = 9
-end = 9
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts"
-start = 13
-end = 13
-render = { kind = "truncated", pattern = "^[^=]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/miniLine.ts"
-start = 4
-end = 4
-render = { kind = "truncated", pattern = "^[^=]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/plainCodeBlock.ts"
-start = 7
-end = 7
-render = { kind = "truncated", pattern = "^[^=]+" }
-[[batches.content.spans]]
-path = "packages/vscode-formatter/src/components/spanBreak.ts"
-start = 8
-end = 8
-render = { kind = "truncated", pattern = "^[^=]+" }
+spans = [
+  { path = "packages/formatter/src/formatTypeWithPrettier.ts", start = 6, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "convertToValidType: the placeholder substitutions going in"
+justification = "The full list of what makes a TS error type parseable — closing truncated parens, rewriting `(...): return` to an arrow, and encoding `... N more ...`, `...;` and bare `...` as `___NMORE___` / `___KEY___` / `__THREE_DOTS__` sentinels. Any bug report about a mangled type starts here."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 52, end = 62, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "convertToOriginalType: the inverse substitutions coming out"
+justification = "The mirror of 4.7, including the extras that have no inverse partner — requoting `'k':` keys to `\"k\":`, turning surviving `... N more ...` into `/* N more */` comments, and stripping the `type x =` wrapper. Ranked adjacent so the encode/decode pair reads as one unit."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 65, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "addMissingParentheses: the bracket-balancing stack"
+justification = "TypeScript truncates long types mid-structure; this is the repair pass. The first half walks the string with a stack, inserting the correct *opening* char when a stray closer appears, and collects the closers still owed."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 13, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "addMissingParentheses: unterminated strings, trailing colon, param rewrite"
+justification = "The tail cases: odd quote count closes the last string with `...\"`, a trailing `:` gets `...`, then the owed closers are appended after a newline and `(param: …)` is rewritten to `(param: …) => ...`. Completes the function begun in 4.9."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 36, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "packages/formatter README: end-to-end usage example"
+justification = "A twenty-line worked example — define a `codeBlock`, build the prettifier, call it on `Type 'string' is not assignable to type 'number'.` It answers \"how do I use this package outside VS Code\" with no follow-up, which is the package's stated selling point."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/README.md", start = 7, end = 20, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "packages/utils/src/index.ts (full)"
-justification = "The entire shared-utils package: objectKeys, invert, `d` (dedent alias used everywhere for HTML template literals), and the `has` type-guard used by diagnostics.ts/webviewViewProvider.ts to filter supported sources/languages."
+descriptor = "prettifyDiagnosticForHover: how a hover is assembled"
+justification = "The VS Code hover pipeline in one body — `embedSymbolLinks` → `identSentences` → the hover prettifier → an `errorTitle` carrying the sidebar/pin/copy/explanation links separated by `divider`, wrapped in a `<span>`. Answers most \"why does the hover look like this\" questions outright."
+predecessor = "3.6"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "packages/utils/src/index.ts"
-start = 1
-end = 25
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "packages/utils/src/index.ts"
-start = 30
-end = 39
-render = { kind = "full" }
+spans = [
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 25, end = 45, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "prettifyDiagnosticForSidebar: the same pipeline, different output"
+justification = "Ranked next so the diff is readable: identical pre-processing, but shiki HTML blocks instead of markdown, a `<div style=\"line-height:2\">` wrapper, no sidebar link, and an extra `errorMessageTranslationLink`. The pair defines what \"VS Code specific\" means in this package."
+predecessor = "3.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 24, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "actions.ts: the five link targets"
+justification = "One line per action link gives the concrete destinations — `https://typescript.tv/errors/ts<code>`, the `command:prettyTsErrors.{showErrorInSidebar,pinError,copyError}` URIs with URI-encoded JSON args, and the lz-string-compressed ts-error-translator URL. Very high value per token, and it closes the loop with the manifest's command ids."
+predecessor = "3.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 39, end = 39, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 48, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "htmlCodeBlock: shiki rendering, the copy button, inline unwrapping"
+justification = "The sidebar's code-block backend end to end: the lazily-injected `highlighter`, the explicit \"call initHighlighter() first\" error, the multi-line `code-container` with its `data-copy-content` button (the hook the webview script listens for), and the regex that strips `<pre><code>` for inline use."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 14, end = 44, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.1"
-descriptor = "extension.ts (full)"
-justification = "The whole activation sequence in one 42-line file: sets the supportedLanguageIds context key, registers the debug-only selected-text hover provider, wires up the diagnostics listener, the sidebar webview, and all 5 commands. The single best file to read first for 'how does this extension start up'."
+descriptor = "Extension manifest: the complete contributed command list"
+justification = "The four palette-visible commands with titles, category and `enablement`. Note the manifest declares four while `enabledCommands` whitelists five (`revealSelection` is link-only) — the sort of discrepancy an agent must see rather than infer."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/extension.ts"
-start = 1
-end = 42
-render = { kind = "full" }
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 75, end = 101, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "diagnostics.ts: registerOnDidChangeDiagnostics"
-justification = "The event handler that fires on every TS diagnostic change: filters to supported sources (ts/ts-plugin/deno-ts/js/glint), formats each via prettifyDiagnosticForHover, and stores/evicts from formattedDiagnosticsStore -- the main data-flow entry point from raw VSCode diagnostics into this extension's formatted output."
+descriptor = "Extension manifest: activity-bar container and the webview view"
+justification = "Declares the `prettyTsErrors` view container and the `prettyTsErrors.sidePanel` webview view — the id that `registerWebviewViewProvider` binds and that the pin/show commands focus via `prettyTsErrors.sidePanel.focus`."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/diagnostics.ts"
-start = 30
-end = 77
-render = { kind = "full" }
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 55, end = 74, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "diagnostics.ts: cache + getFormattedDiagnostic/hover-registration locations"
-justification = "The 100-entry message->MarkdownString memo cache: CACHE_SIZE_MAX plus the `cache` Map declaration itself (its guarding doc comment cites two known perf issues, elided at this budget), plus exact-line pointers to getFormattedDiagnostic/ensureHoverProviderIsRegistered for a 1-hop follow-up read rather than their full bodies."
-predecessor = "6.2"
+descriptor = "Extension manifest: menus, the `type` language and its grammar"
+justification = "The editor/title button and its `when` clause built from the two `setContext` keys (`hasErrors`, `supportedLanguageIds`), plus the registration of the custom `type` language and `source.type` TextMate grammar that the README's second design note explains."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/diagnostics.ts"
-start = 79
-end = 88
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/diagnostics.ts"
-start = 97
-end = 97
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/diagnostics.ts"
-start = 99
-end = 99
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/diagnostics.ts"
-start = 138
-end = 138
-render = { kind = "truncated", pattern = "^[^(]+" }
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 102, end = 125, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.4"
-descriptor = "formattedDiagnosticsStore.ts (full)"
-justification = "The `Map<filePath, FormattedDiagnostic[]>` store diagnostics.ts fills and hoverProvider.ts/webviewViewProvider.ts both read from; 21 lines, defines FormattedDiagnostic's shape (range/contents/lspDiagnostic) referenced throughout the provider tier."
+descriptor = "Extension manifest: identity, engine and extension kind"
+justification = "Marketplace publisher/name, the user-facing displayName and description, the shipped version, `engines.vscode ^1.77.0`, and the `ui`+`workspace` extensionKind that `webviewViewProvider` branches on when choosing between vscode-shiki-bridge and bundled shiki themes. Ellipsis markers flag the manifest regions this batch skips: repository metadata, categories/banner, the `main`/`files` entry points, and the npm scripts block."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/formattedDiagnosticsStore.ts"
-start = 1
-end = 21
-render = { kind = "full" }
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 2, end = 7, render = { kind = "full" } },
+  { path = "apps/vscode-extension/package.json", start = 8, end = 8, render = { kind = "ellipsis" } },
+  { path = "apps/vscode-extension/package.json", start = 14, end = 20, render = { kind = "full" } },
+  { path = "apps/vscode-extension/package.json", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "apps/vscode-extension/package.json", start = 46, end = 46, render = { kind = "ellipsis" } },
+  { path = "apps/vscode-extension/package.json", start = 127, end = 127, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "6.5"
-descriptor = "supportedLanguageIds.ts (full)"
-justification = "The complete list of 10 VSCode language ids the sidebar webview/context-key activate for; a partial listing here would wrongly suggest e.g. glimmer-js/glimmer-ts aren't supported."
+descriptor = "Extension manifest: activation events"
+justification = "The ten `onLanguage:` triggers. They must stay in sync with `SUPPORTED_LANGUAGE_IDS`; showing both makes \"add language X\" a two-file edit the agent can plan without exploring."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/supportedLanguageIds.ts"
-start = 1
-end = 12
-render = { kind = "full" }
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 34, end = 45, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.6"
-descriptor = "logger.ts: measure() overloads"
-justification = "The most interesting member of the exported `logger` object: an overloaded sync/async timing wrapper that logs at a severity chosen by how long `task` took (used to flag the noisy onDidChangeDiagnostics handler)."
+descriptor = "diagnostics.ts: accepted diagnostic sources and the cache rationale"
+justification = "The exact source filter (`ts`, `ts-plugin`, `deno-ts`, `js`, `glint`) plus the commented-in-place reasoning for the message→MarkdownString cache: the TS language-features extension re-pushes all diagnostics constantly, and the TODO admitting the 100-entry map is a stand-in for a real LRU, each linking its tracking issue."
+predecessor = "3.12"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 63
-end = 72
-render = { kind = "full" }
-
-[[batches]]
-id = "6.7"
-descriptor = "logger.ts: remaining symbol roster"
-justification = "Locations for the rest of logger.ts's symbols: the private getLogger() singleton accessor, the public `logger` export itself, the info/trace/debug/warn/error one-liners, the threshold-formatting helpers measure() delegates to (logMeasuredDuration, normalizeThresholds, findLogLevel), and dispose/isPromiseLike/register -- so the file's full symbol set is accounted for without paying for every body."
-predecessor = "6.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 164
-end = 164
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 11
-end = 11
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 21
-end = 21
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 25
-end = 25
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 29
-end = 29
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 32
-end = 32
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 36
-end = 36
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 103
-end = 103
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 113
-end = 113
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 124
-end = 124
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 135
-end = 135
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 142
-end = 142
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/logger.ts"
-start = 151
-end = 151
-render = { kind = "full" }
-
-[[batches]]
-id = "6.8"
-descriptor = "globals.d.ts (full)"
-justification = "13-line shim declaring the global `TextDecoder` missing from the pinned @types/node version; explains an otherwise-mysterious ambient declaration if an agent greps for TextDecoder usage in markdownWebviewProvider.ts."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/globals.d.ts"
-start = 1
-end = 13
-render = { kind = "full" }
+spans = [
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 23, end = 32, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 86, end = 96, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.1"
-descriptor = "commands/enabledCommands.ts (full)"
-justification = "The complete whitelist of command:// URIs allowed inside the MarkdownString/webview (isTrusted.enabledCommands); every command registered elsewhere must appear here or its link silently fails to execute -- a single omission here would be actively misleading."
+descriptor = "Remaining directories: CI/editor config, assets, snapshots, vendored webview files"
+justification = "Closes every directory the root listing revealed but never expanded — `.github` (+ workflows, issue template), `.vscode`, `assets` (+ mentions), `docs/vscode-logs`, the vitest `__snapshots__` dir and the webview's vendored codicon files. Cheap insurance against \"that file doesn't exist\" inferences."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/enabledCommands.ts"
-start = 1
-end = 10
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".vscode", entries = "all" },
+  { parent = "assets", entries = "all" },
+  { parent = "assets/mentions", entries = "all" },
+  { parent = "docs/vscode-logs", entries = "all" },
+  { parent = "packages/formatter/test/__snapshots__", entries = "all" },
+  { parent = "apps/vscode-extension/webview/vendor", entries = "all" },
+]
 
 [[batches]]
 id = "7.2"
-descriptor = "commands/execute.ts (full)"
-justification = "The shared try/catch wrapper every one of the 5 registered commands runs through: logs the error via `logger`, shows a VSCode error toast, and rethrows. Read this once instead of re-deriving the same error-handling pattern from each command file."
+descriptor = "CONTRIBUTING.md: complete heading outline"
+justification = "Seventeen headings covering local dev setup, the mono-repo/turbo explanation, debugging via launch configs, the packaged-vsix path, and testing. Naming them all turns any contributor-workflow question into a single targeted read of one section."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/execute.ts"
-start = 1
-end = 24
-render = { kind = "full" }
+spans = [
+  { path = "CONTRIBUTING.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 15, end = 15, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 24, end = 24, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 28, end = 28, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 36, end = 36, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 58, end = 58, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 72, end = 72, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 76, end = 76, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 82, end = 82, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 86, end = 86, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 90, end = 90, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 92, end = 92, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 108, end = 108, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 115, end = 115, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 123, end = 123, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 132, end = 132, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "7.3"
-descriptor = "commands/validate.ts: location"
-justification = "tryEnsureUri/tryEnsureRange are the runtime type guards every command that receives untyped command-link args (pinError, revealSelection, showErrorInSidebar) calls before trusting its input; exact signature lines for a 1-hop follow-up read of the full 79-line file."
+descriptor = "errorMessageMocks.ts: every exported mock error message"
+justification = "The formatter's regression corpus — all twenty-two named real-world diagnostics (destructured params, truncated types, private-property TS2322, TS1360/TS2304/TS2305/TS2307/TS4113/TS4117, and the rest). Test-writing tasks need the complete set; names only, since each mock's body is a multi-line error string."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/validate.ts"
-start = 3
-end = 3
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/validate.ts"
-start = 33
-end = 33
-render = { kind = "full" }
-
-[[batches]]
-id = "7.4"
-descriptor = "commands/*.ts registration roster"
-justification = "COMMAND_ID + registration-signature locations for all 5 command files (copyError, pinError, revealSelection, showErrorInSidebar, unpinError), closing the roster promised by 2.1/7.1 at symbol level."
-predecessor = "7.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/copyError.ts"
-start = 4
-end = 6
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/pinError.ts"
-start = 6
-end = 8
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/revealSelection.ts"
-start = 5
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/showErrorInSidebar.ts"
-start = 6
-end = 8
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/commands/unpinError.ts"
-start = 5
-end = 7
-render = { kind = "full" }
-
-[[batches]]
-id = "8.1"
-descriptor = "provider/hoverProvider.ts (full)"
-justification = "The VSCode HoverProvider registered per-language in diagnostics.ts: looks up formattedDiagnosticsStore by file path, filters to diagnostics whose range contains the cursor, and returns their pre-rendered contents. 27 lines, the simplest full data-flow read in the provider tier."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/hoverProvider.ts"
-start = 1
-end = 27
-render = { kind = "full" }
-
-[[batches]]
-id = "8.2"
-descriptor = "provider/markdownWebviewProvider.ts: constructor + fields"
-justification = "How the sidebar webview provider holds its extensionUri/htmlTemplate and starts loading webview/index.html; the content-injection and CSP-rewriting methods are left to the 8.3 roster since they're mechanical string munging, not core logic."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 1
-end = 17
-render = { kind = "full" }
-
-[[batches]]
-id = "8.3"
-descriptor = "provider/ roster: markdownWebviewProvider methods + selectedTextHoverProvider"
-justification = "Locations for markdownWebviewProvider.ts's remaining methods (loadWebviewHtmlTemplate, getWebviewOptions, createOnDidReceiveMessage, getWebviewContent, patchCspSafeAttrs) and the whole dev-only selectedTextHoverProvider.ts (registers a debug-only hover on test/**/*.ts that treats the selected text as a fake diagnostic) -- lower-priority than the always-on providers but still symbol-accounted-for."
-predecessor = "8.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 19
-end = 19
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 30
-end = 30
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 39
-end = 39
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 54
-end = 54
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts"
-start = 67
-end = 67
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/selectedTextHoverProvider.ts"
-start = 18
-end = 18
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/selectedTextHoverProvider.ts"
-start = 31
-end = 31
-render = { kind = "truncated", pattern = "^[^(]+" }
-
-[[batches]]
-id = "8.4"
-descriptor = "provider/webviewViewProvider.ts: ViewMode/DiagnosticItem/PinnedError types"
-justification = "The biggest file in the repo (406 lines) -- its 3 key module-level types first: ViewMode ('cursor'|'locked'), and the DiagnosticItem/PinnedError interfaces every method below passes around."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 29
-end = 38
-render = { kind = "full" }
-
-[[batches]]
-id = "8.5"
-descriptor = "webviewViewProvider.ts: full method/field roster"
-justification = "Every top-level function and every MarkdownWebviewViewProvider method/field (including its one-line constructor), name-only. Given this file alone would consume a third of the whole NS budget if bodies were included throughout, breadth (exact line per symbol) is prioritized over a deep dive into any one method here."
-predecessor = "8.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 104
-end = 104
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 105
-end = 113
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 115
-end = 115
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 42
-end = 42
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 46
-end = 46
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 65
-end = 65
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 81
-end = 81
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 117
-end = 117
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 190
-end = 190
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 214
-end = 214
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 242
-end = 242
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 249
-end = 249
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 320
-end = 320
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 329
-end = 329
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 335
-end = 335
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 345
-end = 345
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "apps/vscode-extension/src/provider/webviewViewProvider.ts"
-start = 358
-end = 358
-render = { kind = "truncated", pattern = "^[^(]+" }
-
-[[batches]]
-id = "9.1"
-descriptor = "examples/errors.vue + examples.type (full)"
-justification = "The two smallest example fixtures: a Vue SFC with a real type-mismatch call (y(x) where x includes a string), and a raw '.type' file showing the custom TextMate-highlighted pseudo-type syntax (optional union, tuple array) the type.tmGrammar.json grammar targets."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "examples/errors.vue"
-start = 1
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "examples/examples.type"
-start = 1
-end = 9
-render = { kind = "full" }
+spans = [
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 9, end = 9, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 20, end = 20, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 42, end = 42, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 49, end = 49, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 55, end = 55, render = { kind = "full" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 66, end = 66, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 70, end = 70, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 74, end = 74, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 78, end = 78, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 82, end = 82, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 86, end = 86, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 90, end = 90, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 94, end = 94, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 98, end = 98, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 103, end = 103, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 107, end = 107, render = { kind = "truncated", pattern = "^export const [A-Za-z0-9]+" } },
+]

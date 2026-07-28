@@ -1,1770 +1,768 @@
 fixture = "p-queue"
 revision_pin = "fc4b7369"
 summary = """
-p-queue: a small, dependency-light TypeScript library (single default-export class `PQueue`, an
-EventEmitter3 subclass) implementing an async task queue with concurrency limiting, interval-based
-rate limiting (fixed-window and a `strict` sliding-window mode), task priority, per-task timeout,
-AbortSignal-based cancellation, and a pluggable `queueClass` (default `PriorityQueue`, a sorted-array
-implementation with binary insertion and lazy compaction). Published as ESM-only to npm; built with
-tsc, linted/tested with xo + node:test + tsd. The repo is source (5 files under source/), a large
-node:test suite (7 files under test/, 190 cases) plus a type-level test (test-d/), a benchmark
-script (bench.ts), and a long API-reference README. The query distribution this NS serves: "what
-public methods/options exist and what do they default to", "how does rate limiting / strict mode /
-priority ordering actually work internally", "is behavior X already tested, and where", "how do I
-build/test/bench this", and "how do I use AbortSignal / timeout / custom QueueClass / debug a stuck
-queue" — the last cluster served by the TaskOptions/QueueAddOptions/queue.ts type definitions (more
-precise than the README prose that restates them) plus test/debug.ts's runningTasks/isSaturated
-coverage, not by README FAQ body text, which this draft doesn't render given the budget spent
-making test/advanced.ts and test/strict.ts's coverage — previously entirely unrepresented — complete.
-Every span in this draft ends at a natural boundary (a field, method, type, or object closes at
-that exact line) or is a single-line location pointer (test-name/benchmark-name rosters); none is
-cut off mid-body, so no span here uses an ellipsis render.
+`p-queue` v9.2.0 is a single-purpose TypeScript ESM library: a promise queue
+with concurrency control, rate limiting (fixed-window and strict sliding-window),
+priorities, per-task timeouts and AbortSignal cancellation. Essentially all
+behaviour lives in one class, `PQueue`, in `source/index.ts` (985 lines); the
+supporting modules are tiny (`source/options.ts` option types, `source/queue.ts`
+the pluggable `Queue` contract, `source/priority-queue.ts` the default
+implementation, `source/lower-bound.ts` a binary-search helper). `readme.md` is
+1077 lines and is the project's real API documentation; `test/` holds ~190
+node:test cases across seven files that are the de-facto behavioural spec.
+
+The ranking is: (1) identity and a complete map of the tree, the event set and
+the public export surface; (2) the complete public member roster of `PQueue`
+plus the signatures and doc-comments that let an agent answer usage questions
+with no follow-up; (3) configuration — every option key, its default and its
+validation; (4) the scheduling internals: a name roster of all 21 private
+methods, the complete instance state, the admission/dispatch decision, the
+`add()` pipeline end to end, and both branches of interval gating (the
+rate-limit state machine and the timer helpers are located by the roster rather
+than rendered); (5) `PriorityQueue`'s head-cursor design and `lowerBound`;
+(6) the readme guidance the source doesn't state — custom queue classes, the
+cancellation policy, backpressure; (7) test-title indexes for the four focused
+suites plus build scripts and CI. Option and method semantics are taken from
+the TypeScript doc-comments rather than duplicated from the readme, and the
+readme is scheduled only where it uniquely adds (lede, usage, the `.add()` and
+`.clear()` warnings, section and FAQ indexes, and the FAQ answers above).
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "Cheapest possible orientation: every top-level file/dir in one shot, so no follow-up 'ls' is ever needed and no root file is silently assumed absent. Establishes the source/test/test-d/.github split explored next."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+descriptor = "Readme title, tagline and what p-queue is useful for"
+justification = "Rank 1 must answer \"what is this repository\" in as few tokens as possible: the name, the one-line concept (promise queue with concurrency control) and the intended use cases — rate-limiting async or sync operations, talking to a REST API, CPU/memory intensive work."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 1, end = 5, render.kind = "full"},
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "source/ listing"
-justification = "Names all 5 implementation files up front — index.ts (the class), options.ts (types), priority-queue.ts, queue.ts (interface), lower-bound.ts (helper) — so later batches that dive into individual files read as expected members of a known-complete set, not a surprise subset."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "source"
-entries = "all"
+descriptor = "Readme scope note: not for server job queues, and the project is feature-complete"
+justification = "The remaining lines of the lede, and the ones that change an agent's behaviour rather than just its vocabulary: servers should use a Redis-backed job queue instead, and the project is explicitly feature complete with no further development planned. Any \"add feature X\" request has to be answered against that policy, so it is worth a batch of its own immediately after the concept."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 7, end = 9, render.kind = "full"},
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "test/, test-d/, .github/ listings"
-justification = "Completes the directory closure: 7 node:test files (the bulk of the repo's line count), the tsd type-test dir, and the CI/security config dirs. Grouped together since each is a cheap 'what's here' hedge on its own directory."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "test"
-entries = "all"
-[[batches.content.groups]]
-parent = "test-d"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = "all"
+descriptor = "Complete root directory listing"
+justification = "Fourteen entries, complete, for a few dozen tokens: it establishes that source lives in `source/`, tests in `test/` plus a type test in `test-d/`, that there is a `bench.ts` at the root, and that the only build config is `tsconfig.json` + `package.json`. Listing all entries at once forecloses the inference that unlisted files don't exist."
+content.kind = "fs"
+content.groups = [
+  {parent = ".", entries = "all"},
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Complete listings of source/, test/ and test-d/"
+justification = "The five source modules are the entire implementation, and their names alone (index, options, priority-queue, queue, lower-bound) already sketch the architecture. The seven test files are topical (basic / advanced / strict / rate-limit / debug / priority-queue / validation), so this listing turns \"where is X tested\" into a single directed read. Complete listings, so nothing is implied absent."
+content.kind = "fs"
+content.groups = [
+  {parent = "source", entries = "all"},
+  {parent = "test", entries = "all"},
+  {parent = "test-d", entries = "all"},
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "PQueue class declaration, its two type parameters, and the complete event-name union"
+justification = "The single highest-value five lines in the repository. Line 11 enumerates every event the queue can emit (active, idle, empty, add, next, completed, error, pendingZero, rateLimit, rateLimitCleared) — a complete class, so no agent will guess at event names — and lines 13-16 give the class doc plus the declaration showing `PQueue` is generic over a pluggable `QueueType` defaulting to `PriorityQueue`, and that it extends `EventEmitter`."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 11, end = 11, render.kind = "full"},
+  {path = "source/index.ts", start = 13, end = 16, render.kind = "full"},
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Every section heading in readme.md (all H2s plus the two API H3s)"
+justification = "readme.md is 1077 lines and is where the project's prose documentation actually lives; a complete heading roster is the cheapest possible index into it. It tells the agent that there are dedicated sections for Events, an Advanced example, Handling timeouts, Custom QueueClass and a FAQ, with exact line numbers, so any documentation question becomes one targeted read rather than a search."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 39, end = 39, render.kind = "full"},
+  {path = "readme.md", start = 47, end = 47, render.kind = "full"},
+  {path = "readme.md", start = 68, end = 68, render.kind = "full"},
+  {path = "readme.md", start = 70, end = 70, render.kind = "full"},
+  {path = "readme.md", start = 162, end = 162, render.kind = "full"},
+  {path = "readme.md", start = 512, end = 512, render.kind = "full"},
+  {path = "readme.md", start = 698, end = 698, render.kind = "full"},
+  {path = "readme.md", start = 768, end = 768, render.kind = "full"},
+  {path = "readme.md", start = 813, end = 813, render.kind = "full"},
+  {path = "readme.md", start = 847, end = 847, render.kind = "full"},
+  {path = "readme.md", start = 1066, end = 1066, render.kind = "full"},
+  {path = "readme.md", start = 1071, end = 1071, render.kind = "full"},
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "The package's complete public export surface (end of source/index.ts)"
+justification = "Four lines that close the \"what can I import\" class: the default export `PQueue`, plus the named `Queue` type, `PriorityQueue`, the `QueueAddOptions`/`Options` types, and the re-exported `TimeoutError` from p-timeout. The last is the non-obvious one — `TimeoutError` is not defined in this repository, and an agent that doesn't see line 985 will look for it in `source/` and fail."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 963, end = 965, render.kind = "full"},
+  {path = "source/index.ts", start = 985, end = 985, render.kind = "full"},
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "source/queue.ts in full: the pluggable Queue contract"
+justification = "The whole file is eleven lines and it is the extension point of the library — the interface any custom `queueClass` must satisfy (`size`, `filter`, `dequeue`, `enqueue`, `setPriority`, and optional `remove`) plus the `RunFunction` alias used everywhere else. Cheap, complete, and it is the type both `PQueue` and `PriorityQueue` are written against, including the TODO noting `remove` becomes required in the next major."
+content.kind = "lines"
+content.spans = [
+  {path = "source/queue.ts", start = 1, end = 11, render.kind = "full"},
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "package.json identity block: name, version, description, module type, exports, engines"
+justification = "Establishes the published identity (`p-queue` 9.2.0, MIT, sindresorhus/p-queue) and the two facts that most often bite: the package is `\"type\": \"module\"` — pure ESM with a single `./dist/index.js` export and no CommonJS entry — and it requires Node >= 20. Also shows `sideEffects: false` and that the published artifact is `dist/`, not `source/`."
+content.kind = "lines"
+content.spans = [
+  {path = "package.json", start = 2, end = 16, render.kind = "full"},
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "source/index.ts imports and the Task type"
+justification = "Names the only two runtime dependencies and where they are used — `eventemitter3` for the event surface and `p-timeout` for per-task timeouts — and the intra-package import graph. The `Task` type (lines 7-9) is the shape every queued function must have: it receives `TaskOptions` (i.e. `{signal}`) and may be sync or promise-returning, which is the detail behind \"add a sync or async task\"."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 1, end = 9, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "readme.md title + tagline"
-justification = "Just the H1 and the one-line tagline — smallest possible semantic anchor for what this package is, so even a minimal budget slice names the project accurately."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "readme.md"
-start = 1
-end = 3
-render = { kind = "full" }
+descriptor = "Name-only roster of every public member of PQueue (24 declarations, complete)"
+justification = "The cheapest possible closure over the class's public surface: one truncated line per member, so the agent sees that `add`, `addAll`, `start`, `pause`, `clear`, `setPriority`, `sizeBy`, `onEmpty`, `onIdle`, `onPendingZero`, `onSizeLessThan`, `onRateLimit`, `onRateLimitCleared`, `onError`, the `size`/`pending`/`isPaused`/`isRateLimited`/`isSaturated`/`runningTasks` getters and the `concurrency` getter+setter all exist, and — just as important — that nothing else does. Each name carries its line number, so any \"how does X work\" question is one read away. Later batches refine individual entries with full signatures and doc comments."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 83, end = 83, render.kind = "full"},
+  {path = "source/index.ts", start = 85, end = 85, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 382, end = 382, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 386, end = 386, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 432, end = 432, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 443, end = 443, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 581, end = 581, render.kind = "full"},
+  {path = "source/index.ts", start = 595, end = 595, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 609, end = 609, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 616, end = 616, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 652, end = 652, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 668, end = 668, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 682, end = 682, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 696, end = 696, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 707, end = 707, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 718, end = 718, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 756, end = 756, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 785, end = 785, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 794, end = 794, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 802, end = 802, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 809, end = 809, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 888, end = 888, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 918, end = 918, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 952, end = 952, render.kind = "truncated", render.pattern = "^[^(]+"},
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "readme.md — maintenance-mode notice"
-justification = "\"the project is feature complete... we don't plan any further development\" plus the Redis-backed-queue pointer for server use cases. Load-bearing for any 'let's add feature X' discussion — sets the right expectation before the agent proposes new API surface."
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "readme.md"
-start = 5
-end = 9
-render = { kind = "full" }
+descriptor = "Readme Usage: the canonical concurrency-1 example"
+justification = "The idiomatic shape of the library in sixteen lines — construct with `{concurrency: 1}`, `await queue.add(() => got(url))` inside separate async IIFEs. Most \"how do I use this\" questions are answered outright by this snippet, so it earns its place immediately after the member roster."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 51, end = 66, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "package.json — name, version, description, license"
-justification = "The four fields a first-contact query needs most: what package this is, what version, one-line description, and license. Split from the rest of the identity block to stay inside the growth envelope at this position."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 1
-end = 5
-render = { kind = "full" }
+descriptor = "Full signatures and doc comments for .add() and .addAll()"
+justification = "Refines the two most-used roster entries into complete typed signatures: `add` takes a `Task<TaskResultType>` plus `Partial<EnqueueOptionsType>` and returns `Promise<TaskResultType>` (declared as an overload plus implementation), and `addAll` takes a `ReadonlyArray` of tasks and resolves to an array of results. These are the calls every consumer writes, and the generic parameter names are what make the option type resolvable."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 440, end = 444, render.kind = "full"},
+  {path = "source/index.ts", start = 576, end = 584, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "package.json — repository, funding, type, exports, sideEffects, engines"
-justification = "Second half of the identity block: ESM-only (`type: module`), the exports map (types + default both point at dist/), sideEffects:false, and the engines.node >=20 floor. Answers 'is this ESM or CJS' and 'what Node version' precisely."
-predecessor = "2.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 6
-end = 16
-render = { kind = "full" }
+descriptor = "Readme .add() semantics and its two warnings"
+justification = "The source doc-comment for `add` is one line; the readme is where the two traps are documented — that the returned promise settles when the *task* completes rather than when it is queued (so `await`ing it defeats the point of a queue), and that unhandled rejections from queued tasks can kill the process. Both are the sort of thing an agent must know before writing code against this API, and neither is inferable from the signature."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 168, end = 176, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "package.json — scripts"
-justification = "The full scripts block: build (tsc), test (xo + node:test + tsc + tsd), bench, prepublishOnly. Directly answers 'how do I build/test/bench this' — the single highest-value operational fact in the manifest."
-predecessor = "2.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 17
-end = 22
-render = { kind = "full" }
+descriptor = "Doc comments for the lifecycle controls: .start(), .pause(), .clear()"
+justification = "Three short doc blocks that pin down the pause/resume model: `start()` resumes and is a no-op unless paused via `autoStart: false` or `pause()`, `pause()` puts execution on hold, `clear()` drops queued work. Together with `autoStart` they are the whole manual-control story, and they are cheap to state fully."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 592, end = 595, render.kind = "full"},
+  {path = "source/index.ts", start = 606, end = 609, render.kind = "full"},
+  {path = "source/index.ts", start = 613, end = 616, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "readme.md — H2 section map"
-justification = "Every top-level (##) heading location in the 1077-line README, without bodies: Install, Usage, API, Events, Advanced example, Handling timeouts, Custom QueueClass, FAQ, Maintainers, Related. Prevents assuming a section (e.g. FAQ, or Custom QueueClass) doesn't exist just because later batches only expand some of them."
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "readme.md"
-start = 39
-end = 39
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 47
-end = 47
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 68
-end = 68
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 512
-end = 512
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 698
-end = 698
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 768
-end = 768
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 813
-end = 813
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 847
-end = 847
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 1066
-end = 1066
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "readme.md"
-start = 1071
-end = 1071
-render = { kind = "full" }
+descriptor = "Readme warning: .clear() leaves queued .add() promises unsettled"
+justification = "A short warning block, under its own `.clear()` heading, with outsized consequences — promises returned by `.add()` for tasks still waiting when `.clear()` runs will never settle, causing hangs or unsettled-top-level-await warnings, and the recommended alternative is `AbortSignal`. This is the single most common footgun in the library and is documented nowhere in the source."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 350, end = 353, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "readme.md — Usage example"
-justification = "The canonical 'here's how you actually call this thing' snippet: PQueue with concurrency:1, two .add() calls logging on completion. Highest zero-follow-up value per token for a first-contact 'what does using this look like' question."
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "readme.md"
-start = 47
-end = 66
-render = { kind = "full" }
+descriptor = "Doc comments distinguishing .onEmpty(), .onIdle() and .onPendingZero()"
+justification = "The three drain-waiters differ subtly and users pick the wrong one constantly. These doc blocks state the exact predicates: `onEmpty` resolves when the queue is empty (work may still be running), `onIdle` when `size === 0 && pending === 0`, `onPendingZero` when only the running tasks have finished, ignoring queued ones. Answering \"which should I await\" with zero follow-up reads."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 647, end = 652, render.kind = "full"},
+  {path = "source/index.ts", start = 677, end = 682, render.kind = "full"},
+  {path = "source/index.ts", start = 691, end = 696, render.kind = "full"},
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "bench.ts — benchmark-name roster"
-justification = "Names all 5 named benchmark scenarios in the repo's only perf script (baseline, random priority, increasing priority, large-fifo-backlog of 10k tasks, priority-queue-dequeue in isolation) plus its invocation via `npm run bench` (already surfaced in 2.5). Closes the 'benchmark script (bench.ts)' class the summary promises and prevents assuming only some scenarios exist."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "bench.ts"
-start = 34
-end = 34
-render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
-[[batches.content.spans]]
-path = "bench.ts"
-start = 44
-end = 44
-render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
-[[batches.content.spans]]
-path = "bench.ts"
-start = 56
-end = 56
-render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
-[[batches.content.spans]]
-path = "bench.ts"
-start = 68
-end = 68
-render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
-[[batches.content.spans]]
-path = "bench.ts"
-start = 79
-end = 79
-render = { kind = "truncated", pattern = "^addBenchmark\\('[^']*'" }
+descriptor = "Doc comments for .onSizeLessThan(), .onRateLimit() and .onRateLimitCleared()"
+justification = "The remaining waiter helpers, completing the class begun in 2.7: `onSizeLessThan(limit)` is the backpressure primitive (with its caveat that it counts only queued, not running, items), and the two rate-limit waiters settle on the `intervalCap` transitions. Ranked just after the drain-waiters so a cut between them still leaves a coherent set."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 661, end = 668, render.kind = "full"},
+  {path = "source/index.ts", start = 704, end = 707, render.kind = "full"},
+  {path = "source/index.ts", start = 715, end = 718, render.kind = "full"},
+]
+
+[[batches]]
+id = "2.9"
+descriptor = ".onError() contract, with its example elided"
+justification = "The last waiter, and the one with a non-obvious contract: it returns a promise that rejects on the first task error, is meant to be raced against `onIdle()`, and — critically — does not stop the `add()` promises from rejecting too, so each still needs handling. The worked example at lines 733-753 is left as an ellipsis marker rather than spent, since the prose already conveys the pattern."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 726, end = 731, render.kind = "full"},
+  {path = "source/index.ts", start = 733, end = 733, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 756, end = 756, render.kind = "full"},
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members"
+justification = "The basic observability surface with the distinction that matters: `.size` counts items still waiting, `.pending` counts items already running, and `.sizeBy(options)` filters the waiting set (typically by priority). Full signature for `sizeBy` since its parameter type is not guessable from the name."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 782, end = 785, render.kind = "full"},
+  {path = "source/index.ts", start = 789, end = 794, render.kind = "full"},
+  {path = "source/index.ts", start = 799, end = 802, render.kind = "full"},
+  {path = "source/index.ts", start = 806, end = 809, render.kind = "full"},
+]
+
+[[batches]]
+id = "2.11"
+descriptor = ".isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape"
+justification = "Completes the getter class begun in 2.10 with the three diagnostic members. `isSaturated`'s two disjuncts are spelled out, and `runningTasks` gets its full return type — `ReadonlyArray<{id?, priority, startTime, timeout?}>` — which is the exact shape the readme's debugging FAQ tells you to inspect for stuck tasks. The two worked examples in the doc comments are elided to ellipsis markers."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 885, end = 888, render.kind = "full"},
+  {path = "source/index.ts", start = 892, end = 897, render.kind = "full"},
+  {path = "source/index.ts", start = 899, end = 899, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 918, end = 918, render.kind = "full"},
+  {path = "source/index.ts", start = 923, end = 926, render.kind = "full"},
+  {path = "source/index.ts", start = 928, end = 928, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 952, end = 957, render.kind = "full"},
+]
+
+[[batches]]
+id = "2.12"
+descriptor = ".setPriority(id, priority) signature and contract"
+justification = "The one public method whose behaviour is genuinely non-obvious: it re-prioritises an already-queued task by the `id` given to `.add()`, and it only takes effect when a concurrency limit is set. Signature plus the first two doc sentences; the two worked reprioritisation examples that follow are left as an ellipsis marker."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 396, end = 399, render.kind = "full"},
+  {path = "source/index.ts", start = 401, end = 401, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 432, end = 432, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "source/queue.ts (Queue interface + RunFunction)"
-justification = "The 11-line contract every queueClass (default PriorityQueue, or a custom one from the README's Custom QueueClass section) must satisfy: size/filter/dequeue/enqueue/setPriority, plus the still-optional `remove` slated to become required next major version. Read this before priority-queue.ts to know what it's implementing against."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/queue.ts"
-start = 1
-end = 11
-render = { kind = "full" }
+descriptor = "Every field of every option type in source/options.ts (complete)"
+justification = "One line per declaration across all four types — `TimeoutOptions.timeout`, the eight constructor options in `Options` (concurrency, autoStart, queueClass, intervalCap, interval, carryoverIntervalCount, the deprecated carryoverConcurrencyCount, strict), `QueueAddOptions` (priority, id) and `TaskOptions.signal` — including the intersection lines that show how the three compose. Types and optionality come free with the declarations. This is the complete configuration vocabulary of the library, and it forecloses invented option names."
+content.kind = "lines"
+content.spans = [
+  {path = "source/options.ts", start = 3, end = 3, render.kind = "full"},
+  {path = "source/options.ts", start = 24, end = 25, render.kind = "full"},
+  {path = "source/options.ts", start = 27, end = 27, render.kind = "full"},
+  {path = "source/options.ts", start = 35, end = 35, render.kind = "full"},
+  {path = "source/options.ts", start = 42, end = 42, render.kind = "full"},
+  {path = "source/options.ts", start = 47, end = 47, render.kind = "full"},
+  {path = "source/options.ts", start = 56, end = 56, render.kind = "full"},
+  {path = "source/options.ts", start = 65, end = 65, render.kind = "full"},
+  {path = "source/options.ts", start = 72, end = 72, render.kind = "full"},
+  {path = "source/options.ts", start = 77, end = 77, render.kind = "full"},
+  {path = "source/options.ts", start = 94, end = 95, render.kind = "full"},
+  {path = "source/options.ts", start = 97, end = 97, render.kind = "full"},
+  {path = "source/options.ts", start = 103, end = 103, render.kind = "full"},
+  {path = "source/options.ts", start = 108, end = 109, render.kind = "full"},
+  {path = "source/options.ts", start = 111, end = 111, render.kind = "full"},
+  {path = "source/options.ts", start = 147, end = 148, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "source/options.ts — TimeoutOptions"
-justification = "The `timeout` field shared by both constructor Options and per-task QueueAddOptions, with its full doc comment (default undefined, begins at dequeue not enqueue, overridable per-task). Split out as its own tiny batch since it's mixed into two different exported types via `& TimeoutOptions`."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 1
-end = 25
-render = { kind = "full" }
+descriptor = "One-line description, minimum and @default for each constructor option"
+justification = "Rendered line numbers interleave these doc lines directly above the declarations from 3.1, producing a complete option table: concurrency (default Infinity, min 1), autoStart (true), queueClass, intervalCap (Infinity, min 1), interval (0, must be finite), carryoverIntervalCount (false), the @deprecated marker on carryoverConcurrencyCount, and the global timeout (undefined). Defaults are the single most-asked configuration fact and this answers all of them without a follow-up read."
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/options.ts", start = 5, end = 5, render.kind = "full"},
+  {path = "source/options.ts", start = 7, end = 7, render.kind = "full"},
+  {path = "source/options.ts", start = 9, end = 9, render.kind = "full"},
+  {path = "source/options.ts", start = 29, end = 29, render.kind = "full"},
+  {path = "source/options.ts", start = 31, end = 31, render.kind = "full"},
+  {path = "source/options.ts", start = 33, end = 33, render.kind = "full"},
+  {path = "source/options.ts", start = 38, end = 38, render.kind = "full"},
+  {path = "source/options.ts", start = 40, end = 40, render.kind = "full"},
+  {path = "source/options.ts", start = 45, end = 45, render.kind = "full"},
+  {path = "source/options.ts", start = 50, end = 50, render.kind = "full"},
+  {path = "source/options.ts", start = 52, end = 52, render.kind = "full"},
+  {path = "source/options.ts", start = 54, end = 54, render.kind = "full"},
+  {path = "source/options.ts", start = 59, end = 59, render.kind = "full"},
+  {path = "source/options.ts", start = 61, end = 61, render.kind = "full"},
+  {path = "source/options.ts", start = 63, end = 63, render.kind = "full"},
+  {path = "source/options.ts", start = 68, end = 68, render.kind = "full"},
+  {path = "source/options.ts", start = 70, end = 70, render.kind = "full"},
+  {path = "source/options.ts", start = 75, end = 75, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "source/options.ts — Options (concurrency, autoStart, queueClass)"
-justification = "The three most-exercised constructor-options fields with actual JSDoc defaults/minimums: concurrency (default Infinity), autoStart (default true), queueClass (default PriorityQueue, extension point for the README's Custom QueueClass section). Cheaper, more precise evidence of the config format than the README prose that restates it."
-predecessor = "3.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 27
-end = 47
-render = { kind = "full" }
+descriptor = "The strict option explained: sliding window vs fixed window"
+justification = "`strict` is the most consequential and least obvious option, and the doc comment is the only place its semantics are stated precisely: fixed-window mode can burst at window boundaries (two tasks at 999ms and two more at 1000ms), strict mode enforces no more than `intervalCap` in any rolling `interval`. It also records the two interaction facts — strict is more resource-intensive because it tracks per-execution timestamps, and `carryoverIntervalCount` has no effect under it. Directly determines which rate-limiting mode a user should pick."
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/options.ts", start = 80, end = 80, render.kind = "full"},
+  {path = "source/options.ts", start = 82, end = 82, render.kind = "full"},
+  {path = "source/options.ts", start = 84, end = 84, render.kind = "full"},
+  {path = "source/options.ts", start = 86, end = 88, render.kind = "full"},
+  {path = "source/options.ts", start = 90, end = 90, render.kind = "full"},
+  {path = "source/options.ts", start = 92, end = 92, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "source/options.ts — Options (intervalCap, interval)"
-justification = "The two rate-limiting knobs (default Infinity and 0 respectively — i.e. rate limiting is off by default) that intervalCap/interval-related tests and the strict-mode doc comment (next batch) both build on."
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 49
-end = 65
-render = { kind = "full" }
+descriptor = "Per-task option docs: priority, id, and the AbortSignal contract"
+justification = "Completes 3.2's coverage over the other half of the option surface — the options passed to `.add()` rather than the constructor. Priority defaults to 0 and higher runs first; `id` is auto-assigned an incrementing BigInt from `1n` if omitted and is the handle `setPriority` needs; and the `signal` doc states the cancellation contract — an aborted task is removed from the queue and `.add()` rejects, but a *running* operation must honour the signal itself."
+predecessor = "3.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/options.ts", start = 99, end = 99, render.kind = "full"},
+  {path = "source/options.ts", start = 101, end = 101, render.kind = "full"},
+  {path = "source/options.ts", start = 106, end = 106, render.kind = "full"},
+  {path = "source/options.ts", start = 113, end = 113, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "source/options.ts — Options (carryoverIntervalCount)"
-justification = "carryoverIntervalCount and its deprecated carryoverConcurrencyCount alias — whether a task that misses its interval window carries over into the next one's count."
-predecessor = "3.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 66
-end = 77
-render = { kind = "full" }
+descriptor = "Constructor default-options literal"
+justification = "The runtime counterpart to the `@default` annotations: the object literal the constructor spreads user options over, showing the actual defaults in effect (carryoverIntervalCount false, intervalCap Infinity, interval 0, concurrency Infinity, autoStart true, queueClass PriorityQueue, strict false). One read confirms both what defaults exist and that user options are merged on top rather than replacing them."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 88, end = 98, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "source/options.ts — Options (strict)"
-justification = "The `strict` field's full doc comment closes out the Options type: fixed-window vs sliding-window semantics with a worked example (intervalCap:2/interval:1000 can burst 4-in-1ms under fixed window; strict forbids it). Strict mode gets its own dedicated test file (test/strict.ts) — this is its config-surface definition."
-predecessor = "3.5"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 79
-end = 95
-render = { kind = "full" }
+descriptor = "Every constructor validation rule and its error message"
+justification = "The complete set of rejected configurations, with the exact `TypeError` text each produces: `intervalCap` must be a number >= 1, `interval` must be a finite number >= 0, `strict` requires a non-zero `interval` and a finite `intervalCap`, and `timeout` must be a positive finite number. Debugging sessions that start from an error string land here in one hop, and feature work learns the invariants the rest of the class assumes."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 100, end = 114, render.kind = "full"},
+  {path = "source/index.ts", start = 127, end = 129, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.7"
-descriptor = "source/options.ts — QueueAddOptions"
-justification = "Per-task priority and id — the two fields that flow into PriorityQueue's ordering/lookup and into .setPriority(id, ...)/.sizeBy({priority}). Small (13 lines) natural boundary from the constructor-level Options above it."
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 97
-end = 109
-render = { kind = "full" }
+descriptor = "The concurrency getter/setter, including runtime mutation and its validation"
+justification = "`concurrency` is the one option that is also a live setter: assigning it validates (number >= 1, same error shape as the constructor) and then immediately calls `#processQueue()`, so raising the limit starts queued work at once. That behaviour is what makes dynamic-concurrency use cases work and is not visible from the roster line alone."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 382, end = 394, render.kind = "full"},
+]
 
 [[batches]]
 id = "3.8"
-descriptor = "source/options.ts — TaskOptions (signal field doc)"
-justification = "The `signal` field's own doc line, shared by every per-task options type via `& TaskOptions`. Split from its worked example (next batch) so a small budget still gets the field's existence and one-line purpose."
-predecessor = "3.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 111
-end = 113
-render = { kind = "full" }
-
-[[batches]]
-id = "3.9"
-descriptor = "source/options.ts — TaskOptions (AbortSignal cancellation example)"
-justification = "The full cancellation-flow example (AbortController + CancelError handling) attached to `signal`'s doc comment. This is the type that flows into `Task<T>`'s `{signal}` parameter in index.ts."
-predecessor = "3.8"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 114
-end = 148
-render = { kind = "full" }
-
-[[batches]]
-id = "3.10"
-descriptor = "source/priority-queue.ts — type + class fields"
-justification = "PriorityQueueOptions (priority + QueueAddOptions), the class declaration implementing Queue<RunFunction, PriorityQueueOptions>, and its two fields: the sorted `#queue` array and the `#head` cursor with the comment explaining why dequeued items are left in place until compaction rather than shifted."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 1
-end = 15
-render = { kind = "full" }
-
-[[batches]]
-id = "3.11"
-descriptor = "source/priority-queue.ts — enqueue (binary insertion)"
-justification = "enqueue()'s three paths: empty queue, append at tail for same/lower priority (FIFO-preserving), and binary-insert via a lower_bound-style sorted-index search otherwise — the algorithm a custom queueClass author would need to replicate."
-predecessor = "3.10"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 17
-end = 48
-render = { kind = "full" }
-
-[[batches]]
-id = "3.12"
-descriptor = "source/priority-queue.ts — setPriority + remove"
-justification = "setPriority re-splices the live item out and re-enqueues it (via enqueue()) at a new priority; remove supports lookup by either an id string or the run function itself — two different call shapes a caller might use. Both must skip the already-consumed prefix before #head."
-predecessor = "3.11"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 50
-end = 80
-render = { kind = "full" }
-
-[[batches]]
-id = "3.13"
-descriptor = "source/priority-queue.ts — dequeue"
-justification = "dequeue() advances #head, resetting to an empty array when fully drained, else compacting once the consumed prefix passes compactionThreshold and exceeds half the array. Needed for any 'why did setPriority/remove behave oddly after partial drain' debugging session."
-predecessor = "3.10"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 82
-end = 100
-render = { kind = "full" }
-
-[[batches]]
-id = "3.14"
-descriptor = "source/priority-queue.ts — filter/size/#compact"
-justification = "filter/size read only the live range from #head onward; #compact splices the dead prefix away to restore the whole-array-is-live invariant. Completes the file: every method now has a body batch backing its roster/type entries."
-predecessor = "3.13"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 102
-end = 127
-render = { kind = "full" }
+descriptor = "Every FAQ question in readme.md (complete, eight questions)"
+justification = "A complete index of the readme's design-guidance section for about a hundred tokens. The questions themselves carry information — that concurrency and intervalCap are independent constraints, that strict mode is a documented decision, that backpressure, cancellation, result ordering, streaming, stuck-queue debugging and Jest fake timers all have official answers — and each carries a line number, so any of those discussions is one targeted read away."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 849, end = 849, render.kind = "full"},
+  {path = "readme.md", start = 853, end = 853, render.kind = "full"},
+  {path = "readme.md", start = 865, end = 865, render.kind = "full"},
+  {path = "readme.md", start = 881, end = 881, render.kind = "full"},
+  {path = "readme.md", start = 919, end = 919, render.kind = "full"},
+  {path = "readme.md", start = 948, end = 948, render.kind = "full"},
+  {path = "readme.md", start = 978, end = 978, render.kind = "full"},
+  {path = "readme.md", start = 1049, end = 1049, render.kind = "full"},
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "source/index.ts — imports, Task/EventName types, class doc"
-justification = "The file's top: imports (EventEmitter3, p-timeout, the Queue/RunFunction/PriorityQueue/options types this class composes), the `Task<TaskResultType>` union (a task is either a Promise-returning or plain-returning function of `TaskOptions`), the full `EventName` union (every event this class can ever emit — cross-references the README Events section), and the one-line class doc. Cheapest possible entry point into the main file."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 1
-end = 15
-render = { kind = "full" }
-
+descriptor = "Name-only roster of all 21 private methods and private getters of PQueue"
+justification = "The internal machinery map. Twenty-one names with line numbers — the strict-tick helpers, the two admission gates `#doesIntervalAllowAnother` / `#doesConcurrentAllowAnother`, the `#tryToStartAnother` / `#processQueue` start loop, the interval-timer lifecycle, and the `#scheduleRateLimitUpdate` / `#updateRateLimitState` pair — tells an agent exactly which private function to open for any behavioural question, and closes the class so nothing is assumed absent. Ranked first in this tier because it is the cheapest way to make every later internals question a single targeted read."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 137, end = 137, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 160, end = 160, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 168, end = 168, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 179, end = 179, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 183, end = 183, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 196, end = 196, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 200, end = 200, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 211, end = 211, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 219, end = 219, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 265, end = 265, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 275, end = 275, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 282, end = 282, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 289, end = 289, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 340, end = 340, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 360, end = 360, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 377, end = 377, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 767, end = 767, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 813, end = 813, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 832, end = 832, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 845, end = 845, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/index.ts", start = 854, end = 854, render.kind = "truncated", render.pattern = "^[^(]+"},
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "source/index.ts — PQueue class fields (interval/strict/rate-limit state)"
-justification = "The strict-mode and rate-limit bookkeeping fields: #carryoverIntervalCount, #isIntervalIgnored, #intervalCount, #intervalCap, #rateLimitedInInterval, #rateLimitFlushScheduled, #interval, #intervalEnd, #lastExecutionTime, #intervalId, #timeoutId, #strict, and the #strictTicks circular buffer + #strictTicksStartIndex. Answers 'why is field X set this way' for anything rate-limit-related."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 16
-end = 42
-render = { kind = "full" }
+descriptor = "Every private field of PQueue with its type: the complete instance state"
+justification = "One line per field, complete: the interval bookkeeping (`#intervalCount`, `#intervalCap`, `#interval`, `#intervalEnd`, `#lastExecutionTime`, `#intervalId`, `#timeoutId`), the strict-mode circular buffer (`#strictTicks` plus `#strictTicksStartIndex`), the queue itself and its class, `#pending`, `#concurrency`, `#isPaused`, the `#idAssigner` BigInt counter, the symbol-keyed `#runningTasks` map and the abort-listener cleanup set. The map's element shape is left as an ellipsis marker. Any scheduling or rate-limiting change reasons about exactly these fields."
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 17, end = 17, render.kind = "full"},
+  {path = "source/index.ts", start = 19, end = 19, render.kind = "full"},
+  {path = "source/index.ts", start = 21, end = 21, render.kind = "full"},
+  {path = "source/index.ts", start = 23, end = 23, render.kind = "full"},
+  {path = "source/index.ts", start = 25, end = 26, render.kind = "full"},
+  {path = "source/index.ts", start = 28, end = 28, render.kind = "full"},
+  {path = "source/index.ts", start = 30, end = 30, render.kind = "full"},
+  {path = "source/index.ts", start = 32, end = 32, render.kind = "full"},
+  {path = "source/index.ts", start = 34, end = 34, render.kind = "full"},
+  {path = "source/index.ts", start = 36, end = 36, render.kind = "full"},
+  {path = "source/index.ts", start = 38, end = 38, render.kind = "full"},
+  {path = "source/index.ts", start = 41, end = 42, render.kind = "full"},
+  {path = "source/index.ts", start = 44, end = 44, render.kind = "full"},
+  {path = "source/index.ts", start = 46, end = 46, render.kind = "full"},
+  {path = "source/index.ts", start = 48, end = 48, render.kind = "full"},
+  {path = "source/index.ts", start = 51, end = 51, render.kind = "full"},
+  {path = "source/index.ts", start = 53, end = 53, render.kind = "full"},
+  {path = "source/index.ts", start = 56, end = 56, render.kind = "full"},
+  {path = "source/index.ts", start = 59, end = 59, render.kind = "full"},
+  {path = "source/index.ts", start = 60, end = 60, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 66, end = 66, render.kind = "full"},
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "source/index.ts — PQueue class fields (queue/concurrency/task-tracking state)"
-justification = "The remaining private fields: the queue itself (#queue, #queueClass), #pending, #concurrency, #isPaused, #idAssigner (BigInt id counter), #runningTasks (Map backing the public .runningTasks getter and debug tests), #queueAbortListenerCleanupFunctions. Completes the mutable-state map opened in 4.2."
-predecessor = "4.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 44
-end = 66
-render = { kind = "full" }
+descriptor = "#tryToStartAnother: the admission decision and task dispatch"
+justification = "The scheduling heart of the library, reached from `#processQueue`, from `add()` and from every completion: nothing starts unless the queue is unpaused, `#isIntervalPausedAt(now)` says the window is open, and both `#doesIntervalAllowAnother` and `#doesConcurrentAllowAnother` hold; then a job is dequeued, an interval slot consumed, `active` emitted and the job invoked. This is the concrete answer to how `concurrency` and `intervalCap` compose, and the returned flag is what drives `#processQueue`'s drain loop."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 312, end = 338, render.kind = "full"},
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "source/index.ts — public member roster (locations)"
-justification = "Truncated first-line-only span for every public member of PQueue in file order: timeout field, constructor, concurrency get/set, setPriority, add, addAll, start, pause, clear, onEmpty, onSizeLessThan, onIdle, onPendingZero, onRateLimit, onRateLimitCleared, onError, size, sizeBy, pending, isPaused, isRateLimited, isSaturated, runningTasks. Showing every one together (not just the ones later batches expand) is the catastrophic-omission hedge for 'what's the public API surface' — the single most likely first question about a library."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 83
-end = 83
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 85
-end = 85
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 382
-end = 382
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 386
-end = 386
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 432
-end = 432
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 443
-end = 443
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 581
-end = 581
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 595
-end = 595
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 609
-end = 609
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 616
-end = 616
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 652
-end = 652
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 668
-end = 668
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 682
-end = 682
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 696
-end = 696
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 707
-end = 707
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 718
-end = 718
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 756
-end = 756
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 785
-end = 785
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 794
-end = 794
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 802
-end = 802
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 809
-end = 809
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 888
-end = 888
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 918
-end = 918
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 952
-end = 952
-render = { kind = "truncated", pattern = "^[^(]+" }
+descriptor = "add(): option normalization and automatic id assignment"
+justification = "The first lines of `add` establish two facts consumers hit constantly: the queue's current `this.timeout` is applied as the per-task default and the caller's options object is copied rather than mutated, and every task gets an `id` — the caller's, or the next value of the `#idAssigner` BigInt counter stringified. That auto-id is what makes `setPriority` and id-based removal work for tasks added without one. The rest of the body continues past the ellipsis marker and is refined by the following batches."
+predecessor = "2.3"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 444, end = 457, render.kind = "full"},
+  {path = "source/index.ts", start = 458, end = 458, render.kind = "ellipsis"},
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "source/index.ts — private member roster (locations)"
-justification = "Same hedge for the # private methods that implement rate limiting and scheduling: cleanupStrictTicks, consumeIntervalSlot, rollbackIntervalSlot, getActiveTicksCount, #doesIntervalAllowAnother, #doesConcurrentAllowAnother, #next, #onResumeInterval, #isIntervalPausedAt, #createIntervalTimeout, #clearIntervalTimer, #clearTimeoutTimer, #tryToStartAnother, #initializeIntervalIfNeeded, #onInterval, #processQueue, #onEvent, #setupRateLimitTracking, #scheduleRateLimitUpdate, #rollbackIntervalConsumption, #updateRateLimitState. Without this, only the handful expanded below would seem to exist."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 137
-end = 137
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 160
-end = 160
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 168
-end = 168
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 179
-end = 179
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 183
-end = 183
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 196
-end = 196
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 200
-end = 200
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 211
-end = 211
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 219
-end = 219
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 265
-end = 265
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 275
-end = 275
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 282
-end = 282
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 289
-end = 289
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 340
-end = 340
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 360
-end = 360
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 377
-end = 377
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 767
-end = 767
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 813
-end = 813
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 832
-end = 832
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 845
-end = 845
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 854
-end = 854
-render = { kind = "full" }
+descriptor = "add(): the run() prologue — pending accounting and runningTasks tracking"
+justification = "Where a dequeued job becomes a running task: the queued-state abort listener is detached, `#pending` is incremented, and an entry is written into `#runningTasks` recording id, priority (defaulting to 0 to match PriorityQueue), startTime and timeout. This is the provenance of everything `.runningTasks` reports. The already-aborted pre-check that follows is left as an ellipsis marker."
+predecessor = "4.4"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 458, end = 471, render.kind = "full"},
+  {path = "source/index.ts", start = 474, end = 474, render.kind = "ellipsis"},
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "source/index.ts — constructor (defaults merge)"
-justification = "The super() call and the options-defaults merge (carryoverIntervalCount:false, intervalCap:Infinity, interval:0, concurrency:Infinity, autoStart:true, queueClass:PriorityQueue, strict:false) — the exact default values an agent needs before explaining what `new PQueue()` with no args actually does."
-predecessor = "4.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 85
-end = 99
-render = { kind = "full" }
+descriptor = "add(): invoking the task, wrapping it in p-timeout, and racing the abort signal"
+justification = "The execution core: the task is called with `{signal}`, wrapped in `pTimeout` when a timeout applies — with the diagnostic message that embeds running and waiting counts — and raced against a promise that rejects with `signal.reason` on abort. This is the exact code behind `TimeoutError`, behind aborting an already-running task's promise, and behind `#lastExecutionTime`, which the fixed-window interval logic depends on."
+predecessor = "4.5"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 488, end = 509, render.kind = "full"},
+  {path = "source/index.ts", start = 510, end = 510, render.kind = "ellipsis"},
+]
 
 [[batches]]
 id = "4.7"
-descriptor = "source/index.ts — constructor (validation + field assignment)"
-justification = "Every constructor-time validation error is thrown here: intervalCap must be a number >= 1, interval must be finite >= 0, strict requires a non-zero interval and a finite intervalCap, timeout must be a positive finite number — plus the carryoverIntervalCount / deprecated carryoverConcurrencyCount fallback and the final field assignments. The exact text an agent needs to explain or reproduce any 'why did `new PQueue(...)` throw' report."
-predecessor = "4.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 100
-end = 135
-render = { kind = "full" }
+descriptor = "add(): settlement, completed/error events, and the finally block that defers #next"
+justification = "Closes the task lifecycle: success resolves the caller's promise and emits `completed` with the result, failure rejects and emits `error` — so both channels always fire, which is why `.onError()` does not relieve you of handling the `add()` promise — and the finally block removes the abort listener, deletes the `#runningTasks` entry and defers `#next()` through `queueMicrotask` to avoid deep recursion. Paired with `#next` itself, which decrements pending, emits `pendingZero` at zero and pumps the queue."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 200, end = 209, render.kind = "full"},
+  {path = "source/index.ts", start = 511, end = 531, render.kind = "full"},
+  {path = "source/index.ts", start = 532, end = 532, render.kind = "ellipsis"},
+]
 
 [[batches]]
 id = "4.8"
-descriptor = "source/index.ts — admission-control getters"
-justification = "The two boolean admission checks the private-method roster (4.5) only names by signature: #doesIntervalAllowAnother (strict mode compares live tick count to intervalCap; fixed-window mode compares #intervalCount) and #doesConcurrentAllowAnother (#pending < #concurrency). Cheap (16 lines) and the single most load-bearing pair of conditions for any 'why isn't my queue starting the next task' question."
-predecessor = "4.5"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 183
-end = 198
-render = { kind = "full" }
+descriptor = "add(): enqueueing and the queued-task abort path"
+justification = "The tail of `add`: the run function is enqueued, `add` is emitted and a start is attempted. Its subtlety is queued-task removal on abort — `PriorityQueue` instances are removed by run-function identity while other queue classes get a best-effort `remove?.(id)`, with the comment saying so — plus the cleanup bookkeeping in `#queueAbortListenerCleanupFunctions`; the abort handler rejects, re-pumps the queue and emits `next`. The already-aborted fast path is left as an ellipsis marker. Required reading for anyone touching cancellation or writing a custom queue class."
+predecessor = "4.4"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 533, end = 542, render.kind = "full"},
+  {path = "source/index.ts", start = 544, end = 544, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 548, end = 559, render.kind = "full"},
+  {path = "source/index.ts", start = 561, end = 561, render.kind = "ellipsis"},
+  {path = "source/index.ts", start = 570, end = 572, render.kind = "full"},
+]
 
+[[batches]]
+id = "4.9"
+descriptor = "#isIntervalPausedAt: the strict sliding-window branch"
+justification = "How strict mode actually gates: expired ticks are cleaned, and if the live tick count has reached `intervalCap` a one-shot timeout is scheduled for exactly when the oldest tick ages out. This is the algorithm the `strict` option promises, and the first place to look when sliding-window timing is wrong. The ellipsis marks the non-strict remainder of the same function, rendered by the next batch."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 219, end = 235, render.kind = "full"},
+  {path = "source/index.ts", start = 237, end = 237, render.kind = "ellipsis"},
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "#isIntervalPausedAt: the default fixed-window branch"
+justification = "The default rate-limiting path, including the behaviour that generated real bug reports: when the interval expired while the queue was idle, spacing is re-derived from `#lastExecutionTime` instead of simply resetting, and `#intervalCount` is reset to `#pending` or 0 depending on `carryoverIntervalCount`. Directly explains what `carryoverIntervalCount` does at runtime and why interval spacing survives idle gaps."
+predecessor = "4.9"
+content.kind = "lines"
+content.spans = [
+  {path = "source/index.ts", start = 237, end = 263, render.kind = "full"},
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "test/basic.ts — test-name roster (part 1 of 2)"
-justification = "First half (by file position) of every node:test case name in the largest core-behavior test file, description string only, async-wrapper boilerplate dropped where present: .add() variants (concurrency, priority, timeout), onEmpty/onIdle/onSizeLessThan and the long onPendingZero edge-case cluster. Split in two so a small budget still gets a usable (if partial) roster rather than none."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 14
-end = 14
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 22
-end = 22
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 37
-end = 37
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 58
-end = 58
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 74
-end = 74
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 97
-end = 97
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 110
-end = 110
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 124
-end = 124
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 135
-end = 135
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 167
-end = 167
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 196
-end = 196
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 224
-end = 224
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 246
-end = 246
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 268
-end = 268
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 294
-end = 294
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 319
-end = 319
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 328
-end = 328
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 335
-end = 335
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 352
-end = 352
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 372
-end = 372
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 385
-end = 385
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 411
-end = 411
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 430
-end = 430
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 464
-end = 464
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 484
-end = 484
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 500
-end = 500
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 518
-end = 518
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 536
-end = 536
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 575
-end = 575
-render = { kind = "full" }
+descriptor = "PriorityQueue: header, options type, class declaration and the head-cursor invariant"
+justification = "Opens the default queue implementation with the design decision that explains the rest of the file: items are stored in one array sorted by descending priority, and dequeued items are left in place before `#head` until compaction, which keeps repeated dequeues amortised O(1). Also names `compactionThreshold = 100` and the `PriorityQueueOptions` type (priority plus everything in `QueueAddOptions`), and shows the class implements the `Queue` contract from batch 1.8."
+content.kind = "lines"
+content.spans = [
+  {path = "source/priority-queue.ts", start = 1, end = 15, render.kind = "full"},
+  {path = "source/priority-queue.ts", start = 16, end = 16, render.kind = "ellipsis"},
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "test/basic.ts — test-name roster (part 2 of 2)"
-justification = "Second half: .clear() variants, .addAll(), constructor/setter input validation for concurrency/intervalCap/interval, autoStart/.start()/.pause(), sync+async task mixing and error propagation, and throttled/carryoverIntervalCount interval behavior. Completes the roster opened in part 1 — both halves together are the full 58-case index for this file."
-predecessor = "5.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 589
-end = 589
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 612
-end = 612
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 651
-end = 651
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 661
-end = 661
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 684
-end = 684
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 694
-end = 694
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 722
-end = 722
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 751
-end = 751
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 779
-end = 779
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 811
-end = 811
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 831
-end = 831
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 844
-end = 844
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 854
-end = 854
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 887
-end = 887
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 900
-end = 900
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 922
-end = 922
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 941
-end = 941
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 958
-end = 958
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 986
-end = 986
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1002
-end = 1002
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1038
-end = 1038
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1085
-end = 1085
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1131
-end = 1131
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1173
-end = 1173
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1224
-end = 1224
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1246
-end = 1246
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1277
-end = 1277
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1308
-end = 1308
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/basic.ts"
-start = 1327
-end = 1327
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+descriptor = "Name-only roster of every PriorityQueue member (complete)"
+justification = "Nine lines covering `enqueue`, `setPriority`, the two `remove` overloads and their implementation, `dequeue`, `filter`, the `size` getter and the private `#compact` — the full membership of the class, so an agent can see it satisfies the `Queue` contract exactly and can jump straight to any one of them."
+content.kind = "lines"
+content.spans = [
+  {path = "source/priority-queue.ts", start = 17, end = 17, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 50, end = 50, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 61, end = 63, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 82, end = 82, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 102, end = 102, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 115, end = 115, render.kind = "truncated", render.pattern = "^[^(]+"},
+  {path = "source/priority-queue.ts", start = 119, end = 119, render.kind = "truncated", render.pattern = "^[^(]+"},
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "test/advanced.ts — test-name roster (part 1 of 2)"
-justification = "First half of the repo's largest test file (67 cases, more than basic.ts): event-emission coverage for every EventName (active/idle/empty/add/next/completed/error), then the bulk of AbortSignal-cancellation coverage — skip/reject/reason-forwarding/pause-interaction/duplicate-id/listener-cleanup/event-emission-on-abort, plus clear()-vs-abort-listener interactions. This file, not basic.ts, is where most event and cancellation behavior is actually exercised."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 9
-end = 9
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 26
-end = 26
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 31
-end = 31
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 49
-end = 49
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 88
-end = 88
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 120
-end = 120
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 164
-end = 164
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 208
-end = 208
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 265
-end = 265
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 287
-end = 287
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 296
-end = 296
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 313
-end = 313
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 331
-end = 331
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 346
-end = 346
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 364
-end = 364
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 386
-end = 386
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 420
-end = 420
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 458
-end = 458
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 499
-end = 499
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 529
-end = 529
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 560
-end = 560
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 589
-end = 589
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 604
-end = 604
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 634
-end = 634
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 671
-end = 671
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 705
-end = 705
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 719
-end = 719
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 728
-end = 728
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 749
-end = 749
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 767
-end = 767
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 802
-end = 802
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 820
-end = 820
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 852
-end = 852
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 875
-end = 875
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+descriptor = "PriorityQueue.enqueue: the priority insertion algorithm"
+justification = "Explains the two behavioural guarantees users rely on: equal priorities keep FIFO order (an element whose priority is not greater than the tail's is simply appended), and a higher-priority arrival triggers compaction plus a `lowerBound` binary insertion into the live sorted range. Also shows priority defaulting to 0 and the reset of the consumed prefix when the queue is logically empty."
+predecessor = "5.2"
+content.kind = "lines"
+content.spans = [
+  {path = "source/priority-queue.ts", start = 17, end = 23, render.kind = "full"},
+  {path = "source/priority-queue.ts", start = 25, end = 25, render.kind = "ellipsis"},
+  {path = "source/priority-queue.ts", start = 30, end = 48, render.kind = "full"},
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "test/advanced.ts — test-name roster (part 2 of 2)"
-justification = "Second half: setPriority() re-scheduling under varying concurrency, interval-carryover/reset/idle-period behavior, throttled-interval edge cases (issues #182/#126), then the bulk of the file's rate-limit-specific race coverage (event-emission-once, boundary conditions, concurrent onRateLimit() calls, clear()-vs-scheduled-update races, dynamic concurrency changes) — the direct predecessor content for test/rate-limit.ts's narrower race-condition suite."
-predecessor = "5.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 904
-end = 904
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 934
-end = 934
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 954
-end = 954
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1002
-end = 1002
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1040
-end = 1040
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1076
-end = 1076
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1105
-end = 1105
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1137
-end = 1137
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1161
-end = 1161
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1189
-end = 1189
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1218
-end = 1218
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1246
-end = 1246
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1267
-end = 1267
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1296
-end = 1296
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1323
-end = 1323
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1346
-end = 1346
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1375
-end = 1375
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1396
-end = 1396
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1429
-end = 1429
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1456
-end = 1456
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1489
-end = 1489
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1525
-end = 1525
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1554
-end = 1554
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1583
-end = 1583
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1616
-end = 1616
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1659
-end = 1659
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1707
-end = 1707
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1752
-end = 1752
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1778
-end = 1778
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1808
-end = 1808
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1839
-end = 1839
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1890
-end = 1890
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/advanced.ts"
-start = 1915
-end = 1915
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+descriptor = "PriorityQueue.dequeue, size and #compact: the consumed-prefix machinery"
+justification = "The other half of the head-cursor design: `dequeue` advances `#head`, resets the array outright when fully drained, and compacts once the prefix passes `compactionThreshold` and exceeds half the array; `size` is `length - head`, which is why stale entries never leak into counts; `#compact` splices the prefix away. This is the performance-sensitive code the bench file's `priority-queue-dequeue` case exists to measure."
+predecessor = "5.2"
+content.kind = "lines"
+content.spans = [
+  {path = "source/priority-queue.ts", start = 82, end = 100, render.kind = "full"},
+  {path = "source/priority-queue.ts", start = 115, end = 127, render.kind = "full"},
+]
 
 [[batches]]
 id = "5.5"
-descriptor = "test/strict.ts — test-name roster"
-justification = "Dedicated coverage for the headline `strict` (sliding-window) rate-limit mode named in options.ts:94's doc comment and 3.5's config-surface batch: sliding-window enforcement vs fixed-window timing, circular-buffer tick bookkeeping (compaction, clear() preserving ticks), interaction with pause/start/priority/AbortSignal/timeout/concurrency:Infinity, and the two constructor validation errors (interval=0, intervalCap:Infinity). The 30-case file that answers 'is strict mode's sliding-window behavior actually tested' — previously the largest undocumented content class in the repo."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 15
-end = 15
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 38
-end = 38
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 93
-end = 93
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 116
-end = 116
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 146
-end = 146
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 174
-end = 174
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 199
-end = 199
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 222
-end = 222
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 261
-end = 261
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 275
-end = 275
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 300
-end = 300
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 327
-end = 327
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 352
-end = 352
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 366
-end = 366
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 402
-end = 402
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 424
-end = 424
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 456
-end = 456
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 477
-end = 477
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 510
-end = 510
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 535
-end = 535
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 564
-end = 564
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 587
-end = 587
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 620
-end = 620
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 650
-end = 650
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 676
-end = 676
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 718
-end = 718
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 743
-end = 743
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 773
-end = 773
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 797
-end = 797
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-[[batches.content.spans]]
-path = "test/strict.ts"
-start = 834
-end = 834
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+descriptor = "source/lower-bound.ts: provenance and signature"
+justification = "The smallest module in the repository, and its header states everything an agent needs without reading the body: it is a port of C++'s `lower_bound` used to compute the insertion index that keeps the queue sorted, generic over a comparator. The binary-search body is left as an ellipsis marker at line 5 — cheap to open if someone is actually auditing the search."
+content.kind = "lines"
+content.spans = [
+  {path = "source/lower-bound.ts", start = 1, end = 3, render.kind = "full"},
+  {path = "source/lower-bound.ts", start = 5, end = 5, render.kind = "ellipsis"},
+]
 
 [[batches]]
-id = "5.6"
-descriptor = "test/priority-queue.ts — test-name roster"
-justification = "Unit tests for the default queueClass in isolation (no PQueue involved): dequeued-item exclusion from all operations, insertion/append/removal/filter/setPriority correctness specifically after a partial dequeue has advanced #head, ordering after cursor compaction. This is the file to point at for 'is the #head/compaction invariant tested' questions raised by reading source/priority-queue.ts."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 7
-end = 7
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 28
-end = 28
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 50
-end = 50
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 72
-end = 72
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 91
-end = 91
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 110
-end = 110
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 137
-end = 137
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/priority-queue.ts"
-start = 164
-end = 164
-render = { kind = "full" }
+id = "6.1"
+descriptor = "Readme: the Custom QueueClass section with a complete worked implementation"
+justification = "The library's only extension point, shown end to end: a class with `enqueue`, `dequeue`, a `size` getter and `filter`, passed as `{queueClass: QueueClass}`. Pairs with the `Queue` type from batch 1.8 to make \"how do I plug in my own scheduling policy\" a zero-follow-up question, and it is the readme section the `queueClass` option doc explicitly points at."
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 815, end = 843, render.kind = "full"},
+]
 
 [[batches]]
-id = "5.7"
-descriptor = "test/validation.ts — test-name roster"
-justification = "Small, edge-case-focused suite layered on top of basic/advanced coverage: rate-limit-cleared timing at backlog drain, setPriority input validation, constructor timeout validation, abort-before-start interactions with concurrency and interval-count rollback, carryover-mode reporting with no backlog, and clear() while rate-limited. Good first stop for 'is this specific race already covered' questions."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 6
-end = 6
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 34
-end = 34
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 55
-end = 55
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 77
-end = 77
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 94
-end = 94
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 117
-end = 117
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/validation.ts"
-start = 144
-end = 144
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+id = "6.2"
+descriptor = "Readme FAQ: how to cancel or remove a queued task"
+justification = "The project's considered answer to the most common feature request: use `AbortSignal` (one controller shared across tasks for bulk cancellation), do not use `queue.clear()` for cancellation, aborting rejects the `.add()` promise but does not stop work already inside a running function, and direct removal methods are deliberately not provided because they would leak internals and risk dangling promises. The rationale sentence at the end is what stops an agent from proposing a `remove()` API."
+predecessor = "3.8"
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 883, end = 886, render.kind = "full"},
+  {path = "readme.md", start = 888, end = 888, render.kind = "ellipsis"},
+  {path = "readme.md", start = 917, end = 917, render.kind = "full"},
+]
 
 [[batches]]
-id = "5.8"
-descriptor = "test/rate-limit.ts — test-name roster"
-justification = "Rate-limit-specific race conditions layered on top of advanced.ts: rapid pause/start cycles, zero-interval edge case, sync-microtask-scheduling consistency, queue manipulation during the rateLimit event, and onRateLimit()/onRateLimitCleared() microtask-race and rapid-transition behavior."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 6
-end = 6
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 46
-end = 46
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 65
-end = 65
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 95
-end = 95
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 135
-end = 135
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 165
-end = 165
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 189
-end = 189
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 221
-end = 221
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/rate-limit.ts"
-start = 252
-end = 252
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+id = "6.3"
+descriptor = "Readme FAQ: backpressure, and how concurrency relates to intervalCap"
+justification = "Two short answers that shape design discussions: `concurrency` bounds simultaneity while `intervalCap` bounds throughput over time, and they are independent; and the sanctioned backpressure pattern is `await queue.onSizeLessThan(n)` before adding, with the reminder that `.size` counts queued and `.pending` counts running items, so the real backlog is their sum."
+predecessor = "3.8"
+content.kind = "lines"
+content.spans = [
+  {path = "readme.md", start = 851, end = 851, render.kind = "full"},
+  {path = "readme.md", start = 867, end = 877, render.kind = "full"},
+  {path = "readme.md", start = 879, end = 879, render.kind = "ellipsis"},
+]
 
 [[batches]]
-id = "5.9"
-descriptor = "test/debug.ts — test-name roster"
-justification = "Covers the debugging-oriented public surface added for production troubleshooting: .runningTasks (current/empty/updates-as-tasks-complete/timeout-info/fresh-array/no-id/with-interval-rate-limiting) and .isSaturated (capacity/paused/rate-limited), plus one improved-timeout-error-message test. The file to point at for 'how do I introspect a stuck queue' before reaching for the README FAQ."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 6
-end = 6
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+id = "7.1"
+descriptor = "package.json scripts: how to build, test and benchmark"
+justification = "Six lines that answer the most frequent operational question. `npm test` is the whole gate — `xo` lint, then `node --import=tsx/esm --test test/*.ts`, then a `tsc` build, then `tsd` type tests — which also tells an agent that tests are plain node:test run through tsx, that lint failures fail the test run, and that `npm run bench` executes `bench.ts`."
+content.kind = "lines"
+content.spans = [
+  {path = "package.json", start = 17, end = 22, render.kind = "full"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 52
-end = 52
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.2"
+descriptor = "Test titles in test/debug.ts (all 11)"
+justification = "A complete behavioural index for the debugging surface: what `runningTasks` returns when idle, as tasks complete, with and without ids, with timeouts, that it returns fresh arrays, plus the `isSaturated` cases (at capacity, paused, rate-limited) and the enriched timeout-error message. Cheap, complete for the file, and it converts \"is this behaviour specified anywhere\" into a single read."
+content.kind = "lines"
+content.spans = [
+  {path = "test/debug.ts", start = 6, end = 6, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 52, end = 52, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 65, end = 65, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 84, end = 84, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 102, end = 102, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 125, end = 125, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 146, end = 146, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 174, end = 174, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 198, end = 198, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 216, end = 216, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/debug.ts", start = 233, end = 233, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 65
-end = 65
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.3"
+descriptor = "Test titles in test/priority-queue.ts (all 8)"
+justification = "The unit spec for the head-cursor design in batches 5.1-5.4, stated as invariants: dequeued items are ignored by later operations, high-priority insertion still works after a partial dequeue, same-priority appends preserve order, duplicate-id removal targets the live entry, ordering survives compaction. If the cursor logic is being changed, this is the exact list of properties that must keep holding."
+content.kind = "lines"
+content.spans = [
+  {path = "test/priority-queue.ts", start = 7, end = 7, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 28, end = 28, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 50, end = 50, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 72, end = 72, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 91, end = 91, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 110, end = 110, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 137, end = 137, render.kind = "full"},
+  {path = "test/priority-queue.ts", start = 164, end = 164, render.kind = "full"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 84
-end = 84
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.4"
+descriptor = "Test titles in test/rate-limit.ts (all 9) and test/validation.ts (all 7)"
+justification = "Complete indexes for the two focused regression suites: rate-limit.ts covers pause/start cycling, zero-interval, microtask-race conditions in `onRateLimit` / `onRateLimitCleared` and queue manipulation during a rate-limit event; validation.ts covers input validation for `setPriority` and the constructor `timeout`, plus abort-before-start freeing concurrency and rolling back the interval count. Between them they name most of the known edge cases in the rate-limit state machine."
+content.kind = "lines"
+content.spans = [
+  {path = "test/rate-limit.ts", start = 6, end = 6, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 46, end = 46, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 65, end = 65, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 95, end = 95, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 135, end = 135, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 165, end = 165, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 189, end = 189, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 221, end = 221, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/rate-limit.ts", start = 252, end = 252, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 6, end = 6, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 34, end = 34, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 55, end = 55, render.kind = "full"},
+  {path = "test/validation.ts", start = 77, end = 77, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 94, end = 94, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 117, end = 117, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+  {path = "test/validation.ts", start = 144, end = 144, render.kind = "truncated", render.pattern = "^test\\('[^']+"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 102
-end = 102
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.5"
+descriptor = "CI workflow and the remaining .github files"
+justification = "Completes the tree with the `.github` listings and shows the entire release gate: GitHub Actions on push and pull request, matrix over Node 24 and 20 — the practical floor being the `engines: node >= 20` from batch 1.9 — running nothing more than `npm install && npm test`. Confirms there is no separate lint or publish workflow to update when changing the build."
+content.kind = "fs"
+content.groups = [
+  {parent = ".github", entries = "all"},
+  {parent = ".github/workflows", entries = "all"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 125
-end = 125
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.6"
+descriptor = "The CI job definition itself"
+justification = "Nearly the whole file: trigger events, job name, the version matrix with `fail-fast: false`, and the two run steps — `npm install` then `npm test` — with the checkout/setup-node boilerplate left as an ellipsis marker. It is the concrete answer to \"what must pass before this merges\" and \"which Node versions are supported in practice\"."
+predecessor = "7.5"
+content.kind = "lines"
+content.spans = [
+  {path = ".github/workflows/main.yml", start = 1, end = 14, render.kind = "full"},
+  {path = ".github/workflows/main.yml", start = 15, end = 15, render.kind = "ellipsis"},
+  {path = ".github/workflows/main.yml", start = 20, end = 21, render.kind = "full"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 146
-end = 146
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
+[[batches]]
+id = "7.7"
+descriptor = "bench.ts: the five benchmark cases"
+justification = "Names every scenario the benchmark suite measures — baseline, random priority, increasing priority, a 10,000-task FIFO backlog, and raw `priority-queue-dequeue` — plus the small- and large-backlog task-count constants they run with. Performance work on `PriorityQueue` starts by running one of these five names."
+content.kind = "lines"
+content.spans = [
+  {path = "bench.ts", start = 34, end = 34, render.kind = "truncated", render.pattern = "^addBenchmark\\('[^']+"},
+  {path = "bench.ts", start = 44, end = 44, render.kind = "truncated", render.pattern = "^addBenchmark\\('[^']+"},
+  {path = "bench.ts", start = 56, end = 56, render.kind = "truncated", render.pattern = "^addBenchmark\\('[^']+"},
+  {path = "bench.ts", start = 68, end = 68, render.kind = "truncated", render.pattern = "^addBenchmark\\('[^']+"},
+  {path = "bench.ts", start = 79, end = 79, render.kind = "truncated", render.pattern = "^addBenchmark\\('[^']+"},
+]
 
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 174
-end = 174
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 198
-end = 198
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 216
-end = 216
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
-[[batches.content.spans]]
-path = "test/debug.ts"
-start = 233
-end = 233
-render = { kind = "truncated", pattern = "^test\\('[^']*'" }
-
+[[batches]]
+id = "7.8"
+descriptor = "tsconfig.json: the whole build configuration"
+justification = "The complete build configuration — it extends `@sindresorhus/tsconfig`, emits to `dist` and compiles only `source`, so tests and bench are type-checked by the editor but not shipped — together with the single assertion in `test-d/index.test-d.ts`, which pins that `queue.add(async () => '🦄')` is typed `Promise<string>`. Appendix material, but it closes the last two files in the tree."
+content.kind = "lines"
+content.spans = [
+  {path = "tsconfig.json", start = 1, end = 9, render.kind = "full"},
+]

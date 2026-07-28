@@ -1,0 +1,1222 @@
+fixture = "chronos-forecasting"
+revision_pin = "f951d9ae"
+summary = """
+chronos-forecasting (Amazon Science) is a Python package distributing three generations of pretrained
+time-series forecasting models behind one shared BaseChronosPipeline contract: the original Chronos
+(LM-style quantization + sampling, src/chronos/chronos.py), Chronos-Bolt (patch-based direct multi-step
+quantile regression, src/chronos/chronos_bolt.py), and Chronos-2 (the current flagship - multivariate,
+covariate-aware, LoRA-fine-tunable - under src/chronos/chronos2/: config.py, layers.py, model.py,
+pipeline.py, dataset.py, trainer.py). The ranking serves the full spread of plausible sessions against
+this repo: figuring out which of the three pipelines a query concerns and its exact
+predict/predict_quantiles/predict_df/fit contract (semantic, zero-follow-up-friendly), locating one
+class or function inside a ~5600-line src tree plus ~2000 lines of tests and ~1500 lines of
+training/eval scripts (structural, one-hop-away pointers with exact line coordinates), and operational
+tasks - running/adding tests against the four dummy model fixtures under test/, pretraining or
+fine-tuning (scripts/training/train.py + per-size YAML configs), benchmarking (scripts/evaluation/,
+the opt-in CI eval workflow), and packaging/CI (pyproject.toml, ci.yml's mypy+pytest matrix, PyPI
+release workflow). Breadth is prioritized throughout: every source file's function/class roster is
+surfaced early as a cheap truncated "locations" batch before that file's implementation is expanded,
+and filesystem listings are complete at every directory depth the NS touches (including the four
+dummy-model fixture dirs and the 29 published benchmark-result CSVs) so partial disclosure never
+implies an item doesn't exist. Hedging note: every roster/listing batch (tier 2's per-file rosters,
+9.1/9.6's fs listings, 10.1/10.2's script rosters, 11.1) is either complete or, where deliberately
+partial (9.3's cross-module test sample, 9.4's predict()-parametrization excerpt), says so in its own
+justification. The one enumerable batch cut mid-list without a complete alternative (11.5's Available
+Models table) carries a rendered ellipsis span rather than a silent truncation. Elsewhere, function/
+docstring-body spans are short hand-picked excerpts chosen for one specific fact, not full-body
+renders; most such spans end at a natural prose boundary (end of docstring section, end of a short
+class/dataclass) rather than mid-sentence, but a few are deliberately narrow quotes of a longer body.
+"""
+
+# ============================================================
+# TIER 1 - Identity & orientation
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = "First orientation: what kind of repo is this - docs/config/CI/src/scripts/test all present at root. Deliberately minimal (root only) to satisfy the growth envelope's floor; src/chronos's own listing follows immediately in 1.2."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = [".gitattributes", ".github", ".gitignore", "ci", "CITATION.cff", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "LICENSE", "notebooks", "NOTICE", "pyproject.toml", "README.md", "scripts", "src", "test"] },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "src/chronos + chronos2 package-root listings"
+justification = "The two Python package roots (src/chronos, src/chronos/chronos2) - names every source file before any one is expanded, mitigating catastrophic omission for the src tree an agent will look at first."
+content = { kind = "fs", groups = [
+  { parent = "src/chronos", entries = ["__about__.py", "__init__.py", "base.py", "boto_utils.py", "chronos.py", "chronos2", "chronos_bolt.py", "df_utils.py", "utils.py"] },
+  { parent = "src/chronos/chronos2", entries = ["__init__.py", "config.py", "dataset.py", "layers.py", "model.py", "pipeline.py", "trainer.py"] },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "pyproject.toml - package name"
+justification = "The package name, tiny by design (envelope floor); the full identity/deps/build-backend content is ranked once the budget can absorb it, in 11.4."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README - one-line project description"
+justification = "The single sentence that frames everything else: an interface to pretrained time-series forecasting models. The fuller three-model-family framing is ranked as 3.1 once the location rosters below have built up enough budget to afford its denser prose."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 24, end = 24, render = { kind = "full" } },
+  { path = "README.md", start = 26, end = 26, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 2 - Public exports + per-file location rosters
+# ============================================================
+[[batches]]
+id = "2.1"
+descriptor = "chronos2/config.py + chronos2/trainer.py - locations"
+justification = "The two smallest chronos2 modules: Chronos2CoreConfig/Chronos2ForecastingConfig (the model's HF-style config dataclasses) and Chronos2Trainer (the custom HF Trainer subclass for fine-tuning). Bundled together since each is only a handful of defs."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/config.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/config.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/config.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/config.py", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/trainer.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "df_utils.py + utils.py + boto_utils.py - locations"
+justification = "The three small cross-cutting helper modules shared by more than one pipeline: pandas DataFrame<->list-of-dicts conversion (df_utils), quantile interpolation/left-padding math (utils), and S3/CloudFront model download (boto_utils). Bundled since each has only 2-3 top-level defs."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/chronos/df_utils.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/chronos/df_utils.py", start = 199, end = 199, render = { kind = "full" } },
+  { path = "src/chronos/utils.py", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/utils.py", start = 22, end = 22, render = { kind = "full" } },
+  { path = "src/chronos/utils.py", start = 135, end = 135, render = { kind = "full" } },
+  { path = "src/chronos/boto_utils.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "src/chronos/boto_utils.py", start = 53, end = 53, render = { kind = "full" } },
+  { path = "src/chronos/boto_utils.py", start = 98, end = 98, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "base.py - class/def locations"
+justification = "Every class and method name in the shared BaseChronosPipeline contract, name-only, before any body is read. Mitigates catastrophic omission: showing only predict() would wrongly imply predict_df/predict_fev/from_pretrained aren't shared too."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 48, end = 48, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/base.py", start = 100, end = 100, render = { kind = "full" } },
+  { path = "src/chronos/base.py", start = 135, end = 135, render = { kind = "full" } },
+  { path = "src/chronos/base.py", start = 252, end = 252, render = { kind = "full" } },
+  { path = "src/chronos/base.py", start = 337, end = 337, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "src/chronos/chronos2/__init__.py - Chronos-2 subpackage API"
+justification = "chronos2's own __all__ (Chronos2CoreConfig/Chronos2ForecastingConfig/Chronos2Model/Chronos2Pipeline/Chronos2Dataset) - the subset of chronos2 internals promoted to `chronos.chronos2.*`."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/__init__.py", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "chronos2/dataset.py - class/def locations"
+justification = "PreparedInput schema, the raw-input validators/converters (list-of-tensors, tensor, fev-window), and Chronos2Dataset's slicing/batching methods - shows the whole input-normalization pipeline exists (list-of-dicts vs tensor vs preprocessed-dataset entry points) before any one converter is read."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 219, end = 219, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 263, end = 263, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 302, end = 302, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 338, end = 338, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 370, end = 370, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 406, end = 406, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 466, end = 466, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 472, end = 472, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 511, end = 511, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 545, end = 545, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 609, end = 609, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 641, end = 641, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 653, end = 653, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/dataset.py", start = 666, end = 666, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "chronos2/model.py - class/def locations"
+justification = "Chronos2Encoder(Block) and Chronos2Model's full method roster, including the private _prepare_patched_context/_prepare_patched_future/_compute_loss helpers - shows the encode/forward split and that covariates get their own preparation path before any one method is expanded."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 39, end = 39, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 113, end = 113, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 134, end = 134, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 266, end = 266, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/model.py", start = 315, end = 315, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 373, end = 373, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 425, end = 425, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 499, end = 499, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 550, end = 550, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/model.py", start = 618, end = 618, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "chronos2/pipeline.py - class/def locations (largest file, 1228 lines)"
+justification = "Chronos2Pipeline's full public+private method roster in one place: fit (incl. LoRA), predict/predict_quantiles/predict_df/predict_fev, embed, from_pretrained/save_pretrained, and the private long-horizon-unrolling/batching helpers. Without this, an agent reading only predict() would not know fit()'s LoRA path or the _autoregressive_unroll_for_long_horizon helper exist."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 39, end = 39, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 48, end = 48, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 372, end = 372, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 407, end = 407, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 456, end = 456, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 656, end = 656, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 720, end = 720, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 750, end = 750, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 763, end = 763, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 821, end = 821, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 957, end = 957, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 1027, end = 1027, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 1106, end = 1106, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 1186, end = 1186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 1224, end = 1224, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "chronos_bolt.py - class/def locations"
+justification = "Name-only roster of Chronos-Bolt's building blocks: Patch/InstanceNorm/ResidualBlock, the T5PreTrainedModel-derived ChronosBoltModelForForecasting, and ChronosBoltPipeline. Establishes that Bolt has its own encode/decode/forward, distinct from both base.py's abstract stubs and Chronos-2's model.py."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 33, end = 33, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 81, end = 81, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 113, end = 113, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 114, end = 114, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 147, end = 147, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 215, end = 215, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 240, end = 240, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 294, end = 294, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 358, end = 358, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 364, end = 364, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 403, end = 403, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 407, end = 407, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 412, end = 412, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 416, end = 416, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 420, end = 420, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos_bolt.py", start = 424, end = 424, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 463, end = 463, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 559, end = 559, render = { kind = "full" } },
+  { path = "src/chronos/chronos_bolt.py", start = 610, end = 610, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "chronos.py - class/def locations"
+justification = "Name-only roster of the original Chronos pipeline: ChronosConfig, the abstract ChronosTokenizer contract, its MeanScaleUniformBins implementation, ChronosModel, and ChronosPipeline's own methods - so an agent knows the tokenizer is pluggable before reading any one implementation."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 68, end = 68, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 170, end = 170, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 198, end = 198, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 209, end = 209, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 222, end = 222, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 243, end = 243, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 256, end = 256, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 262, end = 262, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 265, end = 265, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 292, end = 292, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 355, end = 355, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 375, end = 375, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 381, end = 381, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 385, end = 385, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 388, end = 388, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 399, end = 399, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos.py", start = 430, end = 430, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 513, end = 513, render = { kind = "full" } },
+  { path = "src/chronos/chronos.py", start = 536, end = 536, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "src/chronos/__init__.py - public package API"
+justification = "The exact __all__ surface a user gets from `import chronos` - which of the three pipelines/configs/tokenizers are top-level-importable vs internal. Answers 'what can I import' with zero follow-up."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/__init__.py", start = 1, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "chronos2/layers.py - class/def locations"
+justification = "Chronos-2's attention/normalization primitives: RoPE, Chronos2LayerNorm, MLP/FeedForward, the eager-vs-sdpa MHA, and the three attention wrappers (TimeSelfAttention, TimeCrossAttention, GroupSelfAttention) that the model.py encoder composes. Names TimeCrossAttention even though model.py never calls it (encoder-only) - avoids implying it doesn't exist."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/layers.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 169, end = 169, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 197, end = 197, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 227, end = 227, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 294, end = 294, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 295, end = 295, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 301, end = 301, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 317, end = 317, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 318, end = 318, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 343, end = 343, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 346, end = 346, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 353, end = 353, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 369, end = 369, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/chronos/chronos2/layers.py", start = 372, end = 372, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/layers.py", start = 393, end = 393, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+# ============================================================
+# TIER 3 - BaseChronosPipeline shared contract
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "ForecastType, PipelineRegistry metaclass, BaseChronosPipeline construction + abstract length properties"
+justification = "The metaclass trick (PipelineRegistry.REGISTRY) that lets from_pretrained dispatch to the right concrete pipeline by name, plus ForecastType (SAMPLES vs QUANTILES) which is how downstream eval code (evaluate.py) distinguishes Chronos from Bolt/Chronos-2 forecasts."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 27, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "BaseChronosPipeline.predict - Returns section (forecast_type-dependent shape)"
+justification = "predict() is abstract (raises NotImplementedError) but its Returns section is the one line every concrete pipeline's predict() must honor: forecast shape/meaning depends on `self.forecast_type` (SAMPLES vs QUANTILES, 3.1) - the single place to check 'what shape should predict() return' regardless of which pipeline is in use. predict_quantiles has its own parallel docstring at base.py:100-134 (not rendered here for budget) covering quantile_levels specifically."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 92, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "BaseChronosPipeline.predict_df - full signature"
+justification = "predict_df's full parameter contract (id_column/timestamp_column/target/validate_inputs/freq) shared by ChronosPipeline and inherited as-is by ChronosBoltPipeline; Chronos2Pipeline overrides this method with extra params (see 7.9), so this is the baseline to diff against."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 135, end = 142, render = { kind = "full" } },
+  { path = "src/chronos/base.py", start = 144, end = 147, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "BaseChronosPipeline.predict_df - body"
+justification = "Shows predict_df is implemented once here in terms of predict_quantiles + df_utils.convert_df_input_to_list_of_dicts_input, so Chronos/Chronos-Bolt get DataFrame support for free just by implementing predict_quantiles; only Chronos-2 needs its own predict_df (multi-target, future_df)."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 188, end = 192, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "BaseChronosPipeline.predict_fev - fev benchmark integration"
+justification = "The shared entry point used by scripts/evaluation and the test suite's `test_pipeline_can_evaluate_on_dummy_fev_task` tests to score a pipeline against a `fev.Task`; batches windows, picks MASE vs median point-forecast by `task.eval_metric`."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 252, end = 256, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "BaseChronosPipeline.from_pretrained - S3/HF/registry dispatch"
+justification = "The single load path everything (README's `Chronos2Pipeline.from_pretrained`, evaluate.py's `BaseChronosPipeline.from_pretrained`) funnels through: detects `s3://` prefix (-> boto_utils), reads `chronos_pipeline_class` off the HF config, and dispatches via PipelineRegistry - explains why an unrecognized config raises 'Not a Chronos config file'."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/base.py", start = 336, end = 340, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 4 - Chronos (original) pipeline
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "ChronosConfig dataclass"
+justification = "The 14-field config driving the original Chronos tokenizer+model (n_tokens/n_special_tokens/model_type causal-vs-seq2seq/sampling params); create_tokenizer() dynamically looks up the tokenizer class by name off the `chronos` module namespace."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 27, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "ChronosTokenizer abstract contract"
+justification = "context_input_transform/label_input_transform/output_transform's docstrings define the token-ID <-> real-value round trip every tokenizer (currently only MeanScaleUniformBins) must implement - the shapes referenced by 4.3's concrete implementation."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 59, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "MeanScaleUniformBins - the concrete tokenizer (mean-scaling + uniform binning)"
+justification = "The actual quantization scheme: scale by mean absolute value, bucketize into `n_tokens - n_special_tokens - 1` uniform bins via torch.bucketize, clamp, and reverse via `centers[indices] * scale`. This is the mechanism the paper calls 'scaling and quantization' referenced in the README's Chronos description."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 181, end = 185, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "ChronosModel - encoder embedding + autoregressive sample generation"
+justification = "Wraps an HF PreTrainedModel; `encode()` only works for seq2seq (asserts on `model.encoder`), and `forward()` calls `model.generate()` with a GenerationConfig built from num_samples/temperature/top_k/top_p - the actual sampling step behind Chronos's 'probabilistic forecasts via multiple trajectories'."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 243, end = 247, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "ChronosPipeline construction + embed()"
+justification = "embed() exposes encoder hidden states directly (bypassing sampling) - the only pipeline-level way to get a Chronos time-series embedding without generating a forecast."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 355, end = 359, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "ChronosPipeline.predict - chunked autoregressive rollout"
+justification = "The loop that lets Chronos forecast beyond its trained prediction_length: repeatedly re-tokenizes an extended context (appending the running median) and re-samples in chunks of `model.config.prediction_length` until `remaining <= 0` - explains the `limit_prediction_length` warning/error path used across all three pipelines' predict()."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 430, end = 434, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "ChronosPipeline.predict_quantiles + from_pretrained"
+justification = "predict_quantiles derives quantiles/mean from raw sample paths via torch.quantile (samples-based, unlike Bolt/Chronos-2's direct quantile heads); from_pretrained picks AutoModelForSeq2SeqLM vs AutoModelForCausalLM off `chronos_config.model_type`."
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos.py", start = 513, end = 517, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 5 - Chronos-Bolt pipeline
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "ChronosBoltConfig/Output + Patch operator"
+justification = "Patch turns a (batch, context_length) series into (batch, num_patches, patch_size) tiles via unfold, left-padding with NaN if not evenly divisible - the input representation direct multi-step (patch-based) forecasting is named after in the README."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 32, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "InstanceNorm (with optional arcsinh) + ResidualBlock"
+justification = "Per-series standardization (mean/std, NaN-safe) that both ChronosBoltModelForForecasting and Chronos2Model reuse as their scaling step (Chronos2's InstanceNorm import in layers.py comes straight from here); `use_arcsinh` is a Chronos-2-only extension already present in this shared class."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 71, end = 75, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "ChronosBoltModelForForecasting.__init__ + _init_weights"
+justification = "Wires input_patch_embedding (ResidualBlock), a T5Stack encoder/decoder pair, and output_patch_embedding sized to `num_quantiles * prediction_length` - shows Bolt reuses HF's T5Stack rather than a bespoke encoder (contrast with Chronos-2's own Chronos2Encoder in 6.7-6.8)."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 147, end = 151, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "ChronosBoltModelForForecasting.encode"
+justification = "Patches + masks the context, optionally appends a [REG] token, and runs the T5 encoder - the exact attention_mask construction (\"1 if at least one item in the patch is observed\") that a debugging session on masked/missing inputs would need."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 240, end = 244, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "ChronosBoltModelForForecasting.forward + decode - quantile loss"
+justification = "The pinball/quantile loss computation against `self.quantiles`, and the single-token decoder step that turns encoder output into `quantile_preds` of shape (batch, num_quantiles, prediction_length) - Bolt's core training+inference forward pass."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 294, end = 298, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "ChronosBoltPipeline construction + embed()"
+justification = "embed() exposes patch-level encoder embeddings and the per-series (loc, scale) instance-norm stats - the Bolt equivalent of 4.5's Chronos embed(), but shaped by num_patches instead of raw sequence length."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 403, end = 407, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "ChronosBoltPipeline.predict - long-horizon quantile-unrolling heuristic"
+justification = "Explains the documented trick (inline comment at the code): once `prediction_length > model_prediction_length`, the context is expanded along a quantile axis and each of the `num_quantiles` first-block quantile predictions is fed back autoregressively, then the `num_quantiles**2` results are reduced back to `num_quantiles` via empirical quantiles. This is the algorithm behind the 'quality of longer predictions may degrade' warning users hit."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 527, end = 531, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "ChronosBoltPipeline.predict_quantiles + from_pretrained"
+justification = "predict_quantiles either directly indexes the model's trained quantile levels or falls back to torch-based interpolation with an edge-padding trick (duplicating min/max quantile columns) - the 'TODO: this is a hack' comment documents a real known limitation (assumes equidistant training quantiles) worth surfacing for debugging quantile-accuracy questions."
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos_bolt.py", start = 592, end = 596, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 6 - Chronos-2 core (config, attention layers, encoder/model)
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "Chronos2CoreConfig - three key doc'd constructor args (d_model/rope_theta/attn_implementation)"
+justification = "Picked out of the full param-doc'd constructor: d_model sizes the attention heads MHA (6.4) builds from (d_kv/num_heads documented alongside, not rendered here for budget); rope_theta is RoPE's base (6.3); attn_implementation selects eager-vs-sdpa (6.4/6.5). This is the config class instantiated from every dummy-chronos2-model/config.json's top-level keys (see 9.6), so this batch plus that fixture together answer 'what does a real Chronos-2 config.json need'."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/config.py", start = 18, end = 19, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/config.py", start = 40, end = 41, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/config.py", start = 42, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "Chronos2ForecastingConfig - forecasting-specific fields + editable_fields()"
+justification = "context_length/output_patch_size/quantiles/use_reg_token/use_arcsinh/max_output_patches/time_encoding_scale - this dataclass is what `model.chronos_config` actually is at runtime (constructed from the `chronos_config` sub-dict of config.json); `editable_fields()` names exactly which two fields fit() is allowed to grow during fine-tuning."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/config.py", start = 102, end = 111, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/config.py", start = 119, end = 119, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "RoPE + Chronos2LayerNorm + MLP + FeedForward"
+justification = "Chronos-2's own rotary position embedding (used for TimeSelfAttention only, not GroupSelfAttention - see 6.6) and its T5-style (no-bias, no-mean-subtraction) LayerNorm, registered into transformers' ALL_LAYERNORM_LAYERS so HF's init/mixed-precision machinery recognizes it."
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/layers.py", start = 18, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "MHA._eager_attention - deliberately unscaled attention scores"
+justification = "One MHA class backs both TimeSelfAttention and GroupSelfAttention (`use_rope` flag differs, construction at layers.py:151-167). This inline comment is why attention here is unscaled by design ('no scaling - this is the original Chronos-2 implementation'); `_sdpa_attention` (layers.py:222) mirrors it via `scale=1.0` - a detail that would otherwise look like a bug if only one kernel's convention were seen."
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/layers.py", start = 186, end = 190, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "MHA.forward - dispatch + shape/unshape"
+justification = "output_attentions=True forces eager attention (sdpa can't return weights) - the exact condition that test_chronos2.py's `test_attention_implementations_with_output_attentions` (line 1050, not itself rendered in this NS) exercises."
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/layers.py", start = 227, end = 231, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "TimeSelfAttention / TimeCrossAttention / GroupSelfAttention + ResidualBlock"
+justification = "GroupSelfAttention is the mechanism behind multivariate/cross-learning forecasting: it transposes to attend along the *batch* axis (masked by group_ids), explicitly omitting RoPE since there's 'no natural ordering along the batch axis' - the single most load-bearing comment for understanding how Chronos-2 mixes information across time series in a group."
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/layers.py", start = 346, end = 350, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "Chronos2EncoderBlock + Chronos2Encoder construction"
+justification = "One encoder block = TimeSelfAttention -> GroupSelfAttention -> FeedForward, in that order; shows Chronos-2's encoder is a from-scratch stack (Chronos2Encoder), not the HF T5Stack that ChronosBoltModelForForecasting reuses (contrast with 5.3)."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 31, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "Chronos2Encoder - attention-mask construction + forward"
+justification = "_construct_and_invert_group_time_mask is the one function that actually encodes the group_ids semantics (documented in detail in 6.13's forward docstring) into an additive attention mask via `group_ids[:, None] == group_ids[None, :]` outer-producted with the time mask."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 118, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.9"
+descriptor = "Chronos2Output + Chronos2Model.__init__ + _init_weights"
+justification = "input_patch_embedding takes `input_patch_size * 3` features (patch, mask, *and* time-encoding, vs Bolt's `* 2`) - the concrete dimensional difference that makes Chronos-2's patch embedding incompatible with Bolt's despite sharing the ResidualBlock/InstanceNorm/Patch building blocks."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 190, end = 194, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.10"
+descriptor = "Chronos2Model._validate_input - required tensor shapes"
+justification = "The exhaustive set of ValueError messages (context must be (batch, context_length); future_covariates shape must match future_target; num_output_patches must be large enough) - the fastest lookup when a Chronos2Model.forward()/encode() call raises a shape error."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 315, end = 319, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.11"
+descriptor = "_prepare_patched_context + _prepare_patched_future"
+justification = "The context path builds a scaled/time-encoded/patched input; the future path is a mirror image but zero-fills patched_future_covariates when no covariates are given - together these are what encode() concatenates before running the Chronos2Encoder, and show why a covariate-free forecast still passes an (all-zero) 'future' block through the encoder."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 373, end = 377, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.12"
+descriptor = "Chronos2Model._compute_loss"
+justification = "Quantile (pinball) loss masked by both future_target_mask and (1 - future_covariates_mask) - i.e. known future covariates are explicitly excluded from the loss, which is what makes covariate-informed fine-tuning not 'cheat' by training on values it was also given as input."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 499, end = 503, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.13"
+descriptor = "Chronos2Model.encode + forward - signature and the group_ids/covariate contract docstring"
+justification = "forward()'s docstring is the single authoritative explanation of group_ids semantics with a worked example ([0,0,1,1,1,2] -> 3 heterogeneous tasks: joint multivariate, covariate-informed, independent) - this is the highest-value semantic content in the whole model for a 'how do I set up multivariate/covariate forecasting' query, worth ranking ahead of most other tier-6 implementation batches despite its size."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 639, end = 643, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.14"
+descriptor = "Chronos2Model.forward - body"
+justification = "Slices only the last `num_output_patches` hidden states into output_patch_embedding (context tokens never produce predictions directly), then unscales via instance_norm.inverse - completes the encode->slice->unscale pipeline whose contract was set up in 6.13."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/model.py", start = 710, end = 714, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 7 - Chronos-2 pipeline, dataset, trainer
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "Chronos2Pipeline.model_prediction_length + _get_prob_mass_per_quantile_level docstring"
+justification = "model_prediction_length here is `max_output_patches * output_patch_size` (not a fixed config field like Bolt/Chronos) - the trapezoidal-rule quantile probability-mass helper is the weighting scheme 7.4's long-horizon unrolling depends on."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 48, end = 52, render = { kind = "full" } },
+  { path = "src/chronos/chronos2/pipeline.py", start = 85, end = 86, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "Chronos2Pipeline.fit - full docstring (fine-tuning contract)"
+justification = "Every fine-tuning knob in one place: finetune_mode full-vs-lora, context_length, learning_rate (1e-6 default, 1e-5 recommended for LoRA), min_past, output_dir default (chronos-2-finetuned/{timestamp} - matches the .gitignore entry in 1.1), and convert_inputs for pre-tokenized HF-dataset training."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 96, end = 100, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "Chronos2Pipeline.fit - body (LoRA setup, dataset/Trainer wiring, checkpoint save)"
+justification = "Shows fit() deep-copies the model before training (original pipeline is untouched - the behavior test_chronos2.py's finetuning tests assert via `torch.allclose(orig_out_before, orig_out_after)`), the default LoraConfig target_modules list, and that TrainingArguments' tf32/bf16 are gated on `has_sm80` (compute capability >= 8)."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 176, end = 180, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "Long-horizon unrolling helpers (_prepare_inputs_for_long_horizon_unrolling, _autoregressive_unroll_for_long_horizon)"
+justification = "Chronos-2's version of the same long-horizon trick as Bolt (5.7): expands context/future_covariates/group_ids along a quantile axis and shifts group_ids so mixing only happens within the same (original group, quantile) pair - the inline worked example of group_id shifting ([0,0,1,1,1] -> per-quantile-shifted ids) is exactly the kind of detail that saves a debugging session."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 384, end = 388, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = "Chronos2Pipeline.predict - docstring (accepted input shapes, cross_learning)"
+justification = "predict() accepts three distinct input shapes (3D tensor, list of 1D/2D tensors, list of dicts with target/past_covariates/future_covariates) with a worked example for each in the docstring itself - this is the exact contract test_chronos2.py's huge predict-parametrization table (9.4) exercises, and the most common 'how do I call predict()' question this repo gets."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 492, end = 496, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.6"
+descriptor = "Chronos2Pipeline.predict - body"
+justification = "Wraps inputs in a Chronos2Dataset(mode=TEST) + DataLoader, then dispatches each batch to _predict_batch; `cross_learning=True` just zeroes out batch_group_ids so every series in the batch is treated as one group - the one-line mechanism behind the cross_learning flag documented in 7.5."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 619, end = 623, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.7"
+descriptor = "_predict_batch + _predict_step + _slide_context_and_future_covariates"
+justification = "_predict_step is where future_covariates get padded/truncated to exactly `num_output_patches * output_patch_size` before calling the model; _slide_context_and_future_covariates is the per-round bookkeeping that substitutes known future covariate values into the sliding context window during long-horizon unrolling."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 656, end = 660, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.8"
+descriptor = "Chronos2Pipeline.predict_quantiles"
+justification = "Same subset-vs-interpolate branching as Bolt's predict_quantiles (5.8), but operating on a *list* of per-task tensors (since Chronos-2 tasks can have different n_variates) rather than one stacked tensor."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 763, end = 767, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.9"
+descriptor = "Chronos2Pipeline.predict_df - docstring + signature (overrides base)"
+justification = "Diverges from BaseChronosPipeline.predict_df (3.3) in three ways: takes a `future_df` for known covariates, `target` can be a list of columns (multi-target), and adds `batch_size`/`context_length`/`cross_learning` - the exact param-level diff a 'why does Chronos-2's predict_df take different args' question needs."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 821, end = 825, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.10"
+descriptor = "Chronos2Pipeline.predict_df - body"
+justification = "Stacks per-task quantile/mean tensors (safe only because predict_df tasks are homogeneous by construction, per the inline comment) and reshapes into the same long-format output columns (item_id/timestamp/target_name/predictions/quantile columns) as the original ChronosPipeline.predict_df in base.py."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 894, end = 898, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.11"
+descriptor = "predict_fev + _predict_fev_window - fev benchmark integration"
+justification = "Chronos-2-specific override of predict_fev supporting an optional `finetune_kwargs` that fine-tunes on the *first* window only before evaluating - a one-shot adapt-then-eval pattern not present in BaseChronosPipeline.predict_fev (3.5)."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 957, end = 961, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.12"
+descriptor = "Chronos2Pipeline.embed + from_pretrained + save_pretrained"
+justification = "from_pretrained probes for a PEFT adapter config first (`find_adapter_config_file`) before falling back to the base-model path - this is what makes `Chronos2Pipeline.from_pretrained(dummy-chronos2-lora-dir)` (exercised by test_chronos2.py's `test_chronos2_lora_pipeline_loads_from_disk`) transparently load and merge a LoRA adapter."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/pipeline.py", start = 1105, end = 1109, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.13"
+descriptor = "dataset.py - PreparedInput schema + validate_and_prepare_single_dict_input"
+justification = "The single function that turns one raw list-of-dicts task into the PreparedInput tensor pair (context, future_covariates); ordering matters here - past-only covariates come before known-future covariates in the stacked rows ('so known-future are the last rows') - and categorical covariates get target- or ordinal-encoded depending on whether the target is univariate."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 23, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.14"
+descriptor = "prepare_inputs + validate_prepared_schema"
+justification = "prepare_inputs filters out series shorter than `min_past + prediction_length` (raising if the whole dataset is filtered away - the exact error test_chronos2.py's `test_when_input_time_series_are_too_short_then_finetuning_raises_error` checks for); validate_prepared_schema is what fires when `convert_inputs=False` is passed a malformed pre-processed dataset."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 219, end = 223, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.15"
+descriptor = "Input-format converters (tensor/list-of-tensors) + fev-window converter"
+justification = "The two tensor-shaped entry points to Chronos2Dataset (3D batch tensor, list of 1D/2D tensors) plus convert_fev_window_to_list_of_dicts_input, which is how a `fev.Task`'s past/future covariate columns get relabeled into the same target/past_covariates/future_covariates dict shape used everywhere else."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 302, end = 306, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.16"
+descriptor = "DatasetMode enum + Chronos2Dataset construction"
+justification = "TRAIN/VALIDATION/TEST modes each slice input series differently (see 7.17); the docstring spells out the two supported `inputs` shapes (raw dicts vs pre-processed PreparedInput dicts governed by `convert_inputs`) that 7.3's fit() and 7.6's predict() both funnel through."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 466, end = 470, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.17"
+descriptor = "Chronos2Dataset._construct_slice + _build_batch + iteration"
+justification = "_construct_slice is the one place TRAIN picks a *random* subsequence, VALIDATION picks the *last* window, and TEST takes the *full* series - the exact behavior that makes repeated calls to fit() non-deterministic across steps but predict() deterministic; _build_batch then left-pads and concatenates a list of variable-length slices into one padded tensor per training/inference batch."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/dataset.py", start = 545, end = 549, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.18"
+descriptor = "trainer.py - Chronos2Trainer + seed_worker + EvaluateAndSaveFinalStepCallback"
+justification = "Overrides HF Trainer's dataloader getters to disable automatic batching (`batch_size=None, collate_fn=None`) since Chronos2Dataset already yields full batches; warns if `TrainingArguments.train_batch_size` doesn't match the dataset's own batch_size, which is the classic multi-GPU DataParallel footgun this repo works around (`disable_data_parallel=True` default in fit(), 7.3)."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/chronos2/trainer.py", start = 17, end = 21, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 8 - Cross-cutting utils (df_utils, utils, boto_utils)
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "df_utils._validate_df_types_and_cast"
+justification = "Casts object/string/categorical columns to `category` and numeric/bool columns to `float32` (raising if a target column isn't numeric) - the dtype-coercion step that runs before every predict_df/fit() call on a raw pandas DataFrame in both ChronosPipeline and Chronos2Pipeline."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 16, end = 20, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "df_utils.validate_df_inputs - column/frequency validation"
+justification = "Checks required columns exist, future_df doesn't contain target columns or extra columns, and every series has >=3 points - the source of several exact error strings ('df does not contain all expected columns', 'must have at least 3 data points') that test_df_utils.py and test_chronos2.py assert against with pytest.raises(match=...)."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 59, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.3"
+descriptor = "df_utils.validate_df_inputs - frequency inference + sorting"
+justification = "Infers frequency per-series via `pd.infer_freq` and requires all series in one call to share the same frequency - the source of the '`Could not infer frequency`' / 'All time series must have the same frequency' errors surfaced by non-uniform-timestamp test cases in both test_chronos.py and test_chronos2.py."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 143, end = 147, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.4"
+descriptor = "df_utils.convert_df_input_to_list_of_dicts_input - docstring + signature"
+justification = "The `freq` parameter can only be passed together with `validate_inputs=False` - an intentional coupling (raises otherwise) documented here, letting callers skip frequency inference entirely for performance on large datasets."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 199, end = 203, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.5"
+descriptor = "df_utils.convert_df_input_to_list_of_dicts_input - body"
+justification = "Vectorized construction of all future prediction timestamps at once via `np.dstack` over per-series last-timestamp + offset, rather than per-series looping - the actual pandas/numpy trick behind predict_df's timestamp generation for every pipeline."
+content = { kind = "lines", spans = [
+  { path = "src/chronos/df_utils.py", start = 250, end = 254, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.6"
+descriptor = "utils.left_pad_and_stack_1D"
+justification = "Left-pads a list of variable-length 1D tensors with NaN to a common length and stacks them - the exact function BaseChronosPipeline._prepare_and_validate_context calls when `context` is a list rather than a single tensor."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/utils.py", start = 11, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.7"
+descriptor = "utils.interpolate_quantiles"
+justification = "Linear interpolation between arbitrary (possibly non-equidistant) original quantile levels and query levels, with automatic 0/1 boundary padding for extrapolation - this is what both Bolt's and Chronos-2's predict_quantiles fall back to when requested quantile_levels aren't a subset of the model's trained quantiles."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/utils.py", start = 22, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.8"
+descriptor = "utils.weighted_quantile"
+justification = "Builds an empirical CDF from weighted samples (via cumulative sorted weights) then reuses interpolate_quantiles against it - this is the reduction step in Chronos-2's long-horizon unrolling (7.4) that collapses `num_quantiles**2` autoregressive samples back down to `num_quantiles`. The `# FIXME` comment flags this as a known-imperfect extrapolation heuristic."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/utils.py", start = 162, end = 166, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.9"
+descriptor = "boto_utils - CloudFront + S3 model download"
+justification = "MODEL_FILENAMES is a hardcoded 3-file list (config.json/model.safetensors/LICENSE.txt); CLOUDFRONT_MAPPING special-cases exactly one bucket (`s3://autogluon/chronos-2`) to use a CDN instead, with a FutureWarning steering users toward a HuggingFace model_id instead - explains why only Chronos-2 gets faster S3 downloads today."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/boto_utils.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.10"
+descriptor = "boto_utils.cache_model_from_s3"
+justification = "Validates the S3 URI with a regex, caches under `~/.cache/chronos/<bucket>/<prefix>` (or `$XGD_CACHE_HOME`), and picks CloudFront vs plain S3 download - the function `BaseChronosPipeline.from_pretrained` (3.6) calls when given an `s3://` path."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/chronos/boto_utils.py", start = 98, end = 102, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 9 - Tests & fixtures
+# ============================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "test/ directory listing, incl. the four dummy-model fixture dirs"
+justification = "Names all five test modules plus the four dummy model dirs (dummy-chronos-model, dummy-chronos-bolt-model, dummy-chronos2-model, dummy-chronos2-lora) and their weight/config files - showing only e.g. dummy-chronos2-model would wrongly imply Bolt/original-Chronos/LoRA fixtures don't exist."
+content = { kind = "fs", groups = [
+  { parent = "test", entries = ["__init__.py", "dummy-chronos-bolt-model", "dummy-chronos-model", "dummy-chronos2-lora", "dummy-chronos2-model", "test_chronos_bolt.py", "test_chronos.py", "test_chronos2.py", "test_df_utils.py", "test_utils.py", "util.py"] },
+  { parent = "test/dummy-chronos-model", entries = ["config.json", "generation_config.json", "pytorch_model.bin"] },
+  { parent = "test/dummy-chronos-bolt-model", entries = ["config.json", "model.safetensors"] },
+  { parent = "test/dummy-chronos2-model", entries = ["config.json", "model.safetensors"] },
+  { parent = "test/dummy-chronos2-lora", entries = ["adapter_config.json", "adapter_model.safetensors"] },
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "test/util.py - shared test helpers"
+justification = "create_df/create_future_df/get_forecast_start_times are the DataFrame-fixture builders every predict_df test in test_chronos.py and test_chronos2.py parametrizes over (freq, series_ids, covariates); timeout_callback backs the `after_batch` timeout test - understanding these is a prerequisite for reading almost any predict_df test."
+content = { kind = "lines", spans = [
+  { path = "test/util.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.3"
+descriptor = "Test-function locations across all 5 test modules"
+justification = "A budget-constrained sample of test-function names spread across all 5 modules (not exhaustive - see each module directly for the rest) showing the shape of test coverage: tokenizer edge cases (test_chronos.py), LoRA loading and cross_learning (test_chronos2.py), and DataFrame validation edge cases (test_df_utils.py) are all independently tested."
+content = { kind = "lines", spans = [
+  { path = "test/test_chronos.py", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos.py", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos.py", start = 240, end = 240, render = { kind = "full" } },
+  { path = "test/test_chronos.py", start = 424, end = 424, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos_bolt.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos_bolt.py", start = 247, end = 247, render = { kind = "full" } },
+  { path = "test/test_chronos_bolt.py", start = 325, end = 325, render = { kind = "full" } },
+  { path = "test/test_chronos_bolt.py", start = 359, end = 359, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos2.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos2.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "test/test_chronos2.py", start = 362, end = 362, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos2.py", start = 621, end = 621, render = { kind = "full" } },
+  { path = "test/test_chronos2.py", start = 920, end = 920, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_chronos2.py", start = 1148, end = 1148, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_df_utils.py", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_df_utils.py", start = 168, end = 168, render = { kind = "full" } },
+  { path = "test/test_df_utils.py", start = 419, end = 419, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_utils.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_utils.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "9.4"
+descriptor = "test_chronos2.py - predict() input-shape parametrization (tensor + ragged-list cases)"
+justification = "The parametrized `inputs` table's first three cases (homogeneous univariate tensor, homogeneous multivariate tensor, then a ragged list of differently-shaped/differently-lengthed per-series tensors) is a concrete, runnable catalogue of the tensor-shaped inputs Chronos2Pipeline.predict accepts - a more precise zero-follow-up reference than 7.5's prose docstring for 'show me a working example of X'. The table's later list-of-dicts-with-covariates cases continue past this excerpt (not rendered here for budget; see 7.5's docstring for that shape)."
+predecessor = "9.3"
+content = { kind = "lines", spans = [
+  { path = "test/test_chronos2.py", start = 45, end = 54, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.5"
+descriptor = "test_chronos_bolt.py - InstanceNorm standardization unit test"
+justification = "Directly exercises the shared InstanceNorm primitive (5.2) with a hand-computed expected value: two rows differing only by an additive offset ([1..5] vs [2..6]) normalize to identical values - the cheapest possible confirmation of what that class actually computes, ported verbatim from autogluon per the file's own attribution comment (line 242)."
+predecessor = "9.3"
+content = { kind = "lines", spans = [
+  { path = "test/test_chronos_bolt.py", start = 307, end = 307, render = { kind = "full" } },
+  { path = "test/test_chronos_bolt.py", start = 317, end = 320, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.6"
+descriptor = "Dummy model config.json / adapter_config.json quartet"
+justification = "Concrete, runnable evidence of each pipeline's on-disk config schema - dummy-chronos-model (original, chronos_config nested under a T5 config), dummy-chronos-bolt-model, dummy-chronos2-model (chronos_pipeline_class field, arcsinh/reg_token flags), and dummy-chronos2-lora's adapter_config.json (peft LoraConfig fields, base_model_name_or_path) - cheaper and more precise ground truth than reading the config classes alone."
+content = { kind = "lines", spans = [
+  { path = "test/dummy-chronos-model/config.json", start = 1, end = 4, render = { kind = "full" } },
+  { path = "test/dummy-chronos-bolt-model/config.json", start = 1, end = 4, render = { kind = "full" } },
+  { path = "test/dummy-chronos2-model/config.json", start = 1, end = 4, render = { kind = "full" } },
+  { path = "test/dummy-chronos2-lora/adapter_config.json", start = 1, end = 4, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 10 - Scripts: training, evaluation, synthetic data
+# ============================================================
+
+[[batches]]
+id = "10.1"
+descriptor = "scripts/ + ci/ directory tree listing (incl. all training/eval configs and result CSVs)"
+justification = "Full breadth of the non-package tooling in one batch: kernel-synth.py, training/ (train.py + 6 per-model-size YAML configs), evaluation/ (evaluate.py, agg-relative-score.py, 2 backtest-config YAMLs, and all 29 published result CSVs), plus ci/evaluate/'s smaller CI-only backtest config - listing only some result CSVs would wrongly suggest the others (e.g. chronos-t5-large's) don't exist."
+content = { kind = "fs", groups = [
+  { parent = "scripts", entries = ["evaluation", "kernel-synth.py", "README.md", "training"] },
+  { parent = "scripts/evaluation", entries = ["agg-relative-score.py", "configs", "evaluate.py", "results"] },
+  { parent = "scripts/evaluation/configs", entries = ["in-domain.yaml", "zero-shot.yaml"] },
+  { parent = "scripts/evaluation/results", entries = ["chronos-bolt-base-agg-rel-scores.csv", "chronos-bolt-base-in-domain.csv", "chronos-bolt-base-zero-shot.csv", "chronos-bolt-mini-agg-rel-scores.csv", "chronos-bolt-mini-in-domain.csv", "chronos-bolt-mini-zero-shot.csv", "chronos-bolt-small-agg-rel-scores.csv", "chronos-bolt-small-in-domain.csv", "chronos-bolt-small-zero-shot.csv", "chronos-bolt-tiny-agg-rel-scores.csv", "chronos-bolt-tiny-in-domain.csv", "chronos-bolt-tiny-zero-shot.csv", "chronos-t5-base-agg-rel-scores.csv", "chronos-t5-base-in-domain.csv", "chronos-t5-base-zero-shot.csv", "chronos-t5-large-agg-rel-scores.csv", "chronos-t5-large-in-domain.csv", "chronos-t5-large-zero-shot.csv", "chronos-t5-mini-agg-rel-scores.csv", "chronos-t5-mini-in-domain.csv", "chronos-t5-mini-zero-shot.csv", "chronos-t5-small-agg-rel-scores.csv", "chronos-t5-small-in-domain.csv", "chronos-t5-small-zero-shot.csv", "chronos-t5-tiny-agg-rel-scores.csv", "chronos-t5-tiny-in-domain.csv", "chronos-t5-tiny-zero-shot.csv", "seasonal-naive-in-domain.csv", "seasonal-naive-zero-shot.csv"] },
+  { parent = "scripts/training", entries = ["configs", "train.py"] },
+  { parent = "scripts/training/configs", entries = ["chronos-gpt2.yaml", "chronos-t5-base.yaml", "chronos-t5-large.yaml", "chronos-t5-mini.yaml", "chronos-t5-small.yaml", "chronos-t5-tiny.yaml"] },
+  { parent = "ci", entries = ["evaluate"] },
+  { parent = "ci/evaluate", entries = ["backtest_config.yaml"] },
+] }
+
+[[batches]]
+id = "10.2"
+descriptor = "Training/eval script locations (kernel-synth.py, train.py, evaluate.py)"
+justification = "Name-only roster for the three CLI scripts: KernelSynth's GP-based synthetic-series generator, the original-Chronos pretraining script's dataset/model-loading helpers and `main()`, and evaluate.py's three per-pipeline-family typer subcommands (chronos/chronos_bolt/chronos_2)."
+content = { kind = "lines", spans = [
+  { path = "scripts/kernel-synth.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/kernel-synth.py", start = 82, end = 82, render = { kind = "full" } },
+  { path = "scripts/kernel-synth.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "scripts/kernel-synth.py", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 107, end = 107, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 120, end = 120, render = { kind = "full" } },
+  { path = "scripts/training/train.py", start = 155, end = 155, render = { kind = "full" } },
+  { path = "scripts/training/train.py", start = 195, end = 195, render = { kind = "full" } },
+  { path = "scripts/training/train.py", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 254, end = 254, render = { kind = "full" } },
+  { path = "scripts/training/train.py", start = 264, end = 264, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/training/train.py", start = 504, end = 504, render = { kind = "full" } },
+  { path = "scripts/evaluation/evaluate.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/evaluation/evaluate.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "scripts/evaluation/evaluate.py", start = 73, end = 73, render = { kind = "full" } },
+  { path = "scripts/evaluation/evaluate.py", start = 116, end = 116, render = { kind = "full" } },
+  { path = "scripts/evaluation/evaluate.py", start = 174, end = 174, render = { kind = "full" } },
+  { path = "scripts/evaluation/evaluate.py", start = 241, end = 241, render = { kind = "full" } },
+  { path = "scripts/evaluation/evaluate.py", start = 291, end = 291, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.3"
+descriptor = "scripts/README.md - KernelSynth + pretraining walkthrough"
+justification = "The only prose walkthrough of how to actually generate synthetic training data and launch scripts/training/train.py (single-GPU vs torchrun multi-GPU invocation, the shuffle_buffer_length/torch_compile knobs to touch if the first training step is slow) - operational content no other file states this plainly."
+content = { kind = "lines", spans = [
+  { path = "scripts/README.md", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.4"
+descriptor = "scripts/README.md - evaluation walkthrough"
+justification = "The exact invocation of scripts/evaluation/evaluate.py (config path / output CSV / --chronos-model-id / --batch-size / --device / --num-samples) plus the gmean-based aggregated-relative-score snippet that scripts/evaluation/agg-relative-score.py (10.14) turns into a reusable CLI."
+content = { kind = "lines", spans = [
+  { path = "scripts/README.md", start = 113, end = 117, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.5"
+descriptor = "kernel-synth.py - header + KERNEL_BANK"
+justification = "The fixed bank of 32 GP kernels (periodic ExpSineSquared at hourly/daily/weekly/monthly/quarterly/yearly periodicities, plus DotProduct/RBF/RationalQuadratic/WhiteKernel/ConstantKernel) that generate_time_series (10.6) randomly composes - this is literally what 'KernelSynth' means."
+content = { kind = "lines", spans = [
+  { path = "scripts/kernel-synth.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.6"
+descriptor = "kernel-synth.py - generate_time_series + CLI entry point"
+justification = "Randomly samples 1-5 kernels from KERNEL_BANK, combines them with a random +/* binary operator, and retries on `np.linalg.LinAlgError` - the actual synthesis algorithm; `if __name__ == \"__main__\"` shows the --num-series/--max-kernels CLI flags and the joblib-parallel generation loop writing kernelsynth-data.arrow."
+predecessor = "10.2"
+content = { kind = "lines", spans = [
+  { path = "scripts/kernel-synth.py", start = 151, end = 155, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.7"
+descriptor = "train.py - pretraining CLI flag surface (main() signature)"
+justification = "The full ~30-flag surface of the original-Chronos pretraining CLI (typer + typer_config's `use_yaml_config`, so every flag is also a YAML config key - see 10.9's sample config) with every default value inline - context_length=512, min_past=64, model_id='google/t5-efficient-tiny', tokenizer bin/token counts, sampling params."
+predecessor = "10.2"
+content = { kind = "lines", spans = [
+  { path = "scripts/training/train.py", start = 502, end = 506, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.8"
+descriptor = "train.py - main() body (dataset filtering, ChronosConfig, Trainer)"
+justification = "Filters each FileDataset by has_enough_observations(min_past+prediction_length, max_missing_prop) before wrapping in ChronosDataset; builds a HF TrainingArguments from the CLI flags 1:1 and hands off to a plain (non-custom) HF Trainer - unlike Chronos-2's Chronos2Trainer (7.18), original-Chronos pretraining needs no custom dataloader override."
+content = { kind = "lines", spans = [
+  { path = "scripts/training/train.py", start = 602, end = 606, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.9"
+descriptor = "train.py - load_model (vocab-resize + special-token wiring)"
+justification = "The exact steps to adapt a stock HF checkpoint (e.g. google/t5-efficient-small) to Chronos's token vocabulary: `resize_token_embeddings(vocab_size)` then overwrite pad/eos token ids on both `model.config` and `model.generation_config` - a detail easy to get wrong when hand-rolling a similar setup."
+predecessor = "10.2"
+content = { kind = "lines", spans = [
+  { path = "scripts/training/train.py", start = 155, end = 159, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.10"
+descriptor = "scripts/training/configs/chronos-t5-small.yaml - concrete training-config sample"
+justification = "A real, complete YAML config (paired 1:1 with train.py's main() flags in 10.7) - cheaper, more precise ground truth for 'what does a training config look like' than re-deriving it from the CLI signature; the other 5 per-model-size configs are named in 10.1's fs listing."
+content = { kind = "lines", spans = [
+  { path = "scripts/training/configs/chronos-t5-small.yaml", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.11"
+descriptor = "evaluate.py - helper functions (gluonts conversion, forecast generation, metrics)"
+justification = "to_gluonts_univariate/load_and_split_dataset bridge a HuggingFace `datasets` benchmark into gluonts' split/InstanceSplitter machinery; generate_forecasts branches on whether `predict_quantiles` returned a list (Chronos-2) vs a tensor (Chronos/Bolt) via `isinstance(quantiles, list)` - the one place all three pipelines' differing output shapes get normalized for evaluation."
+predecessor = "10.2"
+content = { kind = "lines", spans = [
+  { path = "scripts/evaluation/evaluate.py", start = 25, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.12"
+descriptor = "evaluate.py - chronos / chronos_bolt / chronos_2 CLI subcommands"
+justification = "Three near-identical typer subcommands with per-family defaults (chronos: bfloat16 + num_samples/temperature/top_k/top_p; bolt/chronos_2: float32, no sampling params; chronos_2 adds cross_learning) - the chronos_2 docstring's two literal '# FIXME' markers on its model_id default and available-model-IDs list are a real, currently-unresolved rough edge worth flagging verbatim rather than smoothing over."
+predecessor = "10.2"
+content = { kind = "lines", spans = [
+  { path = "scripts/evaluation/evaluate.py", start = 173, end = 177, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.13"
+descriptor = "Evaluation config samples (in-domain.yaml, zero-shot.yaml, ci/evaluate/backtest_config.yaml)"
+justification = "Concrete backtest-config schema (name/hf_repo/offset/prediction_length/num_rolls per dataset) shared by scripts/evaluation/evaluate.py and the opt-in CI eval workflow (11.3); ci/evaluate/backtest_config.yaml is deliberately a small 7-dataset subset of the 27 zero-shot + in-domain datasets, chosen for CI runtime rather than benchmark completeness."
+content = { kind = "lines", spans = [
+  { path = "scripts/evaluation/configs/in-domain.yaml", start = 1, end = 3, render = { kind = "full" } },
+  { path = "scripts/evaluation/configs/zero-shot.yaml", start = 1, end = 3, render = { kind = "full" } },
+  { path = "ci/evaluate/backtest_config.yaml", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.14"
+descriptor = "scripts/evaluation/agg-relative-score.py"
+justification = "Turns 10.4's inline gmean snippet into a reusable typer CLI: computes geometric-mean relative score against a seasonal-naive baseline separately for in-domain and zero-shot, writing `{model_name}-agg-rel-scores.csv` - the exact script that produced the *-agg-rel-scores.csv files listed in 10.1."
+content = { kind = "lines", spans = [
+  { path = "scripts/evaluation/agg-relative-score.py", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 11 - CI, packaging metadata, remaining docs
+# ============================================================
+
+[[batches]]
+id = "11.1"
+descriptor = ".github/ + notebooks/ directory listings"
+justification = "Names all 3 workflow files and both issue-template files (bug_report.md + config.yml, which disables blank issues in favor of an FAQ/discussions redirect) plus both example notebooks - complete listing before any one workflow or notebook is discussed."
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = ["ISSUE_TEMPLATE", "workflows"] },
+  { parent = ".github/ISSUE_TEMPLATE", entries = ["bug_report.md", "config.yml"] },
+  { parent = ".github/workflows", entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"] },
+  { parent = "notebooks", entries = ["chronos-2-quickstart.ipynb", "deploy-chronos-to-amazon-sagemaker.ipynb"] },
+] }
+
+[[batches]]
+id = "11.2"
+descriptor = "ci.yml - build/test entry point"
+justification = "The canonical 'how do I build/test this' answer: a type-check job (`mypy src test` on py3.11 with the [typecheck] extra) and a test job running plain `pytest` across the full py3.10-3.13 matrix with the [test] extra - runs on every push to main, every PR, and a daily 8AM UTC cron."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/ci.yml", start = 35, end = 35, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 56, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.3"
+descriptor = "eval-model.yml + publish-to-pypi.yml"
+justification = "eval-model.yml only runs when a PR is labeled 'run-eval' and invokes scripts/evaluation/evaluate.py directly against ci/evaluate/backtest_config.yaml for both Chronos-2 and Chronos-Bolt - the CI-side counterpart to 10.4/10.13's manual evaluation walkthrough; publish-to-pypi.yml is the release-triggered `python -m build` + PyPI publish."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/eval-model.yml", start = 1, end = 3, render = { kind = "full" } },
+  { path = ".github/workflows/publish-to-pypi.yml", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.4"
+descriptor = "pyproject.toml - optional-dependency groups, urls, mypy/ruff config"
+justification = "The `extras`/`test`/`typecheck`/`dev` optional-dependency groups (extras adds boto3/peft/fev/pandas for S3+LoRA+benchmarking+DataFrame support; dev additionally pulls in gluonts/datasets/typer/tensorboard for the scripts/ tooling) - answers 'what do I need installed to run the training/eval scripts vs just the library'."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 41, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.5"
+descriptor = "README - Available Models table header + first row + continuation marker"
+justification = "The table header plus the flagship amazon/chronos-2 row, with an ellipsis marking that 11 more rows (chronos-2-synth/-small, bolt-tiny/mini/small/base, t5-tiny/mini/small/base/large) continue at README.md:39-49 - signals the table's existence and format without a bare partial listing silently implying only one of the 12 published checkpoints exist. Matters for 'which model_id do I pass to from_pretrained'."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 36, end = 38, render = { kind = "full" } },
+  { path = "README.md", start = 39, end = 39, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "11.6"
+descriptor = "README - Forecasting usage example (predict_df + visualization)"
+justification = "The canonical end-to-end example: `Chronos2Pipeline.from_pretrained(..., device_map=\"cuda\")` then `pipeline.predict_df(context_df, future_df=..., prediction_length=24, quantile_levels=[0.1,0.5,0.9], ...)` followed by a matplotlib fan-chart plot - the single highest-value zero-follow-up snippet for 'how do I use this library' sessions."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 53, end = 57, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.7"
+descriptor = "README - News (release order)"
+justification = "Dates the three model generations' release order (Chronos Mar'24 -> Bolt Nov'24 -> fev Dec'24 -> Chronos-2 Oct'25 -> SageMaker guide Dec'25), corroborating the tier ordering used throughout this NS. The README's Citation section (BibTeX for the two papers, ~line 130) is not rendered anywhere in this NS - low code-relevance relative to its token cost."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 17, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.8"
+descriptor = "CONTRIBUTING.md - security issue reporting"
+justification = "Security issues go to AWS's vulnerability-reporting page, not a public GitHub issue - the one line most likely to matter for a 'where do I report a security bug' query; the rest of the PR/issue workflow guidance is standard and lower-priority given the tight budget."
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 53, end = 54, render = { kind = "full" } },
+] }

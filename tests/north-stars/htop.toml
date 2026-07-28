@@ -1,1308 +1,682 @@
 fixture = "htop"
 revision_pin = "b7f9df97"
-summary = "htop: a cross-platform ncurses process viewer in C99, built with autotools, using an OOP-in-C vtable pattern (Object -> Row -> Process; Object -> Panel/Meter/Table) over per-OS platform directories. The repo ships an auto-injected AGENTS.md that already covers build commands, code style, the class hierarchy, the platform-directory pattern, and the main loop - so this ranking buys its complement: complete file breadth (rosters of every directory), exact vtable/struct shapes with line coordinates, the runtime CLI flag surface, the htoprc config format via a real sample, column-id and meter-name registries, the platform contract signatures, and CI/test/release operations. Query distribution served: UI behavior (keys, screens, meters, columns), adding meters/columns/platform fields, config handling, cross-platform porting, build features, and test/CI workflows."
+summary = """
+htop is a cross-platform interactive process viewer written in C99, laid
+out as one large flat root of ~140 CamelCase `.c`/`.h` modules plus one
+directory per supported platform (`linux/`, `darwin/`, `freebsd/`,
+`netbsd/`, `openbsd/`, `dragonflybsd/`, `solaris/`, `pcp/`,
+`unsupported/`) and shared helpers in `generic/` and `zfs/`. Because the
+substance is a flat directory, the ranking first partitions that root
+into semantic groups (core data model; entry points and runtime/UI core;
+meters; panels and screens; utility infrastructure; docs/build/meta;
+subdirectories) so that a reader learns which types exist before learning
+where the platform variants live.
+
+The repo ships an AGENTS.md (auto-loaded by the harness, so no batch
+takes body lines from it) that already narrates the build commands, the
+code style and the Object -> Row -> Process / Panel / Meter hierarchy in
+prose. This ranking therefore buys the complement: exact declarations
+with line coordinates (Object/Row/Table/ProcessTable/Machine/Process/
+Panel/Meter/Settings structs and their vtable class structs), the two
+user-facing surfaces that no prose covers - the complete key-binding
+table in `Action.c` and the `--help` text in `CommandLine.c`, each bought
+exactly once - a real `htoprc` sample as the config-format evidence, the
+enum tables that config values are drawn from (RowField, MeterMode,
+HeaderLayout, ColorScheme), the operational surface (Makefile.am
+conditionals, configure.ac option roster, CI job roster, TESTPLAN /
+test_spec.lua), the platform contract (`Platform.h` symbols, the meter
+registry array), the pcp dynamic-definition config samples, and finally
+the supporting container/string/curses APIs.
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Version and release state"
-justification = "AGENTS.md describes the project but not which version this tree is: configure.ac pins 3.6.0-dev, ChangeLog names the last release (3.5.1). Anchors any 'which version / what changed' query."
-
+descriptor = "README identity lede: what htop is"
+justification = "Rank 1 must answer 'what is this repository'. Three prose lines from README.md's Introduction give the concept (cross-platform interactive process viewer), the fact that the display is configurable and interactively sortable/filterable, and the implementation language. Cheapest possible framing for every downstream query."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 10
-end = 10
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "ChangeLog"
-start = 1
-end = 1
-render = { kind = "full" }
+spans = [
+  { path = "README.md", start = 15, end = 15, render = { kind = "full" } },
+  { path = "README.md", start = 20, end = 20, render = { kind = "full" } },
+  { path = "README.md", start = 26, end = 26, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "User-facing quick keys (README Quick Start)"
-justification = "The five most common interactive keys (search / filter / tree / sort / kill). Not covered by AGENTS.md, which is contributor- not user-facing; cheapest semantic entry into UI-behavior queries."
-
+descriptor = "Root roster: core data-model modules"
+justification = "The repo's substance is a flat root; this is the group that matters most. Naming Object/Row/Process/ProcessTable/Table/Machine/Settings (each .c and .h, plus RowField.h) tells the agent the central types exist and exactly which file to open for each, before any platform inventory. Kept to one semantic group so the cost stays small at rank 2."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 33
-end = 41
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["Object.c", "Object.h", "Row.c", "Row.h", "RowField.h", "Process.c", "Process.h", "ProcessTable.c", "ProcessTable.h", "Table.c", "Table.h", "Machine.c", "Machine.h", "Settings.c", "Settings.h"] },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "Repository root: directories, build files, docs, tests"
-justification = "All 16 subdirectories plus the build/docs/test entry files. Completed to the full root listing by batches 2.1-2.4 (the C source rosters); ordering forced by the growth envelope."
-
+descriptor = "Root roster: entry points and runtime/UI core"
+justification = "The other half of the core group: the two program entry points (htop.c, pcp-htop.c), argument handling (CommandLine), the key dispatcher (Action), the main loop and widget core (ScreenManager, MainPanel, Panel, Meter, Header, CRT) with their small enum headers. Together with 1.2 this is the set of files a change to htop's behaviour almost always touches."
 [batches.content]
 kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = [".github", "darwin", "docs", "dragonflybsd", "freebsd", "generic", "iwyu", "linux", "m4", "netbsd", "openbsd", "pcp", "scripts", "solaris", "unsupported", "zfs", "AGENTS.md", "CLAUDE.md", "Makefile.am", "README", "README.md", "TESTPLAN", "autogen.sh", "configure.ac", "htop.1.in", "htop.c", "pcp-htop.5.in", "pcp-htop.c", "test_spec.lua"]
+groups = [
+  { parent = ".", entries = ["htop.c", "pcp-htop.c", "CommandLine.c", "CommandLine.h", "Action.c", "Action.h", "ScreenManager.c", "ScreenManager.h", "MainPanel.c", "MainPanel.h", "Panel.c", "Panel.h", "Meter.c", "Meter.h", "MeterMode.h", "Header.c", "Header.h", "HeaderLayout.h", "CRT.c", "CRT.h"] },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "htop(1) manual section map"
-justification = "Section-heading locations: where flags, interactive commands, COLUMNS, EXTERNAL LIBRARIES, CONFIG FILES, and MEMORY SIZES are documented. One-hop pointers for most user-visible-behavior questions; bodies stay out of budget."
-
+descriptor = "Root roster: subdirectories (platform variants and shared helpers)"
+justification = "Every directory under the root, so the agent knows the full set of platform back-ends (linux, darwin, freebsd, netbsd, openbsd, dragonflybsd, solaris, pcp, unsupported) and the non-platform dirs (generic, zfs, docs, m4, scripts, iwyu, .github). Cheap, and it closes the 'which platforms exist' class in one batch."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 2
-end = 2
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 4
-end = 4
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 11
-end = 11
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 39
-end = 39
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 108
-end = 108
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 311
-end = 311
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 617
-end = 617
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 658
-end = 658
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 723
-end = 723
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 734
-end = 734
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 742
-end = 742
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 748
-end = 748
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 756
-end = 756
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["linux", "darwin", "freebsd", "netbsd", "openbsd", "dragonflybsd", "solaris", "pcp", "unsupported", "generic", "zfs", "docs", "m4", "scripts", "iwyu", ".github"] },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "pcp-htop(5) manual section map"
-justification = "The dynamic-configuration file format doc: METERS and COLUMNS sections define the ini syntax used by pcp/{meters,columns,screens} files (samples ranked at 3.5)."
+descriptor = "Root roster: meter modules and dynamic-definition modules"
+justification = "Meters are the largest recurring module family in the root and 'add/modify a meter' is a common task. Listing every root-level *Meter.c/.h together with DynamicMeter/DynamicColumn/DynamicScreen closes that class: an agent can see there is no e.g. root-level TemperatureMeter and that platform-specific meters must live elsewhere."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["BatteryMeter.c", "BatteryMeter.h", "CPUMeter.c", "CPUMeter.h", "DateTimeMeter.c", "DateTimeMeter.h", "DiskIOMeter.c", "DiskIOMeter.h", "FileDescriptorMeter.c", "FileDescriptorMeter.h", "GPUMeter.c", "GPUMeter.h", "HostnameMeter.c", "HostnameMeter.h", "LoadAverageMeter.c", "LoadAverageMeter.h", "MemoryMeter.c", "MemoryMeter.h", "MemorySwapMeter.c", "MemorySwapMeter.h", "NetworkIOMeter.c", "NetworkIOMeter.h", "SwapMeter.c", "SwapMeter.h", "SysArchMeter.c", "SysArchMeter.h", "TasksMeter.c", "TasksMeter.h", "UptimeMeter.c", "UptimeMeter.h", "DynamicMeter.c", "DynamicMeter.h", "DynamicColumn.c", "DynamicColumn.h", "DynamicScreen.c", "DynamicScreen.h"] },
+]
 
+[[batches]]
+id = "1.6"
+descriptor = "Root roster: setup panels and info screens"
+justification = "The second large module family: every *Panel (the F2 setup UI, affinity, signals, columns, screens tabs) and every *Screen (strace, lsof, environment, backtrace, locks, command). Closes the class so an agent adding a new screen knows the existing set and the naming convention."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["AffinityPanel.c", "AffinityPanel.h", "AvailableColumnsPanel.c", "AvailableColumnsPanel.h", "AvailableMetersPanel.c", "AvailableMetersPanel.h", "CategoriesPanel.c", "CategoriesPanel.h", "ColorsPanel.c", "ColorsPanel.h", "ColumnsPanel.c", "ColumnsPanel.h", "DisplayOptionsPanel.c", "DisplayOptionsPanel.h", "HeaderOptionsPanel.c", "HeaderOptionsPanel.h", "MetersPanel.c", "MetersPanel.h", "ScreensPanel.c", "ScreensPanel.h", "ScreenTabsPanel.c", "ScreenTabsPanel.h", "SignalsPanel.c", "SignalsPanel.h", "BacktraceScreen.c", "BacktraceScreen.h", "CommandScreen.c", "CommandScreen.h", "EnvScreen.c", "EnvScreen.h", "InfoScreen.c", "InfoScreen.h", "OpenFilesScreen.c", "OpenFilesScreen.h", "ProcessLocksScreen.c", "ProcessLocksScreen.h", "TraceScreen.c", "TraceScreen.h"] },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Root roster: utility and infrastructure modules"
+justification = "The remaining root source modules: containers (Vector, Hashtable), string/memory helpers (XUtils, RichString), curses/terminal shims (ProvideCurses.h, ProvideTerm.h), and the small widgets and services (FunctionBar, IncSet, LineEditor, ListItem, OptionItem, History, UsersTable, Affinity, Scheduling, Macros.h, Debug.h). With 1.2/1.3/1.5/1.6 the root .c/.h set is now complete."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["Vector.c", "Vector.h", "Hashtable.c", "Hashtable.h", "XUtils.c", "XUtils.h", "RichString.c", "RichString.h", "FunctionBar.c", "FunctionBar.h", "IncSet.c", "IncSet.h", "LineEditor.c", "LineEditor.h", "ListItem.c", "ListItem.h", "OptionItem.c", "OptionItem.h", "History.c", "History.h", "UsersTable.c", "UsersTable.h", "Affinity.c", "Affinity.h", "Scheduling.c", "Scheduling.h", "Macros.h", "Debug.h", "ProvideCurses.h", "ProvideTerm.h"] },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Root roster: build, docs, packaging and meta files"
+justification = "Completes the root listing: autotools inputs (configure.ac, Makefile.am, autogen.sh), manpage sources (htop.1.in, pcp-htop.5.in), test artefacts (TESTPLAN, test_spec.lua), the lint helper (check-pcp-style.sh), packaging assets and the project docs. Nothing in the root is now unaccounted for, so an agent will not wrongly assume a build or docs file is missing."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = ["configure.ac", "Makefile.am", "autogen.sh", "check-pcp-style.sh", "htop.1.in", "pcp-htop.5.in", "TESTPLAN", "test_spec.lua", "README.md", "README", "AGENTS.md", "CLAUDE.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "COPYING", "AUTHORS", "ChangeLog", "NEWS", "htop.desktop", "htop.png", "htop.svg", "htop-logo.png", ".editorconfig", ".gitignore", ".travis.yml"] },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "README: scrolling/system-info behaviour and the ncurses requirement"
+justification = "The remaining substantive Introduction lines, deferred behind the file rosters because they refine rather than establish. They supply the horizontal/vertical scrolling and system-wide-information behaviour that frames UI questions, and the runtime dependency (ncurses, libncurses(w)) that governs build and packaging questions."
 [batches.content]
 kind = "lines"
+spans = [
+  { path = "README.md", start = 17, end = 18, render = { kind = "full" } },
+  { path = "README.md", start = 24, end = 24, render = { kind = "full" } },
+]
 
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 2
-end = 2
-render = { kind = "full" }
+[[batches]]
+id = "1.10"
+descriptor = "--help text, part 1: -C/-d/-F/--no-function-bar/-h/-H/-M and where it is printed"
+justification = "The CLI surface is bought exactly once, in the one place that is both the flag list and its documentation: printHelpFlag() at CommandLine.c:53. Split in two only for cost. This half covers colour, delay, filter, function bar, help, highlight-changes and the HAVE_GETMOUSE-conditional mouse flag, so the #ifdef-conditional flag pattern is visible."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "CommandLine.c", start = 53, end = 65, render = { kind = "full" } },
+]
 
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 4
-end = 4
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 34
-end = 34
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 157
-end = 157
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 220
-end = 220
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "pcp-htop.5.in"
-start = 228
-end = 228
-render = { kind = "full" }
+[[batches]]
+id = "1.11"
+descriptor = "--help text, part 2: --no-meters through -V, plus the platform hook and footer"
+justification = "Completes the flag list (max-iterations, pid, readonly, sort-key with its --sort-key=help discoverability trick, tree modes classic|soft|hard, user, no-unicode, version) and shows Platform_longOptionsUsage(name) as the extension point where a platform appends its own flags. Predecessor 1.10 so the two halves read as one surface."
+predecessor = "1.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "CommandLine.c", start = 66, end = 78, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "Root roster 1/3: core spine and infrastructure"
-justification = "Every top-level infrastructure module: object system, process model, tables, settings, UI plumbing, containers, plus the header-only utilities. Complements AGENTS.md's subsystem prose with the exact file set."
-
+descriptor = "Object.h: the vtable idiom in full (ObjectClass, Object, Arg)"
+justification = "htop's whole OOP emulation rests on this header: the three virtual-method typedefs (display/compare/delete), the ObjectClass struct whose const 'extends' field encodes inheritance, the one-field Object base, the Arg union every action callback takes, and Object_isA(). Every other class struct in this tier embeds ObjectClass, so it lands first."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = ["Action.c", "Action.h", "CRT.c", "CRT.h", "CommandLine.c", "CommandLine.h", "Debug.h", "FunctionBar.c", "FunctionBar.h", "Hashtable.c", "Hashtable.h", "Header.c", "Header.h", "HeaderLayout.h", "IncSet.c", "IncSet.h", "LineEditor.c", "LineEditor.h", "ListItem.c", "ListItem.h", "Machine.c", "Machine.h", "Macros.h", "MainPanel.c", "MainPanel.h", "Meter.c", "Meter.h", "MeterMode.h", "Object.c", "Object.h", "OptionItem.c", "OptionItem.h", "Panel.c", "Panel.h", "Process.c", "Process.h", "ProcessTable.c", "ProcessTable.h", "ProvideCurses.h", "ProvideTerm.h", "RichString.c", "RichString.h", "Row.c", "Row.h", "RowField.h", "ScreenManager.c", "ScreenManager.h", "Settings.c", "Settings.h", "Table.c", "Table.h", "UsersTable.c", "UsersTable.h", "Vector.c", "Vector.h", "XUtils.c", "XUtils.h"]
+kind = "lines"
+spans = [
+  { path = "Object.h", start = 18, end = 23, render = { kind = "full" } },
+  { path = "Object.h", start = 37, end = 46, render = { kind = "full" } },
+  { path = "Object.h", start = 48, end = 55, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "Root roster 2/3: meters and dynamic providers"
-justification = "All *Meter modules plus the Dynamic{Column,Meter,Screen} runtime registries. A partial meter list would imply missing meters don't exist; this is the complete top-level set."
-
+descriptor = "Row.h: the Row struct - every field of the base display row"
+justification = "Row is Process's parent and the unit the table and tree render. Declaration lines only (comments elided, visible by the line-number gaps) so the complete field set - id/group/parent, isRoot, tag, show, wasShown, showChildren, updated, indent, tree_depth, seenStampMs, tombStampMs - is closed at low cost; the doc comment at 33-35 states what a Row is."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = ["BatteryMeter.c", "BatteryMeter.h", "CPUMeter.c", "CPUMeter.h", "DateTimeMeter.c", "DateTimeMeter.h", "DiskIOMeter.c", "DiskIOMeter.h", "DynamicColumn.c", "DynamicColumn.h", "DynamicMeter.c", "DynamicMeter.h", "DynamicScreen.c", "DynamicScreen.h", "FileDescriptorMeter.c", "FileDescriptorMeter.h", "GPUMeter.c", "GPUMeter.h", "HostnameMeter.c", "HostnameMeter.h", "LoadAverageMeter.c", "LoadAverageMeter.h", "MemoryMeter.c", "MemoryMeter.h", "MemorySwapMeter.c", "MemorySwapMeter.h", "NetworkIOMeter.c", "NetworkIOMeter.h", "SwapMeter.c", "SwapMeter.h", "SysArchMeter.c", "SysArchMeter.h", "TasksMeter.c", "TasksMeter.h", "UptimeMeter.c", "UptimeMeter.h"]
+kind = "lines"
+spans = [
+  { path = "Row.h", start = 33, end = 35, render = { kind = "full" } },
+  { path = "Row.h", start = 37, end = 39, render = { kind = "full" } },
+  { path = "Row.h", start = 42, end = 42, render = { kind = "full" } },
+  { path = "Row.h", start = 44, end = 44, render = { kind = "full" } },
+  { path = "Row.h", start = 45, end = 45, render = { kind = "full" } },
+  { path = "Row.h", start = 46, end = 46, render = { kind = "full" } },
+  { path = "Row.h", start = 49, end = 49, render = { kind = "full" } },
+  { path = "Row.h", start = 52, end = 52, render = { kind = "full" } },
+  { path = "Row.h", start = 55, end = 55, render = { kind = "full" } },
+  { path = "Row.h", start = 58, end = 58, render = { kind = "full" } },
+  { path = "Row.h", start = 61, end = 61, render = { kind = "full" } },
+  { path = "Row.h", start = 64, end = 64, render = { kind = "full" } },
+  { path = "Row.h", start = 69, end = 69, render = { kind = "full" } },
+  { path = "Row.h", start = 70, end = 70, render = { kind = "full" } },
+  { path = "Row.h", start = 75, end = 75, render = { kind = "full" } },
+  { path = "Row.h", start = 76, end = 76, render = { kind = "full" } },
+  { path = "Row.h", start = 77, end = 77, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "Root roster 3/3: panels, screens, and process features"
-justification = "All setup/selection panels, the per-process info screens (env, locks, open files, trace, backtrace), affinity and scheduling. Completes the top-level C sources."
-
+descriptor = "Row.h: RowClass vtable - the six behaviours a row type overrides"
+justification = "The typedefs and RowClass struct a new row kind must fill in: isHighlighted, isVisible, writeField, matchesFilter, sortKeyString, compareByParent, over the ObjectClass super, plus Row_compare(). This is the contract for 'add a new kind of row or screen'; the fallback semantics live in the dispatch macros just below at Row.h:101-105."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = ["Affinity.c", "Affinity.h", "AffinityPanel.c", "AffinityPanel.h", "AvailableColumnsPanel.c", "AvailableColumnsPanel.h", "AvailableMetersPanel.c", "AvailableMetersPanel.h", "BacktraceScreen.c", "BacktraceScreen.h", "CategoriesPanel.c", "CategoriesPanel.h", "ColorsPanel.c", "ColorsPanel.h", "ColumnsPanel.c", "ColumnsPanel.h", "CommandScreen.c", "CommandScreen.h", "DisplayOptionsPanel.c", "DisplayOptionsPanel.h", "EnvScreen.c", "EnvScreen.h", "HeaderOptionsPanel.c", "HeaderOptionsPanel.h", "History.c", "History.h", "InfoScreen.c", "InfoScreen.h", "MetersPanel.c", "MetersPanel.h", "OpenFilesScreen.c", "OpenFilesScreen.h", "ProcessLocksScreen.c", "ProcessLocksScreen.h", "Scheduling.c", "Scheduling.h", "ScreenTabsPanel.c", "ScreenTabsPanel.h", "ScreensPanel.c", "ScreensPanel.h", "SignalsPanel.c", "SignalsPanel.h", "TraceScreen.c", "TraceScreen.h"]
+kind = "lines"
+spans = [
+  { path = "Row.h", start = 79, end = 97, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "Root roster: remaining docs, assets, CI config"
-justification = "Licensing, contribution docs, changelog, desktop-integration assets, editor/CI dotfiles. Completes the root listing so nothing at top level can be presumed absent."
-
+descriptor = "Table.h: the Table struct and the TableClass scan protocol"
+justification = "Table owns the rows Vector, the display-order list, the id->row Hashtable, the host Machine, incFilter, needsSort, following and the stable-tree-view bookkeeping - with the comments that distinguish 'all known rows' from the flattened display list. TableClass adds the prepare/iterate/cleanup slots (their function typedefs are at Table.h:43-46) and the Table_scan* dispatch macros that make iterate mandatory follow at Table.h:55-59."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "."
-entries = [".editorconfig", ".gitignore", ".travis.yml", "AUTHORS", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "COPYING", "ChangeLog", "NEWS", "check-pcp-style.sh", "htop-logo.png", "htop.desktop", "htop.png", "htop.svg"]
+kind = "lines"
+spans = [
+  { path = "Table.h", start = 24, end = 42, render = { kind = "full" } },
+  { path = "Table.h", start = 48, end = 53, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "linux/ platform sources (complete)"
-justification = "The largest platform port: /proc scanning, cgroups, GPU, sensors, netlink delay-accounting, plus Linux-only meters (pressure-stall, zram, systemd, SELinux, OpenRC, hugepages)."
-
+descriptor = "ProcessTable.h in full: the process-table subclass and its platform hooks"
+justification = "Small enough to buy whole: the ProcessTable struct (pidMatchList for --pid, plus the totalTasks/runningTasks/userlandThreads/kernelThreads counters the Tasks meter displays), the three functions every platform must implement (ProcessTable_new, ProcessTable_delete, ProcessTable_goThroughEntries), and the shared init/done; the inline add/find helpers follow at ProcessTable.h:41-49. Answers 'where does process enumeration plug in' with zero follow-up."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "linux"
-entries = ["CGroupUtils.c", "CGroupUtils.h", "Compat.c", "Compat.h", "GPU.c", "GPU.h", "HugePageMeter.c", "HugePageMeter.h", "IOPriority.h", "IOPriorityPanel.c", "IOPriorityPanel.h", "LibNl.c", "LibNl.h", "LibSensors.c", "LibSensors.h", "LinuxMachine.c", "LinuxMachine.h", "LinuxProcess.c", "LinuxProcess.h", "LinuxProcessTable.c", "LinuxProcessTable.h", "OpenRCMeter.c", "OpenRCMeter.h", "Platform.c", "Platform.h", "PressureStallMeter.c", "PressureStallMeter.h", "ProcessField.h", "SELinuxMeter.c", "SELinuxMeter.h", "SystemdMeter.c", "SystemdMeter.h", "ZramMeter.c", "ZramMeter.h", "ZramStats.h", "ZswapStats.h"]
+kind = "lines"
+spans = [
+  { path = "ProcessTable.h", start = 19, end = 40, render = { kind = "full" } },
+  { path = "ProcessTable.h", start = 41, end = 41, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "BSD platform ports (complete)"
-justification = "freebsd/, openbsd/, netbsd/, dragonflybsd/ - each follows the Machine/Process/ProcessTable/Platform/ProcessField pattern; netbsd/ additionally carries its own README.md."
-
+descriptor = "Machine.h: the Machine struct, htop's per-host state"
+justification = "Declaration lines of the quasi-global handed to every meter and row (comments elided; the line-number gaps mark them): sample timestamps (realtime, realtimeMs, monotonicMs, prevMonotonicMs), iterationsRemaining behind --max-iterations, the optional hwloc topology, total memory and swap totals, activeCPUs/existingCPUs, usersTable and the uid fields, maxProcessId, and the tables array with activeTable/processTable. Any system-wide value question starts here."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "freebsd"
-entries = ["FreeBSDMachine.c", "FreeBSDMachine.h", "FreeBSDProcess.c", "FreeBSDProcess.h", "FreeBSDProcessTable.c", "FreeBSDProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h"]
-
-[[batches.content.groups]]
-parent = "openbsd"
-entries = ["OpenBSDMachine.c", "OpenBSDMachine.h", "OpenBSDProcess.c", "OpenBSDProcess.h", "OpenBSDProcessTable.c", "OpenBSDProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h"]
-
-[[batches.content.groups]]
-parent = "netbsd"
-entries = ["NetBSDMachine.c", "NetBSDMachine.h", "NetBSDProcess.c", "NetBSDProcess.h", "NetBSDProcessTable.c", "NetBSDProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h", "README.md"]
-
-[[batches.content.groups]]
-parent = "dragonflybsd"
-entries = ["DragonFlyBSDMachine.c", "DragonFlyBSDMachine.h", "DragonFlyBSDProcess.c", "DragonFlyBSDProcess.h", "DragonFlyBSDProcessTable.c", "DragonFlyBSDProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h"]
+kind = "lines"
+spans = [
+  { path = "Machine.h", start = 35, end = 36, render = { kind = "full" } },
+  { path = "Machine.h", start = 38, end = 39, render = { kind = "full" } },
+  { path = "Machine.h", start = 41, end = 41, render = { kind = "full" } },
+  { path = "Machine.h", start = 42, end = 42, render = { kind = "full" } },
+  { path = "Machine.h", start = 43, end = 43, render = { kind = "full" } },
+  { path = "Machine.h", start = 44, end = 44, render = { kind = "full" } },
+  { path = "Machine.h", start = 46, end = 46, render = { kind = "full" } },
+  { path = "Machine.h", start = 48, end = 48, render = { kind = "full" } },
+  { path = "Machine.h", start = 49, end = 49, render = { kind = "full" } },
+  { path = "Machine.h", start = 50, end = 50, render = { kind = "full" } },
+  { path = "Machine.h", start = 51, end = 51, render = { kind = "full" } },
+  { path = "Machine.h", start = 53, end = 53, render = { kind = "full" } },
+  { path = "Machine.h", start = 55, end = 55, render = { kind = "full" } },
+  { path = "Machine.h", start = 56, end = 56, render = { kind = "full" } },
+  { path = "Machine.h", start = 57, end = 57, render = { kind = "full" } },
+  { path = "Machine.h", start = 59, end = 59, render = { kind = "full" } },
+  { path = "Machine.h", start = 60, end = 60, render = { kind = "full" } },
+  { path = "Machine.h", start = 62, end = 62, render = { kind = "full" } },
+  { path = "Machine.h", start = 63, end = 63, render = { kind = "full" } },
+  { path = "Machine.h", start = 64, end = 64, render = { kind = "full" } },
+  { path = "Machine.h", start = 65, end = 65, render = { kind = "full" } },
+  { path = "Machine.h", start = 67, end = 67, render = { kind = "full" } },
+  { path = "Machine.h", start = 69, end = 69, render = { kind = "full" } },
+  { path = "Machine.h", start = 70, end = 70, render = { kind = "full" } },
+  { path = "Machine.h", start = 71, end = 71, render = { kind = "full" } },
+  { path = "Machine.h", start = 72, end = 72, render = { kind = "full" } },
+  { path = "Machine.h", start = 73, end = 73, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "darwin/, solaris/, unsupported/ ports (complete)"
-justification = "Remaining static platform ports, including darwin's extra PlatformHelpers and the fallback 'unsupported' port used by the CI --host=*-none build."
-
+descriptor = "Panel.h: HandlerResult flags and the PanelClass event vtable"
+justification = "The event protocol every widget speaks: the HandlerResult bitset (HANDLED, IGNORED, BREAK_LOOP, REFRESH, REDRAW, RESCAN, RESIZE, SYNTH_KEY) that handlers return, and PanelClass's three slots eventHandler/drawFunctionBar/printHeader. The synthetic mouse-event encodings sit between them at Panel.h:34-43."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "darwin"
-entries = ["DarwinMachine.c", "DarwinMachine.h", "DarwinProcess.c", "DarwinProcess.h", "DarwinProcessTable.c", "DarwinProcessTable.h", "Platform.c", "Platform.h", "PlatformHelpers.c", "PlatformHelpers.h", "ProcessField.h"]
-
-[[batches.content.groups]]
-parent = "solaris"
-entries = ["Platform.c", "Platform.h", "ProcessField.h", "SolarisMachine.c", "SolarisMachine.h", "SolarisProcess.c", "SolarisProcess.h", "SolarisProcessTable.c", "SolarisProcessTable.h"]
-
-[[batches.content.groups]]
-parent = "unsupported"
-entries = ["Platform.c", "Platform.h", "ProcessField.h", "UnsupportedMachine.c", "UnsupportedMachine.h", "UnsupportedProcess.c", "UnsupportedProcess.h", "UnsupportedProcessTable.c", "UnsupportedProcessTable.h"]
+kind = "lines"
+spans = [
+  { path = "Panel.h", start = 23, end = 32, render = { kind = "full" } },
+  { path = "Panel.h", start = 45, end = 54, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "pcp/ platform sources (complete)"
-justification = "The Performance Co-Pilot port: Metric API wrappers, InDom/Instance tables, and the PCPDynamic{Column,Meter,Screen} loaders that implement runtime-configurable columns/meters/screens."
-
+descriptor = "Panel.h: the Panel struct (geometry, selection, scrolling, function bar)"
+justification = "Concrete widget state - x/y/w/h, cursorX/cursorY, the items Vector, selected/oldSelected/prevSelected, selectedLen, eventHandlerState, scrollV/scrollH, needsRedraw, cursorOn, wasFocus, allowExcessScrollV, lastMouseBarClickX, currentBar/defaultBar, the header RichString and selectionColorId - plus the KEY_MOUSE_BAR_CLICK synthetic key. Panel.h is 149 lines, so its function list is one cheap read away from here."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pcp"
-entries = ["InDomTable.c", "InDomTable.h", "Instance.c", "Instance.h", "Metric.c", "Metric.h", "PCPDynamicColumn.c", "PCPDynamicColumn.h", "PCPDynamicMeter.c", "PCPDynamicMeter.h", "PCPDynamicScreen.c", "PCPDynamicScreen.h", "PCPMachine.c", "PCPMachine.h", "PCPProcess.c", "PCPProcess.h", "PCPProcessTable.c", "PCPProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h", "columns", "meters", "screens"]
+kind = "lines"
+spans = [
+  { path = "Panel.h", start = 64, end = 85, render = { kind = "full" } },
+  { path = "Panel.h", start = 91, end = 93, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.9"
-descriptor = "pcp dynamic config catalogs (complete)"
-justification = "Shipped pcp-htop configuration files: 11 column, 10 meter, and 9 screen definitions. These are the working examples of the pcp-htop(5) ini format."
-
+descriptor = "Meter.h: MeterClass - the full definition record of a meter"
+justification = "The full recipe for a new meter: init/done/updateMode/updateValues/draw/getCaption/getUiName slots, defaultMode and the supportedModes bitset, total, attributes, the name/uiName/caption/description strings that appear in the setup menu and header, maxItems, isMultiColumn, and isPercentChart (its explanatory comment is at Meter.h:79-82). Batch 5.5 points at Platform_meterTypes[], the registry of concrete meter classes a platform offers."
 [batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pcp/columns"
-entries = ["container", "delayacct", "fdcount", "gpu_memory", "guest", "memory", "sched", "swap", "tcp", "udp", "wchan"]
-
-[[batches.content.groups]]
-parent = "pcp/meters"
-entries = ["entropy", "freespace", "gpu", "ipc", "locks", "memcache", "mysql", "postfix", "redis", "tcp"]
-
-[[batches.content.groups]]
-parent = "pcp/screens"
-entries = ["biosnoop", "cgroups", "cgroupsio", "cgroupsmem", "devices", "execsnoop", "exitsnoop", "filesystems", "opensnoop"]
+kind = "lines"
+spans = [
+  { path = "Meter.h", start = 59, end = 78, render = { kind = "full" } },
+  { path = "Meter.h", start = 79, end = 79, render = { kind = "ellipsis" } },
+  { path = "Meter.h", start = 83, end = 84, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.10"
-descriptor = "Support dirs: generic/, zfs/, docs/, scripts/, iwyu/, m4/, .github/"
-justification = "Cross-platform helpers, ZFS ARC meters, project docs, valgrind and IWYU tooling, and the complete GitHub CI workflow set."
-
+descriptor = "Process.h: every field of the Process struct, declarations only"
+justification = "The central per-process record with all field declarations and no comment lines, so the complete set is closed cheaply: pgrp, session, tpgid, isKernelThread, isUserlandThread, isRunningInContainer, tty_nr/tty_name, st_uid, user, elevated_priv, time, cmdline plus its basename offsets, procComm/procExe/procCwd, procExeDeleted, usesDeletedLib, processor, percent_cpu, percent_mem, priority, nice, nlwp, starttime, m_virt, m_resident, minflt, majflt, state, scheduling_policy, mergedCommand. Gaps in the line numbers are the elided per-field comments."
 [batches.content]
-kind = "fs"
+kind = "lines"
+spans = [
+  { path = "Process.h", start = 81, end = 81, render = { kind = "full" } },
+  { path = "Process.h", start = 83, end = 83, render = { kind = "full" } },
+  { path = "Process.h", start = 86, end = 86, render = { kind = "full" } },
+  { path = "Process.h", start = 89, end = 89, render = { kind = "full" } },
+  { path = "Process.h", start = 92, end = 92, render = { kind = "full" } },
+  { path = "Process.h", start = 95, end = 95, render = { kind = "full" } },
+  { path = "Process.h", start = 98, end = 98, render = { kind = "full" } },
+  { path = "Process.h", start = 101, end = 101, render = { kind = "full" } },
+  { path = "Process.h", start = 104, end = 104, render = { kind = "full" } },
+  { path = "Process.h", start = 107, end = 107, render = { kind = "full" } },
+  { path = "Process.h", start = 110, end = 110, render = { kind = "full" } },
+  { path = "Process.h", start = 113, end = 113, render = { kind = "full" } },
+  { path = "Process.h", start = 120, end = 120, render = { kind = "full" } },
+  { path = "Process.h", start = 123, end = 123, render = { kind = "full" } },
+  { path = "Process.h", start = 129, end = 129, render = { kind = "full" } },
+  { path = "Process.h", start = 132, end = 132, render = { kind = "full" } },
+  { path = "Process.h", start = 135, end = 135, render = { kind = "full" } },
+  { path = "Process.h", start = 138, end = 138, render = { kind = "full" } },
+  { path = "Process.h", start = 141, end = 141, render = { kind = "full" } },
+  { path = "Process.h", start = 144, end = 144, render = { kind = "full" } },
+  { path = "Process.h", start = 147, end = 147, render = { kind = "full" } },
+  { path = "Process.h", start = 150, end = 150, render = { kind = "full" } },
+  { path = "Process.h", start = 153, end = 153, render = { kind = "full" } },
+  { path = "Process.h", start = 156, end = 156, render = { kind = "full" } },
+  { path = "Process.h", start = 159, end = 159, render = { kind = "full" } },
+  { path = "Process.h", start = 162, end = 162, render = { kind = "full" } },
+  { path = "Process.h", start = 165, end = 165, render = { kind = "full" } },
+  { path = "Process.h", start = 168, end = 168, render = { kind = "full" } },
+  { path = "Process.h", start = 171, end = 171, render = { kind = "full" } },
+  { path = "Process.h", start = 174, end = 174, render = { kind = "full" } },
+  { path = "Process.h", start = 177, end = 177, render = { kind = "full" } },
+  { path = "Process.h", start = 180, end = 180, render = { kind = "full" } },
+  { path = "Process.h", start = 183, end = 183, render = { kind = "full" } },
+  { path = "Process.h", start = 186, end = 186, render = { kind = "full" } },
+  { path = "Process.h", start = 189, end = 189, render = { kind = "full" } },
+  { path = "Process.h", start = 192, end = 192, render = { kind = "full" } },
+  { path = "Process.h", start = 195, end = 195, render = { kind = "full" } },
+  { path = "Process.h", start = 200, end = 200, render = { kind = "full" } },
+  { path = "Process.h", start = 201, end = 201, render = { kind = "full" } },
+]
 
-[[batches.content.groups]]
-parent = "generic"
-entries = ["Demangle.c", "Demangle.h", "ProvideDemangle.h", "UnwindPtrace.c", "UnwindPtrace.h", "fdstat_sysctl.c", "fdstat_sysctl.h", "gettime.c", "gettime.h", "hostname.c", "hostname.h", "openzfs_sysctl.c", "openzfs_sysctl.h", "uname.c", "uname.h"]
+[[batches]]
+id = "2.11"
+descriptor = "Process.h: the shared ProcessState enum"
+justification = "The platform-independent process states (UNKNOWN, RUNNABLE, RUNNING, QUEUED, WAITING, UNINTERRUPTIBLE_WAIT, BLOCKED, PAGING, STOPPED, TRACED, ZOMBIE, DEFUNCT, IDLE, SLEEPING) with the warning that their order is significant and the pointer to processStateChar for the letter shown in the STATE column. The Tristate type used by isRunningInContainer and elevated_priv is just above at Process.h:31-35."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Process.h", start = 38, end = 56, render = { kind = "full" } },
+]
 
-[[batches.content.groups]]
-parent = "zfs"
-entries = ["ZfsArcMeter.c", "ZfsArcMeter.h", "ZfsArcStats.h", "ZfsCompressedArcMeter.c", "ZfsCompressedArcMeter.h"]
+[[batches]]
+id = "2.12"
+descriptor = "Process.h: ProcessFieldData, the per-column metadata record"
+justification = "Every displayable column is described by this struct; declaration lines only, with the explanatory comments elided at the gaps: name, title, description, flags, pidColumn, defaultSortDesc, autoWidth, autoTitleRightAlign. This is the record a platform fills in for a new column."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Process.h", start = 203, end = 205, render = { kind = "full" } },
+  { path = "Process.h", start = 208, end = 208, render = { kind = "full" } },
+  { path = "Process.h", start = 211, end = 211, render = { kind = "full" } },
+  { path = "Process.h", start = 214, end = 214, render = { kind = "full" } },
+  { path = "Process.h", start = 217, end = 217, render = { kind = "full" } },
+  { path = "Process.h", start = 220, end = 220, render = { kind = "full" } },
+  { path = "Process.h", start = 223, end = 223, render = { kind = "full" } },
+  { path = "Process.h", start = 226, end = 227, render = { kind = "full" } },
+]
 
-[[batches.content.groups]]
-parent = "docs"
-entries = ["ai-contributions-policy.md", "images", "styleguide.md", "understanding-htop-versions.md"]
+[[batches]]
+id = "2.13"
+descriptor = "Process.h: ProcessClass, the Process_fields table and the platform-implemented entry points"
+justification = "LAST_PROCESSFIELD and the ProcessField typedef pointing at RowField.h, the four functions implemented in platform-specific code (Process_writeField, Process_compare, Process_compareByParent, Process_delete), and the extern Process_fields[] table that --sort-key=help iterates. The trailing ellipsis marks ProcessClass with its compareByKey slot, declared just below at Process.h:244-247."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Process.h", start = 229, end = 239, render = { kind = "full" } },
+  { path = "Process.h", start = 241, end = 241, render = { kind = "ellipsis" } },
+]
 
-[[batches.content.groups]]
-parent = "docs/images"
-entries = ["screenshot.png"]
+[[batches]]
+id = "2.14"
+descriptor = "Settings.h: the Settings struct, part 1 (files, dynamic registries, screens, colour, delay)"
+justification = "The in-memory form of ~/.config/htop/htoprc: filename/initialFilename, writeConfig, config_version, hLayout and hColumns, the three runtime-discovered dynamic registries (columns, meters, screens), the screens array with nScreens/ssIndex/ss, colorScheme and delay - plus DEFAULT_DELAY and CONFIG_READER_MIN_VERSION. The ellipsis at line 77 marks the long run of boolean toggles that follows (Settings.h:77-117), each mirrored by an htoprc key."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Settings.h", start = 21, end = 23, render = { kind = "full" } },
+  { path = "Settings.h", start = 58, end = 76, render = { kind = "full" } },
+  { path = "Settings.h", start = 77, end = 77, render = { kind = "ellipsis" } },
+]
 
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["htop_suppressions.valgrind", "run_valgrind.sh"]
-
-[[batches.content.groups]]
-parent = "iwyu"
-entries = ["htop.imp", "run_iwyu.sh"]
-
-[[batches.content.groups]]
-parent = "m4"
-entries = ["ax_check_compile_flag.m4"]
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["build_release.yml", "ci.yml", "codeql-analysis.yml", "coverity.yml", "htoprc"]
+[[batches]]
+id = "2.15"
+descriptor = "Settings.h: the ScreenSettings record behind each screen tab"
+justification = "The per-screen (tab) configuration record: heading versus dynamic name, its Table, the fields array, flags, direction/treeDirection, sortKey/treeSortKey, treeView, treeViewAlwaysByPID, allBranchesCollapsed and the 0=off/1=soft/2=hard stableTreeView; ScreenDefaults - the name/columns/sortKey/treeSortKey defaults a platform declares - and MeterColumnSetting sit just above at Settings.h:29-40. Directly explains the 'screen:NAME=' blocks in htoprc."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Settings.h", start = 42, end = 56, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "Runtime CLI flags: the long_opts table"
-justification = "Every runtime option with its argument arity, incl. the --no-color/--no-colour alias pair, numeric-id options (readonly=128, no-meters=129, no-function-bar=130), and the PLATFORM_LONG_OPTIONS splice. Flag descriptions live in the man COMMAND-LINE OPTIONS section mapped at 1.4."
-
+descriptor = "Action_setBindings, part 1: punctuation and uppercase key bindings"
+justification = "The authoritative keymap, which no prose in the repo states: Action.c:969 maps every key to its handler. Part 1 covers space (tag), '#' (hide meters), '*'/'+'/'-'/'=' (expand/collapse), ','/'.'/'<'/'>' (sort column), '/' (search), '?' (help), C/S (setup), F (follow), H (userland threads), I (invert sort), K (kernel threads), M/N/P/T (sort by memory/PID/CPU/time), O (container), U (untag all)."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 154
-end = 176
-render = { kind = "full" }
+spans = [
+  { path = "Action.c", start = 969, end = 993, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "htoprc sample 1/2: header and global toggles"
-justification = ".github/workflows/htoprc is a real, complete config file - cheaper evidence of the format than the parser. This half: htop_version/config_reader_min_version header, the numeric fields= list, and every boolean/int display toggle key."
-
+descriptor = "Action_setBindings, part 2: control characters and lowercase keys"
+justification = "Continues the map with the conditional Y (scheduling policy, SCHEDULER_SUPPORT), Z (pause), '[' / ']' (priority), Ctrl+L (redraw), backspace (collapse into parent), '\\' (filter), a (affinity), the HAVE_BACKTRACE_SCREEN-conditional b, c (tag children), e (environment), h (help), k (kill), l (lsof), m (merged command), p (program path), q (quit), s (strace), t (tree), u (filter by user), w (command screen), x (locks)."
+predecessor = "3.1"
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 3
-end = 27
-render = { kind = "full" }
+spans = [
+  { path = "Action.c", start = 994, end = 1019, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "htoprc sample 2/2: layout, meters, screens"
-justification = "header_layout, the two column_meters lists (doubling as a meter-name roster: CPU splits, Zram, ZFSARC, PSI, DiskIO, NetworkIO...), sort keys, and the screen:NAME=COLUMNS syntax. Per-screen .option bodies elided behind ellipsis markers; the extra screen:I/O and screen:Dump headers are truncated to prove more screens exist."
-
+descriptor = "Action_setBindings, part 3: function keys, mouse and screen-tab keys"
+justification = "Closes the keymap: F1-F10 (help, setup, search, filter, tree, sort, +nice, -nice, kill, quit), shifted F6 (KEY_F(18)), KEY_RECLICK, Shift-Tab and Tab for screen tabs. With 3.1 and 3.2 every binding in htop is now visible, so an agent will not conclude a key is unbound."
+predecessor = "3.2"
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 28
-end = 48
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 49
-end = 49
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 56
-end = 56
-render = { kind = "truncated", pattern = "^screen:[^=]+" }
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 57
-end = 57
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 64
-end = 64
-render = { kind = "truncated", pattern = "^screen:[^=]+" }
-
-[[batches.content.spans]]
-path = ".github/workflows/htoprc"
-start = 65
-end = 65
-render = { kind = "ellipsis" }
+spans = [
+  { path = "Action.c", start = 1020, end = 1034, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "Config resolution: overwrite-on-exit, fallbacks, $HTOPRC"
-justification = "AGENTS.md gives only the default path. This adds the rest: the file is rewritten on clean exit (don't hand-edit), sysconfdir then hard-coded fallbacks, and the $HTOPRC override."
-
+descriptor = "Action.h: the Htop_Reaction flag set every action handler returns"
+justification = "The vocabulary of the input loop: HTOP_OK, REFRESH, RECALCULATE (implies REFRESH), SAVE_SETTINGS, KEEP_FOLLOWING, QUIT, REDRAW_BAR, UPDATE_PANELHDR and RESIZE, with the composed bit patterns spelled out. Needed to write or modify any action function found via 3.1-3.3."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "htop.1.in"
-start = 663
-end = 674
-render = { kind = "full" }
+spans = [
+  { path = "Action.h", start = 21, end = 30, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "pcp-htop dynamic config: real meter and column samples"
-justification = "One meter ([redisclient]: type/caption + metric.color/label properties) and one column ([vmdata]: heading/width/metric) from the shipped catalogs - concrete instances of the pcp-htop(5) format for extending pcp-htop without C code."
-
+descriptor = "Action.h: the State struct every action handler receives"
+justification = "Everything a handler can touch: host Machine, mainPanel, header, the failedUpdate diagnostic string, pauseUpdate, hideSelection and hideMeters. The State_hideFunctionBar helper and the Action_* exports (pickFromVector, setUserOnly, setSortKey, setScreenTab, follow, setBindings) occupy the remaining 20 lines of this 64-line header."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "pcp/meters/redis"
-start = 19
-end = 28
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "pcp/columns/memory"
-start = 5
-end = 9
-render = { kind = "full" }
+spans = [
+  { path = "Action.h", start = 33, end = 42, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "CommandLine.c structure: parse and run entry points"
-justification = "Locations of the help printer, the CommandLineSettings staging struct, tree-mode parsing, and CommandLine_run itself - where any flag-behavior change lands."
-
+descriptor = "A real htoprc: the config file format, meter vocabulary and screen definitions"
+justification = "The repository ships a working config at .github/workflows/htoprc - cheaper and more concrete evidence of the format than the parser. Shows the self-rewriting warning header, htop_version/config_reader_min_version, the numeric fields= list, then header_layout plus the column_meters_N / column_meter_modes_N pairs that name every configured meter (LeftCPUs4, ZFSARC, SELinux, PressureStall*, DiskIO, NetworkIO ...) and the screen:NAME= blocks (Main and I/O shown, a third at line 64) with their .sort_key/.tree_sort_key sub-keys. Ellipses mark the elided toggle and legacy-compatibility runs, whose names are already in Settings.h."
 [batches.content]
 kind = "lines"
+spans = [
+  { path = ".github/workflows/htoprc", start = 1, end = 5, render = { kind = "full" } },
+  { path = ".github/workflows/htoprc", start = 6, end = 6, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/htoprc", start = 34, end = 40, render = { kind = "full" } },
+  { path = ".github/workflows/htoprc", start = 41, end = 41, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/htoprc", start = 48, end = 49, render = { kind = "full" } },
+  { path = ".github/workflows/htoprc", start = 50, end = 50, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/htoprc", start = 56, end = 56, render = { kind = "full" } },
+  { path = ".github/workflows/htoprc", start = 57, end = 57, render = { kind = "ellipsis" } },
+]
 
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 49
-end = 49
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
+[[batches]]
+id = "3.7"
+descriptor = "RowField.h: the reserved column ids that htoprc and --sort-key speak"
+justification = "The ReservedFields enum with its explicit numbering (PID=1 ... CWD=126) is what the numeric fields= and sort_key= entries in htoprc mean, and it shows the PLATFORM_PROCESS_FIELDS splice point where each platform's ProcessField.h adds its own ids, LAST_RESERVED_FIELD, and the ROW_DYNAMIC_FIELDS base for runtime-discovered columns."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "RowField.h", start = 10, end = 10, render = { kind = "full" } },
+  { path = "RowField.h", start = 13, end = 54, render = { kind = "full" } },
+]
 
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 53
-end = 53
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
+[[batches]]
+id = "3.8"
+descriptor = "MeterMode.h in full: the four meter display modes"
+justification = "BAR=1, TEXT, GRAPH, LED with mode 0 reserved and LAST_METERMODE. These are the integers in the column_meter_modes_N config lines; the MeterModeId typedef and the METERMODE_DEFAULT_SUPPORTED bitset that MeterClass.supportedModes uses follow at MeterMode.h:21-27."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "MeterMode.h", start = 11, end = 19, render = { kind = "full" } },
+]
 
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 83
-end = 83
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 104
-end = 104
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "CommandLine.c"
-start = 384
-end = 384
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
+[[batches]]
+id = "3.9"
+descriptor = "CRT.h: the colour schemes selectable by color_scheme / -C"
+justification = "The ColorScheme enum - default, monochrome, black-on-white, light terminal, midnight, black night, broken gray, nord - which is the value space of the color_scheme setting and the F2 Colors panel. The much larger ColorElements enum that these schemes index starts at CRT.h:44 and ends at LAST_COLORELEMENT on CRT.h:161."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "CRT.h", start = 32, end = 42, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "Object.h: base vtable, Class()/AllocThis, ObjectClass"
-justification = "The root of the OOP-in-C system: method typedefs, the Class() and AllocThis() macros every subclass instantiation uses, the ObjectClass extends-chain struct, and the Arg union actions receive. Dispatch wrapper macros (lines 25-31) elided."
-
+descriptor = "Makefile.am: what gets built, and the per-platform conditional blocks"
+justification = "The build's shape in two cheap pieces: the head showing that HTOP_PCP switches bin_PROGRAMS between htop (htop.c) and pcp-htop (pcp-htop.c) and that htop.1 is the installed man page, plus the myhtopsources/myhtopheaders list heads (lines 30 and 95) and one line per Automake conditional (HAVE_BACKTRACE_SCREEN, HAVE_DEMANGLING, HAVE_DELAYACCT and the nine HTOP_<PLATFORM> blocks), so an agent adding a source file knows exactly which list to extend and where each platform's file lists start."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "Object.h"
-start = 18
-end = 24
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Object.h"
-start = 25
-end = 25
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Object.h"
-start = 33
-end = 46
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Object.h"
-start = 48
-end = 55
-render = { kind = "full" }
+spans = [
+  { path = "Makefile.am", start = 1, end = 7, render = { kind = "full" } },
+  { path = "Makefile.am", start = 9, end = 9, render = { kind = "full" } },
+  { path = "Makefile.am", start = 30, end = 30, render = { kind = "full" } },
+  { path = "Makefile.am", start = 95, end = 95, render = { kind = "full" } },
+  { path = "Makefile.am", start = 169, end = 169, render = { kind = "full" } },
+  { path = "Makefile.am", start = 178, end = 178, render = { kind = "full" } },
+  { path = "Makefile.am", start = 237, end = 237, render = { kind = "full" } },
+  { path = "Makefile.am", start = 242, end = 242, render = { kind = "full" } },
+  { path = "Makefile.am", start = 279, end = 279, render = { kind = "full" } },
+  { path = "Makefile.am", start = 308, end = 308, render = { kind = "full" } },
+  { path = "Makefile.am", start = 337, end = 337, render = { kind = "full" } },
+  { path = "Makefile.am", start = 364, end = 364, render = { kind = "full" } },
+  { path = "Makefile.am", start = 403, end = 403, render = { kind = "full" } },
+  { path = "Makefile.am", start = 436, end = 436, render = { kind = "full" } },
+  { path = "Makefile.am", start = 481, end = 481, render = { kind = "full" } },
+  { path = "Makefile.am", start = 505, end = 505, render = { kind = "full" } },
+  { path = "Makefile.am", start = 512, end = 512, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "Row.h: Row struct head and tree/lifecycle state"
-justification = "The base entity of the lower table: super Object, host pointer, id/group/parent ids, then (past the elided display booleans: tag/show/wasShown/showChildren/updated) the tree-mode indent state and the seen/tomb stamps driving new/exited highlighting."
-
+descriptor = "configure.ac: the complete list of build options"
+justification = "Every AC_ARG_ENABLE / AC_ARG_WITH option name in configure.ac, one line each: static, pcp, unicode, curses, affinity, backtrace, libunwind, demangling, hwloc, config, proc, openvz, vserver, ancient_vserver, capabilities, delayacct, sensors, werror, debug. The AGENTS.md prose names only six of these, so this closes the class - and each line number sits directly above the AS_HELP_STRING that documents that option. AC_INIT shows the package version and homepage."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "Row.h"
-start = 37
-end = 49
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Row.h"
-start = 50
-end = 50
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Row.h"
-start = 66
-end = 77
-render = { kind = "full" }
+spans = [
+  { path = "configure.ac", start = 10, end = 10, render = { kind = "full" } },
+  { path = "configure.ac", start = 17, end = 17, render = { kind = "full" } },
+  { path = "configure.ac", start = 112, end = 112, render = { kind = "full" } },
+  { path = "configure.ac", start = 140, end = 140, render = { kind = "full" } },
+  { path = "configure.ac", start = 491, end = 491, render = { kind = "full" } },
+  { path = "configure.ac", start = 509, end = 509, render = { kind = "full" } },
+  { path = "configure.ac", start = 891, end = 891, render = { kind = "full" } },
+  { path = "configure.ac", start = 991, end = 991, render = { kind = "full" } },
+  { path = "configure.ac", start = 1013, end = 1013, render = { kind = "full" } },
+  { path = "configure.ac", start = 1311, end = 1311, render = { kind = "full" } },
+  { path = "configure.ac", start = 1444, end = 1444, render = { kind = "full" } },
+  { path = "configure.ac", start = 1474, end = 1474, render = { kind = "full" } },
+  { path = "configure.ac", start = 1498, end = 1498, render = { kind = "full" } },
+  { path = "configure.ac", start = 1513, end = 1513, render = { kind = "full" } },
+  { path = "configure.ac", start = 1527, end = 1527, render = { kind = "full" } },
+  { path = "configure.ac", start = 1541, end = 1541, render = { kind = "full" } },
+  { path = "configure.ac", start = 1559, end = 1559, render = { kind = "full" } },
+  { path = "configure.ac", start = 1613, end = 1613, render = { kind = "full" } },
+  { path = "configure.ac", start = 1693, end = 1693, render = { kind = "full" } },
+  { path = "configure.ac", start = 1780, end = 1780, render = { kind = "full" } },
+  { path = "configure.ac", start = 1793, end = 1793, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "Row.h: RowClass vtable"
-justification = "The per-row virtual methods (writeField, isHighlighted, isVisible, matchesFilter, sortKeyString, compareByParent) - what a new row type must implement or inherit."
-
+descriptor = "CI: every job in the GitHub Actions build matrix"
+justification = "The job names of .github/workflows/ci.yml - minimal and full-featured gcc/clang Ubuntu builds, static, pcp, unsupported, clang analyzer and sanitizer, macOS, DragonFly/FreeBSD/NetBSD/OpenBSD/Solaris VMs, plus lint-whitespace and lint-pcp-config. Tells an agent which platforms a change must not break and that the pcp config files are lint-gated; each line number opens that job's configure flags."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "Row.h"
-start = 79
-end = 97
-render = { kind = "full" }
+spans = [
+  { path = ".github/workflows/ci.yml", start = 11, end = 11, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 33, end = 33, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 57, end = 57, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 78, end = 78, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 102, end = 102, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 123, end = 123, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 139, end = 139, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 155, end = 155, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 177, end = 177, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 215, end = 215, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 232, end = 232, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 254, end = 254, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 277, end = 277, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 298, end = 298, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 323, end = 323, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 358, end = 358, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 379, end = 379, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 386, end = 386, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "Process.h: Process struct head and tail"
-justification = "Process extends Row: pgrp/session/tpgid, kernel/userland-thread flags, container tristate. Middle fields (tty, uid, cmdline/comm/exe, cpu/mem percentages, faults) elided; tail shows state, scheduling_policy, and the merged-command cache."
-
+descriptor = "How htop is tested: TESTPLAN and the lua/rote UI harness"
+justification = "There is no unit-test suite; testing is a manual TESTPLAN checklist plus test_spec.lua, which drives a real htop inside a pseudo-terminal. These lines show the harness bootstrap - make coverage, the temporary test.htoprc, rt:forkPty running ./htop under a fixed HTOPRC - and the head of the TESTPLAN with its inline *** FAILING annotations."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 81
-end = 101
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 102
-end = 102
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 191
-end = 201
-render = { kind = "full" }
+spans = [
+  { path = "TESTPLAN", start = 2, end = 8, render = { kind = "full" } },
+  { path = "test_spec.lua", start = 28, end = 28, render = { kind = "full" } },
+  { path = "test_spec.lua", start = 35, end = 36, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "Process.h: ProcessFieldData and the platform contract"
-justification = "ProcessFieldData's name/title/description head (autoWidth and sort-order flags elided) plus lines 229-237: exactly which functions and the Process_fields table every platform must implement - the checklist for adding a process column."
-
+descriptor = "Auxiliary directory listings: docs, scripts, iwyu, m4, workflows"
+justification = "Closes the non-source directories: docs/ (ai-contributions-policy.md, styleguide.md, understanding-htop-versions.md, images/), scripts/ (valgrind runner and suppressions), iwyu/ (include-what-you-use mapping and runner), m4/, and .github/ with its workflow files - including the htoprc fixture used by CI that batch 3.6 renders."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 203
-end = 212
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 213
-end = 213
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 229
-end = 237
-render = { kind = "full" }
-
-[[batches]]
-id = "4.6"
-descriptor = "Machine.h: the quasi-global host state struct"
-justification = "Machine carries settings, sample clocks, memory/swap totals, CPU counts, users table, and the Table registry (tables/activeTable/processTable) that screens display. hwloc-conditional topology fields elided."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Machine.h"
-start = 38
-end = 46
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Machine.h"
-start = 48
-end = 48
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Machine.h"
-start = 53
-end = 73
-render = { kind = "full" }
-
-[[batches]]
-id = "4.7"
-descriptor = "Table.h: Table struct and scan vtable"
-justification = "rows vs displayList vs hashtable lookup, incFilter/following/stable-view state, and the TableClass prepare/iterate/cleanup scan cycle hooks."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Table.h"
-start = 24
-end = 41
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Table.h"
-start = 48
-end = 53
-render = { kind = "full" }
-
-[[batches]]
-id = "4.8"
-descriptor = "ProcessTable.h: process container and platform seam"
-justification = "ProcessTable adds task counters and pidMatchList; ProcessTable_new/delete/goThroughEntries are implemented by each platform - the seam where per-OS process scanning plugs in."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ProcessTable.h"
-start = 20
-end = 36
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "scripts", entries = "all" },
+  { parent = "iwyu", entries = "all" },
+  { parent = "m4", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "Panel.h: HandlerResult flags and PanelClass"
-justification = "Event-handler return flags (HANDLED/BREAK_LOOP/REFRESH/REDRAW/RESCAN/RESIZE/SYNTH_KEY) that drive ScreenManager_run, and the PanelClass vtable every panel subtype fills."
-
+descriptor = "linux/: the complete Linux platform back-end"
+justification = "The largest platform directory and the default build target. Beyond the four files every platform provides, it holds the Linux-only meters and helpers: CGroupUtils, Compat, GPU, HugePageMeter, IOPriority and IOPriorityPanel, LibNl, LibSensors, OpenRCMeter, PressureStallMeter, SELinuxMeter, SystemdMeter, ZramMeter/ZramStats, ZswapStats. Nothing else in the snapshot reveals that these exist."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Panel.h"
-start = 23
-end = 32
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Panel.h"
-start = 45
-end = 54
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "linux", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "Meter.h: the MeterClass contract"
-justification = "The full checklist for adding a meter: init/done/updateMode/updateValues/draw hooks, defaultMode, supportedModes bitset, maxItems, name/uiName/caption, and the isPercentChart flag."
-
+descriptor = "darwin/, freebsd/, netbsd/ and openbsd/ contents"
+justification = "The BSD-family and macOS back-ends, listed in full so the per-platform file set is concrete: each has Platform.c/.h, <Name>Machine, <Name>Process, <Name>ProcessTable and ProcessField.h; darwin additionally has PlatformHelpers.c/.h and netbsd carries its own README.md. A port or a platform bug fix starts from this shape."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Meter.h"
-start = 59
-end = 78
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Meter.h"
-start = 83
-end = 84
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "darwin", entries = "all" },
+  { parent = "freebsd", entries = "all" },
+  { parent = "netbsd", entries = "all" },
+  { parent = "openbsd", entries = "all" },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "MeterMode.h: meter mode ids"
-justification = "Bar/text/graph/led mode ids - these are the numbers stored in htoprc column_meter_modes_N lines (see 3.3) and the values in MeterClass.defaultMode."
-
+descriptor = "dragonflybsd/, solaris/ and unsupported/ contents"
+justification = "The remaining OS back-ends. unsupported/ is the reference minimal implementation - Platform, UnsupportedMachine, UnsupportedProcess, UnsupportedProcessTable, ProcessField.h - and is the file set to copy when adding a new platform; it is also built by a dedicated CI job."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "MeterMode.h"
-start = 11
-end = 20
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "dragonflybsd", entries = "all" },
+  { parent = "solaris", entries = "all" },
+  { parent = "unsupported", entries = "all" },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "Action.h: Htop_Reaction flags and State"
-justification = "The reaction bitset action handlers return (SAVE_SETTINGS, KEEP_FOLLOWING, composite RESIZE/RECALCULATE) and the State bag passed to every handler; Action_setBindings is the key-map entry point."
-
+descriptor = "generic/ and zfs/: routines shared across platforms"
+justification = "generic/ holds the helpers several back-ends reuse (Demangle and ProvideDemangle, fdstat_sysctl, gettime, hostname, openzfs_sysctl, uname, UnwindPtrace) and zfs/ the ARC meters (ZfsArcMeter, ZfsCompressedArcMeter, ZfsArcStats.h) - the answer to 'why does the BSD code not duplicate this'."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Action.h"
-start = 21
-end = 43
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Action.h"
-start = 50
-end = 50
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Action.h"
-start = 62
-end = 62
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "generic", entries = "all" },
+  { parent = "zfs", entries = "all" },
+]
 
 [[batches]]
 id = "5.5"
-descriptor = "CRT.h: the eight color schemes"
-justification = "ColorScheme ids map 1:1 to htoprc color_scheme= values and the F2 Colors panel order (incl. the NORD theme added in 3.5.0) - the anchor for any theming query."
-
+descriptor = "linux/Platform.h: the symbols every platform must provide"
+justification = "The platform contract made concrete: the data tables Platform_defaultScreens, Platform_signals, Platform_memoryClasses and Platform_meterTypes (with their count variables) - Platform_meterTypes[] is the registry listing every meter class the platform offers, defined at linux/Platform.c:230 - plus Platform_init/done; the ~30 remaining hooks (setBindings, getUptime, getLoadAverage, getMaxPid, the setCPU/GPU/Memory/Swap/Zram/ZfsArc value setters, the dynamic-meter/column/screen stubs) run to the end of this 165-line header."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "CRT.h"
-start = 32
-end = 42
-render = { kind = "full" }
+spans = [
+  { path = "linux/Platform.h", start = 42, end = 57, render = { kind = "full" } },
+  { path = "linux/Platform.h", start = 59, end = 59, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
-id = "6.1"
-descriptor = "Settings.h: ScreenSettings (per-screen persisted state)"
-justification = "What each screen tab saves to htoprc: fields, sort/tree keys and directions, treeView flags, and the stableTreeView tristate (the -t/--tree classic|soft|hard modes)."
-
+id = "5.6"
+descriptor = "pcp/: the Performance Co-Pilot back-end and its dynamic definition trees"
+justification = "The pcp-htop build is a second program, not just a platform: PCPDynamicColumn/Meter/Screen, Metric, Instance, InDomTable and the usual Machine/Process/ProcessTable/Platform files, plus three directories of shipped configuration - columns/, meters/ and screens/ - whose file names are the dynamic columns, meters and screens pcp-htop offers out of the box."
 [batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Settings.h"
-start = 42
-end = 56
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "pcp", entries = "all" },
+  { parent = "pcp/columns", entries = "all" },
+  { parent = "pcp/meters", entries = "all" },
+  { parent = "pcp/screens", entries = "all" },
+]
 
 [[batches]]
-id = "6.2"
-descriptor = "Settings.h: the Settings struct"
-justification = "Global config state: filename handling, config_version, header layout, the three dynamic registries, screens array, color/delay. The long run of display booleans is elided - their names mirror the htoprc keys shown in 3.2 one-to-one."
-
+id = "5.7"
+descriptor = "A dynamic meter and a dynamic column definition, in full"
+justification = "Two complete shipped config files show the pcp dynamic-definition format that pcp-htop.5 documents: a meter section with caption/description and per-metric expression, label and suffix, and a column section with heading, caption, width, metric and description. Cheapest possible evidence of the format for anyone adding a dynamic meter or column."
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "Settings.h"
-start = 58
-end = 75
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Settings.h"
-start = 76
-end = 76
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Settings.h"
-start = 110
-end = 117
-render = { kind = "full" }
-
-[[batches]]
-id = "6.3"
-descriptor = "Code map: settings, process display, key bindings, loop"
-justification = "Line-precise pointers into the four behavior-heavy .c files: Settings read/write/new (config I/O), the Process command-line rendering pipeline, Action_setBindings (the full key table, Action.c:969-1034), Platform_meterTypes (the Linux meter registry), and ScreenManager_run (the event loop)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 120
-end = 120
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 263
-end = 263
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 310
-end = 310
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 321
-end = 321
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 651
-end = 651
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 799
-end = 799
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Settings.c"
-start = 918
-end = 918
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 183
-end = 183
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 471
-end = 471
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 573
-end = 573
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 914
-end = 914
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 943
-end = 943
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 1054
-end = 1054
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Process.c"
-start = 1079
-end = 1079
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "Action.c"
-start = 969
-end = 969
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches.content.spans]]
-path = "linux/Platform.c"
-start = 230
-end = 230
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "ScreenManager.c"
-start = 241
-end = 241
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* ]*" }
-
-[[batches]]
-id = "7.1"
-descriptor = "linux/Platform.h: the platform API function set"
-justification = "The concrete Platform_* contract (init, bindings, load average, CPU/GPU/memory/swap/zram/ZFS meter setters, process env/locks, pressure stall, IO, battery) plus the libcap-only --drop-capabilities long option; the getHostname/getRelease/getFailedState static-inline wrappers between them are elided. Other ports implement subsets of this same surface."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "linux/Platform.h"
-start = 56
-end = 95
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "linux/Platform.h"
-start = 96
-end = 96
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "linux/Platform.h"
-start = 110
-end = 111
-render = { kind = "full" }
-
-[[batches]]
-id = "7.2"
-descriptor = "RowField.h: the reserved cross-platform column ids"
-justification = "Every platform-neutral ReservedFields id with its wire number - these ids are what htoprc fields= lines (3.2) store - plus the PLATFORM_PROCESS_FIELDS splice point and the dynamic-fields rule."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "RowField.h"
-start = 13
-end = 50
-render = { kind = "full" }
-
-[[batches]]
-id = "7.3"
-descriptor = "linux/ProcessField.h: Linux column id block (head)"
-justification = "Head of the Linux-specific id list with the ellipsis marking its continuation to line 54 (IO rates, cgroups, delay percentages, PSS, autogroup, GPU, container ids)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "linux/ProcessField.h"
-start = 11
-end = 17
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "linux/ProcessField.h"
-start = 18
-end = 18
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "7.4"
-descriptor = "CPUMeter.c: a canonical MeterClass instance"
-justification = "Real-world template for MeterClass wiring (extends Class(Meter), modes, maxItems, isPercentChart, attributes, name/uiName/caption) - pairs with 5.2's contract; the meter registry to extend is Platform_meterTypes (pointer in 6.3)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "CPUMeter.c"
-start = 371
-end = 389
-render = { kind = "full" }
-
-[[batches]]
-id = "7.5"
-descriptor = "linux/LinuxProcess.c: Process_fields table head"
-justification = "Where column names/titles/descriptions come from on Linux (--sort-key names, setup-screen text). Table continues to line 115 behind the ellipsis."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "linux/LinuxProcess.c"
-start = 34
-end = 36
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "linux/LinuxProcess.c"
-start = 37
-end = 37
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "8.1"
-descriptor = "Dynamic provider structs"
-justification = "The registry record types populated from config files (pcp today): DynamicMeter's caption/type/maximum, DynamicColumn's heading/width/enabled/table, and DynamicScreen's name/heading/caption/fields/sortKey/columnKeys/direction - all three structs' fields present (DynamicScreen's first three field comments truncated for budget)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "DynamicMeter.h"
-start = 17
-end = 23
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "DynamicColumn.h"
-start = 21
-end = 29
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "DynamicScreen.h"
-start = 16
-end = 16
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "DynamicScreen.h"
-start = 17
-end = 19
-render = { kind = "truncated", pattern = "^ *[A-Za-z_][A-Za-z0-9_* \\[\\]]*;" }
-
-[[batches.content.spans]]
-path = "DynamicScreen.h"
-start = 20
-end = 24
-render = { kind = "full" }
-
-[[batches]]
-id = "9.1"
-descriptor = "CI smoke runs (sanitizer job)"
-justification = "The only automated runtime checks in CI: the clang-sanitizer job executes ./htop -h / -n 5 / -n 5 -t / -d 1 -n 50 against the sample htoprc from 3.2/3.3. ci.yml holds 16 build jobs across gcc/clang/static/pcp/macOS/BSD-VM configurations."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 206
-end = 213
-render = { kind = "full" }
-
-[[batches]]
-id = "9.2"
-descriptor = "Makefile.am developer targets"
-justification = "make profile/debug/coverage/cppcheck - build-system entry points beyond plain make that AGENTS.md doesn't list (coverage feeds the lua test suite; an lcov report recipe follows at line 543)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile.am"
-start = 518
-end = 519
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Makefile.am"
-start = 521
-end = 521
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "Makefile.am"
-start = 522
-end = 522
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "Makefile.am"
-start = 524
-end = 528
-render = { kind = "full" }
-
-[[batches]]
-id = "9.3"
-descriptor = "test_spec.lua: the interactive test list"
-justification = "htop's UI test suite (lua + rote terminal emulation, run via 'make coverage' + busted). Representative running_it cases with ellipsis markers signalling further cases between and after them (the suite runs through line 687, ending in a 62-iteration per-column loop test and a final cleanup case)."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 193
-end = 193
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 195
-end = 195
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 217
-end = 217
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 232
-end = 232
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 244
-end = 244
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 264
-end = 264
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 284
-end = 284
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 294
-end = 294
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 334
-end = 334
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 401
-end = 401
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 427
-end = 427
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 446
-end = 446
-render = { kind = "ellipsis" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 549
-end = 549
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 605
-end = 605
-render = { kind = "truncated", pattern = "^   running_it\\(\"[^\"]*" }
-
-[[batches.content.spans]]
-path = "test_spec.lua"
-start = 619
-end = 619
-render = { kind = "ellipsis" }
-
-[[batches]]
-id = "9.4"
-descriptor = "ChangeLog: 3.5.1 release notes"
-justification = "What shipped in the latest release - recency context for 'is X already fixed/added' questions. (Line 1 is owned by batch 1.1.)"
-predecessor = "1.1"
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ChangeLog"
-start = 2
-end = 7
-render = { kind = "full" }
-
-[[batches]]
-id = "9.5"
-descriptor = "configure.ac: feature flags beyond AGENTS.md's six"
-justification = "AGENTS.md names capabilities/debug/delayacct/pcp/sensors/unicode; this closes the set with the remaining AC_ARG options: static, curses backend, affinity, backtrace, libunwind, demangling, hwloc, config dir, proc dir, openvz, vserver, ancient-vserver, werror."
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 114
-end = 114
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 511
-end = 511
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 893
-end = 893
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 993
-end = 993
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1015
-end = 1015
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1313
-end = 1313
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1446
-end = 1446
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1476
-end = 1476
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1500
-end = 1500
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1515
-end = 1515
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1529
-end = 1529
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1543
-end = 1543
-render = { kind = "full" }
-
-[[batches.content.spans]]
-path = "configure.ac"
-start = 1782
-end = 1782
-render = { kind = "full" }
+spans = [
+  { path = "pcp/columns/container", start = 5, end = 10, render = { kind = "full" } },
+  { path = "pcp/meters/entropy", start = 5, end = 10, render = { kind = "full" } },
+]

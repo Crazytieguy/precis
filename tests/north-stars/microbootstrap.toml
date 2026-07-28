@@ -1,419 +1,1089 @@
 fixture = "microbootstrap"
 revision_pin = "609c420b"
 summary = """
-microbootstrap is a Python library that wires up production instruments \
-(sentry, prometheus, opentelemetry, pyroscope, logging, cors, swagger, \
-health-checks) for FastAPI, Litestar, and FastStream services (or none of \
-those, via InstrumentsSetupper), driven entirely by a pydantic-settings \
-object. The query distribution this NS serves: 'how do I enable/configure \
-instrument X for framework Y', 'why isn't Z instrument bootstrapping', \
-'how do I add a custom instrument', 'what does merge/override semantics do \
-when reconfiguring', plus routine build/test/lint workflow and debugging \
-individual instrument logic or framework-specific wiring.
+`microbootstrap` is a Python library that builds a ready-to-run micro-service
+application: you declare a pydantic-settings object, hand it to a framework
+`Bootstrapper`, and get back a Litestar / FastAPI / FastStream app with Sentry,
+OpenTelemetry, Prometheus, Pyroscope, logging, CORS, Swagger and health-check
+"instruments" already wired in — or an `InstrumentsSetupper` context manager
+for services with no web framework at all.
+
+The architecture is a small set of repeated shapes: every instrument is a
+`BaseInstrumentConfig` (a pydantic field bag) plus an `Instrument` subclass with
+`is_ready` / `bootstrap` / `bootstrap_before` / `bootstrap_after`; every
+framework bootstrapper re-registers those instruments through
+`@Bootstrapper.use_instrument()` with framework-specific overrides; and each
+settings class is a multiple-inheritance union of the instrument configs.
+
+The ranking front-loads (a) what the project is and where its files are,
+(b) the settings and instrument-config field surface — the single largest thing
+a session query is likely to be about, (c) the `Instrument` protocol and the
+`InstrumentBox` registry that make the plugin system work, (d) rosters naming
+every remaining member of the instrument package and every per-framework
+adapter class, and only then supporting modules and packaging metadata.
+
+Because the repository is roughly 3000 source lines and the budget cannot hold
+them, the ranking deliberately favours complete rosters and complete config
+classes over the bodies of individual overrides: a name plus a line number puts
+a body one grep away, whereas a missing name is not recoverable. Wherever a
+roster names a symbol whose body is not rendered anywhere, an ellipsis marker
+follows it, so the reader sees that content was withheld rather than inferring
+the symbol is a stub.
 """
 
-# ---------- Tier 1: orientation & topology ----------
+# ---------------------------------------------------------------------------
+# Tier 1 — what the project is, and the map of where everything lives.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Fixture root listing"
-justification = "Top-level shape: package dir, tests, examples, build/CI config, docs tooling. Cheapest possible breadth; goes first per growth-envelope discipline."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "README tagline: what microbootstrap is, in one sentence"
+justification = """
+Repository identity at rank 1, and nothing else — one sentence saying the
+library creates applications with the necessary instruments already set up.
+Everything later in the ranking is a refinement of this sentence, and at the
+smallest imaginable budget it is the only thing worth having.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "microbootstrap/ package listing"
-justification = "The package's own top-level modules and subpackages (bootstrappers/, config/, instruments/, middlewares/) plus the flat modules (settings.py, helpers.py, console_writer.py, exceptions.py, granian_server.py, instruments_setupper.py). Full listing so an agent doesn't assume e.g. exceptions.py doesn't exist because only settings.py got mentioned elsewhere."
-content = { kind = "fs", groups = [ { parent = "microbootstrap", entries = "all" } ] }
+descriptor = "The complete list of built-in instruments"
+justification = """
+The closed list of instruments microbootstrap sets up — sentry, prometheus,
+opentelemetry, logging, cors, swagger (with offline support) and health-checks.
+These seven names recur as file stems throughout `microbootstrap/instruments/`
+and as field prefixes throughout every settings class, so this handful of lines
+frames essentially every later batch. Listed in full because a partial list
+would let the agent conclude an unlisted instrument is unsupported.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 36, end = 36, render = { kind = "full" } },
+  { path = "README.md", start = 38, end = 44, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "microbootstrap/{bootstrappers,config}/ listings"
-justification = "Per-framework bootstrapper and app-config-dataclass subpackages — same architectural layer, so listed together to avoid implying only some frameworks are supported."
-content = { kind = "fs", groups = [
-  { parent = "microbootstrap/bootstrappers", entries = "all" },
-  { parent = "microbootstrap/config", entries = "all" },
-] }
+descriptor = "The four bootstrap targets: fastapi, litestar, faststream, or no framework"
+justification = """
+The product's second axis. Naming all four targets — including the
+\"service that doesn't use one of these frameworks\" case that
+`InstrumentsSetupper` serves — stops an agent assuming the library is
+Litestar-only, which 1.1 and 1.2 alone would allow.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 46, end = 51, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "microbootstrap/{instruments,middlewares}/ listings"
-justification = "The instrument implementations (8 modules) and the 2 logging-middleware builders. Full listing prevents an agent from assuming e.g. pyroscope_instrument.py or swagger_instrument.py doesn't exist."
-content = { kind = "fs", groups = [
-  { parent = "microbootstrap/instruments", entries = "all" },
-  { parent = "microbootstrap/middlewares", entries = "all" },
-] }
+descriptor = "Repository root listing (complete)"
+justification = """
+Cheapest possible breadth: every root entry, so the agent knows there is a
+`Justfile` and a `pyproject.toml` (not a setup.py), a vuepress `package.json`
+sitting next to the Python package, an `examples/` dir and a `tests/` dir.
+Listing all entries rather than a selection stops the agent concluding an
+unlisted root file does not exist.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.5"
-descriptor = "tests/ tree listing"
-justification = "Test tree mirrors the src tree (tests/bootstrappers/, tests/instruments/) plus top-level test modules — needed early so an agent doesn't assume e.g. test_faststream.py doesn't exist."
-content = { kind = "fs", groups = [
-  { parent = "tests", entries = "all" },
-  { parent = "tests/bootstrappers", entries = "all" },
-  { parent = "tests/instruments", entries = "all" },
-] }
+descriptor = "`microbootstrap/` and `microbootstrap/instruments/` listings (complete)"
+justification = """
+The repository's substance is the `microbootstrap/` package, so its core
+grouping comes immediately after the root listing rather than behind any
+peripheral inventory. `instruments/` is listed in the same batch because
+one-file-per-instrument is the repository's central organising idea and a
+partial view of that directory would be actively misleading about which
+instruments exist.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "microbootstrap", entries = "all" },
+  { parent = "microbootstrap/instruments", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "`bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete)"
+justification = """
+Completes the source-tree picture: the three framework adapters, the three
+application-config modules, the two logging-middleware modules and the three
+runnable example apps. With 1.5 this names every non-test Python file in the
+repository, so any of them is one targeted read away.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "microbootstrap/bootstrappers", entries = "all" },
+  { parent = "microbootstrap/config", entries = "all" },
+  { parent = "microbootstrap/middlewares", entries = "all" },
+  { parent = "examples", entries = "all" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "README: supported instruments + frameworks catalog"
-justification = "Catalogs the exact instrument set (sentry/prometheus/opentelemetry/logging/cors/swagger/health-checks) and framework targets (fastapi/litestar/faststream/frameworkless) — the two axes every other batch in this NS is organized around. Catastrophic-omission guard: names must exactly match what's implemented, not a subset."
-content = { kind = "lines", spans = [ { path = "README.md", start = 36, end = 53, render = { kind = "full" } } ] }
+descriptor = "`microbootstrap/__init__.py` — the complete `__all__` export block"
+justification = """
+The public API surface as one contiguous, already-alphabetised block: every name
+a user can `from microbootstrap import`. Complete by construction, so no
+follow-up is needed to rule a name in or out — and it reveals the naming scheme
+(`SentryConfig`, `LitestarPrometheusConfig`, `FastApiSettings`,
+`InstrumentsSetupperSettings`) that the rest of the ranking depends on.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/__init__.py", start = 26, end = 44, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "README lede + minimal usage sketch"
-justification = "What the library does in one sentence, plus the settings-object + Bootstrapper two-step pattern that everything else in the repo elaborates on."
-content = { kind = "lines", spans = [ { path = "README.md", start = 12, end = 34, render = { kind = "full" } } ] }
+descriptor = "README canonical usage snippet: settings class -> bootstrapper -> application"
+justification = """
+The whole mental model as real code: subclass `LitestarSettings`, instantiate it,
+pass it to `LitestarBootstrapper(settings).bootstrap()`. Supplies the answer to
+\"how do I use this\" with zero follow-up and grounds the import path
+`microbootstrap.bootstrappers.litestar` used throughout tier 5.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 14, end = 34, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "pyproject.toml: project identity"
-justification = "Package name and supported Python range — cheap orientation info an agent would otherwise have to open pyproject.toml itself to confirm."
-content = { kind = "lines", spans = [
-  { path = "pyproject.toml", start = 1, end = 2, render = { kind = "full" } },
-  { path = "pyproject.toml", start = 5, end = 5, render = { kind = "full" } },
-] }
+descriptor = "README section map: every `##`/`###`/`####` heading location"
+justification = """
+The README is 860 lines and is the project's real documentation (the vuepress
+site is built from it). Rendering every heading — and nothing else — turns the
+largest file in the repository into an index, so a question about Pyroscope,
+offline Swagger docs or the FastStream AsyncAPI path becomes one jump to a known
+line number. Rendered as a complete set so no section can be assumed absent.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 55, end = 55, render = { kind = "full" } },
+  { path = "README.md", start = 74, end = 74, render = { kind = "full" } },
+  { path = "README.md", start = 102, end = 102, render = { kind = "full" } },
+  { path = "README.md", start = 141, end = 141, render = { kind = "full" } },
+  { path = "README.md", start = 171, end = 171, render = { kind = "full" } },
+  { path = "README.md", start = 201, end = 201, render = { kind = "full" } },
+  { path = "README.md", start = 235, end = 235, render = { kind = "full" } },
+  { path = "README.md", start = 256, end = 256, render = { kind = "full" } },
+  { path = "README.md", start = 270, end = 270, render = { kind = "full" } },
+  { path = "README.md", start = 312, end = 312, render = { kind = "full" } },
+  { path = "README.md", start = 316, end = 316, render = { kind = "full" } },
+  { path = "README.md", start = 347, end = 347, render = { kind = "full" } },
+  { path = "README.md", start = 370, end = 370, render = { kind = "full" } },
+  { path = "README.md", start = 394, end = 394, render = { kind = "full" } },
+  { path = "README.md", start = 436, end = 436, render = { kind = "full" } },
+  { path = "README.md", start = 451, end = 451, render = { kind = "full" } },
+  { path = "README.md", start = 463, end = 463, render = { kind = "full" } },
+  { path = "README.md", start = 498, end = 498, render = { kind = "full" } },
+  { path = "README.md", start = 524, end = 524, render = { kind = "full" } },
+  { path = "README.md", start = 551, end = 551, render = { kind = "full" } },
+  { path = "README.md", start = 563, end = 563, render = { kind = "full" } },
+  { path = "README.md", start = 586, end = 586, render = { kind = "full" } },
+  { path = "README.md", start = 592, end = 592, render = { kind = "full" } },
+  { path = "README.md", start = 639, end = 639, render = { kind = "full" } },
+  { path = "README.md", start = 710, end = 710, render = { kind = "full" } },
+  { path = "README.md", start = 746, end = 746, render = { kind = "full" } },
+]
 
-# ---------- Tier 2: core abstractions ----------
+# ---------------------------------------------------------------------------
+# Tier 2 — the settings surface: what the README calls "the core".
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "instruments/base.py: BaseInstrumentConfig + Instrument fields"
-justification = "The dataclass shape every one of the 8 concrete instruments implements (instrument_config/instrument_name/ready_condition) — prerequisite for reading any single instrument module."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/base.py", start = 1, end = 33, render = { kind = "full" } } ] }
+descriptor = "`settings.py` roster: env-prefix constants and all six class names"
+justification = """
+A location batch over the whole of `microbootstrap/settings.py`: the `SettingsT`
+TypeVar and the `ENV_PREFIX_VAR_NAME` / `ENV_PREFIX` constants in full, plus a
+line for each of the six classes — `BaseServiceSettings`, `ServerConfig`,
+`LitestarSettings`, `FastApiSettings`, `FastStreamSettings`,
+`InstrumentsSetupperSettings`. Cheap, complete, and it fixes the line numbers
+that 2.2–2.4 refine.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/settings.py", start = 23, end = 25, render = { kind = "full" } },
+  { path = "microbootstrap/settings.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "microbootstrap/settings.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^class [A-Za-z]+" } },
+  { path = "microbootstrap/settings.py", start = 60, end = 60, render = { kind = "truncated", pattern = "^class [A-Za-z]+" } },
+  { path = "microbootstrap/settings.py", start = 75, end = 75, render = { kind = "truncated", pattern = "^class [A-Za-z]+" } },
+  { path = "microbootstrap/settings.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^class [A-Za-z]+" } },
+  { path = "microbootstrap/settings.py", start = 105, end = 105, render = { kind = "truncated", pattern = "^class [A-Za-z]+" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "instruments/base.py: Instrument lifecycle methods"
-justification = "is_ready/bootstrap/teardown/bootstrap_before/bootstrap_after/get_config_type — the exact abstract-vs-default-implemented split every concrete Instrument overrides a subset of."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/base.py", start = 35, end = 62, render = { kind = "full" } } ] }
+descriptor = "`BaseServiceSettings`: all five service fields and the env-sourcing `model_config`"
+predecessor = "2.1"
+justification = """
+Every settings class in the library inherits these: `service_debug`,
+`service_environment`, `service_name`, `service_description`, `service_version`,
+plus the `SettingsConfigDict` that makes them readable from `.env` and from
+`ENV_PREFIX`-prefixed environment variables with `extra=\"allow\"`, and the
+`AliasChoices` that let a bare `SERVICE_NAME` or `CI_COMMIT_TAG` work. Answers
+\"which env var sets X\" with no follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/settings.py", start = 29, end = 50, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "microbootstrap/__init__.py: imports"
-justification = "Which submodule each re-exported name actually lives in (e.g. SentryConfig comes from instruments.sentry_instrument, LitestarSettings from settings) — the map an agent needs when a public name's import path isn't obvious."
-content = { kind = "lines", spans = [ { path = "microbootstrap/__init__.py", start = 1, end = 23, render = { kind = "full" } } ] }
+descriptor = "`ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists"
+predecessor = "2.1"
+justification = """
+`ServerConfig` is the four `server_*` fields that `create_granian_server`
+consumes. The two class headers after it are the clearest statement of the
+composition rule anywhere in the codebase: a framework's settings object is
+literally `BaseServiceSettings` plus `ServerConfig` plus one config class per
+supported instrument, and the only difference between these two is
+`LitestarPrometheusConfig` versus `FastApiPrometheusConfig`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/settings.py", start = 53, end = 57, render = { kind = "full" } },
+  { path = "microbootstrap/settings.py", start = 60, end = 88, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "microbootstrap/__init__.py: __all__ surface"
-justification = "The exact set of names microbootstrap re-exports. Catastrophic-omission-critical: this is the one place all public names are enumerated together, so a partial view would wrongly suggest some *Config classes aren't public."
-content = { kind = "lines", spans = [ { path = "microbootstrap/__init__.py", start = 26, end = 44, render = { kind = "full" } } ] }
+descriptor = "`FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists"
+predecessor = "2.1"
+justification = """
+Closes the settings class: FastStream drops `SwaggerConfig` and `CorsConfig`,
+adds `asyncapi_path`, and swaps in `FastStreamOpentelemetryConfig` /
+`FastStreamPrometheusConfig`; `InstrumentsSetupperSettings` is the
+framework-less subset (logging, opentelemetry, sentry, pyroscope only). Ranked
+right after 2.3 so a cut between them still leaves a coherent
+\"the two HTTP frameworks\" slice, while the class is closed here rather than
+left implicitly partial.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/settings.py", start = 90, end = 112, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "bootstrappers/base.py: ApplicationBootstrapper.bootstrap()"
-justification = "The core orchestration loop shared by all 3 framework bootstrappers: run each ready instrument's bootstrap(), merge bootstrap_before() dicts, construct the application, then run each instrument's bootstrap_after(). Every framework-specific bootstrapper overrides pieces of this via bootstrap_before/bootstrap_after."
-content = { kind = "lines", spans = [ { path = "microbootstrap/bootstrappers/base.py", start = 72, end = 97, render = { kind = "full" } } ] }
+descriptor = "README Settings section: env sourcing and `ENVIRONMENT_PREFIX`"
+justification = """
+The prose the code cannot supply: the parameter set is *not* confined to the
+declared fields, values are sourced from the environment by upper-cased field
+name, and exporting `ENVIRONMENT_PREFIX` in advance changes the name looked up.
+Lines 211–221 (an illustrative subclass) are elided behind an ellipsis rather
+than silently dropped.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 203, end = 209, render = { kind = "full" } },
+  { path = "README.md", start = 211, end = 211, render = { kind = "ellipsis" } },
+  { path = "README.md", start = 225, end = 233, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "2.6"
-descriptor = "instruments/instrument_box.py: fields + initialize()"
-justification = "InstrumentBox holds the registered instrument classes and, on initialize(), instantiates one of each from a `settings.model_dump()` — this is why every Instrument's Config subclass must accept **the entire settings dump as kwargs (extra='allow' on BaseServiceSettings makes that safe)."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/instrument_box.py", start = 1, end = 19, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.7"
-descriptor = "instruments/instrument_box.py: configure_instrument() + extend_instruments()"
-justification = "The exact routing/dedup mechanism behind `.configure_instrument()` (matches by get_config_type(), raises MissingInstrumentError if no instrument matches) and `.use_instrument()` (replaces any existing instrument registered under the same config type — why re-declaring e.g. LitestarPrometheusInstrument for a new config type doesn't leave two Prometheus instruments registered)."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/instrument_box.py", start = 21, end = 50, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.8"
-descriptor = "settings.py: BaseServiceSettings + ServerConfig"
-justification = "Root of every framework's Settings class. Shows the pydantic-settings env-prefix mechanism (ENV_PREFIX, AliasChoices for SERVICE_NAME/CI_COMMIT_TAG) and the server_host/port/workers/reload defaults shared by Litestar/FastAPI."
-content = { kind = "lines", spans = [ { path = "microbootstrap/settings.py", start = 29, end = 57, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.9"
-descriptor = "settings.py: LitestarSettings + FastApiSettings"
-justification = "The exact multiple-inheritance mixin order for the two full-framework Settings classes — both mix in the identical 9 bases (ServerConfig + all 8 instrument configs), differing only in which framework-specific Prometheus config they use."
-content = { kind = "lines", spans = [ { path = "microbootstrap/settings.py", start = 60, end = 87, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "2.10"
-descriptor = "settings.py: FastStreamSettings + InstrumentsSetupperSettings"
-justification = "FastStreamSettings drops ServerConfig/SwaggerConfig/CorsConfig (no HTTP server, no OpenAPI docs) but adds asyncapi_path; InstrumentsSetupperSettings drops every HTTP/broker-shaped instrument (cors/swagger/health-checks/prometheus) entirely, keeping only sentry/opentelemetry/pyroscope/logging. Shown with 2.9 so no single class's mixin list is mistaken for the full instrument set."
-content = { kind = "lines", spans = [ { path = "microbootstrap/settings.py", start = 90, end = 112, render = { kind = "full" } } ] }
-
-# ---------- Tier 3: instruments (the library's actual feature surface) ----------
+# ---------------------------------------------------------------------------
+# Tier 3 — the Instrument protocol and the registry that drives it.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "cors_instrument.py (full)"
-justification = "Smallest instrument: readiness gated on cors_allowed_origins or cors_allowed_origin_regex being set; no bootstrap() at all (pure config passthrough to framework-specific CORS middleware, shown per-framework in tier 4)."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/cors_instrument.py", start = 1, end = 29, render = { kind = "full" } } ] }
+descriptor = "`instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster"
+justification = """
+The abstraction every instrument implements. Full lines for the
+`InstrumentConfigT` / `ApplicationT` TypeVars, `BaseInstrumentConfig` with its
+`arbitrary_types_allowed` model config, and the `Instrument` dataclass's
+`instrument_config` field plus `instrument_name` / `ready_condition` ClassVars;
+then a name line for all eight methods, so the complete hook set is known before
+a single body is paid for.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/base.py", start = 15, end = 27, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/base.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/base.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 47, end = 47, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments/base.py", start = 60, end = 60, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "swagger_instrument.py (full)"
-justification = "is_valid_path(swagger_path) gates readiness — same shape as cors, no bootstrap() logic, all the actual work is per-framework (tier 4)."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/swagger_instrument.py", start = 1, end = 30, render = { kind = "full" } } ] }
+descriptor = "Instrument roster: every instrument class with its `instrument_name` and `ready_condition`"
+justification = """
+Eight three-line windows, one per instrument module, giving the complete set of
+concrete `Instrument` subclasses — `CorsInstrument`, `HealthChecksInstrument`,
+`LoggingInstrument`, `BaseOpentelemetryInstrument`, `PrometheusInstrument`,
+`PyroscopeInstrument`, `SentryInstrument`, `SwaggerInstrument` — together with
+the display name used in the bootstrap table and the exact reason string shown
+when the instrument is disabled. The densest batch in the document: it closes
+the instrument class and answers \"why is my instrument disabled\" at once.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/cors_instrument.py", start = 18, end = 20, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/health_checks_instrument.py", start = 26, end = 28, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 148, end = 150, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 99, end = 101, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 60, end = 62, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 27, end = 29, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 89, end = 91, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/swagger_instrument.py", start = 21, end = 23, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "health_checks_instrument.py (full)"
-justification = "The simplest instrument: a bool gate (health_checks_enabled) plus a typed-dict payload builder (render_health_check_data) reused verbatim by all 3 framework health-check handlers."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/health_checks_instrument.py", start = 1, end = 42, render = { kind = "full" } } ] }
+descriptor = "`InstrumentBox`: registry fields, `initialize`, and remaining member roster"
+justification = """
+The plugin registry. The `__instruments__` / `__initialized_instruments__`
+dataclass fields and `initialize` — which dumps the settings model and builds one
+config per registered instrument type — explain how a single flat settings object
+fans out into per-instrument configs. `configure_instrument`,
+`extend_instruments` and the `instruments` property are named so the class is
+closed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/instrument_box.py", start = 9, end = 19, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 21, end = 21, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "pyroscope_instrument.py (full)"
-justification = "is_ready additionally depends on the pyroscope package having imported successfully at module load (None on Windows per README); bootstrap() shows exactly which config fields become pyroscope.configure() kwargs and how the opentelemetry_namespace becomes a service_namespace tag."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 1, end = 54, render = { kind = "full" } } ] }
+descriptor = "`Instrument` abstract methods and default hook implementations (bodies)"
+predecessor = "3.1"
+justification = """
+Refines 3.1's name lines into behaviour: `is_ready` and `get_config_type` are
+the only two `abc.abstractmethod`s, `bootstrap` and `teardown` default to
+returning `None`, and the docstrings on `bootstrap_before` / `bootstrap_after`
+state precisely when each runs relative to application creation — the fact a
+subclass author most needs.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/base.py", start = 42, end = 62, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "sentry_instrument.py: SentryConfig"
-justification = "Exact field defaults (sentry_sample_rate=1.0, sentry_max_breadcrumbs=15, sentry_max_value_length=16384, sentry_attach_stacktrace=True) an agent would otherwise have to grep for when debugging 'why is sentry behaving oddly by default'."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/sentry_instrument.py", start = 1, end = 29, render = { kind = "full" } } ] }
+descriptor = "`Instrument.configure_instrument` and `write_status` (bodies)"
+predecessor = "3.1"
+justification = """
+Closes `instruments/base.py`. Config merging delegates to
+`merge_pydantic_configs`, and `write_status` is the call that feeds the console
+table with `(instrument_name, is_ready(), ready_condition)`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/base.py", start = 29, end = 41, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "sentry_instrument.py: is_ready + bootstrap() + before_send helper locations"
-justification = "is_ready just checks sentry_dsn truthiness; bootstrap() is the actual sentry_sdk.init(...) call showing exactly which SentryConfig fields map to which sentry_sdk kwargs, and that before_send is always wrapped (structlog enrichment + otel trace-url + user callback chained, never just the user's own before_send). The three module-level helper locations (enrich_sentry_event_from_structlog_log, add_trace_url_to_event, wrap_before_send_callbacks) are the chaining implementation the bootstrap() call invokes by name — included as location pointers so the chain isn't only visible as bare names in the call."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments/sentry_instrument.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "microbootstrap/instruments/sentry_instrument.py", start = 67, end = 67, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/sentry_instrument.py", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "microbootstrap/instruments/sentry_instrument.py", start = 89, end = 116, render = { kind = "full" } },
-] }
+descriptor = "`InstrumentBox` bodies: config dispatch and the replace-on-register rule"
+predecessor = "3.3"
+justification = """
+The two rules that make the plugin system work: `configure_instrument` matches an
+incoming config to an instrument by `isinstance(instrument_config,
+instrument.get_config_type())` and raises `MissingInstrumentError` otherwise, and
+`extend_instruments` *filters out* any already-registered instrument sharing the
+same config type before appending — which is exactly why
+`@LitestarBootstrapper.use_instrument()` on a `SentryInstrument` subclass
+overrides rather than duplicates the base registration.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/instrument_box.py", start = 20, end = 32, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 38, end = 47, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/instrument_box.py", start = 49, end = 50, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "3.7"
-descriptor = "prometheus_instrument.py: Base/Litestar/FastApi configs"
-justification = "README explains prometheus needs separate configs per framework because the underlying libraries differ (this batch + 3.8 are the ground truth for that): BasePrometheusConfig (service_name + prometheus_metrics_path), LitestarPrometheusConfig (just prometheus_additional_params), FastApiPrometheusConfig (3 extra dict params for prometheus-fastapi-instrumentator)."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/prometheus_instrument.py", start = 17, end = 33, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.8"
-descriptor = "prometheus_instrument.py: FastStream protocol location + config"
-justification = "FastStream needs an explicit prometheus_middleware_cls (a broker-specific middleware, e.g. RedisPrometheusMiddleware) satisfying FastStreamPrometheusMiddlewareProtocol — unlike Litestar/FastAPI, prometheus is otherwise inert here without it. The protocol's own __init__/__call__ signature is a location pointer (its shape is dictated by the broker-middleware library it wraps, not microbootstrap-specific); FastStreamPrometheusConfig is shown full. Paired with 3.7 so no single framework's config shape is mistaken for the common one. Ellipsis hedges at 37 (protocol body) and 60 (trailing PrometheusInstrument base class: is_ready/get_config_type) mark what this span skips."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 35, end = 36, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 37, end = 37, render = { kind = "ellipsis" } },
-  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 55, end = 57, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 60, end = 60, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "3.9"
-descriptor = "opentelemetry_instrument.py: OpentelemetryConfig"
-justification = "Field defaults an agent debugging otel wiring needs verbatim: opentelemetry_container_name defaults from $HOSTNAME, opentelemetry_exclude_urls defaults to ['/metrics'], opentelemetry_disabled_instrumentations is sourced from the OTEL_PYTHON_DISABLED_INSTRUMENTATIONS env var at import time. Ellipsis hedge at 73 marks the FastStreamTelemetryMiddlewareProtocol/FastStreamOpentelemetryConfig plus BaseOpentelemetryInstrument's is_ready/teardown/_load_instrumentors region this span skips before 3.10 picks back up inside bootstrap()."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 48, end = 70, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 73, end = 73, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "3.10"
-descriptor = "opentelemetry_instrument.py: bootstrap() resource + tracer_provider"
-justification = "Shows the Resource attributes actually set (service.name/version/namespace/container) and that the pyroscope-otel correlation SpanProcessor is attached before any exporter — first half of the assembly order a 'traces aren't showing up' session needs; continues in 3.11."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 132, end = 149, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.11"
-descriptor = "opentelemetry_instrument.py: bootstrap() exporters + instrumentors"
-justification = "Second half of bootstrap(): opentelemetry_log_traces adds a console exporter, opentelemetry_endpoint adds a batched OTLP exporter, then explicit opentelemetry_instrumentors run before self._load_instrumentors() is invoked as the last step (that method's own definition is in the skipped region 3.9 hedges, not this span). Exact ordering for diagnosing missing/duplicate spans."
-content = { kind = "lines", spans = [ { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 150, end = 167, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "3.12"
-descriptor = "logging_instrument.py: LoggingConfig"
-justification = "Defaults for the in-memory JSON logging README describes: logging_buffer_capacity=10, logging_flush_level=ERROR, logging_exclude_endpoints defaults to ['/health/', '/metrics'] with trailing slashes stripped by a model_validator. Ellipsis hedge at 152 marks the is_ready/teardown/_unset_handlers methods this span skips before 3.13 picks back up inside _configure_structlog_loggers."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments/logging_instrument.py", start = 127, end = 145, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/logging_instrument.py", start = 152, end = 152, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "3.13"
-descriptor = "logging_instrument.py: _configure_structlog_loggers (debug vs prod)"
-justification = "The exact behavioral difference between service_debug=True and False inside this one method: debug mode leaves structlog unconfigured entirely via an early return, non-debug mode wires the full processor chain + MemoryLoggerFactory. Directly answers 'why don't I see JSON logs locally' for the structlog half of bootstrap() (the sibling _configure_foreign_loggers/bootstrap() call order past line 181 isn't in this span — ellipsis hedge at 190)."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments/logging_instrument.py", start = 162, end = 181, render = { kind = "full" } },
-  { path = "microbootstrap/instruments/logging_instrument.py", start = 190, end = 190, render = { kind = "ellipsis" } },
-] }
-
-# ---------- Tier 4: framework bootstrapper wiring ----------
+# ---------------------------------------------------------------------------
+# Tier 4 — the instrument configuration field surface, instrument by instrument.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "litestar.py: Bootstrapper + instrument-class roster"
-justification = "Location batch: every Litestar-specific Instrument subclass and where PyroscopeInstrument is reused unmodified (line 124, no subclass needed). One-hop pointer for 'where is instrument X wired for Litestar'."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 48, end = 48, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 63, end = 63, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 74, end = 74, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 109, end = 109, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 124, end = 124, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 158, end = 158, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 178, end = 178, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 191, end = 191, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 200, end = 200, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/litestar.py", start = 223, end = 223, render = { kind = "full" } },
-] }
+descriptor = "`SentryConfig`: complete field set"
+justification = """
+The largest and most-asked-about instrument config, rendered as one contiguous
+class body so no field can be assumed missing: `sentry_dsn`,
+`sentry_traces_sample_rate`, the [0, 1]-bounded `sentry_sample_rate`,
+`sentry_max_breadcrumbs`, `sentry_max_value_length`, `sentry_attach_stacktrace`,
+`sentry_integrations`, `sentry_additional_params`, `sentry_tags`,
+`sentry_before_send` and `sentry_opentelemetry_trace_url_template`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 15, end = 28, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "fastapi.py: Bootstrapper + instrument-class roster"
-justification = "Location batch: FastAPI reuses SentryInstrument/PyroscopeInstrument unmodified (lines 54/89, no subclass) but subclasses Swagger/Cors/Opentelemetry/Logging/Prometheus/HealthChecks. Shown so an agent doesn't conclude Sentry lacks FastAPI support just because no FastApiSentryInstrument class exists."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 27, end = 27, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 54, end = 54, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 58, end = 58, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 74, end = 74, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 89, end = 89, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 93, end = 93, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 104, end = 104, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 114, end = 114, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/fastapi.py", start = 137, end = 137, render = { kind = "full" } },
-] }
+descriptor = "`OpentelemetryConfig`: complete field set"
+justification = """
+The other large config, and the one with the most surprising defaults:
+`opentelemetry_container_name` is seeded from `$HOSTNAME`,
+`opentelemetry_exclude_urls` defaults to `[\"/metrics\"]`,
+`opentelemetry_disabled_instrumentations` is parsed out of the
+`OTEL_PYTHON_DISABLED_INSTRUMENTATIONS` env var, and it carries cross-instrument
+fields (`service_debug`, `health_checks_path`, `pyroscope_endpoint`) that the
+readiness and span-exclusion logic depend on.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 48, end = 69, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "faststream.py: Bootstrapper + instrument-class roster"
-justification = "Location batch: FastStream has no Cors/Swagger instrument at all (asgi_routes-based, no CORS middleware layer) — only Sentry/Pyroscope (reused unmodified)/Opentelemetry/Logging/Prometheus/HealthChecks. This asymmetry vs litestar.py/fastapi.py's rosters (4.1/4.2) is exactly the kind of partial-class gap this NS must make explicit rather than let an agent assume uniformly."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 31, end = 31, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 37, end = 37, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 54, end = 54, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 55, end = 55, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 59, end = 59, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 80, end = 80, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 91, end = 91, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/faststream.py", start = 121, end = 121, render = { kind = "full" } },
-] }
+descriptor = "`LoggingConfig`: complete field set plus the exclude-endpoint validator"
+justification = """
+All seven `logging_*` knobs with defaults (`logging_buffer_capacity = 10`,
+`logging_unset_handlers = [\"uvicorn\", \"uvicorn.access\"]`,
+`logging_exclude_endpoints = [\"/health/\", \"/metrics\"]`,
+`logging_turn_off_middleware`) together with the `model_validator` that strips
+trailing slashes from the exclude list — the detail that explains why the
+middlewares compare a `removesuffix(\"/\")`-ed request path.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 127, end = 145, render = { kind = "full" } },
+]
 
-# ---------- Tier 5: cross-cutting mechanisms + remaining core modules ----------
-# microbootstrap/config/, microbootstrap/middlewares/, instruments_setupper.py,
-# helpers.py's merge/override implementation, and exceptions.py are core
-# production modules with zero coverage elsewhere in this NS (only named in
-# fs listings) — instruments_setupper.py is the "or none of those" case the
-# summary opens with, and helpers.py's merge_dict_configs is the exact
-# implementation behind the "merge/override semantics" query class.
+[[batches]]
+id = "4.4"
+descriptor = "Prometheus config family: `BasePrometheusConfig` and its three framework variants"
+justification = """
+Prometheus is the one instrument the README says cannot be unified across
+frameworks, so its config is a four-class hierarchy. Rendering
+`BasePrometheusConfig`, `LitestarPrometheusConfig`, `FastApiPrometheusConfig`
+and `FastStreamPrometheusConfig` in one batch is the only way to answer
+\"which prometheus parameter do I set\" correctly — a partial view would strand
+the reader on the wrong subclass.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 14, end = 32, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 55, end = 57, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "`CorsConfig` and `SwaggerConfig`: complete field sets"
+justification = """
+Two small, entirely declarative configs paired into one batch: the seven `cors_*`
+fields including `cors_allowed_origin_regex` and `cors_max_age = 600`, and the
+Swagger fields covering `swagger_path`, `swagger_offline_docs`,
+`swagger_extra_params` and the `service_static_path` the offline bundles are
+served from.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/cors_instrument.py", start = 8, end = 15, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/swagger_instrument.py", start = 10, end = 18, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "`HealthCheckTypedDict` + `HealthChecksConfig`, and `PyroscopeConfig`"
+justification = """
+The health-check response shape (`service_version`, `service_name`,
+`health_status`) alongside its config — including the comment marking
+`opentelemetry_generate_health_check_spans` as a cross-instrument parameter —
+and the complete `pyroscope_*` field set. Both are short enough that a name-only
+roster would cost nearly as much as the full text.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/health_checks_instrument.py", start = 8, end = 23, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 15, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "Readiness predicates: `is_ready` for all eight instruments"
+justification = """
+One batch collecting every `is_ready` body in the repository — the enable/disable
+rules for the whole library. Sentry needs a DSN; prometheus needs a
+syntactically valid metrics path via `is_valid_path`; cors needs origins or a
+regex; opentelemetry is ready with an endpoint, in `service_debug`, or with
+`opentelemetry_log_traces`; logging is always ready; health checks follow a
+boolean; pyroscope needs both an endpoint and the importable module. Complete by
+construction, and the direct answer to the most common debugging query.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/cors_instrument.py", start = 22, end = 25, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/health_checks_instrument.py", start = 37, end = 38, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 152, end = 153, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 122, end = 127, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 64, end = 67, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 31, end = 32, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 93, end = 94, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/swagger_instrument.py", start = 25, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "FastStream broker-middleware protocols and `FastStreamOpentelemetryConfig`"
+justification = """
+FastStream is the only target whose telemetry is broker-shaped: the user must
+supply a middleware class. This names `FastStreamPrometheusMiddlewareProtocol`,
+`FastStreamTelemetryMiddlewareProtocol` and the `opentelemetry_middleware_cls`
+field that consumes the latter, with the protocol bodies ellipsis-marked. Both
+protocol names are exported in `__all__` but declared nowhere else.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 35, end = 36, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/prometheus_instrument.py", start = 37, end = 37, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 72, end = 73, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 74, end = 74, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 91, end = 92, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "Instrument method roster: every `bootstrap` / `teardown` / private override, by line"
+justification = """
+A location-only pass over the behaviour of the instrument package, so no
+implementation is invisible: `SentryInstrument.bootstrap`,
+`BaseOpentelemetryInstrument._load_instrumentors` / `teardown` / `bootstrap`,
+`OpentelemetryInstrument` and its `define_exclude_urls`, `LoggingInstrument.teardown` /
+`_unset_handlers` / `_configure_structlog_loggers` / `_configure_foreign_loggers`
+/ `bootstrap`, `PyroscopeInstrument.teardown` / `bootstrap`, and
+`HealthChecksInstrument.render_health_check_data`. Each body is elided behind an
+ellipsis; the name plus line number puts every one of them one grep away, which
+is a far better use of the budget than any two of the bodies themselves.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/health_checks_instrument.py", start = 30, end = 30, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/health_checks_instrument.py", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 155, end = 155, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 156, end = 156, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 158, end = 158, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 159, end = 159, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 162, end = 162, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 163, end = 163, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 182, end = 182, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 183, end = 183, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 207, end = 207, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 208, end = 208, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 104, end = 104, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 129, end = 129, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 130, end = 130, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 133, end = 133, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 134, end = 134, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 170, end = 171, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 172, end = 172, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/pyroscope_instrument.py", start = 38, end = 38, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 97, end = 97, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "Instrument module-level symbol roster: helpers not attached to any class"
+justification = """
+The module-level helpers of `instruments/` that no class owns, so none of them
+is reachable only by chance: `OpenTelemetryInstrumentor` (the dataclass users put in
+`opentelemetry_instrumentors`), `PyroscopeSpanProcessor`, the sentry event
+processors `enrich_sentry_event_from_structlog_log`, `add_trace_url_to_event`
+and `wrap_before_send_callbacks`, and the logging module's `access_logger`,
+`make_path_with_query_string`, `fill_log_message`, `tracer_injection`,
+`STRUCTLOG_PRE_CHAIN_PROCESSORS`, `STRUCTLOG_FORMATTER_PROCESSOR` and
+`MemoryLoggerFactory`. Bodies are ellipsis-marked. Private one-liners
+(`_format_span`, `_is_root_span`, `_serialize_log_with_orjson_to_string`) and
+the module's constant literals are deliberately left out.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 26, end = 26, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 30, end = 30, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 37, end = 37, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 62, end = 62, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 63, end = 63, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 77, end = 77, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 92, end = 92, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 97, end = 97, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/logging_instrument.py", start = 98, end = 98, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 42, end = 45, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 197, end = 197, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/opentelemetry_instrument.py", start = 198, end = 198, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 67, end = 67, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 68, end = 68, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 75, end = 75, render = { kind = "full" } },
+  { path = "microbootstrap/instruments/sentry_instrument.py", start = 76, end = 76, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — bootstrappers: the pipeline and the per-framework adapters.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "bootstrappers/base.py: ApplicationBootstrapper.configure_application/configure_instrument(s)/use_instrument locations"
-justification = "Location batch closing the one mechanism referenced by name across every tier-4 roster (`@XxxBootstrapper.use_instrument()`) and 11.1's README example (`.configure_application(...)`, `.configure_instrument(...)`) without its definition ever appearing: this is that definition's location. use_instrument() lazily creates the class-level InstrumentBox and returns its extend_instruments as a class-decorator factory; configure_instrument(s) delegate to InstrumentBox at runtime (2.7); configure_application merges a partial application-config dataclass into the bootstrapper's own (via helpers.merge_dataclasses_configs, shown in 5.4's file)."
-content = { kind = "lines", spans = [
+descriptor = "`ApplicationBootstrapper`: class attributes and complete member roster"
+justification = """
+The generic base every framework bootstrapper extends, parameterised over
+(settings, application, config-dataclass). Full lines for `application_type`,
+`application_config`, `console_writer`, `instrument_box`, then a name line for
+all ten members — so the fluent API (`configure_application`,
+`configure_instrument`, `configure_instruments`, `use_instrument`, `bootstrap`,
+`teardown`) and the three overridable hooks are a closed, addressable set before
+any body is paid for. The three hook bodies at 99–110 are ellipsis-marked, since
+5.2–5.4 refine only the rest of the file.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/base.py", start = 17, end = 29, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
   { path = "microbootstrap/bootstrappers/base.py", start = 39, end = 39, render = { kind = "full" } },
   { path = "microbootstrap/bootstrappers/base.py", start = 46, end = 46, render = { kind = "full" } },
   { path = "microbootstrap/bootstrappers/base.py", start = 53, end = 53, render = { kind = "full" } },
-  { path = "microbootstrap/bootstrappers/base.py", start = 62, end = 62, render = { kind = "full" } },
-] }
+  { path = "microbootstrap/bootstrappers/base.py", start = 61, end = 62, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 72, end = 72, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 103, end = 103, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 107, end = 107, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 100, end = 100, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 104, end = 104, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 108, end = 108, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "instruments_setupper.py: InstrumentsSetupper fields + __init__ + configure_instrument(s)/use_instrument locations"
-justification = "The frameworkless bootstrap path the summary opens with ('or none of those, via InstrumentsSetupper') — never referenced beyond its filename in 1.2's listing until now. __init__ wires a ConsoleWriter + InstrumentBox.initialize() from an InstrumentsSetupperSettings (2.10). configure_instrument(s)/use_instrument are location pointers only, since their bodies are near-identical to ApplicationBootstrapper's own (5.1) — same registration API, confirming the two bootstrap styles share it."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments_setupper.py", start = 19, end = 26, render = { kind = "full" } },
-  { path = "microbootstrap/instruments_setupper.py", start = 28, end = 28, render = { kind = "full" } },
-  { path = "microbootstrap/instruments_setupper.py", start = 32, end = 32, render = { kind = "full" } },
-  { path = "microbootstrap/instruments_setupper.py", start = 41, end = 41, render = { kind = "full" } },
-] }
+descriptor = "`ApplicationBootstrapper.bootstrap()` — the whole application-assembly pipeline"
+predecessor = "5.1"
+justification = """
+The single most important function in the repository, and it defines an exact
+order: ready instruments run `bootstrap()` and contribute `bootstrap_before()`
+dicts merged by `merge_dict_configs`; every instrument writes its status to the
+console table; the dataclass application config is merged in with defaults
+stripped; the application is constructed; the
+`bootstrap_before_instruments_after_app_created` hook fires; then each ready
+instrument's `bootstrap_after` wraps the application. Any question about
+ordering or precedence resolves here with no follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/base.py", start = 72, end = 97, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "instruments_setupper.py: setup()/teardown() + instrument registrations"
-justification = "setup() runs each ready instrument's bootstrap() then writes its status (no application object involved, unlike ApplicationBootstrapper.bootstrap() in 2.5). Ellipsis hedge at 62 marks the two trivial __enter__/__exit__ one-liners (just call setup()/teardown(), making InstrumentsSetupper a context manager) this span skips. The four module-level use_instrument() registrations at the bottom (logging/sentry/opentelemetry/pyroscope only) are the exact instrument subset InstrumentsSetupperSettings (2.10) also restricts to — cors/swagger/health-checks/prometheus are absent here because they're HTTP/broker-shaped."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/instruments_setupper.py", start = 51, end = 60, render = { kind = "full" } },
-  { path = "microbootstrap/instruments_setupper.py", start = 62, end = 62, render = { kind = "ellipsis" } },
-  { path = "microbootstrap/instruments_setupper.py", start = 69, end = 72, render = { kind = "full" } },
-] }
+descriptor = "`ApplicationBootstrapper.__init__` and the `configure_*` fluent methods"
+predecessor = "5.1"
+justification = """
+Construction and the chainable configuration API: the `ConsoleWriter` is enabled
+from `settings.service_debug`, an `InstrumentBox` is created only if the class
+does not already carry one, and `initialize(self.settings)` is what turns
+settings into instrument instances. `configure_application` merges dataclasses,
+`configure_instrument` delegates to the box, `configure_instruments` loops —
+matching the README's chained-call examples.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/base.py", start = 31, end = 60, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "helpers.py: merge_dict_configs"
-justification = "The literal implementation of the merge/override semantics 11.1's README excerpt describes in prose: set/tuple/list/dict values are merged/expanded (union for set, concatenation for tuple/list, key-union for dict, raising helpers.exceptions.ConfigMergeError on a type mismatch), everything else (str/int/float/etc.) is a plain overwrite. This is the one function every 'why did my reconfigured X not do what I expected' session needs verbatim rather than inferred from the README's prose alone."
-content = { kind = "lines", spans = [ { path = "microbootstrap/helpers.py", start = 60, end = 93, render = { kind = "full" } } ] }
+descriptor = "`use_instrument` decorator factory and `ApplicationBootstrapper.teardown`"
+predecessor = "5.1"
+justification = """
+`use_instrument` lazily creates a class-level `InstrumentBox` and returns
+`extend_instruments` as the decorator — the mechanism behind every
+`@XBootstrapper.use_instrument()` in the adapter modules, and the reason
+registrations are per-bootstrapper-class rather than global. `teardown` calls
+`teardown()` on every ready instrument, closing the lifecycle.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/base.py", start = 62, end = 71, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/base.py", start = 111, end = 114, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.5"
-descriptor = "exceptions.py (full)"
-justification = "The 3-exception hierarchy referenced by name elsewhere but never itself shown: MissingInstrumentError (raised by instrument_box.py's configure_instrument, 2.7) and ConfigMergeError (raised by helpers.merge_dict_configs, 5.4) both derive from MicroBootstrapBaseError. Cheapest possible full-file closure (10 lines) for a class of errors an agent debugging a raised exception needs to trace to its base."
-content = { kind = "lines", spans = [ { path = "microbootstrap/exceptions.py", start = 1, end = 10, render = { kind = "full" } } ] }
+descriptor = "`bootstrappers/litestar.py` roster: bootstrapper, every registered instrument, every helper"
+justification = """
+The complete registration map for Litestar: `LitestarBootstrapper` with its
+`application_config` / `application_type`, each
+`@LitestarBootstrapper.use_instrument()` decorator paired with the class it
+decorates (Sentry, Swagger, Cors, Opentelemetry, Logging, Prometheus,
+HealthChecks), the bare `use_instrument()(PyroscopeInstrument)` registration,
+and the three module-level helpers `build_span_name`,
+`build_litestar_route_details_from_scope` and
+`LitestarOpenTelemetryInstrumentationMiddleware`. Naming them together prevents
+the agent from assuming an unlisted instrument is unsupported on Litestar; each
+elided override body carries an ellipsis so the reader can see a body was
+withheld rather than that the class is empty.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 48, end = 52, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 62, end = 63, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 73, end = 74, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 108, end = 109, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 124, end = 124, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 133, end = 133, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 158, end = 158, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 177, end = 178, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 190, end = 191, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 199, end = 200, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 222, end = 223, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 53, end = 53, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 64, end = 64, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 75, end = 75, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 110, end = 110, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 128, end = 128, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 134, end = 134, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 159, end = 159, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 179, end = 179, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 192, end = 192, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 201, end = 201, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 224, end = 224, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.6"
-descriptor = "config/ + middlewares/ locations"
-justification = "Location batch for the two subpackages named in 1.3/1.4's listings but never opened: config/ holds the three framework-native app-config dataclasses ApplicationBootstrapper.application_config actually is (FastApiConfig wraps fastapi.FastAPI's own constructor kwargs almost 1:1, FastStreamConfig wraps AsgiFastStream's, LitestarConfig subclasses litestar's own AppConfig directly) — not microbootstrap-specific shape, which is why they're a location pointer rather than full content. middlewares/ holds the two logging-middleware builders (build_fastapi_logging_middleware/build_litestar_logging_middleware) instrument-locations 4.1/4.2 already named as call sites without ever locating their own definitions."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/config/fastapi.py", start = 21, end = 21, render = { kind = "full" } },
-  { path = "microbootstrap/config/faststream.py", start = 21, end = 21, render = { kind = "full" } },
-  { path = "microbootstrap/config/litestar.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "microbootstrap/middlewares/fastapi.py", start = 12, end = 12, render = { kind = "full" } },
-  { path = "microbootstrap/middlewares/litestar.py", start = 14, end = 14, render = { kind = "full" } },
-] }
+descriptor = "`bootstrappers/fastapi.py` roster: bootstrapper and every registered instrument"
+justification = """
+The FastAPI equivalent of 5.5, and the contrast is load-bearing: FastAPI
+registers `SentryInstrument` and `PyroscopeInstrument` bare, and its instrument
+subclasses override `bootstrap_after` (mutating an already-constructed app)
+where Litestar's override `bootstrap_before` (contributing constructor kwargs).
+Override bodies are ellipsis-marked, as are the two private lifespan managers.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 27, end = 31, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 57, end = 58, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 73, end = 74, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 92, end = 93, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 103, end = 104, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 113, end = 114, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 136, end = 137, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 33, end = 33, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 59, end = 59, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 75, end = 75, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 94, end = 94, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 105, end = 105, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 115, end = 115, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/fastapi.py", start = 138, end = 138, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.7"
-descriptor = "console_writer.py locations"
-justification = "Location batch for the bootstrap-status reporter every ApplicationBootstrapper/InstrumentsSetupper constructs (2.5, 5.2) and every Instrument.write_status (2.2) calls into: ConsoleWriter builds a rich table one row per instrument, print_bootstrap_table renders it — the rich table an agent sees in terminal output when an instrument silently disables itself."
-content = { kind = "lines", spans = [
-  { path = "microbootstrap/console_writer.py", start = 10, end = 11, render = { kind = "full" } },
-  { path = "microbootstrap/console_writer.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-# ---------- Tier 9: tests ----------
-
-[[batches]]
-id = "9.1"
-descriptor = "tests/conftest.py: fixture roster (session/app + first half of instrument configs)"
-justification = "Location batch: the session-scoped anyio backend and default Litestar app fixtures, then the first half of the per-instrument minimal-config fixtures (sentry/logging/prometheus x3/swagger). One-hop pointer for a new test instead of grepping conftest.py."
-content = { kind = "lines", spans = [
-  { path = "tests/conftest.py", start = 37, end = 37, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 42, end = 42, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 51, end = 51, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 60, end = 60, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 65, end = 65, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 70, end = 70, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 75, end = 75, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 80, end = 80, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 85, end = 85, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "tests/conftest.py: fixture roster (remaining configs + settings/console-writer + generic mocks/autouse)"
-justification = "Second half of the fixture roster: cors/health-checks/opentelemetry/server config fixtures, base_settings and console_writer, the generic magic_mock/async_mock helpers, and the module-reload/entry-points/prometheus-registry autouse fixtures every test implicitly depends on."
-content = { kind = "lines", spans = [
-  { path = "tests/conftest.py", start = 90, end = 90, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 95, end = 95, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 100, end = 100, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 110, end = 110, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 115, end = 115, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 120, end = 120, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 125, end = 125, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 130, end = 130, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 135, end = 135, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 141, end = 141, render = { kind = "full" } },
-  { path = "tests/conftest.py", start = 146, end = 146, render = { kind = "full" } },
-] }
-
-# ---------- Tier 10: build / tooling ----------
+descriptor = "`bootstrappers/faststream.py` roster: bootstrapper, loggers, every registered instrument"
+justification = """
+Completes the adapter set. Shows `KwargsAsgiFastStream` (the shim that turns
+FastStream's positional-only `broker` argument into a kwarg), the two named
+structlog loggers, and that FastStream registers only Sentry, Pyroscope,
+Opentelemetry, Logging, Prometheus and HealthChecks — no Swagger or Cors,
+matching `FastStreamSettings` at 2.4. Override bodies are ellipsis-marked.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 37, end = 39, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 54, end = 55, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 58, end = 59, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 75, end = 76, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 79, end = 80, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 90, end = 91, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 120, end = 121, render = { kind = "full" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 32, end = 32, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 41, end = 41, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 60, end = 60, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 81, end = 81, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 92, end = 92, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/bootstrappers/faststream.py", start = 122, end = 122, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
-id = "10.1"
-descriptor = "Justfile: core recipes"
-justification = "The actual build/lint/test entry points (`just install`, `just lint`, `just test`) — first-class operational coverage, cheaper ground truth than re-deriving from pyproject.toml alone. lint-ci (11-15, elided via ellipsis at 12) runs the identical ruff/mypy tools in --check/--no-fix mode for CI; not shown in full since it's the same tools as lint with different flags."
-content = { kind = "lines", spans = [
-  { path = "Justfile", start = 1, end = 10, render = { kind = "full" } },
-  { path = "Justfile", start = 12, end = 12, render = { kind = "ellipsis" } },
-  { path = "Justfile", start = 17, end = 18, render = { kind = "full" } },
-] }
-
-# ---------- Tier 11: remaining README semantics ----------
+id = "5.8"
+descriptor = "`InstrumentsSetupper`: member roster and the four instruments it registers"
+justification = """
+The framework-less entry point the README devotes a section to. The class
+attributes, a name line for each of its eight members — including
+`__enter__`/`__exit__`, i.e. it is a context manager — and the four explicit
+`InstrumentsSetupper.use_instrument()(...)` registrations at module scope
+(Logging, Sentry, Opentelemetry, Pyroscope), which is the definitive answer to
+\"what works without a web framework\". Method bodies — including the `setup` /
+`teardown` loops that mirror `ApplicationBootstrapper.bootstrap` — are
+ellipsis-marked.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/instruments_setupper.py", start = 19, end = 21, render = { kind = "full" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 23, end = 23, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 28, end = 28, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 51, end = 51, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 57, end = 57, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^ +def [^(]+" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 69, end = 72, render = { kind = "full" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 24, end = 24, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 29, end = 29, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 33, end = 33, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 42, end = 42, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 58, end = 58, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 63, end = 63, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/instruments_setupper.py", start = 66, end = 66, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
-id = "11.1"
-descriptor = "README: simple vs complex type override semantics"
-justification = "The one piece of cross-cutting behavior that isn't obvious from any single instrument's code: re-configuring a str/int/float field overwrites, but list/tuple/dict/set fields are merged/expanded. This is the user-facing statement of the exact contract helpers.merge_dict_configs (5.4) implements in code; the illustrative code examples surrounding these two sentences are skipped since 5.4 already gives the real implementation."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 664, end = 664, render = { kind = "full" } },
-  { path = "README.md", start = 687, end = 687, render = { kind = "full" } },
-] }
+id = "5.9"
+descriptor = "README Configuration: simple values overwrite, complex values merge"
+justification = """
+The behavioural rule that is hard to infer quickly from `merge_dict_configs`:
+scalars passed to `.configure_instrument` *replace* the settings value, while
+`list`, `tuple`, `dict` and `set` values are expanded or merged. Includes the
+sentence naming `.configure_instrument` / `.configure_instruments` as the entry
+points and the note that the application is configured the same way. High
+zero-follow-up value for \"how do I override X at bootstrap time\".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 588, end = 590, render = { kind = "full" } },
+  { path = "README.md", start = 603, end = 603, render = { kind = "full" } },
+  { path = "README.md", start = 641, end = 641, render = { kind = "full" } },
+  { path = "README.md", start = 664, end = 666, render = { kind = "full" } },
+  { path = "README.md", start = 687, end = 688, render = { kind = "full" } },
+  { path = "README.md", start = 708, end = 708, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.10"
+descriptor = "`LitestarBootstrapper.bootstrap_before`: how the console table and teardown get attached"
+justification = """
+The concrete shape of a `bootstrap_before` override, and the reason a
+bootstrapped app prints its instrument table on startup and tears its
+instruments down on shutdown: `debug` from `service_debug`,
+`on_shutdown=[self.teardown]`, `on_startup=[self.console_writer.print_bootstrap_table]`.
+The FastAPI and FastStream equivalents are located by the rosters at 5.6/5.7.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/bootstrappers/litestar.py", start = 54, end = 59, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 6 — supporting modules.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "`helpers.py`: complete function roster and `VALID_PATH_PATTERN`"
+justification = """
+All six helpers are called from code ranked above —
+`merge_pydantic_configs` from `Instrument.configure_instrument`,
+`merge_dict_configs`, `merge_dataclasses_configs` and
+`dataclass_to_dict_no_defaults` from the bootstrap pipeline,
+`optimize_exclude_paths` from both logging middlewares, and `is_valid_path` from
+the prometheus and swagger readiness checks. Naming all six plus the path regex
+literal makes each one hop away; bodies are ellipsis-marked.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/helpers.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 20, end = 20, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/helpers.py", start = 35, end = 35, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 36, end = 36, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/helpers.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 49, end = 49, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/helpers.py", start = 60, end = 60, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 61, end = 61, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/helpers.py", start = 96, end = 97, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 100, end = 100, render = { kind = "full" } },
+  { path = "microbootstrap/helpers.py", start = 101, end = 101, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "`exceptions.py`: the complete exception hierarchy"
+justification = """
+Three classes, ten lines, complete: `MicroBootstrapBaseError` and its subclasses
+`ConfigMergeError` and `MissingInstrumentError`, both raised by code ranked
+earlier. Cheap closure of an entire module.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/exceptions.py", start = 1, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Middleware builders and `create_granian_server`: signatures and returned classes"
+justification = """
+Locates the last two modules with no content yet. Both
+`build_litestar_logging_middleware` and `build_fastapi_logging_middleware` are
+factories that pre-compute an ignore set with `optimize_exclude_paths` and
+return a middleware class (`LitestarLoggingMiddleware`,
+`FastAPILoggingMiddleware`); `create_granian_server` turns a `ServerConfig` into
+a granian server and is what every example's `__main__` calls. Bodies are
+ellipsis-marked.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/middlewares/litestar.py", start = 14, end = 17, render = { kind = "full" } },
+  { path = "microbootstrap/middlewares/litestar.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "microbootstrap/middlewares/litestar.py", start = 20, end = 20, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/middlewares/litestar.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "microbootstrap/middlewares/fastapi.py", start = 12, end = 15, render = { kind = "full" } },
+  { path = "microbootstrap/middlewares/fastapi.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "microbootstrap/middlewares/fastapi.py", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "microbootstrap/middlewares/fastapi.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "microbootstrap/granian_server.py", start = 27, end = 31, render = { kind = "full" } },
+  { path = "microbootstrap/granian_server.py", start = 32, end = 32, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "`config/litestar.py`: the `LitestarConfig` application-config dataclass"
+justification = """
+The dataclass passed to `configure_application` in the README's application
+example and in `examples/litestar_app.py`. It extends Litestar's own `AppConfig`
+and adds only `on_app_init` plus a `logging_config` built with
+`configure_root_logger=False` — the small detail that lets microbootstrap own
+foreign-log formatting.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "microbootstrap/config/litestar.py", start = 13, end = 21, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 7 — tests, packaging and developer commands.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "Test tree listings (complete) and `.github/workflows/`"
+justification = """
+Names every test module — the `tests/` root files including `conftest.py`,
+`tests/instruments/` (one per instrument) and `tests/bootstrappers/` — so an
+agent asked to add or extend a test knows exactly which file to touch without a
+single search. The workflow directory is included so CI is discoverable.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/instruments", entries = "all" },
+  { parent = "tests/bootstrappers", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "`Justfile`: install, lint, lint-ci and test recipes"
+justification = """
+The canonical developer commands, which an agent should run rather than
+inventing its own: `just install` (uv lock + sync all extras), `lint` /
+`lint-ci` (ruff format, ruff check, mypy) and `test` (pytest via uv). The
+`publish` and `run-faststream-example` recipes that follow are ellipsis-marked.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Justfile", start = 1, end = 18, render = { kind = "full" } },
+  { path = "Justfile", start = 20, end = 20, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "`pyproject.toml`: identity, python requirement and optional-dependency extras"
+justification = """
+Distribution name, one-line description, `requires-python = \">=3.10,<4\"`, and
+the four extras (`fastapi`, `litestar`, `granian`, `faststream`) with the
+frameworks behind them — the concrete backing for the README's installation
+instructions and the reason every framework import sits behind an extra.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 1, end = 5, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 62, end = 75, render = { kind = "full" } },
+]

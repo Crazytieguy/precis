@@ -1,547 +1,956 @@
 fixture = "commander"
 revision_pin = "82473649"
 summary = """
-commander.js v14.0.3: the standard Node.js CLI-parsing library (npm 'commander').
-Single-purpose package: six files under lib/ (Command, Option, Argument, Help,
-error classes, and the smaller suggestSimilar typo-matching helper) exported
-through index.js (CJS) and esm.mjs (ESM wrapper). Zero production dependencies.
-Command extends EventEmitter and is the God-object: option/argument
-registration, argv tokenizing, dispatch to subcommands or stand-alone
-executables, help text generation (delegated to a separately-overridable Help
-class), and error/exit handling all live on it. The query distribution spans:
-explaining option/argument/help semantics to a library consumer, debugging a
-parsing edge case, adding a Command/Option/Help feature, running/configuring
-the jest+tsd+eslint+prettier check suite, and archaeology against documented
-behavior in CHANGELOG.md. README.md and docs/*.md are the closest thing to a
-spec (this is a library, not an app with a separate design doc) so they carry
-real semantic weight alongside the source. Token budget here is small relative
-to the ~4200-line lib/ + 1176-line README, so this NS leans on location
-rosters (exact file+line for every public method) backed by a handful of
-full-body excerpts for the highest-frequency debugging targets, trusting the
-roster + one follow-up read for everything else — not full-body coverage.
-Every span in this draft ends at a natural boundary (full file, full function/
-class body, a full doc section, or a deliberately-trimmed prose chunk stopping
-at a paragraph/code-fence break) — none cuts off mid-list or mid-body, so no
-span carries a rendered ellipsis marker.
+Commander.js v14 — the node.js command-line-interface framework: a
+zero-dependency CommonJS library whose whole implementation is six files
+in `lib/` (Command, Option, Argument, Help, CommanderError, suggestSimilar)
+re-exported by a 24-line `index.js`, with a hand-written 1113-line
+`typings/index.d.ts` mirroring it for TypeScript, a 1176-line `Readme.md`
+that is the primary user documentation, ~45 runnable `examples/`, and 110
+jest test files (plus an ESM smoke test and a set of executable-subcommand
+fixtures) in `tests/`.
+
+The ranking front-loads (1) what the package is and what it exports, (2)
+the *complete* method rosters of the six `lib/` classes — for a fluent
+builder API the set of chainable method names is the single highest-value
+artifact, and a partial roster would actively mislead — then (3) the
+TypeScript declaration surface plus exhaustive inventories of docs,
+examples and tests so any "where is X handled/tested/demonstrated"
+question is one grep away, then (4) the semantics that are genuinely not
+guessable from names: the parse life cycle, the `Command` instance-state
+model, `parseOptions()`'s tokenizer rules, flag-string parsing, and the
+help layout pipeline, and finally (5) build/tooling/meta config.
+
+Query distribution served: "how do I declare an option that …" (Readme +
+examples inventory), "why did parsing do X" (parseOptions + life cycle),
+"how do I customise help output" (Help roster + help-in-depth + styling
+methods), "where is this behaviour tested" (tests inventory), "what is the
+TS type of …" (typings roster), and "add a feature" (constructor state +
+registration paths).
 """
 
-# ============================================================
-# Tier 1 — Identity & directory breadth
-# ============================================================
+# ---------------------------------------------------------------------
+# Tier 1 — what the package is, and what it exports
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "package.json identity (name/version/description)"
-justification = "Fastest possible 'what is this and what version' — pins which CHANGELOG/docs entries are current."
-content = { kind = "lines", spans = [ { path = "package.json", start = 2, end = 4, render = { kind = "full" } } ] }
+descriptor = "Readme title + one-line pitch"
+justification = "Cheapest possible answer to \"what is this repo\": the project name and the single sentence that defines it. Skips the four badge lines at 3-6, which are appendix material."
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "Readme.md", start = 8, end = 8, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "typings/ directory listing"
-justification = "index.d.ts, index.test-d.ts, esm.d.mts — three files, cheap to list before either is read."
-content = { kind = "fs", groups = [ { parent = "typings", entries = "all" } ] }
+descriptor = "lib/ listing — the entire implementation"
+justification = "Six files hold 100% of the runtime code. Naming them all immediately after the pitch answers \"where does the substance live\" and gives the agent its first precise navigation targets. `entries = \"all\"` so no sibling can be assumed absent."
+content.kind = "fs"
+content.groups = [{ parent = "lib", entries = "all" }]
 
 [[batches]]
 id = "1.3"
-descriptor = ".github/workflows/ directory listing"
-justification = "Names both CI workflows (tests.yml, codeql-analysis.yml)."
-content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" } ] }
+descriptor = "package.json name, version, npm description"
+justification = "Published identity: this is `commander` at 14.0.3, described as \"the complete solution for node.js command-line programs\". Three lines, and they settle which library (and which major) any versioned advice must target."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 2, end = 4, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = ".github/ directory listing"
-justification = "FUNDING.yml, dependabot.yml, PULL_REQUEST_TEMPLATE.md, workflows/."
-content = { kind = "fs", groups = [ { parent = ".github", entries = "all" } ] }
+descriptor = "package.json module type, main, types, engines"
+justification = "The four facts that change how an agent writes code here: `\"type\": \"commonjs\"`, `main` = ./index.js, `types` = typings/index.d.ts, and a Node >=20 floor. Immediately after identity because they gate every code suggestion. Four `…` markers stand in for the elided regions of the file: the keywords/author/license/repository block, the scripts (rendered in 5.1), the exports map (5.3), and the devDependencies list."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 5, end = 5, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 43, end = 44, render = { kind = "full" } },
+  { path = "package.json", start = 45, end = 45, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 62, end = 62, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 77, end = 80, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "lib/ directory listing"
-justification = "All six source files (argument.js, command.js, error.js, help.js, option.js, suggestSimilar.js) named up front so command.js's size doesn't overshadow the others."
-content = { kind = "fs", groups = [ { parent = "lib", entries = "all" } ] }
+descriptor = "index.js: which lib module each public class comes from"
+justification = "Five require lines mapping Argument/Command/CommanderError/InvalidArgumentError/Help/Option onto their lib files. Turns every later \"where is X implemented\" into a direct open rather than a search."
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 1, end = 5, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "docs/ directory listing"
-justification = "Names all six English docs plus the zh-CN/ subdirectory."
-content = { kind = "fs", groups = [ { parent = "docs", entries = "all" } ] }
+descriptor = "index.js: the `program` singleton and the three createX factories"
+justification = "`exports.program = new Command()` plus createCommand/createOption/createArgument — the shortcuts used throughout the Readme and examples, and the reason most user code says `const { program } = require('commander')`."
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 7, end = 11, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "Root directory listing"
-justification = "Every top-level file/dir in one batch so no later batch can imply an unlisted root entry exists or doesn't."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "index.js: the complete class + error export block"
+justification = "Closes the public export surface begun in 1.5/1.6 — Command, Option, Argument, Help, CommanderError, InvalidArgumentError and the deprecated InvalidOptionArgumentError alias. With this the agent knows the entire CommonJS API namespace, and index.js is fully covered."
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 13, end = 24, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "Readme.md title + one-line tagline"
-justification = "'the complete solution for node.js CLIs' — cheapest possible orientation, badges/TOC lines skipped as low-value token cost."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 1, end = 1, render = { kind = "full" } }, { path = "Readme.md", start = 8, end = 8, render = { kind = "full" } } ] }
+descriptor = "esm.mjs — the named-export ESM wrapper in full"
+justification = "16 lines answering \"can I `import { Command } from 'commander'`\" and showing the ESM surface is a destructure of the CJS default, i.e. exactly the same names. Frequently asked; cheap to answer outright."
+content.kind = "lines"
+content.spans = [
+  { path = "esm.mjs", start = 1, end = 16, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "esm.mjs (ESM entry point) full body"
-justification = "The named-export wrapper for `import { Command } from 'commander'`; tiny and directly answers ESM-vs-CJS import questions."
-content = { kind = "lines", spans = [ { path = "esm.mjs", start = 1, end = 16, render = { kind = "full" } } ] }
+descriptor = "Repository root listing (complete)"
+justification = "Every immediate child of the repo root, dotfiles included: establishes two Readmes (English + zh-CN), docs/, examples/, tests/, typings/, three tsconfigs, and the lint/format config set. Ranked after the entry points because entry points are what a task usually needs first, but before any per-directory inventory so no top-level file can be assumed absent."
+content.kind = "fs"
+content.groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.10"
-descriptor = "package.json engines"
-justification = "Node >=20 minimum, matching the v14.0.0 breaking-change note in CHANGELOG."
-content = { kind = "lines", spans = [ { path = "package.json", start = 78, end = 80, render = { kind = "full" } } ] }
+descriptor = "docs/terminology.md in full — the domain vocabulary"
+justification = "18 lines defining option / option-argument / command / command-argument, the four nouns every doc, method name and error message in this repo is written in. Cheapest available purchase of semantic grounding; without it an agent conflates \"argument\" (command-argument) with \"option-argument\"."
+content.kind = "lines"
+content.spans = [
+  { path = "docs/terminology.md", start = 1, end = 18, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "examples/ directory listing"
-justification = "~50 runnable example files referenced throughout the README ('Example file: ...'); listing all up front avoids implying only README-quoted ones exist."
-content = { kind = "fs", groups = [ { parent = "examples", entries = "all" } ] }
+descriptor = "docs/parsing-and-hooks.md in full — the parse life cycle"
+justification = "23 lines that spell out the exact order of operations for every commander program: parse options, parse env, process implied, `preSubcommand` hooks, descend into subcommand; then at the leaf — missing mandatory, conflicting options, unknown options, command-arguments, `preAction`, action handler, `postAction`. This is the single hardest thing to reconstruct from the source (it is spread across `_parseCommand`, `_dispatchSubcommand` and `_processArguments`) and it is the frame for most \"why did it do that\" debugging questions."
+content.kind = "lines"
+content.spans = [
+  { path = "docs/parsing-and-hooks.md", start = 1, end = 23, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "package.json scripts block"
-justification = "The actual build/test/lint/format entry points (`npm run check`, `npm test`, `npm run fix`) — the single highest-value answer to 'how do I build/test this'. Placed after a little more cumulative has built up since it costs more than the identity/engines snippets around it."
-content = { kind = "lines", spans = [ { path = "package.json", start = 21, end = 34, render = { kind = "full" } } ] }
+descriptor = "Readme: the library's job, in five lines of prose"
+justification = "\"You write code to describe your command line interface\" — parsing into options and command-arguments, usage errors, help system, strict about unrecognised options. The conceptual frame an agent needs before it can even phrase a question about this repo."
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 69, end = 74, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.13"
-descriptor = "index.js (CommonJS entry point) full body"
-justification = "The entire public export surface (Command/Option/Argument/Help/errors/program singleton/factory fns) — answers 'what does require(\"commander\") give me' with zero follow-up. Placed after the cheaper identity batches since it costs more per line than the fs listings around it."
-content = { kind = "lines", spans = [ { path = "index.js", start = 1, end = 24, render = { kind = "full" } } ] }
+descriptor = "Readme Quick Start: the complete split.js program"
+justification = "The smallest complete working program: `.option()`, `.option('-s, --separator <char>')`, `.argument('<string>')`, `.parse()`, `.opts()`, `program.args`. One batch that teaches the fluent-builder idiom outright, with zero follow-up reads."
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 78, end = 91, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 2 — command.js: public-method location roster
-# ============================================================
+[[batches]]
+id = "1.14"
+descriptor = "Readme Quick Start console transcript (unknown-option error + suggestion)"
+justification = "Real terminal output for the program in 1.12: strict unknown-option rejection and the \"(Did you mean --first?)\" suggestion — two behaviours agents routinely ask about — shown as observed output rather than described in prose."
+predecessor = "1.13"
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 93, end = 99, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 2 — complete method rosters of the six lib/ classes
+#
+# For a fluent builder API the *set* of method names is the highest-value
+# artifact per token: it answers "does commander have a way to …" outright
+# and turns everything else into a single targeted read at a known line.
+# The Command roster is split into ten consecutive chunks with a
+# predecessor chain; each chunk ends on a rendered `…` at the first line
+# of the next chunk, so a budget cut inside the roster still tells the
+# reader the roster continues.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "command.js: public-method roster, part 1 of 3 (constructor..action)"
-justification = "command.js is 2777 lines with ~90 methods; a partial body-only ranking would let the agent assume unlisted methods don't exist. Split into three parts so no single roster batch blows the growth envelope. This part covers construction, command/argument registration, and life-cycle setup."
-content = { kind = "lines", spans = [
-  { path = "lib/command.js", start = 20, end = 20, render = { kind = "full" } },
-  { path = "lib/command.js", start = 99, end = 99, render = { kind = "full" } },
-  { path = "lib/command.js", start = 155, end = 155, render = { kind = "full" } },
-  { path = "lib/command.js", start = 192, end = 192, render = { kind = "full" } },
+descriptor = "Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288)"
+justification = "`class Command extends EventEmitter` (which is why `.on('option:x')` works) plus the first eleven method names: constructor, copyInheritedSettings, _getCommandAndAncestors, command, createCommand, createHelp, configureHelp, configureOutput, showHelpAfterError, showSuggestionAfterError, addCommand. Truncated at the paren so the batch is names+locations only; trailing `…` marks that the roster continues."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 13, end = 13, render = { kind = "full" } },
+  { path = "lib/command.js", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 121, end = 121, render = { kind = "full" } },
+  { path = "lib/command.js", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 192, end = 192, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/command.js", start = 203, end = 203, render = { kind = "full" } },
-  { path = "lib/command.js", start = 215, end = 215, render = { kind = "full" } },
-  { path = "lib/command.js", start = 245, end = 245, render = { kind = "full" } },
-  { path = "lib/command.js", start = 261, end = 261, render = { kind = "full" } },
-  { path = "lib/command.js", start = 273, end = 273, render = { kind = "full" } },
-  { path = "lib/command.js", start = 288, end = 288, render = { kind = "full" } },
-  { path = "lib/command.js", start = 316, end = 316, render = { kind = "full" } },
-  { path = "lib/command.js", start = 336, end = 336, render = { kind = "full" } },
-  { path = "lib/command.js", start = 359, end = 359, render = { kind = "full" } },
-  { path = "lib/command.js", start = 375, end = 375, render = { kind = "full" } },
-  { path = "lib/command.js", start = 409, end = 409, render = { kind = "full" } },
-  { path = "lib/command.js", start = 443, end = 443, render = { kind = "full" } },
-  { path = "lib/command.js", start = 487, end = 487, render = { kind = "full" } },
-  { path = "lib/command.js", start = 508, end = 508, render = { kind = "full" } },
-  { path = "lib/command.js", start = 556, end = 556, render = { kind = "full" } },
-  { path = "lib/command.js", start = 585, end = 585, render = { kind = "full" } },
-] }
+  { path = "lib/command.js", start = 215, end = 215, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 261, end = 261, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 273, end = 273, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 316, end = 316, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "command.js: public-method roster, part 2 of 3 (addOption..error)"
-justification = "Continues the roster: option registration/config toggles, option-value storage, argv parsing entry points, parse-state save/restore (saveStateBeforeParse/restoreStateBeforeParse, used by subclasses that call parse() more than once), and the opts()/optsWithGlobals()/error() trio that close out this segment."
-content = { kind = "lines", spans = [
-  { path = "lib/command.js", start = 670, end = 670, render = { kind = "full" } },
-  { path = "lib/command.js", start = 788, end = 788, render = { kind = "full" } },
-  { path = "lib/command.js", start = 805, end = 805, render = { kind = "full" } },
-  { path = "lib/command.js", start = 826, end = 826, render = { kind = "full" } },
-  { path = "lib/command.js", start = 837, end = 837, render = { kind = "full" } },
-  { path = "lib/command.js", start = 848, end = 848, render = { kind = "full" } },
-  { path = "lib/command.js", start = 861, end = 861, render = { kind = "full" } },
-  { path = "lib/command.js", start = 875, end = 875, render = { kind = "full" } },
-  { path = "lib/command.js", start = 905, end = 905, render = { kind = "full" } },
-  { path = "lib/command.js", start = 925, end = 925, render = { kind = "full" } },
-  { path = "lib/command.js", start = 940, end = 940, render = { kind = "full" } },
-  { path = "lib/command.js", start = 953, end = 953, render = { kind = "full" } },
-  { path = "lib/command.js", start = 971, end = 971, render = { kind = "full" } },
-  { path = "lib/command.js", start = 983, end = 983, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1090, end = 1090, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1119, end = 1119, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1141, end = 1141, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1158, end = 1158, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1748, end = 1748, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1902, end = 1902, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1924, end = 1924, render = { kind = "full" } },
-  { path = "lib/command.js", start = 1940, end = 1940, render = { kind = "full" } },
-] }
+descriptor = "Command roster 2/10 — command-arguments, help command, hooks, action (316-556)"
+justification = "createArgument, argument, arguments, addArgument, helpCommand, addHelpCommand, _getHelpCommand, hook, exitOverride, _exit, action. Covers the whole declaration side of command-arguments plus the life-cycle-hook and action-handler entry points; overrides 2.1's ellipsis and posts its own at 585."
+predecessor = "2.1"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 316, end = 316, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 336, end = 336, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 359, end = 359, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 375, end = 375, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 409, end = 409, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 443, end = 443, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 463, end = 463, render = { kind = "full" } },
+  { path = "lib/command.js", start = 487, end = 487, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 508, end = 508, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 533, end = 533, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 556, end = 556, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 585, end = 585, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "command.js: public-method roster, part 3 of 3 (version..addHelpText)"
-justification = "Final roster segment: version/description/alias/usage metadata, help groups, and all help-output/help-customization entry points."
-content = { kind = "lines", spans = [
-  { path = "lib/command.js", start = 2195, end = 2195, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2218, end = 2218, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2234, end = 2234, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2249, end = 2249, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2289, end = 2289, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2304, end = 2304, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2331, end = 2331, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2344, end = 2344, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2363, end = 2363, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2382, end = 2382, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2419, end = 2419, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2437, end = 2437, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2450, end = 2450, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2505, end = 2505, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2559, end = 2559, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2607, end = 2607, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2621, end = 2621, render = { kind = "full" } },
-  { path = "lib/command.js", start = 2656, end = 2656, render = { kind = "full" } },
-] }
+descriptor = "Command roster 3/10 — option creation and registration (585-805)"
+justification = "createOption, _callParseArg, _registerOption, _registerCommand, addOption, _optionEx, option, requiredOption. The `.option()` family is the most-used surface in the library; `_optionEx` and `_registerOption` are where a new option feature would actually be implemented."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 585, end = 585, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 599, end = 599, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 619, end = 619, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 644, end = 644, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 670, end = 670, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 741, end = 741, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 788, end = 788, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 805, end = 805, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 826, end = 826, render = { kind = "ellipsis" } },
+]
 
-# ============================================================
-# Tier 3 — README.md core usage sections (+ one command.js excerpt)
-# ============================================================
+[[batches]]
+id = "2.4"
+descriptor = "Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983)"
+justification = "combineFlagAndOptionalValue, allowUnknownOption, allowExcessArguments, enablePositionalOptions, passThroughOptions, _checkForBrokenPassThrough, storeOptionsAsProperties, getOptionValue, setOptionValue, setOptionValueWithSource, getOptionValueSource, getOptionValueSourceWithGlobals. The complete set of parser-strictness switches plus the value/source accessors — exactly what \"why is my option not being picked up\" questions need."
+predecessor = "2.3"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 826, end = 826, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 837, end = 837, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 848, end = 848, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 861, end = 861, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 875, end = 875, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 885, end = 885, render = { kind = "full" } },
+  { path = "lib/command.js", start = 905, end = 905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 925, end = 925, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 940, end = 940, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 953, end = 953, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 971, end = 971, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 983, end = 983, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1001, end = 1001, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380)"
+justification = "_prepareUserArgs, parse, async parseAsync, _prepareForParse, saveStateBeforeParse, restoreStateBeforeParse, _checkForMissingExecutable, _executeSubCommand, _dispatchSubcommand, _dispatchHelpCommand. Includes the async variant (easy to miss: it is declared `async parseAsync(`) and the whole child-process subcommand path, a 150-line method most agents never guess exists."
+predecessor = "2.4"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 1001, end = 1001, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1090, end = 1090, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1119, end = 1119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1127, end = 1127, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1141, end = 1141, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1158, end = 1158, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1183, end = 1183, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1202, end = 1202, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1352, end = 1352, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1380, end = 1380, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1403, end = 1403, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723)"
+justification = "_checkNumberOfArguments, _processArguments, _chainOrCall, _chainOrCallHooks, _chainOrCallSubCommandHook, _parseCommand, _findCommand, _findOption, _checkForMissingMandatoryOptions, _checkForConflictingLocalOptions, _checkForConflictingOptions. `_parseCommand` at 1550 is the orchestrator of the documented parse life cycle; the check methods are the exact sites for mandatory/conflict error behaviour."
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 1403, end = 1403, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1428, end = 1428, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1481, end = 1481, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1499, end = 1499, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1531, end = 1531, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1550, end = 1550, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1649, end = 1649, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1664, end = 1664, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1675, end = 1675, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1694, end = 1694, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1723, end = 1723, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1748, end = 1748, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996)"
+justification = "parseOptions (the 150-line tokenizer, the single most-consulted method in the file), opts, optsWithGlobals, error, _parseOptionsEnv, _parseOptionsImplied. Six names covering value provenance (cli / env / implied) and the public error-raising entry point."
+predecessor = "2.6"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 1748, end = 1748, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1902, end = 1902, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1924, end = 1924, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1940, end = 1940, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 1966, end = 1966, render = { kind = "full" } },
+  { path = "lib/command.js", start = 1996, end = 1996, render = { kind = "full" } },
+  { path = "lib/command.js", start = 2034, end = 2034, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Command roster 8/10 — the complete set of user-facing error reporters (2034-2162)"
+justification = "missingArgument, optionMissingArgument, missingMandatoryOptionValue, _conflictingOption, unknownOption, _excessArguments, unknownCommand. Every message Commander can emit for a bad command line originates in one of these seven; a partial list would send an agent grepping for a message that does not exist."
+predecessor = "2.7"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 2034, end = 2034, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2046, end = 2046, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2058, end = 2058, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2070, end = 2070, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2114, end = 2114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2146, end = 2146, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2162, end = 2162, render = { kind = "full" } },
+  { path = "lib/command.js", start = 2195, end = 2195, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Command roster 9/10 — metadata and help-grouping accessors (2195-2437)"
+justification = "version, description, summary, alias, aliases, usage, name, helpGroup, commandsGroup, optionsGroup, _initOptionGroup, _initCommandGroup, nameFromFilename, executableDir. Fourteen dual-purpose getter/setter names — the descriptive surface an agent uses when writing or editing a CLI definition."
+predecessor = "2.8"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 2195, end = 2195, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2218, end = 2218, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2234, end = 2234, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2249, end = 2249, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2289, end = 2289, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2304, end = 2304, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2331, end = 2331, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2344, end = 2344, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2363, end = 2363, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2382, end = 2382, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2392, end = 2392, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2401, end = 2401, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2419, end = 2419, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2437, end = 2437, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2450, end = 2450, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "Command roster 10/10 — help output and help-option API (2450-2686)"
+justification = "helpInformation, _getOutputContext, outputHelp, helpOption, _getHelpOption, addHelpOption, help, addHelpText, _outputHelpIfRequested. Closes the Command roster; with 2.1-2.10 the agent has all 99 method definitions in the class and can stop guessing whether a capability exists."
+predecessor = "2.9"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 2450, end = 2450, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2475, end = 2475, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2505, end = 2505, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2559, end = 2559, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2592, end = 2592, render = { kind = "full" } },
+  { path = "lib/command.js", start = 2607, end = 2607, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2621, end = 2621, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2656, end = 2656, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2686, end = 2686, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2705, end = 2705, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "lib/command.js module-level helpers and exports"
+justification = "The two free functions outside the class — incrementNodeInspectorPort (why `--inspect` works for stand-alone subcommands) and useColor (the NO_COLOR/FORCE_COLOR gate) — plus the export lines, including the comment that `useColor` is exported only for tests. Overrides 2.10's ellipsis and closes the file."
+predecessor = "2.10"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 2705, end = 2705, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/command.js", start = 2752, end = 2752, render = { kind = "full" } },
+  { path = "lib/command.js", start = 2776, end = 2777, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "lib/option.js roster 1/2 — Option's declaration methods (3-156)"
+justification = "`class Option` plus constructor, default, preset, conflicts, implies, env, argParser, makeOptionMandatory, hideHelp. This is the object behind every `.option()` call and the target of `.addOption(new Option(...))`; these nine names cover the features people actually reach for. Trailing `…` marks the continuation."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/option.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "lib/option.js", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 132, end = 132, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 144, end = 144, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 156, end = 156, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 165, end = 165, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.13"
+descriptor = "lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports"
+justification = "_collectValue, choices, name, attributeName, helpGroup, is, isBoolean; then `class DualOptions` with constructor/valueFromOption (the --foo/--no-foo pairing machinery), the free functions camelcase and splitOptionFlags, and both export lines. Completes lib/option.js's symbol set."
+predecessor = "2.12"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/option.js", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 181, end = 181, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 203, end = 203, render = { kind = "full" } },
+  { path = "lib/option.js", start = 217, end = 217, render = { kind = "full" } },
+  { path = "lib/option.js", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 243, end = 243, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 256, end = 256, render = { kind = "full" } },
+  { path = "lib/option.js", start = 268, end = 268, render = { kind = "full" } },
+  { path = "lib/option.js", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 297, end = 297, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 316, end = 316, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 328, end = 328, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/option.js", start = 379, end = 380, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.14"
+descriptor = "lib/argument.js — complete roster (150-line file)"
+justification = "`class Argument` with constructor, name, _collectValue, default, argParser, choices, argRequired, argOptional, plus the free function humanReadableArgName (used by Help to render `<x>` / `[x]` / `x...` terms) and both exports. The whole symbol set of the file in one small batch."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/argument.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "lib/argument.js", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 48, end = 48, render = { kind = "full" } },
+  { path = "lib/argument.js", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 119, end = 119, render = { kind = "full" } },
+  { path = "lib/argument.js", start = 129, end = 129, render = { kind = "full" } },
+  { path = "lib/argument.js", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/argument.js", start = 149, end = 150, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.15"
+descriptor = "lib/error.js — both error classes in full"
+justification = "39-line file rendered as its two class declarations, both constructors, the fields CommanderError carries (`code`, `exitCode`, `nestedError`), the fixed `'commander.invalidArgument'` code that InvalidArgumentError uses, and the exports. Small enough that a roster would be false economy; catching Commander errors is a top-five user question."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/error.js", start = 4, end = 4, render = { kind = "full" } },
+  { path = "lib/error.js", start = 11, end = 19, render = { kind = "full" } },
+  { path = "lib/error.js", start = 25, end = 25, render = { kind = "full" } },
+  { path = "lib/error.js", start = 30, end = 35, render = { kind = "full" } },
+  { path = "lib/error.js", start = 38, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.16"
+descriptor = "lib/suggestSimilar.js — complete symbol set"
+justification = "Four lines: the `maxDistance = 3` constant that bounds \"(Did you mean …)\" suggestions, the editDistance and suggestSimilar functions, and the single export. Explains the suggestion behaviour seen in 1.13's transcript and is the whole file's public surface."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/suggestSimilar.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "lib/suggestSimilar.js", start = 3, end = 3, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/suggestSimilar.js", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/suggestSimilar.js", start = 101, end = 101, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.17"
+descriptor = "lib/help.js roster 1/4 — visibility and ordering (12-139)"
+justification = "`class Help` plus constructor, prepareContext, visibleCommands, compareOptions, visibleOptions, visibleGlobalOptions, visibleArguments. Help is entirely subclass-by-override — `configureHelp()` takes a Partial<Help> — so its method names *are* the customisation API. Trailing `…` marks the continuation."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/help.js", start = 12, end = 12, render = { kind = "full" } },
+  { path = "lib/help.js", start = 13, end = 13, render = { kind = "full" } },
+  { path = "lib/help.js", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 162, end = 162, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.18"
+descriptor = "lib/help.js roster 2/4 — term/description/width methods (162-372)"
+justification = "subcommandTerm, optionTerm, argumentTerm, longestSubcommandTermLength, longestOptionTermLength, longestGlobalOptionTermLength, longestArgumentTermLength, commandUsage, commandDescription, subcommandDescription, optionDescription, argumentDescription. These are the string-producing overrides people actually replace when they want different help text."
+predecessor = "2.17"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/help.js", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 193, end = 193, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 205, end = 205, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 224, end = 224, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 241, end = 241, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 258, end = 258, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 276, end = 276, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 300, end = 300, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 313, end = 313, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 325, end = 325, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 403, end = 403, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.19"
+descriptor = "lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606)"
+justification = "formatItemList, groupItems, formatHelp, displayWidth, then all fourteen styling hooks: styleTitle, styleUsage, styleCommandDescription, styleOptionDescription, styleSubcommandDescription, styleArgumentDescription, styleDescriptionText, styleOptionTerm, styleSubcommandTerm, styleArgumentTerm, styleOptionText, styleArgumentText, styleSubcommandText, styleCommandText. Showing only some styleX names would strongly imply the others don't exist, so the whole family lands together."
+predecessor = "2.18"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/help.js", start = 403, end = 403, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 417, end = 417, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 443, end = 443, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 535, end = 535, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 545, end = 545, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 549, end = 549, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 563, end = 563, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 566, end = 566, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 569, end = 569, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 572, end = 572, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 575, end = 575, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 578, end = 578, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 581, end = 581, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 594, end = 594, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 597, end = 597, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 600, end = 600, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 603, end = 603, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 606, end = 606, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 618, end = 618, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.20"
+descriptor = "lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747)"
+justification = "padWidth, preformatted, formatItem, boxWrap, the free function stripColor, and both export lines. Closes lib/help.js and with it the six-file lib roster: every class, method and free function in the runtime is now named with a line number."
+predecessor = "2.19"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/help.js", start = 618, end = 618, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 633, end = 633, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 650, end = 650, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 695, end = 695, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 740, end = 740, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/help.js", start = 746, end = 747, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 3 — the TypeScript declaration surface, and exhaustive
+# inventories of docs / examples / tests. Breadth: after this tier no
+# file in the repository is unnamed and no documentation section is
+# unlocatable, so any "where is X" question is one grep or one read.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "Readme.md: Quick Start, part 1 (boolean+value options example)"
-justification = "The first canonical onboarding program (split.js-style: boolean option + value option + argument, with real console transcript) — split from the second example so this batch stays small enough for its position in the growth envelope."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 67, end = 99, render = { kind = "full" } } ] }
+descriptor = "typings/ listing"
+justification = "Three files: the 1113-line hand-written index.d.ts, the two-line esm.d.mts re-export, and index.test-d.ts (tsd type tests). Establishes that the types are hand-maintained alongside the JS and that there is a type-level test file — both surprising and both load-bearing when editing the API."
+content.kind = "fs"
+content.groups = [{ parent = "typings", entries = "all" }]
 
 [[batches]]
 id = "3.2"
-descriptor = "Readme.md: Quick Start, part 2 (subcommand-with-action example)"
-justification = "The second canonical onboarding program (string-util.js-style: named subcommand + description/version + action handler, with real console transcript) — the highest zero-follow-up-value section for 'how does this library work' once combined with part 1."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 101, end = 145, render = { kind = "full" } } ] }
+descriptor = "typings/index.d.ts — every exported class declaration"
+justification = "CommanderError, InvalidArgumentError, the InvalidOptionArgumentError alias re-export, Argument, Option, Help, Command, plus the ErrorOptions interface and the LiteralUnion helper type. Nine lines that pin the start line of each class in the declaration file, so \"what is the TS signature of X\" is one read at a known offset."
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 16, end = 16, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 38, end = 38, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 40, end = 40, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 48, end = 48, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 95, end = 95, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 210, end = 210, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 376, end = 376, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "command.js: .addOption() body"
-justification = "The option-value wiring core: default-value seeding for negated options, the option:/optionEnv: event listeners, preset/parseArg/variadic value handling. Placed here (after Quick Start builds up enough cumulative budget) because it's the one command.js excerpt selected for full-body treatment — 'why is my option value wrong' bugs concentrate here and README prose doesn't cover the event-driven wiring."
-predecessor = "2.2"
-content = { kind = "lines", spans = [ { path = "lib/command.js", start = 670, end = 733, render = { kind = "full" } } ] }
+descriptor = "typings/index.d.ts — every exported interface, type alias, function and const"
+justification = "HelpConfiguration = Partial<Help> (the reason Help's method names are the customisation API), ParseOptions, HelpContext, AddHelpTextContext, OutputConfiguration, AddHelpTextPosition, HookEvent, OptionValueSource, OptionValues, CommandOptions, ExecutableCommandOptions, ParseOptionsResult, the three createX functions and `program`. Together with 3.2 this is the complete top-level export surface of the declaration file — the two literal unions render in full here, so the legal `.addHelpText()` positions and `.hook()` events need no follow-up."
+predecessor = "3.2"
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 340, end = 340, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 342, end = 342, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 345, end = 345, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 349, end = 349, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 354, end = 354, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 367, end = 368, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 370, end = 370, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 374, end = 374, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1094, end = 1094, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1100, end = 1100, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1104, end = 1104, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1109, end = 1111, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1113, end = 1113, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "Readme.md: Common option types, boolean and value"
-justification = "The two most-used option shapes (boolean flag vs value-taking flag) with combined-short-flag examples and the option-argument-is-greedy caveat."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 211, end = 252, render = { kind = "full" } } ] }
+descriptor = "typings/index.d.ts — Command's public instance properties"
+justification = "args, processedArgs, commands, options, registeredArguments, parent: the six properties user code and subclasses are allowed to touch, three of them `readonly`. Frequently read (`program.args[0]` appears in the Quick Start) and not derivable from the method roster."
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 377, end = 382, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "Readme.md: Required option"
-justification = "`.requiredOption()` — same shape as `.option()` but enforced, one of the first things a new consumer asks about."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 342, end = 360, render = { kind = "full" } } ] }
+descriptor = "Readme.md top-level section map (all H2 headings)"
+justification = "Installation, Quick Start, Declaring program variable, Options, Commands, Automated help, Custom event listeners, Bits and pieces, Support — the nine top-level sections of the 1176-line primary documentation, each with its line number. Converts \"the Readme explains this somewhere\" into a targeted read of a ~50-line window."
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 61, end = 61, render = { kind = "full" } },
+  { path = "Readme.md", start = 67, end = 67, render = { kind = "full" } },
+  { path = "Readme.md", start = 147, end = 147, render = { kind = "full" } },
+  { path = "Readme.md", start = 177, end = 177, render = { kind = "full" } },
+  { path = "Readme.md", start = 523, end = 523, render = { kind = "full" } },
+  { path = "Readme.md", start = 754, end = 754, render = { kind = "full" } },
+  { path = "Readme.md", start = 956, end = 956, render = { kind = "full" } },
+  { path = "Readme.md", start = 966, end = 966, render = { kind = "full" } },
+  { path = "Readme.md", start = 1164, end = 1164, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "Readme.md: Commands intro"
-justification = "`.command()` vs `.addCommand()` vs stand-alone-executable-via-description-arg — the three ways to add a subcommand, in one place. Trimmed to the intro paragraphs + combined example (523-555); the trailing config-options/alias/copyInheritedSettings caveats (557-566) are left for a follow-up read to keep this batch's cost proportionate to its neighbors."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 523, end = 555, render = { kind = "full" } } ] }
+descriptor = "docs/ listing"
+justification = "Six supplementary documents. Two of them (terminology, parsing-and-hooks) are already rendered in full above; this names the other four — deprecated, help-in-depth, options-in-depth, release-policy — so the agent knows the long-form treatments exist rather than re-deriving them from source."
+content.kind = "fs"
+content.groups = [{ parent = "docs", entries = "all" }]
 
 [[batches]]
 id = "3.7"
-descriptor = "Readme.md: Action handler"
-justification = "Exact action-callback parameter shape (one per declared argument, then options, then command) and the `this`-binding caveat for non-arrow functions."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 648, end = 698, render = { kind = "full" } } ] }
+descriptor = "docs/*.md top-level heading map"
+justification = "Title and H2 lines for the four docs not already rendered in full: Deprecated (+ its Removed section), Help in Depth (Data Properties / Stringify and Style / Layout), Options in Depth (varying numbers of option-arguments / combining short options), Release Policy. Tells the agent which document to open for which class of question."
+content.kind = "lines"
+content.spans = [
+  { path = "docs/deprecated.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 227, end = 227, render = { kind = "full" } },
+  { path = "docs/help-in-depth.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/help-in-depth.md", start = 20, end = 20, render = { kind = "full" } },
+  { path = "docs/help-in-depth.md", start = 34, end = 34, render = { kind = "full" } },
+  { path = "docs/help-in-depth.md", start = 118, end = 118, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 2, end = 2, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 15, end = 15, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 148, end = 148, render = { kind = "full" } },
+  { path = "docs/release-policy.md", start = 1, end = 1, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.8"
-descriptor = "Readme.md: Life cycle hooks"
-justification = "The preAction/postAction/preSubcommand hook API with the events table; pairs with docs/parsing-and-hooks.md for full ordering."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 725, end = 752, render = { kind = "full" } } ] }
+descriptor = "Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725)"
+justification = "Common option types, Default option value, Other option types (negatable / boolean|value), Required option, Variadic option, Version option, More configuration, Custom option processing; then Command-arguments (with its More configuration and Custom argument processing subsections), Action handler, Stand-alone executable (sub)commands, Life cycle hooks. This is the feature catalogue of the library, expressed as headings with line numbers — the highest-density answer to \"can commander do X, and where is it written up\"."
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 211, end = 211, render = { kind = "full" } },
+  { path = "Readme.md", start = 254, end = 254, render = { kind = "full" } },
+  { path = "Readme.md", start = 276, end = 276, render = { kind = "full" } },
+  { path = "Readme.md", start = 342, end = 342, render = { kind = "full" } },
+  { path = "Readme.md", start = 362, end = 362, render = { kind = "full" } },
+  { path = "Readme.md", start = 396, end = 396, render = { kind = "full" } },
+  { path = "Readme.md", start = 416, end = 416, render = { kind = "full" } },
+  { path = "Readme.md", start = 459, end = 459, render = { kind = "full" } },
+  { path = "Readme.md", start = 567, end = 567, render = { kind = "full" } },
+  { path = "Readme.md", start = 613, end = 613, render = { kind = "full" } },
+  { path = "Readme.md", start = 625, end = 625, render = { kind = "full" } },
+  { path = "Readme.md", start = 648, end = 648, render = { kind = "full" } },
+  { path = "Readme.md", start = 700, end = 700, render = { kind = "full" } },
+  { path = "Readme.md", start = 725, end = 725, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.9"
-descriptor = "Readme.md: Automated help intro"
-justification = "Default help option/format example — the first thing an agent needs to answer 'what does --help print by default'."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 754, end = 786, render = { kind = "full" } } ] }
+descriptor = "Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172)"
+justification = "Custom help, Display help after errors, Display help from code, .name, .usage, .description and .summary, .helpOption, .helpCommand, Help Groups, More configuration; then .parse()/.parseAsync(), Parsing Configuration, Legacy options as properties, TypeScript, createCommand(), Node options such as --harmony, Debugging stand-alone executable subcommands, npm run-script, Display error, Override exit and output handling, Additional documentation, Commander for enterprise. Completes the Readme heading class begun in 3.5/3.8 — with these three batches no section of the primary documentation is hidden."
+predecessor = "3.8"
+content.kind = "lines"
+content.spans = [
+  { path = "Readme.md", start = 787, end = 787, render = { kind = "full" } },
+  { path = "Readme.md", start = 830, end = 830, render = { kind = "full" } },
+  { path = "Readme.md", start = 860, end = 860, render = { kind = "full" } },
+  { path = "Readme.md", start = 868, end = 868, render = { kind = "full" } },
+  { path = "Readme.md", start = 884, end = 884, render = { kind = "full" } },
+  { path = "Readme.md", start = 900, end = 900, render = { kind = "full" } },
+  { path = "Readme.md", start = 914, end = 914, render = { kind = "full" } },
+  { path = "Readme.md", start = 925, end = 925, render = { kind = "full" } },
+  { path = "Readme.md", start = 937, end = 937, render = { kind = "full" } },
+  { path = "Readme.md", start = 947, end = 947, render = { kind = "full" } },
+  { path = "Readme.md", start = 968, end = 968, render = { kind = "full" } },
+  { path = "Readme.md", start = 988, end = 988, render = { kind = "full" } },
+  { path = "Readme.md", start = 1023, end = 1023, render = { kind = "full" } },
+  { path = "Readme.md", start = 1042, end = 1042, render = { kind = "full" } },
+  { path = "Readme.md", start = 1058, end = 1058, render = { kind = "full" } },
+  { path = "Readme.md", start = 1071, end = 1071, render = { kind = "full" } },
+  { path = "Readme.md", start = 1078, end = 1078, render = { kind = "full" } },
+  { path = "Readme.md", start = 1087, end = 1087, render = { kind = "full" } },
+  { path = "Readme.md", start = 1098, end = 1098, render = { kind = "full" } },
+  { path = "Readme.md", start = 1110, end = 1110, render = { kind = "full" } },
+  { path = "Readme.md", start = 1154, end = 1154, render = { kind = "full" } },
+  { path = "Readme.md", start = 1172, end = 1172, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.10"
-descriptor = "Readme.md: Custom event listeners"
-justification = "The `program.on('option:verbose', ...)` pattern for reacting to individual option/command events, a commonly-missed extension point; cheap (9 lines)."
-content = { kind = "lines", spans = [ { path = "Readme.md", start = 956, end = 964, render = { kind = "full" } } ] }
+descriptor = "docs/ subsection map — the complete deprecation list plus options-in-depth subsections"
+justification = "All thirteen H3s of docs/deprecated.md (RegExp .option() parameter, noHelp, callback to .help()/.outputHelp(), .on('--help'), .on('command:*'), .command('*'), cmd.description(cmdDescription, argDescriptions), InvalidOptionArgumentError, import from commander/esm.mjs, cmd._args, .addHelpCommand(string|boolean|undefined), short option flag longer than a single character, default import of global Command object) and the five sub-headings of docs/options-in-depth.md. An agent writing new code needs the deprecation list to avoid recommending a retired API, and the list is only complete if all thirteen appear together."
+content.kind = "lines"
+content.spans = [
+  { path = "docs/deprecated.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 34, end = 34, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 44, end = 44, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 62, end = 62, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 87, end = 87, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 98, end = 98, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 118, end = 118, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 141, end = 141, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 171, end = 171, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 187, end = 187, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 203, end = 203, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 229, end = 229, render = { kind = "full" } },
+  { path = "docs/deprecated.md", start = 238, end = 238, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 30, end = 30, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 79, end = 79, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 104, end = 104, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 126, end = 126, render = { kind = "full" } },
+  { path = "docs/options-in-depth.md", start = 191, end = 191, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 4 — docs/*.md: subtle behavior the README only gestures at
-# ============================================================
+[[batches]]
+id = "3.11"
+descriptor = "examples/ listing (complete, 45 entries)"
+justification = "Every example is named for the feature it demonstrates — options-negatable, options-variadic, options-conflicts, options-implies, options-env, pass-through-options, positional-options, global-options-nested, hook, custom-command-class, configure-help, configure-output, color-help, man-style-help, help-groups, and the extensionless stand-alone executables (pm, deploy, pizza, description, custom-help, custom-version). For \"how do I do X with commander\" this directory is usually a better answer than the source, and the listing alone often resolves the query without any read."
+content.kind = "fs"
+content.groups = [{ parent = "examples", entries = "all" }]
+
+[[batches]]
+id = "3.12"
+descriptor = "typings: the OutputConfiguration shape"
+justification = "The eight optional members of the object `.configureOutput()` accepts — writeOut, writeErr, outputError, getOutHelpWidth, getErrHelpWidth, getOutHasColors, getErrHasColors, stripColor. Capturing output for tests, and forcing/suppressing colour, are two of the most common integration tasks; showing only some members would imply the rest cannot be overridden."
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 355, end = 365, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies"
+justification = "The small argument-object shapes: what `.error()` accepts (exitCode / code), the `from: 'node' | 'electron' | 'user'` choices for `.parse()`, and the `error` / `command` fields handed to help and addHelpText callbacks. Each is two or three lines and each removes a follow-up read of the declaration file."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 41, end = 45, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 343, end = 343, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 346, end = 347, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 350, end = 352, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult"
+justification = "The five known option-value sources ('default' | 'config' | 'env' | 'cli' | 'implied', open to author-defined strings), the hidden/isDefault/noHelp flags for `.addCommand()`, the executableFile field, and the {operands, unknown} result of `.parseOptions()`. Completes the tail of every type whose header was named in 3.3."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "typings/index.d.ts", start = 371, end = 373, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1095, end = 1098, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1101, end = 1101, render = { kind = "full" } },
+  { path = "typings/index.d.ts", start = 1105, end = 1106, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "tests/ listing (complete, 113 entries)"
+justification = "The test suite is organised one file per feature — command.*, options.*, help.*, argument.*, args.* — so this listing doubles as the finest-grained feature index in the repository (options.implies, options.conflicts, help.boxWrap, command.executableSubcommand.{search,lookup,signals,mock,inspect}, useColor, negatives, deprecated, helpGroup, incrementNodeInspectorPort). Expensive but singular: it answers \"where is this behaviour tested\" and \"is this behaviour intentional\" in one hop, and there is no cheaper structure to sample because the names are the index. The two directory entries it exposes, fixtures/ and fixtures-extensions/, are opened in 3.16."
+content.kind = "fs"
+content.groups = [{ parent = "tests", entries = "all" }]
+
+[[batches]]
+id = "3.16"
+descriptor = "tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete)"
+justification = "The two data directories under tests/ named in 3.15, opened in full: the pm / pm-install / pm-listen / pm-silent / pm-default / pm-search / pmlink family of stand-alone executable subcommands (plus the another-dir and other-dir copies used by the executable-search tests), the inspect.js / inspect-sub.js pair behind the node-inspector-port tests, and the pm-try-ts.ts / pm-try-cjs.cjs extension fixtures. Cheap, and it means every directory in the repository has been listed."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests/fixtures", entries = "all" },
+  { parent = "tests/fixtures/another-dir", entries = "all" },
+  { parent = "tests/fixtures/other-dir", entries = "all" },
+  { parent = "tests/fixtures-extensions", entries = "all" },
+]
+
+[[batches]]
+id = "3.17"
+descriptor = ".github/ and .github/workflows/ listings"
+justification = "FUNDING.yml, PULL_REQUEST_TEMPLATE.md, dependabot.yml, and the two workflows (tests.yml, codeql-analysis.yml). Low value for coding tasks, but it closes the last unlisted directories in the repository, so \"is there CI / a PR template\" needs no search."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
+
+# ---------------------------------------------------------------------
+# Tier 4 — the semantics that names alone don't give: instance state,
+# the option/argument data models, the parse contract, flag-string
+# grammar, colour detection. Everything here is a body, ranked after the
+# rosters and inventories because it is depth rather than breadth.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "docs/parsing-and-hooks.md full body"
-justification = "23-line exact ordering of parse->env->implied->preSubcommand->[mandatory/conflicting/unknown checks]->preAction->action->postAction across the command hierarchy — the ground truth the README hooks section only summarizes."
-content = { kind = "lines", spans = [ { path = "docs/parsing-and-hooks.md", start = 1, end = 23, render = { kind = "full" } } ] }
+descriptor = "Help's five data properties"
+justification = "helpWidth, minWidthToWrap = 40, sortSubcommands, sortOptions, showGlobalOptions — the entire non-method state of Help, and the settings most `.configureHelp({...})` calls actually change. Five lines that answer a whole family of \"how do I sort/widen/show global options in help\" questions outright."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/help.js", start = 14, end = 18, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "docs/terminology.md full body"
-justification = "Defines option/option-argument/command/command-argument precisely — the vocabulary every other doc (and error message) assumes."
-content = { kind = "lines", spans = [ { path = "docs/terminology.md", start = 1, end = 18, render = { kind = "full" } } ] }
+descriptor = "parseOptions()'s documented contract"
+justification = "The JSDoc above lib/command.js:1748: options are removed from argv, argv is returned split into operands and unknown, the call mutates the command and does not reset state if called again, plus four worked examples including the `--` literal case. This is the contract the whole parser is written against and it is the fastest route into any argument-order bug."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 1730, end = 1746, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "docs/help-in-depth.md: TOC + Data Properties"
-justification = "The five Help instance properties (helpWidth/minWidthToWrap/showGlobalOptions/sortSubcommands/sortOptions) settable via `.configureHelp()` — the config surface, distinct from the style/stringify methods that live only in help.js source. Starts at the doc's own TOC (line 15) rather than its intro prose/code sample to keep this batch small; ends at line 28 so the fifth bullet (sortOptions) isn't cut off."
-content = { kind = "lines", spans = [ { path = "docs/help-in-depth.md", start = 15, end = 28, render = { kind = "full" } } ] }
+descriptor = "Option's complete field set (constructor body)"
+justification = "flags, description, required/optional (derived from `<>` vs `[]`), variadic (regex on the flag string), mandatory, short/long from splitOptionFlags, negate (`--no-` prefix), defaultValue, defaultValueDescription, presetArg, envVar, parseArg, hidden, argChoices, conflictsWith, implied, helpGroupHeading — with the inline comments explaining each. The Option data model in one batch; every `.option()` feature is one of these fields."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/option.js", start = 12, end = 36, render = { kind = "full" } },
+]
 
-# ============================================================
-# Tier 5 — Option / Argument / error class rosters + bodies
-# ============================================================
+[[batches]]
+id = "4.4"
+descriptor = "Command instance state 1/4 — commands, options, args and option values"
+justification = "commands, options, parent, _allowUnknownOption, _allowExcessArguments, registeredArguments (and the deprecated `_args` alias), args, rawArgs, processedArgs, _scriptPath, _name, _optionValues, _optionValueSources, _storeOptionsAsProperties, _actionHandler, _executableHandler/_executableFile/_executableDir, _defaultCommandName, _exitCallback, _aliases — with the JSDoc type annotations and the comments distinguishing `args` (options removed) from `processedArgs` (after custom processing). The state model any feature work or debugging session needs."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 22, end = 47, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state"
+justification = "_combineFlagAndOptionalValue (default true), _description, _summary, the legacy _argsDescription, _enablePositionalOptions, _passThroughOptions, _lifeCycleHooks, _showHelpAfterError, _showSuggestionAfterError (default true), _savedState. Continues the constructor from 4.4; the defaults here are what makes commander strict-by-default with suggestions on."
+predecessor = "4.4"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 48, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Command instance state 3/4 — the default _outputConfiguration"
+justification = "The stock implementations behind `.configureOutput()`: writeOut/writeErr to stdout/stderr, outputError, getOutHelpWidth/getErrHelpWidth from TTY columns, getOutHasColors/getErrHasColors gated on useColor() and `hasColors?.()`, stripColor. Reading these is the shortest path to capturing output in tests or forcing colour, and they show exactly which process globals commander touches."
+predecessor = "4.5"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 60, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "Command instance state 4/4 — help option/command and group headings"
+justification = "_hidden, _helpOption (lazily created, may be null when help is disabled), _addImplicitHelpCommand (deliberately undecided and not inherited), _helpCommand (lazy, inherited), _helpConfiguration, _helpGroupHeading, _defaultCommandGroup, _defaultOptionGroup — each with the comment explaining its tri-state. Closes the constructor; the lazy/undefined semantics here are a common source of confusion when subclassing Command."
+predecessor = "4.6"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 76, end = 88, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "Argument's constructor — the `<req>` / `[opt]` / `name...` grammar"
+justification = "The switch on `name[0]` that turns `<x>` into required, `[x]` into optional and a bare name into required, plus the trailing `...` test that sets variadic and strips the suffix, alongside the description/parseArg/defaultValue/argChoices fields. This tiny grammar governs every `.argument()` and `.command('sub <a> [b...]')` string in user code."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/argument.js", start = 14, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "splitOptionFlags — the flag-string grammar and its error messages"
+justification = "The rules behind `'-m, --mixed <value>'`: short flag is exactly one dash and one character, long flag is two dashes, separators are space/comma/pipe, long-then-short is accepted, and two long flags are the supported way to get a longer short-ish flag. Refines the truncated signature from 2.13 to a full one and renders the regexes, the four accepted flag layouts, and the comment marking where the unsupported-flag errors are thrown at lines 350-374."
+predecessor = "2.13"
+content.kind = "lines"
+content.spans = [
+  { path = "lib/option.js", start = 323, end = 323, render = { kind = "full" } },
+  { path = "lib/option.js", start = 328, end = 328, render = { kind = "full" } },
+  { path = "lib/option.js", start = 331, end = 348, render = { kind = "full" } },
+  { path = "lib/option.js", start = 350, end = 350, render = { kind = "full" } },
+  { path = "lib/option.js", start = 351, end = 351, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "useColor() — the colour environment-variable contract"
+justification = "NO_COLOR or FORCE_COLOR in {'0','false'} disables colour; FORCE_COLOR or CLICOLOR_FORCE enables it; otherwise undefined and the TTY check decides. Ten lines that settle every \"why is my help output (not) coloured\" question and name the exact env vars to set in tests."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/command.js", start = 2765, end = 2774, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 5 — build, tooling and contribution meta. Appendix material:
+# needed to run or ship a change, not to understand the library.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "lib/option.js: public method/class/function name roster"
-justification = "15 public/package-visible Option methods (including the @package-tagged `is()`/`isBoolean()` predicate pair, both real entry points a custom argParser or event listener can call) + the 2-method DualOptions helper class (also exported) + the 2 module-level flag-parsing helpers, in one 380-line file — prevents assuming any of the less-common ones (helpGroup, hideHelp, DualOptions.valueFromOption) don't exist. Only the `@private`-tagged `_collectValue()` helper is left off this roster."
-content = { kind = "lines", spans = [
-  { path = "lib/option.js", start = 11, end = 11, render = { kind = "full" } },
-  { path = "lib/option.js", start = 47, end = 47, render = { kind = "full" } },
-  { path = "lib/option.js", start = 65, end = 65, render = { kind = "full" } },
-  { path = "lib/option.js", start = 82, end = 82, render = { kind = "full" } },
-  { path = "lib/option.js", start = 100, end = 100, render = { kind = "full" } },
-  { path = "lib/option.js", start = 120, end = 120, render = { kind = "full" } },
-  { path = "lib/option.js", start = 132, end = 132, render = { kind = "full" } },
-  { path = "lib/option.js", start = 144, end = 144, render = { kind = "full" } },
-  { path = "lib/option.js", start = 156, end = 156, render = { kind = "full" } },
-  { path = "lib/option.js", start = 181, end = 181, render = { kind = "full" } },
-  { path = "lib/option.js", start = 203, end = 203, render = { kind = "full" } },
-  { path = "lib/option.js", start = 217, end = 217, render = { kind = "full" } },
-  { path = "lib/option.js", start = 230, end = 230, render = { kind = "full" } },
-  { path = "lib/option.js", start = 243, end = 243, render = { kind = "full" } },
-  { path = "lib/option.js", start = 256, end = 256, render = { kind = "full" } },
-  { path = "lib/option.js", start = 272, end = 272, render = { kind = "full" } },
-  { path = "lib/option.js", start = 297, end = 297, render = { kind = "full" } },
-  { path = "lib/option.js", start = 316, end = 316, render = { kind = "full" } },
-  { path = "lib/option.js", start = 328, end = 328, render = { kind = "full" } },
-] }
+descriptor = "package.json scripts — how to test, lint, format and type-check"
+justification = "`npm test` = jest plus the tsd/tsc type check; `test-all` adds the ESM import test and the full check; `check` fans out to check:type:js, check:type:ts, check:lint, check:format; `fix` runs eslint --fix and prettier --write. The exact commands an agent must run before claiming a change works, and they are not guessable (type-checking the JavaScript is part of `npm test`)."
+predecessor = "1.4"
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 21, end = 34, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "lib/help.js: method roster part 1 of 2 (visibility-filtering, term/description, layout)"
-justification = "22 of ~42 methods: constructor/prepareContext, visibleCommands/visibleOptions/visibleGlobalOptions/visibleArguments, the term/description stringifiers, the longest*TermLength layout-measurement helpers, and formatHelp — the customization surface that matches docs/help-in-depth.md's stringify tables to real locations. Split from the style-hooks half (5.3) so neither roster half blows the growth envelope (this batch was widened from an earlier draft that only sampled 11 methods total across the whole file, which would have wrongly implied the rest don't exist)."
-content = { kind = "lines", spans = [
-  { path = "lib/help.js", start = 13, end = 13, render = { kind = "full" } },
-  { path = "lib/help.js", start = 29, end = 29, render = { kind = "full" } },
-  { path = "lib/help.js", start = 40, end = 40, render = { kind = "full" } },
-  { path = "lib/help.js", start = 62, end = 62, render = { kind = "full" } },
-  { path = "lib/help.js", start = 79, end = 79, render = { kind = "full" } },
-  { path = "lib/help.js", start = 112, end = 112, render = { kind = "full" } },
-  { path = "lib/help.js", start = 139, end = 139, render = { kind = "full" } },
-  { path = "lib/help.js", start = 162, end = 162, render = { kind = "full" } },
-  { path = "lib/help.js", start = 182, end = 182, render = { kind = "full" } },
-  { path = "lib/help.js", start = 193, end = 193, render = { kind = "full" } },
-  { path = "lib/help.js", start = 205, end = 205, render = { kind = "full" } },
-  { path = "lib/help.js", start = 224, end = 224, render = { kind = "full" } },
-  { path = "lib/help.js", start = 241, end = 241, render = { kind = "full" } },
-  { path = "lib/help.js", start = 258, end = 258, render = { kind = "full" } },
-  { path = "lib/help.js", start = 276, end = 276, render = { kind = "full" } },
-  { path = "lib/help.js", start = 300, end = 300, render = { kind = "full" } },
-  { path = "lib/help.js", start = 313, end = 313, render = { kind = "full" } },
-  { path = "lib/help.js", start = 325, end = 325, render = { kind = "full" } },
-  { path = "lib/help.js", start = 372, end = 372, render = { kind = "full" } },
-  { path = "lib/help.js", start = 403, end = 403, render = { kind = "full" } },
-  { path = "lib/help.js", start = 417, end = 417, render = { kind = "full" } },
-  { path = "lib/help.js", start = 443, end = 443, render = { kind = "full" } },
-] }
+descriptor = "CONTRIBUTING.md — PR rules and the surfaces a change must update"
+justification = "Pull requests go against the `develop` branch, run `npm run test` and `npm run check`, do not update the CHANGELOG or version, and a functional change usually needs TypeScript typings, JSDoc, tests, README and examples/ updated together — plus the standing zero-production-dependencies policy. Directly constrains how an agent should scope any change to this repo."
+content.kind = "lines"
+content.spans = [
+  { path = "CONTRIBUTING.md", start = 15, end = 22, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 34, end = 40, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "lib/help.js: method roster part 2 of 2 (style hooks + layout helpers) + stripColor"
-justification = "The remaining ~20 methods: displayWidth and the styleTitle/styleUsage/style*Description/style*Term/style*Text hooks (the ones a themed-help subclass overrides), plus padWidth/preformatted/formatItem/boxWrap and the module-level stripColor() helper — completes the customization surface part 1 (5.2) started."
-content = { kind = "lines", spans = [
-  { path = "lib/help.js", start = 535, end = 535, render = { kind = "full" } },
-  { path = "lib/help.js", start = 545, end = 545, render = { kind = "full" } },
-  { path = "lib/help.js", start = 549, end = 549, render = { kind = "full" } },
-  { path = "lib/help.js", start = 563, end = 563, render = { kind = "full" } },
-  { path = "lib/help.js", start = 566, end = 566, render = { kind = "full" } },
-  { path = "lib/help.js", start = 569, end = 569, render = { kind = "full" } },
-  { path = "lib/help.js", start = 572, end = 572, render = { kind = "full" } },
-  { path = "lib/help.js", start = 575, end = 575, render = { kind = "full" } },
-  { path = "lib/help.js", start = 578, end = 578, render = { kind = "full" } },
-  { path = "lib/help.js", start = 581, end = 581, render = { kind = "full" } },
-  { path = "lib/help.js", start = 594, end = 594, render = { kind = "full" } },
-  { path = "lib/help.js", start = 597, end = 597, render = { kind = "full" } },
-  { path = "lib/help.js", start = 600, end = 600, render = { kind = "full" } },
-  { path = "lib/help.js", start = 603, end = 603, render = { kind = "full" } },
-  { path = "lib/help.js", start = 606, end = 606, render = { kind = "full" } },
-  { path = "lib/help.js", start = 618, end = 618, render = { kind = "full" } },
-  { path = "lib/help.js", start = 633, end = 633, render = { kind = "full" } },
-  { path = "lib/help.js", start = 650, end = 650, render = { kind = "full" } },
-  { path = "lib/help.js", start = 695, end = 695, render = { kind = "full" } },
-  { path = "lib/help.js", start = 740, end = 740, render = { kind = "full" } },
-] }
+descriptor = "package.json exports map"
+justification = "The conditional exports: `require` resolves to typings/index.d.ts + index.js, `import` to typings/esm.d.mts + esm.mjs, plus the explicit `./esm.mjs` subpath. Matters when debugging module-resolution or dual-package problems, and explains why esm.d.mts exists at all."
+predecessor = "1.4"
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 45, end = 61, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "lib/error.js full body"
-justification = "CommanderError and InvalidArgumentError in full (39 lines) — the two error classes every custom argParser/validation callback is expected to throw."
-content = { kind = "lines", spans = [ { path = "lib/error.js", start = 1, end = 39, render = { kind = "full" } } ] }
-
-[[batches]]
-id = "5.5"
-descriptor = "lib/argument.js: constructor (full)"
-justification = "Argument's required/optional/variadic parsing from the `<name>`/`[name]`/`name...` string syntax — the same parsing string-shape used for command-arguments throughout the README. Kept whole (not truncated mid-switch) since a cut-off constructor body would misrepresent the parsing logic."
-content = { kind = "lines", spans = [ { path = "lib/argument.js", start = 1, end = 40, render = { kind = "full" } } ] }
-
-# ============================================================
-# Tier 6 — typings surface
-# ============================================================
-
-[[batches]]
-id = "6.1"
-descriptor = "typings/index.d.ts: TS-only declarations not mirrored in lib/ JSDoc"
-justification = "The class declarations here (CommanderError/Option/Help/Command/...) just restate what's already in the command.js/option.js/help.js/argument.js rosters, so this batch narrows to the type-only shapes that exist ONLY in the .d.ts: ParseOptions, the OptionValueSource/OptionValues type aliases, and CommandOptions/ExecutableCommandOptions passed to `.command()`. Each span covers the full interface/type body (not just its opening line) so the actual field shapes are visible, not just the declared names."
-content = { kind = "lines", spans = [
-  { path = "typings/index.d.ts", start = 342, end = 344, render = { kind = "full" } },
-  { path = "typings/index.d.ts", start = 370, end = 372, render = { kind = "full" } },
-  { path = "typings/index.d.ts", start = 374, end = 374, render = { kind = "full" } },
-  { path = "typings/index.d.ts", start = 1094, end = 1099, render = { kind = "full" } },
-  { path = "typings/index.d.ts", start = 1100, end = 1102, render = { kind = "full" } },
-] }
-
-# ============================================================
-# Tier 7 — tests/ directory breadth
-# ============================================================
-
-[[batches]]
-id = "7.1"
-descriptor = "tests/: argument-parsing test files"
-justification = "113 jest test files total (plus fixtures/ and fixtures-extensions/) split into naming-family batches so no single fs listing dominates the growth envelope; naming convention (command.X.test.js, options.Y.test.js, help.Z.test.js) is itself informative for 'where would the test for feature X live'. This part: the 7 args./argument.* files (positional-argument parsing, choices, custom processing, variadic)."
-content = { kind = "fs", groups = [ { parent = "tests", entries = [
-  "args.literal.test.js",
-  "args.variadic.test.js",
-  "argument.chain.test.js",
-  "argument.choices.test.js",
-  "argument.custom-processing.test.js",
-  "argument.required.test.js",
-  "argument.variadic.test.js",
-] } ] }
-
-[[batches]]
-id = "7.2"
-descriptor = "tests/: command.* test files"
-justification = "The 45 command.X.test.js files — one per Command method/feature (action, addCommand, alias, executableSubcommand.*, hook, parse, unknownCommand, usage, ...); the largest naming family, matching the command.js roster's own breadth."
-content = { kind = "fs", groups = [ { parent = "tests", entries = [
-  "command.action.test.js",
-  "command.addCommand.test.js",
-  "command.addHelpOption.test.js",
-  "command.addHelpText.test.js",
-  "command.alias.test.js",
-  "command.allowExcessArguments.test.js",
-  "command.allowUnknownOption.test.js",
-  "command.argumentVariations.test.js",
-  "command.asterisk.test.js",
-  "command.chain.test.js",
-  "command.commandHelp.test.js",
-  "command.configureHelp.test.js",
-  "command.configureOutput.test.js",
-  "command.copySettings.test.js",
-  "command.createArgument.test.js",
-  "command.createHelp.test.js",
-  "command.createOption.test.js",
-  "command.default.test.js",
-  "command.description.test.js",
-  "command.error.test.js",
-  "command.executableSubcommand.inspect.test.js",
-  "command.executableSubcommand.lookup.test.js",
-  "command.executableSubcommand.mock.test.js",
-  "command.executableSubcommand.search.test.js",
-  "command.executableSubcommand.signals.test.js",
-  "command.executableSubcommand.test.js",
-  "command.exitOverride.test.js",
-  "command.help.test.js",
-  "command.helpCommand.test.js",
-  "command.helpOption.test.js",
-  "command.hook.test.js",
-  "command.name.test.js",
-  "command.nested.test.js",
-  "command.onCommand.test.js",
-  "command.option-misuse.test.js",
-  "command.parse.test.js",
-  "command.parseOptions.test.js",
-  "command.positionalOptions.test.js",
-  "command.registerClash.test.js",
-  "command.showHelpAfterError.test.js",
-  "command.showSuggestionAfterError.test.js",
-  "command.summary.test.js",
-  "command.unknownCommand.test.js",
-  "command.unknownOption.test.js",
-  "command.usage.test.js",
-] } ] }
-
-[[batches]]
-id = "7.3"
-descriptor = "tests/: help.* test files"
-justification = "The 24 help.X.test.js files (including helpGroup.test.js) — term/description layout, sorting, style, boxWrap/stripAnsi, visibleOptions/visibleCommands/visibleArguments — mirrors the help.js roster's own categories (5.2)."
-content = { kind = "fs", groups = [ { parent = "tests", entries = [
-  "help.argumentDescription.test.js",
-  "help.boxWrap.test.js",
-  "help.commandTerm.test.js",
-  "help.commandUsage.test.js",
-  "help.longestArgumentTermLength.test.js",
-  "help.longestCommandTermLength.test.js",
-  "help.longestOptionTermLength.test.js",
-  "help.minWidthToWrap.test.js",
-  "help.optionDescription.test.js",
-  "help.optionTerm.test.js",
-  "help.padWidth.test.js",
-  "help.preformatted.test.js",
-  "help.showGlobalOptions.test.js",
-  "help.sortCommands.test.js",
-  "help.sortOptions.test.js",
-  "help.stripAnsi.test.js",
-  "help.style.test.js",
-  "help.subcommandDescription.test.js",
-  "help.suggestion.test.js",
-  "help.visibleArguments.test.js",
-  "help.visibleCommands.test.js",
-  "help.visibleGlobalOptions.test.js",
-  "help.visibleOptions.test.js",
-  "helpGroup.test.js",
-] } ] }
-
-[[batches]]
-id = "7.4"
-descriptor = "tests/: option.*/options.* test files"
-justification = "The 26 option./options.* files — flag parsing, defaults, env, conflicts/implies, camelCase, dual-options, variadic — mirrors the option.js roster (5.1)."
-content = { kind = "fs", groups = [ { parent = "tests", entries = [
-  "option.bad-flags.test.js",
-  "option.chain.test.js",
-  "options.bool.combo.test.js",
-  "options.bool.small.combined.test.js",
-  "options.bool.test.js",
-  "options.camelcase.test.js",
-  "options.choices.test.js",
-  "options.conflicts.test.js",
-  "options.custom-processing.test.js",
-  "options.default.test.js",
-  "options.dual-options.test.js",
-  "options.env.test.js",
-  "options.flags.test.js",
-  "options.getset.test.js",
-  "options.implies.test.js",
-  "options.mandatory.test.js",
-  "options.optional.test.js",
-  "options.opts.test.js",
-  "options.optsWithGlobals.test.js",
-  "options.preset.test.js",
-  "options.registerClash.test.js",
-  "options.required.test.js",
-  "options.twice.test.js",
-  "options.values.test.js",
-  "options.variadic.test.js",
-  "options.version.test.js",
-] } ] }
-
-[[batches]]
-id = "7.5"
-descriptor = "tests/: remaining root-level test files + fixtures/, fixtures-extensions/"
-justification = "Closes out the tests/ listing: whole-program tests (program.test.js, commander.configureCommand.test.js, negatives.test.js), the deprecated-API and TS/ESM import checks (deprecated.test.js, ts-imports.test.ts, esm-imports-test.mjs), createCommand.test.js, useColor.test.js, incrementNodeInspectorPort.test.js, and the two fixture directories test files exec against."
-content = { kind = "fs", groups = [ { parent = "tests", entries = [
-  "commander.configureCommand.test.js",
-  "createCommand.test.js",
-  "deprecated.test.js",
-  "esm-imports-test.mjs",
-  "fixtures",
-  "fixtures-extensions",
-  "incrementNodeInspectorPort.test.js",
-  "negatives.test.js",
-  "program.test.js",
-  "ts-imports.test.ts",
-  "useColor.test.js",
-] } ] }
-
+descriptor = "jest.config.js"
+justification = "node test environment, coverage always collected, and ts-jest wired for `.ts`/`.tsx` using tsconfig.ts.json — which is how tests/ts-imports.test.ts runs alongside the JavaScript suite. Small and it removes a guess about how the mixed-language test suite is executed."
+content.kind = "lines"
+content.spans = [
+  { path = "jest.config.js", start = 1, end = 8, render = { kind = "full" } },
+]

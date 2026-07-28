@@ -1,576 +1,1003 @@
 fixture = "go-multierror"
 revision_pin = "edef97ed"
 summary = """
-go-multierror (module github.com/hashicorp/go-multierror, go 1.13, zero
-external deps per an empty go.sum) is a small, mature Go library exposing
-one concrete type, *multierror.Error, that aggregates multiple `error`
-values behind the standard `error` interface. Seven small source files
-split cleanly by concern: multierror.go holds the Error type plus stdlib
-errors.Is/As/Unwrap interop (via the unexported `chain` helper); append.go's
-Append() is the primary construction entrypoint; group.go's Group wraps a
-WaitGroup+mutex for concurrent error collection; flatten.go, prefix.go,
-format.go, and sort.go are small single-purpose utilities (nested-error
-flattening, per-error prefixing, custom Error()-string formatting, and
-sort.Interface). Every source file has a colocated same-named `_test.go`
-file that doubles as its primary usage documentation — there is no
-separate examples directory. The README's opening note flags this package
-as semi-legacy now that Go 1.20 ships stdlib errors.Join, and devotes a
-full "Migrating to errors.Join" section to before/after code; that framing,
-plus the Usage section's six worked examples, is often more directly
-load-bearing for "should/how do I use this" queries than the source
-itself. The likely query distribution: understanding or extending one of
-the seven source files, deciding whether to adopt this vs. errors.Join,
-debugging Unwrap/Is/As interop or the Group/mutex concurrency pattern,
-and checking build/CI (Makefile, the multi-go-version GH Actions matrix).
+`hashicorp/go-multierror` is a single-package, zero-dependency Go library
+(package `multierror`, module `github.com/hashicorp/go-multierror`) that
+represents a list of `error` values as one `error`. Its substance is a flat
+root of seven small implementation files — `multierror.go` (the `Error`
+struct, its `error`/`Unwrap` methods, and the unexported `chain` type that
+makes `errors.Is/As/Unwrap` work), `append.go`, `flatten.go`, `prefix.go`,
+`format.go`, `group.go`, `sort.go` — each with a colocated `*_test.go`, plus
+a README that is half migration guide (the package now recommends stdlib
+`errors.Join`) and half usage cookbook.
+
+The ranking front-loads (1.x) identity and the *complete* exported-symbol
+roster with real signatures, since almost every plausible query ("how do I
+accumulate errors", "does it support errors.As", "where is Group") is
+answered by knowing which symbol lives in which file. 2.x adds the doc
+comments and README recipes that carry the semantics — nil handling,
+flattening on Append, the custom `ErrorFormat` hook, the errors.Join
+migration. 3.x is implementation bodies (small enough to include whole),
+4.x the test roster and the tests that pin observable behaviour (the exact
+formatted output, the Group table), 5.x the build/CI/governance periphery.
 """
 
-# ---------------------------------------------------------------------
-# Tier 1: orientation — identity, breadth (dir listings + whole-repo
-# symbol/test inventories), and operational surface (build/version/CI).
-# ---------------------------------------------------------------------
+# ---------------------------------------------------------------- 1.x identity
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Catastrophic-omission hedge: all 23 top-level entries (7 source .go files, 7 colocated _test.go files, README/CHANGELOG/LICENSE/CODEOWNERS/Makefile/go.mod/go.sum, plus .go-version and .github/) at once, so the agent never has to guess whether e.g. a vendor dir or examples/ exists — it doesn't."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "README title + what the package is"
+justification = """
+Rank 1 must answer "what is this repo". The H1 plus the README's one-line
+definition: a package for Go providing a mechanism for representing a list
+of `error` values as a single `error`. The ellipsis at line 3 signals that
+the material between the title and this sentence (badges, the deprecation
+note, a migration guide) exists and is elided.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 3, end = 3, render = { kind = "ellipsis" } },
+  { path = "README.md", start = 90, end = 91, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = ".github/ and .github/workflows/ listings"
-justification = "Same hedge one level down for the CI/governance surface: dependabot config, PR template, and both workflow files, in one cheap batch."
-content = { kind = "fs", groups = [
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-] }
+descriptor = "go.mod: module path and language version"
+justification = """
+Three lines that fix the import path an agent must write
+(`github.com/hashicorp/go-multierror`) and the language floor (go 1.13).
+Cheapest possible high-certainty fact; also implicitly says there are no
+`require` directives, i.e. no dependencies.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "go.mod + .go-version"
-justification = "Ground truth for module path (github.com/hashicorp/go-multierror), go-version floor (1.13), and — since go.sum is empty — confirmation of zero external dependencies. Cheaper and more authoritative than inferring from README prose alone."
-content = { kind = "lines", spans = [
-  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
-  { path = ".go-version", start = 1, end = 1, render = { kind = "full" } },
-] }
+descriptor = "Complete root directory listing"
+justification = """
+The repository's substance is one flat directory: seven `*.go` files each
+paired with a `*_test.go`, plus README/CHANGELOG/LICENSE/Makefile/CODEOWNERS
+and the dot-files. `entries = "all"` guarantees no member of that class is
+implied away — in particular that every implementation file has a colocated
+test, and that `go.sum` exists (it is empty).
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "Public API locations: multierror.go"
-justification = "Name-only inventory (truncated at the receiver+identifier, dropping params/return types) of multierror.go's exported surface: the Error struct plus Error/ErrorOrNil/GoString/WrappedErrors/Unwrap. Ranked ahead of the other files' roster (1.5) since multierror.go is the type every other file operates on."
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 13, end = 13, render = { kind = "full" } },
-  { path = "multierror.go", start = 18, end = 18, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror.go", start = 31, end = 31, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror.go", start = 42, end = 42, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror.go", start = 71, end = 71, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-] }
+descriptor = "README: why returning a list-of-errors as an error works"
+justification = """
+The three sentences that follow the one-line definition and carry the
+package's design idea: a function can return an `error` that is really a
+list; a caller who knows this can unwrap and inspect it, a caller who
+doesn't still gets a human-readable message; and the library is compatible
+with stdlib `errors` `As`/`Is`/`Unwrap`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 92, end = 96, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "Public API locations: append/flatten/format/group/prefix/sort"
-justification = "Same hedge for the other six source files' exported surface in one batch: Append, Flatten, ErrorFormatFunc/ListFormatFunc, Group (struct/Go/Wait), Prefix, and the Len/Swap/Less sort.Interface trio. Without this an agent could easily miss that GoString and WrappedErrors (1.4) coexist with these more obviously-README'd functions."
-content = { kind = "lines", spans = [
-  { path = "append.go", start = 14, end = 14, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flatten.go", start = 8, end = 8, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "format.go", start = 13, end = 13, render = { kind = "full" } },
-  { path = "format.go", start = 17, end = 17, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "group.go", start = 10, end = 10, render = { kind = "full" } },
-  { path = "group.go", start = 20, end = 20, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "group.go", start = 36, end = 36, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "prefix.go", start = 16, end = 16, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "sort.go", start = 7, end = 7, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "sort.go", start = 16, end = 16, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "sort.go", start = 21, end = 21, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-] }
+descriptor = "The `Error` type: doc comment and both fields"
+justification = """
+`multierror.Error` is the one exported data type; its two fields
+(`Errors []error`, `ErrorFormat ErrorFormatFunc`) are the whole public state
+and the hook every "customize the message" question lands on. Complete
+struct — no field elided.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 11, end = 16, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "Test-function locations: multierror_test.go"
-justification = "Name+line inventory of all 8 top-level Test funcs in multierror_test.go (the Error type's own tests) — TestError_Impl through TestErrorAs — so the agent can tell e.g. TestErrorIs/TestErrorAs exist alongside TestErrorUnwrap without opening the file."
-content = { kind = "lines", spans = [
-  { path = "multierror_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 17, end = 17, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 33, end = 33, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 51, end = 51, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 82, end = 82, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 118, end = 118, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "multierror_test.go", start = 157, end = 157, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-] }
+descriptor = "Package-level API roster: every exported func/type outside multierror.go, with full signatures"
+justification = """
+The complete set of package-level symbols living in the satellite files —
+`Append`, `Flatten` (and its unexported `flatten` helper), `ErrorFormatFunc`,
+`ListFormatFunc`, `Group` with `Go`/`Wait`, and `Prefix` — each rendered as
+its real signature so argument and return types are known without a
+follow-up read. Ellipsis lines under each signature mark the elided bodies.
+Listing these together is the anti-omission hedge: a partial roster would
+let the agent conclude e.g. `Prefix` doesn't exist.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "append.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "append.go", start = 15, end = 15, render = { kind = "ellipsis" } },
+  { path = "flatten.go", start = 8, end = 8, render = { kind = "full" } },
+  { path = "flatten.go", start = 9, end = 9, render = { kind = "ellipsis" } },
+  { path = "flatten.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "flatten.go", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "format.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "format.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "format.go", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "group.go", start = 10, end = 10, render = { kind = "full" } },
+  { path = "group.go", start = 11, end = 11, render = { kind = "ellipsis" } },
+  { path = "group.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "group.go", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "group.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "group.go", start = 37, end = 37, render = { kind = "ellipsis" } },
+  { path = "prefix.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "prefix.go", start = 17, end = 17, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "Test-function locations: the other six _test.go files"
-justification = "Same hedge for append_test.go, flatten_test.go, format_test.go, group_test.go, prefix_test.go, sort_test.go (16 Test funcs total) — completes the test-roster class started in 1.6 so the agent never has to assume how many edge-cases a given file's tests cover."
-content = { kind = "lines", spans = [
-  { path = "append_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "append_test.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "append_test.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "append_test.go", start = 62, end = 62, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "append_test.go", start = 71, end = 71, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "append_test.go", start = 79, end = 79, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flatten_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flatten_test.go", start = 43, end = 43, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "format_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "format_test.go", start = 27, end = 27, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "group_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "prefix_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "prefix_test.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "prefix_test.go", start = 30, end = 30, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "sort_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "sort_test.go", start = 32, end = 32, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-] }
+descriptor = "Every method on `Error`, across multierror.go and sort.go"
+justification = """
+The method set of the exported type, complete: `Error`, `ErrorOrNil`,
+`GoString`, `WrappedErrors`, `Unwrap` in multierror.go and the
+`sort.Interface` trio `Len`/`Swap`/`Less` in sort.go. Full signatures show
+pointer vs value receivers (`Len` is on `*Error`, `Swap`/`Less` on `Error`),
+which is exactly the obscure detail a caller of `sort.Sort` needs. Ellipses
+mark the elided bodies.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "multierror.go", start = 19, end = 19, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "multierror.go", start = 32, end = 32, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "multierror.go", start = 43, end = 43, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 53, end = 53, render = { kind = "full" } },
+  { path = "multierror.go", start = 54, end = 54, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 71, end = 71, render = { kind = "full" } },
+  { path = "multierror.go", start = 72, end = 72, render = { kind = "ellipsis" } },
+  { path = "sort.go", start = 7, end = 7, render = { kind = "full" } },
+  { path = "sort.go", start = 8, end = 8, render = { kind = "ellipsis" } },
+  { path = "sort.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "sort.go", start = 17, end = 17, render = { kind = "ellipsis" } },
+  { path = "sort.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "sort.go", start = 22, end = 22, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "README lede + stdlib-errors.Join deprecation note"
-justification = "The single most load-bearing fact about this repo: the README's opening note says Go 1.20's errors.Join now covers the basic case and recommends it for new projects, positioning this package as legacy-but-maintained with extra features (custom formatting, Group, Append/Flatten/Prefix). Frames every later batch's relevance."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 11, render = { kind = "full" } },
-] }
+descriptor = "The unexported `chain` type and its four methods"
+justification = """
+`chain` is the internal machinery that makes `errors.Is/As/Unwrap` work on
+a multierror, and it is the first thing a debugging session about error
+introspection needs to find. Declaration plus all four methods
+(`Error`, `Unwrap`, `As`, `Is`) — the complete method set, bodies elided.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 99, end = 99, render = { kind = "full" } },
+  { path = "multierror.go", start = 102, end = 102, render = { kind = "full" } },
+  { path = "multierror.go", start = 103, end = 103, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 108, end = 108, render = { kind = "full" } },
+  { path = "multierror.go", start = 109, end = 109, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 117, end = 117, render = { kind = "full" } },
+  { path = "multierror.go", start = 118, end = 118, render = { kind = "ellipsis" } },
+  { path = "multierror.go", start = 122, end = 122, render = { kind = "full" } },
+  { path = "multierror.go", start = 123, end = 123, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "README: package description + stdlib errors compat"
-justification = "States the core contract in prose: an error that might be a list of errors, formats human-readably if the caller doesn't know, and supports errors.As/Is/Unwrap — but Unwrap here returns errors one at a time (chaining) rather than errors.Join's Go-1.20 Unwrap() []error shape. That distinction is easy to get wrong and isn't visible from source alone."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 90, end = 102, render = { kind = "full" } },
-] }
+descriptor = "README section map: every heading and every bold subsection label"
+justification = """
+Complete structural index of the only prose document: the three H2s, the
+one H3, and all nine bold recipe labels. Turns any documentation question
+into a single targeted read at a known line, and shows that the README is
+half `errors.Join` migration guide, half usage cookbook.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+  { path = "README.md", start = 14, end = 14, render = { kind = "full" } },
+  { path = "README.md", start = 36, end = 36, render = { kind = "full" } },
+  { path = "README.md", start = 54, end = 54, render = { kind = "full" } },
+  { path = "README.md", start = 104, end = 104, render = { kind = "full" } },
+  { path = "README.md", start = 111, end = 111, render = { kind = "full" } },
+  { path = "README.md", start = 129, end = 129, render = { kind = "full" } },
+  { path = "README.md", start = 134, end = 134, render = { kind = "full" } },
+  { path = "README.md", start = 154, end = 154, render = { kind = "full" } },
+  { path = "README.md", start = 171, end = 171, render = { kind = "full" } },
+  { path = "README.md", start = 188, end = 188, render = { kind = "full" } },
+  { path = "README.md", start = 204, end = 204, render = { kind = "full" } },
+  { path = "README.md", start = 218, end = 218, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "1.10"
-descriptor = "README: install, go-version floor, compile-error symptom"
-justification = "Operational coverage: install command, doc link, and the concrete reason for the go1.13 floor (error wrapping); also gives the exact compile-error text (undefined: errors.As/errors.Is) a debugging agent would see on an older toolchain, plus the v1.0.0 tag escape hatch."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 104, end = 127, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 2: the Error type (multierror.go) — the return type of every
-# other function in the package — plus the README Usage-section
-# snippets that explain how callers interact with it.
-# ---------------------------------------------------------------------
+# ------------------------------------------------- 2.x semantics: docs + recipes
 
 [[batches]]
 id = "2.1"
-descriptor = "Error struct fields"
-justification = "The core data shape: Errors []error plus an optional ErrorFormat override. Every other file in the package either builds, reads, or formats this struct."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 11, end = 16, render = { kind = "full" } },
-] }
+descriptor = "README deprecation note: prefer stdlib `errors.Join`"
+justification = """
+The single most decision-changing sentence in the repo: as of Go 1.20 the
+maintainers recommend `errors.Join` for new projects, and name the reasons
+to still use this package (custom formatting, `Group`, `Append`/`Flatten`/
+`Prefix`). Any "should I use this / should I migrate" query is answered with
+zero follow-ups.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 10, end = 10, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "Error.Error() — default string formatting"
-justification = "Shows the ErrorFormat-or-ListFormatFunc fallback that every multierror.Error's default string rendering goes through."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 18, end = 25, render = { kind = "full" } },
-] }
+descriptor = "`Append` doc comment: nil handling and one-level flattening"
+justification = """
+`Append` is the entry point of essentially every usage of this library, and
+its doc states the rules that are otherwise only visible by reading the type
+switch: a non-multierror `err` is converted, nested `*Error` args are
+flattened one level, nil errors are ignored, and a nil `err` yields a new
+`*Error`. Sits directly above the signature already ranked in 1.6.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "append.go", start = 6, end = 13, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "README: Usage intro + accessing the error list"
-justification = "The Usage section's framing paragraph plus the type-switch idiom (err.(*multierror.Error)) callers use to reach the Errors field when they know they might get a multierror — the complement to 2.1/2.2's struct+Error() from the source side."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 129, end = 133, render = { kind = "full" } },
-  { path = "README.md", start = 171, end = 186, render = { kind = "full" } },
-] }
+descriptor = "README: stdlib compatibility, install, and the go 1.13 requirement"
+justification = """
+Prose answering three recurring setup questions: that `As`/`Is`/`Unwrap` are
+supported but `Unwrap` chains one-at-a-time rather than the Go 1.20
+`Unwrap() []error` shape; the `go get` line and pkg.go.dev link; and why go
+1.13 is the floor (with the v1.0.0 tag as escape hatch for older toolchains).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 98, end = 102, render = { kind = "full" } },
+  { path = "README.md", start = 106, end = 109, render = { kind = "full" } },
+  { path = "README.md", start = 113, end = 119, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "Error.ErrorOrNil()"
-justification = "The idiomatic end-of-accumulation call (`return result.ErrorOrNil()`) that converts a possibly-empty *Error into a nil error interface; nil-receiver-safe."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 27, end = 40, render = { kind = "full" } },
-] }
+descriptor = "README: the canonical accumulate-with-Append recipe"
+justification = """
+The idiomatic snippet every caller copies (`var result error`;
+`result = multierror.Append(result, err)`), with the framing sentences that
+`Append` behaves like the builtin `append` and that the library is meant to
+be unobtrusive. Highest-value code sample in the document.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 131, end = 132, render = { kind = "full" } },
+  { path = "README.md", start = 136, end = 152, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "README: returning a multierror only if there are errors"
-justification = "The worked example for the ErrorOrNil idiom just shown in 2.4 — pairs the mechanism with the exact calling convention a caller would copy."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 218, end = 231, render = { kind = "full" } },
-] }
+descriptor = "`ErrorOrNil` and `WrappedErrors` doc comments"
+justification = """
+Two nil-safety contracts that are easy to get wrong: `ErrorOrNil` returns
+nil when the list is empty (the recommended way to end an accumulation) and
+`WrappedErrors` is nil-receiver-safe, implements the `errwrap.Wrapper`
+interface, and is explicitly not safe to call concurrently.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 27, end = 30, render = { kind = "full" } },
+  { path = "multierror.go", start = 46, end = 52, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "Error.Unwrap()"
-justification = "Stdlib-compat entry point: builds the unexported `chain` (2.7) to let errors.Is/As/Unwrap walk every wrapped error one at a time, not just the first. Explicitly documents it does a shallow copy, so errors appended after Unwrap won't show up in an already-obtained chain."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 60, end = 86, render = { kind = "full" } },
-] }
+descriptor = "`Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support"
+justification = """
+The subtlest contract in the package: unwrap order matches `Errors` order at
+call time, the slice is shallow-copied so errors appended later are
+invisible until a new `Unwrap`, and the result keeps supporting
+`errors.As/Is/Unwrap`. Prime target for a "why doesn't my appended error
+show up" debugging query.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 60, end = 70, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.7"
-descriptor = "chain type (unexported Unwrap/Is/As helper)"
-justification = "Not in the public-API roster (unexported), but load-bearing for anyone debugging why errors.Is/As behaves the way it does on a multierror: chain is a []error with a precondition of non-empty, and Is/As only ever test errors[0], relying on repeated Unwrap to advance."
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 88, end = 124, render = { kind = "full" } },
-] }
+descriptor = "`Flatten` and `Prefix` doc comments"
+justification = """
+The two remaining exported helpers' contracts: `Flatten` merges nested
+`*Error`s into a single `*Error`; `Prefix` prepends text to each wrapped
+error (or to the error itself if it isn't a multierror) to give better
+scoping. Completes doc coverage of the roster from 1.6.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "flatten.go", start = 6, end = 7, render = { kind = "full" } },
+  { path = "prefix.go", start = 10, end = 15, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.8"
-descriptor = "README: extracting an error via errors.As"
-justification = "Worked example pairing directly with chain.As (2.7): shows the &target pointer-to-concrete-type pattern against a multierror value."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 188, end = 202, render = { kind = "full" } },
-] }
+descriptor = "`Group` doc comments: Go and Wait"
+justification = """
+The concurrency surface's semantics — `Group` coalesces errors from
+goroutines, `Go` runs a function in a new goroutine and adds any error to
+the group multierror, `Wait` blocks until all have returned and returns it.
+With the 1.6 signatures this makes the whole `Group` pattern usable without
+opening group.go.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "group.go", start = 8, end = 9, render = { kind = "full" } },
+  { path = "group.go", start = 16, end = 19, render = { kind = "full" } },
+  { path = "group.go", start = 34, end = 35, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.9"
-descriptor = "README: checking for an exact error value via errors.Is"
-justification = "Worked example pairing with chain.Is (2.7): the errors.Is(err, os.ErrNotExist)-style sentinel-error check against a multierror value."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 204, end = 216, render = { kind = "full" } },
-] }
+descriptor = "format.go semantics: the formatter hook and the default output strings"
+justification = """
+The doc comments plus the complete `ListFormatFunc` body, which contains the
+literal format strings for the one-error and n-error cases. Any question
+about what a multierror prints, or about matching that text in a test, is
+answered here with no follow-up; overrides the 1.6 ellipsis at line 18.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "format.go", start = 11, end = 12, render = { kind = "full" } },
+  { path = "format.go", start = 15, end = 16, render = { kind = "full" } },
+  { path = "format.go", start = 18, end = 29, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.10"
-descriptor = "Error.WrappedErrors()"
-justification = "The errwrap.Wrapper-interface method (for the older, separate hashicorp/errwrap library) — a niche but exported compatibility shim; nil-receiver-safe like ErrorOrNil."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 46, end = 58, render = { kind = "full" } },
-] }
+descriptor = "README: customizing the message via `ErrorFormat`"
+justification = """
+The recipe for the package's headline differentiator over `errors.Join`:
+assign a `func([]error) string` to `result.ErrorFormat` on a
+`*multierror.Error` and `Error()` uses it. Pairs with the `ErrorFormatFunc`
+signature from 1.6 and the default implementation in 2.9.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 156, end = 169, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.11"
-descriptor = "Error.GoString()"
-justification = "Smallest and least commonly needed of the Error methods: a %#v-style debug formatter. Included for completeness of the Error type but ranked last within this tier."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "multierror.go", start = 42, end = 44, render = { kind = "full" } },
-] }
+descriptor = "README: getting at the individual errors"
+justification = """
+The consumer-side recipe: a caller who doesn't know about multierror just
+sees an `error`, one who does can type-switch to `*multierror.Error` and
+read `merr.Errors`, or call `errors.Unwrap` repeatedly until none remain.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 173, end = 186, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 3: Append — the primary construction entrypoint (README's first
-# Usage example) — plus its migration-guide counterpart.
-# ---------------------------------------------------------------------
+[[batches]]
+id = "2.12"
+descriptor = "README: `errors.As` extraction and `errors.Is` sentinel checks"
+justification = """
+The two stdlib-introspection recipes, kept together because they are the
+same technique: `errors.As(err, &errRich)` to pull a typed error out of a
+multierror, and `errors.Is(err, os.ErrNotExist)` to test for a sentinel.
+This is what the `chain` machinery exists to support.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 190, end = 202, render = { kind = "full" } },
+  { path = "README.md", start = 206, end = 216, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.13"
+descriptor = "README: returning a multierror only if there are errors"
+justification = """
+The closing recipe and the idiomatic end of an accumulation:
+`return result.ErrorOrNil()` on a `*multierror.Error`, which yields a nil
+`error` when nothing was appended. Completes the README's usage class, so
+the cookbook is whole rather than partially shown.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 220, end = 231, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.14"
+descriptor = "`chain` doc comment: why the type exists and its precondition"
+justification = """
+Explains the design decision behind `chain` — deterministic
+`errors.Is/As/Unwrap`, `Unwrap` returning the next error rather than the
+wrapped one, and the non-empty-slice precondition that the indexing in its
+methods relies on. The reasoning a maintainer needs before touching
+introspection behaviour.
+"""
+predecessor = "1.8"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 88, end = 98, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.15"
+descriptor = "README migration guide: basic aggregation with `errors.Join`"
+justification = """
+Before/after snippet for the most common migration path off this package.
+Ranked after the package's own usage material because it serves callers
+leaving rather than callers working here, but it is the body of the README's
+first H2 and is what the deprecation note in 2.1 points at.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 15, end = 34, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.16"
+descriptor = "README migration guide: replacing custom formatting"
+justification = """
+The migration recipe for the feature the deprecation note calls out first:
+with stdlib `errors.Join` you wrap the joined error in your own type that
+implements `Error() string` and `Unwrap() []error`. Small and
+independently useful, so it is separable from the Group recipe below.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 37, end = 52, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.17"
+descriptor = "README migration guide: replacing `Group` with a mutex collector"
+justification = """
+The longest snippet in the README and the last piece of the migration
+section: `golang.org/x/sync/errgroup` returns only the first error, so
+collecting all of them stdlib-side needs the shown `ErrorCollector` with a
+`sync.Mutex` and `errors.Join`. Completes the section so it isn't
+half-shown.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 55, end = 86, render = { kind = "full" } },
+]
+
+# ----------------------------------------------------- 3.x implementation bodies
 
 [[batches]]
 id = "3.1"
-descriptor = "Append() doc + *Error branch"
-justification = "The most commonly called function in the package. This half handles the case where err is already a *multierror.Error (including a typed-nil *Error, which the comment flags explicitly), flattening any *Error values found in errs one level."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "append.go", start = 6, end = 36, render = { kind = "full" } },
-] }
+descriptor = "`Append` body: the type switch, flattening, and nil filtering"
+justification = """
+The most-read function in the package, and the one whose behaviour is
+routinely debugged: typed-nil `*Error` initialization, one-level flattening
+of `*Error` args, skipping nil entries, and the default branch that
+recursively re-enters with a fresh `&Error{}`. Overrides the 1.6 ellipsis.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "append.go", start = 15, end = 45, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "Append() default branch"
-justification = "The other half of the same switch: when err is a plain error (or nil), builds a fresh []error and recurses into the *Error branch above."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "append.go", start = 37, end = 46, render = { kind = "full" } },
-] }
+descriptor = "Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors`"
+justification = """
+Four short method bodies that make the type's runtime behaviour concrete:
+the `ListFormatFunc` fallback when `ErrorFormat` is nil, the two nil checks
+in `ErrorOrNil`, the `%#v` GoString, and the nil-receiver guard in
+`WrappedErrors`. Overrides the corresponding 1.7 ellipses.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 19, end = 25, render = { kind = "full" } },
+  { path = "multierror.go", start = 32, end = 40, render = { kind = "full" } },
+  { path = "multierror.go", start = 43, end = 44, render = { kind = "full" } },
+  { path = "multierror.go", start = 54, end = 58, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "README: building a list of errors (Append usage)"
-justification = "The exact idiomatic calling pattern (`result = multierror.Append(result, err)` inside `if err != nil` blocks) that 3.1/3.2's flattening logic exists to support."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 134, end = 152, render = { kind = "full" } },
-] }
+descriptor = "`Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain`"
+justification = """
+Implements the contract documented in 2.6 — nil and empty return nil, a
+single error is returned directly (no chain allocation), otherwise the slice
+is copied and wrapped in `chain`. The single-error fast path is a real
+behavioural corner: the returned error is not a `chain`.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 72, end = 86, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "README: migrating basic error aggregation to errors.Join"
-justification = "Direct before/after code contrasting the Append-based pattern with the stdlib errors.Join equivalent — the concrete answer to \"should I even use Append here\", flagged as central by the README's opening note (1.8)."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 12, end = 34, render = { kind = "full" } },
-] }
+descriptor = "`chain` method bodies: Error/Unwrap/As/Is"
+justification = """
+Four one-liners that define how introspection walks the list: the head
+element answers `Error`/`As`/`Is`, and `Unwrap` returns `e[1:]` until a
+single element remains. Completes the picture started at 1.8 and 2.14.
+"""
+predecessor = "1.8"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 103, end = 107, render = { kind = "full" } },
+  { path = "multierror.go", start = 109, end = 114, render = { kind = "full" } },
+  { path = "multierror.go", start = 118, end = 119, render = { kind = "full" } },
+  { path = "multierror.go", start = 123, end = 124, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 4: ErrorFormat customization (format.go).
-# ---------------------------------------------------------------------
+[[batches]]
+id = "3.5"
+descriptor = "flatten.go bodies: exported `Flatten` and the recursive helper"
+justification = """
+Complete implementation: the non-`*Error` pass-through, and the recursive
+`flatten` that walks nested `*Error`s appending leaves into one result.
+Shows that flattening is unbounded-depth, unlike `Append`'s single level — a
+distinction the doc comments alone do not make sharp.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "flatten.go", start = 9, end = 18, render = { kind = "full" } },
+  { path = "flatten.go", start = 21, end = 29, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "`Prefix` body: in-place rewrite of each wrapped error"
+justification = """
+Reveals that `Prefix` mutates the receiver's `Errors` slice in place with
+`fmt.Errorf("%s %s", prefix, e)` rather than returning a copy, and that it
+uses `%s` not `%w`, so the originals are no longer unwrappable. A non-obvious
+gotcha only the body shows.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "prefix.go", start = 17, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "group.go bodies: the struct's unexported fields, `Go`, and `Wait`"
+justification = """
+The concurrency implementation in full: fields `mutex sync.Mutex`,
+`err *Error`, `wg sync.WaitGroup`; `Go` adds to the WaitGroup, runs the
+function in a goroutine and appends under the mutex; `Wait` waits then
+returns the accumulated error. Everything a concurrency-safety review needs.
+"""
+predecessor = "1.6"
+content.kind = "lines"
+content.spans = [
+  { path = "group.go", start = 11, end = 14, render = { kind = "full" } },
+  { path = "group.go", start = 21, end = 32, render = { kind = "full" } },
+  { path = "group.go", start = 37, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "sort.go bodies: Len/Swap/Less"
+justification = """
+Completes the `sort.Interface` implementation: nil-safe `Len`, the standard
+swap, and `Less` comparing `Error()` strings — i.e. `sort.Sort` on a
+multierror orders by message text.
+"""
+predecessor = "1.7"
+content.kind = "lines"
+content.spans = [
+  { path = "sort.go", start = 8, end = 13, render = { kind = "full" } },
+  { path = "sort.go", start = 17, end = 18, render = { kind = "full" } },
+  { path = "sort.go", start = 22, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Every import block in the package: stdlib only"
+justification = """
+All four files that import anything (`multierror.go`, `format.go`,
+`group.go`, `prefix.go`) shown together; `append.go`, `flatten.go` and
+`sort.go` have none. Establishes that the library depends on nothing but
+`errors`, `fmt`, `strings`, `sync` — consistent with the empty `go.sum` —
+which answers any dependency or vendoring question.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 6, end = 9, render = { kind = "full" } },
+  { path = "format.go", start = 6, end = 9, render = { kind = "full" } },
+  { path = "group.go", start = 6, end = 6, render = { kind = "full" } },
+  { path = "prefix.go", start = 6, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Standard file header: copyright, SPDX tag, package clause"
+justification = """
+The four-line preamble that opens every `.go` file in the repo, shown once
+from multierror.go. Tells an agent adding a new file exactly what
+boilerplate to reproduce, and names the license (MPL-2.0) without spending
+budget on the 16 KB LICENSE text.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror.go", start = 1, end = 4, render = { kind = "full" } },
+]
+
+# ------------------------------------------------------------------- 4.x tests
 
 [[batches]]
 id = "4.1"
-descriptor = "ErrorFormatFunc type"
-justification = "The func([]error) string signature that a custom Error.ErrorFormat must satisfy — referenced by Error.Error() in 2.2."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "format.go", start = 11, end = 13, render = { kind = "full" } },
-] }
+descriptor = "Complete roster of test functions across all seven `*_test.go` files"
+justification = """
+Every top-level `Test*` function in the repo, name-only, grouped by file.
+This is the map for "is behaviour X covered" and for "where do I add a test"
+— both answered in one hop. Listing them all avoids implying that cases like
+typed-nil arguments or non-error inputs are untested.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "append_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "append_test.go", start = 45, end = 45, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "append_test.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "append_test.go", start = 62, end = 62, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "append_test.go", start = 71, end = 71, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "append_test.go", start = 79, end = 79, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "flatten_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "flatten_test.go", start = 43, end = 43, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "format_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "format_test.go", start = 27, end = 27, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "group_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 17, end = 17, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 33, end = 33, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 51, end = 51, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 65, end = 65, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 82, end = 82, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 118, end = 118, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "multierror_test.go", start = 157, end = 157, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "prefix_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "prefix_test.go", start = 22, end = 22, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "prefix_test.go", start = 30, end = 30, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "sort_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^func [^(]+" } },
+  { path = "sort_test.go", start = 32, end = 32, render = { kind = "truncated", pattern = "^func [^(]+" } },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "ListFormatFunc — the default formatter"
-justification = "The built-in ErrorFormatFunc implementation used whenever a caller doesn't set a custom one: singular vs. plural wording, bullet-point list body."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "format.go", start = 15, end = 30, render = { kind = "full" } },
-] }
+descriptor = "Every `t.Run` subtest name in multierror_test.go"
+justification = """
+The Unwrap/Is/As tests are subdivided rather than table-driven; these nine
+names enumerate the introspection cases actually covered (with errors, with
+no errors, with nil multierror, wrapped by fmt.Errorf, value absent). Cheap,
+and it prevents an agent concluding a case is untested when it is.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror_test.go", start = 83, end = 83, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 103, end = 103, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 110, end = 110, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 121, end = 121, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 133, end = 133, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 145, end = 145, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 160, end = 160, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 176, end = 176, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 192, end = 192, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "README: customizing the formatting of the errors"
-justification = "Worked example of setting result.ErrorFormat to a custom closure — the caller-facing counterpart to 4.1/4.2."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 154, end = 169, render = { kind = "full" } },
-] }
+descriptor = "The golden formatted output, as asserted in tests"
+justification = """
+`TestErrorError_default` and `TestFlatten` embed the exact expected strings
+("2 errors occurred:" / "3 errors occurred:" with tab-star bullets and a
+trailing blank line). Seeing the assertion form plus the literal is what an
+agent needs to write or fix a test against the formatter.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror_test.go", start = 34, end = 49, render = { kind = "full" } },
+  { path = "flatten_test.go", start = 30, end = 40, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "README: migrating custom formatting to errors.Join"
-justification = "Shows the stdlib-only equivalent of custom ErrorFormat: wrap errors.Join's result in a caller-defined type implementing Error()/Unwrap() []error — useful for anyone deciding whether to keep this dependency just for formatting."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 36, end = 52, render = { kind = "full" } },
-] }
+descriptor = "group_test.go: the concurrency table and its assertion loop"
+justification = """
+The only table-driven test in the repo, and the template for extending
+`Group` coverage: cases from empty through `{err1, nil, err2}`, a
+`nilResult` expectation, `g.Go` inside a loop with the classic `err := err`
+capture, and a `strings.Contains` check on the aggregated message.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "group_test.go", start = 13, end = 46, render = { kind = "full" } },
+]
 
-# ---------------------------------------------------------------------
-# Tier 5: Group — concurrent error collection (group.go).
-# ---------------------------------------------------------------------
+[[batches]]
+id = "4.5"
+descriptor = "Test-only helper `nestedError` and the `errors.As` target pattern"
+justification = """
+The package's single test fixture type, defined at the bottom of
+multierror_test.go, plus the subtest body that uses it with
+`errors.As(err, &target)`. Anyone writing a new introspection test needs
+this exact shape, and its location after all the tests is easy to miss.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "multierror_test.go", start = 161, end = 174, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 208, end = 211, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "append_test.go: the nil / typed-nil / flattening cases in full"
+justification = """
+The bodies that pin `Append`'s trickiest contract points — a typed nil
+`*Error` receiver, a nil `*Error` argument being dropped, and appending a
+multierror flattening into three errors. These asserted lengths are the
+regression net for any change to 3.1.
+"""
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "append_test.go", start = 12, end = 43, render = { kind = "full" } },
+  { path = "append_test.go", start = 54, end = 60, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "Test file preambles: package clause and imports"
+justification = """
+Tests are in-package (`package multierror`, not `multierror_test`), so they
+can reach unexported symbols like `chain` and `flatten` — a fact that
+determines where a new test may live. Shown for multierror_test.go and
+sort_test.go along with their stdlib-only imports.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "multierror_test.go", start = 4, end = 11, render = { kind = "full" } },
+  { path = "sort_test.go", start = 4, end = 11, render = { kind = "full" } },
+]
+
+# ------------------------------------------------------- 5.x build, CI, meta
 
 [[batches]]
 id = "5.1"
-descriptor = "Group struct"
-justification = "sync.Mutex + *Error + sync.WaitGroup: the concurrency-safe accumulator that Go()/Wait() operate on."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "group.go", start = 8, end = 14, render = { kind = "full" } },
-] }
+descriptor = "Complete `.github/` tree listing"
+justification = """
+The only subdirectory in the repo: `dependabot.yml`,
+`pull_request_template.md` and a `workflows/` directory holding exactly two
+workflows. Establishes the whole automation surface in one cheap listing so
+no CI file is implied away.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "Group.Go()"
-justification = "Launches f in a goroutine, appending any non-nil error to g.err under g.mutex via Append (3.1) — the write side of the concurrency contract."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "group.go", start = 16, end = 32, render = { kind = "full" } },
-] }
+descriptor = "Makefile: every target plus the TEST variable"
+justification = """
+`TEST?=./...`, the `default: test` line, all four targets (`test`,
+`testrace`, `updatedeps`, `generate`) with their prerequisites, and the
+`.PHONY` line. Answers "how do I run the tests locally" (`make test`,
+`make testrace`) without the recipes; ellipses mark those elided bodies.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "Makefile", start = 1, end = 1, render = { kind = "full" } },
+  { path = "Makefile", start = 3, end = 3, render = { kind = "full" } },
+  { path = "Makefile", start = 6, end = 6, render = { kind = "full" } },
+  { path = "Makefile", start = 7, end = 7, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 13, end = 13, render = { kind = "full" } },
+  { path = "Makefile", start = 14, end = 14, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 20, end = 20, render = { kind = "full" } },
+  { path = "Makefile", start = 21, end = 21, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 24, end = 24, render = { kind = "full" } },
+  { path = "Makefile", start = 25, end = 25, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 31, end = 31, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "Group.Wait()"
-justification = "Blocks on the WaitGroup, then returns g.err under the same mutex — the read side; together with 5.2 this is the whole concurrency contract."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "group.go", start = 34, end = 41, render = { kind = "full" } },
-] }
+descriptor = "Makefile recipes for test, testrace, updatedeps and generate"
+justification = """
+The actual commands: `go test -timeout=60s -parallel=10` with `${TESTARGS}`
+passthrough, the `-race` variant, the `scripts/deps.sh` call (a script that
+does not exist in this tree), and the `.DS_Store` sweep plus `go generate`
+that `test` depends on. Overrides the 5.2 ellipses.
+"""
+predecessor = "5.2"
+content.kind = "lines"
+content.spans = [
+  { path = "Makefile", start = 7, end = 12, render = { kind = "full" } },
+  { path = "Makefile", start = 14, end = 18, render = { kind = "full" } },
+  { path = "Makefile", start = 21, end = 21, render = { kind = "full" } },
+  { path = "Makefile", start = 25, end = 29, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "README: migrating Group to errgroup / a manual mutex"
-justification = "Explicitly notes errgroup.Group.Wait() returns only the first error (unlike this package's Group, which collects all of them), then hand-rolls an equivalent ErrorCollector with a mutex — the clearest signal in the whole repo for why Group exists at all rather than reusing errgroup."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 54, end = 86, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 6: Flatten (flatten.go).
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "6.1"
-descriptor = "Flatten()"
-justification = "Public entrypoint: no-op on non-*Error values, otherwise delegates to the recursive flatten() helper (6.2) to merge nested *Errors into one flat *Error."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "flatten.go", start = 6, end = 18, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.2"
-descriptor = "flatten() recursive helper (unexported)"
-justification = "Not in the public-API roster, but is where the actual recursion happens: type-switches on *Error to recurse, otherwise appends the leaf error directly."
-content = { kind = "lines", spans = [
-  { path = "flatten.go", start = 20, end = 29, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 7: Prefix (prefix.go).
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "Prefix()"
-justification = "Prefixes a string to a plain error via fmt.Errorf, or to each wrapped error individually (mutating err.Errors in place) if given a *multierror.Error — including the same typed-nil-initialization guard seen in Append (3.1)."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "prefix.go", start = 6, end = 37, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 8: Sort (sort.go).
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "Len/Swap/Less — sort.Interface"
-justification = "The full sort.Interface implementation in one 18-line file: Len is nil-receiver-safe (returns 0), Swap/Less are value receivers comparing by err.Error() string. Lets callers do sort.Sort(err) directly on a *Error."
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "sort.go", start = 6, end = 23, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 9: worked test examples. Names+lines for every test are already
-# in 1.6/1.7; these are the bodies most likely to answer a "how does X
-# behave / how is X tested" query without a further file read.
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "9.1"
-descriptor = "TestErrorUnwrap"
-justification = "Exercises the Unwrap chain end-to-end across three subtests (with errors, no errors, nil *Error), directly demonstrating the one-at-a-time chaining behavior called out in 1.9/2.6 as the key difference from errors.Join."
-predecessor = "1.6"
-content = { kind = "lines", spans = [
-  { path = "multierror_test.go", start = 82, end = 116, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.2"
-descriptor = "TestAppend_Error"
-justification = "Covers Append's two subtle documented behaviors at once: initializing a typed-nil *Error, and flattening a nested Append(...) call's *Error result one level into the outer one."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "append_test.go", start = 11, end = 43, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.3"
-descriptor = "TestGroup (whole file)"
-justification = "The only test in group_test.go; a table of {errs, nilResult} cases including nil-element and empty-slice inputs, run through real goroutines via g.Go/g.Wait — the concurrency behavior 5.1-5.3 can't show statically."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "group_test.go", start = 6, end = 47, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.4"
-descriptor = "TestFlatten"
-justification = "Demonstrates the recursive case flatten.go's doc comment promises: a *Error nested two levels deep collapses to one flat 3-error list, verified against the exact ListFormatFunc-rendered string."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "flatten_test.go", start = 13, end = 41, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.5"
-descriptor = "prefix_test.go (whole file)"
-justification = "All three Prefix test cases (multierror input, nil error, plain error) in one small file — confirms the exact \"%s %s\" prefix+space format used in prefix.go."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "prefix_test.go", start = 6, end = 39, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.6"
-descriptor = "format_test.go (whole file)"
-justification = "Both ListFormatFunc cases (singular \"1 error occurred\" vs plural \"N errors occurred\") with their exact expected string layout, including the trailing blank line — easy to get wrong by hand."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "format_test.go", start = 6, end = 43, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.7"
-descriptor = "TestSortMultiple (sort_test.go)"
-justification = "Confirms sort.Sort(err) actually reorders err.Errors alphabetically by Error() string via the real stdlib sort package, not just that Less/Swap/Len type-check. TestSortSingle (the file's other, degenerate one-element case) is skipped here — its name+line is already in the 1.7 roster."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "sort_test.go", start = 6, end = 11, render = { kind = "full" } },
-  { path = "sort_test.go", start = 32, end = 55, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "9.8"
-descriptor = "TestErrorErrorOrNil"
-justification = "Confirms the nil-vs-populated-vs-DeepEqual contract of ErrorOrNil (2.4) precisely: empty *Error yields a true nil error interface, non-empty yields the same *Error back by value."
-predecessor = "1.6"
-content = { kind = "lines", spans = [
-  { path = "multierror_test.go", start = 51, end = 63, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------
-# Tier 10: operational surface — build, CI, and governance files.
-# ---------------------------------------------------------------------
-
-[[batches]]
-id = "10.1"
-descriptor = "Makefile"
-justification = "Build/test entry points: `make test` runs `go generate` then `go test` per-package (excluding vendor) with a 60s timeout and -parallel=10; `make testrace` is the same with -race; `updatedeps` shells out to a scripts/deps.sh that doesn't exist in this fixture (a dead target, worth knowing before trying to run it)."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 1, end = 31, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.2"
-descriptor = "CI job-name locations (go-multierror.yml)"
-justification = "Catastrophic-omission hedge for the CI matrix: names of all four jobs (go-fmt, lint, linux-tests, windows-tests) so the agent doesn't assume e.g. race-testing or a single-OS run is all that's configured."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/go-multierror.yml", start = 10, end = 10, render = { kind = "full" } },
-  { path = ".github/workflows/go-multierror.yml", start = 30, end = 30, render = { kind = "full" } },
-  { path = ".github/workflows/go-multierror.yml", start = 42, end = 42, render = { kind = "full" } },
-  { path = ".github/workflows/go-multierror.yml", start = 88, end = 88, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.3"
-descriptor = "linux-tests job body"
-justification = "Representative job shape (windows-tests mirrors it almost exactly, differing mainly in runner/paths): the go-version matrix (1.13/oldstable/stable) plus the actual gotestsum invocation with coverage — the concrete answer to \"how does CI actually run the tests\". Elides the checkout/setup-go/gotestsum-install boilerplate steps and the trailing artifact-upload steps as low-value, but ellipsis-marks both elisions so the agent knows the steps list is longer than the two rendered items."
-predecessor = "10.2"
-content = { kind = "lines", spans = [
+descriptor = "Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix"
+justification = """
+`.github/workflows/go-multierror.yml` structure — push/pull_request
+triggers, read-only contents permission, the complete job list
+(`go-fmt`, `lint`, `linux-tests`, `windows-tests`) with their runners, and
+the shared version matrix `1.13` / `oldstable` / `stable`. Enough to reason
+about a CI failure or add a job without reading 134 lines of YAML; ellipses
+mark the elided step lists.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/go-multierror.yml", start = 1, end = 4, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 6, end = 7, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 9, end = 11, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 12, end = 12, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/go-multierror.yml", start = 30, end = 31, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 32, end = 32, render = { kind = "ellipsis" } },
   { path = ".github/workflows/go-multierror.yml", start = 42, end = 51, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/go-multierror.yml", start = 88, end = 97, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 98, end = 98, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "CI steps: the `go fmt` gate and the golangci-lint job"
+justification = """
+The step bodies behind two of the 5.4 jobs: `files="$(go fmt ./...)"` with
+an `exit 1` if anything is unformatted (so unformatted code fails CI before
+tests run), and the pinned `golangci/golangci-lint-action`. Both jobs read
+`go-version-file: go.mod`. Overrides the 5.4 ellipses at lines 12 and 32.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/go-multierror.yml", start = 12, end = 28, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 32, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "CI: how the linux test job actually runs the suite"
+justification = """
+The commands that define a CI test run:
+`gotestsum --format=short-verbose --junitfile ... -- -p 2 -cover
+-coverprofile=coverage-linux.out ./...`, the artifact uploads keyed by
+matrix Go version, and `go tool cover -func`. The leading ellipsis marks the
+checkout / setup-go / gotestsum-install steps that precede them.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
   { path = ".github/workflows/go-multierror.yml", start = 53, end = 53, render = { kind = "ellipsis" } },
-  { path = ".github/workflows/go-multierror.yml", start = 69, end = 74, render = { kind = "full" } },
-  { path = ".github/workflows/go-multierror.yml", start = 75, end = 75, render = { kind = "ellipsis" } },
-] }
+  { path = ".github/workflows/go-multierror.yml", start = 63, end = 86, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "10.4"
-descriptor = "actionlint.yml"
-justification = "Second, narrower workflow: lints the .github/** workflow files themselves via a dockerized actionlint, triggered only on pushes touching .github/**."
-content = { kind = "lines", spans = [
+id = "5.7"
+descriptor = "CI: what the windows job does differently"
+justification = """
+The windows-tests job repeats the linux steps with four differences that
+matter when editing CI: `git config --global core.autocrlf false`, an
+explicit `go mod download`, `gotestsum.exe` writing `coverage-win.out`, and
+a final coverage step running under `shell: cmd`. Ellipses stand in for the
+steps that merely mirror the linux job.
+"""
+predecessor = "5.4"
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/go-multierror.yml", start = 99, end = 99, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/go-multierror.yml", start = 109, end = 111, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 112, end = 112, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/go-multierror.yml", start = 116, end = 121, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 122, end = 122, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/go-multierror.yml", start = 132, end = 133, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "actionlint workflow, in full"
+justification = """
+The second workflow: lints workflow files on pushes touching `.github/**`
+using a HashiCorp-mirrored `rhysd/actionlint` docker action. Nineteen lines,
+so showing it whole costs little more than pointing at it.
+"""
+content.kind = "lines"
+content.spans = [
   { path = ".github/workflows/actionlint.yml", start = 1, end = 19, render = { kind = "full" } },
-] }
+]
 
 [[batches]]
-id = "10.5"
-descriptor = "dependabot.yml"
-justification = "Weekly update schedule for both github-actions and gomod ecosystems, with a shared \"[chore] : \" commit-message prefix — relevant to anyone asking why a dependency-bump PR appeared."
-content = { kind = "lines", spans = [
-  { path = ".github/dependabot.yml", start = 1, end = 19, render = { kind = "full" } },
-] }
+id = "5.9"
+descriptor = "Dependabot configuration"
+justification = """
+Both update ecosystems (`github-actions` and `gomod`), weekly, with the
+`[chore] : ` commit-message prefix — the reason action SHAs in the workflows
+churn, and the file to edit to change that cadence.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = ".github/dependabot.yml", start = 4, end = 19, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "10.6"
-descriptor = "CODEOWNERS"
-justification = "Default-owns-everything to @hashicorp/team-ip-compliance (the one active rule); the ellipsis marks where commented-out per-path override examples continue (lines 7-13), none of which are actually active in this repo."
-content = { kind = "lines", spans = [
-  { path = "CODEOWNERS", start = 1, end = 5, render = { kind = "full" } },
-  { path = "CODEOWNERS", start = 7, end = 7, render = { kind = "ellipsis" } },
-] }
-
-[[batches]]
-id = "10.7"
-descriptor = "PR template"
-justification = "Three required sections (Description, Related Issue, How Has This Been Tested?) an agent drafting a PR body should fill in verbatim."
-content = { kind = "lines", spans = [
-  { path = ".github/pull_request_template.md", start = 1, end = 12, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "10.8"
-descriptor = "CHANGELOG.md"
-justification = "Currently just an empty \"## Unreleased\" skeleton (Improvements/Changes/Fixed/Security, all blank) — tells the agent no changes are queued for the next release yet, and shows the exact heading structure to append a new entry under."
-content = { kind = "lines", spans = [
+id = "5.10"
+descriptor = "CHANGELOG skeleton, CODEOWNERS, and the pinned Go toolchain file"
+justification = """
+Three small governance facts: the CHANGELOG holds only an empty `Unreleased`
+section with four fixed subheadings (so release notes have a required
+shape), every path is owned by `@hashicorp/team-ip-compliance`, and
+`.go-version` pins `1.13` to match go.mod.
+"""
+content.kind = "lines"
+content.spans = [
   { path = "CHANGELOG.md", start = 1, end = 9, render = { kind = "full" } },
-] }
+  { path = "CODEOWNERS", start = 4, end = 5, render = { kind = "full" } },
+  { path = ".go-version", start = 1, end = 1, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "10.9"
-descriptor = "LICENSE header"
-justification = "Confirms MPL 2.0 licensing textually (already implied by every source file's SPDX header and the README badge) without spending budget on the full 355-line license body, which a coding agent essentially never needs verbatim."
-content = { kind = "lines", spans = [
+id = "5.11"
+descriptor = "README badge block and the older-Go compile-error hint"
+justification = """
+Replaces the 1.1 ellipsis with what was elided at the top of the README:
+CircleCI / pkg.go.dev / go-mod-version badges and their link definitions.
+Also the sample `undefined: errors.As` compile errors quoted in the
+requirements section, which is the string a user on an old toolchain would
+search for.
+"""
+predecessor = "1.1"
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 3, end = 8, render = { kind = "full" } },
+  { path = "README.md", start = 121, end = 127, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.12"
+descriptor = "PR template section headings"
+justification = """
+The three required sections of `.github/pull_request_template.md`
+(Description, Related Issue, How Has This Been Tested?) plus the heimdall
+compliance marker on line 1 — what a generated PR body should contain.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = ".github/pull_request_template.md", start = 1, end = 2, render = { kind = "full" } },
+  { path = ".github/pull_request_template.md", start = 6, end = 6, render = { kind = "full" } },
+  { path = ".github/pull_request_template.md", start = 10, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.13"
+descriptor = "LICENSE identification lines"
+justification = """
+Last: the 16 KB LICENSE file opens with the IBM copyright line and
+`Mozilla Public License, version 2.0`, corroborating the SPDX tag from 3.10.
+Ranked at the bottom because the license text itself has no bearing on any
+coding task; only its identity does.
+"""
+content.kind = "lines"
+content.spans = [
   { path = "LICENSE", start = 1, end = 3, render = { kind = "full" } },
-] }
+]

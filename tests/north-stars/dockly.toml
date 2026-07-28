@@ -1,1140 +1,785 @@
 fixture = "dockly"
 revision_pin = "a817de79"
 summary = """
-dockly: a single-binary Node.js CLI (`bin: dockly` -> index.js) that renders an
-immersive terminal dashboard (blessed + blessed-contrib) for managing Docker
-containers, services, and images against a local or remote Docker daemon via
-dockerode. Architecture is a small plugin system: `src/screen.js` owns a
-12x12 blessed grid and a `mode` (containers/services/images); `src/assetsLoader.js`
-globs `hooks/*.hook.js` and `widgets/**/*.widget.js` at startup and wires them
-into two Maps (hooks poll docker and emit events; widgets render and consume
-those events). `src/grid.config.js` is the per-mode widget->grid-cell layout.
-Widgets subclass one of five templates in `src/widgetsTemplates/` (list, info,
-logs, help, base.hook) via the `src/baseWidget.js` mixin. There is no test
-suite: `npm test` runs `standard` lint only. Likely query distribution: CLI
-flag / keybinding lookups, "how is X docker field displayed" formatting
-questions, docker API call sites, widget/grid layout tweaks, Docker packaging
-(Dockerfile, dockerRunScript.sh, CI publish workflows), and debugging the
-polling/event wiring between hooks and widgets.
+`dockly` is a Node.js terminal dashboard (blessed / blessed-contrib) that
+manages Docker containers, services and images over the dockerode client.
+It is a single global CLI binary (`index.js` -> `bin.dockly`) with no test
+suite: the whole repository is runtime code plus a Gatsby marketing site
+under `docs/`.
+
+The architecture is small but indirect, and that indirection is what an
+agent must not have to rediscover: `src/screen.js` owns the blessed screen
+and a 12x12 grid; `src/assetsLoader.js` glob-loads `hooks/*.hook.js` and
+`widgets/**/*.widget.js` by convention; `src/grid.config.js` decides which
+widget names are instantiated for each of the three modes in `lib/modes.js`
+(containers / services / images); `src/widgetsTemplates/*.template.js` are
+abstract base classes whose unimplemented methods `throw new Error(...)`,
+and the leaf files under `widgets/<mode>/` are mostly a `getLabel()` plus a
+few overrides. Hooks are the data/event layer (docker polling, keypress
+actions); widgets are the view layer; they talk through a shared
+`widgetsRepository` Map and EventEmitter events.
+
+The ranking therefore buys, in order: what the project is and where its
+code lives (complete directory listings, so no file class looks absent);
+the user-facing surfaces (CLI flags in `src/cli.js`, the runtime keybinding
+table, how to build/run/lint it); the orchestration core; the dockerode
+wrapper's method surface; the template/hook framework contracts; then the
+concrete widgets, themes and the peripheral docs site. Symbol rosters are
+ranked before bodies so that "where is X?" is one grep away, and bodies are
+bought where the semantics are non-obvious (mode toggling, asset globbing,
+connection/filter parsing, and shelling into a running container).
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = "First thing any session needs: the full top-level file/dir roster, so nothing downstream (src/, hooks/, widgets/, lib/, docs/, CI config) is assumed absent."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+descriptor = "Package identity: name, version, description, entry point, bin name"
+justification = "The cheapest possible answer to 'what is this repo and how is it invoked'. `main` and `bin` together establish that index.js is both the module entry and the installed `dockly` command, which frames every later batch."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 2, end = 5, render.kind = "full" },
+  { path = "package.json", start = 24, end = 26, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "package.json identity"
-justification = "Name/version/description/main answer 'what is this' as cheaply as possible."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 1
-end = 5
-render = { kind = "full" }
+descriptor = "Complete root directory listing"
+justification = "Every immediate child of the repo root, so the agent can never conclude a top-level file or directory does not exist. Establishes the four code directories (src, widgets, hooks, lib), the docs/ site, and the ops files (Dockerfile, codefresh.yml, dockerRunScript.sh)."
+content.kind = "fs"
+content.groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.3"
-descriptor = "package.json bin + engines"
-justification = "How the CLI is invoked (bin name) and the minimum Node version -- ties directly to the README FAQ's 'unsupported node version' complaint."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 21
-end = 26
-render = { kind = "full" }
+descriptor = "Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/"
+justification = "This is where the substance lives, so it comes immediately after the root map rather than behind any peripheral inventory. Naming every file in src/ and hooks/ at once makes the hook-per-mode convention (containers/images/services/shell) and the src/ split visible for free, and the `.hook.js` / `.widget.js` suffixes hint at the glob loader long before assetsLoader.js is read."
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = "all" },
+  { parent = "hooks", entries = "all" },
+  { parent = "lib", entries = "all" },
+  { parent = "widgets", entries = "all" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "README lede"
-justification = "One-line project description, cheap orientation."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 6
-render = { kind = "full" }
+descriptor = "Complete listings of the per-mode widget directories: widgets/containers, widgets/images, widgets/services"
+justification = "Closes the widget class: the three mode subdirectories hold 15 leaf widgets whose names (containerList, imageUtilization, servicesVsImages, ...) are the vocabulary used by grid.config.js and by every hook's widgetsRepo lookups. Without all three listed, an agent would assume the mode with fewer listed widgets is less complete than it is."
+content.kind = "fs"
+content.groups = [
+  { parent = "widgets/containers", entries = "all" },
+  { parent = "widgets/images", entries = "all" },
+  { parent = "widgets/services", entries = "all" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json scripts"
-justification = "npm scripts are the build/test/lint/debug entry points; 'test' resolving to lint-only (no unit tests) is a load-bearing fact for any testing question."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 6
-end = 12
-render = { kind = "full" }
+descriptor = "Complete listings of src/widgetsTemplates and src/themes"
+justification = "The remaining two source subdirectories. The five *.template.js names are the abstract base classes every leaf widget extends; separating them from 1.4 keeps both batches small while still closing the src/ tree."
+content.kind = "fs"
+content.groups = [
+  { parent = "src/widgetsTemplates", entries = "all" },
+  { parent = "src/themes", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "README --containerFilters detail"
-justification = "The one flag with nontrivial syntax (x-www-form-urlencoded) gets its own worked example; high value for anyone trying to filter containers."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 56
-end = 61
-render = { kind = "full" }
+descriptor = "npm scripts block"
+justification = "Operational core, and a surprise worth landing early: there is no test framework — `npm test` just runs `npm run lint`, which is `standard` plus `lockfile-lint` against package-lock.json. `npm run debug` starts node with an inspector on 0.0.0.0:9222 (the port the .vscode attach config targets)."
+content.kind = "lines"
+content.spans = [{ path = "package.json", start = 6, end = 12, render.kind = "full" }]
 
 [[batches]]
 id = "1.7"
-descriptor = "package.json dependencies"
-justification = "The runtime dependency roster (blessed/blessed-contrib/dockerode/chalk/clipboardy/command-line-args/figures/glob/semver, plus command-line-usage and lockfile-lint) grounds every 'which library does X' question without a follow-up grep; pinned version numbers are truncated since the question this answers is 'which lib', not 'which exact semver range' (full package.json is one hop away)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "package.json"
-start = 68
-end = 68
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "package.json"
-start = 69
-end = 79
-render = { kind = "truncated", pattern = "^[^:]+:" }
-[[batches.content.spans]]
-path = "package.json"
-start = 80
-end = 80
-render = { kind = "full" }
+descriptor = "Published `files` allow-list and the node engines floor"
+justification = "The published surface is exactly hooks, lib, src, widgets, index.js and dockerRunScript.sh — confirming docs/ is a website that does not ship, and that the shell script is a runtime asset rather than a dev tool. `engines.node >= 7.6.0` is the same constant lib/node.version.js enforces at startup."
+content.kind = "lines"
+content.spans = [{ path = "package.json", start = 13, end = 23, render.kind = "full" }]
 
 [[batches]]
 id = "1.8"
-descriptor = "README CLI options table"
-justification = "The exact documented flag surface (socketPath/host/port/protocol/containerFilters/help/version) with descriptions -- directly answers 'how do I configure the docker connection' with zero follow-up. (cli.js in tier 3 reveals an undocumented --theme flag missing from this table.)"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 42
-end = 54
-render = { kind = "full" }
+descriptor = "README tagline plus every top-level heading location"
+justification = "A map of the only substantive prose document in the repo: what sections exist (Install, Usage, Command line options, --containerFilters, Docker Support / Run from docker / Build, FAQ, Alternatives, In the news, Author) and at which lines, without paying for the badge wall or the article links. One grep-free hop to any README topic."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 5, end = 5, render.kind = "full" },
+  { path = "README.md", start = 27, end = 27, render.kind = "full" },
+  { path = "README.md", start = 34, end = 34, render.kind = "full" },
+  { path = "README.md", start = 42, end = 42, render.kind = "full" },
+  { path = "README.md", start = 56, end = 56, render.kind = "full" },
+  { path = "README.md", start = 63, end = 63, render.kind = "full" },
+  { path = "README.md", start = 65, end = 65, render.kind = "full" },
+  { path = "README.md", start = 74, end = 74, render.kind = "full" },
+  { path = "README.md", start = 84, end = 84, render.kind = "full" },
+  { path = "README.md", start = 125, end = 125, render.kind = "full" },
+  { path = "README.md", start = 129, end = 129, render.kind = "full" },
+  { path = "README.md", start = 137, end = 137, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "README Install + Usage"
-justification = "npm install -g dockly / bare `dockly` invocation -- the two commands most 'how do I run this' sessions need."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 27
-end = 40
-render = { kind = "full" }
+descriptor = "index.js: shebang and the module wiring of the executable"
+justification = "The bin file's first lines: the `#!/usr/bin/env node` shebang that makes it the installed `dockly` command, a global bump of EventEmitter.defaultMaxListeners to 50 (a real gotcha given how many widgets subscribe), and the exact set of modules the entry point composes — semver, chalk, lib/node.version, src/screen, src/dockerUtil, src/cli."
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 1, end = 5, render.kind = "full" },
+  { path = "index.js", start = 10, end = 15, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "README Docker Support (run + build)"
-justification = "How to run dockly itself as a container and how to build its own image -- directly relevant to Dockerfile questions in tier 12."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 63
-end = 82
-render = { kind = "full" }
+descriptor = "index.js: pre-flight CLI dispatch (--help, --version, node version floor)"
+justification = "Everything that happens before a docker connection is attempted: cli.cliParse() once at top level, help and version short-circuits that exit(0), and the semver.lt check against nodeVersion.minimum that prints the unsupported-node message from the README FAQ. Answers 'where is --help handled' with no follow-up."
+predecessor = "1.9"
+content.kind = "lines"
+content.spans = [{ path = "index.js", start = 17, end = 32, render.kind = "full" }]
 
 [[batches]]
 id = "1.11"
-descriptor = "README FAQ: unsupported Node version"
-justification = "The single most-filed user complaint (old-Node syntax error trace) plus the FAQ's own diagnosis/fix sentence -- a debugging session starting from this exact error message is answered with zero follow-up. Skips the FAQ's second stack-trace repro (same old-Node root cause, lines 100-108) as a low-value duplicate of the first."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 86
-end = 98
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 109
-end = 110
-render = { kind = "full" }
+descriptor = "index.js: bootstrap promise chain and the three helper function signatures"
+justification = "Completes the entry point's shape: connect to docker, then build screens, then install an uncaughtException handler that tears the screen down before erroring. The three remaining top-level functions are named at their exact lines with ellipsis markers standing in for their bodies, so nothing in this 100-line file looks absent and each body is one targeted read away."
+predecessor = "1.10"
+content.kind = "lines"
+content.spans = [
+  { path = "index.js", start = 34, end = 45, render.kind = "full" },
+  { path = "index.js", start = 47, end = 47, render.kind = "full" },
+  { path = "index.js", start = 48, end = 48, render.kind = "ellipsis" },
+  { path = "index.js", start = 72, end = 72, render.kind = "full" },
+  { path = "index.js", start = 73, end = 73, render.kind = "ellipsis" },
+  { path = "index.js", start = 86, end = 86, render.kind = "full" },
+  { path = "index.js", start = 87, end = 87, render.kind = "ellipsis" },
+  { path = "index.js", start = 99, end = 99, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "README FAQ: PuTTY / icons / alternatives"
-justification = "Remaining FAQ entries (PuTTY garbling, LANG/LC_ALL icon fix) plus the 'similar tools' pointer, rounding out the FAQ without a partial-class gap."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 112
-end = 114
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 116
-end = 123
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 125
-end = 127
-render = { kind = "full" }
+descriptor = "Runtime dependency list from package.json"
+justification = "The dependency block is the fastest statement of what the program is made of: blessed + blessed-contrib (TUI), dockerode 3.3.5 (docker API), command-line-args/-usage (CLI), clipboardy (copy id), figures/chalk (glyphs+colour), glob (asset loading), semver (node floor), lockfile-lint (part of `npm run lint`). The devDependency (`standard`) sits just below at lines 81-83."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 68, end = 80, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.1"
-descriptor = "Code directory rosters: src/, hooks/, widgets/, lib/"
-justification = "One-level listing of every code directory closes the class-closure gap early: agent sees all 4 hook files, all 5 top-level widget files plus the 3 widget subdirs, every src/ module, and both lib/ files before any body content is shown."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "src"
-entries = "all"
-[[batches.content.groups]]
-parent = "hooks"
-entries = "all"
-[[batches.content.groups]]
-parent = "widgets"
-entries = "all"
-[[batches.content.groups]]
-parent = "lib"
-entries = "all"
+descriptor = "The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125)"
+justification = "This one block is the product spec: every interactive command dockly supports (h help, space refresh, / search, i info, return logs, c copy id, v toggle view, q quit; plus container-only l shell / r restart / s stop / m menu, and image-only r remove) with which mode each belongs to. Ranked at the head of tier 2 because it answers a whole family of 'what does dockly do / which key triggers X' questions with zero follow-up, and it is the semantic index for the hooks and toolbar batches below. The surrounding ASCII banner is deliberately not bought."
+content.kind = "lines"
+content.spans = [{ path = "src/widgetsTemplates/help.widget.template.js", start = 102, end = 125, render.kind = "full" }]
 
 [[batches]]
 id = "2.2"
-descriptor = "Nested code directory rosters: src/themes, src/widgetsTemplates, widgets/{containers,images,services}"
-justification = "Second-level listing for the remaining nested source dirs -- the 5 widget templates, 2 theme files, and every containers/images/services widget file -- before tier 6 (widget infra) and tier 8 (widget panel-label roster) reference them."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "src/themes"
-entries = "all"
-[[batches.content.groups]]
-parent = "src/widgetsTemplates"
-entries = "all"
-[[batches.content.groups]]
-parent = "widgets/containers"
-entries = "all"
-[[batches.content.groups]]
-parent = "widgets/images"
-entries = "all"
-[[batches.content.groups]]
-parent = "widgets/services"
-entries = "all"
+descriptor = "src/cli.js: the complete flag roster (all eight option names)"
+justification = "Names only, one line per entry, for every member of `this.cliOpts` — socketPath, host, port, protocol, help, version, containerFilters, theme. Closing this class matters because the README's option table omits `--theme` entirely; an agent that trusted the README would conclude it does not exist. Aliases, types and descriptions are refined by 2.3/2.4."
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.js", start = 8, end = 9, render.kind = "full" },
+  { path = "src/cli.js", start = 11, end = 11, render.kind = "full" },
+  { path = "src/cli.js", start = 17, end = 17, render.kind = "full" },
+  { path = "src/cli.js", start = 23, end = 23, render.kind = "full" },
+  { path = "src/cli.js", start = 29, end = 29, render.kind = "full" },
+  { path = "src/cli.js", start = 35, end = 35, render.kind = "full" },
+  { path = "src/cli.js", start = 41, end = 41, render.kind = "full" },
+  { path = "src/cli.js", start = 47, end = 47, render.kind = "full" },
+  { path = "src/cli.js", start = 52, end = 52, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "Meta/CI directory rosters"
-justification = "GitHub workflow/issue-template roster plus devcontainer/vscode dirs -- closes omission risk for operational tiers before they're covered in depth."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = ".github"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = "all"
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = "all"
-[[batches.content.groups]]
-parent = ".devcontainer"
-entries = "all"
-[[batches.content.groups]]
-parent = ".vscode"
-entries = "all"
+descriptor = "src/cli.js: the four docker-connection options in full (socketPath, host, port, protocol)"
+justification = "Full option objects with alias, type and help text for the flags that decide how dockerode connects; these are the ones src/dockerUtil.js's constructor reads. Note line 31's `type: 'http' | 'https' | 'ssh'`, which is a JS expression evaluating to a string, not a type union — a real latent bug an agent may be asked about."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [{ path = "src/cli.js", start = 10, end = 33, render.kind = "full" }]
 
 [[batches]]
 id = "2.4"
-descriptor = "docs/ roster"
-justification = "docs/ is a vendored Gatsby marketing-site starter (gatsby-starter-stellar), not part of the CLI. Listing its two top levels shows the site exists and is a static-asset tree (fonts/images/scss under src/assets) without spending budget walking every asset file."
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "docs"
-entries = "all"
-[[batches.content.groups]]
-parent = "docs/src"
-entries = "all"
+descriptor = "src/cli.js: the four behavioural options in full (help, version, containerFilters, theme)"
+justification = "Completes the flag surface with the boolean short-circuits index.js checks and the two string options consumed elsewhere: containerFilters is parsed in dockerUtil's constructor, theme is read by src/themes/theme.selector.js. Split from 2.3 so a small budget still gets the whole roster from 2.2 plus one half in detail."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [{ path = "src/cli.js", start = 34, end = 57, render.kind = "full" }]
+
+[[batches]]
+id = "2.5"
+descriptor = "src/cli.js: every prototype method and the singleton export"
+justification = "The complete public surface of the Cli object — showVersion, showUsage, cliParse — plus `module.exports = new Cli()`, which is the load-bearing detail that cli is a shared singleton (so cli.cliParse() is called independently from index.js, dockerUtil and theme.selector). The two console-printing bodies are ellipsis-marked rather than bought: their substance is the flag definitions already rendered by 2.2-2.4."
+content.kind = "lines"
+content.spans = [
+  { path = "src/cli.js", start = 59, end = 59, render.kind = "full" },
+  { path = "src/cli.js", start = 60, end = 60, render.kind = "ellipsis" },
+  { path = "src/cli.js", start = 66, end = 66, render.kind = "full" },
+  { path = "src/cli.js", start = 67, end = 67, render.kind = "ellipsis" },
+  { path = "src/cli.js", start = 93, end = 93, render.kind = "full" },
+  { path = "src/cli.js", start = 94, end = 94, render.kind = "full" },
+  { path = "src/cli.js", start = 97, end = 97, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "README: install and launch commands"
+justification = "The two shell snippets a user starts from — `npm install -g dockly` and bare `dockly`, which auto-connects to the local docker daemon over the unix socket. Cheap, and the most likely thing to be asked to reproduce in docs or issue replies."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 30, end = 32, render.kind = "full" },
+  { path = "README.md", start = 36, end = 40, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "README: --containerFilters semantics"
+justification = "The only flag whose value format is non-obvious: an x-www-form-urlencoded string matching the docker ContainerList filters API, e.g. `--containerFilters=\"name=test&status=running\"`. Pairs with the split/reduce parsing in dockerUtil's constructor bought later."
+content.kind = "lines"
+content.spans = [{ path = "README.md", start = 58, end = 61, render.kind = "full" }]
+
+[[batches]]
+id = "2.8"
+descriptor = "Dockerfile in full"
+justification = "The whole container build in 16 lines: node:24-alpine base, `apk add docker` (the CLI is needed for the shell-into-container feature), the LANG/LC_ALL=C.UTF-8 env vars that the README FAQ tells users to set for glyphs, `npm ci` under NODE_ENV=production, and `ENTRYPOINT [\"node\", \"index.js\"]`. Answers 'how is the image built' with no follow-up."
+content.kind = "lines"
+content.spans = [{ path = "Dockerfile", start = 1, end = 16, render.kind = "full" }]
+
+[[batches]]
+id = "2.9"
+descriptor = "README: running and building the docker image"
+justification = "The published-image invocation (`docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly`) and the local `docker build -t dockly .` equivalent. The socket bind mount is the operationally load-bearing part and appears nowhere else in the repo."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 69, end = 71, render.kind = "full" },
+  { path = "README.md", start = 78, end = 82, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = ".github/workflows/main.yml: the lint job"
+justification = "The entire CI verification story — a matrix of node 22 and 24 on ubuntu-latest running `npm ci` then `npm run lint`. Confirms from a second angle that no tests are executed anywhere in CI, which is the thing an agent adding tests most needs to know."
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/main.yml", start = 1, end = 12, render.kind = "full" },
+  { path = ".github/workflows/main.yml", start = 13, end = 13, render.kind = "ellipsis" },
+  { path = ".github/workflows/main.yml", start = 18, end = 21, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = ".github/workflows/main.yml: the semantic-release job"
+justification = "How versions get published: on push to main, after lint, `npx semantic-release` with GITHUB_TOKEN/NPM_TOKEN and id-token write for npm provenance — which explains package.json's `version: 0.0.0-development` and its publishConfig.provenance flag. The shared checkout/setup-node steps are elided."
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/main.yml", start = 23, end = 32, render.kind = "full" },
+  { path = ".github/workflows/main.yml", start = 33, end = 33, render.kind = "ellipsis" },
+  { path = ".github/workflows/main.yml", start = 40, end = 44, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.1"
-descriptor = "index.js: requires + CLI gate (help/version/node-version check)"
-justification = "The entrypoint's first branch point: parse argv, short-circuit on --help/--version, then hard-fail on an unsupported Node version (semver.lt against lib/node.version.js) -- the exact code path behind the README FAQ's Node-version error."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "index.js"
-start = 1
-end = 32
-render = { kind = "full" }
+descriptor = "lib/modes.js and lib/node.version.js in full"
+justification = "Nine lines that define the program's central axis: the three view modes (container -> 'containers', service -> 'services', image -> 'images') whose string values key grid.config.js layouts, hook filenames and widget directories, plus the 7.6.0 node floor index.js enforces. Highest value-per-token batch in the architecture tier, so it leads it."
+content.kind = "lines"
+content.spans = [
+  { path = "lib/modes.js", start = 1, end = 7, render.kind = "full" },
+  { path = "lib/node.version.js", start = 1, end = 3, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "index.js: startup promise chain + initDockerConnection"
-justification = "The actual boot sequence: connect to the docker daemon (ping) before ever constructing a Screen, and the uncaughtException handler that tears down the blessed screen so a crash doesn't leave the terminal corrupted."
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "index.js"
-start = 34
-end = 70
-render = { kind = "full" }
+descriptor = "src/screen.js: imports and the mode -> grid-layout table"
+justification = "The wiring that makes the whole app mode-driven: screen.js requires assetsLoader, the three *_GRID_LAYOUT constants and MODES, then builds GRID_LAYOUT keyed by mode value. The @TODO at lines 10-11 (this should be user config from index.js) is exactly the kind of known-limitation an agent is asked about."
+content.kind = "lines"
+content.spans = [
+  { path = "src/screen.js", start = 1, end = 8, render.kind = "full" },
+  { path = "src/screen.js", start = 10, end = 16, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "index.js: initScreens + exitError"
-justification = "Completes index.js: how a Screen is constructed/init'd, and the shared error-exit path (re-shows usage, prints the trace, and special-cases the 'Unable to determine the domain name' docker-connectivity error)."
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "index.js"
-start = 72
-end = 100
-render = { kind = "full" }
+descriptor = "src/screen.js: complete method roster of the `screen` class"
+justification = "Every method of the orchestrator named at its exact line — constructor, initScreen, init, initHooks, clearHooks, initWidgets, clearWidgets, setWidgetsRepo, setWidgetsUtils, setWidgetsInit, renderWidgets, toggleMode, registerEvents, render, teardown — plus the class and export lines. Bodies are ellipsis-marked, so any 'where does screen do X' question is one read of a known line range away, and no method can be mistaken for absent."
+content.kind = "lines"
+content.spans = [
+  { path = "src/screen.js", start = 18, end = 19, render.kind = "full" },
+  { path = "src/screen.js", start = 20, end = 20, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 35, end = 35, render.kind = "full" },
+  { path = "src/screen.js", start = 36, end = 36, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 48, end = 48, render.kind = "full" },
+  { path = "src/screen.js", start = 49, end = 49, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 71, end = 71, render.kind = "full" },
+  { path = "src/screen.js", start = 72, end = 72, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 79, end = 79, render.kind = "full" },
+  { path = "src/screen.js", start = 80, end = 80, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 86, end = 86, render.kind = "full" },
+  { path = "src/screen.js", start = 87, end = 87, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 107, end = 107, render.kind = "full" },
+  { path = "src/screen.js", start = 108, end = 108, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 114, end = 114, render.kind = "full" },
+  { path = "src/screen.js", start = 115, end = 115, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 120, end = 120, render.kind = "full" },
+  { path = "src/screen.js", start = 121, end = 121, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 126, end = 126, render.kind = "full" },
+  { path = "src/screen.js", start = 127, end = 127, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 132, end = 132, render.kind = "full" },
+  { path = "src/screen.js", start = 133, end = 133, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 138, end = 138, render.kind = "full" },
+  { path = "src/screen.js", start = 139, end = 139, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 152, end = 152, render.kind = "full" },
+  { path = "src/screen.js", start = 153, end = 153, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 180, end = 180, render.kind = "full" },
+  { path = "src/screen.js", start = 181, end = 181, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 192, end = 192, render.kind = "full" },
+  { path = "src/screen.js", start = 193, end = 194, render.kind = "full" },
+  { path = "src/screen.js", start = 197, end = 197, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "cli.js: cliOpts definitions"
-justification = "The authoritative flag list straight from command-line-args config -- includes --theme (light/dark), which the README's flag table omits entirely. This is the single highest-value discrepancy a CLI-focused session needs surfaced."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/cli.js"
-start = 1
-end = 57
-render = { kind = "full" }
+descriptor = "src/screen.js: init() — the full boot sequence"
+justification = "The single most explanatory body in the repository: load assets, initScreen, initHooks, initWidgets, renderWidgets, setWidgetsRepo, setWidgetsUtils, setWidgetsInit, registerEvents, render — in that order, with comments. Reading it tells an agent why a widget's `init()` can rely on `this.widgetsRepo` already being populated."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [{ path = "src/screen.js", start = 49, end = 69, render.kind = "full" }]
 
 [[batches]]
 id = "3.5"
-descriptor = "cli.js: showVersion / showUsage / cliParse"
-justification = "How --help/--version render (command-line-usage) and the one-line cliParse used everywhere else in the codebase to re-read argv."
-predecessor = "3.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/cli.js"
-start = 59
-end = 97
-render = { kind = "full" }
+descriptor = "src/screen.js: constructor state fields"
+justification = "The orchestrator's mutable state — starting mode (containers), the blessed screen and contrib grid handles, the 'Dockly' window title, the toggleWidgetFocus flag, and the three Maps (widgetsRepository, hooks, widgets) that every widget and hook later looks things up in."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [{ path = "src/screen.js", start = 20, end = 33, render.kind = "full" }]
+
+[[batches]]
+id = "3.6"
+descriptor = "src/screen.js: initScreen() — blessed screen and the 12x12 grid"
+justification = "Where the terminal surface is created: blessed.screen with fullUnicode, dockBorders and smartCSR, and `new contrib.grid({ rows: 12, cols: 12 })` — the grid whose coordinates every entry in grid.config.js is expressed in. Without this, the [row, col, rowSpan, colSpan] tuples in the layouts are unreadable."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [{ path = "src/screen.js", start = 36, end = 46, render.kind = "full" }]
+
+[[batches]]
+id = "3.7"
+descriptor = "src/screen.js: initHooks() and initWidgets() — instantiation and layout gating"
+justification = "The rule that decides what exists at runtime: every discovered hook is instantiated unconditionally, but a widget is only constructed if the current mode's layout contains its name, and it is handed { blessed, contrib, mode, screen, grid: { gridObj, gridLayout } }. This is the constructor contract every widget file destructures, and it explains why hooks guard with `widgetsRepo.has(...)`."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "src/screen.js", start = 72, end = 77, render.kind = "full" },
+  { path = "src/screen.js", start = 78, end = 78, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 87, end = 104, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "src/screen.js: toggleMode() and registerEvents() — the global q/v keys and focus borders"
+justification = "Mode switching semantics: `v` clears hooks and widgets, cycles MODES, destroys the screen and re-runs init() (with the author's TODO noting all assets get reloaded); `q` destroys the screen and exits. The 'element focus' handler is located at line 153 with its body elided. These are the two keys no per-widget toolbar handler owns."
+predecessor = "3.3"
+content.kind = "lines"
+content.spans = [
+  { path = "src/screen.js", start = 139, end = 150, render.kind = "full" },
+  { path = "src/screen.js", start = 153, end = 153, render.kind = "full" },
+  { path = "src/screen.js", start = 154, end = 154, render.kind = "ellipsis" },
+  { path = "src/screen.js", start = 165, end = 178, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "src/assetsLoader.js: the glob patterns that define the plugin conventions"
+justification = "Eight lines that encode the repo's most important unwritten rule: hooks are `hooks/*.hook.js` (flat) and widgets are `widgets/**/*.widget.js` (recursive). Anyone adding a widget or hook needs exactly this; anyone wondering how files nobody imports get loaded is answered here."
+content.kind = "lines"
+content.spans = [{ path = "src/assetsLoader.js", start = 1, end = 8, render.kind = "full" }]
+
+[[batches]]
+id = "3.10"
+descriptor = "src/assetsLoader.js: the loader body and the asset naming rule"
+justification = "The rest of the loader: a Map of 'hooks'/'widgets' to Maps of name -> required module, the two glob.sync loops that require every matching file, and `formatAsset` = `path.basename(item).split('.')[0]` — so containerList.widget.js registers as 'containerList' and containers.hook.js as 'containers'. That derivation is what ties grid.config.js keys, widgetsRepo lookups and filenames together. The Map-construction lines are elided."
+predecessor = "3.9"
+content.kind = "lines"
+content.spans = [
+  { path = "src/assetsLoader.js", start = 10, end = 17, render.kind = "full" },
+  { path = "src/assetsLoader.js", start = 18, end = 18, render.kind = "ellipsis" },
+  { path = "src/assetsLoader.js", start = 25, end = 31, render.kind = "full" },
+  { path = "src/assetsLoader.js", start = 39, end = 41, render.kind = "full" },
+  { path = "src/assetsLoader.js", start = 44, end = 44, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "src/grid.config.js: the containers-mode layout in full"
+justification = "The richest of the three layouts — the twelve widget names placed in the containers dashboard with their [row, col, rowSpan, colSpan] grid tuples. Doubles as the authoritative answer to 'which widgets appear in container view', including the overlapping popup entries (actionsMenu and help both at [4,4,4,4])."
+content.kind = "lines"
+content.spans = [{ path = "src/grid.config.js", start = 1, end = 14, render.kind = "full" }]
+
+[[batches]]
+id = "3.12"
+descriptor = "src/grid.config.js: the services and images layouts plus the export block"
+justification = "Closes the layout class so no mode looks unconfigured: services mode has ten widgets, images mode only seven (no info-vs-utilization pairing for services logs, no logs widget for images at all), and all three constants are exported by name. Diffing these three lists is how an agent answers 'why does feature X only appear in one view'."
+predecessor = "3.11"
+content.kind = "lines"
+content.spans = [
+  { path = "src/grid.config.js", start = 16, end = 27, render.kind = "full" },
+  { path = "src/grid.config.js", start = 29, end = 37, render.kind = "full" },
+  { path = "src/grid.config.js", start = 39, end = 39, render.kind = "full" },
+  { path = "src/grid.config.js", start = 40, end = 40, render.kind = "ellipsis" },
+  { path = "src/grid.config.js", start = 43, end = 43, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.1"
-descriptor = "screen.js: requires + per-mode GRID_LAYOUT map"
-justification = "Shows the three grid-config imports keyed by MODES.{container,service,image} -- the map that tier 4.9's grid.config.js values plug into."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 1
-end = 16
-render = { kind = "full" }
+descriptor = "src/dockerUtil.js: complete method roster of the dockerode wrapper"
+justification = "Every docker operation the app can perform, named with its parameters at its exact line: ping, listImages, systemDf, listContainers, listServices, stopAllContainers, removeAllContainers, removeAllImages, getInfo, getContainer, getService, getImage, restartContainer, stopContainer, removeContainer, removeImage, getContainerStats, getContainerLogs, getServiceLogs. This is the whole capability surface of the tool in one cheap batch, and it is uniformly callback-style — a fact that shapes every hook. Bodies are ellipsis-marked."
+content.kind = "lines"
+content.spans = [
+  { path = "src/dockerUtil.js", start = 3, end = 6, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 33, end = 33, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 34, end = 34, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 43, end = 43, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 44, end = 44, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 55, end = 55, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 56, end = 56, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 65, end = 65, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 66, end = 66, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 78, end = 78, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 79, end = 79, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 88, end = 88, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 89, end = 89, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 100, end = 100, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 101, end = 101, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 112, end = 112, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 113, end = 113, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 124, end = 124, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 125, end = 125, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 155, end = 155, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 156, end = 156, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 160, end = 160, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 161, end = 161, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 165, end = 165, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 166, end = 166, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 170, end = 170, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 171, end = 171, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 175, end = 175, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 176, end = 176, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 180, end = 180, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 181, end = 181, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 187, end = 187, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 188, end = 188, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 194, end = 194, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 195, end = 195, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 208, end = 208, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 209, end = 209, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 220, end = 220, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 221, end = 221, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 233, end = 233, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "screen.js: Screen constructor"
-justification = "The state a Screen instance carries: mode, blessed screen/grid handles, and the three Maps (widgetsRepository/hooks/widgets) that assetsLoader output gets poured into."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 18
-end = 33
-render = { kind = "full" }
+descriptor = "src/dockerUtil.js: constructor — connection config and containerFilters parsing"
+justification = "Where CLI flags become a dockerode connection: a non-object config throws 'docker connection string is faulty', socketPath/host/port/protocol are copied only when set (so an empty config means dockerode's own defaults), and `--containerFilters=name=test&status=running` is split on & and = into the JSON filters string that listContainers passes to the daemon. Answers both 'how do I point dockly at a remote daemon' and 'how are filters encoded'."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/dockerUtil.js", start = 7, end = 10, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 12, end = 12, render.kind = "ellipsis" },
+  { path = "src/dockerUtil.js", start = 13, end = 31, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "screen.js: initScreen + init (boot sequence)"
-justification = "The exact ordered lifecycle: load assets, build the blessed screen + 12x12 contrib.grid, init hooks then widgets, render, wire repos/utils into every widget, then finally call each widget's own init(). Any 'why isn't my widget seeing docker data' question resolves against this order."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 35
-end = 69
-render = { kind = "full" }
+descriptor = "src/dockerUtil.js: getInfo() — the host fields surfaced to the status widgets"
+justification = "The exact projection of `docker info` the UI depends on: Containers, ContainersRunning/Paused/Stopped, Images, OperatingSystem, Architecture, MemTotal, Host, ServerVersion. containerStatus.widget.js and servicesStatus.widget.js read these keys by name, so this is the schema behind the gauges."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/dockerUtil.js", start = 135, end = 146, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "screen.js: initHooks + initWidgets"
-justification = "How the assetsLoader-produced hooks/widgets Maps get instantiated -- a widget is only constructed if its name is a key in the active mode's GRID_LAYOUT. clearHooks/clearWidgets (used only by the v-key mode toggle) mirror these two almost line-for-line, so only their names are pointed at here rather than repeating near-duplicate bodies."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 71
-end = 77
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 79
-end = 79
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 86
-end = 105
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 107
-end = 107
-render = { kind = "full" }
-
-[[batches]]
-id = "4.5"
-descriptor = "screen.js: setWidgetsRepo/setWidgetsUtils/setWidgetsInit + renderWidgets"
-justification = "The remaining wiring passes: every widget/hook gets the full widgetsRepository and the docker utilsRepo, then widgets are appended to the screen before their own init() runs."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 114
-end = 136
-render = { kind = "full" }
-
-[[batches]]
-id = "4.6"
-descriptor = "screen.js: toggleMode + registerEvents (q/v global keys)"
-justification = "The only two screen-global keybindings not owned by toolbar.widget.js: q quits, v cycles container->service->image mode by tearing down and re-init'ing the whole Screen. Also the focus-border-color-on-focus behavior."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 138
-end = 178
-render = { kind = "full" }
-
-[[batches]]
-id = "4.7"
-descriptor = "screen.js: render + teardown"
-justification = "Completes screen.js; teardown() (blessed screen.destroy()) is what index.js's uncaughtException handler calls to restore the terminal."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 180
-end = 197
-render = { kind = "full" }
-
-[[batches]]
-id = "4.8"
-descriptor = "assetsLoader.js (full)"
-justification = "The whole plugin-discovery mechanism in one small file: glob hooks/*.hook.js and widgets/**/*.widget.js, require() each, key by basename-before-first-dot. Explains exactly why e.g. widgets/containers/containerList.widget.js is looked up under key 'containerList'."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 1
-end = 44
-render = { kind = "full" }
-
-[[batches]]
-id = "4.9"
-descriptor = "grid.config.js: CONTAINERS_GRID_LAYOUT (full) + SERVICES/IMAGES widget-name rosters"
-justification = "Full grid coordinates for the (largest, default-on-launch) containers mode; for services/images modes, widget names only -- still closes catastrophic-omission risk on 'what widgets exist per mode' cheaply, trusting a follow-up read for exact [row,col,rowSpan,colSpan] if a layout tweak is needed."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 1
-end = 14
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 16
-end = 16
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 17
-end = 26
-render = { kind = "truncated", pattern = "^[^:]+:" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 29
-end = 29
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 30
-end = 36
-render = { kind = "truncated", pattern = "^[^:]+:" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 39
-end = 39
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/grid.config.js"
-start = 43
-end = 43
-render = { kind = "full" }
-
-[[batches]]
-id = "4.10"
-descriptor = "lib/modes.js + src/enum.js + lib/node.version.js (full)"
-justification = "Three tiny shared constants: the MODES string enum, the ContainerState enum, and the minimum supported Node version -- each referenced from multiple files already covered (screen.js, index.js, containerList.widget.js)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "lib/modes.js"
-start = 1
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/enum.js"
-start = 1
-end = 11
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "lib/node.version.js"
-start = 1
-end = 3
-render = { kind = "full" }
+descriptor = "src/dockerUtil.js: log streaming options for containers and services"
+justification = "getContainerLogs' options in full — follow: true, stdout+stderr, details: false, tail: 50, timestamps: true — and getServiceLogs' head, which is the same call against getService with its option object elided as identical. 'Why do I only see the last 50 lines' / 'how do I change log follow behaviour' resolve here with no search."
+predecessor = "4.1"
+content.kind = "lines"
+content.spans = [
+  { path = "src/dockerUtil.js", start = 209, end = 217, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 220, end = 222, render.kind = "full" },
+  { path = "src/dockerUtil.js", start = 223, end = 223, render.kind = "ellipsis" },
+]
 
 [[batches]]
 id = "5.1"
-descriptor = "dockerUtil.js: method-name roster (all 20 methods, name-only)"
-justification = "The full public surface Util exposes over dockerode (ping/list*/stop*/remove*/get*/restart*/stats/logs) that every hook and widget calls through utilsRepo.get('docker') -- name-only so no method is assumed absent; bodies for the highest-traffic subset follow."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 6
-end = 6
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 33
-end = 33
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 43
-end = 43
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 55
-end = 55
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 65
-end = 65
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 78
-end = 78
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 88
-end = 88
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 100
-end = 100
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 112
-end = 112
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 124
-end = 124
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 155
-end = 155
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 160
-end = 160
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 165
-end = 165
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 170
-end = 170
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 175
-end = 175
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 180
-end = 180
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 187
-end = 187
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 194
-end = 194
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 208
-end = 208
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 220
-end = 220
-render = { kind = "truncated", pattern = "^[^(]+" }
+descriptor = "src/baseWidget.js — the mixin every widget and hook extends"
+justification = "Twenty-six lines that define the shared contract: a class factory `baseWidget(extendsClass)` (called as `baseWidget()` or `baseWidget(EventEmitter)` depending on whether the widget emits) providing setWidgetsRepo, setUtilsRepo, renderWidget, focus and getWidgetStyle — the last merging the active theme with per-widget overrides. Explains the `class myWidget extends baseWidget(EventEmitter)` line at the top of nearly every widget file."
+content.kind = "lines"
+content.spans = [{ path = "src/baseWidget.js", start = 2, end = 26, render.kind = "full" }]
 
 [[batches]]
 id = "5.2"
-descriptor = "dockerUtil.js: constructor (connection config + containerFilters parsing)"
-justification = "How socketPath/host/port/protocol cli flags become a dockerode config object, plus the one nontrivial bit of parsing logic in the whole file: containerFilters' x-www-form-urlencoded-ish string gets hand-split into a JSON filters object (mirrors README 1.6's worked example)."
-predecessor = "5.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 1
-end = 31
-render = { kind = "full" }
+descriptor = "src/widgetsTemplates/base.hook.template.js — the hook base class"
+justification = "The base every hook in hooks/ extends: it requires clipboardy, mixes baseWidget over EventEmitter, opens copyItemIdToClipboard (body elided from line 13; it writes the id to the clipboard and reports through actionStatus, whose emit call is shown at lines 21-26) and declares the abstract getSelectedItem that each mode's hook overrides. This is the whole reason hooks can both emit events and be looked up in the widgets repository."
+content.kind = "lines"
+content.spans = [
+  { path = "src/widgetsTemplates/base.hook.template.js", start = 2, end = 12, render.kind = "full" },
+  { path = "src/widgetsTemplates/base.hook.template.js", start = 13, end = 13, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/base.hook.template.js", start = 21, end = 34, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "dockerUtil.js: ping + listContainers + listServices"
-justification = "The three read calls every hook polls on an interval; listContainers is where cli.js's --containerFilters value is actually applied (filters + all:true)."
-predecessor = "5.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 33
-end = 41
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 65
-end = 86
-render = { kind = "full" }
+descriptor = "src/widgetsTemplates/list.widget.template.js: complete method roster"
+justification = "The contract for containerList / imageList / servicesList: constructor, init, getWidget, refreshList, getItemId, update are provided, while getLabel, getListItems, getItemLogs, updateItemLogs, clearItemLogs, filterList and formatList throw 'not implemented' and must be overridden. Ranked before any leaf list widget so that reading one leaf file is enough to understand it."
+content.kind = "lines"
+content.spans = [
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 6, end = 9, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 10, end = 10, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 21, end = 21, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 22, end = 22, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 88, end = 88, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 89, end = 89, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 107, end = 107, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 108, end = 108, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 119, end = 119, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 120, end = 120, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 127, end = 128, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 131, end = 131, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 135, end = 135, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 139, end = 139, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 143, end = 143, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 147, end = 147, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 151, end = 151, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 155, end = 155, render.kind = "full" },
+  { path = "src/widgetsTemplates/list.widget.template.js", start = 161, end = 161, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "dockerUtil.js: getInfo (host/daemon summary fields)"
-justification = "The exact subset of `docker info` + `docker version` fields dockly surfaces (Containers*, Images, OperatingSystem, MemTotal, ServerVersion, ApiVersion) -- ground truth for any 'what host stats does dockly show' question."
-predecessor = "5.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 124
-end = 153
-render = { kind = "full" }
+descriptor = "src/widgetsTemplates/info.widget.template.js and logs.widget.template.js: method rosters"
+justification = "Closes the template class alongside 5.3 and the help template: the info popup requires getLabel, getSelectedItemId and getItemById (and overrides renderWidget, line 107, because it is a floating box appended to the screen rather than a grid cell); the log widget requires getLabel and getList and supplies update/clear. Together with EXPANDED_LAYOUT this is what a new mode would have to implement."
+content.kind = "lines"
+content.spans = [
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 6, end = 7, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 8, end = 8, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 20, end = 20, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 21, end = 21, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 64, end = 64, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 68, end = 68, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 72, end = 72, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 73, end = 73, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 107, end = 107, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 111, end = 111, render.kind = "full" },
+  { path = "src/widgetsTemplates/info.widget.template.js", start = 115, end = 118, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 5, end = 8, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 9, end = 9, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 19, end = 19, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 20, end = 20, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 45, end = 45, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 46, end = 46, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 72, end = 72, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 76, end = 76, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 80, end = 80, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 84, end = 84, render.kind = "full" },
+  { path = "src/widgetsTemplates/logs.widget.template.js", start = 89, end = 89, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "src/widgetsTemplates/help.widget.template.js: method roster around the help text"
+justification = "The container of the keybinding table bought at 2.1: a popup box whose visibility the toolbar's 'h' key toggles (lines 34-36), with getWidget building a centred 70%x70% blessed box, getWidgetContents returning the help string, and renderWidget/getLabel/update closing the class."
+content.kind = "lines"
+content.spans = [
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 5, end = 6, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 19, end = 19, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 20, end = 20, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 34, end = 36, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 37, end = 37, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 58, end = 58, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 59, end = 59, render.kind = "ellipsis" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 93, end = 94, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 130, end = 130, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 134, end = 134, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 138, end = 138, render.kind = "full" },
+  { path = "src/widgetsTemplates/help.widget.template.js", start = 144, end = 144, render.kind = "full" },
+]
 
 [[batches]]
 id = "6.1"
-descriptor = "baseWidget.js (full)"
-justification = "The mixin every widget/hook is built from: setWidgetsRepo/setUtilsRepo (how widgets get access to each other and to utilsRepo.get('docker')), focus(), and getWidgetStyle() (merges in the active theme). Small and load-bearing -- read before any individual widget file."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 1
-end = 26
-render = { kind = "full" }
+descriptor = "hooks/: complete method rosters of all four hooks"
+justification = "The data/event layer in one batch, with no hook file left unrepresented: containers.hook (init, setupSwitchFocus, notifyOnContainerInfo, notifyOnContainerUtilization, getFreshData, restartContainer, stopContainer, getSelectedItem), services.hook (the same shape minus the container actions), images.hook (init, getSelectedItem, notifyOnImageUpdate, removeImage) and shell.hook (init, openShell, emitActionStatus — note it extends baseWidget() directly, not baseHook). Shows which hook owns which keypress action and where each polling loop lives."
+content.kind = "lines"
+content.spans = [
+  { path = "hooks/containers.hook.js", start = 3, end = 6, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "hooks/containers.hook.js", start = 55, end = 55, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 70, end = 70, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 81, end = 81, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 94, end = 94, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 108, end = 108, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 138, end = 138, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 168, end = 168, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 177, end = 177, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 5, end = 6, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "hooks/services.hook.js", start = 46, end = 46, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 61, end = 61, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 72, end = 72, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 86, end = 86, render.kind = "full" },
+  { path = "hooks/services.hook.js", start = 95, end = 95, render.kind = "full" },
+  { path = "hooks/images.hook.js", start = 5, end = 6, render.kind = "full" },
+  { path = "hooks/images.hook.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "hooks/images.hook.js", start = 27, end = 27, render.kind = "full" },
+  { path = "hooks/images.hook.js", start = 35, end = 35, render.kind = "full" },
+  { path = "hooks/images.hook.js", start = 65, end = 65, render.kind = "full" },
+  { path = "hooks/images.hook.js", start = 97, end = 97, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 8, end = 9, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 10, end = 10, render.kind = "ellipsis" },
+  { path = "hooks/shell.hook.js", start = 23, end = 23, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 59, end = 59, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 68, end = 68, render.kind = "full" },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "widgetsTemplates/*.js: method-name roster across all 5 templates"
-justification = "Name-only roster of every method (incl. constructor signature) on base.hook.template, help/info/list/logs.widget.template -- the five base classes every concrete hook/widget (tiers 7-8) subclasses. Prevents assuming a template method doesn't exist just because a concrete widget doesn't override it; getWidgetContents (help template) is expanded next."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 7
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 29
-end = 29
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 9
-end = 9
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 21
-end = 21
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 88
-end = 88
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 107
-end = 107
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 119
-end = 119
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 127
-end = 127
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 131
-end = 131
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 135
-end = 135
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 139
-end = 139
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 143
-end = 143
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 147
-end = 147
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 151
-end = 151
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 155
-end = 155
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 8
-end = 8
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 19
-end = 19
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 45
-end = 45
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 72
-end = 72
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 76
-end = 76
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 80
-end = 80
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 84
-end = 84
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 7
-end = 7
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 64
-end = 64
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 68
-end = 68
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 72
-end = 72
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 107
-end = 107
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 111
-end = 111
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 115
-end = 115
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 6
-end = 6
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 19
-end = 19
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 50
-end = 50
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 54
-end = 54
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 58
-end = 58
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 93
-end = 93
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 130
-end = 130
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 134
-end = 134
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 138
-end = 138
-render = { kind = "truncated", pattern = "^[^(]+" }
+descriptor = "hooks/containers.hook.js: the toolbar key dispatch inside init()"
+justification = "The canonical hook body: after the elided startup fetch and interval setup, init subscribes to the toolbar's 'key' event and maps keypresses to actions — space refreshes, r restarts, s stops, c copies the id — then enables tab focus switching when both containerLogs and containerList exist. The `widgetsRepo.has('toolbar')` guard style shown here is why widgets absent from a mode's layout do not break the hook."
+predecessor = "6.1"
+content.kind = "lines"
+content.spans = [
+  { path = "hooks/containers.hook.js", start = 7, end = 7, render.kind = "ellipsis" },
+  { path = "hooks/containers.hook.js", start = 24, end = 29, render.kind = "full" },
+  { path = "hooks/containers.hook.js", start = 30, end = 30, render.kind = "ellipsis" },
+  { path = "hooks/containers.hook.js", start = 36, end = 48, render.kind = "full" },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "help.widget.template.js: getWidgetContents (full keybinding cheat-sheet)"
-justification = "The single highest-density answer to 'what can I do in this app': every global key (h/space//i/enter/c/v/q), every container-only key (l/r/s/m), and the image-only key (r=remove) in one block -- this is the literal text the in-app help popup (h key) shows. Directly cross-checked by toolbar.widget.js's createWidget() and each hook's key handlers."
-predecessor = "6.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 93
-end = 128
-render = { kind = "full" }
+descriptor = "hooks/shell.hook.js: openShell() plus dockerRunScript.sh's docker exec line"
+justification = "The feature with the most surprising implementation: pressing `l` inspects the selected container, refuses if it is not running, then shells out — `docker exec -it ... /bin/bash || /bin/sh` inline on win32, otherwise via the bundled dockerRunScript.sh (which also disables mouse reporting with an escape sequence) — and finally reallocs the blessed screen buffers. Buying the script alongside the caller closes the loop on the one shipped non-JS runtime asset."
+predecessor = "6.1"
+content.kind = "lines"
+content.spans = [
+  { path = "hooks/shell.hook.js", start = 24, end = 30, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 31, end = 31, render.kind = "ellipsis" },
+  { path = "hooks/shell.hook.js", start = 36, end = 45, render.kind = "full" },
+  { path = "hooks/shell.hook.js", start = 46, end = 46, render.kind = "ellipsis" },
+  { path = "hooks/shell.hook.js", start = 52, end = 53, render.kind = "full" },
+  { path = "dockerRunScript.sh", start = 1, end = 6, render.kind = "full" },
+]
 
 [[batches]]
 id = "7.1"
-descriptor = "hooks/*.hook.js: method-name roster across all 4 hooks"
-justification = "Name-only roster of every method on the 4 poll-and-emit hooks (containers/images/services/shell) that assetsLoader wires into screen.js -- containers.hook and services.hook are structurally parallel (init/setupSwitchFocus/notifyOn*/getFreshData/getSelectedItem); shell.hook is the odd one out (no polling, just the 'l' shell-attach key that execFileSync's dockerRunScript.sh, covered in tier 12)."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 6
-end = 6
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 55
-end = 55
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 70
-end = 70
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 81
-end = 81
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 94
-end = 94
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 108
-end = 108
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 138
-end = 138
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/containers.hook.js"
-start = 168
-end = 168
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/images.hook.js"
-start = 6
-end = 6
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/images.hook.js"
-start = 27
-end = 27
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/images.hook.js"
-start = 35
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/images.hook.js"
-start = 65
-end = 65
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/services.hook.js"
-start = 6
-end = 6
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/services.hook.js"
-start = 46
-end = 46
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/services.hook.js"
-start = 61
-end = 61
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/services.hook.js"
-start = 72
-end = 72
-render = { kind = "truncated", pattern = "^[^(]+" }
-[[batches.content.spans]]
-path = "hooks/services.hook.js"
-start = 86
-end = 86
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/shell.hook.js"
-start = 9
-end = 9
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/shell.hook.js"
-start = 23
-end = 23
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "hooks/shell.hook.js"
-start = 59
-end = 59
-render = { kind = "truncated", pattern = "^[^(]+" }
+descriptor = "src/enum.js in full — the ContainerState vocabulary"
+justification = "The seven docker container states (created, restarting, running, removing, paused, exited, dead) as a single exported enum. containerList.widget.js sorts by them and containerSortList.widget.js derives its 'By <State>' menu entries from Object.keys of this object, so adding a state here changes the UI."
+content.kind = "lines"
+content.spans = [{ path = "src/enum.js", start = 1, end = 11, render.kind = "full" }]
+
+[[batches]]
+id = "7.2"
+descriptor = "src/themes/theme.selector.js in full and the dark/light style keys"
+justification = "Theming end to end: theme.selector re-parses the CLI on every call, validates `--theme` against a light/dark map and falls back to dark, and getWidgetStyle merges the result with per-widget overrides. styles.js is shown as its key skeleton — darkStyle's fg/bg plus the header, border, label, selected and cell sub-objects at their lines, lightStyle's opening line, and the export of both — so an agent knows the shape a new theme must satisfy without paying for 58 lines of colour literals."
+content.kind = "lines"
+content.spans = [
+  { path = "src/themes/theme.selector.js", start = 1, end = 19, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 1, end = 2, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 3, end = 3, render.kind = "ellipsis" },
+  { path = "src/themes/styles.js", start = 4, end = 4, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 9, end = 9, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 13, end = 13, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 17, end = 17, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 20, end = 20, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 28, end = 28, render.kind = "full" },
+  { path = "src/themes/styles.js", start = 29, end = 29, render.kind = "ellipsis" },
+  { path = "src/themes/styles.js", start = 55, end = 58, render.kind = "full" },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "widgets/containers/containerList.widget.js: complete method roster"
+justification = "The largest leaf widget, and the one most often edited: its overrides of the list template (getLabel, getItemLogs, updateItemLogs, clearItemLogs, getListItems, filterList, formatList) plus its own sortContainersByState, formatContainerStatus, formatContainerState, getSelectedContainer and sortContainers. Gives exact line ranges for the table columns (formatList) and the state-colouring logic without buying 187 lines; imageList and servicesList are the same shape with fewer overrides."
+content.kind = "lines"
+content.spans = [
+  { path = "widgets/containers/containerList.widget.js", start = 3, end = 3, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 6, end = 6, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 8, end = 8, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 10, end = 11, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 12, end = 12, render.kind = "ellipsis" },
+  { path = "widgets/containers/containerList.widget.js", start = 18, end = 18, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 22, end = 22, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 28, end = 28, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 34, end = 34, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 40, end = 40, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 44, end = 44, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 75, end = 75, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 81, end = 81, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 120, end = 120, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 127, end = 127, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 139, end = 139, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 169, end = 169, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 173, end = 173, render.kind = "full" },
+  { path = "widgets/containers/containerList.widget.js", start = 187, end = 187, render.kind = "full" },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "widgets/toolbar.widget.js: the per-mode command extension map"
+justification = "The implementation behind the bottom listbar and every `toolbar.on('key', ...)` subscription: base commands are extended per mode (containers get the container commands plus log commands, services get only log commands, images get remove) and help/view-mode/quit are appended for all modes. Note line 132 emits 't' for the 'view mode' entry while screen.js listens for 'v' — a discrepancy worth having in context."
+content.kind = "lines"
+content.spans = [
+  { path = "widgets/toolbar.widget.js", start = 29, end = 30, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 31, end = 31, render.kind = "ellipsis" },
+  { path = "widgets/toolbar.widget.js", start = 45, end = 45, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 50, end = 50, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 61, end = 61, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 84, end = 84, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 91, end = 97, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 126, end = 128, render.kind = "full" },
+  { path = "widgets/toolbar.widget.js", start = 129, end = 129, render.kind = "ellipsis" },
+  { path = "widgets/toolbar.widget.js", start = 130, end = 133, render.kind = "full" },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "widgets/actionsMenu.widget.js: the `m` menu's action table"
+justification = "The four bulk operations reachable from the actions menu — Stop All Containers, Remove Selected Container, Remove All Containers, Remove All Images — mapped to the methods that call the matching dockerUtil bulk helpers. The destructive-action surface of the app, in one small span, with each handler's line noted."
+content.kind = "lines"
+content.spans = [
+  { path = "widgets/actionsMenu.widget.js", start = 18, end = 25, render.kind = "full" },
+  { path = "widgets/actionsMenu.widget.js", start = 28, end = 28, render.kind = "full" },
+  { path = "widgets/actionsMenu.widget.js", start = 41, end = 41, render.kind = "full" },
+  { path = "widgets/actionsMenu.widget.js", start = 53, end = 53, render.kind = "full" },
+  { path = "widgets/actionsMenu.widget.js", start = 65, end = 65, render.kind = "full" },
+]
 
 [[batches]]
 id = "8.1"
-descriptor = "widgets/**/*.widget.js: panel-label roster (all 20 concrete widgets)"
-justification = "Every concrete widget's displayed panel label (Containers/Container Info/Container Logs/Sort By:/Running/Paused/Stopped/Containers Utilization (%)/Containers vs Images/Images/Image Info/Image Utilization/Services/.../Dockly Help/Status/Menu), in one cheap roster -- the human-readable map from blessed panel title back to source file, for all 20 widget files the tier-2 directory listing named but this NS otherwise doesn't open individually."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "widgets/help.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/searchInput.widget.js"
-start = 24
-end = 25
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/images/imageList.widget.js"
-start = 11
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/images/imageInfo.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerLogs.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerList.widget.js"
-start = 18
-end = 19
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesInfo.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerInfo.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesLogs.widget.js"
-start = 6
-end = 7
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesList.widget.js"
-start = 11
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/actionStatus.widget.js"
-start = 14
-end = 14
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/toolbar.widget.js"
-start = 17
-end = 17
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/actionsMenu.widget.js"
-start = 13
-end = 13
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/images/imageUtilization.widget.js"
-start = 13
-end = 13
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerUtilization.widget.js"
-start = 12
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerSortList.widget.js"
-start = 11
-end = 11
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerVsImages.widget.js"
-start = 12
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/containers/containerStatus.widget.js"
-start = 13
-end = 13
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesVsImages.widget.js"
-start = 12
-end = 12
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesStatus.widget.js"
-start = 13
-end = 13
-render = { kind = "full" }
+descriptor = "Complete listings of .github/ and its subdirectories"
+justification = "Closes the repository-automation class: three workflow files (main.yml plus two docker-publish workflows that nothing else in this ranking covers), mergify.yml, the PR template and the bug-report issue form. An agent asked to change CI needs to know main.yml is not the only workflow."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+]
 
 [[batches]]
 id = "8.2"
-descriptor = "List-table column headers: containers / images / services"
-justification = "The exact displayed columns for each of the 3 main list widgets (Id/Name/Image/Command/State/Status/Ports; Id/Name/Tag/Created/Size; Id/Name/Image/Replicas) in three cheap single lines -- the highest-density answer to 'what fields does dockly show for X' without opening any formatList body."
-predecessor = "8.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "widgets/containers/containerList.widget.js"
-start = 120
-end = 120
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/images/imageList.widget.js"
-start = 68
-end = 68
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "widgets/services/servicesList.widget.js"
-start = 76
-end = 76
-render = { kind = "full" }
+descriptor = "Complete listings of the docs/ Gatsby site"
+justification = "docs/ is a third of the repository's file count but none of its product: a Gatsby starter with its own package.json, LICENSE and gitignore, gatsby-{config,node,browser,ssr}.js, and src/{components,pages,assets}. Listing it wholesale keeps an agent from mistaking these React files for application code, while making the site's structure one hop away."
+content.kind = "fs"
+content.groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/src", entries = "all" },
+  { parent = "docs/src/pages", entries = "all" },
+  { parent = "docs/src/components", entries = "all" },
+]
 
 [[batches]]
-id = "12.1"
-descriptor = "Dockerfile (full)"
-justification = "How dockly packages itself as a container image (node:24-alpine, `apk add docker` so the in-container CLI can still shell out, `npm ci`, entrypoint `node index.js`) -- the concrete artifact behind README 1.10's `docker build`/`docker run` commands and the .github/workflows/docker-publish*.yml CI jobs named in the tier-2 meta-directory roster."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "Dockerfile"
-start = 1
-end = 16
-render = { kind = "full" }
-
-[[batches]]
-id = "12.2"
-descriptor = "dockerRunScript.sh (full)"
-justification = "The script hooks/shell.hook.js's openShell() execFileSync's into a running container (docker exec -it <id> ... /bin/bash || /bin/sh, with the mouse-input escape sequence toggled off/on around it) -- the actual payload behind the 'l' shell-attach key on non-Windows hosts."
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "dockerRunScript.sh"
-start = 1
-end = 9
-render = { kind = "full" }
+id = "8.3"
+descriptor = "Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc"
+justification = "The remaining operational files, each at its decisive line: codefresh builds the Dockerfile into lirantal/dockly and pushes it to the dockerhub registry, gated to the master branch (the tag list is elided); the devcontainer uses a prebuilt typescript-node image; .vscode/launch.json attaches to port 9222, which is exactly what `npm run debug` opens; .nvmrc pins v24. Appendix-grade material, ranked last, but each is a one-line answer to a real setup question."
+content.kind = "lines"
+content.spans = [
+  { path = "codefresh.yml", start = 5, end = 12, render.kind = "full" },
+  { path = "codefresh.yml", start = 13, end = 13, render.kind = "ellipsis" },
+  { path = "codefresh.yml", start = 22, end = 25, render.kind = "full" },
+  { path = ".devcontainer/devcontainer.json", start = 4, end = 6, render.kind = "full" },
+  { path = ".vscode/launch.json", start = 9, end = 12, render.kind = "full" },
+  { path = ".nvmrc", start = 1, end = 1, render.kind = "full" },
+]
 

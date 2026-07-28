@@ -1,575 +1,644 @@
 fixture = "bareiron"
 revision_pin = "ddb071c3"
 summary = """
-bareiron: a from-scratch, single-process Minecraft: Java Edition server
-(protocol 772, MC 1.21.8) written in freestanding C, targeting extremely
-memory-constrained embedded devices (ESP32) as well as PC. Priorities in
-order: memory usage, performance, features; vanilla parity is explicitly
-not a goal. All state is fixed-size global arrays (no heap growth at
-runtime beyond a couple of small mallocs), sized by compile-time knobs in
-include/globals.h. The whole protocol/game-logic implementation lives in
-src/*.c with matching include/*.h declarations; a generated
-src/registries.c + include/registries.h pair (produced by
-build_registries.js from a dumped vanilla server JAR, gitignored, absent
-from this tree) supplies block/item/registry ID tables that most of the
-game code depends on by name (B_*, I_*, W_*, D_* macros). Query
-distribution this NS serves: protocol/packet debugging, gameplay-logic
-questions (crafting, combat, inventory slot mapping, block changes,
-worldgen), config-knob tuning for a target device, build/compile
-troubleshooting (including the registries-generation step), and general
-architecture/design-rationale questions.
+bareiron is a from-scratch Minecraft 1.21.8 (protocol 772) Java-edition
+server written in plain C, sized to run on an ESP32: ~7.7k lines across
+10 `.c` files in `src/` and 9 headers in `include/`, with no dependencies
+beyond libc and sockets (plus ESP-IDF when targeting an MCU). Its stated
+priority order is memory, then performance, then vanilla feature parity.
+
+The repository is far larger than the budget, so the ranking buys breadth
+and exact coordinates rather than long bodies. First identity and the
+file map, then the two build entry points (`build.sh` for gcc/cosmocc,
+`src/CMakeLists.txt` for ESP-IDF) and `.gitignore` — because
+`include/registries.h` and `src/registries.c` are *generated* by
+`build_registries.js` from a vanilla server registry dump and are absent
+from the tree; every `B_*` / `I_*` / `W_*` / `D_*` identifier in the
+sources resolves there, and an agent that doesn't learn this burns many
+searches. Tier 2 is the wire surface: the connection-state constants, the
+complete `cs_*` / `sc_*` declaration set of `include/packets.h`, and the
+VarInt primitives. Tier 3 is the shared vocabulary: `BlockChange`,
+`PlayerData` with its documented flag bits, `MobData`, `EntityData`, the
+global state externs, the complete `#define` roster of `include/globals.h`
+(the file the README designates as the configuration surface, including
+its commented-out toggles), the definitions in `src/globals.c`, the README
+configuration prose, and the `build_registries.js` template that emits the
+generated identifiers plus its fixed biome list. Tier 4 completes the
+header set — `procedures.h`, `worldgen.h`, `tools.h`, `serialize.h`,
+`crafting.h`, `structures.h` — so that after it every declaration in
+`include/` has been rendered. Tier 5 is `src/main.c`: the maintainer's
+design note on the packet handlers, the 0x00 login/configuration branch,
+the complete packet-id dispatch table, the single-threaded accept/tick
+loop, and the ESP32 entry points. Tier 6 buys one-hop definition locations for `procedures.c`
+and `worldgen.c` (the only place their file-private helpers are visible),
+the serializer's file paths, the chat command surface, and the smelting
+table. Tier 7 covers operational periphery: the GitHub workflow and issue
+template listing, the contribution rules, the registry extraction script's
+top-level flow, and the license.
 """
 
-# ============================================================
-# Tier 1 — orientation: root/dir listings + README (complement
-# to no in-repo AGENTS.md/CLAUDE.md; README content is fair game)
-# ============================================================
+# ---------------------------------------------------------------------
+# Tier 1 — what this repository is, where its files are, how to build it
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "First thing any session needs: what's actually in this repo. Cheap fs listing, avoids catastrophic omission of top-level files/dirs."
-content.kind = "fs"
-content.groups = [
-  { parent = ".", entries = "all" },
-]
+descriptor = "Project identity, tagline, and target Minecraft/protocol version"
+justification = "Rank 1 must answer 'what is this repo'. Four short lines give the name, the one-sentence purpose (minimalist Minecraft server for memory-restrictive embedded systems), and the exact `1.21.8` / protocol `772` targets — the two facts that decide whether any protocol question is even answerable from this tree. Deliberately excludes the long goal paragraph so the first batch stays tiny."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 2, render = { kind = "full" } },
+  { path = "README.md", start = 6, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "include/ directory listing"
-justification = "Full listing of every header — the declared public surface of each subsystem. Partial listing here would let an agent wrongly assume some header doesn't exist."
-content.kind = "fs"
-content.groups = [
-  { parent = "include", entries = "all" },
-]
+descriptor = "Complete repository root listing"
+justification = "Cheapest possible breadth: the whole root in one listing (`entries = \"all\"`, so the class is closed by construction). Establishes that the source lives in `src/` and `include/`, that there are two shell scripts and a JavaScript file at the root, and that there is no Makefile or top-level CMake. Everything later in the ranking hangs off this map."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "src/ directory listing"
-justification = "Full listing of every implementation file, same catastrophic-omission hedge as 1.2. Names alone (crafting/globals/main/packets/procedures/serialize/structures/tools/varnum/worldgen) already sketch the module boundaries."
-content.kind = "fs"
-content.groups = [
-  { parent = "src", entries = "all" },
-]
+descriptor = "Stated project goal and priority ordering"
+justification = "The single paragraph that governs every design decision in the codebase: the target is very weak devices such as the ESP32, priorities are memory > performance > features, and vanilla compliance is explicitly *not* a goal. Without it an agent will propose changes the maintainer rejects on principle. Ranked right after the file map because it is the interpretive key for everything else."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 4, end = 4, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = ".gitignore (full)"
-justification = "Explains why registries.c/registries.h, world.bin, notchian/, and the built binaries are absent from this tree despite being referenced/produced everywhere — otherwise an agent grepping for registries.h would wrongly conclude it's simply missing/broken."
-content.kind = "lines"
-content.spans = [
-  { path = ".gitignore", start = 1, end = 7, render.kind = "full" },
-]
+descriptor = "Complete src/ and include/ listings"
+justification = "The two directories that hold all the substance, both listed exhaustively. Ten translation units and nine headers, plus the `CMakeLists.txt` that sits inside `src/` rather than at the root. This is the core source roster and it is ranked early on purpose: a reader should learn the module decomposition (packets / procedures / worldgen / crafting / serialize / tools / varnum / structures / globals / main) before any peripheral inventory."
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+  { parent = "include", entries = "all" },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "README: title + tagline"
-justification = "One-line identity of the project."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 1, end = 2, render.kind = "full" },
-]
+descriptor = "All README H2 section headings"
+justification = "Five heading lines, no bodies — tells the agent exactly which documented topics exist (Quick start, Compilation, Configuration, Non-volatile storage, Contribution) and at which line each begins, so any doc question is one targeted read away. Cheap catastrophic-omission hedge: naming some sections and not others would imply the others don't exist."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+  { path = "README.md", start = 17, end = 17, render = { kind = "full" } },
+  { path = "README.md", start = 28, end = 28, render = { kind = "full" } },
+  { path = "README.md", start = 39, end = 39, render = { kind = "full" } },
+  { path = "README.md", start = 48, end = 48, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "README: priorities + protocol/MC version"
-justification = "The explicit priority order (memory > performance > features, vanilla parity not a goal) and the exact MC/protocol version being targeted — load-bearing for any compat or design-tradeoff question."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 4, end = 7, render.kind = "full" },
-]
+descriptor = ".gitignore in full — which sources are generated and absent"
+justification = "Seven lines that pre-empt the most expensive wrong turn in this repo: `src/registries.c` and `include/registries.h` are ignored and therefore *not in the tree*, as is the `notchian/` registry-dump directory and the `bareiron` binary. Every source file includes `registries.h`; an agent that greps for `B_dirt` or `I_coal` and finds nothing needs this to know why."
+content = { kind = "lines", spans = [
+  { path = ".gitignore", start = 1, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "README: client-support warning"
-justification = "Cheap but important scoping caveat: only vanilla client is officially supported."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 9, end = 10, render.kind = "full" },
-]
+descriptor = "build.sh: the registry prerequisite check and the actual compile command"
+justification = "The PC build entry point reduced to its two load-bearing fragments: the guard that errors out when `include/registries.h` is missing (naming the README section that generates it), and the `$compiler src/*.c -O2 -Iinclude -o bareiron$exe` invocation plus the immediate run of the result. 'How do I build and run this' is a large share of real sessions and this answers it with zero follow-ups."
+content = { kind = "lines", spans = [
+  { path = "build.sh", start = 3, end = 8, render = { kind = "full" } },
+  { path = "build.sh", start = 43, end = 45, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.8"
-descriptor = "README: Quick start"
-justification = "Covers the non-source-build path (prebuilt Cosmopolitan binary) — relevant for 'how do I just run this' without touching the compile toolchain."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 12, end = 15, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.9"
-descriptor = "README: Configuration intro"
-justification = "Names the two files that hold config (include/globals.h for most knobs, src/globals.c for MOTD/time-of-day) before the raw header dump in tier 3 — a semantic map an agent needs before grepping."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 28, end = 31, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.10"
-descriptor = "README: Compilation intro + Linux build command"
-justification = "The registries-generation prerequisite (must run before anything compiles) plus the one-liner Linux build path."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 17, end = 20, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.11"
-descriptor = "README: Non-volatile storage intro"
-justification = "Explains the world.bin persistence default on PC and the LittleFS path on ESP — sets up the SYNC_WORLD_TO_DISK-family config knobs seen later."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 39, end = 42, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.12"
-descriptor = "README: Contribution guidelines"
-justification = "Process context for 'new feature' / PR-shaped sessions: discuss-first policy, explicit non-goal of dev-tooling contributions, and a pointer to the protocol wiki for anything not covered in this ranking. Style-consistency and testing expectations are real bullets too, ellipsis-marked rather than dropped silently."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 48, end = 49, render.kind = "full" },
-  { path = "README.md", start = 50, end = 50, render.kind = "ellipsis" },
-  { path = "README.md", start = 51, end = 51, render.kind = "ellipsis" },
-  { path = "README.md", start = 52, end = 53, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.13"
-descriptor = "README: Configuration knob summary"
-justification = "Names the specific compile-time knobs (BROADCAST_ALL_MOVEMENT, SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT, TIME_BETWEEN_TICKS, ALLOW_CHESTS, DO_FLUID_FLOW, VISITED_HISTORY) that matter for real deployments — directly serves 'how do I tune this for weak hardware/many players' queries."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 33, end = 37, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.14"
-descriptor = "README: Compilation, Windows/ESP options"
-justification = "There are Windows and ESP-IDF build paths beyond the Linux one-liner (1.10); the ESP-IDF/PlatformIO bullet is shown in full since it's this fixture's actual embedded target, while the 4 Windows-specific variants (native MSYS2, 32-bit/9x, MSYS-linked, WSL) are ellipsis-marked rather than dropped silently — each is a real bullet an agent can read on demand."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 21, end = 21, render.kind = "full" },
-  { path = "README.md", start = 22, end = 22, render.kind = "ellipsis" },
-  { path = "README.md", start = 23, end = 23, render.kind = "ellipsis" },
-  { path = "README.md", start = 24, end = 24, render.kind = "ellipsis" },
-  { path = "README.md", start = 25, end = 25, render.kind = "ellipsis" },
-  { path = "README.md", start = 26, end = 26, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.15"
-descriptor = "README: Non-volatile storage, remaining options"
-justification = "The SD-card/custom-VFS path and the TCP BEEF-dump escape hatch (DEV_ENABLE_BEEF_DUMPS), including its explicit lack of auth — a security-relevant caveat an agent must not miss if asked about that feature."
-content.kind = "lines"
-content.spans = [
-  { path = "README.md", start = 44, end = 46, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 2 — core data model: the structs and state-machine
-# constants everything else operates on (include/globals.h)
-# ============================================================
+descriptor = "src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build"
+justification = "Eight lines covering the entire second build path. States in a comment that this file is only for ESP-IDF/PlatformIO and that other platforms compile manually, and names the three IDF components the project requires (`esp_wifi`, `nvs_flash`, `esp_timer`). Complete file, so no omission risk."
+content = { kind = "lines", spans = [
+  { path = "src/CMakeLists.txt", start = 1, end = 8, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.1"
-descriptor = "globals.h: connection-state constants"
-justification = "STATE_NONE/STATUS/LOGIN/TRANSFER/CONFIGURATION/PLAY — the login handshake state machine that main.c's handlePacket dispatches on. Needed to make sense of any packet-routing question."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 165, end = 170, render.kind = "full" },
-]
+descriptor = "Connection state constants (STATE_NONE through STATE_PLAY)"
+justification = "Six `#define`s from globals.h that every dispatch decision in main.c and every handler in packets.c branches on. Tiny, and they make the packet declarations that follow immediately legible (handshake / status / login / transfer / configuration / play). Complete set, in source order."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 165, end = 170, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "globals.h: BlockChange struct"
-justification = "The entire persisted-world representation: a flat array of (x,z,y,block) deltas over generated terrain. Central to any block-change/persistence question."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 191, end = 196, render.kind = "full" },
-]
+descriptor = "packets.h — serverbound declarations, connection and world interaction"
+justification = "First half of the complete serverbound roster with full signatures: handshake, login start, client information, plugin message, player action, use-item-on, use-item, and the three position/rotation readers. These are one-line declarations, so rendering them in full costs little more than the names while also giving the out-parameter shapes the movement readers fill in. Split from the rest only to respect the growth envelope; 2.3 completes the class."
+content = { kind = "lines", spans = [
+  { path = "include/packets.h", start = 4, end = 14, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "globals.h: PlayerData struct"
-justification = "The single most-referenced type in the codebase: position, inventory (41 slots + 9 crafting), health/hunger, the packed `flags` bitfield (attack cooldown/spawning/sneak/sprint/eating/movement-cooldown/craft-lock) whose bit meanings are documented inline. Almost every gameplay question touches this struct."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 198, end = 238, render.kind = "full" },
-]
+descriptor = "packets.h — remainder of the serverbound declarations"
+justification = "Completes the `cs_*` class: the movement-flags reader, held item, swing arm, container click and close, client status, chat, interact, player input, player command and player loaded. Together with 2.2 this is every serverbound packet bareiron understands — which also tells an agent what the server does *not* implement, the more common question given the project's explicit non-parity stance."
+content = { kind = "lines", spans = [
+  { path = "include/packets.h", start = 15, end = 25, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "globals.h: MobData, EntityData(Value)"
-justification = "Mob representation (type/pos/packed health+sheared+panic-timer byte) and the wire-level EntityData/EntityDataValue union used for entity metadata packets — needed for any mob-behavior or entity-metadata question."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 240, end = 266, render.kind = "full" },
-]
+descriptor = "packets.h — clientbound declarations, login and configuration phase"
+justification = "Start of the `sc_*` class: status response, login success, known packs, plugin message, finish configuration, login play, position sync, default spawn position, start-waiting-for-chunks, player abilities and update time. This is the join handshake in declaration order, which is also the order main.c drives it in."
+content = { kind = "lines", spans = [
+  { path = "include/packets.h", start = 27, end = 38, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "globals.h: global state externs (buffers, seeds, counts)"
-justification = "Declares the actual global arrays (block_changes[MAX_BLOCK_CHANGES], player_data[MAX_PLAYERS], mob_data[MAX_MOBS]) and scalar state (recv_buffer, world/rng seeds, world_time, motd/brand, client_count) that 2.2-2.4's types are stored in — completes the 'where does state live' picture."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 172, end = 189, render.kind = "full" },
-  { path = "include/globals.h", start = 268, end = 276, render.kind = "full" },
-]
+descriptor = "packets.h — clientbound declarations, world and inventory"
+justification = "Set center chunk, chunk data and light, keep alive, container slot, cursor item, held item, block update, open screen, acknowledge block change, player info update, spawn entity and spawn entity player. The inventory-facing signatures carry the window-id/slot vocabulary that `cs_clickContainer` and the slot-mapping helpers in procedures.h operate on."
+content = { kind = "lines", spans = [
+  { path = "include/packets.h", start = 39, end = 50, render = { kind = "full" } },
+] }
 
-# ============================================================
-# Tier 3 — compile-time configuration knobs (globals.h defines).
-# A concrete config sample, cheaper evidence of the format than
-# reading a parser (there is no parser: these are #defines).
-# ============================================================
+[[batches]]
+id = "2.6"
+descriptor = "packets.h — clientbound declarations, entities, health and registries"
+justification = "Closes the packet class: entity metadata/animation/teleport/head rotation/rotation, damage event, set health, respawn, system chat, entity event, remove entity, pickup item, and `sc_registries` (which ships the generated `registries_bin` blob). After 2.2–2.6 the entire protocol surface of the project is present with no partial-class risk."
+content = { kind = "lines", spans = [
+  { path = "include/packets.h", start = 51, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "varnum.h in full — VarInt encoding primitives and error sentinel"
+justification = "The Minecraft wire format is VarInt-framed and this seven-line body is the whole module: `SEGMENT_BITS`, `CONTINUE_BIT`, `VARNUM_ERROR` plus `readVarInt` / `sizeVarInt` / `writeVarInt`. `VARNUM_ERROR` in particular is the disconnect trigger in main.c's read loop. A complete module API at near-zero cost."
+content = { kind = "lines", spans = [
+  { path = "include/varnum.h", start = 6, end = 12, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 3 — shared vocabulary: data model, configuration, generated ids
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "globals.h: core server-loop tuning (#define)"
-justification = "PORT, MAX_PLAYERS, MAX_MOBS, MOB_DESPAWN_DISTANCE, GAMEMODE, VIEW_DISTANCE, TIME_BETWEEN_TICKS/TICKS_PER_SECOND — the knobs that most directly trade memory/CPU for player experience, exactly the ones README 1.13 pointed at."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 18, end = 41, render.kind = "full" },
-]
+descriptor = "globals.h — BlockChange record and the packed-struct pragma"
+justification = "`BlockChange` is the unit of all persistent world mutation (a fixed array of `MAX_BLOCK_CHANGES` of them is the entire savegame), and the `#pragma pack(push, 1)` immediately after it is why `PlayerData` and `MobData` can be memcpy'd straight to disk and onto the socket. Small, and it frames the two structs that follow."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 191, end = 198, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "globals.h: worldgen tuning (#define)"
-justification = "INITIAL_WORLD_SEED/INITIAL_RNG_SEED, CHUNK_SIZE, TERRAIN_BASE_HEIGHT, CAVE_BASE_DEPTH, BIOME_SIZE/RADIUS, VISITED_HISTORY — feeds directly into worldgen.c's terrain math covered later in the ranking."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 43, end = 71, render.kind = "full" },
-]
+descriptor = "globals.h — PlayerData fields (identity through inventory)"
+justification = "The central struct of the codebase: uuid/name/fd, integer position, the `visited_x`/`visited_z` chunk history, the conditionally-present `packets_since_update` field, orientation, health/hunger/saturation, hotbar and the 41-slot inventory plus 9-slot crafting grid arrays. Nearly every function in procedures.c and packets.c takes a `PlayerData *`. Split at line 222; 3.3 carries the tail."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 200, end = 222, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "globals.h: storage/network tuning (#define)"
-justification = "MAX_BLOCK_CHANGES (fixed memory for all block edits ever made), SYNC_WORLD_TO_DISK/DISK_SYNC_INTERVAL/DISK_SYNC_BLOCKS_ON_INTERVAL, NETWORK_TIMEOUT_TIME, MAX_RECV_BUF_LEN — governs persistence cadence (see serialize.c, tier 12) and network robustness."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 73, end = 106, render.kind = "full" },
-]
+descriptor = "globals.h — PlayerData flag bits and the overloaded flagval fields"
+justification = "The tail of `PlayerData` and the highest-density comment block in the repo: `flagval_16`/`flagval_8` change meaning depending on `flags`, and the eight documented bits (attack cooldown, has-not-spawned, sneaking, sprinting, eating, client loading, movement cooldown, craft lock) are tested by bare hex literals throughout procedures.c and main.c. Without these lines `player->flags & 0x20` is unreadable; with them, most tick and movement questions need no follow-up."
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 223, end = 238, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.4"
-descriptor = "globals.h: gameplay feature toggles, part 1 (#define)"
-justification = "SEND_BRAND, BROADCAST_ALL_MOVEMENT, SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT, DO_FLUID_FLOW, ALLOW_CHESTS — the highest-traffic on/off switches (movement bandwidth, fluid sim cost, whole chest subsystem) referenced throughout main.c/procedures.c via #ifdef."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 108, end = 135, render.kind = "full" },
-]
+descriptor = "globals.h — MobData and EntityData"
+justification = "Completes the struct class in this header. `MobData` packs health, sheared state and a panic timer into a single byte and reuses `y` as a despawn timer when dead — both documented inline. `EntityData` is the metadata-field encoding used by `sc_setEntityMetadata` and the `writeEntityData` / `sizeEntityData` helpers; its `value` member is a `union EntityDataValue`, whose declaration sits at the elided line marked between the two spans."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 240, end = 253, render = { kind = "full" } },
+  { path = "include/globals.h", start = 255, end = 255, render = { kind = "ellipsis" } },
+  { path = "include/globals.h", start = 260, end = 266, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.5"
-descriptor = "globals.h: gameplay feature toggles, part 2 + dev logging (#define)"
-justification = "ENABLE_PLAYER_FLIGHT/PICKUP_ANIMATION/CACTUS_DAMAGE plus the DEV_LOG_* and DEV_ENABLE_BEEF_DUMPS debug/dev-only switches — the toggles a debugging session is most likely to want flipped on temporarily."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 137, end = 163, render.kind = "full" },
-]
+descriptor = "globals.h — all extern global state declarations"
+justification = "The complete set of process-wide mutable state: receive buffer and count, the two hashed seeds, world time and tick counter, MOTD and brand strings, client count, and the three fixed-size arrays (`block_changes`, `player_data`, `mob_data`) with their counts. This is the whole 'where does the server keep its state' answer in two spans, and it closes the class — there are no other externs in this header."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 172, end = 189, render = { kind = "full" } },
+  { path = "include/globals.h", start = 268, end = 275, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.6"
-descriptor = "globals.h: platform bootstrap (#define/#ifdef)"
-justification = "ESP_PLATFORM-conditional WIFI_SSID/WIFI_PASS and task_yield() shim, plus the true/false macros used throughout (this is C, no <stdbool.h> reliance) — explains a recurring idiom seen in nearly every other file."
-content.kind = "lines"
-content.spans = [
-  { path = "include/globals.h", start = 1, end = 16, render.kind = "full" },
-]
+descriptor = "build_registries.js — the template that generates include/registries.h"
+justification = "The highest-leverage batch after the file map. This template is the *definition* of the missing header: it shows that the generated `registries.h` declares `registries_bin`, `tags_bin`, `block_palette`, `network_block_palette`, `B_to_I` and `I_to_B`, and that the `B_<block>`, `I_<item>`, `W_<biome>` and `D_<damage_type>` macro namespaces are emitted from the registry dump. Every otherwise-unresolvable identifier in the C sources is explained here, turning an open-ended search into zero hops."
+content = { kind = "lines", spans = [
+  { path = "build_registries.js", start = 448, end = 470, render = { kind = "full" } },
+] }
 
-# ============================================================
-# Tier 4 — header signature catalogs. Cheap (Truncated where the
-# param list is the long part) full-breadth "what functions exist"
-# hedge against catastrophic omission, ahead of any one .c deep dive.
-# ============================================================
+[[batches]]
+id = "3.7"
+descriptor = "globals.h — configuration macro roster, part 1 (world and player sizing)"
+justification = "Names and values only, comments stripped: the ESP-only WiFi credential block plus every sizing and tuning constant from `PORT` through `MAX_BLOCK_CHANGES`. The README designates this file as the configuration surface, so the complete `#define` roster is the answer key for 'what can I tune', and rendering just the definition lines keeps it cheap while the surrounding comments stay one read away."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 7, end = 13, render = { kind = "full" } },
+  { path = "include/globals.h", start = 19, end = 19, render = { kind = "full" } },
+  { path = "include/globals.h", start = 23, end = 23, render = { kind = "full" } },
+  { path = "include/globals.h", start = 26, end = 26, render = { kind = "full" } },
+  { path = "include/globals.h", start = 29, end = 29, render = { kind = "full" } },
+  { path = "include/globals.h", start = 32, end = 32, render = { kind = "full" } },
+  { path = "include/globals.h", start = 35, end = 35, render = { kind = "full" } },
+  { path = "include/globals.h", start = 38, end = 38, render = { kind = "full" } },
+  { path = "include/globals.h", start = 41, end = 41, render = { kind = "full" } },
+  { path = "include/globals.h", start = 45, end = 45, render = { kind = "full" } },
+  { path = "include/globals.h", start = 49, end = 49, render = { kind = "full" } },
+  { path = "include/globals.h", start = 53, end = 53, render = { kind = "full" } },
+  { path = "include/globals.h", start = 56, end = 56, render = { kind = "full" } },
+  { path = "include/globals.h", start = 59, end = 59, render = { kind = "full" } },
+  { path = "include/globals.h", start = 63, end = 63, render = { kind = "full" } },
+  { path = "include/globals.h", start = 66, end = 66, render = { kind = "full" } },
+  { path = "include/globals.h", start = 71, end = 71, render = { kind = "full" } },
+  { path = "include/globals.h", start = 75, end = 75, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "globals.h — configuration macro roster, part 2 (feature toggles, including the commented-out ones)"
+justification = "Closes the configuration class: disk-sync gating, network timeout, receive buffer size, and every optional feature switch. Critically it renders the *disabled* toggles too — `DISK_SYNC_BLOCKS_ON_INTERVAL`, `ENABLE_PLAYER_FLIGHT`, `DEV_LOG_UNKNOWN_PACKETS`, `DEV_LOG_CHUNK_GENERATION`, `DEV_ENABLE_BEEF_DUMPS` are commented out in source, and an agent shown only the active ones would conclude they don't exist."
+content = { kind = "lines", spans = [
+  { path = "include/globals.h", start = 84, end = 86, render = { kind = "full" } },
+  { path = "include/globals.h", start = 93, end = 93, render = { kind = "full" } },
+  { path = "include/globals.h", start = 98, end = 98, render = { kind = "full" } },
+  { path = "include/globals.h", start = 103, end = 103, render = { kind = "full" } },
+  { path = "include/globals.h", start = 106, end = 106, render = { kind = "full" } },
+  { path = "include/globals.h", start = 111, end = 111, render = { kind = "full" } },
+  { path = "include/globals.h", start = 118, end = 118, render = { kind = "full" } },
+  { path = "include/globals.h", start = 125, end = 125, render = { kind = "full" } },
+  { path = "include/globals.h", start = 129, end = 129, render = { kind = "full" } },
+  { path = "include/globals.h", start = 135, end = 135, render = { kind = "full" } },
+  { path = "include/globals.h", start = 139, end = 139, render = { kind = "full" } },
+  { path = "include/globals.h", start = 146, end = 146, render = { kind = "full" } },
+  { path = "include/globals.h", start = 149, end = 149, render = { kind = "full" } },
+  { path = "include/globals.h", start = 152, end = 152, render = { kind = "full" } },
+  { path = "include/globals.h", start = 155, end = 155, render = { kind = "full" } },
+  { path = "include/globals.h", start = 158, end = 158, render = { kind = "full" } },
+  { path = "include/globals.h", start = 163, end = 163, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "src/globals.c — definitions of the global state, MOTD and brand"
+justification = "The definition side of 3.5, and the README explicitly sends configuration readers here: `motd[] = \"A bareiron server\"`, `brand[] = \"bareiron\"`, `world_time = 0` (the starting time of day), and the seed initialisers wired to the `INITIAL_*_SEED` macros. The `world_seed`/`rng_seed` initialisers show that the compile-time constants are what actually seed the running server, before main() hashes them."
+content = { kind = "lines", spans = [
+  { path = "src/globals.c", start = 31, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "README Configuration section — where the knobs live"
+justification = "Two prose lines stating that configuring the server requires compiling from source, that the user-friendly options (including WiFi credentials for embedded setups) are in `include/globals.h`, that the MOTD and starting time of day are in `src/globals.c`, and that everything else means digging through the code. Directly connects 3.7/3.8/3.9 and answers 'how do I configure this' without a follow-up."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 29, end = 29, render = { kind = "full" } },
+  { path = "README.md", start = 31, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "README Configuration — the maintainer's tuning guidance"
+justification = "Operational advice that cannot be recovered from the source: which toggles to drop when movement broadcasting saturates the link (`BROADCAST_ALL_MOVEMENT`, `SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT`, `TIME_BETWEEN_TICKS`), and that chest and water instability is switched off via `ALLOW_CHESTS` and `DO_FLUID_FLOW`. A third bullet is elided and marked. Judgement rather than code, so it earns its rank over more source lines."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 35, end = 36, render = { kind = "full" } },
+  { path = "README.md", start = 37, end = 37, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "build_registries.js — the complete biome list"
+justification = "The `W_*` identifiers come from this five-element array, and the comment states the hard constraint that only four biomes plus beach are supported. Anyone touching worldgen needs to know the biome universe is exactly `plains`, `mangrove_swamp`, `desert`, `snowy_plains`, `beach`, and that it is fixed by the generator rather than extensible by adding a case in C."
+content = { kind = "lines", spans = [
+  { path = "build_registries.js", start = 66, end = 73, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 4 — the remaining module APIs, header by header
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "packets.h: every C->S / S->C packet function name"
-justification = "Full roster of all 57 packet handler/encoder names (21 serverbound cs_*, 36 clientbound sc_*), split by the file's own two comment-delimited sections. Names alone let an agent locate the exact packet fn to grep for in packets.c without guessing whether others exist."
-content.kind = "lines"
-content.spans = [
-  { path = "include/packets.h", start = 4, end = 4, render.kind = "full" },
-  { path = "include/packets.h", start = 5, end = 25, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/packets.h", start = 27, end = 27, render.kind = "full" },
-  { path = "include/packets.h", start = 28, end = 63, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
+descriptor = "procedures.h — client state and player lifecycle API"
+justification = "First third of the largest non-packet header: the `client_states` table, the state get/set/index helpers, and the whole player lifecycle (reset, reserve, get, get-by-name, disconnect, join, give item, spawn). These are the entry points main.c calls between packet reads, so this batch plus tier 2 explains the join sequence end to end."
+content = { kind = "lines", spans = [
+  { path = "include/procedures.h", start = 8, end = 22, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "procedures.h: every core game-logic function name"
-justification = "Full roster of the 38 non-packet procedures declared here (player lifecycle, inventory-slot mapping, block changes, mining/combat, mob AI, entity-data sizing) grouped by the header's own blank-line sections. Complements 4.1 to cover the declared game-logic surface by name before later tiers' selective deep dives (procedures.c itself defines 8 more, undeclared here — see the helper roster later in the ranking)."
-content.kind = "lines"
-content.spans = [
-  { path = "include/procedures.h", start = 8, end = 8, render.kind = "full" },
-  { path = "include/procedures.h", start = 10, end = 12, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 14, end = 22, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 24, end = 25, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 27, end = 28, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 30, end = 31, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 33, end = 39, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 41, end = 44, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 46, end = 46, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 48, end = 51, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 53, end = 53, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 55, end = 55, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/procedures.h", start = 57, end = 58, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
+descriptor = "procedures.h — metadata broadcast, slot mapping and block predicates"
+justification = "Middle third: the two metadata broadcasters, the server-slot/client-slot conversions that inventory handling depends on, `getBlockChange`/`makeBlockChange` (the only sanctioned way to mutate the world), and the complete predicate family — instantly-mined, column, passable, passable-spawn, replaceable, compostable, stack size. The predicate set is exactly the kind of class where a partial listing would mislead."
+content = { kind = "lines", spans = [
+  { path = "include/procedures.h", start = 24, end = 39, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "tools.h: byte/network primitives + inline helpers"
-justification = "mod_abs/div_floor (true integer floor-div/mod, used throughout worldgen for negative coordinates — actual bodies, not just signatures, since they're one-liners) plus the read*/write* wire-primitive and recv_all/send_all/fast_rand/splitmix64/get_program_time signatures every packet fn (tier 6's packets.c) builds on."
-content.kind = "lines"
-content.spans = [
-  { path = "include/tools.h", start = 8, end = 13, render.kind = "full" },
-  { path = "include/tools.h", start = 15, end = 15, render.kind = "full" },
-  { path = "include/tools.h", start = 16, end = 18, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/tools.h", start = 20, end = 25, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/tools.h", start = 27, end = 34, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/tools.h", start = 36, end = 38, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/tools.h", start = 40, end = 41, render.kind = "full" },
-  { path = "include/tools.h", start = 43, end = 48, render.kind = "full" },
-]
+descriptor = "procedures.h — mining, actions, fluids, mobs, tick and entity-data API"
+justification = "Final third, closing the header: mining result and tool durability, the two player-action handlers, fluid update, mob spawn/interact/hurt, `handleServerTick`, chest broadcast, and the entity-data write/size helpers. After 4.1–4.3 every declaration in procedures.h is rendered, so an agent can distinguish the public gameplay API from the file-private helpers that tier 6 locates."
+content = { kind = "lines", spans = [
+  { path = "include/procedures.h", start = 41, end = 58, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "varnum.h: VarInt protocol primitives"
-justification = "The Minecraft protocol's variable-length integer encoding constants (SEGMENT_BITS/CONTINUE_BIT/VARNUM_ERROR) and its 3-function API — foundational to every packet read/write in the codebase."
-content.kind = "lines"
-content.spans = [
-  { path = "include/varnum.h", start = 6, end = 12, render.kind = "full" },
-]
+descriptor = "worldgen.h — ChunkAnchor and ChunkFeature"
+justification = "The two structs that carry generation state: an anchor holds chunk coordinates, a hash and a biome; a feature holds a position and a variant. Terrain is a pure function of these plus the world seed, which is the key architectural fact about the generator and the reason nothing but block changes ever needs saving."
+content = { kind = "lines", spans = [
+  { path = "include/worldgen.h", start = 6, end = 18, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.5"
-descriptor = "worldgen.h: chunk types + terrain-query API"
-justification = "ChunkAnchor/ChunkFeature structs (the per-minichunk cache keys) plus the getChunkHash/Biome/HeightAt/TerrainAt/BlockAt query chain and the chunk_section output buffer — the whole worldgen public surface at a glance, ahead of tier 8's algorithm deep dive."
-content.kind = "lines"
-content.spans = [
-  { path = "include/worldgen.h", start = 6, end = 11, render.kind = "full" },
-  { path = "include/worldgen.h", start = 13, end = 18, render.kind = "full" },
-  { path = "include/worldgen.h", start = 20, end = 25, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "include/worldgen.h", start = 27, end = 28, render.kind = "full" },
-]
+descriptor = "worldgen.h — the complete generation API and the shared chunk_section buffer"
+justification = "Chunk hash, biome, the two height queries, terrain-at, block-at, and `buildChunkSection` writing into a single shared 4096-byte `chunk_section` buffer — the memory-frugality decision that makes chunk sending non-reentrant. Six functions plus one global are the whole public generator surface."
+content = { kind = "lines", spans = [
+  { path = "include/worldgen.h", start = 20, end = 28, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.6"
-descriptor = "serialize.h: disk-sync API, with its no-op fallback"
-justification = "Shows the SYNC_WORLD_TO_DISK-gated real API (initSerializer/writeBlockChangesToDisk/writeChestChangesToDisk/writePlayerDataToDisk/writeDataToDiskOnInterval) side-by-side with its #else no-op macro stubs — the exact pattern that lets serialize.c's contents be entirely absent from a build without callers changing."
-content.kind = "lines"
-content.spans = [
-  { path = "include/serialize.h", start = 6, end = 19, render.kind = "full" },
-]
+descriptor = "tools.h — socket I/O and the byte-order writers"
+justification = "`total_bytes_received` (the counter main.c uses to detect misparsed packets), `recv_all`/`send_all`/`discard_all`, and the complete `writeByte` through `writeDouble` family. Every clientbound packet in packets.c is assembled from these calls, so this is the vocabulary needed to read any handler."
+content = { kind = "lines", spans = [
+  { path = "include/tools.h", start = 15, end = 25, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.7"
-descriptor = "structures.h + crafting.h: world-structure and crafting API"
-justification = "The two smallest, most self-contained headers: placeTreeStructure (structures.c's only export) and getCraftingOutput/getSmeltingOutput (crafting.c's only exports) — grouped together since each is a single-purpose one-or-two-function header."
-content.kind = "lines"
-content.spans = [
-  { path = "include/structures.h", start = 4, end = 4, render.kind = "full" },
-  { path = "include/crafting.h", start = 6, end = 7, render.kind = "full" },
-]
+descriptor = "tools.h — the readers, string helpers and RNG"
+justification = "Closes the tools API: the full `read*` family (byte through double, signed and unsigned), `readLengthPrefixedData`, `readString`/`readStringN` which decode into the shared `recv_buffer`, and the two RNG entry points `fast_rand` (XORshift) and `splitmix64` (seed hashing). Both RNGs are load-bearing for worldgen and mob behaviour."
+content = { kind = "lines", spans = [
+  { path = "include/tools.h", start = 27, end = 41, render = { kind = "full" } },
+] }
 
-# ============================================================
-# Tier 5 — main.c: the packet-dispatch loop that ties every
-# other module together, plus the socket bootstrap.
-# ============================================================
+[[batches]]
+id = "4.8"
+descriptor = "tools.h — the inline math helpers and the platform time shim"
+justification = "The remaining lines of the header, kept as their own batch because they are the platform-portability seam: `mod_abs` and `div_floor` give the negative-coordinate-correct arithmetic worldgen relies on, and `get_program_time` is either a macro alias for `esp_timer_get_time` or a real function on PC. Together with 4.6 and 4.7 the header is fully covered."
+content = { kind = "lines", spans = [
+  { path = "include/tools.h", start = 8, end = 13, render = { kind = "full" } },
+  { path = "include/tools.h", start = 43, end = 43, render = { kind = "full" } },
+  { path = "include/tools.h", start = 44, end = 44, render = { kind = "ellipsis" } },
+  { path = "include/tools.h", start = 45, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "serialize.h in full — persistence API and its compile-time no-op fallback"
+justification = "The whole conditional body: when `SYNC_WORLD_TO_DISK` is defined you get `initSerializer`, block/chest/player writers and the interval writer; otherwise all five are `#define`d away to nothing, with `initSerializer()` collapsing to `0`. This pattern explains why callers never guard their persistence calls, and is a common source of confusion when reading main.c."
+content = { kind = "lines", spans = [
+  { path = "include/serialize.h", start = 6, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.10"
+descriptor = "crafting.h and structures.h in full — the two smallest module APIs"
+justification = "Three declarations that constitute two entire modules: `getCraftingOutput` / `getSmeltingOutput` (recipes are resolved from the player's 9-slot grid, with smelting reusing the same array) and `placeTreeStructure`. Including them here closes the header class — after tier 4, every one of the nine files in include/ has had its declarations rendered."
+content = { kind = "lines", spans = [
+  { path = "include/crafting.h", start = 4, end = 7, render = { kind = "full" } },
+  { path = "include/structures.h", start = 4, end = 4, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 5 — src/main.c: dispatch, the join sequence, the loop, ESP entry
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "main.c: handlePacket doc comment + signature"
-justification = "The author's own design note on why handlePacket's error handling is inconsistent and the planned direction (return-value cleanup) — exactly the kind of design-rationale context an agent needs before proposing a refactor here."
-content.kind = "lines"
-content.spans = [
-  { path = "src/main.c", start = 43, end = 68, render.kind = "full" },
-]
+descriptor = "main.c — the project's own module include list"
+justification = "Eight lines showing the dependency order of the whole program and, notably, `#include \"registries.h\"` sitting among them — the generated header the tree does not contain. Cheap confirmation of the module wiring introduced in 1.4."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 34, end = 41, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "main.c: login/configuration handshake dispatch (packet 0x00)"
-justification = "Shows the STATE_NONE/STATUS/LOGIN/CONFIGURATION branch structure that packet ID 0x00 multiplexes across — the concrete shape of the state machine named in 2.1, and the entry point for any login-flow debugging."
-content.kind = "lines"
-content.spans = [
-  { path = "src/main.c", start = 73, end = 98, render.kind = "full" },
-]
+descriptor = "main.c — the maintainer's design note on the packet handlers, and handlePacket's signature"
+justification = "The comment in which the author calls the dispatch design 'a bit of a mess', explains that the handlers' error checks were removed because they were tedious and cost space and time on embedded systems, and notes that the length-discrepancy checks at the bottom of the function are what keeps a bad packet from derailing the stream. Exactly the context a contributor needs before touching packet code, and it exists nowhere else."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 43, end = 57, render = { kind = "full" } },
+  { path = "src/main.c", start = 68, end = 68, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "main.c: fall-damage check in movement packets"
-justification = "Small self-contained excerpt from the movement-packet case (0x1D-0x20): how grounded_y tracks the last-known ground level to compute fall damage, gated on gamemode and swimming state."
-content.kind = "lines"
-content.spans = [
-  { path = "src/main.c", start = 222, end = 234, render.kind = "full" },
-]
+descriptor = "main.c — packet 0x00 dispatch: handshake, status, login, configuration"
+justification = "The state-dependent overload of packet id 0x00 across four connection states, including the login path that reserves player data and the configuration path that fires known-packs, registries and the optional brand plugin message. Rendered from the `switch (packet_id)` line onward, so the shape of the whole dispatch is visible at its head."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 73, end = 97, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "main.c: main() socket bootstrap (socket + SO_REUSEADDR)"
-justification = "socket() creation and the platform-conditional SO_REUSEADDR option, the first steps of main()'s TCP setup — operational grounding for 'why won't it accept connections' debugging."
-content.kind = "lines"
-content.spans = [
-  { path = "src/main.c", start = 535, end = 552, render.kind = "full" },
-]
+descriptor = "main.c — dispatch table, packet ids 0x07 through 0x19"
+justification = "The packet-id-to-handler mapping in compact form: known packs finishes configuration, 0x08 chat, 0x0B client status, 0x0C client tick explicitly ignored, 0x11/0x12 container click and close, 0x1B serverbound keep-alive discarded, 0x19 interact. Answers 'which id triggers X' with no follow-up; 5.5 completes the table."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 165, end = 166, render = { kind = "full" } },
+  { path = "src/main.c", start = 169, end = 169, render = { kind = "full" } },
+  { path = "src/main.c", start = 173, end = 174, render = { kind = "full" } },
+  { path = "src/main.c", start = 177, end = 178, render = { kind = "full" } },
+  { path = "src/main.c", start = 181, end = 181, render = { kind = "full" } },
+  { path = "src/main.c", start = 184, end = 185, render = { kind = "full" } },
+  { path = "src/main.c", start = 188, end = 189, render = { kind = "full" } },
+  { path = "src/main.c", start = 192, end = 195, render = { kind = "full" } },
+  { path = "src/main.c", start = 199, end = 200, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.5"
-descriptor = "main.c: main() event loop shape"
-justification = "The core single-threaded loop structure: round-robin accept of one new client plus one packet from the current client per iteration, with the tick handler invoked opportunistically — the load-bearing fact that this server has no concurrency to reason about."
-content.kind = "lines"
-content.spans = [
-  { path = "src/main.c", start = 594, end = 630, render.kind = "full" },
-]
+descriptor = "main.c — dispatch table, the movement case group and ids 0x28 through the default"
+justification = "Closes the dispatch class. The four movement ids 0x1D/0x1E/0x1F/0x20 share one large body, marked here by its case labels and a trailing ellipsis rather than rendered in full; then player command, player input, player loaded, set held item, swing arm, player action, use-item-on, use-item, and the `default` branch, whose body discards the declared length."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 203, end = 207, render = { kind = "full" } },
+  { path = "src/main.c", start = 208, end = 208, render = { kind = "ellipsis" } },
+  { path = "src/main.c", start = 431, end = 432, render = { kind = "full" } },
+  { path = "src/main.c", start = 435, end = 436, render = { kind = "full" } },
+  { path = "src/main.c", start = 439, end = 440, render = { kind = "full" } },
+  { path = "src/main.c", start = 443, end = 444, render = { kind = "full" } },
+  { path = "src/main.c", start = 447, end = 448, render = { kind = "full" } },
+  { path = "src/main.c", start = 451, end = 452, render = { kind = "full" } },
+  { path = "src/main.c", start = 455, end = 456, render = { kind = "full" } },
+  { path = "src/main.c", start = 459, end = 460, render = { kind = "full" } },
+  { path = "src/main.c", start = 463, end = 463, render = { kind = "full" } },
+  { path = "src/main.c", start = 464, end = 464, render = { kind = "ellipsis" } },
+  { path = "src/main.c", start = 469, end = 469, render = { kind = "full" } },
+] }
 
-# ============================================================
-# Tier 6 — packets.c: the actual wire-format implementation.
-# Tier 4.1 only named the 57 handler/encoder signatures; this is
-# the single largest source file (1352 lines) and the concrete
-# target of any protocol/packet-debugging session, so it needs its
-# own real-body coverage, not just names. Two adjacent handlers
-# from the very start of the connection (handshake read, login
-# success write) show the whole read/write/VarInt-framing pattern
-# every one of the other 55 handlers repeats.
-# ============================================================
+[[batches]]
+id = "5.6"
+descriptor = "main.c — the single-threaded accept and tick round-robin loop"
+justification = "The whole concurrency model: no threads, one non-blocking listening socket, a `MAX_PLAYERS`-wide fd array walked one client per iteration, `task_yield()` to feed the ESP idle task, and `handleServerTick` fired whenever `TIME_BETWEEN_TICKS` microseconds have elapsed. Answers most 'how does this scale' and 'where do I add periodic work' questions outright."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 594, end = 604, render = { kind = "full" } },
+  { path = "src/main.c", start = 605, end = 605, render = { kind = "ellipsis" } },
+  { path = "src/main.c", start = 612, end = 627, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main"
+justification = "The `#ifdef ESP_PLATFORM` tail: `bareiron_main` wraps `main()` in a FreeRTOS task deleted on return, the WiFi event handler reconnects on disconnect and starts the server on GOT_IP with a 4096-word stack, and `app_main` initialises the timer then calls `wifi_init`, whose body is elided at line 751. This is the embedded-target story and it is the project's headline use case."
+content = { kind = "lines", spans = [
+  { path = "src/main.c", start = 732, end = 748, render = { kind = "full" } },
+  { path = "src/main.c", start = 750, end = 750, render = { kind = "full" } },
+  { path = "src/main.c", start = 751, end = 751, render = { kind = "ellipsis" } },
+  { path = "src/main.c", start = 776, end = 779, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 6 — implementation locations and a few high-density internals
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "6.1"
-descriptor = "packets.c: cs_handshake — the read-side wire pattern"
-justification = "The very first packet handled on any connection: reads a VarInt protocol version, a length-prefixed string (server address), a uint16 port, and a final VarInt 'intent' that becomes the STATE_* to transition to (tier 2.1) via setClientState. Demonstrates the readVarInt/readString/readUint16 primitives from tiers 4.3/4.4 in real use, not just as signatures."
-content.kind = "lines"
-content.spans = [
-  { path = "src/packets.c", start = 48, end = 63, render.kind = "full" },
-]
+descriptor = "procedures.c — definition locations, part 1 (state, players, slots, block changes)"
+justification = "Names only, truncated before the parameter list, with their line numbers — every gameplay routine in the repo's biggest file (1991 lines) becomes a one-hop open rather than a grep. This span also exposes `failBlockChange` at line 495, which is file-private and declared in no header, so the roster is the only way an agent learns such helpers exist."
+content = { kind = "lines", spans = [
+  { path = "src/procedures.c", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 146, end = 146, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 177, end = 177, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 199, end = 199, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 214, end = 214, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 239, end = 239, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 321, end = 321, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 396, end = 396, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 434, end = 434, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 478, end = 478, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 495, end = 495, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 512, end = 512, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "packets.c: sc_loginSuccess — the write-side wire pattern + VarInt-framed packet shape"
-justification = "The mirror-image write path: every clientbound packet is framed as writeVarInt(total_length), writeVarInt(packet_id), then payload — literally computed here via sizeVarInt(name_length). This exact framing (length-prefix, then ID, then payload) is the one fact needed to hand-craft or parse any packet in this codebase, and it's not spelled out anywhere else in the ranking."
-content.kind = "lines"
-content.spans = [
-  { path = "src/packets.c", start = 84, end = 97, render.kind = "full" },
-]
+descriptor = "procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids)"
+justification = "Continues the roster and reveals six more header-invisible helpers: `isReplaceableFluid`, `getItemDefensePoints`, `getPlayerDefensePoints`, `getArmorItemSlot`, `handlePlayerEating` and `handleFluidMovement`. Armour and eating have no public API at all, so without this span an agent would reasonably conclude they are unimplemented."
+content = { kind = "lines", spans = [
+  { path = "src/procedures.c", start = 652, end = 652, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 721, end = 721, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 746, end = 746, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 775, end = 775, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 789, end = 789, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 802, end = 802, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 812, end = 812, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 822, end = 822, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 831, end = 831, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 858, end = 858, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 909, end = 909, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 939, end = 939, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 954, end = 954, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 990, end = 990, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1043, end = 1043, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1110, end = 1110, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
-# ============================================================
-# Tier 7 — procedures.c: fills the one gap tier 4 left (helpers
-# not declared in procedures.h), plus one representative
-# full-body excerpt of the central block-change mechanic.
-# ============================================================
+[[batches]]
+id = "6.3"
+descriptor = "procedures.c — definition locations, part 3 (actions, mobs, tick, entity data)"
+justification = "Closes the procedures.c roster with `playPickupAnimation` (also file-private), the two action handlers, mob spawn/interact/hurt, the 300-line `handleServerTick` at line 1623, chest broadcast and the entity-data helpers. All 46 definitions in the file are now located, so nothing in it is invisible."
+content = { kind = "lines", spans = [
+  { path = "src/procedures.c", start = 1123, end = 1123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1156, end = 1156, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1230, end = 1230, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1389, end = 1389, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1430, end = 1430, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1474, end = 1474, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1623, end = 1623, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1931, end = 1931, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1949, end = 1949, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1965, end = 1965, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/procedures.c", start = 1983, end = 1983, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "worldgen.c — every definition, including the five private generator stages"
+justification = "The complete definition roster for the generator in one batch. Five of these appear in no header — `getCornerHeight`, `interpolate`, `getHeightAtFromAnchors`, `getTerrainAtFromCache`, `getFeatureFromAnchor` — as do the `chunk_anchors` and `chunk_features` caches, rendered in full because their sizing expressions show how the per-chunk work is amortised. This is the pipeline decomposition worldgen.h does not show."
+content = { kind = "lines", spans = [
+  { path = "src/worldgen.c", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 160, end = 160, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 173, end = 173, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 323, end = 323, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 358, end = 358, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 374, end = 374, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/worldgen.c", start = 395, end = 396, render = { kind = "full" } },
+  { path = "src/worldgen.c", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "serialize.c — the world file path and all five persistence entry points"
+justification = "Where the save file actually lives: `world.bin` on PC and `/littlefs/world.bin` under ESP-IDF, chosen by preprocessor. Plus the definition line of each of the module's five functions, which is the complete set and locates `initSerializer` (which also *restores* world data on startup) at line 20. Answers most 'where is state persisted' questions in one batch."
+content = { kind = "lines", spans = [
+  { path = "src/serialize.c", start = 5, end = 11, render = { kind = "full" } },
+  { path = "src/serialize.c", start = 19, end = 20, render = { kind = "full" } },
+  { path = "src/serialize.c", start = 120, end = 120, render = { kind = "full" } },
+  { path = "src/serialize.c", start = 148, end = 148, render = { kind = "full" } },
+  { path = "src/serialize.c", start = 174, end = 174, render = { kind = "full" } },
+  { path = "src/serialize.c", start = 190, end = 190, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "packets.c — the chat command surface (!msg and !help)"
+justification = "The complete user-facing command set, which appears nowhere in the README: `!help` prints the list, `!msg <player> <message>` sends a vanilla-styled whisper, and anything else beginning with `!` gets 'Unknown command'. The `goto cleanup` targets a shared epilogue further down the function that drains the packet's remaining signature and acknowledgement fields."
+content = { kind = "lines", spans = [
+  { path = "src/packets.c", start = 1204, end = 1214, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "crafting.c — the registerSmeltingRecipe macro and the complete recipe table"
+justification = "The `registerSmeltingRecipe` macro definition and all ten smelting recipes in one block — cobblestone to stone, logs and wood to charcoal, raw iron and raw gold to ingots, sand to glass, and the four cooked meats. A self-contained gameplay table that would otherwise take several reads to reconstruct, and the exact template for adding a recipe. The elided line marks the fuel-value ladder that sits between the two spans."
+content = { kind = "lines", spans = [
+  { path = "src/crafting.c", start = 349, end = 350, render = { kind = "full" } },
+  { path = "src/crafting.c", start = 391, end = 391, render = { kind = "ellipsis" } },
+  { path = "src/crafting.c", start = 393, end = 403, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 7 — operational periphery
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "7.1"
-descriptor = "procedures.c: helper functions not declared in procedures.h"
-justification = "failBlockChange/isReplaceableFluid/getItemDefensePoints/getPlayerDefensePoints/getArmorItemSlot/handlePlayerEating/handleFluidMovement/playPickupAnimation are defined in procedures.c but never declared in procedures.h — tier 4.2's header-based roster would silently omit them. Naming them here closes that catastrophic-omission gap."
-content.kind = "lines"
-content.spans = [
-  { path = "src/procedures.c", start = 495, end = 495, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 822, end = 822, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 909, end = 909, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 939, end = 939, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 954, end = 954, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 990, end = 990, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 1043, end = 1043, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/procedures.c", start = 1123, end = 1123, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
+descriptor = "Complete .github listings (workflow and issue templates)"
+justification = "Closes the last unlisted corner of the tree: one workflow file and three issue templates, all enumerated exhaustively. Cheap, and it tells the agent that CI exists and that there is no test suite, no lint config and no dependabot — an absence that is easy to get wrong by assumption."
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+] }
 
 [[batches]]
 id = "7.2"
-descriptor = "procedures.c: makeBlockChange's base-terrain dedup check"
-justification = "The key space-saving trick of the whole persistence model: a block edit that matches the underlying generated terrain is never stored (block_changes stays bounded by MAX_BLOCK_CHANGES regardless of how much terrain a player touches). Small, self-contained illustration of makeBlockChange's opening logic."
-content.kind = "lines"
-content.spans = [
-  { path = "src/procedures.c", start = 521, end = 533, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 8 — worldgen.c: closes its own header-omission gap plus a
-# tiny illustrative slice of the biome-island shape.
-# ============================================================
+descriptor = "README Contribution — the maintainer's rules for changes"
+justification = "The three rules that decide whether a proposed change is welcome: discuss with the maintainer before opening a PR even for small changes, match the existing code style exactly even where you disagree (inconsistent style will be nitpicked), and test before requesting review. Two further bullets are elided and marked."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 49, end = 51, render = { kind = "full" } },
+  { path = "README.md", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = "README.md", start = 53, end = 53, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
-id = "8.1"
-descriptor = "worldgen.c: internal helpers not declared in worldgen.h"
-justification = "getCornerHeight/interpolate/getHeightAtFromAnchors/getTerrainAtFromCache/getFeatureFromAnchor are defined in worldgen.c but absent from worldgen.h's public API (4.5) — same catastrophic-omission gap as procedures.c, closed here."
-content.kind = "lines"
-content.spans = [
-  { path = "src/worldgen.c", start = 51, end = 51, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/worldgen.c", start = 117, end = 117, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/worldgen.c", start = 126, end = 126, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/worldgen.c", start = 173, end = 173, render.kind = "truncated", render.pattern = "^[^(]+" },
-  { path = "src/worldgen.c", start = 323, end = 323, render.kind = "truncated", render.pattern = "^[^(]+" },
-]
-
-# ============================================================
-# Tier 9 — crafting.c: a representative slice of the recipe
-# table's shape (single-item recipes).
-# ============================================================
+id = "7.3"
+descriptor = "extract_registries.sh — the top-level registry extraction sequence"
+justification = "The script's whole flow in five lines: verify the Java toolchain, create/enter the `notchian` directory, run the vanilla data generator, then hand off to `build_registries.js`. Completes the generated-header story that 1.6, 1.7 and 3.6 set up, and names the four function definitions an agent would open the file for."
+content = { kind = "lines", spans = [
+  { path = "extract_registries.sh", start = 69, end = 73, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "9.1"
-descriptor = "crafting.c: single-item crafting recipes (getCraftingOutput, case 1)"
-justification = "Concrete, self-contained slice of how the whole recipe table is structured: switch on filled-slot count, then on the first item, hardcoded output+count pairs. Representative of the pattern that continues (with more slot-position checks) through cases 2-9."
-content.kind = "lines"
-content.spans = [
-  { path = "src/crafting.c", start = 39, end = 51, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 10 — structures.c: small enough to show almost whole,
-# and fixes its own header-omission gap in the same batch.
-# ============================================================
-
-[[batches]]
-id = "10.1"
-descriptor = "structures.c: setBlockIfReplaceable helper (not in structures.h)"
-justification = "structures.h only declares placeTreeStructure; this file-local helper (used by the tree-placement loop to avoid overwriting existing blocks) is otherwise invisible to a header-only scan."
-content.kind = "lines"
-content.spans = [
-  { path = "src/structures.c", start = 9, end = 13, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 11 — build tooling: the registries-generation guard that
-# main compilation depends on (README 1.10 pointed at this).
-# ============================================================
-
-[[batches]]
-id = "11.1"
-descriptor = "build.sh: registries.h precondition check"
-justification = "The literal guard that fails a build with a pointer back to the README's Compilation section if include/registries.h hasn't been generated yet — the first thing a fresh-clone compile failure will hit."
-content.kind = "lines"
-content.spans = [
-  { path = "build.sh", start = 1, end = 8, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 12 — serialize.c: the disk-persistence implementation
-# gated by SYNC_WORLD_TO_DISK (tier 3.3, tier 4.6's API). Named
-# by 3.3's justification but otherwise entirely unrepresented
-# until this repair.
-# ============================================================
-
-[[batches]]
-id = "12.1"
-descriptor = "serialize.c: FILE_PATH — where world.bin actually lives per platform"
-justification = "The whole file is compiled out unless SYNC_WORLD_TO_DISK is defined (tier 3.3); when it is, this is the concrete PC-vs-ESP split behind README 1.11/1.15's 'world.bin by default, LittleFS on ESP' claim — the exact path an agent needs to go find or delete a saved world."
-content.kind = "lines"
-content.spans = [
-  { path = "src/serialize.c", start = 3, end = 11, render.kind = "full" },
-]
-
-# ============================================================
-# Tier 13 — tools.c: the single randomness source underlying
-# every probabilistic gameplay mechanic covered above.
-# ============================================================
-
-[[batches]]
-id = "13.1"
-descriptor = "tools.c: fast_rand + splitmix64 (the only randomness source)"
-justification = "Every probabilistic behavior in the codebase (mining drops, mob movement, crafting fuel efficiency, compost chance) bottoms out in this one xorshift PRNG plus the splitmix64 hash used to seed it and to hash world/RNG seeds at startup (main.c 5.1's neighbor). Small and load-bearing enough to show in full rather than just by signature (tier 4.3)."
-content.kind = "lines"
-content.spans = [
-  { path = "src/tools.c", start = 271, end = 283, render.kind = "full" },
-]
+id = "7.4"
+descriptor = "LICENSE — the license identity line"
+justification = "Two lines naming the GNU General Public License version 3, June 2007. Licensing is appendix material and is ranked last accordingly, but the copyleft class of a Minecraft server implementation is worth one very cheap batch since it constrains reuse."
+content = { kind = "lines", spans = [
+  { path = "LICENSE", start = 1, end = 2, render = { kind = "full" } },
+] }

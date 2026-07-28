@@ -1,0 +1,640 @@
+fixture = "mdbook"
+revision_pin = "b8c90970"
+summary = """
+mdBook: a Rust CLI (`mdbook`, workspace of 9 crates under crates/: 7
+published libraries plus the unpublished xtask + mdbook-compare dev
+binaries) that renders a
+directory of Markdown chapters (governed by src/SUMMARY.md and
+book.toml) into a static HTML book (default renderer) or other backends
+via a preprocessor/renderer plugin protocol. The repo also dogfoods
+itself: guide/ is mdBook's own user manual, built with mdBook. Query
+distribution: CLI usage (build/serve/watch/test/clean/init), book.toml
+config schema, SUMMARY.md format, writing/debugging a preprocessor or
+renderer plugin, HTML/Handlebars rendering pipeline (Markdown -> tree
+-> serialize), search-index generation, front-end theme assets
+(css/js/handlebars templates), and testsuite/CI mechanics.
+"""
+
+# ============================================================
+# Tier 1 — orientation: root docs, workspace shape, top-level fs
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = """
+Catastrophic-omission guard, ranked first: every top-level entry
+(crates/, src/, guide/, tests/, examples/, ci/, .github/, plus root
+config/doc files) so the agent never has to guess whether an unlisted
+top-level thing exists.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "crates/ workspace member listing"
+justification = """
+The 9 crates under crates/ (7 published libs, plus xtask and
+mdbook-compare which are both `publish = false`) are the meat of the
+implementation; listing all of them up front avoids the agent assuming
+only the ones mentioned elsewhere (e.g. mdbook-compare) exist.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ and src/cmd/ listing"
+justification = """
+The `mdbook` bin crate's own source tree: main.rs plus one file per CLI
+subcommand under cmd/ (+ watch/ for the two watcher backends).
+"""
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+  { parent = "src/cmd", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "guide/ and tests/ top-level listing"
+justification = """
+guide/ is mdBook's own dogfooded user manual (book.toml + guide-helper
+preprocessor + src/); tests/ splits into the snapbox-driven testsuite/
+and the goml-driven gui/ harness.
+"""
+content = { kind = "fs", groups = [
+  { parent = "guide", entries = "all" },
+  { parent = "tests", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "CI entrypoints: .github/workflows/ and ci/ listing"
+justification = """
+Operational coverage: what CI workflows exist and what shell scripts
+back them, before diving into any one of them.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".github/workflows", entries = "all" },
+  { parent = "ci", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "rustfmt/cargo-alias config"
+justification = """
+Two 1-2 line config files: rustfmt style edition, and the `cargo
+xtask` alias (explains how the `cargo xtask ...` commands elsewhere
+resolve to `crates/xtask`).
+"""
+content = { kind = "lines", spans = [
+  { path = "rustfmt.toml", start = 1, end = 1, render = { kind = "full" } },
+  { path = ".cargo/config.toml", start = 1, end = 2, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "Workspace Cargo.toml: [workspace].members"
+justification = """
+Shows the 3 workspace members outside crates/*: the root bin crate,
+examples/remove-emphasis's plugin crate, and guide/guide-helper.
+"""
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "package.json (JS lint tooling)"
+justification = """
+Declares the eslint + browser-ui-test JS dependencies and the `npm run
+lint` script referenced by CONTRIBUTING.md and CI. The lint/lint-fix
+scripts' glob-pattern argument lists are truncated -- the command name
+matters more than the exact file globs this deep into orientation.
+"""
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 1, end = 6, render = { kind = "full" } },
+  { path = "package.json", start = 7, end = 7, render = { kind = "truncated", pattern = "^.*--no-warn-ignored " } },
+  { path = "package.json", start = 8, end = 8, render = { kind = "truncated", pattern = "^.*--fix " } },
+  { path = "package.json", start = 9, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "Root README, part 1: pitch + guide/contributing links"
+justification = """
+The crate lede: what mdBook is (badges + one-line pitch), plus pointers
+to the User Guide and Contribution Guide. No bundled feature list here
+-- that content lives in guide/src, not the root README. Split from the
+license footer (1.13) to fit the growth envelope this early. The three
+badge lines' target URLs are truncated (CI/crates.io/license badges
+exist; their exact shields.io URLs aren't worth the tokens).
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 2, render = { kind = "full" } },
+  { path = "README.md", start = 3, end = 5, render = { kind = "truncated", pattern = "^\\[!\\[[^\\]]*\\]" } },
+  { path = "README.md", start = 6, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "Workspace Cargo.toml: main package metadata"
+justification = """
+The `mdbook` bin crate's own `[package]` table: name, authors, docs
+link, MSRV pointer, keywords. The individual author name/email lines
+are ellipsis-hedged (the fact of an authors list matters more here
+than the roster of names).
+"""
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 72, end = 76, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 77, end = 77, render = { kind = "ellipsis" } },
+  { path = "Cargo.toml", start = 79, end = 88, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "CONTRIBUTING.md: test commands"
+justification = """
+The canonical list of commands that validate a change (workspace
+tests, gui tests, clippy, rustdoc, fmt, semver-checks) — the first
+thing an agent needs before attempting to validate a change. The
+semver-checks bullet's install-instructions link is truncated (the
+command name matters more than the install pointer).
+"""
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 126, end = 136, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 137, end = 137, render = { kind = "truncated", pattern = "^.*have been made\\." } },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "CONTRIBUTING.md: cargo xtask test wrapper"
+justification = """
+`cargo xtask test-all` and the per-check wrapper form — the
+higher-leverage shortcut over the individual commands in 1.11.
+"""
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 139, end = 149, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.13"
+descriptor = "Root README, part 2: contributing + license"
+justification = """
+The remainder of the root README (contributing pointer, license). The
+reference-link target URLs (18-20) are truncated to their labels --
+the User Guide/CONTRIBUTING/LICENSE files are already known top-level
+entries from 1.1/1.4.
+"""
+predecessor = "1.9"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 13, end = 17, render = { kind = "full" } },
+  { path = "README.md", start = 18, end = 20, render = { kind = "truncated", pattern = "^\\[[^\\]]+\\]:" } },
+] }
+
+[[batches]]
+id = "1.14"
+descriptor = "Cargo.toml [features] flags"
+justification = """
+The cargo feature flags (watch/serve/search, all default-on) that gate
+optional CLI subcommands (watch/serve) and the search index.
+"""
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 129, end = 133, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.15"
+descriptor = "Cargo.toml [[bin]]/[[example]]/[[test]] targets"
+justification = """
+Declares the `mdbook` binary (doc = false), the two example crates as
+tested build targets, and the harness=false `gui` integration test
+target — load-bearing build config an agent would otherwise have to
+reconstruct from cargo error messages.
+"""
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 135, end = 154, render = { kind = "full" } },
+] }
+
+
+
+# ============================================================
+# Tier 2 — crate map: trait/type surface of the library crates
+# (kept intentionally short — full-file dumps of doc-heavy lib.rs
+# files cost 10-15 tok/line; only the highest-value lines are worth
+# a Full render, everything else stays at fs-listing granularity)
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "mdbook-html crate root (mod glue)"
+justification = "The whole lib.rs: module wiring + re-export of HtmlHandlebars."
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-html/src/lib.rs", start = 1, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "mdbook-core crate root (mod glue)"
+justification = """
+MDBOOK_VERSION const + the book/config/utils module map + the
+`errors` re-export of anyhow. mdbook-core is the shared foundation
+every other crate re-exports from.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/lib.rs", start = 1, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "mdbook-driver crate doc: sibling-crate map"
+justification = """
+The authoritative one-paragraph map of how the workspace's 6
+published libraries relate (mdbook-preprocessor/renderer/markdown/
+summary/html/core), from the driver crate's own doc comment.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-driver/src/lib.rs", start = 12, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Preprocessor trait definition"
+justification = """
+The full plugin-authoring contract for a preprocessor: name/run/
+supports_renderer. Everything under builtin_preprocessors/ and any
+3rd-party preprocessor implements this.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-preprocessor/src/lib.rs", start = 30, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Renderer trait definition"
+justification = """
+The full plugin-authoring contract for a renderer: name/render. Every
+backend (HtmlHandlebars, MarkdownRenderer, CmdRenderer) implements
+this.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-renderer/src/lib.rs", start = 28, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "PreprocessorContext + RenderContext field lists"
+justification = """
+What data a preprocessor/renderer actually receives: root dir, Config,
+Book, destination dir, chapter-title overrides. The two structs
+plugin authors deserialize off stdin.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-preprocessor/src/lib.rs", start = 49, end = 66, render = { kind = "full" } },
+  { path = "crates/mdbook-renderer/src/lib.rs", start = 38, end = 61, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "mdbook-markdown: MarkdownOptions struct"
+justification = """
+The 3 book.toml-controlled markdown toggles (smart-punctuation,
+definition-lists, admonitions) and their defaults — the entire public
+surface of the markdown crate besides the parser factory fn.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-markdown/src/lib.rs", start = 13, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "mdbook-summary: Summary/Link/SummaryItem struct/enum defs"
+justification = """
+The parsed-SUMMARY.md data model that mdbook-driver's load.rs walks to
+build a `Book`: title + prefix/numbered/suffix chapter lists, a `Link`
+(name/location/number/nested_items), and the 3-way `SummaryItem` enum.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-summary/src/lib.rs", start = 64, end = 76, render = { kind = "full" } },
+  { path = "crates/mdbook-summary/src/lib.rs", start = 82, end = 94, render = { kind = "full" } },
+  { path = "crates/mdbook-summary/src/lib.rs", start = 119, end = 129, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "xtask: dev command table"
+justification = """
+`cargo xtask <cmd>` is the canonical way to run the project's full
+check suite (CONTRIBUTING.md 1.11/1.12); this is the exhaustive list
+of valid subcommand names, so the agent knows e.g. `changelog` and
+`semver-checks` exist without guessing.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/xtask/src/main.rs", start = 19, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Book/BookItem/Chapter: the core in-memory tree"
+justification = """
+The single most load-bearing data type in the whole codebase: `Book`
+is a `Vec<BookItem>`, `BookItem` is Chapter/Separator/PartTitle, and
+`Chapter` has `path` vs `source_path` (the README->index.md rewrite
+means these can differ) — every preprocessor/renderer walks this tree.
+Not shown anywhere else in this NS, so worth the tail-end budget.
+Chapter's struct opening/close and the path/source_path fields (the
+headline nuance) render in full; the name/content/number/sub_items
+fields (142-149) and parent_names (167-168) are ellipsis-hedged rather
+than spelled out, to fit this tail-end batch's budget without silently
+implying Chapter has only two fields.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/book.rs", start = 25, end = 29, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 119, end = 126, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 141, end = 141, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 142, end = 142, render = { kind = "ellipsis" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 150, end = 157, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 158, end = 166, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 167, end = 167, render = { kind = "ellipsis" } },
+  { path = "crates/mdbook-core/src/book.rs", start = 169, end = 169, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "mdbook-html/src internal listing"
+justification = """
+mdbook-html is the actual HTML rendering engine (Markdown -> tree ->
+serialize) and one of the largest crates by line count, but only its
+lib.rs and front-end/ assets were shown elsewhere; this fills in its
+src/ subtree shape (html_handlebars/, html/, theme/, utils.rs) so the
+agent knows e.g. html/tree.rs and html_handlebars/search.rs exist
+before having to grep for them.
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/mdbook-html/src", entries = "all" },
+  { parent = "crates/mdbook-html/src/html_handlebars", entries = "all" },
+  { parent = "crates/mdbook-html/src/html_handlebars/helpers", entries = "all" },
+  { parent = "crates/mdbook-html/src/html", entries = "all" },
+  { parent = "crates/mdbook-html/src/theme", entries = "all" },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "mdbook-driver/src and mdbook-core/src internal listing"
+justification = """
+The two remaining crates with real internal structure not yet listed:
+mdbook-driver (mdbook.rs orchestration, load.rs, init.rs,
+builtin_preprocessors/, builtin_renderers/) and mdbook-core
+(book.rs, config.rs, utils/).
+"""
+content = { kind = "fs", groups = [
+  { parent = "crates/mdbook-driver/src", entries = "all" },
+  { parent = "crates/mdbook-driver/src/builtin_preprocessors", entries = "all" },
+  { parent = "crates/mdbook-driver/src/builtin_renderers", entries = "all" },
+  { parent = "crates/mdbook-core/src", entries = "all" },
+  { parent = "crates/mdbook-core/src/utils", entries = "all" },
+] }
+
+# ============================================================
+# Tier 3 — CLI surface: src/main.rs + src/cmd/*
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "src/cmd/mod.rs (subcommand module map)"
+justification = "Full file: every subcommand module, incl. the watch/serve feature gates."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/mod.rs", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "src/main.rs: subcommand dispatch"
+justification = """
+The top-level `match ... subcommand()` wiring every CLI verb (init,
+build, clean, watch, serve, test, completions) to its `cmd::*::
+execute()`. The single most direct answer to "where does `mdbook
+<verb>` start executing".
+"""
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 18, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "src/main.rs: create_clap_command (top-level flags)"
+justification = "How the 7 subcommands are registered on the clap `Command`, plus the after-help text."
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 58, end = 91, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "src/cmd/command_prelude.rs (shared CLI arg helpers)"
+justification = """
+The `CommandExt` trait every subcommand builds on: --dest-dir,
+[dir], --open, --watcher — shared flags with their short/long forms and
+value parsers, plus `set_dest_dir()` used by build/serve/watch. The
+dest-dir/root-dir help-text bodies and set_dest_dir's body are
+ellipsis-hedged (flag shape matters more here than the user-facing
+help prose, which is a smaller win per token this deep into Tier 3).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/cmd/command_prelude.rs", start = 1, end = 17, render = { kind = "full" } },
+  { path = "src/cmd/command_prelude.rs", start = 18, end = 18, render = { kind = "ellipsis" } },
+  { path = "src/cmd/command_prelude.rs", start = 22, end = 29, render = { kind = "full" } },
+  { path = "src/cmd/command_prelude.rs", start = 30, end = 30, render = { kind = "ellipsis" } },
+  { path = "src/cmd/command_prelude.rs", start = 32, end = 62, render = { kind = "full" } },
+  { path = "src/cmd/command_prelude.rs", start = 63, end = 63, render = { kind = "ellipsis" } },
+  { path = "src/cmd/command_prelude.rs", start = 68, end = 69, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "src/cmd/build.rs (full)"
+justification = "The `mdbook build` subcommand end to end: flags + execute()."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/build.rs", start = 1, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "src/cmd/test.rs: make_subcommand (CLI flags)"
+justification = "The `mdbook test` flag surface: -c/--chapter and -L/--library-path (rustdoc-tests the book's Rust code samples)."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/test.rs", start = 1, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "src/cmd/init.rs: make_subcommand (CLI flags)"
+justification = "The `mdbook init` flag surface: --theme, --force, --title, --ignore."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/init.rs", start = 11, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "src/cmd/serve.rs: make_subcommand (CLI flags)"
+justification = "The `mdbook serve` flag surface: -n/--hostname, -p/--port, --open, --watcher."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/serve.rs", start = 23, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "src/cmd/watch.rs: flags + WatcherKind"
+justification = """
+`mdbook watch`'s flag surface plus the poll-vs-native watcher choice
+(shared by `serve`'s --watcher flag too).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/cmd/watch.rs", start = 1, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "src/cmd/clean.rs: make_subcommand + execute"
+justification = "The `mdbook clean` flag surface and its Clean-report entry point."
+content = { kind = "lines", spans = [
+  { path = "src/cmd/clean.rs", start = 1, end = 33, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — core data model: book.toml config schema + Book tree
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Config struct: book/build/rust/output/preprocessor fields"
+justification = """
+The top-level shape of an in-memory book.toml: BookConfig/BuildConfig/
+RustConfig as typed fields, plus the untyped `output`/`preprocessor`
+toml::Value tables that back arbitrary renderer/preprocessor config.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/config.rs", start = 58, end = 78, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "BookConfig struct + defaults"
+justification = """
+The `[book]` table fields (title/authors/description/src/language/
+text-direction) — the most commonly hand-edited part of book.toml —
+plus its Default impl showing src="src", language="en".
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/config.rs", start = 313, end = 333, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/config.rs", start = 340, end = 351, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "HtmlConfig struct, part 1: theme/punctuation/mathjax/css/js/fold/playground/code/print/section-label"
+justification = """
+The `[output.html]` table is the config surface most book authors
+touch; this is its first half (theme selection, smart-punctuation,
+admonitions, mathjax, additional CSS/JS, fold, playground, code,
+print, and no-section-label fields).
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/config.rs", start = 449, end = 480, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "HtmlConfig struct, part 2: search/git/404/edit-url"
+justification = """
+The next batch of commonly-touched `[output.html]` fields: search,
+git-repository-url/icon, input-404, site-url, edit-url-template.
+(redirect/hash-files/sidebar-header-nav close out the struct in 4.5.)
+"""
+predecessor = "4.3"
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/config.rs", start = 481, end = 502, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "HtmlConfig struct, part 3: redirect/hash-files/sidebar-header-nav"
+justification = """
+Closes the HtmlConfig field roster: `redirect` (old-page -> new-page URL
+rewrites, exercised by its own gui test at tests/gui/redirect.goml),
+`hash_files` (cache-busts static asset filenames), and
+`sidebar_header_nav` (in-page heading navigation toggle).
+`live_reload_endpoint` (config.rs:503-509) is the struct's only other
+field, but it's `#[doc(hidden)]` and explicitly not user-editable, so
+it's skipped here.
+"""
+content = { kind = "lines", spans = [
+  { path = "crates/mdbook-core/src/config.rs", start = 512, end = 512, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/config.rs", start = 517, end = 517, render = { kind = "full" } },
+  { path = "crates/mdbook-core/src/config.rs", start = 520, end = 520, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "guide/book.toml: concrete [book] table sample"
+justification = """
+A real book.toml in the wild (mdBook's own guide/), grounding the typed
+Config/BookConfig fields from 4.1/4.2 in an actual on-disk sample
+rather than only their Rust struct definitions -- often cheaper
+evidence of the config format than the parser that reads it.
+"""
+content = { kind = "lines", spans = [
+  { path = "guide/book.toml", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+
+# ============================================================
+# Tier 5 — closing breadth: remaining directory shape
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Remaining directory shape: guide/src subsections, front-end assets, testsuite"
+justification = """
+Final catastrophic-omission sweep at the budget tail: guide/src's
+topic subdirectories (cli/, format/ + its configuration/theme
+subdirs, for_developers/, guide/, misc/), the HTML renderer's
+front-end/ static-asset tree (templates/css/js/fonts/images/
+playground_editor/searcher), and the full tests/testsuite/ file list
+— so nothing in these trees reads as "doesn't exist" for lack of a
+listing, even though budget doesn't allow rendering their bodies here.
+"""
+content = { kind = "fs", groups = [
+  { parent = "guide/src", entries = "all" },
+  { parent = "guide/src/cli", entries = "all" },
+  { parent = "guide/src/format", entries = "all" },
+  { parent = "guide/src/format/configuration", entries = "all" },
+  { parent = "guide/src/format/theme", entries = "all" },
+  { parent = "guide/src/for_developers", entries = "all" },
+  { parent = "guide/src/guide", entries = "all" },
+  { parent = "guide/src/misc", entries = "all" },
+  { parent = "crates/mdbook-html/front-end", entries = "all" },
+  { parent = "tests/testsuite", entries = "all" },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "examples/ listing"
+justification = "The two example preprocessor crates (nop-preprocessor.rs, remove-emphasis/) referenced by Cargo.toml's [[example]] targets (1.15)."
+content = { kind = "fs", groups = [
+  { parent = "examples", entries = "all" },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "tests/gui listing"
+justification = "The goml-based browser test harness's own top-level shape (books/, runner.rs, *.goml scripts), rounding out the tests/ tree started in 1.4/5.1."
+content = { kind = "fs", groups = [
+  { parent = "tests/gui", entries = "all" },
+] }
+
+
+

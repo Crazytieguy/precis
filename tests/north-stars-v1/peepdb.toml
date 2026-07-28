@@ -1,0 +1,528 @@
+fixture = "peepdb"
+revision_pin = "929064dd"
+summary = """
+peepDB is a small Python CLI + library (`peepdb` console script, entry point
+`peepdb.cli:main`) that lets a developer or DBA inspect database tables
+without writing SQL: `save` a connection, `list`/`view`/`remove` it. It
+speaks eight backends (MySQL, PostgreSQL, MariaDB, SQLite, MongoDB,
+Firebase, MSSQL, OracleDB) behind one `BaseDatabase` ABC
+(connect/disconnect/fetch_tables/fetch_data), dispatched by
+`core.connect_to_database`. Connection details persist encrypted in
+`~/.peepdb/config.json` (Fernet, key from OS keyring or a
+password-derived PBKDF2 key) via `config.py`. Output is a `tabulate`
+grid or JSON, with paging and a scientific-notation toggle.
+
+Sessions against this repo skew toward: "how do I add/fix a DB backend"
+(the `peepdb/db/*.py` family, all implementing the same 4-method
+contract), "how are connections stored/encrypted" (`config.py`), "what
+does the CLI actually do for command X" (`cli.py`), and ordinary
+build/test mechanics (setuptools + a GitHub Actions matrix that also
+publishes to (Test)PyPI, plus a separate Jekyll docs site on GitHub
+Pages). Within the 10k-token budget the ranking front-loads breadth
+(every file, every CLI verb, every DB backend named) before depth, then
+spends depth on the CLI/core/config request-flow spine a session is
+most likely to touch end-to-end. Of the 8 structurally parallel DB
+backends, only the ones that genuinely diverge from the shared contract
+get deep treatment (SQLite's print-based tracing and its real test
+coverage; Firebase's incompatible constructor; Mongo's hand-built URI)
+— the other five are named in the roster/contract batches and are a
+single file-read away, a deliberate depth-vs-breadth trade rather than
+an oversight. Release mechanics, the Jekyll doc site, and most test
+bodies get correspondingly thin coverage (existence + one worked
+example each) to keep the budget on the spine above.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = "Cheapest possible first batch: every top-level file/dir named (packaging, docs, images, CI, LICENSE) so nothing downstream reads as more exhaustive than it is."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "peepdb/ package listing"
+justification = "Names the whole importable package surface (cli, core, config, exceptions, db/, tests/) before any single module is read in depth."
+content = { kind = "fs", groups = [
+  { parent = "peepdb", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "peepdb/db/ backend listing"
+justification = "All 8 backend modules plus base.py/__init__.py named together so a later deep-dive into only 3 of them doesn't read as 'these are the only backends'."
+content = { kind = "fs", groups = [
+  { parent = "peepdb/db", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "peepdb/tests/ listing"
+justification = "Names all 6 test modules (including the oddly-named, zero-test test_connection.py) so 'is there a test for X' has a cheap first answer even where this NS doesn't render every test body."
+content = { kind = "fs", groups = [
+  { parent = "peepdb/tests", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "docs/ listing (Jekyll site)"
+justification = "Surfaces the separate GitHub-Pages doc site (index/installation/usage/contributing.md plus Jekyll scaffold) as its own tree distinct from the root README/CONTRIBUTING."
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = ".github/workflows/ listing"
+justification = "Two workflows exist (test.yml, pages.yml) with very different jobs (test/publish vs docs deploy); naming both prevents a later single-workflow read from reading as exhaustive."
+content = { kind = "fs", groups = [
+  { parent = ".github/workflows", entries = "all" },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "images/ listing"
+justification = "README embeds these (demo gif, two example screenshots) inline; naming them here means no batch needs to spend budget rendering binary-referencing markdown blindly."
+content = { kind = "fs", groups = [
+  { parent = "images", entries = "all" },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README title + one-line description"
+justification = "What this repo is, in one sentence, before anything else — split from the feature list (batch 1.9) purely to respect small-early-batch budgeting."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "README feature list"
+justification = "All 7 feature bullets together (not a prefix) so the 8-backend, encrypted-storage, paging, dual-format claims are all grounded from the first tier rather than trickling in piecemeal."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 5, end = 13, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.1"
+descriptor = "MANIFEST.in + .gitignore"
+justification = "Cheap packaging-hygiene pair: what sdist extra-includes (README/LICENSE/requirements.txt) and what's excluded from version control (venvs, bytecode, egg-info, .env, IDE/OS cruft)."
+content = { kind = "lines", spans = [
+  { path = "MANIFEST.in", start = 1, end = 3, render = { kind = "full" } },
+  { path = ".gitignore", start = 1, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Installation: pip install + system deps + verification"
+justification = "Combines the one-line README install command with docs/installation.md's non-duplicated content (apt system deps for MariaDB, `peepdb --version` verification, a Windows PATH gotcha) — the two files are complementary here, not redundant."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 27, end = 33, render = { kind = "full" } },
+  { path = "docs/installation.md", start = 21, end = 40, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "project.toml — build system + project identity"
+justification = "Name/version/description/authors/license and the build backend — the canonical answer to 'what is this package'. Trimmed to skip the classifiers list (Python 3.9-3.11, GPLv3, Alpha) since requires-python (line 13) already pins the supported interpreter range."
+content = { kind = "lines", spans = [
+  { path = "project.toml", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "project.toml — dependencies, entry point, packaging"
+justification = "Runtime deps, the `dev` extra, the `peepdb = peepdb.cli:main` console-script entry point, and the setuptools package-discovery include/exclude — the first place to check 'what depends on what' and 'how does the CLI get installed'."
+content = { kind = "lines", spans = [
+  { path = "project.toml", start = 25, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "setup.py — where it diverges from project.toml"
+justification = "A second, only-partially-synced packaging definition. Its install_requires lists cachetools, keyring, pymongo and dnspython — none of which appear in project.toml's dependencies. Trimmed to just this block; the rest (name/version/classifiers/entry_points, and an extras_require 'system' stanza) is either byte-for-byte what batches 2.3-2.4 already show or lower marginal value at this budget."
+content = { kind = "lines", spans = [
+  { path = "setup.py", start = 16, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "requirements.txt (pinned freeze, sampled)"
+justification = "This is a `pip freeze`-style pin list (62 lines, alphabetical); the previous two batches already give the meaningful dependency names, so only the first pinned line and the one genuinely unusual entry are rendered full — a self-referential `-e git+https://github.com/.../peepDB.git@<sha>#egg=peepdb` line, i.e. this file was frozen inside an editable checkout of the project itself. Ellipsis markers signal the ~58 other pinned lines exist without spending budget on them."
+content = { kind = "lines", spans = [
+  { path = "requirements.txt", start = 1, end = 1, render = { kind = "full" } },
+  { path = "requirements.txt", start = 2, end = 2, render = { kind = "ellipsis" } },
+  { path = "requirements.txt", start = 40, end = 40, render = { kind = "full" } },
+  { path = "requirements.txt", start = 41, end = 41, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "CI test job + publish-job trigger gating (test.yml)"
+justification = "The core of the build/test recipe: matrix over Python 3.9-3.11, then `pip install -r requirements.txt` + `pip install -e .` and `pytest peepdb/tests` (an ellipsis marks the elided 'Install system dependencies' step — apt libmariadb-dev — identical boilerplate repeated in the two publish jobs). Closes out with the publish-testpypi job name and its `release.prerelease == true` gate that routes prereleases to TestPyPI and full releases to PyPI (`publish-pypi`, structurally identical, is left at the fs listing given budget) — the one worked example backing the summary's 'matrix that also publishes to (Test)PyPI' claim."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/test.yml", start = 1, end = 24, render = { kind = "full" } },
+  { path = ".github/workflows/test.yml", start = 26, end = 26, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/test.yml", start = 31, end = 38, render = { kind = "full" } },
+  { path = ".github/workflows/test.yml", start = 40, end = 40, render = { kind = "full" } },
+  { path = ".github/workflows/test.yml", start = 41, end = 41, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/test.yml", start = 44, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.1"
+descriptor = "cli.py: all 5 command names"
+justification = "Location-only hedge: `save`, `list`, `remove`, `remove_all`, `view` are the entire CLI verb surface. Ranked before any single command's full body so a small budget still reveals all 5 exist."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/cli.py", start = 87, end = 87, render = { kind = "full" } },
+  { path = "peepdb/cli.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/cli.py", start = 115, end = 115, render = { kind = "full" } },
+  { path = "peepdb/cli.py", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "cli.py: imports + CustomEncoder"
+justification = "The JSON encoder that makes `--format json` handle Decimal/date is the one piece of cli.py logic outside the click commands themselves; also shows exactly which config/core symbols the CLI layer depends on."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 1, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "cli.py: `cli` group docstring"
+justification = "The group's docstring is click's own `--help` text and doubles as the most concise worked-example set for the whole CLI (save/view/remove with real flags) — high semantic value for 'how do I use this' with no further reads needed."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 25, end = 50, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "cli.py: `save` command"
+predecessor = "3.1"
+justification = "Full save-command logic: trusted/Windows-auth short-circuit, interactive prompt fallback for user/password on non-sqlite/firebase types, then the actual save_connection call. First command most 'get started' queries will land on."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 53, end = 83, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "cli.py: `list` command"
+predecessor = "3.1"
+justification = "Trivial one-line delegation to config.list_connections(); included in full since a session asking 'what does peepdb list do' shouldn't need a second hop to discover it's a pure delegate."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 86, end = 94, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "cli.py: `remove` command"
+predecessor = "3.1"
+justification = "Shows the confirmation-prompt decorator and the found/not-found branch — the exact contract test_remove_command (peepdb/tests/test_cli.py, named in batch 8.1) asserts against."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 97, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "cli.py: `remove-all` command"
+predecessor = "3.1"
+justification = "Same confirmation pattern as `remove` but for the whole connection store; small enough to include in full alongside its sibling commands rather than only being inferable from the fs listing."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 113, end = 123, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "cli.py: `view` — options + connection resolution"
+predecessor = "3.1"
+justification = "The most complex command's front half: all 5 click options, the InvalidPassword→SystemExit(1) error path, and the legacy 5-tuple-vs-6-tuple (trusted) connection unpacking that any 'why does view fail on old saved connections' debugging session needs to see."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 126, end = 154, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "cli.py: `view` — peep_db call + output rendering"
+justification = "The call into core.peep_db plus the table/JSON output branch, including the constructed 'Next Page'/'Previous Page' navigation hint strings — the exact text a user sees, useful for anyone debugging pagination UX without re-deriving it from core.py."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 156, end = 178, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "cli.py: `main()` entry point"
+justification = "Trivial but closes the loop from setup.py's/project.toml's `peepdb.cli:main` entry point declaration to the actual `cli()` invocation."
+content = { kind = "lines", spans = [
+  { path = "peepdb/cli.py", start = 181, end = 186, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.1"
+descriptor = "core.py: all 4 top-level function names"
+justification = "Location-only hedge over connect_to_database / peep_db / format_as_table / format_value before any body is shown, so a small budget still knows the full function roster of the module the CLI's `view` command calls into."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/core.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/core.py", start = 101, end = 101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/core.py", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "core.py: imports + module logger"
+justification = "Shows the full db-class import list (all 8 backends imported here, mirroring db/__init__.py's __all__) plus the DEBUG-level console logging setup that fires on every peep_db call."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 1, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "core.py: connect_to_database"
+predecessor = "4.1"
+justification = "The single dispatch point from db_type string to backend class — every one of the 8 elif branches shown together (including the mssql branch's distinct handling: it does NOT pop 'trusted' from kwargs, unlike every other branch) so no branch reads as omitted."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 27, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "core.py: peep_db — signature + fetch"
+predecessor = "4.1"
+justification = "Signature (defaults: format='table', page=1, page_size=100) plus the connect/fetch_tables-or-single-table branch. Note page_size defaults to 100 here but cli.py's --page-size option (batch 3.8) defaults to 50 — a discrepancy worth having both spans visible for."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 56, end = 78, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "core.py: peep_db — format branch + disconnect"
+justification = "The table-format vs JSON-format field-formatting split (table calls format_value per cell; JSON just isoformats dates/floats Decimals) plus the `finally: db.disconnect()` that guarantees cleanup even on fetch errors."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 80, end = 98, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "core.py: format_as_table"
+predecessor = "4.1"
+justification = "Exact shape of the `tabulate`-based table output (per-table 'Table: name' header, grid format, then the 'Page X of Y (Total rows: Z)' footer) — the ground truth for README's example output block (batch 9.1)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 101, end = 115, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "core.py: format_value"
+predecessor = "4.1"
+justification = "The numeric formatting rules behind --scientific and the >=1e6 comma-grouping heuristic — exactly what the format-value-focused tests (named in batch 8.1) are pinned against."
+content = { kind = "lines", spans = [
+  { path = "peepdb/core.py", start = 118, end = 140, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "config.py: all 12 top-level function names"
+justification = "Location hedge over the whole connection-storage/encryption module (generate_key_from_password, fetch_key_from_keyring, get_key_security_config, get_key, encrypt, decrypt, save_connection, get_connection, list_connections, remove_connection, remove_all_connections, add_key_security) before any single one is read in depth — this module is the most likely target of 'where/how are passwords stored' questions."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "peepdb/config.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "peepdb/config.py", start = 60, end = 60, render = { kind = "full" } },
+  { path = "peepdb/config.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 144, end = 144, render = { kind = "full" } },
+  { path = "peepdb/config.py", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/config.py", start = 178, end = 178, render = { kind = "full" } },
+  { path = "peepdb/config.py", start = 196, end = 196, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "README security section"
+justification = "The user-facing framing of the encryption story (local storage, cryptography-backed encryption, command-line-password caution) before the actual encryption code — sets up why config.py's key-management functions exist."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 154, end = 160, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "config.py: KeySecurity + on-disk paths + module logger"
+justification = "Defines CONFIG_DIR/CONFIG_FILE/SECURITY_CONFIG_FILE (all under ~/.peepdb/) and the two-valued KeySecurity class (os-keyring vs password) that get_key() branches on — the concrete on-disk locations a 'where does peepdb store its config' query needs. Also picks up the module's own DEBUG-level logging setup (mirroring core.py's, batch 4.2), which fires on every save_connection/get_connection call (batches 5.6-5.7). Trimmed to skip the plain import list above it (line 1 of batch 5.1's location markers already implies the module's dependency surface)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 15, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "config.py: key derivation (password path + keyring path)"
+predecessor = "5.1"
+justification = "The two competing ways an encryption key is obtained: PBKDF2-HMAC-SHA256 (480,000 iterations) from a user-entered password, or a Fernet key generated once and stored in the OS keyring under service 'PEEP_DB'. Both @cached with a 600s TTLCache — worth seeing together since get_key() (batch 5.5) picks between them at runtime."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 29, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "config.py: get_key_security_config + get_key"
+predecessor = "5.1"
+justification = "How the choice between keyring and password-derived keys is persisted (security_config.json) and re-read on every encrypt/decrypt call, including the first-run add_key_security() fallback trigger (that function's own body is small enough to skip past this batch's location marker at line 196; encrypt/decrypt themselves, lines 70/73, are two one-line Fernet wrappers likewise left at their location markers)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 49, end = 68, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "config.py: save_connection"
+predecessor = "5.1"
+justification = "Shows the sqlite/firebase special case (host+database stored in plaintext, no encryption — no password to encrypt for those types) versus every other db_type (host/user/password/database all Fernet-encrypted, trusted stored as a plain bool) — a real branch a security-focused session needs both halves of."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 76, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "config.py: get_connection"
+predecessor = "5.1"
+justification = "The read-side mirror of save_connection, including the InvalidToken→InvalidPassword re-raise that cli.py's `view` command (batch 3.8) catches, and the 5-tuple/6-tuple return shape cli.py branches on."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 112, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "config.py: list_connections"
+predecessor = "5.1"
+justification = "The simplest config.json reader (prints db_type per saved name) — remove_connection/remove_all_connections, its two mutating siblings, are left at their batch-5.1 location markers given budget; both are a straightforward read-json/delete-key/write-json shape."
+content = { kind = "lines", spans = [
+  { path = "peepdb/config.py", start = 144, end = 159, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.1"
+descriptor = "db/__init__.py — backend export roster"
+justification = "The authoritative list of all 9 exported names (BaseDatabase + 8 concrete backends) via __all__; ranked first in this tier so no single backend deep-dive reads as the complete backend set. mysql/postgresql/mariadb/mssql/oracle are named here and implement the batch-6.2 contract directly but aren't separately deep-dived in this NS given budget — each is one file-read away from this roster + fs listing (batch 1.3)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/db/__init__.py", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "db/base.py — BaseDatabase ABC contract"
+justification = "The 4-method abstract contract (connect/disconnect/fetch_tables/fetch_data) every one of the 8 backends implements, plus the shared __init__ (host/user/password/database/port/extra_params) and context-manager support — read this once and every unshown backend's shape is already known."
+content = { kind = "lines", spans = [
+  { path = "peepdb/db/base.py", start = 1, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "db/sqlite.py — connect()"
+justification = "The one backend with real test coverage (test_sqlite.py, named in batch 8.1) and no server dependency, making it the most likely 'let me understand a backend end-to-end' target. Shows connect(): print()-based tracing instead of self.logger, and the path resolved via os.path.abspath(self.host) rather than used as-is. disconnect()/fetch_tables()/fetch_data() are skipped as more mechanical given budget — fetch_data's pagination arithmetic is still pinned by test_fetch_data_pagination (named in batch 8.1)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/db/sqlite.py", start = 1, end = 20, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "db/firebase.py — constructor"
+justification = "The most divergent __init__ of all 8 backends: it does NOT call super().__init__ or accept host/user/password/database — its constructor takes only a service_account_path, which connect_to_database (batch 4.3) special-cases. Trimmed to imports+class+__init__; connect()/fetch_tables()/fetch_data() are ordinary Firestore SDK calls at lower marginal value given budget."
+content = { kind = "lines", spans = [
+  { path = "peepdb/db/firebase.py", start = 1, end = 13, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "db/mongodb.py — connect() URI construction"
+justification = "Structurally different from the SQL backends: builds a mongodb:// URI by hand (quote_plus-escaping user/password) rather than passing discrete connect() kwargs — exactly what test_mongodb_uri.py (batch 8.2) pins down. Trimmed to the URI-construction lines; an ellipsis marks that connect() continues (extra_params query-string append, MongoClient construction, logging, error handling) rather than ending at line 16."
+content = { kind = "lines", spans = [
+  { path = "peepdb/db/mongodb.py", start = 1, end = 16, render = { kind = "full" } },
+  { path = "peepdb/db/mongodb.py", start = 18, end = 18, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "7.1"
+descriptor = "exceptions.py + __main__.py"
+justification = "Both trivial (2 and 4 lines) but load-bearing: InvalidPassword is the exception cli.py's `view` command and config.py's get_connection coordinate on; __main__.py is what makes `python -m peepdb` equivalent to the installed console script."
+content = { kind = "lines", spans = [
+  { path = "peepdb/exceptions.py", start = 1, end = 2, render = { kind = "full" } },
+  { path = "peepdb/__main__.py", start = 1, end = 4, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.1"
+descriptor = "Test function locations, 4 of 6 test modules"
+justification = "Names every test_ function across test_cli.py, test_peepdb.py, test_data_types.py, and test_sqlite.py so 'is there a test for X' has a cheap, complete answer for these four even though this NS doesn't render most bodies given budget. test_mongodb_uri.py's one test is fully rendered in batch 8.2 instead of duplicated here; test_connection.py genuinely has none (see batch 8.3)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/tests/test_cli.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 147, end = 147, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_cli.py", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_peepdb.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_peepdb.py", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_data_types.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_data_types.py", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_data_types.py", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_sqlite.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "peepdb/tests/test_sqlite.py", start = 40, end = 40, render = { kind = "full" } },
+  { path = "peepdb/tests/test_sqlite.py", start = 47, end = 47, render = { kind = "full" } },
+  { path = "peepdb/tests/test_sqlite.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "peepdb/tests/test_sqlite.py", start = 67, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "test_mongodb_uri.py (full)"
+justification = "Small but precise: asserts the exact escaped URI peepdb/db/mongodb.py must build ('mongodb://user+name:p%40ssword@localhost:1234/mydb?replicaSet=rs0') — the executable spec for MongoDBDatabase.connect (batch 6.5)."
+content = { kind = "lines", spans = [
+  { path = "peepdb/tests/test_mongodb_uri.py", start = 1, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.3"
+descriptor = "test_connection.py — unused/dead test helper"
+justification = "Despite the name, this file defines zero test_ functions (grep confirms, hence its absence from batch 8.1) and isn't imported anywhere else in the tree — it's a standalone, never-invoked reimplementation of core.connect_to_database covering only mysql/postgres/mariadb (missing sqlite/mongodb/firebase/mssql/oracle entirely). Flagged so a session grepping test files for backend coverage doesn't mistake this for a real test or an authoritative backend list. An ellipsis marks that the function continues past the shown if/elif/else dispatch (success-path logging/return, the except clause) rather than silently cutting off."
+content = { kind = "lines", spans = [
+  { path = "peepdb/tests/test_connection.py", start = 1, end = 26, render = { kind = "full" } },
+  { path = "peepdb/tests/test_connection.py", start = 27, end = 27, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "9.1"
+descriptor = "README example output (table + JSON)"
+justification = "The literal on-screen output shapes (tabulate grid with border characters; the nested JSON with page/total_pages/total_rows) that aren't reconstructable from cli.py/core.py source alone — genuinely additive rather than duplicating the command-invocation prose already covered by the CLI docstring (batch 3.3)."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 91, end = 101, render = { kind = "full" } },
+  { path = "README.md", start = 127, end = 131, render = { kind = "full" } },
+  { path = "README.md", start = 132, end = 132, render = { kind = "ellipsis" } },
+  { path = "README.md", start = 134, end = 137, render = { kind = "full" } },
+  { path = "README.md", start = 138, end = 138, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "docs/index.md — encryption key storage claim"
+justification = "States the encryption key lives at ~/.peepdb/key.key — a claim that does NOT match config.py's actual key-management code (batches 5.3-5.5, which use an OS keyring entry or a password-derived key, with no literal key.key file ever written). Header and the claim itself are rendered, the intervening generic security bullet points are elided, so a session can notice and reconcile the discrepancy against the real implementation rather than trusting stale doc-site prose uncontested."
+content = { kind = "lines", spans = [
+  { path = "docs/index.md", start = 28, end = 28, render = { kind = "full" } },
+  { path = "docs/index.md", start = 29, end = 29, render = { kind = "ellipsis" } },
+  { path = "docs/index.md", start = 38, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.3"
+descriptor = "LICENSE identity: GPLv3"
+justification = "The root LICENSE is GPLv3 (matches project.toml's license field); body elided via ellipsis since it's unmodified boilerplate legal text, not project-specific content. Note: docs/LICENSE (named in the docs/ listing, batch 1.5) is a *different*, MIT license — it covers only the vendored Jekyll template under docs/, not the peepDB project itself. Not rendered here given budget, but worth a session not conflating the two if a licensing question comes up."
+content = { kind = "lines", spans = [
+  { path = "LICENSE", start = 1, end = 2, render = { kind = "full" } },
+  { path = "LICENSE", start = 4, end = 4, render = { kind = "ellipsis" } },
+] }
+

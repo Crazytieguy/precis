@@ -1,681 +1,2421 @@
 fixture = "cobra"
 revision_pin = "ad460ea8"
 summary = """
-spf13/cobra: the Go library nearly every major Go CLI (kubectl, Hugo, gh, Docker
-distribution, etcd, ...) is built on. Not an application -- a library whose entire
-product surface is its exported API: the `Command` struct (spine of the whole
-repo), package-level helpers in cobra.go, positional-arg validators in args.go,
-flag-group validation, and the shell-completion/active-help/docgen subsystems
-built on top. A `doc/` subpackage (separate Go package) generates man/md/rest/yaml
-reference docs from a Command tree; `site/content/` holds the maintained
-user-facing docs (user_guide.md is the most complete single narrative in the
-repo). Query distribution: mostly "how do I use Cobra to do X" (define a command,
-add a flag, validate args, add a completion, run code before/after Run) grounded
-in either the struct/method signatures or the matching user_guide.md section;
-occasionally "how does cobra internally resolve/execute a command" (Find/Traverse/
-execute); occasionally build/test/CI/contribution questions. This NS ranks the
-Command struct and its execute() lifecycle first (the load-bearing spine measured
-in dependency graphs elsewhere), user_guide.md narrative next (cheapest path to
-a correct usage pattern), then the supporting single-purpose files (args, flag
-groups, cobra.go) each roster-then-body, then the larger completion/docgen
-subsystems, then operational/repo-meta content.
+Cobra (github.com/spf13/cobra) is a Go *library* for building git-style CLI
+applications. Its substance is one flat root package `cobra` -- 14 non-test
+.go files with 11 colocated *_test.go siblings -- plus a single subpackage
+`doc/` that generates man / markdown / ReST / YAML pages from a command tree,
+and a Hugo documentation site under site/content/. There is no binary here:
+the scaffolding generator lives in the separate spf13/cobra-cli project.
+
+Everything hangs off one type. `Command` (command.go, 2072 lines) is a
+declarative struct -- Use/Short/Long, an Args validator, five pairs of *Run
+hooks, a dozen behaviour toggles -- with ~98 exported methods, executed via
+Execute()/ExecuteC(). The second-largest surface is shell completion:
+completions.go implements the hidden `__complete` protocol and the generated
+`completion` subcommand, while five per-shell files emit the actual
+bash/zsh/fish/powershell scripts.
+
+The ranking front-loads (1) what the library is and where every file lives,
+including the build/test entry point, (2) the `Command` struct itself, the
+most-consulted surface for nearly any question here, (3) the complete
+exported method roster of `Command`, name-only and grouped by theme, (4)
+navigation into the 887-line user guide plus the test harness and CI gates a
+change must pass, then (5) execution semantics, (6) the command-declaration
+API (arg validators, flag groups, flag markers), (7) the completion engine,
+(8) the per-shell generators, (9) doc/, and (10) project policy. Rosters are
+truncated at the opening paren so a whole surface costs ~10 tokens per symbol
+and every name arrives with an exact line to jump to.
 """
 
 [[batches]]
 id = "1.1"
-descriptor = "go.mod: module identity"
-justification = "The module path (github.com/spf13/cobra) and minimum Go version."
-content = { kind = "lines", spans = [
-  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
-]}
+descriptor = "Identity: the README lede and the package doc comment"
+justification = "Rank 1 is what the repository is, in four lines: the README's one-sentence definition of Cobra as a library for creating CLI applications, the pointer to cobra.dev where the extensive documentation lives, and the `package cobra` doc comment that opens command.go -- which also pins command.go as the primary file."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 15
+end = 17
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = "go.mod: dependencies"
-justification = "The only 4 real deps: pflag (flags), go-md2man (man pages), mousetrap (Windows double-click guard), yaml.v3 (doc/yaml_docs.go)."
-content = { kind = "lines", spans = [
-  { path = "go.mod", start = 5, end = 10, render = { kind = "full" } },
-]}
+descriptor = "go.mod: module path, Go version floor, and the four dependencies"
+justification = "Names the import path an agent must use (github.com/spf13/cobra), the Go 1.15 floor that rules out modern stdlib and syntax, and the complete dependency set -- pflag (supplies every FlagSet in the API), go-md2man (man page rendering in doc/), mousetrap (the Windows explorer.exe hook) and yaml/v3. Four dependencies is itself the signal: this project resists adding more."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 10
+render = { kind = "full" }
 
 [[batches]]
 id = "1.3"
-descriptor = "README tagline + adoption"
-justification = "README lede: what Cobra is, and that it underlies Kubernetes/Hugo/GitHub CLI -- the identity check for 'what is this repo'."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "README.md", start = 12, end = 14, render = { kind = "full" } },
-]}
+descriptor = "Complete .go roster of the root package: sources and colocated tests"
+justification = "The substance of this repo is one flat root package, so this is the single most orienting batch after identity. All 25 root .go files at once -- sources and their *_test.go siblings together, so neither class looks empty: completion support is split across five per-shell generators, there are windows/notwin build-tag variants, and every source file has a test file beside it, which answers 'where does a test for X go' with no search."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = ["active_help.go", "args.go", "bash_completions.go", "bash_completionsV2.go", "cobra.go", "command.go", "command_notwin.go", "command_win.go", "completions.go", "fish_completions.go", "flag_groups.go", "powershell_completions.go", "shell_completions.go", "zsh_completions.go", "active_help_test.go", "args_test.go", "bash_completions_test.go", "bash_completionsV2_test.go", "cobra_test.go", "command_test.go", "completions_test.go", "fish_completions_test.go", "flag_groups_test.go", "powershell_completions_test.go", "zsh_completions_test.go"]
 
 [[batches]]
 id = "1.4"
-descriptor = "Repo root listing, part 1: Go source/test files"
-justification = "The exported cobra package's 25 .go files (source+test pairs for command/args/completions/flag_groups/active_help/cobra plus the per-shell bash/bash V2/zsh/fish/powershell completion generators, and the command_win/command_notwin build-tag split). Split from part 2 to stay under the early growth envelope while still grounding every later file-scoped command.go/args.go/etc. batch with the exact sibling set."
-content = { kind = "fs", groups = [
-  { parent = ".", entries = ["active_help.go", "active_help_test.go", "args.go", "args_test.go", "bash_completions.go", "bash_completions_test.go", "bash_completionsV2.go", "bash_completionsV2_test.go", "cobra.go", "cobra_test.go", "command.go", "command_notwin.go", "command_test.go", "command_win.go", "completions.go", "completions_test.go", "fish_completions.go", "fish_completions_test.go", "flag_groups.go", "flag_groups_test.go", "powershell_completions.go", "powershell_completions_test.go", "shell_completions.go", "zsh_completions.go", "zsh_completions_test.go"] },
-]}
+descriptor = "README 'Overview': what the library does, first half"
+justification = "The feature bullets are the cheapest semantic map of the library's scope: subcommand-based CLIs, POSIX-compliant flags, nesting, global/local/cascading flags, suggestions for mistyped commands, automatic help generation. Each bullet names a surface that later tiers locate precisely in source, so this is what makes the rosters interpretable. Split across 1.4/1.5 only to keep early batches small; 1.5 completes the list."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 37
+end = 46
+render = { kind = "full" }
 
 [[batches]]
 id = "1.5"
-descriptor = "Repo root listing, part 2: docs, CI, and meta"
-justification = "The remaining 16 root entries: the doc/ subpackage, site/ docs tree, .github/ CI config, go.mod/go.sum, assets/, and repo-meta files (README/CONTRIBUTING/CONDUCT/SECURITY/LICENSE/MAINTAINERS/Makefile/.golangci.yml/.mailmap/.gitignore). Completes the root closure that part 1 started, so no root entry looks catastrophically omitted."
+descriptor = "README: the remaining capabilities, and who builds on Cobra"
+justification = "Completes the bullet list begun in 1.4: help grouping, -h recognition, generated shell autocomplete for bash/zsh/fish/powershell, generated man pages, aliases, overridable help and usage, and optional viper integration. Without this half an agent could conclude that completions and docgen -- two of the largest source surfaces here -- are not part of the library. The adoption lines are attached here: Kubernetes, Hugo and the GitHub CLI are what calibrate the back-compat caution that governs every change to this API."
 predecessor = "1.4"
-content = { kind = "fs", groups = [
-  { parent = ".", entries = [".github", ".gitignore", ".golangci.yml", ".mailmap", "assets", "CONDUCT.md", "CONTRIBUTING.md", "doc", "go.mod", "go.sum", "LICENSE.txt", "MAINTAINERS", "Makefile", "README.md", "SECURITY.md", "site"] },
-]}
+content.kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 47
+end = 53
+render = { kind = "full" }
 
 [[batches]]
 id = "1.6"
-descriptor = "site/content/ doc-tree subdirectory listings"
-justification = "Second-level listings for site/content/'s completions/ and docgen/ subsections -- the user-facing docs this NS pulls from in tiers 5/9. Comes right after the root listing (1.4/1.5) so these subtrees refine an already-grounded sibling set."
-content = { kind = "fs", groups = [
-  { parent = "site", entries = "all" },
-  { parent = "site/content", entries = "all" },
-  { parent = "site/content/completions", entries = "all" },
-  { parent = "site/content/docgen", entries = "all" },
-]}
+descriptor = "Canonical usage: the rootCmd literal and Execute() from the user guide"
+justification = "The most-copied snippet in the ecosystem and the fastest route to a correct mental model: a command is a struct literal with Use/Short/Long/Run, and main calls rootCmd.Execute() with the error printed to stderr. Quoted from site/content/user_guide.md, which also teaches the agent that the guide holds runnable examples."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 47
+end = 63
+render = { kind = "full" }
 
 [[batches]]
 id = "1.7"
-descriptor = "doc/ and .github/ subdirectory listings"
-justification = "Second-level listings for the doc/ generator subpackage and .github/ CI plumbing, continuing the subtree breakdown started at 1.6."
-content = { kind = "fs", groups = [
-  { parent = "doc", entries = "all" },
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-]}
+descriptor = "Complete non-Go root listing: build, config, docs, governance"
+justification = "Closes the root directory against 1.3: Makefile, go.mod/go.sum, .golangci.yml, .github/, README plus the four governance documents, LICENSE.txt, MAINTAINERS, .mailmap, and the doc/ and site/ directories. With both halves listed, the absence of a cmd/, a Dockerfile, or a vendor directory becomes information rather than uncertainty."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = [".github", ".gitignore", ".golangci.yml", ".mailmap", "CONDUCT.md", "CONTRIBUTING.md", "LICENSE.txt", "MAINTAINERS", "Makefile", "README.md", "SECURITY.md", "assets", "doc", "go.mod", "go.sum", "site"]
 
 [[batches]]
 id = "1.8"
-descriptor = "README Overview: feature bullets, part 1"
-justification = "The # Overview lede plus the first 4 of 13 feature bullets (subcommand CLIs, POSIX flags, nested subcommands, cascading flags)."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 35, end = 44, render = { kind = "full" } },
-]}
+descriptor = "Makefile: every target and its recipe"
+justification = "The build/test/lint entry point, every target with its recipe (only the banner $(info) lines are elided): `make test` runs `go test -v ./...` after `go get -v ./...`, `make richtest` (what CI actually invokes) wraps it in richgo, `make fmt` is a gofmt-diff gate that fails on any formatting drift, and `make lint` shells out to golangci-lint. Zero follow-up for the most common operational question."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 8
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 16
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 20
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 24
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 28
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Makefile"
+start = 32
+end = 35
+render = { kind = "full" }
 
 [[batches]]
 id = "1.9"
-descriptor = "README Overview: feature bullets, part 2"
-justification = "The remaining 9 feature bullets (suggestions, help generation/grouping, shell autocomplete, man pages, aliases, custom help, viper integration) -- split from 1.8 to stay under the growth envelope while still covering the full bullet list through line 53 (previously cut at 49, silently dropping the man-pages/aliases/custom-help/viper-integration bullets)."
-predecessor = "1.8"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 45, end = 53, render = { kind = "full" } },
-]}
+descriptor = "doc/ subpackage, CI workflows, and assets listings"
+justification = "The only real subpackage is doc/: four generators (man, md, rest, yaml) plus util.go, each with its own test, which shows the format set is closed at four. The .github listing shows CI is exactly two workflows plus dependabot and labeler config, and assets/ holds one image."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "doc"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+[[batches.content.groups]]
+parent = "assets"
+entries = "all"
+
+[[batches]]
+id = "1.10"
+descriptor = "Documentation site tree: site/content and its two subdirectories"
+justification = "The prose documentation is a Hugo site rather than a README: user_guide.md (887 lines), a completions section with a page per shell, a docgen section with a page per output format, plus active_help.md and projects_using_cobra.md. This listing turns most 'how do I use feature X' questions into one targeted file read."
+content.kind = "fs"
+[[batches.content.groups]]
+parent = "site/content"
+entries = "all"
+[[batches.content.groups]]
+parent = "site/content/completions"
+entries = "all"
+[[batches.content.groups]]
+parent = "site/content/docgen"
+entries = "all"
 
 [[batches]]
 id = "2.1"
-descriptor = "Command struct fields, part 1a: identity + args + version, name only"
-justification = "Location roster for 15 of the Command struct's 36 exported fields (command.go:54-115): Use/Aliases/SuggestFor/Short/GroupID/Long/Example, ValidArgs(Function)/Args/ArgAliases/BashCompletionFunction/Deprecated/Annotations/Version, doc-comments stripped."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 64, end = 64, render = { kind = "full" } },
-  { path = "command.go", start = 67, end = 67, render = { kind = "full" } },
-  { path = "command.go", start = 71, end = 71, render = { kind = "full" } },
-  { path = "command.go", start = 74, end = 74, render = { kind = "full" } },
-  { path = "command.go", start = 77, end = 77, render = { kind = "full" } },
-  { path = "command.go", start = 80, end = 80, render = { kind = "full" } },
-  { path = "command.go", start = 83, end = 83, render = { kind = "full" } },
-  { path = "command.go", start = 86, end = 86, render = { kind = "full" } },
-  { path = "command.go", start = 90, end = 90, render = { kind = "full" } },
-  { path = "command.go", start = 93, end = 93, render = { kind = "full" } },
-  { path = "command.go", start = 98, end = 98, render = { kind = "full" } },
-  { path = "command.go", start = 102, end = 102, render = { kind = "full" } },
-  { path = "command.go", start = 105, end = 105, render = { kind = "full" } },
-  { path = "command.go", start = 109, end = 109, render = { kind = "full" } },
-  { path = "command.go", start = 115, end = 115, render = { kind = "full" } },
-]}
+descriptor = "command.go: exported constants, FParseErrWhitelist, Group, Command's doc"
+justification = "Opens the central type. The two exported annotation keys (FlagSetByCobraAnnotation, CommandDisplayNameAnnotation) and the internal help/help-command names, the FParseErrWhitelist alias over pflag's allowlist, the whole `Group` data model (ID + Title) behind help grouping, and the doc comment and opening line of `type Command struct` that batches 2.2-2.5 fill in field by field."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 33
+end = 39
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 41
+end = 48
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 50
+end = 54
+render = { kind = "full" }
 
 [[batches]]
 id = "2.2"
-descriptor = "Command struct fields, part 1b: run-hooks, name only"
-justification = "Location roster for the 10 Persistent{Pre,Post}Run(E)/Pre/PostRun(E)/Run(E) fields (command.go:128-146)."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 128, end = 128, render = { kind = "full" } },
-  { path = "command.go", start = 130, end = 130, render = { kind = "full" } },
-  { path = "command.go", start = 132, end = 132, render = { kind = "full" } },
-  { path = "command.go", start = 134, end = 134, render = { kind = "full" } },
-  { path = "command.go", start = 136, end = 136, render = { kind = "full" } },
-  { path = "command.go", start = 138, end = 138, render = { kind = "full" } },
-  { path = "command.go", start = 140, end = 140, render = { kind = "full" } },
-  { path = "command.go", start = 142, end = 142, render = { kind = "full" } },
-  { path = "command.go", start = 144, end = 144, render = { kind = "full" } },
-  { path = "command.go", start = 146, end = 146, render = { kind = "full" } },
-]}
+descriptor = "Command fields: naming and help text (Use .. Example)"
+justification = "First slice of the exported field set, declarations only: Use, Aliases, SuggestFor, Short, GroupID, Long, Example -- the fields essentially every user of the library sets. The line numbers land directly on the per-field doc comments (for instance the bracket/brace usage-syntax convention documented at 55-63 above Use). The class continues in 2.3-2.5."
+predecessor = "2.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 64
+end = 64
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 67
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 71
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 74
+end = 74
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 77
+end = 77
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 80
+end = 80
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 83
+end = 83
+render = { kind = "full" }
 
 [[batches]]
 id = "2.3"
-descriptor = "Command struct fields, part 2: completion opts + behavior toggles, name only"
-justification = "Location roster for the remaining 11 exported fields (command.go:204-259): FParseErrWhitelist/CompletionOptions and the 9 behavior-toggle bools/ints. Together with 2.1/2.2, this is the full 36-field exported surface of Command -- a partial listing would wrongly imply the rest don't exist."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 205, end = 205, render = { kind = "full" } },
-  { path = "command.go", start = 208, end = 208, render = { kind = "full" } },
-  { path = "command.go", start = 230, end = 230, render = { kind = "full" } },
-  { path = "command.go", start = 233, end = 233, render = { kind = "full" } },
-  { path = "command.go", start = 236, end = 236, render = { kind = "full" } },
-  { path = "command.go", start = 239, end = 239, render = { kind = "full" } },
-  { path = "command.go", start = 243, end = 243, render = { kind = "full" } },
-  { path = "command.go", start = 247, end = 247, render = { kind = "full" } },
-  { path = "command.go", start = 251, end = 251, render = { kind = "full" } },
-  { path = "command.go", start = 255, end = 255, render = { kind = "full" } },
-  { path = "command.go", start = 259, end = 259, render = { kind = "full" } },
-]}
+descriptor = "Command fields: argument validation, completion, metadata"
+justification = "Second slice: ValidArgs []Completion, ValidArgsFunction CompletionFunc, Args PositionalArgs, ArgAliases, BashCompletionFunction, Deprecated, Annotations, Version. This is where the struct wires into the two largest subsystems -- Completion, CompletionFunc and PositionalArgs are defined in completions.go and args.go and are expanded in tiers 6-7."
+predecessor = "2.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 86
+end = 86
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 90
+end = 90
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 93
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 98
+end = 98
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 102
+end = 102
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 105
+end = 105
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 109
+end = 109
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 115
+end = 115
+render = { kind = "full" }
 
 [[batches]]
 id = "2.4"
-descriptor = "Command run-hook fields + execution order"
-justification = "The Persistent{Pre,Post}Run(E)/Pre/PostRun(E)/Run(E) fields plus the doc comment giving their exact execution order -- not obvious from field names alone, and the answer to 'in what order do my hooks run' (cross-checked against the real order in command.go's execute(), tier 3)."
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 116, end = 146, render = { kind = "full" } },
-]}
+descriptor = "Command fields: the ten *Run hooks with the documented ordering comment"
+justification = "Rendered with its comment block because 117-126 states the execution order -- PersistentPreRun, PreRun, Run, PostRun, PersistentPostRun -- and the rule that Pre/Post hooks only fire when Run is declared. Hook ordering is one of the most frequently asked questions about Cobra and the E-suffixed error-returning twin of each hook is the second; both are answered here with zero follow-up."
+predecessor = "2.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 117
+end = 128
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 130
+end = 130
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 132
+end = 132
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 134
+end = 134
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 136
+end = 136
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 138
+end = 138
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 140
+end = 140
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 142
+end = 142
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 144
+end = 144
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 146
+end = 146
+render = { kind = "full" }
 
 [[batches]]
 id = "2.5"
-descriptor = "Command behavior toggle fields"
-justification = "The bool/int knobs application code actually flips, with semantics not obvious from the name alone: TraverseChildren, Hidden, SilenceErrors, SilenceUsage, DisableFlagParsing, DisableAutoGenTag, DisableFlagsInUseLine, DisableSuggestions, SuggestionsMinimumDistance."
-predecessor = "2.3"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 229, end = 259, render = { kind = "full" } },
-]}
+descriptor = "Command fields: behaviour toggles, with ellipses over the unexported state"
+justification = "Closes the exported field class: FParseErrWhitelist, CompletionOptions, TraverseChildren, Hidden, SilenceErrors, SilenceUsage, DisableFlagParsing, DisableAutoGenTag, DisableFlagsInUseLine, DisableSuggestions, SuggestionsMinimumDistance, and the closing brace. The ellipsis markers at 148 and 210 make the elided unexported machinery (flag-set caches, parent pointer, template holders, ctx) visible as a gap rather than a silent omission."
+predecessor = "2.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 148
+end = 148
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 205
+end = 205
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 208
+end = 208
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 210
+end = 210
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 230
+end = 230
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 233
+end = 233
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 236
+end = 236
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 239
+end = 239
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 243
+end = 243
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 247
+end = 247
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 251
+end = 251
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 255
+end = 255
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 259
+end = 259
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 260
+end = 260
+render = { kind = "full" }
 
 [[batches]]
 id = "3.1"
-descriptor = "Command methods roster A1: context/IO/template setters + usage/help resolution"
-justification = "Full closure over command.go lines 269-643 (up to the unexported helpers that open tier 3.2). Named: the complete Set* family (SetContext/SetArgs/SetOutput/SetOut/SetErr/SetIn/SetUsageFunc/SetUsageTemplate/SetFlagErrorFunc/SetHelpFunc/SetHelpCommand/SetHelpCommandGroupID/SetCompletionCommandGroupID/SetHelpTemplate/SetVersionTemplate/SetErrPrefix/SetGlobalNormalizationFunc), OutOrStdout/ErrOrStderr/getOut/getIn, and the UsageFunc/Usage/HelpFunc/Help/FlagErrorFunc resolution chain. The remaining funcs in this span -- InOrStdin, the get*TemplateFunc trio, UsageString, and the Usage/CommandPath/Name-padding plus Usage/Help/VersionTemplate plus ErrPrefix getters -- are ellipsis-hedged at their exact lines rather than dropped, so nothing here reads as a partial listing."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 269, end = 269, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 275, end = 275, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 281, end = 281, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 289, end = 289, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 296, end = 296, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 302, end = 302, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 308, end = 308, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 313, end = 313, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 318, end = 318, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 328, end = 328, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 333, end = 333, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 338, end = 338, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 343, end = 343, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 352, end = 352, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 358, end = 358, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 367, end = 367, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 376, end = 376, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 382, end = 382, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 393, end = 393, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 398, end = 398, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 403, end = 403, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 408, end = 408, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 412, end = 412, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 422, end = 422, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 432, end = 432, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 444, end = 444, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 464, end = 464, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 478, end = 478, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 484, end = 484, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 505, end = 505, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 520, end = 520, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 526, end = 526, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 547, end = 547, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 563, end = 563, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 573, end = 573, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 583, end = 583, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 592, end = 592, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 605, end = 605, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 618, end = 618, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 631, end = 631, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 643, end = 643, render = { kind = "ellipsis" } },
-]}
+descriptor = "Command method roster: execution and lifecycle"
+justification = "Opens a name-only roster of every exported *Command method in command.go, split by theme across 3.1-3.6 so that any cut point still yields a coherent group. First the entry points an application actually calls: Execute, ExecuteC, ExecuteContext, ExecuteContextC, the validators execution runs (ValidateArgs, ValidateRequiredFlags), SetArgs, ArgsLenAtDash and the context accessors. Truncating at the opening paren costs ~10 tokens per method and still gives an exact line to jump to."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 269
+end = 269
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 275
+end = 275
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 281
+end = 281
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 901
+end = 901
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1062
+end = 1062
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1070
+end = 1070
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1078
+end = 1078
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1084
+end = 1084
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1172
+end = 1172
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1180
+end = 1180
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "3.2"
-descriptor = "Command methods roster A2: flag-arg helpers, Find/Traverse, execute lifecycle"
-justification = "Full closure over command.go lines 654-1263 (up to the tree-mutation group that opens tier 3.7). Named: hasNoOptDefVal/stripFlags/argsMinusFirstX, Find/findSuggestions/findNext/Traverse/VisitParents/ArgsLenAtDash, and the whole execute-lifecycle group -- execute/preRun/postRun/ExecuteContext/Execute/ExecuteC/ValidateArgs/checkCommandGroups/InitDefaultHelpFlag/InitDefaultHelpCmd. Command has by far the widest method surface in the repo; without a roster an agent can only see whatever subset the body batches below happen to expand, and Execute() -- the one method nearly every consumer calls -- would silently look like it doesn't exist. shortHasNoOptDefVal/isFlagArg/SuggestionsFor/Root/ExecuteContextC/ValidateRequiredFlags/InitDefaultVersionFlag are ellipsis-hedged at their exact lines rather than dropped."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 654, end = 654, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 662, end = 662, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 674, end = 674, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 715, end = 715, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 750, end = 750, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 757, end = 757, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 781, end = 781, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 798, end = 798, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 821, end = 821, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 863, end = 863, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 884, end = 884, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 892, end = 892, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 901, end = 901, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 905, end = 905, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1047, end = 1047, render = { kind = "full" } },
-  { path = "command.go", start = 1053, end = 1053, render = { kind = "full" } },
-  { path = "command.go", start = 1062, end = 1062, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1070, end = 1070, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1078, end = 1078, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1084, end = 1084, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1172, end = 1172, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1180, end = 1180, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1205, end = 1205, render = { kind = "full" } },
-  { path = "command.go", start = 1219, end = 1219, render = { kind = "full" } },
-  { path = "command.go", start = 1238, end = 1238, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1263, end = 1263, render = { kind = "full" } },
-]}
+descriptor = "Command method roster: building and traversing the command tree"
+justification = "AddCommand, RemoveCommand, Commands and ResetCommands; the group API (AddGroup, Groups, ContainsGroup, AllChildCommandsHaveGroup) that backs grouped help; and the lookup side -- Find, Traverse, SuggestionsFor, VisitParents, Root. This is the set anyone wiring up a CLI or debugging 'why did my subcommand not match' needs."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 757
+end = 757
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 821
+end = 821
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 863
+end = 863
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 884
+end = 884
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 892
+end = 892
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1317
+end = 1317
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1332
+end = 1332
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1342
+end = 1342
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1371
+end = 1371
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1376
+end = 1376
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1386
+end = 1386
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1396
+end = 1396
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1401
+end = 1401
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "3.3"
-descriptor = "Command.execute(), part 1: flag parsing + help/version short-circuit"
-justification = "The first half of the per-command run sequence: Init*Flag, ParseFlags, the help/version early-returns, the Runnable check, and validating positional args -- before any Run hook fires."
-predecessor = "3.2"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 905, end = 971, render = { kind = "full" } },
-]}
+descriptor = "Command method roster: the complete flag API"
+justification = "Nineteen methods behind the README's one-line flag claim: Flags, PersistentFlags, LocalFlags, LocalNonPersistentFlags, InheritedFlags, NonInheritedFlags, the eight Has*Flags predicates the help templates call, Flag lookup, ParseFlags, ResetFlags, Parent and GlobalNormalizationFunc. The differences between these flag sets are a classic source of confusion, so seeing the whole family at once prevents guessing at a name that does not exist."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 1682
+end = 1682
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1688
+end = 1688
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1702
+end = 1702
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1716
+end = 1716
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1744
+end = 1744
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1770
+end = 1770
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1775
+end = 1775
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1787
+end = 1787
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1801
+end = 1801
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1806
+end = 1806
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1811
+end = 1811
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1816
+end = 1816
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1822
+end = 1822
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1827
+end = 1827
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1833
+end = 1833
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1839
+end = 1839
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1844
+end = 1844
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1868
+end = 1868
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1892
+end = 1892
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "3.4"
-descriptor = "Command.execute(), part 2: the hook-running order"
-justification = "The second half: the parents-walk for PersistentPreRun(E) (EnableTraverseRunHooks controls whether every parent runs or only the first), PreRun(E), ValidateRequiredFlags/ValidateFlagGroups, Run(E), PostRun(E), and the parents-walk for PersistentPostRun(E). Ground truth for the order documented in tier 2.4 and user_guide.md's PreRun/PostRun section."
-predecessor = "3.2"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 972, end = 1046, render = { kind = "full" } },
-]}
+descriptor = "Command method roster: I/O wiring and the Set* customisation hooks"
+justification = "How tests and embedders redirect and override everything: SetOut, SetErr, SetIn, SetOutput, SetUsageFunc, SetUsageTemplate, SetHelpFunc, SetHelpTemplate, SetVersionTemplate, SetFlagErrorFunc, SetHelpCommand, the two group-id setters, SetErrPrefix, SetGlobalNormalizationFunc, plus the OutOrStdout / OutOrStderr / ErrOrStderr / InOrStdin accessors used pervasively inside the package."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 289
+end = 289
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 296
+end = 296
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 302
+end = 302
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 308
+end = 308
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 313
+end = 313
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 318
+end = 318
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 328
+end = 328
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 333
+end = 333
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 338
+end = 338
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 343
+end = 343
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 352
+end = 352
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 358
+end = 358
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 367
+end = 367
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 376
+end = 376
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 382
+end = 382
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 393
+end = 393
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 398
+end = 398
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 403
+end = 403
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 408
+end = 408
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "3.5"
-descriptor = "Command.ExecuteC, part 1: setup before dispatch"
-justification = "ctx init, the Root() redirect, the Windows mousetrap hook, InitDefaultHelpCmd, the __complete/completion command injection, and checkCommandGroups -- everything ExecuteC does before it resolves which subcommand to run."
-predecessor = "3.2"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 1084, end = 1118, render = { kind = "full" } },
-]}
+descriptor = "Command method roster: help, usage, templates, default-command injection"
+justification = "The rendering surface: Usage, UsageString, UsageFunc, UsageTemplate, Help, HelpFunc, HelpTemplate, VersionTemplate, FlagErrorFunc, ErrPrefix, the three padding helpers the templates call, and the InitDefaultHelpFlag / InitDefaultVersionFlag / InitDefaultHelpCmd methods that inject `-h`, `--version` and the `help` subcommand into a user's tree."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 444
+end = 444
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 478
+end = 478
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 484
+end = 484
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 520
+end = 520
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 526
+end = 526
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 547
+end = 547
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 563
+end = 563
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 573
+end = 573
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 583
+end = 583
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 592
+end = 592
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 605
+end = 605
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 618
+end = 618
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 643
+end = 643
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1219
+end = 1219
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1238
+end = 1238
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1263
+end = 1263
+render = { kind = "full" }
 
 [[batches]]
 id = "3.6"
-descriptor = "Command.ExecuteC, part 2: dispatch + error handling"
-justification = "The Find-vs-Traverse dispatch (governed by TraverseChildren), the cmd.execute() call, and the SilenceErrors/SilenceUsage-gated error/usage printing on failure -- what 'rootCmd.Execute()' actually returns to main()."
-predecessor = "3.2"
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 1119, end = 1170, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "3.7"
-descriptor = "Command methods roster B1: tree mutation + naming"
-justification = "Full closure over command.go lines 1317-1677. Named: ResetCommands/Commands/AddCommand/RemoveCommand/Groups/AddGroup tree mutation, the six Print*/PrintErr* output helpers, and the CommandPath/DisplayName/UseLine/Name/CalledAs/NameAndAliases/Runnable/IsAvailableCommand/HasHelpSubCommands/HasParent naming and predicate helpers. The commandSorterByName sort.Interface trio and the remaining predicates in this span (AllChildCommandsHaveGroup/ContainsGroup/DebugFlags/HasAlias/hasNameOrAliasPrefix/HasExample/HasSubCommands/IsAdditionalHelpTopicCommand/HasAvailableSubCommands) are ellipsis-hedged at their exact lines rather than dropped."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 1317, end = 1317, render = { kind = "full" } },
-  { path = "command.go", start = 1327, end = 1327, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1328, end = 1328, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1329, end = 1329, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1332, end = 1332, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1342, end = 1342, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1371, end = 1371, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1376, end = 1376, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1386, end = 1386, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1396, end = 1396, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1401, end = 1401, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1435, end = 1435, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1440, end = 1440, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1445, end = 1445, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1450, end = 1450, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1455, end = 1455, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1460, end = 1460, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1465, end = 1465, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1474, end = 1474, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1482, end = 1482, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1501, end = 1501, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1541, end = 1541, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1551, end = 1551, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1562, end = 1562, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1571, end = 1571, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1586, end = 1586, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1591, end = 1591, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1596, end = 1596, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1601, end = 1601, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1607, end = 1607, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1628, end = 1628, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1648, end = 1648, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1662, end = 1662, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1677, end = 1677, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-]}
-
-[[batches]]
-id = "3.8"
-descriptor = "Command methods roster B2: flags accessors + default templates"
-justification = "Full closure over command.go lines 1682-2068 (starting one func earlier than 3.7's 1677 cutoff to close the GlobalNormalizationFunc gap between the two rosters). Named: GlobalNormalizationFunc, the Flags()/LocalFlags/InheritedFlags/PersistentFlags accessor family, all eight HasFlags/HasPersistentFlags/HasLocalFlags/HasInheritedFlags/HasAvailable* predicates, Flag(name)/ParseFlags/Parent, and the default usage/help template funcs. LocalNonPersistentFlags/NonInheritedFlags/ResetFlags, the unexported persistentFlag/mergePersistentFlags/updateParentsPflags/commandNameMatches helpers, and defaultVersionFunc are ellipsis-hedged at their exact lines rather than dropped."
-content = { kind = "lines", spans = [
-  { path = "command.go", start = 1682, end = 1682, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1688, end = 1688, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1702, end = 1702, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1716, end = 1716, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1744, end = 1744, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1770, end = 1770, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1775, end = 1775, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1787, end = 1787, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1801, end = 1801, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1806, end = 1806, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1811, end = 1811, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1816, end = 1816, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1822, end = 1822, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1827, end = 1827, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1833, end = 1833, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1839, end = 1839, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1844, end = 1844, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1855, end = 1855, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1868, end = 1868, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1892, end = 1892, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 1898, end = 1898, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1907, end = 1907, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1928, end = 1928, render = { kind = "ellipsis" } },
-  { path = "command.go", start = 1974, end = 1974, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 2047, end = 2047, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "command.go", start = 2068, end = 2068, render = { kind = "ellipsis" } },
-]}
+descriptor = "Command method roster: naming and introspection predicates"
+justification = "Closes the *Command method class in command.go: CommandPath, DisplayName, UseLine, Name, NameAndAliases, HasAlias, CalledAs, DebugFlags, and the predicates the help machinery keys off -- Runnable, HasExample, HasSubCommands, HasAvailableSubCommands, IsAvailableCommand, IsAdditionalHelpTopicCommand, HasHelpSubCommands, HasParent. After this batch any *Command method not seen in 3.1-3.6 can be assumed to live in another file: completions.go, flag_groups.go, shell_completions.go or one of the shell generators."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 1465
+end = 1465
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1474
+end = 1474
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1482
+end = 1482
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1501
+end = 1501
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1541
+end = 1541
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1551
+end = 1551
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1562
+end = 1562
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1586
+end = 1586
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1591
+end = 1591
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1596
+end = 1596
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1601
+end = 1601
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1607
+end = 1607
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1628
+end = 1628
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1648
+end = 1648
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1662
+end = 1662
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1677
+end = 1677
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "4.1"
-descriptor = "args.go: every PositionalArgs validator, name only"
-justification = "Location roster for the PositionalArgs type and all 10 built-in validators (legacyArgs is the unexported fallback used when Args is nil and there ARE subcommands)."
-content = { kind = "lines", spans = [
-  { path = "args.go", start = 28, end = 28, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 42, end = 42, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 51, end = 51, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 69, end = 69, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 82, end = 82, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 87, end = 87, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 97, end = 97, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 107, end = 107, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 117, end = 117, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 127, end = 127, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 142, end = 142, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "args.go", start = 22, end = 22, render = { kind = "full" } },
-]}
+descriptor = "user_guide.md: complete H2 section map"
+justification = "The user guide is 887 lines and answers most 'how do I do X with cobra' questions. Every top-level heading, locations only, converts those into a single targeted read: flags at 249, positional args at 436, help command at 562, usage message at 628, version flag at 672, error prefix at 682, run hooks at 688, suggestions at 777, docgen at 818, completions at 823, active help at 829, plugins at 835."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 35
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 249
+end = 249
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 436
+end = 436
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 492
+end = 492
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 562
+end = 562
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 628
+end = 628
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 672
+end = 672
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 682
+end = 682
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 688
+end = 688
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 777
+end = 777
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 818
+end = 818
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 823
+end = 823
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 829
+end = 829
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 835
+end = 835
+render = { kind = "full" }
 
 [[batches]]
 id = "4.2"
-descriptor = "args.go: no-arg validator bodies (NoArgs, ArbitraryArgs, OnlyValidArgs, NoDuplicateArgs)"
-justification = "The four validators with no constructor argument -- full bodies, each 5-15 lines, showing exactly which error string each produces."
+descriptor = "user_guide.md: complete H3/H4 subsection map"
+justification = "Completes the heading class from 4.1 -- without it the guide looks like sixteen flat sections and its most-searched topics stay invisible: persistent vs local flags (266/276/284), binding flags to config (297), required flags (316), flag groups (333), count and slice flags (373/413), grouping commands in help (604), defining your own help (612) and usage (659), and the kubectl plugin example (842)."
 predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "args.go", start = 41, end = 84, render = { kind = "full" } },
-]}
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 40
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 139
+end = 139
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 156
+end = 156
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 187
+end = 187
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 218
+end = 218
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 253
+end = 253
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 266
+end = 266
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 276
+end = 276
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 284
+end = 284
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 297
+end = 297
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 316
+end = 316
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 333
+end = 333
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 369
+end = 369
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 373
+end = 373
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 413
+end = 413
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 570
+end = 570
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 604
+end = 604
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 612
+end = 612
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 633
+end = 633
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 659
+end = 659
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/user_guide.md"
+start = 842
+end = 842
+render = { kind = "full" }
 
 [[batches]]
 id = "4.3"
-descriptor = "args.go: parametrized validator bodies (Minimum/Maximum/Exact/RangeArgs)"
-justification = "The PositionalArgs-returning constructors, each closing over its N/min/max parameter. (MatchAll/ExactValidArgs are simple compositions, left to the roster's line pointers.)"
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "args.go", start = 86, end = 125, render = { kind = "full" } },
-]}
+descriptor = "Completion and Active Help documentation: H1/H2 maps"
+justification = "site/content/completions/_index.md (616 lines) is the reference for the entire completion feature; its top-level headings show the split between writing your own completion command, customising completions, and a section per shell. active_help.md's headings cover supported shells, adding messages, and user control. Headings only, so this is cheap navigation into the subsystem that tiers 7-8 cover in source."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 93
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 118
+end = 118
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 122
+end = 122
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 273
+end = 273
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 436
+end = 436
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 492
+end = 492
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 527
+end = 527
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/completions/_index.md"
+start = 557
+end = 557
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 95
+end = 95
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 142
+end = 142
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/active_help.md"
+start = 149
+end = 149
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "Test harness: the helpers every root-package test is written against"
+justification = "command_test.go defines emptyRun and the executeCommand / executeCommandC / executeCommandWithContext family that buffers stdout+stderr and drives a command tree, returning captured output. Any new test in the root package uses these, so this is the highest-value 30 lines of the ~7500 test lines in the repo; the ellipsis marks the further context-carrying variants that follow."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command_test.go"
+start = 30
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command_test.go"
+start = 36
+end = 36
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command_test.go"
+start = 48
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command_test.go"
+start = 59
+end = 59
+render = { kind = "ellipsis" }
+
+[[batches]]
+id = "4.5"
+descriptor = "CI: the four jobs and the platform / Go-version matrix"
+justification = "What a change has to pass: an addlicense check that enforces the Apache header on every file, golangci-lint, test-unix over ubuntu+macOS x Go 1.17 through 1.24, and a MINGW64 Windows job -- both test jobs invoking `make richtest`. The Go version span is the practical constraint: code here must still compile on releases far older than current."
+content.kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 17
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 26
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 35
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 56
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 60
+end = 73
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 88
+end = 88
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 91
+end = 92
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 125
+end = 125
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "golangci-lint configuration: the enabled linter set"
+justification = "The lint gate, with the full enable list rather than a sample: errcheck, goconst, gocritic, gosec, govet, ineffassign, misspell, nolintlint, staticcheck, unconvert, unused, on top of `default: none` and gofmt+goimports formatters. The govet buildtag check is disabled on purpose so the dual `//go:build` + `// +build` tags required for Go 1.15 keep passing -- exactly the sort of thing an agent would otherwise 'clean up' and break."
+content.kind = "lines"
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 15
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 32
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 36
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 40
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 44
+end = 44
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 48
+end = 48
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 50
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 60
+end = 61
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 65
+end = 66
+render = { kind = "full" }
 
 [[batches]]
 id = "5.1"
-descriptor = "user_guide.md heading outline, part 1 (app layout through flags)"
-justification = "Headings 1-19 of the 887-line user guide with no bodies: app layout, rootCmd/main.go, organizing subcommands, and the full Working-with-Flags subsection breakdown. Establishes section structure before tier 5.3/5.4 expand only two of them."
-content = { kind = "lines", spans = [
-  { path = "site/content/user_guide.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 28, end = 28, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 35, end = 35, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 40, end = 40, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 139, end = 139, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 156, end = 156, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 187, end = 187, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 218, end = 218, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 249, end = 249, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 253, end = 253, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 266, end = 266, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 276, end = 276, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 284, end = 284, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 297, end = 297, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 316, end = 316, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 333, end = 333, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 369, end = 369, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 373, end = 373, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 413, end = 413, render = { kind = "full" } },
-]}
+descriptor = "Execute / ExecuteC: doc comments and the root-redirect rule"
+justification = "Refines the signatures from 3.1 with the behaviour that surprises people: Execute simply delegates to ExecuteC; ExecuteC re-dispatches to Root() no matter which command it was called on; it defaults a nil ctx to context.Background(); and before parsing anything it runs the Windows mousetrap pre-exec hook and InitDefaultHelpCmd."
+predecessor = "3.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 1059
+end = 1076
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1083
+end = 1092
+render = { kind = "full" }
 
 [[batches]]
 id = "5.2"
-descriptor = "user_guide.md heading outline, part 2 (args through plugins)"
-justification = "Headings 20-37: positional args, the worked example, help/usage/version customization, PreRun/PostRun hooks, suggestions, docgen/completions/active-help pointers, and the plugin pattern."
-content = { kind = "lines", spans = [
-  { path = "site/content/user_guide.md", start = 436, end = 436, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 492, end = 492, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 562, end = 562, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 570, end = 570, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 604, end = 604, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 612, end = 612, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 628, end = 628, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 633, end = 633, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 659, end = 659, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 672, end = 672, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 682, end = 682, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 688, end = 688, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 777, end = 777, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 818, end = 818, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 823, end = 823, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 829, end = 829, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 835, end = 835, render = { kind = "full" } },
-  { path = "site/content/user_guide.md", start = 842, end = 842, render = { kind = "full" } },
-]}
+descriptor = "execute(): the ordered run pipeline"
+justification = "The heart of the library and the source of most behavioural answers, with ellipses over the error-handling filler: deprecation warning; InitDefaultHelpFlag/InitDefaultVersionFlag deferred to the last possible moment for overridability; ParseFlags routed through FlagErrorFunc; the help-flag short-circuit returning flag.ErrHelp; the non-runnable short-circuit; preRun and deferred postRun; ValidateArgs against DisableFlagParsing; the parent walk that honours EnableTraverseRunHooks when choosing which PersistentPreRun fires; then PreRun, ValidateRequiredFlags and ValidateFlagGroups."
+predecessor = "5.1"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 905
+end = 921
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 922
+end = 922
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 933
+end = 935
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 936
+end = 936
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 953
+end = 961
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 962
+end = 962
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 970
+end = 978
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 979
+end = 979
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 995
+end = 1004
+render = { kind = "full" }
 
 [[batches]]
 id = "5.3"
-descriptor = "user_guide.md: Create rootCmd (the bootstrap template)"
-justification = "The literal rootCmd struct literal + Execute() wrapper most new Cobra apps are copied from."
-predecessor = "5.1"
-content = { kind = "lines", spans = [
-  { path = "site/content/user_guide.md", start = 46, end = 64, render = { kind = "full" } },
-]}
+descriptor = "cobra.go: the package-level behaviour switches"
+justification = "Global knobs that live on the package rather than on Command and are therefore easy to miss entirely: EnablePrefixMatching, EnableCommandSorting, EnableCaseInsensitive and EnableTraverseRunHooks (the variable execute() consults), each with its documented default. A question like 'can command names be case-insensitive' is answered here with no follow-up."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "cobra.go"
+start = 45
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 52
+end = 56
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 58
+end = 59
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 61
+end = 62
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 65
+end = 66
+render = { kind = "full" }
 
 [[batches]]
 id = "5.4"
-descriptor = "user_guide.md: Required flags"
-justification = "MarkFlagRequired/MarkPersistentFlagRequired with a worked example -- the entry point into shell_completions.go's single-flag Mark* family (tier 6.0); flag_groups.go's Mark*Together/OneRequired/MutuallyExclusive group annotators (tier 6.1) build on these."
-predecessor = "5.1"
-content = { kind = "lines", spans = [
-  { path = "site/content/user_guide.md", start = 316, end = 331, render = { kind = "full" } },
-]}
+descriptor = "cobra.go: package-level function roster"
+justification = "Everything exported from cobra.go that is not a Command method: AddTemplateFunc and AddTemplateFuncs (extend the help/usage template vocabulary), OnInitialize and OnFinalize (global hooks run around every Execute), the template comparison helpers Gt and Eq, and CheckErr / WriteStringAndCheck, the error helpers that generated cobra-cli code calls."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "cobra.go"
+start = 85
+end = 85
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 91
+end = 91
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 99
+end = 99
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 114
+end = 114
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 235
+end = 235
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 243
+end = 243
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "5.5"
-descriptor = "user_guide.md: Positional Arguments validator list"
-justification = "The one-line semantics of the number-of-arguments validators -- narrative counterpart to args.go's roster (tier 4.1)."
-predecessor = "5.2"
-content = { kind = "lines", spans = [
-  { path = "site/content/user_guide.md", start = 441, end = 447, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "6.0"
-descriptor = "shell_completions.go: MarkFlag*/MarkPersistentFlag* annotators, name only"
-justification = "Full closure over shell_completions.go's 11 funcs. Named: the single-flag MarkFlagRequired/MarkFlagFilename/MarkFlagCustom/MarkFlagDirname family and their MarkPersistentFlag* twins -- the funcs user_guide.md's Required Flags section (5.4) actually calls. Each one's exported *pflag.FlagSet-level implementation (same name, package-level) is ellipsis-hedged at its line rather than dropped."
-content = { kind = "lines", spans = [
-  { path = "shell_completions.go", start = 24, end = 24, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 31, end = 31, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 38, end = 38, render = { kind = "ellipsis" } },
-  { path = "shell_completions.go", start = 44, end = 44, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 61, end = 61, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 67, end = 67, render = { kind = "ellipsis" } },
-  { path = "shell_completions.go", start = 77, end = 77, render = { kind = "ellipsis" } },
-  { path = "shell_completions.go", start = 83, end = 83, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 90, end = 90, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "shell_completions.go", start = 96, end = 96, render = { kind = "ellipsis" } },
-]}
+descriptor = "The default usage template, plus the help and version template constants"
+justification = "The literal template behind every Cobra help screen, head and tail rendered with an ellipsis over the grouped-commands middle: Usage, Aliases and Examples at the top; Flags, Global Flags, additional help topics and the trailing 'Use \"... [command] --help\"' line at the bottom. It also exposes the template funcs (rpad, trimTrailingWhitespaces) registered in cobra.go. The two sibling constants are included so the help and version templates do not look like they are missing."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command.go"
+start = 1942
+end = 1948
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1949
+end = 1949
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "command.go"
+start = 1965
+end = 1970
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 2042
+end = 2042
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command.go"
+start = 2064
+end = 2064
+render = { kind = "full" }
 
 [[batches]]
 id = "6.1"
-descriptor = "flag_groups.go: the three Mark*-group annotators, name only"
-justification = "Location roster for MarkFlagsRequiredTogether/MarkFlagsOneRequired/MarkFlagsMutuallyExclusive -- the funcs a Command author calls directly."
-content = { kind = "lines", spans = [
-  { path = "flag_groups.go", start = 33, end = 33, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 49, end = 49, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-]}
+descriptor = "args.go: every PositionalArgs validator with its defining doc line"
+justification = "The complete `Args:` vocabulary -- NoArgs, OnlyValidArgs, NoDuplicateArgs, ArbitraryArgs, MinimumNArgs, MaximumNArgs, ExactArgs, RangeArgs, MatchAll and the deprecated ExactValidArgs -- each with the one-line doc stating its rule, plus the PositionalArgs type and the legacyArgs default that applies when Args is nil (root commands with subcommands validate; everything else accepts anything). Doc lines are included because the names alone do not distinguish OnlyValidArgs from MatchAll."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "args.go"
+start = 22
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 24
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 41
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 68
+end = 69
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 81
+end = 82
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 86
+end = 87
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 96
+end = 97
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 106
+end = 107
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 116
+end = 117
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 126
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "args.go"
+start = 141
+end = 142
+render = { kind = "full" }
 
 [[batches]]
 id = "6.2"
-descriptor = "flag_groups.go: ValidateFlagGroups + helpers, name only"
-justification = "Location roster for ValidateFlagGroups (called from execute(), tier 3.4) plus its per-kind validators, the shared annotation-scan helper, and enforceFlagGroupsForCompletion."
-content = { kind = "lines", spans = [
-  { path = "flag_groups.go", start = 81, end = 81, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 111, end = 111, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 121, end = 121, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 144, end = 144, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 167, end = 167, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 188, end = 188, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 209, end = 209, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "flag_groups.go", start = 225, end = 225, render = { kind = "full" } },
-]}
+descriptor = "flag_groups.go: the three group markers and their annotation keys"
+justification = "MarkFlagsRequiredTogether, MarkFlagsOneRequired and MarkFlagsMutuallyExclusive with their doc comments, ValidateFlagGroups (the entry point execute() calls) and enforceFlagGroupsForCompletion. The three annotation key constants are included because that is what the feature actually stores on a pflag.Flag -- indispensable when debugging a group that does not fire."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 25
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 31
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 33
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 65
+end = 65
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 79
+end = 79
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 81
+end = 81
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "flag_groups.go"
+start = 225
+end = 225
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "shell_completions.go: the complete Mark* helper family"
+justification = "Eleven functions with method and package-level forms side by side: MarkFlagRequired / MarkPersistentFlagRequired, MarkFlagFilename / MarkPersistentFlagFilename, MarkFlagCustom, MarkFlagDirname / MarkPersistentFlagDirname, plus the free functions taking a *pflag.FlagSet. Showing both forms together prevents the common wrong guess that only one exists."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 31
+end = 31
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 44
+end = 44
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 54
+end = 54
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 61
+end = 61
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 67
+end = 67
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 77
+end = 77
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 83
+end = 83
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 90
+end = 90
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 96
+end = 96
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "7.1"
-descriptor = "cobra.go: every func, name only"
-justification = "Location roster for cobra.go's package-level API: template-func registration, init/finalize hooks, the Gt/Eq template comparators (marked FIXME-unused), string helpers, and CheckErr/WriteStringAndCheck."
-content = { kind = "lines", spans = [
-  { path = "cobra.go", start = 85, end = 85, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 91, end = 91, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 99, end = 99, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 105, end = 105, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 114, end = 114, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 144, end = 144, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 159, end = 159, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 166, end = 166, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 174, end = 174, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 179, end = 179, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 192, end = 192, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 225, end = 225, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 235, end = 235, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "cobra.go", start = 243, end = 243, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-]}
+descriptor = "completions.go: the completion type vocabulary"
+justification = "ShellCompDirective, the `Completion = string` alias, CompletionFunc's exact signature -- the shape every ValidArgsFunction and flag completion function must have -- and CompletionOptions with all five fields (DisableDefaultCmd, DisableNoDescFlag, DisableDescriptions, HiddenDefaultCmd, DefaultShellCompDirective) plus its setter. These are the types named but not defined by the Command fields in 2.3."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "completions.go"
+start = 43
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 105
+end = 121
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 123
+end = 123
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 136
+end = 136
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 138
+end = 139
+render = { kind = "full" }
 
 [[batches]]
 id = "7.2"
-descriptor = "Package-level config vars"
-justification = "EnablePrefixMatching/EnableCommandSorting/EnableCaseInsensitive/EnableTraverseRunHooks (all default false except sorting) -- the global switches referenced by command.go's execute()/findNext (tier 3). Declaration lines only; the explanatory doc-comments are elided (their gist is captured above) to keep this batch cheap."
-predecessor = "7.1"
-content = { kind = "lines", spans = [
-  { path = "cobra.go", start = 45, end = 50, render = { kind = "full" } },
-  { path = "cobra.go", start = 55, end = 55, render = { kind = "full" } },
-  { path = "cobra.go", start = 59, end = 59, render = { kind = "full" } },
-  { path = "cobra.go", start = 62, end = 62, render = { kind = "full" } },
-  { path = "cobra.go", start = 66, end = 66, render = { kind = "full" } },
-]}
+descriptor = "The ShellCompDirective bit-mask values"
+justification = "All seven directives -- Error, NoSpace, NoFileComp, FilterFileExt, FilterDirs, KeepOrder, Default -- with the doc line stating what each instructs the shell to do, and the internal shellCompDirectiveMaxValue sentinel that bounds the iota. A completion function's second return value is meaningless without this table, and it is exactly the enum a model half-remembers."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "completions.go"
+start = 56
+end = 58
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 61
+end = 62
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 65
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 69
+end = 69
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 73
+end = 73
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 76
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 80
+end = 80
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 83
+end = 84
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 90
+end = 90
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 93
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 95
+end = 95
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "completions.go: exported completion API roster"
+justification = "CompletionWithDesc, NoFileCompletions, FixedCompletions, RegisterFlagCompletionFunc, GetFlagCompletionFunc, InitDefaultCompletionCmd and the four CompDebug/CompError helpers, plus the two unexported functions that implement the protocol: initCompleteCmd, and getCompletions, whose 270-line body starting at 316 is where any 'why did completion return that' investigation ends up."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "completions.go"
+start = 142
+end = 142
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 151
+end = 151
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 160
+end = 160
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 170
+end = 170
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 186
+end = 186
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 231
+end = 231
+render = { kind = "truncated", pattern = "[a-z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 316
+end = 316
+render = { kind = "truncated", pattern = "[a-z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 748
+end = 748
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 955
+end = 955
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 980
+end = 980
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 985
+end = 985
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 991
+end = 991
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+
+[[batches]]
+id = "7.4"
+descriptor = "The __complete protocol and its environment configuration"
+justification = "The hidden request commands (__complete and __completeNoDesc) that every generated script invokes, the constants for the visible `completion` command and its --no-descriptions flag, and the <PROGRAM>_COMPLETION_DESCRIPTIONS / COBRA_COMPLETION_DESCRIPTIONS environment scheme with the function that derives the program-specific variable name. This is the contract between the Go side and the generated shell scripts."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "completions.go"
+start = 28
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 98
+end = 103
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 996
+end = 999
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 1001
+end = 1001
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 1006
+end = 1006
+render = { kind = "truncated", pattern = "[a-z][A-Za-z0-9]*\\(" }
+
+[[batches]]
+id = "7.5"
+descriptor = "The generated `completion` command tree"
+justification = "Where `myapp completion bash|zsh|fish|powershell` comes from: the parent command literal with its Use and Short, and the four child commands constructed inline inside one 180-line method, ending in the AddCommand that assembles them. Nothing in the file layout hints that these user-visible subcommands are built here."
+predecessor = "7.3"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "completions.go"
+start = 772
+end = 775
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 805
+end = 805
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 840
+end = 840
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 879
+end = 879
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 904
+end = 904
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "completions.go"
+start = 929
+end = 929
+render = { kind = "full" }
 
 [[batches]]
 id = "8.1"
-descriptor = "completions.go: every func/method, part 1 (options + registration), name only"
-justification = "Location roster for completions.go's public-facing half: CompletionOptions setter, Completion/CompletionFunc helpers, flag-completion registration, and the ShellCompDirective.string() debug formatter."
-content = { kind = "lines", spans = [
-  { path = "completions.go", start = 52, end = 52, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 123, end = 123, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 142, end = 142, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 151, end = 151, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 160, end = 160, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 170, end = 170, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 186, end = 186, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 200, end = 200, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 231, end = 231, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-]}
+descriptor = "Shell script generators: every exported Gen*Completion entry point"
+justification = "The complete generator surface across five files: GenBashCompletion and GenBashCompletionFile (legacy V1), GenBashCompletionV2 and GenBashCompletionFileV2, the four zsh variants plus the deprecated MarkZshCompPositionalArgument pair, GenFishCompletion(+File), and the six PowerShell variants. One batch, so the V1/V2 and descriptions/no-descriptions distinctions are visible together rather than sampled."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "bash_completions.go"
+start = 683
+end = 683
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "bash_completions.go"
+start = 701
+end = 701
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "bash_completionsV2.go"
+start = 470
+end = 470
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "bash_completionsV2.go"
+start = 482
+end = 482
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 25
+end = 25
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 31
+end = 31
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 36
+end = 36
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 42
+end = 42
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 55
+end = 55
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 66
+end = 66
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 276
+end = 276
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 284
+end = 284
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 331
+end = 331
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 337
+end = 337
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 342
+end = 342
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 348
+end = 348
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "8.2"
-descriptor = "completions.go: every func/method, part 2 (internal completion engine), name only"
-justification = "Location roster for the internal completion-resolution machinery: getCompletions and its helpers, the __complete-command wiring, the default `completion` command builder (InitDefaultCompletionCmd), and the CompDebug/CompError/env-var helpers."
-content = { kind = "lines", spans = [
-  { path = "completions.go", start = 316, end = 316, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 587, end = 587, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 599, end = 599, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 632, end = 632, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 657, end = 657, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 748, end = 748, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 932, end = 932, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 955, end = 955, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 980, end = 980, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 985, end = 985, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 991, end = 991, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 1006, end = 1006, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-  { path = "completions.go", start = 1018, end = 1018, render = { kind = "truncated", pattern = '^func (\([^)]*\) )?[A-Za-z0-9_]+' } },
-]}
+descriptor = "Legacy bash completion annotations"
+justification = "The four BashComp* annotation constants -- BashCompFilenameExt, BashCompCustom, BashCompOneRequiredFlag, BashCompSubdirsInDir -- that the V1 bash generator and the Mark* helpers in 6.3 communicate through. They appear as bare strings in flag annotations, so having the names mapped to their values makes grep hits legible."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "bash_completions.go"
+start = 29
+end = 34
+render = { kind = "full" }
 
 [[batches]]
 id = "8.3"
-descriptor = "ShellCompDirective bit-flag constants"
-justification = "The 6 directive bits (Error/NoSpace/NoFileComp/FilterFileExt/FilterDirs/KeepOrder, combinable via bit-or), the internal shellCompDirectiveMaxValue sentinel, and the zero-value Default -- the vocabulary every ValidArgsFunction/RegisterFlagCompletionFunc callback returns. Declaration lines only (doc comments elided) so the closed set is exhaustive at a fraction of the token cost; a partial listing would misrepresent which directives exist."
-predecessor = "8.1"
-content = { kind = "lines", spans = [
-  { path = "completions.go", start = 58, end = 58, render = { kind = "full" } },
-  { path = "completions.go", start = 62, end = 62, render = { kind = "full" } },
-  { path = "completions.go", start = 66, end = 66, render = { kind = "full" } },
-  { path = "completions.go", start = 73, end = 73, render = { kind = "full" } },
-  { path = "completions.go", start = 80, end = 80, render = { kind = "full" } },
-  { path = "completions.go", start = 84, end = 84, render = { kind = "full" } },
-  { path = "completions.go", start = 90, end = 90, render = { kind = "full" } },
-  { path = "completions.go", start = 95, end = 95, render = { kind = "full" } },
-]}
+descriptor = "active_help.go: the whole feature in one batch"
+justification = "A small self-contained subsystem: AppendActiveHelp with its doc comment, GetActiveHelpConfig, the `_activeHelp_ ` marker string the generated scripts parse, and the <PROGRAM>_ACTIVE_HELP / COBRA_ACTIVE_HELP variables with their '0' disable value."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "active_help.go"
+start = 22
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "active_help.go"
+start = 26
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "active_help.go"
+start = 31
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "active_help.go"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "active_help.go"
+start = 42
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "active_help.go"
+start = 47
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "8.4"
+descriptor = "The Windows mousetrap hook and its no-op counterpart"
+justification = "The only platform-conditional code in the repository: the dual build tags on command_win.go / command_notwin.go, the preExecHookFn variable ExecuteC calls, the Windows behaviour of printing MousetrapHelpText and exiting when the binary was launched from explorer.exe, and the MousetrapHelpText / MousetrapDisplayDuration knobs in cobra.go that control it."
+predecessor = "5.3"
+content.kind = "lines"
+[[batches.content.spans]]
+path = "command_win.go"
+start = 15
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command_win.go"
+start = 28
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command_notwin.go"
+start = 15
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "command_notwin.go"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 68
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "cobra.go"
+start = 81
+end = 81
+render = { kind = "full" }
 
 [[batches]]
 id = "9.1"
-descriptor = "active_help.go: AppendActiveHelp"
-justification = "The func every custom completion callback calls to attach an Active Help hint (recognized by the completion script via the `_activeHelp_ ` marker prefix). GetActiveHelpConfig, the file's other exported func (reads the ACTIVE_HELP env var), is ellipsis-hedged at its line rather than silently omitted."
-content = { kind = "lines", spans = [
-  { path = "active_help.go", start = 31, end = 40, render = { kind = "full" } },
-  { path = "active_help.go", start = 47, end = 47, render = { kind = "ellipsis" } },
-]}
+descriptor = "doc/: every exported generator across all four output formats"
+justification = "The complete public surface of the subpackage: GenManTree, GenManTreeFromOpts and GenMan; GenMarkdown(+Custom, Tree, TreeCustom); GenReST(+Custom, Tree, TreeCustom); GenYaml(+Custom, Tree, TreeCustom). The regular Gen<Fmt> / Gen<Fmt>Custom / Gen<Fmt>Tree / Gen<Fmt>TreeCustom pattern -- and man's deviation from it -- is only visible when all four formats are listed together."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "doc/man_docs.go"
+start = 38
+end = 38
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/man_docs.go"
+start = 48
+end = 48
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/man_docs.go"
+start = 105
+end = 105
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 52
+end = 52
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 57
+end = 57
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 125
+end = 125
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 133
+end = 133
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/rest_docs.go"
+start = 57
+end = 57
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/rest_docs.go"
+start = 62
+end = 62
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/rest_docs.go"
+start = 138
+end = 138
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/rest_docs.go"
+start = 145
+end = 145
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/yaml_docs.go"
+start = 53
+end = 53
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/yaml_docs.go"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/yaml_docs.go"
+start = 88
+end = 88
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/yaml_docs.go"
+start = 93
+end = 93
+render = { kind = "truncated", pattern = "[A-Z][A-Za-z0-9]*\\(" }
 
 [[batches]]
 id = "9.2"
-descriptor = "completions/_index.md heading outline, part 1"
-justification = "Headings 1-16 of the main shell-completion doc (616 lines): default/custom completion command, and noun/flag completion customization."
-content = { kind = "lines", spans = [
-  { path = "site/content/completions/_index.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 14, end = 14, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 93, end = 93, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 118, end = 118, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 122, end = 122, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 124, end = 124, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 152, end = 152, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 168, end = 168, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 240, end = 240, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 273, end = 273, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 275, end = 275, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 291, end = 291, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 308, end = 308, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 338, end = 338, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 351, end = 351, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 365, end = 365, render = { kind = "full" } },
-]}
+descriptor = "doc/: GenManTreeOptions and GenManHeader, field by field"
+justification = "The only configuration structs in the subpackage: Header, Path and CommandSeparator for the tree walk; Title, Section, Date, Source and Manual for the roff header, with the doc comment explaining which fields are auto-filled when left unset. Anyone generating man pages needs these exact names."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "doc/man_docs.go"
+start = 84
+end = 103
+render = { kind = "full" }
 
 [[batches]]
 id = "9.3"
-descriptor = "completions/_index.md heading outline, part 2"
-justification = "Headings 17-30: one section per supported shell (bash/zsh/fish/PowerShell)."
-content = { kind = "lines", spans = [
-  { path = "site/content/completions/_index.md", start = 386, end = 386, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 436, end = 436, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 438, end = 438, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 442, end = 442, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 456, end = 456, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 461, end = 461, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 492, end = 492, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 515, end = 515, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 522, end = 522, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 527, end = 527, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 541, end = 541, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 557, end = 557, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 586, end = 586, render = { kind = "full" } },
-  { path = "site/content/completions/_index.md", start = 602, end = 602, render = { kind = "full" } },
-]}
+descriptor = "doc/: the YAML document schema and the shared helpers"
+justification = "cmdDoc and cmdOption define the YAML the generator emits -- name, synopsis, options, inherited_options, see_also -- which is the contract downstream tooling parses. doc/util.go holds hasSeeAlso, forceMultiLine and the byName sorter shared by all four generators, answering 'where is the code common to the generators'."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "doc/yaml_docs.go"
+start = 30
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "doc/util.go"
+start = 26
+end = 26
+render = { kind = "truncated", pattern = "[a-z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/util.go"
+start = 41
+end = 41
+render = { kind = "truncated", pattern = "[a-z][A-Za-z0-9]*\\(" }
+[[batches.content.spans]]
+path = "doc/util.go"
+start = 48
+end = 48
+render = { kind = "full" }
+
+[[batches]]
+id = "9.4"
+descriptor = "docgen documentation pages: heading map"
+justification = "site/content/docgen/_index.md plus a page per format, which carry the copy-pasteable snippets and the two options that change generated output (DisableAutoGenTag, and hiding the completion command before generating). One hop from here to a working example."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 8
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/man.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/md.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/rest.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "site/content/docgen/yaml.md"
+start = 1
+end = 1
+render = { kind = "full" }
 
 [[batches]]
 id = "10.1"
-descriptor = "Makefile"
-justification = "The canonical build/test/lint entry points: `make fmt` (gofmt check), `make test`/`make richtest` (go test -v ./...), `make lint` (golangci-lint run -v), plus install_deps and clean -- the full 35-line file, answering 'how do I build/test/clean this' directly."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 1, end = 35, render = { kind = "full" } },
-]}
+descriptor = "Project policy documents: section maps"
+justification = "Locations for the governance surface a contribution has to respect: CONDUCT.md is a user contract covering versioning, backward compatibility, deprecation and breaking changes; SECURITY.md covers reporting, supported versions and CVE handling; CONTRIBUTING.md covers filing issues, submitting changes and the quick contribution steps. Headings only -- enough to route a question without spending budget on policy prose."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 3
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 6
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 9
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 32
+end = 32
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONDUCT.md"
+start = 35
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 3
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 25
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 36
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 66
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 75
+end = 75
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "SECURITY.md"
+start = 98
+end = 98
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 16
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 29
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 38
+end = 38
+render = { kind = "full" }
 
 [[batches]]
 id = "10.2"
-descriptor = "CONTRIBUTING.md: CLA + test commands"
-justification = "The CLA sign-off requirement and the two equivalent test commands (`go test ./...` / `make test`) contributors need before opening a PR."
-content = { kind = "lines", spans = [
-  { path = "CONTRIBUTING.md", start = 31, end = 36, render = { kind = "full" } },
-]}
+descriptor = "Repository metadata: maintainers and local ignore rules"
+justification = "The appendix: the four active maintainers (useful when reading git history or attributing review conventions), and the project-specific gitignore entries -- the compiled cobra.test binary and bin/ -- which mark which build artefacts are throwaway."
+content.kind = "lines"
+[[batches.content.spans]]
+path = "MAINTAINERS"
+start = 1
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".gitignore"
+start = 35
+end = 36
+render = { kind = "full" }

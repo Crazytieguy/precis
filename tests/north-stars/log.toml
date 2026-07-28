@@ -1,147 +1,197 @@
 fixture = "log"
 revision_pin = "43f2c283"
 summary = """
-`log` is the de-facto Rust logging facade (rust-lang/log): a `no_std`-friendly
-crate of macros (`error!`/`warn!`/`info!`/`debug!`/`trace!`/`log!`/`log_enabled!`),
-a global logger indirection (`set_logger`/`set_boxed_logger`/`logger()`), the
-`Log` trait implementors write, and an optional `kv` feature for structured
-key-value log records (`Key`/`Value`/`Source`). It has near-zero runtime
-dependencies (all deps behind `kv_*` feature flags) and a large Cargo
-feature-flag surface (`std`, `kv`, `kv_std`/`kv_sval`/`kv_serde`,
-`max_level_*`/`release_max_level_*`). The query distribution this NS serves:
-"how do I emit/filter logs", "how do I implement a Logger", "how does the kv
-capture syntax (`key:? = val`) work", "what feature flag enables X", "how is
-MSRV/CI/no_std supported", plus targeted debugging of the macro-expansion
-chain (`log!` -> `__log!` -> `__private_api`) and the kv `Value`/`Source`
-types. Given a hard per-NS token budget, depth is concentrated on the small
-set of types/macros every consumer touches (Level, LevelFilter, Log, Record,
-log!/error!, kv capture dispatch); everything else is reachable one grep/read
-away from a location pointer here.
-"""
+`log` 0.4.29 — the Rust logging *facade*. It defines an API (five level macros,
+a `Log` trait, `Record`/`Metadata` payloads, one process-global logger slot)
+and deliberately ships no backend; downstream binaries pick one. Two facts
+dominate its design and therefore this ranking: (a) severity is filtered twice
+— at compile time through the `STATIC_MAX_LEVEL` const that the `max_level_*`
+Cargo features resolve, and at run time through an atomic
+`MAX_LOG_LEVEL_FILTER`; (b) everything past the bare facade — structured
+key-values (`kv`), `std`, `serde`/`sval` capture — is feature-gated, so most
+symbols are conditional and "does this exist without feature X?" recurs
+constantly.
 
-# ---------------------------------------------------------------------------
-# Tier 1: orientation - directory breadth, identity, feature/dep surface
-# ---------------------------------------------------------------------------
+Order: repository identity and the complete file/feature map; the crate-root
+public surface, rosters first so no reader believes an unlisted public item is
+absent; then the two things a reader actually touches — implementing and
+installing a `Log`, and the macro expansion path from `src/macros.rs` through
+`src/__private_api.rs`; then the `Record`/`Metadata` payload types; then the
+`kv` subsystem (`Source`/`VisitSource`, `Value`/`VisitValue`, `Key`, the
+`value_bag` vs dependency-free backends); finally tests, CI, changelog and the
+structured-logging RFC. Query classes served: "how do I write a logger", "why
+is my log line dropped", "what does `key:serde` expand to", "which types can
+carry key-values", "what breaks without `std`".
+"""
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "Cheapest possible breadth: every top-level file/dir (src/, tests/, benches/, rfcs/, test_max_level_features/, CI, docs, license files) before any body content is shown."
-content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+descriptor = "Crate identity: README title and one-line description"
+justification = "The cheapest possible statement of what this repository is \u2014 the `log` crate, a lightweight logging facade. Every later batch is read through it."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 4, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "src/ directory listing"
-justification = "Names every source module (lib.rs, macros.rs, serde.rs, __private_api.rs, kv/) so later file-specific batches don't look exhaustive of src/ on their own."
-content = { kind = "fs", groups = [ { parent = "src", entries = "all" } ] }
+descriptor = "Complete root listing"
+justification = "Names every top-level entry (src, tests, benches, rfcs, test_max_level_features, CHANGELOG.md, both licences, triagebot.toml, the CI directory) so the agent holds the whole repository shape and never assumes an unlisted file is absent."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "src/kv/ directory listing"
-justification = "Names all five kv submodules (error, key, mod, source, value) before any kv batch claims to be exhaustive about the module."
-content = { kind = "fs", groups = [ { parent = "src/kv", entries = "all" } ] }
+descriptor = "Complete src/ and src/kv/ listings"
+justification = "The crate's substance is six files under src/ plus the five-file kv submodule. Surfacing the core source set immediately after the root listing tells the agent where any implementation question must land: lib.rs, macros.rs, __private_api.rs, serde.rs, kv/."
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+  { parent = "src/kv", entries = "all" },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/)"
-justification = "One cheap batch closing the class of non-src top-level dirs, so the agent knows exactly which test/bench/CI/rfc files exist without guessing from the root listing alone."
+descriptor = "Listings for the remaining directories"
+justification = "Closes the directory class opened at 1.2: tests/, benches/, rfcs/, the companion test_max_level_features crate and .github/workflows each get their full entry list, so partial knowledge of the layout cannot misdirect a later search."
 content = { kind = "fs", groups = [
   { parent = "tests", entries = "all" },
   { parent = "benches", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
   { parent = "test_max_level_features", entries = "all" },
   { parent = "rfcs", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.5"
-descriptor = "triagebot.toml + .gitignore + .precis-pin"
-justification = "The three smallest root config files in one batch: triagebot's minimal [assign], the standard target/Cargo.lock/.idea/ gitignore, and the precis fixture revision pin."
+descriptor = "Facade semantics: the noop fallback"
+justification = "Four lines of crate doc the README does not carry: with no logger installed the facade degrades to a noop costing an integer load, compare and jump. The most load-bearing design fact about the crate."
 content = { kind = "lines", spans = [
-  { path = "triagebot.toml", start = 1, end = 1, render = { kind = "full" } },
-  { path = ".gitignore", start = 1, end = 3, render = { kind = "full" } },
-  { path = ".precis-pin", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 18, end = 21, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.6"
-descriptor = "Cargo.toml package identity (name/version/license/repo)"
-justification = "Name, version, license, MSRV-adjacent metadata - the crate's identity card, answers 'what is this crate/version' with zero follow-up."
+descriptor = "Facade semantics: what a log request is"
+justification = "A request is a target, a level and a body, the target defaulting to the module path of the call site and loggers filtering on it. Frames every question about targets, levels and filtering that follows."
 content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 1, end = 12, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 22, end = 25, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.7"
-descriptor = "Crate-doc lede (lib.rs)"
-justification = "The facade concept in the author's own words - single logging API, noop fallback when unconfigured. The single highest-value sentence for 'what does this crate do'."
+descriptor = "Cargo.toml package block: version, licence, MSRV, edition"
+justification = "Package identity and the constraints that gate any change: 0.4.29 (with the reminder that html_root_url tracks it), the dual MIT/Apache licence, the upstream repository and docs URLs, rust-version 1.68.0 and edition 2021."
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 11, end = 20, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 3, end = 9, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 16, end = 17, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.8"
-descriptor = "Cargo.toml package identity (MSRV, edition, docs.rs features)"
-justification = "MSRV (1.68.0), edition 2021, and the docs.rs metadata.docs.rs feature set used to build the published docs - completes the identity card from 1.6."
+descriptor = "Cargo features, part 1: the twelve compile-time level filters"
+justification = "`max_level_*` and `release_max_level_*` are this crate's most distinctive knob and the source of most of its cfg complexity. Rendered under the `[features]` header, with an ellipsis at line 37 signalling that further features follow."
 content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 13, end = 21, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 22, end = 35, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 37, end = 37, render = { kind = "ellipsis" } },
 ] }
 
 [[batches]]
 id = "1.9"
-descriptor = "Cargo.toml [features]: max_level_*/release_max_level_*"
-justification = "The compile-time log-filtering feature flags, mutually exclusive within each of the two families - answers 'how do I statically strip trace logs from a release build' directly."
+descriptor = "Cargo features, part 2: std, the kv family, the serde alias, deprecated aliases"
+justification = "Replaces 1.8's ellipsis with the rest of the table: `std`, `kv`, `kv_sval`, `kv_std`, `kv_serde` with the dependency features each pulls in, the `serde = [\"serde_core\"]` back-compat alias, and the deprecated `kv_unstable_*` set. Completes the feature class."
+predecessor = "1.8"
 content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 22, end = 36, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 36, end = 42, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 46, end = 47, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 49, end = 54, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.10"
-descriptor = "Cargo.toml [features]: std/kv/kv_std/kv_sval/kv_serde"
-justification = "The remaining feature flags: std (unlocks std::error/set_boxed_logger), the kv family and its three backend choices, and the deprecated kv_unstable_* aliases - completes the config surface from 1.9."
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 37, end = 54, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = "Cargo.toml [dependencies]"
-justification = "Confirms the dependency-light design directly: every runtime dep (serde_core, sval, sval_ref, value-bag) is optional, gated behind kv_* features - dev-dependencies (Cargo.toml:62-76) are the same pattern one hop away."
+descriptor = "The four optional runtime dependencies"
+justification = "All four runtime dependencies are optional and feature-gated: serde_core, sval, sval_ref and value-bag (with `inline-i128`). The ellipsis at 62 marks the dev-dependency block that follows."
 content = { kind = "lines", spans = [
   { path = "Cargo.toml", start = 56, end = 60, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 62, end = 62, render = { kind = "ellipsis" } },
 ] }
-
-# ---------------------------------------------------------------------------
-# Tier 2: lib.rs - the core public API
-# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "Level enum"
-justification = "The five severity variants (Error..Trace) with explicit discriminants (1..5) - the most fundamental type in the crate, referenced by every macro and by Log::enabled."
+descriptor = "Roster: every public type, trait, module and const in src/lib.rs"
+justification = "One line per top-level public item \u2014 `pub mod kv`, `Level`, `LevelFilter`, `Record`, `RecordBuilder`, `Metadata`, `MetadataBuilder`, `trait Log`, `SetLoggerError`, `ParseLevelError`, `pub mod __private_api`, `STATIC_MAX_LEVEL` \u2014 with exact lines. Diffed against `grep '^pub ' src/lib.rs`: the class is closed, so an unlisted root item does not exist."
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 467, end = 499, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 410, end = 410, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 475, end = 475, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 636, end = 636, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 842, end = 842, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1003, end = 1003, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1158, end = 1158, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1200, end = 1200, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1249, end = 1249, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1549, end = 1549, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1566, end = 1566, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1600, end = 1600, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1611, end = 1611, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.2"
-descriptor = "LevelFilter enum"
-justification = "The Off..Trace filter enum (discriminants 0..5, one more variant than Level) that set_max_level/STATIC_MAX_LEVEL operate on - pairs with 2.1 to show the two-enum design in one glance."
+descriptor = "Roster: the seven free functions of the global logger API, with their cfg gates"
+justification = "`set_max_level`, `set_max_level_racy`, `max_level`, `set_boxed_logger`, `set_logger`, `set_logger_racy`, `logger` \u2014 each signature preceded by the `#[cfg]` that gates it, which answers 'is this available without std, or without pointer-width atomics'."
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 626, end = 649, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1350, end = 1351, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1375, end = 1375, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1396, end = 1396, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1419, end = 1420, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1477, end = 1478, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1529, end = 1529, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1581, end = 1581, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.3"
-descriptor = "Level & LevelFilter public method roster"
-justification = "Name-only roster (max, to_level_filter/to_level, as_str, iter, increment_severity, decrement_severity on both enums) so none of the twelve methods look absent; bodies are a one-hop `Read` of lines 534-778 away."
+descriptor = "`enum Level`: all five variants and their discriminants"
+justification = "The severity ladder Error = 1 through Trace, `#[repr(usize)]` and the derive list. Doc lines are elided; the variant set and the explicit `= 1` (chosen so the discriminants line up with `LevelFilter`) are what callers need."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 473, end = 475, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 482, end = 482, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 486, end = 486, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 490, end = 490, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 494, end = 494, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 498, end = 499, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "`enum LevelFilter`: all six variants, including `Off`"
+justification = "The filter counterpart to `Level`, with `Off` at discriminant 0. 'Level has five variants, LevelFilter has six' is the detail most often gotten wrong when reading or extending this crate."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 634, end = 636, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 638, end = 638, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 640, end = 640, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 642, end = 642, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 644, end = 644, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 646, end = 646, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 648, end = 649, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Roster: every method on `Level` and `LevelFilter`"
+justification = "Both inherent impl blocks, one truncated line per method: `from_usize`, `max`, `to_level_filter` / `to_level`, `as_str`, `iter`, `increment_severity`, `decrement_severity`. Span starts diffed against grep over lines 534-624 and 684-778; the private `from_usize` is included so neither block reads as partial."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 534, end = 534, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 535, end = 535, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 548, end = 548, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 554, end = 554, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 561, end = 561, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 579, end = 579, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 599, end = 599, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 620, end = 620, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 684, end = 684, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 685, end = 685, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 699, end = 699, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 707, end = 707, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 714, end = 714, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -151,26 +201,285 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "2.4"
-descriptor = "FromStr for Level"
-justification = "The case-insensitive string-to-level parsing (LevelFilter's FromStr is symmetric, one line away at lib.rs:667) - answers 'how do I parse a level from a string/env var' directly."
-content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 515, end = 526, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.5"
-descriptor = "Record struct + KeyValues wrapper"
-justification = "The log-message payload's actual fields (metadata, args, module_path, file, line, feature-gated key_values) - the shape a custom Logger's log() method destructures."
-content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 841, end = 867, render = { kind = "full" } },
-] }
-
-[[batches]]
 id = "2.6"
-descriptor = "Record accessor method roster"
-justification = "Names of every Record accessor (args, metadata, level, target, module_path[_static], file[_static], line, key_values, builder, to_builder) so none look absent - the builder() entry is the pointer to RecordBuilder for anyone who needs to construct one."
+descriptor = "Module declarations and the atomics-vs-Cell import fork"
+justification = "`#[macro_use] mod macros`, `mod serde`, `#[cfg(feature = \"kv\")] pub mod kv`, then the `target_has_atomic = \"ptr\"` fork selecting real `AtomicUsize`/`Ordering` or a `Cell` stand-in. Explains both the file layout and the crate's portability seam."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 405, end = 418, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Global state: LOGGER, STATE, the state constants, LOG_LEVEL_NAMES"
+justification = "The crate's entire mutable global surface: `static mut LOGGER` defaulting to `NopLogger`, the UNINITIALIZED/INITIALIZING/INITIALIZED constants, `MAX_LOG_LEVEL_FILTER`, and the `LOG_LEVEL_NAMES` table behind `as_str`/`from_str`; the ellipsis at 462 marks the two static error-message strings that follow."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 447, end = 449, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 454, end = 460, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 462, end = 462, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Roster: the impls that make Level and LevelFilter comparable and parseable"
+justification = "Cross-type `PartialEq`/`PartialOrd` in both directions, `FromStr` for each (including `type Err = ParseLevelError` and the `from_str` signature) and `Display` for each. Answers 'can I compare a Level to a LevelFilter' with no file read."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 501, end = 501, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 508, end = 508, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 515, end = 517, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 528, end = 528, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 651, end = 651, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 658, end = 658, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 665, end = 667, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 678, end = 678, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "`STATIC_MAX_LEVEL`: compile-time level resolution"
+justification = "The const whose `match cfg!(debug_assertions)` arms collapse the twelve `max_level_*`/`release_max_level_*` features into one `LevelFilter`. Half of the crate's two-stage filtering story; `max_level()` is the other half."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1611, end = 1624, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.1"
+descriptor = "`trait Log`: the three required methods"
+justification = "The trait every backend implements \u2014 `enabled`, `log`, `flush` \u2014 with the `Sync + Send` bound, ellipses standing in for the doc comments between signatures. The most-implemented item in the crate."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1248, end = 1249, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1250, end = 1250, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 1262, end = 1262, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1263, end = 1263, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 1271, end = 1271, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1272, end = 1272, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 1279, end = 1280, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Worked example: a complete `Log` implementation"
+justification = "The crate doc's SimpleLogger: `impl log::Log` filtering on `metadata.level() <= Level::Info` and printing `record.level()`/`record.args()`. A zero-follow-up answer to the most common task performed against this crate."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 178, end = 195, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Why `set_max_level` must be called, and that it defaults to `Off`"
+justification = "Crate-doc prose: the facade uses the max level as an optimisation and it defaults to `Off`, so nothing is captured until a logger sets it. Directly answers 'my logger produces no output'."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 200, end = 206, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Worked example: the conventional `init()` for a logger crate"
+justification = "`set_logger(&LOGGER).map(|()| set_max_level(LevelFilter::Info))` over a `static LOGGER`, returning `Result<(), SetLoggerError>` \u2014 the idiom every backend exposes to its users."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 220, end = 228, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "The `Log` impls the crate itself provides"
+justification = "`NopLogger` (the initial value of LOGGER), the blanket forwarding impl for `&T`, and the std-gated impls for `Box<T>` and `Arc<T>`. A complete set: answers 'can I install an Arc<dyn Log>' and 'what runs before init'."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1282, end = 1285, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1294, end = 1296, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1310, end = 1312, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1327, end = 1329, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "`logger()`: the acquire-load fast path"
+justification = "How a record reaches a backend \u2014 unless `STATE` observes `INITIALIZED` under Acquire ordering a `&NOP` is returned, which is why pre-init messages vanish."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1582, end = 1583, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1590, end = 1596, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "`set_logger_inner`: the compare-exchange install path"
+justification = "The UNINITIALIZED -> INITIALIZING -> INITIALIZED transition, the `unsafe` write to the `LOGGER` static, the spin loop for a racing caller and the `SetLoggerError` returns. Explains why installation can only ever succeed once."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1483, end = 1499, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1500, end = 1500, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "Runtime max-level get and set bodies"
+justification = "`set_max_level` is a relaxed store of the filter discriminant; `max_level` is a relaxed load plus `mem::transmute`, with the comment justifying that transmute. The runtime half of the two-stage filter."
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 1352, end = 1353, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1397, end = 1400, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1403, end = 1404, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "no_std wiring"
+justification = "The attributes that let this crate build without std \u2014 `#![cfg_attr(all(not(feature = \"std\"), not(test)), no_std)]` with the lint denials \u2014 and `extern crate core as std` so the rest of the file can keep spelling `std::`."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 353, end = 355, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 396, end = 397, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.1"
+descriptor = "Roster: the seven public macros of src/macros.rs"
+justification = "`log!`, `error!`, `warn!`, `info!`, `debug!`, `trace!`, `log_enabled!` at their definition lines \u2014 the crate's most-used surface and the complete public macro class. The four level macros not expanded below are byte-identical in shape to `error!`, differing only in the `Level` constant."
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 75, end = 75, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 165, end = 165, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 204, end = 204, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 252, end = 252, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 292, end = 292, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 336, end = 336, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 391, end = 391, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "`log!`: all four call forms"
+justification = "The macro head and first matcher, then the sample-invocation comment heading each remaining arm \u2014 `logger:`, `target:`, and bare \u2014 so the whole calling convention is visible without the delegation bodies."
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 73, end = 77, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 78, end = 78, render = { kind = "ellipsis" } },
+  { path = "src/macros.rs", start = 86, end = 86, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 106, end = 106, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "`__log!`: the expansion every log call becomes"
+justification = "The kv-carrying arm: the `lvl <= STATIC_MAX_LEVEL && lvl <= max_level()` guard, then `__private_api::log` with `format_args!`, the target/module_path/`loc()` tuple and a `&[(__log_key!(..), __log_value!(..))]` slice. Answers 'what code does info! emit'."
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 120, end = 132, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "`error!`: head and matcher arms"
+justification = "The attributes and the bare-message arm, which forwards to `log!` with `$crate::Level::Error`; the ellipsis marks the three elided `logger:`/`target:` arms. `warn!`, `info!`, `debug!` and `trace!` have exactly this body with their own `Level` constant."
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 163, end = 165, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 166, end = 166, render = { kind = "ellipsis" } },
+  { path = "src/macros.rs", start = 184, end = 186, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Roster: every doc(hidden) internal macro, with its feature fork"
+justification = "`__log`, `__log_enabled`, `__log_logger`, and the cfg-forked pairs `__log_key`, `__log_value`, `__log_value_sval`, `__log_value_serde`, `__log_value_error` \u2014 the enabled arm shown with its `#[cfg]`, the fallback arm on the line beneath. Closes the macro class opened at 4.1; diffed against `grep '^macro_rules!'`."
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 119, end = 119, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 415, end = 415, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 429, end = 429, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 444, end = 445, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 459, end = 459, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 467, end = 468, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 517, end = 517, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 525, end = 526, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 535, end = 535, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 543, end = 544, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 553, end = 553, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 563, end = 564, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 573, end = 573, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "`__log_value!`: the capture-modifier dispatch table"
+justification = "How `:?`/`:debug`, `:%`/`:display`, `:err`, `:sval`, `:serde` and the default `ToValue` path each map to a `__private_api::capture_*` call. The exact place to edit when adding or debugging a capture syntax."
+predecessor = "4.6"
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 482, end = 512, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "`log_enabled!`: purpose and call forms"
+justification = "The doc sentence about avoiding expensive argument computation, then the matcher arms mirroring `log!`'s four forms, with an ellipsis for the middle two."
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "src/macros.rs", start = 359, end = 362, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 390, end = 394, render = { kind = "full" } },
+  { path = "src/macros.rs", start = 395, end = 395, render = { kind = "ellipsis" } },
+  { path = "src/macros.rs", start = 408, end = 410, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "`__private_api`: the three functions macros expand into"
+justification = "`log` with its `KVs` bound (so a call site can pass a slice of pairs or `()`), `enabled`, and the `#[track_caller] loc()` that captures the call site. The entire macro-facing surface."
+content = { kind = "lines", spans = [
+  { path = "src/__private_api.rs", start = 84, end = 92, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 93, end = 93, render = { kind = "ellipsis" } },
+  { path = "src/__private_api.rs", start = 103, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "`log_impl`: where a `Record` is actually built"
+justification = "Split out of `log` to cut generic bloat; panics if key-values arrive without the `kv` feature, then fills args/level/target/module_path/file/line from the captured `Location`. This is where a record's file and line metadata come from."
+content = { kind = "lines", spans = [
+  { path = "src/__private_api.rs", start = 55, end = 62, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 68, end = 76, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 77, end = 77, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "`GlobalLogger`: the zero-sized proxy for the global slot"
+justification = "The `Log` impl forwarding `enabled`/`log`/`flush` to `logger()`. It is what `__log_logger!(__log_global_logger)` expands to, so it appears in macro output and in user code that names a logger explicitly."
+content = { kind = "lines", spans = [
+  { path = "src/__private_api.rs", start = 37, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "`kv_support`: the capture_* functions behind every modifier"
+justification = "`capture_to_value`, `capture_debug`, `capture_display` and the feature-gated `capture_error`, `capture_sval`, `capture_serde`, plus the `Value` type alias onto `kv::Value`. Completes the path opened at 4.7."
+content = { kind = "lines", spans = [
+  { path = "src/__private_api.rs", start = 112, end = 113, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 116, end = 116, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/__private_api.rs", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/__private_api.rs", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/__private_api.rs", start = 134, end = 134, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/__private_api.rs", start = 139, end = 139, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/__private_api.rs", start = 144, end = 144, render = { kind = "full" } },
+  { path = "src/__private_api.rs", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.1"
+descriptor = "`struct Record`: every field"
+justification = "metadata, args, module_path, file, line and the `#[cfg(feature = \"kv\")] key_values` field \u2014 the payload handed to `Log::log`, and proof that key-values are absent from the struct entirely without the feature."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 841, end = 850, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "Roster: every accessor on `Record`"
+justification = "`builder`, `args`, `metadata`, `level`, `target`, `module_path`, `module_path_static`, `file`, `file_static`, `line`, plus the kv-gated `key_values` and `to_builder` shown with their `#[cfg]`. Span starts diffed against grep over lines 869-961."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 869, end = 869, render = { kind = "full" } },
   { path = "src/lib.rs", start = 872, end = 872, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 878, end = 878, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 884, end = 884, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -181,224 +490,259 @@ content = { kind = "lines", spans = [
   { path = "src/lib.rs", start = 917, end = 917, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 923, end = 923, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/lib.rs", start = 932, end = 932, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 937, end = 937, render = { kind = "full" } },
   { path = "src/lib.rs", start = 939, end = 939, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 944, end = 944, render = { kind = "full" } },
   { path = "src/lib.rs", start = 946, end = 946, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "2.7"
-descriptor = "Log trait"
-justification = "The single trait every logger implementation must satisfy (enabled/log/flush) - the crate's central extension point and the answer to 'how do I write my own logger'."
+id = "6.3"
+descriptor = "`Metadata` and its accessors"
+justification = "The two-field struct (level, target) plus `builder`, `level`, `target` \u2014 the value `Log::enabled` receives, and the thing `log_enabled!` constructs."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 1248, end = 1280, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1157, end = 1161, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1163, end = 1163, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1166, end = 1166, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1172, end = 1172, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1178, end = 1178, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "2.8"
-descriptor = "NopLogger + blanket impl for &T"
-justification = "The default no-op logger, plus the blanket impl showing any &dyn Log also implements Log by dereferencing - the Box<T>/Arc<T> impls right below follow the identical pattern (lib.rs:1310-1342); the ellipsis marks the boundary in rendered content, not just in this prose."
+id = "6.4"
+descriptor = "Roster: `RecordBuilder` and all twelve setters"
+justification = "The builder type plus `new`, `args`, `metadata`, `level`, `target`, `module_path`, `module_path_static`, `file`, `file_static`, `line`, the kv-gated `key_values`, and `build`. Diffed against grep over lines 1007-1111."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 1282, end = 1308, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 1310, end = 1310, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 1002, end = 1005, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1007, end = 1007, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1021, end = 1021, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1037, end = 1037, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1044, end = 1044, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1051, end = 1051, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1058, end = 1058, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1065, end = 1065, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1072, end = 1072, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1079, end = 1079, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1086, end = 1086, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1093, end = 1093, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1099, end = 1099, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1101, end = 1101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1108, end = 1108, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "2.9"
-descriptor = "set_max_level + max_level"
-justification = "The two functions that write/read the global MAX_LOG_LEVEL_FILTER atomic every log! invocation checks before formatting - the runtime half of the compile-time STATIC_MAX_LEVEL story (1.9's Cargo features)."
+id = "6.5"
+descriptor = "`MetadataBuilder` and its setters"
+justification = "`new`, `level`, `target`, `build` \u2014 the four-method builder that `MetadataBuilder::new()` seeds with `Level::Info` and an empty target."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 1344, end = 1353, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 1395, end = 1404, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1199, end = 1202, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1204, end = 1204, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 1212, end = 1212, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1223, end = 1223, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1230, end = 1230, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/lib.rs", start = 1237, end = 1237, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "2.10"
-descriptor = "set_boxed_logger + set_logger"
-justification = "The two public entry points for exactly-once global-logger installation (both delegate to a CAS-based set_logger_inner at lib.rs:1483, one hop away) - core to any 'why did set_logger return Err' debugging session."
+id = "7.1"
+descriptor = "What structured logging means in `log`"
+justification = "The kv module lede: attributes live in a [`Source`] on the record, each one a [`Key`]/[`Value`] pair, values ranging from primitives to nested structures. Orients every kv query."
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 1406, end = 1422, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 1477, end = 1480, render = { kind = "full" } },
+  { path = "src/kv/mod.rs", start = 1, end = 4, render = { kind = "full" } },
+  { path = "src/kv/mod.rs", start = 17, end = 21, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.11"
-descriptor = "logger() fn"
-justification = "How any code (including the macros, via __private_api::GlobalLogger) fetches the currently-installed Log; STATIC_MAX_LEVEL (lib.rs:1611-1624, derived from the Cargo features in 1.9) is one hop below it."
+id = "7.2"
+descriptor = "The complete list of capture modifiers"
+justification = "`:?`/`:debug`, `:%`/`:display`, `:err`, `:sval`, `:serde`, each with the feature it requires, plus the statement that values are captured through `ToValue` by default. The highest-traffic reference in the whole kv surface."
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 1578, end = 1596, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 3: macros.rs - the logging DSL
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "3.1"
-descriptor = "macro_rules! definition roster"
-justification = "Every macro_rules! header in the file, including both cfg(kv)/cfg(not(kv)) variants of the internal __log_* helpers - without this an agent reading only log!/error! might assume log_enabled! or the kv-capture helpers don't exist."
-content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 75, end = 75, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 119, end = 119, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 165, end = 165, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 204, end = 204, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 252, end = 252, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 292, end = 292, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 336, end = 336, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 391, end = 391, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 415, end = 415, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 429, end = 429, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 445, end = 445, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 459, end = 459, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 468, end = 468, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 517, end = 517, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 526, end = 526, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 535, end = 535, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 544, end = 544, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 553, end = 553, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 564, end = 564, render = { kind = "full" } },
-  { path = "src/macros.rs", start = 573, end = 573, render = { kind = "full" } },
+  { path = "src/kv/mod.rs", start = 50, end = 58, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "3.2"
-descriptor = "log! macro"
-justification = "The base macro every level-specific macro (error!/warn!/.../trace!, all one hop away at their own macro_rules! headers from 3.1) expands into - the 4 call forms (plain / target: / logger: / both) that recur identically everywhere in the DSL."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 75, end = 115, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.3"
-descriptor = "error! macro"
-justification = "Full body + doc examples for the highest-priority level macro; warn!/info!/debug!/trace! (macros.rs:188-357) follow this exact 4-arm shape with only the Level and doc example substituted."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 149, end = 186, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.4"
-descriptor = "log_enabled! macro"
-justification = "The check-before-you-compute-expensive-args idiom (if log_enabled!(Level::Debug) { ... }); expands via __log_enabled!/__log_logger! (macros.rs:415-437, one hop away) into the identical STATIC_MAX_LEVEL/max_level() double-check log! uses."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 391, end = 411, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "__log_value! kv capture-modifier dispatch"
-justification = "The exact expansion of key:? / key:% / key:err / key:sval / key:serde capture syntax into __private_api::capture_* calls - the single place that answers 'what does the :sval modifier actually do'."
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 468, end = 512, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 4: __private_api.rs - macro-expansion target, not part of public API
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "4.1"
-descriptor = "GlobalLogger + log/enabled/loc public fns"
-justification = "GlobalLogger is what __log_logger!(__log_global_logger) resolves to (delegates to crate::logger()); log()/enabled() are the two entry points __log!/__log_enabled! call; loc() uses #[track_caller] to recover file/line - the last hop after macro expansion."
-content = { kind = "lines", spans = [
-  { path = "src/__private_api.rs", start = 37, end = 53, render = { kind = "full" } },
-  { path = "src/__private_api.rs", start = 84, end = 110, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 5: kv module - structured logging (Key, Value, Source)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "5.1"
-descriptor = "kv/mod.rs doc lede"
-justification = "The kv feature's concept in one paragraph: attributes are Key+Value pairs on a Source, added before the message in log! macros. Extended one line past the naive cut to finish the 'arbitrarily complex structures' sentence instead of truncating it."
-content = { kind = "lines", spans = [
-  { path = "src/kv/mod.rs", start = 1, end = 21, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.2"
-descriptor = "kv/mod.rs capturing-modifier list"
-justification = "The full :?/:debug/:%/:display/:err/:sval/:serde modifier list referenced by 3.5's macro expansion - answers 'what capture modifiers exist' without cross-referencing the macro source."
-content = { kind = "lines", spans = [
-  { path = "src/kv/mod.rs", start = 44, end = 54, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "kv/mod.rs module decls + re-exports"
-justification = "The authoritative list of what kv:: actually exports (Error, Key, ToKey, Source, VisitSource, ToValue, Value, VisitValue, and the kv_unstable-gated Visitor alias) - closes the module's public surface."
+id = "7.3"
+descriptor = "The kv module's structure and complete export list"
+justification = "`mod error/key/source/value`, the `pub use` of `Error`, `Key`, `ToKey`, `Source`, `VisitSource`, `ToValue`, `Value`, `VisitValue`, and the `kv_unstable` fork that makes `source`/`value` public modules and re-exports `Visitor`. Everything `log::kv::` can name."
 content = { kind = "lines", spans = [
   { path = "src/kv/mod.rs", start = 246, end = 265, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.4"
-descriptor = "kv/key.rs: ToKey trait + Key struct"
-justification = "The Key<'k> newtype over &str and the ToKey conversion trait it implements - the key half of every kv pair. Its methods (from_str/as_str/to_borrowed_str) and the std/sval/serde support submodules follow immediately after (kv/key.rs:42-149)."
-content = { kind = "lines", spans = [
-  { path = "src/kv/key.rs", start = 7, end = 40, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.5"
-descriptor = "kv/error.rs: Error struct, Inner enum, msg() constructor"
-justification = "kv::Error's core shape: the Inner enum (Boxed/Msg/Value/Fmt) and the msg() constructor - the value-bag/std-only constructors, Display impl, and From<io::Error> follow immediately after (kv/error.rs:28-94)."
-content = { kind = "lines", spans = [
-  { path = "src/kv/error.rs", start = 1, end = 25, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.6"
-descriptor = "kv/source.rs: Source trait method roster"
-justification = "Name-only roster of Source's three methods (visit/get/count, the latter two default-implemented in terms of visit) - the trait every kv-attribute collection implements; full doc + default bodies are one hop away at kv/source.rs:1-88."
+id = "7.4"
+descriptor = "`trait Source`: the three methods"
+justification = "`visit`, plus the defaulted `get` and `count`, with ellipses for the implementation notes between them. This is the trait `Record::key_values()` returns."
 content = { kind = "lines", spans = [
   { path = "src/kv/source.rs", start = 51, end = 51, render = { kind = "full" } },
-  { path = "src/kv/source.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/kv/source.rs", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/kv/source.rs", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/source.rs", start = 52, end = 52, render = { kind = "ellipsis" } },
+  { path = "src/kv/source.rs", start = 62, end = 62, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 63, end = 63, render = { kind = "ellipsis" } },
+  { path = "src/kv/source.rs", start = 73, end = 73, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 74, end = 74, render = { kind = "ellipsis" } },
+  { path = "src/kv/source.rs", start = 85, end = 85, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 86, end = 86, render = { kind = "ellipsis" } },
+  { path = "src/kv/source.rs", start = 88, end = 88, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.7"
-descriptor = "kv/source.rs: VisitSource trait"
-justification = "VisitSource's single required method (visit_pair) - Rust's own fmt::DebugMap/DebugList/DebugSet/DebugTuple builders implement it too (kv/source.rs:250-277), which is how Record's Debug impl prints key-values without a bespoke visitor."
+id = "7.5"
+descriptor = "Roster: every type that implements `Source`"
+justification = "`&T`, `(K, V)`, `[S]`, `[S; N]`, `Option<S>`, and behind `std`: `Box`, `Arc`, `Rc`, `Vec`, `HashMap`, `BTreeMap`. The answer to 'what can I hand to `key_values`', complete for the file."
+content = { kind = "lines", spans = [
+  { path = "src/kv/source.rs", start = 130, end = 130, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 169, end = 169, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 196, end = 196, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 213, end = 213, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 279, end = 280, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 288, end = 288, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 305, end = 305, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 322, end = 322, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 339, end = 339, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 365, end = 365, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 387, end = 387, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.6"
+descriptor = "`trait VisitSource`: the visitor side of a `Source`"
+justification = "The one-method trait a logger implements to enumerate key-values \u2014 `visit_pair(key, value)`. The counterpart to `Source::visit` at 7.4, and the trait every consumer of structured data implements."
 content = { kind = "lines", spans = [
   { path = "src/kv/source.rs", start = 234, end = 238, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.8"
-descriptor = "kv/value.rs: ToValue trait + Value struct"
-justification = "The two-line trait every capturable type implements, and the type-erased Value struct itself (an inner::Inner enum, backend-selected by the value-bag Cargo feature - see 5.9)."
+id = "7.7"
+descriptor = "`Value` and `ToValue`"
+justification = "The `ToValue` trait with its single `to_value`, and the `Value<'v>` newtype wrapping a private `inner::Inner`. The centre of the kv data model."
 content = { kind = "lines", spans = [
-  { path = "src/kv/value.rs", start = 10, end = 14, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 11, end = 14, render = { kind = "full" } },
   { path = "src/kv/value.rs", start = 118, end = 121, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.9"
-descriptor = "kv/value.rs: dependency-free Inner enum (data model)"
-justification = "The concrete 11-variant repr (None/Bool/Str/Char/I64/U64/F64/I128/U128/Debug/Display) used when the value-bag Cargo feature is off - the exact answer to 'what types can a captured kv Value actually hold'."
+id = "7.8"
+descriptor = "Roster: every constructor and conversion on `Value`"
+justification = "`from_any`, `from_debug`, `from_display`, the gated `from_serde`/`from_sval`/`from_dyn_error`, `from_dyn_debug`, `from_dyn_display`, `null`, `visit`, and the `to_borrowed_error`/`to_borrowed_str` extractors, each with its `#[cfg]` where one applies."
 content = { kind = "lines", spans = [
-  { path = "src/kv/value.rs", start = 737, end = 750, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 123, end = 123, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 125, end = 125, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 153, end = 153, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 164, end = 164, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 189, end = 189, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 376, end = 376, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 378, end = 378, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 379, end = 379, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 384, end = 384, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
-# ---------------------------------------------------------------------------
-# Tier 6: tests/macros.rs - macro-DSL coverage (tests/integration.rs's
-# custom-Logger + set_max_level idiom duplicates test_max_level_features/
-# from tier 7 closely enough that it isn't separately budgeted here; its
-# filename is still named in 1.4's directory listing).
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "7.9"
+descriptor = "The primitive conversion tables"
+justification = "The three macro invocations generating most of `Value`'s API: every primitive with `ToValue`/`From` impls, every `NonZero*` type, and the `to_u64`/`to_i64`/`to_u128`/`to_i128`/`to_f64`/`to_char`/`to_bool` extractors. Grepping for `fn to_i64` otherwise finds nothing."
+content = { kind = "lines", spans = [
+  { path = "src/kv/value.rs", start = 349, end = 357, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 359, end = 359, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 361, end = 361, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 363, end = 363, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 365, end = 365, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 367, end = 367, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 369, end = 369, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 371, end = 371, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 373, end = 373, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "6.1"
-descriptor = "tests/macros.rs test-fn roster"
-justification = "Name-only roster of all 24 #[test] fns in the macro-DSL test file (arg styles, kv capture modifiers, logger:/target: combinations, string keys, a regression case) - a partial roster here would wrongly imply the unlisted tests don't exist."
+id = "7.10"
+descriptor = "Roster: every method on `VisitValue`"
+justification = "`visit_any` (the only required one) and the defaulted `visit_null`, `visit_u64`, `visit_i64`, `visit_u128`, `visit_i128`, `visit_f64`, `visit_bool`, `visit_str`, `visit_borrowed_str`, `visit_char`, plus the kv_std-gated `visit_error` and `visit_borrowed_error`. Diffed against grep over lines 462-537."
+content = { kind = "lines", spans = [
+  { path = "src/kv/value.rs", start = 462, end = 462, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 469, end = 469, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 472, end = 472, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 477, end = 477, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 482, end = 482, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 487, end = 487, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 492, end = 492, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 497, end = 497, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 502, end = 502, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 507, end = 507, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 512, end = 512, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 517, end = 517, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 523, end = 523, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 524, end = 524, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/value.rs", start = 528, end = 528, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 530, end = 530, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.11"
+descriptor = "The two `Value` backends: `value_bag` and the dependency-free fallback"
+justification = "`kv::value::inner` compiles either over the `value_bag` crate (type erasure bridging serde and sval) or, without that dependency, over a hand-written implementation. Explains why `value-bag` is a dependency and where conversions actually live."
+content = { kind = "lines", spans = [
+  { path = "src/kv/value.rs", start = 601, end = 602, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 604, end = 604, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 612, end = 612, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 614, end = 614, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 720, end = 721, render = { kind = "full" } },
+  { path = "src/kv/value.rs", start = 723, end = 723, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.12"
+descriptor = "`Key`, `ToKey`, and their feature-gated support modules"
+justification = "The `ToKey` conversion trait, the borrowed-str `Key` newtype with `from_str`/`as_str`/`to_borrowed_str`, its `Display`/`AsRef`/`Borrow`/`From` impls, and the three feature-gated support modules (std, kv_sval, kv_serde) where the remaining impls live."
+content = { kind = "lines", spans = [
+  { path = "src/kv/key.rs", start = 6, end = 9, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 37, end = 40, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/key.rs", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/key.rs", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/key.rs", start = 69, end = 69, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 75, end = 75, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 81, end = 81, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 87, end = 87, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 93, end = 94, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 112, end = 113, render = { kind = "full" } },
+  { path = "src/kv/key.rs", start = 135, end = 136, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.13"
+descriptor = "`kv::Error`: every variant of the private inner enum"
+justification = "The opaque error type and its `Inner` \u2014 a boxed std error under `std`, a static message, a value-bag error, or `fmt::Error` \u2014 with the `msg` and std-gated `boxed` constructors."
+content = { kind = "lines", spans = [
+  { path = "src/kv/error.rs", start = 3, end = 17, render = { kind = "full" } },
+  { path = "src/kv/error.rs", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/kv/error.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "7.17"
+descriptor = "`Source::get` and `Source::count` default implementations"
+justification = "The two private helpers that spin up a throwaway `VisitSource` to find a key or count pairs \u2014 why implementing `visit` alone suffices, and the cost model behind the 'override these if you can do better' notes."
+predecessor = "7.4"
+content = { kind = "lines", spans = [
+  { path = "src/kv/source.rs", start = 90, end = 91, render = { kind = "full" } },
+  { path = "src/kv/source.rs", start = 113, end = 114, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.1"
+descriptor = "Roster: every test in tests/macros.rs"
+justification = "Twenty-four test names covering argument forms, `log_enabled!`, each capture modifier, string keys, implicit named args, custom loggers and a numbered regression. Where to add a macro test, and a map of which behaviours are pinned."
 content = { kind = "lines", spans = [
   { path = "tests/macros.rs", start = 25, end = 25, render = { kind = "full" } },
   { path = "tests/macros.rs", start = 56, end = 56, render = { kind = "full" } },
@@ -427,73 +771,94 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "6.2"
-descriptor = "tests/macros.rs: kv_common_value_types body"
-justification = "Shows every primitive kv value type (u8..i128, f32/f64, bool, str) captured in one all_log_macros! call - the most concrete single example of the kv call-site grammar."
-predecessor = "6.1"
-content = { kind = "lines", spans = [
-  { path = "tests/macros.rs", start = 335, end = 355, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 7: operational coverage - CI, feature-matrix smoke test
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "7.1"
-descriptor = "CI workflow job-name roster"
-justification = "Names all 7 CI jobs (Test, Check Format and Clippy, Check Documentation, Feature check, Minimal versions, MSRV, Embedded) - answers 'how is this tested/built' at a glance; full job steps are one Read of .github/workflows/main.yml away."
-content = { kind = "lines", spans = [
-  { path = ".github/workflows/main.yml", start = 10, end = 10, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 47, end = 47, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 60, end = 60, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 71, end = 71, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 84, end = 84, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 97, end = 97, render = { kind = "full" } },
-  { path = ".github/workflows/main.yml", start = 110, end = 110, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.2"
-descriptor = "test_max_level_features/Cargo.toml"
-justification = "The config sample CI uses to smoke-test that max_level_debug/release_max_level_info actually suppress trace/debug logs - a concrete consumer of the compile-time-filter features documented in 1.9; the test() fn that exercises it is one hop away at test_max_level_features/main.rs:44."
-content = { kind = "lines", spans = [
-  { path = "test_max_level_features/Cargo.toml", start = 1, end = 13, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 8: docs - README, CHANGELOG, RFC 0296 (kv design rationale)
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "8.1"
-descriptor = "README.md lede"
-justification = "The facade pitch and build/crates.io badges - the first thing a human contributor reads; complements (doesn't duplicate) lib.rs's own crate doc, already shown in 1.6."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 16, render = { kind = "full" } },
-] }
-
-[[batches]]
 id = "8.2"
-descriptor = "CHANGELOG.md: Unreleased + 0.4.29"
-justification = "What changed most recently (FromStr perf, serde -> serde_core migration) - the direct answer to 'what's new' without reading the full 423-line history; older release headings are rostered in 8.3."
+descriptor = "tests/integration.rs: the capturing test logger and what it pins"
+justification = "A `Mutex`-backed `State` logger, a sweep over all six `LevelFilter`s, and the `#[track_caller]` assertion that a record's line number is the macro call site. The template for any new end-to-end test."
 content = { kind = "lines", spans = [
-  { path = "CHANGELOG.md", start = 1, end = 15, render = { kind = "full" } },
+  { path = "tests/integration.rs", start = 6, end = 13, render = { kind = "full" } },
+  { path = "tests/integration.rs", start = 26, end = 26, render = { kind = "full" } },
+  { path = "tests/integration.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/integration.rs", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/integration.rs", start = 96, end = 98, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "8.3"
-descriptor = "CHANGELOG.md: sampled older version headings"
-justification = "A spread of release headings from 0.4.28 down to 0.4.0 (with dates), so the agent knows the full release history goes back further and can locate an approximate era before reading the file directly for the exact version in between."
+descriptor = "src/serde.rs: what is serialised, and how"
+justification = "The whole file gated on `serde_core`, providing handwritten `Serialize`/`Deserialize` for `Level` and `LevelFilter` \u2014 handwritten specifically so deserialisation is case-insensitive via `FromStr` \u2014 plus the first unit-variant names that go on the wire (\"ERROR\", \"WARN\", \"INFO\", the rest elided at 24)."
 content = { kind = "lines", spans = [
-  { path = "CHANGELOG.md", start = 17, end = 17, render = { kind = "full" } },
-  { path = "CHANGELOG.md", start = 323, end = 323, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 9, end = 9, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 21, end = 23, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 24, end = 24, render = { kind = "ellipsis" } },
+  { path = "src/serde.rs", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 110, end = 110, render = { kind = "full" } },
+  { path = "src/serde.rs", start = 126, end = 126, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "8.4"
-descriptor = "rfcs/0296-structured-logging.md heading roster"
-justification = "The top-level section skeleton of the 1651-line kv-feature RFC (Summary, Motivation, Guide-level/Reference-level explanations, Drawbacks/alternatives, Prior art, Unresolved questions) - shows the design-rationale doc's shape before 8.5 excerpts its Summary."
+descriptor = "CI: the seven jobs"
+justification = "test (a cargo-hack feature powerset across five OS/toolchain rows), check (fmt + clippy), doc, features, minimal versions, MSRV 1.68 and embedded targets. What a change has to survive."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/main.yml", start = 8, end = 10, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 46, end = 47, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 59, end = 60, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 70, end = 71, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 83, end = 84, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 96, end = 97, render = { kind = "full" } },
+  { path = ".github/workflows/main.yml", start = 109, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.5"
+descriptor = "The companion crate that tests compile-time filtering"
+justification = "test_max_level_features is an unpublished crate depending on `log` by path with `max_level_debug` + `release_max_level_info`, run in debug and release by CI \u2014 the only way to exercise the static filters, which cannot be toggled in-crate."
+content = { kind = "lines", spans = [
+  { path = "test_max_level_features/Cargo.toml", start = 1, end = 2, render = { kind = "full" } },
+  { path = "test_max_level_features/Cargo.toml", start = 10, end = 13, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.6"
+descriptor = "Roster: the value benchmarks"
+justification = "Four nightly `#[bench]`s over `Value::from` and `Value::from_debug`, gated on the `kv` feature and `#![feature(test)]`. The entirety of benches/."
+content = { kind = "lines", spans = [
+  { path = "benches/value.rs", start = 1, end = 2, render = { kind = "full" } },
+  { path = "benches/value.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "benches/value.rs", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "benches/value.rs", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "benches/value.rs", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "8.7"
+descriptor = "The mutually-exclusive feature guards"
+justification = "Two `compile_error!` blocks enumerating every disallowed pair of `max_level_*` and of `release_max_level_*` features, shown head and tail with ellipses for the repetitive middle. The source of the 'multiple max_level_* features set' error."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 357, end = 358, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 359, end = 359, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 373, end = 374, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 376, end = 378, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 379, end = 379, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 393, end = 394, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.8"
+descriptor = "CHANGELOG: format and latest release"
+justification = "Keep-a-changelog style with an `Unreleased` section; the head shows 0.4.29 and its date, so an agent can tell how the working tree relates to the last release."
+content = { kind = "lines", spans = [
+  { path = "CHANGELOG.md", start = 1, end = 3, render = { kind = "full" } },
+  { path = "CHANGELOG.md", start = 5, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.9"
+descriptor = "Roster: the top-level sections of the structured-logging RFC"
+justification = "rfcs/0296-structured-logging.md is 1651 lines of rationale for the entire kv subsystem; its eight top-level headings tell an agent whether to open it and where to land."
 content = { kind = "lines", spans = [
   { path = "rfcs/0296-structured-logging.md", start = 5, end = 5, render = { kind = "full" } },
   { path = "rfcs/0296-structured-logging.md", start = 16, end = 16, render = { kind = "full" } },
@@ -503,32 +868,4 @@ content = { kind = "lines", spans = [
   { path = "rfcs/0296-structured-logging.md", start = 1575, end = 1575, render = { kind = "full" } },
   { path = "rfcs/0296-structured-logging.md", start = 1629, end = 1629, render = { kind = "full" } },
   { path = "rfcs/0296-structured-logging.md", start = 1650, end = 1650, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "8.5"
-descriptor = "RFC 0296: Summary"
-justification = "Why the kv feature exists at all (typed data alongside a textual message, avoiding fragile text-parsing pipelines, inspired by slog/tokio-trace) - the 'why' behind everything shown in tier 5's kv module, one hop from any 'why does kv work this way' question. Starts at the heading itself (line 5, already surfaced by 8.4) rather than re-spending on the RFC-process front matter above it."
-predecessor = "8.4"
-content = { kind = "lines", spans = [
-  { path = "rfcs/0296-structured-logging.md", start = 5, end = 12, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 9: serde support - src/serde.rs is the one src/ module with zero
-# coverage above (it never appears past its 1.2 filename listing), even
-# though the serde Cargo feature is itself documented in 1.10 and its
-# serde_core migration is called out in 8.2's changelog excerpt.
-# ---------------------------------------------------------------------------
-
-[[batches]]
-id = "9.1"
-descriptor = "src/serde.rs: serde impl roster"
-justification = "Location-only roster of the serde_core cfg gate plus all four hand-written impls (Serialize/Deserialize for Level, Serialize/Deserialize for LevelFilter) - closes the class (no impl looks absent) at near-zero cost; the concrete serialize_unit_variant string mapping (lines 22-26), the handwritten case-insensitive Deserialize logic (32-107, 127-202), and the serde_test round-trip suite (205-397) are all one hop away in this 397-line file."
-content = { kind = "lines", spans = [
-  { path = "src/serde.rs", start = 1, end = 1, render = { kind = "full" } },
-  { path = "src/serde.rs", start = 16, end = 16, render = { kind = "full" } },
-  { path = "src/serde.rs", start = 31, end = 31, render = { kind = "full" } },
-  { path = "src/serde.rs", start = 110, end = 110, render = { kind = "full" } },
-  { path = "src/serde.rs", start = 126, end = 126, render = { kind = "full" } },
 ] }

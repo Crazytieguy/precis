@@ -1,47 +1,81 @@
 fixture = "krep"
 revision_pin = "ae96fbd2"
 summary = """
-krep is a single-binary C CLI: a grep-alternative optimized for throughput
-(SIMD, memory-mapped I/O, a worker thread pool, algorithm auto-selection
-across Boyer-Moore-Horspool/KMP/Aho-Corasick/regex). Two source files carry
-almost all logic: krep.c (~5.3k lines: CLI parsing in main(), the search
-algorithms, the thread pool, mmap'd file search, recursive directory walk
-with .gitignore support, and match printing) and aho_corasick.c (trie build
-+ multi-pattern search). krep.h is the shared struct/API vocabulary; tests/
-is a from-scratch C test harness (no external framework) with per-topic
-files (test_krep.c, test_regex.c, test_multiple_patterns.c,
-test_directory.c) plus compat wrappers bridging older call signatures to
-the current search_params_t-based ones. The query distribution likely
-spans: adding/behavior-checking a CLI flag, understanding algorithm
-dispatch/selection, debugging threading or mmap chunking, extending
-gitignore/recursive-search skip logic, and locating/extending unit tests.
+`krep` is a single-binary POSIX C command-line string search utility ("a
+faster, smaller grep"): two translation units (`krep.c`, 5287 lines;
+`aho_corasick.c`, 466 lines) behind one shared header `krep.h`, built by a
+hand-written `Makefile` that sniffs the host arch to pick SIMD compiler
+flags, with a `test/` directory of four C test programs (three linked into
+one `krep_test` binary, one built standalone) and two GitHub Actions
+workflows.
+
+The overwhelming fact about this repository is the size imbalance:
+`krep.c` is 5287 of the 6115 lines of non-test source, and its largest
+functions (`print_matching_items`, 620 lines; `search_file`, 800 lines;
+`main`, 440 lines) are each bigger than whole files elsewhere. A snapshot that only quoted prose would leave an
+agent grepping blind through it. So the ranking buys, in order: (1) what
+the tool is and what files exist; (2) the semantic surface a session needs
+before it can even frame a question — feature list, the complete CLI flag
+table, the documented algorithm-selection policy; (3) the `krep.h`
+contract, which is the real API boundary between the two `.c` files and
+the tests; (4) exhaustive *name-only* rosters with line numbers for every
+top-level function in `krep.c`, `aho_corasick.c` and all four test files,
+plus the `// --- ... ---` section banners that are the only navigation
+inside the giant functions — this is what makes "where is X" a one-hop
+grep; (5) build/test/CI mechanics; (6) the load-bearing bodies
+(`select_search_algorithm`, the constants block, the gitignore matcher's
+data model, the getopt wiring); (7) appendix metadata.
+
+Query distribution served: adding or changing a CLI flag (getopt table +
+`print_usage` + README options), adding or tuning a search algorithm
+(`search_func_t`, `select_search_algorithm`, the `#if KREP_USE_*` ladder),
+debugging output formatting (`print_matching_items` internal banners),
+recursive-search / gitignore behaviour, threading and chunking, and
+"how do I build and run the tests".
 """
 
-# ---------------------------------------------------------------------
-# Tier 1: orientation — identity, breadth (dir + symbol-location
-# hedges), then operational surface (CLI flags, build, CI).
-# ---------------------------------------------------------------------
+# ---------------------------------------------------------------- tier 1
+# Orientation: what this is, what files exist, what the binary is called,
+# and the name-only roster of the public API. Everything here is cheap.
 
 [[batches]]
 id = "1.1"
-descriptor = "Crate title"
-justification = "One-line identity anchor; cheapest possible first batch."
+descriptor = "Repository identity: title line and the one-paragraph what-it-is"
+justification = """
+Rank 1 must answer "what am I looking at". README line 1 gives the name
+and tagline, line 6 gives the full positioning sentence (optimized string
+search, large files and directories, multiple algorithms, SIMD). Two lines,
+and every later batch is interpretable in their light.
+"""
 content = { kind = "lines", spans = [
   { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 6, end = 6, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Root directory listing"
-justification = "Catastrophic-omission hedge: every top-level file/dir at once so the agent never has to guess whether e.g. a build script or LICENSE exists."
+descriptor = "Complete root directory listing"
+justification = """
+`entries = "all"` so the agent sees the entire root: the two `.c` files,
+the two headers, `Makefile`, `README.md`, `LICENSE`, and the dotfiles. The
+critical fact it establishes is negative — there is no `src/`, no
+`configure`, no `CMakeLists.txt`; the sources are flat at the root and
+there are exactly two of them.
+"""
 content = { kind = "fs", groups = [
   { parent = ".", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "test/ and .github/ (incl. workflows/) listings"
-justification = "Same hedge one level down: the whole test suite's file roster and the whole CI/release automation roster, in one cheap batch."
+descriptor = "Complete listings of test/, .github/ and .github/workflows/"
+justification = """
+Closes the directory class opened by 1.2. `test/` holds four `.c` test
+programs plus two headers and a benchmark shell script; `.github/` holds
+two workflows plus funding/dependabot metadata. Listing all three parents
+with `all` prevents the agent inferring, say, that `test_directory.c` or
+`release.yml` do not exist.
+"""
 content = { kind = "fs", groups = [
   { parent = "test", entries = "all" },
   { parent = ".github", entries = "all" },
@@ -50,10 +84,496 @@ content = { kind = "fs", groups = [
 
 [[batches]]
 id = "1.4"
-descriptor = "krep.c locations: match-result mgmt + line-finding helpers"
-justification = "krep.c is 5287 lines, nearly the whole implementation in one file. A name-only inventory (truncated at the open-paren) of every top-level function is the single highest-leverage catastrophic-omission hedge in this fixture. This slice: the match_result_t lifecycle + the line-boundary helpers everything else calls."
+descriptor = "Makefile: binary name, source list, and the complete .PHONY target list"
+justification = """
+Three single lines that answer most "how do I build/test this" questions
+outright: `SRCS = krep.c aho_corasick.c` (the entire compiled source set),
+`TARGET = krep`, and the `.PHONY` line naming every phony target —
+`all clean install uninstall test test-directory ci bench-rg`. Extremely
+high value per token. It is the complete *phony* target list; the two
+file targets `test_directory` and `krep_test` are surfaced with their
+recipes at 5.4 and 5.5.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.c", start = 128, end = 128, render = { kind = "full" } },
+  { path = "Makefile", start = 52, end = 52, render = { kind = "full" } },
+  { path = "Makefile", start = 61, end = 61, render = { kind = "full" } },
+  { path = "Makefile", start = 63, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README invocation synopsis: all six supported command forms"
+justification = """
+The complete usage synopsis block — positional PATTERN, `-e PATTERN`,
+`-f FILE`, `-s PATTERN STRING_TO_SEARCH`, stdin redirect and pipe forms.
+Six short lines that fix the CLI's shape, including the non-obvious fact
+that `-s` takes the string to search as a positional argument and that
+`krep -f -` reads patterns from stdin.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 87, end = 93, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Every H2 heading location in README.md"
+justification = """
+All twelve `##` headings, nothing else — a table of contents with line
+numbers, so a follow-up read of any section is a single precise range read
+rather than a scan of 243 lines. Complete for the H2 class (H3 subsection
+headings under Installation, Performance Benchmarks and How Krep Works are
+deliberately not claimed here).
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 13, end = 13, render = { kind = "full" } },
+  { path = "README.md", start = 19, end = 19, render = { kind = "full" } },
+  { path = "README.md", start = 36, end = 36, render = { kind = "full" } },
+  { path = "README.md", start = 42, end = 42, render = { kind = "full" } },
+  { path = "README.md", start = 84, end = 84, render = { kind = "full" } },
+  { path = "README.md", start = 96, end = 96, render = { kind = "full" } },
+  { path = "README.md", start = 134, end = 134, render = { kind = "full" } },
+  { path = "README.md", start = 155, end = 155, render = { kind = "full" } },
+  { path = "README.md", start = 180, end = 180, render = { kind = "full" } },
+  { path = "README.md", start = 231, end = 231, render = { kind = "full" } },
+  { path = "README.md", start = 235, end = 235, render = { kind = "full" } },
+  { path = "README.md", start = 239, end = 239, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "krep.h public API roster: the three search entry points, match-result management, printing"
+justification = """
+Name-only (truncated at the opening paren) declarations of the whole
+non-algorithm public surface: `search_file`, `search_string`,
+`search_directory_recursive`, `match_result_init` / `_add` / `_free` /
+`_merge`, `print_matching_items`, `print_usage`. This is the API boundary
+that `krep.c`, `aho_corasick.c` and every test share. Full parameter lists
+land later (3.10); the names + line numbers are the cheap part and the
+part that prevents an agent assuming a function is absent.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 180, end = 180, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 183, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "krep.h search-algorithm roster with the SIMD #if guards intact"
+justification = """
+The five unconditional algorithms (`boyer_moore_search`, `kmp_search`,
+`regex_search`, `memchr_search`, `memchr_short_search`) name-only, then
+the four SIMD variants rendered *inside* their `#if defined(__SSE4_2__)` /
+`__AVX2__` / `__AVX512F__` / `__ARM_NEON` guards shown in full. The guards
+are the point: they tell the agent these symbols only exist under specific
+compiler flags, which is the single most confusing thing about this
+codebase. `aho_corasick_search` is the sixth algorithm and is declared in
+`aho_corasick.h`, not here.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 207, end = 211, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 213, end = 214, render = { kind = "full" } },
+  { path = "krep.h", start = 215, end = 215, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 216, end = 218, render = { kind = "full" } },
+  { path = "krep.h", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 220, end = 222, render = { kind = "full" } },
+  { path = "krep.h", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 224, end = 226, render = { kind = "full" } },
+  { path = "krep.h", start = 227, end = 227, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 228, end = 228, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "aho_corasick.h: the complete second-module interface"
+justification = """
+The whole public interface of the other translation unit in four
+declarations — `ac_trie_build`, `ac_trie_free`, `ac_trie_root_has_outputs`
+and `aho_corasick_search`, which completes the algorithm class opened in
+1.8. Rendered full (not truncated) because the file is 41 lines and these four
+lines carry the ownership contract; shown together with the `struct ac_trie`
+forward declaration that lets this header avoid including `krep.h`.
+"""
+content = { kind = "lines", spans = [
+  { path = "aho_corasick.h", start = 26, end = 39, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 2
+# Semantics from the README: what the tool does, every flag it accepts,
+# and the documented policy behind its behaviour. This is the tier that
+# buys zero-follow-up answers.
+
+[[batches]]
+id = "2.1"
+descriptor = "README Key Features, first half"
+justification = """
+Algorithms offered (Boyer-Moore-Horspool, KMP, Aho-Corasick), the `--algo`
+override, SIMD sets actually used (SSE4.2, AVX2, NEON), memory-mapped I/O,
+multi-threading, POSIX ERE regex support, and multi-pattern search. Split
+from 2.2 so a small budget still gets the algorithmic half.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 21, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "README Key Features, second half"
+justification = """
+Completes the feature class begun in 2.1: recursive directory search with
+binary skipping, `--gitignore`, stdin pattern input via `-f -`, colored
+output, the v2.2 UI refresh, specialized short-pattern algorithms, and
+match limiting. Ranked immediately after 2.1 so the list is never seen as
+half a list.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 28, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "README command-line options table, first half (-i through -F)"
+justification = """
+The canonical flag documentation: short form, long form and semantics for
+`-i/--ignore-case`, `-c/--count`, `-o/--only-matching`, `-e/--pattern`,
+`-f/--file`, `-m/--max-count`, `-E/--extended-regexp`, `-F/--fixed-strings`.
+Said once, here, at its best rank — this is the surface most sessions
+touch, and having it verbatim removes a whole class of follow-up reads.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 136, end = 143, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "README command-line options table, second half (-r through -h)"
+justification = """
+Completes the flag class: `-r`, `--gitignore`, `--algo=ALGO` with its
+valid values `auto|bm|kmp`, `-t/--threads`, `-s/--string`, `-w/--word-regexp`,
+`--color[=WHEN]`, `--no-simd`, `-v/--version`, `-h/--help`. Together with
+2.3 this is every documented flag; a partial flag table would be actively
+misleading when an agent is asked to add one.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 144, end = 153, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "README: the documented smart algorithm-selection policy"
+justification = """
+The prose statement of the dispatch rule that `select_search_algorithm`
+implements — Boyer-Moore-Horspool for most literals, KMP for very short
+and repetitive patterns, memchr for single characters, SIMD when the
+hardware allows, the regex engine for `-E`, Aho-Corasick auto-selected for
+multiple `-e` patterns, and the `--algo` escape hatch. Semantic context
+that makes the later code batches (6.4 and 6.5) cheap to interpret, and on its
+own answers "why did krep pick that algorithm" with no follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 184, end = 195, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "README usage examples: the six concrete invocations, command lines only"
+justification = """
+Only the shell command lines are claimed, not the fenced blocks and prose
+around them: `krep -F "value: 100%" config.ini`, `krep -r "function"
+./project`, `krep -r --gitignore "TODO" ./project`, `echo 'pattern' |
+krep -f - target.txt`, `krep -w 'cat' samples/text.en`, and
+`cat krep.c | krep 'c'`. Six lines that make flag combinations concrete.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 101, end = 101, render = { kind = "full" } },
+  { path = "README.md", start = 107, end = 107, render = { kind = "full" } },
+  { path = "README.md", start = 113, end = 113, render = { kind = "full" } },
+  { path = "README.md", start = 119, end = 119, render = { kind = "full" } },
+  { path = "README.md", start = 125, end = 125, render = { kind = "full" } },
+  { path = "README.md", start = 131, end = 131, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "README: the multi-threading architecture section"
+justification = """
+The design rationale for the mechanism that dominates `search_file`:
+automatic core detection, dividing large files into chunks for parallel
+processing, thread pooling, thread-count selection based on file size, and
+careful boundary handling so no match is missed at a chunk seam. Directly
+frames the chunking code and the `MIN_CHUNK_SIZE` /
+`LARGE_FILE_THRESHOLD` constants that appear later.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 197, end = 206, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "README: the recursive-search skipping rules"
+justification = """
+Section 5 of "How Krep Works": what `-r` silently skips — common binary
+file types, version-control directories `.git` and `.svn`, dependency
+directories `node_modules` and `venv`, and files detected as binary by
+content. The prose counterpart of the `skip_directories` and
+`skip_extensions` tables in `krep.h`, and the answer to the recurring
+"why was my file not searched".
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 222, end = 229, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "README scope note: explicitly not a grep/ripgrep replacement"
+justification = """
+The project's stated non-goal. Load-bearing for design discussions and
+feature requests: a proposal to add grep-compatible options is against the
+declared philosophy of a minimal, pragmatic tool for the common cases. An
+agent that misses this argues for the wrong thing.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 8, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "README install and build-from-source commands"
+justification = """
+`brew install krep`, the `git clone` / `make` / `sudo make install` /
+`sudo make uninstall` sequence, and the sentence giving the install
+location `/usr/local/bin/krep`. Only the command lines and that one
+sentence are claimed, not the surrounding prose.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 49, end = 49, render = { kind = "full" } },
+  { path = "README.md", start = 56, end = 64, render = { kind = "full" } },
+  { path = "README.md", start = 67, end = 67, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 3
+# The krep.h data model. Every type that crosses a function boundary in
+# this codebase is declared here; this is where a code change starts.
+
+[[batches]]
+id = "3.1"
+descriptor = "search_params_t: the struct every search function takes"
+justification = """
+The single most important type in the repository — legacy single-pattern
+fields, the multi-pattern arrays, the six option booleans (`case_sensitive`,
+`use_regex`, `count_lines_mode`, `count_matches_mode`, `track_positions`,
+`whole_word`), the compiled `regex_t`, the prebuilt `ac_trie`, and
+`max_count`. Rendered full including its comments because those comments
+map each field to the CLI flag that sets it (`-c`, `-o`, `-w`).
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 65, end = 94, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "match_position_t and match_result_t"
+justification = """
+The result-accumulation types: a `(start_offset, end_offset)` pair and the
+dynamically-resized `positions` array with `count`/`capacity`. Paired with
+the `match_result_*` roster already delivered in 1.7, this is enough to
+write code against the match API with no follow-up read.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 47, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "search_func_t: the algorithm function-pointer type"
+justification = """
+The uniform signature every search algorithm must satisfy
+`(const search_params_t *, const char *text_start, size_t text_len,
+match_result_t *) -> uint64_t`, plus the comment stating the return is a
+count of lines or matches depending on mode and that `result` may be NULL
+unless `track_positions`. This is the extension point for "add a new
+search algorithm", so it is rendered in full rather than truncated.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 96, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "krep.h thread-pool API: all four functions in full"
+justification = """
+`thread_pool_init`, `thread_pool_submit`, `thread_pool_wait_all`,
+`thread_pool_destroy` — the complete pool lifecycle, short enough that
+full signatures cost about what a name-only roster would. Their bodies
+live at the far end of `krep.c` (rostered in 4.5); this is the contract.
+The closing lines of the two supporting typedefs, `} task_t;` at 130 and
+`} thread_pool_t;` at 143, are included so the queue-node and pool types
+are known to exist and locatable, without buying their fields.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 130, end = 130, render = { kind = "full" } },
+  { path = "krep.h", start = 143, end = 143, render = { kind = "full" } },
+  { path = "krep.h", start = 145, end = 149, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "thread_data_t: per-thread search state, including the false-sharing padding"
+justification = """
+What each worker thread receives and returns: `thread_id`, shared `params`,
+`chunk_start`/`chunk_len` with its overlap caveat, the pre-selected
+`search_algo`, per-thread `local_result` and `count_result`, `error_flag`,
+and the explicit `char padding[64]` with its comment about keeping the
+struct off a shared cache line. That padding is exactly the kind of detail
+an agent would otherwise delete as dead weight.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 103, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "krep.h helper roster: line finding, word matching, table preparation"
+justification = """
+Name-only closure of the remaining declared symbols in `krep.h`:
+`memory_equals_case_insensitive`, `prepare_bad_char_table`,
+`select_search_algorithm`, `get_algorithm_name`, `find_line_start`,
+`find_line_end`, and the two `static inline` helpers `is_word_char` and
+`is_whole_word_match`. With 1.7, 1.8 and the pool API at 3.4, this makes
+the header's function set complete — no declared symbol is left unnamed.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 231, end = 234, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 278, end = 278, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 298, end = 298, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.h", start = 312, end = 312, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "skip_directories: the complete recursive-search directory blocklist"
+justification = """
+The entire table, verbatim — `.git`, `node_modules`, `.svn`, `.hg`,
+`build`, `dist`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.venv`,
+`.env`, `venv`, `env`, `target`, `bin`, `obj` — plus `num_skip_directories`.
+Short enough to show whole, and "why didn't krep search my directory" is a
+recurring question this answers outright. Note these tables live in the
+*header* as `static const`, an unusual placement worth surfacing.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 236, end = 244, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "skip_extensions: head, ellipsis, and the count line"
+justification = """
+The companion binary-extension blocklist. Its ~90 entries span lines
+246-265 and are not worth quoting whole, so this renders the declaration
+and the object/library/executable group, an explicit ellipsis at line 251
+marking the elided archive/image/audio/document/font groups, and the
+closing brace with `num_skip_extensions`. The agent learns the table
+exists, where it starts and ends, and that it continues past what is
+shown.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 246, end = 250, render = { kind = "full" } },
+  { path = "krep.h", start = 251, end = 251, render = { kind = "ellipsis" } },
+  { path = "krep.h", start = 265, end = 266, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "ANSI colour macro block, output palette and help palette"
+justification = """
+All six output-palette `KREP_COLOR_*` macros with their 256-colour escape
+sequences — reset, bright cyan filename, muted gray separator, soft mint
+line number, warm amber match, soft white text — plus the four
+`KREP_COLOR_HELP_*` macros used by the help screen. Ten macros, the whole
+palette. The v2.2 release is explicitly a UI refresh,
+so "change the match highlight colour" is a plausible task and this is the
+complete set of knobs for it.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 34, end = 34, render = { kind = "full" } },
+  { path = "krep.h", start = 35, end = 39, render = { kind = "truncated", pattern = "^[^/]+" } },
+  { path = "krep.h", start = 42, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "Documented contracts of the three entry points and the printer"
+justification = """
+Refines the name-only roster from 1.7 with the doc-comment lines that
+carry the behavioural contract: each of `search_file`, `search_string`,
+`search_directory_recursive` returns 0 on matches found / 1 on none /
+2 on error — except `search_directory_recursive`, which returns the error
+*count* — and `print_matching_items` returns the number of items printed.
+Also states that `search_file` accepts `"-"` for stdin.
+"""
+predecessor = "1.7"
+content = { kind = "lines", spans = [
+  { path = "krep.h", start = 154, end = 154, render = { kind = "full" } },
+  { path = "krep.h", start = 157, end = 157, render = { kind = "full" } },
+  { path = "krep.h", start = 159, end = 159, render = { kind = "full" } },
+  { path = "krep.h", start = 165, end = 165, render = { kind = "full" } },
+  { path = "krep.h", start = 168, end = 168, render = { kind = "full" } },
+  { path = "krep.h", start = 174, end = 174, render = { kind = "full" } },
+  { path = "krep.h", start = 179, end = 179, render = { kind = "full" } },
+  { path = "krep.h", start = 189, end = 189, render = { kind = "full" } },
+  { path = "krep.h", start = 198, end = 198, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.1"
+descriptor = "krep.c file-level section banner map, all sixteen top-level banners"
+justification = """
+`krep.c` is organised by column-0 `// --- ... ---` banners, and this is
+the complete set of file-level ones: Match Result Management, Line Finding
+Functions, Printing Function, Utility Functions, Boyer-Moore-Horspool,
+Regex Search, KMP, Search Orchestration, Threading Logic, Public API
+Implementations, Recursive Directory Search, Gitignore Support, Main Entry
+Point, Thread Pool Implementation, memchr short-pattern search, SIMD
+Implementations. Sixteen lines that give a 5287-line file a spine with
+exact coordinates. Banners nested inside `print_matching_items` are not
+claimed here; 4.7 covers those.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.c", start = 136, end = 136, render = { kind = "full" } },
+  { path = "krep.c", start = 359, end = 359, render = { kind = "full" } },
+  { path = "krep.c", start = 417, end = 417, render = { kind = "full" } },
+  { path = "krep.c", start = 1080, end = 1080, render = { kind = "full" } },
+  { path = "krep.c", start = 1210, end = 1210, render = { kind = "full" } },
+  { path = "krep.c", start = 1387, end = 1387, render = { kind = "full" } },
+  { path = "krep.c", start = 1581, end = 1581, render = { kind = "full" } },
+  { path = "krep.c", start = 1769, end = 1769, render = { kind = "full" } },
+  { path = "krep.c", start = 1916, end = 1916, render = { kind = "full" } },
+  { path = "krep.c", start = 1961, end = 1961, render = { kind = "full" } },
+  { path = "krep.c", start = 3068, end = 3068, render = { kind = "full" } },
+  { path = "krep.c", start = 3143, end = 3143, render = { kind = "full" } },
+  { path = "krep.c", start = 3447, end = 3447, render = { kind = "full" } },
+  { path = "krep.c", start = 4043, end = 4043, render = { kind = "full" } },
+  { path = "krep.c", start = 4370, end = 4370, render = { kind = "full" } },
+  { path = "krep.c", start = 4697, end = 4697, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "krep.c definition roster, lines 139-461: match results, line finding, printing"
+justification = """
+Every top-level definition between lines 139 and 461, name-only:
+`match_result_init`, `match_result_add`, `match_result_free`,
+`match_result_merge`, `match_result_merge_limited`, `find_line_start`,
+`find_line_end`, `compare_match_positions`, `safe_append_to_batch`,
+`print_matching_items`. The line numbers alone tell the agent that
+`print_matching_items` starts at 461 and (given the next roster starts at
+1084) runs some 620 lines — the single biggest function in the project.
+"""
+content = { kind = "lines", spans = [
   { path = "krep.c", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 244, end = 244, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -62,37 +582,29 @@ content = { kind = "lines", spans = [
   { path = "krep.c", start = 363, end = 363, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 420, end = 420, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 438, end = 438, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "1.5"
-descriptor = "krep.c locations: printing + usage + BM prep"
-justification = "Continuation of the same hedge: the output-formatting entry points and the start of the search-algorithm section."
+id = "4.3"
+descriptor = "krep.c definition roster, lines 1084-1964: utilities, the four scalar algorithms, orchestration"
+justification = """
+Continues the roster with no gaps: `ensure_line_buffer_capacity`,
+`get_time`, `print_usage`, `memory_equals_case_insensitive`,
+`prepare_bad_char_table`, `boyer_moore_search`, `regex_search`,
+`compute_lps_array`, `kmp_search`, `select_search_algorithm`,
+`is_repetitive_pattern`, `search_chunk_thread`, `get_algorithm_name`.
+This is where an agent asked to touch matching behaviour lands, and the
+spacing shows each algorithm is a 130-200 line block.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.c", start = 438, end = 438, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "krep.c", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1084, end = 1084, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1125, end = 1125, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1137, end = 1137, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1198, end = 1198, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1213, end = 1213, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1260, end = 1260, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "1.6"
-descriptor = "krep is not a grep/ripgrep replacement (design intent)"
-justification = "The design-philosophy note frames every later 'why doesn't it support X' question; small and high semantic value."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 6, end = 6, render = { kind = "full" } },
-  { path = "README.md", start = 8, end = 11, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.7"
-descriptor = "krep.c locations: remaining search algorithms + dispatch"
-justification = "Continuation of the function inventory: regex/KMP bodies, the algorithm-selection dispatcher, the repetitive-pattern heuristic, the thread worker fn, and the algo-to-name mapper."
-content = { kind = "lines", spans = [
   { path = "krep.c", start = 1389, end = 1389, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1585, end = 1585, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 1628, end = 1628, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -103,47 +615,22 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "1.8"
-descriptor = "CLI usage synopsis (README)"
-justification = "The invocation shapes (PATTERN vs -e vs -f vs -s vs stdin) that a `-h`-style query or a new-user question would need."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 86, end = 94, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "How Krep Works (README): smart algorithm selection"
-justification = "Cheap prose overview — cheaper per unit of understanding than deriving it from select_search_algorithm's C — naming the exact algorithm-to-use-case mapping (BM-Horspool default, KMP for short/repetitive patterns, memchr for single chars, SIMD when available, regex engine, Aho-Corasick for multi-pattern), before any of the underlying C is shown. The `--algo` override note (line 195) is elided since 1.17/1.18's CLI options table already spells out `--algo=ALGO`'s exact values."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 180, end = 193, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "How Krep Works (README): multithreading + memory-mapped I/O"
-justification = "Same cheap-prose hedge for the two architecture pillars the summary calls out but no code batch shows a body for: how the thread pool parallelizes a file search (core-count detection, chunking, boundary handling) and why mmap is used over read() (direct CPU access, reduced I/O overhead, prefetching)."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 197, end = 214, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.11"
-descriptor = "krep.c locations: search_string/search_file + thread-pool init"
-justification = "Continuation: the two public search entry points and where a global thread pool gets created/torn down."
+id = "4.4"
+descriptor = "krep.c definition roster, lines 1999-3442: public API bodies, skip filters, gitignore"
+justification = """
+`search_string`, `init_global_thread_pool`, `cleanup_global_thread_pool`,
+`search_file`, `should_skip_directory`, `should_skip_extension`,
+`is_binary_file`, the five `gitignore_*` functions,
+`search_directory_recursive_impl` and the public
+`search_directory_recursive` wrapper. Note `search_file` spans 2274-3070,
+about 800 lines — the roster's line deltas are what tell an agent to read
+a sub-range rather than the whole function.
+"""
 content = { kind = "lines", spans = [
   { path = "krep.c", start = 1999, end = 1999, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 2252, end = 2252, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 2265, end = 2265, render = { kind = "full" } },
   { path = "krep.c", start = 2274, end = 2274, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "krep.c", start = 4046, end = 4046, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "krep.c", start = 4104, end = 4104, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "1.12"
-descriptor = "krep.c locations: directory walk + gitignore"
-justification = "Continuation: the skip/binary-check predicates and the whole gitignore_* family (new/add_pattern/load/is_ignored/free) plus the recursive walk entry points."
-content = { kind = "lines", spans = [
   { path = "krep.c", start = 3071, end = 3071, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 3090, end = 3090, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 3122, end = 3122, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -157,27 +644,145 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "1.13"
-descriptor = "krep.c locations: main + memchr/SIMD family + thread-pool ops"
-justification = "Final slice of the inventory: the CLI entry point, the single-char/short-pattern scanners, the four SIMD backends (neon/sse4.2/avx2/avx512) as a group so none looks like it doesn't exist, and the thread-pool submit/wait/destroy API."
+id = "4.5"
+descriptor = "krep.c definition roster, lines 3451-5108: main, thread pool, and the guarded SIMD kernels"
+justification = """
+Closes the roster: `main`, `memchr_search`, `thread_pool_worker`,
+`thread_pool_init`, `thread_pool_submit`, `thread_pool_submit_batch`,
+`thread_pool_wait_all`, `thread_pool_destroy`, `memchr_short_search`, and
+the four SIMD kernels each preceded by its compile guard rendered in full
+— `#ifdef __ARM_NEON` before `neon_search`, `#if KREP_USE_SSE42` before
+`simd_sse42_search`, `#if KREP_USE_AVX2` before `simd_avx2_search`,
+`#if KREP_USE_AVX512` before `simd_avx512_search`. Half of `krep.c` past
+line 4500 is SIMD that most builds never compile.
+"""
 content = { kind = "lines", spans = [
   { path = "krep.c", start = 3451, end = 3451, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 3891, end = 3891, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 4046, end = 4046, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 4104, end = 4104, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 4209, end = 4209, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 4251, end = 4251, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 4313, end = 4313, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 4332, end = 4332, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "krep.c", start = 4371, end = 4371, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 4505, end = 4505, render = { kind = "full" } },
   { path = "krep.c", start = 4506, end = 4506, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 4699, end = 4699, render = { kind = "full" } },
   { path = "krep.c", start = 4702, end = 4702, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 4872, end = 4872, render = { kind = "full" } },
   { path = "krep.c", start = 4877, end = 4877, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "krep.c", start = 5104, end = 5104, render = { kind = "full" } },
   { path = "krep.c", start = 5108, end = 5108, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
-id = "1.14"
-descriptor = "Test-suite locations: test_krep.c"
-justification = "Catastrophic-omission hedge for the test tree: every top-level test/helper fn in the largest test file, so the agent knows the full scope of what's already covered (basic search, edge cases, case-insensitivity, whole-word, counting, perf, SIMD, report/max-count limits, numeric patterns) before writing a new test."
+id = "4.6"
+descriptor = "search_file internal section map, all eleven banners inside lines 2274-3070"
+justification = """
+`search_file` is ~800 lines with no sub-functions; its indented banners
+are the only navigation. All of them: Regular File Handling, Handle Empty
+File, Build Aho-Corasick Trie, Compile Regex, Memory Map or Read File,
+Determine Thread Count and Chunking, Initialize Threading Resources,
+Launch Threads, Wait for Threads and Aggregate Results, Final Processing
+and Output, Cleanup Resources. Any question about mmap, chunking or thread
+launch becomes a targeted read of a 100-line window.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.c", start = 2403, end = 2403, render = { kind = "full" } },
+  { path = "krep.c", start = 2418, end = 2418, render = { kind = "full" } },
+  { path = "krep.c", start = 2524, end = 2524, render = { kind = "full" } },
+  { path = "krep.c", start = 2538, end = 2538, render = { kind = "full" } },
+  { path = "krep.c", start = 2630, end = 2630, render = { kind = "full" } },
+  { path = "krep.c", start = 2728, end = 2728, render = { kind = "full" } },
+  { path = "krep.c", start = 2772, end = 2772, render = { kind = "full" } },
+  { path = "krep.c", start = 2815, end = 2815, render = { kind = "full" } },
+  { path = "krep.c", start = 2928, end = 2928, render = { kind = "full" } },
+  { path = "krep.c", start = 3006, end = 3006, render = { kind = "full" } },
+  { path = "krep.c", start = 3043, end = 3043, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "print_matching_items internal section map: the -o and full-line output modes"
+justification = """
+The 620-line printer, mapped by its own banners: Setup enhanced buffering,
+Preallocate reusable line buffer, Preallocate match position storage,
+Precompute constant string lengths, then the two mutually exclusive output
+modes — Only Matching Parts (-o) at line 515 and Full Lines (Default) at
+line 795 — the line batch buffer at 832, and Cleanup at 1073. Every
+output-formatting bug ("wrong colour", "-o prints the whole line",
+"missing trailing newline") starts from one of these eight coordinates.
+"""
+content = { kind = "lines", spans = [
+  { path = "krep.c", start = 474, end = 474, render = { kind = "full" } },
+  { path = "krep.c", start = 485, end = 485, render = { kind = "full" } },
+  { path = "krep.c", start = 495, end = 495, render = { kind = "full" } },
+  { path = "krep.c", start = 499, end = 499, render = { kind = "full" } },
+  { path = "krep.c", start = 515, end = 515, render = { kind = "full" } },
+  { path = "krep.c", start = 795, end = 795, render = { kind = "full" } },
+  { path = "krep.c", start = 832, end = 832, render = { kind = "full" } },
+  { path = "krep.c", start = 1073, end = 1073, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "aho_corasick.c: complete definition roster"
+justification = """
+All seven top-level definitions in the second translation unit —
+`ac_node_create`, `ac_node_add_output`, `ac_node_free`, `ac_trie_build`,
+`ac_trie_free`, `ac_trie_root_has_outputs`, `aho_corasick_search` — plus
+the two `extern` re-declarations at lines 293-294 by which this file
+borrows `find_line_start` and `is_whole_word_match` from `krep.c` instead
+of including them. Small file, so this roster is its whole structure.
+"""
+content = { kind = "lines", spans = [
+  { path = "aho_corasick.c", start = 34, end = 34, render = { kind = "full" } },
+  { path = "aho_corasick.c", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "aho_corasick.c", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "aho_corasick.c", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "aho_corasick.c", start = 274, end = 274, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "aho_corasick.c", start = 287, end = 287, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "aho_corasick.c", start = 293, end = 294, render = { kind = "full" } },
+  { path = "aho_corasick.c", start = 299, end = 299, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "aho_corasick.c trie data model: ac_node_t and struct ac_trie"
+justification = """
+The private types behind the opaque `ac_trie_t` handle: a node with a
+256-wide `children` array, `fail_link`, and a growable `output_indices`
+list with `num_outputs`/`capacity_outputs`; and the trie with `root`,
+`num_patterns`, `case_sensitive`. The file header comment at lines 3-4
+explains this layout is a deliberate memory optimisation over the 2KB per
+node a naive representation would cost, which is the context for any
+change here.
+"""
+content = { kind = "lines", spans = [
+  { path = "aho_corasick.c", start = 3, end = 4, render = { kind = "full" } },
+  { path = "aho_corasick.c", start = 17, end = 18, render = { kind = "full" } },
+  { path = "aho_corasick.c", start = 19, end = 23, render = { kind = "truncated", pattern = "^[^/]+" } },
+  { path = "aho_corasick.c", start = 24, end = 27, render = { kind = "full" } },
+  { path = "aho_corasick.c", start = 28, end = 30, render = { kind = "truncated", pattern = "^[^/]+" } },
+  { path = "aho_corasick.c", start = 31, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.10"
+descriptor = "test/test_krep.c: complete roster of test functions, helpers and main"
+justification = """
+The largest test file (1520 lines), name-only: helpers
+`write_multithread_test_file`, `run_search_file_count_capture`,
+`create_base_params`, `create_literal_params`, `create_regex_params`,
+`cleanup_params`; then every test — `test_basic_search_new`,
+`test_edge_cases_new`, `test_case_insensitive_new`, `test_whole_word_option`,
+`test_count_lines_multiple_matches`, `test_performance_new`,
+`test_simd_specific_new`, `test_report_limit_new`, `test_max_count_new`,
+`test_multithreading_placeholder_new`, `test_numeric_patterns_new`,
+`test_additional_cases`, `test_edge_cases_advanced` — and `main` at 1481,
+which is where a new test gets registered.
+"""
 content = { kind = "lines", spans = [
   { path = "test/test_krep.c", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "test/test_krep.c", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -202,9 +807,19 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "1.15"
-descriptor = "Test-suite locations: test_regex.c, test_multiple_patterns.c"
-justification = "Same catastrophic-omission hedge for the regex and Aho-Corasick topic files: every top-level test/helper fn, so the agent knows what regex/multi-pattern behavior is already covered."
+id = "4.11"
+descriptor = "test/test_regex.c and test/test_multiple_patterns.c rosters"
+justification = """
+Closes two more of the four test programs. Regex suite: `create_regex`
+plus `test_basic_regex`, `test_complex_regex`, `test_regex_multiple_matches`,
+`test_regex_edge_cases`, `test_regex_overlapping`, `test_regex_report_limit`,
+`test_regex_vs_literal_performance`, `test_regex_line_extraction`, and the
+`run_regex_tests` driver. Aho-Corasick suite: `test_basic_aho_corasick`,
+`test_aho_corasick_case_insensitive`, `test_aho_corasick_edge_cases`,
+`test_position_tracking_multipattern`, `test_multipattern_performance`,
+`test_multiple_patterns_performance`, `run_multiple_patterns_tests`.
+Both are linked into the `krep_test` binary via their `run_*_tests` entry.
+"""
 content = { kind = "lines", spans = [
   { path = "test/test_regex.c", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "test/test_regex.c", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -226,9 +841,18 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "1.16"
-descriptor = "Test-suite locations: test_directory.c"
-justification = "Same hedge for the directory-recursion/gitignore/binary-file topic file, including its fixture-building helpers (create_test_directory_structure etc.) so the agent knows integration tests build a real /tmp dir tree rather than mocking the filesystem."
+id = "4.12"
+descriptor = "test/test_directory.c roster: the separate recursive-search integration binary"
+justification = """
+The fourth test program, which the Makefile builds as its own `test_directory`
+binary rather than linking into `krep_test`: fixture builders
+`create_test_directory_structure`, `cleanup_test_directory_structure`,
+`create_binary_file`, `create_text_file`, `create_nested_directory`, the
+capture helper `run_recursive_search_capture`, the two tests
+`test_recursive_directory_search` and `test_binary_file_handling`, and its
+own `main`. This is the only place recursive/binary-skip behaviour is
+exercised end to end.
+"""
 content = { kind = "lines", spans = [
   { path = "test/test_directory.c", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "test/test_directory.c", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -242,241 +866,291 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "1.17"
-descriptor = "CLI options table (README), part 1: search/scope flags"
-justification = "The flag surface end users and agents ask about most, first half: -i/-c/-o/-e/-f/-m/-E/-F/-r/--gitignore."
+id = "4.13"
+descriptor = "test/test_compat.h: the TESTING wrapper roster and its guards"
+justification = """
+Explains why the tests compile with `-DTESTING`: this header supplies
+`*_compat` wrappers with the old pre-`search_params_t` signatures. Complete
+roster of `boyer_moore_search_compat`, `kmp_search_compat`,
+`regex_search_compat`, `simd_sse42_search_compat`, `simd_avx2_search_compat`,
+`neon_search_compat`, `aho_corasick_search_compat`,
+`memchr_short_search_compat`, and the three `test_bridge_*` helpers, with
+the `#ifdef __SSE4_2__` / `__AVX2__` / `__ARM_NEON` guards shown so the
+agent knows three of them may not exist in a given build.
+"""
 content = { kind = "lines", spans = [
-  { path = "README.md", start = 136, end = 145, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 26, end = 26, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 49, end = 49, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 72, end = 72, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 101, end = 101, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 102, end = 102, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 126, end = 126, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 127, end = 127, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 151, end = 151, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 152, end = 152, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 176, end = 176, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 204, end = 204, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 231, end = 231, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 240, end = 240, render = { kind = "full" } },
+  { path = "test/test_compat.h", start = 250, end = 250, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "1.18"
-descriptor = "CLI options table (README), part 2: perf/output flags"
-justification = "Second half of the flag table: --algo/-t/-s/-w/--color/--no-simd/-v/-h."
+id = "4.14"
+descriptor = "test/test_krep.h: shared test helper declarations"
+justification = """
+The header the three linked test files share: the `TESTING` define that
+turns on the compat wrappers, the odd-one-out
+`regex_search_test_positions` prototype (a test-only signature that does
+not exist in production code), and the three helpers every test uses to
+build parameters — `create_literal_params`, `create_regex_params`,
+`cleanup_params`. Writing a new test starts here.
+"""
 content = { kind = "lines", spans = [
-  { path = "README.md", start = 146, end = 153, render = { kind = "full" } },
+  { path = "test/test_krep.h", start = 14, end = 20, render = { kind = "full" } },
+  { path = "test/test_krep.h", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_krep.h", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_krep.h", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/test_krep.h", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+# ---------------------------------------------------------------- tier 5
+# Build, test and CI mechanics. The target names were bought at 1.4; this
+# tier buys the recipes behind them and the CI that runs them.
+
+[[batches]]
+id = "5.1"
+descriptor = "Makefile compiler configuration: CC, CFLAGS, LDFLAGS, PREFIX"
+justification = """
+The exact build flags — `gcc`, `-Wall -Wextra -O3 -ffast-math -std=c11
+-pthread -D_GNU_SOURCE -D_DEFAULT_SOURCE -flto -funroll-loops
+-finline-functions`, `LDFLAGS = -pthread -flto`, and `PREFIX ?= /usr/local`
+with `BINDIR`. Answers "what C standard is this", "why does `_GNU_SOURCE`
+apply" and "where does install put the binary" with no follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 5, end = 11, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "1.19"
-descriptor = "Install instructions (README): Homebrew + build-from-source quickstart"
-justification = "The two-line quickstart (git clone; make; sudo make install) and the Homebrew one-liner — the fastest path to 'how do I get a working krep binary'."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 44, end = 65, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.20"
-descriptor = "Build requirements + NATIVE=1 / arch-detection override (README)"
-justification = "The POSIX/pthread/GCC prerequisites and the one user-facing build knob (NATIVE=1 for -march=native, or disabling arch detection) — cheaper than deriving them from the Makefile's shell probing logic."
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 69, end = 82, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.21"
-descriptor = "Makefile: compiler flags and NATIVE override"
-justification = "Ground truth for the actual build flags (-O3 -flto -funroll-loops, C11, pthread) and the one user-facing override knob; a config-file sample is cheaper evidence than deriving it from README prose alone."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 1, end = 17, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.22"
-descriptor = "Makefile: source file lists (main vs test binary)"
-justification = "Which .c files make up the main binary vs the test binary — the ground truth for 'what gets compiled into krep'."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 51, end = 61, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.23"
-descriptor = "Makefile: phony targets (test/test-directory/ci/bench-rg/install/clean)"
-justification = "The concrete build/test/install commands for this repo, i.e. this project's equivalent of `cargo t`/`cargo run`."
-content = { kind = "lines", spans = [
-  { path = "Makefile", start = 63, end = 65, render = { kind = "full" } },
-  { path = "Makefile", start = 90, end = 116, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.24"
-descriptor = "CI workflow (ci.yml)"
-justification = "Confirms the actual build+test commands CI runs (make -j, make test, make test-directory) across ubuntu/macos — the canonical 'how is this tested' answer."
+id = "5.2"
+descriptor = ".github/workflows/ci.yml in full"
+justification = """
+The entire CI contract in 23 lines: triggers `[push, pull_request]`, a
+matrix of `ubuntu-latest` and `macos-latest`, and exactly three steps —
+`make -j`, `make test`, `make test-directory`. That last step is the proof
+that `test_directory` is a first-class suite and not a leftover. Cheap
+enough to render whole, so nothing about CI is left implicit.
+"""
 content = { kind = "lines", spans = [
   { path = ".github/workflows/ci.yml", start = 1, end = 23, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "1.25"
-descriptor = "Release workflow: trigger + permissions (build/package/publish steps elided)"
-justification = "Confirms releases are tag-triggered (`v*`) and need `contents: write`; lower priority than CI since it's rarely the reason for a dev session, so the actual build/test/package/publish steps (which mirror ci.yml's make -j / make test / make test-directory, then per-OS packaging and a gh release upload) are elided rather than paid for in full."
+id = "5.3"
+descriptor = "Makefile architecture detection: which SIMD flags each arch gets"
+justification = """
+Where `KREP_USE_AVX512` / `KREP_USE_AVX2` / `KREP_USE_SSE42` / `__ARM_NEON`
+ultimately come from: `ARCH := $(shell uname -m)`, then the x86_64 ladder
+adding `-mavx512f -mavx512bw -msse4.2 -mavx2`, or `-mavx2 -msse4.2`, or
+plain `-msse4.2`, and the arm64/aarch64 branches adding `-D__ARM_NEON`.
+The ellipsis at line 23 marks the elided `/proc/cpuinfo` and `sysctl`
+probes that compute `HAS_AVX512` and `HAS_AVX2`.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 20, end = 22, render = { kind = "full" } },
+  { path = "Makefile", start = 23, end = 23, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 34, end = 44, render = { kind = "full" } },
+  { path = "Makefile", start = 46, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "Makefile compile/link rules and the parallel -DTESTING build"
+justification = """
+`TEST_SRCS`, `TEST_TARGET`, the link rule for `krep`, the generic
+`%.o: %.c krep.h aho_corasick.h` rule, then the second build of the same
+sources under `-DTESTING` (`krep_test.o`, and — behind the ellipsis at
+line 78 — the matching `aho_corasick_test.o` rule), the `test/%.o` rule,
+and the `krep_test` link line with `-lm`. This duplicate compilation is
+why `main` in `krep.c` sits inside `#if !defined(TESTING)`.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 56, end = 56, render = { kind = "full" } },
+  { path = "Makefile", start = 59, end = 59, render = { kind = "full" } },
+  { path = "Makefile", start = 65, end = 68, render = { kind = "full" } },
+  { path = "Makefile", start = 71, end = 72, render = { kind = "full" } },
+  { path = "Makefile", start = 76, end = 77, render = { kind = "full" } },
+  { path = "Makefile", start = 78, end = 78, render = { kind = "ellipsis" } },
+  { path = "Makefile", start = 83, end = 84, render = { kind = "full" } },
+  { path = "Makefile", start = 87, end = 88, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Makefile run targets: test, test-directory, ci, bench-rg, all-tests"
+justification = """
+The recipes behind the target names: `test` runs `./krep_test`;
+`test-directory` builds a separate `test_directory` binary directly from
+`test/test_directory.c krep.c aho_corasick.c`; `ci` chains
+`all test test-directory`; `bench-rg` shells out to
+`test/benchmark_krep_vs_rg.sh`; and the stale `all-tests` target at line
+104 depends on `test_basic`, `test_krep`, `test_regex` and
+`test_multiple_patterns`, none of which are defined anywhere — a real
+trap for anyone who runs it.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 90, end = 104, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = ".github/workflows/release.yml: tag trigger and release artifacts"
+justification = """
+Closes the workflow class opened at 5.2 so the agent does not conclude CI
+is the only automation: fires on `v*` tags with `contents: write`, and
+builds two artifacts, `krep-linux-x86_64` on ubuntu and `krep-macos-arm64`
+on macos. The remainder of the file (tar + sha256 packaging, artifact
+upload and `gh release create`) is elided behind the ellipsis at line 23.
+"""
 content = { kind = "lines", spans = [
   { path = ".github/workflows/release.yml", start = 1, end = 9, render = { kind = "full" } },
-  { path = ".github/workflows/release.yml", start = 10, end = 10, render = { kind = "ellipsis" } },
+  { path = ".github/workflows/release.yml", start = 15, end = 22, render = { kind = "full" } },
+  { path = ".github/workflows/release.yml", start = 23, end = 23, render = { kind = "ellipsis" } },
 ] }
 
-# ---------------------------------------------------------------------
-# Tier 2: shared data model / public API surface (krep.h, aho_corasick.h)
-# ---------------------------------------------------------------------
+# ---------------------------------------------------------------- tier 6
+# The load-bearing bodies: tunables, global option state, the getopt
+# wiring, the dispatch function, and the gitignore data model.
 
 [[batches]]
-id = "2.1"
-descriptor = "krep.h: match_position_t / match_result_t"
-justification = "The two structs every search algorithm and print_matching_items communicate through; understanding these is a prerequisite for touching any search fn."
+id = "6.1"
+descriptor = "krep.c constants: VERSION and every performance tunable"
+justification = """
+`MAX_PATTERN_LENGTH 1024` (which also caps the number of patterns),
+`DEFAULT_THREAD_COUNT 0` meaning auto, `MIN_CHUNK_SIZE` 2MB,
+`LARGE_FILE_THRESHOLD` 64MB, `SINGLE_THREAD_FILE_SIZE_THRESHOLD`,
+`VERSION "2.2.0"`, `BINARY_CHECK_BUFFER_SIZE 1024`,
+`MAX_PATTERN_FILE_LINE_LEN 2048`, `CACHE_LINE_SIZE 64` and
+`PREFETCH_DISTANCE 512`. Every "why does it switch to threads at that
+size" question resolves here, and the version string lives here rather
+than in the Makefile — worth knowing before a release bump.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.h", start = 47, end = 60, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.2"
-descriptor = "krep.h: search_params_t and the search_func_t signature"
-justification = "The single struct threaded through every search/print call and the function-pointer type used for algorithm dispatch — the load-bearing shared vocabulary of the whole codebase."
-content = { kind = "lines", spans = [
-  { path = "krep.h", start = 64, end = 101, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.3"
-descriptor = "krep.h: thread_data_t (per-chunk thread argument struct)"
-justification = "The struct passed to every search_chunk_thread invocation: which chunk of the mmap'd file, which pre-selected algorithm, and where per-thread results land before the main thread merges them."
-content = { kind = "lines", spans = [
-  { path = "krep.h", start = 103, end = 122, render = { kind = "full" } },
+  { path = "krep.c", start = 76, end = 90, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.4"
-descriptor = "krep.h: thread_pool_t / task_t + thread-pool API"
-justification = "The work-queue shape (mutex/cond-guarded linked list of tasks) and its 4 public functions — needed before touching threading/perf behavior."
+id = "6.2"
+descriptor = "krep.c global option state and the lower_table constructor"
+justification = """
+The mutable globals that carry CLI options into code that never sees
+`search_params_t`: `color_output_enabled`, `only_matching` (`-o`),
+`force_no_simd` (`--no-simd`), `use_gitignore` (`--gitignore`),
+`algo_override` (`--algo`), the atomics `global_match_found_flag` and
+`madvise_warning_emitted`, and the `__attribute__((constructor))`
+`init_lower_table` that fills `lower_table[256]` before `main` runs.
+Adding a global flag means touching exactly this block.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.h", start = 124, end = 149, render = { kind = "full" } },
+  { path = "krep.c", start = 116, end = 125, render = { kind = "full" } },
+  { path = "krep.c", start = 128, end = 134, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.5"
-descriptor = "krep.h: public API signatures + return-code contracts (trimmed of doc prose)"
-justification = "Just the return-code contract and signature for each public entry point (0=match,1=no match,2=error) without the full doxygen prose — cheaper than reproducing the full doc comments, still answers 'what does search_file return'."
+id = "6.3"
+descriptor = "main: the getopt_long table and short-option string"
+justification = """
+The exact wiring for adding a flag: `struct option long_options[]` mapping
+`--color`, `--no-simd`, `--help`, `--version`, `--fixed-strings`,
+`--regexp`, `--max-count`, `--gitignore` (sentinel 256) and `--algo`
+(sentinel 257), plus the short string `"+e:f:icm:oEFrt:s:vhw"` whose
+leading `+` stops parsing at the first non-option argument. Note the long
+names here differ from the README in places (`--regexp`, not
+`--pattern`), and `-i`, `-c`, `-o`, `-r`, `-w`, `-t`, `-s` have no long
+form at all despite what the README implies.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.h", start = 159, end = 159, render = { kind = "full" } },
-  { path = "krep.h", start = 161, end = 161, render = { kind = "full" } },
-  { path = "krep.h", start = 167, end = 167, render = { kind = "full" } },
-  { path = "krep.h", start = 170, end = 170, render = { kind = "full" } },
-  { path = "krep.h", start = 178, end = 178, render = { kind = "full" } },
-  { path = "krep.h", start = 180, end = 180, render = { kind = "full" } },
-  { path = "krep.h", start = 182, end = 186, render = { kind = "full" } },
-  { path = "krep.h", start = 230, end = 234, render = { kind = "full" } },
+  { path = "krep.c", start = 3475, end = 3475, render = { kind = "full" } },
+  { path = "krep.c", start = 3476, end = 3485, render = { kind = "truncated", pattern = "^[^/]+" } },
+  { path = "krep.c", start = 3486, end = 3486, render = { kind = "full" } },
+  { path = "krep.c", start = 3494, end = 3494, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.6"
-descriptor = "krep.h: skip_directories[] (full) + skip_extensions[] (sampled)"
-justification = "skip_directories[] is small and fully shown (agent needs the exact list of dirs -r skips by default); skip_extensions[] is much longer so only its declaration, first few categories (object/library, archive, image), and last entry are shown with an ellipsis, signaling more categories (audio/video, documents, logs, editor files, databases, fonts) exist without paying for all ~90 entries."
+id = "6.4"
+descriptor = "select_search_algorithm: dispatch head through the short-pattern branch"
+justification = """
+The code behind the policy prose of 2.5: `use_regex` wins outright,
+`num_patterns > 1` routes to `aho_corasick_search`, then the `--algo`
+override maps `bm`/`kmp`, then `can_use_simd` is computed from
+`force_no_simd`, `SIMD_MAX_PATTERN_LEN` and pattern length, and
+`SHORT_PATTERN_THRESH = 4` sends single characters to `memchr_search`.
+The ellipsis at line 1802 marks the elided `#if KREP_USE_*` ladder for
+2-3 character patterns, which falls back to `memchr_short_search`.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.h", start = 238, end = 244, render = { kind = "full" } },
-  { path = "krep.h", start = 246, end = 252, render = { kind = "full" } },
-  { path = "krep.h", start = 253, end = 253, render = { kind = "ellipsis" } },
-  { path = "krep.h", start = 265, end = 266, render = { kind = "full" } },
+  { path = "krep.c", start = 1774, end = 1778, render = { kind = "full" } },
+  { path = "krep.c", start = 1780, end = 1784, render = { kind = "full" } },
+  { path = "krep.c", start = 1786, end = 1793, render = { kind = "full" } },
+  { path = "krep.c", start = 1797, end = 1801, render = { kind = "full" } },
+  { path = "krep.c", start = 1802, end = 1802, render = { kind = "ellipsis" } },
 ] }
 
 [[batches]]
-id = "2.7"
-descriptor = "krep.h: is_word_char / is_whole_word_match (whole-word semantics)"
-justification = "The exact, small, fully-inlined logic behind -w that every search algorithm calls; kept full since it's only 2 short static inline functions and directly answers 'what counts as a word boundary'."
+id = "6.5"
+descriptor = "select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback"
+justification = """
+The tail of the dispatcher, and the only place the per-instruction-set
+constraints are written down: AVX-512 up to 64 bytes case-sensitive only,
+AVX2 up to 32 bytes including case-insensitive, SSE4.2 up to 16 bytes
+case-sensitive, NEON any length case-sensitive; then `KMP_THRESH = 8`
+with `is_repetitive_pattern` selecting `kmp_search`, otherwise
+`boyer_moore_search`. Directly actionable for both tuning and bug reports.
+"""
+predecessor = "6.4"
 content = { kind = "lines", spans = [
-  { path = "krep.h", start = 298, end = 319, render = { kind = "full" } },
+  { path = "krep.c", start = 1835, end = 1837, render = { kind = "full" } },
+  { path = "krep.c", start = 1839, end = 1842, render = { kind = "full" } },
+  { path = "krep.c", start = 1844, end = 1847, render = { kind = "full" } },
+  { path = "krep.c", start = 1849, end = 1852, render = { kind = "full" } },
+  { path = "krep.c", start = 1854, end = 1856, render = { kind = "full" } },
+  { path = "krep.c", start = 1860, end = 1869, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.8"
-descriptor = "aho_corasick.h (full)"
-justification = "The whole public surface of the multi-pattern engine (ac_trie_build/free/root_has_outputs, aho_corasick_search) — only 41 lines, cheap to include whole."
+id = "6.6"
+descriptor = "gitignore data model: pattern record and parent-chained context"
+justification = """
+`gitignore_pattern_t` carries `pattern`, `negated` and `dir_only` — so
+`!foo` negation and `bar/` directory-only syntax are both supported — and
+`gitignore_t` is a growable list with a `parent` pointer, giving nested
+`.gitignore` files an inheritance chain during the recursive walk. With
+the `gitignore_*` roster at 4.4, that is enough to reason about
+`--gitignore` semantics before opening the file.
+"""
 content = { kind = "lines", spans = [
-  { path = "aho_corasick.h", start = 1, end = 41, render = { kind = "full" } },
+  { path = "krep.c", start = 3145, end = 3161, render = { kind = "full" } },
 ] }
 
-
-# ---------------------------------------------------------------------
-# Tier 3: algorithm dispatch, one representative algorithm body,
-# recursive-search filtering (gitignore + skip lists), the CLI's option
-# table, the test runner's entry point, and the Aho-Corasick trie's
-# memory layout + lifecycle (build/search bodies remain in aho_corasick.c
-# itself, not reproduced here — see the aho_corasick.h batch for their
-# signatures and 1.9's algorithm-selection prose for what the search does).
-# ---------------------------------------------------------------------
+# ---------------------------------------------------------------- tier 7
+# Appendix: metadata and marketing material. Real content, lowest value
+# per token, correctly last.
 
 [[batches]]
-id = "3.1"
-descriptor = "krep.c: select_search_algorithm (head+tail)"
-justification = "The decision tree behind --algo=auto: regex/multi-pattern/override checks and the final KMP-vs-Boyer-Moore fallback, with the middle SIMD-width-threshold branches (repetitive per-ISA length checks) elided since they're mechanical repeats of the same `pattern_len <= N` pattern already summarized by SIMD_MAX_PATTERN_LEN."
-predecessor = "1.7"
+id = "7.1"
+descriptor = "Licence header, dependabot config and .gitignore"
+justification = """
+BSD 2-Clause, copyright 2025 Davide Santangelo, from `LICENSE` lines 1-3
+(the README's Author and License sections were located at 1.6 and say no
+more than this); the whole of `.github/dependabot.yml` (weekly `github-actions` updates only — there is
+no C dependency management to update); and the
+three `.gitignore` entries, which are notably just the benchmark dataset
+and a VS Code setting, so build outputs are *not* ignored.
+`.github/FUNDING.yml` is a stock template and is left unread.
+"""
 content = { kind = "lines", spans = [
-  { path = "krep.c", start = 1771, end = 1808, render = { kind = "full" } },
-  { path = "krep.c", start = 1809, end = 1809, render = { kind = "ellipsis" } },
-  { path = "krep.c", start = 1859, end = 1870, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.2"
-descriptor = "krep.c: is_repetitive_pattern (full)"
-justification = "The one non-obvious heuristic in algorithm selection: detects repeating substrings/short repeating sequences in short patterns to prefer KMP over Boyer-Moore."
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "krep.c", start = 1873, end = 1914, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.3"
-descriptor = "krep.c: find_line_start / find_line_end"
-justification = "The two boundary-finding primitives every algorithm and print_matching_items calls to turn a byte offset into a printable line; small, concrete, and reused everywhere. find_line_start's GNU/glibc memrchr fast path is elided (platform-specific, same backward-scan-for-newline semantics as the portable fallback shown) — the freed budget instead funds 1.9/1.10's cheap prose coverage of algorithm selection, threading, and mmap, which no batch showed a body or explanation for at all."
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "krep.c", start = 363, end = 370, render = { kind = "full" } },
-  { path = "krep.c", start = 371, end = 371, render = { kind = "ellipsis" } },
-  { path = "krep.c", start = 389, end = 397, render = { kind = "full" } },
-  { path = "krep.c", start = 401, end = 407, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.4"
-descriptor = "aho_corasick.c: ac_node/ac_trie struct layout + free/root_has_outputs"
-justification = "The memory-optimized trie node layout (256-pointer children array + growable output_indices, chosen to avoid a flat 2KB-per-node overhead per the file's own top comment) plus how it's torn down and how empty-file matching is detected."
-content = { kind = "lines", spans = [
-  { path = "aho_corasick.c", start = 17, end = 31, render = { kind = "full" } },
-  { path = "aho_corasick.c", start = 274, end = 290, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "krep.c: gitignore_is_ignored (parent-chain precedence)"
-justification = "The one function that answers 'why did/didn't --gitignore skip this file': walks parent directories' patterns first (less specific) then the current dir's (can override), fnmatch against the basename, negation flips ignored back off."
-predecessor = "1.12"
-content = { kind = "lines", spans = [
-  { path = "krep.c", start = 3272, end = 3294, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "krep.c: should_skip_directory / should_skip_extension"
-justification = "The always-on (no --gitignore needed) recursive-search filters: hidden-dir skip + the skip_directories[] check, and the extension/.min. check against skip_extensions[]."
-predecessor = "1.12"
-content = { kind = "lines", spans = [
-  { path = "krep.c", start = 3071, end = 3087, render = { kind = "full" } },
-  { path = "krep.c", start = 3090, end = 3119, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.7"
-descriptor = "krep.c: main()'s getopt_long option table"
-justification = "The exact short/long flag correspondence table (e.g. --gitignore has no short form, -e maps to --regexp, --color/--algo take values 256/257) — the ground truth behind the README options list."
-predecessor = "1.13"
-content = { kind = "lines", spans = [
-  { path = "krep.c", start = 3475, end = 3486, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.8"
-descriptor = "test/test_krep.c: main() suite composition/order (full body)"
-justification = "The exact order the from-scratch test runner executes topic suites in (new-style search tests, then SIMD/report/max-count, then test_additional_cases, then regex.c and multiple_patterns.c's run_*_tests(), then advanced edge cases), through the pass/fail summary and exit code — the fastest way to see 'is X already tested' before writing a new test, and the ground truth for what a green run actually prints/returns."
-predecessor = "1.14"
-content = { kind = "lines", spans = [
-  { path = "test/test_krep.c", start = 1486, end = 1520, render = { kind = "full" } },
+  { path = "LICENSE", start = 1, end = 3, render = { kind = "full" } },
+  { path = ".github/dependabot.yml", start = 1, end = 6, render = { kind = "full" } },
+  { path = ".gitignore", start = 1, end = 3, render = { kind = "full" } },
 ] }

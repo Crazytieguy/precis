@@ -1,0 +1,1200 @@
+fixture = "gin"
+revision_pin = "5f4f9643"
+summary = """
+gin-gonic/gin: a high-performance Go HTTP web framework (radix-tree router
+forked from httprouter) built around three surfaces — package `gin` (root):
+Engine/RouterGroup route registration, the per-request `Context` (huge
+method surface: query/form/binding, rendering, cookies, content
+negotiation, streaming), and built-in middleware (Logger, Recovery,
+BasicAuth); package `binding` (multi-format request decoding + validator
+tag mapping); package `render` (multi-format response writers, one type
+per file); package `codec/json` (swappable JSON backend selected by build
+tag: stdlib/go-json/jsoniter/sonic); tiny `internal/bytesconv` and
+`internal/fs` helpers; and `ginS`, a deprecated-style package-level
+singleton-engine wrapper. Nearly every non-test .go file has a colocated
+`_test.go`. `docs/doc.md` is a 2666-line user guide (the README defers
+new-feature docs there per CONTRIBUTING.md); it is not host-injected, so
+its headings/sections are fair game and are the cheapest way to hedge
+against the guide's own breadth. Expected query distribution: adding
+routes/middleware, debugging binding/validation, adding a render/binding
+format, ClientIP/trusted-proxy behavior, JSON-backend build tags, testing
+patterns, and CI/lint/release config.
+"""
+
+# ============================================================
+# Tier 1 — orientation + directory closure (cheap breadth first,
+# ordered ~ascending cost to respect the growth envelope)
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "docs/ and examples/ directory listings"
+justification = "docs/doc.md (the 2666-line user guide) and examples/README.md (pointer to the standalone gin-gonic/examples repo) named; both are small dirs, combined into one cheap batch."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "ginS/ directory listing"
+justification = "The deprecated-style package-level singleton-engine wrapper's files, named so it isn't mistaken for absent."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "ginS"
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "codec/json/ directory listing"
+justification = "Shows the 4 build-tag-selected JSON backend files (api.go contract + json/go_json/jsoniter/sonic implementations) exist as a closed set."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "codec/json"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "internal/ package listing (bytesconv, fs)"
+justification = "Both tiny internal helper packages named together; used pervasively (unsafe string/byte conversion, http.FileSystem wrapper for html/template ParseFS)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/bytesconv"
+entries = "all"
+[[batches.content.groups]]
+parent = "internal/fs"
+entries = "all"
+
+[[batches]]
+id = "1.5"
+descriptor = "testdata/ directory tree listing"
+justification = "Fixtures used by tests (TLS cert/key, protobuf example, html/template files, plain test file) — relevant for anyone touching context_file_test.go, render/render_test.go, or the protobuf binding tests."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "testdata"
+entries = "all"
+[[batches.content.groups]]
+parent = "testdata/certificate"
+entries = "all"
+[[batches.content.groups]]
+parent = "testdata/protoexample"
+entries = "all"
+[[batches.content.groups]]
+parent = "testdata/template"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = ".github/ directory listing (workflows, issue templates)"
+justification = "CI workflows (gin.yml test matrix, codeql, goreleaser, trivy-scan), dependabot config, issue/PR templates named together — the operational-coverage surface for 'how is this built/released/scanned'."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = "all"
+
+[[batches]]
+id = "1.7"
+descriptor = "render/ directory listing"
+justification = "Names every response-render-format file (one per format, plus render.go's shared interface) up front."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "render"
+entries = "all"
+
+[[batches]]
+id = "1.8"
+descriptor = "version.go: current release const"
+justification = "Trivial but load-bearing for 'what version is this' / release-bump tasks; ties to CHANGELOG.md's 'Gin v1.12.0' heading."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "version.go"
+start = 1
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "binding/ directory listing"
+justification = "Names every binding-format source+test file up front (json/xml/yaml/toml/msgpack/bson/protobuf/form/query/uri/header/plain + form_mapping/multipart/validator) so the agent knows the full format roster exists before reading any body."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "binding"
+entries = "all"
+
+[[batches]]
+id = "1.10"
+descriptor = "Package doc lede (doc.go)"
+justification = "Cheapest possible framing of what this repo is and the canonical minimal usage shape."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "doc.go"
+start = 1
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "1.11"
+descriptor = "Root directory listing"
+justification = "Catastrophic-omission hedge: every top-level file/dir (source, tests, docs, config) named up front so no follow-up 'what else is here' listing is needed. Uses the 'all' sentinel so it can never silently drop a real file."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.12"
+descriptor = "README: what Gin is + key features list"
+justification = "The concept framing doc.go's one-liner doesn't cover (zero-alloc router, crash-free recovery, JSON validation, route grouping, built-in multi-format rendering) — cheap semantic context beyond the code itself."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 31
+end = 41
+render = { kind = "full" }
+
+[[batches]]
+id = "1.13"
+descriptor = "go.mod: Go version + direct dependency stack"
+justification = "Go 1.25+ requirement and the direct third-party stack (validator, sonic/go-json/jsoniter/ugorji-codec, mongo bson, protobuf, quic-go/http3, x/net h2c, go-toml, go-yaml) that recurs throughout binding/render/codec/json and the CI matrix. Indirect/transitive requires dropped — lower value per token."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 20
+render = { kind = "full" }
+
+
+# ============================================================
+# Tier 2 — Engine & request-dispatch core (gin.go)
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "gin.go: handler/route type defs + trusted-platform consts"
+justification = "HandlerFunc/HandlersChain/RouteInfo/RoutesInfo are the vocabulary every route-registration and middleware question is phrased in; PlatformGoogleAppEngine/Cloudflare/FlyIO are the exact values passed to Engine.TrustedPlatform (see docs/doc.md 'Don't trust all proxies')."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 50
+end = 88
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "gin.go: Engine struct, part 1 — documented request-handling flags"
+justification = "RedirectTrailingSlash/RedirectFixedPath/HandleMethodNotAllowed/ForwardedByClientIP are the flags most 'why did my request get redirected/rejected' questions turn on. RedirectFixedPath's own doc (9 lines of prose) elided to a decl-only line since RedirectTrailingSlash right above it already carries the shared example."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 90
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 95
+end = 97
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 99
+end = 104
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 115
+end = 115
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 123
+end = 123
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 125
+end = 129
+render = { kind = "full" }
+
+
+[[batches]]
+id = "2.3"
+descriptor = "gin.go: Engine struct, part 2 — remaining flags + unexported routing state (names+types only)"
+justification = "AppEngine(deprecated)/UseRawPath/UseEscapedPath/UnescapePathValues/RemoveExtraSlash/RemoteIPHeaders/TrustedPlatform/MaxMultipartMemory/UseH2C/ContextWithFallback plus the unexported delims/pool/trees/trustedProxies bookkeeping — completes the struct roster from 2.2. Docs elided (each is only 1-4 lines in source; one hop away) to keep this catastrophic-omission hedge cheap."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 135
+end = 135
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 140
+end = 140
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 144
+end = 144
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 149
+end = 149
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 153
+end = 153
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 159
+end = 159
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 163
+end = 163
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 167
+end = 167
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 170
+end = 170
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 173
+end = 173
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 175
+end = 189
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "gin.go: New()/Default() constructors (+ Handler/allocateContext locations)"
+justification = "The actual defaults struct literal (RedirectTrailingSlash:true, ForwardedByClientIP:true, trustedProxies:[0.0.0.0/0,::/0], MaxMultipartMemory:32MB, ...); Default() shows Logger()+Recovery() are the only middleware auto-attached."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 202
+end = 233
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 236
+end = 241
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 243
+end = 243
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 252
+end = 252
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "2.5"
+descriptor = "gin.go: Delims/SecureJsonPrefix (+ LoadHTML*/SetHTMLTemplate/SetFuncMap locations)"
+justification = "The two config setters kept in full since they're one-liners with real doc value; the four HTML-template setup functions (LoadHTMLGlob/Files/FS, SetHTMLTemplate) and SetFuncMap are near-duplicates of each other so only named — docs/doc.md's HTML-rendering section is the deeper reference for their IsDebugging()-branches-to-HTMLDebug pattern."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 258
+end = 268
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 272
+end = 272
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 288
+end = 288
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 300
+end = 300
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 312
+end = 312
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 321
+end = 321
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "2.6"
+descriptor = "gin.go: Use() + addRoute() (+ NoRoute/NoMethod/With/rebuild*Handlers locations)"
+justification = "Use() is how global middleware attaches (and why it forces a 404/405 handler rebuild); addRoute is the sole entry point from RouterGroup into the tree (engine.trees / maxParams / maxSections bookkeeping) — the two functions here with genuinely distinct logic worth their cost."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 326
+end = 326
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 332
+end = 332
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 337
+end = 345
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 348
+end = 348
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 356
+end = 356
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 360
+end = 360
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 364
+end = 386
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "gin.go: Routes() + iterate() (locations) — registered-route introspection"
+justification = "gin.Engine.Routes() (used for route-listing/debug endpoints and tests) recursively walks the per-method tree into RouteInfo values; named only given budget — the RouteInfo shape itself is already in 2.1."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 390
+end = 390
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 397
+end = 397
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+[[batches]]
+id = "2.8"
+descriptor = "gin.go: trusted-proxy / ClientIP-trust machinery (SetTrustedProxies, isTrustedProxy, validateHeader)"
+justification = "The exact logic docs/doc.md's 'Don't trust all proxies' section describes at prose level and Context.ClientIP() calls into — a frequent source of debugging questions ('why is ClientIP wrong'). prepareTrustedCIDRs/isUnsafeTrustedProxies/parseTrustedProxies (mechanical CIDR plumbing) named only."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 414
+end = 414
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 451
+end = 451
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 457
+end = 457
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 462
+end = 462
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 469
+end = 469
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 481
+end = 501
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "gin.go: updateRouteTree(s) + parseIP (locations)"
+justification = "One-time escaped-colon-to-colon rewrite pass over the built tree plus the IP normalization helper used by isUnsafeTrustedProxies — named only, lower query-relevance than 2.8's trust logic."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 504
+end = 504
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 517
+end = 517
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 525
+end = 525
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+[[batches]]
+id = "2.10"
+descriptor = "gin.go: Run/RunTLS/RunUnix/RunFd/RunQUIC/RunListener (locations)"
+justification = "Six near-identical entry points (unsafe-trusted-proxy warning, resolveAddress/listener setup, http.Server construction) that only differ in how the listener is obtained (addr / addr+certs / unix socket / fd / QUIC / net.Listener) — named together so the full Run* family is visible without paying six times for the same shape."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 540
+end = 540
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 561
+end = 561
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 581
+end = 581
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 607
+end = 607
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 630
+end = 630
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 645
+end = 645
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "2.11"
+descriptor = "gin.go: ServeHTTP + HandleContext"
+justification = "The actual http.Handler entry point (pool.Get/Put, writermem.reset, one-time routeTreesUpdated.Do) and HandleContext's documented re-entry pattern for rewriting c.Request.URL.Path mid-flight."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 661
+end = 688
+render = { kind = "full" }
+
+[[batches]]
+id = "2.12"
+descriptor = "gin.go: handleHTTPRequest — core request dispatch"
+justification = "The single most load-bearing function for routing questions: UseEscapedPath/UseRawPath path selection, per-method tree walk, TSR/fixed-path redirect branches, 404 fallthrough. The 405-Allow-header assembly block (RFC 7231) is elided with an ellipsis marker (same shape as the tree walk above it, lower marginal value per token) rather than shown in full."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 690
+end = 737
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 739
+end = 739
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 758
+end = 760
+render = { kind = "full" }
+
+[[batches]]
+id = "2.13"
+descriptor = "gin.go: serveError (+ redirectTrailingSlash/sanitizePathChars/redirectFixedPath/redirectRequest locations)"
+justification = "serveError is what actually writes the 404/405 bodies — the highest-value piece here. The four redirect/path-fixup helpers implement the RedirectTrailingSlash/RedirectFixedPath Engine flags from 2.2/2.3 and are named only."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "gin.go"
+start = 762
+end = 779
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 781
+end = 781
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 799
+end = 799
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 808
+end = 808
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "gin.go"
+start = 820
+end = 820
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+# ============================================================
+# Tier 3 — route-registration API (routergroup.go)
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "routergroup.go: IRouter/IRoutes interfaces + RouterGroup struct"
+justification = "IRoutes is the interface every Handle/GET/POST/.../Static* method returns (to support chaining); RouterGroup is the value every route-registration question centers on (Handlers/basePath/engine/root)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 26
+end = 60
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "routergroup.go: Handle() (+ Use/Group/BasePath/handle/GET/POST/.../Any/Match/Static*/combineHandlers/calculateAbsolutePath/returnObj locations)"
+justification = "Handle()'s doc comment is the canonical explanation of 'last handler is the real one, others are shared middleware' that docs/doc.md's routing section assumes — the one function here with unique prose value. Every other RouterGroup method (Use, Group, BasePath, the unexported handle/staticFileHandler/createStaticHandler/combineHandlers/calculateAbsolutePath/returnObj helpers, and all the POST/GET/.../Any/Match/Static*/StaticFS shortcuts) is named only: each is a one-or-few-line dispatcher, and naming the full IRoutes surface here hedges catastrophic omission cheaply."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 93
+end = 108
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 65
+end = 65
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 82
+end = 82
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 86
+end = 86
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 111
+end = 111
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 116
+end = 116
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 121
+end = 121
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 126
+end = 126
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 131
+end = 131
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 136
+end = 136
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 141
+end = 141
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 147
+end = 147
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 156
+end = 156
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 166
+end = 166
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 175
+end = 175
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 181
+end = 181
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 197
+end = 197
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 203
+end = 203
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 216
+end = 216
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 241
+end = 241
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 250
+end = 250
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "routergroup.go"
+start = 254
+end = 254
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+# ============================================================
+# Tier 4 — Context: the central per-request type (context.go)
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "context.go: Context struct — the full field roster"
+justification = "Every field (writermem/Request/Writer/Params/handlers/index/fullPath/engine/params/skippedNodes/mu/Keys/Errors/Accepted/queryCache/formCache/sameSite) — catastrophic-omission critical since this struct backs nearly every Context method in this file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 59
+end = 97
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "context.go: Copy() (+ reset/HandlerName/HandlerNames/Handler/FullPath locations)"
+justification = "Copy()'s doc explains the exact shallow/deep-copy split needed before passing a Context to a goroutine — directly relevant to docs/doc.md's 'Goroutines inside a middleware' section. reset() (mechanical per-request field-clearing, ties to Engine.pool in gin.go 2.2/2.3) named only given budget."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 103
+end = 103
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "context.go"
+start = 120
+end = 145
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "context.go"
+start = 149
+end = 149
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 155
+end = 155
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 167
+end = 167
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "4.3"
+descriptor = "context.go: flow control — Next/IsAborted/Abort/AbortWithStatus*/AbortWithError"
+justification = "The middleware-chain execution model (c.index walk, Abort's abortIndex sentinel) that every custom-middleware question depends on."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 188
+end = 218
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "context.go"
+start = 222
+end = 222
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 227
+end = 241
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "context.go: Error() — attaching errors to the request"
+justification = "How c.Error()/c.Errors accumulates (panics on nil, normalizes to *gin.Error) — the mechanism behind ErrorLogger/ErrorLoggerT in logger.go and the error-typed content in docs/doc.md's middleware section."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 247
+end = 268
+render = { kind = "full" }
+
+
+[[batches]]
+id = "4.5"
+descriptor = "context.go: Set/Get/MustGet/getTyped + representative GetXxx/GetXxxSlice accessors (+ ellipsis marking the rest)"
+justification = "Set/Get/MustGet/getTyped are the generic core every GetString/GetBool/GetInt.../GetIntSlice.../GetStringMap* variant wraps. Showing one of each shape (scalar GetString/GetInt/GetTime, slice GetIntSlice, map GetStringMap/GetStringMapStringSlice) plus an explicit ellipsis at the gap communicates 'there are ~30 more of this exact shape, lines 316-471' without paying per-line cost for every one — cheaper than exhaustive enumeration at this per-line cost, honest via the ellipsis rather than silent omission."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 274
+end = 308
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "context.go"
+start = 311
+end = 311
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 316
+end = 316
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 321
+end = 321
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 381
+end = 381
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 396
+end = 396
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 466
+end = 466
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 476
+end = 476
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "4.6"
+descriptor = "context.go: remaining surface (locations + ellipsis-hedged families) — Query/PostForm/ClientIP/Bind family/rendering entry points/cookies/negotiation/streaming"
+justification = "Names the highest-traffic remaining Context methods (Query, PostForm, ClientIP, Bind/MustBindWith/ShouldBindJSON, Render/JSON, Cookie/SetCookie, Negotiate, Stream/SSEvent, File) so the agent knows exactly where to grep in this one (large but single) file for query-param handling, request binding, response rendering, and content negotiation. This file has ~90 more methods than budget allows naming individually, so ellipsis markers hedge every same-shape family instead of silently dropping it: after Query (Default/Array/Map query-value siblings), after PostForm (its own Default/Array/Map siblings), after PostFormMap (the unshown FormFile/MultipartForm/SaveUploadedFile upload trio), after Bind (the ~20-strong Bind*/ShouldBind*/ShouldBindBodyWith* family), after ClientIP (RemoteIP/ContentType/IsWebsocket/Header/GetHeader/GetRawData), after Render (the 14 other format methods HTML/XML/YAML/TOML/ProtoBuf/BSON/PDF/...), after JSON (Data/DataFromReader/FileAttachment), after Negotiate (NegotiateFormat/SetAccepted), and after Stream (the context.Context-interface methods Deadline/Done/Err/Value that back the ContextWithFallback flag from 2.3) — the file itself is easy to search once the shape is known from 4.1-4.5."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "context.go"
+start = 525
+end = 525
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 538
+end = 538
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 601
+end = 601
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 609
+end = 609
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 698
+end = 698
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 757
+end = 757
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "context.go"
+start = 763
+end = 763
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 810
+end = 810
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 867
+end = 867
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 975
+end = 975
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1036
+end = 1036
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1152
+end = 1152
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1171
+end = 1171
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1205
+end = 1205
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1142
+end = 1142
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1109
+end = 1109
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1268
+end = 1268
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1364
+end = 1364
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1400
+end = 1400
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1328
+end = 1328
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1319
+end = 1319
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1447
+end = 1447
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "context.go"
+start = 1286
+end = 1286
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+# ============================================================
+# Tier 5 — routing internals (tree.go, path.go) — lean, given budget
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "tree.go: Param/Params type (+ addRoute/getValue/findCaseInsensitivePath/insertChild locations)"
+justification = "Param{Key,Value}/Params (what c.Param()/c.Params.ByName() return) is the one piece of this httprouter-derived radix-tree file most sessions actually need; the tree-mutation/lookup internals are named only given budget — self-contained algorithmic code an agent can read directly off these 4 locations."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tree.go"
+start = 16
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tree.go"
+start = 135
+end = 135
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "tree.go"
+start = 288
+end = 288
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "tree.go"
+start = 418
+end = 418
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+[[batches.content.spans]]
+path = "tree.go"
+start = 671
+end = 671
+render = { kind = "truncated", pattern = "^func \\([^)]*\\) \\w+" }
+
+[[batches]]
+id = "5.2"
+descriptor = "path.go: cleanPath doc (+ removeRepeatedChar location) — trailing-slash/path-cleaning semantics"
+justification = "cleanPath's doc comment states the exact . / .. / repeated-slash normalization rules gin applies before routing (RedirectFixedPath in gin.go 2.2); body is dense byte-buffer code, named only."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "path.go"
+start = 10
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "path.go"
+start = 155
+end = 155
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+# ============================================================
+# Tier 6 — render + binding package rosters (very lean: budget-constrained)
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "render/render.go: the full Render-implementer roster (+ BSON/MsgPack, which the var block itself omits)"
+justification = "This var block covers 16 of the 18 response formats gin can render (JSON/IndentedJSON/SecureJSON/JsonpJSON/XML/String/Redirect/Data/HTML/HTMLDebug/HTMLProduction/YAML/Reader/AsciiJSON/ProtoBuf/TOML/PDF) — the cheapest possible catastrophic-omission hedge for the whole render/ package. BSON (render/bson.go) and MsgPack (render/msgpack.go) also implement Render but the source never gives them a compile-check assertion here, so their type decls are pointed to directly to keep the roster genuinely complete (per-file bodies not shown given budget; render/ directory listing from 1.7 gives exact filenames)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "render/render.go"
+start = 17
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "render/bson.go"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^type \\w+" }
+[[batches.content.spans]]
+path = "render/msgpack.go"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^type \\w+" }
+
+[[batches]]
+id = "6.2"
+descriptor = "binding/binding.go: the full Binding-implementer roster"
+justification = "This var block is the complete list of every request-binding format gin supports (JSON/XML/Form/Query/FormPost/FormMultipart/ProtoBuf/MsgPack/YAML/Uri/Header/Plain/TOML/BSON) plus Default()'s content-type dispatch — the cheapest possible catastrophic-omission hedge for the whole binding/ package (binding/ directory listing from 1.9 gives exact filenames)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "binding/binding.go"
+start = 76
+end = 91
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "binding/binding.go"
+start = 95
+end = 95
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+# ============================================================
+# Tier 7 — final lean coverage: doc guide headings + built-in middleware pointers
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "docs/doc.md: top-level (H2) section headings"
+justification = "The complete table of contents of the 2666-line user guide, at its exact line numbers (Build tags, Routing, Middleware, Logging, Request Binding & Validation, Response Rendering, Server Configuration, Testing) — the cheapest possible hedge against this guide's own breadth; not host-injected, so fair game, and this is far cheaper than pulling any section body."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 3
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 79
+end = 79
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 113
+end = 113
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 402
+end = 402
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 608
+end = 608
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 812
+end = 812
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 1662
+end = 1662
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 2090
+end = 2090
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/doc.md"
+start = 2616
+end = 2616
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "Built-in middleware entry points (locations): BasicAuth, Logger, Recovery"
+justification = "auth.go/logger.go/recovery.go each already have their directory presence noted at root (1.11); pointing at their exact top-level constructor signatures here is the one-hop-away anchor for 'how do I add auth/logging/panic-recovery' — the single most common middleware questions for this repo. Two bare ellipsis markers flank BasicAuth at auth.go's own BasicAuthForRealm (line 48) and BasicAuthForProxy (line 98) so the two realm/proxy variants aren't implied absent."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "auth.go"
+start = 48
+end = 48
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "auth.go"
+start = 72
+end = 72
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "auth.go"
+start = 98
+end = 98
+render = { kind = "ellipsis" }
+[[batches.content.spans]]
+path = "logger.go"
+start = 224
+end = 224
+render = { kind = "truncated", pattern = "^func \\w+" }
+[[batches.content.spans]]
+path = "recovery.go"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^func \\w+" }
+
+[[batches]]
+id = "7.3"
+descriptor = "Makefile: which packages 'make test' actually covers"
+justification = "TESTFOLDER restricts `go test` to gin$/ginS$/binding$/render$ (excluding examples/) — operational-coverage anchor for 'how do I run the tests' that the CI workflow (1.6) invokes via `make test` across its OS/Go-version/build-tag matrix."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 7
+end = 7
+render = { kind = "full" }

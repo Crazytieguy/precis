@@ -1,0 +1,1050 @@
+fixture = "helm"
+revision_pin = "b2786f15"
+summary = """
+Helm (helm.sh/helm/v4) is the Kubernetes package manager: a Go CLI (cmd/helm ->
+pkg/cmd) plus an embeddable SDK (pkg/action orchestrating pkg/chart, pkg/engine,
+pkg/kube, pkg/registry, pkg/storage) for installing/upgrading/templating charts.
+AGENTS.md already covers the architecture overview, make targets, package map,
+compatibility rules, and branching model (main=v4 dev, dev-v3=v3 stable) — this
+NS deliberately buys the complement: exact file/package rosters (catastrophic-
+omission hedges for the ~530 Go files across cmd/pkg/internal), concrete type
+shapes with line coordinates (Configuration, Chart, Release, Install/Upgrade
+flags, kube.Interface, storage.Driver), the actual CLI command roster wired in
+root.go, the chart-authoring scaffold `helm create` embeds, a canonical values
+sample and rendering example, the v4-era plugin system (WASM/extism runtime),
+and the OCI registry / getter / repo-index plumbing. Query distribution served:
+explaining chart/release/action concepts, adding a CLI subcommand or template
+func, debugging install/upgrade/render, writing or invoking a plugin, working
+with storage backends or OCI push/pull, and build/test/CI operational tasks.
+Ellipsis markers throughout signal deliberately-elided tails of larger enums/
+structs/templates — the surrounding batch names the file:line to read on for
+the rest.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = "Foundational catastrophic-omission hedge: every top-level file/dir (docs, go.mod, Makefile, cmd/pkg/internal/scripts/testdata) in one cheap batch so nothing at repo root is assumed absent."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "pkg/ package roster"
+justification = "AGENTS.md's 'major packages' list is a curated subset (omits postrenderer, uploader, ignore, helmpath, gates, cli, kubeenv...); the full immediate-child listing prevents the agent from assuming those don't exist."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "pkg"
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "internal/ package roster"
+justification = "Same hedge for internal/: reveals monocular, resolver, statusreaders, sympath, urlutil, tlsutil, version, logging, fileutil, copystructure, third_party, gates, plugin, chart/v3, release/v2 — none named in AGENTS.md's summary."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "cmd/helm/ listing"
+justification = "The actual binary entry-point directory (just 2 files) — cheap, orients the agent to where `main` lives before its content is read next."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "cmd/helm"
+entries = "all"
+
+[[batches]]
+id = "1.5"
+descriptor = "Makefile target roster — build/test/lint/release targets"
+justification = "AGENTS.md's build/test snippet names only build/test/test-unit/test-coverage/test-style; the Makefile also has test-source-headers, test-acceptance(-completion), and format. Location batch of the target-definition lines so none look absent."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 67
+end = 67
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 76
+end = 76
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 83
+end = 83
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 93
+end = 93
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 110
+end = 110
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 116
+end = 116
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 128
+end = 128
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 132
+end = 132
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 142
+end = 142
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 146
+end = 146
+render.kind = "full"
+
+[[batches]]
+id = "1.6"
+descriptor = "Makefile target roster — packaging/release/golden-file targets"
+justification = "Second half of the target roster: gen-test-golden, build-cross, dist/fetch-dist, sign, checksum, clean, release-notes, info, tidy — completes the hedge started in 1.5 so none of these look absent."
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 151
+end = 151
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 173
+end = 173
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 178
+end = 178
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 188
+end = 188
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 196
+end = 196
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 209
+end = 209
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 218
+end = 218
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 222
+end = 222
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 234
+end = 234
+render.kind = "full"
+[[batches.content.spans]]
+path = "Makefile"
+start = 241
+end = 241
+render.kind = "full"
+
+[[batches]]
+id = "1.7"
+descriptor = ".github/workflows/ listing"
+justification = "All 7 CI workflow files (build-test, codeql-analysis, golangci-lint, govulncheck, release, scorecards, stale) named in one cheap batch so none are assumed missing."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+
+[[batches]]
+id = "1.8"
+descriptor = "build-test.yml — CI trigger branches + job start"
+justification = "The push/PR trigger branches (main, dev-v3, release-**) and job start — concrete evidence of how the branching model in AGENTS.md is enforced by CI, without yet paying for every step."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/build-test.yml"
+start = 1
+end = 18
+render.kind = "full"
+
+[[batches]]
+id = "1.9"
+descriptor = ".golangci.yml — formatters + enabled linters"
+justification = "Concrete lint config sample: the full alphabetic linter enable-list (depguard, dupl, exhaustive, gomodguard, govet, ineffassign, misspell, modernize, nakedret, nolintlint, perfsprint, revive, sloglint, staticcheck, testifylint, thelper, unused, usestdlibvars, usetesting). Cheaper and more precise evidence of style rules than reading golangci-lint docs."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".golangci.yml"
+start = 17
+end = 40
+render.kind = "full"
+
+[[batches]]
+id = "1.10"
+descriptor = "build-test.yml — remaining CI steps + pinned tool versions"
+justification = "The rest of the primary CI job (checkout, setup-go, test-source-headers, go mod tidy -diff, test-coverage, build) plus the GOLANG_VERSION/GOLANGCI_LINT_VERSION pins it reads from .github/env."
+predecessor = "1.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/build-test.yml"
+start = 19
+end = 36
+render.kind = "full"
+[[batches.content.spans]]
+path = ".github/env"
+start = 1
+end = 2
+render.kind = "full"
+
+[[batches]]
+id = "1.11"
+descriptor = "cmd/helm/helm.go — process entry point (body)"
+justification = "The whole main() body: builds the root cobra command via pkg/cmd.NewRootCmd and maps CommandError to process exit codes, plus the comment explaining why kube.ManagedFieldsManager is set to \"helm\". Answers 'where does execution start' in one hop; the import block is skipped as inferable from the two calls shown."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "cmd/helm/helm.go"
+start = 17
+end = 17
+render.kind = "full"
+[[batches.content.spans]]
+path = "cmd/helm/helm.go"
+start = 31
+end = 44
+render.kind = "full"
+
+[[batches]]
+id = "1.12"
+descriptor = "go.mod — module identity + direct dependencies (head)"
+justification = "Module path helm.sh/helm/v4, Go 1.26 toolchain, and the alphabetically-first direct (non-indirect) dependencies — already reveals load-bearing but non-obvious deps (extism/go-sdk = WASM plugin runtime, distribution/distribution = OCI registry, Masterminds/squirrel = SQL query builder). First ellipsis elides three intervening deps (ProtonMail/go-crypto, asaskevich/govalidator, cyphar/filepath-securejoin); second signals the require block continues rather than silently truncating."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 12
+render.kind = "full"
+[[batches.content.spans]]
+path = "go.mod"
+start = 13
+end = 13
+render.kind = "ellipsis"
+[[batches.content.spans]]
+path = "go.mod"
+start = 16
+end = 18
+render.kind = "full"
+[[batches.content.spans]]
+path = "go.mod"
+start = 19
+end = 19
+render.kind = "ellipsis"
+
+[[batches]]
+id = "2.1"
+descriptor = "pkg/cmd/ file roster"
+justification = "The CLI-command package's full file list (~120 files, one .go + one _test.go per subcommand, plus require/ and search/ subpackages) — the single biggest catastrophic-omission risk in the repo if only a sample were shown."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "pkg/cmd"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "pkg/cmd/root.go — subcommand roster (cmd.AddCommand)"
+justification = "The actual wiring that assembles the `helm` command tree, grouped by the source's own comments (chart commands vs release commands vs misc) plus the separate registry/push AddCommand call — the ground truth for 'what commands does helm have' and, by naming convention (newXCmd defined in X.go), a one-grep pointer to each command's implementation file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/cmd/root.go"
+start = 267
+end = 303
+render.kind = "full"
+
+[[batches]]
+id = "2.3"
+descriptor = "pkg/cmd/root.go — env var reference table (head)"
+justification = "The env var table's header and its first two rows ($HELM_CACHE_HOME, $HELM_CONFIG_HOME) from the globalUsage backtick string. Ellipsis signals the table continues ($HELM_DATA_HOME through $HELM_MAX_HISTORY, $HELM_NAMESPACE through $KUBECONFIG, kube-context/impersonation vars, color mode, then a per-OS directory-defaults table) rather than silently truncating."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/cmd/root.go"
+start = 48
+end = 62
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/cmd/root.go"
+start = 63
+end = 63
+render.kind = "ellipsis"
+
+[[batches]]
+id = "3.1"
+descriptor = "pkg/cli/environment.go — EnvSettings struct (head)"
+justification = "The concrete Go type behind every persistent CLI flag: KubeConfig/KubeContext/KubeToken/KubeAsUser/KubeAsGroups here, pairing with the env var table in 2.3 — this is where a new global flag would be added. Ellipsis signals KubeAPIServer/KubeCaFile/KubeInsecureSkipTLSVerify/KubeTLSServerName/Debug/RegistryConfig/RepositoryConfig/RepositoryCache/PluginsDirectory/MaxHistory/BurstLimit/QPS/ColorMode/ContentCache follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/cli/environment.go"
+start = 51
+end = 64
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/cli/environment.go"
+start = 65
+end = 65
+render.kind = "ellipsis"
+
+[[batches]]
+id = "4.1"
+descriptor = "pkg/chart/v2/chart.go — Chart struct"
+justification = "The in-memory representation of a loaded chart (Raw/Metadata/Lock/Templates/Values/Schema fields) — the central domain type nearly every action/engine/loader function operates on. Ellipsis signals SchemaModTime/Files/ModTime and the private parent/dependencies fields follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/chart/v2/chart.go"
+start = 35
+end = 56
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/chart/v2/chart.go"
+start = 57
+end = 57
+render.kind = "ellipsis"
+
+[[batches]]
+id = "4.2"
+descriptor = "pkg/chart/v2/metadata.go — Metadata struct (Chart.yaml schema, head)"
+justification = "Field-for-field mapping of the front half of Chart.yaml (name, home, sources, version, description, keywords). Ellipsis signals maintainers/icon/apiVersion/condition/tags/appVersion/deprecated/annotations/kubeVersion/dependencies/type follow — cheaper, more precise evidence of the chart manifest format than prose docs."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/chart/v2/metadata.go"
+start = 46
+end = 60
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/chart/v2/metadata.go"
+start = 61
+end = 61
+render.kind = "ellipsis"
+
+[[batches]]
+id = "4.3"
+descriptor = "Feature-gate mechanism + experimental chart v3 gate"
+justification = "pkg/gates defines the env-var-driven Gate type (IsEnabled/Error); internal/gates/ChartV3 is the one gate defined today, behind HELM_EXPERIMENTAL_CHART_V3 — explains how any 'experimental' Helm v4 feature is toggled, a pattern not mentioned in AGENTS.md."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/gates/gates.go"
+start = 24
+end = 38
+render.kind = "full"
+[[batches.content.spans]]
+path = "internal/gates/gates.go"
+start = 17
+end = 21
+render.kind = "full"
+
+[[batches]]
+id = "4.4"
+descriptor = "internal/chart/v3/ file roster"
+justification = "The next-gen chart-format package (mentioned by name in AGENTS.md but not enumerated): lint/, loader/, util/ mirror pkg/chart/v2's shape almost file-for-file — this listing lets the agent confirm that parallel structure directly instead of guessing."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/chart/v3"
+entries = "all"
+
+[[batches]]
+id = "5.1"
+descriptor = "pkg/chart/v2/util/create.go — scaffold filename constants (head)"
+justification = "The filenames `helm create` writes (Chart.yaml, values.yaml, values.schema.json, templates/, charts/, templates/tests/, .helmignore). Ellipsis signals the per-template filename constants (ingress/deployment/service/serviceaccount/hpa/NOTES.txt/_helpers.tpl) follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 41
+end = 54
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 55
+end = 55
+render.kind = "ellipsis"
+
+[[batches]]
+id = "5.2"
+descriptor = "Canonical Chart.yaml template (`helm create` scaffold, head)"
+justification = "The exact embedded Chart.yaml text `helm create` writes, comments included (application vs library chart type). Ellipsis signals the version/appVersion commentary follows — a config-sample answer to 'what does a Chart.yaml look like' cheaper than reading the chartutil validator."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 81
+end = 93
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 94
+end = 94
+render.kind = "ellipsis"
+
+[[batches]]
+id = "5.3"
+descriptor = "Canonical values.yaml template — head (`helm create` scaffold)"
+justification = "First section of the embedded default values.yaml (replicaCount, image repository/pullPolicy/tag); an Ellipsis signals the template continues (imagePullSecrets, serviceAccount, service/ingress/httpRoute/resources/autoscaling/probes) rather than silently truncating."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 107
+end = 120
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/chart/v2/util/create.go"
+start = 121
+end = 121
+render.kind = "ellipsis"
+
+[[batches]]
+id = "5.4"
+descriptor = "pkg/cmd/testdata/testcharts/ roster"
+justification = "The ~30 hand-built edge-case charts test suites load against (chart-with-schema, chart-with-lib-dep, chart-bad-requirements, chart-with-only-crds, subchart, lib-chart, deprecated, issue-7233...) — breadth hedge so the agent doesn't assume a fixture chart for its scenario is missing before searching."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "pkg/cmd/testdata/testcharts"
+entries = "all"
+
+[[batches]]
+id = "5.5"
+descriptor = "alpine test chart — minimal real example (Chart.yaml + template head)"
+justification = "A complete, tiny, real chart: full Chart.yaml plus the start of its one Pod template exercising .Release.Name/.Values and the `quote` template func — a concrete rendering example to pair with the funcMap batch (7.2) and Chart/Metadata structs (4.1/4.2). Ellipsis signals .Chart.AppVersion (release labels), helm.sh/chart, and the spec: section (restartPolicy/containers) follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/cmd/testdata/testcharts/alpine/Chart.yaml"
+start = 1
+end = 8
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/cmd/testdata/testcharts/alpine/templates/alpine-pod.yaml"
+start = 1
+end = 10
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/cmd/testdata/testcharts/alpine/templates/alpine-pod.yaml"
+start = 11
+end = 11
+render.kind = "ellipsis"
+
+[[batches]]
+id = "6.1"
+descriptor = "pkg/action/action.go — Configuration struct"
+justification = "The shared dependency-injection struct every action (Install/Upgrade/List/...) embeds a pointer to: RESTClientGetter, Releases storage, KubeClient, RegistryClient, Capabilities, CustomTemplateFuncs, HookOutputFunc — the hub of the SDK's object graph. Ellipsis signals the private mutex/LogHolder fields follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/action/action.go"
+start = 119
+end = 140
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/action.go"
+start = 141
+end = 141
+render.kind = "ellipsis"
+
+[[batches]]
+id = "6.2"
+descriptor = "pkg/action/action.go — DryRunStrategy enum (head)"
+justification = "The three dry-run modes (none/client/server) with their exact behavioral comments — directly relevant to debugging install/upgrade --dry-run behavior. Ellipsis signals the file continues into PostRenderStrategy (the v4-new combined/separate/nohooks post-render modes)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/action/action.go"
+start = 76
+end = 89
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/action.go"
+start = 90
+end = 90
+render.kind = "ellipsis"
+
+[[batches]]
+id = "6.3"
+descriptor = "Location batch: every exported pkg/action type"
+justification = "One line per exported action type declaration (Configuration, Install, Upgrade, Get/GetValues/GetMetadata, History, List, Lint/LintResult, Package, Pull, Push, Rollback, Show, Status, ChartPathOptions, Uninstall, Verify, Dependency, RegistryLogin/Logout, ReleaseTesting) — shows the complete action-layer API surface so no `helm <verb>` implementation looks absent."
+predecessor = "6.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/action/action.go"
+start = 119
+end = 119
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/dependency.go"
+start = 36
+end = 36
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/get_metadata.go"
+start = 34
+end = 34
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/get_metadata.go"
+start = 40
+end = 40
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/history.go"
+start = 32
+end = 32
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/get_values.go"
+start = 30
+end = 30
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/get.go"
+start = 26
+end = 26
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/install.go"
+start = 74
+end = 74
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/install.go"
+start = 143
+end = 143
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/lint.go"
+start = 34
+end = 34
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/lint.go"
+start = 44
+end = 44
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/package.go"
+start = 41
+end = 41
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/push.go"
+start = 32
+end = 32
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/list.go"
+start = 34
+end = 34
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/list.go"
+start = 88
+end = 88
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/list.go"
+start = 105
+end = 105
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/registry_logout.go"
+start = 24
+end = 24
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/pull.go"
+start = 36
+end = 36
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/rollback.go"
+start = 37
+end = 37
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/registry_login.go"
+start = 26
+end = 26
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/status.go"
+start = 29
+end = 29
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/upgrade.go"
+start = 50
+end = 50
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/verify.go"
+start = 29
+end = 29
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/show.go"
+start = 59
+end = 59
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/uninstall.go"
+start = 40
+end = 40
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/release_testing.go"
+start = 46
+end = 46
+render.kind = "full"
+
+[[batches]]
+id = "6.4"
+descriptor = "pkg/action/install.go — Install struct (flag surface, head)"
+justification = "Fields behind the first slice of `helm install`/`helm template`'s flags: ForceReplace/ForceConflicts/ServerSideApply. Ellipsis signals CreateNamespace/DryRunStrategy/HideSecret/DisableHooks/Replace/WaitStrategy/WaitOptions/WaitForJobs/Devel/DependencyUpdate/Timeout/Namespace/ReleaseName and later flags follow — refines the one-line entry already listed in 6.3."
+predecessor = "6.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/action/install.go"
+start = 74
+end = 88
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/install.go"
+start = 89
+end = 89
+render.kind = "ellipsis"
+
+[[batches]]
+id = "6.5"
+descriptor = "pkg/action/upgrade.go — Upgrade struct (head)"
+justification = "The upgrade-specific counterpart to 6.4. Ellipsis signals the `Install bool` informative flag itself (upgrade-or-install mode, distinct from the Install action), then Devel/Namespace/SkipCRDs/Timeout/WaitStrategy/DisableHooks/DryRunStrategy and ForceReplace/ForceConflicts follow — refines the one-line entry in 6.3."
+predecessor = "6.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/action/upgrade.go"
+start = 50
+end = 54
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/action/upgrade.go"
+start = 55
+end = 55
+render.kind = "ellipsis"
+
+[[batches]]
+id = "7.1"
+descriptor = "pkg/engine/engine.go — Engine struct"
+justification = "The template-rendering engine's own knobs (Strict, LintMode, clientProvider, EnableDNS, CustomTemplateFuncs) — orients before the funcMap deep-dive. Ellipsis signals the New() constructor (which wires a rest.Config-backed ClientProvider for the `lookup` function) follows."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/engine/engine.go"
+start = 38
+end = 50
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/engine/engine.go"
+start = 51
+end = 51
+render.kind = "ellipsis"
+
+[[batches]]
+id = "7.2"
+descriptor = "pkg/engine/funcs.go — funcMap() custom template functions"
+justification = "The exact set of non-Sprig template functions Helm adds: toYaml/toJson/toToml + must*/from* variants (span one), and the late-bound placeholders for `include`/`tpl`/`required`/`lookup` (span two) — the single highest-value semantic table for 'what can a chart template call' short of reading every chart. Ellipsis marks the elided duration-helper functions in between."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/engine/funcs.go"
+start = 51
+end = 69
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/engine/funcs.go"
+start = 70
+end = 70
+render.kind = "ellipsis"
+[[batches.content.spans]]
+path = "pkg/engine/funcs.go"
+start = 87
+end = 96
+render.kind = "full"
+
+[[batches]]
+id = "7.3"
+descriptor = "pkg/engine/lookup_func.go — `lookup` template function"
+justification = "How the `lookup` function performs live in-cluster reads from inside a template (ClientProvider interface + NewLookupFunction), and that it returns no error when the resource is absent — a frequently-surprising behavior worth surfacing directly rather than via a doc search."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/engine/lookup_func.go"
+start = 33
+end = 47
+render.kind = "full"
+
+[[batches]]
+id = "8.1"
+descriptor = "pkg/kube/interface.go — kube.Interface (CRUD methods, head)"
+justification = "The four core CRUD methods of the Kubernetes-client abstraction Helm codes against (Get/Create/Delete/Update). Ellipsis signals Build/IsReachable/GetWaiter/GetPodList/BuildTable follow — the seam any custom/mock kube client (mentioned in AGENTS.md's testing conventions) must satisfy."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/kube/interface.go"
+start = 28
+end = 47
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/kube/interface.go"
+start = 48
+end = 48
+render.kind = "ellipsis"
+
+[[batches]]
+id = "9.1"
+descriptor = "pkg/storage/storage.go — Storage struct"
+justification = "The release-history engine: embeds a driver.Driver, adds MaxHistory pruning — the object action.Configuration.Releases points at, sitting directly above the driver-implementation tier covered next."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/storage/storage.go"
+start = 41
+end = 51
+render.kind = "full"
+
+[[batches]]
+id = "9.2"
+descriptor = "pkg/storage/driver/driver.go — Creator/Updator/Deletor/Queryor/Driver interfaces"
+justification = "Deletor/Queryor plus the composed Driver interface (which also names its Creator/Updator embeds directly, elided here via ellipsis) — the exact method set (Create/Update/Delete/Get/List/Query) to reimplement for a new storage backend."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/storage/driver/driver.go"
+start = 56
+end = 56
+render.kind = "ellipsis"
+[[batches.content.spans]]
+path = "pkg/storage/driver/driver.go"
+start = 77
+end = 79
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/storage/driver/driver.go"
+start = 89
+end = 93
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/storage/driver/driver.go"
+start = 95
+end = 105
+render.kind = "full"
+
+[[batches]]
+id = "9.3"
+descriptor = "pkg/storage/driver/ file roster"
+justification = "Names all four storage backend implementations (cfgmaps, secrets, memory, sql) plus the shared labels/records/util helpers in one cheap listing, so e.g. the SQL driver isn't assumed unimplemented after only reading the interface."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "pkg/storage/driver"
+entries = "all"
+
+[[batches]]
+id = "10.1"
+descriptor = "pkg/release/v1/release.go — Release struct"
+justification = "The persisted-release record (Name/Info/Chart/Config/Manifest/Hooks/Version) that storage.Driver implementations serialize — the concrete shape behind `helm get` / `helm history` / `helm list` output. Ellipsis signals Namespace/Labels/ApplyMethod follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/release/v1/release.go"
+start = 28
+end = 46
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/release/v1/release.go"
+start = 47
+end = 47
+render.kind = "ellipsis"
+
+[[batches]]
+id = "10.2"
+descriptor = "pkg/release/v1/hook.go — HookEvent enum + Hook struct (name)"
+justification = "Every lifecycle hook name (pre/post-install, pre/post-upgrade, pre/post-delete, pre/post-rollback, test) — the ground truth for 'what hook events exist and in what phases'. Ellipsis signals the Hook struct itself (Name/Kind/Path/Manifest/Events/Weight/DeletePolicies/OutputLogPolicies) follows at line 78."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/release/v1/hook.go"
+start = 24
+end = 38
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/release/v1/hook.go"
+start = 78
+end = 78
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/release/v1/hook.go"
+start = 79
+end = 79
+render.kind = "ellipsis"
+
+[[batches]]
+id = "10.3"
+descriptor = "pkg/release/common/status.go — release Status enum"
+justification = "Every release status string (deployed/uninstalled/superseded/failed/pending-install/pending-upgrade/pending-rollback/uninstalling) plus the maintainer note to keep cmd/helm/status.go in sync — the values `helm status`/`helm list` print and that release-state debugging keys off of."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/release/common/status.go"
+start = 18
+end = 42
+render.kind = "full"
+
+[[batches]]
+id = "11.1"
+descriptor = "pkg/registry/constants.go — OCI media types (head)"
+justification = "The exact OCI scheme/media-type strings Helm's registry client pushes/pulls (OCIScheme, credentials file path, config + chart-content media types) — the precise values to grep for when debugging an OCI registry interop issue. Ellipsis signals the provenance and legacy media types follow."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/registry/constants.go"
+start = 17
+end = 30
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/registry/constants.go"
+start = 31
+end = 31
+render.kind = "ellipsis"
+
+[[batches]]
+id = "11.2"
+descriptor = "Location batch: pkg/registry/client.go Option constructors"
+justification = "Every functional Client-construction option (debug, cache, basic-auth, writer, authorizer, registry-authorizer, credentials file, HTTP client, plain-HTTP) in one truncated-signature batch — the surface for configuring NewClient without reading the whole 900+-line client file. The file also defines LoginOpt*/PullOpt*/PushOpt* functional options (lines 279-774, not individually enumerated here) for the login/pull/push call sites."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 88
+end = 88
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 150
+end = 150
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 157
+end = 157
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 164
+end = 164
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 172
+end = 172
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 182
+end = 182
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 192
+end = 192
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 199
+end = 199
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 206
+end = 206
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "pkg/registry/client.go"
+start = 214
+end = 214
+render.kind = "truncated"
+render.pattern = "^[^(]+"
+
+[[batches]]
+id = "12.1"
+descriptor = "internal/plugin/ file roster"
+justification = "The v4 plugin system's ~30 files (cache/, installer/, schema/, legacy + v1 metadata, subprocess + extism runtimes, signing) — breadth hedge before diving into the interfaces, so e.g. the OCI installer, signing support, or the WASM runtime aren't assumed absent."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "internal/plugin"
+entries = "all"
+
+[[batches]]
+id = "12.2"
+descriptor = "internal/plugin/plugin.go — Plugin/PluginHook interfaces"
+justification = "The runtime-agnostic contract every plugin (subprocess or WASM) satisfies: Dir/Metadata/Invoke (its request/response-mechanism doc-comment elided), plus PluginHook.InvokeHook for install/upgrade lifecycle events — the seam to implement a new plugin type or debug an Invoke failure against."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/plugin/plugin.go"
+start = 27
+end = 34
+render.kind = "full"
+[[batches.content.spans]]
+path = "internal/plugin/plugin.go"
+start = 35
+end = 35
+render.kind = "ellipsis"
+[[batches.content.spans]]
+path = "internal/plugin/plugin.go"
+start = 44
+end = 50
+render.kind = "full"
+
+[[batches]]
+id = "12.3"
+descriptor = "internal/plugin/runtime.go — Runtime + RuntimeConfig interfaces"
+justification = "The one-level-up abstraction (CreatePlugin) that subprocess and extism/WASM runtimes both implement (see 12.1's runtime_extismv1.go / runtime_subprocess.go), and the RuntimeConfig.Validate() contract each runtime's config type must satisfy."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/plugin/runtime.go"
+start = 25
+end = 40
+render.kind = "full"
+
+[[batches]]
+id = "12.4"
+descriptor = "internal/plugin/metadata.go — Metadata struct (plugin.yaml schema)"
+justification = "The in-memory shape every legacy/v1 plugin.yaml is normalized to: APIVersion/Name/Type (cli/v1, getter/v1, postrenderer/v1)/Runtime (subprocess, wasm)/Version/SourceURL/Config/RuntimeConfig — the schema to check before writing or debugging a plugin.yaml."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "internal/plugin/metadata.go"
+start = 34
+end = 59
+render.kind = "full"
+
+[[batches]]
+id = "13.1"
+descriptor = "pkg/getter/getter.go — Getter interface + Provider"
+justification = "The Getter interface + Constructor type behind every scheme-dispatched chart-fetch (http/https/oci) that pkg/downloader and `helm pull`/`helm dependency update` resolve through. Ellipsis signals the Provider{Schemes, New} struct follows."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/getter/getter.go"
+start = 156
+end = 163
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/getter/getter.go"
+start = 164
+end = 164
+render.kind = "ellipsis"
+
+[[batches]]
+id = "13.2"
+descriptor = "pkg/repo/v1/index.go — IndexFile struct (index.yaml schema)"
+justification = "The exact field set of a chart-repository index.yaml (APIVersion/Generated/Entries map/PublicKeys, Annotations elided via ellipsis) — the config-sample shortcut for 'what does `helm repo index` produce' instead of tracing IndexDirectory's construction logic."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/repo/v1/index.go"
+start = 82
+end = 88
+render.kind = "full"
+[[batches.content.spans]]
+path = "pkg/repo/v1/index.go"
+start = 89
+end = 89
+render.kind = "ellipsis"
+[[batches.content.spans]]
+path = "pkg/repo/v1/index.go"
+start = 93
+end = 93
+render.kind = "full"
+
+[[batches]]
+id = "13.3"
+descriptor = "pkg/downloader/ file roster"
+justification = "Names the chart_downloader (pull-by-reference), manager (dependency resolution), and cache implementation files in one cheap listing, orienting before any deep dive into chart-acquisition code."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "pkg/downloader"
+entries = "all"
+
+[[batches]]
+id = "14.1"
+descriptor = "pkg/postrenderer/postrenderer.go — PostRenderer interface"
+justification = "The single-method Run(buffer)->(buffer,error) contract any post-renderer (plugin-backed or custom) implements — pairs with the DryRunStrategy/PostRenderStrategy enums in 6.2 to fully explain Helm 4's hook+template post-render pipeline."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pkg/postrenderer/postrenderer.go"
+start = 28
+end = 35
+render.kind = "full"

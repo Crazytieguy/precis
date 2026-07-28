@@ -1,492 +1,677 @@
 fixture = "thiserror"
 revision_pin = "9ac165c4"
 summary = """
-thiserror is a proc-macro crate (two-crate workspace: `thiserror` re-exports \
-`thiserror-impl`'s `#[derive(Error)]`) that generates `std::error::Error` \
-(source/provide) and `Display` impls from `#[error(...)]`, `#[from]`, \
-`#[source]`, and `#[backtrace]` field/container attributes, plus \
-`#[error(transparent)]` passthrough. The query distribution this NS serves: \
-(a) "how do I use attribute X" (README/lib.rs doc-comment semantics), \
-(b) "why won't my derive compile" (impl/src/valid.rs's exact error strings, \
-tests/ui/*.rs+*.stderr compile-fail catalog), (c) "how does the macro expand \
-X" (impl/src/{ast,attr,fmt,expand}.rs — parse attrs -> validate -> codegen), \
-(d) build/CI/config operational questions (build.rs nightly-feature probing, \
-ci.yml job matrix), and (e) "what usage patterns are already tested" \
-(tests/test_*.rs). Runtime-support traits in src/{aserror,display,provide,var}.rs \
-back every generated impl and are referenced pervasively from expand.rs via \
-`::thiserror::#private::*`.
+`thiserror` 2.0.18 (dtolnay) — a Cargo workspace of two crates that
+together implement `#[derive(Error)]` for the standard library's
+`std::error::Error` trait. The root crate (`src/`) is a thin `no_std`
+runtime shim: it re-exports the derive macro and provides the sealed
+helper traits (`AsDynError`, `AsDisplay`, `ThiserrorProvide`, `Var`)
+that generated code calls through a version-stamped `__private18`
+module built by `build.rs`. All the real work is in `impl/`
+(`thiserror-impl`), a proc-macro crate whose pipeline is
+`ast.rs` (parse syn input into Struct/Enum/Variant/Field) →
+`attr.rs` (parse `#[error]`/`#[source]`/`#[from]`/`#[backtrace]`) →
+`fmt.rs` (expand the `{field}` display shorthand) → `valid.rs`
+(reject bad attribute combinations with tuned diagnostics) →
+`expand.rs` (emit the Error/Display/From impls), with `fallback.rs`
+emitting a stub impl when validation fails.
+
+The ranking front-loads what the crate *is* and how users spell it:
+the README lede and canonical example, the two source trees, the
+derive entry point and its accepted attributes, then the attribute
+semantics (`#[from]`, `#[source]`, `#[backtrace]`,
+`error(transparent)`, `error(fmt = ...)`, format-shorthand rules) that
+dominate "how do I express X" questions. After that comes the
+proc-macro implementation surface — type rosters, function rosters and
+the shape of the generated impls — sized so that "where is X
+implemented" lands in one grep. The runtime shim, build-script cfg
+probing, the integration/trybuild test corpus and packaging/CI
+metadata rank last, since they answer narrower questions.
 """
 
-# ============================= TIER 1: orientation =============================
+# ---------------------------------------------------------------- tier 1
+# Identity, layout, and the two entry points (the derive macro and the
+# root crate's public surface).
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
-justification = "First orientation for any query: names every top-level entry (manifest, build script, two source trees, tests, license/CI files) so the agent never has to guess whether e.g. a top-level doc or config file exists."
-[batches.content]
-kind = "fs"
-groups = [ { parent = ".", entries = "all" } ]
+descriptor = "Crate identity: name, one-line purpose, version"
+justification = "Rank 1 must answer \"what is this repository\". README's title and lede sentence name the artifact (`derive(Error)` for `std::error::Error`) and the dependency line gives the major version; Cargo.toml lines 2-3 pin the exact version 2.0.18. Seven short lines."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 2, render = { kind = "full" } },
+  { path = "README.md", start = 9, end = 10, render = { kind = "full" } },
+  { path = "README.md", start = 16, end = 16, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 2, end = 3, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "src/ and impl/src/ directory listings"
-justification = "The two source trees (runtime-support crate vs proc-macro crate) side by side; establishes the full module rosters up front so later batches that quote individual files never look like a partial/omitted set."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "src", entries = "all" }, { parent = "impl/src", entries = "all" } ]
+descriptor = "Complete repository root listing"
+justification = "The whole class of root entries at once: an agent that sees `impl/`, `build/`, `build.rs`, `src/`, `tests/` knows the workspace has a second crate, a build script with a probe file, and where tests live. Partial root listings are the classic catastrophic omission, so `entries = \"all\"`."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "tests/ and tests/no-std/ directory listings"
-justification = "Names every integration test file and the no-std sub-crate; a 'what's already tested' or 'add a test for X' query needs this roster before picking a file to extend."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "tests", entries = "all" }, { parent = "tests/no-std", entries = "all" } ]
+descriptor = "Complete listings of both source trees: src/, impl/, impl/src/"
+justification = "This repository's substance sits in two flat directories of ~6 and ~11 modules. Naming every file in both — plus `impl/`'s own two entries — tells the agent the entire module set of both crates before any file is opened, which is what makes later \"where is X\" greps one hop. Deferring this behind peripheral inventories would be the known failure mode."
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+  { parent = "impl", entries = "all" },
+  { parent = "impl/src", entries = "all" },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "build/, .github/, .github/workflows/ listings"
-justification = "Cheap operational-coverage roster: the nightly-feature probe source and the CI workflow file, so 'how is this tested/built in CI' has an exact path before any content is spent."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "build", entries = "all" }, { parent = ".github", entries = "all" }, { parent = ".github/workflows", entries = "all" } ]
+descriptor = "README canonical example, head: derive, #[from], positional {0}"
+justification = "The single highest zero-follow-up item in the repo, split so a tight budget still gets the core spelling: `use thiserror::Error`, `#[derive(Error, Debug)]`, an `#[error(\"...\")]` message, a `#[from]` tuple variant and a positional `{0}` interpolation. The trailing ellipsis marks that the enum continues; batch 1.5 renders the rest."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 23, end = 31, render = { kind = "full" } },
+  { path = "README.md", start = 32, end = 32, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "Cargo.toml — package identity (name/version/authors)"
-justification = "Crate name, version, and author: the first three facts almost any task needs to identify the crate (thiserror v2.0.18)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 1, end = 4, render = { kind = "full" } } ]
+descriptor = "README canonical example, tail: named-field variant, unit variant"
+justification = "Completes the example with the struct-style variant carrying `{expected:?}`/`{found:?}` debug interpolation and the fieldless `Unknown` variant, so the reader sees all four variant shapes thiserror supports. Overrides batch 1.4's ellipsis line."
+predecessor = "1.4"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 32, end = 40, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version"
-justification = "Remaining package metadata, completing the [package] table so no field looks omitted — including edition (2021) and rust-version (MSRV 1.71), the two facts almost any 'can I use feature X here' task needs."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 5, end = 12, render = { kind = "full" } } ]
+descriptor = "Derive entry point: #[proc_macro_derive(Error, attributes(...))]"
+justification = "Five lines that name the macro, enumerate every helper attribute the crate accepts (`backtrace`, `error`, `from`, `source` — a complete class, so no reader can assume a missing one), and show that expansion is delegated to `expand::derive`. This is the hop-zero answer for \"what attributes exist\" and the hop-one pointer into impl/src/expand.rs."
+content = { kind = "lines", spans = [
+  { path = "impl/src/lib.rs", start = 39, end = 43, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "Cargo.toml — [features] header"
-justification = "Shows the crate has exactly one feature (`std`, default-on) before spending tokens on its doc comment."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 14, end = 16, render = { kind = "full" } } ]
+descriptor = "Root crate module structure and public re-export (src/lib.rs tail)"
+justification = "The root crate's entire non-doc body: the std-feature `extern crate` shims, the complete `mod` roster (`aserror`, `display`, `provide` behind a cfg, `var`, `private`), the `pub use thiserror_impl::*` that makes `thiserror::Error` the derive, and the `include!` of the build-script-generated `private.rs`. Explains why `src/` looks nearly empty and where the generated module comes from."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 276, end = 291, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.8"
-descriptor = "Cargo.toml — std feature doc comment"
-justification = "The only non-default-config axis in this crate (no_std support); the doc comment is the exact statement of what `std` gates (Path/PathBuf Display formatting) — directly answers 'does this work in no_std' without opening src/."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 17, end = 28, render = { kind = "full" } } ]
+descriptor = "Root crate attributes: no_std, docs.rs root, nightly cfg gate"
+justification = "`#![no_std]`, the docs.rs root URL, the `error_generic_member_access` feature gate and the `compile_error!` that fires when the build-script probe disagrees with `thiserror_nightly_testing`. These lines are the reason `build.rs` exists and the first thing to read for any nightly/backtrace/no_std question; the ellipsis marks the elided `#![allow(clippy::...)]` list at lines 264-270."
+content = { kind = "lines", spans = [
+  { path = "src/lib.rs", start = 262, end = 263, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 264, end = 264, render = { kind = "ellipsis" } },
+  { path = "src/lib.rs", start = 271, end = 274, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.9"
-descriptor = "Cargo.toml — [dependencies]"
-justification = "The only runtime dependency is the sibling thiserror-impl proc-macro crate, version-locked with `=` (both crates are always released in lockstep)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 30, end = 31, render = { kind = "full" } } ]
+descriptor = "Cargo manifest: features, dependency on impl, workspace members"
+justification = "The `std` default feature, the exact-version path dependency on `thiserror-impl`, and the two workspace members (`impl`, `tests/no-std`). Answers \"is there a no_std mode\", \"how do the crates relate\", \"what is the MSRV surface\" without opening the manifest. The comment block documenting the std feature and the dev-dependency/docs.rs metadata are deferred to tier 5."
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 8, end = 8, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 12, end = 12, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 14, end = 15, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 28, end = 28, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 30, end = 31, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 39, end = 40, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "1.10"
-descriptor = "Cargo.toml — [workspace]"
-justification = "Workspace members (impl/, tests/no-std/) explain why `cargo test --workspace --exclude thiserror_no_std_test` appears in CI."
-[batches.content]
-kind = "lines"
-spans = [ { path = "Cargo.toml", start = 39, end = 40, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.11"
-descriptor = "impl/Cargo.toml — package identity (name/version/authors/description/edition)"
-justification = "The proc-macro crate's own manifest identity, mirroring 1.5 for the derive-implementation half of the workspace. license/repository/rust-version (elided, see ellipsis) are byte-identical to 1.5/1.6's values for the root crate — both halves of the workspace are always released in lockstep."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/Cargo.toml", start = 1, end = 6, render = { kind = "full" } },
-  { path = "impl/Cargo.toml", start = 7, end = 7, render = { kind = "ellipsis" } },
-]
-
-[[batches]]
-id = "1.12"
-descriptor = "impl/Cargo.toml — [lib]/[dependencies]"
-justification = "Confirms this crate is `proc-macro = true` and pins the exact syn/quote/proc-macro2 versions — load-bearing for any 'upgrade syn' or 'why does this parse differently' task."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/Cargo.toml", start = 11, end = 17, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.13"
-descriptor = "impl/src/lib.rs — module list"
-justification = "The single most load-bearing structural pointer in the impl crate: names all 10 sibling modules (ast/attr/expand/fallback/fmt/generics/prop/scan_expr/unraw/valid) in one place, so later batches that quote 2-3 of these files never look like the full set."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/lib.rs", start = 21, end = 32, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.14"
-descriptor = "impl/src/lib.rs — #[proc_macro_derive] entry point"
-justification = "Shows the derive macro recognizes exactly 4 attributes (backtrace, error, from, source), dispatches straight to expand::derive(), and the `private` marker type whose ToTokens impl resolves to the version-patch-suffixed `__private<N>` module (see 3.3)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/lib.rs", start = 34, end = 55, render = { kind = "full" } } ]
-
-[[batches]]
-id = "1.15"
-descriptor = "src/lib.rs — module wiring epilogue"
-justification = "The runtime crate's own module map (aserror/display/provide(cfg)/var/private) plus the `include!(concat!(env!(\"OUT_DIR\"), \"/private.rs\"))` line — the exact tie to build.rs-generated code, and the `#![no_std]` + `pub use thiserror_impl::*` re-export that makes the derive macro visible as `thiserror::Error`. Skips the crate's clippy `#![allow(...)]` lint-suppression list (lines 264-270) — lint-name bookkeeping, not load-bearing for understanding the crate."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lib.rs", start = 262, end = 263, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 271, end = 291, render = { kind = "full" } },
-]
-
-# ================= TIER 2: public attribute-grammar semantics =================
+# ---------------------------------------------------------------- tier 2
+# What the derive actually means for a user: the documented semantics of
+# every helper attribute and of the display-format shorthand. This is the
+# crate's specification and the biggest zero-follow-up win after the
+# example.
 
 [[batches]]
 id = "2.1"
-descriptor = "Crate-doc lede + canonical example"
-justification = "The crate's own rustdoc lede and the one example every downstream user copies (DataStoreError with #[from], positional shorthand, struct fields). Highest zero-follow-up value in the whole fixture: most 'how do I use thiserror' queries are answered by this alone. (README.md carries near-identical prose; this doc-comment is the canonical, line-addressable copy so both aren't double-bought.) Skips the github/crates.io/docs.rs badge markdown (lines 1-8) — decorative, not semantic."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/lib.rs", start = 9, end = 34, render = { kind = "full" } } ]
+descriptor = "Documentation map: README section headings + rustdoc mirror in src/lib.rs"
+justification = "Six lines that fix the shape of both prose surfaces: README's `## Example`, `## Details`, `## Comparison to anyhow` and `#### License` headings, and the matching `//! # Example` / `//! # Details` headings inside src/lib.rs — which tells the agent that lines 1-260 of src/lib.rs are a rustdoc copy of the README's Details section, so it need not read both."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 21, end = 21, render = { kind = "full" } },
+  { path = "README.md", start = 44, end = 44, render = { kind = "full" } },
+  { path = "README.md", start = 211, end = 211, render = { kind = "full" } },
+  { path = "README.md", start = 223, end = 223, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/lib.rs", start = 38, end = 38, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "Display-shorthand table + #[from] rule statement"
-justification = "The exact `{var}`/`{0}`/`{var:?}`/`{0:?}` shorthand-to-write! mapping table (the single densest piece of semantic info in the crate) plus the prose statement of what #[from] requires, ahead of its code example in 2.3."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lib.rs", start = 48, end = 57, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 99, end = 106, render = { kind = "full" } },
-]
+descriptor = "Details: no public API footprint, allowed error shapes, Display generation"
+justification = "The first three Details bullets carry the design invariants an agent must not get wrong: thiserror never appears in your public API (so switching to/from a handwritten impl is not a breaking change); errors may be enums, named-field structs, tuple structs or unit structs (a closed list); and a Display impl is generated from `#[error(\"...\")]` on the struct or on each variant."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 46, end = 56, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "#[from] example + #[source] rule statement"
-justification = "Concrete #[from] usage (unnamed field, no other fields allowed beyond source+backtrace) followed by the #[source]-selection rule text (named `source`, or explicit attribute) that check_field_attrs (6.3) enforces. Stops before the example's rustdoc-hidden `# impl Display` doctest boilerplate (123-129) — compile plumbing, not part of the pattern being shown."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lib.rs", start = 118, end = 122, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 131, end = 139, render = { kind = "full" } },
-]
+descriptor = "Display shorthand table: {var}, {0}, {var:?}, {0:?}"
+justification = "Nine lines giving the complete four-row mapping from interpolation shorthand to the `write!` it becomes, plus the note that shorthands compose with additional format args. Highest value-per-token in the Details section and the answer to the most common formatting question."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 58, end = 66, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "provide()/backtrace rule statement"
-justification = "States the backtrace auto-detection rule (a field typed `Backtrace` is auto-provided via provide()) — the nightly-only (error_generic_member_access) half of the crate's contract, tying to src/provide.rs (3.2) and build.rs's cfg emission (10.1)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "src/lib.rs", start = 159, end = 163, render = { kind = "full" } } ]
+descriptor = "Details: #[from] generates From, with its field-count restriction"
+justification = "Text plus a two-variant example: a `From` impl is generated per `#[from]` variant, and such a variant must contain no fields beyond the source (and optionally a backtrace). That restriction is enforced in impl/src/valid.rs and is a frequent source of confusion, so the rule belongs in the snapshot."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 89, end = 102, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "#[error(transparent)] rule + 'anything else' variant example"
-justification = "transparent's forward-Display-and-source-through semantics, appropriate for enums that need a catch-all variant, plus the concrete `Other(#[from] anyhow::Error)` example showing it combined with #[from]."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lib.rs", start = 210, end = 214, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 218, end = 227, render = { kind = "full" } },
-]
+descriptor = "Details: source() from #[source] or a field named `source`"
+justification = "Explains the two ways a source field is identified, that `#[from]` implies `#[source]` so both are never needed, and that any `std::error::Error` (or deref to `dyn Error`) works as a source. The accompanying struct example at README lines 114-121 is left out; the prose is self-contained."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 104, end = 112, render = { kind = "full" } },
+] }
 
-# ==================== TIER 3: runtime-support traits ====================
+[[batches]]
+id = "2.6"
+descriptor = "Details: #[error(transparent)] forwarding"
+justification = "Transparent is the third major behavioural mode (after message-Display and From) and has its own validation rules and codegen path. These lines say it forwards both source and Display to the single underlying error and is meant for an \"anything else\" variant."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 169, end = 181, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Details: provide() and automatic Backtrace field detection"
+justification = "States that a field whose type is named `Backtrace` is detected automatically and surfaced through `Error::provide`, and that this requires nightly ≥ 1.73. The four rendered example lines show the bare `backtrace: Backtrace` field that triggers it. Pairs with the `error_generic_member_access` cfg shown at src/lib.rs 271 and with src/provide.rs."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 123, end = 126, render = { kind = "full" } },
+  { path = "README.md", start = 131, end = 134, render = { kind = "full" } },
+  { path = "README.md", start = 135, end = 135, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Details: #[backtrace] on a source field forwards provide()"
+justification = "The subtle case: when one field is both source and `#[backtrace]`, `provide()` delegates to the source's `provide` so both layers share a backtrace. This is the rule behind the four-arm match in `impl_enum`'s provide arm and is not inferable from the code without effort."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 138, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Details: #[from] variants with a Backtrace field capture in From"
+justification = "Completes the backtrace story: a variant with both `#[from]` and a `Backtrace` field captures the backtrace inside the generated `From` impl. Without this the reader has the two other backtrace rules and would wrongly assume the set is closed."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 155, end = 156, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Details example: extra format arguments (`max = i32::MAX`)"
+justification = "Concrete syntax for passing additional named format arguments alongside the shorthand — the feature that forces impl/src/fmt.rs's `explicit_named_args` parsing. Ranked after the semantic bullets because it refines rules already stated in batch 2.3."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 68, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Details example: referring to fields from format args via `.var` / `.0`"
+justification = "The `.0` / `.limits.lo` spelling used inside additional expression arguments, shown by the `first_char(.0)` and `OutOfBounds` examples. A distinct, separately-satisfiable rule from batch 2.10 and the reason impl/src/attr.rs's `parse_token_expr` rewrites leading dots into `_0` idents."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 76, end = 87, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "When to use thiserror vs anyhow"
+justification = "The Details section's closing pointer to `anyhow` plus the core of the `## Comparison to anyhow` section: library-like code that designs its own error types uses thiserror, application-like code uses anyhow. Cheap, and it answers a common framing question outright."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 204, end = 207, render = { kind = "full" } },
+  { path = "README.md", start = 213, end = 217, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 3
+# The proc-macro crate (impl/): the IR, the attribute parser, the
+# validator's diagnostic catalog, and the code generator. Rosters first
+# so "where is X implemented" is one grep; depth afterwards.
 
 [[batches]]
 id = "3.1"
-descriptor = "src/aserror.rs — AsDynError trait + impls"
-justification = "Backs every generated `fn source()` (`self.field.as_dyn_error()`); the 5 near-identical impls enumerate exactly which `dyn Error [+ Send [+ Sync [+ UnwindSafe]]]` field shapes are accepted as a source — directly explains ui/source-*-not-error.rs failures (see the 13.1 roster) since only these shapes satisfy `AsDynError`. The private Sealed trait + its mirrored impls (lines 44-51, elided) merely gate external implementations of AsDynError; they don't add any shape beyond what's already enumerated above."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/aserror.rs", start = 1, end = 42, render = { kind = "full" } },
-  { path = "src/aserror.rs", start = 44, end = 44, render = { kind = "ellipsis" } },
-]
+descriptor = "impl/src/expand.rs: complete top-level function roster (names only)"
+justification = "expand.rs is the 598-line core and by far the largest file in the crate. One truncated line per function gives every name and line number — `derive`, `try_expand`, `impl_struct`, `impl_enum`, `call_site_ident`, `fields_pat`, `use_as_display`, `from_initializer`, `type_is_option`, `unoptional_type`, `type_parameter_of_option` — so no reader can assume an unlisted helper is absent, and any \"where does the macro do X\" question becomes a single targeted read."
+content = { kind = "lines", spans = [
+  { path = "impl/src/expand.rs", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 221, end = 221, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 505, end = 505, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 511, end = 511, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 526, end = 526, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 536, end = 536, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 565, end = 565, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 569, end = 569, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/expand.rs", start = 574, end = 574, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated)"
-justification = "Backs every generated `fn provide()`; only compiled under `cfg(error_generic_member_access)`, i.e. only when build.rs's nightly probe (10.1) succeeds — the crate's one nightly-only code path. The trailing Sealed trait/impl (lines 18-20, elided) mirrors 3.1's sealing pattern, gating external impls without adding a new shape."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/provide.rs", start = 1, end = 16, render = { kind = "full" } },
-  { path = "src/provide.rs", start = 18, end = 18, render = { kind = "ellipsis" } },
-]
+descriptor = "expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines"
+justification = "The macro's control flow end to end: `derive` calls `try_expand` and, on any `syn::Error`, falls back to `fallback::expand` so that an Error impl is emitted anyway (with the comment explaining why); `try_expand` runs `Input::from_syn`, then `input.validate()`, then dispatches to `impl_struct`/`impl_enum`. Overrides the truncated signatures from batch 3.1."
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+  { path = "impl/src/expand.rs", start = 12, end = 29, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper)"
-justification = "private.rs is the literal target of every `::thiserror::#private::X` path emitted by expand.rs (1.14's `private` ToTokens impl resolves to this module, versioned as `__private<PATCH>` to dodge cross-version ambiguity) — the single place that answers 'what does #private refer to'. var.rs's Var<T> is the {field:p} Pointer-format wrapper used by fmt.rs's bonus-display machinery (8.1)."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/private.rs", start = 1, end = 14, render = { kind = "full" } },
-  { path = "src/var.rs", start = 1, end = 9, render = { kind = "full" } },
-]
+descriptor = "expand.rs: the two emitted impl shapes (struct and enum quote! tails)"
+justification = "The literal output template of the macro, for both container kinds: `impl ::thiserror::#private::Error for #ty` containing `#source_method` and `#provide_method`, followed by `#display_impl` and the `From` impl(s). Twenty lines that answer \"what code does this derive actually generate\" without expanding anything."
+content = { kind = "lines", spans = [
+  { path = "impl/src/expand.rs", start = 209, end = 218, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 491, end = 500, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.4"
-descriptor = "src/display.rs — AsDisplay trait + Path Display impl"
-justification = "The fourth runtime-support file named in the summary alongside aserror/provide/var — until now the only one of the four with zero rendered lines despite `mod display;` appearing in 1.15's module map. AsDisplay::as_display() is what the plain `{var}` shorthand (2.2) actually expands to at each interpolated field; the Path impl's `Target = path::Display<'a>` is why a `Path`/`PathBuf` field in a message interpolates via `.display()` instead of failing to implement Display (the trivial one-line body, and PathBuf's mirrored impl, both elided). Ends before the Sealed trait and the `cfg(not(feature = \"std\"))` synthetic-impl workaround module (elided) — sealing/compile-inference internals, not part of the public contract."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/display.rs", start = 1, end = 27, render = { kind = "full" } },
-  { path = "src/display.rs", start = 29, end = 29, render = { kind = "ellipsis" } },
-]
+descriptor = "impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field)"
+justification = "Every type the rest of the crate manipulates, with all fields: `Input` as Struct-or-Enum, and the `attrs`/`ident`/`generics`/`fields`/`variants`/`member`/`ty`/`contains_generic` members. Reading any other module in impl/src requires exactly this; showing the whole block avoids implying that unlisted fields do not exist."
+content = { kind = "lines", spans = [
+  { path = "impl/src/ast.rs", start = 10, end = 42, render = { kind = "full" } },
+] }
 
-# ========================= TIER 4: ast.rs data model =========================
+[[batches]]
+id = "3.5"
+descriptor = "impl/src/attr.rs: Attrs and the parsed Display attribute"
+justification = "`Attrs` is the complete set of helper attributes the parser can produce — `display`, `source`, `backtrace`, `from`, `transparent`, `fmt` — and the `Display` struct carries the derived facts codegen depends on (`requires_fmt_machinery`, `has_bonus_display`, `infinite_recursive`, `implied_bounds`, `bindings`). Note the `fmt` field: `#[error(fmt = ...)]` exists but is not documented in the README."
+content = { kind = "lines", spans = [
+  { path = "impl/src/attr.rs", start = 11, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum"
+justification = "Closes the class opened by batch 3.5: the four remaining attribute payload types (each carrying `original` and a `span`, `Fmt` carrying an `ExprPath`) plus the nine-variant `Trait` enum — Debug, Display, Octal, LowerHex, UpperHex, Pointer, Binary, LowerExp, UpperExp — which is the complete set of formatting traits a `{x:?}`-style spec can imply."
+content = { kind = "lines", spans = [
+  { path = "impl/src/attr.rs", start = 32, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "attr.rs: the three accepted forms of #[error(...)]"
+justification = "The `kw::transparent` / `kw::fmt` custom keywords and the lookahead chain that accepts exactly a string literal, `transparent`, or `fmt = <path>` — anything else is a lookahead error. This is the authoritative, and only, statement of the attribute's grammar, including the `fmt = ...` form the README never mentions."
+content = { kind = "lines", spans = [
+  { path = "impl/src/attr.rs", start = 125, end = 128, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 130, end = 135, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 147, end = 150, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "impl/src/valid.rs: container-level diagnostic messages"
+justification = "The exact compile-error strings a user can hit from struct/enum/variant/field validation — transparent needing exactly one field, transparent structs rejecting `#[source]`, `fmt = ...` being enum-only, a missing `#[error(\"...\")]` on a variant, and `#[error(...)]` on a field. Self-describing lines, and the fastest possible route from an observed error message to its source line."
+content = { kind = "lines", spans = [
+  { path = "impl/src/valid.rs", start = 21, end = 21, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 27, end = 27, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 34, end = 34, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 58, end = 58, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 73, end = 73, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 79, end = 79, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 102, end = 102, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "valid.rs: attribute-placement and field-attribute diagnostic messages"
+justification = "The remaining thirteen messages, from `check_non_field_attrs` and `check_field_attrs`: misplaced `#[from]`/`#[source]`/`#[backtrace]`, the mutually-exclusive transparent/display/fmt combinations, the three duplicate-attribute errors, `#[from]` only on the source field, \"deriving From requires no fields other than source and backtrace\", and the non-static-lifetime rejection. Together with batch 3.8 this is the crate's complete diagnostic catalog."
+content = { kind = "lines", spans = [
+  { path = "impl/src/valid.rs", start = 113, end = 113, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 119, end = 119, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 125, end = 125, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 132, end = 132, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 138, end = 138, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 144, end = 144, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 161, end = 161, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 170, end = 170, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 179, end = 179, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 188, end = 188, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 197, end = 197, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 209, end = 209, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 217, end = 217, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "valid.rs: complete validate/check function roster"
+justification = "Which impl owns which check: `Input::validate` dispatching to `Struct`/`Enum`/`Variant`/`Field` validators, plus the two free functions `check_non_field_attrs` and `check_field_attrs` and the `contains_non_static_lifetime` helper. Gives the messages of batches 3.8-3.9 their enclosing structure at one line each."
+content = { kind = "lines", spans = [
+  { path = "impl/src/valid.rs", start = 5, end = 6, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 14, end = 15, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 45, end = 46, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 66, end = 67, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 91, end = 92, render = { kind = "full" } },
+  { path = "impl/src/valid.rs", start = 109, end = 109, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/valid.rs", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/valid.rs", start = 224, end = 224, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "attr.rs: which attributes `get` recognises, plus the file's function roster"
+justification = "The dispatch in `attr::get` over `error`, `source`, `backtrace` and `from` — including the deliberate `continue` that lets `#[from(...)]` through for derive_more — and the names of the file's three functions and two `ToTokens` impls, so the `Display`/`Trait` token emission is one hop away."
+content = { kind = "lines", spans = [
+  { path = "impl/src/attr.rs", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/attr.rs", start = 80, end = 82, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 94, end = 94, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 100, end = 106, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/attr.rs", start = 196, end = 196, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/attr.rs", start = 302, end = 302, render = { kind = "full" } },
+  { path = "impl/src/attr.rs", start = 342, end = 342, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "impl/src/prop.rs: complete accessor roster for source/from/backtrace fields"
+justification = "Every function in prop.rs at one line each: the `Struct`/`Variant` accessors (`from_field`, `source_field`, `backtrace_field`, `distinct_backtrace_field`), the `Enum` predicates (`has_source`, `has_backtrace`, `has_display`), `Field::is_backtrace`/`source_span`, and the five free helpers. This module is the operational definition of \"which field is the source\", so naming all of it prevents wrong assumptions about the lookup rules."
+content = { kind = "lines", spans = [
+  { path = "impl/src/prop.rs", start = 6, end = 6, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 25, end = 25, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 26, end = 26, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 53, end = 53, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 72, end = 72, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 88, end = 88, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/prop.rs", start = 127, end = 127, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "prop.rs: how the source and backtrace fields are actually chosen"
+justification = "The two lookup bodies that batch 3.12 only names: `source_field` prefers a `#[from]`/`#[source]` field and otherwise falls back to a field literally named `source`; `backtrace_field` prefers `#[backtrace]` and otherwise any field whose type is named `Backtrace` — with `type_is_backtrace` showing that the match is on the last path segment. This is the precise rule the README states informally."
+content = { kind = "lines", spans = [
+  { path = "impl/src/prop.rs", start = 98, end = 110, render = { kind = "full" } },
+  { path = "impl/src/prop.rs", start = 139, end = 146, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.14"
+descriptor = "impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping"
+justification = "The entry point that rewrites `#[error(\"{field}\")]` into real format args, plus the match that turns the last character of a format spec into an implied bound — `?`→Debug, `o`→Octal, `x`/`X`→hex, `p`→Pointer, `b`→Binary, `e`/`E`→exp, otherwise Display, and the empty-spec case that sets `has_bonus_display`. Also the `self` check that sets `infinite_recursive`, and the `implied_bounds.insert` that drives the generated where-clauses."
+content = { kind = "lines", spans = [
+  { path = "impl/src/fmt.rs", start = 15, end = 16, render = { kind = "full" } },
+  { path = "impl/src/fmt.rs", start = 93, end = 110, render = { kind = "full" } },
+  { path = "impl/src/fmt.rs", start = 118, end = 118, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.15"
+descriptor = "fmt.rs: FmtArguments and the remaining function roster"
+justification = "The `FmtArguments` struct (`named` set plus `first_unnamed`) and one line per remaining function — `explicit_named_args`, `try_explicit_named_args`, `fallback_explicit_named_args`, `is_syn_full`, `take_int`, `take_ident`, `between` — closing the file's symbol set opened by batch 3.14 and pointing at the syn-\"full\"-detection trick."
+predecessor = "3.14"
+content = { kind = "lines", spans = [
+  { path = "impl/src/fmt.rs", start = 166, end = 169, render = { kind = "full" } },
+  { path = "impl/src/fmt.rs", start = 172, end = 172, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 192, end = 192, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 231, end = 231, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 255, end = 255, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 273, end = 273, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/fmt.rs", start = 299, end = 299, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.16"
+descriptor = "ast.rs: ContainerKind and its six display strings"
+justification = "The closed six-variant classification of containers (struct, tuple struct, unit struct, struct variant, tuple variant, unit variant) plus the `Display` impl that renders each variant as human text; those strings are interpolated into the container-kind diagnostic emitted from impl/src/fmt.rs."
+content = { kind = "lines", spans = [
+  { path = "impl/src/ast.rs", start = 44, end = 52, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 176, end = 183, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.17"
+descriptor = "ast.rs: complete from_syn constructor roster"
+justification = "Every remaining function in ast.rs with its owning impl block: `Input::from_syn` (which rejects unions), `Struct`/`Enum`/`Variant`/`Field::from_syn`, `Field::multiple_from_syn`, and `ContainerKind::from_struct`/`from_variant`. Closes the file's symbol set left open by batches 3.4 and 3.16."
+content = { kind = "lines", spans = [
+  { path = "impl/src/ast.rs", start = 54, end = 55, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 67, end = 68, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 85, end = 86, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 118, end = 119, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 130, end = 131, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/ast.rs", start = 156, end = 157, render = { kind = "full" } },
+  { path = "impl/src/ast.rs", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/ast.rs", start = 174, end = 175, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.18"
+descriptor = "impl/src/generics.rs: ParamsInScope and InferredBounds"
+justification = "The two mechanisms behind thiserror's generated where-clauses: `ParamsInScope::intersects` decides `Field::contains_generic`, and `InferredBounds::insert`/`augment_where_clause` accumulate `T: Display`-style predicates in deterministic order. Answers \"why did my derive add a bound\" and is referenced from both `impl_struct` and `impl_enum`."
+content = { kind = "lines", spans = [
+  { path = "impl/src/generics.rs", start = 8, end = 11, render = { kind = "full" } },
+  { path = "impl/src/generics.rs", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/generics.rs", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/generics.rs", start = 26, end = 26, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/generics.rs", start = 48, end = 51, render = { kind = "full" } },
+  { path = "impl/src/generics.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/generics.rs", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "impl/src/generics.rs", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.19"
+descriptor = "impl/src/unraw.rs: IdentUnraw/MemberUnraw and the raw-identifier rule"
+justification = "Why the crate has its own ident type: `IdentUnraw::to_local` re-raws an identifier unless it is one of `_`, `super`, `self`, `Self`, `crate`, which can never appear raw. Plus the `MemberUnraw` Named/Unnamed enum used as the field key throughout ast/attr/expand. Directly explains the `r#type` handling exercised by tests/ui/raw-identifier.rs."
+content = { kind = "lines", spans = [
+  { path = "impl/src/unraw.rs", start = 10, end = 12, render = { kind = "full" } },
+  { path = "impl/src/unraw.rs", start = 19, end = 30, render = { kind = "full" } },
+  { path = "impl/src/unraw.rs", start = 81, end = 85, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.20"
+descriptor = "impl/src/fallback.rs: the invalid-input fallback expansion"
+justification = "The signature and the whole emitted token stream (the ellipsis hides only the two `let` bindings at lines 8-9): emit the compile error, then an empty `Error` impl guarded by the `for<'workaround> #ty: Debug` trivial-bounds workaround, plus a `Display` impl whose `fmt` is `unreachable!()`. This is why a broken `#[derive(Error)]` still produces a type that satisfies `Error`, and it is exercised by tests/ui/invalid-input-impl-anyway.rs."
+content = { kind = "lines", spans = [
+  { path = "impl/src/fallback.rs", start = 7, end = 7, render = { kind = "full" } },
+  { path = "impl/src/fallback.rs", start = 8, end = 8, render = { kind = "ellipsis" } },
+  { path = "impl/src/fallback.rs", start = 11, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.21"
+descriptor = "impl/src/scan_expr.rs: the Input/Action alphabet of the expression scanner"
+justification = "scan_expr is a self-contained table-driven expression skipper used when syn's \"full\" feature is off (see `is_syn_full` in fmt.rs). Its two enums — the sixteen `Input` matchers and the four `Action`s (`SetState`, `IncDepth`, `DecDepth`, `Finish`) — are the whole vocabulary needed to read or extend the tables."
+content = { kind = "lines", spans = [
+  { path = "impl/src/scan_expr.rs", start = 6, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.22"
+descriptor = "expand.rs: the gate line for every conditionally generated impl"
+justification = "A one-line-per-decision index into the 470 lines of impl_struct and impl_enum that the roster in batch 3.1 only names. For structs: the transparent-vs-source-field choice for `source()`, `backtrace_field()` gating `provide()`, transparent-vs-`#[error]` for `Display`, `from_field()` gating `From`, and the type-parameter check that adds `Self: Debug + Display`. For enums: the `has_source`/`has_backtrace`/`has_display` gates, the four-arm match over `(backtrace_field(), source_field())` that implements the README's backtrace-forwarding rules, the per-variant `from_impls`, and the same generic-bounds check. Ellipses mark the elided bodies."
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+  { path = "impl/src/expand.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 45, end = 45, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 74, end = 74, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 127, end = 127, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 133, end = 133, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 167, end = 167, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 202, end = 202, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 203, end = 203, render = { kind = "ellipsis" } },
+  { path = "impl/src/expand.rs", start = 226, end = 226, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 278, end = 278, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 282, end = 284, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 323, end = 324, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 346, end = 346, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 365, end = 365, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 382, end = 382, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 447, end = 447, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 484, end = 484, render = { kind = "full" } },
+  { path = "impl/src/expand.rs", start = 485, end = 485, render = { kind = "ellipsis" } },
+] }
+
+
+# ---------------------------------------------------------------- tier 4
+# The runtime half: the sealed helper traits generated code calls, and
+# the build script that decides which of them exist.
 
 [[batches]]
 id = "4.1"
-descriptor = "impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs"
-justification = "The parsed-input data model every other impl/src/*.rs file operates on (attr::get() fills Field.attrs; expand.rs matches on Input::Struct/Enum). Field.contains_generic and Field.member (MemberUnraw, see 9.3) are the two facts threaded through the entire codegen path."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/ast.rs", start = 10, end = 52, render = { kind = "full" } } ]
+descriptor = "src/private.rs: the complete generated-code support surface"
+justification = "Fourteen lines naming every item the expanded macro can reference through `::thiserror::__private18::…`: `AsDynError`, `AsDisplay`, `ThiserrorProvide` (cfg `error_generic_member_access`), `Var`, `core::error::Error`, and `std::backtrace::Backtrace` (cfg std and not `thiserror_no_backtrace_type`). Anyone changing codegen must keep this list in sync, so the whole class belongs in one batch."
+content = { kind = "lines", spans = [
+  { path = "src/private.rs", start = 1, end = 14, render = { kind = "full" } },
+] }
 
-# =================== TIER 5: attr.rs attribute-parsing schema ===================
+[[batches]]
+id = "4.2"
+descriptor = "src/aserror.rs: AsDynError and its five blanket/dyn impls"
+justification = "The trait behind every generated `source()` body, plus each impl header — `T: Error`, `dyn Error`, `+ Send`, `+ Send + Sync`, `+ Send + Sync + UnwindSafe` — and the `Sealed` supertrait, whose four remaining `dyn` impls at lines 47-50 mirror the list above (marked with an ellipsis). The exact set of `dyn` combinations is what decides whether a given source type compiles, so showing all five closes the class."
+content = { kind = "lines", spans = [
+  { path = "src/aserror.rs", start = 4, end = 7, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 9, end = 9, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 44, end = 46, render = { kind = "full" } },
+  { path = "src/aserror.rs", start = 47, end = 47, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "src/display.rs: AsDisplay and the std-only Path/PathBuf specializations"
+justification = "The trait with its `Target` associated type and `as_display`, the generic `&T` impl, and the two `#[cfg(feature = \"std\")]` impls for `Path`/`PathBuf` that make `{path}` in an error message work without `.display()` — the concrete payoff of the `std` feature documented in Cargo.toml. Ends at the `Sealed` supertrait, with an ellipsis over its two std-gated impls at lines 48-51."
+content = { kind = "lines", spans = [
+  { path = "src/display.rs", start = 5, end = 12, render = { kind = "full" } },
+  { path = "src/display.rs", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/display.rs", start = 25, end = 27, render = { kind = "full" } },
+  { path = "src/display.rs", start = 35, end = 37, render = { kind = "full" } },
+  { path = "src/display.rs", start = 45, end = 47, render = { kind = "full" } },
+  { path = "src/display.rs", start = 48, end = 48, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "src/provide.rs (ThiserrorProvide) and src/var.rs (Var) end to end"
+justification = "Both remaining runtime modules, complete and small: `ThiserrorProvide::thiserror_provide` forwarding to `Error::provide` (the mechanism behind `#[backtrace]` source forwarding), and `Var<'a, T>`, the newtype that lets a `{x:p}` pointer format reach a field by reference. Only provide.rs's four-line `Sealed` boilerplate at lines 17-20 is elided, behind an ellipsis."
+content = { kind = "lines", spans = [
+  { path = "src/provide.rs", start = 1, end = 16, render = { kind = "full" } },
+  { path = "src/provide.rs", start = 17, end = 17, render = { kind = "ellipsis" } },
+  { path = "src/var.rs", start = 1, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "impl/src/lib.rs: the version-stamped `private` path token"
+justification = "The remaining eleven lines of the proc-macro crate's lib.rs: a unit struct whose `ToTokens` emits `__private` concatenated with `CARGO_PKG_VERSION_PATCH`. This is why generated code says `::thiserror::__private18::` and why the derive crate is pinned to an exact `=2.0.18` version in Cargo.toml — a genuinely surprising coupling worth having in the snapshot."
+content = { kind = "lines", spans = [
+  { path = "impl/src/lib.rs", start = 45, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "build.rs: the generated __private module and the cfg declarations"
+justification = "The `PRIVATE` template string with its `$$` patch-version placeholder, and the head of `main`: the three `cargo:rustc-check-cfg` declarations naming every cfg this crate uses (`error_generic_member_access`, `thiserror_nightly_testing`, `thiserror_no_backtrace_type`) and the `fs::write` of `$OUT_DIR/private.rs` that src/lib.rs includes at line 291."
+content = { kind = "lines", spans = [
+  { path = "build.rs", start = 10, end = 16, render = { kind = "full" } },
+  { path = "build.rs", start = 18, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "build.rs: rustc capability decisions, function roster, and the probe file"
+justification = "Where each cfg is actually emitted — `error_generic_member_access` from the nightly probe, `feature=\"std\"` forced when rustc < 1.81 lacks `core::error::Error`, `thiserror_no_backtrace_type` when rustc < 1.65 — plus the names of the three helper functions (`compile_probe`, `rustc_minor_version`, `cargo_env_var`) and the comment at the top of build/probe.rs stating what the probe tests."
+content = { kind = "lines", spans = [
+  { path = "build.rs", start = 65, end = 66, render = { kind = "full" } },
+  { path = "build.rs", start = 76, end = 77, render = { kind = "full" } },
+  { path = "build.rs", start = 86, end = 87, render = { kind = "full" } },
+  { path = "build.rs", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "build.rs", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "build.rs", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "build/probe.rs", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------- tier 5
+# Test corpus, packaging metadata and CI. Narrow questions, ranked last.
 
 [[batches]]
 id = "5.1"
-descriptor = "impl/src/attr.rs — Attrs/Display/Source/From/Transparent/Fmt/Trait struct defs"
-justification = "The exact fields captured per recognized attribute (Display.requires_fmt_machinery/has_bonus_display/infinite_recursive/implied_bounds/bindings are the state fmt.rs's expand_shorthand (8.1) computes and expand.rs later consumes) plus the 9-variant Trait enum (Debug/Display/Octal/LowerHex/UpperHex/Pointer/Binary/LowerExp/UpperExp) — every format-spec suffix {field:X} can select."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/attr.rs", start = 11, end = 67, render = { kind = "full" } } ]
-
-# =================== TIER 6: valid.rs validation-error catalog ===================
-
-[[batches]]
-id = "6.1"
-descriptor = "impl/src/valid.rs — Struct::validate() dispatch"
-justification = "Struct::validate is called from Input::validate (line 5, elided — a trivial match on Input::Struct/Enum) and contributes three compile-error strings that fire here, not in either check_* function (6.2/6.3): '#[error(transparent)] requires exactly one field', 'transparent error struct can't contain #[source]', and '#[error(fmt = ...)] is only supported in enums; for a struct, handwrite your own Display impl'. Stops before validate()'s tail call into check_field_attrs (37, elided — already 6.3's own subject). Enum::validate (line 45, elided) contributes its own 'missing #[error(\"...\")] display attribute' error for variants; Variant::validate (line 66, elided) mirrors Struct::validate's transparent checks with variant-specific wording; Field::validate (line 91, elided) rejects a display/fmt attribute placed directly on a field."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/valid.rs", start = 5, end = 5, render = { kind = "ellipsis" } },
-  { path = "impl/src/valid.rs", start = 14, end = 36, render = { kind = "full" } },
-  { path = "impl/src/valid.rs", start = 37, end = 37, render = { kind = "ellipsis" } },
-  { path = "impl/src/valid.rs", start = 45, end = 45, render = { kind = "ellipsis" } },
-  { path = "impl/src/valid.rs", start = 91, end = 91, render = { kind = "ellipsis" } },
-]
+descriptor = "Complete tests/, tests/no-std/ and .github/ listings"
+justification = "Every entry of the test tree at once: the eleven topic-named integration files (test_display, test_backtrace, test_from, test_source, test_transparent, test_generics, test_expr, test_option, test_path, test_lints, test_error), the `compiletest.rs` harness, the `ui/` directory of trybuild cases and the `no-std/` workspace member — plus, for closure, the sole entries of `.github/workflows/` and `build/`. Topic names make \"where is X tested\" a zero-search question; `entries = \"all\"` so no reader assumes a missing topic is untested."
+content = { kind = "fs", groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/no-std", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = "build", entries = "all" },
+] }
 
 [[batches]]
-id = "6.2"
-descriptor = "impl/src/valid.rs — check_non_field_attrs()"
-justification = "The exact compile error strings for container-level attribute misuse: #[from]/#[source]/#[backtrace] on a struct/enum instead of a field, and #[error(transparent)] combined with a display or fmt= attribute. Directly explains ui/unexpected-struct-source.rs and ui/duplicate-fmt.rs's 3rd/4th errors (see the 13.1 roster)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/valid.rs", start = 109, end = 149, render = { kind = "full" } } ]
+id = "5.2"
+descriptor = "tests/compiletest.rs: the trybuild UI harness in full"
+justification = "All seven lines: a nightly-only, miri-excluded `ui` test that runs `t.compile_fail(\"tests/ui/*.rs\")`. This is what turns the ~49 `.rs`/`.stderr` pairs under tests/ui into expected-diagnostic snapshots, and it tells an agent that changing a message in impl/src/valid.rs means regenerating those `.stderr` files."
+content = { kind = "lines", spans = [
+  { path = "tests/compiletest.rs", start = 1, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "6.3"
-descriptor = "impl/src/valid.rs — check_field_attrs()"
-justification = "The densest error-message cluster in the crate: duplicate #[from]/#[source]/#[backtrace], #[from] must match the source field, 'deriving From requires no fields other than source and backtrace', and the non-'static-lifetime-in-source restriction. This is the first stop for almost any 'why won't my derive(Error) compile' task that 6.1/6.2 don't cover."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/valid.rs", start = 151, end = 222, render = { kind = "full" } } ]
-
-# ========================= TIER 7: expand.rs codegen =========================
+id = "5.3"
+descriptor = "tests/no-std/test.rs: the no_std smoke test's error types"
+justification = "A `#![no_std]` crate deriving an enum with `#[from]` over a `#[error(\"SourceError {field}\")]` struct — the minimal proof that derive output compiles without std. Shows how the no-std workspace member is wired and what it actually asserts."
+content = { kind = "lines", spans = [
+  { path = "tests/no-std/test.rs", start = 1, end = 15, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "7.1"
-descriptor = "impl/src/expand.rs — derive()/try_expand() entry point"
-justification = "The macro's top-level control flow: parse -> Input::from_syn -> validate() -> impl_struct/impl_enum, falling back to fallback::expand() (9.1) on any error so a broken derive still gets a (stub) Error/Display impl to avoid cascading diagnostics elsewhere in the caller's crate."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/expand.rs", start = 12, end = 29, render = { kind = "full" } } ]
+id = "5.4"
+descriptor = "Cargo.toml: std-feature rationale and dev-dependencies"
+justification = "The comment explaining that the `std` feature exists to format `Path`/`PathBuf` conveniently (matching src/display.rs), and the complete dev-dependency set — `anyhow`, `ref-cast`, `rustversion`, `trybuild` with the `diff` feature — which is what the integration and UI tests are allowed to use."
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 17, end = 18, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 27, end = 27, render = { kind = "full" } },
+  { path = "Cargo.toml", start = 33, end = 37, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "7.2"
-descriptor = "impl/src/expand.rs — impl_struct(): source() body construction"
-justification = "Shows exactly how transparent (delegates via AsDynError, 3.1) vs an explicit #[source]/#[from] field (with Option<T> unwrapping via `.as_ref()?`) each produce the generated `fn source()` — the single clearest illustration of 'what code does #[source] actually generate'. impl_struct() itself continues past this excerpt (provide_method, Display impl, final quote! assembly — elided, see ellipsis) into territory 3.2/2.2 already cover semantically."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/expand.rs", start = 31, end = 72, render = { kind = "full" } },
-  { path = "impl/src/expand.rs", start = 73, end = 73, render = { kind = "ellipsis" } },
-]
+id = "5.5"
+descriptor = "impl/Cargo.toml: the proc-macro crate's manifest"
+justification = "Name, matching version 2.0.18, `rust-version = \"1.71\"`, the `[lib] proc-macro = true` marker, and the complete dependency set (proc-macro2, quote, syn) with their minimum versions — the answer to \"what syn version must this code target\", which constrains every parser change in impl/src."
+content = { kind = "lines", spans = [
+  { path = "impl/Cargo.toml", start = 2, end = 3, render = { kind = "full" } },
+  { path = "impl/Cargo.toml", start = 6, end = 6, render = { kind = "full" } },
+  { path = "impl/Cargo.toml", start = 9, end = 9, render = { kind = "full" } },
+  { path = "impl/Cargo.toml", start = 11, end = 17, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "7.3"
-descriptor = "impl/src/expand.rs — from_initializer(): generated From-impl body"
-justification = "The shared struct/enum helper that builds the `Self { field: source, backtrace: ... }` initializer for every #[from] field, including the `Backtrace::capture()` call inserted when a Backtrace field is also present — answers 'when exactly is a backtrace captured' precisely (at From::from() time, not at error-construction time)."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/expand.rs", start = 536, end = 563, render = { kind = "full" } } ]
-
-[[batches]]
-id = "7.4"
-descriptor = "impl/src/expand.rs — impl_enum() entry: per-variant source() dispatch"
-justification = "impl_enum() is the single largest function in the crate (221-504, vs. impl_struct's 190 at 31-220) and was otherwise wholly unaddressed — a catastrophic-omission risk given #[derive(Error)] on an enum is at least as common as on a struct (the crate-doc's own canonical example, 2.1, is an enum). Shows that fn source() is built the same way as impl_struct (7.2) — gated by the same input.has_source() (prop.rs, 9.4) — just mapped once per variant instead of once per struct. The per-variant match arms (transparent / explicit #[source] field / neither), provide_method, and the Display/generic-bounds assembly all continue past this excerpt (elided, see ellipsis) using the identical asref/dyn_error idiom 7.2 already shows in full."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/expand.rs", start = 221, end = 226, render = { kind = "full" } },
-  { path = "impl/src/expand.rs", start = 227, end = 227, render = { kind = "ellipsis" } },
-]
-
-# ==================== TIER 8: fmt.rs display-shorthand engine ====================
-
-[[batches]]
-id = "8.1"
-descriptor = "impl/src/fmt.rs — expand_shorthand() signature + setup"
-justification = "Locates the algorithm behind the 2.2 shorthand table (field-name/index scanning inside the format string, member_index lookup, extra_positional_arguments_allowed gate for struct-vs-tuple containers) without spending on its ~130-line scanning loop body (elided, see ellipsis)."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/fmt.rs", start = 15, end = 28, render = { kind = "full" } },
-  { path = "impl/src/fmt.rs", start = 29, end = 29, render = { kind = "ellipsis" } },
-]
-
-# ======================= TIER 9: secondary impl internals =======================
-
-[[batches]]
-id = "9.1"
-descriptor = "impl/src/fallback.rs (full file)"
-justification = "The exact fallback codegen used by 7.1's `Err(error) => fallback::expand(...)`: a stub Error/Display impl (with a trivial-bounds workaround comment) so one broken derive doesn't cascade unrelated 'doesn't implement Error' diagnostics through the rest of the caller's crate."
-[batches.content]
-kind = "lines"
-spans = [ { path = "impl/src/fallback.rs", start = 1, end = 33, render = { kind = "full" } } ]
-
-[[batches]]
-id = "9.2"
-descriptor = "impl/src/generics.rs — ParamsInScope/InferredBounds struct locations"
-justification = "Cheap location pointers for the two generic-bound-inference helpers expand.rs's error_inferred_bounds/display_inferred_bounds (7.2-class) build up: ParamsInScope detects whether a field's type mentions a generic parameter; InferredBounds dedupes and renders the resulting where-clause. Prevents 'only fallback.rs got detail, the rest of impl/src/ look unexamined' after 9.1."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/generics.rs", start = 8, end = 8, render = { kind = "full" } },
-  { path = "impl/src/generics.rs", start = 48, end = 48, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "9.3"
-descriptor = "impl/src/unraw.rs + impl/src/scan_expr.rs — type/fn locations"
-justification = "IdentUnraw/MemberUnraw (unraw.rs) strip the `r#` prefix so a raw-identifier field name like `r#fn` still works as `{fn}` in a format string (see tests/ui/raw-identifier.rs); scan_expr() is the hand-written expression-boundary scanner attr.rs's parse_token_expr falls back to when syn's non-\"full\" mode can't parse an arbitrary expression. Locations only — both are internal parsing machinery, not something most tasks need the body of."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/unraw.rs", start = 12, end = 12, render = { kind = "full" } },
-  { path = "impl/src/unraw.rs", start = 82, end = 82, render = { kind = "full" } },
-  { path = "impl/src/scan_expr.rs", start = 192, end = 192, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "9.4"
-descriptor = "impl/src/prop.rs — from_field/source_field/backtrace_field/has_* predicate locations"
-justification = "prop.rs was named in 1.13's module roster but otherwise carried zero rendered lines anywhere in this draft — the only one of the 10 impl/src/ modules with no content batch at all. These are the shared predicate helpers 4.1's Struct/Enum/Field types are built around and 7.1-7.4's codegen calls directly (input.source_field(), input.has_source(), etc.): per-container from/source/backtrace field lookup, the three Enum-level has_source/has_backtrace/has_display gates 7.4's impl_enum() branches on, and Field::is_backtrace/source_span. Signatures only, truncated at the opening paren — bodies are short field-scanning loops, not something most tasks need verbatim. impl Variant<'_> (line 53, elided) repeats Struct's four methods verbatim for the per-variant case; the free-standing fns each impl method delegates to (line 88, elided) are the same lookups factored out, not additional surface."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "impl/src/prop.rs", start = 6, end = 6, render = { kind = "full" } },
-  { path = "impl/src/prop.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 11, end = 11, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 15, end = 15, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 19, end = 19, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 25, end = 25, render = { kind = "full" } },
-  { path = "impl/src/prop.rs", start = 26, end = 26, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 38, end = 38, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 53, end = 53, render = { kind = "ellipsis" } },
-  { path = "impl/src/prop.rs", start = 72, end = 72, render = { kind = "full" } },
-  { path = "impl/src/prop.rs", start = 73, end = 73, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^.*fn [A-Za-z_][A-Za-z0-9_]*" } },
-  { path = "impl/src/prop.rs", start = 88, end = 88, render = { kind = "ellipsis" } },
-]
-
-# =========================== TIER 10: build script ===========================
-
-[[batches]]
-id = "10.1"
-descriptor = "build.rs — rerun-if-changed / rustc-check-cfg declarations + OUT_DIR/private.rs generation"
-justification = "The three custom cfgs this crate ever emits (error_generic_member_access, thiserror_nightly_testing, thiserror_no_backtrace_type) declared up front, plus the exact generation of `$OUT_DIR/private.rs` (the module 1.15's `include!` pulls in and 3.3 documents the contents of) with its version-patch-suffixed module name. main() continues past this into the nightly-feature compile-probe decision tree (elided, see ellipsis) that 2.4 ties to."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "build.rs", start = 18, end = 29, render = { kind = "full" } },
-  { path = "build.rs", start = 30, end = 30, render = { kind = "ellipsis" } },
-]
-
-# ========================= TIER 11: CI / repo config =========================
-
-[[batches]]
-id = "11.1"
-descriptor = "ci.yml — header + every job key (roster)"
-justification = "Names all 8 CI jobs (pre_ci, test, msrv, minimal, doc, clippy, miri, outdated) so no job looks omitted, ahead of expanding the primary `test` job's detail in 11.2. clippy's job (line 93) runs `cargo clippy` with `-Dclippy::all -Dclippy::pedantic` (line 103) — relevant to any 'does this pass clippy' question."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".github/workflows/ci.yml", start = 1, end = 6, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 7, end = 7, render = { kind = "truncated", pattern = "^\\s*schedule:" } },
-  { path = ".github/workflows/ci.yml", start = 8, end = 13, render = { kind = "full" } },
+id = "5.6"
+descriptor = "CI job roster and the pinned toolchain components"
+justification = "One line per workflow job — `pre_ci`, `test` (the Rust version matrix), `msrv` at 1.71.0, `minimal` versions, `doc`, `clippy`, `miri`, `outdated` — so an agent knows the full set of gates a change must pass, plus rust-toolchain.toml requesting the `rust-src` component. Appendix material by rank, but complete."
+content = { kind = "lines", spans = [
   { path = ".github/workflows/ci.yml", start = 16, end = 16, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 19, end = 19, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 52, end = 52, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 65, end = 65, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 77, end = 77, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 93, end = 93, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 103, end = 103, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 105, end = 105, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 122, end = 122, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "11.2"
-descriptor = "ci.yml — primary `test` job detail"
-justification = "The rust-version matrix (nightly/beta/stable/1.81.0/1.76.0) and the exact three commands run per version (workspace test excluding the no-std crate, the no-std crate's own test, and --no-default-features) — the canonical 'how do I run this crate's tests the way CI does' answer. Skips two nightly-only RUSTFLAGS-tweaking steps (35-40, elided) between checkout and the actual test commands, and stops before the trailing Cargo.lock upload-artifact step (45-50) — both CI bookkeeping, not test commands."
-[batches.content]
-kind = "lines"
-spans = [
-  { path = ".github/workflows/ci.yml", start = 20, end = 34, render = { kind = "full" } },
-  { path = ".github/workflows/ci.yml", start = 35, end = 35, render = { kind = "ellipsis" } },
-  { path = ".github/workflows/ci.yml", start = 41, end = 44, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "11.3"
-descriptor = "rust-toolchain.toml + .gitignore + FUNDING.yml"
-justification = "Three tiny whole-file configs bundled together: the rust-src component pin, the two gitignored paths (/target, /Cargo.lock), and the GitHub sponsor link — cheap completeness, no reason to make an agent open each separately."
-[batches.content]
-kind = "lines"
-spans = [
+  { path = ".github/workflows/ci.yml", start = 19, end = 20, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 52, end = 53, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 65, end = 66, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 77, end = 78, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 93, end = 94, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 105, end = 106, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 122, end = 123, render = { kind = "full" } },
   { path = "rust-toolchain.toml", start = 1, end = 2, render = { kind = "full" } },
-  { path = ".gitignore", start = 1, end = 2, render = { kind = "full" } },
-  { path = ".github/FUNDING.yml", start = 1, end = 1, render = { kind = "full" } },
-]
-
-# ========================= TIER 12: usage-pattern tests =========================
-
-[[batches]]
-id = "12.1"
-descriptor = "tests/test_error.rs — canonical error shapes"
-justification = "The most compact 'what shapes does #[derive(Error)] accept' reference: braced/tuple/unit struct, a #[source]-bearing struct, and an anyhow-sourced struct — the shapes any new error type in a downstream crate will match one of."
-[batches.content]
-kind = "lines"
-spans = [ { path = "tests/test_error.rs", start = 17, end = 39, render = { kind = "full" } } ]
-
-[[batches]]
-id = "12.2"
-descriptor = "tests/test_from.rs — #[from] shapes (struct/tuple, plain and Option<T>)"
-justification = "Confirms #[from] works identically on named and tuple fields and on `Option<SourceError>` (the asref-unwrapping path expand.rs's source_body, 7.2, generates) — the concrete usage counterpart to the semantic rule stated in 2.2/2.3."
-[batches.content]
-kind = "lines"
-spans = [ { path = "tests/test_from.rs", start = 6, end = 27, render = { kind = "full" } } ]
-
-# =============================== TIER 13: ui fixtures ===============================
-
-[[batches]]
-id = "13.1"
-descriptor = "tests/ui/ directory listing (all 37 compile-fail cases + their .stderr)"
-justification = "Full roster of every trybuild compile-fail fixture (transparent-*, source-*-not-error, duplicate-*, from-*, missing-*, etc.) run by tests/compiletest.rs. An agent debugging a compile error can match its shape against this roster and read the matching .rs/.stderr pair directly — the naming convention alone (e.g. `transparent-struct-source.rs`) usually identifies which rule in 6.1/6.2/6.3 fired."
-[batches.content]
-kind = "fs"
-groups = [ { parent = "tests/ui", entries = "all" } ]
+] }
