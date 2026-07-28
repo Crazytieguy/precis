@@ -14,7 +14,7 @@ use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 pub use crate::fs_util::list_dir;
 use crate::fs_util::{DirFilter, EntryKind};
-use crate::value::{is_colocated_test_filename, mix_signals};
+use crate::value::mix_signals;
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
@@ -255,19 +255,6 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    // A large root-level `test/`/`spec/` dir of per-feature source files is
-    // the spec index ("what test covers feature X"): NS authors rank the
-    // *listing* mid-tier, but the non-essential floor (0.5) leaves its
-    // ratio far below the orientation tier, so it lands past 3K (chibicc
-    // test/ at ~3110 vs NS rank 7). Lift the listing — scoped to the
-    // listing batch, never the test bodies — for root-adjacent test dirs
-    // large enough to be a real spec suite.
-    let test_index_boost =
-        if source_inventory_dir && is_large_root_test_inventory_dir(dir, ctx, children) {
-            TEST_INDEX_LISTING_BOOST
-        } else {
-            1.0
-        };
     // Catalog-child suppression: when the parent is a high-fanout
     // source-inventory catalog, its own listing already names every child,
     // so each child's (near-identical) listing is redundant reference
@@ -281,11 +268,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    mix_signals(cat, fu, ztu, depth)
-        * fanout
-        * catalog_child_factor
-        * test_index_boost
-        * LISTING_TIER_SCALE
+    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_TIER_SCALE
 }
 
 /// Uniform price of the directory-listing class against the source
@@ -313,6 +296,14 @@ const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
 /// `index.*`/`__init__.py`/`mod.rs` entrypoint) are deliberately NOT
 /// catalogs — their children are first-class modules, not catalog leaves.
 fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
+    // The walk root has no parent *inside the walk*. Without this the
+    // probe reads the directory the root happens to sit in — so
+    // `precis ~/projects/myrepo` suppresses the root listing whenever
+    // `~/projects` holds ten-plus sibling checkouts, making the summary
+    // depend on files the walk never looks at.
+    if dir == ctx.root() {
+        return false;
+    }
     let Some(parent) = dir.parent() else {
         return false;
     };
@@ -534,47 +525,6 @@ fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.fs_state()
         .source_inventory_count(dir, MIN_SOURCE_FILES, ctx.dir_filter())
         >= MIN_SOURCE_FILES
-}
-
-/// Ratio multiplier lifting a large root-level test/spec listing out of
-/// the non-essential floor so its spec-index value clears the orientation
-/// tier at small budgets.
-const TEST_INDEX_LISTING_BOOST: f64 = 1.8;
-/// Minimum per-feature source files for a root test dir to read as a spec
-/// suite worth surfacing (not a handful of smoke tests).
-const MIN_TEST_INDEX_FILES: usize = 12;
-
-/// A root-adjacent `test`/`tests`/`spec`/`specs` directory that is a
-/// per-feature spec catalog (chibicc's `test/arith.c`, `test/cast.c` …) —
-/// the "what tests cover feature X" index the NS ranks mid-tier. Gated
-/// away from unit-test suites (commander's `tests/*.test.js`): those files
-/// carry the co-located test-convention naming and mirror source modules,
-/// and the NS never indexes them, so boosting the listing displaces
-/// tier-1 orientation. The discriminator is the file naming — standalone
-/// feature-named programs vs `.test.`/`.spec.`/`_test.` suffixes.
-fn is_large_root_test_inventory_dir(
-    dir: &Path,
-    ctx: &WalkCtx,
-    children: &BTreeMap<String, EntryKind>,
-) -> bool {
-    if dir.parent() != Some(ctx.root()) {
-        return false;
-    }
-    let Some(name) = dir.file_name().and_then(|n| n.to_str()) else {
-        return false;
-    };
-    if !is_test_dir_name(name) {
-        return false;
-    }
-    let catalog_files = children
-        .iter()
-        .filter(|(child, kind)| {
-            matches!(kind, EntryKind::File)
-                && is_source_inventory_file(Path::new(child))
-                && !is_colocated_test_filename(child)
-        })
-        .count();
-    catalog_files >= MIN_TEST_INDEX_FILES
 }
 
 /// True when `dir` lies under a `src`/`lib`/`source`/`pkg/` dir that

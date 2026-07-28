@@ -12,30 +12,30 @@ Score(3000)=0.703 I=0.901 C=0.548 ns_rows≤3K=20/63 (reached=11 partial=1 missi
 | ns | 170 |  | 48 | src/ module inventory | 1.3 |  | 0.545 |
 | walker |  | 190 | 67 | README headline in README.md |  |  | 0.549 |
 | ns | 261 |  | 91 | What `anyhow::Error` is — a Box<dyn Error> that must be Send + Sync | 1.4 |  | 0.486 |
-| walker |  | 283 | 93 | listing of 'tests' |  |  | 0.537 |
-| ns | 335 |  | 74 | …and the other two guarantees: always a backtrace, one word wide | 1.5 | 1.4 | 0.494 |
-| walker |  | 373 | 90 | pub-item names surface in src/lib.rs |  |  | 0.496 |
-| walker |  | 373 | 0 | pub item at src/lib.rs:468 |  |  | 0.496 |
-| walker |  | 386 | 13 | pub item at src/lib.rs:650 |  |  | 0.497 |
-| walker |  | 412 | 26 | pub item at src/lib.rs:390 |  |  | 0.499 |
-| ns | 419 |  | 84 | Cargo.toml package tail — MSRV, edition, license, links | 1.6 |  | 0.457 |
-| walker |  | 422 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.458 |
-| walker |  | 471 | 49 | pub item at src/lib.rs:415 |  |  | 0.464 |
-| ns | 512 |  | 93 | tests/ inventory | 1.7 |  | 0.510 |
-| walker |  | 515 | 44 | headings outline in README.md |  |  | 0.516 |
-| ns | 650 |  | 138 | Cargo features — std default, optional backtrace | 1.8 |  | 0.474 |
-| walker |  | 675 | 160 | pub item at src/lib.rs:616 |  |  | 0.484 |
-| ns | 798 |  | 148 | README lede, install snippet, and section map | 1.9 |  | 0.472 |
-| walker |  | 840 | 165 | [package] in Cargo.toml |  |  | 0.796 |
-| walker |  | 914 | 74 | README.md section #0 |  |  | 0.833 |
-| ns | 1014 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.722 |
-| walker |  | 1024 | 110 | [dependencies] in Cargo.toml |  |  | 0.781 |
-| ns | 1249 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.760 |
-| walker |  | 1298 | 274 | crate-doc lede in src/lib.rs |  |  | 0.760 |
-| walker |  | 1420 | 122 | macro_export names across src |  |  | 0.761 |
-| ns | 1457 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.709 |
-| ns | 1617 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.724 |
-| walker |  | 1684 | 264 | mod/use plumbing in src/lib.rs |  |  | 0.763 |
+| walker |  | 280 | 90 | pub-item names surface in src/lib.rs |  |  | 0.489 |
+| walker |  | 280 | 0 | pub item at src/lib.rs:468 |  |  | 0.489 |
+| walker |  | 293 | 13 | pub item at src/lib.rs:650 |  |  | 0.490 |
+| walker |  | 319 | 26 | pub item at src/lib.rs:390 |  |  | 0.493 |
+| walker |  | 329 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.494 |
+| ns | 335 |  | 74 | …and the other two guarantees: always a backtrace, one word wide | 1.5 | 1.4 | 0.454 |
+| walker |  | 378 | 49 | pub item at src/lib.rs:415 |  |  | 0.461 |
+| ns | 419 |  | 84 | Cargo.toml package tail — MSRV, edition, license, links | 1.6 |  | 0.422 |
+| walker |  | 422 | 44 | headings outline in README.md |  |  | 0.429 |
+| ns | 512 |  | 93 | tests/ inventory | 1.7 |  | 0.349 |
+| walker |  | 582 | 160 | pub item at src/lib.rs:616 |  |  | 0.358 |
+| ns | 650 |  | 138 | Cargo features — std default, optional backtrace | 1.8 |  | 0.330 |
+| walker |  | 747 | 165 | [package] in Cargo.toml |  |  | 0.646 |
+| ns | 798 |  | 148 | README lede, install snippet, and section map | 1.9 |  | 0.637 |
+| walker |  | 821 | 74 | README.md section #0 |  |  | 0.678 |
+| walker |  | 931 | 110 | [dependencies] in Cargo.toml |  |  | 0.752 |
+| ns | 1014 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.652 |
+| walker |  | 1205 | 274 | crate-doc lede in src/lib.rs |  |  | 0.652 |
+| ns | 1249 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.649 |
+| walker |  | 1327 | 122 | macro_export names across src |  |  | 0.649 |
+| ns | 1457 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.606 |
+| walker |  | 1591 | 264 | mod/use plumbing in src/lib.rs |  |  | 0.651 |
+| ns | 1617 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.670 |
+| walker |  | 1684 | 93 | listing of 'tests' |  |  | 0.763 |
 | walker |  | 1781 | 97 | dev/build/target dependencies in Cargo.toml |  |  | 0.763 |
 | ns | 1783 |  | 166 | Display representations — `{}` and `{:#}`, with sample output | 2.4 | 1.4 | 0.741 |
 | walker |  | 1904 | 123 | manifest config in Cargo.toml |  |  | 0.741 |

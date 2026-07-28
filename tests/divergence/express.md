@@ -13,20 +13,20 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 173 | 17 | listing of '.github/workflows' |  |  | 0.918 |
 | walker |  | 181 | 8 | imports in index.js |  |  | 0.918 |
 | walker |  | 212 | 31 | package runtime metadata in package.json |  |  | 0.919 |
-| ns | 299 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.727 |
-| ns | 446 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.600 |
-| walker |  | 590 | 378 | listing of 'test' |  |  | 0.609 |
-| walker |  | 640 | 50 | package entrypoints in package.json |  |  | 0.609 |
-| walker |  | 651 | 11 | listing of 'test/support' |  |  | 0.609 |
-| ns | 655 |  | 209 | npm scripts + engines | 1.6 |  | 0.544 |
-| ns | 681 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.579 |
-| walker |  | 776 | 125 | listing of 'examples' |  |  | 0.582 |
-| ns | 792 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.549 |
-| ns | 965 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.483 |
-| walker |  | 1196 | 420 | README headline in Readme.md |  |  | 0.612 |
-| ns | 1204 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.535 |
-| walker |  | 1324 | 128 | headings outline in Readme.md |  |  | 0.535 |
-| walker |  | 1411 | 87 | Readme.md section #2 |  |  | 0.535 |
+| walker |  | 262 | 50 | package entrypoints in package.json |  |  | 0.919 |
+| ns | 299 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.728 |
+| walker |  | 387 | 125 | listing of 'examples' |  |  | 0.731 |
+| ns | 446 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.603 |
+| ns | 655 |  | 209 | npm scripts + engines | 1.6 |  | 0.539 |
+| ns | 681 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.574 |
+| ns | 792 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.541 |
+| walker |  | 807 | 420 | README headline in Readme.md |  |  | 0.686 |
+| walker |  | 935 | 128 | headings outline in Readme.md |  |  | 0.686 |
+| ns | 965 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.604 |
+| walker |  | 1022 | 87 | Readme.md section #2 |  |  | 0.604 |
+| ns | 1204 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.528 |
+| walker |  | 1400 | 378 | listing of 'test' |  |  | 0.535 |
+| walker |  | 1411 | 11 | listing of 'test/support' |  |  | 0.535 |
 | ns | 1468 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.485 |
 | walker |  | 1587 | 176 | package scripts in package.json |  |  | 0.555 |
 | ns | 1666 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.520 |

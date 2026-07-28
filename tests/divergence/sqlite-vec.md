@@ -22,21 +22,21 @@ Score(3000)=0.449 I=0.764 C=0.264 ns_rows≤3K=18/60 (reached=6 partial=0 missin
 | walker |  | 563 | 19 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.666 |
 | ns | 599 |  | 127 | ARCHITECTURE.md: status line and section map | 1.6 |  | 0.578 |
 | ns | 645 |  | 46 | README sample usage: loading and creating a vec0 table | 1.7 |  | 0.547 |
-| walker |  | 711 | 148 | listing of 'tests' |  |  | 0.550 |
-| walker |  | 815 | 104 | [package] in sqlite-dist.toml |  |  | 0.550 |
-| walker |  | 853 | 38 | headings outline in README.md |  |  | 0.550 |
-| walker |  | 865 | 12 | listing of 'scripts' |  |  | 0.550 |
-| ns | 881 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.514 |
-| walker |  | 913 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.528 |
-| walker |  | 935 | 22 | listing of 'benchmarks' |  |  | 0.528 |
-| walker |  | 947 | 12 | listing of 'benchmarks/self-params' |  |  | 0.528 |
-| walker |  | 966 | 19 | python imports in tmp-static.py |  |  | 0.528 |
-| ns | 985 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.492 |
-| walker |  | 1043 | 77 | listing of 'site' |  |  | 0.493 |
-| walker |  | 1051 | 8 | listing of 'site/.vitepress' |  |  | 0.493 |
-| walker |  | 1067 | 16 | listing of 'site/.vitepress/theme' |  |  | 0.493 |
-| walker |  | 1092 | 25 | listing of 'benchmarks/micro' |  |  | 0.493 |
-| walker |  | 1095 | 3 | listing of 'benchmarks/micro/src' |  |  | 0.493 |
+| walker |  | 667 | 104 | [package] in sqlite-dist.toml |  |  | 0.547 |
+| walker |  | 705 | 38 | headings outline in README.md |  |  | 0.547 |
+| walker |  | 717 | 12 | listing of 'scripts' |  |  | 0.547 |
+| walker |  | 765 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.562 |
+| walker |  | 787 | 22 | listing of 'benchmarks' |  |  | 0.562 |
+| walker |  | 799 | 12 | listing of 'benchmarks/self-params' |  |  | 0.562 |
+| walker |  | 818 | 19 | python imports in tmp-static.py |  |  | 0.562 |
+| ns | 881 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.525 |
+| walker |  | 895 | 77 | listing of 'site' |  |  | 0.525 |
+| walker |  | 903 | 8 | listing of 'site/.vitepress' |  |  | 0.525 |
+| walker |  | 919 | 16 | listing of 'site/.vitepress/theme' |  |  | 0.525 |
+| walker |  | 944 | 25 | listing of 'benchmarks/micro' |  |  | 0.525 |
+| walker |  | 947 | 3 | listing of 'benchmarks/micro/src' |  |  | 0.525 |
+| ns | 985 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.490 |
+| walker |  | 1095 | 148 | listing of 'tests' |  |  | 0.493 |
 | walker |  | 1190 | 95 | listing of 'examples' |  |  | 0.495 |
 | ns | 1201 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.445 |
 | walker |  | 1293 | 103 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.445 |

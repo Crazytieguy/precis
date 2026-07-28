@@ -6,12 +6,12 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | ns | 75 |  | 75 | README title + what chibicc is | 1.1 |  | 0.000 |
 | walker |  | 88 | 35 | listing of 'include' |  |  | 0.000 |
 | ns | 128 |  | 53 | Complete repository root listing | 1.2 |  | 0.595 |
-| ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.481 |
-| walker |  | 299 | 211 | listing of 'test' |  |  | 0.532 |
-| ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.447 |
-| walker |  | 376 | 77 | README headline in README.md |  |  | 0.464 |
-| ns | 417 |  | 59 | All README H2 headings | 1.5 |  | 0.423 |
-| walker |  | 435 | 59 | headings outline in README.md |  |  | 0.513 |
+| walker |  | 165 | 77 | README headline in README.md |  |  | 0.621 |
+| walker |  | 224 | 59 | headings outline in README.md |  |  | 0.647 |
+| ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.523 |
+| ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.440 |
+| ns | 417 |  | 59 | All README H2 headings | 1.5 |  | 0.470 |
+| walker |  | 435 | 211 | listing of 'test' |  |  | 0.513 |
 | ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.456 |
 | ns | 604 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.427 |
 | ns | 767 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.375 |
