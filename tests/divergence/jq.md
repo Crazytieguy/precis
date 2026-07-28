@@ -5,49 +5,49 @@ Score(3000)=0.718 I=0.834 C=0.618 ns_rows≤3K=16/40 (reached=8 partial=0 missin
 | ns | 71 |  | 71 | README lede: what jq is | 1.1 |  | 0.000 |
 | walker |  | 91 | 91 | listing of '.' |  |  | 0.000 |
 | walker |  | 100 | 9 | listing of 'config' |  |  | 0.000 |
-| ns | 162 |  | 91 | Repository root listing (complete) | 1.2 |  | 0.698 |
-| walker |  | 171 | 71 | README headline in README.md |  |  | 1.000 |
-| walker |  | 225 | 54 | listing of 'docs' |  |  | 0.913 |
-| ns | 225 |  | 63 | Front-end landmarks: jq_parse / jq_parse_library / block_compile | 1.3 |  | 0.913 |
-| walker |  | 240 | 15 | listing of 'docs/content' |  |  | 0.916 |
-| walker |  | 243 | 3 | listing of 'docs/content/download' |  |  | 0.916 |
-| walker |  | 246 | 3 | listing of 'docs/content/tutorial' |  |  | 0.916 |
-| walker |  | 267 | 21 | listing of 'docs/templates' |  |  | 0.916 |
-| walker |  | 276 | 9 | listing of 'vendor' |  |  | 0.916 |
+| walker |  | 154 | 54 | listing of 'docs' |  |  | 0.000 |
+| ns | 162 |  | 91 | Repository root listing (complete) | 1.2 |  | 0.703 |
+| walker |  | 169 | 15 | listing of 'docs/content' |  |  | 0.708 |
+| walker |  | 172 | 3 | listing of 'docs/content/download' |  |  | 0.708 |
+| walker |  | 175 | 3 | listing of 'docs/content/tutorial' |  |  | 0.708 |
+| walker |  | 196 | 21 | listing of 'docs/templates' |  |  | 0.708 |
+| walker |  | 205 | 9 | listing of 'vendor' |  |  | 0.708 |
+| ns | 225 |  | 63 | Front-end landmarks: jq_parse / jq_parse_library / block_compile | 1.3 |  | 0.644 |
+| walker |  | 276 | 71 | README headline in README.md |  |  | 0.916 |
 | walker |  | 308 | 32 | listing of 'docs/public' |  |  | 0.916 |
 | walker |  | 311 | 3 | listing of 'docs/public/css' |  |  | 0.916 |
 | walker |  | 315 | 4 | listing of 'docs/public/js' |  |  | 0.916 |
 | walker |  | 335 | 20 | listing of 'docs/templates/shared' |  |  | 0.916 |
 | ns | 344 |  | 119 | Back-end landmarks: load_program, builtins_bind, and who owns the bytecode format | 1.4 |  | 0.785 |
-| walker |  | 391 | 56 | README headline in docs/README.md |  |  | 0.785 |
-| walker |  | 404 | 13 | listing of '.github' |  |  | 0.785 |
-| walker |  | 438 | 34 | listing of '.github/workflows' |  |  | 0.789 |
-| walker |  | 451 | 13 | listing of 'scripts' |  |  | 0.789 |
-| walker |  | 497 | 46 | listing of 'config/m4' |  |  | 0.789 |
+| walker |  | 348 | 13 | listing of '.github' |  |  | 0.785 |
+| walker |  | 382 | 34 | listing of '.github/workflows' |  |  | 0.789 |
+| walker |  | 395 | 13 | listing of 'scripts' |  |  | 0.789 |
+| walker |  | 441 | 46 | listing of 'config/m4' |  |  | 0.789 |
+| walker |  | 497 | 56 | README headline in docs/README.md |  |  | 0.789 |
+| walker |  | 519 | 22 | listing of 'm4' |  |  | 0.789 |
 | ns | 527 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.631 |
-| walker |  | 569 | 72 | headings outline in README.md |  |  | 0.633 |
-| walker |  | 591 | 22 | listing of 'm4' |  |  | 0.633 |
+| walker |  | 591 | 72 | headings outline in README.md |  |  | 0.633 |
 | ns | 617 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.595 |
 | walker |  | 823 | 232 | listing of 'src' |  |  | 0.629 |
-| walker |  | 846 | 23 | c decl names surface in src/jv_file.c |  |  | 0.629 |
-| walker |  | 846 | 0 | c decl at src/jv_file.c:12 |  |  | 0.629 |
 | ns | 849 |  | 232 | src/ listing (complete) - the flat core | 1.7 |  | 0.743 |
-| walker |  | 895 | 49 | listing of 'docs/content/manual' |  |  | 0.750 |
-| walker |  | 898 | 3 | listing of 'docs/content/manual/dev' |  |  | 0.750 |
-| walker |  | 901 | 3 | listing of 'docs/content/manual/v1.3' |  |  | 0.750 |
-| walker |  | 904 | 3 | listing of 'docs/content/manual/v1.4' |  |  | 0.750 |
-| walker |  | 907 | 3 | listing of 'docs/content/manual/v1.5' |  |  | 0.750 |
-| walker |  | 910 | 3 | listing of 'docs/content/manual/v1.6' |  |  | 0.750 |
-| walker |  | 913 | 3 | listing of 'docs/content/manual/v1.7' |  |  | 0.750 |
-| walker |  | 916 | 3 | listing of 'docs/content/manual/v1.8' |  |  | 0.750 |
+| walker |  | 872 | 49 | listing of 'docs/content/manual' |  |  | 0.750 |
+| walker |  | 875 | 3 | listing of 'docs/content/manual/dev' |  |  | 0.750 |
+| walker |  | 878 | 3 | listing of 'docs/content/manual/v1.3' |  |  | 0.750 |
+| walker |  | 881 | 3 | listing of 'docs/content/manual/v1.4' |  |  | 0.750 |
+| walker |  | 884 | 3 | listing of 'docs/content/manual/v1.5' |  |  | 0.750 |
+| walker |  | 887 | 3 | listing of 'docs/content/manual/v1.6' |  |  | 0.750 |
+| walker |  | 890 | 3 | listing of 'docs/content/manual/v1.7' |  |  | 0.750 |
+| walker |  | 893 | 3 | listing of 'docs/content/manual/v1.8' |  |  | 0.750 |
+| walker |  | 916 | 23 | c decl names surface in src/jv_file.c |  |  | 0.750 |
+| walker |  | 916 | 0 | c decl at src/jv_file.c:12 |  |  | 0.750 |
 | walker |  | 968 | 52 | README.md section #1 |  |  | 0.750 |
-| walker |  | 1006 | 38 | c decl names surface in src/jq_test.c |  |  | 0.750 |
-| walker |  | 1006 | 0 | c decl at src/jq_test.c:21 |  |  | 0.750 |
 | ns | 1015 |  | 166 | tests/ listing (complete) | 1.8 |  | 0.652 |
-| walker |  | 1022 | 16 | c decl at src/jq_test.c:78 |  |  | 0.652 |
-| ns | 1135 |  | 120 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.685 |
-| ns | 1179 |  | 44 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.694 |
-| walker |  | 1188 | 166 | listing of 'tests' |  |  | 0.808 |
+| walker |  | 1134 | 166 | listing of 'tests' |  |  | 0.794 |
+| ns | 1135 |  | 120 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |
+| walker |  | 1172 | 38 | c decl names surface in src/jq_test.c |  |  | 0.805 |
+| walker |  | 1172 | 0 | c decl at src/jq_test.c:21 |  |  | 0.805 |
+| ns | 1179 |  | 44 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.808 |
+| walker |  | 1188 | 16 | c decl at src/jq_test.c:78 |  |  | 0.808 |
 | ns | 1404 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.771 |
 | walker |  | 1515 | 327 | c decl names surface in src/jv.h |  |  | 0.773 |
 | ns | 1522 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.753 |
@@ -68,30 +68,30 @@ Score(3000)=0.718 I=0.834 C=0.618 ns_rows≤3K=16/40 (reached=8 partial=0 missin
 | walker |  | 2668 | 0 | c decl at src/jv_dtoa_tsd.c:31 |  |  | 0.755 |
 | walker |  | 2668 | 0 | c decl at src/jv_dtoa_tsd.c:39 |  |  | 0.755 |
 | ns | 2672 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.718 |
-| walker |  | 2688 | 20 | c decl names surface in src/jv_utf8_tables.h |  |  | 0.718 |
-| walker |  | 2754 | 66 | c whole header in src/jv_private.h |  |  | 0.718 |
-| walker |  | 2828 | 74 | c decl names surface in src/linker.c |  |  | 0.718 |
-| walker |  | 2828 | 0 | c decl at src/linker.c:409 |  |  | 0.718 |
-| walker |  | 2828 | 0 | c decl at src/linker.c:435 |  |  | 0.718 |
-| walker |  | 2854 | 26 | c decl at src/linker.c:28 |  |  | 0.718 |
-| walker |  | 2882 | 28 | c decl at src/linker.c:23 |  |  | 0.718 |
-| walker |  | 2965 | 83 | README.md section #7 |  |  | 0.718 |
-| walker |  | 2996 | 31 | README.md section #3 |  |  | 0.718 |
+| walker |  | 2777 | 109 | listing of 'sig' |  |  | 0.718 |
+| walker |  | 2797 | 20 | c decl names surface in src/jv_utf8_tables.h |  |  | 0.718 |
+| walker |  | 2963 | 166 | listing of 'vendor/decNumber' |  |  | 0.718 |
+| walker |  | 2967 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.718 |
+| walker |  | 2971 | 4 | listing of 'tests/torture' |  |  | 0.718 |
+| walker |  | 3037 | 66 | c whole header in src/jv_private.h |  |  | 0.718 |
 | ns | 3062 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.687 |
-| walker |  | 3081 | 85 | c decl names surface in src/main.c |  |  | 0.687 |
-| walker |  | 3190 | 109 | listing of 'sig' |  |  | 0.687 |
-| ns | 3229 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.675 |
-| walker |  | 3271 | 81 | c whole header in src/linker.h |  |  | 0.678 |
-| walker |  | 3356 | 85 | README.md section #8 |  |  | 0.678 |
+| walker |  | 3111 | 74 | c decl names surface in src/linker.c |  |  | 0.687 |
+| walker |  | 3111 | 0 | c decl at src/linker.c:409 |  |  | 0.687 |
+| walker |  | 3111 | 0 | c decl at src/linker.c:435 |  |  | 0.687 |
+| walker |  | 3137 | 26 | c decl at src/linker.c:28 |  |  | 0.687 |
+| walker |  | 3165 | 28 | c decl at src/linker.c:23 |  |  | 0.687 |
+| ns | 3229 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.673 |
+| walker |  | 3248 | 83 | README.md section #7 |  |  | 0.673 |
+| walker |  | 3279 | 31 | README.md section #3 |  |  | 0.673 |
+| walker |  | 3364 | 85 | c decl names surface in src/main.c |  |  | 0.675 |
+| walker |  | 3445 | 81 | c whole header in src/linker.h |  |  | 0.678 |
 | ns | 3452 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.663 |
+| walker |  | 3530 | 85 | README.md section #8 |  |  | 0.663 |
 | ns | 3692 |  | 240 | Makefile.am: the TESTS list and test environment | 3.6 |  | 0.643 |
-| walker |  | 3737 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.703 |
-| walker |  | 3737 | 0 | c decl at src/jq.h:60 |  |  | 0.703 |
-| walker |  | 3903 | 166 | listing of 'vendor/decNumber' |  |  | 0.703 |
+| walker |  | 3911 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.703 |
+| walker |  | 3911 | 0 | c decl at src/jq.h:60 |  |  | 0.703 |
 | ns | 3930 |  | 238 | tests/setup + tests/jqtest: how one test driver actually runs | 3.7 |  | 0.686 |
-| walker |  | 3933 | 30 | README.md section #2 |  |  | 0.686 |
-| walker |  | 3937 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.686 |
-| walker |  | 3941 | 4 | listing of 'tests/torture' |  |  | 0.686 |
+| walker |  | 3941 | 30 | README.md section #2 |  |  | 0.686 |
 | ns | 4043 |  | 113 | tests/jq.test: the three-line test format, with the first cases | 3.8 |  | 0.670 |
 | walker |  | 4047 | 106 | c decl names surface in src/jv_print.c |  |  | 0.670 |
 | walker |  | 4047 | 0 | c decl at src/jv_print.c:40 |  |  | 0.670 |

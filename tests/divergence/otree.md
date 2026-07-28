@@ -9,48 +9,48 @@ Score(3000)=0.632 I=0.853 C=0.469 ns_rows≤3K=19/44 (reached=9 partial=2 missin
 | walker |  | 64 | 12 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 71 | 7 | listing of 'config/themes' |  |  | 0.000 |
 | ns | 85 |  | 41 | Complete repository root listing | 1.2 |  | 0.697 |
-| walker |  | 115 | 44 | README headline in README.md |  |  | 1.000 |
-| ns | 125 |  | 40 | Complete src/ listing — the module roster | 1.3 |  | 0.727 |
-| walker |  | 155 | 40 | listing of 'src' |  |  | 1.000 |
-| walker |  | 170 | 15 | listing of 'src/config' |  |  | 1.000 |
-| walker |  | 183 | 13 | macro_export names across src |  |  | 1.000 |
-| walker |  | 195 | 12 | entry item at src/main.rs:111 |  |  | 1.000 |
-| walker |  | 208 | 13 | entry item at src/main.rs:27 |  |  | 1.000 |
-| ns | 217 |  | 92 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.692 |
-| walker |  | 219 | 11 | entry item body at src/main.rs:27 body 52 |  |  | 0.692 |
-| walker |  | 231 | 12 | entry item body at src/main.rs:27 body 108 |  |  | 0.692 |
-| walker |  | 244 | 13 | entry item body at src/main.rs:27 body 54 |  |  | 0.692 |
-| walker |  | 257 | 13 | entry item body at src/main.rs:27 body 58 |  |  | 0.692 |
-| walker |  | 271 | 14 | entry item body at src/main.rs:27 body 38 |  |  | 0.692 |
-| ns | 274 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.666 |
-| walker |  | 285 | 14 | entry item body at src/main.rs:27 body 39 |  |  | 0.666 |
-| walker |  | 298 | 13 | entry item body at src/main.rs:27 body 41 |  |  | 0.667 |
-| ns | 309 |  | 35 | All README H2 section headings | 1.6 |  | 0.636 |
-| walker |  | 312 | 14 | entry item body at src/main.rs:27 body 55 |  |  | 0.636 |
-| walker |  | 326 | 14 | entry item body at src/main.rs:27 body 99 |  |  | 0.636 |
-| walker |  | 345 | 19 | entry item body at src/main.rs:27 body 101 |  |  | 0.637 |
-| walker |  | 369 | 24 | entry item body at src/main.rs:27 body 51 |  |  | 0.637 |
-| walker |  | 394 | 25 | entry item body at src/main.rs:27 body 43 |  |  | 0.638 |
-| ns | 417 |  | 108 | README Usage — how the binary is invoked | 1.7 | 1.6 | 0.575 |
-| walker |  | 419 | 25 | entry item body at src/main.rs:27 body 53 |  |  | 0.576 |
-| walker |  | 445 | 26 | entry item body at src/main.rs:27 body 98 |  |  | 0.576 |
-| walker |  | 474 | 29 | entry item body at src/main.rs:27 body 57 |  |  | 0.577 |
-| walker |  | 506 | 32 | entry item body at src/main.rs:27 body 28 |  |  | 0.578 |
-| ns | 514 |  | 97 | README pointers to config file and reference docs | 1.8 | 1.7 | 0.553 |
-| walker |  | 539 | 33 | entry item body at src/main.rs:27 body 47 |  |  | 0.555 |
-| walker |  | 573 | 34 | listing of 'src/ui' |  |  | 0.628 |
-| ns | 584 |  | 70 | Complete listings of docs/, config/, config/themes/, examples/, assets/ | 1.9 | 1.2 | 0.580 |
-| walker |  | 593 | 20 | pub item at src/ui/mod.rs:35 |  |  | 0.580 |
-| walker |  | 638 | 45 | entry item body at src/main.rs:111 body 112 |  |  | 0.584 |
-| walker |  | 686 | 48 | entry item body at src/main.rs:27 body 32 |  |  | 0.588 |
-| ns | 723 |  | 139 | Cargo [dependencies] — first half | 1.10 |  | 0.547 |
-| walker |  | 734 | 48 | entry item body at src/main.rs:27 body 103 |  |  | 0.549 |
-| walker |  | 777 | 43 | listing of 'src/parse' |  |  | 0.692 |
-| walker |  | 800 | 23 | pub-item names surface in src/parse/mod.rs |  |  | 0.692 |
-| walker |  | 828 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.692 |
-| walker |  | 828 | 0 | impl method at src/parse/mod.rs:67 |  |  | 0.692 |
-| walker |  | 836 | 8 | listing of '.github' |  |  | 0.692 |
-| walker |  | 851 | 15 | listing of '.github/workflows' |  |  | 0.692 |
+| walker |  | 111 | 40 | listing of 'src' |  |  | 0.785 |
+| ns | 125 |  | 40 | Complete src/ listing — the module roster | 1.3 |  | 0.754 |
+| walker |  | 126 | 15 | listing of 'src/config' |  |  | 0.756 |
+| walker |  | 139 | 13 | macro_export names across src |  |  | 0.756 |
+| walker |  | 151 | 12 | entry item at src/main.rs:111 |  |  | 0.757 |
+| walker |  | 164 | 13 | entry item at src/main.rs:27 |  |  | 0.757 |
+| walker |  | 175 | 11 | entry item body at src/main.rs:27 body 52 |  |  | 0.757 |
+| walker |  | 187 | 12 | entry item body at src/main.rs:27 body 108 |  |  | 0.757 |
+| walker |  | 200 | 13 | entry item body at src/main.rs:27 body 54 |  |  | 0.757 |
+| walker |  | 213 | 13 | entry item body at src/main.rs:27 body 58 |  |  | 0.758 |
+| ns | 217 |  | 92 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.520 |
+| walker |  | 227 | 14 | entry item body at src/main.rs:27 body 38 |  |  | 0.520 |
+| walker |  | 241 | 14 | entry item body at src/main.rs:27 body 39 |  |  | 0.521 |
+| walker |  | 254 | 13 | entry item body at src/main.rs:27 body 41 |  |  | 0.521 |
+| walker |  | 268 | 14 | entry item body at src/main.rs:27 body 55 |  |  | 0.521 |
+| ns | 274 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.502 |
+| walker |  | 282 | 14 | entry item body at src/main.rs:27 body 99 |  |  | 0.502 |
+| walker |  | 301 | 19 | entry item body at src/main.rs:27 body 101 |  |  | 0.502 |
+| ns | 309 |  | 35 | All README H2 section headings | 1.6 |  | 0.479 |
+| walker |  | 325 | 24 | entry item body at src/main.rs:27 body 51 |  |  | 0.480 |
+| walker |  | 350 | 25 | entry item body at src/main.rs:27 body 43 |  |  | 0.481 |
+| walker |  | 375 | 25 | entry item body at src/main.rs:27 body 53 |  |  | 0.481 |
+| walker |  | 401 | 26 | entry item body at src/main.rs:27 body 98 |  |  | 0.482 |
+| ns | 417 |  | 108 | README Usage — how the binary is invoked | 1.7 | 1.6 | 0.435 |
+| walker |  | 435 | 34 | listing of 'src/ui' |  |  | 0.503 |
+| walker |  | 455 | 20 | pub item at src/ui/mod.rs:35 |  |  | 0.503 |
+| walker |  | 484 | 29 | entry item body at src/main.rs:27 body 57 |  |  | 0.504 |
+| ns | 514 |  | 97 | README pointers to config file and reference docs | 1.8 | 1.7 | 0.481 |
+| walker |  | 516 | 32 | entry item body at src/main.rs:27 body 28 |  |  | 0.483 |
+| walker |  | 560 | 44 | README headline in README.md |  |  | 0.626 |
+| ns | 584 |  | 70 | Complete listings of docs/, config/, config/themes/, examples/, assets/ | 1.9 | 1.2 | 0.578 |
+| walker |  | 593 | 33 | entry item body at src/main.rs:27 body 47 |  |  | 0.580 |
+| walker |  | 636 | 43 | listing of 'src/parse' |  |  | 0.733 |
+| walker |  | 659 | 23 | pub-item names surface in src/parse/mod.rs |  |  | 0.733 |
+| walker |  | 667 | 8 | listing of '.github' |  |  | 0.733 |
+| walker |  | 682 | 15 | listing of '.github/workflows' |  |  | 0.733 |
+| ns | 723 |  | 139 | Cargo [dependencies] — first half | 1.10 |  | 0.682 |
+| walker |  | 727 | 45 | entry item body at src/main.rs:111 body 112 |  |  | 0.685 |
+| walker |  | 775 | 48 | entry item body at src/main.rs:27 body 32 |  |  | 0.690 |
+| walker |  | 823 | 48 | entry item body at src/main.rs:27 body 103 |  |  | 0.692 |
+| walker |  | 851 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.692 |
+| walker |  | 851 | 0 | impl method at src/parse/mod.rs:67 |  |  | 0.692 |
 | walker |  | 873 | 22 | pub item at src/clipboard.rs:28 |  |  | 0.692 |
 | ns | 910 |  | 187 | Cargo [dependencies] tail plus [build-dependencies] | 1.11 | 1.10 | 0.642 |
 | ns | 983 |  | 73 | main.rs entry points — run() signature and main() | 2.1 |  | 0.654 |
@@ -103,22 +103,22 @@ Score(3000)=0.632 I=0.853 C=0.469 ns_rows≤3K=19/44 (reached=9 partial=2 missin
 | walker |  | 3459 | 333 | pub item at src/parse/mod.rs:36 |  |  | 0.588 |
 | ns | 3658 |  | 209 | ContentType — the complete set of supported input formats | 4.1 |  | 0.608 |
 | walker |  | 3685 | 226 | mod/use plumbing in src/main.rs |  |  | 0.608 |
-| walker |  | 3770 | 85 | pub item at src/tree.rs:14 |  |  | 0.610 |
-| walker |  | 3858 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.610 |
-| walker |  | 3905 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.610 |
-| walker |  | 3955 | 50 | pub item at src/ui/header.rs:11 |  |  | 0.611 |
-| ns | 3975 |  | 317 | The Parser trait surface and ContentType::new_parser | 4.2 | 4.1 | 0.599 |
-| walker |  | 3998 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.599 |
-| walker |  | 3998 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.599 |
-| walker |  | 4043 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.599 |
-| walker |  | 4074 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.599 |
-| walker |  | 4112 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.599 |
-| walker |  | 4147 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.599 |
-| walker |  | 4194 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.600 |
-| ns | 4292 |  | 317 | tree.rs — Tree, ItemValue, HighlightKeyword and FieldType | 4.3 |  | 0.625 |
-| ns | 4499 |  | 207 | Parser::parse_root — UTF-8 decode and root-shape validation | 4.4 | 4.2 | 0.638 |
-| walker |  | 4530 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.640 |
-| walker |  | 4569 | 39 | listing of 'examples' |  |  | 0.670 |
+| walker |  | 3724 | 39 | listing of 'examples' |  |  | 0.644 |
+| walker |  | 3809 | 85 | pub item at src/tree.rs:14 |  |  | 0.646 |
+| walker |  | 3897 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.646 |
+| walker |  | 3944 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.646 |
+| ns | 3975 |  | 317 | The Parser trait surface and ContentType::new_parser | 4.2 | 4.1 | 0.633 |
+| walker |  | 3994 | 50 | pub item at src/ui/header.rs:11 |  |  | 0.633 |
+| walker |  | 4037 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.633 |
+| walker |  | 4037 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.633 |
+| walker |  | 4082 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.633 |
+| walker |  | 4113 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.633 |
+| walker |  | 4151 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.633 |
+| walker |  | 4186 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.633 |
+| walker |  | 4233 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.634 |
+| ns | 4292 |  | 317 | tree.rs — Tree, ItemValue, HighlightKeyword and FieldType | 4.3 |  | 0.656 |
+| ns | 4499 |  | 207 | Parser::parse_root — UTF-8 decode and root-shape validation | 4.4 | 4.2 | 0.668 |
+| walker |  | 4569 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.670 |
 | ns | 4632 |  | 133 | SyntaxToken — the complete highlight token vocabulary | 4.5 |  | 0.655 |
 | walker |  | 4842 | 273 | [dependencies] in Cargo.toml |  |  | 0.691 |
 | ns | 4865 |  | 233 | JSON, JSONL and YAML parsers — types, extensions, array roots allowed | 4.6 | 4.2 | 0.670 |

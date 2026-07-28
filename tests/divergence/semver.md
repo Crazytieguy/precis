@@ -6,8 +6,8 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 (reached=9 partial=0 missin
 | walker |  | 112 | 112 | listing of '.' |  |  | 0.000 |
 | walker |  | 115 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
 | walker |  | 119 | 4 | listing of 'bin' |  |  | 0.000 |
-| walker |  | 131 | 12 | export names surface in index.js |  |  | 0.000 |
-| walker |  | 147 | 16 | listing of 'classes' |  |  | 0.000 |
+| walker |  | 135 | 16 | listing of 'classes' |  |  | 0.000 |
+| walker |  | 147 | 12 | export names surface in index.js |  |  | 0.000 |
 | walker |  | 173 | 26 | README headline in README.md |  |  | 0.219 |
 | ns | 191 |  | 112 | Complete root directory listing | 1.2 |  | 0.661 |
 | walker |  | 199 | 26 | listing of 'internal' |  |  | 0.687 |
@@ -22,68 +22,68 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 (reached=9 partial=0 missin
 | walker |  | 520 | 40 | listing of '.github/workflows' |  |  | 0.835 |
 | ns | 521 |  | 55 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.836 |
 | walker |  | 557 | 37 | listing of 'benchmarks' |  |  | 0.837 |
-| walker |  | 617 | 60 | package identity metadata in package.json |  |  | 0.837 |
-| walker |  | 656 | 39 | listing of 'test' |  |  | 0.838 |
-| walker |  | 672 | 16 | listing of 'test/classes' |  |  | 0.838 |
+| walker |  | 596 | 39 | listing of 'test' |  |  | 0.838 |
+| walker |  | 612 | 16 | listing of 'test/classes' |  |  | 0.838 |
+| walker |  | 672 | 60 | package identity metadata in package.json |  |  | 0.838 |
 | ns | 716 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | walker |  | 852 | 180 | headings outline in README.md |  |  | 0.725 |
 | walker |  | 877 | 25 | README.md section #1 |  |  | 0.725 |
 | walker |  | 904 | 27 | README.md section #55 |  |  | 0.725 |
 | ns | 913 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.658 |
-| walker |  | 1039 | 135 | package entrypoints in package.json |  |  | 0.787 |
+| walker |  | 930 | 26 | listing of 'test/internal' |  |  | 0.658 |
+| walker |  | 1065 | 135 | package entrypoints in package.json |  |  | 0.787 |
 | ns | 1234 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.754 |
-| walker |  | 1324 | 285 | README.md section #2 |  |  | 0.757 |
-| walker |  | 1468 | 144 | package scripts in package.json |  |  | 0.758 |
-| walker |  | 1494 | 26 | listing of 'test/internal' |  |  | 0.758 |
+| walker |  | 1350 | 285 | README.md section #2 |  |  | 0.757 |
+| walker |  | 1494 | 144 | package scripts in package.json |  |  | 0.758 |
 | ns | 1495 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.717 |
+| walker |  | 1497 | 3 | listing of '.github/matchers' |  |  | 0.717 |
+| walker |  | 1500 | 3 | listing of 'tap-snapshots/test' |  |  | 0.717 |
+| walker |  | 1503 | 3 | listing of 'test/integration' |  |  | 0.717 |
 | ns | 1748 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.663 |
-| walker |  | 1874 | 380 | export at index.js:45 |  |  | 0.835 |
-| walker |  | 1877 | 3 | listing of '.github/matchers' |  |  | 0.835 |
-| walker |  | 1880 | 3 | listing of 'tap-snapshots/test' |  |  | 0.835 |
-| walker |  | 1883 | 3 | listing of 'test/integration' |  |  | 0.835 |
-| walker |  | 1904 | 21 | README.md section #21 |  |  | 0.835 |
-| walker |  | 1925 | 21 | README.md section #22 |  |  | 0.835 |
-| walker |  | 1946 | 21 | README.md section #23 |  |  | 0.835 |
+| walker |  | 1883 | 380 | export at index.js:45 |  |  | 0.835 |
 | ns | 1954 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
-| walker |  | 1967 | 21 | README.md section #24 |  |  | 0.785 |
-| walker |  | 2071 | 104 | listing of 'test/functions' |  |  | 0.785 |
-| walker |  | 2093 | 22 | README.md section #35 |  |  | 0.785 |
-| walker |  | 2115 | 22 | README.md section #52 |  |  | 0.785 |
-| walker |  | 2140 | 25 | README.md section #13 |  |  | 0.785 |
-| walker |  | 2164 | 24 | README.md section #43 |  |  | 0.785 |
-| walker |  | 2188 | 24 | README.md section #48 |  |  | 0.785 |
-| ns | 2220 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.732 |
-| walker |  | 2243 | 55 | listing of 'test/ranges' |  |  | 0.732 |
-| walker |  | 2247 | 4 | listing of 'test/bin' |  |  | 0.732 |
-| walker |  | 2276 | 29 | README.md section #14 |  |  | 0.732 |
-| walker |  | 2359 | 83 | listing of 'test/fixtures' |  |  | 0.734 |
+| walker |  | 1987 | 104 | listing of 'test/functions' |  |  | 0.785 |
+| walker |  | 2042 | 55 | listing of 'test/ranges' |  |  | 0.785 |
+| walker |  | 2046 | 4 | listing of 'test/bin' |  |  | 0.785 |
+| walker |  | 2067 | 21 | README.md section #21 |  |  | 0.785 |
+| walker |  | 2088 | 21 | README.md section #22 |  |  | 0.785 |
+| walker |  | 2109 | 21 | README.md section #23 |  |  | 0.785 |
+| walker |  | 2130 | 21 | README.md section #24 |  |  | 0.785 |
+| walker |  | 2213 | 83 | listing of 'test/fixtures' |  |  | 0.787 |
+| ns | 2220 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.734 |
+| walker |  | 2235 | 22 | README.md section #35 |  |  | 0.734 |
+| walker |  | 2257 | 22 | README.md section #52 |  |  | 0.734 |
+| walker |  | 2282 | 25 | README.md section #13 |  |  | 0.734 |
+| walker |  | 2306 | 24 | README.md section #43 |  |  | 0.734 |
+| walker |  | 2330 | 24 | README.md section #48 |  |  | 0.734 |
+| walker |  | 2359 | 29 | README.md section #14 |  |  | 0.734 |
 | walker |  | 2382 | 23 | README.md section #34 |  |  | 0.734 |
 | walker |  | 2411 | 29 | README.md section #26 |  |  | 0.734 |
 | walker |  | 2440 | 29 | README.md section #36 |  |  | 0.734 |
 | ns | 2541 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.687 |
 | walker |  | 2546 | 106 | README.md section #4 |  |  | 0.689 |
 | walker |  | 2576 | 30 | README.md section #39 |  |  | 0.689 |
+| walker |  | 2583 | 7 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.689 |
 | ns | 2606 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.679 |
-| walker |  | 2658 | 82 | package dev/peer dependencies in package.json |  |  | 0.679 |
-| walker |  | 2691 | 33 | README.md section #31 |  |  | 0.679 |
-| walker |  | 2728 | 37 | README.md section #40 |  |  | 0.679 |
-| walker |  | 2764 | 36 | README.md section #41 |  |  | 0.679 |
-| walker |  | 2801 | 37 | README.md section #47 |  |  | 0.679 |
-| walker |  | 2808 | 7 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.679 |
+| walker |  | 2665 | 82 | package dev/peer dependencies in package.json |  |  | 0.679 |
+| walker |  | 2698 | 33 | README.md section #31 |  |  | 0.679 |
+| walker |  | 2735 | 37 | README.md section #40 |  |  | 0.679 |
+| walker |  | 2771 | 36 | README.md section #41 |  |  | 0.679 |
+| walker |  | 2808 | 37 | README.md section #47 |  |  | 0.679 |
 | walker |  | 2852 | 44 | README.md section #37 |  |  | 0.679 |
 | ns | 2861 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.689 |
 | walker |  | 2894 | 42 | README.md section #38 |  |  | 0.689 |
 | walker |  | 2938 | 44 | README.md section #45 |  |  | 0.689 |
 | walker |  | 2983 | 45 | README.md section #53 |  |  | 0.689 |
-| walker |  | 3030 | 47 | README.md section #29 |  |  | 0.689 |
+| walker |  | 2995 | 12 | listing of '.github/actions' |  |  | 0.689 |
+| walker |  | 2998 | 3 | listing of '.github/actions/create-check' |  |  | 0.689 |
+| walker |  | 3001 | 3 | listing of '.github/actions/install-latest-npm' |  |  | 0.689 |
+| walker |  | 3048 | 47 | README.md section #29 |  |  | 0.689 |
 | ns | 3069 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.672 |
-| walker |  | 3080 | 50 | README.md section #30 |  |  | 0.672 |
-| walker |  | 3135 | 55 | README.md section #25 |  |  | 0.672 |
-| walker |  | 3147 | 12 | listing of '.github/actions' |  |  | 0.672 |
-| walker |  | 3150 | 3 | listing of '.github/actions/create-check' |  |  | 0.672 |
-| walker |  | 3153 | 3 | listing of '.github/actions/install-latest-npm' |  |  | 0.672 |
-| walker |  | 3163 | 10 | CHANGELOG.md section #0 |  |  | 0.672 |
-| walker |  | 3170 | 7 | listing of 'tap-snapshots/test/bin' |  |  | 0.672 |
+| walker |  | 3098 | 50 | README.md section #30 |  |  | 0.672 |
+| walker |  | 3105 | 7 | listing of 'tap-snapshots/test/bin' |  |  | 0.672 |
+| walker |  | 3160 | 55 | README.md section #25 |  |  | 0.672 |
+| walker |  | 3170 | 10 | CHANGELOG.md section #0 |  |  | 0.672 |
 | ns | 3175 |  | 106 | README: what counts as a version | 3.3 |  | 0.678 |
 | walker |  | 3240 | 70 | README.md section #32 |  |  | 0.678 |
 | walker |  | 3311 | 71 | README.md section #28 |  |  | 0.678 |

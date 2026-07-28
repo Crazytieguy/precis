@@ -173,10 +173,108 @@ entries = ["timeutil.go", "timeutil_test.go"]
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: "demo" })'
+descriptor = "listing of 'demo'"
+cost_tokens = 4
+cum_tokens = 159
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "demo"
+entries = ["demo_script.sh"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "internal/core" })'
+descriptor = "listing of 'internal/core'"
+cost_tokens = 15
+cum_tokens = 174
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core"
+entries = ["dto", "errors", "models", "ports"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "internal/core/errors" })'
+descriptor = "listing of 'internal/core/errors'"
+cost_tokens = 3
+cum_tokens = 177
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core/errors"
+entries = ["errors.go"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "internal/core/models" })'
+descriptor = "listing of 'internal/core/models'"
+cost_tokens = 3
+cum_tokens = 180
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core/models"
+entries = ["activity.go"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "internal/core/dto" })'
+descriptor = "listing of 'internal/core/dto'"
+cost_tokens = 5
+cum_tokens = 185
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core/dto"
+entries = ["activity_dto.go"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "internal/core/ports" })'
+descriptor = "listing of 'internal/core/ports'"
+cost_tokens = 7
+cum_tokens = 192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core/ports"
+entries = ["mocks", "ports.go"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "internal/services/activity" })'
+descriptor = "listing of 'internal/services/activity'"
+cost_tokens = 8
+cum_tokens = 200
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/services/activity"
+entries = ["service.go", "service_test.go"]
+
+[[batches]]
+position = 20
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 33
-cum_tokens = 188
+cum_tokens = 233
 
 [batches.content]
 kind = "lines"
@@ -188,104 +286,6 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "demo" })'
-descriptor = "listing of 'demo'"
-cost_tokens = 4
-cum_tokens = 192
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "demo"
-entries = ["demo_script.sh"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "internal/core" })'
-descriptor = "listing of 'internal/core'"
-cost_tokens = 15
-cum_tokens = 207
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core"
-entries = ["dto", "errors", "models", "ports"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "internal/core/errors" })'
-descriptor = "listing of 'internal/core/errors'"
-cost_tokens = 3
-cum_tokens = 210
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core/errors"
-entries = ["errors.go"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "internal/core/models" })'
-descriptor = "listing of 'internal/core/models'"
-cost_tokens = 3
-cum_tokens = 213
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core/models"
-entries = ["activity.go"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "internal/core/dto" })'
-descriptor = "listing of 'internal/core/dto'"
-cost_tokens = 5
-cum_tokens = 218
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core/dto"
-entries = ["activity_dto.go"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "internal/core/ports" })'
-descriptor = "listing of 'internal/core/ports'"
-cost_tokens = 7
-cum_tokens = 225
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core/ports"
-entries = ["mocks", "ports.go"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "internal/services/activity" })'
-descriptor = "listing of 'internal/services/activity'"
-cost_tokens = 8
-cum_tokens = 233
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/services/activity"
-entries = ["service.go", "service_test.go"]
 
 [[batches]]
 position = 21
@@ -403,10 +403,38 @@ kind = "full"
 
 [[batches]]
 position = 28
+key = 'Fs(DirListing { dir: "internal/adapters/repositories/file" })'
+descriptor = "listing of 'internal/adapters/repositories/file'"
+cost_tokens = 17
+cum_tokens = 735
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/adapters/repositories/file"
+entries = ["parser.go", "parser_test.go", "repository.go", "repository_test.go"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "internal/core/ports/mocks" })'
+descriptor = "listing of 'internal/core/ports/mocks'"
+cost_tokens = 17
+cum_tokens = 752
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/core/ports/mocks"
+entries = ["mock_activityrepository.go", "mock_activityresolver.go", "mock_notesrepository.go"]
+
+[[batches]]
+position = 30
 key = 'Go(DeclNames { file: "cmd/tock/main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/tock/main.go"
 cost_tokens = 12
-cum_tokens = 730
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -428,11 +456,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 31
 key = 'Go(Decl { file: "cmd/tock/main.go", start_line: 7 })'
 descriptor = "go decl at cmd/tock/main.go:7"
 cost_tokens = 0
-cum_tokens = 730
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -446,53 +474,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "internal/adapters/repositories/file" })'
-descriptor = "listing of 'internal/adapters/repositories/file'"
-cost_tokens = 17
-cum_tokens = 747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/adapters/repositories/file"
-entries = ["parser.go", "parser_test.go", "repository.go", "repository_test.go"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "internal/core/ports/mocks" })'
-descriptor = "listing of 'internal/core/ports/mocks'"
-cost_tokens = 17
-cum_tokens = 764
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/core/ports/mocks"
-entries = ["mock_activityrepository.go", "mock_activityresolver.go", "mock_notesrepository.go"]
-
-[[batches]]
 position = 32
-key = 'Fs(DirListing { dir: "internal/adapters/cli" })'
-descriptor = "listing of 'internal/adapters/cli'"
-cost_tokens = 78
-cum_tokens = 842
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/adapters/cli"
-entries = ["add.go", "analyze.go", "calendar.go", "calendar_sidebar.go", "continue.go", "current.go", "ical.go", "interactive.go", "last.go", "list_gui.go", "remove.go", "report.go", "root.go", "start.go", "stop.go", "theme.go", "update.go", "version.go", "watch.go"]
-
-[[batches]]
-position = 33
 key = 'Go(DeclBody { file: "cmd/tock/main.go", start_line: 7 })'
 descriptor = "go decl body at cmd/tock/main.go:7"
 cost_tokens = 8
-cum_tokens = 850
+cum_tokens = 772
 
 [batches.content]
 kind = "lines"
@@ -504,6 +490,20 @@ end = 8
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "internal/adapters/cli" })'
+descriptor = "listing of 'internal/adapters/cli'"
+cost_tokens = 78
+cum_tokens = 850
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/adapters/cli"
+entries = ["add.go", "analyze.go", "calendar.go", "calendar_sidebar.go", "continue.go", "current.go", "ical.go", "interactive.go", "last.go", "list_gui.go", "remove.go", "report.go", "root.go", "start.go", "stop.go", "theme.go", "update.go", "version.go", "watch.go"]
 
 [[batches]]
 position = 34

@@ -14,26 +14,26 @@ Score(3000)=0.554 I=0.818 C=0.376 ns_rows≤3K=21/56 (reached=6 partial=2 missin
 | walker |  | 228 | 63 | export names surface in source/index.ts |  |  | 0.428 |
 | ns | 246 |  | 57 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.349 |
 | walker |  | 261 | 33 | export at source/index.ts:16 |  |  | 0.349 |
-| walker |  | 328 | 67 | README headline in readme.md |  |  | 0.707 |
-| walker |  | 335 | 7 | listing of '.github' |  |  | 0.707 |
-| walker |  | 338 | 3 | listing of '.github/workflows' |  |  | 0.707 |
-| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.659 |
-| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.559 |
-| walker |  | 539 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.561 |
+| walker |  | 268 | 7 | listing of '.github' |  |  | 0.349 |
+| walker |  | 271 | 3 | listing of '.github/workflows' |  |  | 0.350 |
+| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.327 |
+| walker |  | 472 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.330 |
+| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.280 |
+| walker |  | 539 | 67 | README headline in readme.md |  |  | 0.561 |
 | walker |  | 559 | 20 | export doc at source/index.ts:16 |  |  | 0.593 |
 | ns | 565 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.567 |
 | walker |  | 589 | 30 | export at source/options.ts:27 |  |  | 0.567 |
 | walker |  | 643 | 54 | package runtime dependencies in package.json |  |  | 0.567 |
 | walker |  | 674 | 31 | package runtime metadata in package.json |  |  | 0.569 |
-| walker |  | 711 | 37 | export names surface in source/priority-queue.ts |  |  | 0.569 |
-| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.509 |
-| walker |  | 728 | 17 | export at source/priority-queue.ts:7 |  |  | 0.509 |
-| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.484 |
-| walker |  | 946 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.488 |
-| walker |  | 1022 | 76 | benchmark names surface in bench.ts |  |  | 0.489 |
-| ns | 1037 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.459 |
-| walker |  | 1143 | 121 | headings outline in readme.md |  |  | 0.571 |
-| walker |  | 1173 | 30 | listing of 'test' |  |  | 0.671 |
+| walker |  | 704 | 30 | listing of 'test' |  |  | 0.716 |
+| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.641 |
+| walker |  | 741 | 37 | export names surface in source/priority-queue.ts |  |  | 0.641 |
+| walker |  | 758 | 17 | export at source/priority-queue.ts:7 |  |  | 0.641 |
+| walker |  | 834 | 76 | benchmark names surface in bench.ts |  |  | 0.642 |
+| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.598 |
+| ns | 1037 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.561 |
+| walker |  | 1052 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.565 |
+| walker |  | 1173 | 121 | headings outline in readme.md |  |  | 0.671 |
 | ns | 1276 |  | 239 | Name-only roster of every public member of PQueue (24 declarations, complete) | 2.1 |  | 0.598 |
 | walker |  | 1302 | 129 | export at source/priority-queue.ts:11 |  |  | 0.599 |
 | walker |  | 1312 | 10 | readme.md section #5 |  |  | 0.599 |
@@ -47,9 +47,9 @@ Score(3000)=0.554 I=0.818 C=0.376 ns_rows≤3K=21/56 (reached=6 partial=2 missin
 | walker |  | 1830 | 18 | imports in source/options.ts |  |  | 0.661 |
 | ns | 1898 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.634 |
 | walker |  | 1914 | 84 | imports in source/index.ts |  |  | 0.649 |
-| walker |  | 1995 | 81 | json config tsconfig.json |  |  | 0.650 |
-| ns | 2003 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.641 |
-| walker |  | 2115 | 120 | export member docs #1 at source/options.ts:97 |  |  | 0.641 |
+| ns | 2003 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.640 |
+| walker |  | 2034 | 120 | export member docs #1 at source/options.ts:97 |  |  | 0.641 |
+| walker |  | 2115 | 81 | json config tsconfig.json |  |  | 0.641 |
 | walker |  | 2162 | 47 | readme.md section #41 |  |  | 0.641 |
 | ns | 2250 |  | 247 | Doc comments distinguishing .onEmpty(), .onIdle() and .onPendingZero() | 2.7 | 2.1 | 0.606 |
 | ns | 2457 |  | 207 | Doc comments for .onSizeLessThan(), .onRateLimit() and .onRateLimitCleared() | 2.8 | 2.1 | 0.579 |
@@ -70,12 +70,12 @@ Score(3000)=0.554 I=0.818 C=0.376 ns_rows≤3K=21/56 (reached=6 partial=2 missin
 | walker |  | 3148 | 0 | export at source/lower-bound.ts:3 |  |  | 0.567 |
 | walker |  | 3197 | 49 | readme.md section #8 |  |  | 0.567 |
 | ns | 3292 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.547 |
-| walker |  | 3400 | 203 | readme.md section #2 |  |  | 0.596 |
-| ns | 3605 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.575 |
-| walker |  | 3680 | 280 | export member docs #1 at source/options.ts:27 |  |  | 0.594 |
-| ns | 3869 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.584 |
-| ns | 4016 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.583 |
-| walker |  | 4074 | 394 | export member docs #1 at source/options.ts:111 |  |  | 0.593 |
+| walker |  | 3477 | 280 | export member docs #1 at source/options.ts:27 |  |  | 0.557 |
+| ns | 3605 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.547 |
+| ns | 3869 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.539 |
+| walker |  | 3871 | 394 | export member docs #1 at source/options.ts:111 |  |  | 0.543 |
+| ns | 4016 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.548 |
+| walker |  | 4074 | 203 | readme.md section #2 |  |  | 0.593 |
 | walker |  | 4138 | 64 | readme.md section #26 |  |  | 0.593 |
 | ns | 4156 |  | 140 | Constructor default-options literal | 3.5 |  | 0.581 |
 | walker |  | 4211 | 73 | readme.md section #10 |  |  | 0.581 |

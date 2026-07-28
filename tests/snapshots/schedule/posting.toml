@@ -1,7 +1,7 @@
 fixture = "posting"
 budget = 10000
-cumulative_tokens = 9922
-batch_count = 225
+cumulative_tokens = 9976
+batch_count = 238
 
 [[batches]]
 position = 1
@@ -47,10 +47,52 @@ entries = ["environments"]
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 43
+cum_tokens = 102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["CHANGELOG.md", "CNAME", "assets", "faq.md", "guide", "home-image.afdesign", "index.md", "overrides", "roadmap.md", "stylesheets"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "docs/overrides" })'
+descriptor = "listing of 'docs/overrides'"
+cost_tokens = 3
+cum_tokens = 105
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/overrides"
+entries = ["home.html"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "docs/stylesheets" })'
+descriptor = "listing of 'docs/stylesheets'"
+cost_tokens = 3
+cum_tokens = 108
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/stylesheets"
+entries = ["extra.css"]
+
+[[batches]]
+position = 7
 key = 'Toml(Scripts { file: "pyproject.toml" })'
 descriptor = "entry-point scripts in pyproject.toml"
 cost_tokens = 26
-cum_tokens = 85
+cum_tokens = 134
 
 [batches.content]
 kind = "lines"
@@ -62,48 +104,6 @@ end = 50
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 43
-cum_tokens = 128
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["CHANGELOG.md", "CNAME", "assets", "faq.md", "guide", "home-image.afdesign", "index.md", "overrides", "roadmap.md", "stylesheets"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "docs/overrides" })'
-descriptor = "listing of 'docs/overrides'"
-cost_tokens = 3
-cum_tokens = 131
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/overrides"
-entries = ["home.html"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs/stylesheets" })'
-descriptor = "listing of 'docs/stylesheets'"
-cost_tokens = 3
-cum_tokens = 134
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/stylesheets"
-entries = ["extra.css"]
 
 [[batches]]
 position = 8
@@ -569,10 +569,24 @@ kind = "full"
 
 [[batches]]
 position = 27
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 104
+cum_tokens = 1644
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__snapshots__", "posting_snapshot_app.py", "resources", "sample-collections", "sample-configs", "sample-envs", "sample-importable-collections", "sample-themes", "test_curl_export.py", "test_curl_import.py", "test_files.py", "test_load_env_file_dialog.py", "test_open_api_import.py", "test_postman_import.py", "test_snapshots.py", "test_urls.py", "test_variables.py"]
+
+[[batches]]
+position = 28
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 50
-cum_tokens = 1590
+cum_tokens = 1694
 
 [batches.content]
 kind = "lines"
@@ -586,11 +600,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 257
-cum_tokens = 1847
+cum_tokens = 1951
 
 [batches.content]
 kind = "lines"
@@ -604,11 +618,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Yaml(Whole { file: "mkdocs.yml" })'
 descriptor = "YAML config at mkdocs.yml"
 cost_tokens = 791
-cum_tokens = 2638
+cum_tokens = 2742
 
 [batches.content]
 kind = "lines"
@@ -620,20 +634,6 @@ end = 69
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 104
-cum_tokens = 2742
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__snapshots__", "posting_snapshot_app.py", "resources", "sample-collections", "sample-configs", "sample-envs", "sample-importable-collections", "sample-themes", "test_curl_export.py", "test_curl_import.py", "test_files.py", "test_load_env_file_dialog.py", "test_open_api_import.py", "test_postman_import.py", "test_snapshots.py", "test_urls.py", "test_variables.py"]
 
 [[batches]]
 position = 31
@@ -739,10 +739,24 @@ kind = "full"
 
 [[batches]]
 position = 34
+key = 'Fs(DirListing { dir: ".codex/environments" })'
+descriptor = "listing of '.codex/environments'"
+cost_tokens = 4
+cum_tokens = 2801
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".codex/environments"
+entries = ["environment.toml"]
+
+[[batches]]
+position = 35
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 298
-cum_tokens = 3095
+cum_tokens = 3099
 
 [batches.content]
 kind = "lines"
@@ -756,11 +770,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(HeadingsOutline { file: "docs/guide/themes.md" })'
 descriptor = "headings outline in docs/guide/themes.md"
 cost_tokens = 31
-cum_tokens = 3126
+cum_tokens = 3130
 
 [batches.content]
 kind = "lines"
@@ -814,91 +828,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 36
-key = 'Python(Imports { file: "src/posting/request_headers.py" })'
-descriptor = "python imports in src/posting/request_headers.py"
-cost_tokens = 12
-cum_tokens = 3138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/request_headers.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 37
-key = 'Python(Imports { file: "src/posting/version.py" })'
-descriptor = "python imports in src/posting/version.py"
-cost_tokens = 13
-cum_tokens = 3151
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/version.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Toml(DevelopmentDependencies { file: "pyproject.toml" })'
-descriptor = "dev/build/target dependencies in pyproject.toml"
-cost_tokens = 212
-cum_tokens = 3363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 52
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Toml(Config { file: "pyproject.toml" })'
-descriptor = "manifest config in pyproject.toml"
-cost_tokens = 244
-cum_tokens = 3607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 39
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 72
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
 key = 'Python(DeclNames { file: "src/posting/__main__.py" })'
 descriptor = "python decl names surface in src/posting/__main__.py"
 cost_tokens = 112
-cum_tokens = 3719
+cum_tokens = 3242
 
 [batches.content]
 kind = "lines"
@@ -1032,11 +966,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 38
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 21 })'
 descriptor = "python decl at src/posting/__main__.py:21"
 cost_tokens = 0
-cum_tokens = 3719
+cum_tokens = 3242
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +984,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 42
+position = 39
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 32 })'
 descriptor = "python decl at src/posting/__main__.py:32"
 cost_tokens = 0
-cum_tokens = 3719
+cum_tokens = 3242
 
 [batches.content]
 kind = "lines"
@@ -1068,11 +1002,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 43
+position = 40
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl at src/posting/__main__.py:45"
 cost_tokens = 10
-cum_tokens = 3729
+cum_tokens = 3252
 
 [batches.content]
 kind = "lines"
@@ -1086,11 +1020,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 44
+position = 41
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl at src/posting/__main__.py:177"
 cost_tokens = 10
-cum_tokens = 3739
+cum_tokens = 3262
 
 [batches.content]
 kind = "lines"
@@ -1104,11 +1038,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 45
+position = 42
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl doc at src/posting/__main__.py:45"
 cost_tokens = 12
-cum_tokens = 3751
+cum_tokens = 3274
 
 [batches.content]
 kind = "lines"
@@ -1122,11 +1056,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 46
+position = 43
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl doc at src/posting/__main__.py:177"
 cost_tokens = 12
-cum_tokens = 3763
+cum_tokens = 3286
 
 [batches.content]
 kind = "lines"
@@ -1140,11 +1074,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 47
+position = 44
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 76 })'
 descriptor = "python decl at src/posting/__main__.py:76"
 cost_tokens = 41
-cum_tokens = 3804
+cum_tokens = 3327
 
 [batches.content]
 kind = "lines"
@@ -1158,11 +1092,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 48
+position = 45
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl at src/posting/__main__.py:194"
 cost_tokens = 44
-cum_tokens = 3848
+cum_tokens = 3371
 
 [batches.content]
 kind = "lines"
@@ -1176,11 +1110,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 49
+position = 46
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl doc at src/posting/__main__.py:194"
 cost_tokens = 17
-cum_tokens = 3865
+cum_tokens = 3388
 
 [batches.content]
 kind = "lines"
@@ -1194,11 +1128,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 50
+position = 47
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl at src/posting/__main__.py:96"
 cost_tokens = 146
-cum_tokens = 4011
+cum_tokens = 3534
 
 [batches.content]
 kind = "lines"
@@ -1212,11 +1146,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 51
+position = 48
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl doc at src/posting/__main__.py:96"
 cost_tokens = 16
-cum_tokens = 4027
+cum_tokens = 3550
 
 [batches.content]
 kind = "lines"
@@ -1230,11 +1164,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 52
+position = 49
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 50 })'
 descriptor = "python decl at src/posting/__main__.py:50"
 cost_tokens = 147
-cum_tokens = 4174
+cum_tokens = 3697
 
 [batches.content]
 kind = "lines"
@@ -1248,227 +1182,91 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'Python(Imports { file: "src/posting/help_data.py" })'
-descriptor = "python imports in src/posting/help_data.py"
-cost_tokens = 15
-cum_tokens = 4189
+position = 50
+key = 'Python(Imports { file: "src/posting/request_headers.py" })'
+descriptor = "python imports in src/posting/request_headers.py"
+cost_tokens = 12
+cum_tokens = 3709
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/help_data.py"
+path = "src/posting/request_headers.py"
 start = 1
 end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Python(Imports { file: "src/posting/version.py" })'
+descriptor = "python imports in src/posting/version.py"
+cost_tokens = 13
+cum_tokens = 3722
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/version.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Toml(DevelopmentDependencies { file: "pyproject.toml" })'
+descriptor = "dev/build/target dependencies in pyproject.toml"
+cost_tokens = 212
+cum_tokens = 3934
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 52
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 244
+cum_tokens = 4178
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 39
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 72
+end = 84
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 54
-key = 'Markdown(HeadingsOutline { file: "docs/guide/keymap.md" })'
-descriptor = "headings outline in docs/guide/keymap.md"
-cost_tokens = 41
-cum_tokens = 4230
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/keymap.md"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: ".codex/environments" })'
-descriptor = "listing of '.codex/environments'"
-cost_tokens = 4
-cum_tokens = 4234
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".codex/environments"
-entries = ["environment.toml"]
-
-[[batches]]
-position = 56
-key = 'Python(Imports { file: "src/posting/types.py" })'
-descriptor = "python imports in src/posting/types.py"
-cost_tokens = 17
-cum_tokens = 4251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/types.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Markdown(HeadingsOutline { file: "docs/guide/importing.md" })'
-descriptor = "headings outline in docs/guide/importing.md"
-cost_tokens = 47
-cum_tokens = 4298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
-key = 'Markdown(Section { file: "docs/guide/importing.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/guide/importing.md section #0"
-cost_tokens = 14
-cum_tokens = 4312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/importing.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
 key = 'Python(DeclNames { file: "src/posting/collection.py" })'
 descriptor = "python decl names surface in src/posting/collection.py"
 cost_tokens = 307
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1650,11 +1448,11 @@ end = 554
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 55
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 23 })'
 descriptor = "python decl at src/posting/collection.py:23"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1668,11 +1466,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 61
+position = 56
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 56 })'
 descriptor = "python decl at src/posting/collection.py:56"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1686,11 +1484,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 62
+position = 57
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 61 })'
 descriptor = "python decl at src/posting/collection.py:61"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1704,11 +1502,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 63
+position = 58
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 66 })'
 descriptor = "python decl at src/posting/collection.py:66"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1722,11 +1520,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 64
+position = 59
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 70 })'
 descriptor = "python decl at src/posting/collection.py:70"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1740,11 +1538,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 65
+position = 60
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 75 })'
 descriptor = "python decl at src/posting/collection.py:75"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1758,11 +1556,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 66
+position = 61
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 81 })'
 descriptor = "python decl at src/posting/collection.py:81"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1776,11 +1574,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 67
+position = 62
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 87 })'
 descriptor = "python decl at src/posting/collection.py:87"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1794,11 +1592,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 68
+position = 63
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 93 })'
 descriptor = "python decl at src/posting/collection.py:93"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +1610,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 69
+position = 64
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 103 })'
 descriptor = "python decl at src/posting/collection.py:103"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +1628,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 70
+position = 65
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 111 })'
 descriptor = "python decl at src/posting/collection.py:111"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1848,11 +1646,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 71
+position = 66
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 133 })'
 descriptor = "python decl at src/posting/collection.py:133"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1866,11 +1664,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 72
+position = 67
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 138 })'
 descriptor = "python decl at src/posting/collection.py:138"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1884,11 +1682,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 73
+position = 68
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 401 })'
 descriptor = "python decl at src/posting/collection.py:401"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1902,11 +1700,11 @@ end = 401
 kind = "full"
 
 [[batches]]
-position = 74
+position = 69
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 407 })'
 descriptor = "python decl at src/posting/collection.py:407"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1920,11 +1718,11 @@ end = 407
 kind = "full"
 
 [[batches]]
-position = 75
+position = 70
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 412 })'
 descriptor = "python decl at src/posting/collection.py:412"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +1736,11 @@ end = 412
 kind = "full"
 
 [[batches]]
-position = 76
+position = 71
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 417 })'
 descriptor = "python decl at src/posting/collection.py:417"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1956,11 +1754,11 @@ end = 417
 kind = "full"
 
 [[batches]]
-position = 77
+position = 72
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 427 })'
 descriptor = "python decl at src/posting/collection.py:427"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1974,11 +1772,11 @@ end = 427
 kind = "full"
 
 [[batches]]
-position = 78
+position = 73
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 553 })'
 descriptor = "python decl at src/posting/collection.py:553"
 cost_tokens = 0
-cum_tokens = 4619
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -1992,11 +1790,11 @@ end = 553
 kind = "full"
 
 [[batches]]
-position = 79
+position = 74
 key = 'Python(Decl { file: "src/posting/collection.py", start_line: 154 })'
 descriptor = "python decl at src/posting/collection.py:154"
 cost_tokens = 10
-cum_tokens = 4629
+cum_tokens = 4495
 
 [batches.content]
 kind = "lines"
@@ -2010,11 +1808,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 80
+position = 75
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 70 })'
 descriptor = "python class body at src/posting/collection.py:70"
 cost_tokens = 16
-cum_tokens = 4645
+cum_tokens = 4511
 
 [batches.content]
 kind = "lines"
@@ -2028,11 +1826,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 81
+position = 76
 key = 'Python(DeclDoc { file: "src/posting/collection.py", start_line: 138 })'
 descriptor = "python decl doc at src/posting/collection.py:138"
 cost_tokens = 38
-cum_tokens = 4683
+cum_tokens = 4549
 
 [batches.content]
 kind = "lines"
@@ -2046,11 +1844,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 82
+position = 77
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 75 })'
 descriptor = "python class body at src/posting/collection.py:75"
 cost_tokens = 29
-cum_tokens = 4712
+cum_tokens = 4578
 
 [batches.content]
 kind = "lines"
@@ -2064,11 +1862,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 83
+position = 78
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 81 })'
 descriptor = "python class body at src/posting/collection.py:81"
 cost_tokens = 29
-cum_tokens = 4741
+cum_tokens = 4607
 
 [batches.content]
 kind = "lines"
@@ -2082,11 +1880,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 84
+position = 79
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 87 })'
 descriptor = "python class body at src/posting/collection.py:87"
 cost_tokens = 29
-cum_tokens = 4770
+cum_tokens = 4636
 
 [batches.content]
 kind = "lines"
@@ -2100,11 +1898,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 85
+position = 80
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 66 })'
 descriptor = "python class body at src/posting/collection.py:66"
 cost_tokens = 10
-cum_tokens = 4780
+cum_tokens = 4646
 
 [batches.content]
 kind = "lines"
@@ -2118,11 +1916,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 86
+position = 81
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 93 })'
 descriptor = "python class body at src/posting/collection.py:93"
 cost_tokens = 31
-cum_tokens = 4811
+cum_tokens = 4677
 
 [batches.content]
 kind = "lines"
@@ -2136,11 +1934,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 87
+position = 82
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 407 })'
 descriptor = "python class body at src/posting/collection.py:407"
 cost_tokens = 21
-cum_tokens = 4832
+cum_tokens = 4698
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +1952,11 @@ end = 409
 kind = "full"
 
 [[batches]]
-position = 88
+position = 83
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 412 })'
 descriptor = "python class body at src/posting/collection.py:412"
 cost_tokens = 21
-cum_tokens = 4853
+cum_tokens = 4719
 
 [batches.content]
 kind = "lines"
@@ -2172,11 +1970,11 @@ end = 414
 kind = "full"
 
 [[batches]]
-position = 89
+position = 84
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 56 })'
 descriptor = "python class body at src/posting/collection.py:56"
 cost_tokens = 22
-cum_tokens = 4875
+cum_tokens = 4741
 
 [batches.content]
 kind = "lines"
@@ -2190,11 +1988,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 90
+position = 85
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 61 })'
 descriptor = "python class body at src/posting/collection.py:61"
 cost_tokens = 22
-cum_tokens = 4897
+cum_tokens = 4763
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +2006,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 91
+position = 86
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 417 })'
 descriptor = "python class body at src/posting/collection.py:417"
 cost_tokens = 85
-cum_tokens = 4982
+cum_tokens = 4848
 
 [batches.content]
 kind = "lines"
@@ -2226,11 +2024,11 @@ end = 424
 kind = "full"
 
 [[batches]]
-position = 92
+position = 87
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 401 })'
 descriptor = "python class body at src/posting/collection.py:401"
 cost_tokens = 38
-cum_tokens = 5020
+cum_tokens = 4886
 
 [batches.content]
 kind = "lines"
@@ -2244,11 +2042,11 @@ end = 404
 kind = "full"
 
 [[batches]]
-position = 93
+position = 88
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 103 })'
 descriptor = "python class body at src/posting/collection.py:103"
 cost_tokens = 71
-cum_tokens = 5091
+cum_tokens = 4957
 
 [batches.content]
 kind = "lines"
@@ -2262,11 +2060,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 94
+position = 89
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 427 })'
 descriptor = "python class body at src/posting/collection.py:427"
 cost_tokens = 76
-cum_tokens = 5167
+cum_tokens = 5033
 
 [batches.content]
 kind = "lines"
@@ -2280,11 +2078,11 @@ end = 432
 kind = "full"
 
 [[batches]]
-position = 95
+position = 90
 key = 'Python(MethodSigs { file: "src/posting/collection.py" })'
 descriptor = "python method sigs in src/posting/collection.py"
 cost_tokens = 342
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2562,11 +2360,11 @@ end = 542
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 91
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 29 })'
 descriptor = "python method at src/posting/collection.py:29"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2580,11 +2378,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 97
+position = 92
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 121 })'
 descriptor = "python method at src/posting/collection.py:121"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2396,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 98
+position = 93
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 205 })'
 descriptor = "python method at src/posting/collection.py:205"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2616,11 +2414,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 99
+position = 94
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 269 })'
 descriptor = "python method at src/posting/collection.py:269"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2432,11 @@ end = 269
 kind = "full"
 
 [[batches]]
-position = 100
+position = 95
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 291 })'
 descriptor = "python method at src/posting/collection.py:291"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2652,11 +2450,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 101
+position = 96
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 303 })'
 descriptor = "python method at src/posting/collection.py:303"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2670,11 +2468,11 @@ end = 303
 kind = "full"
 
 [[batches]]
-position = 102
+position = 97
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 312 })'
 descriptor = "python method at src/posting/collection.py:312"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2688,11 +2486,11 @@ end = 312
 kind = "full"
 
 [[batches]]
-position = 103
+position = 98
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 392 })'
 descriptor = "python method at src/posting/collection.py:392"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2706,11 +2504,11 @@ end = 392
 kind = "full"
 
 [[batches]]
-position = 104
+position = 99
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 395 })'
 descriptor = "python method at src/posting/collection.py:395"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2724,11 +2522,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 105
+position = 100
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 541 })'
 descriptor = "python method at src/posting/collection.py:541"
 cost_tokens = 0
-cum_tokens = 5509
+cum_tokens = 5375
 
 [batches.content]
 kind = "lines"
@@ -2742,11 +2540,11 @@ end = 541
 kind = "full"
 
 [[batches]]
-position = 106
+position = 101
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 98 })'
 descriptor = "python method at src/posting/collection.py:98"
 cost_tokens = 6
-cum_tokens = 5515
+cum_tokens = 5381
 
 [batches.content]
 kind = "lines"
@@ -2760,11 +2558,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 107
+position = 102
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 41 })'
 descriptor = "python method at src/posting/collection.py:41"
 cost_tokens = 8
-cum_tokens = 5523
+cum_tokens = 5389
 
 [batches.content]
 kind = "lines"
@@ -2778,11 +2576,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 108
+position = 103
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 45 })'
 descriptor = "python method at src/posting/collection.py:45"
 cost_tokens = 8
-cum_tokens = 5531
+cum_tokens = 5397
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +2594,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 109
+position = 104
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 51 })'
 descriptor = "python method at src/posting/collection.py:51"
 cost_tokens = 8
-cum_tokens = 5539
+cum_tokens = 5405
 
 [batches.content]
 kind = "lines"
@@ -2814,11 +2612,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 110
+position = 105
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 480 })'
 descriptor = "python method at src/posting/collection.py:480"
 cost_tokens = 8
-cum_tokens = 5547
+cum_tokens = 5413
 
 [batches.content]
 kind = "lines"
@@ -2832,11 +2630,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 111
+position = 106
 key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 205 })'
 descriptor = "python method doc at src/posting/collection.py:205"
 cost_tokens = 14
-cum_tokens = 5561
+cum_tokens = 5427
 
 [batches.content]
 kind = "lines"
@@ -2850,11 +2648,11 @@ end = 206
 kind = "full"
 
 [[batches]]
-position = 112
+position = 107
 key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 291 })'
 descriptor = "python method doc at src/posting/collection.py:291"
 cost_tokens = 15
-cum_tokens = 5576
+cum_tokens = 5442
 
 [batches.content]
 kind = "lines"
@@ -2868,11 +2666,11 @@ end = 292
 kind = "full"
 
 [[batches]]
-position = 113
+position = 108
 key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 541 })'
 descriptor = "python method doc at src/posting/collection.py:541"
 cost_tokens = 15
-cum_tokens = 5591
+cum_tokens = 5457
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +2684,11 @@ end = 542
 kind = "full"
 
 [[batches]]
-position = 114
+position = 109
 key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 269 })'
 descriptor = "python method doc at src/posting/collection.py:269"
 cost_tokens = 16
-cum_tokens = 5607
+cum_tokens = 5473
 
 [batches.content]
 kind = "lines"
@@ -2904,11 +2702,11 @@ end = 270
 kind = "full"
 
 [[batches]]
-position = 115
+position = 110
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 441 })'
 descriptor = "python method at src/posting/collection.py:441"
 cost_tokens = 37
-cum_tokens = 5644
+cum_tokens = 5510
 
 [batches.content]
 kind = "lines"
@@ -2922,11 +2720,11 @@ end = 444
 kind = "full"
 
 [[batches]]
-position = 116
+position = 111
 key = 'Python(Method { file: "src/posting/collection.py", start_line: 434 })'
 descriptor = "python method at src/posting/collection.py:434"
 cost_tokens = 41
-cum_tokens = 5685
+cum_tokens = 5551
 
 [batches.content]
 kind = "lines"
@@ -2940,47 +2738,103 @@ end = 437
 kind = "full"
 
 [[batches]]
-position = 117
-key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 111 })'
-descriptor = "python class body at src/posting/collection.py:111"
-cost_tokens = 106
-cum_tokens = 5791
+position = 112
+key = 'Python(Imports { file: "src/posting/help_data.py" })'
+descriptor = "python imports in src/posting/help_data.py"
+cost_tokens = 15
+cum_tokens = 5566
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/collection.py"
-start = 112
-end = 119
+path = "src/posting/help_data.py"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 118
-key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 23 })'
-descriptor = "python class body at src/posting/collection.py:23"
-cost_tokens = 75
-cum_tokens = 5866
+position = 113
+key = 'Markdown(HeadingsOutline { file: "docs/guide/keymap.md" })'
+descriptor = "headings outline in docs/guide/keymap.md"
+cost_tokens = 41
+cum_tokens = 5607
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/collection.py"
-start = 24
-end = 27
+path = "docs/guide/keymap.md"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/keymap.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 119
+position = 114
 key = 'Python(DeclNames { file: "src/posting/scripts.py" })'
 descriptor = "python decl names surface in src/posting/scripts.py"
 cost_tokens = 122
-cum_tokens = 5988
+cum_tokens = 5729
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +2928,11 @@ end = 205
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 115
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 23 })'
 descriptor = "python decl at src/posting/scripts.py:23"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 5729
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +2946,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 121
+position = 116
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 113 })'
 descriptor = "python decl at src/posting/scripts.py:113"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 5729
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +2964,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 122
+position = 117
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 191 })'
 descriptor = "python decl at src/posting/scripts.py:191"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 5729
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +2982,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 123
+position = 118
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 204 })'
 descriptor = "python decl at src/posting/scripts.py:204"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 5729
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3000,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 124
+position = 119
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 121 })'
 descriptor = "python decl at src/posting/scripts.py:121"
 cost_tokens = 33
-cum_tokens = 6021
+cum_tokens = 5762
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3018,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 125
+position = 120
 key = 'Python(DeclDoc { file: "src/posting/scripts.py", start_line: 23 })'
 descriptor = "python decl doc at src/posting/scripts.py:23"
 cost_tokens = 20
-cum_tokens = 6041
+cum_tokens = 5782
 
 [batches.content]
 kind = "lines"
@@ -3182,11 +3036,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 126
+position = 121
 key = 'Python(DeclBody { file: "src/posting/scripts.py", start_line: 113, body_start_line: 117 })'
 descriptor = "python decl body at src/posting/scripts.py:113 body 117"
 cost_tokens = 20
-cum_tokens = 6061
+cum_tokens = 5802
 
 [batches.content]
 kind = "lines"
@@ -3200,11 +3054,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 127
+position = 122
 key = 'Python(DeclDoc { file: "src/posting/scripts.py", start_line: 113 })'
 descriptor = "python decl doc at src/posting/scripts.py:113"
 cost_tokens = 26
-cum_tokens = 6087
+cum_tokens = 5828
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3072,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 128
+position = 123
 key = 'Python(Decl { file: "src/posting/scripts.py", start_line: 164 })'
 descriptor = "python decl at src/posting/scripts.py:164"
 cost_tokens = 29
-cum_tokens = 6116
+cum_tokens = 5857
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3090,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 129
+position = 124
 key = 'Python(DeclDoc { file: "src/posting/scripts.py", start_line: 164 })'
 descriptor = "python decl doc at src/posting/scripts.py:164"
 cost_tokens = 19
-cum_tokens = 6135
+cum_tokens = 5876
 
 [batches.content]
 kind = "lines"
@@ -3254,11 +3108,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 130
+position = 125
 key = 'Python(DeclDoc { file: "src/posting/scripts.py", start_line: 204 })'
 descriptor = "python decl doc at src/posting/scripts.py:204"
 cost_tokens = 53
-cum_tokens = 6188
+cum_tokens = 5929
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3126,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 131
+position = 126
 key = 'Python(MethodSigs { file: "src/posting/scripts.py" })'
 descriptor = "python method sigs in src/posting/scripts.py"
 cost_tokens = 130
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3394,11 +3248,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 127
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 26 })'
 descriptor = "python method at src/posting/scripts.py:26"
 cost_tokens = 0
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3412,11 +3266,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 133
+position = 128
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 45 })'
 descriptor = "python method at src/posting/scripts.py:45"
 cost_tokens = 0
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3430,11 +3284,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 134
+position = 129
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 59 })'
 descriptor = "python method at src/posting/scripts.py:59"
 cost_tokens = 0
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3448,11 +3302,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 135
+position = 130
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 71 })'
 descriptor = "python method at src/posting/scripts.py:71"
 cost_tokens = 0
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3466,11 +3320,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 136
+position = 131
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 81 })'
 descriptor = "python method at src/posting/scripts.py:81"
 cost_tokens = 0
-cum_tokens = 6318
+cum_tokens = 6059
 
 [batches.content]
 kind = "lines"
@@ -3484,11 +3338,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 137
+position = 132
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 36 })'
 descriptor = "python method at src/posting/scripts.py:36"
 cost_tokens = 8
-cum_tokens = 6326
+cum_tokens = 6067
 
 [batches.content]
 kind = "lines"
@@ -3502,11 +3356,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 138
+position = 133
 key = 'Python(MethodDoc { file: "src/posting/scripts.py", start_line: 81 })'
 descriptor = "python method doc at src/posting/scripts.py:81"
 cost_tokens = 11
-cum_tokens = 6337
+cum_tokens = 6078
 
 [batches.content]
 kind = "lines"
@@ -3520,11 +3374,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 139
+position = 134
 key = 'Python(Method { file: "src/posting/scripts.py", start_line: 86 })'
 descriptor = "python method at src/posting/scripts.py:86"
 cost_tokens = 64
-cum_tokens = 6401
+cum_tokens = 6142
 
 [batches.content]
 kind = "lines"
@@ -3538,11 +3392,171 @@ end = 93
 kind = "full"
 
 [[batches]]
+position = 135
+key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 111 })'
+descriptor = "python class body at src/posting/collection.py:111"
+cost_tokens = 106
+cum_tokens = 6248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 112
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Fs(DirListing { dir: "tests/__snapshots__" })'
+descriptor = "listing of 'tests/__snapshots__'"
+cost_tokens = 6
+cum_tokens = 6254
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/__snapshots__"
+entries = ["test_snapshots"]
+
+[[batches]]
+position = 137
+key = 'Python(Imports { file: "src/posting/types.py" })'
+descriptor = "python imports in src/posting/types.py"
+cost_tokens = 17
+cum_tokens = 6271
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/types.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Markdown(HeadingsOutline { file: "docs/guide/importing.md" })'
+descriptor = "headings outline in docs/guide/importing.md"
+cost_tokens = 47
+cum_tokens = 6318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 139
+key = 'Markdown(Section { file: "docs/guide/importing.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/guide/importing.md section #0"
+cost_tokens = 14
+cum_tokens = 6332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/guide/importing.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 140
+key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 23 })'
+descriptor = "python class body at src/posting/collection.py:23"
+cost_tokens = 75
+cum_tokens = 6407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 24
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
 key = 'Python(MethodDoc { file: "src/posting/scripts.py", start_line: 71 })'
 descriptor = "python method doc at src/posting/scripts.py:71"
 cost_tokens = 44
-cum_tokens = 6445
+cum_tokens = 6451
 
 [batches.content]
 kind = "lines"
@@ -3556,11 +3570,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(DeclDoc { file: "src/posting/collection.py", start_line: 553 })'
 descriptor = "python decl doc at src/posting/collection.py:553"
 cost_tokens = 77
-cum_tokens = 6522
+cum_tokens = 6528
 
 [batches.content]
 kind = "lines"
@@ -3574,11 +3588,11 @@ end = 561
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 138 })'
 descriptor = "python class body at src/posting/collection.py:138"
 cost_tokens = 121
-cum_tokens = 6643
+cum_tokens = 6649
 
 [batches.content]
 kind = "lines"
@@ -3592,11 +3606,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Markdown(HeadingsOutline { file: "docs/guide/external_tools.md" })'
 descriptor = "headings outline in docs/guide/external_tools.md"
 cost_tokens = 52
-cum_tokens = 6695
+cum_tokens = 6701
 
 [batches.content]
 kind = "lines"
@@ -3682,11 +3696,25 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 145
+key = 'Fs(DirListing { dir: "tests/resources" })'
+descriptor = "listing of 'tests/resources'"
+cost_tokens = 7
+cum_tokens = 6708
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/resources"
+entries = ["snapshot_report_template.jinja2"]
+
+[[batches]]
+position = 146
 key = 'Python(Imports { file: "src/posting/save_request.py" })'
 descriptor = "python imports in src/posting/save_request.py"
 cost_tokens = 20
-cum_tokens = 6715
+cum_tokens = 6728
 
 [batches.content]
 kind = "lines"
@@ -3700,29 +3728,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 145
-key = 'Python(Imports { file: "src/posting/widgets/center_middle.py" })'
-descriptor = "python imports in src/posting/widgets/center_middle.py"
-cost_tokens = 12
-cum_tokens = 6727
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/widgets/center_middle.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
+position = 147
 key = 'Python(DeclNames { file: "src/posting/help_data.py" })'
 descriptor = "python decl names surface in src/posting/help_data.py"
 cost_tokens = 8
-cum_tokens = 6735
+cum_tokens = 6736
 
 [batches.content]
 kind = "lines"
@@ -3736,11 +3746,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(Decl { file: "src/posting/help_data.py", start_line: 4 })'
 descriptor = "python decl at src/posting/help_data.py:4"
 cost_tokens = 8
-cum_tokens = 6743
+cum_tokens = 6744
 
 [batches.content]
 kind = "lines"
@@ -3754,11 +3764,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(DeclDoc { file: "src/posting/help_data.py", start_line: 4 })'
 descriptor = "python decl doc at src/posting/help_data.py:4"
 cost_tokens = 19
-cum_tokens = 6762
+cum_tokens = 6763
 
 [batches.content]
 kind = "lines"
@@ -3772,11 +3782,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(DeclNames { file: "src/posting/version.py" })'
 descriptor = "python decl names surface in src/posting/version.py"
 cost_tokens = 8
-cum_tokens = 6770
+cum_tokens = 6771
 
 [batches.content]
 kind = "lines"
@@ -3790,11 +3800,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
+key = 'Python(Imports { file: "src/posting/widgets/center_middle.py" })'
+descriptor = "python imports in src/posting/widgets/center_middle.py"
+cost_tokens = 12
+cum_tokens = 6783
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/widgets/center_middle.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
 key = 'Python(ClassBody { file: "src/posting/help_data.py", start_line: 4 })'
 descriptor = "python class body at src/posting/help_data.py:4"
 cost_tokens = 49
-cum_tokens = 6819
+cum_tokens = 6832
 
 [batches.content]
 kind = "lines"
@@ -3808,11 +3836,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 151
+position = 153
 key = 'Markdown(HeadingsOutline { file: "docs/guide/collections.md" })'
 descriptor = "headings outline in docs/guide/collections.md"
 cost_tokens = 62
-cum_tokens = 6881
+cum_tokens = 6894
 
 [batches.content]
 kind = "lines"
@@ -3914,11 +3942,11 @@ end = 65
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 154
 key = 'Python(Imports { file: "src/posting/suggesters.py" })'
 descriptor = "python imports in src/posting/suggesters.py"
 cost_tokens = 23
-cum_tokens = 6904
+cum_tokens = 6917
 
 [batches.content]
 kind = "lines"
@@ -3932,11 +3960,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 153
+position = 155
 key = 'Python(ClassBody { file: "src/posting/collection.py", start_line: 154 })'
 descriptor = "python class body at src/posting/collection.py:154"
 cost_tokens = 573
-cum_tokens = 7477
+cum_tokens = 7490
 
 [batches.content]
 kind = "lines"
@@ -3950,25 +3978,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 154
-key = 'Fs(DirListing { dir: "tests/__snapshots__" })'
-descriptor = "listing of 'tests/__snapshots__'"
-cost_tokens = 6
-cum_tokens = 7483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/__snapshots__"
-entries = ["test_snapshots"]
-
-[[batches]]
-position = 155
+position = 156
 key = 'Python(MethodDoc { file: "src/posting/scripts.py", start_line: 36 })'
 descriptor = "python method doc at src/posting/scripts.py:36"
 cost_tokens = 56
-cum_tokens = 7539
+cum_tokens = 7546
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +3996,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(Imports { file: "src/posting/auth.py" })'
 descriptor = "python imports in src/posting/auth.py"
 cost_tokens = 24
-cum_tokens = 7563
+cum_tokens = 7570
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +4014,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(Imports { file: "src/posting/urls.py" })'
 descriptor = "python imports in src/posting/urls.py"
 cost_tokens = 24
-cum_tokens = 7587
+cum_tokens = 7594
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +4032,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Markdown(HeadingsOutline { file: "docs/guide/environments.md" })'
 descriptor = "headings outline in docs/guide/environments.md"
 cost_tokens = 66
-cum_tokens = 7653
+cum_tokens = 7660
 
 [batches.content]
 kind = "lines"
@@ -4124,11 +4138,25 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 160
+key = 'Fs(DirListing { dir: "tests/sample-envs" })'
+descriptor = "listing of 'tests/sample-envs'"
+cost_tokens = 9
+cum_tokens = 7669
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/sample-envs"
+entries = ["sample_base.env", "sample_extra.env"]
+
+[[batches]]
+position = 161
 key = 'Python(DeclNames { file: "src/posting/exit_codes.py" })'
 descriptor = "python decl names surface in src/posting/exit_codes.py"
 cost_tokens = 10
-cum_tokens = 7663
+cum_tokens = 7679
 
 [batches.content]
 kind = "lines"
@@ -4142,25 +4170,25 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 160
-key = 'Fs(DirListing { dir: "tests/resources" })'
-descriptor = "listing of 'tests/resources'"
-cost_tokens = 7
-cum_tokens = 7670
+position = 162
+key = 'Fs(DirListing { dir: "tests/sample-themes" })'
+descriptor = "listing of 'tests/sample-themes'"
+cost_tokens = 10
+cum_tokens = 7689
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "tests/resources"
-entries = ["snapshot_report_template.jinja2"]
+parent = "tests/sample-themes"
+entries = ["another_test.yml", "serene_ocean.yaml"]
 
 [[batches]]
-position = 161
+position = 163
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 227
-cum_tokens = 7897
+cum_tokens = 7916
 
 [batches.content]
 kind = "lines"
@@ -4174,11 +4202,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 162
+position = 164
 key = 'Markdown(HeadingsOutline { file: "docs/guide/navigation.md" })'
 descriptor = "headings outline in docs/guide/navigation.md"
 cost_tokens = 77
-cum_tokens = 7974
+cum_tokens = 7993
 
 [batches.content]
 kind = "lines"
@@ -4296,65 +4324,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 163
-key = 'Markdown(Section { file: "docs/guide/themes.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/guide/themes.md section #0"
-cost_tokens = 61
-cum_tokens = 8035
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/themes.md"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
-key = 'Python(Imports { file: "src/posting/tuple_to_multidict.py" })'
-descriptor = "python imports in src/posting/tuple_to_multidict.py"
-cost_tokens = 32
-cum_tokens = 8067
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/tuple_to_multidict.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 165
-key = 'Python(Imports { file: "src/posting/messages.py" })'
-descriptor = "python imports in src/posting/messages.py"
-cost_tokens = 33
-cum_tokens = 8100
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/messages.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 166
 key = 'Python(DeclNames { file: "src/posting/messages.py" })'
 descriptor = "python decl names surface in src/posting/messages.py"
-cost_tokens = 8
-cum_tokens = 8108
+cost_tokens = 12
+cum_tokens = 8005
 
 [batches.content]
 kind = "lines"
@@ -4368,11 +4342,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 167
+position = 166
 key = 'Python(Decl { file: "src/posting/messages.py", start_line: 6 })'
 descriptor = "python decl at src/posting/messages.py:6"
 cost_tokens = 10
-cum_tokens = 8118
+cum_tokens = 8015
 
 [batches.content]
 kind = "lines"
@@ -4386,11 +4360,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 168
+position = 167
 key = 'Python(ClassBody { file: "src/posting/messages.py", start_line: 6 })'
 descriptor = "python class body at src/posting/messages.py:6"
 cost_tokens = 7
-cum_tokens = 8125
+cum_tokens = 8022
 
 [batches.content]
 kind = "lines"
@@ -4404,49 +4378,17 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 169
-key = 'Python(Imports { file: "src/posting/__main__.py" })'
-descriptor = "python imports in src/posting/__main__.py"
-cost_tokens = 152
-cum_tokens = 8277
+position = 168
+key = 'Python(Imports { file: "src/posting/messages.py" })'
+descriptor = "python imports in src/posting/messages.py"
+cost_tokens = 29
+cum_tokens = 8051
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/__main__.py"
-start = 1
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'Fs(DirListing { dir: "tests/sample-envs" })'
-descriptor = "listing of 'tests/sample-envs'"
-cost_tokens = 9
-cum_tokens = 8286
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/sample-envs"
-entries = ["sample_base.env", "sample_extra.env"]
-
-[[batches]]
-position = 171
-key = 'Python(Imports { file: "src/posting/locations.py" })'
-descriptor = "python imports in src/posting/locations.py"
-cost_tokens = 36
-cum_tokens = 8322
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/locations.py"
+path = "src/posting/messages.py"
 start = 1
 end = 3
 
@@ -4454,29 +4396,47 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 172
-key = 'Python(DeclNames { file: "src/posting/suggesters.py" })'
-descriptor = "python decl names surface in src/posting/suggesters.py"
-cost_tokens = 13
-cum_tokens = 8335
+position = 169
+key = 'Markdown(Section { file: "docs/guide/themes.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/guide/themes.md section #0"
+cost_tokens = 61
+cum_tokens = 8112
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/suggesters.py"
-start = 2
-end = 2
+path = "docs/guide/themes.md"
+start = 1
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 173
+position = 170
+key = 'Python(Imports { file: "src/posting/tuple_to_multidict.py" })'
+descriptor = "python imports in src/posting/tuple_to_multidict.py"
+cost_tokens = 32
+cum_tokens = 8144
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/tuple_to_multidict.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
 key = 'Python(DeclNames { file: "src/posting/jumper.py" })'
 descriptor = "python decl names surface in src/posting/jumper.py"
 cost_tokens = 36
-cum_tokens = 8371
+cum_tokens = 8180
 
 [batches.content]
 kind = "lines"
@@ -4506,11 +4466,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 174
+position = 172
 key = 'Python(Decl { file: "src/posting/jumper.py", start_line: 16 })'
 descriptor = "python decl at src/posting/jumper.py:16"
 cost_tokens = 0
-cum_tokens = 8371
+cum_tokens = 8180
 
 [batches.content]
 kind = "lines"
@@ -4524,11 +4484,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 175
+position = 173
 key = 'Python(Decl { file: "src/posting/jumper.py", start_line: 26 })'
 descriptor = "python decl at src/posting/jumper.py:26"
 cost_tokens = 0
-cum_tokens = 8371
+cum_tokens = 8180
 
 [batches.content]
 kind = "lines"
@@ -4542,11 +4502,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 176
+position = 174
 key = 'Python(Decl { file: "src/posting/jumper.py", start_line: 9 })'
 descriptor = "python decl at src/posting/jumper.py:9"
 cost_tokens = 10
-cum_tokens = 8381
+cum_tokens = 8190
 
 [batches.content]
 kind = "lines"
@@ -4560,11 +4520,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 177
+position = 175
 key = 'Python(DeclDoc { file: "src/posting/jumper.py", start_line: 9 })'
 descriptor = "python decl doc at src/posting/jumper.py:9"
 cost_tokens = 15
-cum_tokens = 8396
+cum_tokens = 8205
 
 [batches.content]
 kind = "lines"
@@ -4578,11 +4538,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 178
+position = 176
 key = 'Python(DeclDoc { file: "src/posting/jumper.py", start_line: 16 })'
 descriptor = "python decl doc at src/posting/jumper.py:16"
 cost_tokens = 16
-cum_tokens = 8412
+cum_tokens = 8221
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +4556,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 179
+position = 177
 key = 'Python(DeclDoc { file: "src/posting/jumper.py", start_line: 26 })'
 descriptor = "python decl doc at src/posting/jumper.py:26"
 cost_tokens = 16
-cum_tokens = 8428
+cum_tokens = 8237
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4574,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 180
+position = 178
 key = 'Python(ClassBody { file: "src/posting/jumper.py", start_line: 9 })'
 descriptor = "python class body at src/posting/jumper.py:9"
 cost_tokens = 8
-cum_tokens = 8436
+cum_tokens = 8245
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4592,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 181
+position = 179
 key = 'Python(ClassBody { file: "src/posting/jumper.py", start_line: 16 })'
 descriptor = "python class body at src/posting/jumper.py:16"
 cost_tokens = 54
-cum_tokens = 8490
+cum_tokens = 8299
 
 [batches.content]
 kind = "lines"
@@ -4650,107 +4610,29 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 182
-key = 'Python(MethodSigs { file: "src/posting/jumper.py" })'
-descriptor = "python method sigs in src/posting/jumper.py"
-cost_tokens = 49
-cum_tokens = 8539
+position = 180
+key = 'Python(Imports { file: "src/posting/__main__.py" })'
+descriptor = "python imports in src/posting/__main__.py"
+cost_tokens = 152
+cum_tokens = 8451
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 183
-key = 'Python(Method { file: "src/posting/jumper.py", start_line: 29 })'
-descriptor = "python method at src/posting/jumper.py:29"
-cost_tokens = 0
-cum_tokens = 8539
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 29
-end = 29
+path = "src/posting/__main__.py"
+start = 1
+end = 18
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 184
-key = 'Python(Method { file: "src/posting/jumper.py", start_line: 34 })'
-descriptor = "python method at src/posting/jumper.py:34"
-cost_tokens = 0
-cum_tokens = 8539
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Python(MethodDoc { file: "src/posting/jumper.py", start_line: 34 })'
-descriptor = "python method doc at src/posting/jumper.py:34"
-cost_tokens = 15
-cum_tokens = 8554
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/jumper.py"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
+position = 181
 key = 'Python(DeclNames { file: "src/posting/types.py" })'
 descriptor = "python decl names surface in src/posting/types.py"
 cost_tokens = 25
-cum_tokens = 8579
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -4772,11 +4654,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 187
+position = 182
 key = 'Python(Decl { file: "src/posting/types.py", start_line: 6 })'
 descriptor = "python decl at src/posting/types.py:6"
 cost_tokens = 72
-cum_tokens = 8651
+cum_tokens = 8548
 
 [batches.content]
 kind = "lines"
@@ -4790,97 +4672,161 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 188
-key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 480 })'
-descriptor = "python method doc at src/posting/collection.py:480"
-cost_tokens = 90
-cum_tokens = 8741
+position = 183
+key = 'Python(DeclNames { file: "src/posting/suggesters.py" })'
+descriptor = "python decl names surface in src/posting/suggesters.py"
+cost_tokens = 13
+cum_tokens = 8561
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/collection.py"
-start = 482
-end = 489
+path = "src/posting/suggesters.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Python(MethodSigs { file: "src/posting/jumper.py" })'
+descriptor = "python method sigs in src/posting/jumper.py"
+cost_tokens = 49
+cum_tokens = 8610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 185
+key = 'Python(Method { file: "src/posting/jumper.py", start_line: 29 })'
+descriptor = "python method at src/posting/jumper.py:29"
+cost_tokens = 0
+cum_tokens = 8610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(Method { file: "src/posting/jumper.py", start_line: 34 })'
+descriptor = "python method at src/posting/jumper.py:34"
+cost_tokens = 0
+cum_tokens = 8610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(MethodDoc { file: "src/posting/jumper.py", start_line: 34 })'
+descriptor = "python method doc at src/posting/jumper.py:34"
+cost_tokens = 15
+cum_tokens = 8625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/jumper.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(Imports { file: "src/posting/locations.py" })'
+descriptor = "python imports in src/posting/locations.py"
+cost_tokens = 36
+cum_tokens = 8661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/locations.py"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 189
-key = 'Markdown(Section { file: "docs/index.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/index.md section #0"
-cost_tokens = 34
-cum_tokens = 8775
+key = 'Python(DeclNames { file: "src/posting/auth.py" })'
+descriptor = "python decl names surface in src/posting/auth.py"
+cost_tokens = 14
+cum_tokens = 8675
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/index.md"
-start = 1
-end = 4
+path = "src/posting/auth.py"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 190
-key = 'Fs(DirListing { dir: "tests/sample-themes" })'
-descriptor = "listing of 'tests/sample-themes'"
-cost_tokens = 10
-cum_tokens = 8785
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/sample-themes"
-entries = ["another_test.yml", "serene_ocean.yaml"]
-
-[[batches]]
-position = 191
-key = 'Python(MethodDoc { file: "src/posting/scripts.py", start_line: 59 })'
-descriptor = "python method doc at src/posting/scripts.py:59"
-cost_tokens = 92
-cum_tokens = 8877
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/scripts.py"
-start = 60
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 192
-key = 'Python(DeclNames { file: "src/posting/auth.py" })'
-descriptor = "python decl names surface in src/posting/auth.py"
-cost_tokens = 14
-cum_tokens = 8891
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/auth.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
 key = 'Python(Decl { file: "src/posting/auth.py", start_line: 6 })'
 descriptor = "python decl at src/posting/auth.py:6"
 cost_tokens = 0
-cum_tokens = 8891
+cum_tokens = 8675
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4840,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 194
+position = 191
 key = 'Python(MethodSigs { file: "src/posting/auth.py" })'
 descriptor = "python method sigs in src/posting/auth.py"
 cost_tokens = 46
-cum_tokens = 8937
+cum_tokens = 8721
 
 [batches.content]
 kind = "lines"
@@ -4936,11 +4882,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 192
 key = 'Python(Method { file: "src/posting/auth.py", start_line: 7 })'
 descriptor = "python method at src/posting/auth.py:7"
 cost_tokens = 0
-cum_tokens = 8937
+cum_tokens = 8721
 
 [batches.content]
 kind = "lines"
@@ -4954,11 +4900,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 196
+position = 193
 key = 'Python(Method { file: "src/posting/auth.py", start_line: 10 })'
 descriptor = "python method at src/posting/auth.py:10"
 cost_tokens = 0
-cum_tokens = 8937
+cum_tokens = 8721
 
 [batches.content]
 kind = "lines"
@@ -4972,11 +4918,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 197
+position = 194
 key = 'Python(MethodBody { file: "src/posting/auth.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python method body at src/posting/auth.py:7 body 8"
 cost_tokens = 8
-cum_tokens = 8945
+cum_tokens = 8729
 
 [batches.content]
 kind = "lines"
@@ -4990,47 +4936,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 198
-key = 'Python(MethodBody { file: "src/posting/auth.py", start_line: 10, body_start_line: 11 })'
-descriptor = "python method body at src/posting/auth.py:10 body 11"
-cost_tokens = 24
-cum_tokens = 8969
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/auth.py"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 199
-key = 'Markdown(Section { file: "docs/guide/external_tools.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/guide/external_tools.md section #0"
-cost_tokens = 77
-cum_tokens = 9046
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/external_tools.md"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 200
+position = 195
 key = 'Python(DeclNames { file: "src/posting/request_headers.py" })'
 descriptor = "python decl names surface in src/posting/request_headers.py"
 cost_tokens = 27
-cum_tokens = 9073
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5052,11 +4962,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 201
+position = 196
 key = 'Python(Decl { file: "src/posting/request_headers.py", start_line: 4 })'
 descriptor = "python decl at src/posting/request_headers.py:4"
 cost_tokens = 0
-cum_tokens = 9073
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5070,11 +4980,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 202
+position = 197
 key = 'Python(ClassBody { file: "src/posting/request_headers.py", start_line: 4 })'
 descriptor = "python class body at src/posting/request_headers.py:4"
 cost_tokens = 43
-cum_tokens = 9116
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -5088,571 +4998,169 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 203
-key = 'Markdown(HeadingsOutline { file: "docs/guide/configuration.md" })'
-descriptor = "headings outline in docs/guide/configuration.md"
-cost_tokens = 110
-cum_tokens = 9226
+position = 198
+key = 'Python(DeclNames { file: "src/posting/help_screen.py" })'
+descriptor = "python decl names surface in src/posting/help_screen.py"
+cost_tokens = 65
+cum_tokens = 8864
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 1
-end = 1
+path = "src/posting/help_screen.py"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 11
-end = 11
+path = "src/posting/help_screen.py"
+start = 22
+end = 22
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 29
-end = 29
+path = "src/posting/help_screen.py"
+start = 33
+end = 33
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 39
-end = 39
+path = "src/posting/help_screen.py"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 56
-end = 56
+path = "src/posting/help_screen.py"
+start = 48
+end = 48
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 199
+key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 22 })'
+descriptor = "python decl at src/posting/help_screen.py:22"
+cost_tokens = 0
+cum_tokens = 8864
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 60
-end = 60
+path = "src/posting/help_screen.py"
+start = 22
+end = 22
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 200
+key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 33 })'
+descriptor = "python decl at src/posting/help_screen.py:33"
+cost_tokens = 0
+cum_tokens = 8864
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 71
-end = 71
+path = "src/posting/help_screen.py"
+start = 33
+end = 33
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 201
+key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 44 })'
+descriptor = "python decl at src/posting/help_screen.py:44"
+cost_tokens = 0
+cum_tokens = 8864
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 86
-end = 86
+path = "src/posting/help_screen.py"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 202
+key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 48 })'
+descriptor = "python decl at src/posting/help_screen.py:48"
+cost_tokens = 0
+cum_tokens = 8864
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 90
-end = 90
+path = "src/posting/help_screen.py"
+start = 48
+end = 48
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 203
+key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 14 })'
+descriptor = "python decl at src/posting/help_screen.py:14"
+cost_tokens = 10
+cum_tokens = 8874
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 101
-end = 101
+path = "src/posting/help_screen.py"
+start = 14
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 204
-key = 'Markdown(Section { file: "docs/guide/configuration.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/guide/configuration.md section #3"
-cost_tokens = 26
-cum_tokens = 9252
+key = 'Python(DeclDoc { file: "src/posting/help_screen.py", start_line: 22 })'
+descriptor = "python decl doc at src/posting/help_screen.py:22"
+cost_tokens = 11
+cum_tokens = 8885
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 56
-end = 58
+path = "src/posting/help_screen.py"
+start = 23
+end = 23
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 205
-key = 'Markdown(HeadingsOutline { file: "docs/guide/scripting.md" })'
-descriptor = "headings outline in docs/guide/scripting.md"
-cost_tokens = 110
-cum_tokens = 9362
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/guide/scripting.md"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 206
-key = 'Python(Imports { file: "src/posting/yaml.py" })'
-descriptor = "python imports in src/posting/yaml.py"
-cost_tokens = 41
-cum_tokens = 9403
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/yaml.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/yaml.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 207
-key = 'Python(DeclDoc { file: "src/posting/scripts.py", start_line: 191 })'
-descriptor = "python decl doc at src/posting/scripts.py:191"
-cost_tokens = 77
-cum_tokens = 9480
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/scripts.py"
-start = 192
-end = 200
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 208
-key = 'Python(DeclNames { file: "src/posting/help_screen.py" })'
-descriptor = "python decl names surface in src/posting/help_screen.py"
-cost_tokens = 65
-cum_tokens = 9545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 209
-key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 22 })'
-descriptor = "python decl at src/posting/help_screen.py:22"
-cost_tokens = 0
-cum_tokens = 9545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 210
-key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 33 })'
-descriptor = "python decl at src/posting/help_screen.py:33"
-cost_tokens = 0
-cum_tokens = 9545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 211
-key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 44 })'
-descriptor = "python decl at src/posting/help_screen.py:44"
-cost_tokens = 0
-cum_tokens = 9545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 212
-key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 48 })'
-descriptor = "python decl at src/posting/help_screen.py:48"
-cost_tokens = 0
-cum_tokens = 9545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 213
-key = 'Python(Decl { file: "src/posting/help_screen.py", start_line: 14 })'
-descriptor = "python decl at src/posting/help_screen.py:14"
-cost_tokens = 10
-cum_tokens = 9555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
-key = 'Python(DeclDoc { file: "src/posting/help_screen.py", start_line: 22 })'
-descriptor = "python decl doc at src/posting/help_screen.py:22"
-cost_tokens = 11
-cum_tokens = 9566
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/help_screen.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 215
 key = 'Python(DeclDoc { file: "src/posting/help_screen.py", start_line: 33 })'
 descriptor = "python decl doc at src/posting/help_screen.py:33"
 cost_tokens = 11
-cum_tokens = 9577
+cum_tokens = 8896
 
 [batches.content]
 kind = "lines"
@@ -5666,11 +5174,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 216
+position = 206
 key = 'Python(DeclDoc { file: "src/posting/help_screen.py", start_line: 44 })'
 descriptor = "python decl doc at src/posting/help_screen.py:44"
 cost_tokens = 11
-cum_tokens = 9588
+cum_tokens = 8907
 
 [batches.content]
 kind = "lines"
@@ -5684,11 +5192,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 217
+position = 207
 key = 'Python(DeclDoc { file: "src/posting/help_screen.py", start_line: 14 })'
 descriptor = "python decl doc at src/posting/help_screen.py:14"
 cost_tokens = 28
-cum_tokens = 9616
+cum_tokens = 8935
 
 [batches.content]
 kind = "lines"
@@ -5702,11 +5210,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 218
+position = 208
 key = 'Python(ClassBody { file: "src/posting/help_screen.py", start_line: 14 })'
 descriptor = "python class body at src/posting/help_screen.py:14"
 cost_tokens = 8
-cum_tokens = 9624
+cum_tokens = 8943
 
 [batches.content]
 kind = "lines"
@@ -5720,11 +5228,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 219
+position = 209
 key = 'Python(ClassBody { file: "src/posting/help_screen.py", start_line: 22 })'
 descriptor = "python class body at src/posting/help_screen.py:22"
 cost_tokens = 54
-cum_tokens = 9678
+cum_tokens = 8997
 
 [batches.content]
 kind = "lines"
@@ -5738,11 +5246,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 220
+position = 210
 key = 'Python(ClassBody { file: "src/posting/help_screen.py", start_line: 33 })'
 descriptor = "python class body at src/posting/help_screen.py:33"
 cost_tokens = 54
-cum_tokens = 9732
+cum_tokens = 9051
 
 [batches.content]
 kind = "lines"
@@ -5756,11 +5264,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 221
+position = 211
 key = 'Python(MethodSigs { file: "src/posting/help_screen.py" })'
 descriptor = "python method sigs in src/posting/help_screen.py"
 cost_tokens = 26
-cum_tokens = 9758
+cum_tokens = 9077
 
 [batches.content]
 kind = "lines"
@@ -5798,11 +5306,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 212
 key = 'Python(Method { file: "src/posting/help_screen.py", start_line: 127 })'
 descriptor = "python method at src/posting/help_screen.py:127"
 cost_tokens = 0
-cum_tokens = 9758
+cum_tokens = 9077
 
 [batches.content]
 kind = "lines"
@@ -5816,11 +5324,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 223
+position = 213
 key = 'Python(Method { file: "src/posting/help_screen.py", start_line: 117 })'
 descriptor = "python method at src/posting/help_screen.py:117"
 cost_tokens = 64
-cum_tokens = 9822
+cum_tokens = 9141
 
 [batches.content]
 kind = "lines"
@@ -5834,37 +5342,531 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 224
-key = 'Markdown(Section { file: "docs/guide/configuration.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/guide/configuration.md section #0"
-cost_tokens = 84
-cum_tokens = 9906
+position = 214
+key = 'Python(MethodBody { file: "src/posting/auth.py", start_line: 10, body_start_line: 11 })'
+descriptor = "python method body at src/posting/auth.py:10 body 11"
+cost_tokens = 24
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/guide/configuration.md"
-start = 1
-end = 9
+path = "src/posting/auth.py"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
+key = 'Python(MethodDoc { file: "src/posting/collection.py", start_line: 480 })'
+descriptor = "python method doc at src/posting/collection.py:480"
+cost_tokens = 90
+cum_tokens = 9255
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/collection.py"
+start = 482
+end = 489
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'Python(DeclNames { file: "src/posting/config.py" })'
+descriptor = "python decl names surface in src/posting/config.py"
+cost_tokens = 131
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 18 })'
+descriptor = "python decl at src/posting/config.py:18"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 34 })'
+descriptor = "python decl at src/posting/config.py:34"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 46 })'
+descriptor = "python decl at src/posting/config.py:46"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 220
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 56 })'
+descriptor = "python decl at src/posting/config.py:56"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 79 })'
+descriptor = "python decl at src/posting/config.py:79"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 92 })'
+descriptor = "python decl at src/posting/config.py:92"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 223
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 99 })'
+descriptor = "python decl at src/posting/config.py:99"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 224
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 106 })'
+descriptor = "python decl at src/posting/config.py:106"
+cost_tokens = 0
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 106
+end = 106
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 225
-key = 'Python(Imports { file: "src/posting/widgets/response/response_headers.py" })'
-descriptor = "python imports in src/posting/widgets/response/response_headers.py"
-cost_tokens = 16
-cum_tokens = 9922
+key = 'Python(Decl { file: "src/posting/config.py", start_line: 116 })'
+descriptor = "python decl at src/posting/config.py:116"
+cost_tokens = 0
+cum_tokens = 9386
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/posting/widgets/response/response_headers.py"
-start = 1
-end = 1
+path = "src/posting/config.py"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 56 })'
+descriptor = "python decl doc at src/posting/config.py:56"
+cost_tokens = 11
+cum_tokens = 9397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 46 })'
+descriptor = "python decl doc at src/posting/config.py:46"
+cost_tokens = 12
+cum_tokens = 9409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 92 })'
+descriptor = "python decl doc at src/posting/config.py:92"
+cost_tokens = 12
+cum_tokens = 9421
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 99 })'
+descriptor = "python decl doc at src/posting/config.py:99"
+cost_tokens = 12
+cum_tokens = 9433
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 106 })'
+descriptor = "python decl doc at src/posting/config.py:106"
+cost_tokens = 12
+cum_tokens = 9445
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
+key = 'Python(DeclDoc { file: "src/posting/config.py", start_line: 79 })'
+descriptor = "python decl doc at src/posting/config.py:79"
+cost_tokens = 15
+cum_tokens = 9460
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Python(MethodSigs { file: "src/posting/config.py" })'
+descriptor = "python method sigs in src/posting/config.py"
+cost_tokens = 13
+cum_tokens = 9473
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 233
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 79 })'
+descriptor = "python class body at src/posting/config.py:79"
+cost_tokens = 119
+cum_tokens = 9592
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 82
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 18 })'
+descriptor = "python class body at src/posting/config.py:18"
+cost_tokens = 169
+cum_tokens = 9761
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 19
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 92 })'
+descriptor = "python class body at src/posting/config.py:92"
+cost_tokens = 32
+cum_tokens = 9793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 95
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 46 })'
+descriptor = "python class body at src/posting/config.py:46"
+cost_tokens = 72
+cum_tokens = 9865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 49
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 106 })'
+descriptor = "python class body at src/posting/config.py:106"
+cost_tokens = 72
+cum_tokens = 9937
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 109
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Python(ClassBody { file: "src/posting/config.py", start_line: 99 })'
+descriptor = "python class body at src/posting/config.py:99"
+cost_tokens = 39
+cum_tokens = 9976
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/config.py"
+start = 102
+end = 103
 
 [batches.content.spans.render]
 kind = "full"

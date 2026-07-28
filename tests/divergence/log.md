@@ -10,14 +10,14 @@ Score(3000)=0.624 I=0.843 C=0.461 ns_rows≤3K=23/67 (reached=13 partial=0 missi
 | walker |  | 95 | 3 | listing of '.github' |  |  | 0.634 |
 | walker |  | 98 | 3 | listing of '.github/workflows' |  |  | 0.635 |
 | walker |  | 101 | 3 | listing of 'benches' |  |  | 0.637 |
-| ns | 127 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.632 |
-| walker |  | 153 | 52 | README headline in README.md |  |  | 1.000 |
-| ns | 158 |  | 31 | Listings for the remaining directories | 1.4 |  | 0.877 |
-| walker |  | 160 | 7 | listing of 'tests' |  |  | 0.911 |
+| walker |  | 108 | 7 | listing of 'tests' |  |  | 0.647 |
+| ns | 127 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.642 |
+| ns | 158 |  | 31 | Listings for the remaining directories | 1.4 |  | 0.583 |
+| walker |  | 160 | 52 | README headline in README.md |  |  | 0.911 |
 | walker |  | 168 | 8 | listing of 'test_max_level_features' |  |  | 0.965 |
-| ns | 225 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.901 |
-| walker |  | 259 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.901 |
-| walker |  | 268 | 9 | listing of 'rfcs' |  |  | 0.934 |
+| walker |  | 177 | 9 | listing of 'rfcs' |  |  | 1.000 |
+| ns | 225 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.934 |
+| walker |  | 268 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.934 |
 | ns | 306 |  | 81 | Facade semantics: what a log request is | 1.6 |  | 0.878 |
 | walker |  | 324 | 56 | headings outline in README.md |  |  | 0.878 |
 | ns | 433 |  | 127 | Cargo.toml package block: version, licence, MSRV, edition | 1.7 |  | 0.780 |

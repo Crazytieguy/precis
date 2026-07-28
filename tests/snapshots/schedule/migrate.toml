@@ -129,10 +129,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "cmd/migrate" })'
+descriptor = "listing of 'cmd/migrate'"
+cost_tokens = 15
+cum_tokens = 203
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmd/migrate"
+entries = ["README.md", "examples", "main.go", "version.go"]
+
+[[batches]]
+position = 10
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 35
-cum_tokens = 223
+cum_tokens = 238
 
 [batches.content]
 kind = "lines"
@@ -144,20 +158,6 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "cmd/migrate" })'
-descriptor = "listing of 'cmd/migrate'"
-cost_tokens = 15
-cum_tokens = 238
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmd/migrate"
-entries = ["README.md", "examples", "main.go", "version.go"]
 
 [[batches]]
 position = 11
@@ -197,10 +197,38 @@ kind = "full"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 307
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "workflows"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 3
+cum_tokens = 310
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yaml"]
+
+[[batches]]
+position = 15
 key = 'Markdown(ReadmeHeadline { file: "cli/README.md" })'
 descriptor = "README headline in cli/README.md"
 cost_tokens = 29
-cum_tokens = 328
+cum_tokens = 339
 
 [batches.content]
 kind = "lines"
@@ -214,11 +242,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Go(PackageDocLede { file: "migrate.go" })'
 descriptor = "go package doc lede in migrate.go"
 cost_tokens = 72
-cum_tokens = 400
+cum_tokens = 411
 
 [batches.content]
 kind = "lines"
@@ -232,11 +260,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Go(DeclNames { file: "cli/main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cli/main.go"
 cost_tokens = 12
-cum_tokens = 412
+cum_tokens = 423
 
 [batches.content]
 kind = "lines"
@@ -258,11 +286,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Go(Decl { file: "cli/main.go", start_line: 6 })'
 descriptor = "go decl at cli/main.go:6"
 cost_tokens = 0
-cum_tokens = 412
+cum_tokens = 423
 
 [batches.content]
 kind = "lines"
@@ -276,75 +304,61 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Go(DeclNames { file: "cli/version.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cli/version.go"
 cost_tokens = 12
-cum_tokens = 424
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cli/version.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Go(Decl { file: "cli/version.go", start_line: 4 })'
-descriptor = "go decl at cli/version.go:4"
-cost_tokens = 0
-cum_tokens = 424
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cli/version.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 432
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "workflows"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 3
 cum_tokens = 435
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yaml"]
+[[batches.content.spans]]
+path = "cli/version.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Go(Decl { file: "cli/version.go", start_line: 4 })'
+descriptor = "go decl at cli/version.go:4"
+cost_tokens = 0
+cum_tokens = 435
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cli/version.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 21
+key = 'Fs(DirListing { dir: "testing" })'
+descriptor = "listing of 'testing'"
+cost_tokens = 12
+cum_tokens = 447
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "testing"
+entries = ["docker.go", "testing.go", "testing_test.go"]
+
+[[batches]]
+position = 22
 key = 'Go(PackageImports { file: "log.go" })'
 descriptor = "go package + imports in log.go"
 cost_tokens = 7
-cum_tokens = 442
+cum_tokens = 454
 
 [batches.content]
 kind = "lines"
@@ -358,25 +372,353 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "testing" })'
-descriptor = "listing of 'testing'"
-cost_tokens = 12
-cum_tokens = 454
+position = 23
+key = 'Fs(DirListing { dir: "source" })'
+descriptor = "listing of 'source'"
+cost_tokens = 102
+cum_tokens = 556
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "testing"
-entries = ["docker.go", "testing.go", "testing_test.go"]
+parent = "source"
+entries = ["aws_s3", "bitbucket", "driver.go", "driver_test.go", "errors.go", "file", "github", "github_ee", "gitlab", "go_bindata", "godoc_vfs", "google_cloud_storage", "httpfs", "iofs", "migration.go", "migration_test.go", "parse.go", "parse_test.go", "pkger", "stub", "testing"]
 
 [[batches]]
-position = 23
+position = 24
+key = 'Fs(DirListing { dir: "source/file" })'
+descriptor = "listing of 'source/file'"
+cost_tokens = 12
+cum_tokens = 568
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/file"
+entries = ["README.md", "file.go", "file_test.go"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "source/google_cloud_storage" })'
+descriptor = "listing of 'source/google_cloud_storage'"
+cost_tokens = 12
+cum_tokens = 580
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/google_cloud_storage"
+entries = ["README.md", "storage.go", "storage_test.go"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "source/aws_s3" })'
+descriptor = "listing of 'source/aws_s3'"
+cost_tokens = 14
+cum_tokens = 594
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/aws_s3"
+entries = ["README.md", "s3.go", "s3_test.go"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "source/pkger" })'
+descriptor = "listing of 'source/pkger'"
+cost_tokens = 14
+cum_tokens = 608
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/pkger"
+entries = ["README.md", "pkger.go", "pkger_test.go"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "source/godoc_vfs" })'
+descriptor = "listing of 'source/godoc_vfs'"
+cost_tokens = 17
+cum_tokens = 625
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/godoc_vfs"
+entries = ["vfs.go", "vfs_example_test.go", "vfs_test.go"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "source/bitbucket" })'
+descriptor = "listing of 'source/bitbucket'"
+cost_tokens = 19
+cum_tokens = 644
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/bitbucket"
+entries = [".gitignore", "README.md", "bitbucket.go", "bitbucket_test.go"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "source/stub" })'
+descriptor = "listing of 'source/stub'"
+cost_tokens = 8
+cum_tokens = 652
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/stub"
+entries = ["stub.go", "stub_test.go"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "source/github" })'
+descriptor = "listing of 'source/github'"
+cost_tokens = 21
+cum_tokens = 673
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/github"
+entries = [".gitignore", "README.md", "examples", "github.go", "github_test.go"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "source/github_ee" })'
+descriptor = "listing of 'source/github_ee'"
+cost_tokens = 21
+cum_tokens = 694
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/github_ee"
+entries = [".gitignore", "README.md", "github_ee.go", "github_ee_test.go"]
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "source/gitlab" })'
+descriptor = "listing of 'source/gitlab'"
+cost_tokens = 23
+cum_tokens = 717
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/gitlab"
+entries = [".gitignore", "README.md", "examples", "gitlab.go", "gitlab_test.go"]
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "source/go_bindata" })'
+descriptor = "listing of 'source/go_bindata'"
+cost_tokens = 25
+cum_tokens = 742
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/go_bindata"
+entries = ["README.md", "examples", "go-bindata.go", "go-bindata_test.go", "testdata"]
+
+[[batches]]
+position = 35
+key = 'Fs(DirListing { dir: "source/go_bindata/testdata" })'
+descriptor = "listing of 'source/go_bindata/testdata'"
+cost_tokens = 4
+cum_tokens = 746
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/go_bindata/testdata"
+entries = ["bindata.go"]
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "source/httpfs" })'
+descriptor = "listing of 'source/httpfs'"
+cost_tokens = 28
+cum_tokens = 774
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs"
+entries = ["README.md", "driver.go", "driver_test.go", "partial_driver.go", "partial_driver_test.go", "testdata"]
+
+[[batches]]
+position = 37
+key = 'Fs(DirListing { dir: "source/iofs" })'
+descriptor = "listing of 'source/iofs'"
+cost_tokens = 28
+cum_tokens = 802
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/iofs"
+entries = ["README.md", "doc.go", "example_test.go", "iofs.go", "iofs_test.go", "testdata"]
+
+[[batches]]
+position = 38
+key = 'Fs(DirListing { dir: "source/iofs/testdata" })'
+descriptor = "listing of 'source/iofs/testdata'"
+cost_tokens = 3
+cum_tokens = 805
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/iofs/testdata"
+entries = ["migrations"]
+
+[[batches]]
+position = 39
+key = 'Markdown(ReadmeHeadline { file: "source/github_ee/README.md" })'
+descriptor = "README headline in source/github_ee/README.md"
+cost_tokens = 10
+cum_tokens = 815
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/github_ee/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(ReadmeHeadline { file: "source/httpfs/README.md" })'
+descriptor = "README headline in source/httpfs/README.md"
+cost_tokens = 10
+cum_tokens = 825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/httpfs/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Markdown(ReadmeHeadline { file: "source/go_bindata/README.md" })'
+descriptor = "README headline in source/go_bindata/README.md"
+cost_tokens = 11
+cum_tokens = 836
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/go_bindata/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Markdown(ReadmeHeadline { file: "source/google_cloud_storage/README.md" })'
+descriptor = "README headline in source/google_cloud_storage/README.md"
+cost_tokens = 11
+cum_tokens = 847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/google_cloud_storage/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "source/httpfs/testdata" })'
+descriptor = "listing of 'source/httpfs/testdata'"
+cost_tokens = 13
+cum_tokens = 860
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata"
+entries = ["duplicates", "no-migrations", "sql"]
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "source/httpfs/testdata/no-migrations" })'
+descriptor = "listing of 'source/httpfs/testdata/no-migrations'"
+cost_tokens = 3
+cum_tokens = 863
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata/no-migrations"
+entries = ["some-file"]
+
+[[batches]]
+position = 45
+key = 'Markdown(ReadmeHeadline { file: "source/aws_s3/README.md" })'
+descriptor = "README headline in source/aws_s3/README.md"
+cost_tokens = 27
+cum_tokens = 890
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/aws_s3/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Markdown(HeadingsOutline { file: "GETTING_STARTED.md" })'
 descriptor = "headings outline in GETTING_STARTED.md"
 cost_tokens = 53
-cum_tokens = 507
+cum_tokens = 943
 
 [batches.content]
 kind = "lines"
@@ -462,353 +804,393 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "source" })'
-descriptor = "listing of 'source'"
-cost_tokens = 102
-cum_tokens = 609
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source"
-entries = ["aws_s3", "bitbucket", "driver.go", "driver_test.go", "errors.go", "file", "github", "github_ee", "gitlab", "go_bindata", "godoc_vfs", "google_cloud_storage", "httpfs", "iofs", "migration.go", "migration_test.go", "parse.go", "parse_test.go", "pkger", "stub", "testing"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "source/file" })'
-descriptor = "listing of 'source/file'"
-cost_tokens = 12
-cum_tokens = 621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/file"
-entries = ["README.md", "file.go", "file_test.go"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "source/google_cloud_storage" })'
-descriptor = "listing of 'source/google_cloud_storage'"
-cost_tokens = 12
-cum_tokens = 633
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/google_cloud_storage"
-entries = ["README.md", "storage.go", "storage_test.go"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "source/aws_s3" })'
-descriptor = "listing of 'source/aws_s3'"
-cost_tokens = 14
-cum_tokens = 647
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/aws_s3"
-entries = ["README.md", "s3.go", "s3_test.go"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "source/pkger" })'
-descriptor = "listing of 'source/pkger'"
-cost_tokens = 14
-cum_tokens = 661
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/pkger"
-entries = ["README.md", "pkger.go", "pkger_test.go"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "source/godoc_vfs" })'
-descriptor = "listing of 'source/godoc_vfs'"
+position = 47
+key = 'Fs(DirListing { dir: "source/httpfs/testdata/duplicates" })'
+descriptor = "listing of 'source/httpfs/testdata/duplicates'"
 cost_tokens = 17
-cum_tokens = 678
+cum_tokens = 960
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/godoc_vfs"
-entries = ["vfs.go", "vfs_example_test.go", "vfs_test.go"]
+parent = "source/httpfs/testdata/duplicates"
+entries = ["1_foobar.up.sql", "1_foobaz.up.sql"]
 
 [[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "source/bitbucket" })'
-descriptor = "listing of 'source/bitbucket'"
-cost_tokens = 19
-cum_tokens = 697
+position = 48
+key = 'Fs(DirListing { dir: "database" })'
+descriptor = "listing of 'database'"
+cost_tokens = 145
+cum_tokens = 1105
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/bitbucket"
-entries = [".gitignore", "README.md", "bitbucket.go", "bitbucket_test.go"]
+parent = "database"
+entries = ["cassandra", "clickhouse", "cockroachdb", "crate", "driver.go", "driver_test.go", "error.go", "firebird", "mongodb", "multistmt", "mysql", "neo4j", "parse_test.go", "pgx", "postgres", "ql", "redshift", "rqlite", "shell", "snowflake", "spanner", "sqlcipher", "sqlite", "sqlite3", "sqlserver", "stub", "testing", "util.go", "util_test.go", "yugabytedb"]
 
 [[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "source/stub" })'
-descriptor = "listing of 'source/stub'"
+position = 49
+key = 'Fs(DirListing { dir: "database/crate" })'
+descriptor = "listing of 'database/crate'"
+cost_tokens = 3
+cum_tokens = 1108
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/crate"
+entries = ["README.md"]
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "database/shell" })'
+descriptor = "listing of 'database/shell'"
+cost_tokens = 3
+cum_tokens = 1111
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/shell"
+entries = ["README.md"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "database/multistmt" })'
+descriptor = "listing of 'database/multistmt'"
 cost_tokens = 8
-cum_tokens = 705
+cum_tokens = 1119
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/stub"
+parent = "database/multistmt"
+entries = ["parse.go", "parse_test.go"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "database/snowflake" })'
+descriptor = "listing of 'database/snowflake'"
+cost_tokens = 8
+cum_tokens = 1127
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/snowflake"
+entries = ["README.md", "snowflake.go"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "database/stub" })'
+descriptor = "listing of 'database/stub'"
+cost_tokens = 8
+cum_tokens = 1135
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/stub"
 entries = ["stub.go", "stub_test.go"]
 
 [[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "source/github" })'
-descriptor = "listing of 'source/github'"
-cost_tokens = 21
-cum_tokens = 726
+position = 54
+key = 'Fs(DirListing { dir: "database/mongodb" })'
+descriptor = "listing of 'database/mongodb'"
+cost_tokens = 16
+cum_tokens = 1151
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/github"
-entries = [".gitignore", "README.md", "examples", "github.go", "github_test.go"]
+parent = "database/mongodb"
+entries = ["README.md", "examples", "mongodb.go", "mongodb_test.go"]
 
 [[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "source/github_ee" })'
-descriptor = "listing of 'source/github_ee'"
-cost_tokens = 21
-cum_tokens = 747
+position = 55
+key = 'Fs(DirListing { dir: "database/mysql" })'
+descriptor = "listing of 'database/mysql'"
+cost_tokens = 16
+cum_tokens = 1167
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/github_ee"
-entries = [".gitignore", "README.md", "github_ee.go", "github_ee_test.go"]
+parent = "database/mysql"
+entries = ["README.md", "examples", "mysql.go", "mysql_test.go"]
 
 [[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "source/gitlab" })'
-descriptor = "listing of 'source/gitlab'"
+position = 56
+key = 'Fs(DirListing { dir: "database/sqlite" })'
+descriptor = "listing of 'database/sqlite'"
+cost_tokens = 16
+cum_tokens = 1183
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlite"
+entries = ["README.md", "examples", "sqlite.go", "sqlite_test.go"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "database/cassandra" })'
+descriptor = "listing of 'database/cassandra'"
+cost_tokens = 18
+cum_tokens = 1201
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/cassandra"
+entries = ["README.md", "cassandra.go", "cassandra_test.go", "examples"]
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "database/clickhouse" })'
+descriptor = "listing of 'database/clickhouse'"
+cost_tokens = 18
+cum_tokens = 1219
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/clickhouse"
+entries = ["README.md", "clickhouse.go", "clickhouse_test.go", "examples"]
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "database/firebird" })'
+descriptor = "listing of 'database/firebird'"
+cost_tokens = 18
+cum_tokens = 1237
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/firebird"
+entries = ["README.md", "examples", "firebird.go", "firebird_test.go"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "database/ql" })'
+descriptor = "listing of 'database/ql'"
+cost_tokens = 18
+cum_tokens = 1255
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/ql"
+entries = ["README.md", "examples", "ql.go", "ql_test.go"]
+
+[[batches]]
+position = 61
+key = 'Fs(DirListing { dir: "database/redshift" })'
+descriptor = "listing of 'database/redshift'"
+cost_tokens = 18
+cum_tokens = 1273
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/redshift"
+entries = ["README.md", "examples", "redshift.go", "redshift_test.go"]
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "database/spanner" })'
+descriptor = "listing of 'database/spanner'"
+cost_tokens = 18
+cum_tokens = 1291
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/spanner"
+entries = ["README.md", "examples", "spanner.go", "spanner_test.go"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "database/sqlcipher" })'
+descriptor = "listing of 'database/sqlcipher'"
+cost_tokens = 18
+cum_tokens = 1309
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlcipher"
+entries = ["README.md", "examples", "sqlcipher.go", "sqlcipher_test.go"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "database/sqlite3" })'
+descriptor = "listing of 'database/sqlite3'"
+cost_tokens = 18
+cum_tokens = 1327
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlite3"
+entries = ["README.md", "examples", "sqlite3.go", "sqlite3_test.go"]
+
+[[batches]]
+position = 65
+key = 'Fs(DirListing { dir: "database/sqlserver" })'
+descriptor = "listing of 'database/sqlserver'"
+cost_tokens = 18
+cum_tokens = 1345
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/sqlserver"
+entries = ["README.md", "examples", "sqlserver.go", "sqlserver_test.go"]
+
+[[batches]]
+position = 66
+key = 'Fs(DirListing { dir: "database/rqlite" })'
+descriptor = "listing of 'database/rqlite'"
+cost_tokens = 20
+cum_tokens = 1365
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/rqlite"
+entries = ["README.md", "examples", "rqlite.go", "rqlite_test.go"]
+
+[[batches]]
+position = 67
+key = 'Fs(DirListing { dir: "database/postgres" })'
+descriptor = "listing of 'database/postgres'"
+cost_tokens = 22
+cum_tokens = 1387
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "database/postgres"
+entries = ["README.md", "TUTORIAL.md", "examples", "postgres.go", "postgres_test.go"]
+
+[[batches]]
+position = 68
+key = 'Markdown(ReadmeHeadline { file: "database/spanner/README.md" })'
+descriptor = "README headline in database/spanner/README.md"
+cost_tokens = 12
+cum_tokens = 1399
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/spanner/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "database/pgx" })'
+descriptor = "listing of 'database/pgx'"
 cost_tokens = 23
-cum_tokens = 770
+cum_tokens = 1422
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/gitlab"
-entries = [".gitignore", "README.md", "examples", "gitlab.go", "gitlab_test.go"]
+parent = "database/pgx"
+entries = ["README.md", "examples", "pgx.go", "pgx_test.go", "v5"]
 
 [[batches]]
-position = 35
-key = 'Fs(DirListing { dir: "source/go_bindata" })'
-descriptor = "listing of 'source/go_bindata'"
-cost_tokens = 25
-cum_tokens = 795
+position = 70
+key = 'Fs(DirListing { dir: "database/yugabytedb" })'
+descriptor = "listing of 'database/yugabytedb'"
+cost_tokens = 24
+cum_tokens = 1446
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/go_bindata"
-entries = ["README.md", "examples", "go-bindata.go", "go-bindata_test.go", "testdata"]
+parent = "database/yugabytedb"
+entries = ["README.md", "examples", "yugabytedb.go", "yugabytedb_test.go"]
 
 [[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "source/go_bindata/testdata" })'
-descriptor = "listing of 'source/go_bindata/testdata'"
-cost_tokens = 4
-cum_tokens = 799
+position = 71
+key = 'Fs(DirListing { dir: "database/cockroachdb" })'
+descriptor = "listing of 'database/cockroachdb'"
+cost_tokens = 26
+cum_tokens = 1472
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/go_bindata/testdata"
-entries = ["bindata.go"]
+parent = "database/cockroachdb"
+entries = ["README.md", "TUTORIAL.md", "cockroachdb.go", "cockroachdb_test.go", "examples"]
 
 [[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "source/httpfs" })'
-descriptor = "listing of 'source/httpfs'"
-cost_tokens = 28
-cum_tokens = 827
+position = 72
+key = 'Fs(DirListing { dir: "database/neo4j" })'
+descriptor = "listing of 'database/neo4j'"
+cost_tokens = 26
+cum_tokens = 1498
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/httpfs"
-entries = ["README.md", "driver.go", "driver_test.go", "partial_driver.go", "partial_driver_test.go", "testdata"]
+parent = "database/neo4j"
+entries = ["README.md", "TUTORIAL.md", "examples", "neo4j.go", "neo4j_test.go"]
 
 [[batches]]
-position = 38
-key = 'Fs(DirListing { dir: "source/iofs" })'
-descriptor = "listing of 'source/iofs'"
-cost_tokens = 28
-cum_tokens = 855
+position = 73
+key = 'Fs(DirListing { dir: "database/pgx/v5" })'
+descriptor = "listing of 'database/pgx/v5'"
+cost_tokens = 14
+cum_tokens = 1512
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/iofs"
-entries = ["README.md", "doc.go", "example_test.go", "iofs.go", "iofs_test.go", "testdata"]
+parent = "database/pgx/v5"
+entries = ["README.md", "pgx.go", "pgx_test.go"]
 
 [[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "source/iofs/testdata" })'
-descriptor = "listing of 'source/iofs/testdata'"
-cost_tokens = 3
-cum_tokens = 858
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/iofs/testdata"
-entries = ["migrations"]
-
-[[batches]]
-position = 40
-key = 'Markdown(ReadmeHeadline { file: "source/github_ee/README.md" })'
-descriptor = "README headline in source/github_ee/README.md"
-cost_tokens = 10
-cum_tokens = 868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/github_ee/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Markdown(ReadmeHeadline { file: "source/httpfs/README.md" })'
-descriptor = "README headline in source/httpfs/README.md"
-cost_tokens = 10
-cum_tokens = 878
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/httpfs/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Markdown(ReadmeHeadline { file: "source/go_bindata/README.md" })'
-descriptor = "README headline in source/go_bindata/README.md"
-cost_tokens = 11
-cum_tokens = 889
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/go_bindata/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Markdown(ReadmeHeadline { file: "source/google_cloud_storage/README.md" })'
-descriptor = "README headline in source/google_cloud_storage/README.md"
-cost_tokens = 11
-cum_tokens = 900
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/google_cloud_storage/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Fs(DirListing { dir: "source/httpfs/testdata" })'
-descriptor = "listing of 'source/httpfs/testdata'"
-cost_tokens = 13
-cum_tokens = 913
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata"
-entries = ["duplicates", "no-migrations", "sql"]
-
-[[batches]]
-position = 45
-key = 'Fs(DirListing { dir: "source/httpfs/testdata/no-migrations" })'
-descriptor = "listing of 'source/httpfs/testdata/no-migrations'"
-cost_tokens = 3
-cum_tokens = 916
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata/no-migrations"
-entries = ["some-file"]
-
-[[batches]]
-position = 46
-key = 'Markdown(ReadmeHeadline { file: "source/aws_s3/README.md" })'
-descriptor = "README headline in source/aws_s3/README.md"
-cost_tokens = 27
-cum_tokens = 943
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/aws_s3/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
+position = 74
 key = 'Markdown(ReadmeHeadline { file: "source/file/README.md" })'
 descriptor = "README headline in source/file/README.md"
 cost_tokens = 33
-cum_tokens = 976
+cum_tokens = 1545
 
 [batches.content]
 kind = "lines"
@@ -822,11 +1204,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 48
+position = 75
 key = 'Go(DeclNames { file: "cmd/migrate/main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/migrate/main.go"
 cost_tokens = 12
-cum_tokens = 988
+cum_tokens = 1557
 
 [batches.content]
 kind = "lines"
@@ -848,11 +1230,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 76
 key = 'Go(Decl { file: "cmd/migrate/main.go", start_line: 5 })'
 descriptor = "go decl at cmd/migrate/main.go:5"
 cost_tokens = 0
-cum_tokens = 988
+cum_tokens = 1557
 
 [batches.content]
 kind = "lines"
@@ -866,11 +1248,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 50
+position = 77
 key = 'Go(DeclNames { file: "cmd/migrate/version.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/migrate/version.go"
 cost_tokens = 12
-cum_tokens = 1000
+cum_tokens = 1569
 
 [batches.content]
 kind = "lines"
@@ -884,11 +1266,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 51
+position = 78
 key = 'Go(Decl { file: "cmd/migrate/version.go", start_line: 4 })'
 descriptor = "go decl at cmd/migrate/version.go:4"
 cost_tokens = 0
-cum_tokens = 1000
+cum_tokens = 1569
 
 [batches.content]
 kind = "lines"
@@ -902,11 +1284,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 52
+position = 79
 key = 'Markdown(ReadmeHeadline { file: "source/iofs/README.md" })'
 descriptor = "README headline in source/iofs/README.md"
 cost_tokens = 36
-cum_tokens = 1036
+cum_tokens = 1605
 
 [batches.content]
 kind = "lines"
@@ -920,11 +1302,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 53
+position = 80
 key = 'Markdown(HeadingsOutline { file: "source/google_cloud_storage/README.md" })'
 descriptor = "headings outline in source/google_cloud_storage/README.md"
 cost_tokens = 17
-cum_tokens = 1053
+cum_tokens = 1622
 
 [batches.content]
 kind = "lines"
@@ -962,411 +1344,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 54
-key = 'Markdown(ReadmeHeadline { file: "source/bitbucket/README.md" })'
-descriptor = "README headline in source/bitbucket/README.md"
-cost_tokens = 41
-cum_tokens = 1094
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/bitbucket/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "source/httpfs/testdata/duplicates" })'
-descriptor = "listing of 'source/httpfs/testdata/duplicates'"
-cost_tokens = 17
-cum_tokens = 1111
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata/duplicates"
-entries = ["1_foobar.up.sql", "1_foobaz.up.sql"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "database" })'
-descriptor = "listing of 'database'"
-cost_tokens = 145
-cum_tokens = 1256
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database"
-entries = ["cassandra", "clickhouse", "cockroachdb", "crate", "driver.go", "driver_test.go", "error.go", "firebird", "mongodb", "multistmt", "mysql", "neo4j", "parse_test.go", "pgx", "postgres", "ql", "redshift", "rqlite", "shell", "snowflake", "spanner", "sqlcipher", "sqlite", "sqlite3", "sqlserver", "stub", "testing", "util.go", "util_test.go", "yugabytedb"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "database/crate" })'
-descriptor = "listing of 'database/crate'"
-cost_tokens = 3
-cum_tokens = 1259
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/crate"
-entries = ["README.md"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "database/shell" })'
-descriptor = "listing of 'database/shell'"
-cost_tokens = 3
-cum_tokens = 1262
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/shell"
-entries = ["README.md"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "database/multistmt" })'
-descriptor = "listing of 'database/multistmt'"
-cost_tokens = 8
-cum_tokens = 1270
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/multistmt"
-entries = ["parse.go", "parse_test.go"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "database/snowflake" })'
-descriptor = "listing of 'database/snowflake'"
-cost_tokens = 8
-cum_tokens = 1278
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/snowflake"
-entries = ["README.md", "snowflake.go"]
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "database/stub" })'
-descriptor = "listing of 'database/stub'"
-cost_tokens = 8
-cum_tokens = 1286
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/stub"
-entries = ["stub.go", "stub_test.go"]
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "database/mongodb" })'
-descriptor = "listing of 'database/mongodb'"
-cost_tokens = 16
-cum_tokens = 1302
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/mongodb"
-entries = ["README.md", "examples", "mongodb.go", "mongodb_test.go"]
-
-[[batches]]
-position = 63
-key = 'Fs(DirListing { dir: "database/mysql" })'
-descriptor = "listing of 'database/mysql'"
-cost_tokens = 16
-cum_tokens = 1318
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/mysql"
-entries = ["README.md", "examples", "mysql.go", "mysql_test.go"]
-
-[[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "database/sqlite" })'
-descriptor = "listing of 'database/sqlite'"
-cost_tokens = 16
-cum_tokens = 1334
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlite"
-entries = ["README.md", "examples", "sqlite.go", "sqlite_test.go"]
-
-[[batches]]
-position = 65
-key = 'Fs(DirListing { dir: "database/cassandra" })'
-descriptor = "listing of 'database/cassandra'"
-cost_tokens = 18
-cum_tokens = 1352
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/cassandra"
-entries = ["README.md", "cassandra.go", "cassandra_test.go", "examples"]
-
-[[batches]]
-position = 66
-key = 'Fs(DirListing { dir: "database/clickhouse" })'
-descriptor = "listing of 'database/clickhouse'"
-cost_tokens = 18
-cum_tokens = 1370
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/clickhouse"
-entries = ["README.md", "clickhouse.go", "clickhouse_test.go", "examples"]
-
-[[batches]]
-position = 67
-key = 'Fs(DirListing { dir: "database/firebird" })'
-descriptor = "listing of 'database/firebird'"
-cost_tokens = 18
-cum_tokens = 1388
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/firebird"
-entries = ["README.md", "examples", "firebird.go", "firebird_test.go"]
-
-[[batches]]
-position = 68
-key = 'Fs(DirListing { dir: "database/ql" })'
-descriptor = "listing of 'database/ql'"
-cost_tokens = 18
-cum_tokens = 1406
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/ql"
-entries = ["README.md", "examples", "ql.go", "ql_test.go"]
-
-[[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "database/redshift" })'
-descriptor = "listing of 'database/redshift'"
-cost_tokens = 18
-cum_tokens = 1424
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/redshift"
-entries = ["README.md", "examples", "redshift.go", "redshift_test.go"]
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: "database/spanner" })'
-descriptor = "listing of 'database/spanner'"
-cost_tokens = 18
-cum_tokens = 1442
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/spanner"
-entries = ["README.md", "examples", "spanner.go", "spanner_test.go"]
-
-[[batches]]
-position = 71
-key = 'Markdown(ReadmeHeadline { file: "database/spanner/README.md" })'
-descriptor = "README headline in database/spanner/README.md"
-cost_tokens = 12
-cum_tokens = 1454
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "database/sqlcipher" })'
-descriptor = "listing of 'database/sqlcipher'"
-cost_tokens = 18
-cum_tokens = 1472
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlcipher"
-entries = ["README.md", "examples", "sqlcipher.go", "sqlcipher_test.go"]
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "database/sqlite3" })'
-descriptor = "listing of 'database/sqlite3'"
-cost_tokens = 18
-cum_tokens = 1490
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlite3"
-entries = ["README.md", "examples", "sqlite3.go", "sqlite3_test.go"]
-
-[[batches]]
-position = 74
-key = 'Fs(DirListing { dir: "database/sqlserver" })'
-descriptor = "listing of 'database/sqlserver'"
-cost_tokens = 18
-cum_tokens = 1508
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/sqlserver"
-entries = ["README.md", "examples", "sqlserver.go", "sqlserver_test.go"]
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "database/rqlite" })'
-descriptor = "listing of 'database/rqlite'"
-cost_tokens = 20
-cum_tokens = 1528
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/rqlite"
-entries = ["README.md", "examples", "rqlite.go", "rqlite_test.go"]
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "database/postgres" })'
-descriptor = "listing of 'database/postgres'"
-cost_tokens = 22
-cum_tokens = 1550
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/postgres"
-entries = ["README.md", "TUTORIAL.md", "examples", "postgres.go", "postgres_test.go"]
-
-[[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "database/pgx" })'
-descriptor = "listing of 'database/pgx'"
-cost_tokens = 23
-cum_tokens = 1573
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/pgx"
-entries = ["README.md", "examples", "pgx.go", "pgx_test.go", "v5"]
-
-[[batches]]
-position = 78
-key = 'Fs(DirListing { dir: "database/yugabytedb" })'
-descriptor = "listing of 'database/yugabytedb'"
-cost_tokens = 24
-cum_tokens = 1597
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/yugabytedb"
-entries = ["README.md", "examples", "yugabytedb.go", "yugabytedb_test.go"]
-
-[[batches]]
-position = 79
-key = 'Fs(DirListing { dir: "database/cockroachdb" })'
-descriptor = "listing of 'database/cockroachdb'"
-cost_tokens = 26
-cum_tokens = 1623
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/cockroachdb"
-entries = ["README.md", "TUTORIAL.md", "cockroachdb.go", "cockroachdb_test.go", "examples"]
-
-[[batches]]
-position = 80
-key = 'Fs(DirListing { dir: "database/neo4j" })'
-descriptor = "listing of 'database/neo4j'"
-cost_tokens = 26
-cum_tokens = 1649
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/neo4j"
-entries = ["README.md", "TUTORIAL.md", "examples", "neo4j.go", "neo4j_test.go"]
-
-[[batches]]
 position = 81
-key = 'Fs(DirListing { dir: "database/pgx/v5" })'
-descriptor = "listing of 'database/pgx/v5'"
-cost_tokens = 14
-cum_tokens = 1663
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "database/pgx/v5"
-entries = ["README.md", "pgx.go", "pgx_test.go"]
-
-[[batches]]
-position = 82
 key = 'Go(DeclNames { file: "database/error.go", chunk_index: 0 })'
 descriptor = "go decl names surface in database/error.go"
 cost_tokens = 27
-cum_tokens = 1690
+cum_tokens = 1649
 
 [batches.content]
 kind = "lines"
@@ -1404,11 +1386,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Go(Decl { file: "database/error.go", start_line: 22 })'
 descriptor = "go decl at database/error.go:22"
 cost_tokens = 0
-cum_tokens = 1690
+cum_tokens = 1649
 
 [batches.content]
 kind = "lines"
@@ -1417,6 +1399,24 @@ kind = "lines"
 path = "database/error.go"
 start = 22
 end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Markdown(ReadmeHeadline { file: "source/bitbucket/README.md" })'
+descriptor = "README headline in source/bitbucket/README.md"
+cost_tokens = 41
+cum_tokens = 1690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/bitbucket/README.md"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
@@ -2339,24 +2339,10 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'Fs(DirListing { dir: "internal/cli" })'
-descriptor = "listing of 'internal/cli'"
-cost_tokens = 205
-cum_tokens = 3492
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "internal/cli"
-entries = ["build_aws-s3.go", "build_bitbucket.go", "build_cassandra.go", "build_clickhouse.go", "build_cockroachdb.go", "build_firebird.go", "build_github.go", "build_github_ee.go", "build_gitlab.go", "build_go-bindata.go", "build_godoc-vfs.go", "build_google-cloud-storage.go", "build_mongodb.go", "build_mysql.go", "build_neo4j.go", "build_pgx.go", "build_pgxv5.go", "build_postgres.go", "build_ql.go", "build_redshift.go", "build_rqlite.go", "build_snowflake.go", "build_spanner.go", "build_sqlcipher.go", "build_sqlite.go", "build_sqlite3.go", "build_sqlserver.go", "build_yugabytedb.go", "commands.go", "commands_test.go", "log.go", "main.go"]
-
-[[batches]]
-position = 123
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 137
-cum_tokens = 3629
+cum_tokens = 3424
 
 [batches.content]
 kind = "lines"
@@ -2570,11 +2556,11 @@ end = 188
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 18
-cum_tokens = 3647
+cum_tokens = 3442
 
 [batches.content]
 kind = "lines"
@@ -2588,11 +2574,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 125
-cum_tokens = 3772
+cum_tokens = 3567
 
 [batches.content]
 kind = "lines"
@@ -2606,11 +2592,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Go(PackageDocLede { file: "source/iofs/doc.go" })'
 descriptor = "go package doc lede in source/iofs/doc.go"
 cost_tokens = 28
-cum_tokens = 3800
+cum_tokens = 3595
 
 [batches.content]
 kind = "lines"
@@ -2624,11 +2610,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Go(DeclNames { file: "dktesting/dktesting.go", chunk_index: 0 })'
 descriptor = "go decl names surface in dktesting/dktesting.go"
 cost_tokens = 53
-cum_tokens = 3853
+cum_tokens = 3648
 
 [batches.content]
 kind = "lines"
@@ -2682,11 +2668,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Go(Decl { file: "dktesting/dktesting.go", start_line: 20 })'
 descriptor = "go decl at dktesting/dktesting.go:20"
 cost_tokens = 0
-cum_tokens = 3853
+cum_tokens = 3648
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +2686,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Go(Decl { file: "dktesting/dktesting.go", start_line: 44 })'
 descriptor = "go decl at dktesting/dktesting.go:44"
 cost_tokens = 18
-cum_tokens = 3871
+cum_tokens = 3666
 
 [batches.content]
 kind = "lines"
@@ -2718,11 +2704,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Go(Decl { file: "dktesting/dktesting.go", start_line: 14 })'
 descriptor = "go decl at dktesting/dktesting.go:14"
 cost_tokens = 25
-cum_tokens = 3896
+cum_tokens = 3691
 
 [batches.content]
 kind = "lines"
@@ -2736,11 +2722,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Go(DeclDoc { file: "dktesting/dktesting.go", start_line: 14 })'
 descriptor = "go decl doc at dktesting/dktesting.go:14"
 cost_tokens = 13
-cum_tokens = 3909
+cum_tokens = 3704
 
 [batches.content]
 kind = "lines"
@@ -2754,11 +2740,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Go(DeclDoc { file: "dktesting/dktesting.go", start_line: 44 })'
 descriptor = "go decl doc at dktesting/dktesting.go:44"
 cost_tokens = 13
-cum_tokens = 3922
+cum_tokens = 3717
 
 [batches.content]
 kind = "lines"
@@ -2772,11 +2758,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Go(DeclNames { file: "util.go", chunk_index: 0 })'
 descriptor = "go decl names surface in util.go"
 cost_tokens = 126
-cum_tokens = 4048
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2878,11 +2864,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Go(Decl { file: "util.go", start_line: 21 })'
 descriptor = "go decl at util.go:21"
 cost_tokens = 0
-cum_tokens = 4048
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2896,11 +2882,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Go(Decl { file: "util.go", start_line: 32 })'
 descriptor = "go decl at util.go:32"
 cost_tokens = 0
-cum_tokens = 4048
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2914,11 +2900,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Go(Decl { file: "util.go", start_line: 45 })'
 descriptor = "go decl at util.go:45"
 cost_tokens = 0
-cum_tokens = 4048
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2932,11 +2918,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Go(Decl { file: "util.go", start_line: 53 })'
 descriptor = "go decl at util.go:53"
 cost_tokens = 0
-cum_tokens = 4048
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +2936,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Go(Decl { file: "util.go", start_line: 13 })'
 descriptor = "go decl at util.go:13"
 cost_tokens = 14
-cum_tokens = 4062
+cum_tokens = 3857
 
 [batches.content]
 kind = "lines"
@@ -2968,11 +2954,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Go(DeclDoc { file: "util.go", start_line: 53 })'
 descriptor = "go decl doc at util.go:53"
 cost_tokens = 18
-cum_tokens = 4080
+cum_tokens = 3875
 
 [batches.content]
 kind = "lines"
@@ -2986,11 +2972,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Go(DeclDoc { file: "util.go", start_line: 32 })'
 descriptor = "go decl doc at util.go:32"
 cost_tokens = 19
-cum_tokens = 4099
+cum_tokens = 3894
 
 [batches.content]
 kind = "lines"
@@ -3004,11 +2990,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Go(DeclDoc { file: "util.go", start_line: 13 })'
 descriptor = "go decl doc at util.go:13"
 cost_tokens = 29
-cum_tokens = 4128
+cum_tokens = 3923
 
 [batches.content]
 kind = "lines"
@@ -3030,11 +3016,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 142
+position = 141
 key = 'Go(DeclDoc { file: "util.go", start_line: 21 })'
 descriptor = "go decl doc at util.go:21"
 cost_tokens = 32
-cum_tokens = 4160
+cum_tokens = 3955
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3042,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 143
+position = 142
 key = 'Go(DeclDoc { file: "cli/version.go", start_line: 4 })'
 descriptor = "go decl doc at cli/version.go:4"
 cost_tokens = 13
-cum_tokens = 4173
+cum_tokens = 3968
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3060,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 144
+position = 143
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 187
-cum_tokens = 4360
+cum_tokens = 4155
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3078,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'Markdown(ReadmeHeadline { file: "database/pgx/README.md" })'
 descriptor = "README headline in database/pgx/README.md"
 cost_tokens = 80
-cum_tokens = 4440
+cum_tokens = 4235
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3096,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Markdown(HeadingsOutline { file: "database/pgx/README.md" })'
 descriptor = "headings outline in database/pgx/README.md"
 cost_tokens = 25
-cum_tokens = 4465
+cum_tokens = 4260
 
 [batches.content]
 kind = "lines"
@@ -3152,11 +3138,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 146
 key = 'Go(PackageImports { file: "cmd/migrate/version.go" })'
 descriptor = "go package + imports in cmd/migrate/version.go"
 cost_tokens = 7
-cum_tokens = 4472
+cum_tokens = 4267
 
 [batches.content]
 kind = "lines"
@@ -3170,11 +3156,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'Markdown(HeadingsOutline { file: "database/spanner/README.md" })'
 descriptor = "headings outline in database/spanner/README.md"
 cost_tokens = 38
-cum_tokens = 4510
+cum_tokens = 4305
 
 [batches.content]
 kind = "lines"
@@ -3244,11 +3230,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 148
 key = 'Markdown(ReadmeHeadline { file: "database/snowflake/README.md" })'
 descriptor = "README headline in database/snowflake/README.md"
 cost_tokens = 91
-cum_tokens = 4601
+cum_tokens = 4396
 
 [batches.content]
 kind = "lines"
@@ -3262,11 +3248,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'Markdown(Section { file: "database/snowflake/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "database/snowflake/README.md section #0"
 cost_tokens = 26
-cum_tokens = 4627
+cum_tokens = 4422
 
 [batches.content]
 kind = "lines"
@@ -3280,11 +3266,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'Markdown(ReadmeHeadline { file: "database/sqlite/README.md" })'
 descriptor = "README headline in database/sqlite/README.md"
 cost_tokens = 93
-cum_tokens = 4720
+cum_tokens = 4515
 
 [batches.content]
 kind = "lines"
@@ -3298,11 +3284,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'Go(DeclDoc { file: "source/errors.go", start_line: 7 })'
 descriptor = "go decl doc at source/errors.go:7"
 cost_tokens = 24
-cum_tokens = 4744
+cum_tokens = 4539
 
 [batches.content]
 kind = "lines"
@@ -3316,11 +3302,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Go(DeclDoc { file: "migration.go", start_line: 13 })'
 descriptor = "go decl doc at migration.go:13"
 cost_tokens = 37
-cum_tokens = 4781
+cum_tokens = 4576
 
 [batches.content]
 kind = "lines"
@@ -3334,11 +3320,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 24 })'
 descriptor = "go decl doc at migrate.go:24"
 cost_tokens = 97
-cum_tokens = 4878
+cum_tokens = 4673
 
 [batches.content]
 kind = "lines"
@@ -3352,11 +3338,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 155
+position = 154
 key = 'Markdown(ReadmeHeadline { file: "database/sqlite3/README.md" })'
 descriptor = "README headline in database/sqlite3/README.md"
 cost_tokens = 96
-cum_tokens = 4974
+cum_tokens = 4769
 
 [batches.content]
 kind = "lines"
@@ -3370,11 +3356,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'Markdown(ReadmeHeadline { file: "database/mongodb/README.md" })'
 descriptor = "README headline in database/mongodb/README.md"
 cost_tokens = 97
-cum_tokens = 5071
+cum_tokens = 4866
 
 [batches.content]
 kind = "lines"
@@ -3388,11 +3374,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Go(DeclBody { file: "source/errors.go", start_line: 13 })'
 descriptor = "go decl body at source/errors.go:13"
 cost_tokens = 15
-cum_tokens = 5086
+cum_tokens = 4881
 
 [batches.content]
 kind = "lines"
@@ -3406,11 +3392,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 158
+position = 157
 key = 'Markdown(HeadingsOutline { file: "database/sqlserver/README.md" })'
 descriptor = "headings outline in database/sqlserver/README.md"
 cost_tokens = 42
-cum_tokens = 5128
+cum_tokens = 4923
 
 [batches.content]
 kind = "lines"
@@ -3448,11 +3434,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 158
 key = 'Plaintext(MakefileSkeletonChunk { file: "Makefile", chunk_index: 0 })'
 descriptor = "Makefile target skeleton chunk #1 of Makefile"
 cost_tokens = 168
-cum_tokens = 5296
+cum_tokens = 5091
 
 [batches.content]
 kind = "lines"
@@ -3474,11 +3460,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 159
 key = 'Go(PackageImports { file: "source/iofs/doc.go" })'
 descriptor = "go package + imports in source/iofs/doc.go"
 cost_tokens = 8
-cum_tokens = 5304
+cum_tokens = 5099
 
 [batches.content]
 kind = "lines"
@@ -3492,11 +3478,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 161
+position = 160
 key = 'Go(DeclBody { file: "cmd/migrate/main.go", start_line: 5 })'
 descriptor = "go decl body at cmd/migrate/main.go:5"
 cost_tokens = 10
-cum_tokens = 5314
+cum_tokens = 5109
 
 [batches.content]
 kind = "lines"
@@ -3510,11 +3496,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 162
+position = 161
 key = 'Markdown(ReadmeHeadline { file: "database/rqlite/README.md" })'
 descriptor = "README headline in database/rqlite/README.md"
 cost_tokens = 102
-cum_tokens = 5416
+cum_tokens = 5211
 
 [batches.content]
 kind = "lines"
@@ -3528,11 +3514,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 163
+position = 162
 key = 'Go(DeclDoc { file: "dktesting/dktesting.go", start_line: 20 })'
 descriptor = "go decl doc at dktesting/dktesting.go:20"
 cost_tokens = 21
-cum_tokens = 5437
+cum_tokens = 5232
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +3532,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 164
+position = 163
 key = 'Markdown(HeadingsOutline { file: "database/neo4j/TUTORIAL.md" })'
 descriptor = "headings outline in database/neo4j/TUTORIAL.md"
 cost_tokens = 46
-cum_tokens = 5483
+cum_tokens = 5278
 
 [batches.content]
 kind = "lines"
@@ -3620,11 +3606,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 164
 key = 'Markdown(Section { file: "source/google_cloud_storage/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "source/google_cloud_storage/README.md section #2"
 cost_tokens = 16
-cum_tokens = 5499
+cum_tokens = 5294
 
 [batches.content]
 kind = "lines"
@@ -3636,6 +3622,20 @@ end = 14
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 165
+key = 'Fs(DirListing { dir: "internal/cli" })'
+descriptor = "listing of 'internal/cli'"
+cost_tokens = 205
+cum_tokens = 5499
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/cli"
+entries = ["build_aws-s3.go", "build_bitbucket.go", "build_cassandra.go", "build_clickhouse.go", "build_cockroachdb.go", "build_firebird.go", "build_github.go", "build_github_ee.go", "build_gitlab.go", "build_go-bindata.go", "build_godoc-vfs.go", "build_google-cloud-storage.go", "build_mongodb.go", "build_mysql.go", "build_neo4j.go", "build_pgx.go", "build_pgxv5.go", "build_postgres.go", "build_ql.go", "build_redshift.go", "build_rqlite.go", "build_snowflake.go", "build_spanner.go", "build_sqlcipher.go", "build_sqlite.go", "build_sqlite3.go", "build_sqlserver.go", "build_yugabytedb.go", "commands.go", "commands_test.go", "log.go", "main.go"]
 
 [[batches]]
 position = 166
@@ -4603,10 +4603,38 @@ kind = "ellipsis"
 
 [[batches]]
 position = 204
+key = 'Fs(DirListing { dir: "source/httpfs/testdata/sql" })'
+descriptor = "listing of 'source/httpfs/testdata/sql'"
+cost_tokens = 80
+cum_tokens = 7308
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata/sql"
+entries = ["1_foobar.down.sql", "1_foobar.up.sql", "3_foobar.up.sql", "4_foobar.down.sql", "4_foobar.up.sql", "5_foobar.down.sql", "7_foobar.down.sql", "7_foobar.up.sql", "other-files-are-ignored", "subdirs-are-ignored"]
+
+[[batches]]
+position = 205
+key = 'Fs(DirListing { dir: "source/httpfs/testdata/sql/subdirs-are-ignored" })'
+descriptor = "listing of 'source/httpfs/testdata/sql/subdirs-are-ignored'"
+cost_tokens = 3
+cum_tokens = 7311
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/httpfs/testdata/sql/subdirs-are-ignored"
+entries = ["some-file"]
+
+[[batches]]
+position = 206
 key = 'Markdown(ReadmeHeadline { file: "database/neo4j/README.md" })'
 descriptor = "README headline in database/neo4j/README.md"
 cost_tokens = 140
-cum_tokens = 7368
+cum_tokens = 7451
 
 [batches.content]
 kind = "lines"
@@ -4620,11 +4648,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 205
+position = 207
 key = 'Go(DeclNames { file: "source/parse.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/parse.go"
 cost_tokens = 100
-cum_tokens = 7468
+cum_tokens = 7551
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4722,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 206
+position = 208
 key = 'Go(Decl { file: "source/parse.go", start_line: 22 })'
 descriptor = "go decl at source/parse.go:22"
 cost_tokens = 0
-cum_tokens = 7468
+cum_tokens = 7551
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4740,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 207
+position = 209
 key = 'Go(Decl { file: "source/parse.go", start_line: 25 })'
 descriptor = "go decl at source/parse.go:25"
 cost_tokens = 0
-cum_tokens = 7468
+cum_tokens = 7551
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4758,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 208
+position = 210
 key = 'Go(Decl { file: "source/parse.go", start_line: 9 })'
 descriptor = "go decl at source/parse.go:9"
 cost_tokens = 11
-cum_tokens = 7479
+cum_tokens = 7562
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +4776,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 209
+position = 211
 key = 'Go(Decl { file: "source/parse.go", start_line: 13 })'
 descriptor = "go decl at source/parse.go:13"
 cost_tokens = 9
-cum_tokens = 7488
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -4766,11 +4794,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 210
+position = 212
 key = 'Go(DeclDoc { file: "source/parse.go", start_line: 25 })'
 descriptor = "go decl doc at source/parse.go:25"
 cost_tokens = 11
-cum_tokens = 7499
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -4784,11 +4812,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 211
+position = 213
 key = 'Go(DeclDoc { file: "cmd/migrate/version.go", start_line: 4 })'
 descriptor = "go decl doc at cmd/migrate/version.go:4"
 cost_tokens = 13
-cum_tokens = 7512
+cum_tokens = 7595
 
 [batches.content]
 kind = "lines"
@@ -4802,11 +4830,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 212
+position = 214
 key = 'Go(DeclNames { file: "migrate.go", chunk_index: 4 })'
 descriptor = "go decl names surface #4 in migrate.go"
 cost_tokens = 66
-cum_tokens = 7578
+cum_tokens = 7661
 
 [batches.content]
 kind = "lines"
@@ -4860,11 +4888,11 @@ end = 976
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 215
 key = 'Go(Decl { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl at migrate.go:961"
 cost_tokens = 0
-cum_tokens = 7578
+cum_tokens = 7661
 
 [batches.content]
 kind = "lines"
@@ -4878,11 +4906,11 @@ end = 961
 kind = "full"
 
 [[batches]]
-position = 214
+position = 216
 key = 'Go(Decl { file: "migrate.go", start_line: 968 })'
 descriptor = "go decl at migrate.go:968"
 cost_tokens = 0
-cum_tokens = 7578
+cum_tokens = 7661
 
 [batches.content]
 kind = "lines"
@@ -4896,11 +4924,11 @@ end = 968
 kind = "full"
 
 [[batches]]
-position = 215
+position = 217
 key = 'Go(Decl { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl at migrate.go:975"
 cost_tokens = 0
-cum_tokens = 7578
+cum_tokens = 7661
 
 [batches.content]
 kind = "lines"
@@ -4914,11 +4942,11 @@ end = 975
 kind = "full"
 
 [[batches]]
-position = 216
+position = 218
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl doc at migrate.go:961"
 cost_tokens = 15
-cum_tokens = 7593
+cum_tokens = 7676
 
 [batches.content]
 kind = "lines"
@@ -4932,11 +4960,11 @@ end = 960
 kind = "full"
 
 [[batches]]
-position = 217
+position = 219
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl doc at migrate.go:975"
 cost_tokens = 16
-cum_tokens = 7609
+cum_tokens = 7692
 
 [batches.content]
 kind = "lines"
@@ -4950,11 +4978,11 @@ end = 974
 kind = "full"
 
 [[batches]]
-position = 218
+position = 220
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 968 })'
 descriptor = "go decl doc at migrate.go:968"
 cost_tokens = 22
-cum_tokens = 7631
+cum_tokens = 7714
 
 [batches.content]
 kind = "lines"
@@ -4968,11 +4996,11 @@ end = 967
 kind = "full"
 
 [[batches]]
-position = 219
+position = 221
 key = 'Go(DeclBody { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl body at migrate.go:961"
 cost_tokens = 28
-cum_tokens = 7659
+cum_tokens = 7742
 
 [batches.content]
 kind = "lines"
@@ -4986,11 +5014,11 @@ end = 964
 kind = "full"
 
 [[batches]]
-position = 220
+position = 222
 key = 'Go(DeclNames { file: "internal/url/url.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/url/url.go"
 cost_tokens = 55
-cum_tokens = 7714
+cum_tokens = 7797
 
 [batches.content]
 kind = "lines"
@@ -5028,11 +5056,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 221
+position = 223
 key = 'Go(Decl { file: "internal/url/url.go", start_line: 12 })'
 descriptor = "go decl at internal/url/url.go:12"
 cost_tokens = 0
-cum_tokens = 7714
+cum_tokens = 7797
 
 [batches.content]
 kind = "lines"
@@ -5046,11 +5074,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 222
+position = 224
 key = 'Go(DeclDoc { file: "internal/url/url.go", start_line: 12 })'
 descriptor = "go decl doc at internal/url/url.go:12"
 cost_tokens = 14
-cum_tokens = 7728
+cum_tokens = 7811
 
 [batches.content]
 kind = "lines"
@@ -5064,11 +5092,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 223
+position = 225
 key = 'Go(PackageImports { file: "migration.go" })'
 descriptor = "go package + imports in migration.go"
 cost_tokens = 58
-cum_tokens = 7786
+cum_tokens = 7869
 
 [batches.content]
 kind = "lines"
@@ -5082,11 +5110,25 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 224
+position = 226
+key = 'Fs(DirListing { dir: "source/testing" })'
+descriptor = "listing of 'source/testing'"
+cost_tokens = 3
+cum_tokens = 7872
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/testing"
+entries = ["testing.go"]
+
+[[batches]]
+position = 227
 key = 'Go(DeclBody { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl body at migrate.go:975"
 cost_tokens = 32
-cum_tokens = 7818
+cum_tokens = 7904
 
 [batches.content]
 kind = "lines"
@@ -5100,11 +5142,11 @@ end = 978
 kind = "full"
 
 [[batches]]
-position = 225
+position = 228
 key = 'Go(DeclNames { file: "source/httpfs/driver.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/httpfs/driver.go"
 cost_tokens = 58
-cum_tokens = 7876
+cum_tokens = 7962
 
 [batches.content]
 kind = "lines"
@@ -5158,11 +5200,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 226
+position = 229
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 19 })'
 descriptor = "go decl at source/httpfs/driver.go:19"
 cost_tokens = 0
-cum_tokens = 7876
+cum_tokens = 7962
 
 [batches.content]
 kind = "lines"
@@ -5176,11 +5218,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 227
+position = 230
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 29 })'
 descriptor = "go decl at source/httpfs/driver.go:29"
 cost_tokens = 0
-cum_tokens = 7876
+cum_tokens = 7962
 
 [batches.content]
 kind = "lines"
@@ -5194,11 +5236,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 228
+position = 231
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 13 })'
 descriptor = "go decl at source/httpfs/driver.go:13"
 cost_tokens = 13
-cum_tokens = 7889
+cum_tokens = 7975
 
 [batches.content]
 kind = "lines"
@@ -5212,11 +5254,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 229
+position = 232
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 47
-cum_tokens = 7936
+cum_tokens = 8022
 
 [batches.content]
 kind = "lines"
@@ -5230,11 +5272,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 230
+position = 233
 key = 'Go(PackageDocBody { file: "source/iofs/doc.go" })'
 descriptor = "go package doc body in source/iofs/doc.go"
 cost_tokens = 75
-cum_tokens = 8011
+cum_tokens = 8097
 
 [batches.content]
 kind = "lines"
@@ -5248,11 +5290,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 231
+position = 234
 key = 'Go(DeclNames { file: "migrate.go", chunk_index: 2 })'
 descriptor = "go decl names surface #2 in migrate.go"
 cost_tokens = 171
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5386,11 +5428,11 @@ end = 533
 kind = "ellipsis"
 
 [[batches]]
-position = 232
+position = 235
 key = 'Go(Decl { file: "migrate.go", start_line: 265 })'
 descriptor = "go decl at migrate.go:265"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5404,11 +5446,11 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 233
+position = 236
 key = 'Go(Decl { file: "migrate.go", start_line: 287 })'
 descriptor = "go decl at migrate.go:287"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5422,11 +5464,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 234
+position = 237
 key = 'Go(Decl { file: "migrate.go", start_line: 307 })'
 descriptor = "go decl at migrate.go:307"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5440,11 +5482,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 235
+position = 238
 key = 'Go(Decl { file: "migrate.go", start_line: 321 })'
 descriptor = "go decl at migrate.go:321"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5458,11 +5500,11 @@ end = 321
 kind = "full"
 
 [[batches]]
-position = 236
+position = 239
 key = 'Go(Decl { file: "migrate.go", start_line: 365 })'
 descriptor = "go decl at migrate.go:365"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5476,11 +5518,11 @@ end = 365
 kind = "full"
 
 [[batches]]
-position = 237
+position = 240
 key = 'Go(Decl { file: "migrate.go", start_line: 383 })'
 descriptor = "go decl at migrate.go:383"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5494,11 +5536,11 @@ end = 383
 kind = "full"
 
 [[batches]]
-position = 238
+position = 241
 key = 'Go(Decl { file: "migrate.go", start_line: 400 })'
 descriptor = "go decl at migrate.go:400"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5512,11 +5554,11 @@ end = 400
 kind = "full"
 
 [[batches]]
-position = 239
+position = 242
 key = 'Go(Decl { file: "migrate.go", start_line: 532 })'
 descriptor = "go decl at migrate.go:532"
 cost_tokens = 0
-cum_tokens = 8182
+cum_tokens = 8268
 
 [batches.content]
 kind = "lines"
@@ -5530,11 +5572,11 @@ end = 532
 kind = "full"
 
 [[batches]]
-position = 240
+position = 243
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 307 })'
 descriptor = "go decl doc at migrate.go:307"
 cost_tokens = 12
-cum_tokens = 8194
+cum_tokens = 8280
 
 [batches.content]
 kind = "lines"
@@ -5548,11 +5590,11 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 241
+position = 244
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 265 })'
 descriptor = "go decl doc at migrate.go:265"
 cost_tokens = 33
-cum_tokens = 8227
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -5566,11 +5608,11 @@ end = 264
 kind = "full"
 
 [[batches]]
-position = 242
+position = 245
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 287 })'
 descriptor = "go decl doc at migrate.go:287"
 cost_tokens = 33
-cum_tokens = 8260
+cum_tokens = 8346
 
 [batches.content]
 kind = "lines"
@@ -5584,11 +5626,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 243
+position = 246
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 383 })'
 descriptor = "go decl doc at migrate.go:383"
 cost_tokens = 34
-cum_tokens = 8294
+cum_tokens = 8380
 
 [batches.content]
 kind = "lines"
@@ -5602,11 +5644,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 244
+position = 247
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 365 })'
 descriptor = "go decl doc at migrate.go:365"
 cost_tokens = 40
-cum_tokens = 8334
+cum_tokens = 8420
 
 [batches.content]
 kind = "lines"
@@ -5620,11 +5662,11 @@ end = 364
 kind = "full"
 
 [[batches]]
-position = 245
+position = 248
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 321 })'
 descriptor = "go decl doc at migrate.go:321"
 cost_tokens = 62
-cum_tokens = 8396
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -5638,11 +5680,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 246
+position = 249
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 400 })'
 descriptor = "go decl doc at migrate.go:400"
 cost_tokens = 76
-cum_tokens = 8472
+cum_tokens = 8558
 
 [batches.content]
 kind = "lines"
@@ -5656,11 +5698,11 @@ end = 399
 kind = "full"
 
 [[batches]]
-position = 247
+position = 250
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 532 })'
 descriptor = "go decl doc at migrate.go:532"
 cost_tokens = 98
-cum_tokens = 8570
+cum_tokens = 8656
 
 [batches.content]
 kind = "lines"
@@ -5674,11 +5716,11 @@ end = 531
 kind = "full"
 
 [[batches]]
-position = 248
+position = 251
 key = 'Go(DeclNames { file: "source/file/file.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/file/file.go"
 cost_tokens = 63
-cum_tokens = 8633
+cum_tokens = 8719
 
 [batches.content]
 kind = "lines"
@@ -5748,11 +5790,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 249
+position = 252
 key = 'Go(Decl { file: "source/file/file.go", start_line: 12 })'
 descriptor = "go decl at source/file/file.go:12"
 cost_tokens = 0
-cum_tokens = 8633
+cum_tokens = 8719
 
 [batches.content]
 kind = "lines"
@@ -5766,11 +5808,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 250
+position = 253
 key = 'Go(Decl { file: "source/file/file.go", start_line: 22 })'
 descriptor = "go decl at source/file/file.go:22"
 cost_tokens = 0
-cum_tokens = 8633
+cum_tokens = 8719
 
 [batches.content]
 kind = "lines"
@@ -5784,11 +5826,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 251
+position = 254
 key = 'Go(Decl { file: "source/file/file.go", start_line: 37 })'
 descriptor = "go decl at source/file/file.go:37"
 cost_tokens = 0
-cum_tokens = 8633
+cum_tokens = 8719
 
 [batches.content]
 kind = "lines"
@@ -5802,11 +5844,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 252
+position = 255
 key = 'Go(Decl { file: "source/file/file.go", start_line: 16 })'
 descriptor = "go decl at source/file/file.go:16"
 cost_tokens = 28
-cum_tokens = 8661
+cum_tokens = 8747
 
 [batches.content]
 kind = "lines"
@@ -5820,11 +5862,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 253
+position = 256
 key = 'Markdown(ReadmeHeadline { file: "source/gitlab/README.md" })'
 descriptor = "README headline in source/gitlab/README.md"
 cost_tokens = 180
-cum_tokens = 8841
+cum_tokens = 8927
 
 [batches.content]
 kind = "lines"
@@ -5838,11 +5880,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 254
+position = 257
 key = 'Markdown(HeadingsOutline { file: "database/cockroachdb/TUTORIAL.md" })'
 descriptor = "headings outline in database/cockroachdb/TUTORIAL.md"
 cost_tokens = 79
-cum_tokens = 8920
+cum_tokens = 9006
 
 [batches.content]
 kind = "lines"
@@ -5928,11 +5970,11 @@ end = 120
 kind = "ellipsis"
 
 [[batches]]
-position = 255
+position = 258
 key = 'Markdown(Section { file: "database/cockroachdb/TUTORIAL.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "database/cockroachdb/TUTORIAL.md section #0"
 cost_tokens = 0
-cum_tokens = 8920
+cum_tokens = 9006
 
 [batches.content]
 kind = "lines"
@@ -5946,11 +5988,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 256
+position = 259
 key = 'Go(DeclDoc { file: "util.go", start_line: 45 })'
 descriptor = "go decl doc at util.go:45"
 cost_tokens = 43
-cum_tokens = 8963
+cum_tokens = 9049
 
 [batches.content]
 kind = "lines"
@@ -5964,11 +6006,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 257
+position = 260
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 56
-cum_tokens = 9019
+cum_tokens = 9105
 
 [batches.content]
 kind = "lines"
@@ -5982,11 +6024,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 258
+position = 261
 key = 'Go(PackageImports { file: "cli/main.go" })'
 descriptor = "go package + imports in cli/main.go"
 cost_tokens = 30
-cum_tokens = 9049
+cum_tokens = 9135
 
 [batches.content]
 kind = "lines"
@@ -6000,11 +6042,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 259
+position = 262
 key = 'Go(PackageImports { file: "database/error.go" })'
 descriptor = "go package + imports in database/error.go"
 cost_tokens = 30
-cum_tokens = 9079
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6018,11 +6060,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 260
+position = 263
 key = 'Markdown(Section { file: "database/rqlite/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "database/rqlite/README.md section #1"
 cost_tokens = 32
-cum_tokens = 9111
+cum_tokens = 9197
 
 [batches.content]
 kind = "lines"
@@ -6036,39 +6078,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 261
-key = 'Fs(DirListing { dir: "source/httpfs/testdata/sql" })'
-descriptor = "listing of 'source/httpfs/testdata/sql'"
-cost_tokens = 80
-cum_tokens = 9191
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata/sql"
-entries = ["1_foobar.down.sql", "1_foobar.up.sql", "3_foobar.up.sql", "4_foobar.down.sql", "4_foobar.up.sql", "5_foobar.down.sql", "7_foobar.down.sql", "7_foobar.up.sql", "other-files-are-ignored", "subdirs-are-ignored"]
-
-[[batches]]
-position = 262
-key = 'Fs(DirListing { dir: "source/httpfs/testdata/sql/subdirs-are-ignored" })'
-descriptor = "listing of 'source/httpfs/testdata/sql/subdirs-are-ignored'"
-cost_tokens = 3
-cum_tokens = 9194
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/httpfs/testdata/sql/subdirs-are-ignored"
-entries = ["some-file"]
-
-[[batches]]
-position = 263
+position = 264
 key = 'Go(DeclNames { file: "database/driver.go", chunk_index: 0 })'
 descriptor = "go decl names surface in database/driver.go"
 cost_tokens = 136
-cum_tokens = 9330
+cum_tokens = 9333
 
 [batches.content]
 kind = "lines"
@@ -6170,11 +6184,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 264
+position = 265
 key = 'Go(Decl { file: "database/driver.go", start_line: 85 })'
 descriptor = "go decl at database/driver.go:85"
 cost_tokens = 0
-cum_tokens = 9330
+cum_tokens = 9333
 
 [batches.content]
 kind = "lines"
@@ -6188,11 +6202,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 265
+position = 266
 key = 'Go(Decl { file: "database/driver.go", start_line: 102 })'
 descriptor = "go decl at database/driver.go:102"
 cost_tokens = 0
-cum_tokens = 9330
+cum_tokens = 9333
 
 [batches.content]
 kind = "lines"
@@ -6206,11 +6220,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 266
+position = 267
 key = 'Go(Decl { file: "database/driver.go", start_line: 115 })'
 descriptor = "go decl at database/driver.go:115"
 cost_tokens = 0
-cum_tokens = 9330
+cum_tokens = 9333
 
 [batches.content]
 kind = "lines"
@@ -6224,11 +6238,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 267
+position = 268
 key = 'Go(Decl { file: "database/driver.go", start_line: 15 })'
 descriptor = "go decl at database/driver.go:15"
 cost_tokens = 9
-cum_tokens = 9339
+cum_tokens = 9342
 
 [batches.content]
 kind = "lines"
@@ -6242,11 +6256,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 268
+position = 269
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 102 })'
 descriptor = "go decl doc at database/driver.go:102"
 cost_tokens = 11
-cum_tokens = 9350
+cum_tokens = 9353
 
 [batches.content]
 kind = "lines"
@@ -6260,11 +6274,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 269
+position = 270
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 115 })'
 descriptor = "go decl doc at database/driver.go:115"
 cost_tokens = 11
-cum_tokens = 9361
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -6278,11 +6292,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 270
+position = 271
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 85 })'
 descriptor = "go decl doc at database/driver.go:85"
 cost_tokens = 12
-cum_tokens = 9373
+cum_tokens = 9376
 
 [batches.content]
 kind = "lines"
@@ -6296,11 +6310,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 271
+position = 272
 key = 'Go(DeclBody { file: "migrate.go", start_line: 52 })'
 descriptor = "go decl body at migrate.go:52"
 cost_tokens = 22
-cum_tokens = 9395
+cum_tokens = 9398
 
 [batches.content]
 kind = "lines"
@@ -6314,11 +6328,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 272
+position = 273
 key = 'Markdown(HeadingsOutline { file: "database/postgres/TUTORIAL.md" })'
 descriptor = "headings outline in database/postgres/TUTORIAL.md"
 cost_tokens = 88
-cum_tokens = 9483
+cum_tokens = 9486
 
 [batches.content]
 kind = "lines"
@@ -6420,11 +6434,11 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 273
+position = 274
 key = 'Markdown(Section { file: "database/postgres/TUTORIAL.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "database/postgres/TUTORIAL.md section #0"
 cost_tokens = 0
-cum_tokens = 9483
+cum_tokens = 9486
 
 [batches.content]
 kind = "lines"
@@ -6438,11 +6452,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 274
+position = 275
 key = 'Go(DeclNames { file: "source/godoc_vfs/vfs.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/godoc_vfs/vfs.go"
 cost_tokens = 73
-cum_tokens = 9556
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
@@ -6512,11 +6526,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 275
+position = 276
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 17 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:17"
 cost_tokens = 0
-cum_tokens = 9556
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
@@ -6530,11 +6544,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 276
+position = 277
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 33 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:33"
 cost_tokens = 0
-cum_tokens = 9556
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
@@ -6548,11 +6562,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 277
+position = 278
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 41 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:41"
 cost_tokens = 0
-cum_tokens = 9556
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
@@ -6566,11 +6580,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 278
+position = 279
 key = 'Go(DeclBody { file: "source/godoc_vfs/vfs.go", start_line: 33 })'
 descriptor = "go decl body at source/godoc_vfs/vfs.go:33"
 cost_tokens = 9
-cum_tokens = 9565
+cum_tokens = 9568
 
 [batches.content]
 kind = "lines"
@@ -6584,11 +6598,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 279
+position = 280
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 23 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:23"
 cost_tokens = 33
-cum_tokens = 9598
+cum_tokens = 9601
 
 [batches.content]
 kind = "lines"
@@ -6602,11 +6616,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 280
+position = 281
 key = 'Go(DeclDoc { file: "source/godoc_vfs/vfs.go", start_line: 23 })'
 descriptor = "go decl doc at source/godoc_vfs/vfs.go:23"
 cost_tokens = 27
-cum_tokens = 9625
+cum_tokens = 9628
 
 [batches.content]
 kind = "lines"
@@ -6620,11 +6634,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 281
+position = 282
 key = 'Go(DeclDoc { file: "source/parse.go", start_line: 22 })'
 descriptor = "go decl doc at source/parse.go:22"
 cost_tokens = 36
-cum_tokens = 9661
+cum_tokens = 9664
 
 [batches.content]
 kind = "lines"
@@ -6636,20 +6650,6 @@ end = 21
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 282
-key = 'Fs(DirListing { dir: "source/testing" })'
-descriptor = "listing of 'source/testing'"
-cost_tokens = 3
-cum_tokens = 9664
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/testing"
-entries = ["testing.go"]
 
 [[batches]]
 position = 283

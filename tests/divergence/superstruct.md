@@ -1,4 +1,4 @@
-Score(3000)=0.486 I=0.746 C=0.317 ns_rows≤3K=20/60 (reached=7 partial=1 missing=12)
+Score(3000)=0.459 I=0.763 C=0.276 ns_rows≤3K=20/60 (reached=6 partial=1 missing=13)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,34 +11,34 @@ Score(3000)=0.486 I=0.746 C=0.317 ns_rows≤3K=20/60 (reached=7 partial=1 missin
 | ns | 140 |  | 71 | Complete root directory listing | 1.2 |  | 0.616 |
 | walker |  | 141 | 7 | listing of 'docs/resources' |  |  | 0.616 |
 | ns | 177 |  | 37 | Complete src/ and src/structs/ listings | 1.3 |  | 0.613 |
-| walker |  | 223 | 82 | package identity in package.json |  |  | 0.959 |
-| ns | 256 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.865 |
-| walker |  | 277 | 54 | listing of 'examples' |  |  | 0.867 |
-| walker |  | 285 | 8 | listing of '.github' |  |  | 0.867 |
-| walker |  | 288 | 3 | listing of '.github/workflows' |  |  | 0.867 |
-| ns | 422 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.841 |
-| walker |  | 463 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.843 |
-| walker |  | 542 | 79 | imports in src/index.ts |  |  | 0.938 |
-| walker |  | 570 | 28 | listing of 'docs/images' |  |  | 0.939 |
-| walker |  | 600 | 30 | listing of 'docs/reference' |  |  | 0.941 |
-| walker |  | 634 | 34 | package runtime metadata in package.json |  |  | 0.941 |
+| walker |  | 195 | 54 | listing of 'examples' |  |  | 0.617 |
+| walker |  | 203 | 8 | listing of '.github' |  |  | 0.617 |
+| walker |  | 206 | 3 | listing of '.github/workflows' |  |  | 0.617 |
+| ns | 256 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.556 |
+| walker |  | 381 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.559 |
+| ns | 422 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.542 |
+| walker |  | 463 | 82 | package identity in package.json |  |  | 0.843 |
+| walker |  | 491 | 28 | listing of 'docs/images' |  |  | 0.844 |
+| walker |  | 521 | 30 | listing of 'docs/reference' |  |  | 0.846 |
+| walker |  | 600 | 79 | imports in src/index.ts |  |  | 0.941 |
 | ns | 644 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.778 |
-| walker |  | 661 | 27 | export names surface in src/error.ts |  |  | 0.778 |
-| walker |  | 711 | 50 | listing of 'docs/guides' |  |  | 0.780 |
+| walker |  | 650 | 50 | listing of 'docs/guides' |  |  | 0.780 |
+| walker |  | 684 | 34 | package runtime metadata in package.json |  |  | 0.780 |
+| walker |  | 711 | 27 | export names surface in src/error.ts |  |  | 0.780 |
 | ns | 822 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.706 |
 | walker |  | 893 | 182 | README headline in Readme.md |  |  | 0.711 |
 | walker |  | 959 | 66 | README prelude in Readme.md |  |  | 0.725 |
 | ns | 977 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.636 |
 | walker |  | 1013 | 54 | headings outline in Readme.md |  |  | 0.637 |
 | walker |  | 1031 | 18 | headings outline in docs/resources/links.md |  |  | 0.637 |
-| walker |  | 1050 | 19 | Readme.md section #11 |  |  | 0.637 |
+| walker |  | 1061 | 30 | listing of 'test' |  |  | 0.638 |
 | ns | 1072 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.595 |
-| walker |  | 1126 | 76 | package entrypoints in package.json |  |  | 0.595 |
-| walker |  | 1242 | 116 | README headline in docs/readme.md |  |  | 0.595 |
-| walker |  | 1308 | 66 | README prelude in docs/readme.md |  |  | 0.595 |
-| ns | 1324 |  | 252 | Complete roster of the 25 type structs | 2.2 |  | 0.516 |
-| walker |  | 1389 | 81 | export at src/error.ts:5 |  |  | 0.519 |
-| walker |  | 1419 | 30 | listing of 'test' |  |  | 0.519 |
+| walker |  | 1080 | 19 | Readme.md section #11 |  |  | 0.595 |
+| walker |  | 1156 | 76 | package entrypoints in package.json |  |  | 0.596 |
+| walker |  | 1272 | 116 | README headline in docs/readme.md |  |  | 0.596 |
+| ns | 1324 |  | 252 | Complete roster of the 25 type structs | 2.2 |  | 0.517 |
+| walker |  | 1338 | 66 | README prelude in docs/readme.md |  |  | 0.517 |
+| walker |  | 1419 | 81 | export at src/error.ts:5 |  |  | 0.519 |
 | ns | 1426 |  | 102 | Complete roster of src/structs/utilities.ts | 2.3 |  | 0.495 |
 | ns | 1509 |  | 83 | Complete roster of src/structs/refinements.ts | 2.4 |  | 0.477 |
 | walker |  | 1512 | 93 | export at src/error.ts:25 |  |  | 0.478 |
@@ -49,11 +49,11 @@ Score(3000)=0.486 I=0.746 C=0.317 ns_rows≤3K=20/60 (reached=7 partial=1 missin
 | walker |  | 1648 | 36 | headings outline in docs/guides/01-getting-started.md |  |  | 0.473 |
 | walker |  | 1648 | 0 | docs/guides/01-getting-started.md section #0 |  |  | 0.473 |
 | ns | 1657 |  | 114 | Failure - the shape of every validation failure | 2.6 |  | 0.490 |
-| walker |  | 1692 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.491 |
-| walker |  | 1732 | 40 | headings outline in docs/reference/errors.md |  |  | 0.491 |
-| walker |  | 1758 | 26 | export doc at src/error.ts:5 |  |  | 0.513 |
-| walker |  | 1810 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.514 |
-| walker |  | 1834 | 24 | listing of 'test/api' |  |  | 0.515 |
+| walker |  | 1672 | 24 | listing of 'test/api' |  |  | 0.491 |
+| walker |  | 1716 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.492 |
+| walker |  | 1756 | 40 | headings outline in docs/reference/errors.md |  |  | 0.492 |
+| walker |  | 1782 | 26 | export doc at src/error.ts:5 |  |  | 0.514 |
+| walker |  | 1834 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.515 |
 | ns | 1835 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.503 |
 | walker |  | 1876 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.503 |
 | walker |  | 1921 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.503 |
@@ -67,47 +67,47 @@ Score(3000)=0.486 I=0.746 C=0.317 ns_rows≤3K=20/60 (reached=7 partial=1 missin
 | ns | 2384 |  | 238 | Type-level utility roster of src/utils.ts | 2.10 |  | 0.449 |
 | walker |  | 2419 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.449 |
 | ns | 2580 |  | 196 | What each type struct does, part 1 (any ... literal) | 3.1 | 2.2 | 0.436 |
-| walker |  | 2652 | 233 | export names surface in src/struct.ts |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:175 |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:231 |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:237 |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:253 |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:259 |  |  | 0.473 |
-| walker |  | 2652 | 0 | export at src/struct.ts:266 |  |  | 0.473 |
-| walker |  | 2686 | 34 | export at src/struct.ts:221 |  |  | 0.488 |
-| walker |  | 2727 | 41 | export at src/struct.ts:243 |  |  | 0.510 |
-| walker |  | 2764 | 37 | export at src/struct.ts:139 |  |  | 0.510 |
-| walker |  | 2801 | 37 | export at src/struct.ts:157 |  |  | 0.510 |
-| walker |  | 2841 | 40 | export at src/struct.ts:123 |  |  | 0.510 |
-| ns | 2922 |  | 342 | What each type struct does, part 2 (map ... unknown) | 3.2 | 2.2 | 0.486 |
-| walker |  | 2924 | 83 | export at src/struct.ts:185 |  |  | 0.486 |
-| walker |  | 2948 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.486 |
-| walker |  | 2971 | 23 | export doc at src/struct.ts:243 |  |  | 0.486 |
-| walker |  | 2996 | 25 | export doc at src/struct.ts:259 |  |  | 0.486 |
-| walker |  | 3019 | 23 | export doc at src/struct.ts:175 |  |  | 0.486 |
-| walker |  | 3046 | 27 | export doc at src/struct.ts:231 |  |  | 0.486 |
-| walker |  | 3073 | 27 | export doc at src/struct.ts:237 |  |  | 0.486 |
-| walker |  | 3101 | 28 | export doc at src/struct.ts:253 |  |  | 0.486 |
-| walker |  | 3129 | 28 | export doc at src/struct.ts:123 |  |  | 0.486 |
-| ns | 3150 |  | 228 | What each utility struct does | 3.3 | 2.3 | 0.469 |
-| walker |  | 3158 | 29 | export doc at src/struct.ts:139 |  |  | 0.469 |
-| walker |  | 3188 | 30 | export doc at src/struct.ts:157 |  |  | 0.469 |
-| ns | 3306 |  | 156 | What each refinement does | 3.4 | 2.4 | 0.462 |
-| walker |  | 3415 | 227 | export at src/struct.ts:10 |  |  | 0.494 |
-| ns | 3417 |  | 111 | What each coercion does - and the create() gotcha | 3.5 | 2.5 | 0.488 |
-| walker |  | 3477 | 62 | headings outline in docs/reference/core.md |  |  | 0.491 |
-| walker |  | 3477 | 0 | docs/reference/core.md section #0 |  |  | 0.491 |
-| walker |  | 3516 | 39 | export doc at src/struct.ts:266 |  |  | 0.491 |
-| walker |  | 3535 | 19 | docs/resources/links.md section #0 |  |  | 0.491 |
-| walker |  | 3700 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.492 |
-| ns | 3722 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.469 |
-| walker |  | 3865 | 165 | listing of 'test/validation' |  |  | 0.473 |
-| walker |  | 3944 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.473 |
-| ns | 3965 |  | 243 | Struct method semantics: mask recursion and validate options | 3.7 | 2.1 | 0.461 |
-| walker |  | 3990 | 46 | export doc at src/struct.ts:185 |  |  | 0.461 |
-| walker |  | 4072 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.462 |
-| ns | 4155 |  | 190 | What each src/utils.ts helper does | 3.8 | 2.9 | 0.452 |
-| walker |  | 4254 | 182 | listing of 'test/typings' |  |  | 0.456 |
+| walker |  | 2584 | 165 | listing of 'test/validation' |  |  | 0.440 |
+| walker |  | 2766 | 182 | listing of 'test/typings' |  |  | 0.444 |
+| ns | 2922 |  | 342 | What each type struct does, part 2 (map ... unknown) | 3.2 | 2.2 | 0.423 |
+| walker |  | 2999 | 233 | export names surface in src/struct.ts |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:175 |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:231 |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:237 |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:253 |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:259 |  |  | 0.459 |
+| walker |  | 2999 | 0 | export at src/struct.ts:266 |  |  | 0.459 |
+| walker |  | 3033 | 34 | export at src/struct.ts:221 |  |  | 0.474 |
+| walker |  | 3074 | 41 | export at src/struct.ts:243 |  |  | 0.495 |
+| walker |  | 3111 | 37 | export at src/struct.ts:139 |  |  | 0.495 |
+| walker |  | 3148 | 37 | export at src/struct.ts:157 |  |  | 0.495 |
+| ns | 3150 |  | 228 | What each utility struct does | 3.3 | 2.3 | 0.478 |
+| walker |  | 3188 | 40 | export at src/struct.ts:123 |  |  | 0.478 |
+| walker |  | 3271 | 83 | export at src/struct.ts:185 |  |  | 0.478 |
+| walker |  | 3295 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.478 |
+| ns | 3306 |  | 156 | What each refinement does | 3.4 | 2.4 | 0.470 |
+| walker |  | 3318 | 23 | export doc at src/struct.ts:243 |  |  | 0.470 |
+| walker |  | 3343 | 25 | export doc at src/struct.ts:259 |  |  | 0.470 |
+| walker |  | 3366 | 23 | export doc at src/struct.ts:175 |  |  | 0.470 |
+| walker |  | 3393 | 27 | export doc at src/struct.ts:231 |  |  | 0.470 |
+| ns | 3417 |  | 111 | What each coercion does - and the create() gotcha | 3.5 | 2.5 | 0.465 |
+| walker |  | 3420 | 27 | export doc at src/struct.ts:237 |  |  | 0.465 |
+| walker |  | 3448 | 28 | export doc at src/struct.ts:253 |  |  | 0.465 |
+| walker |  | 3476 | 28 | export doc at src/struct.ts:123 |  |  | 0.465 |
+| walker |  | 3505 | 29 | export doc at src/struct.ts:139 |  |  | 0.465 |
+| walker |  | 3535 | 30 | export doc at src/struct.ts:157 |  |  | 0.465 |
+| ns | 3722 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.443 |
+| walker |  | 3762 | 227 | export at src/struct.ts:10 |  |  | 0.473 |
+| walker |  | 3824 | 62 | headings outline in docs/reference/core.md |  |  | 0.476 |
+| walker |  | 3824 | 0 | docs/reference/core.md section #0 |  |  | 0.476 |
+| walker |  | 3863 | 39 | export doc at src/struct.ts:266 |  |  | 0.476 |
+| walker |  | 3882 | 19 | docs/resources/links.md section #0 |  |  | 0.476 |
+| ns | 3965 |  | 243 | Struct method semantics: mask recursion and validate options | 3.7 | 2.1 | 0.464 |
+| walker |  | 4047 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.465 |
+| walker |  | 4126 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.465 |
+| ns | 4155 |  | 190 | What each src/utils.ts helper does | 3.8 | 2.9 | 0.456 |
+| walker |  | 4172 | 46 | export doc at src/struct.ts:185 |  |  | 0.456 |
+| walker |  | 4254 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.456 |
 | walker |  | 4292 | 38 | imports in src/struct.ts |  |  | 0.456 |
 | ns | 4304 |  | 149 | run() signature and per-call context setup | 4.1 | 2.9 | 0.445 |
 | walker |  | 4377 | 85 | export body at src/structs/coercions.ts:16 body 21 |  |  | 0.446 |

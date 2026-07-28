@@ -47,10 +47,24 @@ entries = ["errors.ts", "index.ts", "internals", "is-matching.ts", "match.ts", "
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "src/internals" })'
+descriptor = "listing of 'src/internals'"
+cost_tokens = 7
+cum_tokens = 117
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/internals"
+entries = ["helpers.ts", "symbols.ts"]
+
+[[batches]]
+position = 5
 key = 'Typescript(ExportNames { file: "src/index.ts" })'
 descriptor = "export names surface in src/index.ts"
 cost_tokens = 16
-cum_tokens = 126
+cum_tokens = 133
 
 [batches.content]
 kind = "lines"
@@ -72,25 +86,25 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "src/internals" })'
-descriptor = "listing of 'src/internals'"
-cost_tokens = 7
-cum_tokens = 133
+position = 6
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 5
+cum_tokens = 138
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "src/internals"
-entries = ["helpers.ts", "symbols.ts"]
+parent = "scripts"
+entries = ["generate-cts.sh"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Typescript(Imports { file: "src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 42
-cum_tokens = 175
+cum_tokens = 180
 
 [batches.content]
 kind = "lines"
@@ -104,25 +118,25 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 5
-cum_tokens = 180
+position = 8
+key = 'Fs(DirListing { dir: "src/types" })'
+descriptor = "listing of 'src/types'"
+cost_tokens = 55
+cum_tokens = 235
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "scripts"
-entries = ["generate-cts.sh"]
+parent = "src/types"
+entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 73
-cum_tokens = 253
+cum_tokens = 308
 
 [batches.content]
 kind = "lines"
@@ -144,20 +158,6 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "src/types" })'
-descriptor = "listing of 'src/types'"
-cost_tokens = 55
-cum_tokens = 308
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/types"
-entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
-
-[[batches]]
 position = 10
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
@@ -173,10 +173,24 @@ entries = ["FUNDING.yml", "ISSUE_TEMPLATE"]
 
 [[batches]]
 position = 11
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 11
+cum_tokens = 328
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["gif-fetcher", "one-file-demo"]
+
+[[batches]]
+position = 12
 key = 'Typescript(ExportNames { file: "src/errors.ts" })'
 descriptor = "export names surface in src/errors.ts"
 cost_tokens = 18
-cum_tokens = 335
+cum_tokens = 346
 
 [batches.content]
 kind = "lines"
@@ -198,11 +212,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Typescript(Export { file: "src/errors.ts", start_line: 5 })'
 descriptor = "export at src/errors.ts:5"
 cost_tokens = 12
-cum_tokens = 347
+cum_tokens = 358
 
 [batches.content]
 kind = "lines"
@@ -222,20 +236,6 @@ end = 7
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 11
-cum_tokens = 358
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["gif-fetcher", "one-file-demo"]
 
 [[batches]]
 position = 14
@@ -367,10 +367,24 @@ kind = "full"
 
 [[batches]]
 position = 20
+key = 'Fs(DirListing { dir: "examples/gif-fetcher" })'
+descriptor = "listing of 'examples/gif-fetcher'"
+cost_tokens = 16
+cum_tokens = 714
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/gif-fetcher"
+entries = ["package.json", "public", "src", "tsconfig.json"]
+
+[[batches]]
+position = 21
 key = 'Markdown(Prelude { file: "README.md" })'
 descriptor = "README prelude in README.md"
 cost_tokens = 261
-cum_tokens = 959
+cum_tokens = 975
 
 [batches.content]
 kind = "lines"
@@ -384,11 +398,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Typescript(ExportNames { file: "src/is-matching.ts" })'
 descriptor = "export names surface in src/is-matching.ts"
 cost_tokens = 58
-cum_tokens = 1017
+cum_tokens = 1033
 
 [batches.content]
 kind = "lines"
@@ -442,11 +456,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 32 })'
 descriptor = "export at src/is-matching.ts:32"
 cost_tokens = 27
-cum_tokens = 1044
+cum_tokens = 1060
 
 [batches.content]
 kind = "lines"
@@ -460,11 +474,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 53 })'
 descriptor = "export at src/is-matching.ts:53"
 cost_tokens = 33
-cum_tokens = 1077
+cum_tokens = 1093
 
 [batches.content]
 kind = "lines"
@@ -486,11 +500,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 48 })'
 descriptor = "export at src/is-matching.ts:48"
 cost_tokens = 39
-cum_tokens = 1116
+cum_tokens = 1132
 
 [batches.content]
 kind = "lines"
@@ -504,25 +518,25 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "examples/gif-fetcher" })'
-descriptor = "listing of 'examples/gif-fetcher'"
-cost_tokens = 16
-cum_tokens = 1132
+position = 26
+key = 'Fs(DirListing { dir: "examples/gif-fetcher/src" })'
+descriptor = "listing of 'examples/gif-fetcher/src'"
+cost_tokens = 22
+cum_tokens = 1154
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "examples/gif-fetcher"
-entries = ["package.json", "public", "src", "tsconfig.json"]
+parent = "examples/gif-fetcher/src"
+entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(ExportBody { file: "src/errors.ts", start_line: 5, body_start_line: 7 })'
 descriptor = "export body at src/errors.ts:5 body 7"
 cost_tokens = 75
-cum_tokens = 1207
+cum_tokens = 1229
 
 [batches.content]
 kind = "lines"
@@ -536,25 +550,25 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "examples/gif-fetcher/src" })'
-descriptor = "listing of 'examples/gif-fetcher/src'"
-cost_tokens = 22
-cum_tokens = 1229
+position = 28
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 298
+cum_tokens = 1527
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "examples/gif-fetcher/src"
-entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
+parent = "tests"
+entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
 
 [[batches]]
-position = 28
+position = 29
 key = 'Typescript(Imports { file: "src/types/index.ts" })'
 descriptor = "imports in src/types/index.ts"
 cost_tokens = 10
-cum_tokens = 1239
+cum_tokens = 1537
 
 [batches.content]
 kind = "lines"
@@ -568,11 +582,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 1261
+cum_tokens = 1559
 
 [batches.content]
 kind = "lines"
@@ -584,20 +598,6 @@ end = 51
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 298
-cum_tokens = 1559
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
 
 [[batches]]
 position = 31
@@ -1099,10 +1099,38 @@ kind = "full"
 
 [[batches]]
 position = 52
+key = 'Fs(DirListing { dir: "examples/gif-fetcher/public" })'
+descriptor = "listing of 'examples/gif-fetcher/public'"
+cost_tokens = 3
+cum_tokens = 3204
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/gif-fetcher/public"
+entries = ["index.html"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "tests/types-catalog" })'
+descriptor = "listing of 'tests/types-catalog'"
+cost_tokens = 7
+cum_tokens = 3211
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/types-catalog"
+entries = ["definition.ts", "utils.ts"]
+
+[[batches]]
+position = 54
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 53 })'
 descriptor = "module item body at src/match.ts:47 body 53"
 cost_tokens = 31
-cum_tokens = 3232
+cum_tokens = 3242
 
 [batches.content]
 kind = "lines"
@@ -1116,11 +1144,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 53
+position = 55
 key = 'Typescript(Imports { file: "src/is-matching.ts" })'
 descriptor = "imports in src/is-matching.ts"
 cost_tokens = 62
-cum_tokens = 3294
+cum_tokens = 3304
 
 [batches.content]
 kind = "lines"
@@ -1134,11 +1162,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 54
+position = 56
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 154
-cum_tokens = 3448
+cum_tokens = 3458
 
 [batches.content]
 kind = "lines"
@@ -1152,25 +1180,25 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "examples/gif-fetcher/public" })'
-descriptor = "listing of 'examples/gif-fetcher/public'"
-cost_tokens = 3
-cum_tokens = 3451
+position = 57
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 9
+cum_tokens = 3467
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "examples/gif-fetcher/public"
-entries = ["index.html"]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug_report.md", "feature_request.md"]
 
 [[batches]]
-position = 56
+position = 58
 key = 'Typescript(Imports { file: "src/match.ts" })'
 descriptor = "imports in src/match.ts"
 cost_tokens = 75
-cum_tokens = 3526
+cum_tokens = 3542
 
 [batches.content]
 kind = "lines"
@@ -1184,11 +1212,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 57
+position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 124
-cum_tokens = 3650
+cum_tokens = 3666
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1230,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 58
+position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 55
-cum_tokens = 3705
+cum_tokens = 3721
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1248,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Typescript(ExportNames { file: "src/internals/symbols.ts" })'
 descriptor = "export names surface in src/internals/symbols.ts"
 cost_tokens = 185
-cum_tokens = 3890
+cum_tokens = 3906
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1290,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 62
 key = 'Typescript(Export { file: "src/internals/symbols.ts", start_line: 16 })'
 descriptor = "export at src/internals/symbols.ts:16"
 cost_tokens = 0
-cum_tokens = 3890
+cum_tokens = 3906
 
 [batches.content]
 kind = "lines"
@@ -1280,25 +1308,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "tests/types-catalog" })'
-descriptor = "listing of 'tests/types-catalog'"
-cost_tokens = 7
-cum_tokens = 3897
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/types-catalog"
-entries = ["definition.ts", "utils.ts"]
-
-[[batches]]
-position = 62
+position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 148
-cum_tokens = 4045
+cum_tokens = 4054
 
 [batches.content]
 kind = "lines"
@@ -1312,11 +1326,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 60
-cum_tokens = 4105
+cum_tokens = 4114
 
 [batches.content]
 kind = "lines"
@@ -1330,11 +1344,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 63
-cum_tokens = 4168
+cum_tokens = 4177
 
 [batches.content]
 kind = "lines"
@@ -1348,11 +1362,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 129
-cum_tokens = 4297
+cum_tokens = 4306
 
 [batches.content]
 kind = "lines"
@@ -1364,20 +1378,6 @@ end = 82
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 66
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 9
-cum_tokens = 4306
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug_report.md", "feature_request.md"]
 
 [[batches]]
 position = 67
@@ -1417,10 +1417,24 @@ kind = "full"
 
 [[batches]]
 position = 69
+key = 'Fs(DirListing { dir: "examples/one-file-demo" })'
+descriptor = "listing of 'examples/one-file-demo'"
+cost_tokens = 14
+cum_tokens = 4459
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/one-file-demo"
+entries = ["one-file-demo.ts", "package.json", "tsconfig.json"]
+
+[[batches]]
+position = 70
 key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 48 })'
 descriptor = "export doc at src/is-matching.ts:48"
 cost_tokens = 151
-cum_tokens = 4596
+cum_tokens = 4610
 
 [batches.content]
 kind = "lines"
@@ -1434,11 +1448,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 74 })'
 descriptor = "module item body at src/match.ts:47 body 74"
 cost_tokens = 45
-cum_tokens = 4641
+cum_tokens = 4655
 
 [batches.content]
 kind = "lines"
@@ -1452,11 +1466,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 230
-cum_tokens = 4871
+cum_tokens = 4885
 
 [batches.content]
 kind = "lines"
@@ -1470,11 +1484,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 32 })'
 descriptor = "export doc at src/is-matching.ts:32"
 cost_tokens = 176
-cum_tokens = 5047
+cum_tokens = 5061
 
 [batches.content]
 kind = "lines"
@@ -1486,20 +1500,6 @@ end = 31
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "examples/one-file-demo" })'
-descriptor = "listing of 'examples/one-file-demo'"
-cost_tokens = 14
-cum_tokens = 5061
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/one-file-demo"
-entries = ["one-file-demo.ts", "package.json", "tsconfig.json"]
 
 [[batches]]
 position = 74

@@ -4,8 +4,8 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 47 | 47 | listing of '.' |  |  | 1.000 |
 | ns | 47 |  | 47 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 62 | 15 | export names surface in index.js |  |  | 1.000 |
-| walker |  | 85 | 23 | listing of 'lib' |  |  | 1.000 |
+| walker |  | 70 | 23 | listing of 'lib' |  |  | 1.000 |
+| walker |  | 85 | 15 | export names surface in index.js |  |  | 1.000 |
 | ns | 139 |  | 92 | package.json identity | 1.2 |  | 0.827 |
 | walker |  | 148 | 63 | package identity in package.json |  |  | 0.908 |
 | walker |  | 156 | 8 | listing of '.github' |  |  | 0.908 |
@@ -13,19 +13,19 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 173 | 17 | listing of '.github/workflows' |  |  | 0.918 |
 | walker |  | 181 | 8 | imports in index.js |  |  | 0.918 |
 | walker |  | 212 | 31 | package runtime metadata in package.json |  |  | 0.919 |
-| walker |  | 262 | 50 | package entrypoints in package.json |  |  | 0.919 |
-| ns | 299 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.728 |
+| ns | 299 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.727 |
 | ns | 446 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.600 |
-| walker |  | 640 | 378 | listing of 'test' |  |  | 0.609 |
+| walker |  | 590 | 378 | listing of 'test' |  |  | 0.609 |
+| walker |  | 640 | 50 | package entrypoints in package.json |  |  | 0.609 |
 | walker |  | 651 | 11 | listing of 'test/support' |  |  | 0.609 |
 | ns | 655 |  | 209 | npm scripts + engines | 1.6 |  | 0.544 |
 | ns | 681 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.579 |
-| ns | 792 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.546 |
-| ns | 965 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.481 |
-| walker |  | 1071 | 420 | README headline in Readme.md |  |  | 0.610 |
-| walker |  | 1199 | 128 | headings outline in Readme.md |  |  | 0.610 |
-| ns | 1204 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.532 |
-| walker |  | 1324 | 125 | listing of 'examples' |  |  | 0.535 |
+| walker |  | 776 | 125 | listing of 'examples' |  |  | 0.582 |
+| ns | 792 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.549 |
+| ns | 965 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.483 |
+| walker |  | 1196 | 420 | README headline in Readme.md |  |  | 0.612 |
+| ns | 1204 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.535 |
+| walker |  | 1324 | 128 | headings outline in Readme.md |  |  | 0.535 |
 | walker |  | 1411 | 87 | Readme.md section #2 |  |  | 0.535 |
 | ns | 1468 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.485 |
 | walker |  | 1587 | 176 | package scripts in package.json |  |  | 0.555 |
@@ -42,28 +42,28 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 1734 | 24 | export body at lib/request.js:171 body 172 |  |  | 0.531 |
 | walker |  | 1759 | 25 | export body at lib/request.js:127 body 128 |  |  | 0.531 |
 | walker |  | 1785 | 26 | export body at lib/request.js:140 body 141 |  |  | 0.531 |
-| ns | 1899 |  | 233 | createApplication() body | 2.6 |  | 0.492 |
-| walker |  | 1918 | 133 | export names surface in lib/express.js |  |  | 0.565 |
-| walker |  | 1918 | 0 | export at lib/express.js:27 |  |  | 0.565 |
-| walker |  | 1918 | 0 | export at lib/express.js:36 |  |  | 0.565 |
-| walker |  | 1918 | 0 | export at lib/express.js:62 |  |  | 0.565 |
-| walker |  | 1918 | 0 | export at lib/express.js:70 |  |  | 0.565 |
-| walker |  | 1918 | 0 | export at lib/express.js:77 |  |  | 0.565 |
-| walker |  | 1935 | 17 | export doc at lib/express.js:70 |  |  | 0.565 |
-| walker |  | 1952 | 17 | export doc at lib/express.js:77 |  |  | 0.565 |
-| walker |  | 1972 | 20 | export doc at lib/express.js:62 |  |  | 0.565 |
-| ns | 2156 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.523 |
-| ns | 2247 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.500 |
-| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.473 |
-| walker |  | 2432 | 460 | package runtime dependencies in package.json |  |  | 0.474 |
-| walker |  | 2454 | 22 | export doc at lib/express.js:27 |  |  | 0.474 |
-| walker |  | 2478 | 24 | imports in lib/request.js |  |  | 0.474 |
+| walker |  | 1870 | 85 | listing of 'test/acceptance' |  |  | 0.532 |
+| ns | 1899 |  | 233 | createApplication() body | 2.6 |  | 0.494 |
+| walker |  | 2003 | 133 | export names surface in lib/express.js |  |  | 0.567 |
+| walker |  | 2003 | 0 | export at lib/express.js:27 |  |  | 0.567 |
+| walker |  | 2003 | 0 | export at lib/express.js:36 |  |  | 0.567 |
+| walker |  | 2003 | 0 | export at lib/express.js:62 |  |  | 0.567 |
+| walker |  | 2003 | 0 | export at lib/express.js:70 |  |  | 0.567 |
+| walker |  | 2003 | 0 | export at lib/express.js:77 |  |  | 0.567 |
+| walker |  | 2020 | 17 | export doc at lib/express.js:70 |  |  | 0.567 |
+| walker |  | 2037 | 17 | export doc at lib/express.js:77 |  |  | 0.567 |
+| walker |  | 2057 | 20 | export doc at lib/express.js:62 |  |  | 0.567 |
+| ns | 2156 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.524 |
+| ns | 2247 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.501 |
+| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.474 |
 | ns | 2481 |  | 109 | Default settings established at boot | 3.1 |  | 0.463 |
-| walker |  | 2504 | 26 | export doc at lib/request.js:37 |  |  | 0.463 |
-| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.445 |
-| walker |  | 2746 | 242 | Readme.md section #1 |  |  | 0.445 |
-| walker |  | 2771 | 25 | imports in lib/express.js |  |  | 0.445 |
-| walker |  | 2856 | 85 | listing of 'test/acceptance' |  |  | 0.446 |
+| walker |  | 2517 | 460 | package runtime dependencies in package.json |  |  | 0.464 |
+| walker |  | 2539 | 22 | export doc at lib/express.js:27 |  |  | 0.464 |
+| walker |  | 2563 | 24 | imports in lib/request.js |  |  | 0.464 |
+| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.446 |
+| walker |  | 2805 | 242 | Readme.md section #1 |  |  | 0.446 |
+| walker |  | 2831 | 26 | export doc at lib/request.js:37 |  |  | 0.446 |
+| walker |  | 2856 | 25 | imports in lib/express.js |  |  | 0.446 |
 | walker |  | 2883 | 27 | imports in lib/application.js |  |  | 0.446 |
 | walker |  | 2906 | 23 | Readme.md section #19 |  |  | 0.446 |
 | walker |  | 2929 | 23 | Readme.md section #30 |  |  | 0.446 |

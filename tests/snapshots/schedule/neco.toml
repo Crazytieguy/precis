@@ -1,7 +1,7 @@
 fixture = "neco"
 budget = 10000
-cumulative_tokens = 9965
-batch_count = 156
+cumulative_tokens = 9980
+batch_count = 157
 
 [[batches]]
 position = 1
@@ -125,10 +125,38 @@ kind = "full"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "docs/tools" })'
+descriptor = "listing of 'docs/tools'"
+cost_tokens = 14
+cum_tokens = 390
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/tools"
+entries = ["README.md", "build-api.sh", "doxygen-md"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "deps" })'
+descriptor = "listing of 'deps'"
+cost_tokens = 41
+cum_tokens = 431
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "deps"
+entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
+
+[[batches]]
+position = 11
 key = 'C(HeaderBanner { file: "neco.h" })'
 descriptor = "c header banner in neco.h"
 cost_tokens = 89
-cum_tokens = 465
+cum_tokens = 520
 
 [batches.content]
 kind = "lines"
@@ -142,39 +170,25 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "docs/tools" })'
-descriptor = "listing of 'docs/tools'"
-cost_tokens = 14
-cum_tokens = 479
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/tools"
-entries = ["README.md", "build-api.sh", "doxygen-md"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "deps" })'
-descriptor = "listing of 'deps'"
-cost_tokens = 41
-cum_tokens = 520
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "deps"
-entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
-
-[[batches]]
 position = 12
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 50
+cum_tokens = 570
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
+
+[[batches]]
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 427
-cum_tokens = 947
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -186,20 +200,6 @@ end = 33
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 50
-cum_tokens = 997
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
 position = 14
@@ -4115,10 +4115,24 @@ kind = "full"
 
 [[batches]]
 position = 146
+key = 'Fs(DirListing { dir: "docs/tools/doxygen-md" })'
+descriptor = "listing of 'docs/tools/doxygen-md'"
+cost_tokens = 15
+cum_tokens = 9023
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/tools/doxygen-md"
+entries = ["README.md", "go.mod", "go.sum", "main.go"]
+
+[[batches]]
+position = 147
 key = 'Markdown(Section { file: "docs/API.md", section_index: 86, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #86"
 cost_tokens = 86
-cum_tokens = 9094
+cum_tokens = 9109
 
 [batches.content]
 kind = "lines"
@@ -4132,11 +4146,11 @@ end = 1394
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Markdown(Section { file: "docs/API.md", section_index: 87, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #87"
 cost_tokens = 84
-cum_tokens = 9178
+cum_tokens = 9193
 
 [batches.content]
 kind = "lines"
@@ -4150,11 +4164,11 @@ end = 1400
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Markdown(Section { file: "docs/API.md", section_index: 90, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #90"
 cost_tokens = 87
-cum_tokens = 9265
+cum_tokens = 9280
 
 [batches.content]
 kind = "lines"
@@ -4168,11 +4182,11 @@ end = 1418
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Markdown(Section { file: "docs/API.md", section_index: 122, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #122"
 cost_tokens = 87
-cum_tokens = 9352
+cum_tokens = 9367
 
 [batches.content]
 kind = "lines"
@@ -4186,11 +4200,11 @@ end = 1858
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Markdown(Section { file: "docs/API.md", section_index: 124, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #124"
 cost_tokens = 87
-cum_tokens = 9439
+cum_tokens = 9454
 
 [batches.content]
 kind = "lines"
@@ -4204,11 +4218,11 @@ end = 1870
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Markdown(Section { file: "docs/API.md", section_index: 123, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #123"
 cost_tokens = 87
-cum_tokens = 9526
+cum_tokens = 9541
 
 [batches.content]
 kind = "lines"
@@ -4222,11 +4236,11 @@ end = 1864
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Markdown(Section { file: "docs/API.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #42"
 cost_tokens = 88
-cum_tokens = 9614
+cum_tokens = 9629
 
 [batches.content]
 kind = "lines"
@@ -4240,11 +4254,11 @@ end = 475
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Markdown(Section { file: "docs/API.md", section_index: 89, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #89"
 cost_tokens = 88
-cum_tokens = 9702
+cum_tokens = 9717
 
 [batches.content]
 kind = "lines"
@@ -4258,11 +4272,11 @@ end = 1412
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Markdown(Section { file: "docs/API.md", section_index: 88, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #88"
 cost_tokens = 88
-cum_tokens = 9790
+cum_tokens = 9805
 
 [batches.content]
 kind = "lines"
@@ -4276,11 +4290,11 @@ end = 1406
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Markdown(Section { file: "docs/API.md", section_index: 99, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #99"
 cost_tokens = 88
-cum_tokens = 9878
+cum_tokens = 9893
 
 [batches.content]
 kind = "lines"
@@ -4294,11 +4308,11 @@ end = 1472
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Markdown(Section { file: "docs/API.md", section_index: 100, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/API.md section #100"
 cost_tokens = 87
-cum_tokens = 9965
+cum_tokens = 9980
 
 [batches.content]
 kind = "lines"

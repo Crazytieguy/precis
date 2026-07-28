@@ -2103,10 +2103,24 @@ kind = "full"
 
 [[batches]]
 position = 76
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 8
+cum_tokens = 4025
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug-report.md", "config.yml"]
+
+[[batches]]
+position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 43
-cum_tokens = 4060
+cum_tokens = 4068
 
 [batches.content]
 kind = "lines"
@@ -2120,11 +2134,11 @@ end = 168
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 44
-cum_tokens = 4104
+cum_tokens = 4112
 
 [batches.content]
 kind = "lines"
@@ -2138,11 +2152,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #24"
 cost_tokens = 45
-cum_tokens = 4149
+cum_tokens = 4157
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2170,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 17 })'
 descriptor = "go decl at truststore_nss.go:17"
 cost_tokens = 208
-cum_tokens = 4357
+cum_tokens = 4365
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2188,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 47
-cum_tokens = 4404
+cum_tokens = 4412
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2206,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 47
-cum_tokens = 4451
+cum_tokens = 4459
 
 [batches.content]
 kind = "lines"
@@ -2210,11 +2224,11 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 68
-cum_tokens = 4519
+cum_tokens = 4527
 
 [batches.content]
 kind = "lines"
@@ -2228,11 +2242,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #20"
 cost_tokens = 99
-cum_tokens = 4618
+cum_tokens = 4626
 
 [batches.content]
 kind = "lines"
@@ -2246,11 +2260,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 120 })'
 descriptor = "go decl body at truststore_nss.go:120"
 cost_tokens = 116
-cum_tokens = 4734
+cum_tokens = 4742
 
 [batches.content]
 kind = "lines"
@@ -2264,11 +2278,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Go(DeclBody { file: "main.go", start_line: 336 })'
 descriptor = "go decl body at main.go:336"
 cost_tokens = 55
-cum_tokens = 4789
+cum_tokens = 4797
 
 [batches.content]
 kind = "lines"
@@ -2282,11 +2296,11 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 76
-cum_tokens = 4865
+cum_tokens = 4873
 
 [batches.content]
 kind = "lines"
@@ -2298,20 +2312,6 @@ end = 76
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 8
-cum_tokens = 4873
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug-report.md", "config.yml"]
 
 [[batches]]
 position = 88

@@ -12,26 +12,26 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 184 | 36 | listing of 'docs' |  |  | 0.356 |
 | walker |  | 261 | 77 | package identity in package.json |  |  | 0.481 |
 | ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.421 |
-| walker |  | 326 | 65 | README headline in Readme.md |  |  | 0.619 |
-| ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.554 |
-| walker |  | 350 | 24 | listing of 'docs/zh-CN' |  |  | 0.554 |
-| ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.453 |
-| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.373 |
-| walker |  | 586 | 236 | listing of 'examples' |  |  | 0.378 |
-| walker |  | 616 | 30 | package runtime metadata in package.json |  |  | 0.413 |
-| walker |  | 658 | 42 | export names surface in lib/option.js |  |  | 0.413 |
-| walker |  | 658 | 0 | export at lib/option.js:3 |  |  | 0.413 |
-| walker |  | 668 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.413 |
-| ns | 684 |  | 107 | Repository root listing (complete) | 1.9 |  | 0.578 |
-| walker |  | 694 | 26 | export at lib/option.js:268 |  |  | 0.578 |
-| walker |  | 705 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.578 |
-| walker |  | 716 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.579 |
-| walker |  | 727 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.579 |
-| walker |  | 747 | 20 | listing of '.github' |  |  | 0.579 |
-| walker |  | 756 | 9 | listing of '.github/workflows' |  |  | 0.579 |
-| ns | 933 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.517 |
-| walker |  | 1091 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.517 |
-| walker |  | 1126 | 35 | Readme.md section #1 |  |  | 0.517 |
+| walker |  | 285 | 24 | listing of 'docs/zh-CN' |  |  | 0.421 |
+| ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.377 |
+| walker |  | 350 | 65 | README headline in Readme.md |  |  | 0.554 |
+| walker |  | 380 | 30 | package runtime metadata in package.json |  |  | 0.605 |
+| walker |  | 400 | 20 | listing of '.github' |  |  | 0.606 |
+| walker |  | 409 | 9 | listing of '.github/workflows' |  |  | 0.606 |
+| ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.495 |
+| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.408 |
+| ns | 684 |  | 107 | Repository root listing (complete) | 1.9 |  | 0.571 |
+| walker |  | 744 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.571 |
+| walker |  | 786 | 42 | export names surface in lib/option.js |  |  | 0.571 |
+| walker |  | 786 | 0 | export at lib/option.js:3 |  |  | 0.571 |
+| walker |  | 796 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.572 |
+| walker |  | 822 | 26 | export at lib/option.js:268 |  |  | 0.572 |
+| walker |  | 833 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.572 |
+| walker |  | 844 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.572 |
+| walker |  | 855 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.572 |
+| walker |  | 890 | 35 | Readme.md section #1 |  |  | 0.572 |
+| ns | 933 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.511 |
+| walker |  | 1126 | 236 | listing of 'examples' |  |  | 0.517 |
 | walker |  | 1168 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.517 |
 | ns | 1218 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.460 |
 | ns | 1317 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.447 |
@@ -103,32 +103,32 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 3867 | 26 | module item at examples/custom-command-class.js:6 |  |  | 0.622 |
 | ns | 3879 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.628 |
 | ns | 3895 |  | 16 | typings/ listing | 3.1 |  | 0.630 |
-| walker |  | 3949 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.650 |
-| walker |  | 3968 | 19 | export body at lib/option.js:3 body 121 |  |  | 0.650 |
-| ns | 4017 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.641 |
-| walker |  | 4058 | 90 | Readme.md section #24 |  |  | 0.641 |
-| walker |  | 4221 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.641 |
-| ns | 4262 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.627 |
-| ns | 4326 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.621 |
-| ns | 4417 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.614 |
-| ns | 4453 |  | 36 | docs/ listing | 3.6 |  | 0.619 |
-| ns | 4568 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.620 |
-| ns | 4733 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.609 |
-| ns | 4996 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.592 |
-| walker |  | 5023 | 802 | Readme.md section #0 |  |  | 0.592 |
-| walker |  | 5035 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.592 |
-| walker |  | 5054 | 19 | export body at lib/option.js:3 body 133 |  |  | 0.592 |
-| walker |  | 5107 | 53 | export doc at lib/argument.js:143 |  |  | 0.592 |
-| ns | 5245 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.580 |
-| ns | 5481 |  | 236 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.609 |
-| ns | 5612 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.602 |
-| ns | 5751 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.595 |
-| ns | 5872 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.589 |
-| walker |  | 5921 | 814 | listing of 'tests' |  |  | 0.599 |
-| walker |  | 5949 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.599 |
-| walker |  | 6043 | 94 | listing of 'tests/fixtures' |  |  | 0.600 |
-| walker |  | 6045 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.601 |
-| walker |  | 6047 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.601 |
+| ns | 4017 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.622 |
+| ns | 4262 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.607 |
+| ns | 4326 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.602 |
+| ns | 4417 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.595 |
+| ns | 4453 |  | 36 | docs/ listing | 3.6 |  | 0.600 |
+| ns | 4568 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.602 |
+| walker |  | 4681 | 814 | listing of 'tests' |  |  | 0.612 |
+| walker |  | 4709 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.612 |
+| ns | 4733 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.601 |
+| walker |  | 4803 | 94 | listing of 'tests/fixtures' |  |  | 0.602 |
+| walker |  | 4805 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.602 |
+| walker |  | 4807 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.603 |
+| walker |  | 4889 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.620 |
+| walker |  | 4908 | 19 | export body at lib/option.js:3 body 121 |  |  | 0.620 |
+| ns | 4996 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.604 |
+| walker |  | 4998 | 90 | Readme.md section #24 |  |  | 0.604 |
+| walker |  | 5161 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.604 |
+| ns | 5245 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.592 |
+| ns | 5481 |  | 236 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.621 |
+| ns | 5612 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.614 |
+| ns | 5751 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.607 |
+| ns | 5872 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.601 |
+| walker |  | 5963 | 802 | Readme.md section #0 |  |  | 0.601 |
+| walker |  | 5975 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.601 |
+| walker |  | 5994 | 19 | export body at lib/option.js:3 body 133 |  |  | 0.601 |
+| walker |  | 6047 | 53 | export doc at lib/argument.js:143 |  |  | 0.601 |
 | walker |  | 6061 | 14 | module item at examples/configure-output.js:4 |  |  | 0.601 |
 | walker |  | 6072 | 11 | module item at examples/configure-output.js:2 |  |  | 0.601 |
 | walker |  | 6086 | 14 | module item at examples/nestedCommands.js:21 |  |  | 0.601 |

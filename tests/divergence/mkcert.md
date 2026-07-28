@@ -99,20 +99,20 @@ Score(3000)=0.641 I=0.845 C=0.486 ns_rows≤3K=19/48 (reached=10 partial=0 missi
 | ns | 3945 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.623 |
 | walker |  | 3977 | 55 | README.md section #4 |  |  | 0.623 |
 | walker |  | 4017 | 40 | README.md section #22 |  |  | 0.623 |
-| walker |  | 4060 | 43 | README.md section #17 |  |  | 0.623 |
-| walker |  | 4104 | 44 | README.md section #15 |  |  | 0.627 |
-| walker |  | 4149 | 45 | README.md section #24 |  |  | 0.627 |
-| walker |  | 4357 | 208 | go decl at truststore_nss.go:17 |  |  | 0.684 |
-| ns | 4376 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.647 |
-| walker |  | 4404 | 47 | README.md section #19 |  |  | 0.647 |
-| walker |  | 4451 | 47 | README.md section #21 |  |  | 0.647 |
-| walker |  | 4519 | 68 | README.md section #7 |  |  | 0.647 |
-| walker |  | 4618 | 99 | README.md section #20 |  |  | 0.647 |
-| walker |  | 4734 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.647 |
-| ns | 4778 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.615 |
-| walker |  | 4789 | 55 | go decl body at main.go:336 |  |  | 0.616 |
-| walker |  | 4865 | 76 | README.md section #5 |  |  | 0.616 |
-| walker |  | 4873 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.623 |
+| walker |  | 4025 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.632 |
+| walker |  | 4068 | 43 | README.md section #17 |  |  | 0.632 |
+| walker |  | 4112 | 44 | README.md section #15 |  |  | 0.636 |
+| walker |  | 4157 | 45 | README.md section #24 |  |  | 0.636 |
+| walker |  | 4365 | 208 | go decl at truststore_nss.go:17 |  |  | 0.692 |
+| ns | 4376 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.655 |
+| walker |  | 4412 | 47 | README.md section #19 |  |  | 0.655 |
+| walker |  | 4459 | 47 | README.md section #21 |  |  | 0.655 |
+| walker |  | 4527 | 68 | README.md section #7 |  |  | 0.655 |
+| walker |  | 4626 | 99 | README.md section #20 |  |  | 0.655 |
+| walker |  | 4742 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.655 |
+| ns | 4778 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.623 |
+| walker |  | 4797 | 55 | go decl body at main.go:336 |  |  | 0.623 |
+| walker |  | 4873 | 76 | README.md section #5 |  |  | 0.623 |
 | walker |  | 5013 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.635 |
 | walker |  | 5013 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.635 |
 | walker |  | 5013 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.635 |

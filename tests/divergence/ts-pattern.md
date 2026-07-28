@@ -6,19 +6,19 @@ Score(3000)=0.621 I=0.815 C=0.473 ns_rows≤3K=20/53 (reached=7 partial=2 missin
 | ns | 60 |  | 60 | README title and one-line description of the library | 1.1 |  | 0.000 |
 | walker |  | 80 | 25 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 110 | 30 | listing of 'src' |  |  | 0.000 |
-| walker |  | 126 | 16 | export names surface in src/index.ts |  |  | 0.000 |
-| ns | 132 |  | 72 | src/index.ts in full — the complete public export surface | 1.2 |  | 0.088 |
-| walker |  | 133 | 7 | listing of 'src/internals' |  |  | 0.090 |
-| walker |  | 175 | 42 | imports in src/index.ts |  |  | 0.523 |
-| walker |  | 180 | 5 | listing of 'scripts' |  |  | 0.523 |
+| walker |  | 117 | 7 | listing of 'src/internals' |  |  | 0.000 |
+| ns | 132 |  | 72 | src/index.ts in full — the complete public export surface | 1.2 |  | 0.000 |
+| walker |  | 133 | 16 | export names surface in src/index.ts |  |  | 0.090 |
+| walker |  | 138 | 5 | listing of 'scripts' |  |  | 0.090 |
+| walker |  | 180 | 42 | imports in src/index.ts |  |  | 0.523 |
 | ns | 187 |  | 55 | Complete repository root listing | 1.3 |  | 0.614 |
-| walker |  | 253 | 73 | package identity in package.json |  |  | 0.624 |
-| ns | 281 |  | 94 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.476 |
-| walker |  | 308 | 55 | listing of 'src/types' |  |  | 0.683 |
+| walker |  | 235 | 55 | listing of 'src/types' |  |  | 0.685 |
+| ns | 281 |  | 94 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.674 |
+| walker |  | 308 | 73 | package identity in package.json |  |  | 0.683 |
 | walker |  | 317 | 9 | listing of '.github' |  |  | 0.684 |
-| walker |  | 335 | 18 | export names surface in src/errors.ts |  |  | 0.684 |
-| walker |  | 347 | 12 | export at src/errors.ts:5 |  |  | 0.684 |
-| walker |  | 358 | 11 | listing of 'examples' |  |  | 0.686 |
+| walker |  | 328 | 11 | listing of 'examples' |  |  | 0.685 |
+| walker |  | 346 | 18 | export names surface in src/errors.ts |  |  | 0.685 |
+| walker |  | 358 | 12 | export at src/errors.ts:5 |  |  | 0.686 |
 | ns | 365 |  | 84 | package.json identity: name, version, description, module type, entry source | 1.5 |  | 0.658 |
 | walker |  | 378 | 20 | export names surface in src/match.ts |  |  | 0.658 |
 | walker |  | 398 | 20 | export at src/match.ts:32 |  |  | 0.659 |
@@ -28,21 +28,21 @@ Score(3000)=0.621 I=0.815 C=0.473 ns_rows≤3K=20/53 (reached=7 partial=2 missin
 | walker |  | 589 | 25 | listing of 'benchmarks' |  |  | 0.789 |
 | ns | 647 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.755 |
 | walker |  | 698 | 109 | README.md section #0 |  |  | 0.755 |
-| ns | 766 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.692 |
-| walker |  | 959 | 261 | README prelude in README.md |  |  | 0.824 |
-| walker |  | 1017 | 58 | export names surface in src/is-matching.ts |  |  | 0.824 |
-| walker |  | 1044 | 27 | export at src/is-matching.ts:32 |  |  | 0.824 |
-| walker |  | 1077 | 33 | export at src/is-matching.ts:53 |  |  | 0.825 |
-| ns | 1081 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.779 |
-| walker |  | 1116 | 39 | export at src/is-matching.ts:48 |  |  | 0.780 |
-| walker |  | 1132 | 16 | listing of 'examples/gif-fetcher' |  |  | 0.784 |
-| walker |  | 1207 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.785 |
-| ns | 1225 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.721 |
-| walker |  | 1229 | 22 | listing of 'examples/gif-fetcher/src' |  |  | 0.760 |
-| walker |  | 1239 | 10 | imports in src/types/index.ts |  |  | 0.760 |
-| walker |  | 1261 | 22 | README.md section #2 |  |  | 0.761 |
-| ns | 1531 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.612 |
-| walker |  | 1559 | 298 | listing of 'tests' |  |  | 0.805 |
+| walker |  | 714 | 16 | listing of 'examples/gif-fetcher' |  |  | 0.759 |
+| ns | 766 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.695 |
+| walker |  | 975 | 261 | README prelude in README.md |  |  | 0.828 |
+| walker |  | 1033 | 58 | export names surface in src/is-matching.ts |  |  | 0.828 |
+| walker |  | 1060 | 27 | export at src/is-matching.ts:32 |  |  | 0.828 |
+| ns | 1081 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.783 |
+| walker |  | 1093 | 33 | export at src/is-matching.ts:53 |  |  | 0.783 |
+| walker |  | 1132 | 39 | export at src/is-matching.ts:48 |  |  | 0.784 |
+| walker |  | 1154 | 22 | listing of 'examples/gif-fetcher/src' |  |  | 0.790 |
+| ns | 1225 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.759 |
+| walker |  | 1229 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.760 |
+| walker |  | 1527 | 298 | listing of 'tests' |  |  | 0.788 |
+| ns | 1531 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.804 |
+| walker |  | 1537 | 10 | imports in src/types/index.ts |  |  | 0.804 |
+| walker |  | 1559 | 22 | README.md section #2 |  |  | 0.805 |
 | walker |  | 1599 | 40 | export doc at src/errors.ts:5 |  |  | 0.806 |
 | walker |  | 1626 | 27 | README.md section #7 |  |  | 0.807 |
 | walker |  | 1654 | 28 | README.md section #8 |  |  | 0.809 |
@@ -74,37 +74,37 @@ Score(3000)=0.621 I=0.815 C=0.473 ns_rows≤3K=20/53 (reached=7 partial=2 missin
 | walker |  | 3145 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.611 |
 | walker |  | 3172 | 27 | module item body at src/match.ts:47 body 111 |  |  | 0.612 |
 | walker |  | 3201 | 29 | module item body at src/match.ts:47 body 116 |  |  | 0.612 |
-| walker |  | 3232 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.612 |
-| ns | 3277 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.596 |
-| walker |  | 3294 | 62 | imports in src/is-matching.ts |  |  | 0.596 |
-| walker |  | 3448 | 154 | json config tsconfig.json |  |  | 0.597 |
-| walker |  | 3451 | 3 | listing of 'examples/gif-fetcher/public' |  |  | 0.602 |
-| walker |  | 3526 | 75 | imports in src/match.ts |  |  | 0.602 |
-| ns | 3544 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.583 |
-| walker |  | 3650 | 124 | README.md section #11 |  |  | 0.584 |
-| walker |  | 3705 | 55 | README.md section #5 |  |  | 0.588 |
-| ns | 3829 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.573 |
-| walker |  | 3890 | 185 | export names surface in src/internals/symbols.ts |  |  | 0.575 |
-| walker |  | 3890 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.575 |
-| walker |  | 3897 | 7 | listing of 'tests/types-catalog' |  |  | 0.584 |
-| walker |  | 4045 | 148 | README.md section #10 |  |  | 0.585 |
-| ns | 4103 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.571 |
-| walker |  | 4105 | 60 | README.md section #6 |  |  | 0.576 |
-| walker |  | 4168 | 63 | README.md section #1 |  |  | 0.582 |
-| ns | 4257 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.593 |
-| walker |  | 4297 | 129 | package dev/peer dependencies in package.json |  |  | 0.593 |
-| walker |  | 4306 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.601 |
+| walker |  | 3204 | 3 | listing of 'examples/gif-fetcher/public' |  |  | 0.616 |
+| walker |  | 3211 | 7 | listing of 'tests/types-catalog' |  |  | 0.627 |
+| walker |  | 3242 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.627 |
+| ns | 3277 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.611 |
+| walker |  | 3304 | 62 | imports in src/is-matching.ts |  |  | 0.611 |
+| walker |  | 3458 | 154 | json config tsconfig.json |  |  | 0.612 |
+| walker |  | 3467 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.621 |
+| walker |  | 3542 | 75 | imports in src/match.ts |  |  | 0.621 |
+| ns | 3544 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.601 |
+| walker |  | 3666 | 124 | README.md section #11 |  |  | 0.602 |
+| walker |  | 3721 | 55 | README.md section #5 |  |  | 0.606 |
+| ns | 3829 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.591 |
+| walker |  | 3906 | 185 | export names surface in src/internals/symbols.ts |  |  | 0.593 |
+| walker |  | 3906 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.593 |
+| walker |  | 4054 | 148 | README.md section #10 |  |  | 0.594 |
+| ns | 4103 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.580 |
+| walker |  | 4114 | 60 | README.md section #6 |  |  | 0.585 |
+| walker |  | 4177 | 63 | README.md section #1 |  |  | 0.591 |
+| ns | 4257 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.601 |
+| walker |  | 4306 | 129 | package dev/peer dependencies in package.json |  |  | 0.601 |
 | walker |  | 4352 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.601 |
 | ns | 4444 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.610 |
 | walker |  | 4445 | 93 | json config jsr.json |  |  | 0.611 |
-| walker |  | 4596 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.615 |
-| walker |  | 4641 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.615 |
-| ns | 4666 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.599 |
-| walker |  | 4871 | 230 | README.md section #9 |  |  | 0.601 |
-| ns | 4872 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.586 |
-| ns | 4989 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.577 |
-| walker |  | 5047 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.582 |
-| walker |  | 5061 | 14 | listing of 'examples/one-file-demo' |  |  | 0.594 |
+| walker |  | 4459 | 14 | listing of 'examples/one-file-demo' |  |  | 0.624 |
+| walker |  | 4610 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.627 |
+| walker |  | 4655 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.628 |
+| ns | 4666 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.612 |
+| ns | 4872 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.596 |
+| walker |  | 4885 | 230 | README.md section #9 |  |  | 0.598 |
+| ns | 4989 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.589 |
+| walker |  | 5061 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.594 |
 | ns | 5196 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.581 |
 | ns | 5424 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.595 |
 | ns | 5643 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.605 |
