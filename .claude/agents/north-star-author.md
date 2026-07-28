@@ -248,14 +248,6 @@ batches no longer held. Rules:
   bodies wastes budget. Their filenames can still appear in fs
   listings (the agent knows the file exists and can read it on
   demand), but no batch should pull line ranges from their bodies.
-  Go further: **rank the complement**. Read the injected docs and
-  spend the budget on what they *don't* cover — if they already
-  explain the architecture and build story, the NS should buy file
-  breadth, exact shapes with line coordinates, and semantic tables
-  instead of re-buying that prose from README/manpages.
-
-Also weigh **operational coverage** as a first-class candidate class,
-not an afterthought: build/test entry points, CI workflow existence,
-a concrete config-file sample (often cheaper evidence of the config
-format than the parser that reads it), and CLI flag surfaces. "How do
-I build/test/configure/run this" is a large share of real sessions.
+  Read the injected docs and weigh every candidate batch by what it
+  adds *given* that context: content those docs already cover is
+  worth less; content they don't cover is worth correspondingly more.
