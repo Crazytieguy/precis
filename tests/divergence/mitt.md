@@ -94,18 +94,17 @@ Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missi
 | walker |  | 6520 | 62 | imports in test/index_test.ts |  |  | 0.705 |
 | ns | 6614 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.686 |
 | ns | 6778 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.676 |
-| walker |  | 6892 | 372 | test names surface in test/index_test.ts |  |  | 0.699 |
-| ns | 6920 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.704 |
-| ns | 7026 |  | 106 | README Examples & Demos section | 7.2 |  | 0.707 |
-| ns | 7258 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.711 |
-| ns | 7601 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.714 |
-| ns | 7913 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.719 |
-| ns | 7944 |  | 31 | README License line | 7.6 |  | 0.720 |
-| ns | 8312 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.727 |
-| ns | 8537 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.734 |
-| ns | 8809 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.740 |
-| ns | 9013 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.740 |
-| ns | 9133 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.742 |
-| ns | 9207 |  | 74 | .gitignore in full | 7.12 |  | 0.744 |
-| ns | 9390 |  | 183 | README badge header | 7.13 |  | 0.741 |
-| ns | 9602 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.739 |
+| ns | 6920 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.682 |
+| ns | 7026 |  | 106 | README Examples & Demos section | 7.2 |  | 0.685 |
+| ns | 7258 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.689 |
+| ns | 7601 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.694 |
+| ns | 7913 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.699 |
+| ns | 7944 |  | 31 | README License line | 7.6 |  | 0.700 |
+| ns | 8312 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.708 |
+| ns | 8537 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.715 |
+| ns | 8809 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.723 |
+| ns | 9013 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.723 |
+| ns | 9133 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.726 |
+| ns | 9207 |  | 74 | .gitignore in full | 7.12 |  | 0.728 |
+| ns | 9390 |  | 183 | README badge header | 7.13 |  | 0.724 |
+| ns | 9602 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.723 |

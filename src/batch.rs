@@ -246,14 +246,6 @@ pub enum TsKey {
     /// Surface listing of every top-level export's first line — one
     /// unified catalog per file; catastrophic-omission hedge.
     ExportNames { file: PathBuf },
-    /// Source-ordered string-label roster from `test` / `it` /
-    /// `describe` / `bench` calls in a recognized JS/TS test or
-    /// benchmark file. Oversize rosters are predecessor-chained chunks.
-    TestNames {
-        file: PathBuf,
-        chunk_index: usize,
-        benchmark: bool,
-    },
     /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },
     /// JSDoc above a single export. Predecessor: matching `Export`.
@@ -867,8 +859,7 @@ impl InnerKey for TsKey {
             TsKey::ExportMemberDoc { .. }
             | TsKey::ExportMemberNames { .. }
             | TsKey::ExportMemberNamesChunk { .. }
-            | TsKey::ModuleItemNames { .. }
-            | TsKey::TestNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
+            | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -881,20 +872,6 @@ impl InnerKey for TsKey {
                 describe_chunked_surface("imports", file, *chunk_index, root)
             }
             TsKey::ExportNames { file } => describe_in("export names surface", file, root),
-            TsKey::TestNames {
-                file,
-                chunk_index,
-                benchmark,
-            } => describe_chunked_surface(
-                if *benchmark {
-                    "benchmark names surface"
-                } else {
-                    "test names surface"
-                },
-                file,
-                *chunk_index,
-                root,
-            ),
             TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
             TsKey::ExportDoc { file, start_line } => {
                 describe_at("export doc", file, *start_line, root)
