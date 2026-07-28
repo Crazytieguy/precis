@@ -1,4 +1,4 @@
-Score(3000)=0.460 I=0.757 C=0.279 ns_rows≤3K=18/54 (reached=5 partial=1 missing=12)
+Score(3000)=0.399 I=0.730 C=0.218 ns_rows≤3K=18/54 (reached=5 partial=0 missing=13)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,14 +55,14 @@ Score(3000)=0.460 I=0.757 C=0.279 ns_rows≤3K=18/54 (reached=5 partial=1 missin
 | walker |  | 2491 | 39 | README.md section #22 |  |  | 0.430 |
 | walker |  | 2500 | 9 | README headline in benchmark/README.md |  |  | 0.430 |
 | walker |  | 2507 | 7 | listing of 'tests/data' |  |  | 0.431 |
+| walker |  | 2556 | 49 | README.md section #17 |  |  | 0.431 |
+| walker |  | 2612 | 56 | README.md section #5 |  |  | 0.431 |
+| walker |  | 2668 | 56 | README.md section #8 |  |  | 0.431 |
+| walker |  | 2726 | 58 | README.md section #4 |  |  | 0.431 |
 | ns | 2741 |  | 377 | parse_value(): string, boolean, array and inline-table dispatch | 2.7 | 2.4 | 0.392 |
-| walker |  | 2971 | 464 | python decl names surface in src/tomli/_parser.py |  |  | 0.460 |
-| walker |  | 3020 | 49 | README.md section #17 |  |  | 0.460 |
-| walker |  | 3054 | 34 | python decl names surface in src/tomli/_types.py |  |  | 0.466 |
-| walker |  | 3110 | 56 | README.md section #5 |  |  | 0.466 |
-| ns | 3129 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.436 |
-| walker |  | 3166 | 56 | README.md section #8 |  |  | 0.436 |
-| walker |  | 3224 | 58 | README.md section #4 |  |  | 0.436 |
+| walker |  | 2760 | 34 | python decl names surface in src/tomli/_types.py |  |  | 0.399 |
+| ns | 3129 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.373 |
+| walker |  | 3224 | 464 | python decl names surface in src/tomli/_parser.py |  |  | 0.436 |
 | walker |  | 3254 | 30 | tomllib.md section #3 |  |  | 0.436 |
 | ns | 3460 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.418 |
 | walker |  | 3555 | 301 | README.md section #1 |  |  | 0.474 |

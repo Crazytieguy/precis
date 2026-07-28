@@ -111,6 +111,16 @@ demo.py
       68→
       69→
       70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
+      71→    """Prepare a connection string for the given inbound, user UUID and telegram ID.
+      72→
+      73→    Arguments:
+      74→        inbound (Inbound): The inbound object.
+      75→        user_uuid (str): The UUID of the user.
+      76→        user_email (int): The email of the user.
+      77→
+      78→    Returns:
+      79→        str: The connection string.
+      80→    """
     …
       98→import os
       99→
@@ -182,8 +192,6 @@ py3xui/
         async_api.py
             …
               18→class AsyncApi:
-              19→    """This class provides a high-level interface to interact with the XUI API.
-              20→    Access to the client, inbound, and database APIs is provided through this class.
             …
         async_api_base.py …
         async_api_client.py …
@@ -204,13 +212,7 @@ py3xui/
         __init__.py
                1→# pylint: disable=missing-module-docstring
                2→from py3xui.client.client import Client
-        client.py
-            …
-               7→class ClientFields:
-               8→    """Stores the fields returned by the XUI API for parsing."""
-            …
-              36→class Client(BaseModel):
-            …
+        client.py …
     inbound/
         README.md
             …

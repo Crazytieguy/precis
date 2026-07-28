@@ -70,31 +70,31 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 2019 | 14 | imports in lib/option.js |  |  | 0.447 |
 | walker |  | 2030 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.447 |
 | walker |  | 2047 | 17 | imports in lib/help.js |  |  | 0.447 |
+| walker |  | 2063 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.447 |
 | ns | 2133 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.433 |
-| ns | 2289 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.419 |
-| walker |  | 2300 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.497 |
-| walker |  | 2316 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.497 |
-| ns | 2363 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.488 |
-| walker |  | 2397 | 81 | imports in index.js |  |  | 0.516 |
-| walker |  | 2408 | 11 | export names surface in esm.mjs |  |  | 0.516 |
-| walker |  | 2419 | 11 | imports in esm.mjs |  |  | 0.517 |
-| ns | 2448 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.507 |
-| walker |  | 2516 | 97 | export at esm.mjs:4 |  |  | 0.555 |
-| ns | 2600 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.535 |
-| walker |  | 2665 | 149 | package identity metadata in package.json |  |  | 0.539 |
+| walker |  | 2144 | 81 | imports in index.js |  |  | 0.463 |
+| walker |  | 2155 | 11 | export names surface in esm.mjs |  |  | 0.463 |
+| walker |  | 2166 | 11 | imports in esm.mjs |  |  | 0.465 |
+| walker |  | 2263 | 97 | export at esm.mjs:4 |  |  | 0.519 |
+| ns | 2289 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.503 |
+| ns | 2363 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.494 |
+| walker |  | 2412 | 149 | package identity metadata in package.json |  |  | 0.498 |
+| ns | 2448 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.488 |
+| ns | 2600 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.471 |
+| walker |  | 2665 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.539 |
 | ns | 2708 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.527 |
 | ns | 2760 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.529 |
 | ns | 2856 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.520 |
 | walker |  | 2947 | 282 | package entrypoints in package.json |  |  | 0.553 |
 | ns | 2999 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.556 |
 | ns | 3127 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.572 |
-| ns | 3358 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.567 |
-| walker |  | 3383 | 436 | export member names at lib/help.js:12 |  |  | 0.574 |
-| ns | 3401 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.570 |
-| ns | 3481 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.579 |
-| ns | 3613 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.593 |
-| walker |  | 3640 | 257 | package scripts in package.json |  |  | 0.601 |
-| walker |  | 3652 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.602 |
+| walker |  | 3204 | 257 | package scripts in package.json |  |  | 0.580 |
+| walker |  | 3216 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.582 |
+| ns | 3358 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.576 |
+| ns | 3401 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.572 |
+| ns | 3481 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.564 |
+| ns | 3613 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.551 |
+| walker |  | 3652 | 436 | export member names at lib/help.js:12 |  |  | 0.602 |
 | walker |  | 3686 | 34 | export doc at lib/command.js:2752 |  |  | 0.602 |
 | walker |  | 3714 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.605 |
 | walker |  | 3714 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.605 |
