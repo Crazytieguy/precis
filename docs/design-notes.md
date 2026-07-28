@@ -364,6 +364,15 @@ v2 key. All numbers are Score(3000) means over the 71 training
 fixtures; the code comments on these constants point here rather than
 restating the shapes.
 
+**Combined-tree grid** (un-ships + concavity 0.38 + listing 1.13
+merged together, measured fresh — isolated deltas summed to +0.0094;
+the combined state delivers +0.0076 at 3000, interaction cost
+−0.0018): B=1000 0.6150→0.6128 · 1442 0.6246→0.6233 · 2080
+0.6259→0.6277 · **3000 0.6074→0.6150** · 4327 0.5801→0.5845 · 6240
+0.5614→0.5649 · 9000 0.5606→0.5604. The early-budget give-back equals
+lane S1's isolated measurement (−0.0023 at 1000), i.e. it comes from
+the listing scale alone, not from lane interaction.
+
 **Listing / roster lane** (shipped `LISTING_TIER_SCALE = 1.13` plus
 deleting `catalog_roster_mass_factor`; combined +0.0046, 0.6074 →
 0.6120):

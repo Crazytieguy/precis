@@ -219,9 +219,9 @@ Score(3000)=0.565 I=0.812 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | ns | 6804 |  | 79 | CancelToken: complete member roster | 4.7 |  | 0.403 |
 | ns | 6915 |  | 111 | CanceledError and isCancel | 4.8 |  | 0.401 |
 | walker |  | 6938 | 144 | export member names at index.d.ts:461 |  |  | 0.417 |
-| ns | 6994 |  | 79 | Adapter resolution: knownAdapters and getAdapter | 5.1 |  | 0.414 |
-| walker |  | 7130 | 192 | export member names at index.d.ts:713 |  |  | 0.414 |
-| walker |  | 7143 | 13 | export at index.d.ts:476 |  |  | 0.417 |
+| walker |  | 6951 | 13 | export at index.d.ts:476 |  |  | 0.420 |
+| ns | 6994 |  | 79 | Adapter resolution: knownAdapters and getAdapter | 5.1 |  | 0.417 |
+| walker |  | 7143 | 192 | export member names at index.d.ts:713 |  |  | 0.417 |
 | walker |  | 7155 | 12 | export at index.d.ts:535 |  |  | 0.417 |
 | ns | 7159 |  | 165 | The three adapter entry points and their support gates | 5.2 |  | 0.412 |
 | walker |  | 7169 | 14 | export at index.d.ts:457 |  |  | 0.412 |

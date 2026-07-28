@@ -86,124 +86,124 @@ Score(3000)=0.596 I=0.764 C=0.465 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 3023 | 26 | python decl at src/pluggy/_manager.py:37 |  |  | 0.596 |
 | walker |  | 3039 | 16 | python decl body at src/pluggy/_manager.py:525 body 526 |  |  | 0.600 |
 | ns | 3306 |  | 411 | Complete section map of the 1082-line manual `docs/index.rst` | 2.8 |  | 0.549 |
-| walker |  | 3384 | 345 | python decl names surface in src/pluggy/_hooks.py |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:40 |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:56 |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:281 |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:293 |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:382 |  |  | 0.558 |
-| walker |  | 3384 | 0 | python decl at src/pluggy/_hooks.py:593 |  |  | 0.558 |
-| walker |  | 3392 | 8 | python decl at src/pluggy/_hooks.py:358 |  |  | 0.560 |
-| walker |  | 3400 | 8 | python decl at src/pluggy/_hooks.py:638 |  |  | 0.561 |
-| walker |  | 3408 | 8 | python decl at src/pluggy/_hooks.py:696 |  |  | 0.563 |
-| walker |  | 3417 | 9 | python decl at src/pluggy/_hooks.py:77 |  |  | 0.564 |
-| walker |  | 3426 | 9 | python decl at src/pluggy/_hooks.py:164 |  |  | 0.566 |
-| walker |  | 3438 | 12 | python decl doc at src/pluggy/_hooks.py:40 |  |  | 0.566 |
-| walker |  | 3450 | 12 | python decl doc at src/pluggy/_hooks.py:56 |  |  | 0.566 |
-| walker |  | 3467 | 17 | python decl doc at src/pluggy/_hooks.py:382 |  |  | 0.571 |
-| walker |  | 3485 | 18 | python decl doc at src/pluggy/_hooks.py:638 |  |  | 0.575 |
-| walker |  | 3516 | 31 | python decl doc at src/pluggy/_hooks.py:358 |  |  | 0.584 |
-| ns | 3551 |  | 245 | The real call signatures of `@hookspec` and `@hookimpl` — every accepted option with its default | 3.1 |  | 0.563 |
-| walker |  | 3628 | 112 | python class body at src/pluggy/_hooks.py:638 |  |  | 0.563 |
-| walker |  | 3716 | 88 | python class body at src/pluggy/_hooks.py:696 |  |  | 0.565 |
-| ns | 3799 |  | 248 | `HookimplOpts` in full: every hook-implementation option and what it means | 3.2 | 2.3 | 0.546 |
-| walker |  | 3808 | 92 | python class body at src/pluggy/_hooks.py:382 |  |  | 0.546 |
-| walker |  | 3832 | 24 | python decl at src/pluggy/_hooks.py:377 |  |  | 0.546 |
-| ns | 3983 |  | 184 | `HookspecOpts` in full: every hook-specification option | 3.3 | 2.3 | 0.534 |
-| walker |  | 4056 | 224 | python class body at src/pluggy/_hooks.py:56 |  |  | 0.569 |
-| walker |  | 4218 | 162 | python class body at src/pluggy/_hooks.py:40 |  |  | 0.594 |
-| walker |  | 4234 | 16 | python class body at src/pluggy/_hooks.py:77 |  |  | 0.594 |
-| walker |  | 4250 | 16 | python class body at src/pluggy/_hooks.py:164 |  |  | 0.594 |
-| walker |  | 4282 | 32 | python decl doc at src/pluggy/_hooks.py:593 |  |  | 0.603 |
-| walker |  | 4334 | 52 | python class body at src/pluggy/_hooks.py:358 |  |  | 0.603 |
-| ns | 4415 |  | 432 | Hook implementation ordering: the `_hookimpls` layout comment and `_add_hookimpl` in full | 3.4 | 2.4 | 0.573 |
-| ns | 4621 |  | 206 | `HookCaller.__call__` in full: what `pm.hook.myhook(...)` actually does | 3.5 | 2.4 | 0.560 |
-| walker |  | 4852 | 518 | python method sigs in src/pluggy/_hooks.py |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:88 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:175 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:365 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:420 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:438 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:442 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:449 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:453 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:477 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:499 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:577 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:612 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:634 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:692 |  |  | 0.586 |
-| walker |  | 4852 | 0 | python method at src/pluggy/_hooks.py:709 |  |  | 0.586 |
-| walker |  | 4860 | 8 | python method at src/pluggy/_hooks.py:626 |  |  | 0.586 |
-| walker |  | 4868 | 8 | python method at src/pluggy/_hooks.py:630 |  |  | 0.586 |
-| walker |  | 4878 | 10 | python method doc at src/pluggy/_hooks.py:365 |  |  | 0.586 |
-| walker |  | 4909 | 31 | python method at src/pluggy/_hooks.py:543 |  |  | 0.586 |
-| walker |  | 4924 | 15 | python method doc at src/pluggy/_hooks.py:449 |  |  | 0.586 |
-| walker |  | 4939 | 15 | python method at src/pluggy/_hooks.py:618 |  |  | 0.586 |
-| walker |  | 4957 | 18 | python method doc at src/pluggy/_hooks.py:438 |  |  | 0.586 |
-| walker |  | 4998 | 41 | python method at src/pluggy/_hooks.py:424 |  |  | 0.586 |
-| walker |  | 5015 | 17 | python method at src/pluggy/_hooks.py:480 |  |  | 0.586 |
-| walker |  | 5067 | 52 | python method at src/pluggy/_hooks.py:516 |  |  | 0.586 |
-| walker |  | 5081 | 14 | python method doc at src/pluggy/_hooks.py:453 |  |  | 0.587 |
-| ns | 5086 |  | 465 | `_multicall` part 1: the setup / non-wrapper call loop | 3.6 |  | 0.555 |
-| walker |  | 5144 | 63 | python method at src/pluggy/_hooks.py:656 |  |  | 0.555 |
-| walker |  | 5156 | 12 | python method doc at src/pluggy/_hooks.py:656 |  |  | 0.555 |
-| walker |  | 5236 | 80 | python decl doc at src/pluggy/_hooks.py:164 |  |  | 0.555 |
-| walker |  | 5317 | 81 | python decl doc at src/pluggy/_hooks.py:77 |  |  | 0.555 |
-| walker |  | 5351 | 34 | python decl at src/pluggy/_hooks.py:33 |  |  | 0.555 |
-| walker |  | 5421 | 70 | python method at src/pluggy/_hooks.py:393 |  |  | 0.555 |
-| walker |  | 5433 | 12 | python method doc at src/pluggy/_hooks.py:393 |  |  | 0.555 |
-| walker |  | 5454 | 21 | python method doc at src/pluggy/_hooks.py:577 |  |  | 0.555 |
-| walker |  | 5499 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.555 |
-| ns | 5529 |  | 443 | `_multicall` part 2: the teardown loop, exception routing and `firstresult` collapse | 3.7 | 3.6 | 0.525 |
-| ns | 5685 |  | 156 | `PluginManager.register` docstring: naming, blocking and the duplicate-registration contract | 3.8 | 2.1 | 0.517 |
-| ns | 5981 |  | 296 | `PluginManager.register` body: how hook implementations are discovered and attached | 3.9 | 3.8 | 0.505 |
-| walker |  | 6114 | 615 | python method sigs in src/pluggy/_manager.py |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:59 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:68 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:76 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:79 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:125 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:176 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:233 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:238 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:242 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:252 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:296 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:300 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:304 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:315 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:319 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:323 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:331 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:379 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:395 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:425 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:430 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:434 |  |  | 0.560 |
-| walker |  | 6114 | 0 | python method at src/pluggy/_manager.py:487 |  |  | 0.560 |
-| walker |  | 6122 | 8 | python method at src/pluggy/_manager.py:71 |  |  | 0.562 |
-| walker |  | 6132 | 10 | python method at src/pluggy/_manager.py:100 |  |  | 0.562 |
-| walker |  | 6160 | 28 | python method at src/pluggy/_manager.py:512 |  |  | 0.562 |
-| walker |  | 6174 | 14 | python method doc at src/pluggy/_manager.py:300 |  |  | 0.562 |
-| walker |  | 6205 | 31 | python method at src/pluggy/_manager.py:278 |  |  | 0.562 |
-| walker |  | 6236 | 31 | python method at src/pluggy/_manager.py:450 |  |  | 0.562 |
-| walker |  | 6251 | 15 | python method doc at src/pluggy/_manager.py:238 |  |  | 0.562 |
-| walker |  | 6266 | 15 | python method doc at src/pluggy/_manager.py:296 |  |  | 0.562 |
-| walker |  | 6301 | 35 | python method at src/pluggy/_manager.py:201 |  |  | 0.562 |
-| walker |  | 6318 | 17 | python method doc at src/pluggy/_manager.py:319 |  |  | 0.562 |
-| walker |  | 6336 | 18 | python method doc at src/pluggy/_manager.py:233 |  |  | 0.562 |
-| walker |  | 6354 | 18 | python method doc at src/pluggy/_manager.py:315 |  |  | 0.562 |
-| walker |  | 6375 | 21 | python method doc at src/pluggy/_manager.py:430 |  |  | 0.562 |
-| walker |  | 6404 | 29 | python method doc at src/pluggy/_manager.py:323 |  |  | 0.562 |
-| walker |  | 6434 | 30 | python method doc at src/pluggy/_manager.py:425 |  |  | 0.562 |
+| ns | 3551 |  | 245 | The real call signatures of `@hookspec` and `@hookimpl` — every accepted option with its default | 3.1 |  | 0.529 |
+| walker |  | 3654 | 615 | python method sigs in src/pluggy/_manager.py |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:59 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:68 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:76 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:79 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:125 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:176 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:233 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:238 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:242 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:252 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:296 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:300 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:304 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:315 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:319 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:323 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:331 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:379 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:395 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:425 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:430 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:434 |  |  | 0.610 |
+| walker |  | 3654 | 0 | python method at src/pluggy/_manager.py:487 |  |  | 0.610 |
+| walker |  | 3662 | 8 | python method at src/pluggy/_manager.py:71 |  |  | 0.612 |
+| walker |  | 3672 | 10 | python method at src/pluggy/_manager.py:100 |  |  | 0.612 |
+| walker |  | 3700 | 28 | python method at src/pluggy/_manager.py:512 |  |  | 0.612 |
+| walker |  | 3714 | 14 | python method doc at src/pluggy/_manager.py:300 |  |  | 0.612 |
+| walker |  | 3745 | 31 | python method at src/pluggy/_manager.py:278 |  |  | 0.612 |
+| walker |  | 3776 | 31 | python method at src/pluggy/_manager.py:450 |  |  | 0.612 |
+| walker |  | 3791 | 15 | python method doc at src/pluggy/_manager.py:238 |  |  | 0.612 |
+| ns | 3799 |  | 248 | `HookimplOpts` in full: every hook-implementation option and what it means | 3.2 | 2.3 | 0.592 |
+| walker |  | 3806 | 15 | python method doc at src/pluggy/_manager.py:296 |  |  | 0.592 |
+| walker |  | 3841 | 35 | python method at src/pluggy/_manager.py:201 |  |  | 0.592 |
+| walker |  | 3858 | 17 | python method doc at src/pluggy/_manager.py:319 |  |  | 0.592 |
+| walker |  | 3876 | 18 | python method doc at src/pluggy/_manager.py:233 |  |  | 0.592 |
+| walker |  | 3894 | 18 | python method doc at src/pluggy/_manager.py:315 |  |  | 0.592 |
+| walker |  | 3915 | 21 | python method doc at src/pluggy/_manager.py:430 |  |  | 0.592 |
+| walker |  | 3944 | 29 | python method doc at src/pluggy/_manager.py:323 |  |  | 0.592 |
+| walker |  | 3974 | 30 | python method doc at src/pluggy/_manager.py:425 |  |  | 0.592 |
+| ns | 3983 |  | 184 | `HookspecOpts` in full: every hook-specification option | 3.3 | 2.3 | 0.578 |
+| walker |  | 4009 | 35 | python method doc at src/pluggy/_manager.py:242 |  |  | 0.579 |
+| walker |  | 4051 | 42 | python method doc at src/pluggy/_manager.py:487 |  |  | 0.579 |
+| walker |  | 4095 | 44 | python method doc at src/pluggy/_manager.py:379 |  |  | 0.579 |
+| walker |  | 4105 | 10 | python imports in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.579 |
+| ns | 4415 |  | 432 | Hook implementation ordering: the `_hookimpls` layout comment and `_add_hookimpl` in full | 3.4 | 2.4 | 0.550 |
+| walker |  | 4450 | 345 | python decl names surface in src/pluggy/_hooks.py |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:40 |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:56 |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:281 |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:293 |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:382 |  |  | 0.557 |
+| walker |  | 4450 | 0 | python decl at src/pluggy/_hooks.py:593 |  |  | 0.557 |
+| walker |  | 4458 | 8 | python decl at src/pluggy/_hooks.py:358 |  |  | 0.558 |
+| walker |  | 4466 | 8 | python decl at src/pluggy/_hooks.py:638 |  |  | 0.560 |
+| walker |  | 4474 | 8 | python decl at src/pluggy/_hooks.py:696 |  |  | 0.561 |
+| walker |  | 4483 | 9 | python decl at src/pluggy/_hooks.py:77 |  |  | 0.562 |
+| walker |  | 4492 | 9 | python decl at src/pluggy/_hooks.py:164 |  |  | 0.564 |
+| walker |  | 4504 | 12 | python decl doc at src/pluggy/_hooks.py:40 |  |  | 0.564 |
+| walker |  | 4516 | 12 | python decl doc at src/pluggy/_hooks.py:56 |  |  | 0.564 |
+| walker |  | 4533 | 17 | python decl doc at src/pluggy/_hooks.py:382 |  |  | 0.568 |
+| walker |  | 4551 | 18 | python decl doc at src/pluggy/_hooks.py:638 |  |  | 0.572 |
+| walker |  | 4582 | 31 | python decl doc at src/pluggy/_hooks.py:358 |  |  | 0.579 |
+| ns | 4621 |  | 206 | `HookCaller.__call__` in full: what `pm.hook.myhook(...)` actually does | 3.5 | 2.4 | 0.565 |
+| walker |  | 4694 | 112 | python class body at src/pluggy/_hooks.py:638 |  |  | 0.566 |
+| walker |  | 4782 | 88 | python class body at src/pluggy/_hooks.py:696 |  |  | 0.567 |
+| walker |  | 4874 | 92 | python class body at src/pluggy/_hooks.py:382 |  |  | 0.567 |
+| walker |  | 4898 | 24 | python decl at src/pluggy/_hooks.py:377 |  |  | 0.567 |
+| ns | 5086 |  | 465 | `_multicall` part 1: the setup / non-wrapper call loop | 3.6 |  | 0.537 |
+| walker |  | 5122 | 224 | python class body at src/pluggy/_hooks.py:56 |  |  | 0.566 |
+| walker |  | 5284 | 162 | python class body at src/pluggy/_hooks.py:40 |  |  | 0.586 |
+| walker |  | 5300 | 16 | python class body at src/pluggy/_hooks.py:77 |  |  | 0.586 |
+| walker |  | 5316 | 16 | python class body at src/pluggy/_hooks.py:164 |  |  | 0.586 |
+| walker |  | 5348 | 32 | python decl doc at src/pluggy/_hooks.py:593 |  |  | 0.595 |
+| walker |  | 5400 | 52 | python class body at src/pluggy/_hooks.py:358 |  |  | 0.595 |
+| ns | 5529 |  | 443 | `_multicall` part 2: the teardown loop, exception routing and `firstresult` collapse | 3.7 | 3.6 | 0.563 |
+| ns | 5685 |  | 156 | `PluginManager.register` docstring: naming, blocking and the duplicate-registration contract | 3.8 | 2.1 | 0.554 |
+| walker |  | 5918 | 518 | python method sigs in src/pluggy/_hooks.py |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:88 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:175 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:365 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:420 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:438 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:442 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:449 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:453 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:477 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:499 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:577 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:612 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:634 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:692 |  |  | 0.576 |
+| walker |  | 5918 | 0 | python method at src/pluggy/_hooks.py:709 |  |  | 0.576 |
+| walker |  | 5926 | 8 | python method at src/pluggy/_hooks.py:626 |  |  | 0.576 |
+| walker |  | 5934 | 8 | python method at src/pluggy/_hooks.py:630 |  |  | 0.576 |
+| walker |  | 5944 | 10 | python method doc at src/pluggy/_hooks.py:365 |  |  | 0.576 |
+| walker |  | 5975 | 31 | python method at src/pluggy/_hooks.py:543 |  |  | 0.576 |
+| ns | 5981 |  | 296 | `PluginManager.register` body: how hook implementations are discovered and attached | 3.9 | 3.8 | 0.562 |
+| walker |  | 5990 | 15 | python method doc at src/pluggy/_hooks.py:449 |  |  | 0.562 |
+| walker |  | 6005 | 15 | python method at src/pluggy/_hooks.py:618 |  |  | 0.562 |
+| walker |  | 6023 | 18 | python method doc at src/pluggy/_hooks.py:438 |  |  | 0.562 |
+| walker |  | 6064 | 41 | python method at src/pluggy/_hooks.py:424 |  |  | 0.562 |
+| walker |  | 6081 | 17 | python method at src/pluggy/_hooks.py:480 |  |  | 0.562 |
+| walker |  | 6133 | 52 | python method at src/pluggy/_hooks.py:516 |  |  | 0.562 |
+| walker |  | 6147 | 14 | python method doc at src/pluggy/_hooks.py:453 |  |  | 0.563 |
+| walker |  | 6210 | 63 | python method at src/pluggy/_hooks.py:656 |  |  | 0.563 |
+| walker |  | 6222 | 12 | python method doc at src/pluggy/_hooks.py:656 |  |  | 0.563 |
+| walker |  | 6302 | 80 | python decl doc at src/pluggy/_hooks.py:164 |  |  | 0.563 |
+| walker |  | 6383 | 81 | python decl doc at src/pluggy/_hooks.py:77 |  |  | 0.563 |
+| walker |  | 6417 | 34 | python decl at src/pluggy/_hooks.py:33 |  |  | 0.563 |
 | ns | 6439 |  | 458 | `PluginManager._verify_hook`: every validation error message pluggy can raise | 3.10 | 2.1 | 0.542 |
-| walker |  | 6469 | 35 | python method doc at src/pluggy/_manager.py:242 |  |  | 0.542 |
-| walker |  | 6511 | 42 | python method doc at src/pluggy/_manager.py:487 |  |  | 0.542 |
-| walker |  | 6555 | 44 | python method doc at src/pluggy/_manager.py:379 |  |  | 0.542 |
-| walker |  | 6634 | 79 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.542 |
+| walker |  | 6487 | 70 | python method at src/pluggy/_hooks.py:393 |  |  | 0.542 |
+| walker |  | 6499 | 12 | python method doc at src/pluggy/_hooks.py:393 |  |  | 0.542 |
+| walker |  | 6520 | 21 | python method doc at src/pluggy/_hooks.py:577 |  |  | 0.542 |
+| walker |  | 6565 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.542 |
 | ns | 6635 |  | 196 | `PluginManager.__init__`: the complete state of a plugin manager | 3.11 | 2.1 | 0.536 |
-| walker |  | 6644 | 10 | python imports in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.536 |
+| walker |  | 6644 | 79 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.536 |
 | walker |  | 6694 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.536 |
 | ns | 7001 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.523 |
 | walker |  | 7086 | 392 | tool.towncrier config in pyproject.toml |  |  | 0.523 |
@@ -248,25 +248,24 @@ Score(3000)=0.596 I=0.764 C=0.465 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 9492 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.508 |
 | ns | 9495 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.499 |
 | walker |  | 9551 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.507 |
-| walker |  | 9618 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.508 |
-| walker |  | 9618 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.508 |
-| walker |  | 9618 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.508 |
-| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.512 |
-| walker |  | 9828 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.528 |
-| walker |  | 9828 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.528 |
-| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.523 |
-| walker |  | 9837 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.523 |
-| walker |  | 9849 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.523 |
-| walker |  | 9862 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.523 |
-| walker |  | 9879 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.523 |
-| walker |  | 9889 | 10 | listing of 'docs/examples/eggsample-spam' |  |  | 0.528 |
-| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.531 |
-| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.533 |
+| walker |  | 9561 | 10 | listing of 'docs/examples/eggsample-spam' |  |  | 0.511 |
+| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.516 |
+| walker |  | 9695 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.516 |
+| walker |  | 9762 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.517 |
+| walker |  | 9762 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.517 |
+| walker |  | 9762 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.517 |
+| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.512 |
+| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.516 |
+| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.518 |
+| walker |  | 9972 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.533 |
+| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.533 |
+| walker |  | 9981 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.533 |
+| walker |  | 9993 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.533 |
