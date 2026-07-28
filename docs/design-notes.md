@@ -357,6 +357,110 @@ pre-freeze dead-lever verdicts about early-budget orientation vs
 source are the most likely to have flipped — re-measure before
 trusting any of them.
 
+### Post-refreeze re-sweep curves (2026-07-28, v2 key, zero 0.6074)
+
+Two full-corpus sweep lanes re-measured the settled knobs against the
+v2 key. All numbers are Score(3000) means over the 71 training
+fixtures; the code comments on these constants point here rather than
+restating the shapes.
+
+**Listing / roster lane** (shipped `LISTING_TIER_SCALE = 1.13` plus
+deleting `catalog_roster_mass_factor`; combined +0.0046, 0.6074 →
+0.6120):
+
+- Class-wide listing scale: 0.80→0.5928 · 0.90→0.6047 · 0.95→0.6067 ·
+  1.03→0.6077 · 1.06→0.6069 · 1.10→0.6089 · 1.11→0.6089 · 1.12→0.6092 ·
+  1.13→0.6103 · 1.135→0.6107 · 1.14→0.6105 · 1.15→0.6111 · 1.17→0.6112 ·
+  1.20→0.6081 · 1.25→0.6046
+- `LIST_SOURCE` tier alone: 0.90→0.6050 · 1.05→0.6076 · 1.10→0.6085 ·
+  1.12→0.6090 · 1.13→0.6092 · 1.14→0.6091 · 1.15→0.6091 · 1.16→0.6091 ·
+  1.17→0.6090 · 1.18→0.6052 · 1.20→0.6052 · 1.25→0.6016 · 1.30→0.6011 ·
+  1.40→0.6002
+- Per-tier at ×1.15: root→0.6074 (bit-identical everywhere) ·
+  module→0.6086 · source→0.6091 · catch-all→0.6084
+- `CATALOG_ROSTER_MASS_NEUTRALIZATION`: 0.0→0.6086 · 0.40→0.6079 ·
+  0.60→0.6079 · 0.90→0.6071 · 1.00→0.6071 (monotone; 0 best)
+- `ROSTER_MASS_FACTOR_CAP`: 1.28→0.6067 · 1.44→0.6068 · 1.6→0.6074 ·
+  1.76→0.6070 · 2.00→0.6068 · 2.40→0.6054
+- `ROSTER_MASS_BASELINE`: 8.8→0.6072 · 11.0→0.6074 · 13.75→0.6087
+- `TEST_INDEX_LISTING_BOOST`: 1.0 / 1.44 / 1.62 / 1.98 / 2.25 / 4.00 all
+  →0.6074 (inert)
+- `CHUNKED_NAMES_FIRST_CHUNK_FACTOR`: 0.80→0.6065 · 0.85→0.6051;
+  `CHUNKED_NAMES_FALLOFF`: 0.35→0.6056
+- Combined: all1.13+cn0.6→0.6108 · all1.14+cn0.6→0.6111 ·
+  all1.16+cn0.6→0.6116 · all1.17+cn0.6→0.6117 · **all1.13+cn0→0.6120
+  (shipped)** · all1.12+cn0→0.6109 · all1.14+cn0→0.6121 ·
+  all1.145+cn0→0.6121 · all1.15+cn0→0.6124 · all1.16+cn0→0.6123 ·
+  +`ROSTER_CAP` 1.76→0.6111 · +`ROSTER_BASELINE` 13.75→0.6122 ·
+  +`NAMES_FIRST` 0.85→0.6097 · +`CAT_CHILD` 0.025/0.10→0.6120 (inert)
+- 1.15/1.16 score higher at 3000 (0.6124/0.6123) but drop budget-1000
+  by ~0.007; 1.13 was chosen for holding the rest of the grid.
+- DEAD: `ROSTER_MASS_FACTOR_CAP`, `ROSTER_MASS_BASELINE` (mixed, loses
+  1000/4327), `TEST_INDEX_LISTING_BOOST` (inert at the primary budget;
+  ~25 removable lines behind it, costs −0.0016 at 1442),
+  `CATALOG_CHILD_LISTING_SUPPRESSION` (fully inert 0.025–0.10 — gate may
+  no longer fire), `CHUNKED_NAMES_FALLOFF`, per-tier `LIST_ROOT`
+  (provably rank-invariant). `CHUNKED_NAMES_FIRST_CHUNK_FACTOR` is a
+  real early-budget lever but loses at the primary budget.
+
+**Value-mix lane** (shipped `CATALOG_ROSTER_CONCAVITY_EXPONENT`
+0.37 → 0.38; +0.0027, 0.6074 → 0.6101, gain concentrated at 2080–3000):
+
+- `mix_signals` fu: 0→0.5998 · 100→0.6041 · 160→0.6044 · 200→0.6045 ·
+  240→0.6054 · 260→0.6055 · **280→0.6074** · 290→0.6073 · 300→0.6071 ·
+  320→0.6073 · 360→0.6071 · 400→0.6071 · 440→0.6070 · 500→0.6068 ·
+  600→0.6060
+- `mix_signals` cat: 800→0.6065 · 900→0.6067 · 950→0.6071 ·
+  **1000→0.6074** · 1050→0.6068 · 1100→0.6054 · 1200→0.6052 ·
+  1400→0.6020
+- `mix_signals` ztu: 180→0.6036 · 230→0.6054 · 265→0.6065 ·
+  **300→0.6074** · 335→0.6068 · 370→0.6069 · 420→0.6068 · 500→0.6067
+- `DEFAULT_CONCAVITY_EXPONENT`: 0.30→0.5977 · 0.32→0.5952 · 0.33→0.5954 ·
+  0.34→0.6001 · **0.35→0.6074** · 0.355→0.6074 · 0.36→0.6078 ·
+  0.365→0.6058 · 0.37→0.6057 · 0.38→0.5996 · 0.40→0.6017 · 0.42→0.5963
+- `CATALOG_ROSTER_CONCAVITY_EXPONENT`: 0.28→0.6021 · 0.31→0.6047 ·
+  0.34→0.6069 · 0.355→0.6064 · 0.37→0.6074 · 0.372→0.6080 ·
+  0.375→0.6102 · 0.378→0.6101 · **0.38→0.6101 (shipped)** · 0.385→0.6095 ·
+  0.39→0.6093 · 0.395→0.6095 · 0.40→0.6094 · 0.41→0.6093 · 0.42→0.6096 ·
+  0.43→0.6091 · 0.46→0.6068 · 0.50→0.6050
+- `depth_factor` slope: 0.20→0.5945 · 0.25→0.5979 · 0.30→0.6044 ·
+  0.325→0.6058 · **0.35→0.6074** · 0.375→0.6053 · 0.40→0.6050 ·
+  0.45→0.6052 · 0.50→0.6046 · 0.60→0.6006
+- Combined on cexp=0.38: alone→**0.6101** · +dexp0.36→0.6091 ·
+  +dexp0.34→0.6004 · +fu320→0.6100 · +fu240→0.6085 · +ztu335→0.6088 ·
+  +ztu265→0.6091 · +cat950→0.6091 · +cat1050→0.6095 ·
+  +dslope0.375→0.6085 · +dslope0.325→0.6102 (ties at 3000, loses at
+  1000/4327/9000 — rejected)
+- DEAD: all three `mix_signals` axes, `DEFAULT_CONCAVITY_EXPONENT`
+  (0.36's +0.0004 is a knife edge — 0.355/0.365 sit at-or-below base),
+  `depth_factor` slope, and every combination stacked on cexp=0.38.
+
+Caveat carried from both lanes: nearly every large per-fixture mover
+sits within ~40 tokens of the 3000 cliff, so individual fixture
+magnitudes are not trustworthy. The ship decisions rest on the plateau
+shapes above and on whole-NS-row bucket changes.
+
+### v2-key un-ship generalization losses (2026-07-28, corpus-invisible)
+
+The same lanes deleted mechanisms whose corpus contribution was flat or
+negative. Two classes of loss don't show up in Score(3000) at all and
+are recorded here so they aren't rediscovered as regressions:
+
+- **Wide source catalogs outside conventional source-root names.**
+  Removing the catalog roster-mass neutralization net-demotes wide
+  catalogs that live somewhere other than a recognized source root —
+  a repository-root `include/` or `components/`, for instance. No
+  training fixture has that layout, so the corpus can't see it. Queue a
+  non-corpus fixture with a root-level wide catalog before treating the
+  removal as fully validated.
+- **Content classes with no remaining reachable path.** The un-shipped
+  mechanisms were the only way to reach: TS interface-member JSDoc;
+  YAML API-spec *body* content (openapi / swagger / schema /
+  reference.yaml beyond `TopLevelKeys`); and TS test / describe / bench
+  label rosters. These are out-of-corpus-axis losses, not walker
+  regressions — cover them via the OOC protocol's pinned repos rather
+  than by re-adding the mechanisms on corpus evidence.
+
 ## ⚠️ Score-history break at the 2026-07-05 NS re-freeze (22d2f7b3)
 
 All 93 North Stars were re-authored (Sonnet, audited repair pipeline)

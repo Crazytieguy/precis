@@ -502,10 +502,12 @@ fn is_under_illustrative_dir(file: &Path, root: &Path) -> bool {
 }
 
 /// Walk the project's non-test `.c` files once. Same coarse one-pass
-/// scan (and cap) as [`count_small_headers`], plus a byte budget; test
-/// dirs and test-named files are excluded so a large test suite can't
-/// mask a single-implementation-file layout. `None` when the scan
-/// bailed — callers must treat that as "no information".
+/// scan (and cap) as [`count_small_headers`], plus a byte budget. The
+/// scan's only product is whether the project builds a program of its
+/// own, so test dirs and test-named files are excluded: a harness
+/// `main` would otherwise make every library look like a program.
+/// `None` when the scan bailed — callers must treat that as "no
+/// information".
 fn scan_c_project(root: &Path, filter: &DirFilter) -> Option<CProjectScan> {
     const SCAN_CAP: usize = 4096;
     let mut main_candidates: Vec<PathBuf> = Vec::new();
@@ -572,8 +574,10 @@ struct CSourceScan {
 /// Buffered per-line scan of one `.c` file. Reads raw bytes so a
 /// non-UTF-8 byte can't silently drop the file from the tally; stops
 /// early (with `bytes` past `max_bytes`) once the budget is blown so an
-/// oversized file isn't read to the end. `None` on I/O error — the file
-/// is skipped, matching the sibling scans.
+/// oversized file isn't read to the end. `None` on I/O error, which
+/// [`scan_c_project`] propagates: an unreadable source file could be
+/// the one defining `main`, so the whole scan fails closed to "no
+/// information" rather than skipping the file.
 fn scan_c_source(path: &Path, max_bytes: u64) -> Option<CSourceScan> {
     use std::io::BufRead;
     let file = std::fs::File::open(path).ok()?;

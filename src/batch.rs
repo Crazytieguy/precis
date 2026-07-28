@@ -1145,7 +1145,8 @@ impl InnerKey for PythonKey {
         )
     }
 
-    /// `DeclNames` / `DeclNamesChunk` + `ImportChunk` use a mild `0.37` (broad
+    /// `DeclNames` / `DeclNamesChunk` + `ImportChunk` use the mild
+    /// [`crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT`] (broad
     /// catalog-shaped surfaces). Per-decl / per-method batches use
     /// `0.45` (matches C / Go) for the same reason — short decls
     /// emitted in bulk. `ClassBody` keeps the default; field listings

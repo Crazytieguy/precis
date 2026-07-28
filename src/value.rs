@@ -7,12 +7,11 @@
 //! to express per-batch tuning as a `(catastrophic, follow-up, zero-call)`
 //! triple — the weights live here so per-batch numbers stay comparable
 //! across walkers. It's not load-bearing: a walker is free to skip the
-//! helper and compute its value however. The weights are sweep-confirmed
-//! at the training optimum, re-confirmed against the v2 answer key
-//! (2026-07-28): all three axes peak at the shipped values and regress
-//! in both directions, with fu flat-to-worse across 0..600 and cat/ztu
-//! unimodal. Don't re-sweep without a new answer key (see
-//! `docs/design-notes.md`).
+//! helper and compute its value however. The weights were re-swept on
+//! the full corpus on 2026-07-28 against the v2 answer key (zero point
+//! 0.6074) and left unchanged; the measured point grids are recorded in
+//! `docs/design-notes.md` ("Post-refreeze re-sweep curves"). Don't
+//! re-sweep without a new answer key.
 
 /// Mix three signal axes — catastrophic-omission,
 /// follow-up minimization, zero-tool-call understanding — into a scalar
@@ -32,8 +31,10 @@ pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// whose value is otherwise size-invariant while cost grows linearly
 /// with N, so `value/cost^k` systematically prefers tiny rosters over
 /// the complete catalogs NS authors anchor on. Scaling value by
-/// `(N / baseline)^k` (the same exponent as the cost concavity) makes
-/// the ratio roster-size-neutral. Boost-only (≥ 1) and capped: small
+/// `(N / baseline)^k` pushes back against that. `k` is always
+/// [`DEFAULT_CONCAVITY_EXPONENT`], including for batches the scheduler
+/// prices at [`CATALOG_ROSTER_CONCAVITY_EXPONENT`], so the correction
+/// is approximate rather than exactly size-neutral for those. Boost-only (≥ 1) and capped: small
 /// rosters keep their existing rank rather than being demoted.
 pub fn roster_mass_factor(entries: usize) -> f64 {
     (entries as f64 / ROSTER_MASS_BASELINE)
@@ -60,17 +61,18 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
 }
 
 /// Concavity exponent shared by the catalog-roster batch keys (Python
-/// `DeclNames`/`DeclNamesChunk`, TS `ExportMemberNames*` /
-/// `ModuleItemNames`) and the head-parity allocation in
+/// `ImportChunk` / `DeclNames` / `DeclNamesChunk`, TS
+/// `ExportMemberNames*` / `ModuleItemNames`) and the head-parity allocation in
 /// [`conserved_catalog_chunk_factors`] — the allocation is only
 /// ratio-neutral if it uses the exponent the scheduler ranks with.
 ///
 /// Deliberately above [`DEFAULT_CONCAVITY_EXPONENT`]: rosters are the
 /// batch class whose value is most nearly size-invariant, so they
 /// tolerate more cost discounting than ordinary content before the
-/// scheduler starts overpaying for them. Swept 0.28..0.50 against the
-/// v2 answer key (2026-07-28) — a broad plateau over 0.375..0.43, edges
-/// falling off on both sides.
+/// scheduler starts overpaying for them. Set by a full-corpus sweep on
+/// 2026-07-28 against the v2 answer key (zero point 0.6074), worth
+/// +0.0027 at Score(3000). Measured point grid is recorded in
+/// `docs/design-notes.md` ("Post-refreeze re-sweep curves").
 pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.38;
 
 /// Head premium over ratio parity (`share_0^k`) inside the conserved

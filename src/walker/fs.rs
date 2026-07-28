@@ -291,13 +291,11 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
 /// Uniform price of the directory-listing class against the source
 /// batches it competes with. The tier triples above set listings'
 /// ranking *among themselves*; this sets where the whole class sits
-/// against parsed source. Swept on the full corpus one tier at a time
-/// and then combined: the response is a plateau over 1.10–1.16 at the
-/// primary budget with a cliff on either side (1.18 gives back the
-/// whole gain, and above 1.145 the 1000-token budget falls off), and
-/// per-tier sweeps reproduce the uniform result — the root tier is
-/// rank-invariant to it, so a single class-wide scalar is the honest
-/// shape rather than four separately-tuned triples.
+/// against parsed source. Set by a full-corpus sweep on 2026-07-28
+/// against the v2 answer key (zero point 0.6074), worth +0.0046 at
+/// Score(3000) in combination with the roster-mass-neutralization
+/// removal. Measured point grids are recorded in
+/// `docs/design-notes.md` ("Post-refreeze re-sweep curves").
 const LISTING_TIER_SCALE: f64 = 1.13;
 
 /// Min child-directory count for a parent to count as a "catalog" whose
