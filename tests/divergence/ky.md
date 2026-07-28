@@ -171,18 +171,18 @@ Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | ns | 8405 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.457 |
 | walker |  | 8482 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.457 |
 | ns | 8560 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.452 |
-| ns | 8733 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.448 |
-| walker |  | 8739 | 257 | export member docs #1 at source/types/retry.ts:15 |  |  | 0.451 |
-| walker |  | 8858 | 119 | export names surface in source/utils/merge.ts |  |  | 0.457 |
-| walker |  | 8858 | 0 | export at source/utils/merge.ts:6 |  |  | 0.457 |
-| walker |  | 8858 | 0 | export at source/utils/merge.ts:16 |  |  | 0.457 |
-| walker |  | 8858 | 0 | export at source/utils/merge.ts:86 |  |  | 0.457 |
-| walker |  | 8952 | 94 | export at source/utils/merge.ts:38 |  |  | 0.464 |
-| ns | 9007 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.457 |
-| walker |  | 9036 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.458 |
-| walker |  | 9118 | 82 | export at source/types/retry.ts:3 |  |  | 0.460 |
-| ns | 9132 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.466 |
-| walker |  | 9274 | 156 | readme.md section #17 |  |  | 0.466 |
+| walker |  | 8601 | 119 | export names surface in source/utils/merge.ts |  |  | 0.458 |
+| walker |  | 8601 | 0 | export at source/utils/merge.ts:6 |  |  | 0.458 |
+| walker |  | 8601 | 0 | export at source/utils/merge.ts:16 |  |  | 0.458 |
+| walker |  | 8601 | 0 | export at source/utils/merge.ts:86 |  |  | 0.458 |
+| walker |  | 8695 | 94 | export at source/utils/merge.ts:38 |  |  | 0.459 |
+| ns | 8733 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.460 |
+| walker |  | 8779 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.461 |
+| walker |  | 8861 | 82 | export at source/types/retry.ts:3 |  |  | 0.462 |
+| ns | 9007 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.455 |
+| walker |  | 9017 | 156 | readme.md section #17 |  |  | 0.455 |
+| ns | 9132 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.461 |
+| walker |  | 9274 | 257 | export member docs #1 at source/types/retry.ts:15 |  |  | 0.466 |
 | ns | 9289 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.470 |
 | ns | 9377 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.470 |
 | walker |  | 9441 | 167 | readme.md section #4 |  |  | 0.473 |

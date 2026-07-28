@@ -4369,28 +4369,10 @@ kind = "full"
 
 [[batches]]
 position = 171
-key = 'Typescript(ExportMemberNames { file: "index.d.ts", start_line: 713 })'
-descriptor = "export member names at index.d.ts:713"
-cost_tokens = 192
-cum_tokens = 6849
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.d.ts"
-start = 714
-end = 729
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
 key = 'Typescript(Export { file: "index.d.ts", start_line: 476 })'
 descriptor = "export at index.d.ts:476"
 cost_tokens = 13
-cum_tokens = 6862
+cum_tokens = 6670
 
 [batches.content]
 kind = "lines"
@@ -4399,6 +4381,24 @@ kind = "lines"
 path = "index.d.ts"
 start = 476
 end = 478
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Typescript(ExportMemberNames { file: "index.d.ts", start_line: 713 })'
+descriptor = "export member names at index.d.ts:713"
+cost_tokens = 192
+cum_tokens = 6862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.d.ts"
+start = 714
+end = 729
 
 [batches.content.spans.render]
 kind = "full"

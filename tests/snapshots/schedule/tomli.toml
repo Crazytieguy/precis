@@ -913,10 +913,100 @@ entries = ["invalid", "valid"]
 
 [[batches]]
 position = 37
+key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #17"
+cost_tokens = 49
+cum_tokens = 2556
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 162
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 56
+cum_tokens = 2612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 88
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #8"
+cost_tokens = 56
+cum_tokens = 2668
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 117
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #4"
+cost_tokens = 58
+cum_tokens = 2726
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 81
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(DeclNames { file: "src/tomli/_types.py" })'
+descriptor = "python decl names surface in src/tomli/_types.py"
+cost_tokens = 34
+cum_tokens = 2760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tomli/_types.py"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
 key = 'Python(DeclNames { file: "src/tomli/_parser.py" })'
 descriptor = "python decl names surface in src/tomli/_parser.py"
 cost_tokens = 464
-cum_tokens = 2971
+cum_tokens = 3224
 
 [batches.content]
 kind = "lines"
@@ -1264,96 +1354,6 @@ end = 613
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 38
-key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #17"
-cost_tokens = 49
-cum_tokens = 3020
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 162
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Python(DeclNames { file: "src/tomli/_types.py" })'
-descriptor = "python decl names surface in src/tomli/_types.py"
-cost_tokens = 34
-cum_tokens = 3054
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tomli/_types.py"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 56
-cum_tokens = 3110
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 88
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #8"
-cost_tokens = 56
-cum_tokens = 3166
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 117
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #4"
-cost_tokens = 58
-cum_tokens = 3224
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 81
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 43

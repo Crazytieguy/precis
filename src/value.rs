@@ -8,9 +8,10 @@
 //! triple — the weights live here so per-batch numbers stay comparable
 //! across walkers. It's not load-bearing: a walker is free to skip the
 //! helper and compute its value however. The weights are sweep-confirmed
-//! at the training optimum on the post-refreeze keys (2026-07): cat and
-//! ztu regress in both directions, fu is non-monotone with 280 > 400 >
-//! 340; don't re-sweep without a new answer key (see
+//! at the training optimum, re-confirmed against the v2 answer key
+//! (2026-07-28): all three axes peak at the shipped values and regress
+//! in both directions, with fu flat-to-worse across 0..600 and cat/ztu
+//! unimodal. Don't re-sweep without a new answer key (see
 //! `docs/design-notes.md`).
 
 /// Mix three signal axes — catastrophic-omission,
@@ -63,7 +64,14 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
 /// `ModuleItemNames`) and the head-parity allocation in
 /// [`conserved_catalog_chunk_factors`] — the allocation is only
 /// ratio-neutral if it uses the exponent the scheduler ranks with.
-pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.37;
+///
+/// Deliberately above [`DEFAULT_CONCAVITY_EXPONENT`]: rosters are the
+/// batch class whose value is most nearly size-invariant, so they
+/// tolerate more cost discounting than ordinary content before the
+/// scheduler starts overpaying for them. Swept 0.28..0.50 against the
+/// v2 answer key (2026-07-28) — a broad plateau over 0.375..0.43, edges
+/// falling off on both sides.
+pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.38;
 
 /// Head premium over ratio parity (`share_0^k`) inside the conserved
 /// total. Pure parity prices the head like the unsplit catalog — which

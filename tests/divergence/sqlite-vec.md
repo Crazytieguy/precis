@@ -1,4 +1,4 @@
-Score(3000)=0.332 I=0.704 C=0.156 ns_rows≤3K=18/60 (reached=3 partial=0 missing=15)
+Score(3000)=0.444 I=0.758 C=0.260 ns_rows≤3K=18/60 (reached=6 partial=0 missing=12)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -54,14 +54,14 @@ Score(3000)=0.332 I=0.704 C=0.156 ns_rows≤3K=18/60 (reached=3 partial=0 missin
 | walker |  | 2369 | 55 | YAML reference leaf contracts in reference.yaml:40 chunk 2 |  |  | 0.386 |
 | ns | 2399 |  | 153 | vec0BestIndex query-plan selection rules | 2.7 |  | 0.370 |
 | walker |  | 2431 | 62 | YAML reference leaf contracts in reference.yaml:328 chunk 1 |  |  | 0.370 |
-| walker |  | 2563 | 132 | python decl names surface in tmp-static.py |  |  | 0.370 |
-| walker |  | 2563 | 0 | python decl at tmp-static.py:25 |  |  | 0.370 |
 | ns | 2573 |  | 174 | vec0 user column kinds | 2.8 |  | 0.354 |
 | ns | 2880 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.332 |
-| ns | 3052 |  | 172 | Partition key operator encoding | 2.10 |  | 0.321 |
-| walker |  | 3086 | 523 | README.md section #3 |  |  | 0.430 |
-| walker |  | 3130 | 44 | listing of 'site/guides' |  |  | 0.430 |
-| walker |  | 3178 | 48 | listing of 'site/using' |  |  | 0.431 |
+| walker |  | 2954 | 523 | README.md section #3 |  |  | 0.444 |
+| walker |  | 2998 | 44 | listing of 'site/guides' |  |  | 0.444 |
+| walker |  | 3046 | 48 | listing of 'site/using' |  |  | 0.445 |
+| ns | 3052 |  | 172 | Partition key operator encoding | 2.10 |  | 0.431 |
+| walker |  | 3178 | 132 | python decl names surface in tmp-static.py |  |  | 0.431 |
+| walker |  | 3178 | 0 | python decl at tmp-static.py:25 |  |  | 0.431 |
 | ns | 3284 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.411 |
 | walker |  | 3299 | 121 | ARCHITECTURE.md section #0 |  |  | 0.415 |
 | walker |  | 3313 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.415 |
@@ -107,20 +107,20 @@ Score(3000)=0.332 I=0.704 C=0.156 ns_rows≤3K=18/60 (reached=3 partial=0 missin
 | walker |  | 5918 | 12 | listing of 'tests/minimum' |  |  | 0.290 |
 | walker |  | 5994 | 76 | c decl body at sqlite-vec.c:646 |  |  | 0.290 |
 | ns | 6002 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.284 |
-| walker |  | 6029 | 35 | python decl names surface in bindings/python/extra_init.py |  |  | 0.284 |
-| walker |  | 6029 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.284 |
-| walker |  | 6029 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.284 |
-| walker |  | 6046 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.284 |
-| walker |  | 6068 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.284 |
-| walker |  | 6092 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.284 |
 | ns | 6103 |  | 101 | Registered virtual table modules | 3.2 |  | 0.281 |
-| walker |  | 6109 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.281 |
-| ns | 6212 |  | 109 | vec_debug build string | 3.3 |  | 0.278 |
-| walker |  | 6262 | 153 | c includes in sqlite-vec.c |  |  | 0.278 |
-| walker |  | 6299 | 37 | ARCHITECTURE.md section #6 |  |  | 0.282 |
-| walker |  | 6335 | 36 | ARCHITECTURE.md section #5 |  |  | 0.287 |
-| walker |  | 6372 | 37 | ARCHITECTURE.md section #4 |  |  | 0.291 |
-| walker |  | 6408 | 36 | ARCHITECTURE.md section #3 |  |  | 0.297 |
+| walker |  | 6147 | 153 | c includes in sqlite-vec.c |  |  | 0.281 |
+| walker |  | 6184 | 37 | ARCHITECTURE.md section #6 |  |  | 0.285 |
+| ns | 6212 |  | 109 | vec_debug build string | 3.3 |  | 0.282 |
+| walker |  | 6220 | 36 | ARCHITECTURE.md section #5 |  |  | 0.287 |
+| walker |  | 6257 | 37 | ARCHITECTURE.md section #4 |  |  | 0.291 |
+| walker |  | 6293 | 36 | ARCHITECTURE.md section #3 |  |  | 0.297 |
+| walker |  | 6328 | 35 | python decl names surface in bindings/python/extra_init.py |  |  | 0.297 |
+| walker |  | 6328 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.297 |
+| walker |  | 6328 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.297 |
+| walker |  | 6345 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.297 |
+| walker |  | 6367 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.297 |
+| walker |  | 6391 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.297 |
+| walker |  | 6408 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.297 |
 | ns | 6446 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.291 |
 | ns | 6537 |  | 91 | Vector element types | 3.5 |  | 0.305 |
 | walker |  | 6635 | 227 | YAML reference leaf contracts in reference.yaml:40 chunk 1 |  |  | 0.305 |

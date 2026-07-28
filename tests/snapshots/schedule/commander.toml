@@ -1505,10 +1505,134 @@ kind = "full"
 
 [[batches]]
 position = 51
+key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 244 })'
+descriptor = "export body at lib/option.js:3 body 244"
+cost_tokens = 16
+cum_tokens = 2063
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Typescript(Imports { file: "index.js" })'
+descriptor = "imports in index.js"
+cost_tokens = 81
+cum_tokens = 2144
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Typescript(ExportNames { file: "esm.mjs" })'
+descriptor = "export names surface in esm.mjs"
+cost_tokens = 11
+cum_tokens = 2155
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "esm.mjs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "esm.mjs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Typescript(Imports { file: "esm.mjs" })'
+descriptor = "imports in esm.mjs"
+cost_tokens = 11
+cum_tokens = 2166
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "esm.mjs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Typescript(Export { file: "esm.mjs", start_line: 4 })'
+descriptor = "export at esm.mjs:4"
+cost_tokens = 97
+cum_tokens = 2263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "esm.mjs"
+start = 4
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Json(IdentityMeta { file: "package.json" })'
+descriptor = "package identity metadata in package.json"
+cost_tokens = 149
+cum_tokens = 2412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 5
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
 key = 'Typescript(ExportMemberNamesChunk { file: "lib/command.js", start_line: 13, chunk_index: 0 })'
 descriptor = "export member names #1 at lib/command.js:13"
 cost_tokens = 253
-cum_tokens = 2300
+cum_tokens = 2665
 
 [batches.content]
 kind = "lines"
@@ -1739,130 +1863,6 @@ kind = "truncated"
 pattern = "^[^(]+"
 
 [[batches]]
-position = 52
-key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 244 })'
-descriptor = "export body at lib/option.js:3 body 244"
-cost_tokens = 16
-cum_tokens = 2316
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 244
-end = 244
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
-key = 'Typescript(Imports { file: "index.js" })'
-descriptor = "imports in index.js"
-cost_tokens = 81
-cum_tokens = 2397
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
-key = 'Typescript(ExportNames { file: "esm.mjs" })'
-descriptor = "export names surface in esm.mjs"
-cost_tokens = 11
-cum_tokens = 2408
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "esm.mjs"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "esm.mjs"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'Typescript(Imports { file: "esm.mjs" })'
-descriptor = "imports in esm.mjs"
-cost_tokens = 11
-cum_tokens = 2419
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "esm.mjs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Typescript(Export { file: "esm.mjs", start_line: 4 })'
-descriptor = "export at esm.mjs:4"
-cost_tokens = 97
-cum_tokens = 2516
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "esm.mjs"
-start = 4
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Json(IdentityMeta { file: "package.json" })'
-descriptor = "package identity metadata in package.json"
-cost_tokens = 149
-cum_tokens = 2665
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 5
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 58
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
@@ -1898,10 +1898,54 @@ kind = "full"
 
 [[batches]]
 position = 59
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 257
+cum_tokens = 3204
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 21
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 132 })'
+descriptor = "export member at lib/option.js:3 member 132"
+cost_tokens = 12
+cum_tokens = 3216
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
 key = 'Typescript(ExportMemberNames { file: "lib/help.js", start_line: 12 })'
 descriptor = "export member names at lib/help.js:12"
 cost_tokens = 436
-cum_tokens = 3383
+cum_tokens = 3652
 
 [batches.content]
 kind = "lines"
@@ -2274,50 +2318,6 @@ end = 695
 [batches.content.spans.render]
 kind = "truncated"
 pattern = "^[^(]+"
-
-[[batches]]
-position = 60
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 257
-cum_tokens = 3640
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 21
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 132 })'
-descriptor = "export member at lib/option.js:3 member 132"
-cost_tokens = 12
-cum_tokens = 3652
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 133
-end = 133
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 62

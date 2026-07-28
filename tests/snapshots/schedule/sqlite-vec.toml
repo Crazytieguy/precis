@@ -1305,10 +1305,56 @@ kind = "full"
 
 [[batches]]
 position = 37
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
+cost_tokens = 523
+cum_tokens = 2954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 61
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Fs(DirListing { dir: "site/guides" })'
+descriptor = "listing of 'site/guides'"
+cost_tokens = 44
+cum_tokens = 2998
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/guides"
+entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.md", "matryoshka.md", "performance.md", "rag.md", "scalar-quant.md", "semantic-search.md"]
+
+[[batches]]
+position = 39
+key = 'Fs(DirListing { dir: "site/using" })'
+descriptor = "listing of 'site/using'"
+cost_tokens = 48
+cum_tokens = 3046
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/using"
+entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
+
+[[batches]]
+position = 40
 key = 'Python(DeclNames { file: "tmp-static.py" })'
 descriptor = "python decl names surface in tmp-static.py"
 cost_tokens = 132
-cum_tokens = 2563
+cum_tokens = 3178
 
 [batches.content]
 kind = "lines"
@@ -1346,11 +1392,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Python(Decl { file: "tmp-static.py", start_line: 25 })'
 descriptor = "python decl at tmp-static.py:25"
 cost_tokens = 0
-cum_tokens = 2563
+cum_tokens = 3178
 
 [batches.content]
 kind = "lines"
@@ -1362,52 +1408,6 @@ end = 25
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 39
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
-cost_tokens = 523
-cum_tokens = 3086
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Fs(DirListing { dir: "site/guides" })'
-descriptor = "listing of 'site/guides'"
-cost_tokens = 44
-cum_tokens = 3130
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/guides"
-entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.md", "matryoshka.md", "performance.md", "rag.md", "scalar-quant.md", "semantic-search.md"]
-
-[[batches]]
-position = 41
-key = 'Fs(DirListing { dir: "site/using" })'
-descriptor = "listing of 'site/using'"
-cost_tokens = 48
-cum_tokens = 3178
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/using"
-entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
 
 [[batches]]
 position = 42
@@ -2359,160 +2359,10 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
-descriptor = "python decl names surface in bindings/python/extra_init.py"
-cost_tokens = 35
-cum_tokens = 6029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 73
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl at bindings/python/extra_init.py:6"
-cost_tokens = 0
-cum_tokens = 6029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl at bindings/python/extra_init.py:11"
-cost_tokens = 0
-cum_tokens = 6029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
-descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
-cost_tokens = 17
-cum_tokens = 6046
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:6"
-cost_tokens = 22
-cum_tokens = 6068
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:11"
-cost_tokens = 24
-cum_tokens = 6092
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
-descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
-cost_tokens = 17
-cum_tokens = 6109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
 key = 'C(Includes { file: "sqlite-vec.c" })'
 descriptor = "c includes in sqlite-vec.c"
 cost_tokens = 153
-cum_tokens = 6262
+cum_tokens = 6147
 
 [batches.content]
 kind = "lines"
@@ -2526,11 +2376,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 80
+position = 73
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #6"
 cost_tokens = 37
-cum_tokens = 6299
+cum_tokens = 6184
 
 [batches.content]
 kind = "lines"
@@ -2544,11 +2394,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 81
+position = 74
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #5"
 cost_tokens = 36
-cum_tokens = 6335
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -2562,11 +2412,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 82
+position = 75
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #4"
 cost_tokens = 37
-cum_tokens = 6372
+cum_tokens = 6257
 
 [batches.content]
 kind = "lines"
@@ -2580,11 +2430,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 83
+position = 76
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #3"
 cost_tokens = 36
-cum_tokens = 6408
+cum_tokens = 6293
 
 [batches.content]
 kind = "lines"
@@ -2593,6 +2443,156 @@ kind = "lines"
 path = "ARCHITECTURE.md"
 start = 29
 end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
+descriptor = "python decl names surface in bindings/python/extra_init.py"
+cost_tokens = 35
+cum_tokens = 6328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl at bindings/python/extra_init.py:6"
+cost_tokens = 0
+cum_tokens = 6328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl at bindings/python/extra_init.py:11"
+cost_tokens = 0
+cum_tokens = 6328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
+descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
+cost_tokens = 17
+cum_tokens = 6345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:6"
+cost_tokens = 22
+cum_tokens = 6367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:11"
+cost_tokens = 24
+cum_tokens = 6391
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
+descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
+cost_tokens = 17
+cum_tokens = 6408
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"

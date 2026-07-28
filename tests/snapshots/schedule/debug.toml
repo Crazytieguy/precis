@@ -1093,10 +1093,64 @@ kind = "full"
 
 [[batches]]
 position = 39
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
+descriptor = "export body at src/common.js:7 body 163"
+cost_tokens = 11
+cum_tokens = 2904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #15"
+cost_tokens = 229
+cum_tokens = 3133
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 357
+end = 376
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Typescript(Imports { file: "test.node.js" })'
+descriptor = "imports in test.node.js"
+cost_tokens = 48
+cum_tokens = 3181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test.node.js"
+start = 3
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
 key = 'Typescript(TestNames { file: "test.js", chunk_index: 0, benchmark: false })'
 descriptor = "test names surface in test.js"
 cost_tokens = 256
-cum_tokens = 3149
+cum_tokens = 3437
 
 [batches.content]
 kind = "lines"
@@ -1253,60 +1307,6 @@ end = 121
 [batches.content.spans.render]
 kind = "truncated"
 pattern = '''^		it\('handles re\-enabling existing instances''''
-
-[[batches]]
-position = 40
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
-descriptor = "export body at src/common.js:7 body 163"
-cost_tokens = 11
-cum_tokens = 3160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #15"
-cost_tokens = 229
-cum_tokens = 3389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 357
-end = 376
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Typescript(Imports { file: "test.node.js" })'
-descriptor = "imports in test.node.js"
-cost_tokens = 48
-cum_tokens = 3437
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test.node.js"
-start = 3
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 43

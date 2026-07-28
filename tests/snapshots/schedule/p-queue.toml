@@ -365,65 +365,10 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Typescript(TestNames { file: "bench.ts", chunk_index: 0, benchmark: true })'
-descriptor = "benchmark names surface in bench.ts"
-cost_tokens = 76
-cum_tokens = 804
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bench.ts"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^addBenchmark\('baseline''''
-
-[[batches.content.spans]]
-path = "bench.ts"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^addBenchmark\('operation with random priority''''
-
-[[batches.content.spans]]
-path = "bench.ts"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^addBenchmark\('operation with increasing priority''''
-
-[[batches.content.spans]]
-path = "bench.ts"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^addBenchmark\('large\-fifo\-backlog''''
-
-[[batches.content.spans]]
-path = "bench.ts"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^addBenchmark\('priority\-queue\-dequeue''''
-
-[[batches]]
-position = 20
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 0 })'
 descriptor = "export tail #1 at source/index.ts:16"
 cost_tokens = 218
-cum_tokens = 1022
+cum_tokens = 946
 
 [batches.content]
 kind = "lines"
@@ -507,6 +452,61 @@ end = 589
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Typescript(TestNames { file: "bench.ts", chunk_index: 0, benchmark: true })'
+descriptor = "benchmark names surface in bench.ts"
+cost_tokens = 76
+cum_tokens = 1022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bench.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^addBenchmark\('baseline''''
+
+[[batches.content.spans]]
+path = "bench.ts"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^addBenchmark\('operation with random priority''''
+
+[[batches.content.spans]]
+path = "bench.ts"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^addBenchmark\('operation with increasing priority''''
+
+[[batches.content.spans]]
+path = "bench.ts"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^addBenchmark\('large\-fifo\-backlog''''
+
+[[batches.content.spans]]
+path = "bench.ts"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^addBenchmark\('priority\-queue\-dequeue''''
 
 [[batches]]
 position = 21
@@ -1222,28 +1222,10 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Typescript(ExportMemberDoc { file: "source/options.ts", start_line: 97, chunk_index: 0 })'
-descriptor = "export member docs #1 at source/options.ts:97"
-cost_tokens = 120
-cum_tokens = 2034
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/options.ts"
-start = 98
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 81
-cum_tokens = 2115
+cum_tokens = 1995
 
 [batches.content]
 kind = "lines"
@@ -1252,6 +1234,24 @@ kind = "lines"
 path = "tsconfig.json"
 start = 1
 end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Typescript(ExportMemberDoc { file: "source/options.ts", start_line: 97, chunk_index: 0 })'
+descriptor = "export member docs #1 at source/options.ts:97"
+cost_tokens = 120
+cum_tokens = 2115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/options.ts"
+start = 98
+end = 108
 
 [batches.content.spans.render]
 kind = "full"
@@ -1516,10 +1516,28 @@ kind = "full"
 
 [[batches]]
 position = 46
+key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #2"
+cost_tokens = 203
+cum_tokens = 3400
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 47
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
 key = 'Typescript(ExportMemberDoc { file: "source/options.ts", start_line: 27, chunk_index: 0 })'
 descriptor = "export member docs #1 at source/options.ts:27"
 cost_tokens = 280
-cum_tokens = 3477
+cum_tokens = 3680
 
 [batches.content]
 kind = "lines"
@@ -1533,11 +1551,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Typescript(ExportMemberDoc { file: "source/options.ts", start_line: 111, chunk_index: 0 })'
 descriptor = "export member docs #1 at source/options.ts:111"
 cost_tokens = 394
-cum_tokens = 3871
+cum_tokens = 4074
 
 [batches.content]
 kind = "lines"
@@ -1546,24 +1564,6 @@ kind = "lines"
 path = "source/options.ts"
 start = 112
 end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #2"
-cost_tokens = 203
-cum_tokens = 4074
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 47
-end = 66
 
 [batches.content.spans.render]
 kind = "full"

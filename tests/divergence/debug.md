@@ -60,14 +60,14 @@ Score(3000)=0.569 I=0.780 C=0.416 ns_rows≤3K=21/54 (reached=10 partial=0 missi
 | ns | 2856 |  | 210 | README: namespace naming conventions + the `DEBUG_*` → `util.inspect` options note | 3.7 |  | 0.509 |
 | walker |  | 2881 | 389 | README.md section #9 |  |  | 0.554 |
 | walker |  | 2893 | 12 | export body at src/common.js:7 body 164 |  |  | 0.554 |
+| walker |  | 2904 | 11 | export body at src/common.js:7 body 163 |  |  | 0.554 |
 | ns | 2950 |  | 94 | README: checking and forcing `debug.enabled` | 3.8 |  | 0.569 |
 | ns | 3076 |  | 126 | README: `log.extend()` for sub-namespaces | 3.9 |  | 0.586 |
-| walker |  | 3149 | 256 | test names surface in test.js |  |  | 0.588 |
-| walker |  | 3160 | 11 | export body at src/common.js:7 body 163 |  |  | 0.588 |
-| ns | 3201 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.570 |
-| ns | 3381 |  | 180 | README: `enable(namespaces)` / `disable()` contract and the round-trip caveat | 3.11 |  | 0.552 |
-| walker |  | 3389 | 229 | README.md section #15 |  |  | 0.555 |
-| walker |  | 3437 | 48 | imports in test.node.js |  |  | 0.555 |
+| walker |  | 3133 | 229 | README.md section #15 |  |  | 0.588 |
+| walker |  | 3181 | 48 | imports in test.node.js |  |  | 0.589 |
+| ns | 3201 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.571 |
+| ns | 3381 |  | 180 | README: `enable(namespaces)` / `disable()` contract and the round-trip caveat | 3.11 |  | 0.553 |
+| walker |  | 3437 | 256 | test names surface in test.js |  |  | 0.555 |
 | ns | 3571 |  | 190 | README: adding a custom formatter | 3.12 |  | 0.573 |
 | ns | 3743 |  | 172 | README: redirecting output by overriding `log` | 3.13 |  | 0.557 |
 | walker |  | 3807 | 370 | README.md section #4 |  |  | 0.584 |

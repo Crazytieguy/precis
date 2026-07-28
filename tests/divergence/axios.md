@@ -209,10 +209,10 @@ Score(3000)=0.563 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 6513 | 260 | export member names #1 at index.d.ts:366 |  |  | 0.421 |
 | ns | 6643 |  | 188 | AxiosHeaders: complete method surface | 4.5 |  | 0.411 |
 | walker |  | 6657 | 144 | export member names at index.d.ts:461 |  |  | 0.427 |
-| ns | 6725 |  | 82 | AxiosHeaders: generated accessors and frozen prototype | 4.6 | 4.5 | 0.424 |
-| ns | 6804 |  | 79 | CancelToken: complete member roster | 4.7 |  | 0.419 |
-| walker |  | 6849 | 192 | export member names at index.d.ts:713 |  |  | 0.419 |
-| walker |  | 6862 | 13 | export at index.d.ts:476 |  |  | 0.422 |
+| walker |  | 6670 | 13 | export at index.d.ts:476 |  |  | 0.431 |
+| ns | 6725 |  | 82 | AxiosHeaders: generated accessors and frozen prototype | 4.6 | 4.5 | 0.427 |
+| ns | 6804 |  | 79 | CancelToken: complete member roster | 4.7 |  | 0.422 |
+| walker |  | 6862 | 192 | export member names at index.d.ts:713 |  |  | 0.422 |
 | walker |  | 6874 | 12 | export at index.d.ts:535 |  |  | 0.422 |
 | walker |  | 6888 | 14 | export at index.d.ts:457 |  |  | 0.422 |
 | walker |  | 6902 | 14 | export at index.d.ts:545 |  |  | 0.422 |

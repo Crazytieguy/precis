@@ -57,37 +57,37 @@ Score(3000)=0.606 I=0.878 C=0.418 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 1685 | 18 | readme.md section #23 |  |  | 0.812 |
 | ns | 1690 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.757 |
 | walker |  | 1702 | 17 | readme.md section #24 |  |  | 0.757 |
+| walker |  | 1722 | 20 | readme.md section #20 |  |  | 0.757 |
 | ns | 1830 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.726 |
-| walker |  | 1869 | 167 | module item names surface in source/vendor/ansi-styles/index.js |  |  | 0.726 |
-| walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.726 |
-| walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.726 |
-| walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.726 |
-| walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.726 |
-| walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.726 |
-| walker |  | 1889 | 20 | readme.md section #20 |  |  | 0.726 |
+| walker |  | 1889 | 167 | module item names surface in source/vendor/ansi-styles/index.js |  |  | 0.726 |
+| walker |  | 1889 | 0 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.726 |
+| walker |  | 1889 | 0 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.726 |
+| walker |  | 1889 | 0 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.726 |
+| walker |  | 1889 | 0 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.726 |
+| walker |  | 1889 | 0 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.726 |
 | ns | 1974 |  | 144 | `ChalkInstance` call signature, `level`, and all six colour-model methods | 2.6 | 2.2 | 0.692 |
 | ns | 2098 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.657 |
-| walker |  | 2143 | 254 | module item names surface in source/index.js |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:8 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:10 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:11 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:12 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:22 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:24 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:41 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:74 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:94 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:119 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:132 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:152 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:168 |  |  | 0.662 |
-| walker |  | 2143 | 0 | module item at source/index.js:204 |  |  | 0.662 |
-| walker |  | 2181 | 38 | module item at source/index.js:15 |  |  | 0.662 |
-| walker |  | 2241 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.663 |
-| ns | 2297 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.629 |
-| walker |  | 2356 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.630 |
-| ns | 2521 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.599 |
-| walker |  | 2610 | 254 | package scripts in package.json |  |  | 0.622 |
+| walker |  | 2143 | 254 | package scripts in package.json |  |  | 0.682 |
+| ns | 2297 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.647 |
+| walker |  | 2397 | 254 | module item names surface in source/index.js |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:8 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:10 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:11 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:12 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:22 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:24 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:41 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:74 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:94 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:119 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:132 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:152 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:168 |  |  | 0.652 |
+| walker |  | 2397 | 0 | module item at source/index.js:204 |  |  | 0.652 |
+| walker |  | 2435 | 38 | module item at source/index.js:15 |  |  | 0.652 |
+| walker |  | 2495 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.653 |
+| ns | 2521 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.621 |
+| walker |  | 2610 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.622 |
 | walker |  | 2633 | 23 | readme.md section #21 |  |  | 0.622 |
 | walker |  | 2655 | 22 | readme.md section #22 |  |  | 0.622 |
 | walker |  | 2746 | 91 | readme.md section #2 |  |  | 0.622 |
@@ -121,12 +121,12 @@ Score(3000)=0.606 I=0.878 C=0.418 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 4074 | 101 | code-of-conduct.md section #1 |  |  | 0.558 |
 | ns | 4163 |  | 209 | readme: modifier list with human descriptions | 3.5 | 1.7 | 0.571 |
 | walker |  | 4259 | 185 | package dev/peer dependencies in package.json |  |  | 0.571 |
-| walker |  | 4439 | 180 | benchmark names surface in benchmark.js |  |  | 0.571 |
-| ns | 4471 |  | 308 | readme: 256/Truecolor section and the `rgb`/`hex`/`ansi256` colour models | 3.6 | 1.5 | 0.561 |
-| walker |  | 4550 | 111 | code-of-conduct.md section #4 |  |  | 0.561 |
-| ns | 4565 |  | 94 | `source/index.js` imports and the stdout/stderr colour split | 4.1 |  | 0.567 |
-| walker |  | 4604 | 54 | readme.md section #14 |  |  | 0.571 |
-| walker |  | 4660 | 56 | readme.md section #32 |  |  | 0.571 |
+| walker |  | 4370 | 111 | code-of-conduct.md section #4 |  |  | 0.571 |
+| walker |  | 4424 | 54 | readme.md section #14 |  |  | 0.576 |
+| ns | 4471 |  | 308 | readme: 256/Truecolor section and the `rgb`/`hex`/`ansi256` colour models | 3.6 | 1.5 | 0.565 |
+| walker |  | 4480 | 56 | readme.md section #32 |  |  | 0.565 |
+| ns | 4565 |  | 94 | `source/index.js` imports and the stdout/stderr colour split | 4.1 |  | 0.571 |
+| walker |  | 4660 | 180 | benchmark names surface in benchmark.js |  |  | 0.571 |
 | ns | 4847 |  | 282 | `source/index.js`: complete top-level declaration roster | 4.2 |  | 0.579 |
 | ns | 4986 |  | 139 | `Chalk` class, `chalkFactory`, `createChalk` | 4.3 | 4.2 | 0.580 |
 | ns | 5104 |  | 118 | `applyOptions`: level validation and auto-detection | 4.4 | 4.2 | 0.585 |
@@ -161,23 +161,23 @@ Score(3000)=0.606 I=0.878 C=0.418 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 8133 | 108 | readme.md section #12 |  |  | 0.564 |
 | walker |  | 8146 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.564 |
 | ns | 8253 |  | 401 | `_supportsColor`: TeamCity, `COLORTERM` and terminal-emulator sniffing | 5.7 | 5.6 | 0.551 |
-| walker |  | 8263 | 117 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.560 |
-| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.560 |
-| walker |  | 8310 | 47 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.566 |
-| ns | 8313 |  | 60 | supports-color: `createSupportsColor` body | 5.8 | 5.1 | 0.569 |
-| walker |  | 8388 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.569 |
-| walker |  | 8475 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.580 |
-| ns | 8478 |  | 165 | supports-color `index.d.ts`: complete type roster | 5.9 |  | 0.573 |
-| walker |  | 8607 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.585 |
-| ns | 8687 |  | 209 | supports-color browser build: `browser.js` level detection and export shape | 5.10 |  | 0.575 |
-| ns | 8700 |  | 13 | `browser.d.ts` (one-line type re-export) | 5.11 |  | 0.576 |
-| ns | 8772 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.573 |
-| walker |  | 8831 | 224 | code-of-conduct.md section #2 |  |  | 0.573 |
+| ns | 8313 |  | 60 | supports-color: `createSupportsColor` body | 5.8 | 5.1 | 0.555 |
+| walker |  | 8370 | 224 | code-of-conduct.md section #2 |  |  | 0.555 |
+| ns | 8478 |  | 165 | supports-color `index.d.ts`: complete type roster | 5.9 |  | 0.549 |
+| walker |  | 8487 | 117 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.557 |
+| walker |  | 8487 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.557 |
+| walker |  | 8534 | 47 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.563 |
+| walker |  | 8612 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.563 |
+| ns | 8687 |  | 209 | supports-color browser build: `browser.js` level detection and export shape | 5.10 |  | 0.554 |
+| walker |  | 8699 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.564 |
+| ns | 8700 |  | 13 | `browser.d.ts` (one-line type re-export) | 5.11 |  | 0.565 |
+| ns | 8772 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.562 |
+| walker |  | 8831 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.573 |
 | walker |  | 8985 | 154 | export body at source/utilities.js:21 body 22 |  |  | 0.573 |
 | ns | 9193 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.564 |
 | walker |  | 9408 | 423 | readme.md section #29 |  |  | 0.578 |

@@ -219,7 +219,9 @@ microbootstrap/
         …
           10→@dataclasses.dataclass
           11→class ConsoleWriter:
-        …
+          12→    writer_enabled: bool = True
+          13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
+          14→    rich_table: Table = dataclasses.field(init=False)
           16→    def __post_init__(self) -> None:
         …
           22→    def write_instrument_status(
@@ -231,13 +233,7 @@ microbootstrap/
         …
           31→    def print_bootstrap_table(self) -> None:
         …
-    exceptions.py
-           1→class MicroBootstrapBaseError(Exception):
-           2→    """Base for all exceptions."""
-           5→class ConfigMergeError(MicroBootstrapBaseError):
-           6→    """Raises when it's impossible to merge configs due to type mismatch."""
-           9→class MissingInstrumentError(MicroBootstrapBaseError):
-          10→    """Raises when attempting to configure instrument, that is not supported yet."""
+    exceptions.py …
     granian_server.py
         …
           16→GRANIAN_LOG_LEVELS_MAP = {
