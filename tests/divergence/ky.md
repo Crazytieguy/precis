@@ -9,22 +9,22 @@ Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | walker |  | 86 | 12 | export names surface in source/index.ts |  |  | 0.000 |
 | walker |  | 86 | 0 | export at source/index.ts:36 |  |  | 0.000 |
 | walker |  | 93 | 7 | listing of 'source/core' |  |  | 0.000 |
-| walker |  | 114 | 21 | export at source/index.ts:10 |  |  | 0.000 |
-| ns | 125 |  | 44 | Complete repository root listing | 1.2 |  | 0.627 |
-| walker |  | 134 | 20 | listing of 'source/errors' |  |  | 0.644 |
+| walker |  | 113 | 20 | listing of 'source/errors' |  |  | 0.000 |
+| ns | 125 |  | 44 | Complete repository root listing | 1.2 |  | 0.644 |
+| walker |  | 134 | 21 | export at source/index.ts:10 |  |  | 0.644 |
 | walker |  | 166 | 32 | listing of 'source/types' |  |  | 0.702 |
 | walker |  | 203 | 37 | listing of 'source/utils' |  |  | 0.782 |
 | ns | 244 |  | 119 | Complete `source/` tree: every library file | 1.3 |  | 0.736 |
 | walker |  | 274 | 71 | package identity in package.json |  |  | 0.746 |
 | ns | 320 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.725 |
 | walker |  | 340 | 66 | listing of 'test' |  |  | 0.736 |
-| walker |  | 371 | 31 | package runtime metadata in package.json |  |  | 0.737 |
-| walker |  | 382 | 11 | listing of '.github' |  |  | 0.737 |
-| walker |  | 385 | 3 | listing of '.github/workflows' |  |  | 0.738 |
-| ns | 422 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.659 |
-| ns | 542 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.599 |
-| ns | 676 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.545 |
-| walker |  | 720 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.545 |
+| walker |  | 351 | 11 | listing of '.github' |  |  | 0.736 |
+| walker |  | 354 | 3 | listing of '.github/workflows' |  |  | 0.737 |
+| ns | 422 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.658 |
+| ns | 542 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.598 |
+| ns | 676 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.544 |
+| walker |  | 689 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.544 |
+| walker |  | 720 | 31 | package runtime metadata in package.json |  |  | 0.545 |
 | walker |  | 735 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.545 |
 | ns | 758 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.515 |
 | walker |  | 760 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.515 |
@@ -40,11 +40,11 @@ Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | walker |  | 1245 | 64 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.681 |
 | walker |  | 1346 | 101 | package scripts in package.json |  |  | 0.681 |
 | walker |  | 1387 | 41 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.682 |
-| ns | 1468 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.633 |
-| walker |  | 1690 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.635 |
-| ns | 1738 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.629 |
-| walker |  | 1790 | 100 | imports in source/index.ts |  |  | 0.629 |
-| walker |  | 1821 | 31 | listing of 'test/helpers' |  |  | 0.673 |
+| walker |  | 1418 | 31 | listing of 'test/helpers' |  |  | 0.731 |
+| ns | 1468 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.678 |
+| walker |  | 1721 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.680 |
+| ns | 1738 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.673 |
+| walker |  | 1821 | 100 | imports in source/index.ts |  |  | 0.673 |
 | walker |  | 1835 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.673 |
 | ns | 1990 |  | 252 | `KyInstance`: every member signature (types/ky.ts) | 2.1 |  | 0.623 |
 | ns | 2101 |  | 111 | `ResponsePromise`: all six body-shortcut signatures | 2.2 |  | 0.605 |

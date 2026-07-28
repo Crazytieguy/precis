@@ -15,14 +15,14 @@ Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missin
 | ns | 245 |  | 91 | examples/ and deps/ listings | 1.4 |  | 0.256 |
 | ns | 342 |  | 97 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.274 |
 | walker |  | 376 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.276 |
-| walker |  | 465 | 89 | c header banner in neco.h |  |  | 0.276 |
-| ns | 467 |  | 125 | Complete tests/ listing | 1.6 |  | 0.340 |
-| walker |  | 479 | 14 | listing of 'docs/tools' |  |  | 0.368 |
-| walker |  | 520 | 41 | listing of 'deps' |  |  | 0.404 |
-| ns | 599 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.375 |
-| ns | 868 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.341 |
-| walker |  | 947 | 427 | README headline in README.md |  |  | 0.561 |
-| walker |  | 997 | 50 | listing of 'examples' |  |  | 0.679 |
+| walker |  | 390 | 14 | listing of 'docs/tools' |  |  | 0.315 |
+| walker |  | 431 | 41 | listing of 'deps' |  |  | 0.360 |
+| ns | 467 |  | 125 | Complete tests/ listing | 1.6 |  | 0.404 |
+| walker |  | 520 | 89 | c header banner in neco.h |  |  | 0.404 |
+| walker |  | 570 | 50 | listing of 'examples' |  |  | 0.539 |
+| ns | 599 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.501 |
+| ns | 868 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.455 |
+| walker |  | 997 | 427 | README headline in README.md |  |  | 0.679 |
 | ns | 1084 |  | 216 | Basic operations: every coroutine-lifecycle signature | 1.9 |  | 0.637 |
 | walker |  | 1230 | 233 | headings outline in README.md |  |  | 0.640 |
 | walker |  | 1274 | 44 | README.md section #0 |  |  | 0.640 |
@@ -193,21 +193,22 @@ Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missin
 | walker |  | 8909 | 81 | docs/API.md section #121 |  |  | 0.575 |
 | walker |  | 8992 | 83 | docs/API.md section #135 |  |  | 0.575 |
 | walker |  | 9008 | 16 | docs/assets/API_head.md section #10 |  |  | 0.575 |
-| walker |  | 9094 | 86 | docs/API.md section #86 |  |  | 0.575 |
-| ns | 9095 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.563 |
-| walker |  | 9178 | 84 | docs/API.md section #87 |  |  | 0.563 |
-| walker |  | 9265 | 87 | docs/API.md section #90 |  |  | 0.563 |
-| walker |  | 9352 | 87 | docs/API.md section #122 |  |  | 0.563 |
-| ns | 9399 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.553 |
-| walker |  | 9439 | 87 | docs/API.md section #124 |  |  | 0.553 |
-| walker |  | 9526 | 87 | docs/API.md section #123 |  |  | 0.553 |
-| ns | 9567 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.547 |
-| walker |  | 9614 | 88 | docs/API.md section #42 |  |  | 0.547 |
-| ns | 9650 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.545 |
-| walker |  | 9702 | 88 | docs/API.md section #89 |  |  | 0.545 |
-| walker |  | 9790 | 88 | docs/API.md section #88 |  |  | 0.545 |
-| ns | 9831 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.539 |
-| walker |  | 9878 | 88 | docs/API.md section #99 |  |  | 0.539 |
-| ns | 9943 |  | 112 | CI | 6.6 |  | 0.545 |
-| walker |  | 9965 | 87 | docs/API.md section #100 |  |  | 0.545 |
-| ns | 9988 |  | 45 | License | 6.7 |  | 0.546 |
+| walker |  | 9023 | 15 | listing of 'docs/tools/doxygen-md' |  |  | 0.590 |
+| ns | 9095 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.577 |
+| walker |  | 9109 | 86 | docs/API.md section #86 |  |  | 0.577 |
+| walker |  | 9193 | 84 | docs/API.md section #87 |  |  | 0.577 |
+| walker |  | 9280 | 87 | docs/API.md section #90 |  |  | 0.577 |
+| walker |  | 9367 | 87 | docs/API.md section #122 |  |  | 0.577 |
+| ns | 9399 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.567 |
+| walker |  | 9454 | 87 | docs/API.md section #124 |  |  | 0.567 |
+| walker |  | 9541 | 87 | docs/API.md section #123 |  |  | 0.567 |
+| ns | 9567 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.561 |
+| walker |  | 9629 | 88 | docs/API.md section #42 |  |  | 0.561 |
+| ns | 9650 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.559 |
+| walker |  | 9717 | 88 | docs/API.md section #89 |  |  | 0.559 |
+| walker |  | 9805 | 88 | docs/API.md section #88 |  |  | 0.559 |
+| ns | 9831 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.552 |
+| walker |  | 9893 | 88 | docs/API.md section #99 |  |  | 0.552 |
+| ns | 9943 |  | 112 | CI | 6.6 |  | 0.559 |
+| walker |  | 9980 | 87 | docs/API.md section #100 |  |  | 0.559 |
+| ns | 9988 |  | 45 | License | 6.7 |  | 0.559 |

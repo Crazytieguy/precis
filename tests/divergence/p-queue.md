@@ -14,26 +14,26 @@ Score(3000)=0.554 I=0.818 C=0.376 ns_rows≤3K=21/56 (reached=6 partial=2 missin
 | walker |  | 228 | 63 | export names surface in source/index.ts |  |  | 0.428 |
 | ns | 246 |  | 57 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.349 |
 | walker |  | 261 | 33 | export at source/index.ts:16 |  |  | 0.349 |
-| walker |  | 328 | 67 | README headline in readme.md |  |  | 0.707 |
-| walker |  | 335 | 7 | listing of '.github' |  |  | 0.707 |
-| walker |  | 338 | 3 | listing of '.github/workflows' |  |  | 0.707 |
-| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.659 |
-| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.559 |
-| walker |  | 539 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.561 |
+| walker |  | 268 | 7 | listing of '.github' |  |  | 0.349 |
+| walker |  | 271 | 3 | listing of '.github/workflows' |  |  | 0.350 |
+| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.327 |
+| walker |  | 472 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.330 |
+| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.280 |
+| walker |  | 539 | 67 | README headline in readme.md |  |  | 0.561 |
 | walker |  | 559 | 20 | export doc at source/index.ts:16 |  |  | 0.593 |
 | ns | 565 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.567 |
 | walker |  | 589 | 30 | export at source/options.ts:27 |  |  | 0.567 |
 | walker |  | 643 | 54 | package runtime dependencies in package.json |  |  | 0.567 |
 | walker |  | 674 | 31 | package runtime metadata in package.json |  |  | 0.569 |
-| walker |  | 711 | 37 | export names surface in source/priority-queue.ts |  |  | 0.569 |
-| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.509 |
-| walker |  | 728 | 17 | export at source/priority-queue.ts:7 |  |  | 0.509 |
-| walker |  | 804 | 76 | benchmark names surface in bench.ts |  |  | 0.510 |
-| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.485 |
-| walker |  | 1022 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.489 |
-| ns | 1037 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.459 |
-| walker |  | 1143 | 121 | headings outline in readme.md |  |  | 0.571 |
-| walker |  | 1173 | 30 | listing of 'test' |  |  | 0.671 |
+| walker |  | 704 | 30 | listing of 'test' |  |  | 0.716 |
+| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.641 |
+| walker |  | 741 | 37 | export names surface in source/priority-queue.ts |  |  | 0.641 |
+| walker |  | 758 | 17 | export at source/priority-queue.ts:7 |  |  | 0.641 |
+| walker |  | 834 | 76 | benchmark names surface in bench.ts |  |  | 0.642 |
+| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.598 |
+| ns | 1037 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.561 |
+| walker |  | 1052 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.565 |
+| walker |  | 1173 | 121 | headings outline in readme.md |  |  | 0.671 |
 | ns | 1276 |  | 239 | Name-only roster of every public member of PQueue (24 declarations, complete) | 2.1 |  | 0.598 |
 | walker |  | 1302 | 129 | export at source/priority-queue.ts:11 |  |  | 0.599 |
 | walker |  | 1312 | 10 | readme.md section #5 |  |  | 0.599 |

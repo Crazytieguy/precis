@@ -75,10 +75,24 @@ entries = ["browser.d.ts", "browser.js", "index.d.ts", "index.js"]
 
 [[batches]]
 position = 6
+key = 'Fs(DirListing { dir: "source/vendor/ansi-styles" })'
+descriptor = "listing of 'source/vendor/ansi-styles'"
+cost_tokens = 8
+cum_tokens = 119
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/vendor/ansi-styles"
+entries = ["index.d.ts", "index.js"]
+
+[[batches]]
+position = 7
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 66
-cum_tokens = 177
+cum_tokens = 185
 
 [batches.content]
 kind = "lines"
@@ -100,20 +114,6 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "source/vendor/ansi-styles" })'
-descriptor = "listing of 'source/vendor/ansi-styles'"
-cost_tokens = 8
-cum_tokens = 185
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/vendor/ansi-styles"
-entries = ["index.d.ts", "index.js"]
-
-[[batches]]
 position = 8
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
@@ -129,10 +129,56 @@ entries = ["rainbow.js", "screenshot.js"]
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 11
+cum_tokens = 203
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["funding.yml", "security.md", "workflows"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 3
+cum_tokens = 206
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 11
+key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
+descriptor = "YAML config at .github/workflows/main.yml"
+cost_tokens = 260
+cum_tokens = 466
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Typescript(ExportNames { file: "source/index.js" })'
 descriptor = "export names surface in source/index.js"
 cost_tokens = 56
-cum_tokens = 248
+cum_tokens = 522
 
 [batches.content]
 kind = "lines"
@@ -194,11 +240,11 @@ end = 221
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 13
 key = 'Typescript(Export { file: "source/index.js", start_line: 225 })'
 descriptor = "export at source/index.js:225"
 cost_tokens = 0
-cum_tokens = 248
+cum_tokens = 522
 
 [batches.content]
 kind = "lines"
@@ -212,11 +258,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 11
+position = 14
 key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
 descriptor = "export at source/index.js:34"
 cost_tokens = 8
-cum_tokens = 256
+cum_tokens = 530
 
 [batches.content]
 kind = "lines"
@@ -238,11 +284,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 15
 key = 'Typescript(Export { file: "source/index.js", start_line: 50 })'
 descriptor = "export at source/index.js:50"
 cost_tokens = 13
-cum_tokens = 269
+cum_tokens = 543
 
 [batches.content]
 kind = "lines"
@@ -264,11 +310,11 @@ end = 51
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 16
 key = 'Typescript(ExportBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
 descriptor = "export body at source/index.js:50 body 51"
 cost_tokens = 9
-cum_tokens = 278
+cum_tokens = 552
 
 [batches.content]
 kind = "lines"
@@ -282,11 +328,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 14
+position = 17
 key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
 descriptor = "export at source/index.js:220"
 cost_tokens = 27
-cum_tokens = 305
+cum_tokens = 579
 
 [batches.content]
 kind = "lines"
@@ -300,11 +346,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 15
+position = 18
 key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
 descriptor = "export body at source/index.js:34 body 36"
 cost_tokens = 26
-cum_tokens = 331
+cum_tokens = 605
 
 [batches.content]
 kind = "lines"
@@ -318,11 +364,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 16
+position = 19
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 105
-cum_tokens = 436
+cum_tokens = 710
 
 [batches.content]
 kind = "lines"
@@ -339,52 +385,6 @@ kind = "full"
 path = "readme.md"
 start = 18
 end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 11
-cum_tokens = 447
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["funding.yml", "security.md", "workflows"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 3
-cum_tokens = 450
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 19
-key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
-descriptor = "YAML config at .github/workflows/main.yml"
-cost_tokens = 260
-cum_tokens = 710
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/main.yml"
-start = 1
-end = 26
 
 [batches.content.spans.render]
 kind = "full"

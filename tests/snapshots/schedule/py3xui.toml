@@ -121,10 +121,24 @@ entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", 
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "py3xui/api" })'
+descriptor = "listing of 'py3xui/api'"
+cost_tokens = 39
+cum_tokens = 320
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "py3xui/api"
+entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py", "api_database.py", "api_inbound.py", "api_server.py"]
+
+[[batches]]
+position = 10
 key = 'Python(Imports { file: "py3xui/client/__init__.py" })'
 descriptor = "python imports in py3xui/client/__init__.py"
 cost_tokens = 28
-cum_tokens = 309
+cum_tokens = 348
 
 [batches.content]
 kind = "lines"
@@ -138,11 +152,25 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
+key = 'Fs(DirListing { dir: "py3xui/async_api" })'
+descriptor = "listing of 'py3xui/async_api'"
+cost_tokens = 45
+cum_tokens = 393
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "py3xui/async_api"
+entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "async_api_client.py", "async_api_database.py", "async_api_inbound.py", "async_api_server.py"]
+
+[[batches]]
+position = 12
 key = 'Python(DeclNames { file: "py3xui/utils/__init__.py" })'
 descriptor = "python decl names surface in py3xui/utils/__init__.py"
 cost_tokens = 17
-cum_tokens = 326
+cum_tokens = 410
 
 [batches.content]
 kind = "lines"
@@ -156,11 +184,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 11
+position = 13
 key = 'Python(Imports { file: "py3xui/utils/__init__.py" })'
 descriptor = "python imports in py3xui/utils/__init__.py"
 cost_tokens = 31
-cum_tokens = 357
+cum_tokens = 441
 
 [batches.content]
 kind = "lines"
@@ -174,11 +202,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 12
+position = 14
 key = 'Python(Imports { file: "py3xui/server/__init__.py" })'
 descriptor = "python imports in py3xui/server/__init__.py"
 cost_tokens = 32
-cum_tokens = 389
+cum_tokens = 473
 
 [batches.content]
 kind = "lines"
@@ -190,34 +218,6 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "py3xui/api" })'
-descriptor = "listing of 'py3xui/api'"
-cost_tokens = 39
-cum_tokens = 428
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "py3xui/api"
-entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py", "api_database.py", "api_inbound.py", "api_server.py"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "py3xui/async_api" })'
-descriptor = "listing of 'py3xui/async_api'"
-cost_tokens = 45
-cum_tokens = 473
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "py3xui/async_api"
-entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "async_api_client.py", "async_api_database.py", "async_api_inbound.py", "async_api_server.py"]
 
 [[batches]]
 position = 15
@@ -235,10 +235,38 @@ entries = ["launch.json", "settings.json", "tasks.json"]
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 19
+cum_tokens = 503
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 22
+cum_tokens = 525
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["checks.yml", "checkspr.yml", "issues.yml", "pypi.yml", "stale.yml"]
+
+[[batches]]
+position = 18
 key = 'Markdown(ReadmeHeadline { file: "py3xui/utils/README.md" })'
 descriptor = "README headline in py3xui/utils/README.md"
 cost_tokens = 31
-cum_tokens = 515
+cum_tokens = 556
 
 [batches.content]
 kind = "lines"
@@ -252,11 +280,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Python(Imports { file: "py3xui/api/__init__.py" })'
 descriptor = "python imports in py3xui/api/__init__.py"
 cost_tokens = 80
-cum_tokens = 595
+cum_tokens = 636
 
 [batches.content]
 kind = "lines"
@@ -270,11 +298,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Python(Imports { file: "py3xui/inbound/__init__.py" })'
 descriptor = "python imports in py3xui/inbound/__init__.py"
 cost_tokens = 82
-cum_tokens = 677
+cum_tokens = 718
 
 [batches.content]
 kind = "lines"
@@ -288,11 +316,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 19
+position = 21
 key = 'Markdown(Section { file: "py3xui/utils/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/utils/README.md section #0"
 cost_tokens = 15
-cum_tokens = 692
+cum_tokens = 733
 
 [batches.content]
 kind = "lines"
@@ -306,11 +334,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Python(Imports { file: "py3xui/async_api/__init__.py" })'
 descriptor = "python imports in py3xui/async_api/__init__.py"
 cost_tokens = 91
-cum_tokens = 783
+cum_tokens = 824
 
 [batches.content]
 kind = "lines"
@@ -324,11 +352,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Markdown(ReadmeHeadline { file: "py3xui/server/README.md" })'
 descriptor = "README headline in py3xui/server/README.md"
 cost_tokens = 36
-cum_tokens = 819
+cum_tokens = 860
 
 [batches.content]
 kind = "lines"
@@ -342,11 +370,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Markdown(ReadmeHeadline { file: "py3xui/client/README.md" })'
 descriptor = "README headline in py3xui/client/README.md"
 cost_tokens = 37
-cum_tokens = 856
+cum_tokens = 897
 
 [batches.content]
 kind = "lines"
@@ -360,11 +388,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 61
-cum_tokens = 917
+cum_tokens = 958
 
 [batches.content]
 kind = "lines"
@@ -378,39 +406,25 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 24
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 19
-cum_tokens = 936
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 22
-cum_tokens = 958
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["checks.yml", "checkspr.yml", "issues.yml", "pypi.yml", "stale.yml"]
-
-[[batches]]
 position = 26
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 25
+cum_tokens = 983
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__init__.py", "responses", "test_api.py", "test_async_api.py", "test_env.py"]
+
+[[batches]]
+position = 27
 key = 'Markdown(ReadmeHeadline { file: "py3xui/inbound/README.md" })'
 descriptor = "README headline in py3xui/inbound/README.md"
 cost_tokens = 47
-cum_tokens = 1005
+cum_tokens = 1030
 
 [batches.content]
 kind = "lines"
@@ -424,11 +438,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Markdown(HeadingsOutline { file: "py3xui/client/README.md" })'
 descriptor = "headings outline in py3xui/client/README.md"
 cost_tokens = 21
-cum_tokens = 1026
+cum_tokens = 1051
 
 [batches.content]
 kind = "lines"
@@ -466,11 +480,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(Section { file: "py3xui/client/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/client/README.md section #0"
 cost_tokens = 13
-cum_tokens = 1039
+cum_tokens = 1064
 
 [batches.content]
 kind = "lines"
@@ -484,11 +498,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Markdown(ReadmeHeadline { file: "py3xui/api/README.md" })'
 descriptor = "README headline in py3xui/api/README.md"
 cost_tokens = 49
-cum_tokens = 1088
+cum_tokens = 1113
 
 [batches.content]
 kind = "lines"
@@ -502,11 +516,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(ReadmeHeadline { file: "py3xui/async_api/README.md" })'
 descriptor = "README headline in py3xui/async_api/README.md"
 cost_tokens = 59
-cum_tokens = 1147
+cum_tokens = 1172
 
 [batches.content]
 kind = "lines"
@@ -518,20 +532,6 @@ end = 6
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 25
-cum_tokens = 1172
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__init__.py", "responses", "test_api.py", "test_async_api.py", "test_env.py"]
 
 [[batches]]
 position = 32

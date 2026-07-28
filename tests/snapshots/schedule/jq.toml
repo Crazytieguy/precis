@@ -33,10 +33,94 @@ entries = [".gitignore", "m4"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 54
+cum_tokens = 154
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "docs/content" })'
+descriptor = "listing of 'docs/content'"
+cost_tokens = 15
+cum_tokens = 169
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content"
+entries = ["download", "index.yml", "manual", "tutorial"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "docs/content/download" })'
+descriptor = "listing of 'docs/content/download'"
+cost_tokens = 3
+cum_tokens = 172
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content/download"
+entries = ["default.yml"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
+descriptor = "listing of 'docs/content/tutorial'"
+cost_tokens = 3
+cum_tokens = 175
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content/tutorial"
+entries = ["default.yml"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "docs/templates" })'
+descriptor = "listing of 'docs/templates'"
+cost_tokens = 21
+cum_tokens = 196
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/templates"
+entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "vendor" })'
+descriptor = "listing of 'vendor'"
+cost_tokens = 9
+cum_tokens = 205
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "vendor"
+entries = ["decNumber", "oniguruma"]
+
+[[batches]]
+position = 9
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 71
-cum_tokens = 171
+cum_tokens = 276
 
 [batches.content]
 kind = "lines"
@@ -48,90 +132,6 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 54
-cum_tokens = 225
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "docs/content" })'
-descriptor = "listing of 'docs/content'"
-cost_tokens = 15
-cum_tokens = 240
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content"
-entries = ["download", "index.yml", "manual", "tutorial"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "docs/content/download" })'
-descriptor = "listing of 'docs/content/download'"
-cost_tokens = 3
-cum_tokens = 243
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content/download"
-entries = ["default.yml"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
-descriptor = "listing of 'docs/content/tutorial'"
-cost_tokens = 3
-cum_tokens = 246
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content/tutorial"
-entries = ["default.yml"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "docs/templates" })'
-descriptor = "listing of 'docs/templates'"
-cost_tokens = 21
-cum_tokens = 267
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/templates"
-entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "vendor" })'
-descriptor = "listing of 'vendor'"
-cost_tokens = 9
-cum_tokens = 276
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "vendor"
-entries = ["decNumber", "oniguruma"]
 
 [[batches]]
 position = 10
@@ -191,10 +191,66 @@ entries = ["_footer.html.j2", "_head.html.j2", "_navbar.html.j2"]
 
 [[batches]]
 position = 14
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 348
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 34
+cum_tokens = 382
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "decnum.yml", "manpage.yml", "oniguruma.yml", "scanbuild.yml", "valgrind.yml", "website.yml"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 13
+cum_tokens = 395
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["crosscompile", "gen_utf8_tables.py", "version"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "config/m4" })'
+descriptor = "listing of 'config/m4'"
+cost_tokens = 46
+cum_tokens = 441
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "config/m4"
+entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
+
+[[batches]]
+position = 18
 key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
 cost_tokens = 56
-cum_tokens = 391
+cum_tokens = 497
 
 [batches.content]
 kind = "lines"
@@ -208,67 +264,25 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 404
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 34
-cum_tokens = 438
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "decnum.yml", "manpage.yml", "oniguruma.yml", "scanbuild.yml", "valgrind.yml", "website.yml"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 13
-cum_tokens = 451
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["crosscompile", "gen_utf8_tables.py", "version"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "config/m4" })'
-descriptor = "listing of 'config/m4'"
-cost_tokens = 46
-cum_tokens = 497
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "config/m4"
-entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
-
-[[batches]]
 position = 19
+key = 'Fs(DirListing { dir: "m4" })'
+descriptor = "listing of 'm4'"
+cost_tokens = 22
+cum_tokens = 519
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "m4"
+entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
+
+[[batches]]
+position = 20
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 72
-cum_tokens = 569
+cum_tokens = 591
 
 [batches.content]
 kind = "lines"
@@ -370,20 +384,6 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "m4" })'
-descriptor = "listing of 'm4'"
-cost_tokens = 22
-cum_tokens = 591
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "m4"
-entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
-
-[[batches]]
 position = 21
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
@@ -399,62 +399,10 @@ entries = ["builtin.c", "builtin.h", "builtin.jq", "bytecode.c", "bytecode.h", "
 
 [[batches]]
 position = 22
-key = 'C(DeclNames { file: "src/jv_file.c", chunk_index: 0 })'
-descriptor = "c decl names surface in src/jv_file.c"
-cost_tokens = 23
-cum_tokens = 846
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 23
-key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
-descriptor = "c decl at src/jv_file.c:12"
-cost_tokens = 0
-cum_tokens = 846
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
 key = 'Fs(DirListing { dir: "docs/content/manual" })'
 descriptor = "listing of 'docs/content/manual'"
 cost_tokens = 49
-cum_tokens = 895
+cum_tokens = 872
 
 [batches.content]
 kind = "fs"
@@ -464,11 +412,11 @@ parent = "docs/content/manual"
 entries = ["dev", "manual.yml", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8"]
 
 [[batches]]
-position = 25
+position = 23
 key = 'Fs(DirListing { dir: "docs/content/manual/dev" })'
 descriptor = "listing of 'docs/content/manual/dev'"
 cost_tokens = 3
-cum_tokens = 898
+cum_tokens = 875
 
 [batches.content]
 kind = "fs"
@@ -478,11 +426,11 @@ parent = "docs/content/manual/dev"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 26
+position = 24
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.3" })'
 descriptor = "listing of 'docs/content/manual/v1.3'"
 cost_tokens = 3
-cum_tokens = 901
+cum_tokens = 878
 
 [batches.content]
 kind = "fs"
@@ -492,11 +440,11 @@ parent = "docs/content/manual/v1.3"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 27
+position = 25
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.4" })'
 descriptor = "listing of 'docs/content/manual/v1.4'"
 cost_tokens = 3
-cum_tokens = 904
+cum_tokens = 881
 
 [batches.content]
 kind = "fs"
@@ -506,11 +454,11 @@ parent = "docs/content/manual/v1.4"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 28
+position = 26
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.5" })'
 descriptor = "listing of 'docs/content/manual/v1.5'"
 cost_tokens = 3
-cum_tokens = 907
+cum_tokens = 884
 
 [batches.content]
 kind = "fs"
@@ -520,11 +468,11 @@ parent = "docs/content/manual/v1.5"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 29
+position = 27
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.6" })'
 descriptor = "listing of 'docs/content/manual/v1.6'"
 cost_tokens = 3
-cum_tokens = 910
+cum_tokens = 887
 
 [batches.content]
 kind = "fs"
@@ -534,11 +482,11 @@ parent = "docs/content/manual/v1.6"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 30
+position = 28
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.7" })'
 descriptor = "listing of 'docs/content/manual/v1.7'"
 cost_tokens = 3
-cum_tokens = 913
+cum_tokens = 890
 
 [batches.content]
 kind = "fs"
@@ -548,11 +496,11 @@ parent = "docs/content/manual/v1.7"
 entries = ["manual.yml"]
 
 [[batches]]
-position = 31
+position = 29
 key = 'Fs(DirListing { dir: "docs/content/manual/v1.8" })'
 descriptor = "listing of 'docs/content/manual/v1.8'"
 cost_tokens = 3
-cum_tokens = 916
+cum_tokens = 893
 
 [batches.content]
 kind = "fs"
@@ -560,6 +508,58 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/content/manual/v1.8"
 entries = ["manual.yml"]
+
+[[batches]]
+position = 30
+key = 'C(DeclNames { file: "src/jv_file.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_file.c"
+cost_tokens = 23
+cum_tokens = 916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 31
+key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
+descriptor = "c decl at src/jv_file.c:12"
+cost_tokens = 0
+cum_tokens = 916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 32
@@ -581,10 +581,24 @@ kind = "full"
 
 [[batches]]
 position = 33
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 166
+cum_tokens = 1134
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["base64.test", "base64test", "jq-f-test.sh", "jq.test", "jq_fuzz_compile.c", "jq_fuzz_execute.cpp", "jq_fuzz_fixed.cpp", "jq_fuzz_load_file.c", "jq_fuzz_parse.c", "jq_fuzz_parse_extended.c", "jq_fuzz_parse_stream.c", "jqtest", "local.supp", "man.test", "manonig.test", "manonigtest", "mantest", "modules", "no-main-program.jq", "onig.supp", "onig.test", "onigtest", "optional.test", "optionaltest", "setup", "shtest", "torture", "uri.test", "uritest", "utf8test", "yes-main-program.jq"]
+
+[[batches]]
+position = 34
 key = 'C(DeclNames { file: "src/jq_test.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq_test.c"
 cost_tokens = 38
-cum_tokens = 1006
+cum_tokens = 1172
 
 [batches.content]
 kind = "lines"
@@ -622,11 +636,11 @@ end = 79
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'C(Decl { file: "src/jq_test.c", start_line: 21 })'
 descriptor = "c decl at src/jq_test.c:21"
 cost_tokens = 0
-cum_tokens = 1006
+cum_tokens = 1172
 
 [batches.content]
 kind = "lines"
@@ -648,11 +662,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 36
 key = 'C(Decl { file: "src/jq_test.c", start_line: 78 })'
 descriptor = "c decl at src/jq_test.c:78"
 cost_tokens = 16
-cum_tokens = 1022
+cum_tokens = 1188
 
 [batches.content]
 kind = "lines"
@@ -664,20 +678,6 @@ end = 80
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 166
-cum_tokens = 1188
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["base64.test", "base64test", "jq-f-test.sh", "jq.test", "jq_fuzz_compile.c", "jq_fuzz_execute.cpp", "jq_fuzz_fixed.cpp", "jq_fuzz_load_file.c", "jq_fuzz_parse.c", "jq_fuzz_parse_extended.c", "jq_fuzz_parse_stream.c", "jqtest", "local.supp", "man.test", "manonig.test", "manonigtest", "mantest", "modules", "no-main-program.jq", "onig.supp", "onig.test", "onigtest", "optional.test", "optionaltest", "setup", "shtest", "torture", "uri.test", "uritest", "utf8test", "yes-main-program.jq"]
 
 [[batches]]
 position = 37
@@ -1077,10 +1077,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 51
+key = 'Fs(DirListing { dir: "sig" })'
+descriptor = "listing of 'sig'"
+cost_tokens = 109
+cum_tokens = 2777
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "sig"
+entries = ["jq-release-new.key", "jq-release-old.key", "v1.3", "v1.4", "v1.5", "v1.5rc1", "v1.5rc2", "v1.6", "v1.7", "v1.7.1", "v1.7rc1", "v1.7rc2", "v1.8.0", "v1.8.1"]
+
+[[batches]]
+position = 52
 key = 'C(DeclNames { file: "src/jv_utf8_tables.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_utf8_tables.h"
 cost_tokens = 20
-cum_tokens = 2688
+cum_tokens = 2797
 
 [batches.content]
 kind = "lines"
@@ -1102,11 +1116,53 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 53
+key = 'Fs(DirListing { dir: "vendor/decNumber" })'
+descriptor = "listing of 'vendor/decNumber'"
+cost_tokens = 166
+cum_tokens = 2963
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "vendor/decNumber"
+entries = ["ICU-license.html", "decBasic.c", "decCommon.c", "decContext.c", "decContext.h", "decDPD.h", "decDouble.c", "decDouble.h", "decNumber.c", "decNumber.h", "decNumberLocal.h", "decPacked.c", "decPacked.h", "decQuad.c", "decQuad.h", "decSingle.c", "decSingle.h", "decimal128.c", "decimal128.h", "decimal32.c", "decimal32.h", "decimal64.c", "decimal64.h", "decnumber.pdf", "example1.c", "example2.c", "example3.c", "example4.c", "example5.c", "example6.c", "example7.c", "example8.c", "readme.txt"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 4
+cum_tokens = 2967
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug_report.md"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "tests/torture" })'
+descriptor = "listing of 'tests/torture'"
+cost_tokens = 4
+cum_tokens = 2971
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/torture"
+entries = ["input0.json"]
+
+[[batches]]
+position = 56
 key = 'C(WholeFile { file: "src/jv_private.h" })'
 descriptor = "c whole header in src/jv_private.h"
 cost_tokens = 66
-cum_tokens = 2754
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1176,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 53
+position = 57
 key = 'C(DeclNames { file: "src/linker.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/linker.c"
 cost_tokens = 74
-cum_tokens = 2828
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1186,11 +1242,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 58
 key = 'C(Decl { file: "src/linker.c", start_line: 409 })'
 descriptor = "c decl at src/linker.c:409"
 cost_tokens = 0
-cum_tokens = 2828
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1212,11 +1268,11 @@ end = 410
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 59
 key = 'C(Decl { file: "src/linker.c", start_line: 435 })'
 descriptor = "c decl at src/linker.c:435"
 cost_tokens = 0
-cum_tokens = 2828
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1238,11 +1294,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 60
 key = 'C(Decl { file: "src/linker.c", start_line: 28 })'
 descriptor = "c decl at src/linker.c:28"
 cost_tokens = 26
-cum_tokens = 2854
+cum_tokens = 3137
 
 [batches.content]
 kind = "lines"
@@ -1256,11 +1312,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 57
+position = 61
 key = 'C(Decl { file: "src/linker.c", start_line: 23 })'
 descriptor = "c decl at src/linker.c:23"
 cost_tokens = 28
-cum_tokens = 2882
+cum_tokens = 3165
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +1330,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 58
+position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 83
-cum_tokens = 2965
+cum_tokens = 3248
 
 [batches.content]
 kind = "lines"
@@ -1292,11 +1348,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 59
+position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 31
-cum_tokens = 2996
+cum_tokens = 3279
 
 [batches.content]
 kind = "lines"
@@ -1310,11 +1366,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 60
+position = 64
 key = 'C(DeclNames { file: "src/main.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 85
-cum_tokens = 3081
+cum_tokens = 3364
 
 [batches.content]
 kind = "lines"
@@ -1384,25 +1440,11 @@ end = 174
 kind = "ellipsis"
 
 [[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "sig" })'
-descriptor = "listing of 'sig'"
-cost_tokens = 109
-cum_tokens = 3190
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "sig"
-entries = ["jq-release-new.key", "jq-release-old.key", "v1.3", "v1.4", "v1.5", "v1.5rc1", "v1.5rc2", "v1.6", "v1.7", "v1.7.1", "v1.7rc1", "v1.7rc2", "v1.8.0", "v1.8.1"]
-
-[[batches]]
-position = 62
+position = 65
 key = 'C(WholeFile { file: "src/linker.h" })'
 descriptor = "c whole header in src/linker.h"
 cost_tokens = 81
-cum_tokens = 3271
+cum_tokens = 3445
 
 [batches.content]
 kind = "lines"
@@ -1416,11 +1458,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 63
+position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 85
-cum_tokens = 3356
+cum_tokens = 3530
 
 [batches.content]
 kind = "lines"
@@ -1434,11 +1476,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 64
+position = 67
 key = 'C(DeclNames { file: "src/jq.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in src/jq.h"
 cost_tokens = 381
-cum_tokens = 3737
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1518,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 68
 key = 'C(Decl { file: "src/jq.h", start_line: 60 })'
 descriptor = "c decl at src/jq.h:60"
 cost_tokens = 0
-cum_tokens = 3737
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -1494,25 +1536,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 66
-key = 'Fs(DirListing { dir: "vendor/decNumber" })'
-descriptor = "listing of 'vendor/decNumber'"
-cost_tokens = 166
-cum_tokens = 3903
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "vendor/decNumber"
-entries = ["ICU-license.html", "decBasic.c", "decCommon.c", "decContext.c", "decContext.h", "decDPD.h", "decDouble.c", "decDouble.h", "decNumber.c", "decNumber.h", "decNumberLocal.h", "decPacked.c", "decPacked.h", "decQuad.c", "decQuad.h", "decSingle.c", "decSingle.h", "decimal128.c", "decimal128.h", "decimal32.c", "decimal32.h", "decimal64.c", "decimal64.h", "decnumber.pdf", "example1.c", "example2.c", "example3.c", "example4.c", "example5.c", "example6.c", "example7.c", "example8.c", "readme.txt"]
-
-[[batches]]
-position = 67
+position = 69
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 30
-cum_tokens = 3933
+cum_tokens = 3941
 
 [batches.content]
 kind = "lines"
@@ -1524,34 +1552,6 @@ end = 14
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 68
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 4
-cum_tokens = 3937
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug_report.md"]
-
-[[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "tests/torture" })'
-descriptor = "listing of 'tests/torture'"
-cost_tokens = 4
-cum_tokens = 3941
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/torture"
-entries = ["input0.json"]
 
 [[batches]]
 position = 70

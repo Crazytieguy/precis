@@ -19,10 +19,24 @@ entries = [".editorconfig", ".eslintignore", ".eslintrc.yml", ".github", ".gitig
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 23
+cum_tokens = 70
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
+
+[[batches]]
+position = 3
 key = 'Typescript(ExportNames { file: "index.js" })'
 descriptor = "export names surface in index.js"
 cost_tokens = 15
-cum_tokens = 62
+cum_tokens = 85
 
 [batches.content]
 kind = "lines"
@@ -34,20 +48,6 @@ end = 11
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 23
-cum_tokens = 85
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
 
 [[batches]]
 position = 4
@@ -141,10 +141,24 @@ kind = "full"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 378
+cum_tokens = 590
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
+
+[[batches]]
+position = 10
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 50
-cum_tokens = 262
+cum_tokens = 640
 
 [batches.content]
 kind = "lines"
@@ -156,20 +170,6 @@ end = 90
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 378
-cum_tokens = 640
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
 
 [[batches]]
 position = 11
@@ -187,10 +187,24 @@ entries = ["env.js", "tmpl.js", "utils.js"]
 
 [[batches]]
 position = 12
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 125
+cum_tokens = 776
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
+
+[[batches]]
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 420
-cum_tokens = 1071
+cum_tokens = 1196
 
 [batches.content]
 kind = "lines"
@@ -212,11 +226,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 128
-cum_tokens = 1199
+cum_tokens = 1324
 
 [batches.content]
 kind = "lines"
@@ -428,20 +442,6 @@ end = 264
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 125
-cum_tokens = 1324
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
 
 [[batches]]
 position = 15
@@ -873,10 +873,24 @@ kind = "full"
 
 [[batches]]
 position = 29
+key = 'Fs(DirListing { dir: "test/acceptance" })'
+descriptor = "listing of 'test/acceptance'"
+cost_tokens = 85
+cum_tokens = 1870
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/acceptance"
+entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
+
+[[batches]]
+position = 30
 key = 'Typescript(ExportNames { file: "lib/express.js" })'
 descriptor = "export names surface in lib/express.js"
 cost_tokens = 133
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -954,11 +968,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Typescript(Export { file: "lib/express.js", start_line: 27 })'
 descriptor = "export at lib/express.js:27"
 cost_tokens = 0
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -972,11 +986,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Typescript(Export { file: "lib/express.js", start_line: 36 })'
 descriptor = "export at lib/express.js:36"
 cost_tokens = 0
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -998,11 +1012,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Typescript(Export { file: "lib/express.js", start_line: 62 })'
 descriptor = "export at lib/express.js:62"
 cost_tokens = 0
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -1016,11 +1030,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Typescript(Export { file: "lib/express.js", start_line: 70 })'
 descriptor = "export at lib/express.js:70"
 cost_tokens = 0
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -1034,11 +1048,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Typescript(Export { file: "lib/express.js", start_line: 77 })'
 descriptor = "export at lib/express.js:77"
 cost_tokens = 0
-cum_tokens = 1918
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -1052,11 +1066,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 70 })'
 descriptor = "export doc at lib/express.js:70"
 cost_tokens = 17
-cum_tokens = 1935
+cum_tokens = 2020
 
 [batches.content]
 kind = "lines"
@@ -1070,11 +1084,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 77 })'
 descriptor = "export doc at lib/express.js:77"
 cost_tokens = 17
-cum_tokens = 1952
+cum_tokens = 2037
 
 [batches.content]
 kind = "lines"
@@ -1088,11 +1102,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 62 })'
 descriptor = "export doc at lib/express.js:62"
 cost_tokens = 20
-cum_tokens = 1972
+cum_tokens = 2057
 
 [batches.content]
 kind = "lines"
@@ -1106,11 +1120,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package runtime dependencies in package.json"
 cost_tokens = 460
-cum_tokens = 2432
+cum_tokens = 2517
 
 [batches.content]
 kind = "lines"
@@ -1124,11 +1138,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 27 })'
 descriptor = "export doc at lib/express.js:27"
 cost_tokens = 22
-cum_tokens = 2454
+cum_tokens = 2539
 
 [batches.content]
 kind = "lines"
@@ -1142,11 +1156,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Typescript(Imports { file: "lib/request.js" })'
 descriptor = "imports in lib/request.js"
 cost_tokens = 24
-cum_tokens = 2478
+cum_tokens = 2563
 
 [batches.content]
 kind = "lines"
@@ -1168,29 +1182,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 41
-key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 37 })'
-descriptor = "export doc at lib/request.js:37"
-cost_tokens = 26
-cum_tokens = 2504
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/request.js"
-start = 32
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 42
 key = 'Markdown(Section { file: "Readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "Readme.md section #1"
 cost_tokens = 242
-cum_tokens = 2746
+cum_tokens = 2805
 
 [batches.content]
 kind = "lines"
@@ -1205,10 +1201,28 @@ kind = "full"
 
 [[batches]]
 position = 43
+key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 37 })'
+descriptor = "export doc at lib/request.js:37"
+cost_tokens = 26
+cum_tokens = 2831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 32
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
 key = 'Typescript(Imports { file: "lib/express.js" })'
 descriptor = "imports in lib/express.js"
 cost_tokens = 25
-cum_tokens = 2771
+cum_tokens = 2856
 
 [batches.content]
 kind = "lines"
@@ -1228,20 +1242,6 @@ end = 15
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 44
-key = 'Fs(DirListing { dir: "test/acceptance" })'
-descriptor = "listing of 'test/acceptance'"
-cost_tokens = 85
-cum_tokens = 2856
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/acceptance"
-entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
 
 [[batches]]
 position = 45

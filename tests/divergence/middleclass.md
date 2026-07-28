@@ -9,10 +9,10 @@ Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 (reached=12 partial=5 missi
 | ns | 101 |  | 36 | Repository root listing (complete) | 1.2 |  | 0.479 |
 | walker |  | 147 | 57 | listing of 'spec' |  |  | 0.520 |
 | ns | 148 |  | 47 | README title and one-line pitch | 1.3 |  | 0.510 |
-| walker |  | 212 | 65 | lua module identity in middleclass.lua |  |  | 0.933 |
-| ns | 251 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.778 |
-| walker |  | 258 | 46 | headings outline in UPDATING.md |  |  | 0.779 |
-| walker |  | 337 | 79 | listing of 'rockspecs' |  |  | 0.811 |
+| walker |  | 226 | 79 | listing of 'rockspecs' |  |  | 0.561 |
+| ns | 251 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
+| walker |  | 291 | 65 | lua module identity in middleclass.lua |  |  | 0.810 |
+| walker |  | 337 | 46 | headings outline in UPDATING.md |  |  | 0.811 |
 | walker |  | 362 | 25 | lua decl names surface in performance/run.lua |  |  | 0.811 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:19 |  |  | 0.811 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:37 |  |  | 0.811 |

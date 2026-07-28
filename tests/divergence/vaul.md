@@ -9,36 +9,36 @@ Score(3000)=0.875 I=0.930 C=0.824 ns_rows≤3K=20/61 (reached=15 partial=2 missi
 | ns | 86 |  | 86 | Package identity: name, version, description, entry points | 1.1 |  | 0.000 |
 | walker |  | 133 | 58 | package identity in package.json |  |  | 0.460 |
 | ns | 152 |  | 66 | Complete repository root listing | 1.2 |  | 0.677 |
-| walker |  | 169 | 36 | package runtime dependencies in package.json |  |  | 0.677 |
-| walker |  | 188 | 19 | package runtime metadata in package.json |  |  | 0.677 |
-| ns | 222 |  | 70 | Complete src/ listing — the shipped library | 1.3 |  | 0.507 |
-| walker |  | 258 | 70 | listing of 'src' |  |  | 0.737 |
+| walker |  | 203 | 70 | listing of 'src' |  |  | 0.746 |
+| ns | 222 |  | 70 | Complete src/ listing — the shipped library | 1.3 |  | 0.737 |
+| walker |  | 239 | 36 | package runtime dependencies in package.json |  |  | 0.737 |
+| walker |  | 258 | 19 | package runtime metadata in package.json |  |  | 0.737 |
 | walker |  | 275 | 17 | module item at src/index.tsx:993 |  |  | 0.737 |
 | walker |  | 288 | 13 | module item at src/index.tsx:994 |  |  | 0.737 |
 | ns | 337 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.615 |
 | walker |  | 351 | 63 | README.md section #0 |  |  | 0.620 |
 | walker |  | 364 | 13 | export names surface in playwright.config.ts |  |  | 0.620 |
-| walker |  | 387 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.620 |
 | ns | 405 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.616 |
-| ns | 591 |  | 186 | Every top-level export declaration in src/index.tsx (names only) | 1.6 |  | 0.541 |
-| walker |  | 611 | 224 | export names surface in src/index.tsx |  |  | 0.635 |
-| walker |  | 611 | 0 | export at src/index.tsx:1098 |  |  | 0.635 |
-| walker |  | 611 | 0 | export at src/index.tsx:1130 |  |  | 0.635 |
-| walker |  | 624 | 13 | export at src/index.tsx:989 |  |  | 0.635 |
-| walker |  | 637 | 13 | export at src/index.tsx:803 |  |  | 0.635 |
-| walker |  | 666 | 29 | export at src/index.tsx:996 |  |  | 0.635 |
-| walker |  | 700 | 34 | export at src/index.tsx:833 |  |  | 0.635 |
-| ns | 738 |  | 147 | src/index.tsx imports: Radix dialog, style.css, and the first hook modules | 1.7 |  | 0.580 |
-| walker |  | 820 | 120 | export at src/index.tsx:40 |  |  | 0.583 |
-| ns | 905 |  | 167 | src/index.tsx imports: the constants set and the remaining hook modules | 1.8 | 1.7 | 0.521 |
-| walker |  | 981 | 161 | export at src/index.tsx:27 |  |  | 0.531 |
-| ns | 1042 |  | 137 | package.json scripts — build, dev, test, format | 1.9 |  | 0.500 |
-| walker |  | 1082 | 101 | export at src/index.tsx:1137 |  |  | 0.594 |
-| ns | 1098 |  | 56 | Snap-point prop union: the fields of WithFadeFromProps / WithoutFadeFromProps | 2.1 | 1.6 | 0.605 |
-| ns | 1260 |  | 162 | DialogProps declarations, first half (lines 51-85), doc comments elided | 2.2 | 1.6 | 0.550 |
-| walker |  | 1400 | 318 | export at src/index.tsx:139 |  |  | 0.566 |
-| walker |  | 1454 | 54 | listing of 'test' |  |  | 0.567 |
-| walker |  | 1457 | 3 | listing of 'test/src' |  |  | 0.567 |
+| walker |  | 418 | 54 | listing of 'test' |  |  | 0.618 |
+| walker |  | 421 | 3 | listing of 'test/src' |  |  | 0.618 |
+| walker |  | 444 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.618 |
+| ns | 591 |  | 186 | Every top-level export declaration in src/index.tsx (names only) | 1.6 |  | 0.542 |
+| walker |  | 668 | 224 | export names surface in src/index.tsx |  |  | 0.637 |
+| walker |  | 668 | 0 | export at src/index.tsx:1098 |  |  | 0.637 |
+| walker |  | 668 | 0 | export at src/index.tsx:1130 |  |  | 0.637 |
+| walker |  | 681 | 13 | export at src/index.tsx:989 |  |  | 0.637 |
+| walker |  | 694 | 13 | export at src/index.tsx:803 |  |  | 0.637 |
+| walker |  | 723 | 29 | export at src/index.tsx:996 |  |  | 0.637 |
+| ns | 738 |  | 147 | src/index.tsx imports: Radix dialog, style.css, and the first hook modules | 1.7 |  | 0.582 |
+| walker |  | 757 | 34 | export at src/index.tsx:833 |  |  | 0.582 |
+| walker |  | 877 | 120 | export at src/index.tsx:40 |  |  | 0.585 |
+| ns | 905 |  | 167 | src/index.tsx imports: the constants set and the remaining hook modules | 1.8 | 1.7 | 0.522 |
+| walker |  | 1038 | 161 | export at src/index.tsx:27 |  |  | 0.532 |
+| ns | 1042 |  | 137 | package.json scripts — build, dev, test, format | 1.9 |  | 0.502 |
+| ns | 1098 |  | 56 | Snap-point prop union: the fields of WithFadeFromProps / WithoutFadeFromProps | 2.1 | 1.6 | 0.520 |
+| walker |  | 1139 | 101 | export at src/index.tsx:1137 |  |  | 0.607 |
+| ns | 1260 |  | 162 | DialogProps declarations, first half (lines 51-85), doc comments elided | 2.2 | 1.6 | 0.551 |
+| walker |  | 1457 | 318 | export at src/index.tsx:139 |  |  | 0.567 |
 | walker |  | 1471 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.567 |
 | walker |  | 1485 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.567 |
 | ns | 1497 |  | 237 | DialogProps declarations, second half (lines 86-137) plus the union tail | 2.3 | 2.2 | 0.510 |
@@ -56,23 +56,23 @@ Score(3000)=0.875 I=0.930 C=0.824 ns_rows≤3K=20/61 (reached=15 partial=2 missi
 | ns | 2805 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.632 |
 | ns | 2994 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.607 |
 | walker |  | 2995 | 1170 | export at src/index.tsx:50 |  |  | 0.875 |
-| ns | 3072 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.862 |
-| walker |  | 3171 | 176 | package identity metadata in package.json |  |  | 0.862 |
-| ns | 3245 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.848 |
-| walker |  | 3282 | 111 | json config tsconfig.json |  |  | 0.849 |
-| walker |  | 3318 | 36 | export names surface in src/context.ts |  |  | 0.849 |
-| walker |  | 3318 | 0 | export at src/context.ts:69 |  |  | 0.849 |
-| ns | 3357 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.837 |
-| walker |  | 3383 | 65 | listing of 'test/tests' |  |  | 0.838 |
-| walker |  | 3400 | 17 | imports in playwright.config.ts |  |  | 0.838 |
-| walker |  | 3514 | 114 | listing of 'test/src/app' |  |  | 0.840 |
+| walker |  | 3060 | 65 | listing of 'test/tests' |  |  | 0.877 |
+| ns | 3072 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.863 |
+| walker |  | 3174 | 114 | listing of 'test/src/app' |  |  | 0.866 |
+| ns | 3245 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.851 |
+| walker |  | 3350 | 176 | package identity metadata in package.json |  |  | 0.851 |
+| ns | 3357 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.839 |
+| walker |  | 3461 | 111 | json config tsconfig.json |  |  | 0.840 |
+| walker |  | 3497 | 36 | export names surface in src/context.ts |  |  | 0.840 |
+| walker |  | 3497 | 0 | export at src/context.ts:69 |  |  | 0.840 |
+| walker |  | 3514 | 17 | imports in playwright.config.ts |  |  | 0.840 |
 | walker |  | 3551 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.840 |
 | walker |  | 3551 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.840 |
+| walker |  | 3559 | 8 | listing of 'test/public' |  |  | 0.840 |
 | ns | 3636 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.813 |
 | ns | 3816 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.790 |
-| walker |  | 3865 | 314 | imports in src/index.tsx |  |  | 0.858 |
-| walker |  | 3877 | 12 | imports in src/use-controllable-state.ts |  |  | 0.858 |
-| walker |  | 3885 | 8 | listing of 'test/public' |  |  | 0.858 |
+| walker |  | 3873 | 314 | imports in src/index.tsx |  |  | 0.858 |
+| walker |  | 3885 | 12 | imports in src/use-controllable-state.ts |  |  | 0.858 |
 | walker |  | 3899 | 14 | imports in src/use-composed-refs.ts |  |  | 0.858 |
 | ns | 3915 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.845 |
 | walker |  | 4023 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.845 |

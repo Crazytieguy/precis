@@ -299,10 +299,38 @@ kind = "full"
 
 [[batches]]
 position = 14
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 14
+cum_tokens = 226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 11
+cum_tokens = 237
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["actionlint.yml", "go-multierror.yml"]
+
+[[batches]]
+position = 16
 key = 'Go(PackageImports { file: "append.go" })'
 descriptor = "go package + imports in append.go"
 cost_tokens = 10
-cum_tokens = 222
+cum_tokens = 247
 
 [batches.content]
 kind = "lines"
@@ -316,11 +344,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Go(PackageImports { file: "flatten.go" })'
 descriptor = "go package + imports in flatten.go"
 cost_tokens = 10
-cum_tokens = 232
+cum_tokens = 257
 
 [batches.content]
 kind = "lines"
@@ -334,11 +362,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 132
-cum_tokens = 364
+cum_tokens = 389
 
 [batches.content]
 kind = "lines"
@@ -369,11 +397,11 @@ kind = "truncated"
 pattern = "(?s)^.{1,320}"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 49
-cum_tokens = 413
+cum_tokens = 438
 
 [batches.content]
 kind = "lines"
@@ -443,11 +471,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Go(DeclNames { file: "group.go", chunk_index: 0 })'
 descriptor = "go decl names surface in group.go"
 cost_tokens = 48
-cum_tokens = 461
+cum_tokens = 486
 
 [batches.content]
 kind = "lines"
@@ -501,11 +529,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 21
 key = 'Go(Decl { file: "group.go", start_line: 20 })'
 descriptor = "go decl at group.go:20"
 cost_tokens = 0
-cum_tokens = 461
+cum_tokens = 486
 
 [batches.content]
 kind = "lines"
@@ -519,11 +547,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Go(Decl { file: "group.go", start_line: 36 })'
 descriptor = "go decl at group.go:36"
 cost_tokens = 0
-cum_tokens = 461
+cum_tokens = 486
 
 [batches.content]
 kind = "lines"
@@ -537,11 +565,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Go(Decl { file: "group.go", start_line: 10 })'
 descriptor = "go decl at group.go:10"
 cost_tokens = 33
-cum_tokens = 494
+cum_tokens = 519
 
 [batches.content]
 kind = "lines"
@@ -553,34 +581,6 @@ end = 14
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 14
-cum_tokens = 508
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 11
-cum_tokens = 519
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["actionlint.yml", "go-multierror.yml"]
 
 [[batches]]
 position = 24

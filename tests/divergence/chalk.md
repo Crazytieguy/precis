@@ -9,24 +9,24 @@ Score(3000)=0.606 I=0.878 C=0.418 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 94 | 10 | listing of 'source/vendor' |  |  | 0.000 |
 | ns | 105 |  | 51 | Complete repository root listing | 1.2 |  | 0.598 |
 | walker |  | 111 | 17 | listing of 'source/vendor/supports-color' |  |  | 0.629 |
-| walker |  | 177 | 66 | package identity in package.json |  |  | 0.892 |
-| ns | 177 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.892 |
-| walker |  | 185 | 8 | listing of 'source/vendor/ansi-styles' |  |  | 0.892 |
+| walker |  | 119 | 8 | listing of 'source/vendor/ansi-styles' |  |  | 0.650 |
+| ns | 177 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.560 |
+| walker |  | 185 | 66 | package identity in package.json |  |  | 0.892 |
 | walker |  | 192 | 7 | listing of 'examples' |  |  | 0.892 |
-| ns | 237 |  | 60 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.909 |
-| walker |  | 248 | 56 | export names surface in source/index.js |  |  | 0.909 |
-| walker |  | 248 | 0 | export at source/index.js:225 |  |  | 0.909 |
-| walker |  | 256 | 8 | export at source/index.js:34 |  |  | 0.910 |
-| walker |  | 269 | 13 | export at source/index.js:50 |  |  | 0.910 |
-| walker |  | 278 | 9 | export body at source/index.js:50 body 51 |  |  | 0.910 |
-| walker |  | 305 | 27 | export at source/index.js:220 |  |  | 0.911 |
-| walker |  | 331 | 26 | export body at source/index.js:34 body 36 |  |  | 0.911 |
-| ns | 368 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.758 |
-| walker |  | 436 | 105 | README headline in readme.md |  |  | 0.764 |
-| walker |  | 447 | 11 | listing of '.github' |  |  | 0.767 |
-| walker |  | 450 | 3 | listing of '.github/workflows' |  |  | 0.768 |
-| ns | 575 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.649 |
-| walker |  | 710 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.669 |
+| walker |  | 203 | 11 | listing of '.github' |  |  | 0.892 |
+| walker |  | 206 | 3 | listing of '.github/workflows' |  |  | 0.892 |
+| ns | 237 |  | 60 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.914 |
+| ns | 368 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.759 |
+| walker |  | 466 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.783 |
+| walker |  | 522 | 56 | export names surface in source/index.js |  |  | 0.783 |
+| walker |  | 522 | 0 | export at source/index.js:225 |  |  | 0.783 |
+| walker |  | 530 | 8 | export at source/index.js:34 |  |  | 0.783 |
+| walker |  | 543 | 13 | export at source/index.js:50 |  |  | 0.783 |
+| walker |  | 552 | 9 | export body at source/index.js:50 body 51 |  |  | 0.783 |
+| ns | 575 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.662 |
+| walker |  | 579 | 27 | export at source/index.js:220 |  |  | 0.663 |
+| walker |  | 605 | 26 | export body at source/index.js:34 body 36 |  |  | 0.663 |
+| walker |  | 710 | 105 | README headline in readme.md |  |  | 0.669 |
 | ns | 715 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.614 |
 | ns | 774 |  | 59 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.595 |
 | walker |  | 788 | 78 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.596 |

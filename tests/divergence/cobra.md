@@ -12,15 +12,15 @@ Score(3000)=0.607 I=0.762 C=0.483 ns_rows≤3K=19/50 (reached=9 partial=1 missin
 | walker |  | 307 | 27 | listing of 'site/content' |  |  | 0.238 |
 | walker |  | 365 | 58 | listing of 'doc' |  |  | 0.243 |
 | ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.509 |
-| walker |  | 461 | 96 | README headline in README.md |  |  | 0.756 |
-| walker |  | 481 | 20 | listing of 'site/content/docgen' |  |  | 0.760 |
-| walker |  | 494 | 13 | listing of '.github' |  |  | 0.765 |
-| walker |  | 502 | 8 | listing of '.github/workflows' |  |  | 0.768 |
-| ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.670 |
-| ns | 724 |  | 217 | README: the remaining capabilities, and who builds on Cobra | 1.5 | 1.4 | 0.599 |
-| ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.516 |
-| ns | 982 |  | 56 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.572 |
-| walker |  | 1047 | 545 | YAML config at .github/workflows/test.yml |  |  | 0.573 |
+| walker |  | 385 | 20 | listing of 'site/content/docgen' |  |  | 0.514 |
+| walker |  | 398 | 13 | listing of '.github' |  |  | 0.520 |
+| walker |  | 406 | 8 | listing of '.github/workflows' |  |  | 0.524 |
+| ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.457 |
+| ns | 724 |  | 217 | README: the remaining capabilities, and who builds on Cobra | 1.5 | 1.4 | 0.409 |
+| ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.352 |
+| walker |  | 951 | 545 | YAML config at .github/workflows/test.yml |  |  | 0.353 |
+| ns | 982 |  | 56 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.399 |
+| walker |  | 1047 | 96 | README headline in README.md |  |  | 0.573 |
 | walker |  | 1069 | 22 | listing of 'site/content/completions' |  |  | 0.578 |
 | walker |  | 1132 | 63 | headings outline in README.md |  |  | 0.578 |
 | walker |  | 1144 | 12 | README.md section #0 |  |  | 0.578 |

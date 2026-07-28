@@ -1,4 +1,4 @@
-Score(3000)=0.514 I=0.819 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missing=16)
+Score(3000)=0.513 I=0.817 C=0.322 ns_rows≤3K=24/56 (reached=6 partial=2 missing=16)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,23 +9,23 @@ Score(3000)=0.514 I=0.819 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missin
 | walker |  | 89 | 24 | listing of 'src' |  |  | 0.000 |
 | ns | 129 |  | 43 | Complete repository root listing | 1.2 |  | 0.453 |
 | walker |  | 136 | 47 | README headline in README.md |  |  | 0.635 |
-| walker |  | 172 | 36 | [dependencies] in Cargo.toml |  |  | 0.637 |
-| walker |  | 201 | 29 | headings outline in README.md |  |  | 0.640 |
-| walker |  | 209 | 8 | listing of '.github' |  |  | 0.640 |
-| walker |  | 212 | 3 | listing of '.github/workflows' |  |  | 0.640 |
+| walker |  | 144 | 8 | listing of '.github' |  |  | 0.635 |
+| walker |  | 147 | 3 | listing of '.github/workflows' |  |  | 0.636 |
+| walker |  | 183 | 36 | [dependencies] in Cargo.toml |  |  | 0.637 |
+| walker |  | 212 | 29 | headings outline in README.md |  |  | 0.640 |
 | ns | 219 |  | 90 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.461 |
-| walker |  | 283 | 71 | mod/use plumbing in src/lib.rs |  |  | 0.468 |
-| ns | 317 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.408 |
-| walker |  | 356 | 73 | listing of 'tests' |  |  | 0.411 |
-| ns | 402 |  | 85 | README canonical example, tail: named-field variant, unit variant | 1.5 | 1.4 | 0.371 |
-| ns | 480 |  | 78 | Derive entry point: #[proc_macro_derive(Error, attributes(...))] | 1.6 |  | 0.353 |
-| walker |  | 541 | 185 | [package] in Cargo.toml |  |  | 0.510 |
-| walker |  | 587 | 46 | listing of 'impl/src' |  |  | 0.719 |
-| ns | 616 |  | 136 | Root crate module structure and public re-export (src/lib.rs tail) | 1.7 |  | 0.661 |
-| walker |  | 629 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.672 |
-| walker |  | 664 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.672 |
-| walker |  | 664 | 0 | impl method at impl/src/lib.rs:49 |  |  | 0.672 |
-| walker |  | 695 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.697 |
+| walker |  | 285 | 73 | listing of 'tests' |  |  | 0.464 |
+| ns | 317 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.405 |
+| walker |  | 356 | 71 | mod/use plumbing in src/lib.rs |  |  | 0.411 |
+| walker |  | 402 | 46 | listing of 'impl/src' |  |  | 0.567 |
+| ns | 402 |  | 85 | README canonical example, tail: named-field variant, unit variant | 1.5 | 1.4 | 0.567 |
+| walker |  | 444 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.569 |
+| walker |  | 479 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.569 |
+| walker |  | 479 | 0 | impl method at impl/src/lib.rs:49 |  |  | 0.569 |
+| ns | 480 |  | 78 | Derive entry point: #[proc_macro_derive(Error, attributes(...))] | 1.6 |  | 0.551 |
+| walker |  | 510 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.577 |
+| ns | 616 |  | 136 | Root crate module structure and public re-export (src/lib.rs tail) | 1.7 |  | 0.530 |
+| walker |  | 695 | 185 | [package] in Cargo.toml |  |  | 0.697 |
 | ns | 711 |  | 95 | Root crate attributes: no_std, docs.rs root, nightly cfg gate | 1.8 |  | 0.663 |
 | walker |  | 767 | 72 | README.md section #0 |  |  | 0.701 |
 | ns | 818 |  | 107 | Cargo manifest: features, dependency on impl, workspace members | 1.9 |  | 0.694 |
@@ -56,31 +56,31 @@ Score(3000)=0.514 I=0.819 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missin
 | walker |  | 2293 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.597 |
 | walker |  | 2311 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.597 |
 | walker |  | 2352 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.597 |
-| walker |  | 2396 | 44 | pub-item names surface in src/provide.rs |  |  | 0.597 |
-| ns | 2414 |  | 156 | When to use thiserror vs anyhow | 2.12 |  | 0.581 |
-| walker |  | 2441 | 45 | pub-item names surface in src/display.rs |  |  | 0.581 |
-| walker |  | 2487 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.582 |
-| walker |  | 2495 | 8 | listing of 'tests/no-std' |  |  | 0.582 |
+| walker |  | 2360 | 8 | listing of 'tests/no-std' |  |  | 0.597 |
+| ns | 2414 |  | 156 | When to use thiserror vs anyhow | 2.12 |  | 0.582 |
 | ns | 2529 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.564 |
-| walker |  | 2539 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.565 |
-| walker |  | 2539 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.565 |
-| walker |  | 2539 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.565 |
-| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.539 |
-| walker |  | 2798 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.539 |
-| walker |  | 2920 | 122 | [package] in impl/Cargo.toml |  |  | 0.539 |
-| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.514 |
-| walker |  | 3079 | 159 | manifest config in impl/Cargo.toml |  |  | 0.514 |
-| walker |  | 3138 | 59 | README.md section #11 |  |  | 0.518 |
-| walker |  | 3223 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.518 |
-| walker |  | 3223 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.518 |
-| walker |  | 3223 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.518 |
-| walker |  | 3223 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.518 |
-| walker |  | 3223 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.518 |
-| walker |  | 3234 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.518 |
-| walker |  | 3246 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.518 |
-| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.482 |
-| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.464 |
-| walker |  | 3773 | 527 | listing of 'tests/ui' |  |  | 0.464 |
+| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.538 |
+| walker |  | 2887 | 527 | listing of 'tests/ui' |  |  | 0.538 |
+| walker |  | 2931 | 44 | pub-item names surface in src/provide.rs |  |  | 0.538 |
+| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.513 |
+| walker |  | 2976 | 45 | pub-item names surface in src/display.rs |  |  | 0.513 |
+| walker |  | 3022 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.513 |
+| walker |  | 3066 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.514 |
+| walker |  | 3066 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.514 |
+| walker |  | 3066 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.514 |
+| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.478 |
+| walker |  | 3325 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.478 |
+| walker |  | 3447 | 122 | [package] in impl/Cargo.toml |  |  | 0.478 |
+| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.460 |
+| walker |  | 3606 | 159 | manifest config in impl/Cargo.toml |  |  | 0.460 |
+| walker |  | 3665 | 59 | README.md section #11 |  |  | 0.464 |
+| walker |  | 3750 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.464 |
+| walker |  | 3750 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.464 |
+| walker |  | 3750 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.464 |
+| walker |  | 3750 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.464 |
+| walker |  | 3750 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.464 |
+| walker |  | 3761 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.464 |
+| walker |  | 3773 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.464 |
 | ns | 3851 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.435 |
 | ns | 4044 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.425 |
 | walker |  | 4107 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.425 |

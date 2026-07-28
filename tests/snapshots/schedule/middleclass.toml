@@ -73,10 +73,24 @@ entries = ["class_spec.lua", "classes_spec.lua", "default_methods_spec.lua", "in
 
 [[batches]]
 position = 5
+key = 'Fs(DirListing { dir: "rockspecs" })'
+descriptor = "listing of 'rockspecs'"
+cost_tokens = 79
+cum_tokens = 226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "rockspecs"
+entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
+
+[[batches]]
+position = 6
 key = 'Lua(ModuleIdentity { file: "middleclass.lua" })'
 descriptor = "lua module identity in middleclass.lua"
 cost_tokens = 65
-cum_tokens = 212
+cum_tokens = 291
 
 [batches.content]
 kind = "lines"
@@ -90,11 +104,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 6
+position = 7
 key = 'Markdown(HeadingsOutline { file: "UPDATING.md" })'
 descriptor = "headings outline in UPDATING.md"
 cost_tokens = 46
-cum_tokens = 258
+cum_tokens = 337
 
 [batches.content]
 kind = "lines"
@@ -130,20 +144,6 @@ end = 23
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "rockspecs" })'
-descriptor = "listing of 'rockspecs'"
-cost_tokens = 79
-cum_tokens = 337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "rockspecs"
-entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
 
 [[batches]]
 position = 8

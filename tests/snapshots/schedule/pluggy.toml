@@ -1,7 +1,7 @@
 fixture = "pluggy"
 budget = 10000
-cumulative_tokens = 9879
-batch_count = 224
+cumulative_tokens = 9889
+batch_count = 225
 
 [[batches]]
 position = 1
@@ -193,10 +193,52 @@ kind = "full"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 3
+cum_tokens = 602
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 13
+cum_tokens = 615
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["release.py", "towncrier-draft-to-file.py"]
+
+[[batches]]
+position = 16
 key = 'Markdown(ReadmeHeadline { file: "README.rst" })'
 descriptor = "README headline in README.rst"
 cost_tokens = 119
-cum_tokens = 705
+cum_tokens = 734
 
 [batches.content]
 kind = "lines"
@@ -210,11 +252,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 14
+position = 17
 key = 'Markdown(Section { file: "README.rst", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.rst section #0"
 cost_tokens = 546
-cum_tokens = 1251
+cum_tokens = 1280
 
 [batches.content]
 kind = "lines"
@@ -226,48 +268,6 @@ end = 65
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 1264
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 3
-cum_tokens = 1267
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 13
-cum_tokens = 1280
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["release.py", "towncrier-draft-to-file.py"]
 
 [[batches]]
 position = 18
@@ -307,10 +307,38 @@ kind = "full"
 
 [[batches]]
 position = 20
+key = 'Fs(DirListing { dir: "docs/examples" })'
+descriptor = "listing of 'docs/examples'"
+cost_tokens = 16
+cum_tokens = 1366
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples"
+entries = ["eggsample", "eggsample-spam", "toy-example.py"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "docs/examples/eggsample" })'
+descriptor = "listing of 'docs/examples/eggsample'"
+cost_tokens = 8
+cum_tokens = 1374
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples/eggsample"
+entries = ["eggsample", "setup.py"]
+
+[[batches]]
+position = 22
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 51
-cum_tokens = 1401
+cum_tokens = 1425
 
 [batches.content]
 kind = "lines"
@@ -340,11 +368,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "setuptools_scm+uv" })'
 descriptor = "tool.setuptools_scm+uv config in pyproject.toml"
 cost_tokens = 41
-cum_tokens = 1442
+cum_tokens = 1466
 
 [batches.content]
 kind = "lines"
@@ -358,11 +386,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "setuptools" })'
 descriptor = "tool.setuptools config in pyproject.toml"
 cost_tokens = 49
-cum_tokens = 1491
+cum_tokens = 1515
 
 [batches.content]
 kind = "lines"
@@ -376,11 +404,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 63
-cum_tokens = 1554
+cum_tokens = 1578
 
 [batches.content]
 kind = "lines"
@@ -394,39 +422,25 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "docs/examples" })'
-descriptor = "listing of 'docs/examples'"
-cost_tokens = 16
-cum_tokens = 1570
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples"
-entries = ["eggsample", "eggsample-spam", "toy-example.py"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "docs/examples/eggsample" })'
-descriptor = "listing of 'docs/examples/eggsample'"
-cost_tokens = 8
-cum_tokens = 1578
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples/eggsample"
-entries = ["eggsample", "setup.py"]
-
-[[batches]]
 position = 26
+key = 'Fs(DirListing { dir: "docs/examples/eggsample/eggsample" })'
+descriptor = "listing of 'docs/examples/eggsample/eggsample'"
+cost_tokens = 19
+cum_tokens = 1597
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples/eggsample/eggsample"
+entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
+
+[[batches]]
+position = 27
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 78
-cum_tokens = 1656
+cum_tokens = 1675
 
 [batches.content]
 kind = "lines"
@@ -456,11 +470,25 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
+key = 'Fs(DirListing { dir: "testing" })'
+descriptor = "listing of 'testing'"
+cost_tokens = 61
+cum_tokens = 1736
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "testing"
+entries = ["benchmark.py", "conftest.py", "test_details.py", "test_helpers.py", "test_hookcaller.py", "test_invocations.py", "test_multicall.py", "test_pluginmanager.py", "test_result.py", "test_tracer.py", "test_warnings.py"]
+
+[[batches]]
+position = 29
 key = 'Python(Imports { file: "src/pluggy/_warnings.py" })'
 descriptor = "python imports in src/pluggy/_warnings.py"
 cost_tokens = 11
-cum_tokens = 1667
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -472,34 +500,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "docs/examples/eggsample/eggsample" })'
-descriptor = "listing of 'docs/examples/eggsample/eggsample'"
-cost_tokens = 19
-cum_tokens = 1686
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples/eggsample/eggsample"
-entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "testing" })'
-descriptor = "listing of 'testing'"
-cost_tokens = 61
-cum_tokens = 1747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "testing"
-entries = ["benchmark.py", "conftest.py", "test_details.py", "test_helpers.py", "test_hookcaller.py", "test_invocations.py", "test_multicall.py", "test_pluginmanager.py", "test_result.py", "test_tracer.py", "test_warnings.py"]
 
 [[batches]]
 position = 30
@@ -5466,3 +5466,17 @@ end = 68
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 225
+key = 'Fs(DirListing { dir: "docs/examples/eggsample-spam" })'
+descriptor = "listing of 'docs/examples/eggsample-spam'"
+cost_tokens = 10
+cum_tokens = 9889
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples/eggsample-spam"
+entries = ["eggsample_spam.py", "setup.py"]

@@ -6,11 +6,11 @@ Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missin
 | ns | 54 |  | 54 | Project identity, tagline, and target Minecraft/protocol version | 1.1 |  | 0.000 |
 | walker |  | 69 | 37 | listing of 'include' |  |  | 0.000 |
 | ns | 86 |  | 32 | Complete repository root listing | 1.2 |  | 0.518 |
-| walker |  | 126 | 57 | c whole header in include/structures.h |  |  | 0.518 |
-| ns | 151 |  | 65 | Stated project goal and priority ordering | 1.3 |  | 0.494 |
-| walker |  | 173 | 47 | listing of 'src' |  |  | 0.623 |
-| walker |  | 181 | 8 | listing of '.github' |  |  | 0.623 |
-| walker |  | 184 | 3 | listing of '.github/workflows' |  |  | 0.623 |
+| walker |  | 116 | 47 | listing of 'src' |  |  | 0.654 |
+| walker |  | 124 | 8 | listing of '.github' |  |  | 0.654 |
+| walker |  | 127 | 3 | listing of '.github/workflows' |  |  | 0.654 |
+| ns | 151 |  | 65 | Stated project goal and priority ordering | 1.3 |  | 0.623 |
+| walker |  | 184 | 57 | c whole header in include/structures.h |  |  | 0.623 |
 | ns | 235 |  | 84 | Complete src/ and include/ listings | 1.4 |  | 0.638 |
 | walker |  | 282 | 98 | README headline in README.md |  |  | 0.807 |
 | ns | 286 |  | 51 | All README H2 section headings | 1.5 |  | 0.741 |
@@ -21,10 +21,10 @@ Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missin
 | walker |  | 492 | 63 | README.md section #0 |  |  | 0.812 |
 | ns | 596 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.747 |
 | walker |  | 642 | 150 | c whole header in include/varnum.h |  |  | 0.752 |
+| walker |  | 657 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.753 |
 | ns | 666 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.712 |
-| walker |  | 886 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
-| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.654 |
-| walker |  | 901 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.654 |
+| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.652 |
+| walker |  | 901 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
 | ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.606 |
 | walker |  | 1237 | 336 | c whole header in include/worldgen.h |  |  | 0.609 |
 | walker |  | 1264 | 27 | c decl names surface in src/main.c |  |  | 0.610 |

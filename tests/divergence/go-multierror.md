@@ -18,19 +18,19 @@ Score(3000)=0.535 I=0.569 C=0.502 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 212 | 34 | go decl names surface in format.go |  |  | 0.672 |
 | walker |  | 212 | 0 | go decl at format.go:13 |  |  | 0.672 |
 | walker |  | 212 | 0 | go decl at format.go:17 |  |  | 0.672 |
-| walker |  | 222 | 10 | go package + imports in append.go |  |  | 0.672 |
-| walker |  | 232 | 10 | go package + imports in flatten.go |  |  | 0.672 |
-| ns | 239 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.611 |
-| ns | 314 |  | 75 | The `Error` type: doc comment and both fields | 1.5 |  | 0.554 |
-| walker |  | 364 | 132 | README headline in README.md |  |  | 0.570 |
-| walker |  | 413 | 49 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 461 | 48 | go decl names surface in group.go |  |  | 0.593 |
-| walker |  | 461 | 0 | go decl at group.go:20 |  |  | 0.593 |
-| walker |  | 461 | 0 | go decl at group.go:36 |  |  | 0.593 |
-| ns | 466 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.617 |
-| walker |  | 494 | 33 | go decl at group.go:10 |  |  | 0.617 |
-| walker |  | 508 | 14 | listing of '.github' |  |  | 0.618 |
-| walker |  | 519 | 11 | listing of '.github/workflows' |  |  | 0.618 |
+| walker |  | 226 | 14 | listing of '.github' |  |  | 0.672 |
+| walker |  | 237 | 11 | listing of '.github/workflows' |  |  | 0.673 |
+| ns | 239 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.612 |
+| walker |  | 247 | 10 | go package + imports in append.go |  |  | 0.612 |
+| walker |  | 257 | 10 | go package + imports in flatten.go |  |  | 0.612 |
+| ns | 314 |  | 75 | The `Error` type: doc comment and both fields | 1.5 |  | 0.555 |
+| walker |  | 389 | 132 | README headline in README.md |  |  | 0.571 |
+| walker |  | 438 | 49 | headings outline in README.md |  |  | 0.572 |
+| ns | 466 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.530 |
+| walker |  | 486 | 48 | go decl names surface in group.go |  |  | 0.618 |
+| walker |  | 486 | 0 | go decl at group.go:20 |  |  | 0.618 |
+| walker |  | 486 | 0 | go decl at group.go:36 |  |  | 0.618 |
+| walker |  | 519 | 33 | go decl at group.go:10 |  |  | 0.618 |
 | walker |  | 574 | 55 | go decl names surface in sort.go |  |  | 0.622 |
 | walker |  | 574 | 0 | go decl at sort.go:7 |  |  | 0.622 |
 | walker |  | 574 | 0 | go decl at sort.go:16 |  |  | 0.622 |

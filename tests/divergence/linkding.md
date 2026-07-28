@@ -1,4 +1,4 @@
-Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missing=8)
+Score(3000)=0.691 I=0.841 C=0.567 ns_rows≤3K=18/51 (reached=8 partial=1 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -8,11 +8,11 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | walker |  | 133 | 11 | listing of 'docker' |  |  | 0.000 |
 | walker |  | 136 | 3 | listing of '.github' |  |  | 0.000 |
 | walker |  | 148 | 12 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 158 | 10 | plaintext config version.txt |  |  | 0.000 |
-| walker |  | 162 | 4 | listing of '.devcontainer' |  |  | 0.000 |
-| walker |  | 216 | 54 | README headline in README.md |  |  | 0.816 |
-| ns | 234 |  | 122 | Repository root listing (complete) | 1.3 |  | 0.945 |
-| walker |  | 259 | 43 | listing of 'assets' |  |  | 0.945 |
+| walker |  | 152 | 4 | listing of '.devcontainer' |  |  | 0.000 |
+| walker |  | 162 | 10 | plaintext config version.txt |  |  | 0.000 |
+| walker |  | 205 | 43 | listing of 'assets' |  |  | 0.000 |
+| ns | 234 |  | 122 | Repository root listing (complete) | 1.3 |  | 0.714 |
+| walker |  | 259 | 54 | README headline in README.md |  |  | 0.945 |
 | ns | 365 |  | 131 | bookmarks/ app package listing (complete) | 1.4 |  | 0.647 |
 | walker |  | 390 | 131 | listing of 'bookmarks' |  |  | 0.957 |
 | walker |  | 393 | 3 | listing of 'bookmarks/management' |  |  | 0.957 |
@@ -20,8 +20,8 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | walker |  | 427 | 17 | listing of 'bookmarks/templatetags' |  |  | 0.958 |
 | walker |  | 448 | 21 | listing of 'bookmarks/settings' |  |  | 0.961 |
 | ns | 462 |  | 97 | README feature overview (head) | 1.5 |  | 0.896 |
-| walker |  | 480 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.897 |
-| walker |  | 499 | 19 | listing of 'bookmarks/frontend' |  |  | 0.897 |
+| walker |  | 467 | 19 | listing of 'bookmarks/frontend' |  |  | 0.896 |
+| walker |  | 499 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.897 |
 | walker |  | 532 | 33 | listing of 'bookmarks/templates' |  |  | 0.897 |
 | walker |  | 536 | 4 | listing of 'bookmarks/templates/admin' |  |  | 0.897 |
 | walker |  | 551 | 15 | listing of 'bookmarks/templates/registration' |  |  | 0.897 |
@@ -34,33 +34,33 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | walker |  | 768 | 26 | listing of 'bookmarks/frontend/utils' |  |  | 0.892 |
 | ns | 770 |  | 80 | bookmarks/services/ listing (complete) | 1.8 |  | 0.890 |
 | walker |  | 794 | 26 | listing of 'bookmarks/templates/settings' |  |  | 0.890 |
-| walker |  | 891 | 97 | headings outline in README.md |  |  | 0.890 |
+| walker |  | 863 | 69 | listing of 'bookmarks/styles' |  |  | 0.890 |
+| walker |  | 903 | 40 | listing of 'bookmarks/templates/shared' |  |  | 0.890 |
 | ns | 945 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.818 |
-| walker |  | 960 | 69 | listing of 'bookmarks/styles' |  |  | 0.818 |
-| walker |  | 1000 | 40 | listing of 'bookmarks/templates/shared' |  |  | 0.818 |
-| walker |  | 1045 | 45 | listing of 'bookmarks/management/commands' |  |  | 0.818 |
-| walker |  | 1137 | 92 | listing of 'bookmarks/static' |  |  | 0.818 |
-| walker |  | 1141 | 4 | listing of 'bookmarks/static/vendor' |  |  | 0.818 |
+| walker |  | 948 | 45 | listing of 'bookmarks/management/commands' |  |  | 0.818 |
+| walker |  | 1040 | 92 | listing of 'bookmarks/static' |  |  | 0.818 |
+| walker |  | 1044 | 4 | listing of 'bookmarks/static/vendor' |  |  | 0.818 |
+| walker |  | 1141 | 97 | headings outline in README.md |  |  | 0.818 |
 | ns | 1162 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.749 |
-| walker |  | 1200 | 59 | YAML config at docker-compose.yml |  |  | 0.749 |
-| walker |  | 1268 | 68 | YAML config tail at docker-compose.yml |  |  | 0.749 |
-| walker |  | 1304 | 36 | listing of 'docs' |  |  | 0.750 |
-| walker |  | 1315 | 11 | python decl names surface in manage.py |  |  | 0.750 |
-| walker |  | 1315 | 0 | python decl at manage.py:7 |  |  | 0.750 |
-| walker |  | 1374 | 59 | listing of 'bookmarks/frontend/components' |  |  | 0.751 |
-| walker |  | 1443 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.751 |
+| walker |  | 1177 | 36 | listing of 'docs' |  |  | 0.750 |
+| walker |  | 1236 | 59 | listing of 'bookmarks/frontend/components' |  |  | 0.751 |
+| walker |  | 1305 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.751 |
+| walker |  | 1321 | 16 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.751 |
+| walker |  | 1341 | 20 | listing of 'docs/src' |  |  | 0.751 |
+| walker |  | 1348 | 7 | listing of 'docs/src/content' |  |  | 0.751 |
+| walker |  | 1407 | 59 | YAML config at docker-compose.yml |  |  | 0.751 |
 | ns | 1446 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.700 |
-| walker |  | 1459 | 16 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.700 |
 | ns | 1467 |  | 21 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.705 |
-| walker |  | 1479 | 20 | listing of 'docs/src' |  |  | 0.705 |
-| walker |  | 1486 | 7 | listing of 'docs/src/content' |  |  | 0.705 |
-| ns | 1609 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.682 |
-| walker |  | 1650 | 164 | plaintext config .env.sample |  |  | 0.682 |
-| ns | 1718 |  | 109 | docs/ site and its content pages (complete) | 1.14 |  | 0.645 |
-| walker |  | 1805 | 155 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.645 |
-| walker |  | 1855 | 50 | listing of 'scripts' |  |  | 0.646 |
+| walker |  | 1475 | 68 | YAML config tail at docker-compose.yml |  |  | 0.705 |
+| walker |  | 1486 | 11 | python decl names surface in manage.py |  |  | 0.705 |
+| walker |  | 1486 | 0 | python decl at manage.py:7 |  |  | 0.705 |
+| walker |  | 1536 | 50 | listing of 'scripts' |  |  | 0.707 |
+| ns | 1609 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.683 |
+| walker |  | 1622 | 86 | listing of 'bookmarks/styles/theme' |  |  | 0.683 |
+| ns | 1718 |  | 109 | docs/ site and its content pages (complete) | 1.14 |  | 0.646 |
+| walker |  | 1786 | 164 | plaintext config .env.sample |  |  | 0.646 |
 | ns | 1893 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.618 |
-| walker |  | 1941 | 86 | listing of 'bookmarks/styles/theme' |  |  | 0.618 |
+| walker |  | 1941 | 155 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.618 |
 | walker |  | 1954 | 13 | python imports in bookmarks/apps.py |  |  | 0.618 |
 | walker |  | 2156 | 202 | [dependencies] in pyproject.toml |  |  | 0.645 |
 | walker |  | 2193 | 37 | python imports in manage.py |  |  | 0.645 |
@@ -69,37 +69,37 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | walker |  | 2554 | 361 | plaintext config Makefile |  |  | 0.672 |
 | walker |  | 2571 | 17 | README.md section #11 |  |  | 0.672 |
 | walker |  | 2588 | 17 | README.md section #20 |  |  | 0.672 |
-| ns | 2831 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.641 |
-| walker |  | 2948 | 360 | README.md section #0 |  |  | 0.682 |
-| walker |  | 3010 | 62 | README.md section #3 |  |  | 0.682 |
-| ns | 3034 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.654 |
-| walker |  | 3092 | 82 | [package] in pyproject.toml |  |  | 0.681 |
-| walker |  | 3103 | 11 | python decl names surface in bookmarks/apps.py |  |  | 0.681 |
-| walker |  | 3103 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.681 |
-| walker |  | 3114 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.681 |
-| walker |  | 3136 | 22 | python method at bookmarks/apps.py:7 |  |  | 0.681 |
-| walker |  | 3145 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.681 |
-| walker |  | 3159 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.681 |
-| walker |  | 3179 | 20 | README.md section #16 |  |  | 0.681 |
-| walker |  | 3191 | 12 | python decl names surface in bookmarks/wsgi.py |  |  | 0.681 |
-| walker |  | 3212 | 21 | python imports in bookmarks/context_processors.py |  |  | 0.681 |
-| walker |  | 3232 | 20 | python decl names surface in bookmarks/context_processors.py |  |  | 0.681 |
-| walker |  | 3232 | 0 | python decl at bookmarks/context_processors.py:5 |  |  | 0.681 |
-| walker |  | 3232 | 0 | python decl at bookmarks/context_processors.py:20 |  |  | 0.681 |
-| walker |  | 3244 | 12 | python decl body at bookmarks/context_processors.py:20 body 21 |  |  | 0.681 |
-| walker |  | 3266 | 22 | python imports in bookmarks/validators.py |  |  | 0.681 |
-| walker |  | 3279 | 13 | python decl names surface in bookmarks/signals.py |  |  | 0.657 |
-| ns | 3279 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.657 |
-| walker |  | 3323 | 44 | python decl at bookmarks/signals.py:6 |  |  | 0.657 |
-| walker |  | 3336 | 13 | python decl names surface in bookmarks/validators.py |  |  | 0.657 |
-| walker |  | 3336 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.657 |
-| walker |  | 3351 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.657 |
-| walker |  | 3351 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.657 |
-| walker |  | 3402 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.657 |
-| ns | 3473 |  | 194 | Tag model + tag-string parsing rules | 2.7 | 2.1 | 0.640 |
-| walker |  | 3474 | 72 | README.md section #4 |  |  | 0.661 |
-| walker |  | 3487 | 13 | python imports in bookmarks/views/custom_css.py |  |  | 0.661 |
-| walker |  | 3559 | 72 | listing of 'docs/src/content/docs' |  |  | 0.706 |
+| walker |  | 2660 | 72 | listing of 'docs/src/content/docs' |  |  | 0.724 |
+| ns | 2831 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.691 |
+| walker |  | 3020 | 360 | README.md section #0 |  |  | 0.731 |
+| ns | 3034 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.701 |
+| walker |  | 3082 | 62 | README.md section #3 |  |  | 0.701 |
+| walker |  | 3164 | 82 | [package] in pyproject.toml |  |  | 0.727 |
+| walker |  | 3175 | 11 | python decl names surface in bookmarks/apps.py |  |  | 0.727 |
+| walker |  | 3175 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.727 |
+| walker |  | 3186 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.727 |
+| walker |  | 3208 | 22 | python method at bookmarks/apps.py:7 |  |  | 0.727 |
+| walker |  | 3217 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.727 |
+| walker |  | 3231 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.727 |
+| walker |  | 3251 | 20 | README.md section #16 |  |  | 0.727 |
+| walker |  | 3263 | 12 | python decl names surface in bookmarks/wsgi.py |  |  | 0.727 |
+| ns | 3279 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.702 |
+| walker |  | 3284 | 21 | python imports in bookmarks/context_processors.py |  |  | 0.702 |
+| walker |  | 3304 | 20 | python decl names surface in bookmarks/context_processors.py |  |  | 0.702 |
+| walker |  | 3304 | 0 | python decl at bookmarks/context_processors.py:5 |  |  | 0.702 |
+| walker |  | 3304 | 0 | python decl at bookmarks/context_processors.py:20 |  |  | 0.702 |
+| walker |  | 3316 | 12 | python decl body at bookmarks/context_processors.py:20 body 21 |  |  | 0.702 |
+| walker |  | 3338 | 22 | python imports in bookmarks/validators.py |  |  | 0.702 |
+| walker |  | 3351 | 13 | python decl names surface in bookmarks/signals.py |  |  | 0.702 |
+| walker |  | 3395 | 44 | python decl at bookmarks/signals.py:6 |  |  | 0.702 |
+| walker |  | 3408 | 13 | python decl names surface in bookmarks/validators.py |  |  | 0.702 |
+| walker |  | 3408 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.702 |
+| walker |  | 3423 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.702 |
+| walker |  | 3423 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.702 |
+| ns | 3473 |  | 194 | Tag model + tag-string parsing rules | 2.7 | 2.1 | 0.684 |
+| walker |  | 3474 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.684 |
+| walker |  | 3546 | 72 | README.md section #4 |  |  | 0.706 |
+| walker |  | 3559 | 13 | python imports in bookmarks/views/custom_css.py |  |  | 0.706 |
 | walker |  | 3653 | 94 | python decl names surface in bookmarks/widgets.py |  |  | 0.706 |
 | walker |  | 3653 | 0 | python decl at bookmarks/widgets.py:7 |  |  | 0.706 |
 | walker |  | 3653 | 0 | python decl at bookmarks/widgets.py:11 |  |  | 0.706 |
@@ -333,7 +333,8 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | ns | 9443 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.518 |
 | walker |  | 9680 | 348 | python class body at bookmarks/models.py:224 |  |  | 0.544 |
 | walker |  | 9687 | 7 | python method body at bookmarks/feeds.py:63 body 64 |  |  | 0.544 |
+| walker |  | 9690 | 3 | listing of 'docs/src/styles' |  |  | 0.544 |
 | ns | 9795 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.537 |
 | ns | 9902 |  | 107 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.547 |
-| walker |  | 9961 | 274 | python class body at bookmarks/models.py:129 |  |  | 0.567 |
+| walker |  | 9964 | 274 | python class body at bookmarks/models.py:129 |  |  | 0.567 |
 | ns | 9989 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.576 |

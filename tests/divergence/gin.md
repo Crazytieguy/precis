@@ -7,8 +7,8 @@ Score(3000)=0.707 I=0.816 C=0.612 ns_rows≤3K=15/45 (reached=6 partial=1 missin
 | walker |  | 238 | 238 | listing of '.' |  |  | 0.000 |
 | walker |  | 241 | 3 | listing of 'codec' |  |  | 0.000 |
 | walker |  | 244 | 3 | listing of 'docs' |  |  | 0.000 |
-| walker |  | 255 | 11 | README headline in README.md |  |  | 0.000 |
-| walker |  | 263 | 8 | listing of 'internal' |  |  | 0.000 |
+| walker |  | 252 | 8 | listing of 'internal' |  |  | 0.000 |
+| walker |  | 263 | 11 | README headline in README.md |  |  | 0.000 |
 | walker |  | 277 | 14 | listing of 'ginS' |  |  | 0.000 |
 | walker |  | 294 | 17 | listing of 'testdata' |  |  | 0.000 |
 | walker |  | 301 | 7 | listing of 'testdata/certificate' |  |  | 0.000 |
@@ -21,28 +21,28 @@ Score(3000)=0.707 I=0.816 C=0.612 ns_rows≤3K=15/45 (reached=6 partial=1 missin
 | walker |  | 370 | 31 | go module identity in go.mod |  |  | 0.090 |
 | walker |  | 387 | 17 | go decl names surface in version.go |  |  | 0.139 |
 | walker |  | 387 | 0 | go decl at version.go:8 |  |  | 0.139 |
-| walker |  | 408 | 21 | go package doc lede in doc.go |  |  | 0.265 |
-| walker |  | 433 | 25 | go decl names surface in context_appengine.go |  |  | 0.265 |
-| walker |  | 433 | 0 | go decl at context_appengine.go:9 |  |  | 0.265 |
-| walker |  | 438 | 5 | go package + imports in context_appengine.go |  |  | 0.265 |
-| ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.226 |
-| walker |  | 459 | 21 | listing of 'codec/json' |  |  | 0.230 |
-| walker |  | 468 | 9 | go package + imports in version.go |  |  | 0.230 |
-| walker |  | 509 | 41 | go decl names surface in deprecated.go |  |  | 0.230 |
-| walker |  | 509 | 0 | go decl at deprecated.go:17 |  |  | 0.230 |
-| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.207 |
-| walker |  | 583 | 74 | listing of 'render' |  |  | 0.209 |
+| walker |  | 408 | 21 | listing of 'codec/json' |  |  | 0.142 |
+| walker |  | 429 | 21 | go package doc lede in doc.go |  |  | 0.269 |
+| ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.230 |
+| walker |  | 454 | 25 | go decl names surface in context_appengine.go |  |  | 0.230 |
+| walker |  | 454 | 0 | go decl at context_appengine.go:9 |  |  | 0.230 |
+| walker |  | 459 | 5 | go package + imports in context_appengine.go |  |  | 0.230 |
+| walker |  | 533 | 74 | listing of 'render' |  |  | 0.232 |
+| walker |  | 542 | 9 | go package + imports in version.go |  |  | 0.232 |
+| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.209 |
+| walker |  | 583 | 41 | go decl names surface in deprecated.go |  |  | 0.209 |
+| walker |  | 583 | 0 | go decl at deprecated.go:17 |  |  | 0.209 |
 | walker |  | 595 | 12 | go decl doc at version.go:8 |  |  | 0.304 |
-| walker |  | 611 | 16 | go package + imports in doc.go |  |  | 0.304 |
+| walker |  | 615 | 20 | listing of '.github' |  |  | 0.304 |
+| walker |  | 636 | 21 | listing of '.github/workflows' |  |  | 0.304 |
 | ns | 661 |  | 92 | docs/doc.md top-level section map | 1.6 |  | 0.261 |
-| walker |  | 682 | 71 | go decl names surface in path.go |  |  | 0.261 |
-| walker |  | 682 | 0 | go decl at path.go:23 |  |  | 0.261 |
-| walker |  | 682 | 0 | go decl at path.go:128 |  |  | 0.261 |
-| walker |  | 682 | 0 | go decl at path.go:155 |  |  | 0.261 |
-| walker |  | 689 | 7 | go package + imports in path.go |  |  | 0.261 |
-| walker |  | 709 | 20 | listing of '.github' |  |  | 0.261 |
-| walker |  | 730 | 21 | listing of '.github/workflows' |  |  | 0.261 |
-| walker |  | 885 | 155 | listing of 'binding' |  |  | 0.277 |
+| walker |  | 791 | 155 | listing of 'binding' |  |  | 0.277 |
+| walker |  | 807 | 16 | go package + imports in doc.go |  |  | 0.277 |
+| walker |  | 878 | 71 | go decl names surface in path.go |  |  | 0.277 |
+| walker |  | 878 | 0 | go decl at path.go:23 |  |  | 0.277 |
+| walker |  | 878 | 0 | go decl at path.go:128 |  |  | 0.277 |
+| walker |  | 878 | 0 | go decl at path.go:155 |  |  | 0.277 |
+| walker |  | 885 | 7 | go package + imports in path.go |  |  | 0.277 |
 | walker |  | 896 | 11 | docs/doc.md section #0 |  |  | 0.280 |
 | ns | 899 |  | 238 | Complete repository root listing | 1.7 |  | 0.612 |
 | walker |  | 1072 | 176 | go decl names surface in gin.go |  |  | 0.612 |

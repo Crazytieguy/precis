@@ -105,10 +105,24 @@ entries = ["Ky.ts", "constants.ts"]
 
 [[batches]]
 position = 7
+key = 'Fs(DirListing { dir: "source/errors" })'
+descriptor = "listing of 'source/errors'"
+cost_tokens = 20
+cum_tokens = 113
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/errors"
+entries = ["ForceRetryError.ts", "HTTPError.ts", "NonError.ts", "TimeoutError.ts"]
+
+[[batches]]
+position = 8
 key = 'Typescript(Export { file: "source/index.ts", start_line: 10 })'
 descriptor = "export at source/index.ts:10"
 cost_tokens = 21
-cum_tokens = 114
+cum_tokens = 134
 
 [batches.content]
 kind = "lines"
@@ -128,20 +142,6 @@ end = 11
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "source/errors" })'
-descriptor = "listing of 'source/errors'"
-cost_tokens = 20
-cum_tokens = 134
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/errors"
-entries = ["ForceRetryError.ts", "HTTPError.ts", "NonError.ts", "TimeoutError.ts"]
 
 [[batches]]
 position = 9
@@ -213,28 +213,10 @@ entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchp
 
 [[batches]]
 position = 13
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 31
-cum_tokens = 371
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 21
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 11
-cum_tokens = 382
+cum_tokens = 351
 
 [batches.content]
 kind = "fs"
@@ -244,11 +226,11 @@ parent = ".github"
 entries = ["funding.yml", "security.md", "workflows"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 3
-cum_tokens = 385
+cum_tokens = 354
 
 [batches.content]
 kind = "fs"
@@ -258,11 +240,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 335
-cum_tokens = 720
+cum_tokens = 689
 
 [batches.content]
 kind = "lines"
@@ -271,6 +253,24 @@ kind = "lines"
 path = ".github/workflows/main.yml"
 start = 1
 end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 31
+cum_tokens = 720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 21
+end = 23
 
 [batches.content.spans.render]
 kind = "full"
@@ -539,10 +539,24 @@ kind = "full"
 
 [[batches]]
 position = 28
+key = 'Fs(DirListing { dir: "test/helpers" })'
+descriptor = "listing of 'test/helpers'"
+cost_tokens = 31
+cum_tokens = 1418
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/helpers"
+entries = ["create-http-test-server.ts", "create-large-file.ts", "index.ts", "parse-body.ts", "with-page.ts", "with-performance.ts"]
+
+[[batches]]
+position = 29
 key = 'Typescript(ExportBody { file: "source/index.ts", start_line: 10, body_start_line: 11 })'
 descriptor = "export body at source/index.ts:10 body 11"
 cost_tokens = 303
-cum_tokens = 1690
+cum_tokens = 1721
 
 [batches.content]
 kind = "lines"
@@ -556,11 +570,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(Imports { file: "source/index.ts" })'
 descriptor = "imports in source/index.ts"
 cost_tokens = 100
-cum_tokens = 1790
+cum_tokens = 1821
 
 [batches.content]
 kind = "lines"
@@ -572,20 +586,6 @@ end = 8
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "test/helpers" })'
-descriptor = "listing of 'test/helpers'"
-cost_tokens = 31
-cum_tokens = 1821
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/helpers"
-entries = ["create-http-test-server.ts", "create-large-file.ts", "index.ts", "parse-body.ts", "with-page.ts", "with-performance.ts"]
 
 [[batches]]
 position = 31

@@ -111,36 +111,10 @@ entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.
 
 [[batches]]
 position = 8
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 96
-cum_tokens = 461
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 29
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
 key = 'Fs(DirListing { dir: "site/content/docgen" })'
 descriptor = "listing of 'site/content/docgen'"
 cost_tokens = 20
-cum_tokens = 481
+cum_tokens = 385
 
 [batches.content]
 kind = "fs"
@@ -150,11 +124,11 @@ parent = "site/content/docgen"
 entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 13
-cum_tokens = 494
+cum_tokens = 398
 
 [batches.content]
 kind = "fs"
@@ -164,11 +138,11 @@ parent = ".github"
 entries = ["dependabot.yml", "labeler.yml", "workflows"]
 
 [[batches]]
-position = 11
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 502
+cum_tokens = 406
 
 [batches.content]
 kind = "fs"
@@ -178,11 +152,11 @@ parent = ".github/workflows"
 entries = ["labeler.yml", "test.yml"]
 
 [[batches]]
-position = 12
+position = 11
 key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
 descriptor = "YAML config at .github/workflows/test.yml"
 cost_tokens = 545
-cum_tokens = 1047
+cum_tokens = 951
 
 [batches.content]
 kind = "lines"
@@ -202,6 +176,32 @@ end = 61
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 96
+cum_tokens = 1047
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 13

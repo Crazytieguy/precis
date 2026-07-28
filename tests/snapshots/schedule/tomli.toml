@@ -121,10 +121,24 @@ entries = ["profiler_script.py", "requirements.txt"]
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 16
+cum_tokens = 265
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["mypyc_tox", "requirements.txt", "use_setuptools.py"]
+
+[[batches]]
+position = 10
 key = 'Markdown(HeadingsOutline { file: "tomllib.md" })'
 descriptor = "headings outline in tomllib.md"
 cost_tokens = 58
-cum_tokens = 307
+cum_tokens = 323
 
 [batches.content]
 kind = "lines"
@@ -176,20 +190,6 @@ end = 21
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 16
-cum_tokens = 323
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["mypyc_tox", "requirements.txt", "use_setuptools.py"]
 
 [[batches]]
 position = 11
@@ -827,10 +827,24 @@ kind = "full"
 
 [[batches]]
 position = 32
+key = 'Fs(DirListing { dir: "tests/data" })'
+descriptor = "listing of 'tests/data'"
+cost_tokens = 7
+cum_tokens = 2244
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data"
+entries = ["invalid", "valid"]
+
+[[batches]]
+position = 33
 key = 'Markdown(Section { file: "tomllib.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #0"
 cost_tokens = 175
-cum_tokens = 2412
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -844,11 +858,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 40
-cum_tokens = 2452
+cum_tokens = 2459
 
 [batches.content]
 kind = "lines"
@@ -862,11 +876,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 39
-cum_tokens = 2491
+cum_tokens = 2498
 
 [batches.content]
 kind = "lines"
@@ -880,11 +894,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(ReadmeHeadline { file: "benchmark/README.md" })'
 descriptor = "README headline in benchmark/README.md"
 cost_tokens = 9
-cum_tokens = 2500
+cum_tokens = 2507
 
 [batches.content]
 kind = "lines"
@@ -896,20 +910,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "tests/data" })'
-descriptor = "listing of 'tests/data'"
-cost_tokens = 7
-cum_tokens = 2507
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data"
-entries = ["invalid", "valid"]
 
 [[batches]]
 position = 37
@@ -2231,10 +2231,108 @@ kind = "full"
 
 [[batches]]
 position = 84
+key = 'Fs(DirListing { dir: "tests/data/valid" })'
+descriptor = "listing of 'tests/data/valid'"
+cost_tokens = 105
+cum_tokens = 9296
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid"
+entries = ["_external", "apostrophes-in-literal-string.json", "apostrophes-in-literal-string.toml", "array", "boolean.json", "boolean.toml", "dates-and-times", "five-quotes.json", "five-quotes.toml", "hex-char.json", "hex-char.toml", "inline-table", "multiline-basic-str", "no-newlines.json", "no-newlines.toml", "trailing-comma.json", "trailing-comma.toml"]
+
+[[batches]]
+position = 85
+key = 'Fs(DirListing { dir: "tests/data/valid/_external" })'
+descriptor = "listing of 'tests/data/valid/_external'"
+cost_tokens = 5
+cum_tokens = 9301
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/_external"
+entries = ["toml-test"]
+
+[[batches]]
+position = 86
+key = 'Fs(DirListing { dir: "tests/data/valid/_external/toml-test" })'
+descriptor = "listing of 'tests/data/valid/_external/toml-test'"
+cost_tokens = 6
+cum_tokens = 9307
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/_external/toml-test"
+entries = ["LICENSE", "valid"]
+
+[[batches]]
+position = 87
+key = 'Fs(DirListing { dir: "tests/data/valid/dates-and-times" })'
+descriptor = "listing of 'tests/data/valid/dates-and-times'"
+cost_tokens = 21
+cum_tokens = 9328
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/dates-and-times"
+entries = ["datetimes.json", "datetimes.toml", "localtime.json", "localtime.toml"]
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "tests/data/valid/array" })'
+descriptor = "listing of 'tests/data/valid/array'"
+cost_tokens = 25
+cum_tokens = 9353
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/array"
+entries = ["array-subtables.json", "array-subtables.toml", "open-parent-table.json", "open-parent-table.toml"]
+
+[[batches]]
+position = 89
+key = 'Fs(DirListing { dir: "tests/data/valid/inline-table" })'
+descriptor = "listing of 'tests/data/valid/inline-table'"
+cost_tokens = 25
+cum_tokens = 9378
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/inline-table"
+entries = ["empty-inline-table.json", "empty-inline-table.toml", "multiline-inline-table.json", "multiline-inline-table.toml"]
+
+[[batches]]
+position = 90
+key = 'Fs(DirListing { dir: "tests/data/valid/multiline-basic-str" })'
+descriptor = "listing of 'tests/data/valid/multiline-basic-str'"
+cost_tokens = 27
+cum_tokens = 9405
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/valid/multiline-basic-str"
+entries = ["ends-in-whitespace-escape.json", "ends-in-whitespace-escape.toml", "replacements.json", "replacements.toml"]
+
+[[batches]]
+position = 91
 key = 'Python(Imports { file: "fuzzer/fuzz.py" })'
 descriptor = "python imports in fuzzer/fuzz.py"
 cost_tokens = 11
-cum_tokens = 9202
+cum_tokens = 9416
 
 [batches.content]
 kind = "lines"
@@ -2246,104 +2344,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 85
-key = 'Fs(DirListing { dir: "tests/data/valid" })'
-descriptor = "listing of 'tests/data/valid'"
-cost_tokens = 105
-cum_tokens = 9307
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid"
-entries = ["_external", "apostrophes-in-literal-string.json", "apostrophes-in-literal-string.toml", "array", "boolean.json", "boolean.toml", "dates-and-times", "five-quotes.json", "five-quotes.toml", "hex-char.json", "hex-char.toml", "inline-table", "multiline-basic-str", "no-newlines.json", "no-newlines.toml", "trailing-comma.json", "trailing-comma.toml"]
-
-[[batches]]
-position = 86
-key = 'Fs(DirListing { dir: "tests/data/valid/_external" })'
-descriptor = "listing of 'tests/data/valid/_external'"
-cost_tokens = 5
-cum_tokens = 9312
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/_external"
-entries = ["toml-test"]
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: "tests/data/valid/_external/toml-test" })'
-descriptor = "listing of 'tests/data/valid/_external/toml-test'"
-cost_tokens = 6
-cum_tokens = 9318
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/_external/toml-test"
-entries = ["LICENSE", "valid"]
-
-[[batches]]
-position = 88
-key = 'Fs(DirListing { dir: "tests/data/valid/dates-and-times" })'
-descriptor = "listing of 'tests/data/valid/dates-and-times'"
-cost_tokens = 21
-cum_tokens = 9339
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/dates-and-times"
-entries = ["datetimes.json", "datetimes.toml", "localtime.json", "localtime.toml"]
-
-[[batches]]
-position = 89
-key = 'Fs(DirListing { dir: "tests/data/valid/array" })'
-descriptor = "listing of 'tests/data/valid/array'"
-cost_tokens = 25
-cum_tokens = 9364
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/array"
-entries = ["array-subtables.json", "array-subtables.toml", "open-parent-table.json", "open-parent-table.toml"]
-
-[[batches]]
-position = 90
-key = 'Fs(DirListing { dir: "tests/data/valid/inline-table" })'
-descriptor = "listing of 'tests/data/valid/inline-table'"
-cost_tokens = 25
-cum_tokens = 9389
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/inline-table"
-entries = ["empty-inline-table.json", "empty-inline-table.toml", "multiline-inline-table.json", "multiline-inline-table.toml"]
-
-[[batches]]
-position = 91
-key = 'Fs(DirListing { dir: "tests/data/valid/multiline-basic-str" })'
-descriptor = "listing of 'tests/data/valid/multiline-basic-str'"
-cost_tokens = 27
-cum_tokens = 9416
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/valid/multiline-basic-str"
-entries = ["ends-in-whitespace-escape.json", "ends-in-whitespace-escape.toml", "replacements.json", "replacements.toml"]
 
 [[batches]]
 position = 92
@@ -2365,10 +2365,206 @@ kind = "full"
 
 [[batches]]
 position = 93
+key = 'Fs(DirListing { dir: "tests/data/invalid" })'
+descriptor = "listing of 'tests/data/invalid'"
+cost_tokens = 165
+cum_tokens = 9586
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid"
+entries = ["_external", "array", "array-missing-comma.toml", "array-of-tables", "basic-str-ends-in-escape.toml", "boolean", "dates-and-times", "dotted-keys", "inline-table", "inline-table-missing-comma.toml", "invalid-comment-char.toml", "invalid-escaped-unicode.toml", "invalid-hex.toml", "keys-and-vals", "literal-str", "missing-closing-double-square-bracket.toml", "missing-closing-square-bracket.toml", "multiline-basic-str", "multiline-literal-str", "non-scalar-escaped.toml", "table", "unclosed-multiline-string.toml", "unclosed-string.toml"]
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "tests/data/invalid/_external" })'
+descriptor = "listing of 'tests/data/invalid/_external'"
+cost_tokens = 5
+cum_tokens = 9591
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/_external"
+entries = ["toml-test"]
+
+[[batches]]
+position = 95
+key = 'Fs(DirListing { dir: "tests/data/invalid/dates-and-times" })'
+descriptor = "listing of 'tests/data/invalid/dates-and-times'"
+cost_tokens = 5
+cum_tokens = 9596
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/dates-and-times"
+entries = ["invalid-day.toml"]
+
+[[batches]]
+position = 96
+key = 'Fs(DirListing { dir: "tests/data/invalid/literal-str" })'
+descriptor = "listing of 'tests/data/invalid/literal-str'"
+cost_tokens = 5
+cum_tokens = 9601
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/literal-str"
+entries = ["unclosed.toml"]
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "tests/data/invalid/_external/toml-test" })'
+descriptor = "listing of 'tests/data/invalid/_external/toml-test'"
+cost_tokens = 6
+cum_tokens = 9607
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/_external/toml-test"
+entries = ["LICENSE", "invalid"]
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "tests/data/invalid/multiline-literal-str" })'
+descriptor = "listing of 'tests/data/invalid/multiline-literal-str'"
+cost_tokens = 14
+cum_tokens = 9621
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/multiline-literal-str"
+entries = ["file-ends-after-opening.toml", "unclosed.toml"]
+
+[[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "tests/data/invalid/array-of-tables" })'
+descriptor = "listing of 'tests/data/invalid/array-of-tables'"
+cost_tokens = 17
+cum_tokens = 9638
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/array-of-tables"
+entries = ["overwrite-array-in-parent.toml", "overwrite-bool-with-aot.toml"]
+
+[[batches]]
+position = 100
+key = 'Fs(DirListing { dir: "tests/data/invalid/boolean" })'
+descriptor = "listing of 'tests/data/invalid/boolean'"
+cost_tokens = 17
+cum_tokens = 9655
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/boolean"
+entries = ["invalid-false-casing.toml", "invalid-true-casing.toml"]
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "tests/data/invalid/table" })'
+descriptor = "listing of 'tests/data/invalid/table'"
+cost_tokens = 20
+cum_tokens = 9675
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/table"
+entries = ["eof-after-opening.toml", "redefine-1.toml", "redefine-2.toml"]
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "tests/data/invalid/array" })'
+descriptor = "listing of 'tests/data/invalid/array'"
+cost_tokens = 22
+cum_tokens = 9697
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/array"
+entries = ["file-end-after-val.toml", "unclosed-after-item.toml", "unclosed-empty.toml"]
+
+[[batches]]
+position = 103
+key = 'Fs(DirListing { dir: "tests/data/invalid/dotted-keys" })'
+descriptor = "listing of 'tests/data/invalid/dotted-keys'"
+cost_tokens = 32
+cum_tokens = 9729
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/dotted-keys"
+entries = ["access-non-table.toml", "extend-defined-aot.toml", "extend-defined-table-with-subtable.toml", "extend-defined-table.toml"]
+
+[[batches]]
+position = 104
+key = 'Fs(DirListing { dir: "tests/data/invalid/keys-and-vals" })'
+descriptor = "listing of 'tests/data/invalid/keys-and-vals'"
+cost_tokens = 39
+cum_tokens = 9768
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/keys-and-vals"
+entries = ["ends-early-table-def.toml", "ends-early.toml", "no-value.toml", "only-ws-after-dot.toml", "overwrite-with-deep-table.toml"]
+
+[[batches]]
+position = 105
+key = 'Fs(DirListing { dir: "tests/data/invalid/multiline-basic-str" })'
+descriptor = "listing of 'tests/data/invalid/multiline-basic-str'"
+cost_tokens = 41
+cum_tokens = 9809
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/multiline-basic-str"
+entries = ["carriage-return.toml", "escape-only.toml", "file-ends-after-opening.toml", "last-line-escape.toml", "unclosed-ends-in-whitespace-escape.toml"]
+
+[[batches]]
+position = 106
+key = 'Fs(DirListing { dir: "tests/data/invalid/inline-table" })'
+descriptor = "listing of 'tests/data/invalid/inline-table'"
+cost_tokens = 88
+cum_tokens = 9897
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/data/invalid/inline-table"
+entries = ["define-twice-in-subtable.toml", "define-twice.toml", "file-end-after-key-val.toml", "mutate.toml", "override-val-in-table.toml", "override-val-with-array.toml", "override-val-with-table.toml", "overwrite-implicitly.toml", "overwrite-value-in-inner-array.toml", "overwrite-value-in-inner-table.toml", "unclosed-empty.toml"]
+
+[[batches]]
+position = 107
 key = 'Python(TestNames { file: "tests/test_data.py" })'
 descriptor = "python test names surface in tests/test_data.py"
 cost_tokens = 26
-cum_tokens = 9447
+cum_tokens = 9923
 
 [batches.content]
 kind = "lines"
@@ -2406,11 +2602,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 108
 key = 'Plaintext(Whole { file: "fuzzer/requirements.txt" })'
 descriptor = "plaintext config fuzzer/requirements.txt"
 cost_tokens = 44
-cum_tokens = 9491
+cum_tokens = 9967
 
 [batches.content]
 kind = "lines"
@@ -2422,202 +2618,6 @@ end = 4
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 95
-key = 'Fs(DirListing { dir: "tests/data/invalid" })'
-descriptor = "listing of 'tests/data/invalid'"
-cost_tokens = 165
-cum_tokens = 9656
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid"
-entries = ["_external", "array", "array-missing-comma.toml", "array-of-tables", "basic-str-ends-in-escape.toml", "boolean", "dates-and-times", "dotted-keys", "inline-table", "inline-table-missing-comma.toml", "invalid-comment-char.toml", "invalid-escaped-unicode.toml", "invalid-hex.toml", "keys-and-vals", "literal-str", "missing-closing-double-square-bracket.toml", "missing-closing-square-bracket.toml", "multiline-basic-str", "multiline-literal-str", "non-scalar-escaped.toml", "table", "unclosed-multiline-string.toml", "unclosed-string.toml"]
-
-[[batches]]
-position = 96
-key = 'Fs(DirListing { dir: "tests/data/invalid/_external" })'
-descriptor = "listing of 'tests/data/invalid/_external'"
-cost_tokens = 5
-cum_tokens = 9661
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/_external"
-entries = ["toml-test"]
-
-[[batches]]
-position = 97
-key = 'Fs(DirListing { dir: "tests/data/invalid/dates-and-times" })'
-descriptor = "listing of 'tests/data/invalid/dates-and-times'"
-cost_tokens = 5
-cum_tokens = 9666
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/dates-and-times"
-entries = ["invalid-day.toml"]
-
-[[batches]]
-position = 98
-key = 'Fs(DirListing { dir: "tests/data/invalid/literal-str" })'
-descriptor = "listing of 'tests/data/invalid/literal-str'"
-cost_tokens = 5
-cum_tokens = 9671
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/literal-str"
-entries = ["unclosed.toml"]
-
-[[batches]]
-position = 99
-key = 'Fs(DirListing { dir: "tests/data/invalid/_external/toml-test" })'
-descriptor = "listing of 'tests/data/invalid/_external/toml-test'"
-cost_tokens = 6
-cum_tokens = 9677
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/_external/toml-test"
-entries = ["LICENSE", "invalid"]
-
-[[batches]]
-position = 100
-key = 'Fs(DirListing { dir: "tests/data/invalid/multiline-literal-str" })'
-descriptor = "listing of 'tests/data/invalid/multiline-literal-str'"
-cost_tokens = 14
-cum_tokens = 9691
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/multiline-literal-str"
-entries = ["file-ends-after-opening.toml", "unclosed.toml"]
-
-[[batches]]
-position = 101
-key = 'Fs(DirListing { dir: "tests/data/invalid/array-of-tables" })'
-descriptor = "listing of 'tests/data/invalid/array-of-tables'"
-cost_tokens = 17
-cum_tokens = 9708
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/array-of-tables"
-entries = ["overwrite-array-in-parent.toml", "overwrite-bool-with-aot.toml"]
-
-[[batches]]
-position = 102
-key = 'Fs(DirListing { dir: "tests/data/invalid/boolean" })'
-descriptor = "listing of 'tests/data/invalid/boolean'"
-cost_tokens = 17
-cum_tokens = 9725
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/boolean"
-entries = ["invalid-false-casing.toml", "invalid-true-casing.toml"]
-
-[[batches]]
-position = 103
-key = 'Fs(DirListing { dir: "tests/data/invalid/table" })'
-descriptor = "listing of 'tests/data/invalid/table'"
-cost_tokens = 20
-cum_tokens = 9745
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/table"
-entries = ["eof-after-opening.toml", "redefine-1.toml", "redefine-2.toml"]
-
-[[batches]]
-position = 104
-key = 'Fs(DirListing { dir: "tests/data/invalid/array" })'
-descriptor = "listing of 'tests/data/invalid/array'"
-cost_tokens = 22
-cum_tokens = 9767
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/array"
-entries = ["file-end-after-val.toml", "unclosed-after-item.toml", "unclosed-empty.toml"]
-
-[[batches]]
-position = 105
-key = 'Fs(DirListing { dir: "tests/data/invalid/dotted-keys" })'
-descriptor = "listing of 'tests/data/invalid/dotted-keys'"
-cost_tokens = 32
-cum_tokens = 9799
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/dotted-keys"
-entries = ["access-non-table.toml", "extend-defined-aot.toml", "extend-defined-table-with-subtable.toml", "extend-defined-table.toml"]
-
-[[batches]]
-position = 106
-key = 'Fs(DirListing { dir: "tests/data/invalid/keys-and-vals" })'
-descriptor = "listing of 'tests/data/invalid/keys-and-vals'"
-cost_tokens = 39
-cum_tokens = 9838
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/keys-and-vals"
-entries = ["ends-early-table-def.toml", "ends-early.toml", "no-value.toml", "only-ws-after-dot.toml", "overwrite-with-deep-table.toml"]
-
-[[batches]]
-position = 107
-key = 'Fs(DirListing { dir: "tests/data/invalid/multiline-basic-str" })'
-descriptor = "listing of 'tests/data/invalid/multiline-basic-str'"
-cost_tokens = 41
-cum_tokens = 9879
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/multiline-basic-str"
-entries = ["carriage-return.toml", "escape-only.toml", "file-ends-after-opening.toml", "last-line-escape.toml", "unclosed-ends-in-whitespace-escape.toml"]
-
-[[batches]]
-position = 108
-key = 'Fs(DirListing { dir: "tests/data/invalid/inline-table" })'
-descriptor = "listing of 'tests/data/invalid/inline-table'"
-cost_tokens = 88
-cum_tokens = 9967
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/inline-table"
-entries = ["define-twice-in-subtable.toml", "define-twice.toml", "file-end-after-key-val.toml", "mutate.toml", "override-val-in-table.toml", "override-val-with-array.toml", "override-val-with-table.toml", "overwrite-implicitly.toml", "overwrite-value-in-inner-array.toml", "overwrite-value-in-inner-table.toml", "unclosed-empty.toml"]
 
 [[batches]]
 position = 109

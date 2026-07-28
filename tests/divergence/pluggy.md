@@ -19,29 +19,29 @@ Score(3000)=0.596 I=0.764 C=0.465 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 570 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.770 |
 | walker |  | 586 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.771 |
 | walker |  | 586 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.771 |
+| walker |  | 599 | 13 | listing of '.github' |  |  | 0.771 |
+| walker |  | 602 | 3 | listing of '.github/workflows' |  |  | 0.771 |
+| walker |  | 615 | 13 | listing of 'scripts' |  |  | 0.771 |
 | ns | 621 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.680 |
-| walker |  | 705 | 119 | README headline in README.rst |  |  | 0.820 |
-| ns | 845 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.751 |
-| ns | 901 |  | 56 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.704 |
+| walker |  | 734 | 119 | README headline in README.rst |  |  | 0.820 |
+| ns | 845 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.752 |
+| ns | 901 |  | 56 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.705 |
 | ns | 993 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.672 |
-| walker |  | 1251 | 546 | README.rst section #0 |  |  | 0.672 |
-| walker |  | 1264 | 13 | listing of '.github' |  |  | 0.672 |
-| walker |  | 1267 | 3 | listing of '.github/workflows' |  |  | 0.672 |
-| walker |  | 1280 | 13 | listing of 'scripts' |  |  | 0.672 |
+| walker |  | 1280 | 546 | README.rst section #0 |  |  | 0.672 |
 | ns | 1304 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.597 |
 | walker |  | 1306 | 26 | downstream/README.md section #0 |  |  | 0.597 |
 | walker |  | 1350 | 44 | dev/build/target dependencies in pyproject.toml |  |  | 0.597 |
-| walker |  | 1401 | 51 | [package] in pyproject.toml |  |  | 0.597 |
-| walker |  | 1442 | 41 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.597 |
-| walker |  | 1491 | 49 | tool.setuptools config in pyproject.toml |  |  | 0.597 |
-| ns | 1536 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.555 |
-| walker |  | 1554 | 63 | manifest config in pyproject.toml |  |  | 0.555 |
-| walker |  | 1570 | 16 | listing of 'docs/examples' |  |  | 0.559 |
-| walker |  | 1578 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.565 |
-| walker |  | 1656 | 78 | package metadata in pyproject.toml |  |  | 0.566 |
-| walker |  | 1667 | 11 | python imports in src/pluggy/_warnings.py |  |  | 0.566 |
-| walker |  | 1686 | 19 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.590 |
-| walker |  | 1747 | 61 | listing of 'testing' |  |  | 0.663 |
+| walker |  | 1366 | 16 | listing of 'docs/examples' |  |  | 0.601 |
+| walker |  | 1374 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.608 |
+| walker |  | 1425 | 51 | [package] in pyproject.toml |  |  | 0.609 |
+| walker |  | 1466 | 41 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.609 |
+| walker |  | 1515 | 49 | tool.setuptools config in pyproject.toml |  |  | 0.609 |
+| ns | 1536 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.565 |
+| walker |  | 1578 | 63 | manifest config in pyproject.toml |  |  | 0.565 |
+| walker |  | 1597 | 19 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.589 |
+| walker |  | 1675 | 78 | package metadata in pyproject.toml |  |  | 0.590 |
+| walker |  | 1736 | 61 | listing of 'testing' |  |  | 0.663 |
+| walker |  | 1747 | 11 | python imports in src/pluggy/_warnings.py |  |  | 0.663 |
 | walker |  | 1767 | 20 | python decl names surface in src/pluggy/_warnings.py |  |  | 0.664 |
 | walker |  | 1767 | 0 | python decl at src/pluggy/_warnings.py:4 |  |  | 0.664 |
 | walker |  | 1783 | 16 | python decl at src/pluggy/_warnings.py:10 |  |  | 0.664 |
@@ -267,5 +267,6 @@ Score(3000)=0.596 I=0.764 C=0.465 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 9849 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.523 |
 | walker |  | 9862 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.523 |
 | walker |  | 9879 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.523 |
-| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.526 |
-| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.529 |
+| walker |  | 9889 | 10 | listing of 'docs/examples/eggsample-spam' |  |  | 0.528 |
+| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.531 |
+| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.533 |

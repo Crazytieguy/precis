@@ -17,15 +17,15 @@ Score(3000)=0.622 I=0.835 C=0.463 ns_rows≤3K=25/59 (reached=12 partial=0 missi
 | walker |  | 142 | 8 | listing of 'internal/services' |  |  | 0.688 |
 | walker |  | 145 | 3 | listing of 'internal/services/ics' |  |  | 0.690 |
 | walker |  | 155 | 10 | listing of 'internal/timeutil' |  |  | 0.693 |
-| walker |  | 188 | 33 | go module identity in go.mod |  |  | 0.774 |
-| walker |  | 192 | 4 | listing of 'demo' |  |  | 0.775 |
-| walker |  | 207 | 15 | listing of 'internal/core' |  |  | 0.798 |
-| walker |  | 210 | 3 | listing of 'internal/core/errors' |  |  | 0.800 |
-| walker |  | 213 | 3 | listing of 'internal/core/models' |  |  | 0.803 |
-| walker |  | 218 | 5 | listing of 'internal/core/dto' |  |  | 0.806 |
-| ns | 223 |  | 83 | README feature bullets, part 1 (storage, notes, TUI, footprint) | 1.4 |  | 0.725 |
-| walker |  | 225 | 7 | listing of 'internal/core/ports' |  |  | 0.731 |
-| walker |  | 233 | 8 | listing of 'internal/services/activity' |  |  | 0.738 |
+| walker |  | 159 | 4 | listing of 'demo' |  |  | 0.693 |
+| walker |  | 174 | 15 | listing of 'internal/core' |  |  | 0.715 |
+| walker |  | 177 | 3 | listing of 'internal/core/errors' |  |  | 0.717 |
+| walker |  | 180 | 3 | listing of 'internal/core/models' |  |  | 0.719 |
+| walker |  | 185 | 5 | listing of 'internal/core/dto' |  |  | 0.722 |
+| walker |  | 192 | 7 | listing of 'internal/core/ports' |  |  | 0.728 |
+| walker |  | 200 | 8 | listing of 'internal/services/activity' |  |  | 0.735 |
+| ns | 223 |  | 83 | README feature bullets, part 1 (storage, notes, TUI, footprint) | 1.4 |  | 0.662 |
+| walker |  | 233 | 33 | go module identity in go.mod |  |  | 0.738 |
 | walker |  | 246 | 13 | listing of 'internal/adapters/repositories' |  |  | 0.738 |
 | walker |  | 254 | 8 | listing of 'internal/adapters/repositories/notes' |  |  | 0.739 |
 | walker |  | 262 | 8 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.740 |
@@ -38,13 +38,13 @@ Score(3000)=0.622 I=0.835 C=0.463 ns_rows≤3K=25/59 (reached=12 partial=0 missi
 | ns | 506 |  | 73 | Domain, service and support package file listings (complete) | 1.8 |  | 0.621 |
 | ns | 633 |  | 127 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.511 |
 | walker |  | 718 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.511 |
-| walker |  | 730 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.512 |
-| walker |  | 730 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.512 |
-| ns | 738 |  | 105 | README section headings (all H2) | 1.10 |  | 0.482 |
-| walker |  | 747 | 17 | listing of 'internal/adapters/repositories/file' |  |  | 0.495 |
-| walker |  | 764 | 17 | listing of 'internal/core/ports/mocks' |  |  | 0.529 |
-| walker |  | 842 | 78 | listing of 'internal/adapters/cli' |  |  | 0.671 |
-| walker |  | 850 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.674 |
+| walker |  | 735 | 17 | listing of 'internal/adapters/repositories/file' |  |  | 0.526 |
+| ns | 738 |  | 105 | README section headings (all H2) | 1.10 |  | 0.494 |
+| walker |  | 752 | 17 | listing of 'internal/core/ports/mocks' |  |  | 0.528 |
+| walker |  | 764 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.529 |
+| walker |  | 764 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.529 |
+| walker |  | 772 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.532 |
+| walker |  | 850 | 78 | listing of 'internal/adapters/cli' |  |  | 0.674 |
 | walker |  | 867 | 17 | go decl names surface in internal/adapters/cli/start.go |  |  | 0.674 |
 | walker |  | 867 | 0 | go decl at internal/adapters/cli/start.go:17 |  |  | 0.674 |
 | walker |  | 884 | 17 | go decl names surface in internal/adapters/cli/stop.go |  |  | 0.674 |

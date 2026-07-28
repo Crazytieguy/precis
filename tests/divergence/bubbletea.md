@@ -13,13 +13,13 @@ Score(3000)=0.554 I=0.783 C=0.393 ns_rows≤3K=18/50 (reached=6 partial=0 missin
 | walker |  | 275 | 29 | go module identity in go.mod |  |  | 0.043 |
 | walker |  | 289 | 14 | go decl names surface in profile.go |  |  | 0.043 |
 | walker |  | 300 | 11 | go decl at profile.go:13 |  |  | 0.043 |
-| walker |  | 322 | 22 | go decl names surface in focus.go |  |  | 0.043 |
-| walker |  | 322 | 0 | go decl at focus.go:5 |  |  | 0.043 |
-| walker |  | 322 | 0 | go decl at focus.go:9 |  |  | 0.043 |
+| walker |  | 321 | 21 | listing of 'testdata/TestClearMsg' |  |  | 0.043 |
 | ns | 338 |  | 72 | Program entry points: `NewProgram`, `Run`, `ProgramOption` | 1.4 |  | 0.038 |
-| walker |  | 345 | 23 | go decl names surface in input.go |  |  | 0.038 |
-| walker |  | 345 | 0 | go decl at input.go:8 |  |  | 0.038 |
-| walker |  | 366 | 21 | listing of 'testdata/TestClearMsg' |  |  | 0.038 |
+| walker |  | 343 | 22 | go decl names surface in focus.go |  |  | 0.038 |
+| walker |  | 343 | 0 | go decl at focus.go:5 |  |  | 0.038 |
+| walker |  | 343 | 0 | go decl at focus.go:9 |  |  | 0.038 |
+| walker |  | 366 | 23 | go decl names surface in input.go |  |  | 0.038 |
+| walker |  | 366 | 0 | go decl at input.go:8 |  |  | 0.038 |
 | walker |  | 392 | 26 | go decl names surface in raw.go |  |  | 0.038 |
 | walker |  | 392 | 0 | go decl at raw.go:33 |  |  | 0.038 |
 | walker |  | 405 | 13 | go decl at raw.go:5 |  |  | 0.038 |
@@ -27,9 +27,9 @@ Score(3000)=0.554 I=0.783 C=0.393 ns_rows≤3K=18/50 (reached=6 partial=0 missin
 | walker |  | 481 | 76 | README headline in README.md |  |  | 0.032 |
 | walker |  | 488 | 7 | go package + imports in focus.go |  |  | 0.032 |
 | walker |  | 495 | 7 | go package + imports in raw.go |  |  | 0.032 |
-| walker |  | 539 | 44 | go module identity in tutorials/go.mod |  |  | 0.032 |
-| walker |  | 552 | 13 | listing of '.github' |  |  | 0.032 |
-| walker |  | 582 | 30 | listing of '.github/workflows' |  |  | 0.032 |
+| walker |  | 508 | 13 | listing of '.github' |  |  | 0.032 |
+| walker |  | 538 | 30 | listing of '.github/workflows' |  |  | 0.032 |
+| walker |  | 582 | 44 | go module identity in tutorials/go.mod |  |  | 0.032 |
 | walker |  | 632 | 50 | go decl names surface in screen.go |  |  | 0.032 |
 | walker |  | 632 | 0 | go decl at screen.go:20 |  |  | 0.032 |
 | walker |  | 632 | 0 | go decl at screen.go:26 |  |  | 0.032 |
@@ -92,30 +92,30 @@ Score(3000)=0.554 I=0.783 C=0.393 ns_rows≤3K=18/50 (reached=6 partial=0 missin
 | walker |  | 1494 | 39 | go decl doc at tea.go:84 |  |  | 0.624 |
 | ns | 1526 |  | 184 | README lede: positioning and shipped feature set | 1.11 |  | 0.605 |
 | walker |  | 1530 | 36 | go decl doc at tea.go:46 |  |  | 0.607 |
-| walker |  | 1592 | 62 | go decl names surface in environ.go |  |  | 0.607 |
-| walker |  | 1592 | 0 | go decl at environ.go:19 |  |  | 0.607 |
-| walker |  | 1592 | 0 | go decl at environ.go:24 |  |  | 0.607 |
-| walker |  | 1592 | 0 | go decl at environ.go:32 |  |  | 0.607 |
-| walker |  | 1606 | 14 | go decl body at environ.go:24 |  |  | 0.607 |
-| walker |  | 1620 | 14 | go decl body at environ.go:32 |  |  | 0.607 |
-| walker |  | 1644 | 24 | go decl doc at focus.go:5 |  |  | 0.607 |
-| walker |  | 1668 | 24 | go decl doc at focus.go:9 |  |  | 0.607 |
+| walker |  | 1601 | 71 | listing of 'testdata/TestViewModel' |  |  | 0.607 |
+| walker |  | 1663 | 62 | go decl names surface in environ.go |  |  | 0.607 |
+| walker |  | 1663 | 0 | go decl at environ.go:19 |  |  | 0.607 |
+| walker |  | 1663 | 0 | go decl at environ.go:24 |  |  | 0.607 |
+| walker |  | 1663 | 0 | go decl at environ.go:32 |  |  | 0.607 |
 | ns | 1669 |  | 143 | Sentinel errors returned by `Program.Run` | 2.1 |  | 0.619 |
-| walker |  | 1718 | 50 | go decl at screen.go:62 |  |  | 0.619 |
-| walker |  | 1784 | 66 | go decl names surface in logging.go |  |  | 0.619 |
-| walker |  | 1784 | 0 | go decl at logging.go:23 |  |  | 0.619 |
-| walker |  | 1784 | 0 | go decl at logging.go:35 |  |  | 0.619 |
-| walker |  | 1806 | 22 | go decl at logging.go:29 |  |  | 0.619 |
-| ns | 1814 |  | 145 | Every exported `*Program` method (complete roster) | 2.2 | 1.4 | 0.599 |
-| walker |  | 1822 | 16 | go decl body at logging.go:23 |  |  | 0.599 |
-| walker |  | 1843 | 21 | go decl doc at logging.go:35 |  |  | 0.599 |
-| walker |  | 1872 | 29 | go decl doc at logging.go:29 |  |  | 0.599 |
-| walker |  | 1901 | 29 | go decl doc at paste.go:5 |  |  | 0.599 |
-| walker |  | 1930 | 29 | go decl doc at paste.go:20 |  |  | 0.599 |
-| walker |  | 1959 | 29 | go decl doc at raw.go:5 |  |  | 0.599 |
-| walker |  | 1990 | 31 | go decl doc at paste.go:16 |  |  | 0.599 |
+| walker |  | 1677 | 14 | go decl body at environ.go:24 |  |  | 0.619 |
+| walker |  | 1691 | 14 | go decl body at environ.go:32 |  |  | 0.619 |
+| walker |  | 1715 | 24 | go decl doc at focus.go:5 |  |  | 0.619 |
+| walker |  | 1739 | 24 | go decl doc at focus.go:9 |  |  | 0.619 |
+| walker |  | 1789 | 50 | go decl at screen.go:62 |  |  | 0.619 |
+| ns | 1814 |  | 145 | Every exported `*Program` method (complete roster) | 2.2 | 1.4 | 0.598 |
+| walker |  | 1855 | 66 | go decl names surface in logging.go |  |  | 0.599 |
+| walker |  | 1855 | 0 | go decl at logging.go:23 |  |  | 0.599 |
+| walker |  | 1855 | 0 | go decl at logging.go:35 |  |  | 0.599 |
+| walker |  | 1877 | 22 | go decl at logging.go:29 |  |  | 0.599 |
+| walker |  | 1893 | 16 | go decl body at logging.go:23 |  |  | 0.599 |
+| walker |  | 1914 | 21 | go decl doc at logging.go:35 |  |  | 0.599 |
+| walker |  | 1943 | 29 | go decl doc at logging.go:29 |  |  | 0.599 |
+| walker |  | 1972 | 29 | go decl doc at paste.go:5 |  |  | 0.599 |
+| walker |  | 2001 | 29 | go decl doc at paste.go:20 |  |  | 0.599 |
 | ns | 2005 |  | 191 | Every `ProgramOption` constructor (complete roster) | 2.3 |  | 0.574 |
-| walker |  | 2061 | 71 | listing of 'testdata/TestViewModel' |  |  | 0.574 |
+| walker |  | 2030 | 29 | go decl doc at raw.go:5 |  |  | 0.574 |
+| walker |  | 2061 | 31 | go decl doc at paste.go:16 |  |  | 0.574 |
 | ns | 2134 |  | 129 | Build/test/lint entry points (`Taskfile.yaml`) | 2.4 |  | 0.549 |
 | walker |  | 2158 | 97 | go decl names surface in cursor.go |  |  | 0.550 |
 | walker |  | 2158 | 0 | go decl at cursor.go:4 |  |  | 0.550 |
@@ -306,120 +306,120 @@ Score(3000)=0.554 I=0.783 C=0.393 ns_rows≤3K=18/50 (reached=6 partial=0 missin
 | walker |  | 6390 | 61 | go decl doc at clipboard.go:54 |  |  | 0.493 |
 | walker |  | 6451 | 61 | go decl doc at clipboard.go:68 |  |  | 0.493 |
 | ns | 6570 |  | 188 | Keyboard enhancements: request fields and response predicates | 3.13 | 3.2 | 0.494 |
-| walker |  | 6649 | 198 | go decl names surface in exec.go |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:22 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:50 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:56 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:69 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:75 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:78 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:86 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:94 |  |  | 0.499 |
-| walker |  | 6649 | 0 | go decl at exec.go:102 |  |  | 0.499 |
-| walker |  | 6692 | 43 | go decl at exec.go:60 |  |  | 0.499 |
-| walker |  | 6706 | 14 | go decl body at exec.go:50 |  |  | 0.499 |
-| walker |  | 6732 | 26 | go decl doc at exec.go:60 |  |  | 0.500 |
-| walker |  | 6754 | 22 | go decl at exec.go:10 |  |  | 0.500 |
-| ns | 6763 |  | 193 | `Batch` vs `Sequence` semantics and where they execute | 3.14 | 3.3 | 0.497 |
-| walker |  | 6791 | 37 | go decl doc at exec.go:56 |  |  | 0.497 |
-| walker |  | 6810 | 19 | go decl doc at exec.go:10 |  |  | 0.497 |
-| walker |  | 6828 | 18 | go decl doc at exec.go:78 |  |  | 0.497 |
-| walker |  | 6848 | 20 | go decl doc at exec.go:86 |  |  | 0.497 |
-| walker |  | 6869 | 21 | go decl doc at exec.go:94 |  |  | 0.497 |
-| walker |  | 6890 | 21 | go decl doc at exec.go:102 |  |  | 0.497 |
-| walker |  | 6918 | 28 | go decl doc at exec.go:75 |  |  | 0.497 |
-| walker |  | 6962 | 44 | go package + imports in exec.go |  |  | 0.497 |
-| ns | 6963 |  | 200 | `Exec` / `ExecProcess` and the `ExecCommand` interface | 3.15 | 3.3 | 0.499 |
-| ns | 7115 |  | 152 | Logging to a file: `LogToFile` / `LogToFileWith` | 3.16 |  | 0.501 |
-| walker |  | 7208 | 246 | headings outline in README.md |  |  | 0.502 |
-| walker |  | 7222 | 14 | README.md section #3 |  |  | 0.502 |
-| ns | 7332 |  | 217 | The `renderer` interface: complete method set, and its two implementations | 4.1 |  | 0.493 |
-| walker |  | 7473 | 251 | README.md section #0 |  |  | 0.505 |
-| walker |  | 7679 | 206 | go decl names surface in options.go |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:17 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:22 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:30 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:40 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:58 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:66 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:76 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:84 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:98 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:133 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:142 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:153 |  |  | 0.524 |
-| walker |  | 7679 | 0 | go decl at options.go:163 |  |  | 0.524 |
-| ns | 7685 |  | 353 | `cursedRenderer`: every function in the 860-line renderer | 4.2 | 4.1 | 0.513 |
-| walker |  | 7703 | 24 | go decl doc at options.go:84 |  |  | 0.513 |
-| walker |  | 7737 | 34 | go decl doc at options.go:30 |  |  | 0.513 |
-| walker |  | 7774 | 37 | go decl doc at options.go:66 |  |  | 0.513 |
-| walker |  | 7801 | 27 | go decl body at options.go:30 |  |  | 0.513 |
-| walker |  | 7858 | 57 | go decl doc at options.go:22 |  |  | 0.513 |
-| walker |  | 7919 | 61 | go decl doc at options.go:40 |  |  | 0.513 |
-| walker |  | 7980 | 61 | go decl doc at options.go:142 |  |  | 0.513 |
-| ns | 8043 |  | 358 | `View` fields → ANSI sequences, in `cursedRenderer.start` | 4.3 | 4.2 | 0.502 |
-| walker |  | 8053 | 73 | go decl doc at options.go:17 |  |  | 0.502 |
-| walker |  | 8081 | 28 | go decl doc at tty.go:33 |  |  | 0.502 |
-| walker |  | 8167 | 86 | go decl at mod.go:9 |  |  | 0.503 |
-| walker |  | 8173 | 6 | go decl doc at mod.go:9 |  |  | 0.505 |
-| walker |  | 8234 | 61 | go decl doc at clipboard.go:15 |  |  | 0.505 |
-| walker |  | 8269 | 35 | go decl doc at screen.go:26 |  |  | 0.505 |
-| walker |  | 8337 | 68 | go decl doc at options.go:76 |  |  | 0.505 |
-| walker |  | 8407 | 70 | go decl doc at options.go:163 |  |  | 0.505 |
-| walker |  | 8417 | 10 | go decl body at cursor.go:26 |  |  | 0.505 |
-| ns | 8424 |  | 381 | Platform matrix: build tags and per-OS terminal functions | 4.4 |  | 0.495 |
-| walker |  | 8449 | 32 | go decl doc at exec.go:69 |  |  | 0.495 |
-| walker |  | 8479 | 30 | go decl doc at tty.go:109 |  |  | 0.495 |
-| ns | 8622 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.499 |
-| walker |  | 8709 | 230 | go decl names surface in color.go |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:10 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:13 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:18 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:21 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:26 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:29 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:36 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:39 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:44 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:67 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:70 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:75 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:81 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:84 |  |  | 0.514 |
-| walker |  | 8709 | 0 | go decl at color.go:89 |  |  | 0.514 |
-| walker |  | 8718 | 9 | go decl body at color.go:13 |  |  | 0.514 |
-| walker |  | 8727 | 9 | go decl body at color.go:21 |  |  | 0.514 |
-| walker |  | 8736 | 9 | go decl body at color.go:29 |  |  | 0.514 |
-| walker |  | 8748 | 12 | go decl doc at color.go:39 |  |  | 0.514 |
-| walker |  | 8760 | 12 | go decl doc at color.go:70 |  |  | 0.514 |
-| walker |  | 8772 | 12 | go decl doc at color.go:84 |  |  | 0.514 |
-| walker |  | 8786 | 14 | go decl doc at color.go:44 |  |  | 0.514 |
-| walker |  | 8800 | 14 | go decl doc at color.go:75 |  |  | 0.514 |
-| walker |  | 8814 | 14 | go decl doc at color.go:89 |  |  | 0.514 |
-| walker |  | 8830 | 16 | go decl doc at color.go:13 |  |  | 0.514 |
-| walker |  | 8846 | 16 | go decl doc at color.go:21 |  |  | 0.514 |
-| walker |  | 8862 | 16 | go decl doc at color.go:29 |  |  | 0.514 |
-| walker |  | 8896 | 34 | go decl doc at color.go:81 |  |  | 0.514 |
-| walker |  | 8914 | 18 | go decl doc at color.go:10 |  |  | 0.514 |
-| walker |  | 8932 | 18 | go decl doc at color.go:18 |  |  | 0.514 |
-| ns | 8949 |  | 327 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.487 |
-| walker |  | 8950 | 18 | go decl doc at color.go:26 |  |  | 0.487 |
-| walker |  | 8998 | 48 | go decl doc at color.go:36 |  |  | 0.487 |
-| walker |  | 9051 | 53 | go package + imports in color.go |  |  | 0.487 |
-| walker |  | 9083 | 32 | go decl names surface in signals_windows.go |  |  | 0.487 |
-| walker |  | 9083 | 0 | go decl at signals_windows.go:8 |  |  | 0.487 |
-| walker |  | 9122 | 39 | go decl at renderer.go:10 |  |  | 0.489 |
-| ns | 9129 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.484 |
-| walker |  | 9164 | 42 | README.md section #44 |  |  | 0.484 |
-| walker |  | 9254 | 90 | go decl doc at termcap.go:41 |  |  | 0.484 |
-| walker |  | 9299 | 45 | README.md section #24 |  |  | 0.484 |
-| walker |  | 9333 | 34 | go decl names surface in termios_windows.go |  |  | 0.484 |
-| walker |  | 9333 | 0 | go decl at termios_windows.go:8 |  |  | 0.484 |
-| walker |  | 9406 | 73 | go decl doc at environ.go:32 |  |  | 0.484 |
-| ns | 9414 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.480 |
-| walker |  | 9452 | 46 | go decl body at renderer.go:70 |  |  | 0.480 |
-| walker |  | 9511 | 59 | go package + imports in logging.go |  |  | 0.480 |
-| ns | 9583 |  | 169 | README section map | 5.4 |  | 0.490 |
-| ns | 9943 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.480 |
-| ns | 9985 |  | 42 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.486 |
-| walker |  | 9987 | 476 | go module file go.mod |  |  | 0.498 |
+| walker |  | 6763 | 312 | listing of 'examples' |  |  | 0.496 |
+| ns | 6763 |  | 193 | `Batch` vs `Sequence` semantics and where they execute | 3.14 | 3.3 | 0.496 |
+| walker |  | 6961 | 198 | go decl names surface in exec.go |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:22 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:50 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:56 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:69 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:75 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:78 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:86 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:94 |  |  | 0.501 |
+| walker |  | 6961 | 0 | go decl at exec.go:102 |  |  | 0.501 |
+| ns | 6963 |  | 200 | `Exec` / `ExecProcess` and the `ExecCommand` interface | 3.15 | 3.3 | 0.495 |
+| walker |  | 7004 | 43 | go decl at exec.go:60 |  |  | 0.498 |
+| walker |  | 7018 | 14 | go decl body at exec.go:50 |  |  | 0.498 |
+| walker |  | 7044 | 26 | go decl doc at exec.go:60 |  |  | 0.501 |
+| walker |  | 7066 | 22 | go decl at exec.go:10 |  |  | 0.501 |
+| walker |  | 7103 | 37 | go decl doc at exec.go:56 |  |  | 0.501 |
+| ns | 7115 |  | 152 | Logging to a file: `LogToFile` / `LogToFileWith` | 3.16 |  | 0.503 |
+| walker |  | 7122 | 19 | go decl doc at exec.go:10 |  |  | 0.503 |
+| walker |  | 7140 | 18 | go decl doc at exec.go:78 |  |  | 0.503 |
+| walker |  | 7160 | 20 | go decl doc at exec.go:86 |  |  | 0.503 |
+| walker |  | 7181 | 21 | go decl doc at exec.go:94 |  |  | 0.503 |
+| walker |  | 7202 | 21 | go decl doc at exec.go:102 |  |  | 0.505 |
+| walker |  | 7230 | 28 | go decl doc at exec.go:75 |  |  | 0.505 |
+| walker |  | 7274 | 44 | go package + imports in exec.go |  |  | 0.505 |
+| ns | 7332 |  | 217 | The `renderer` interface: complete method set, and its two implementations | 4.1 |  | 0.497 |
+| walker |  | 7520 | 246 | headings outline in README.md |  |  | 0.497 |
+| walker |  | 7534 | 14 | README.md section #3 |  |  | 0.497 |
+| ns | 7685 |  | 353 | `cursedRenderer`: every function in the 860-line renderer | 4.2 | 4.1 | 0.487 |
+| walker |  | 7785 | 251 | README.md section #0 |  |  | 0.499 |
+| walker |  | 7991 | 206 | go decl names surface in options.go |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:17 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:22 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:30 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:40 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:58 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:66 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:76 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:84 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:98 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:133 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:142 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:153 |  |  | 0.517 |
+| walker |  | 7991 | 0 | go decl at options.go:163 |  |  | 0.517 |
+| walker |  | 8015 | 24 | go decl doc at options.go:84 |  |  | 0.517 |
+| ns | 8043 |  | 358 | `View` fields → ANSI sequences, in `cursedRenderer.start` | 4.3 | 4.2 | 0.506 |
+| walker |  | 8049 | 34 | go decl doc at options.go:30 |  |  | 0.506 |
+| walker |  | 8086 | 37 | go decl doc at options.go:66 |  |  | 0.506 |
+| walker |  | 8113 | 27 | go decl body at options.go:30 |  |  | 0.506 |
+| walker |  | 8170 | 57 | go decl doc at options.go:22 |  |  | 0.506 |
+| walker |  | 8231 | 61 | go decl doc at options.go:40 |  |  | 0.506 |
+| walker |  | 8292 | 61 | go decl doc at options.go:142 |  |  | 0.506 |
+| walker |  | 8365 | 73 | go decl doc at options.go:17 |  |  | 0.506 |
+| walker |  | 8393 | 28 | go decl doc at tty.go:33 |  |  | 0.506 |
+| ns | 8424 |  | 381 | Platform matrix: build tags and per-OS terminal functions | 4.4 |  | 0.496 |
+| walker |  | 8479 | 86 | go decl at mod.go:9 |  |  | 0.497 |
+| walker |  | 8485 | 6 | go decl doc at mod.go:9 |  |  | 0.499 |
+| walker |  | 8546 | 61 | go decl doc at clipboard.go:15 |  |  | 0.499 |
+| walker |  | 8581 | 35 | go decl doc at screen.go:26 |  |  | 0.499 |
+| ns | 8622 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.503 |
+| walker |  | 8649 | 68 | go decl doc at options.go:76 |  |  | 0.503 |
+| walker |  | 8719 | 70 | go decl doc at options.go:163 |  |  | 0.503 |
+| walker |  | 8729 | 10 | go decl body at cursor.go:26 |  |  | 0.503 |
+| walker |  | 8761 | 32 | go decl doc at exec.go:69 |  |  | 0.503 |
+| walker |  | 8791 | 30 | go decl doc at tty.go:109 |  |  | 0.503 |
+| ns | 8949 |  | 327 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.545 |
+| walker |  | 9021 | 230 | go decl names surface in color.go |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:10 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:13 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:18 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:21 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:26 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:29 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:36 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:39 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:44 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:67 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:70 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:75 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:81 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:84 |  |  | 0.558 |
+| walker |  | 9021 | 0 | go decl at color.go:89 |  |  | 0.558 |
+| walker |  | 9030 | 9 | go decl body at color.go:13 |  |  | 0.558 |
+| walker |  | 9039 | 9 | go decl body at color.go:21 |  |  | 0.558 |
+| walker |  | 9048 | 9 | go decl body at color.go:29 |  |  | 0.558 |
+| walker |  | 9060 | 12 | go decl doc at color.go:39 |  |  | 0.558 |
+| walker |  | 9072 | 12 | go decl doc at color.go:70 |  |  | 0.558 |
+| walker |  | 9084 | 12 | go decl doc at color.go:84 |  |  | 0.558 |
+| walker |  | 9098 | 14 | go decl doc at color.go:44 |  |  | 0.558 |
+| walker |  | 9112 | 14 | go decl doc at color.go:75 |  |  | 0.558 |
+| walker |  | 9126 | 14 | go decl doc at color.go:89 |  |  | 0.558 |
+| ns | 9129 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.551 |
+| walker |  | 9142 | 16 | go decl doc at color.go:13 |  |  | 0.551 |
+| walker |  | 9158 | 16 | go decl doc at color.go:21 |  |  | 0.551 |
+| walker |  | 9174 | 16 | go decl doc at color.go:29 |  |  | 0.551 |
+| walker |  | 9208 | 34 | go decl doc at color.go:81 |  |  | 0.551 |
+| walker |  | 9226 | 18 | go decl doc at color.go:10 |  |  | 0.551 |
+| walker |  | 9244 | 18 | go decl doc at color.go:18 |  |  | 0.551 |
+| walker |  | 9262 | 18 | go decl doc at color.go:26 |  |  | 0.551 |
+| walker |  | 9310 | 48 | go decl doc at color.go:36 |  |  | 0.551 |
+| walker |  | 9363 | 53 | go package + imports in color.go |  |  | 0.551 |
+| walker |  | 9395 | 32 | go decl names surface in signals_windows.go |  |  | 0.552 |
+| walker |  | 9395 | 0 | go decl at signals_windows.go:8 |  |  | 0.552 |
+| ns | 9414 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.547 |
+| walker |  | 9434 | 39 | go decl at renderer.go:10 |  |  | 0.549 |
+| walker |  | 9476 | 42 | README.md section #44 |  |  | 0.549 |
+| walker |  | 9566 | 90 | go decl doc at termcap.go:41 |  |  | 0.549 |
+| ns | 9583 |  | 169 | README section map | 5.4 |  | 0.556 |
+| walker |  | 9611 | 45 | README.md section #24 |  |  | 0.556 |
+| walker |  | 9645 | 34 | go decl names surface in termios_windows.go |  |  | 0.557 |
+| walker |  | 9645 | 0 | go decl at termios_windows.go:8 |  |  | 0.557 |
+| walker |  | 9718 | 73 | go decl doc at environ.go:32 |  |  | 0.557 |
+| walker |  | 9764 | 46 | go decl body at renderer.go:70 |  |  | 0.557 |
+| walker |  | 9823 | 59 | go package + imports in logging.go |  |  | 0.557 |
+| ns | 9943 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.546 |
+| ns | 9985 |  | 42 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.550 |

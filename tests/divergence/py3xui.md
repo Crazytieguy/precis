@@ -14,36 +14,36 @@ Score(3000)=0.615 I=0.854 C=0.443 ns_rows≤3K=20/57 (reached=10 partial=1 missi
 | ns | 247 |  | 30 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.653 |
 | walker |  | 250 | 13 | listing of 'py3xui/utils' |  |  | 0.658 |
 | walker |  | 281 | 31 | listing of 'py3xui/inbound' |  |  | 0.680 |
-| walker |  | 309 | 28 | python imports in py3xui/client/__init__.py |  |  | 0.680 |
-| walker |  | 326 | 17 | python decl names surface in py3xui/utils/__init__.py |  |  | 0.680 |
-| walker |  | 357 | 31 | python imports in py3xui/utils/__init__.py |  |  | 0.681 |
-| ns | 387 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.610 |
-| walker |  | 389 | 32 | python imports in py3xui/server/__init__.py |  |  | 0.611 |
-| walker |  | 428 | 39 | listing of 'py3xui/api' |  |  | 0.620 |
-| walker |  | 473 | 45 | listing of 'py3xui/async_api' |  |  | 0.644 |
+| walker |  | 320 | 39 | listing of 'py3xui/api' |  |  | 0.689 |
+| walker |  | 348 | 28 | python imports in py3xui/client/__init__.py |  |  | 0.690 |
+| ns | 387 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.618 |
+| walker |  | 393 | 45 | listing of 'py3xui/async_api' |  |  | 0.642 |
+| walker |  | 410 | 17 | python decl names surface in py3xui/utils/__init__.py |  |  | 0.642 |
+| walker |  | 441 | 31 | python imports in py3xui/utils/__init__.py |  |  | 0.643 |
+| walker |  | 473 | 32 | python imports in py3xui/server/__init__.py |  |  | 0.644 |
 | walker |  | 484 | 11 | listing of '.vscode' |  |  | 0.644 |
-| walker |  | 515 | 31 | README headline in py3xui/utils/README.md |  |  | 0.644 |
-| walker |  | 595 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.647 |
-| ns | 600 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.513 |
-| walker |  | 677 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.519 |
-| walker |  | 692 | 15 | py3xui/utils/README.md section #0 |  |  | 0.519 |
-| ns | 719 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.487 |
-| walker |  | 783 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.493 |
-| ns | 803 |  | 84 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.540 |
-| walker |  | 819 | 36 | README headline in py3xui/server/README.md |  |  | 0.540 |
-| walker |  | 856 | 37 | README headline in py3xui/client/README.md |  |  | 0.540 |
-| ns | 873 |  | 70 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.564 |
-| walker |  | 917 | 61 | [dependencies] in pyproject.toml |  |  | 0.564 |
-| walker |  | 936 | 19 | listing of '.github' |  |  | 0.564 |
-| walker |  | 958 | 22 | listing of '.github/workflows' |  |  | 0.565 |
-| walker |  | 1005 | 47 | README headline in py3xui/inbound/README.md |  |  | 0.565 |
-| ns | 1020 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.573 |
-| walker |  | 1026 | 21 | headings outline in py3xui/client/README.md |  |  | 0.573 |
-| walker |  | 1039 | 13 | py3xui/client/README.md section #0 |  |  | 0.573 |
-| walker |  | 1088 | 49 | README headline in py3xui/api/README.md |  |  | 0.573 |
-| walker |  | 1147 | 59 | README headline in py3xui/async_api/README.md |  |  | 0.573 |
-| ns | 1161 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.576 |
-| walker |  | 1172 | 25 | listing of 'tests' |  |  | 0.577 |
+| walker |  | 503 | 19 | listing of '.github' |  |  | 0.645 |
+| walker |  | 525 | 22 | listing of '.github/workflows' |  |  | 0.646 |
+| walker |  | 556 | 31 | README headline in py3xui/utils/README.md |  |  | 0.646 |
+| ns | 600 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.512 |
+| walker |  | 636 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.514 |
+| walker |  | 718 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.520 |
+| ns | 719 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.488 |
+| walker |  | 733 | 15 | py3xui/utils/README.md section #0 |  |  | 0.488 |
+| ns | 803 |  | 84 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.534 |
+| walker |  | 824 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.541 |
+| walker |  | 860 | 36 | README headline in py3xui/server/README.md |  |  | 0.541 |
+| ns | 873 |  | 70 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.565 |
+| walker |  | 897 | 37 | README headline in py3xui/client/README.md |  |  | 0.565 |
+| walker |  | 958 | 61 | [dependencies] in pyproject.toml |  |  | 0.565 |
+| walker |  | 983 | 25 | listing of 'tests' |  |  | 0.566 |
+| ns | 1020 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.574 |
+| walker |  | 1030 | 47 | README headline in py3xui/inbound/README.md |  |  | 0.574 |
+| walker |  | 1051 | 21 | headings outline in py3xui/client/README.md |  |  | 0.574 |
+| walker |  | 1064 | 13 | py3xui/client/README.md section #0 |  |  | 0.574 |
+| walker |  | 1113 | 49 | README headline in py3xui/api/README.md |  |  | 0.574 |
+| ns | 1161 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.577 |
+| walker |  | 1172 | 59 | README headline in py3xui/async_api/README.md |  |  | 0.577 |
 | walker |  | 1241 | 69 | [package] in pyproject.toml |  |  | 0.659 |
 | walker |  | 1296 | 55 | package metadata in pyproject.toml |  |  | 0.659 |
 | ns | 1346 |  | 185 | Canonical usage: env-var credentials, Api.from_env() and AsyncApi.from_env() | 2.1 |  | 0.614 |

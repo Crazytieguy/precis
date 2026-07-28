@@ -6,10 +6,10 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | ns | 75 |  | 75 | README title + what chibicc is | 1.1 |  | 0.000 |
 | walker |  | 88 | 35 | listing of 'include' |  |  | 0.000 |
 | ns | 128 |  | 53 | Complete repository root listing | 1.2 |  | 0.595 |
-| walker |  | 165 | 77 | README headline in README.md |  |  | 0.621 |
-| ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.502 |
-| ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.422 |
-| walker |  | 376 | 211 | listing of 'test' |  |  | 0.464 |
+| ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.481 |
+| walker |  | 299 | 211 | listing of 'test' |  |  | 0.532 |
+| ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.447 |
+| walker |  | 376 | 77 | README headline in README.md |  |  | 0.464 |
 | ns | 417 |  | 59 | All README H2 headings | 1.5 |  | 0.423 |
 | walker |  | 435 | 59 | headings outline in README.md |  |  | 0.513 |
 | ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.456 |
@@ -148,22 +148,22 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | walker |  | 7154 | 0 | c decl at codegen.c:1585 |  |  | 0.675 |
 | walker |  | 7164 | 10 | c includes in codegen.c |  |  | 0.675 |
 | walker |  | 7183 | 19 | c decl body at codegen.c:55 |  |  | 0.675 |
+| walker |  | 7208 | 25 | listing of 'test/thirdparty' |  |  | 0.675 |
 | ns | 7442 |  | 327 | Node struct, first half (operands, control flow, calls) | 4.8 |  | 0.671 |
-| walker |  | 7644 | 461 | README.md section #3 |  |  | 0.702 |
-| walker |  | 7701 | 57 | c whole header in test/include1.h |  |  | 0.702 |
+| walker |  | 7669 | 461 | README.md section #3 |  |  | 0.702 |
 | ns | 7719 |  | 277 | Node struct, second half (goto/switch/case, asm, atomics, literals) | 4.9 | 4.8 | 0.693 |
-| walker |  | 7723 | 22 | c decl body at main.c:586 |  |  | 0.693 |
-| walker |  | 7740 | 17 | c decl doc at strings.c:20 |  |  | 0.693 |
-| walker |  | 7863 | 123 | c whole header in include/stddef.h |  |  | 0.693 |
+| walker |  | 7726 | 57 | c whole header in test/include1.h |  |  | 0.693 |
+| walker |  | 7748 | 22 | c decl body at main.c:586 |  |  | 0.693 |
+| walker |  | 7765 | 17 | c decl doc at strings.c:20 |  |  | 0.693 |
 | ns | 7872 |  | 153 | TypeKind enum | 4.10 |  | 0.698 |
+| walker |  | 7888 | 123 | c whole header in include/stddef.h |  |  | 0.698 |
 | ns | 8148 |  | 276 | Type struct, first half + the pointer/array duality comment | 4.11 |  | 0.689 |
-| walker |  | 8224 | 361 | README.md section #1 |  |  | 0.689 |
+| walker |  | 8249 | 361 | README.md section #1 |  |  | 0.689 |
 | ns | 8311 |  | 163 | Type struct, second half (array, VLA, struct, function members) | 4.12 | 4.11 | 0.687 |
 | ns | 8436 |  | 125 | Member struct (struct/union members incl. bitfields) | 4.13 | 4.12 | 0.691 |
-| walker |  | 8441 | 217 | README.md section #2 |  |  | 0.691 |
-| walker |  | 8504 | 63 | c decl at parse.c:42 |  |  | 0.691 |
+| walker |  | 8466 | 217 | README.md section #2 |  |  | 0.691 |
 | ns | 8525 |  | 89 | HashEntry / HashMap structs | 4.14 | 2.9 | 0.693 |
-| walker |  | 8529 | 25 | listing of 'test/thirdparty' |  |  | 0.693 |
+| walker |  | 8529 | 63 | c decl at parse.c:42 |  |  | 0.693 |
 | walker |  | 8538 | 9 | c decl doc at chibicc.h:126 |  |  | 0.695 |
 | ns | 8616 |  | 91 | main(): driver entry and the -cc1 self-re-exec split | 5.1 | 3.4 | 0.689 |
 | walker |  | 8749 | 211 | c decl names surface in hashmap.c |  |  | 0.689 |
