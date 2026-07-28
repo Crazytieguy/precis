@@ -343,6 +343,20 @@ Two related conventions worth resisting drift on:
 - Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
   `typescript_state`, …), not a `TypeId` bag or thread-local.
 
+## ⚠️ Score-history break at the 2026-07-28 NS re-freeze v2 (2fbbe8d4)
+
+All 93 North Stars re-authored again (Opus authors, de-anchored
+guidelines, blind A/B gate 12/12, mechanical audit; see commit
+2fbbe8d4 and ignore/ns-refreeze-2026-07-28/). New zero point: training
+mean 0.6074 (old key scored this same tree 0.6412); validation
+baseline 0.5554. The v1 corpus is kept at `tests/north-stars-v1/` for
+two-column history scoring. Every magnitude recorded below this line
+predates the v2 key unless said otherwise. The v2 key demands source
+much earlier (median first-source position 397 vs 1147), so
+pre-freeze dead-lever verdicts about early-budget orientation vs
+source are the most likely to have flipped — re-measure before
+trusting any of them.
+
 ## ⚠️ Score-history break at the 2026-07-05 NS re-freeze (22d2f7b3)
 
 All 93 North Stars were re-authored (Sonnet, audited repair pipeline)
