@@ -131,15 +131,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         else {
             continue;
         };
+        // Multi-file Prisma layouts and generated copies ship
+        // `schema.prisma` files holding only `datasource` / `generator`
+        // config. Those are build wiring, not the application's data
+        // model, and earn no root pin.
+        let declares_data_model = decls
+            .iter()
+            .any(|d| matches!(d.kind, DeclKind::Model | DeclKind::Enum));
+        let depth = schema_depth_factor(&file, ctx, declares_data_model);
+
         let toc_key: BatchKey = PrismaKey::Toc { file: file.clone() }.into();
         out.push(Batch {
             key: toc_key.clone(),
             predecessor: None,
             content,
-            value: toc_value(&file, ctx),
+            value: toc_value(depth),
         });
 
-        let depth = schema_depth_factor(&file, ctx);
         let mut body_index = 0;
         for decl in &decls {
             if !decl.warrants_body() {
@@ -287,11 +295,12 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
     }
 }
 
-fn toc_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(1.0, 0.7, 0.85, schema_depth_factor(file, ctx))
+fn toc_value(depth: f64) -> f64 {
+    mix_signals(1.0, 0.7, 0.85, depth)
 }
 
-/// Depth factor for a data-model definition file, pinned to root tier.
+/// Depth factor for a data-model definition file, pinned to root tier
+/// when it actually declares a data model.
 ///
 /// A schema that declares the application's persistent entities is
 /// application spine: every backend question resolves against it, and
@@ -308,9 +317,13 @@ fn toc_value(file: &Path, ctx: &WalkCtx) -> f64 {
 /// Makefiles, tsconfig) describes how the project is built and run, and
 /// its depth genuinely tracks its scope — a workflow under
 /// `apps/web/.github/` governs only that app. Nothing outside this
-/// walker's `schema.prisma` gate is affected.
-fn schema_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    super::file_depth_factor(file, ctx, true)
+/// walker's `schema.prisma` gate is affected. That binding is enforced
+/// by `declares_data_model` rather than by the filename: a
+/// `schema.prisma` holding only `datasource` / `generator` blocks — a
+/// multi-file layout's config half, a generated client's copy — keeps
+/// ordinary path-depth pricing.
+fn schema_depth_factor(file: &Path, ctx: &WalkCtx, declares_data_model: bool) -> f64 {
+    super::file_depth_factor(file, ctx, declares_data_model)
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
@@ -436,6 +449,54 @@ model Real {
         assert_eq!(decl_keyword("enum Theme {"), Some(DeclKind::Enum));
         assert_eq!(decl_keyword("datasource db {"), Some(DeclKind::Header));
         assert_eq!(decl_keyword("generator client {"), Some(DeclKind::Header));
+    }
+
+    /// The root pin belongs to the application's data model. A nested
+    /// `schema.prisma` carrying only `datasource` / `generator` config —
+    /// a multi-file layout's config half, a generated client's copy — is
+    /// build wiring and keeps ordinary path-depth pricing.
+    #[test]
+    fn prisma_root_pin_requires_a_model_or_enum_declaration() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let nested = root.join("packages/db/prisma");
+        std::fs::create_dir_all(&nested).unwrap();
+        std::fs::write(root.join("README.md"), "# demo\n").unwrap();
+
+        let config_only = nested.join("schema.prisma");
+        std::fs::write(
+            &config_only,
+            "generator client {\n  provider = \"prisma-client-js\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DB_URL\")\n}\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let unpinned = schema_depth_factor(&config_only, &ctx, false);
+        let pinned = schema_depth_factor(&config_only, &ctx, true);
+        assert!(
+            unpinned < pinned,
+            "a nested config-only schema must not reach root tier: {unpinned} vs {pinned}"
+        );
+
+        let batches = expand_in_dir(&nested, &ctx);
+        let toc = batches
+            .iter()
+            .find(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })))
+            .expect("toc batch");
+        assert!((toc.value - toc_value(unpinned)).abs() < 1e-9);
+
+        // Adding one model turns the pin back on at the same path.
+        std::fs::write(
+            &config_only,
+            "generator client {\n  provider = \"prisma-client-js\"\n}\n\nmodel User {\n  id    Int    @id\n  email String @unique\n}\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let toc = expand_in_dir(&nested, &ctx)
+            .into_iter()
+            .find(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })))
+            .expect("toc batch");
+        assert!((toc.value - toc_value(pinned)).abs() < 1e-9);
     }
 
     #[test]

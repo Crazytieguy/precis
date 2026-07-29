@@ -2431,7 +2431,14 @@ un-pinned factor (the pin is ×1.7 at that file's depth): 1.2 0.450 ·
 The gate is the data model, not configuration: this is deliberately
 narrower than the measured-dead ops-config class boost. Deploy / CI /
 tool config describes how a project is built and run, and its depth does
-track its scope. **Only linkwarden carries a schema in training** —
+track its scope. As first shipped the gate was only the *filename*,
+which let a `schema.prisma` holding nothing but `datasource` /
+`generator` blocks take the pin — the config half of a multi-file Prisma
+layout, or a generated client's copy. Corrected 2026-07-29 to require at
+least one `model` / `enum` declaration; corpus-inert (no training
+fixture has a config-only schema), so it is a statement about what the
+rule means, not a score move. **Only linkwarden carries a schema in
+training** —
 drizzle-orm is holdout, no fixture has SQL migration or GraphQL schema
 files the oracle wants (sqlite-vec's `SQL schema contracts` chunk has
 oracle mass 0), so the rule generalizes on its statement, not on corpus
