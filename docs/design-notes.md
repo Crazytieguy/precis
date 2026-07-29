@@ -2483,3 +2483,43 @@ in tinyusb, highest total in-degree picks `globals.h` over `packets.h` in
 bareiron, and the repo-eponymous test does not exist in bareiron, htop or
 tinyusb. The value-ranking boost above is deliberately graded rather than
 a selection.
+
+## Wave-1 integration (2026-07-29): 0.6151 → 0.6209
+
+Four calibration lanes merged onto one tree, then an adversarial review
+gated the ship on five correctness findings before the combined
+measurement was allowed to count. All five are fixed; this entry records
+the combined result, which is what the next lane's zero point should be.
+
+Grid (71 training fixtures), `v0.2-rewrite` → integrated: 1000
+0.6132→0.6134 · 1442 0.6217→0.6239 · 2080 0.6277→0.6307 · **3000
+0.6151→0.6209** · 4327 0.5851→0.5911 · 6240 0.5649→0.5662 · 9000
+0.5606→0.5638. Up at all seven budgets.
+
+**The lanes do not add.** Isolated deltas summed to +0.0076 at 3000; the
+tree delivers +0.0058. The gap is not a merge defect — the review's
+fixes cost some of it on purpose (the dominant-file premium's boosted
+set shrank to its intended surface classes), and the lanes overlap on
+the same 3000-token frontier, so two lanes that each move a fixture past
+the same cliff are credited once. Always re-measure a merged tree;
+never report a sum of isolated lane deltas as a tree result.
+
+Eighteen fixtures move the headline, seventeen up: linkwarden +0.236
+(the schema pin), tomli +0.067, cmdk −0.060, log +0.050, swarm +0.038,
+cobra +0.025, requests +0.020\*, xxhash +0.016, tinyusb +0.008,
+microbootstrap +0.006\*, typeguard +0.006\*, pluggy +0.004, bubbletea
+−0.004, click −0.001, thiserror/htop/dockly/ky ±0.001 (\* = last walker
+row within 40 tokens of the 3000 cliff, so the sign is frontier
+placement rather than ranking).
+
+cmdk is the one real regression and it is the surface predicate working
+as specified: `TsKey::ExportDoc` was taking the premium through the old
+`!is_depth_follow_up` spelling, and cmdk's NS credits the per-export
+JSDoc train on `cmdk/src/index.tsx` (its spine file, 32 tokens of
+frontier slack at 3000). Probed the obvious accommodation — adding
+item-head doc classes (`ExportDoc`, `ModuleDocLede`, Go/C/Python/Lua
+`DeclDoc`, `PubItemDocLede`, `CrateDocLede`) back to
+`is_dominant_file_surface`: +0.0005 at 3000 against −0.0007 at 2080,
+−0.0019 at 6240 and −0.0009 at 9000. Not taken — it buys the primary
+sliver by re-blurring the roster/doc distinction the predicate exists to
+draw, and pays for it across the rest of the grid.
