@@ -558,6 +558,20 @@ the primary budget moves (+0.0012), through express. Its last walker row
 lands at 2980, so treat the fixture magnitude as cliff-adjacent even
 though the newly credited application roster itself ends at 2917.
 
+### Declarative Python data-model surfaces (2026-07-29)
+
+A source-mass detector cannot identify a compact schema/settings module
+inside a larger Python package. The Python walker therefore treats a file
+with at least four public top-level classes, at least eight class-field
+rows, and at most two methods as a declarative data-model surface, and
+lifts only its declaration roster by ×1.30. The field and method counts
+reuse the same syntax-backed collectors that emit `ClassBody` and
+`MethodSigs`; filenames and package names are not inputs. This keeps the
+mechanism on a cheap location map rather than promoting every field body.
+The measured factor neighborhood was 1.20→0.6242 and
+1.30/1.35/1.50→0.6249 at Score(3000), from a 0.6224 baseline; 1.30 is the
+lowest point on the plateau.
+
 ### v2-key un-ship generalization losses (2026-07-28, corpus-invisible)
 
 The same lanes deleted mechanisms whose corpus contribution was flat or
