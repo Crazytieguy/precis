@@ -563,6 +563,7 @@ fn describes_repository(file: &Path, ctx: &WalkCtx) -> bool {
 fn dev_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.24, 0.48, 0.24, manifest_depth_factor(file, ctx))
         * secondary_package_json_factor(file)
+        * crate::value::DEV_DEPENDENCY_ROSTER_SCALE
 }
 
 /// Primary publishable members rank like root manifests for the operational

@@ -197,29 +197,29 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 8165 | 142 | export doc at lib/response.js:894 |  |  | 0.532 |
 | walker |  | 8324 | 159 | export doc at lib/application.js:522 |  |  | 0.532 |
 | ns | 8374 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.526 |
+| walker |  | 8485 | 161 | export doc at lib/response.js:794 |  |  | 0.526 |
 | ns | 8561 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.521 |
-| walker |  | 8596 | 272 | package dev/peer dependencies in package.json |  |  | 0.522 |
-| walker |  | 8757 | 161 | export doc at lib/response.js:794 |  |  | 0.522 |
-| ns | 8835 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.531 |
-| ns | 8916 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.535 |
-| walker |  | 8921 | 164 | export doc at lib/response.js:629 |  |  | 0.535 |
-| walker |  | 9086 | 165 | export doc at lib/response.js:64 |  |  | 0.536 |
-| ns | 9149 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.531 |
-| walker |  | 9268 | 182 | export doc at lib/response.js:97 |  |  | 0.531 |
-| ns | 9419 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.524 |
-| walker |  | 9420 | 152 | export names surface in lib/utils.js |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:29 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:40 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:51 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:61 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:75 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:130 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:162 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:194 |  |  | 0.533 |
-| walker |  | 9420 | 0 | export at lib/utils.js:225 |  |  | 0.533 |
-| walker |  | 9432 | 12 | export body at lib/utils.js:75 body 76 |  |  | 0.533 |
-| walker |  | 9477 | 45 | export body at lib/utils.js:61 body 62 |  |  | 0.533 |
-| walker |  | 9655 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.533 |
-| ns | 9701 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.542 |
-| walker |  | 9855 | 200 | export doc at lib/response.js:503 |  |  | 0.542 |
-| ns | 9999 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.538 |
+| walker |  | 8649 | 164 | export doc at lib/response.js:629 |  |  | 0.521 |
+| walker |  | 8814 | 165 | export doc at lib/response.js:64 |  |  | 0.522 |
+| ns | 8835 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.516 |
+| ns | 8916 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.521 |
+| walker |  | 8996 | 182 | export doc at lib/response.js:97 |  |  | 0.521 |
+| walker |  | 9148 | 152 | export names surface in lib/utils.js |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:29 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:40 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:51 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:61 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:75 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:130 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:162 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:194 |  |  | 0.531 |
+| walker |  | 9148 | 0 | export at lib/utils.js:225 |  |  | 0.531 |
+| ns | 9149 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.526 |
+| walker |  | 9160 | 12 | export body at lib/utils.js:75 body 76 |  |  | 0.526 |
+| walker |  | 9205 | 45 | export body at lib/utils.js:61 body 62 |  |  | 0.526 |
+| walker |  | 9383 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.526 |
+| ns | 9419 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.519 |
+| walker |  | 9583 | 200 | export doc at lib/response.js:503 |  |  | 0.519 |
+| ns | 9701 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.528 |
+| walker |  | 9789 | 206 | export doc at lib/request.js:63 |  |  | 0.528 |
+| ns | 9999 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.524 |

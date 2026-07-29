@@ -1,7 +1,7 @@
 fixture = "enclosed"
 budget = 10000
-cumulative_tokens = 9989
-batch_count = 203
+cumulative_tokens = 9957
+batch_count = 202
 
 [[batches]]
 position = 1
@@ -2029,28 +2029,10 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Json(DevDependencies { file: "package.json" })'
-descriptor = "package dev/peer dependencies in package.json"
-cost_tokens = 34
-cum_tokens = 3137
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 30
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 23
-cum_tokens = 3160
+cum_tokens = 3126
 
 [batches.content]
 kind = "lines"
@@ -2064,11 +2046,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 22
-cum_tokens = 3182
+cum_tokens = 3148
 
 [batches.content]
 kind = "lines"
@@ -2082,11 +2064,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/app/auth" })'
 descriptor = "listing of 'packages/app-server/src/modules/app/auth'"
 cost_tokens = 42
-cum_tokens = 3224
+cum_tokens = 3190
 
 [batches.content]
 kind = "fs"
@@ -2096,11 +2078,11 @@ parent = "packages/app-server/src/modules/app/auth"
 entries = ["auth.errors.ts", "auth.middleware.test.ts", "auth.middleware.ts", "auth.models.test.ts", "auth.models.ts", "auth.routes.ts", "auth.services.ts", "e2e"]
 
 [[batches]]
-position = 111
+position = 110
 key = 'Markdown(Section { file: "packages/lib/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/lib/README.md section #2"
 cost_tokens = 115
-cum_tokens = 3339
+cum_tokens = 3305
 
 [batches.content]
 kind = "lines"
@@ -2114,11 +2096,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/index.md" })'
 descriptor = "headings outline in packages/docs/src/index.md"
 cost_tokens = 43
-cum_tokens = 3382
+cum_tokens = 3348
 
 [batches.content]
 kind = "lines"
@@ -2188,11 +2170,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/notes" })'
 descriptor = "listing of 'packages/app-server/src/modules/notes'"
 cost_tokens = 64
-cum_tokens = 3446
+cum_tokens = 3412
 
 [batches.content]
 kind = "fs"
@@ -2202,11 +2184,11 @@ parent = "packages/app-server/src/modules/notes"
 entries = ["e2e", "notes.constants.ts", "notes.errors.ts", "notes.models.test.ts", "notes.models.ts", "notes.repository.test.ts", "notes.repository.ts", "notes.routes.ts", "notes.types.ts", "notes.usecases.test.ts", "notes.usecases.ts", "tasks"]
 
 [[batches]]
-position = 114
+position = 113
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/notes/tasks" })'
 descriptor = "listing of 'packages/app-server/src/modules/notes/tasks'"
 cost_tokens = 18
-cum_tokens = 3464
+cum_tokens = 3430
 
 [batches.content]
 kind = "fs"
@@ -2216,11 +2198,11 @@ parent = "packages/app-server/src/modules/notes/tasks"
 entries = ["delete-expired-notes.tasks.test.ts", "delete-expired-notes.tasks.ts"]
 
 [[batches]]
-position = 115
+position = 114
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 25
-cum_tokens = 3489
+cum_tokens = 3455
 
 [batches.content]
 kind = "lines"
@@ -2234,11 +2216,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/notes/e2e" })'
 descriptor = "listing of 'packages/app-server/src/modules/notes/e2e'"
 cost_tokens = 51
-cum_tokens = 3540
+cum_tokens = 3506
 
 [batches.content]
 kind = "fs"
@@ -2248,11 +2230,11 @@ parent = "packages/app-server/src/modules/notes/e2e"
 entries = ["create-and-view-note-authenticated.e2e.test.ts", "create-and-view-note-unauthenticated.e2e.test.ts", "no-expiration-delay.e2e.test.ts", "size-limited-note-cration.e2e.test.ts"]
 
 [[batches]]
-position = 117
+position = 116
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/self-hosting/troubleshooting.md" })'
 descriptor = "headings outline in packages/docs/src/self-hosting/troubleshooting.md"
 cost_tokens = 30
-cum_tokens = 3570
+cum_tokens = 3536
 
 [batches.content]
 kind = "lines"
@@ -2274,11 +2256,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Markdown(Section { file: "packages/docs/src/self-hosting/troubleshooting.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/self-hosting/troubleshooting.md section #0"
 cost_tokens = 0
-cum_tokens = 3570
+cum_tokens = 3536
 
 [batches.content]
 kind = "lines"
@@ -2292,11 +2274,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Fs(DirListing { dir: "packages/app-client/src/modules/ui/components" })'
 descriptor = "listing of 'packages/app-client/src/modules/ui/components'"
 cost_tokens = 47
-cum_tokens = 3617
+cum_tokens = 3583
 
 [batches.content]
 kind = "fs"
@@ -2306,11 +2288,11 @@ parent = "packages/app-client/src/modules/ui/components"
 entries = ["alert.tsx", "button.tsx", "card.tsx", "dropdown-menu.tsx", "sonner.tsx", "switch.tsx", "tabs.tsx", "textarea.tsx", "textfield.tsx"]
 
 [[batches]]
-position = 120
+position = 119
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
-cost_tokens = 153
-cum_tokens = 3770
+cost_tokens = 155
+cum_tokens = 3738
 
 [batches.content]
 kind = "lines"
@@ -2332,11 +2314,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 29
-cum_tokens = 3799
+cum_tokens = 3767
 
 [batches.content]
 kind = "lines"
@@ -2350,11 +2332,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Plaintext(Whole { file: "Dockerfile" })'
 descriptor = "plaintext config Dockerfile"
 cost_tokens = 519
-cum_tokens = 4318
+cum_tokens = 4286
 
 [batches.content]
 kind = "lines"
@@ -2368,11 +2350,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/resources/i18n.md" })'
 descriptor = "headings outline in packages/docs/src/resources/i18n.md"
 cost_tokens = 37
-cum_tokens = 4355
+cum_tokens = 4323
 
 [batches.content]
 kind = "lines"
@@ -2426,11 +2408,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Markdown(HeadingsOutline { file: "packages/cli/README.md" })'
 descriptor = "headings outline in packages/cli/README.md"
 cost_tokens = 100
-cum_tokens = 4455
+cum_tokens = 4423
 
 [batches.content]
 kind = "lines"
@@ -2580,11 +2562,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Markdown(Section { file: "packages/cli/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/cli/README.md section #2"
 cost_tokens = 28
-cum_tokens = 4483
+cum_tokens = 4451
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2580,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #23"
 cost_tokens = 163
-cum_tokens = 4646
+cum_tokens = 4614
 
 [batches.content]
 kind = "lines"
@@ -2616,11 +2598,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Typescript(Export { file: "packages/lib/src/index.ts", start_line: 10 })'
 descriptor = "export at packages/lib/src/index.ts:10"
 cost_tokens = 164
-cum_tokens = 4810
+cum_tokens = 4778
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2616,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Markdown(Section { file: "packages/crypto/README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/crypto/README.md section #3"
 cost_tokens = 26
-cum_tokens = 4836
+cum_tokens = 4804
 
 [batches.content]
 kind = "lines"
@@ -2652,11 +2634,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Markdown(HeadingsOutline { file: "packages/app-client/README.md" })'
 descriptor = "headings outline in packages/app-client/README.md"
 cost_tokens = 115
-cum_tokens = 4951
+cum_tokens = 4919
 
 [batches.content]
 kind = "lines"
@@ -2734,11 +2716,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #3"
 cost_tokens = 0
-cum_tokens = 4951
+cum_tokens = 4919
 
 [batches.content]
 kind = "lines"
@@ -2752,11 +2734,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #0"
 cost_tokens = 77
-cum_tokens = 5028
+cum_tokens = 4996
 
 [batches.content]
 kind = "lines"
@@ -2770,11 +2752,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Markdown(Section { file: "packages/cli/README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/cli/README.md section #7"
 cost_tokens = 26
-cum_tokens = 5054
+cum_tokens = 5022
 
 [batches.content]
 kind = "lines"
@@ -2788,11 +2770,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Markdown(Section { file: "packages/crypto/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/crypto/README.md section #2"
 cost_tokens = 33
-cum_tokens = 5087
+cum_tokens = 5055
 
 [batches.content]
 kind = "lines"
@@ -2806,11 +2788,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Markdown(Section { file: "packages/app-client/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/app-client/README.md section #2"
 cost_tokens = 30
-cum_tokens = 5117
+cum_tokens = 5085
 
 [batches.content]
 kind = "lines"
@@ -2824,11 +2806,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 36
-cum_tokens = 5153
+cum_tokens = 5121
 
 [batches.content]
 kind = "lines"
@@ -2842,11 +2824,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Markdown(Section { file: "packages/lib/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/lib/README.md section #4"
 cost_tokens = 26
-cum_tokens = 5179
+cum_tokens = 5147
 
 [batches.content]
 kind = "lines"
@@ -2860,11 +2842,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/integrations/npm-package.md" })'
 descriptor = "headings outline in packages/docs/src/integrations/npm-package.md"
 cost_tokens = 51
-cum_tokens = 5230
+cum_tokens = 5198
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +2932,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Markdown(Section { file: "packages/cli/README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/cli/README.md section #6"
 cost_tokens = 33
-cum_tokens = 5263
+cum_tokens = 5231
 
 [batches.content]
 kind = "lines"
@@ -2968,11 +2950,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/self-hosting/configuration.md" })'
 descriptor = "headings outline in packages/docs/src/self-hosting/configuration.md"
 cost_tokens = 58
-cum_tokens = 5321
+cum_tokens = 5289
 
 [batches.content]
 kind = "lines"
@@ -3058,11 +3040,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Markdown(Section { file: "packages/lib/README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/lib/README.md section #3"
 cost_tokens = 33
-cum_tokens = 5354
+cum_tokens = 5322
 
 [batches.content]
 kind = "lines"
@@ -3076,11 +3058,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Json(Whole { file: "renovate.json" })'
 descriptor = "json config renovate.json"
 cost_tokens = 60
-cum_tokens = 5414
+cum_tokens = 5382
 
 [batches.content]
 kind = "lines"
@@ -3094,11 +3076,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 142
+position = 141
 key = 'Markdown(Section { file: "README.md", section_index: 31, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #31"
 cost_tokens = 29
-cum_tokens = 5443
+cum_tokens = 5411
 
 [batches.content]
 kind = "lines"
@@ -3112,11 +3094,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 143
+position = 142
 key = 'Markdown(Section { file: "README.md", section_index: 30, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #30"
 cost_tokens = 31
-cum_tokens = 5474
+cum_tokens = 5442
 
 [batches.content]
 kind = "lines"
@@ -3130,11 +3112,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 144
+position = 143
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #16"
 cost_tokens = 38
-cum_tokens = 5512
+cum_tokens = 5480
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3130,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #24"
 cost_tokens = 115
-cum_tokens = 5627
+cum_tokens = 5595
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3148,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/self-hosting/other-platforms.md" })'
 descriptor = "headings outline in packages/docs/src/self-hosting/other-platforms.md"
 cost_tokens = 85
-cum_tokens = 5712
+cum_tokens = 5680
 
 [batches.content]
 kind = "lines"
@@ -3288,11 +3270,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 146
 key = 'Markdown(Section { file: "packages/docs/src/self-hosting/other-platforms.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/self-hosting/other-platforms.md section #0"
 cost_tokens = 0
-cum_tokens = 5712
+cum_tokens = 5680
 
 [batches.content]
 kind = "lines"
@@ -3306,11 +3288,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'Typescript(ExportNames { file: "packages/lib/src/notes/notes.usecases.ts" })'
 descriptor = "export names surface in packages/lib/src/notes/notes.usecases.ts"
 cost_tokens = 13
-cum_tokens = 5725
+cum_tokens = 5693
 
 [batches.content]
 kind = "lines"
@@ -3332,11 +3314,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 148
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 60
-cum_tokens = 5785
+cum_tokens = 5753
 
 [batches.content]
 kind = "lines"
@@ -3350,11 +3332,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #29"
 cost_tokens = 38
-cum_tokens = 5823
+cum_tokens = 5791
 
 [batches.content]
 kind = "lines"
@@ -3368,11 +3350,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'Plaintext(Whole { file: "pnpm-workspace.yaml" })'
 descriptor = "plaintext config pnpm-workspace.yaml"
 cost_tokens = 161
-cum_tokens = 5984
+cum_tokens = 5952
 
 [batches.content]
 kind = "lines"
@@ -3386,11 +3368,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 127
-cum_tokens = 6111
+cum_tokens = 6079
 
 [batches.content]
 kind = "lines"
@@ -3404,11 +3386,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Markdown(Section { file: "packages/docs/src/resources/i18n.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/resources/i18n.md section #0"
 cost_tokens = 25
-cum_tokens = 6136
+cum_tokens = 6104
 
 [batches.content]
 kind = "lines"
@@ -3422,11 +3404,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/resources/brand-kit.md" })'
 descriptor = "headings outline in packages/docs/src/resources/brand-kit.md"
 cost_tokens = 107
-cum_tokens = 6243
+cum_tokens = 6211
 
 [batches.content]
 kind = "lines"
@@ -3576,11 +3558,11 @@ end = 62
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 154
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 13
-cum_tokens = 6256
+cum_tokens = 6224
 
 [batches.content]
 kind = "fs"
@@ -3590,11 +3572,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["bug-report.yml", "config.yml", "feature-request.yml"]
 
 [[batches]]
-position = 156
+position = 155
 key = 'Plaintext(DeclSurface { file: "packages/docs/src/components/credential-inputs.vue" })'
 descriptor = "declaration surface of packages/docs/src/components/credential-inputs.vue"
 cost_tokens = 89
-cum_tokens = 6345
+cum_tokens = 6313
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3622,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Json(Identity { file: "packages/deploy-cloudflare/package.json" })'
 descriptor = "package identity in packages/deploy-cloudflare/package.json"
 cost_tokens = 68
-cum_tokens = 6413
+cum_tokens = 6381
 
 [batches.content]
 kind = "lines"
@@ -3666,11 +3648,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 158
+position = 157
 key = 'Json(Runtime { file: "packages/deploy-cloudflare/package.json" })'
 descriptor = "package runtime metadata in packages/deploy-cloudflare/package.json"
 cost_tokens = 17
-cum_tokens = 6430
+cum_tokens = 6398
 
 [batches.content]
 kind = "lines"
@@ -3684,11 +3666,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 159
+position = 158
 key = 'Json(Scripts { file: "packages/deploy-cloudflare/package.json" })'
 descriptor = "package scripts in packages/deploy-cloudflare/package.json"
 cost_tokens = 29
-cum_tokens = 6459
+cum_tokens = 6427
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3684,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 160
+position = 159
 key = 'Typescript(ExportNames { file: "packages/lib/src/crypto/crypto.usecases.ts" })'
 descriptor = "export names surface in packages/lib/src/crypto/crypto.usecases.ts"
 cost_tokens = 16
-cum_tokens = 6475
+cum_tokens = 6443
 
 [batches.content]
 kind = "lines"
@@ -3728,11 +3710,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 160
 key = 'Typescript(ExportNames { file: "packages/lib/src/notes/notes.services.ts" })'
 descriptor = "export names surface in packages/lib/src/notes/notes.services.ts"
 cost_tokens = 16
-cum_tokens = 6491
+cum_tokens = 6459
 
 [batches.content]
 kind = "lines"
@@ -3754,11 +3736,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 162
+position = 161
 key = 'Plaintext(DeclSurface { file: "packages/docs/src/components/toggle.vue" })'
 descriptor = "declaration surface of packages/docs/src/components/toggle.vue"
 cost_tokens = 94
-cum_tokens = 6585
+cum_tokens = 6553
 
 [batches.content]
 kind = "lines"
@@ -3804,11 +3786,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 163
+position = 162
 key = 'Markdown(Section { file: "packages/crypto/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/crypto/README.md section #1"
 cost_tokens = 89
-cum_tokens = 6674
+cum_tokens = 6642
 
 [batches.content]
 kind = "lines"
@@ -3822,11 +3804,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 164
+position = 163
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/how-it-works.md" })'
 descriptor = "headings outline in packages/docs/src/how-it-works.md"
 cost_tokens = 193
-cum_tokens = 6867
+cum_tokens = 6835
 
 [batches.content]
 kind = "lines"
@@ -4056,11 +4038,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 164
 key = 'Json(Identity { file: "packages/app-client/package.json" })'
 descriptor = "package identity in packages/app-client/package.json"
 cost_tokens = 77
-cum_tokens = 6944
+cum_tokens = 6912
 
 [batches.content]
 kind = "lines"
@@ -4085,76 +4067,76 @@ kind = "full"
 path = "packages/app-client/package.json"
 start = 8
 end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Json(Runtime { file: "packages/app-client/package.json" })'
+descriptor = "package runtime metadata in packages/app-client/package.json"
+cost_tokens = 51
+cum_tokens = 6963
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/package.json"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/package.json"
+start = 13
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 166
-key = 'Json(Runtime { file: "packages/app-client/package.json" })'
-descriptor = "package runtime metadata in packages/app-client/package.json"
-cost_tokens = 51
-cum_tokens = 6995
+key = 'Json(Identity { file: "packages/app-server/package.json" })'
+descriptor = "package identity in packages/app-server/package.json"
+cost_tokens = 77
+cum_tokens = 7040
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "packages/app-client/package.json"
-start = 5
-end = 5
+path = "packages/app-server/package.json"
+start = 2
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "packages/app-client/package.json"
-start = 13
-end = 15
+path = "packages/app-server/package.json"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-server/package.json"
+start = 8
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 167
-key = 'Json(Identity { file: "packages/app-server/package.json" })'
-descriptor = "package identity in packages/app-server/package.json"
-cost_tokens = 77
-cum_tokens = 7072
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/app-server/package.json"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/app-server/package.json"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/app-server/package.json"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 168
 key = 'Json(Runtime { file: "packages/app-server/package.json" })'
 descriptor = "package runtime metadata in packages/app-server/package.json"
 cost_tokens = 51
-cum_tokens = 7123
+cum_tokens = 7091
 
 [batches.content]
 kind = "lines"
@@ -4176,11 +4158,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 169
+position = 168
 key = 'Json(Identity { file: "packages/docs/package.json" })'
 descriptor = "package identity in packages/docs/package.json"
 cost_tokens = 77
-cum_tokens = 7200
+cum_tokens = 7168
 
 [batches.content]
 kind = "lines"
@@ -4210,11 +4192,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 170
+position = 169
 key = 'Json(Entry { file: "packages/docs/package.json" })'
 descriptor = "package entrypoints in packages/docs/package.json"
 cost_tokens = 14
-cum_tokens = 7214
+cum_tokens = 7182
 
 [batches.content]
 kind = "lines"
@@ -4228,11 +4210,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 171
+position = 170
 key = 'Json(Runtime { file: "packages/docs/package.json" })'
 descriptor = "package runtime metadata in packages/docs/package.json"
 cost_tokens = 17
-cum_tokens = 7231
+cum_tokens = 7199
 
 [batches.content]
 kind = "lines"
@@ -4246,11 +4228,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 172
+position = 171
 key = 'Json(Scripts { file: "packages/docs/package.json" })'
 descriptor = "package scripts in packages/docs/package.json"
 cost_tokens = 87
-cum_tokens = 7318
+cum_tokens = 7286
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +4246,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 173
+position = 172
 key = 'Json(Dependencies { file: "packages/docs/package.json" })'
 descriptor = "package runtime dependencies in packages/docs/package.json"
 cost_tokens = 31
-cum_tokens = 7349
+cum_tokens = 7317
 
 [batches.content]
 kind = "lines"
@@ -4282,11 +4264,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 174
+position = 173
 key = 'Json(Identity { file: "packages/crypto/package.json" })'
 descriptor = "package identity in packages/crypto/package.json"
 cost_tokens = 79
-cum_tokens = 7428
+cum_tokens = 7396
 
 [batches.content]
 kind = "lines"
@@ -4316,11 +4298,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 175
+position = 174
 key = 'Json(Runtime { file: "packages/crypto/package.json" })'
 descriptor = "package runtime metadata in packages/crypto/package.json"
 cost_tokens = 51
-cum_tokens = 7479
+cum_tokens = 7447
 
 [batches.content]
 kind = "lines"
@@ -4342,11 +4324,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 176
+position = 175
 key = 'Json(Scripts { file: "packages/crypto/package.json" })'
 descriptor = "package scripts in packages/crypto/package.json"
 cost_tokens = 151
-cum_tokens = 7630
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -4360,11 +4342,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 177
+position = 176
 key = 'Json(Dependencies { file: "packages/crypto/package.json" })'
 descriptor = "package runtime dependencies in packages/crypto/package.json"
 cost_tokens = 31
-cum_tokens = 7661
+cum_tokens = 7629
 
 [batches.content]
 kind = "lines"
@@ -4378,11 +4360,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 178
+position = 177
 key = 'Json(Identity { file: "packages/lib/package.json" })'
 descriptor = "package identity in packages/lib/package.json"
 cost_tokens = 79
-cum_tokens = 7740
+cum_tokens = 7708
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +4394,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 179
+position = 178
 key = 'Json(Runtime { file: "packages/lib/package.json" })'
 descriptor = "package runtime metadata in packages/lib/package.json"
 cost_tokens = 51
-cum_tokens = 7791
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -4438,11 +4420,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 180
+position = 179
 key = 'Json(Entry { file: "packages/lib/package.json" })'
 descriptor = "package entrypoints in packages/lib/package.json"
 cost_tokens = 124
-cum_tokens = 7915
+cum_tokens = 7883
 
 [batches.content]
 kind = "lines"
@@ -4464,11 +4446,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 181
+position = 180
 key = 'Json(Scripts { file: "packages/lib/package.json" })'
 descriptor = "package scripts in packages/lib/package.json"
 cost_tokens = 149
-cum_tokens = 8064
+cum_tokens = 8032
 
 [batches.content]
 kind = "lines"
@@ -4482,11 +4464,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 182
+position = 181
 key = 'Json(Scripts { file: "packages/app-client/package.json" })'
 descriptor = "package scripts in packages/app-client/package.json"
 cost_tokens = 200
-cum_tokens = 8264
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -4500,11 +4482,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 183
+position = 182
 key = 'Json(Identity { file: "packages/cli/package.json" })'
 descriptor = "package identity in packages/cli/package.json"
 cost_tokens = 80
-cum_tokens = 8344
+cum_tokens = 8312
 
 [batches.content]
 kind = "lines"
@@ -4534,11 +4516,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 184
+position = 183
 key = 'Json(Runtime { file: "packages/cli/package.json" })'
 descriptor = "package runtime metadata in packages/cli/package.json"
 cost_tokens = 51
-cum_tokens = 8395
+cum_tokens = 8363
 
 [batches.content]
 kind = "lines"
@@ -4560,11 +4542,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 185
+position = 184
 key = 'Json(Entry { file: "packages/cli/package.json" })'
 descriptor = "package entrypoints in packages/cli/package.json"
 cost_tokens = 84
-cum_tokens = 8479
+cum_tokens = 8447
 
 [batches.content]
 kind = "lines"
@@ -4578,11 +4560,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 186
+position = 185
 key = 'Json(Scripts { file: "packages/cli/package.json" })'
 descriptor = "package scripts in packages/cli/package.json"
 cost_tokens = 151
-cum_tokens = 8630
+cum_tokens = 8598
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +4578,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 187
+position = 186
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 50
-cum_tokens = 8680
+cum_tokens = 8648
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4596,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 188
+position = 187
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/self-hosting/docker-compose.md" })'
 descriptor = "headings outline in packages/docs/src/self-hosting/docker-compose.md"
 cost_tokens = 147
-cum_tokens = 8827
+cum_tokens = 8795
 
 [batches.content]
 kind = "lines"
@@ -4832,11 +4814,11 @@ end = 102
 kind = "ellipsis"
 
 [[batches]]
-position = 189
+position = 188
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 64
-cum_tokens = 8891
+cum_tokens = 8859
 
 [batches.content]
 kind = "lines"
@@ -4850,11 +4832,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 190
+position = 189
 key = 'Markdown(Section { file: "packages/lib/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/lib/README.md section #1"
 cost_tokens = 86
-cum_tokens = 8977
+cum_tokens = 8945
 
 [batches.content]
 kind = "lines"
@@ -4868,11 +4850,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 191
+position = 190
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/how-it-works.md section #0"
 cost_tokens = 60
-cum_tokens = 9037
+cum_tokens = 9005
 
 [batches.content]
 kind = "lines"
@@ -4886,11 +4868,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 192
+position = 191
 key = 'Markdown(HeadingsOutline { file: "packages/docs/src/self-hosting/docker.md" })'
 descriptor = "headings outline in packages/docs/src/self-hosting/docker.md"
 cost_tokens = 164
-cum_tokens = 9201
+cum_tokens = 9169
 
 [batches.content]
 kind = "lines"
@@ -5120,11 +5102,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 192
 key = 'Markdown(Section { file: "packages/docs/src/self-hosting/docker.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/self-hosting/docker.md section #0"
 cost_tokens = 43
-cum_tokens = 9244
+cum_tokens = 9212
 
 [batches.content]
 kind = "lines"
@@ -5138,11 +5120,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 194
+position = 193
 key = 'Typescript(ExportNames { file: "packages/lib/src/api/api.models.ts" })'
 descriptor = "export names surface in packages/lib/src/api/api.models.ts"
 cost_tokens = 25
-cum_tokens = 9269
+cum_tokens = 9237
 
 [batches.content]
 kind = "lines"
@@ -5164,11 +5146,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 194
 key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #28"
 cost_tokens = 52
-cum_tokens = 9321
+cum_tokens = 9289
 
 [batches.content]
 kind = "lines"
@@ -5182,11 +5164,11 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 196
+position = 195
 key = 'Json(Scripts { file: "packages/app-server/package.json" })'
 descriptor = "package scripts in packages/app-server/package.json"
 cost_tokens = 281
-cum_tokens = 9602
+cum_tokens = 9570
 
 [batches.content]
 kind = "lines"
@@ -5200,11 +5182,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 197
+position = 196
 key = 'Json(Whole { file: "packages/lib/tsconfig.json" })'
 descriptor = "json config packages/lib/tsconfig.json"
 cost_tokens = 109
-cum_tokens = 9711
+cum_tokens = 9679
 
 [batches.content]
 kind = "lines"
@@ -5218,11 +5200,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 198
+position = 197
 key = 'Json(Whole { file: "packages/crypto/tsconfig.json" })'
 descriptor = "json config packages/crypto/tsconfig.json"
 cost_tokens = 121
-cum_tokens = 9832
+cum_tokens = 9800
 
 [batches.content]
 kind = "lines"
@@ -5236,11 +5218,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 199
+position = 198
 key = 'Markdown(Section { file: "packages/docs/src/self-hosting/docker-compose.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/self-hosting/docker-compose.md section #0"
 cost_tokens = 51
-cum_tokens = 9883
+cum_tokens = 9851
 
 [batches.content]
 kind = "lines"
@@ -5254,11 +5236,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 200
+position = 199
 key = 'Typescript(ExportNames { file: "packages/lib/src/files/files.models.ts" })'
 descriptor = "export names surface in packages/lib/src/files/files.models.ts"
 cost_tokens = 30
-cum_tokens = 9913
+cum_tokens = 9881
 
 [batches.content]
 kind = "lines"
@@ -5273,6 +5255,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "packages/lib/src/files/files.models.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'Typescript(ExportNames { file: "packages/lib/src/notes/notes.models.ts" })'
+descriptor = "export names surface in packages/lib/src/notes/notes.models.ts"
+cost_tokens = 30
+cum_tokens = 9911
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/lib/src/notes/notes.models.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/src/notes/notes.models.ts"
 start = 5
 end = 5
 
@@ -5281,36 +5289,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 201
-key = 'Typescript(ExportNames { file: "packages/lib/src/notes/notes.models.ts" })'
-descriptor = "export names surface in packages/lib/src/notes/notes.models.ts"
-cost_tokens = 30
-cum_tokens = 9943
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/src/notes/notes.models.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/src/notes/notes.models.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 202
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/docs/src/how-it-works.md section #13"
 cost_tokens = 31
-cum_tokens = 9974
+cum_tokens = 9942
 
 [batches.content]
 kind = "lines"
@@ -5324,11 +5306,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 203
+position = 202
 key = 'Plaintext(DeclSurface { file: "packages/docs/src/public/robots.txt" })'
 descriptor = "declaration surface of packages/docs/src/public/robots.txt"
 cost_tokens = 15
-cum_tokens = 9989
+cum_tokens = 9957
 
 [batches.content]
 kind = "lines"

@@ -1,7 +1,7 @@
 fixture = "ky"
 budget = 10000
-cumulative_tokens = 9989
-batch_count = 137
+cumulative_tokens = 9898
+batch_count = 139
 
 [[batches]]
 position = 1
@@ -2853,28 +2853,10 @@ kind = "full"
 
 [[batches]]
 position = 115
-key = 'Json(DevDependencies { file: "package.json" })'
-descriptor = "package dev/peer dependencies in package.json"
-cost_tokens = 371
-cum_tokens = 7125
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 56
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
 key = 'Markdown(Section { file: "readme.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #20"
 cost_tokens = 117
-cum_tokens = 7242
+cum_tokens = 6871
 
 [batches.content]
 kind = "lines"
@@ -2888,11 +2870,11 @@ end = 837
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Typescript(ExportDoc { file: "source/utils/type-guards.ts", start_line: 71 })'
 descriptor = "export doc at source/utils/type-guards.ts:71"
 cost_tokens = 182
-cum_tokens = 7424
+cum_tokens = 7053
 
 [batches.content]
 kind = "lines"
@@ -2906,11 +2888,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Markdown(Section { file: "readme.md", section_index: 47, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #47"
 cost_tokens = 234
-cum_tokens = 7658
+cum_tokens = 7287
 
 [batches.content]
 kind = "lines"
@@ -2924,11 +2906,11 @@ end = 1337
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Typescript(ExportBody { file: "source/utils/timeout.ts", start_line: 9, body_start_line: 15 })'
 descriptor = "export body at source/utils/timeout.ts:9 body 15"
 cost_tokens = 159
-cum_tokens = 7817
+cum_tokens = 7446
 
 [batches.content]
 kind = "lines"
@@ -2942,11 +2924,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Typescript(ExportDoc { file: "source/utils/type-guards.ts", start_line: 27 })'
 descriptor = "export doc at source/utils/type-guards.ts:27"
 cost_tokens = 216
-cum_tokens = 8033
+cum_tokens = 7662
 
 [batches.content]
 kind = "lines"
@@ -2960,11 +2942,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Typescript(ExportDoc { file: "source/utils/type-guards.ts", start_line: 98 })'
 descriptor = "export doc at source/utils/type-guards.ts:98"
 cost_tokens = 220
-cum_tokens = 8253
+cum_tokens = 7882
 
 [batches.content]
 kind = "lines"
@@ -2978,11 +2960,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Typescript(ExportBody { file: "source/utils/delay.ts", start_line: 9, body_start_line: 13 })'
 descriptor = "export body at source/utils/delay.ts:9 body 13"
 cost_tokens = 167
-cum_tokens = 8420
+cum_tokens = 8049
 
 [batches.content]
 kind = "lines"
@@ -2996,11 +2978,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Typescript(ExportNames { file: "source/utils/merge.ts" })'
 descriptor = "export names surface in source/utils/merge.ts"
 cost_tokens = 119
-cum_tokens = 8539
+cum_tokens = 8168
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3052,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Typescript(Export { file: "source/utils/merge.ts", start_line: 6 })'
 descriptor = "export at source/utils/merge.ts:6"
 cost_tokens = 0
-cum_tokens = 8539
+cum_tokens = 8168
 
 [batches.content]
 kind = "lines"
@@ -3096,11 +3078,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Typescript(Export { file: "source/utils/merge.ts", start_line: 16 })'
 descriptor = "export at source/utils/merge.ts:16"
 cost_tokens = 0
-cum_tokens = 8539
+cum_tokens = 8168
 
 [batches.content]
 kind = "lines"
@@ -3122,11 +3104,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Typescript(Export { file: "source/utils/merge.ts", start_line: 86 })'
 descriptor = "export at source/utils/merge.ts:86"
 cost_tokens = 0
-cum_tokens = 8539
+cum_tokens = 8168
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3130,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Typescript(Export { file: "source/utils/merge.ts", start_line: 38 })'
 descriptor = "export at source/utils/merge.ts:38"
 cost_tokens = 94
-cum_tokens = 8633
+cum_tokens = 8262
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3148,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Typescript(ExportBody { file: "source/utils/merge.ts", start_line: 6, body_start_line: 7 })'
 descriptor = "export body at source/utils/merge.ts:6 body 7"
 cost_tokens = 84
-cum_tokens = 8717
+cum_tokens = 8346
 
 [batches.content]
 kind = "lines"
@@ -3184,11 +3166,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Typescript(Export { file: "source/types/retry.ts", start_line: 3 })'
 descriptor = "export at source/types/retry.ts:3"
 cost_tokens = 82
-cum_tokens = 8799
+cum_tokens = 8428
 
 [batches.content]
 kind = "lines"
@@ -3202,11 +3184,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Markdown(Section { file: "readme.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #17"
 cost_tokens = 156
-cum_tokens = 8955
+cum_tokens = 8584
 
 [batches.content]
 kind = "lines"
@@ -3220,11 +3202,11 @@ end = 827
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Markdown(Section { file: "readme.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #4"
 cost_tokens = 167
-cum_tokens = 9122
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -3238,11 +3220,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Typescript(Imports { file: "source/utils/body.ts" })'
 descriptor = "imports in source/utils/body.ts"
 cost_tokens = 32
-cum_tokens = 9154
+cum_tokens = 8783
 
 [batches.content]
 kind = "lines"
@@ -3256,11 +3238,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Markdown(Section { file: "readme.md", section_index: 29, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #29"
 cost_tokens = 170
-cum_tokens = 9324
+cum_tokens = 8953
 
 [batches.content]
 kind = "lines"
@@ -3274,11 +3256,11 @@ end = 1023
 kind = "full"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Markdown(Section { file: "readme.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #16"
 cost_tokens = 171
-cum_tokens = 9495
+cum_tokens = 9124
 
 [batches.content]
 kind = "lines"
@@ -3292,11 +3274,11 @@ end = 809
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Markdown(Section { file: "readme.md", section_index: 30, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #30"
 cost_tokens = 173
-cum_tokens = 9668
+cum_tokens = 9297
 
 [batches.content]
 kind = "lines"
@@ -3310,11 +3292,11 @@ end = 1042
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Typescript(ExportBody { file: "source/errors/NonError.ts", start_line: 6, body_start_line: 11 })'
 descriptor = "export body at source/errors/NonError.ts:6 body 11"
 cost_tokens = 178
-cum_tokens = 9846
+cum_tokens = 9475
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3310,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Markdown(Section { file: "readme.md", section_index: 43, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #43"
 cost_tokens = 143
-cum_tokens = 9989
+cum_tokens = 9618
 
 [batches.content]
 kind = "lines"
@@ -3341,6 +3323,60 @@ kind = "lines"
 path = "readme.md"
 start = 1249
 end = 1262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Typescript(ExportDoc { file: "source/errors/NonError.ts", start_line: 6 })'
+descriptor = "export doc at source/errors/NonError.ts:6"
+cost_tokens = 57
+cum_tokens = 9675
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/errors/NonError.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Typescript(Imports { file: "source/utils/options.ts" })'
+descriptor = "imports in source/utils/options.ts"
+cost_tokens = 39
+cum_tokens = 9714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/utils/options.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Markdown(Section { file: "readme.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #42"
+cost_tokens = 184
+cum_tokens = 9898
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 1232
+end = 1247
 
 [batches.content.spans.render]
 kind = "full"

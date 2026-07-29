@@ -20,6 +20,14 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
+/// Demotion for the dev / build / test / peer dependency roster of a
+/// manifest, applied on top of the class's own tier. The runtime roster
+/// says what the package is built on; the development roster says what
+/// its contributors install to check it — the same "contributor
+/// toolchain, not project" distinction that demotes checking-tool config
+/// tables, one class further out.
+pub const DEV_DEPENDENCY_ROSTER_SCALE: f64 = 0.3;
+
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;

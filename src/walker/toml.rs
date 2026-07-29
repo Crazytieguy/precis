@@ -181,6 +181,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         for (tool, content) in
             build_tool_config_contents(&file, &source, &sections, python_project_manifest)
         {
+            let value = config_value(&file, ctx) * checking_toolchain_scale(&tool);
             out.push(Batch {
                 key: TomlKey::ToolConfig {
                     file: file.clone(),
@@ -189,7 +190,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .into(),
                 predecessor: identity.clone(),
                 content,
-                value: config_value(&file, ctx),
+                value,
             });
         }
         if let Some(content) =
@@ -804,11 +805,78 @@ fn development_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
         follow_up,
         zero_tool_call,
         path_depth_factor(file, ctx),
-    )
+    ) * crate::value::DEV_DEPENDENCY_ROSTER_SCALE
 }
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.45, 0.6, 0.45, path_depth_factor(file, ctx))
+}
+
+/// Demotion for a `tool.<name>` pack whose every family configures the
+/// contributor's *checking* toolchain — linter, formatter, type checker,
+/// test runner, coverage. Build backends, packaging and task-runner
+/// tables say how the project is built and invoked and stay at the full
+/// config tier; these say only which style rules a contributor's editor
+/// enforces, which is the one part of a manifest no summary reader is
+/// orienting on. Any unrecognized family in the pack keeps it at full
+/// value, so the demotion never fires on a mixed appendix.
+///
+/// `pack` is the `+`-joined family name that
+/// [`pack_small_tool_config_families`] produced.
+fn checking_toolchain_scale(pack: &str) -> f64 {
+    if pack.split('+').all(is_checking_toolchain_tool) {
+        CHECKING_TOOLCHAIN_CONFIG_SCALE
+    } else {
+        1.0
+    }
+}
+
+const CHECKING_TOOLCHAIN_CONFIG_SCALE: f64 = 0.35;
+
+fn is_checking_toolchain_tool(tool: &str) -> bool {
+    matches!(
+        tool,
+        // linters and formatters
+        "ruff"
+            | "black"
+            | "blue"
+            | "isort"
+            | "flake8"
+            | "pylint"
+            | "autopep8"
+            | "yapf"
+            | "autoflake"
+            | "pyupgrade"
+            | "bandit"
+            | "vulture"
+            | "codespell"
+            | "docformatter"
+            | "docstrfmt"
+            | "interrogate"
+            | "pydocstyle"
+            | "pycodestyle"
+            | "refurb"
+            | "ssort"
+            // type checkers
+            | "mypy"
+            | "pyright"
+            | "basedpyright"
+            | "pyre"
+            | "pyre-check"
+            | "pytype"
+            | "ty"
+            // test harness and coverage
+            | "pytest"
+            | "coverage"
+            | "tox"
+            | "nox"
+            | "hypothesis"
+            | "slipcover"
+            // commit-time plumbing
+            | "pre-commit"
+            | "commitizen"
+            | "towncrier"
+    )
 }
 
 // --- parser ---
@@ -1482,6 +1550,23 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         let (lede, residue) = identity_partition(source, 5);
         assert_eq!(lede, vec![1, 2, 4]);
         assert_eq!(residue, vec![3, 5]);
+    }
+
+    /// The demotion fires only when the whole pack is checking tooling —
+    /// a build backend, a task runner, or an unrecognized tool anywhere
+    /// in the pack keeps it at the full config tier.
+    #[test]
+    fn walker_toml_checking_toolchain_scale_requires_a_pure_pack() {
+        for pack in ["ruff", "mypy+pytest", "coverage+isort+tox"] {
+            assert_eq!(
+                checking_toolchain_scale(pack),
+                CHECKING_TOOLCHAIN_CONFIG_SCALE,
+                "{pack}"
+            );
+        }
+        for pack in ["setuptools", "poe", "maturin", "mypy+setuptools", "ruff+uv"] {
+            assert_eq!(checking_toolchain_scale(pack), 1.0, "{pack}");
+        }
     }
 
     /// Config takes every table no other batch owns; the owned ones are the

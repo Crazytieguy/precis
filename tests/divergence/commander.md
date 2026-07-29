@@ -204,27 +204,26 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | ns | 7542 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.643 |
 | walker |  | 7731 | 210 | docs/help-in-depth.md section #0 |  |  | 0.643 |
 | ns | 7896 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.630 |
-| walker |  | 7957 | 226 | package dev/peer dependencies in package.json |  |  | 0.635 |
-| ns | 8055 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.630 |
-| ns | 8274 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.623 |
-| ns | 8486 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.618 |
-| walker |  | 8530 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.619 |
-| walker |  | 8550 | 20 | export body at lib/option.js:3 body 66 |  |  | 0.619 |
-| ns | 8768 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.628 |
-| walker |  | 8773 | 223 | docs/options-in-depth.md section #0 |  |  | 0.628 |
-| walker |  | 9063 | 290 | Readme.md section #3 |  |  | 0.629 |
-| walker |  | 9079 | 16 | imports in examples/help-groups.js |  |  | 0.629 |
-| walker |  | 9095 | 16 | imports in examples/hook.js |  |  | 0.629 |
-| ns | 9098 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.620 |
-| walker |  | 9111 | 16 | imports in examples/options-conflicts.js |  |  | 0.620 |
-| walker |  | 9127 | 16 | imports in examples/options-custom-processing.js |  |  | 0.620 |
-| walker |  | 9143 | 16 | imports in examples/options-env.js |  |  | 0.620 |
-| walker |  | 9159 | 16 | imports in examples/options-extra.js |  |  | 0.620 |
-| walker |  | 9175 | 16 | imports in examples/options-implies.js |  |  | 0.620 |
-| walker |  | 9195 | 20 | export body at lib/option.js:3 body 231 |  |  | 0.620 |
-| ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.622 |
-| walker |  | 9444 | 249 | docs/terminology.md section #0 |  |  | 0.645 |
-| ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.649 |
-| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.643 |
-| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.648 |
-| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.645 |
+| ns | 8055 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.625 |
+| ns | 8274 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.619 |
+| walker |  | 8304 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.621 |
+| walker |  | 8324 | 20 | export body at lib/option.js:3 body 66 |  |  | 0.621 |
+| ns | 8486 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.615 |
+| walker |  | 8547 | 223 | docs/options-in-depth.md section #0 |  |  | 0.615 |
+| ns | 8768 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.624 |
+| walker |  | 8837 | 290 | Readme.md section #3 |  |  | 0.624 |
+| walker |  | 8853 | 16 | imports in examples/help-groups.js |  |  | 0.624 |
+| walker |  | 8869 | 16 | imports in examples/hook.js |  |  | 0.624 |
+| walker |  | 8885 | 16 | imports in examples/options-conflicts.js |  |  | 0.624 |
+| walker |  | 8901 | 16 | imports in examples/options-custom-processing.js |  |  | 0.624 |
+| walker |  | 8917 | 16 | imports in examples/options-env.js |  |  | 0.624 |
+| walker |  | 8933 | 16 | imports in examples/options-extra.js |  |  | 0.624 |
+| walker |  | 8949 | 16 | imports in examples/options-implies.js |  |  | 0.624 |
+| walker |  | 8969 | 20 | export body at lib/option.js:3 body 231 |  |  | 0.624 |
+| ns | 9098 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.615 |
+| ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.618 |
+| walker |  | 9218 | 249 | docs/terminology.md section #0 |  |  | 0.641 |
+| ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.645 |
+| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.639 |
+| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.644 |
+| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.640 |
