@@ -13,7 +13,8 @@ expression: rendered
     actions/
         create-check/
             action.yml …
-        install-latest-npm/ …
+        install-latest-npm/
+            action.yml …
     dependabot.yml …
     matchers/
         tap.json …
@@ -89,6 +90,9 @@ README.md
      458→* `lte(v1, v2)`: `v1 <= v2`
     …
      462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+    …
+     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
+     470→  in descending order when passed to `Array.sort()`.
     …
      473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
     …
@@ -250,12 +254,7 @@ package.json
       13→    "template-oss-apply": "template-oss-apply --force",
       14→    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
       15→  },
-      16→  "devDependencies": {
-      17→    "@npmcli/eslint-config": "^6.0.0",
-      18→    "@npmcli/template-oss": "4.29.0",
-      19→    "benchmark": "^2.1.4",
-      20→    "tap": "^16.0.0"
-      21→  },
+    …
       22→  "license": "ISC",
       23→  "repository": {
       24→    "type": "git",

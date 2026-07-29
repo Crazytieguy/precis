@@ -68,28 +68,7 @@ README.md
        6→xxhash is a Go implementation of the 64-bit [xxHash] algorithm, XXH64. This is a
        7→high-quality hashing algorithm that is much faster than anything in the Go
        8→standard library.
-      10→This package provides a straightforward API:
-      11→
-      12→```
-      13→func Sum64(b []byte) uint64
-      14→func Sum64String(s string) uint64
-      15→type Digest struct{ ... }
-      16→    func New() *Digest
-      17→```
-      18→
-      19→The `Digest` type implements hash.Hash64. Its key methods are:
-      20→
-      21→```
-      22→func (*Digest) Write([]byte) (int, error)
-      23→func (*Digest) WriteString(string) (int, error)
-      24→func (*Digest) Sum64() uint64
-      25→```
-      26→
-      27→The package is written with optimized pure Go and also contains even faster
-      28→assembly implementations for amd64 and arm64. If desired, the `purego` build tag
-      29→opts into using the Go code even on those architectures.
-      30→
-      31→[xxHash]: https://xxhash.com/
+    …
       33→## Compatibility
     …
       45→## Benchmarks
@@ -100,17 +79,7 @@ bench_test.go …
 dynamic/
     .gitignore …
     dynamic_test.go …
-    plugin.go
-           1→//go:build ignore
-        …
-          14→const (
-          15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
-          16→	want = uint64(0x02a2e85470d6fd96)
-          17→)
-          19→func TestSum(t *testing.T) {
-        …
-          26→func TestDigest(t *testing.T) {
-        …
+    plugin.go …
 go.mod
        1→module github.com/cespare/xxhash/v2
        2→
@@ -130,7 +99,13 @@ testall.sh
 xxhash.go
        1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
        2→// at https://xxhash.com/.
-    …
+       3→package xxhash
+       4→
+       5→import (
+       6→	"encoding/binary"
+       7→	"errors"
+       8→	"math/bits"
+       9→)
       11→const (
       12→	prime1 uint64 = 11400714785074694791
       13→	prime2 uint64 = 14029467366897019727
@@ -138,11 +113,24 @@ xxhash.go
       15→	prime4 uint64 = 9650029242287828579
       16→	prime5 uint64 = 2870177450012600261
       17→)
-    …
+      19→// Store the primes in an array as well.
+      20→//
+      21→// The consts are used when possible in Go code to avoid MOVs but we need a
+      22→// contiguous array for the assembly code.
       23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
-    …
+      25→// Digest implements hash.Hash64.
+      26→//
+      27→// Note that a zero-valued Digest is not ready to receive writes.
+      28→// Call Reset or create a Digest using New before calling other methods.
       29→type Digest struct {
-    …
+      30→	v1    uint64
+      31→	v2    uint64
+      32→	v3    uint64
+      33→	v4    uint64
+      34→	total uint64
+      35→	mem   [32]byte
+      36→	n     int // how much of mem is used
+      37→}
       39→// New creates a new Digest with a zero seed.
       40→func New() *Digest {
       41→	return NewWithSeed(0)
@@ -150,9 +138,12 @@ xxhash.go
       44→// NewWithSeed creates a new Digest with the given seed.
       45→func NewWithSeed(seed uint64) *Digest {
     …
+      51→// Reset clears the Digest's state so that it can be reused.
+      52→// It uses a seed value of zero.
       53→func (d *Digest) Reset() {
-      54→	d.ResetWithSeed(0)
     …
+      57→// ResetWithSeed clears the Digest's state so that it can be reused.
+      58→// It uses the given seed to initialize the state.
       59→func (d *Digest) ResetWithSeed(seed uint64) {
     …
       68→// Size always returns 8 bytes.
@@ -235,15 +226,11 @@ xxhash_unsafe.go
       36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
       37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
       38→func Sum64String(s string) uint64 {
-      39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
-      40→	return Sum64(b)
     …
       43→// WriteString adds more data to d. It always returns len(s), nil.
       44→// It may be faster than Write([]byte(s)) by avoiding a copy.
       45→func (d *Digest) WriteString(s string) (n int, err error) {
     …
-      53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-      54→// of the first two words is the same as the layout of a string.
       55→type sliceHeader struct {
       56→	s   string
       57→	cap int

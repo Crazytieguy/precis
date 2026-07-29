@@ -55,25 +55,7 @@ Readme.md
       45→})
       46→```
       48→## Installation
-      49→
-      50→This is a [Node.js](https://nodejs.org/en/) module available through the
-      51→[npm registry](https://www.npmjs.com/).
-      52→
-      53→Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-      54→Node.js 18 or higher is required.
-      55→
-      56→If this is a brand new project, make sure to create a `package.json` first with
-      57→the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
-      58→
-      59→Installation is done using the
-      60→[`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally):
-      61→
-      62→```bash
-      63→npm install express
-      64→```
-      65→
-      66→Follow [our installing guide](https://expressjs.com/en/starter/installing.html)
-      67→for more information.
+    …
       69→## Features
       70→
       71→  * Robust routing
@@ -92,7 +74,12 @@ Readme.md
      127→## Examples
     …
      147→## Contributing
-    …
+     148→
+     149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
+     150→from code for bug fixes and enhancements, to additions and fixes to documentation, additional
+     151→tests, triaging incoming pull requests and issues, and more!
+     152→
+     153→See the [Contributing Guide] for more technical details on contributing.
      155→### Security Issues
     …
      159→### Running Tests
@@ -102,11 +89,17 @@ Readme.md
      181→### TC (Technical Committee)
     …
      184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
+     185→* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
+     186→* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
     …
+     190→* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
      192→<details>
      193→<summary>TC emeriti members</summary>
     …
      205→### Triagers
+    …
+     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
+     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     …
      216→* [krzysdz](https://github.com/krzysdz)
     …
@@ -163,7 +156,12 @@ lib/
           24→ * Expose `createApplication()`.
           25→ */
           27→exports = module.exports = createApplication;
-        …
+          29→/**
+          30→ * Create an express application.
+          31→ *
+          32→ * @return {Function}
+          33→ * @api public
+          34→ */
           36→function createApplication() {
         …
           58→/**

@@ -1,4 +1,4 @@
-Score(3000)=0.624 I=0.843 C=0.461 ns_rows≤3K=23/67 (reached=13 partial=0 missing=10)
+Score(3000)=0.674 I=0.849 C=0.535 ns_rows≤3K=23/67 (reached=14 partial=0 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,61 +27,61 @@ Score(3000)=0.624 I=0.843 C=0.461 ns_rows≤3K=23/67 (reached=13 partial=0 missi
 | walker |  | 615 | 36 | manifest config in Cargo.toml |  |  | 0.767 |
 | ns | 801 |  | 234 | Cargo features, part 2: std, the kv family, the serde alias, deprecated aliases | 1.9 | 1.8 | 0.678 |
 | walker |  | 863 | 248 | crate-doc lede in src/lib.rs |  |  | 0.756 |
-| walker |  | 889 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.756 |
 | ns | 918 |  | 117 | The four optional runtime dependencies | 1.10 |  | 0.724 |
-| walker |  | 920 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.725 |
-| walker |  | 1039 | 119 | [dependencies] in Cargo.toml |  |  | 0.764 |
-| walker |  | 1066 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.764 |
-| ns | 1086 |  | 168 | Roster: every public type, trait, module and const in src/lib.rs | 2.1 |  | 0.707 |
-| walker |  | 1100 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.707 |
-| walker |  | 1148 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.708 |
-| ns | 1290 |  | 204 | Roster: the seven free functions of the global logger API, with their cfg gates | 2.2 |  | 0.668 |
-| ns | 1376 |  | 86 | `enum Level`: all five variants and their discriminants | 2.3 | 2.1 | 0.638 |
-| walker |  | 1379 | 231 | mod/use plumbing in src/lib.rs |  |  | 0.645 |
-| walker |  | 1419 | 40 | pub-item names surface in src/kv/value.rs |  |  | 0.645 |
-| walker |  | 1450 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.645 |
-| ns | 1468 |  | 92 | `enum LevelFilter`: all six variants, including `Off` | 2.4 | 2.1 | 0.615 |
-| walker |  | 1476 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.615 |
-| ns | 1652 |  | 184 | Roster: every method on `Level` and `LevelFilter` | 2.5 |  | 0.574 |
-| walker |  | 1776 | 300 | pub-item names surface in src/lib.rs |  |  | 0.670 |
-| walker |  | 1776 | 0 | pub item at src/lib.rs:1375 |  |  | 0.670 |
-| walker |  | 1776 | 0 | pub item at src/lib.rs:1396 |  |  | 0.670 |
-| walker |  | 1776 | 0 | pub item at src/lib.rs:1529 |  |  | 0.670 |
-| walker |  | 1776 | 0 | pub item at src/lib.rs:1581 |  |  | 0.670 |
-| ns | 1784 |  | 132 | Module declarations and the atomics-vs-Cell import fork | 2.6 | 2.1 | 0.685 |
-| walker |  | 1790 | 14 | pub item at src/lib.rs:1351 |  |  | 0.691 |
-| walker |  | 1804 | 14 | pub item at src/lib.rs:1478 |  |  | 0.698 |
-| walker |  | 1827 | 23 | pub item at src/lib.rs:1549 |  |  | 0.698 |
-| walker |  | 1848 | 21 | pub item at src/lib.rs:1420 |  |  | 0.707 |
-| walker |  | 1875 | 27 | pub item at src/lib.rs:1003 |  |  | 0.707 |
-| walker |  | 1903 | 28 | pub item at src/lib.rs:1566 |  |  | 0.707 |
-| walker |  | 1915 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.707 |
-| ns | 1936 |  | 152 | Global state: LOGGER, STATE, the state constants, LOG_LEVEL_NAMES | 2.7 |  | 0.679 |
-| walker |  | 1955 | 40 | pub item at src/lib.rs:1200 |  |  | 0.680 |
-| walker |  | 1971 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.680 |
-| walker |  | 2022 | 51 | pub item at src/lib.rs:1158 |  |  | 0.680 |
-| walker |  | 2042 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.680 |
-| ns | 2119 |  | 183 | Roster: the impls that make Level and LevelFilter comparable and parseable | 2.8 |  | 0.653 |
-| walker |  | 2148 | 106 | pub item at src/lib.rs:842 |  |  | 0.655 |
-| walker |  | 2168 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.655 |
-| walker |  | 2342 | 174 | pub item at src/lib.rs:636 |  |  | 0.695 |
-| walker |  | 2363 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.695 |
-| ns | 2397 |  | 278 | `STATIC_MAX_LEVEL`: compile-time level resolution | 2.9 | 2.1 | 0.666 |
-| walker |  | 2455 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.666 |
-| ns | 2472 |  | 75 | `trait Log`: the three required methods | 3.1 | 2.1 | 0.649 |
-| ns | 2659 |  | 187 | Worked example: a complete `Log` implementation | 3.2 |  | 0.618 |
-| walker |  | 2758 | 303 | pub item at src/lib.rs:475 |  |  | 0.650 |
-| walker |  | 2798 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.650 |
-| ns | 2815 |  | 156 | Why `set_max_level` must be called, and that it defaults to `Off` | 3.4 |  | 0.638 |
-| walker |  | 2844 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.638 |
-| ns | 2921 |  | 106 | Worked example: the conventional `init()` for a logger crate | 3.5 |  | 0.624 |
-| ns | 3074 |  | 153 | The `Log` impls the crate itself provides | 3.6 |  | 0.605 |
-| ns | 3188 |  | 114 | `logger()`: the acquire-load fast path | 3.7 | 2.2 | 0.592 |
-| walker |  | 3259 | 415 | pub item at src/lib.rs:1249 |  |  | 0.608 |
-| walker |  | 3276 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.618 |
-| ns | 3375 |  | 187 | `set_logger_inner`: the compare-exchange install path | 3.8 |  | 0.595 |
-| ns | 3520 |  | 145 | Runtime max-level get and set bodies | 3.9 | 2.2 | 0.585 |
-| walker |  | 3552 | 276 | pub item at src/lib.rs:1611 |  |  | 0.623 |
+| ns | 1086 |  | 168 | Roster: every public type, trait, module and const in src/lib.rs | 2.1 |  | 0.671 |
+| walker |  | 1094 | 231 | mod/use plumbing in src/lib.rs |  |  | 0.678 |
+| ns | 1290 |  | 204 | Roster: the seven free functions of the global logger API, with their cfg gates | 2.2 |  | 0.640 |
+| ns | 1376 |  | 86 | `enum Level`: all five variants and their discriminants | 2.3 | 2.1 | 0.611 |
+| walker |  | 1394 | 300 | pub-item names surface in src/lib.rs |  |  | 0.721 |
+| walker |  | 1394 | 0 | pub item at src/lib.rs:1375 |  |  | 0.721 |
+| walker |  | 1394 | 0 | pub item at src/lib.rs:1396 |  |  | 0.721 |
+| walker |  | 1394 | 0 | pub item at src/lib.rs:1529 |  |  | 0.721 |
+| walker |  | 1394 | 0 | pub item at src/lib.rs:1581 |  |  | 0.721 |
+| walker |  | 1408 | 14 | pub item at src/lib.rs:1351 |  |  | 0.728 |
+| walker |  | 1422 | 14 | pub item at src/lib.rs:1478 |  |  | 0.736 |
+| walker |  | 1445 | 23 | pub item at src/lib.rs:1549 |  |  | 0.736 |
+| walker |  | 1466 | 21 | pub item at src/lib.rs:1420 |  |  | 0.748 |
+| ns | 1468 |  | 92 | `enum LevelFilter`: all six variants, including `Off` | 2.4 | 2.1 | 0.713 |
+| walker |  | 1493 | 27 | pub item at src/lib.rs:1003 |  |  | 0.713 |
+| walker |  | 1521 | 28 | pub item at src/lib.rs:1566 |  |  | 0.713 |
+| walker |  | 1561 | 40 | pub item at src/lib.rs:1200 |  |  | 0.714 |
+| walker |  | 1612 | 51 | pub item at src/lib.rs:1158 |  |  | 0.714 |
+| walker |  | 1624 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.714 |
+| ns | 1652 |  | 184 | Roster: every method on `Level` and `LevelFilter` | 2.5 |  | 0.666 |
+| walker |  | 1730 | 106 | pub item at src/lib.rs:842 |  |  | 0.668 |
+| walker |  | 1746 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.668 |
+| walker |  | 1766 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.668 |
+| ns | 1784 |  | 132 | Module declarations and the atomics-vs-Cell import fork | 2.6 | 2.1 | 0.684 |
+| ns | 1936 |  | 152 | Global state: LOGGER, STATE, the state constants, LOG_LEVEL_NAMES | 2.7 |  | 0.657 |
+| walker |  | 1940 | 174 | pub item at src/lib.rs:636 |  |  | 0.700 |
+| ns | 2119 |  | 183 | Roster: the impls that make Level and LevelFilter comparable and parseable | 2.8 |  | 0.672 |
+| walker |  | 2243 | 303 | pub item at src/lib.rs:475 |  |  | 0.708 |
+| walker |  | 2263 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.708 |
+| ns | 2397 |  | 278 | `STATIC_MAX_LEVEL`: compile-time level resolution | 2.9 | 2.1 | 0.678 |
+| ns | 2472 |  | 75 | `trait Log`: the three required methods | 3.1 | 2.1 | 0.662 |
+| ns | 2659 |  | 187 | Worked example: a complete `Log` implementation | 3.2 |  | 0.630 |
+| walker |  | 2678 | 415 | pub item at src/lib.rs:1249 |  |  | 0.647 |
+| walker |  | 2695 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.658 |
+| walker |  | 2716 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.658 |
+| ns | 2815 |  | 156 | Why `set_max_level` must be called, and that it defaults to `Off` | 3.4 |  | 0.646 |
+| ns | 2921 |  | 106 | Worked example: the conventional `init()` for a logger crate | 3.5 |  | 0.632 |
+| walker |  | 2992 | 276 | pub item at src/lib.rs:1611 |  |  | 0.674 |
+| walker |  | 3018 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.674 |
+| walker |  | 3049 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.675 |
+| ns | 3074 |  | 153 | The `Log` impls the crate itself provides | 3.6 |  | 0.654 |
+| walker |  | 3168 | 119 | [dependencies] in Cargo.toml |  |  | 0.670 |
+| ns | 3188 |  | 114 | `logger()`: the acquire-load fast path | 3.7 | 2.2 | 0.657 |
+| walker |  | 3260 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.657 |
+| walker |  | 3287 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.657 |
+| walker |  | 3321 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.657 |
+| walker |  | 3369 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.657 |
+| ns | 3375 |  | 187 | `set_logger_inner`: the compare-exchange install path | 3.8 |  | 0.632 |
+| walker |  | 3409 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.632 |
+| walker |  | 3455 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.632 |
+| walker |  | 3495 | 40 | pub-item names surface in src/kv/value.rs |  |  | 0.632 |
+| ns | 3520 |  | 145 | Runtime max-level get and set bodies | 3.9 | 2.2 | 0.622 |
+| walker |  | 3526 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.623 |
+| walker |  | 3552 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.623 |
 | ns | 3601 |  | 81 | no_std wiring | 3.10 |  | 0.617 |
 | ns | 3681 |  | 80 | Roster: the seven public macros of src/macros.rs | 4.1 |  | 0.608 |
 | walker |  | 3701 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.608 |
@@ -89,205 +89,205 @@ Score(3000)=0.624 I=0.843 C=0.461 ns_rows≤3K=23/67 (reached=13 partial=0 missi
 | ns | 3833 |  | 152 | `log!`: all four call forms | 4.2 | 4.1 | 0.598 |
 | walker |  | 3922 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.612 |
 | walker |  | 3985 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.612 |
-| walker |  | 4060 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.612 |
 | ns | 4101 |  | 268 | `__log!`: the expansion every log call becomes | 4.3 |  | 0.598 |
-| walker |  | 4160 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.598 |
 | ns | 4172 |  | 71 | `error!`: head and matcher arms | 4.5 | 4.1 | 0.590 |
-| walker |  | 4248 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.590 |
-| walker |  | 4262 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.590 |
-| walker |  | 4357 | 95 | pub-item doc lede at src/lib.rs:1200 |  |  | 0.590 |
-| walker |  | 4377 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.590 |
-| walker |  | 4397 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.590 |
 | ns | 4408 |  | 236 | Roster: every doc(hidden) internal macro, with its feature fork | 4.6 |  | 0.572 |
-| walker |  | 4519 | 122 | pub-item doc lede at src/lib.rs:636 |  |  | 0.572 |
-| walker |  | 4615 | 96 | pub-item doc lede at src/lib.rs:1529 |  |  | 0.572 |
-| walker |  | 4636 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.573 |
-| walker |  | 4735 | 99 | pub-item doc lede at src/lib.rs:1375 |  |  | 0.573 |
-| walker |  | 4754 | 19 | README.md section #6 |  |  | 0.573 |
 | ns | 4765 |  | 357 | `__log_value!`: the capture-modifier dispatch table | 4.7 | 4.6 | 0.545 |
 | ns | 4966 |  | 201 | `log_enabled!`: purpose and call forms | 4.9 | 4.1 | 0.534 |
-| walker |  | 5164 | 410 | [features] in Cargo.toml |  |  | 0.615 |
-| ns | 5170 |  | 204 | `__private_api`: the three functions macros expand into | 5.1 |  | 0.599 |
-| ns | 5366 |  | 196 | `log_impl`: where a `Record` is actually built | 5.2 |  | 0.584 |
-| ns | 5515 |  | 149 | `GlobalLogger`: the zero-sized proxy for the global slot | 5.3 |  | 0.571 |
-| walker |  | 5552 | 388 | macro_export names across src |  |  | 0.602 |
-| walker |  | 5717 | 165 | macro_export names across src/kv |  |  | 0.602 |
-| ns | 5739 |  | 224 | `kv_support`: the capture_* functions behind every modifier | 5.4 |  | 0.593 |
-| walker |  | 5761 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.593 |
-| walker |  | 5805 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.593 |
-| ns | 5845 |  | 106 | `struct Record`: every field | 6.1 | 2.1 | 0.601 |
-| walker |  | 5850 | 45 | macro_export body at src/kv/value.rs:1149 |  |  | 0.601 |
-| walker |  | 5895 | 45 | macro_export body at src/kv/value.rs:1159 |  |  | 0.601 |
-| walker |  | 5940 | 45 | macro_export body at src/kv/value.rs:1169 |  |  | 0.601 |
-| ns | 6026 |  | 181 | Roster: every accessor on `Record` | 6.2 |  | 0.590 |
-| walker |  | 6051 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.590 |
-| ns | 6127 |  | 101 | `Metadata` and its accessors | 6.3 | 2.1 | 0.589 |
-| walker |  | 6178 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.589 |
-| walker |  | 6261 | 83 | README.md section #1 |  |  | 0.589 |
-| ns | 6333 |  | 206 | Roster: `RecordBuilder` and all twelve setters | 6.4 | 2.1 | 0.578 |
-| ns | 6436 |  | 103 | `MetadataBuilder` and its setters | 6.5 | 2.1 | 0.575 |
-| walker |  | 6466 | 205 | mod/use plumbing in src/kv/mod.rs |  |  | 0.577 |
-| ns | 6593 |  | 157 | What structured logging means in `log` | 7.1 |  | 0.572 |
-| ns | 6776 |  | 183 | The complete list of capture modifiers | 7.2 |  | 0.567 |
-| ns | 6981 |  | 205 | The kv module's structure and complete export list | 7.3 |  | 0.582 |
-| ns | 7072 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.577 |
-| ns | 7279 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.569 |
-| ns | 7363 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.573 |
-| ns | 7446 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.578 |
-| ns | 7691 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.568 |
-| ns | 7967 |  | 276 | The primitive conversion tables | 7.9 |  | 0.559 |
-| ns | 8160 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.551 |
-| ns | 8296 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.547 |
-| walker |  | 8482 | 2016 | impl method sigs in src/lib.rs |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:427 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:431 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:435 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:503 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:510 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:517 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:529 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:535 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:548 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:554 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:561 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:579 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:599 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:620 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:653 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:660 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:667 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:679 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:685 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:699 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:707 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:714 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:732 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:752 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:774 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:788 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:862 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:872 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:878 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:884 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:890 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:896 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:902 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:908 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:917 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:923 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:932 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1021 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1037 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1044 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1051 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1058 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1065 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1072 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1079 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1086 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1093 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1108 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1114 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1166 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1172 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1178 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1212 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1223 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1230 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1237 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1243 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1286 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1290 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1291 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1298 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1302 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1305 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1315 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1319 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1322 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1332 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1336 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1339 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1552 |  |  | 0.635 |
-| walker |  | 8482 | 0 | impl method at src/lib.rs:1569 |  |  | 0.635 |
-| walker |  | 8490 | 8 | impl method body at src/lib.rs:932 body 933 |  |  | 0.635 |
-| walker |  | 8498 | 8 | impl method body at src/lib.rs:1286 body 1287 |  |  | 0.635 |
-| walker |  | 8507 | 9 | impl method body at src/lib.rs:548 body 549 |  |  | 0.635 |
-| walker |  | 8516 | 9 | impl method body at src/lib.rs:653 body 654 |  |  | 0.635 |
-| walker |  | 8525 | 9 | impl method body at src/lib.rs:878 body 879 |  |  | 0.635 |
-| walker |  | 8534 | 9 | impl method body at src/lib.rs:884 body 885 |  |  | 0.635 |
-| walker |  | 8543 | 9 | impl method body at src/lib.rs:890 body 891 |  |  | 0.635 |
-| walker |  | 8552 | 9 | impl method body at src/lib.rs:896 body 897 |  |  | 0.635 |
-| walker |  | 8561 | 9 | impl method body at src/lib.rs:1172 body 1173 |  |  | 0.635 |
-| walker |  | 8570 | 9 | impl method body at src/lib.rs:1178 body 1179 |  |  | 0.635 |
-| walker |  | 8580 | 10 | impl method body at src/lib.rs:699 body 700 |  |  | 0.635 |
-| walker |  | 8590 | 10 | impl method body at src/lib.rs:872 body 873 |  |  | 0.627 |
-| ns | 8590 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.627 |
-| walker |  | 8600 | 10 | impl method body at src/lib.rs:1108 body 1109 |  |  | 0.627 |
-| walker |  | 8610 | 10 | impl method body at src/lib.rs:1114 body 1115 |  |  | 0.627 |
-| walker |  | 8620 | 10 | impl method body at src/lib.rs:1237 body 1238 |  |  | 0.627 |
-| walker |  | 8630 | 10 | impl method body at src/lib.rs:1243 body 1244 |  |  | 0.627 |
-| walker |  | 8641 | 11 | impl method body at src/lib.rs:529 body 530 |  |  | 0.627 |
-| walker |  | 8652 | 11 | impl method body at src/lib.rs:679 body 680 |  |  | 0.627 |
-| walker |  | 8663 | 11 | impl method body at src/lib.rs:1166 body 1167 |  |  | 0.627 |
-| walker |  | 8674 | 11 | impl method body at src/lib.rs:1305 body 1306 |  |  | 0.627 |
-| walker |  | 8686 | 12 | impl method body at src/lib.rs:1298 body 1299 |  |  | 0.627 |
-| walker |  | 8698 | 12 | impl method body at src/lib.rs:1302 body 1303 |  |  | 0.627 |
-| walker |  | 8710 | 12 | impl method body at src/lib.rs:1322 body 1323 |  |  | 0.627 |
-| walker |  | 8722 | 12 | impl method body at src/lib.rs:1339 body 1340 |  |  | 0.627 |
-| walker |  | 8735 | 13 | impl method body at src/lib.rs:561 body 562 |  |  | 0.627 |
-| walker |  | 8748 | 13 | impl method body at src/lib.rs:714 body 715 |  |  | 0.627 |
-| walker |  | 8761 | 13 | impl method body at src/lib.rs:1315 body 1316 |  |  | 0.627 |
-| ns | 8762 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.620 |
-| walker |  | 8774 | 13 | impl method body at src/lib.rs:1319 body 1320 |  |  | 0.620 |
-| walker |  | 8787 | 13 | impl method body at src/lib.rs:1332 body 1333 |  |  | 0.620 |
-| walker |  | 8800 | 13 | impl method body at src/lib.rs:1336 body 1337 |  |  | 0.620 |
-| walker |  | 8814 | 14 | impl method at src/lib.rs:939 |  |  | 0.622 |
-| walker |  | 8825 | 11 | impl method body at src/lib.rs:939 body 940 |  |  | 0.622 |
-| walker |  | 8839 | 14 | impl method at src/lib.rs:946 |  |  | 0.622 |
-| ns | 8839 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.622 |
-| walker |  | 8854 | 15 | impl method at src/lib.rs:1101 |  |  | 0.625 |
-| walker |  | 8868 | 14 | impl method body at src/lib.rs:917 body 918 |  |  | 0.625 |
-| walker |  | 8882 | 14 | impl method body at src/lib.rs:1569 body 1570 |  |  | 0.625 |
-| walker |  | 8897 | 15 | impl method body at src/lib.rs:503 body 504 |  |  | 0.625 |
-| walker |  | 8912 | 15 | impl method body at src/lib.rs:707 body 708 |  |  | 0.625 |
-| walker |  | 8927 | 15 | impl method body at src/lib.rs:902 body 903 |  |  | 0.625 |
-| walker |  | 8942 | 15 | impl method body at src/lib.rs:1552 body 1553 |  |  | 0.625 |
-| walker |  | 8960 | 18 | impl method body at src/lib.rs:510 body 511 |  |  | 0.625 |
-| walker |  | 8978 | 18 | impl method body at src/lib.rs:554 body 555 |  |  | 0.625 |
-| walker |  | 8996 | 18 | impl method body at src/lib.rs:660 body 661 |  |  | 0.625 |
-| walker |  | 9016 | 20 | impl method body at src/lib.rs:1037 body 1038 |  |  | 0.625 |
-| walker |  | 9036 | 20 | impl method body at src/lib.rs:1044 body 1045 |  |  | 0.625 |
-| walker |  | 9056 | 20 | impl method body at src/lib.rs:1093 body 1094 |  |  | 0.625 |
-| walker |  | 9076 | 20 | impl method body at src/lib.rs:1223 body 1224 |  |  | 0.625 |
-| walker |  | 9096 | 20 | impl method body at src/lib.rs:1230 body 1231 |  |  | 0.625 |
-| walker |  | 9117 | 21 | impl method body at src/lib.rs:1051 body 1052 |  |  | 0.625 |
-| ns | 9123 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.613 |
-| walker |  | 9138 | 21 | impl method body at src/lib.rs:1058 body 1059 |  |  | 0.613 |
-| walker |  | 9161 | 23 | impl method body at src/lib.rs:579 body 580 |  |  | 0.613 |
-| walker |  | 9184 | 23 | impl method body at src/lib.rs:732 body 733 |  |  | 0.613 |
-| walker |  | 9208 | 24 | impl method body at src/lib.rs:1101 body 1102 |  |  | 0.613 |
-| walker |  | 9235 | 27 | impl method body at src/lib.rs:1086 body 1087 |  |  | 0.613 |
-| walker |  | 9263 | 28 | impl method body at src/lib.rs:1072 body 1073 |  |  | 0.613 |
-| walker |  | 9291 | 28 | impl method body at src/lib.rs:1079 body 1080 |  |  | 0.613 |
-| ns | 9299 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.606 |
-| walker |  | 9320 | 29 | impl method body at src/lib.rs:1065 body 1066 |  |  | 0.606 |
-| walker |  | 9353 | 33 | impl method body at src/lib.rs:599 body 600 |  |  | 0.606 |
-| walker |  | 9386 | 33 | impl method body at src/lib.rs:752 body 753 |  |  | 0.606 |
-| walker |  | 9422 | 36 | impl method body at src/lib.rs:620 body 621 |  |  | 0.606 |
-| walker |  | 9458 | 36 | impl method body at src/lib.rs:774 body 775 |  |  | 0.606 |
-| ns | 9465 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.601 |
-| walker |  | 9500 | 42 | impl method body at src/lib.rs:862 body 863 |  |  | 0.601 |
-| walker |  | 9542 | 42 | impl method body at src/lib.rs:923 body 924 |  |  | 0.601 |
-| walker |  | 9585 | 43 | impl method body at src/lib.rs:908 body 909 |  |  | 0.601 |
-| ns | 9609 |  | 144 | CI: the seven jobs | 8.4 |  | 0.594 |
-| walker |  | 9639 | 54 | impl method body at src/lib.rs:1212 body 1213 |  |  | 0.594 |
-| walker |  | 9648 | 9 | impl method body at src/lib.rs:431 body 432 |  |  | 0.594 |
-| walker |  | 9658 | 10 | impl method body at src/lib.rs:435 body 436 |  |  | 0.594 |
-| ns | 9665 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.591 |
-| ns | 9737 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.589 |
-| walker |  | 9747 | 89 | impl method body at src/lib.rs:517 body 518 |  |  | 0.589 |
-| walker |  | 9837 | 90 | impl method body at src/lib.rs:667 body 668 |  |  | 0.589 |
+| ns | 5170 |  | 204 | `__private_api`: the three functions macros expand into | 5.1 |  | 0.520 |
+| ns | 5366 |  | 196 | `log_impl`: where a `Record` is actually built | 5.2 |  | 0.507 |
+| ns | 5515 |  | 149 | `GlobalLogger`: the zero-sized proxy for the global slot | 5.3 |  | 0.496 |
+| ns | 5739 |  | 224 | `kv_support`: the capture_* functions behind every modifier | 5.4 |  | 0.489 |
+| ns | 5845 |  | 106 | `struct Record`: every field | 6.1 | 2.1 | 0.500 |
+| walker |  | 6001 | 2016 | impl method sigs in src/lib.rs |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:427 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:431 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:435 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:503 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:510 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:517 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:529 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:535 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:548 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:554 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:561 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:579 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:599 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:620 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:653 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:660 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:667 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:679 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:685 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:699 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:707 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:714 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:732 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:752 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:774 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:788 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:862 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:872 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:878 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:884 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:890 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:896 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:902 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:908 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:917 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:923 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:932 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1021 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1037 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1044 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1051 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1058 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1065 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1072 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1079 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1086 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1093 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1108 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1114 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1166 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1172 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1178 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1212 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1223 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1230 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1237 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1243 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1286 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1290 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1291 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1298 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1302 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1305 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1315 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1319 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1322 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1332 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1336 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1339 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1552 |  |  | 0.560 |
+| walker |  | 6001 | 0 | impl method at src/lib.rs:1569 |  |  | 0.560 |
+| walker |  | 6015 | 14 | impl method at src/lib.rs:939 |  |  | 0.561 |
+| ns | 6026 |  | 181 | Roster: every accessor on `Record` | 6.2 |  | 0.570 |
+| walker |  | 6029 | 14 | impl method at src/lib.rs:946 |  |  | 0.574 |
+| walker |  | 6044 | 15 | impl method at src/lib.rs:1101 |  |  | 0.574 |
+| walker |  | 6052 | 8 | impl method body at src/lib.rs:932 body 933 |  |  | 0.574 |
+| walker |  | 6060 | 8 | impl method body at src/lib.rs:1286 body 1287 |  |  | 0.574 |
+| walker |  | 6069 | 9 | impl method body at src/lib.rs:548 body 549 |  |  | 0.574 |
+| walker |  | 6078 | 9 | impl method body at src/lib.rs:653 body 654 |  |  | 0.574 |
+| walker |  | 6087 | 9 | impl method body at src/lib.rs:878 body 879 |  |  | 0.574 |
+| walker |  | 6096 | 9 | impl method body at src/lib.rs:884 body 885 |  |  | 0.574 |
+| walker |  | 6105 | 9 | impl method body at src/lib.rs:890 body 891 |  |  | 0.574 |
+| walker |  | 6114 | 9 | impl method body at src/lib.rs:896 body 897 |  |  | 0.574 |
+| walker |  | 6123 | 9 | impl method body at src/lib.rs:1172 body 1173 |  |  | 0.574 |
+| ns | 6127 |  | 101 | `Metadata` and its accessors | 6.3 | 2.1 | 0.581 |
+| walker |  | 6132 | 9 | impl method body at src/lib.rs:1178 body 1179 |  |  | 0.581 |
+| walker |  | 6142 | 10 | impl method body at src/lib.rs:699 body 700 |  |  | 0.581 |
+| walker |  | 6152 | 10 | impl method body at src/lib.rs:872 body 873 |  |  | 0.581 |
+| walker |  | 6162 | 10 | impl method body at src/lib.rs:1108 body 1109 |  |  | 0.581 |
+| walker |  | 6172 | 10 | impl method body at src/lib.rs:1114 body 1115 |  |  | 0.581 |
+| walker |  | 6182 | 10 | impl method body at src/lib.rs:1237 body 1238 |  |  | 0.581 |
+| walker |  | 6192 | 10 | impl method body at src/lib.rs:1243 body 1244 |  |  | 0.581 |
+| walker |  | 6203 | 11 | impl method body at src/lib.rs:529 body 530 |  |  | 0.581 |
+| walker |  | 6214 | 11 | impl method body at src/lib.rs:679 body 680 |  |  | 0.581 |
+| walker |  | 6225 | 11 | impl method body at src/lib.rs:939 body 940 |  |  | 0.581 |
+| walker |  | 6236 | 11 | impl method body at src/lib.rs:1166 body 1167 |  |  | 0.581 |
+| walker |  | 6247 | 11 | impl method body at src/lib.rs:1305 body 1306 |  |  | 0.581 |
+| walker |  | 6259 | 12 | impl method body at src/lib.rs:1298 body 1299 |  |  | 0.581 |
+| walker |  | 6271 | 12 | impl method body at src/lib.rs:1302 body 1303 |  |  | 0.581 |
+| walker |  | 6283 | 12 | impl method body at src/lib.rs:1322 body 1323 |  |  | 0.581 |
+| walker |  | 6295 | 12 | impl method body at src/lib.rs:1339 body 1340 |  |  | 0.581 |
+| walker |  | 6308 | 13 | impl method body at src/lib.rs:561 body 562 |  |  | 0.581 |
+| walker |  | 6321 | 13 | impl method body at src/lib.rs:714 body 715 |  |  | 0.581 |
+| ns | 6333 |  | 206 | Roster: `RecordBuilder` and all twelve setters | 6.4 | 2.1 | 0.594 |
+| walker |  | 6334 | 13 | impl method body at src/lib.rs:1315 body 1316 |  |  | 0.594 |
+| walker |  | 6347 | 13 | impl method body at src/lib.rs:1319 body 1320 |  |  | 0.594 |
+| walker |  | 6360 | 13 | impl method body at src/lib.rs:1332 body 1333 |  |  | 0.594 |
+| walker |  | 6373 | 13 | impl method body at src/lib.rs:1336 body 1337 |  |  | 0.594 |
+| walker |  | 6387 | 14 | impl method body at src/lib.rs:917 body 918 |  |  | 0.594 |
+| walker |  | 6401 | 14 | impl method body at src/lib.rs:1569 body 1570 |  |  | 0.594 |
+| walker |  | 6416 | 15 | impl method body at src/lib.rs:503 body 504 |  |  | 0.594 |
+| walker |  | 6431 | 15 | impl method body at src/lib.rs:707 body 708 |  |  | 0.594 |
+| ns | 6436 |  | 103 | `MetadataBuilder` and its setters | 6.5 | 2.1 | 0.600 |
+| walker |  | 6446 | 15 | impl method body at src/lib.rs:902 body 903 |  |  | 0.600 |
+| walker |  | 6461 | 15 | impl method body at src/lib.rs:1552 body 1553 |  |  | 0.600 |
+| walker |  | 6479 | 18 | impl method body at src/lib.rs:510 body 511 |  |  | 0.600 |
+| walker |  | 6497 | 18 | impl method body at src/lib.rs:554 body 555 |  |  | 0.600 |
+| walker |  | 6515 | 18 | impl method body at src/lib.rs:660 body 661 |  |  | 0.600 |
+| walker |  | 6535 | 20 | impl method body at src/lib.rs:1037 body 1038 |  |  | 0.600 |
+| walker |  | 6555 | 20 | impl method body at src/lib.rs:1044 body 1045 |  |  | 0.600 |
+| walker |  | 6575 | 20 | impl method body at src/lib.rs:1093 body 1094 |  |  | 0.600 |
+| ns | 6593 |  | 157 | What structured logging means in `log` | 7.1 |  | 0.595 |
+| walker |  | 6595 | 20 | impl method body at src/lib.rs:1223 body 1224 |  |  | 0.595 |
+| walker |  | 6615 | 20 | impl method body at src/lib.rs:1230 body 1231 |  |  | 0.595 |
+| walker |  | 6636 | 21 | impl method body at src/lib.rs:1051 body 1052 |  |  | 0.595 |
+| walker |  | 6657 | 21 | impl method body at src/lib.rs:1058 body 1059 |  |  | 0.595 |
+| walker |  | 6680 | 23 | impl method body at src/lib.rs:579 body 580 |  |  | 0.595 |
+| walker |  | 6703 | 23 | impl method body at src/lib.rs:732 body 733 |  |  | 0.595 |
+| walker |  | 6727 | 24 | impl method body at src/lib.rs:1101 body 1102 |  |  | 0.595 |
+| walker |  | 6754 | 27 | impl method body at src/lib.rs:1086 body 1087 |  |  | 0.595 |
+| ns | 6776 |  | 183 | The complete list of capture modifiers | 7.2 |  | 0.589 |
+| walker |  | 6782 | 28 | impl method body at src/lib.rs:1072 body 1073 |  |  | 0.589 |
+| walker |  | 6810 | 28 | impl method body at src/lib.rs:1079 body 1080 |  |  | 0.589 |
+| walker |  | 6839 | 29 | impl method body at src/lib.rs:1065 body 1066 |  |  | 0.589 |
+| walker |  | 6872 | 33 | impl method body at src/lib.rs:599 body 600 |  |  | 0.589 |
+| walker |  | 6905 | 33 | impl method body at src/lib.rs:752 body 753 |  |  | 0.589 |
+| walker |  | 6941 | 36 | impl method body at src/lib.rs:620 body 621 |  |  | 0.589 |
+| walker |  | 6977 | 36 | impl method body at src/lib.rs:774 body 775 |  |  | 0.589 |
+| ns | 6981 |  | 205 | The kv module's structure and complete export list | 7.3 |  | 0.577 |
+| walker |  | 7019 | 42 | impl method body at src/lib.rs:862 body 863 |  |  | 0.577 |
+| walker |  | 7061 | 42 | impl method body at src/lib.rs:923 body 924 |  |  | 0.577 |
+| ns | 7072 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.572 |
+| walker |  | 7104 | 43 | impl method body at src/lib.rs:908 body 909 |  |  | 0.572 |
+| walker |  | 7158 | 54 | impl method body at src/lib.rs:1212 body 1213 |  |  | 0.572 |
+| walker |  | 7233 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.572 |
+| ns | 7279 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.564 |
+| walker |  | 7333 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.564 |
+| walker |  | 7342 | 9 | impl method body at src/lib.rs:431 body 432 |  |  | 0.564 |
+| ns | 7363 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.565 |
+| walker |  | 7430 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.565 |
+| walker |  | 7444 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.565 |
+| ns | 7446 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.570 |
+| walker |  | 7539 | 95 | pub-item doc lede at src/lib.rs:1200 |  |  | 0.570 |
+| walker |  | 7549 | 10 | impl method body at src/lib.rs:435 body 436 |  |  | 0.570 |
+| walker |  | 7569 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.570 |
+| walker |  | 7589 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.570 |
+| ns | 7691 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.560 |
+| walker |  | 7711 | 122 | pub-item doc lede at src/lib.rs:636 |  |  | 0.560 |
+| walker |  | 7807 | 96 | pub-item doc lede at src/lib.rs:1529 |  |  | 0.560 |
+| walker |  | 7828 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.563 |
+| walker |  | 7927 | 99 | pub-item doc lede at src/lib.rs:1375 |  |  | 0.563 |
+| walker |  | 7946 | 19 | README.md section #6 |  |  | 0.563 |
+| ns | 7967 |  | 276 | The primitive conversion tables | 7.9 |  | 0.554 |
+| ns | 8160 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.546 |
+| ns | 8296 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.543 |
+| walker |  | 8356 | 410 | [features] in Cargo.toml |  |  | 0.598 |
+| walker |  | 8445 | 89 | impl method body at src/lib.rs:517 body 518 |  |  | 0.598 |
+| ns | 8590 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.591 |
+| ns | 8762 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.584 |
+| walker |  | 8833 | 388 | macro_export names across src |  |  | 0.605 |
+| ns | 8839 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.603 |
+| walker |  | 8998 | 165 | macro_export names across src/kv |  |  | 0.603 |
+| walker |  | 9042 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.603 |
+| walker |  | 9086 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.603 |
+| ns | 9123 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.591 |
+| walker |  | 9131 | 45 | macro_export body at src/kv/value.rs:1149 |  |  | 0.591 |
+| walker |  | 9176 | 45 | macro_export body at src/kv/value.rs:1159 |  |  | 0.591 |
+| walker |  | 9221 | 45 | macro_export body at src/kv/value.rs:1169 |  |  | 0.591 |
+| ns | 9299 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.585 |
+| walker |  | 9311 | 90 | impl method body at src/lib.rs:667 body 668 |  |  | 0.585 |
+| walker |  | 9422 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.585 |
+| ns | 9465 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.580 |
+| walker |  | 9549 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.580 |
+| ns | 9609 |  | 144 | CI: the seven jobs | 8.4 |  | 0.573 |
+| walker |  | 9632 | 83 | README.md section #1 |  |  | 0.573 |
+| ns | 9665 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.570 |
+| ns | 9737 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.568 |
+| walker |  | 9837 | 205 | mod/use plumbing in src/kv/mod.rs |  |  | 0.589 |
 | ns | 9846 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.584 |
 | ns | 9891 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.582 |
 | walker |  | 9961 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.582 |

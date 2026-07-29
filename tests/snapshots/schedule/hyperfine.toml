@@ -1,7 +1,7 @@
 fixture = "hyperfine"
 budget = 10000
-cumulative_tokens = 9525
-batch_count = 190
+cumulative_tokens = 9900
+batch_count = 193
 
 [[batches]]
 position = 1
@@ -1229,7 +1229,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: true, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: true })'
 descriptor = "README.md section #1"
 cost_tokens = 151
 cum_tokens = 1906
@@ -1265,7 +1265,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 80
 cum_tokens = 2010
@@ -2977,7 +2977,7 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 39
 cum_tokens = 4262
@@ -3985,7 +3985,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 54
 cum_tokens = 6185
@@ -4819,7 +4819,7 @@ kind = "full"
 
 [[batches]]
 position = 166
-key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 74
 cum_tokens = 8206
@@ -4837,7 +4837,7 @@ kind = "full"
 
 [[batches]]
 position = 167
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
 cost_tokens = 82
 cum_tokens = 8288
@@ -5681,44 +5681,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 189
-key = 'Toml(DevelopmentDependencies { file: "Cargo.toml" })'
-descriptor = "dev/build/target dependencies in Cargo.toml"
-cost_tokens = 328
-cum_tokens = 9498
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 32
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 63
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 74
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
 key = 'Rust(PubItemBody { file: "src/output/format.rs", start_line: 5, body_start_line: 6 })'
 descriptor = "pub item body at src/output/format.rs:5 body 6"
 cost_tokens = 27
-cum_tokens = 9525
+cum_tokens = 9197
 
 [batches.content]
 kind = "lines"
@@ -5727,6 +5693,86 @@ kind = "lines"
 path = "src/output/format.rs"
 start = 6
 end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Rust(PubItem { file: "src/options.rs", start_line: 198 })'
+descriptor = "pub item at src/options.rs:198"
+cost_tokens = 585
+cum_tokens = 9782
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/options.rs"
+start = 198
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Rust(ImplMethod { file: "src/benchmark/scheduler.rs", start_line: 21 })'
+descriptor = "impl method at src/benchmark/scheduler.rs:21"
+cost_tokens = 44
+cum_tokens = 9826
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/benchmark/scheduler.rs"
+start = 21
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/benchmark/scheduler.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 192
+key = 'Rust(PubItemDocLede { file: "src/output/progress_bar.rs", start_line: 13 })'
+descriptor = "pub-item doc lede at src/output/progress_bar.rs:13"
+cost_tokens = 13
+cum_tokens = 9839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/output/progress_bar.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Rust(ImplMethodBody { file: "src/parameter/mod.rs", start_line: 14, body_start_line: 15 })'
+descriptor = "impl method body at src/parameter/mod.rs:14 body 15"
+cost_tokens = 61
+cum_tokens = 9900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parameter/mod.rs"
+start = 15
+end = 19
 
 [batches.content.spans.render]
 kind = "full"

@@ -20,6 +20,20 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
+/// Demotion for the dev / build / test dependency roster of a manifest,
+/// applied on top of the class's own tier. The runtime roster says what
+/// the package is built on; the development roster says what its
+/// contributors install to check it — the same "contributor toolchain,
+/// not project" distinction that demotes checking-tool config tables,
+/// one class further out.
+///
+/// **Peer dependencies are not in the class.** `peerDependencies` is a
+/// consumer-facing compatibility contract ("this plugin works against
+/// React 18"), not a contributor tool, and several North Stars rank it
+/// as runtime surface. A batch carrying peer content keeps full value —
+/// see `walker::json::dev_dependencies_value`.
+pub const DEV_DEPENDENCY_ROSTER_SCALE: f64 = 0.3;
+
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;
@@ -568,36 +582,6 @@ fn is_locale_language(s: &str) -> bool {
 /// batches via [`crate::batch::WalkerKey::concavity_exponent`].
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
-/// Late-budget tier for operationally dense prose sections. These
-/// batches keep their normal ratio while the protected early budget is
-/// filling, then compete with a multiplier once compact source rosters
-/// have had first chance to schedule. Expressed as a fraction so small
-/// runs still get a live tier and large runs do not turn deferred prose
-/// on for nearly the whole schedule. The initial 0.5 boundary delayed
-/// too much prose past the 3K scoring prefix in 10K schedule snapshots;
-/// 0.25 keeps the corpus mean stable while still scaling with budget.
-pub const PROSE_MASS_WINDOW_FRACTION: f64 = 0.25;
-pub const PROSE_MASS_BOOST: f64 = 1.5;
-
-/// Ratio multiplier for deferred operational prose after the early
-/// source-roster window.
-pub fn prose_mass_tier_multiplier(
-    consumed_tokens: usize,
-    token_budget: usize,
-    is_deferred_mass_prose: bool,
-) -> f64 {
-    let window = prose_mass_window_tokens(token_budget);
-    if is_deferred_mass_prose && consumed_tokens >= window {
-        PROSE_MASS_BOOST
-    } else {
-        1.0
-    }
-}
-
-fn prose_mass_window_tokens(token_budget: usize) -> usize {
-    ((token_budget as f64) * PROSE_MASS_WINDOW_FRACTION).round() as usize
-}
-
 /// Convert a value and a marginal token cost into the scheduling ratio.
 /// The scheduler passes `entry.key.concavity_exponent()` so prose-shaped
 /// batches see a steeper cost penalty than structural ones.
@@ -612,25 +596,6 @@ pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -
 mod tests {
     use super::*;
     use std::path::Path;
-
-    #[test]
-    fn prose_mass_window_scales_with_token_budget() {
-        assert_eq!(prose_mass_window_tokens(1_200), 300);
-        assert_eq!(prose_mass_window_tokens(3_000), 750);
-        assert_eq!(prose_mass_window_tokens(20_000), 5_000);
-
-        assert_eq!(prose_mass_tier_multiplier(749, 3_000, true), 1.0);
-        assert_eq!(
-            prose_mass_tier_multiplier(750, 3_000, true),
-            PROSE_MASS_BOOST
-        );
-        assert_eq!(prose_mass_tier_multiplier(1_500, 20_000, true), 1.0);
-        assert_eq!(
-            prose_mass_tier_multiplier(5_000, 20_000, true),
-            PROSE_MASS_BOOST
-        );
-        assert_eq!(prose_mass_tier_multiplier(5_000, 20_000, false), 1.0);
-    }
 
     #[test]
     fn conserved_catalog_chunk_factors_sum_to_one() {

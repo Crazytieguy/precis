@@ -33,28 +33,7 @@ commands.go …
 commands_test.go …
 cursed_renderer.go …
 cursed_renderer_test.go …
-cursor.go
-       1→package tea
-       3→// Position represents a position in the terminal.
-       4→type Position struct{ X, Y int }
-       6→// CursorPositionMsg is a message that represents the terminal cursor position.
-       7→type CursorPositionMsg struct {
-       8→	X, Y int
-       9→}
-      11→// CursorShape represents a terminal cursor shape.
-      12→type CursorShape int
-      14→// Cursor shapes.
-      15→const (
-      16→	CursorBlock CursorShape = iota
-      17→	CursorUnderline
-      18→	CursorBar
-      19→)
-      21→// requestCursorPosMsg is a message that requests the cursor position.
-      22→type requestCursorPosMsg struct{}
-      24→// RequestCursorPosition is a command that requests the cursor position.
-      25→// The cursor position will be sent as a [CursorPositionMsg] message.
-      26→func RequestCursorPosition() Msg {
-    …
+cursor.go …
 environ.go
     …
       19→type EnvMsg uv.Environ
@@ -87,30 +66,12 @@ input.go
        8→func (p *Program) translateInputEvent(e uv.Event) Msg {
     …
 key.go …
-keyboard.go
-    …
-       9→type KeyboardEnhancementsMsg struct {
-    …
-      33→func (k KeyboardEnhancementsMsg) SupportsKeyDisambiguation() bool {
-      34→	return k.Flags > 0
-    …
-      39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
-    …
-      43→// SupportsAlternateKeys returns whether the terminal supports reporting
-      44→// alternate key codes.
-      45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
-    …
-      51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
-    …
-      57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
-    …
+keyboard.go …
 logging.go
     …
       23→func LogToFile(path string, prefix string) (*os.File, error) {
       24→	return LogToFileWith(path, prefix, log.Default())
     …
-      27→// LogOptionsSetter is an interface implemented by stdlib's log and charm's log
-      28→// libraries.
       29→type LogOptionsSetter interface {
       30→	SetOutput(io.Writer)
       31→	SetPrefix(string)
@@ -126,8 +87,7 @@ options.go …
 options_test.go …
 paste.go
        1→package tea
-       3→// PasteMsg is an message that is emitted when a terminal receives pasted text
-       4→// using bracketed-paste.
+    …
        5→type PasteMsg struct {
        6→	Content string
        7→}
@@ -135,47 +95,24 @@ paste.go
       10→func (p PasteMsg) String() string {
       11→	return p.Content
     …
-      14→// PasteStartMsg is an message that is emitted when the terminal starts the
-      15→// bracketed-paste text.
       16→type PasteStartMsg struct{}
-      18→// PasteEndMsg is an message that is emitted when the terminal ends the
-      19→// bracketed-paste text.
+    …
       20→type PasteEndMsg struct{}
 profile.go
-       1→package tea
-       2→
-       3→import "github.com/charmbracelet/colorprofile"
     …
       13→type ColorProfileMsg struct {
       14→	colorprofile.Profile
       15→}
 raw.go
        1→package tea
-       3→// RawMsg is a message that contains a string to be printed to the terminal
-       4→// without any intermediate processing.
+    …
        5→type RawMsg struct {
        6→	Msg any
        7→}
     …
       33→func Raw(r any) Cmd {
     …
-renderer.go
-    …
-      13→	defaultFPS = 60
-      14→	maxFPS     = 120
-    …
-      18→type renderer interface {
-    …
-      59→type printLineMessage struct {
-      60→	messageBody string
-      61→}
-    …
-      70→func Println(args ...any) Cmd {
-    …
-      86→func Printf(template string, args ...any) Cmd {
-    …
-      96→func encodeCursorStyle(style CursorShape, blink bool) int {
-    …
+renderer.go …
 screen.go
     …
        9→type WindowSizeMsg struct {
@@ -233,15 +170,7 @@ tea.go
       63→	// view is rendered after every Update.
       64→	View() View
       65→}
-      67→// NewView is a helper function to create a new [View] with the given styled
-      68→// string. A styled string represents text with styles and hyperlinks encoded
-      69→// as ANSI escape codes.
-      70→//
-      71→// Example:
-      72→//
-      73→//	```go
-      74→//	v := tea.NewView("Hello, World!")
-      75→//	```
+    …
       76→func NewView(s string) View {
     …
       82→// View represents a terminal view that can be composed of multiple layers.
@@ -274,6 +203,103 @@ tea.go
      190→}
     …
      241→type KeyboardEnhancements struct {
+    …
+     356→// Cursor represents a cursor on the terminal screen.
+     357→type Cursor struct {
+     358→	// Position is a [Position] that determines the cursor's position on the
+     359→	// screen relative to the top left corner of the frame.
+     360→	Position
+     361→
+     362→	// Color is a [color.Color] that determines the cursor's color.
+     363→	Color color.Color
+     364→
+     365→	// Shape is a [CursorShape] that determines the cursor's shape.
+     366→	Shape CursorShape
+     367→
+     368→	// Blink is a boolean that determines whether the cursor should blink.
+     369→	Blink bool
+     370→}
+     372→// NewCursor returns a new cursor with the default settings and the given
+     373→// position.
+     374→func NewCursor(x, y int) *Cursor {
+    …
+     390→type Cmd func() Msg
+    …
+     395→type channelHandlers struct {
+     396→	handlers []chan struct{}
+     397→	mu       sync.RWMutex
+     398→}
+    …
+     402→func (h *channelHandlers) add(ch chan struct{}) {
+    …
+     408→// shutdown waits for all handlers to terminate.
+     409→func (h *channelHandlers) shutdown() {
+    …
+     425→// Program is a terminal user interface.
+     426→type Program struct {
+    …
+     429→	disableInput bool
+    …
+     433→	disableSignalHandler bool
+    …
+     439→	disableCatchPanics bool
+    …
+     472→	filter func(Model, Msg) Msg
+    …
+     477→	fps int
+    …
+     481→	initialModel Model
+    …
+     486→	disableRenderer bool
+    …
+     490→	handlers channelHandlers
+    …
+     494→	ctx    context.Context
+     495→	cancel context.CancelFunc
+    …
+     499→	externalCtx context.Context
+     501→	msgs         chan Msg
+     502→	errs         chan error
+     503→	finished     chan struct{}
+     504→	shutdownOnce sync.Once
+     506→	profile *colorprofile.Profile // the terminal color profile
+    …
+     509→	output    io.Writer
+     510→	outputBuf bytes.Buffer // buffer used to queue commands to be sent to the output
+    …
+     513→	ttyOutput           term.File
+     514→	previousOutputState *term.State
+     515→	renderer            renderer
+    …
+     518→	environ uv.Environ
+    …
+     520→	logger uv.Logger
+    …
+     523→	input io.Reader
+    …
+     525→	ttyInput              term.File
+     526→	previousTtyInputState *term.State
+     527→	cancelReader          cancelreader.CancelReader
+     528→	inputScanner          *uv.TerminalReader
+     529→	readLoopDone          chan struct{}
+    …
+     532→	ignoreSignals uint32
+    …
+     535→	ticker *time.Ticker
+    …
+     538→	once sync.Once
+    …
+     541→	rendererDone chan struct{}
+    …
+     544→	width, height int
+    …
+     547→	useHardTabs bool
+    …
+     549→	useBackspace bool
+     551→	mu sync.Mutex
+     552→}
+     554→// Quit is a special command that tells the Bubble Tea program to exit.
+     555→func Quit() Msg {
     …
 tea_test.go …
 termcap.go
@@ -315,22 +341,10 @@ tty_unix.go …
 tty_windows.go …
 tutorials/
     basics/
-        README.md
-               1→# Bubble Tea Basics
-               2→
-               3→Bubble Tea is based on the functional design paradigms of [The Elm
-               4→Architecture][elm], which happens to work nicely with Go. It’s a delightful way
-               5→to build applications.
-            …
+        README.md …
         main.go …
     commands/
-        README.md
-               1→# Commands in Bubble Tea
-               2→
-               3→This is the second tutorial for Bubble Tea covering commands, which deal with
-               4→I/O. The tutorial assumes you have a working knowledge of Go and a decent
-               5→understanding of [the first tutorial][basics].
-            …
+        README.md …
         main.go …
     go.mod
            1→module tutorial

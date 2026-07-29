@@ -24,23 +24,23 @@ Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 (reached=12 partial=5 missi
 | walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:7 |  |  | 0.851 |
 | walker |  | 490 | 9 | lua decl body at performance/run.lua:19 |  |  | 0.851 |
 | walker |  | 499 | 9 | lua decl body at performance/run.lua:37 |  |  | 0.851 |
-| walker |  | 513 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.851 |
-| walker |  | 527 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.851 |
 | ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.690 |
 | ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.628 |
-| walker |  | 833 | 306 | lua decl names surface in middleclass.lua |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:31 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:57 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:68 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:81 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:109 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:129 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:139 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:144 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:151 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:172 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:178 |  |  | 0.774 |
-| walker |  | 833 | 0 | lua decl at middleclass.lua:186 |  |  | 0.774 |
+| walker |  | 805 | 306 | lua decl names surface in middleclass.lua |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:31 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:57 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:68 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:81 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:109 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:129 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:139 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:144 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:151 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:172 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:178 |  |  | 0.773 |
+| walker |  | 805 | 0 | lua decl at middleclass.lua:186 |  |  | 0.773 |
+| walker |  | 819 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.774 |
+| walker |  | 833 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.774 |
 | ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.682 |
 | ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.637 |
 | walker |  | 1149 | 316 | README.md section #0 |  |  | 0.651 |

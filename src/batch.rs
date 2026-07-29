@@ -76,11 +76,11 @@ macro_rules! impl_batchkey {
             fn is_orientation(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_orientation(k),)* }
             }
-            fn is_deferred_mass_prose(&self) -> bool {
-                match self { $(BatchKey::$variant(k) => InnerKey::is_deferred_mass_prose(k),)* }
-            }
             fn is_depth_follow_up(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
+            }
+            fn is_dominant_file_surface(&self) -> bool {
+                match self { $(BatchKey::$variant(k) => InnerKey::is_dominant_file_surface(k),)* }
             }
         }
     };
@@ -114,14 +114,15 @@ trait InnerKey {
     fn is_orientation(&self) -> bool {
         false
     }
-    fn is_deferred_mass_prose(&self) -> bool {
-        false
-    }
     /// True for depth follow-up batches — doc/body/member refinements
     /// of an already-delivered surface. Drives the scheduler's
     /// breadth-pressure penalty; surfaces and orientation never
     /// qualify.
     fn is_depth_follow_up(&self) -> bool {
+        false
+    }
+    /// See [`WalkerKey::is_dominant_file_surface`].
+    fn is_dominant_file_surface(&self) -> bool {
         false
     }
 }
@@ -221,13 +222,10 @@ pub enum MarkdownKey {
     /// `reference_shaped` marks README ranges dominated by list / table
     /// / fence rows — they keep the default concavity instead of the
     /// steeper prose exponent.
-    /// `deferred_mass_prose` marks operationally dense prose that only
-    /// competes in the late scheduler window.
     Section {
         file: PathBuf,
         section_index: usize,
         reference_shaped: bool,
-        deferred_mass_prose: bool,
     },
 }
 
@@ -635,16 +633,20 @@ pub trait WalkerKey:
         false
     }
 
-    /// True for prose batches that should only receive their ratio
-    /// lift after the protected early source window.
-    fn is_deferred_mass_prose(&self) -> bool {
-        false
-    }
-
     /// True for depth follow-up batches — doc/body/member refinements
     /// of an already-delivered surface. Drives the scheduler's
     /// breadth-pressure penalty.
     fn is_depth_follow_up(&self) -> bool {
+        false
+    }
+
+    /// True for the batch classes that earn the scheduler's
+    /// dominant-source-file premium: declaration/name rosters and
+    /// catalogs, public-surface item heads, and the imports-level
+    /// top-of-file surface. Opt-in per walker, defaulting false —
+    /// bodies, tails, doc prose, and member/field groups are the depth
+    /// the premium is meant to *reach*, not the depth it front-loads.
+    fn is_dominant_file_surface(&self) -> bool {
         false
     }
 }
@@ -674,6 +676,21 @@ impl InnerKey for RustKey {
                 | RustKey::PubItemDocBody { .. }
                 | RustKey::MacroBody { .. }
                 | RustKey::ImplMethodBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            RustKey::CrateAttrs { .. }
+                | RustKey::ModUse { .. }
+                | RustKey::PubItemNames { .. }
+                | RustKey::PubItem { .. }
+                | RustKey::EntryItem { .. }
+                | RustKey::MethodSigs { .. }
+                | RustKey::ImplMethod { .. }
+                | RustKey::RegistrationRoster { .. }
+                | RustKey::MacroNames { .. }
         )
     }
 
@@ -752,13 +769,7 @@ impl InnerKey for RustKey {
 
 impl InnerKey for MarkdownKey {
     fn is_orientation(&self) -> bool {
-        !matches!(
-            self,
-            MarkdownKey::Section {
-                deferred_mass_prose: true,
-                ..
-            }
-        )
+        true
     }
     fn describe(&self, root: &Path) -> String {
         match self {
@@ -791,16 +802,6 @@ impl InnerKey for MarkdownKey {
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
-
-    fn is_deferred_mass_prose(&self) -> bool {
-        matches!(
-            self,
-            MarkdownKey::Section {
-                deferred_mass_prose: true,
-                ..
-            }
-        )
-    }
 }
 
 impl InnerKey for TsKey {
@@ -811,6 +812,20 @@ impl InnerKey for TsKey {
                 | TsKey::ExportMember { .. }
                 | TsKey::ExportTail { .. }
                 | TsKey::ModuleItemBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            TsKey::Imports { .. }
+                | TsKey::ImportChunk { .. }
+                | TsKey::ExportNames { .. }
+                | TsKey::Export { .. }
+                | TsKey::ExportMemberNames { .. }
+                | TsKey::ExportMemberNamesChunk { .. }
+                | TsKey::ModuleItemNames { .. }
+                | TsKey::ModuleItem { .. }
         )
     }
 
@@ -972,6 +987,13 @@ impl InnerKey for PlaintextKey {
     fn is_orientation(&self) -> bool {
         matches!(self, PlaintextKey::ManLede { .. })
     }
+
+    /// The language-agnostic declaration surface is how an unparsed
+    /// source language (Ruby, Swift, C++, …) presents its roster.
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(self, PlaintextKey::DeclSurface { .. })
+    }
+
     fn describe(&self, root: &Path) -> String {
         match self {
             PlaintextKey::Whole { file } => {
@@ -1066,6 +1088,13 @@ impl InnerKey for GoKey {
         matches!(self, GoKey::DeclBody { .. })
     }
 
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            GoKey::PackageImports { .. } | GoKey::DeclNames { .. } | GoKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` (matches the C walker) —
     /// short decls plus dozens per file would otherwise dominate the
     /// rank against larger anchors at the default 0.35.
@@ -1113,6 +1142,19 @@ impl InnerKey for PythonKey {
             PythonKey::DeclDocRest { .. }
                 | PythonKey::DeclBody { .. }
                 | PythonKey::MethodBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            PythonKey::Imports { .. }
+                | PythonKey::ImportChunk { .. }
+                | PythonKey::DeclNames { .. }
+                | PythonKey::DeclNamesChunk { .. }
+                | PythonKey::Decl { .. }
+                | PythonKey::MethodSigs { .. }
+                | PythonKey::Method { .. }
         )
     }
 
@@ -1199,6 +1241,16 @@ impl InnerKey for CKey {
         matches!(self, CKey::DeclDoc { .. } | CKey::DeclBody { .. })
     }
 
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            CKey::WholeFile { .. }
+                | CKey::Includes { .. }
+                | CKey::DeclNames { .. }
+                | CKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
     /// stack dominate larger anchor batches. `DeclDoc` joins them: a
@@ -1243,6 +1295,16 @@ impl InnerKey for CKey {
 }
 
 impl InnerKey for LuaKey {
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            LuaKey::ModuleIdentity { .. }
+                | LuaKey::MetaFileWhole { .. }
+                | LuaKey::DeclNames { .. }
+                | LuaKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` (matches C / Python).
     /// `MetaFileWhole` keeps the default — LuaCATS specs are
     /// load-bearing and shouldn't be pushed later.
@@ -1324,29 +1386,4 @@ pub struct Batch<K: WalkerKey> {
     pub predecessor: Option<K>,
     pub content: BatchContent,
     pub value: f64,
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn markdown_deferred_mass_prose_is_not_orientation() {
-        let ordinary = MarkdownKey::Section {
-            file: PathBuf::from("README.md"),
-            section_index: 1,
-            reference_shaped: false,
-            deferred_mass_prose: false,
-        };
-        let deferred = MarkdownKey::Section {
-            file: PathBuf::from("README.md"),
-            section_index: 2,
-            reference_shaped: false,
-            deferred_mass_prose: true,
-        };
-
-        assert!(ordinary.is_orientation());
-        assert!(!deferred.is_orientation());
-        assert!(deferred.is_deferred_mass_prose());
-    }
 }

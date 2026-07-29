@@ -146,6 +146,9 @@ pub struct WalkCtx {
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// Nested SQL files named exactly by a root README/build file.
     sql_cited_paths: OnceCell<HashSet<PathBuf>>,
+    /// The one source file that carries a dominant share of the tree's
+    /// essential source bytes, if any.
+    dominant_source_file: OnceCell<Option<PathBuf>>,
 }
 
 impl WalkCtx {
@@ -167,6 +170,7 @@ impl WalkCtx {
             python_state: python::PythonState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
+            dominant_source_file: OnceCell::new(),
         }
     }
 
@@ -252,6 +256,21 @@ impl WalkCtx {
             .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root, self));
         let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
         cited.contains(&canonical)
+    }
+
+    /// The single source file the repository is *about*, when one
+    /// exists: the largest essential source file, provided it carries at
+    /// least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's essential
+    /// source bytes. Single-implementation-file libraries (a one-file
+    /// parser, a single amalgamated `.c`, a `core.py`) put the content
+    /// an NS author wants in one place, and the scheduler's
+    /// breadth-first instincts spend the marginal token elsewhere.
+    /// Returns `None` when source mass is spread across peers, which is
+    /// the common case.
+    pub fn dominant_source_file(&self) -> Option<&Path> {
+        self.dominant_source_file
+            .get_or_init(|| find_dominant_source_file(&self.root, &self.dir_filter))
+            .as_deref()
     }
 
     /// True when `path` is an auto-injected agent doc (AGENTS.md /
@@ -342,6 +361,166 @@ pub(in crate::walker) fn first_child_of_kind<'a>(
     let mut cursor = node.walk();
     node.children(&mut cursor)
         .find(|child| (!named_only || child.is_named()) && child.kind() == kind)
+}
+
+/// Minimum share of the tree's essential source bytes for the largest
+/// source file to count as the repository's spine. Swept full-corpus;
+/// see `docs/design-notes.md` ("Dominant source file").
+const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
+
+/// Directories holding code that nobody wrote by hand: build outputs,
+/// vendored copies, and generated test corpora. Their contents are
+/// source bytes but not *the repository's* source, so they neither win
+/// nor dilute the mass share. Complements
+/// [`crate::value::non_essential_factor`]'s classifier, which covers
+/// `tests/` / `examples/` / `benches/` but not these.
+const MASS_SHARE_EXCLUDED_DIRS: &[&str] = &[
+    "dist",
+    "build",
+    "generated",
+    "libs",
+    "spec",
+    "specs",
+    "testdata",
+    "third_party",
+    "vendor",
+    "vendored",
+];
+
+/// Mean bytes per line above which a file reads as minified or bundled
+/// rather than hand-authored. Hand-written code across the corpus sits
+/// near 20–55; minified bundles are in the thousands.
+const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
+
+/// Upper bound on a spine file's size. Past this, a single file is a
+/// generated table or an amalgamated bundle rather than something a
+/// reader is meant to read more of.
+const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
+
+/// Largest hand-authored source file in the tree, if it carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. Non-essential subtrees
+/// (tests, examples, vendored, tooling) are excluded from both the
+/// numerator and the denominator so a big test file can neither win nor
+/// dilute the share.
+///
+/// Enumeration mirrors the walkers' own rules rather than inventing a
+/// second traversal policy: gitignore exclusion via `filter`, the
+/// heavy-directory blocklist via [`crate::fs_util::should_skip_dir`]
+/// (the only thing bounding a walk of a non-repository tree, where the
+/// filter is inert by design), and non-following file types so a
+/// symlink is neither descended into nor weighed as source — the same
+/// containment answer typed source discovery gives. The
+/// generated/vendored [`MASS_SHARE_EXCLUDED_DIRS`] narrowing applies on
+/// top of that shared universe.
+fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
+    let mut per_language: HashMap<&'static str, u64> = HashMap::new();
+    let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
+    let mut stack = vec![root.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            let path = entry.path();
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
+            if file_type.is_dir() {
+                let name = entry.file_name();
+                let name = name.to_string_lossy();
+                let skipped = crate::fs_util::should_skip_dir(&name)
+                    || MASS_SHARE_EXCLUDED_DIRS.contains(&name.to_ascii_lowercase().as_str());
+                if !skipped {
+                    stack.push(path);
+                }
+            } else if file_type.is_file() {
+                let Some(language) = language_group(&path) else {
+                    continue;
+                };
+                if crate::value::non_essential_factor(&path, root) < 1.0 {
+                    continue;
+                }
+                let Ok(len) = entry.metadata().map(|m| m.len()) else {
+                    continue;
+                };
+                *per_language.entry(language).or_default() += len;
+                if len <= MASS_SHARE_MAX_FILE_BYTES {
+                    candidates.push((path, len, language));
+                }
+            }
+        }
+    }
+    // The spine has to be written in the language the repository is
+    // written in — a vendored JS bundle inside a Go tree is source mass
+    // but it is not what the repo is about. Ranked over a sorted vector
+    // rather than the hash map's iteration order, and a tie for the lead
+    // yields no primary at all: "the language this repo is written in"
+    // has no answer there, and answering it by hasher seeding would make
+    // the output differ between processes on identical input.
+    let mut by_mass: Vec<(&'static str, u64)> = per_language.into_iter().collect();
+    by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
+    let (primary, primary_bytes) = *by_mass.first()?;
+    if by_mass
+        .get(1)
+        .is_some_and(|&(_, bytes)| bytes == primary_bytes)
+    {
+        return None;
+    }
+    let total: u64 = by_mass.iter().map(|&(_, bytes)| bytes).sum();
+    if total == 0 {
+        return None;
+    }
+    candidates.retain(|(_, len, language)| {
+        *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
+    });
+    // Descending by size, so the line-shape probe reads at most a
+    // handful of files rather than every source file in the tree; path
+    // breaks size ties, since directory read order is not stable.
+    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+    candidates
+        .into_iter()
+        .find(|(path, _, _)| is_hand_authored(path))
+        .map(|(path, _, _)| path)
+}
+
+/// Extension → language family, collapsing the families whose files sit
+/// side by side in one codebase (a `.h` beside its `.c`, a `.js` beside
+/// its `.ts`). `None` for anything that isn't hand-authored code.
+fn language_group(path: &Path) -> Option<&'static str> {
+    let ext = path.extension()?.to_str()?.to_ascii_lowercase();
+    Some(match ext.as_str() {
+        "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" => "c",
+        "js" | "jsx" | "cjs" | "mjs" | "ts" | "tsx" => "js",
+        "go" => "go",
+        "lua" => "lua",
+        "py" => "py",
+        "rb" => "rb",
+        "rs" => "rs",
+        "swift" => "swift",
+        "zig" => "zig",
+        _ => return None,
+    })
+}
+
+/// Line-shape check for "a person typed this": mean bytes per line over
+/// a leading sample stays under [`MASS_SHARE_MAX_MEAN_LINE_BYTES`].
+fn is_hand_authored(path: &Path) -> bool {
+    use std::io::Read;
+    let Ok(mut file) = std::fs::File::open(path) else {
+        return false;
+    };
+    let mut sample = [0u8; 64 * 1024];
+    let Ok(read) = file.read(&mut sample) else {
+        return false;
+    };
+    if read == 0 {
+        return false;
+    }
+    let newlines = sample[..read].iter().filter(|&&b| b == b'\n').count();
+    read as f64 / (newlines + 1) as f64 <= MASS_SHARE_MAX_MEAN_LINE_BYTES
 }
 
 /// Scan the seed root's README for relative-path hyperlinks to source
@@ -1005,6 +1184,74 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    /// The spine detector runs on whatever path a user points precis
+    /// at, including trees that are not repositories — where `DirFilter`
+    /// is inert and the heavy-directory blocklist is the only thing
+    /// between the scan and a dependency tree.
+    #[test]
+    fn walker_mod_dominant_file_skips_heavy_dirs_on_non_git_tree() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("node_modules/dep")).unwrap();
+        std::fs::create_dir_all(root.join("src")).unwrap();
+        // Bigger than the spine, and in the same language — if it were
+        // scanned it would both win the candidate race and dilute the
+        // share out of range.
+        std::fs::write(
+            root.join("node_modules/dep/bundle.js"),
+            "x = 1\n".repeat(4000),
+        )
+        .unwrap();
+        std::fs::write(root.join("src/core.js"), "y = 2\n".repeat(100)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("src/core.js").as_path()));
+    }
+
+    /// Typed source discovery rejects symlinks (non-following file
+    /// types), so a link must not be weighed as source mass or selected
+    /// as the spine — otherwise the scheduler boosts a path no walker
+    /// ever emits, and the link's target is double-counted.
+    #[cfg(unix)]
+    #[test]
+    fn walker_mod_dominant_file_ignores_in_root_file_symlink() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100)).unwrap();
+        std::os::unix::fs::symlink("core.py", root.join("alias.py")).unwrap();
+        std::fs::write(root.join("helper.py"), "z = 3\n".repeat(60)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("core.py").as_path()));
+
+        // Removing the real file leaves only the link plus a peer; the
+        // link must not stand in for the mass it points at.
+        std::fs::remove_file(root.join("core.py")).unwrap();
+        assert_eq!(
+            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            Some(root.join("helper.py").as_path())
+        );
+    }
+
+    /// Two languages at exactly equal mass have no "primary", and the
+    /// answer must not come from hash iteration order — same input, same
+    /// output, across processes.
+    #[test]
+    fn walker_mod_dominant_file_declines_a_tied_primary_language() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100)).unwrap();
+        std::fs::write(root.join("core.go"), "y = 2\n".repeat(100)).unwrap();
+        assert_eq!(find_dominant_source_file(root, &DirFilter::new(root)), None);
+
+        // One byte of lead is enough to make the question answerable.
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100) + "z").unwrap();
+        assert_eq!(
+            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            Some(root.join("core.py").as_path())
+        );
     }
 
     #[test]

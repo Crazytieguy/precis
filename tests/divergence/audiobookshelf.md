@@ -366,4 +366,5 @@ Score(3000)=0.771 I=0.863 C=0.688 ns_rows≤3K=19/47 (reached=10 partial=1 missi
 | walker |  | 9878 | 44 | declaration surface of client/components/ui/Dropdown.vue |  |  | 0.621 |
 | walker |  | 9922 | 44 | declaration surface of client/components/ui/FileInput.vue |  |  | 0.621 |
 | walker |  | 9966 | 44 | declaration surface of client/components/ui/LibraryIcon.vue |  |  | 0.621 |
+| walker |  | 9983 | 17 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.621 |
 | ns | 9997 |  | 120 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.623 |

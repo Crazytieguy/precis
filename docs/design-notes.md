@@ -449,6 +449,101 @@ sits within ~40 tokens of the 3000 cliff, so individual fixture
 magnitudes are not trustworthy. The ship decisions rest on the plateau
 shapes above and on whole-NS-row bucket changes.
 
+## Dominant source file (2026-07-29): 0.6151 → 0.6179
+
+The largest v2-key loss class was "unscheduled": one implementation
+file per repo that the walker can emit but never schedules at 10K
+(tomli `_parser.py` 0.515 of |A_3K|, sqlite-vec.c 0.440, act
+`cmd/root.go` 0.505, xlstm `model.py` 0.478). The NS wants *more of
+the same file*; the walker spends the marginal token on breadth.
+
+Shipped mechanism, two pieces:
+
+- `WalkCtx::dominant_source_file` — walk-time detection of the file a
+  repository is *about*: the largest essential source file, when it
+  holds ≥ 20% of the tree's essential source bytes. Guards that all
+  earned their place on the corpus probe: non-essential subtrees plus a
+  `dist`/`vendor`/`spec`/`testdata`/`libs` exclusion list (both numerator
+  and denominator); a 400 KB ceiling and a 200 bytes/line mean ceiling
+  (minified and generated bundles — healthchecks `zxcvbn.min.js`,
+  monaco `typescriptServices.js`, rqlite `testdata/chinook/db.go`,
+  rough-viz `dist/roughviz.es.js` all won the raw mass race); and a
+  primary-language gate (act's spine is Go, but a vendored
+  `pkg/runner/hashfiles/index.js` is its biggest single file). Fires on
+  39/93 fixtures.
+- `Scheduler::dominant_file_boost` — a ×1.35 ratio premium on that
+  file's *surface* batches, **gated on the file already having been
+  entered** on its own merits.
+
+  "Surface" is `WalkerKey::is_dominant_file_surface`, a positive
+  per-walker opt-in (declaration/name rosters and catalogs,
+  public-surface item heads, imports-level surface). The lane originally
+  spelled it `!is_depth_follow_up()`, which is the wrong instrument:
+  `is_depth_follow_up` is a *breadth-pressure* opt-in, so a walker that
+  never needed pressure never listed anything and the premium fell
+  through to everything it emitted — Lua and Prisma have no override at
+  all (middleclass.lua is ~85% of its repo's source mass, so its whole
+  depth train was boosted), Go excluded only `DeclBody` (doc ledes/bodies,
+  `DeclDoc`, struct field groups all boosted), C excluded only
+  `DeclDoc`/`DeclBody` (aggregate member groups boosted). Two taxonomies
+  with different purposes must not share one predicate.
+
+Mass-share was explicitly not among the four proxies in the dead "Go
+spine centrality" entry, and the entered-gate is what makes it work.
+The gate is the whole result: every variant that let the premium pull
+the spine file *forward* traded orientation for depth and lost.
+
+- Boost magnitude, entered-gate, `!is_depth_follow_up` surface (the
+  lane's original sweep, isolated on 0.6151): 1.15→0.6155 · 1.30→0.6170 ·
+  1.40→0.6173 · 1.45→0.6179 · 1.50→0.6179 · 1.55→0.6179 · 1.60→0.6160
+  (vaul −0.138 crosses a cliff)
+- Re-swept on the true surface predicate over the merged integration
+  tree, since the boosted set shrank — grid means, `B=1000 … 9000`:
+  1.35 → 0.6134/0.6239/0.6307/**0.62094**/0.5916/0.5665/0.5643 ·
+  1.45 → 0.6146/0.6231/0.6306/**0.62087**/0.5916/0.5656/0.5636 ·
+  1.55 → 0.6147/0.6209/0.6292/**0.62123**/0.5918/0.5656/0.5630.
+  Flat at the primary within 0.0004; **1.35 shipped** — it wins or ties
+  six of seven budgets and 1.55 pays for its primary sliver at 1442
+  (−0.0030) and 2080 (−0.0015). The lever is a plateau, not a peak;
+  don't re-tune it on sub-0.001 primary moves.
+- Including depth follow-ups in the premium: 1.50→0.6169 (−0.0010).
+  Rosters are the under-bought class; the file's own docs and bodies
+  already rank once its train is open.
+- **DEAD — budget-window gate** (premium suppressed until
+  `consumed ≥ 0.25 × budget`, no entered-gate): 0.20→0.6163 ·
+  0.25→0.6170 · 0.28→0.6151 (inert). Scores at 3000 but is an artifact:
+  0.25 × the 10K schedule budget lands the premium in the 2500–3000
+  slice of the scored prefix, and the grid gives it all back
+  (4327 −0.0029, 6240 −0.0015, 9000 −0.0008). It also behaves
+  differently at a real user budget than at the measured one. Do not
+  re-try budget-fraction gates on this lever.
+- **DEAD — ungated premium** (no window, no entered-gate): surface-only
+  1.30→0.6144, all batches 1.30→0.6137. Big targeted wins
+  (express +0.117, tomli +0.061) fully cancelled by front-loading
+  collapses (cmdk −0.192, neco −0.107 where the boosted `neco.c` roster
+  displaced the `neco.h` public API, anyhow −0.036, pluggy −0.031).
+- **DEAD — per-file concavity relief** (rank at `cost^(k−0.10)` inside
+  the dominant file, so the premium grows with batch size): 0.6071
+  ungated, 0.6152 with the 0.25 window. Strictly worse than the flat
+  premium at every gate tried.
+
+Shipped grid (before → after): B=1000 0.6132→0.6150 · 1442
+0.6217→0.6204 · 2080 0.6277→0.6266 · **3000 0.6151→0.6179** · 4327
+0.5851→0.5863 · 6240 0.5649→0.5635 · 9000 0.5606→0.5585. Net-neutral
+off-primary. Eight movers at 3000, all positive, no fixture regresses:
+log +0.050, bubbletea +0.046, swarm +0.038, cobra +0.025, xxhash
++0.013, middleclass +0.012, cmdk +0.009, debug +0.006. swarm and cobra
+buy their new content at cum 2966–2983 — cliff-adjacent, discount them;
+log and bubbletea re-order at 1094–2020 and are the robust evidence.
+
+Known mis-targets the detector keeps (all measured harmless or better
+at the shipped gate): anyhow `src/ensure.rs` and thiserror
+`impl/src/expand.rs` are `#[doc(hidden)]` macro machinery rather than
+the crate spine, and express picks `lib/response.js` over the NS's
+`lib/application.js`. A declaration-density discriminator ("a spine
+file is dense in declarations, not just bytes") is the obvious repair
+if this lever is revisited.
+
 ### v2-key un-ship generalization losses (2026-07-28, corpus-invisible)
 
 The same lanes deleted mechanisms whose corpus contribution was flat or
@@ -696,7 +791,8 @@ state — four moved, four+ confirmed: ORIENTATION_TIER_WINDOW
 (+0.0009, tinyusb +0.063). Confirmed at optimum on the new state:
 concavity 0.35 (sharp), ORIENTATION_TIER_BOOST 1.4 (both
 ORIENTATION_TIER_* since deleted — see the budget-tier entry), roster cap 2.2,
-PROSE_MASS_WINDOW_FRACTION 0.25, TRAIN_PRESSURE_K 0.15,
+PROSE_MASS_WINDOW_FRACTION 0.25 (both PROSE_MASS_* since deleted —
+see the README-ordering entry), TRAIN_PRESSURE_K 0.15,
 BODY_BLOCK/README_SUB scales, GO_ENTRY_FACTOR 1.4, go unexported
 0.6, REFERENCE_USAGE 1.3, python init factor 3.0. Lesson: every
 structural ship moves nearby knob optima — re-sweep the neighborhood
@@ -889,9 +985,9 @@ worst −0.004. Calibration knowledge from the tuning loop:
 - **Tail factor 0.85, not BodyBlock's 0.60.** At 0.60 the tails
   strand past the window their head opened (middleclass README tail
   at 3618 vs the old whole-lump at 1634); 0.85 restores near-lump
-  train completion while the head still buys early. Tails are also
-  exempt from the `deferred_mass_prose` pass — deferring a mid-train
-  tail strands everything gated behind it.
+  train completion while the head still buys early. (Tails were also
+  exempt from the `deferred_mass_prose` pass, which was un-shipped
+  2026-07-29 as inert — see the README-ordering entry below.)
 - **README-late fixtures with content past ~4K stayed flat at 3K**
   (go-multierror, debug, cmdk, commander): the split re-orders their
   README delivery but the chunks still price past the 3K frontier.
@@ -2131,3 +2227,299 @@ form re-expresses the same fit rather than generalizing it. Pushing to
 tinyusb −0.224 @2080, which is exactly the wrong-header promotion the
 inventory warned the role would cause on unseen repos. Do not sweep
 this constant upward on training score.
+
+## README orientation-vs-source ordering: the value knobs are exhausted (2026-07-29, v2 key)
+
+Lane target was the README-class "late" loss — 52 of 71 training
+fixtures carry it and ~64% of that mass is content that *is* scheduled,
+just past 3K (go-multierror README 0.415, mitt 0.289, cmdk 0.251, krep
+0.212). The oracle-vs-walker class gap says the walker under-buys
+substantive README `Section` mass (22.0K vs 33.3K) while over-buying
+`ReadmeHeadline` and `HeadingsOutline`. Every knob that could close
+that gap was re-swept on the v2 key and **every one already sits at its
+local optimum**; the zero point was 0.6151 over the 71 training
+fixtures throughout.
+
+- `CANONICAL_USAGE_SECTION_FACTOR`: 1.8→0.6135 · **2.2→0.6151** ·
+  2.4→0.6149 · 2.6→0.6149 · 3.0→0.6149. The pre-refreeze 2.2 survives
+  the re-freeze; above it the curve is a flat plateau slightly below.
+- **Uniform README-section value factor** (all sections × k, the level
+  axis the old "section-mass factor" entry never isolated):
+  0.9→0.6081 · **1.0→0.6151** · 1.12→0.6145 · 1.25→0.6110 ·
+  1.5→0.6043. Clean single peak at the shipped value.
+- `readme_index_decay`: exponent 0.0→0.6087 · 0.08→0.6148 ·
+  **0.15→0.6151** · 0.25→0.6142; floor 0.7 (shipped) →0.6151 ·
+  0.8→0.6148 · 0.85→0.6155 · 0.9→0.6132 · 0.95→0.6095. The 0.85 point
+  is a knife edge — both neighbours sit below base — same signature as
+  the `DEFAULT_CONCAVITY_EXPONENT` 0.36 artifact.
+- **README section-mass factor, re-measured on the v2 key** (value ×
+  `(tokens/100)^e`, baseline 100): boost-only e0.10→0.6148 ·
+  e0.20→0.6155 · e0.35→0.6136; demote-only e0.10/floor0.7→0.6138 ·
+  e0.35/floor0.7→0.6144 · e0.35/floor0.5→0.6148. **The old key's
+  demote-only +0.0025 has flipped negative.** The boost-only peak is
+  not a lever: it moves 12 fixtures and is dominated by commander
+  −0.139 against beszel +0.096 — the same tiny-section bimodality the
+  old entry recorded, with the signs reshuffled.
+- `MarkdownKey::Section` concavity exponent (index ≥1, non-reference):
+  0.40→0.6107 · 0.42→0.6150 · **0.45→0.6151** · 0.48→0.6103. Sharp
+  peak; this is the knob that makes tiny sections beat big ones in the
+  ratio race, and it cannot be relaxed.
+- **Canonical-usage sections exempted from the steep prose exponent**
+  (the `reference_shaped` argument applied to code-dominant demo
+  sections): −0.0007. Dead.
+- **README sections delivered in document order** (each root-README
+  section gated on its predecessor, the `chained_to_previous` shape
+  generalized): all sections →0.6119, prose-only (reference-shaped and
+  roster ranges stay free) →0.6118, first-4-prose-only →0.6132. The
+  winners are the fixtures whose walker was buying scattered tiny
+  sections (mitt +0.060, tomli +0.068, p-queue +0.055); the losers are
+  reference READMEs whose valuable sections are late-index and get
+  blocked (json-server −0.115, sqlite-vec −0.111, krep −0.094 — krep's
+  oracle buys sections #45/#48/#43 first). No walk-time signal
+  separates "read top-down" from "addressable reference" READMEs.
+
+Conclusion for the next session: the README-late bucket is not
+reachable by value or ordering knobs on the markdown side. The oracle
+funds its extra README mass out of the classes the walker over-buys —
+listing (+21.6K), config (+8.4K), manifest (+6.6K) — so the lever lives
+in *those* lanes, or in new recall, not here. This is the same shape as
+the "early-budget ratio wall" verdict, re-confirmed on the v2 key.
+
+### Un-ship: the deferred-mass-prose scheduler tier (inert at 3000)
+
+`prose_mass_tier_multiplier` gave operationally dense README/dev-doc
+prose sections a 1.5× ratio boost once 25% of the budget was consumed,
+and excluded them from `is_orientation`. **Both halves are inert at the
+primary budget**: boost 1.0 (mechanism off) / 1.2 / 1.35 / 1.5
+(shipped) all score 0.6151, and 1.9 costs −0.0006. Zeroing the
+`deferred_mass_prose` flag as well — which also flips `is_orientation`
+back to unconditionally true for markdown — gives the identical result.
+Only dockly and microbootstrap move, both +0.001.
+
+Grid on removal: 1000/1442/2080/3000 bit-identical (0.6132 / 0.6217 /
+0.6277 / 0.6151), 4327 0.5851→0.5839, 6240 0.5649→0.5654, 9000
+0.5606→0.5604. The −0.0012 at 4327 is the only real cost, against
+−264/+19 lines: the `DensitySignal` two-mode plumbing collapses to the
+single dev-workflow path, and `looks_like_option_or_env_row` plus its
+two exclusive helpers go with it. Precedent for accepting the
+off-primary cost: `TEST_INDEX_LISTING_BOOST` (−0.0016 at 1442, ~25
+lines). If a future lane wants a late-prose tier back, note that the
+window fraction is *also* inert (0.15 / 0.25 / 0.35 all →0.6151), so
+the shape — not the constants — is what failed.
+
+## Contributor-toolchain demotion (2026-07-29): 0.6151 → 0.6165
+
+Lane premise: at B=3000 the walker over-buys against the NS-aware
+oracle by class — listings −21.6K tokens, config −8.4K, manifest
+−6.6K, imports −2.4K. Cross-referencing every walker row ≤3000 in the
+divergence reports against the oracle's purchase list at the same
+budget gives a *credited vs uncredited* histogram per class, and the
+config/manifest over-buy turns out not to be uniform. Two sub-classes
+are essentially never credited:
+
+| sub-class | oracle-also (tok) | uncredited (tok) |
+|---|--:|--:|
+| `tool.<name>` config families in a Python manifest | 236 | 2734 |
+| dev / build / target / peer dependency rosters | 0 | 1022 |
+| whole `config` class for comparison | 3982 | 12382 |
+
+The 236 credited tool-config tokens are `tool.poe` (a task runner) and
+`tool.setuptools` (a build backend) — not one linter, formatter, type
+checker, test runner or coverage table is credited anywhere in the
+corpus. That is the discriminator: a table that configures the
+**contributor's checking toolchain** says nothing about the project,
+while a build-backend or task-runner table says how it is built and
+invoked. Both shipped mechanisms are that one rule.
+
+- `walker::toml::CHECKING_TOOLCHAIN_CONFIG_SCALE = 0.35` — demotes a
+  `ToolConfig` batch when *every* family in its pack is a checking
+  tool. A mixed or unrecognized pack keeps full value, so the rule
+  never fires on an appendix it cannot classify.
+- `value::DEV_DEPENDENCY_ROSTER_SCALE = 0.3` — the same distinction one
+  class out, applied at both dev-roster sites (Cargo dev/build/target
+  tables + PEP 735 groups; `package.json` `devDependencies`).
+
+  **Not** `peerDependencies`. `JsonKey::DevDependencies` spans
+  `devDependencies` + `peerDependencies` + `peerDependenciesMeta` for
+  batching reasons, but a peer roster is a consumer-facing compatibility
+  contract, not a contributor toolchain — the demotion applies only to a
+  peer-free batch (`walker::json::dev_dependencies_value`, corrected
+  2026-07-29). Cargo and PEP 735 have no peer analogue, so that site is
+  unaffected.
+
+Grid (71 training fixtures): 1000 0.6132→0.6132 · 1442 0.6217→0.6234 ·
+2080 0.6277→0.6279 · **3000 0.6151→0.6165** · 4327 0.5851→0.5882 ·
+6240 0.5649→0.5653 · 9000 0.5606→0.5632. Positive or flat at all seven
+budgets. Movers @3000: tomli +0.068 (295 tokens of frontier slack, not
+a cliff artifact), requests +0.020\*, typeguard +0.006\*, pluggy
++0.004, debug +0.002, click −0.001\* (\* = last walker row within 40
+tokens of 3000).
+
+Sweeps, all measured on the full corpus:
+
+- `CHECKING_TOOLCHAIN_CONFIG_SCALE`: 1.0→0.6151 · 0.60→0.6164 ·
+  0.35→0.6164 · 0.15→0.6164. Broad plateau from 0.6 down; 0.35 chosen
+  as its centre.
+- `DEV_DEPENDENCY_ROSTER_SCALE` (on the shipped config scale):
+  1.0→0.6164 · 0.6→0.6165 · 0.3→0.6165 · 0.15→0.6165. Flat at 3000;
+  0.3 chosen on the higher-budget grid (+0.0008 @4327, +0.0021 @9000
+  over 1.0, and 0.15 adds nothing further).
+
+**Measured dead: the undiscriminated version of the same lever.** A
+blanket `config_value` rescale to 0.80 across the whole manifest config
+appendix costs −0.0010 (htmy −0.051, requests −0.015, beets −0.010
+against peepdb +0.008, pluggy +0.004) — the credited fixtures lose more
+than the uncredited ones gain. The tool-name axis is what makes the
+demotion pay; do not retry the class-wide form.
+
+**Measured inert: extending the rule to the unpartitioned `Config`
+batch.** Applying the same all-checking-tools test to the generic
+`TomlKey::Config` appendix (which owns the tool tables when they total
+≤ `TOOL_CONFIG_FAMILY_MAX_TOKENS`) produced a **byte-identical** corpus
+— every divergence report unchanged. No training manifest has a small
+config appendix that is purely checking tooling, so the extra branch
+was pure dead code and was dropped.
+
+### Interior-of-a-supporting-corpus listing suppression — measured MIXED, not shipped
+
+The same histogram over listings splits by a parent-relative
+condition: when a listed directory *and its parent* are both
+non-essential, the listing is enumerating a supporting corpus's
+internal partitioning (thiserror `tests/ui` at 527 tokens, a docs
+site's per-language page dirs) rather than telling the reader the
+corpus exists — 806 credited vs 2400 uncredited tokens, against 74%
+credited for depth-1 corpus entries. Distinct from the dead
+`small_listing_decay` (size-gated), from sibling-count devaluation
+(sibling-count-gated) and from catalog-child suppression (parent is a
+high-fanout source catalog); the depth-1 repo-map floor is untouched
+because a corpus's own entry has the root as its parent, and the
+`.github/workflows` carve-out is excluded because its own
+classification is essential.
+
+Magnitude sweep on top of the shipped config lever (3000): 1.0→0.6165
+· 0.85→0.6167 · 0.75→0.6170 · 0.70→0.6167 · 0.65→0.6163 · 0.50→0.6154.
+Grid at the 0.75 peak vs the shipped state: 1000 +0.0029 · 1442
+−0.0018 · 2080 +0.0009 · 3000 +0.0005 · 4327 −0.0002 · 6240 −0.0012 ·
+9000 −0.0013. Per-fixture swings are large in both directions at 0.50
+(tomli +0.130, flask +0.061 against anyhow −0.061, click −0.043, ky
+−0.030). Not shipped: a shallow ±0.0005 ridge that trades four budgets
+for two is not worth ~35 lines against a class that gates the whole fs
+expansion. Worth re-measuring only if a later tree is specifically
+short at B=1000, where it is the strongest lever measured this lane.
+
+## Data-model schemas and C interface headers (2026-07-29)
+
+Zero point 0.6151 / 71 training fixtures. Two narrow ships, plus five
+dead lever shapes on the C side.
+
+**A data-model schema is priced at root tier.** A file declaring the
+application's persistent entities is spine — NS authors rank its catalog
+beside the root manifest — while its filesystem depth records only which
+workspace package owns the ORM client. Pinning the Prisma walker's depth
+factor to root (the clamp `file_depth_factor` already gives entrypoints)
+is +0.0033 corpus, all of it linkwarden 0.457 → 0.693 @3000, with the
+whole grid up except 6240 (−0.0003). Measured as a multiplier over the
+un-pinned factor (the pin is ×1.7 at that file's depth): 1.2 0.450 ·
+1.35 0.532 · 1.5 0.614 · 1.65 0.676 · **1.7 (pin) 0.693** · 1.9 0.707 ·
+2.2 0.707 · 3.0 0.767, with budget-1000 collapsing above ~2.0. Adding
+`roster_mass_factor` on the catalog is bit-inert on top of the pin.
+
+The gate is the data model, not configuration: this is deliberately
+narrower than the measured-dead ops-config class boost. Deploy / CI /
+tool config describes how a project is built and run, and its depth does
+track its scope. As first shipped the gate was only the *filename*,
+which let a `schema.prisma` holding nothing but `datasource` /
+`generator` blocks take the pin — the config half of a multi-file Prisma
+layout, or a generated client's copy. Corrected 2026-07-29 to require at
+least one `model` / `enum` declaration; corpus-inert (no training
+fixture has a config-only schema), so it is a statement about what the
+rule means, not a score move. **Only linkwarden carries a schema in
+training** —
+drizzle-orm is holdout, no fixture has SQL migration or GraphQL schema
+files the oracle wants (sqlite-vec's `SQL schema contracts` chunk has
+oracle mass 0), so the rule generalizes on its statement, not on corpus
+breadth.
+
+**C header centrality ranks on total include in-degree.** The public
+header of a library is included by implementations, examples and board
+support, not by other headers, so the header-to-header ranking
+under-rated it: tinyusb `usbh.h`/`usbd.h` sit at h2h 1 / total 20 and
+were unscheduled at every budget ≤10K. Switching only the *boost basis*
+to total is +0.0001 @3000 but +0.0008 @2080, +0.0005 @6240, +0.0011
+@9000, and the two movers rise almost monotonically (tinyusb +0.079
+@9000, htop +0.052 @2080). The two graphs answer different questions and
+both are load-bearing: on the ten-fixture C subset at 3000 (base 0.6196),
+moving `is_top_include_hub`'s roster-mass test to total is 0.5856 and
+moving the spine gate is 0.5970.
+
+Measured dead in the same lane (C subset means at 3000, base 0.6196):
+
+- **`roster_mass_factor` on C `DeclNames` outside top include hubs**
+  — 0.6006 class-wide (chibicc −0.123, bareiron −0.097, neco −0.031),
+  0.6103 gated to the repo-eponymous header (chibicc −0.123, neco
+  −0.031, krep −0.007, jq +0.068). The pre-refreeze verdict survives the
+  v2 key unchanged; the failure is the same early-budget displacement of
+  NS tier-1 orientation. tinyusb is bit-identical under both — its
+  public headers lose on cost, and mass alone does not close the gap.
+- **Flattening the names-surface chunk decay for C headers** (so a big
+  roster arrives complete): falloff 0.25 (shipped) 0.6196 · 0.15 0.6194 ·
+  0.10 0.6164 · 0.05 0.6088 · 0.0 0.6028. Gains at 4327–9000, loses at
+  the primary budget, and tinyusb never moves — the tail chunks are not
+  what blocks it.
+- **Damping `AggregateMemberGroup`** despite oracle mass 0 for the class
+  corpus-wide against 858 walker tokens (all chibicc): ×0.8 0.6171 ·
+  ×0.6/0.45/0.3/0.15 all 0.6163. The freed budget does not go anywhere
+  the NS wants; the over-buy is real but the demotion is not the lever.
+- **Boost magnitude on the total-in-degree basis**: 0.4 0.6209 ·
+  **0.6 (shipped) 0.6204** · 0.9 0.6204 · 1.2 0.6176 · 1.6 0.5987 ·
+  2.2 0.5986 — flat plateau, keep the existing constant.
+
+Two shape findings for whoever retries the C cluster. sqlite-vec is the
+counter-example to "header first": it is a single-`.c` library and its
+oracle buys `sqlite-vec.c` names surfaces #3/#4, no header at all. And
+no single structural proxy selects the NS-wanted header across the
+corpus — largest project roster picks a vendored `lib/networking/ndis.h`
+in tinyusb, highest total in-degree picks `globals.h` over `packets.h` in
+bareiron, and the repo-eponymous test does not exist in bareiron, htop or
+tinyusb. The value-ranking boost above is deliberately graded rather than
+a selection.
+
+## Wave-1 integration (2026-07-29): 0.6151 → 0.6209
+
+Four calibration lanes merged onto one tree, then an adversarial review
+gated the ship on five correctness findings before the combined
+measurement was allowed to count. All five are fixed; this entry records
+the combined result, which is what the next lane's zero point should be.
+
+Grid (71 training fixtures), `v0.2-rewrite` → integrated: 1000
+0.6132→0.6134 · 1442 0.6217→0.6239 · 2080 0.6277→0.6307 · **3000
+0.6151→0.6209** · 4327 0.5851→0.5911 · 6240 0.5649→0.5662 · 9000
+0.5606→0.5638. Up at all seven budgets.
+
+**The lanes do not add.** Isolated deltas summed to +0.0076 at 3000; the
+tree delivers +0.0058. The gap is not a merge defect — the review's
+fixes cost some of it on purpose (the dominant-file premium's boosted
+set shrank to its intended surface classes), and the lanes overlap on
+the same 3000-token frontier, so two lanes that each move a fixture past
+the same cliff are credited once. Always re-measure a merged tree;
+never report a sum of isolated lane deltas as a tree result.
+
+Eighteen fixtures move the headline, seventeen up: linkwarden +0.236
+(the schema pin), tomli +0.067, cmdk −0.060, log +0.050, swarm +0.038,
+cobra +0.025, requests +0.020\*, xxhash +0.016, tinyusb +0.008,
+microbootstrap +0.006\*, typeguard +0.006\*, pluggy +0.004, bubbletea
+−0.004, click −0.001, thiserror/htop/dockly/ky ±0.001 (\* = last walker
+row within 40 tokens of the 3000 cliff, so the sign is frontier
+placement rather than ranking).
+
+cmdk is the one real regression and it is the surface predicate working
+as specified: `TsKey::ExportDoc` was taking the premium through the old
+`!is_depth_follow_up` spelling, and cmdk's NS credits the per-export
+JSDoc train on `cmdk/src/index.tsx` (its spine file, 32 tokens of
+frontier slack at 3000). Probed the obvious accommodation — adding
+item-head doc classes (`ExportDoc`, `ModuleDocLede`, Go/C/Python/Lua
+`DeclDoc`, `PubItemDocLede`, `CrateDocLede`) back to
+`is_dominant_file_surface`: +0.0005 at 3000 against −0.0007 at 2080,
+−0.0019 at 6240 and −0.0009 at 9000. Not taken — it buys the primary
+sliver by re-blurring the roster/doc distinction the predicate exists to
+draw, and pays for it across the rest of the grid.

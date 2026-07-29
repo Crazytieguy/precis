@@ -256,72 +256,72 @@ Score(3000)=0.734 I=0.902 C=0.598 ns_rows≤3K=22/55 (reached=13 partial=2 missi
 | walker |  | 5446 | 0 | python decl at nanovllm/utils/loader.py:12 |  |  | 0.636 |
 | walker |  | 5456 | 10 | python decl body at nanovllm/utils/loader.py:8 body 9 |  |  | 0.636 |
 | walker |  | 5514 | 58 | python imports in nanovllm/engine/scheduler.py |  |  | 0.639 |
-| walker |  | 5613 | 99 | python decl names surface in nanovllm/utils/context.py |  |  | 0.642 |
-| walker |  | 5613 | 0 | python decl at nanovllm/utils/context.py:18 |  |  | 0.642 |
-| walker |  | 5613 | 0 | python decl at nanovllm/utils/context.py:21 |  |  | 0.642 |
-| walker |  | 5613 | 0 | python decl at nanovllm/utils/context.py:25 |  |  | 0.642 |
-| walker |  | 5620 | 7 | python decl at nanovllm/utils/context.py:5 |  |  | 0.643 |
-| walker |  | 5628 | 8 | python decl body at nanovllm/utils/context.py:18 body 19 |  |  | 0.643 |
-| walker |  | 5636 | 8 | python method body at nanovllm/engine/sequence.py:31 body 32 |  |  | 0.643 |
-| walker |  | 5645 | 9 | python method body at nanovllm/engine/sequence.py:34 body 35 |  |  | 0.643 |
-| walker |  | 5664 | 19 | python decl body at nanovllm/utils/context.py:25 body 26 |  |  | 0.643 |
-| walker |  | 5675 | 11 | python method body at nanovllm/models/qwen3.py:204 body 209 |  |  | 0.643 |
-| walker |  | 5686 | 11 | python method body at nanovllm/models/qwen3.py:211 body 215 |  |  | 0.623 |
-| ns | 5686 |  | 341 | BlockManager.can_allocate and allocate — the prefix-cache hit path | 3.12 | 2.5 | 0.623 |
-| walker |  | 5698 | 12 | python method body at nanovllm/engine/sequence.py:49 body 51 |  |  | 0.623 |
-| walker |  | 5711 | 13 | python method body at nanovllm/engine/sequence.py:37 body 39 |  |  | 0.623 |
-| walker |  | 5724 | 13 | python method body at nanovllm/engine/sequence.py:41 body 43 |  |  | 0.623 |
-| walker |  | 5737 | 13 | python method body at nanovllm/engine/sequence.py:45 body 47 |  |  | 0.623 |
-| walker |  | 5750 | 13 | python method body at nanovllm/engine/sequence.py:53 body 55 |  |  | 0.623 |
-| walker |  | 5764 | 14 | python method body at nanovllm/layers/linear.py:50 body 51 |  |  | 0.623 |
-| walker |  | 5778 | 14 | python method body at nanovllm/layers/linear.py:72 body 73 |  |  | 0.623 |
-| walker |  | 5793 | 15 | python method body at nanovllm/layers/linear.py:39 body 45 |  |  | 0.623 |
-| walker |  | 5918 | 125 | python class body at nanovllm/utils/context.py:5 |  |  | 0.645 |
-| walker |  | 5958 | 40 | python decl body at nanovllm/layers/rotary_embedding.py:51 body 59 |  |  | 0.645 |
-| walker |  | 5979 | 21 | python method body at nanovllm/engine/sequence.py:57 body 59 |  |  | 0.645 |
-| walker |  | 6000 | 21 | python method body at nanovllm/engine/sequence.py:61 body 63 |  |  | 0.646 |
-| walker |  | 6028 | 28 | python method body at nanovllm/layers/linear.py:78 body 84 |  |  | 0.646 |
-| ns | 6057 |  | 371 | BlockManager.deallocate, can_append and may_append | 3.13 | 2.5 | 0.625 |
-| walker |  | 6084 | 56 | python decl body at nanovllm/utils/context.py:21 body 22 |  |  | 0.625 |
-| walker |  | 6115 | 31 | python method body at nanovllm/engine/block_manager.py:20 body 21 |  |  | 0.626 |
-| walker |  | 6148 | 33 | python method body at nanovllm/layers/layernorm.py:7 body 12 |  |  | 0.626 |
-| walker |  | 6182 | 34 | python method body at nanovllm/engine/sequence.py:69 body 70 |  |  | 0.623 |
-| ns | 6182 |  | 125 | Block class body | 3.14 | 2.5 | 0.623 |
-| walker |  | 6217 | 35 | python method body at nanovllm/layers/linear.py:56 body 62 |  |  | 0.623 |
-| walker |  | 6252 | 35 | python method body at nanovllm/layers/linear.py:133 body 139 |  |  | 0.623 |
-| walker |  | 6288 | 36 | python method body at nanovllm/engine/scheduler.py:60 body 61 |  |  | 0.624 |
-| walker |  | 6324 | 36 | python method body at nanovllm/engine/sequence.py:65 body 66 |  |  | 0.625 |
-| ns | 6344 |  | 162 | Sequence block arithmetic and append_token | 3.15 | 2.6 | 0.631 |
-| walker |  | 6388 | 64 | python decl names surface in nanovllm/layers/attention.py |  |  | 0.638 |
-| walker |  | 6388 | 0 | python decl at nanovllm/layers/attention.py:33 |  |  | 0.638 |
-| walker |  | 6388 | 0 | python decl at nanovllm/layers/attention.py:43 |  |  | 0.638 |
-| walker |  | 6423 | 35 | python method sigs in nanovllm/layers/attention.py |  |  | 0.638 |
-| walker |  | 6423 | 0 | python method at nanovllm/layers/attention.py:59 |  |  | 0.638 |
-| walker |  | 6469 | 46 | python method at nanovllm/layers/attention.py:45 |  |  | 0.632 |
-| ns | 6469 |  | 125 | Sequence.__getstate__ / __setstate__ — the TP pickling contract | 3.16 | 2.6 | 0.632 |
-| walker |  | 6555 | 86 | python decl at nanovllm/layers/attention.py:10 |  |  | 0.636 |
-| walker |  | 6594 | 39 | python method body at nanovllm/engine/llm_engine.py:36 body 37 |  |  | 0.639 |
-| walker |  | 6674 | 80 | python decl body at nanovllm/layers/rotary_embedding.py:6 body 11 |  |  | 0.639 |
-| walker |  | 6751 | 77 | python imports in nanovllm/layers/attention.py |  |  | 0.642 |
-| walker |  | 6793 | 42 | python method body at nanovllm/layers/layernorm.py:42 body 47 |  |  | 0.642 |
-| ns | 6881 |  | 412 | ModelRunner.run and run_model — the per-step dispatch | 4.1 | 2.7 | 0.627 |
-| walker |  | 6931 | 138 | python method at nanovllm/models/qwen3.py:16 |  |  | 0.627 |
-| walker |  | 6974 | 43 | python method body at nanovllm/engine/block_manager.py:10 body 11 |  |  | 0.635 |
-| walker |  | 6992 | 18 | python decl body at nanovllm/utils/loader.py:12 body 13 |  |  | 0.635 |
-| walker |  | 7036 | 44 | python method body at nanovllm/engine/sequence.py:74 body 75 |  |  | 0.637 |
-| walker |  | 7081 | 45 | python method body at nanovllm/engine/llm_engine.py:42 body 43 |  |  | 0.645 |
-| walker |  | 7128 | 47 | python method body at nanovllm/models/qwen3.py:112 body 113 |  |  | 0.645 |
-| walker |  | 7181 | 53 | python method body at nanovllm/engine/model_runner.py:61 body 62 |  |  | 0.645 |
-| walker |  | 7236 | 55 | python method body at nanovllm/layers/linear.py:149 body 150 |  |  | 0.645 |
-| walker |  | 7293 | 57 | python method body at nanovllm/engine/model_runner.py:85 body 86 |  |  | 0.645 |
-| ns | 7295 |  | 414 | ModelRunner.__init__ — distributed init and startup order | 4.2 | 2.7 | 0.626 |
-| walker |  | 7356 | 63 | python method body at nanovllm/engine/model_runner.py:182 body 183 |  |  | 0.626 |
-| walker |  | 7462 | 106 | python method body at nanovllm/config.py:20 body 21 |  |  | 0.638 |
-| walker |  | 7526 | 64 | python method body at nanovllm/engine/block_manager.py:35 body 37 |  |  | 0.643 |
-| ns | 7645 |  | 350 | ModelRunner.allocate_kv_cache — sizing the paged cache | 4.3 | 2.7 | 0.632 |
-| walker |  | 7663 | 137 | python imports in nanovllm/engine/llm_engine.py |  |  | 0.652 |
-| walker |  | 7734 | 71 | python method body at nanovllm/layers/embed_head.py:27 body 28 |  |  | 0.652 |
-| walker |  | 7886 | 152 | python imports in nanovllm/engine/model_runner.py |  |  | 0.672 |
+| walker |  | 5666 | 152 | python imports in nanovllm/engine/model_runner.py |  |  | 0.666 |
+| ns | 5686 |  | 341 | BlockManager.can_allocate and allocate — the prefix-cache hit path | 3.12 | 2.5 | 0.645 |
+| walker |  | 5765 | 99 | python decl names surface in nanovllm/utils/context.py |  |  | 0.648 |
+| walker |  | 5765 | 0 | python decl at nanovllm/utils/context.py:18 |  |  | 0.648 |
+| walker |  | 5765 | 0 | python decl at nanovllm/utils/context.py:21 |  |  | 0.648 |
+| walker |  | 5765 | 0 | python decl at nanovllm/utils/context.py:25 |  |  | 0.648 |
+| walker |  | 5772 | 7 | python decl at nanovllm/utils/context.py:5 |  |  | 0.649 |
+| walker |  | 5780 | 8 | python decl body at nanovllm/utils/context.py:18 body 19 |  |  | 0.649 |
+| walker |  | 5788 | 8 | python method body at nanovllm/engine/sequence.py:31 body 32 |  |  | 0.649 |
+| walker |  | 5797 | 9 | python method body at nanovllm/engine/sequence.py:34 body 35 |  |  | 0.649 |
+| walker |  | 5816 | 19 | python decl body at nanovllm/utils/context.py:25 body 26 |  |  | 0.649 |
+| walker |  | 5827 | 11 | python method body at nanovllm/models/qwen3.py:204 body 209 |  |  | 0.649 |
+| walker |  | 5838 | 11 | python method body at nanovllm/models/qwen3.py:211 body 215 |  |  | 0.649 |
+| walker |  | 5850 | 12 | python method body at nanovllm/engine/sequence.py:49 body 51 |  |  | 0.649 |
+| walker |  | 5863 | 13 | python method body at nanovllm/engine/sequence.py:37 body 39 |  |  | 0.649 |
+| walker |  | 5876 | 13 | python method body at nanovllm/engine/sequence.py:41 body 43 |  |  | 0.649 |
+| walker |  | 5889 | 13 | python method body at nanovllm/engine/sequence.py:45 body 47 |  |  | 0.649 |
+| walker |  | 5902 | 13 | python method body at nanovllm/engine/sequence.py:53 body 55 |  |  | 0.649 |
+| walker |  | 5916 | 14 | python method body at nanovllm/layers/linear.py:50 body 51 |  |  | 0.649 |
+| walker |  | 5930 | 14 | python method body at nanovllm/layers/linear.py:72 body 73 |  |  | 0.649 |
+| walker |  | 5945 | 15 | python method body at nanovllm/layers/linear.py:39 body 45 |  |  | 0.649 |
+| ns | 6057 |  | 371 | BlockManager.deallocate, can_append and may_append | 3.13 | 2.5 | 0.628 |
+| walker |  | 6070 | 125 | python class body at nanovllm/utils/context.py:5 |  |  | 0.650 |
+| walker |  | 6110 | 40 | python decl body at nanovllm/layers/rotary_embedding.py:51 body 59 |  |  | 0.650 |
+| walker |  | 6131 | 21 | python method body at nanovllm/engine/sequence.py:57 body 59 |  |  | 0.650 |
+| walker |  | 6152 | 21 | python method body at nanovllm/engine/sequence.py:61 body 63 |  |  | 0.650 |
+| walker |  | 6180 | 28 | python method body at nanovllm/layers/linear.py:78 body 84 |  |  | 0.650 |
+| ns | 6182 |  | 125 | Block class body | 3.14 | 2.5 | 0.642 |
+| walker |  | 6236 | 56 | python decl body at nanovllm/utils/context.py:21 body 22 |  |  | 0.642 |
+| walker |  | 6267 | 31 | python method body at nanovllm/engine/block_manager.py:20 body 21 |  |  | 0.647 |
+| walker |  | 6300 | 33 | python method body at nanovllm/layers/layernorm.py:7 body 12 |  |  | 0.647 |
+| walker |  | 6334 | 34 | python method body at nanovllm/engine/sequence.py:69 body 70 |  |  | 0.647 |
+| ns | 6344 |  | 162 | Sequence block arithmetic and append_token | 3.15 | 2.6 | 0.647 |
+| walker |  | 6369 | 35 | python method body at nanovllm/layers/linear.py:56 body 62 |  |  | 0.647 |
+| walker |  | 6404 | 35 | python method body at nanovllm/layers/linear.py:133 body 139 |  |  | 0.647 |
+| walker |  | 6440 | 36 | python method body at nanovllm/engine/scheduler.py:60 body 61 |  |  | 0.648 |
+| ns | 6469 |  | 125 | Sequence.__getstate__ / __setstate__ — the TP pickling contract | 3.16 | 2.6 | 0.642 |
+| walker |  | 6476 | 36 | python method body at nanovllm/engine/sequence.py:65 body 66 |  |  | 0.648 |
+| walker |  | 6540 | 64 | python decl names surface in nanovllm/layers/attention.py |  |  | 0.655 |
+| walker |  | 6540 | 0 | python decl at nanovllm/layers/attention.py:33 |  |  | 0.655 |
+| walker |  | 6540 | 0 | python decl at nanovllm/layers/attention.py:43 |  |  | 0.655 |
+| walker |  | 6575 | 35 | python method sigs in nanovllm/layers/attention.py |  |  | 0.655 |
+| walker |  | 6575 | 0 | python method at nanovllm/layers/attention.py:59 |  |  | 0.655 |
+| walker |  | 6621 | 46 | python method at nanovllm/layers/attention.py:45 |  |  | 0.655 |
+| walker |  | 6707 | 86 | python decl at nanovllm/layers/attention.py:10 |  |  | 0.658 |
+| walker |  | 6746 | 39 | python method body at nanovllm/engine/llm_engine.py:36 body 37 |  |  | 0.662 |
+| walker |  | 6826 | 80 | python decl body at nanovllm/layers/rotary_embedding.py:6 body 11 |  |  | 0.662 |
+| ns | 6881 |  | 412 | ModelRunner.run and run_model — the per-step dispatch | 4.1 | 2.7 | 0.646 |
+| walker |  | 6903 | 77 | python imports in nanovllm/layers/attention.py |  |  | 0.649 |
+| walker |  | 6945 | 42 | python method body at nanovllm/layers/layernorm.py:42 body 47 |  |  | 0.649 |
+| walker |  | 7083 | 138 | python method at nanovllm/models/qwen3.py:16 |  |  | 0.649 |
+| walker |  | 7126 | 43 | python method body at nanovllm/engine/block_manager.py:10 body 11 |  |  | 0.657 |
+| walker |  | 7144 | 18 | python decl body at nanovllm/utils/loader.py:12 body 13 |  |  | 0.657 |
+| walker |  | 7188 | 44 | python method body at nanovllm/engine/sequence.py:74 body 75 |  |  | 0.659 |
+| walker |  | 7233 | 45 | python method body at nanovllm/engine/llm_engine.py:42 body 43 |  |  | 0.667 |
+| walker |  | 7280 | 47 | python method body at nanovllm/models/qwen3.py:112 body 113 |  |  | 0.667 |
+| ns | 7295 |  | 414 | ModelRunner.__init__ — distributed init and startup order | 4.2 | 2.7 | 0.647 |
+| walker |  | 7333 | 53 | python method body at nanovllm/engine/model_runner.py:61 body 62 |  |  | 0.647 |
+| walker |  | 7388 | 55 | python method body at nanovllm/layers/linear.py:149 body 150 |  |  | 0.647 |
+| walker |  | 7445 | 57 | python method body at nanovllm/engine/model_runner.py:85 body 86 |  |  | 0.647 |
+| walker |  | 7508 | 63 | python method body at nanovllm/engine/model_runner.py:182 body 183 |  |  | 0.647 |
+| walker |  | 7614 | 106 | python method body at nanovllm/config.py:20 body 21 |  |  | 0.659 |
+| ns | 7645 |  | 350 | ModelRunner.allocate_kv_cache — sizing the paged cache | 4.3 | 2.7 | 0.648 |
+| walker |  | 7678 | 64 | python method body at nanovllm/engine/block_manager.py:35 body 37 |  |  | 0.652 |
+| walker |  | 7815 | 137 | python imports in nanovllm/engine/llm_engine.py |  |  | 0.672 |
+| walker |  | 7886 | 71 | python method body at nanovllm/layers/embed_head.py:27 body 28 |  |  | 0.672 |
 | walker |  | 7958 | 72 | python method body at nanovllm/engine/sequence.py:78 body 79 |  |  | 0.680 |
 | ns | 8059 |  | 414 | ModelRunner.prepare_prefill — varlen batching and slot mapping | 4.4 | 2.7 | 0.664 |
 | walker |  | 8115 | 157 | python imports in nanovllm/models/qwen3.py |  |  | 0.683 |

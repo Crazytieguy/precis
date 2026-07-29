@@ -137,70 +137,70 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | walker |  | 6889 | 0 | c decl at parse.c:244 |  |  | 0.665 |
 | walker |  | 6889 | 0 | c decl at parse.c:1987 |  |  | 0.665 |
 | walker |  | 6889 | 0 | c decl at parse.c:3337 |  |  | 0.665 |
-| walker |  | 6899 | 10 | c decl doc at parse.c:31 |  |  | 0.665 |
-| walker |  | 6909 | 10 | c decl doc at parse.c:75 |  |  | 0.665 |
-| walker |  | 6923 | 14 | c includes in parse.c |  |  | 0.665 |
-| walker |  | 6965 | 42 | c decl at parse.c:76 |  |  | 0.665 |
-| walker |  | 7009 | 44 | c decl at parse.c:23 |  |  | 0.665 |
+| walker |  | 6903 | 14 | c includes in parse.c |  |  | 0.665 |
+| walker |  | 6945 | 42 | c decl at parse.c:76 |  |  | 0.665 |
+| walker |  | 6991 | 46 | c decl at parse.c:23 |  |  | 0.665 |
+| walker |  | 6999 | 8 | c decl doc at parse.c:31 |  |  | 0.665 |
+| walker |  | 7062 | 63 | c decl at parse.c:42 |  |  | 0.665 |
 | ns | 7115 |  | 348 | NodeKind enum, second half (control flow, calls, casts, atomics) | 4.7 | 4.6 | 0.675 |
-| walker |  | 7154 | 145 | c decl names surface in codegen.c |  |  | 0.675 |
-| walker |  | 7154 | 0 | c decl at codegen.c:55 |  |  | 0.675 |
-| walker |  | 7154 | 0 | c decl at codegen.c:1585 |  |  | 0.675 |
-| walker |  | 7164 | 10 | c includes in codegen.c |  |  | 0.675 |
-| walker |  | 7183 | 19 | c decl body at codegen.c:55 |  |  | 0.675 |
-| walker |  | 7208 | 25 | listing of 'test/thirdparty' |  |  | 0.675 |
+| walker |  | 7137 | 75 | c decl at parse.c:32 |  |  | 0.675 |
+| walker |  | 7282 | 145 | c decl names surface in codegen.c |  |  | 0.675 |
+| walker |  | 7282 | 0 | c decl at codegen.c:55 |  |  | 0.675 |
+| walker |  | 7282 | 0 | c decl at codegen.c:1585 |  |  | 0.675 |
+| walker |  | 7292 | 10 | c includes in codegen.c |  |  | 0.675 |
+| walker |  | 7311 | 19 | c decl body at codegen.c:55 |  |  | 0.675 |
+| walker |  | 7336 | 25 | listing of 'test/thirdparty' |  |  | 0.675 |
 | ns | 7442 |  | 327 | Node struct, first half (operands, control flow, calls) | 4.8 |  | 0.671 |
-| walker |  | 7669 | 461 | README.md section #3 |  |  | 0.702 |
-| ns | 7719 |  | 277 | Node struct, second half (goto/switch/case, asm, atomics, literals) | 4.9 | 4.8 | 0.693 |
-| walker |  | 7726 | 57 | c whole header in test/include1.h |  |  | 0.693 |
-| walker |  | 7748 | 22 | c decl body at main.c:586 |  |  | 0.693 |
-| walker |  | 7765 | 17 | c decl doc at strings.c:20 |  |  | 0.693 |
+| ns | 7719 |  | 277 | Node struct, second half (goto/switch/case, asm, atomics, literals) | 4.9 | 4.8 | 0.662 |
+| walker |  | 7797 | 461 | README.md section #3 |  |  | 0.693 |
+| walker |  | 7854 | 57 | c whole header in test/include1.h |  |  | 0.693 |
 | ns | 7872 |  | 153 | TypeKind enum | 4.10 |  | 0.698 |
-| walker |  | 7888 | 123 | c whole header in include/stddef.h |  |  | 0.698 |
+| walker |  | 7876 | 22 | c decl body at main.c:586 |  |  | 0.698 |
+| walker |  | 7893 | 17 | c decl doc at strings.c:20 |  |  | 0.698 |
+| walker |  | 8016 | 123 | c whole header in include/stddef.h |  |  | 0.698 |
 | ns | 8148 |  | 276 | Type struct, first half + the pointer/array duality comment | 4.11 |  | 0.689 |
-| walker |  | 8249 | 361 | README.md section #1 |  |  | 0.689 |
 | ns | 8311 |  | 163 | Type struct, second half (array, VLA, struct, function members) | 4.12 | 4.11 | 0.687 |
+| walker |  | 8377 | 361 | README.md section #1 |  |  | 0.687 |
 | ns | 8436 |  | 125 | Member struct (struct/union members incl. bitfields) | 4.13 | 4.12 | 0.691 |
-| walker |  | 8466 | 217 | README.md section #2 |  |  | 0.691 |
 | ns | 8525 |  | 89 | HashEntry / HashMap structs | 4.14 | 2.9 | 0.693 |
-| walker |  | 8529 | 63 | c decl at parse.c:42 |  |  | 0.693 |
-| walker |  | 8538 | 9 | c decl doc at chibicc.h:126 |  |  | 0.695 |
+| walker |  | 8594 | 217 | README.md section #2 |  |  | 0.693 |
+| walker |  | 8604 | 10 | c decl doc at parse.c:75 |  |  | 0.693 |
+| walker |  | 8613 | 9 | c decl doc at chibicc.h:126 |  |  | 0.695 |
 | ns | 8616 |  | 91 | main(): driver entry and the -cc1 self-re-exec split | 5.1 | 3.4 | 0.689 |
-| walker |  | 8749 | 211 | c decl names surface in hashmap.c |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:6 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:9 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:12 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:15 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:108 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:112 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:117 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:121 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:126 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:130 |  |  | 0.689 |
-| walker |  | 8749 | 0 | c decl at hashmap.c:136 |  |  | 0.689 |
-| walker |  | 8761 | 12 | c includes in hashmap.c |  |  | 0.689 |
-| walker |  | 8769 | 8 | c decl doc at hashmap.c:6 |  |  | 0.689 |
-| walker |  | 8778 | 9 | c decl doc at hashmap.c:15 |  |  | 0.689 |
-| walker |  | 8793 | 15 | c decl body at hashmap.c:126 |  |  | 0.689 |
-| walker |  | 8809 | 16 | c decl body at hashmap.c:108 |  |  | 0.689 |
+| walker |  | 8824 | 211 | c decl names surface in hashmap.c |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:6 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:9 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:12 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:15 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:108 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:112 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:117 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:121 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:126 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:130 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:136 |  |  | 0.689 |
+| walker |  | 8836 | 12 | c includes in hashmap.c |  |  | 0.689 |
+| walker |  | 8844 | 8 | c decl doc at hashmap.c:6 |  |  | 0.689 |
+| walker |  | 8853 | 9 | c decl doc at hashmap.c:15 |  |  | 0.689 |
+| walker |  | 8868 | 15 | c decl body at hashmap.c:126 |  |  | 0.689 |
+| walker |  | 8884 | 16 | c decl body at hashmap.c:108 |  |  | 0.689 |
 | ns | 8914 |  | 298 | cc1(): the compile pipeline in one function | 5.2 | 5.1 | 0.675 |
-| walker |  | 9021 | 212 | c decl names surface in preprocess.c |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:54 |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:685 |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:993 |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:998 |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:1060 |  |  | 0.675 |
-| walker |  | 9021 | 0 | c decl at preprocess.c:1198 |  |  | 0.675 |
-| walker |  | 9043 | 22 | c decl at preprocess.c:28 |  |  | 0.675 |
-| walker |  | 9068 | 25 | c decl at preprocess.c:63 |  |  | 0.675 |
-| walker |  | 9080 | 12 | c includes in preprocess.c |  |  | 0.675 |
-| walker |  | 9093 | 13 | c decl body at preprocess.c:998 |  |  | 0.675 |
-| walker |  | 9127 | 34 | c decl at preprocess.c:1115 |  |  | 0.675 |
-| walker |  | 9168 | 41 | c decl at preprocess.c:34 |  |  | 0.675 |
+| walker |  | 9096 | 212 | c decl names surface in preprocess.c |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:54 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:685 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:993 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:998 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:1060 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:1198 |  |  | 0.675 |
+| walker |  | 9118 | 22 | c decl at preprocess.c:28 |  |  | 0.675 |
+| walker |  | 9143 | 25 | c decl at preprocess.c:63 |  |  | 0.675 |
+| walker |  | 9155 | 12 | c includes in preprocess.c |  |  | 0.675 |
+| walker |  | 9168 | 13 | c decl body at preprocess.c:998 |  |  | 0.675 |
 | ns | 9184 |  | 270 | parse(): the top-level program loop | 5.3 |  | 0.664 |
-| walker |  | 9219 | 51 | c decl at preprocess.c:55 |  |  | 0.664 |
-| walker |  | 9291 | 72 | c decl at preprocess.c:44 |  |  | 0.664 |
-| walker |  | 9366 | 75 | c decl at parse.c:32 |  |  | 0.664 |
+| walker |  | 9202 | 34 | c decl at preprocess.c:1115 |  |  | 0.664 |
+| walker |  | 9243 | 41 | c decl at preprocess.c:34 |  |  | 0.664 |
+| walker |  | 9294 | 51 | c decl at preprocess.c:55 |  |  | 0.664 |
+| walker |  | 9366 | 72 | c decl at preprocess.c:44 |  |  | 0.664 |
 | ns | 9431 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.657 |
 | walker |  | 9495 | 129 | c decl names surface in include/stdarg.h |  |  | 0.657 |
 | walker |  | 9518 | 23 | c decl at include/stdarg.h:13 |  |  | 0.657 |

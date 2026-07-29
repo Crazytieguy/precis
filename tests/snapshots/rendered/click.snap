@@ -65,7 +65,17 @@ docs/
     changes.rst …
     click-concepts.md
            1→# Click Concepts
-        …
+           2→
+           3→This section covers concepts about Click's design.
+           4→
+           5→```{contents}
+           6→---
+           7→depth: 1
+           8→local: true
+           9→---
+          10→```
+          11→
+          12→(callback-evaluation-order)=
           14→## Callback Evaluation Order
         …
     command-line-reference.md
@@ -173,44 +183,46 @@ pyproject.toml
       65→[build-system]
       66→requires = ["flit_core>=3.11,<4"]
       67→build-backend = "flit_core.buildapi"
-    …
-     110→[tool.mypy]
-     111→python_version = "3.10"
-     112→files = ["src", "tests/typing"]
-     113→show_error_codes = true
-     114→pretty = true
-     115→strict = true
-     116→
-     117→[[tool.mypy.overrides]]
-     118→module = [
-     119→    "colorama.*",
-     120→]
-     121→ignore_missing_imports = true
-     122→
-     123→[tool.pyright]
-     124→pythonVersion = "3.10"
-     125→include = ["src", "tests/typing"]
-     126→typeCheckingMode = "basic"
-     128→[tool.ruff]
-     129→extend-exclude = ["examples/"]
-     130→src = ["src"]
-     131→fix = true
-     132→show-fixes = true
-     133→output-format = "full"
-     134→
-     135→[tool.ruff.lint]
-     136→select = [
-     137→    "B",  # flake8-bugbear
-     138→    "E",  # pycodestyle error
-     139→    "F",  # pyflakes
-     140→    "I",  # isort
-     141→    "UP",  # pyupgrade
-     142→    "W",  # pycodestyle warning
-     143→]
-     144→
-     145→[tool.ruff.lint.isort]
-     146→force-single-line = true
-     147→order-by-type = false
+      69→[tool.flit.module]
+      70→name = "click"
+      71→
+      72→[tool.flit.sdist]
+      73→include = [
+      74→    "docs/",
+      75→    "tests/",
+      76→    "CHANGES.rst",
+      77→    "uv.lock"
+      78→]
+      79→exclude = [
+      80→    "docs/_build/",
+      81→]
+      82→
+      83→[tool.uv]
+      84→default-groups = ["dev", "pre-commit", "tests", "typing"]
+      85→
+      86→[tool.pytest.ini_options]
+      87→testpaths = ["tests"]
+      88→filterwarnings = [
+      89→    "error",
+      90→]
+      91→markers = [
+      92→    "stress: high-iteration stress tests for race conditions (deselect with '-m \"not stress\"')",
+      93→]
+      94→addopts = "-m 'not stress'"
+      95→
+      96→[tool.coverage.run]
+      97→branch = true
+      98→source = ["click", "tests"]
+      99→
+     100→[tool.coverage.paths]
+     101→source = ["src", "*/site-packages"]
+     102→
+     103→[tool.coverage.report]
+     104→exclude_also = [
+     105→    "if t.TYPE_CHECKING",
+     106→    "raise NotImplementedError",
+     107→    ": \\.{3}",
+     108→]
     …
 src/
     click/

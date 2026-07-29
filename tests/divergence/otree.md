@@ -122,168 +122,167 @@ Score(3000)=0.632 I=0.853 C=0.469 ns_rows≤3K=19/44 (reached=9 partial=2 missin
 | ns | 4632 |  | 133 | SyntaxToken — the complete highlight token vocabulary | 4.5 |  | 0.655 |
 | walker |  | 4842 | 273 | [dependencies] in Cargo.toml |  |  | 0.691 |
 | ns | 4865 |  | 233 | JSON, JSONL and YAML parsers — types, extensions, array roots allowed | 4.6 | 4.2 | 0.670 |
-| walker |  | 4890 | 48 | dev/build/target dependencies in Cargo.toml |  |  | 0.681 |
-| walker |  | 4952 | 62 | pub-item names surface in src/parse/syntax.rs |  |  | 0.681 |
-| walker |  | 4952 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.681 |
-| walker |  | 4952 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.681 |
-| walker |  | 4976 | 24 | pub item at src/parse/syntax.rs:151 |  |  | 0.682 |
-| ns | 5100 |  | 235 | TOML, XML and HCL parsers — types, extensions, array roots rejected | 4.7 | 4.6 | 0.662 |
-| ns | 5303 |  | 203 | AnyParser — format auto-detection by trial parsing | 4.8 | 4.7 | 0.648 |
-| walker |  | 5401 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:131 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:144 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:161 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:171 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:196 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:212 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:218 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:222 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:226 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:232 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:241 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:249 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:256 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:260 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:266 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:273 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:277 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:283 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:290 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:296 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:304 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:312 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:316 |  |  | 0.649 |
-| walker |  | 5401 | 0 | impl method at src/config/mod.rs:322 |  |  | 0.649 |
-| ns | 5433 |  | 130 | Every method on Tree and ItemValue (names only) | 4.9 | 4.3 | 0.640 |
-| walker |  | 5443 | 42 | impl method body at src/config/mod.rs:212 body 213 |  |  | 0.640 |
-| walker |  | 5450 | 7 | impl method body at src/config/mod.rs:218 body 219 |  |  | 0.640 |
-| walker |  | 5457 | 7 | impl method body at src/config/mod.rs:312 body 313 |  |  | 0.640 |
-| walker |  | 5464 | 7 | impl method body at src/config/mod.rs:316 body 317 |  |  | 0.640 |
-| ns | 5539 |  | 106 | syntax.rs shared helpers — StringValue, quoting, wrapping, splitting | 4.10 | 4.5 | 0.638 |
-| walker |  | 5587 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.638 |
-| walker |  | 5719 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.638 |
-| ns | 5730 |  | 191 | Complete test inventory — every test module and test fn in the crate | 4.11 |  | 0.627 |
-| walker |  | 5842 | 123 | manifest config in Cargo.toml |  |  | 0.627 |
-| ns | 5897 |  | 167 | The Config struct — every configuration section | 5.1 |  | 0.635 |
-| walker |  | 5919 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.635 |
-| walker |  | 5964 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.635 |
-| walker |  | 6055 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.635 |
-| walker |  | 6147 | 92 | impl method sigs in src/cmd.rs |  |  | 0.637 |
-| walker |  | 6147 | 0 | impl method at src/cmd.rs:112 |  |  | 0.637 |
-| walker |  | 6147 | 0 | impl method at src/cmd.rs:149 |  |  | 0.637 |
-| walker |  | 6147 | 0 | impl method at src/cmd.rs:202 |  |  | 0.637 |
-| walker |  | 6147 | 0 | impl method at src/cmd.rs:230 |  |  | 0.637 |
-| walker |  | 6147 | 0 | impl method at src/cmd.rs:234 |  |  | 0.637 |
-| walker |  | 6155 | 8 | impl method body at src/config/mod.rs:222 body 223 |  |  | 0.637 |
-| walker |  | 6163 | 8 | impl method body at src/config/mod.rs:277 body 278 |  |  | 0.637 |
-| walker |  | 6283 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.659 |
-| ns | 6360 |  | 463 | Every scalar config section struct with its keys | 5.2 | 5.1 | 0.679 |
-| walker |  | 6370 | 87 | README.md section #1 |  |  | 0.679 |
-| walker |  | 6463 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.679 |
-| walker |  | 6576 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.679 |
-| ns | 6708 |  | 348 | generate_actions! — the complete Action vocabulary | 5.3 |  | 0.659 |
-| walker |  | 6719 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.659 |
-| walker |  | 6839 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.659 |
-| walker |  | 6961 | 122 | impl method sigs in src/edit.rs |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:17 |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:40 |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:53 |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:66 |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:92 |  |  | 0.659 |
-| walker |  | 6961 | 0 | impl method at src/edit.rs:100 |  |  | 0.659 |
-| walker |  | 6971 | 10 | impl method body at src/config/mod.rs:226 body 227 |  |  | 0.659 |
-| walker |  | 6981 | 10 | impl method body at src/config/mod.rs:273 body 274 |  |  | 0.659 |
-| ns | 7114 |  | 406 | The complete colour schema — groups, per-group fields, and the Color type | 5.4 |  | 0.640 |
-| walker |  | 7189 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.640 |
-| walker |  | 7200 | 11 | impl method body at src/config/mod.rs:260 body 261 |  |  | 0.640 |
-| ns | 7237 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.634 |
-| walker |  | 7343 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.634 |
-| ns | 7375 |  | 138 | Every method on Config (names only) | 5.6 | 5.1 | 0.634 |
-| walker |  | 7496 | 153 | impl method sigs in src/live_reload.rs |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:54 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:64 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:71 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:99 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:103 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:107 |  |  | 0.634 |
-| walker |  | 7496 | 0 | impl method at src/live_reload.rs:112 |  |  | 0.634 |
-| ns | 7591 |  | 216 | The App control enums — Refresh, ElementInFocus, ScrollDirection | 6.1 |  | 0.622 |
-| walker |  | 7654 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.622 |
-| walker |  | 7772 | 118 | pub item body at src/debug.rs:23 body 24 |  |  | 0.622 |
-| walker |  | 7785 | 13 | impl method body at src/config/mod.rs:256 body 257 |  |  | 0.622 |
-| walker |  | 7829 | 44 | impl method body at src/live_reload.rs:64 body 65 |  |  | 0.622 |
-| walker |  | 7925 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.623 |
-| walker |  | 7925 | 0 | impl method at src/parse/json.rs:9 |  |  | 0.623 |
-| walker |  | 7925 | 0 | impl method at src/parse/json.rs:13 |  |  | 0.623 |
-| walker |  | 7925 | 0 | impl method at src/parse/json.rs:17 |  |  | 0.623 |
-| walker |  | 7925 | 0 | impl method at src/parse/json.rs:21 |  |  | 0.623 |
-| walker |  | 7932 | 7 | impl method body at src/parse/json.rs:13 body 14 |  |  | 0.624 |
-| walker |  | 7940 | 8 | impl method body at src/parse/json.rs:9 body 10 |  |  | 0.624 |
-| walker |  | 7953 | 13 | impl method body at src/parse/json.rs:21 body 22 |  |  | 0.624 |
-| walker |  | 7970 | 17 | impl method body at src/parse/json.rs:17 body 18 |  |  | 0.624 |
-| walker |  | 8070 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.624 |
-| walker |  | 8070 | 0 | impl method at src/parse/hcl.rs:11 |  |  | 0.624 |
-| walker |  | 8070 | 0 | impl method at src/parse/hcl.rs:15 |  |  | 0.624 |
-| walker |  | 8070 | 0 | impl method at src/parse/hcl.rs:19 |  |  | 0.624 |
-| walker |  | 8070 | 0 | impl method at src/parse/hcl.rs:23 |  |  | 0.624 |
-| walker |  | 8077 | 7 | impl method body at src/parse/hcl.rs:15 body 16 |  |  | 0.625 |
-| walker |  | 8086 | 9 | impl method body at src/parse/hcl.rs:11 body 12 |  |  | 0.625 |
-| walker |  | 8100 | 14 | impl method body at src/parse/hcl.rs:23 body 24 |  |  | 0.625 |
-| walker |  | 8118 | 18 | impl method body at src/parse/hcl.rs:19 body 20 |  |  | 0.625 |
-| ns | 8140 |  | 549 | Every method on App, plus its layout and polling constants | 6.2 | 6.1 | 0.611 |
-| walker |  | 8218 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.613 |
-| walker |  | 8218 | 0 | impl method at src/parse/toml.rs:12 |  |  | 0.613 |
-| walker |  | 8218 | 0 | impl method at src/parse/toml.rs:16 |  |  | 0.613 |
-| walker |  | 8218 | 0 | impl method at src/parse/toml.rs:20 |  |  | 0.613 |
-| walker |  | 8218 | 0 | impl method at src/parse/toml.rs:25 |  |  | 0.613 |
-| walker |  | 8225 | 7 | impl method body at src/parse/toml.rs:16 body 17 |  |  | 0.613 |
-| walker |  | 8234 | 9 | impl method body at src/parse/toml.rs:12 body 13 |  |  | 0.614 |
-| walker |  | 8335 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.616 |
-| walker |  | 8335 | 0 | impl method at src/parse/jsonl.rs:10 |  |  | 0.616 |
-| walker |  | 8335 | 0 | impl method at src/parse/jsonl.rs:14 |  |  | 0.616 |
-| walker |  | 8335 | 0 | impl method at src/parse/jsonl.rs:18 |  |  | 0.616 |
-| walker |  | 8335 | 0 | impl method at src/parse/jsonl.rs:35 |  |  | 0.616 |
-| walker |  | 8342 | 7 | impl method body at src/parse/jsonl.rs:14 body 15 |  |  | 0.617 |
-| walker |  | 8350 | 8 | impl method body at src/parse/jsonl.rs:10 body 11 |  |  | 0.618 |
-| walker |  | 8365 | 15 | impl method body at src/parse/jsonl.rs:35 body 36 |  |  | 0.618 |
-| walker |  | 8466 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.621 |
-| walker |  | 8466 | 0 | impl method at src/parse/yaml.rs:11 |  |  | 0.621 |
-| walker |  | 8466 | 0 | impl method at src/parse/yaml.rs:15 |  |  | 0.621 |
-| walker |  | 8466 | 0 | impl method at src/parse/yaml.rs:19 |  |  | 0.621 |
-| walker |  | 8466 | 0 | impl method at src/parse/yaml.rs:37 |  |  | 0.621 |
-| walker |  | 8473 | 7 | impl method body at src/parse/yaml.rs:15 body 16 |  |  | 0.622 |
-| walker |  | 8481 | 8 | impl method body at src/parse/yaml.rs:11 body 12 |  |  | 0.623 |
-| walker |  | 8586 | 105 | impl method sigs in src/config/keys.rs |  |  | 0.623 |
-| walker |  | 8586 | 0 | impl method at src/config/keys.rs:75 |  |  | 0.623 |
-| walker |  | 8586 | 0 | impl method at src/config/keys.rs:121 |  |  | 0.623 |
-| walker |  | 8586 | 0 | impl method at src/config/keys.rs:181 |  |  | 0.623 |
-| walker |  | 8586 | 0 | impl method at src/config/keys.rs:357 |  |  | 0.623 |
-| ns | 8735 |  | 595 | TreeOverview — complete method roster and its two constants | 6.3 |  | 0.608 |
-| walker |  | 8792 | 206 | pub item at src/config/types.rs:28 |  |  | 0.616 |
-| walker |  | 8844 | 52 | impl method at src/live_reload.rs:28 |  |  | 0.616 |
-| walker |  | 8953 | 109 | impl method sigs in src/ui/header.rs |  |  | 0.616 |
-| walker |  | 8953 | 0 | impl method at src/ui/header.rs:19 |  |  | 0.616 |
-| walker |  | 8953 | 0 | impl method at src/ui/header.rs:33 |  |  | 0.616 |
-| walker |  | 8953 | 0 | impl method at src/ui/header.rs:47 |  |  | 0.616 |
-| walker |  | 8953 | 0 | impl method at src/ui/header.rs:55 |  |  | 0.616 |
-| ns | 9137 |  | 402 | Filter widget — the filter types and complete method roster | 6.4 |  | 0.609 |
-| walker |  | 9185 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.616 |
-| walker |  | 9289 | 104 | README.md section #6 |  |  | 0.616 |
-| walker |  | 9415 | 126 | impl method body at src/config/mod.rs:131 body 132 |  |  | 0.616 |
-| ns | 9457 |  | 320 | DataBlock — complete method roster and the scroll-retain constant | 6.5 |  | 0.608 |
-| walker |  | 9661 | 246 | impl method sigs in src/tree.rs |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:52 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:58 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:94 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:98 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:368 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:386 |  |  | 0.619 |
-| walker |  | 9661 | 0 | impl method at src/tree.rs:390 |  |  | 0.619 |
-| walker |  | 9671 | 10 | impl method body at src/tree.rs:94 body 95 |  |  | 0.619 |
-| walker |  | 9683 | 12 | impl method body at src/tree.rs:98 body 99 |  |  | 0.619 |
-| walker |  | 9697 | 14 | impl method body at src/tree.rs:386 body 387 |  |  | 0.619 |
-| walker |  | 9714 | 17 | impl method body at src/tree.rs:390 body 391 |  |  | 0.619 |
-| walker |  | 9761 | 47 | impl method body at src/tree.rs:52 body 53 |  |  | 0.619 |
-| walker |  | 9811 | 50 | impl method at src/tree.rs:394 |  |  | 0.619 |
-| walker |  | 9946 | 135 | impl method body at src/config/mod.rs:196 body 197 |  |  | 0.619 |
-| ns | 9998 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.613 |
+| walker |  | 4904 | 62 | pub-item names surface in src/parse/syntax.rs |  |  | 0.671 |
+| walker |  | 4904 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.671 |
+| walker |  | 4904 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.671 |
+| walker |  | 4928 | 24 | pub item at src/parse/syntax.rs:151 |  |  | 0.671 |
+| ns | 5100 |  | 235 | TOML, XML and HCL parsers — types, extensions, array roots rejected | 4.7 | 4.6 | 0.651 |
+| ns | 5303 |  | 203 | AnyParser — format auto-detection by trial parsing | 4.8 | 4.7 | 0.638 |
+| walker |  | 5353 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:131 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:144 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:161 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:171 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:196 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:212 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:218 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:222 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:226 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:232 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:241 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:249 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:256 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:260 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:266 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:273 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:277 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:283 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:290 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:296 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:304 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:312 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:316 |  |  | 0.639 |
+| walker |  | 5353 | 0 | impl method at src/config/mod.rs:322 |  |  | 0.639 |
+| walker |  | 5395 | 42 | impl method body at src/config/mod.rs:212 body 213 |  |  | 0.639 |
+| walker |  | 5402 | 7 | impl method body at src/config/mod.rs:218 body 219 |  |  | 0.639 |
+| walker |  | 5409 | 7 | impl method body at src/config/mod.rs:312 body 313 |  |  | 0.639 |
+| walker |  | 5416 | 7 | impl method body at src/config/mod.rs:316 body 317 |  |  | 0.639 |
+| ns | 5433 |  | 130 | Every method on Tree and ItemValue (names only) | 4.9 | 4.3 | 0.630 |
+| walker |  | 5539 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.628 |
+| ns | 5539 |  | 106 | syntax.rs shared helpers — StringValue, quoting, wrapping, splitting | 4.10 | 4.5 | 0.628 |
+| walker |  | 5671 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.628 |
+| ns | 5730 |  | 191 | Complete test inventory — every test module and test fn in the crate | 4.11 |  | 0.617 |
+| walker |  | 5796 | 125 | manifest config in Cargo.toml |  |  | 0.617 |
+| walker |  | 5873 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.617 |
+| ns | 5897 |  | 167 | The Config struct — every configuration section | 5.1 |  | 0.626 |
+| walker |  | 5918 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.626 |
+| walker |  | 6009 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.626 |
+| walker |  | 6101 | 92 | impl method sigs in src/cmd.rs |  |  | 0.627 |
+| walker |  | 6101 | 0 | impl method at src/cmd.rs:112 |  |  | 0.627 |
+| walker |  | 6101 | 0 | impl method at src/cmd.rs:149 |  |  | 0.627 |
+| walker |  | 6101 | 0 | impl method at src/cmd.rs:202 |  |  | 0.627 |
+| walker |  | 6101 | 0 | impl method at src/cmd.rs:230 |  |  | 0.627 |
+| walker |  | 6101 | 0 | impl method at src/cmd.rs:234 |  |  | 0.627 |
+| walker |  | 6109 | 8 | impl method body at src/config/mod.rs:222 body 223 |  |  | 0.627 |
+| walker |  | 6117 | 8 | impl method body at src/config/mod.rs:277 body 278 |  |  | 0.627 |
+| walker |  | 6237 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.650 |
+| walker |  | 6324 | 87 | README.md section #1 |  |  | 0.650 |
+| ns | 6360 |  | 463 | Every scalar config section struct with its keys | 5.2 | 5.1 | 0.670 |
+| walker |  | 6417 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.670 |
+| walker |  | 6530 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.670 |
+| walker |  | 6673 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.670 |
+| ns | 6708 |  | 348 | generate_actions! — the complete Action vocabulary | 5.3 |  | 0.651 |
+| walker |  | 6793 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.651 |
+| walker |  | 6915 | 122 | impl method sigs in src/edit.rs |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:17 |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:40 |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:53 |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:66 |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:92 |  |  | 0.651 |
+| walker |  | 6915 | 0 | impl method at src/edit.rs:100 |  |  | 0.651 |
+| walker |  | 6925 | 10 | impl method body at src/config/mod.rs:226 body 227 |  |  | 0.651 |
+| walker |  | 6935 | 10 | impl method body at src/config/mod.rs:273 body 274 |  |  | 0.651 |
+| ns | 7114 |  | 406 | The complete colour schema — groups, per-group fields, and the Color type | 5.4 |  | 0.632 |
+| walker |  | 7143 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.632 |
+| walker |  | 7154 | 11 | impl method body at src/config/mod.rs:260 body 261 |  |  | 0.632 |
+| ns | 7237 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.626 |
+| walker |  | 7297 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.626 |
+| ns | 7375 |  | 138 | Every method on Config (names only) | 5.6 | 5.1 | 0.626 |
+| walker |  | 7450 | 153 | impl method sigs in src/live_reload.rs |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:54 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:64 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:71 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:99 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:103 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:107 |  |  | 0.626 |
+| walker |  | 7450 | 0 | impl method at src/live_reload.rs:112 |  |  | 0.626 |
+| ns | 7591 |  | 216 | The App control enums — Refresh, ElementInFocus, ScrollDirection | 6.1 |  | 0.615 |
+| walker |  | 7608 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.615 |
+| walker |  | 7726 | 118 | pub item body at src/debug.rs:23 body 24 |  |  | 0.615 |
+| walker |  | 7739 | 13 | impl method body at src/config/mod.rs:256 body 257 |  |  | 0.615 |
+| walker |  | 7783 | 44 | impl method body at src/live_reload.rs:64 body 65 |  |  | 0.615 |
+| walker |  | 7879 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.615 |
+| walker |  | 7879 | 0 | impl method at src/parse/json.rs:9 |  |  | 0.615 |
+| walker |  | 7879 | 0 | impl method at src/parse/json.rs:13 |  |  | 0.615 |
+| walker |  | 7879 | 0 | impl method at src/parse/json.rs:17 |  |  | 0.615 |
+| walker |  | 7879 | 0 | impl method at src/parse/json.rs:21 |  |  | 0.615 |
+| walker |  | 7886 | 7 | impl method body at src/parse/json.rs:13 body 14 |  |  | 0.616 |
+| walker |  | 7894 | 8 | impl method body at src/parse/json.rs:9 body 10 |  |  | 0.616 |
+| walker |  | 7907 | 13 | impl method body at src/parse/json.rs:21 body 22 |  |  | 0.616 |
+| walker |  | 7924 | 17 | impl method body at src/parse/json.rs:17 body 18 |  |  | 0.616 |
+| walker |  | 8024 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.617 |
+| walker |  | 8024 | 0 | impl method at src/parse/hcl.rs:11 |  |  | 0.617 |
+| walker |  | 8024 | 0 | impl method at src/parse/hcl.rs:15 |  |  | 0.617 |
+| walker |  | 8024 | 0 | impl method at src/parse/hcl.rs:19 |  |  | 0.617 |
+| walker |  | 8024 | 0 | impl method at src/parse/hcl.rs:23 |  |  | 0.617 |
+| walker |  | 8031 | 7 | impl method body at src/parse/hcl.rs:15 body 16 |  |  | 0.617 |
+| walker |  | 8040 | 9 | impl method body at src/parse/hcl.rs:11 body 12 |  |  | 0.617 |
+| walker |  | 8054 | 14 | impl method body at src/parse/hcl.rs:23 body 24 |  |  | 0.617 |
+| walker |  | 8072 | 18 | impl method body at src/parse/hcl.rs:19 body 20 |  |  | 0.617 |
+| ns | 8140 |  | 549 | Every method on App, plus its layout and polling constants | 6.2 | 6.1 | 0.603 |
+| walker |  | 8172 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.605 |
+| walker |  | 8172 | 0 | impl method at src/parse/toml.rs:12 |  |  | 0.605 |
+| walker |  | 8172 | 0 | impl method at src/parse/toml.rs:16 |  |  | 0.605 |
+| walker |  | 8172 | 0 | impl method at src/parse/toml.rs:20 |  |  | 0.605 |
+| walker |  | 8172 | 0 | impl method at src/parse/toml.rs:25 |  |  | 0.605 |
+| walker |  | 8179 | 7 | impl method body at src/parse/toml.rs:16 body 17 |  |  | 0.606 |
+| walker |  | 8188 | 9 | impl method body at src/parse/toml.rs:12 body 13 |  |  | 0.606 |
+| walker |  | 8289 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.609 |
+| walker |  | 8289 | 0 | impl method at src/parse/jsonl.rs:10 |  |  | 0.609 |
+| walker |  | 8289 | 0 | impl method at src/parse/jsonl.rs:14 |  |  | 0.609 |
+| walker |  | 8289 | 0 | impl method at src/parse/jsonl.rs:18 |  |  | 0.609 |
+| walker |  | 8289 | 0 | impl method at src/parse/jsonl.rs:35 |  |  | 0.609 |
+| walker |  | 8296 | 7 | impl method body at src/parse/jsonl.rs:14 body 15 |  |  | 0.609 |
+| walker |  | 8304 | 8 | impl method body at src/parse/jsonl.rs:10 body 11 |  |  | 0.610 |
+| walker |  | 8319 | 15 | impl method body at src/parse/jsonl.rs:35 body 36 |  |  | 0.610 |
+| walker |  | 8420 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.613 |
+| walker |  | 8420 | 0 | impl method at src/parse/yaml.rs:11 |  |  | 0.613 |
+| walker |  | 8420 | 0 | impl method at src/parse/yaml.rs:15 |  |  | 0.613 |
+| walker |  | 8420 | 0 | impl method at src/parse/yaml.rs:19 |  |  | 0.613 |
+| walker |  | 8420 | 0 | impl method at src/parse/yaml.rs:37 |  |  | 0.613 |
+| walker |  | 8427 | 7 | impl method body at src/parse/yaml.rs:15 body 16 |  |  | 0.614 |
+| walker |  | 8435 | 8 | impl method body at src/parse/yaml.rs:11 body 12 |  |  | 0.616 |
+| walker |  | 8540 | 105 | impl method sigs in src/config/keys.rs |  |  | 0.616 |
+| walker |  | 8540 | 0 | impl method at src/config/keys.rs:75 |  |  | 0.616 |
+| walker |  | 8540 | 0 | impl method at src/config/keys.rs:121 |  |  | 0.616 |
+| walker |  | 8540 | 0 | impl method at src/config/keys.rs:181 |  |  | 0.616 |
+| walker |  | 8540 | 0 | impl method at src/config/keys.rs:357 |  |  | 0.616 |
+| ns | 8735 |  | 595 | TreeOverview — complete method roster and its two constants | 6.3 |  | 0.601 |
+| walker |  | 8746 | 206 | pub item at src/config/types.rs:28 |  |  | 0.608 |
+| walker |  | 8798 | 52 | impl method at src/live_reload.rs:28 |  |  | 0.608 |
+| walker |  | 8907 | 109 | impl method sigs in src/ui/header.rs |  |  | 0.608 |
+| walker |  | 8907 | 0 | impl method at src/ui/header.rs:19 |  |  | 0.608 |
+| walker |  | 8907 | 0 | impl method at src/ui/header.rs:33 |  |  | 0.608 |
+| walker |  | 8907 | 0 | impl method at src/ui/header.rs:47 |  |  | 0.608 |
+| walker |  | 8907 | 0 | impl method at src/ui/header.rs:55 |  |  | 0.608 |
+| ns | 9137 |  | 402 | Filter widget — the filter types and complete method roster | 6.4 |  | 0.602 |
+| walker |  | 9139 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.608 |
+| walker |  | 9243 | 104 | README.md section #6 |  |  | 0.608 |
+| walker |  | 9369 | 126 | impl method body at src/config/mod.rs:131 body 132 |  |  | 0.608 |
+| ns | 9457 |  | 320 | DataBlock — complete method roster and the scroll-retain constant | 6.5 |  | 0.601 |
+| walker |  | 9615 | 246 | impl method sigs in src/tree.rs |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:52 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:58 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:94 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:98 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:368 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:386 |  |  | 0.612 |
+| walker |  | 9615 | 0 | impl method at src/tree.rs:390 |  |  | 0.612 |
+| walker |  | 9625 | 10 | impl method body at src/tree.rs:94 body 95 |  |  | 0.612 |
+| walker |  | 9637 | 12 | impl method body at src/tree.rs:98 body 99 |  |  | 0.612 |
+| walker |  | 9651 | 14 | impl method body at src/tree.rs:386 body 387 |  |  | 0.612 |
+| walker |  | 9668 | 17 | impl method body at src/tree.rs:390 body 391 |  |  | 0.612 |
+| walker |  | 9715 | 47 | impl method body at src/tree.rs:52 body 53 |  |  | 0.612 |
+| walker |  | 9765 | 50 | impl method at src/tree.rs:394 |  |  | 0.612 |
+| walker |  | 9900 | 135 | impl method body at src/config/mod.rs:196 body 197 |  |  | 0.612 |
+| ns | 9998 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.607 |

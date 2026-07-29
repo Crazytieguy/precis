@@ -50,36 +50,36 @@ Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missi
 | ns | 2800 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.568 |
 | walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.777 |
 | walker |  | 2983 | 145 | README.md section #5 |  |  | 0.779 |
+| walker |  | 3013 | 30 | README.md section #12 |  |  | 0.779 |
 | ns | 3035 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.785 |
-| ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.760 |
-| walker |  | 3263 | 280 | README.md section #2 |  |  | 0.817 |
-| ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.798 |
-| walker |  | 3293 | 30 | README.md section #12 |  |  | 0.798 |
-| walker |  | 3442 | 149 | json config tsconfig.json |  |  | 0.831 |
-| walker |  | 3475 | 33 | README.md section #10 |  |  | 0.831 |
-| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.837 |
-| walker |  | 3586 | 111 | README.md section #4 |  |  | 0.837 |
-| walker |  | 3621 | 35 | README.md section #6 |  |  | 0.838 |
+| walker |  | 3162 | 149 | json config tsconfig.json |  |  | 0.789 |
+| ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.795 |
+| walker |  | 3195 | 33 | README.md section #10 |  |  | 0.795 |
+| ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.776 |
+| walker |  | 3306 | 111 | README.md section #4 |  |  | 0.777 |
+| walker |  | 3341 | 35 | README.md section #6 |  |  | 0.777 |
+| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.787 |
+| walker |  | 3621 | 280 | README.md section #2 |  |  | 0.838 |
 | ns | 3659 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.841 |
 | walker |  | 3676 | 55 | README.md section #16 |  |  | 0.841 |
 | ns | 3737 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.832 |
 | walker |  | 3775 | 99 | README.md section #14 |  |  | 0.833 |
-| walker |  | 4143 | 368 | package dev/peer dependencies in package.json |  |  | 0.835 |
+| walker |  | 3891 | 116 | README.md section #11 |  |  | 0.834 |
+| walker |  | 4011 | 120 | README.md section #9 |  |  | 0.835 |
 | ns | 4154 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.801 |
-| walker |  | 4259 | 116 | README.md section #11 |  |  | 0.802 |
-| ns | 4356 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.777 |
-| walker |  | 4379 | 120 | README.md section #9 |  |  | 0.778 |
-| ns | 4541 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.757 |
-| ns | 4737 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.738 |
-| walker |  | 4912 | 533 | README.md section #3 |  |  | 0.836 |
+| ns | 4356 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.776 |
+| ns | 4541 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.755 |
+| walker |  | 4544 | 533 | README.md section #3 |  |  | 0.855 |
+| walker |  | 4664 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.856 |
+| ns | 4737 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.835 |
+| walker |  | 4856 | 192 | README.md section #17 |  |  | 0.836 |
+| walker |  | 4875 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.836 |
+| walker |  | 4891 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.836 |
+| walker |  | 4919 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.836 |
 | ns | 4933 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.816 |
-| walker |  | 5032 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.817 |
 | ns | 5129 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.797 |
-| walker |  | 5224 | 192 | README.md section #17 |  |  | 0.799 |
-| walker |  | 5243 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.799 |
-| walker |  | 5259 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.799 |
-| ns | 5282 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.782 |
-| walker |  | 5287 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.782 |
+| ns | 5282 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.780 |
+| walker |  | 5287 | 368 | package dev/peer dependencies in package.json |  |  | 0.782 |
 | walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.783 |
 | walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.783 |
 | ns | 5453 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.761 |

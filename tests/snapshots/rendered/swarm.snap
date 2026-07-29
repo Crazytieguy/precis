@@ -284,9 +284,7 @@ swarm/
         …
           26→class Swarm:
           27→    def __init__(self, client=None):
-          28→        if not client:
-          29→            client = OpenAI()
-          30→        self.client = client
+        …
           32→    def get_chat_completion(
           33→        self,
           34→        agent: Agent,
@@ -319,15 +317,21 @@ swarm/
          148→    ):
         …
          231→    def run(
+         232→        self,
+         233→        agent: Agent,
+         234→        messages: List,
+         235→        context_variables: dict = {},
+         236→        model_override: str = None,
+         237→        stream: bool = False,
+         238→        debug: bool = False,
+         239→        max_turns: int = float("inf"),
+         240→        execute_tools: bool = True,
+         241→    ) -> Response:
         …
     repl/
         __init__.py
                1→from .repl import run_demo_loop
-        repl.py
-               1→import json
-               2→
-               3→from swarm import Swarm
-            …
+        repl.py …
     types.py
         …
           11→AgentFunction = Callable[[], Union[str, "Agent", dict]]

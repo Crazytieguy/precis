@@ -32,7 +32,34 @@ AUTHORS.rst …
 HISTORY.md …
 LICENSE …
 MANIFEST.in …
-Makefile …
+Makefile
+       1→.PHONY: docs
+       2→init:
+       3→	python -m pip install -r requirements-dev.txt
+       4→test:
+       5→	python -m pytest tests
+       6→
+       7→ci:
+       8→	python -m pytest tests --junitxml=report.xml
+       9→
+      10→test-readme:
+      11→	python setup.py check --restructuredtext --strict && ([ $$? -eq 0 ] && echo "README.rst and HISTORY.rst ok") || echo "Invalid markup in README.rst or HISTORY.rst!"
+      12→
+      13→coverage:
+      14→	python -m pytest --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=src/requests tests
+      15→
+      16→.publishenv:
+      17→	python -m venv .publishenv
+      18→	.publishenv/bin/pip install 'twine>=1.5.0' build
+      19→
+      20→publish: .publishenv
+      21→	.publishenv/bin/python -m build
+      22→	.publishenv/bin/python -m twine upload --skip-existing dist/*
+      23→	rm -fr build dist .egg requests.egg-info
+      24→
+      25→docs:
+      26→	cd docs && make html
+      27→	@echo "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
 NOTICE …
 README.md
        1→# Requests
@@ -96,7 +123,10 @@ docs/
         contributing.rst …
     index.rst …
     make.bat …
-    requirements.txt …
+    requirements.txt
+           1→# Pinning to avoid unexpected breakages.
+           2→# Used by RTD to generate docs.
+           3→Sphinx==7.2.6
     user/
         advanced.rst …
         authentication.rst …
@@ -152,16 +182,6 @@ pyproject.toml
       80→[tool.setuptools.packages.find]
       81→where = ["src"]
     …
-     108→[tool.pytest.ini_options]
-     109→addopts = "--doctest-modules"
-     110→doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
-     111→minversion = "6.2"
-     112→testpaths = ["tests"]
-     113→
-     114→
-     115→[tool.pyright]
-     116→include = ["src/requests"]
-     117→typeCheckingMode = "strict"
 requirements-dev.txt …
 setup.py
        1→import sys
@@ -304,7 +324,11 @@ src/
         help.py …
         hooks.py …
         models.py …
-        packages.py …
+        packages.py
+               1→import sys
+               2→
+               3→from .compat import chardet
+            …
         py.typed
         sessions.py …
         status_codes.py …

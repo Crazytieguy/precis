@@ -56,14 +56,14 @@ Score(3000)=0.535 I=0.569 C=0.502 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 835 | 15 | go decl body at multierror.go:42 |  |  | 0.682 |
 | walker |  | 844 | 9 | go decl doc at multierror.go:102 |  |  | 0.682 |
 | ns | 852 |  | 171 | README section map: every heading and every bold subsection label | 1.9 |  | 0.630 |
-| walker |  | 882 | 38 | go decl doc at multierror.go:13 |  |  | 0.664 |
-| walker |  | 893 | 11 | go decl body at multierror.go:102 |  |  | 0.664 |
-| walker |  | 909 | 16 | go decl doc at multierror.go:122 |  |  | 0.664 |
-| walker |  | 927 | 18 | go decl doc at multierror.go:117 |  |  | 0.664 |
-| walker |  | 940 | 13 | go decl body at multierror.go:117 |  |  | 0.664 |
+| walker |  | 884 | 40 | go package + imports in multierror.go |  |  | 0.630 |
+| walker |  | 920 | 36 | go decl doc at multierror.go:13 |  |  | 0.664 |
+| walker |  | 931 | 11 | go decl body at multierror.go:102 |  |  | 0.664 |
 | ns | 945 |  | 93 | README deprecation note: prefer stdlib `errors.Join` | 2.1 |  | 0.663 |
-| walker |  | 953 | 13 | go decl body at multierror.go:122 |  |  | 0.663 |
-| walker |  | 991 | 38 | go package + imports in multierror.go |  |  | 0.663 |
+| walker |  | 947 | 16 | go decl doc at multierror.go:122 |  |  | 0.663 |
+| walker |  | 965 | 18 | go decl doc at multierror.go:117 |  |  | 0.663 |
+| walker |  | 978 | 13 | go decl body at multierror.go:117 |  |  | 0.663 |
+| walker |  | 991 | 13 | go decl body at multierror.go:122 |  |  | 0.663 |
 | walker |  | 1022 | 31 | go decl body at multierror.go:53 |  |  | 0.663 |
 | walker |  | 1051 | 29 | go decl doc at group.go:10 |  |  | 0.664 |
 | walker |  | 1069 | 18 | go decl body at sort.go:21 |  |  | 0.633 |

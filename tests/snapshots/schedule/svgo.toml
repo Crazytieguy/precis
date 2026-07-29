@@ -1,7 +1,7 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 9975
-batch_count = 154
+cumulative_tokens = 9842
+batch_count = 157
 
 [[batches]]
 position = 1
@@ -604,7 +604,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 26
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
 cost_tokens = 16
 cum_tokens = 745
@@ -874,7 +874,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 11
 cum_tokens = 1322
@@ -892,7 +892,7 @@ kind = "full"
 
 [[batches]]
 position = 38
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 55
 cum_tokens = 1377
@@ -1246,7 +1246,7 @@ entries = ["addAttributesToSVGElement.mdx", "addClassesToSVGElement.mdx", "clean
 
 [[batches]]
 position = 53
-key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
 cost_tokens = 57
 cum_tokens = 2516
@@ -1334,7 +1334,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 30
 cum_tokens = 2581
@@ -1452,7 +1452,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 129
 cum_tokens = 3129
@@ -1684,7 +1684,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 70
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 40
 cum_tokens = 3322
@@ -1770,7 +1770,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 118
 cum_tokens = 3697
@@ -1820,7 +1820,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 165
 cum_tokens = 3887
@@ -2400,7 +2400,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 355
 cum_tokens = 5644
@@ -3274,28 +3274,10 @@ kind = "full"
 
 [[batches]]
 position = 143
-key = 'Json(DevDependencies { file: "package.json" })'
-descriptor = "package dev/peer dependencies in package.json"
-cost_tokens = 446
-cum_tokens = 9280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 113
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
 key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
-cum_tokens = 9295
+cum_tokens = 8849
 
 [batches.content]
 kind = "lines"
@@ -3309,11 +3291,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
 cost_tokens = 100
-cum_tokens = 9395
+cum_tokens = 8949
 
 [batches.content]
 kind = "lines"
@@ -3327,11 +3309,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/cleanupNumericValues.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/cleanupNumericValues.mdx"
 cost_tokens = 65
-cum_tokens = 9460
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -3353,11 +3335,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 147
+position = 146
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/convertShapeToPath.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/convertShapeToPath.mdx"
 cost_tokens = 65
-cum_tokens = 9525
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -3379,11 +3361,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeStyleElement.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeStyleElement.mdx"
 cost_tokens = 65
-cum_tokens = 9590
+cum_tokens = 9144
 
 [batches.content]
 kind = "lines"
@@ -3405,11 +3387,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 149
+position = 148
 key = 'Plaintext(DeclSurface { file: "docs/01-index.mdx" })'
 descriptor = "declaration surface of docs/01-index.mdx"
 cost_tokens = 127
-cum_tokens = 9717
+cum_tokens = 9271
 
 [batches.content]
 kind = "lines"
@@ -3439,11 +3421,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeDoctype.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeDoctype.mdx"
 cost_tokens = 68
-cum_tokens = 9785
+cum_tokens = 9339
 
 [batches.content]
 kind = "lines"
@@ -3465,11 +3447,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively/depth-1/depth-2" })'
 descriptor = "listing of 'test/coa/testSvgRecursively/depth-1/depth-2'"
 cost_tokens = 9
-cum_tokens = 9794
+cum_tokens = 9348
 
 [batches.content]
 kind = "fs"
@@ -3479,11 +3461,11 @@ parent = "test/coa/testSvgRecursively/depth-1/depth-2"
 entries = ["test.1.svg", "test.svg"]
 
 [[batches]]
-position = 152
+position = 151
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeNonInheritableGroupAttrs.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeNonInheritableGroupAttrs.mdx"
 cost_tokens = 71
-cum_tokens = 9865
+cum_tokens = 9419
 
 [batches.content]
 kind = "lines"
@@ -3505,11 +3487,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
-cum_tokens = 9901
+cum_tokens = 9455
 
 [batches.content]
 kind = "lines"
@@ -3523,11 +3505,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/cleanupAttrs.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/cleanupAttrs.mdx"
 cost_tokens = 74
-cum_tokens = 9975
+cum_tokens = 9529
 
 [batches.content]
 kind = "lines"
@@ -3544,6 +3526,102 @@ kind = "full"
 path = "docs/04-plugins/cleanupAttrs.mdx"
 start = 19
 end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeEmptyText.mdx" })'
+descriptor = "declaration surface of docs/04-plugins/removeEmptyText.mdx"
+cost_tokens = 75
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/removeEmptyText.mdx"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/removeEmptyText.mdx"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/removeEmptyText.mdx"
+start = 20
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeUselessDefs.mdx" })'
+descriptor = "declaration surface of docs/04-plugins/removeUselessDefs.mdx"
+cost_tokens = 75
+cum_tokens = 9679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/removeUselessDefs.mdx"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/removeUselessDefs.mdx"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
+descriptor = "README.md section #11"
+cost_tokens = 123
+cum_tokens = 9802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 138
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 141 })'
+descriptor = "export doc at lib/path.js:141"
+cost_tokens = 40
+cum_tokens = 9842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/path.js"
+start = 137
+end = 140
 
 [batches.content.spans.render]
 kind = "full"

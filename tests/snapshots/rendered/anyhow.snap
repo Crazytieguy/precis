@@ -29,12 +29,7 @@ Cargo.toml
       21→# besides bringing in an unused dependency, as `std::backtrace` is always
       22→# preferred.
       23→backtrace = { version = "0.3.51", optional = true }
-      25→[dev-dependencies]
-      26→futures = { version = "0.3", default-features = false }
-      27→rustversion = "1.0.6"
-      28→syn = { version = "2.0", features = ["full"] }
-      29→thiserror = "2"
-      30→trybuild = { version = "1.0.108", features = ["diff"] }
+    …
       32→[package.metadata.docs.rs]
       33→targets = ["x86_64-unknown-linux-gnu"]
       34→rustdoc-args = [
@@ -71,7 +66,11 @@ README.md
 build.rs …
 rust-toolchain.toml …
 src/
-    backtrace.rs …
+    backtrace.rs
+        …
+           7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
+           8→pub(crate) enum Backtrace {}
+        …
     chain.rs …
     context.rs
         …

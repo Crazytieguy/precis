@@ -140,73 +140,78 @@ Score(3000)=0.459 I=0.763 C=0.276 ns_rows≤3K=20/60 (reached=6 partial=1 missin
 | walker |  | 5901 | 326 | package scripts in package.json |  |  | 0.574 |
 | walker |  | 5931 | 30 | docs/reference/utilities.md section #0 |  |  | 0.574 |
 | ns | 5955 |  | 76 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.566 |
-| walker |  | 6137 | 206 | Readme.md section #9 |  |  | 0.593 |
+| walker |  | 5959 | 28 | imports in src/structs/refinements.ts |  |  | 0.566 |
+| walker |  | 5996 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.566 |
+| walker |  | 6034 | 38 | docs/reference/errors.md section #0 |  |  | 0.566 |
 | ns | 6137 |  | 182 | The 45 type-level test files | 5.6 |  | 0.593 |
-| walker |  | 6165 | 28 | imports in src/structs/refinements.ts |  |  | 0.593 |
-| walker |  | 6202 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.593 |
-| walker |  | 6240 | 38 | docs/reference/errors.md section #0 |  |  | 0.593 |
-| walker |  | 6351 | 111 | Readme.md section #8 |  |  | 0.593 |
+| walker |  | 6145 | 111 | Readme.md section #8 |  |  | 0.593 |
 | ns | 6364 |  | 227 | Every heading in the six guides | 5.7 |  | 0.603 |
 | ns | 6427 |  | 63 | Readme section map | 5.8 |  | 0.607 |
-| ns | 6567 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.605 |
-| walker |  | 6652 | 301 | package identity metadata in package.json |  |  | 0.618 |
-| walker |  | 6676 | 24 | module-doc lede in test/index.ts |  |  | 0.618 |
-| ns | 6738 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.612 |
-| walker |  | 6773 | 97 | export doc at src/struct.ts:221 |  |  | 0.614 |
-| walker |  | 6880 | 107 | export doc at src/error.ts:25 |  |  | 0.628 |
-| walker |  | 6925 | 45 | Readme.md section #5 |  |  | 0.628 |
-| ns | 6939 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.619 |
-| walker |  | 6969 | 44 | Readme.md section #6 |  |  | 0.619 |
-| walker |  | 7017 | 48 | export doc at src/structs/refinements.ts:109 |  |  | 0.621 |
-| walker |  | 7202 | 185 | json config tsconfig.json |  |  | 0.622 |
+| walker |  | 6446 | 301 | package identity metadata in package.json |  |  | 0.620 |
+| walker |  | 6470 | 24 | module-doc lede in test/index.ts |  |  | 0.620 |
+| walker |  | 6567 | 97 | export doc at src/struct.ts:221 |  |  | 0.621 |
+| ns | 6567 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.621 |
+| walker |  | 6674 | 107 | export doc at src/error.ts:25 |  |  | 0.635 |
+| walker |  | 6719 | 45 | Readme.md section #5 |  |  | 0.635 |
+| ns | 6738 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.628 |
+| walker |  | 6763 | 44 | Readme.md section #6 |  |  | 0.628 |
+| walker |  | 6811 | 48 | export doc at src/structs/refinements.ts:109 |  |  | 0.631 |
+| ns | 6939 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.621 |
+| walker |  | 6996 | 185 | json config tsconfig.json |  |  | 0.622 |
+| walker |  | 7049 | 53 | docs/reference/refinements.md section #0 |  |  | 0.622 |
+| walker |  | 7099 | 50 | Readme.md section #4 |  |  | 0.622 |
+| walker |  | 7117 | 18 | export names surface in test/index.ts |  |  | 0.622 |
+| walker |  | 7170 | 53 | Readme.md section #3 |  |  | 0.622 |
 | ns | 7212 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.606 |
-| walker |  | 7255 | 53 | docs/reference/refinements.md section #0 |  |  | 0.606 |
-| walker |  | 7305 | 50 | Readme.md section #4 |  |  | 0.606 |
-| walker |  | 7323 | 18 | export names surface in test/index.ts |  |  | 0.606 |
+| walker |  | 7218 | 48 | imports in src/structs/coercions.ts |  |  | 0.606 |
+| walker |  | 7281 | 63 | docs/reference/coercions.md section #0 |  |  | 0.606 |
 | ns | 7343 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.600 |
-| walker |  | 7376 | 53 | Readme.md section #3 |  |  | 0.600 |
-| walker |  | 7424 | 48 | imports in src/structs/coercions.ts |  |  | 0.600 |
-| walker |  | 7487 | 63 | docs/reference/coercions.md section #0 |  |  | 0.600 |
-| ns | 7529 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.591 |
-| ns | 7942 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.573 |
-| walker |  | 8003 | 516 | Readme.md section #2 |  |  | 0.573 |
-| ns | 8133 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.567 |
-| walker |  | 8241 | 238 | export names surface in src/structs/utilities.ts |  |  | 0.580 |
-| walker |  | 8241 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.580 |
-| walker |  | 8241 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.580 |
-| walker |  | 8241 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.580 |
-| walker |  | 8241 | 0 | export at src/structs/utilities.ts:247 |  |  | 0.580 |
-| ns | 8247 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.583 |
-| walker |  | 8260 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.584 |
-| walker |  | 8293 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.584 |
-| walker |  | 8330 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.584 |
-| walker |  | 8368 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.584 |
-| walker |  | 8411 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.584 |
-| walker |  | 8455 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.584 |
-| walker |  | 8500 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.584 |
-| ns | 8506 |  | 259 | npm scripts | 7.1 | 1.1 | 0.590 |
-| walker |  | 8602 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.590 |
-| walker |  | 8628 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.590 |
-| ns | 8677 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.586 |
-| walker |  | 8778 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.586 |
-| walker |  | 8807 | 29 | export doc at src/structs/utilities.ts:247 |  |  | 0.587 |
-| ns | 8826 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.585 |
-| walker |  | 8989 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.585 |
-| ns | 9005 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.591 |
-| walker |  | 9044 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.592 |
-| walker |  | 9101 | 57 | export doc at src/structs/utilities.ts:171 |  |  | 0.593 |
-| walker |  | 9158 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.595 |
-| walker |  | 9221 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.598 |
-| ns | 9255 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.589 |
-| walker |  | 9289 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.593 |
-| walker |  | 9366 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.593 |
-| ns | 9416 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.598 |
-| ns | 9569 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.604 |
-| walker |  | 9637 | 271 | headings outline in docs/reference/types.md |  |  | 0.605 |
-| ns | 9647 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.602 |
-| walker |  | 9679 | 42 | docs/reference/types.md section #0 |  |  | 0.602 |
-| walker |  | 9760 | 81 | export doc at src/structs/utilities.ts:106 |  |  | 0.603 |
-| ns | 9766 |  | 119 | ESLint configuration head | 7.9 |  | 0.599 |
-| walker |  | 9842 | 82 | export doc at src/structs/coercions.ts:38 |  |  | 0.599 |
-| ns | 9895 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.597 |
-| walker |  | 9933 | 91 | export doc at src/structs/refinements.ts:146 |  |  | 0.598 |
+| walker |  | 7519 | 238 | export names surface in src/structs/utilities.ts |  |  | 0.614 |
+| walker |  | 7519 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.614 |
+| walker |  | 7519 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.614 |
+| walker |  | 7519 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.614 |
+| walker |  | 7519 | 0 | export at src/structs/utilities.ts:247 |  |  | 0.614 |
+| ns | 7529 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.605 |
+| walker |  | 7538 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.605 |
+| walker |  | 7571 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.605 |
+| walker |  | 7608 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.605 |
+| walker |  | 7646 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.605 |
+| walker |  | 7689 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.605 |
+| walker |  | 7733 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.605 |
+| walker |  | 7778 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.605 |
+| walker |  | 7880 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.605 |
+| walker |  | 7906 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.605 |
+| ns | 7942 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.587 |
+| walker |  | 8056 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.587 |
+| walker |  | 8085 | 29 | export doc at src/structs/utilities.ts:247 |  |  | 0.587 |
+| ns | 8133 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.581 |
+| ns | 8247 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.584 |
+| walker |  | 8267 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.584 |
+| walker |  | 8322 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.585 |
+| walker |  | 8379 | 57 | export doc at src/structs/utilities.ts:171 |  |  | 0.587 |
+| walker |  | 8436 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.589 |
+| walker |  | 8499 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.592 |
+| ns | 8506 |  | 259 | npm scripts | 7.1 | 1.1 | 0.598 |
+| walker |  | 8567 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.602 |
+| walker |  | 8644 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.603 |
+| ns | 8677 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.599 |
+| ns | 8826 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.597 |
+| walker |  | 8915 | 271 | headings outline in docs/reference/types.md |  |  | 0.598 |
+| walker |  | 8957 | 42 | docs/reference/types.md section #0 |  |  | 0.598 |
+| ns | 9005 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.604 |
+| walker |  | 9038 | 81 | export doc at src/structs/utilities.ts:106 |  |  | 0.604 |
+| walker |  | 9120 | 82 | export doc at src/structs/coercions.ts:38 |  |  | 0.605 |
+| walker |  | 9211 | 91 | export doc at src/structs/refinements.ts:146 |  |  | 0.607 |
+| ns | 9255 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.598 |
+| walker |  | 9321 | 110 | json config jsr.json |  |  | 0.600 |
+| ns | 9416 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.605 |
+| walker |  | 9527 | 206 | Readme.md section #9 |  |  | 0.605 |
+| ns | 9569 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.610 |
+| walker |  | 9607 | 80 | imports in src/structs/utilities.ts |  |  | 0.610 |
+| walker |  | 9633 | 26 | package identity in examples/package.json |  |  | 0.610 |
+| ns | 9647 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.608 |
+| walker |  | 9736 | 103 | export doc at src/structs/utilities.ts:140 |  |  | 0.610 |
+| ns | 9766 |  | 119 | ESLint configuration head | 7.9 |  | 0.605 |
+| walker |  | 9844 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.605 |
+| ns | 9895 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.603 |
+| walker |  | 9955 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.603 |
