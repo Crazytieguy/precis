@@ -2510,3 +2510,40 @@ item-head doc classes (`ExportDoc`, `ModuleDocLede`, Go/C/Python/Lua
 −0.0019 at 6240 and −0.0009 at 9000. Not taken — it buys the primary
 sliver by re-blurring the roster/doc distinction the predicate exists to
 draw, and pays for it across the rest of the grid.
+
+## Wave-2 combined state (2026-07-29)
+
+Two lanes merged on top of the wave-1 tree (0.6209): interior-listing
+suppression 0.85 (defer a listing when the directory AND its immediate
+parent are non-essential) and public-surface-density dominant-file
+retargeting (challenger needs ≥20% density margin + same semantic
+type-machinery class; density = span-deduplicated top-level AST count).
+Combined grid vs the wave-1 tree:
+
+B=1000 0.6134→0.6159 · 1442 0.6239→0.6233 · 2080 0.6307→0.6311 ·
+**3000 0.6209→0.6224** · 4327 0.5911→0.5909 · 6240 0.5662→0.5657 ·
+9000 0.5638→0.5637 — the two ships compose additively (isolated
++0.0003 and +0.0012 at 3000).
+
+Knob re-sweep on this frontier confirmed the settled values again:
+LISTING_TIER_SCALE 1.13 (1.14/1.16 microscopically higher at 3000 but
+−0.005 at 1000), CATALOG_ROSTER_CONCAVITY_EXPONENT 0.38 (0.385 is a
+cliff-concentrated numerical peak — full-diff review rejected it; 0.39
+trades five real regressions for two concentrated wins that OVERLAP the
+suppression lever's superstruct win), DEFAULT_CONCAVITY_EXPONENT 0.35
+(0.355/0.36 sum −0.053/−0.071, near-all cliff-adjacent).
+
+Measured-dead this wave (specifics block retries): dominant-file
+first-roster-chunk entry factors — Go ×1.5–3.0 flat with act/lo rosters
+still absent at 10K, Python ×1.5–3.0 flat (click +0.023 vs pluggy/
+typeguard losses), C ×1.5 −0.0037 (sqlite-vec −0.116, neco −0.107, the
+implementation-roster-displaces-header failure again); extra
+dominant-surface opt-ins (Python ClassBody, Go StructFieldGroup) inert;
+peer/dev dependency split or peer-bearing demotion (debug-only, flat
+curve); tiny depth-follow-up demotion (8-tok gate neutral, 16-tok
+regresses — cost alone cannot separate crumbs from credited API
+detail). The late-displacer histogram (ignore/session-2026-07-29/)
+identified secondary-module breadth (helper modules bought before the
+primary API/data model, 5/8 fixtures) as the largest unaddressed
+displacer class; the dominant-file detector is the candidate
+primary-vs-helper discriminator uniform sibling damps lacked.

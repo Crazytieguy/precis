@@ -62,26 +62,26 @@ Score(3000)=0.505 I=0.806 C=0.317 ns_rows≤3K=19/51 (reached=7 partial=1 missin
 | walker |  | 2504 | 26 | export doc at lib/request.js:37 |  |  | 0.463 |
 | walker |  | 2529 | 25 | imports in lib/express.js |  |  | 0.463 |
 | walker |  | 2556 | 27 | imports in lib/application.js |  |  | 0.463 |
-| walker |  | 2641 | 85 | listing of 'test/acceptance' |  |  | 0.464 |
-| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.446 |
-| walker |  | 2917 | 276 | export names surface in lib/application.js |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:59 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:90 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:152 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:190 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:256 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:294 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:322 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:351 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:399 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:420 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:439 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:451 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:463 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:494 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:522 |  |  | 0.539 |
-| walker |  | 2917 | 0 | export at lib/application.js:598 |  |  | 0.539 |
-| walker |  | 2934 | 17 | export doc at lib/application.js:90 |  |  | 0.539 |
+| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.445 |
+| walker |  | 2832 | 276 | export names surface in lib/application.js |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:59 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:90 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:152 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:190 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:256 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:294 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:322 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:351 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:399 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:420 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:439 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:451 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:463 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:494 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:522 |  |  | 0.538 |
+| walker |  | 2832 | 0 | export at lib/application.js:598 |  |  | 0.538 |
+| walker |  | 2849 | 17 | export doc at lib/application.js:90 |  |  | 0.538 |
+| walker |  | 2934 | 85 | listing of 'test/acceptance' |  |  | 0.539 |
 | walker |  | 2957 | 23 | Readme.md section #19 |  |  | 0.539 |
 | ns | 2958 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.505 |
 | walker |  | 2980 | 23 | Readme.md section #30 |  |  | 0.505 |
