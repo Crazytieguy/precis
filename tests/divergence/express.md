@@ -42,27 +42,27 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 1734 | 24 | export body at lib/request.js:171 body 172 |  |  | 0.531 |
 | walker |  | 1759 | 25 | export body at lib/request.js:127 body 128 |  |  | 0.531 |
 | walker |  | 1785 | 26 | export body at lib/request.js:140 body 141 |  |  | 0.531 |
-| walker |  | 1870 | 85 | listing of 'test/acceptance' |  |  | 0.532 |
-| ns | 1899 |  | 233 | createApplication() body | 2.6 |  | 0.494 |
-| walker |  | 2003 | 133 | export names surface in lib/express.js |  |  | 0.567 |
-| walker |  | 2003 | 0 | export at lib/express.js:27 |  |  | 0.567 |
-| walker |  | 2003 | 0 | export at lib/express.js:36 |  |  | 0.567 |
-| walker |  | 2003 | 0 | export at lib/express.js:62 |  |  | 0.567 |
-| walker |  | 2003 | 0 | export at lib/express.js:70 |  |  | 0.567 |
-| walker |  | 2003 | 0 | export at lib/express.js:77 |  |  | 0.567 |
-| walker |  | 2020 | 17 | export doc at lib/express.js:70 |  |  | 0.567 |
-| walker |  | 2037 | 17 | export doc at lib/express.js:77 |  |  | 0.567 |
-| walker |  | 2057 | 20 | export doc at lib/express.js:62 |  |  | 0.567 |
-| ns | 2156 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.524 |
-| ns | 2247 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.501 |
-| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.474 |
+| ns | 1899 |  | 233 | createApplication() body | 2.6 |  | 0.492 |
+| walker |  | 1918 | 133 | export names surface in lib/express.js |  |  | 0.565 |
+| walker |  | 1918 | 0 | export at lib/express.js:27 |  |  | 0.565 |
+| walker |  | 1918 | 0 | export at lib/express.js:36 |  |  | 0.565 |
+| walker |  | 1918 | 0 | export at lib/express.js:62 |  |  | 0.565 |
+| walker |  | 1918 | 0 | export at lib/express.js:70 |  |  | 0.565 |
+| walker |  | 1918 | 0 | export at lib/express.js:77 |  |  | 0.565 |
+| walker |  | 1935 | 17 | export doc at lib/express.js:70 |  |  | 0.565 |
+| walker |  | 1952 | 17 | export doc at lib/express.js:77 |  |  | 0.565 |
+| walker |  | 1972 | 20 | export doc at lib/express.js:62 |  |  | 0.565 |
+| ns | 2156 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.523 |
+| ns | 2247 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.500 |
+| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.473 |
+| walker |  | 2432 | 460 | package runtime dependencies in package.json |  |  | 0.474 |
+| walker |  | 2454 | 22 | export doc at lib/express.js:27 |  |  | 0.474 |
+| walker |  | 2478 | 24 | imports in lib/request.js |  |  | 0.474 |
 | ns | 2481 |  | 109 | Default settings established at boot | 3.1 |  | 0.463 |
-| walker |  | 2517 | 460 | package runtime dependencies in package.json |  |  | 0.464 |
-| walker |  | 2539 | 22 | export doc at lib/express.js:27 |  |  | 0.464 |
-| walker |  | 2563 | 24 | imports in lib/request.js |  |  | 0.464 |
-| walker |  | 2589 | 26 | export doc at lib/request.js:37 |  |  | 0.464 |
-| walker |  | 2614 | 25 | imports in lib/express.js |  |  | 0.464 |
-| walker |  | 2641 | 27 | imports in lib/application.js |  |  | 0.464 |
+| walker |  | 2504 | 26 | export doc at lib/request.js:37 |  |  | 0.463 |
+| walker |  | 2529 | 25 | imports in lib/express.js |  |  | 0.463 |
+| walker |  | 2556 | 27 | imports in lib/application.js |  |  | 0.463 |
+| walker |  | 2641 | 85 | listing of 'test/acceptance' |  |  | 0.464 |
 | ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.446 |
 | walker |  | 2664 | 23 | Readme.md section #19 |  |  | 0.446 |
 | walker |  | 2687 | 23 | Readme.md section #30 |  |  | 0.446 |

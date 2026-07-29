@@ -1,4 +1,4 @@
-Score(3000)=0.513 I=0.816 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missing=16)
+Score(3000)=0.513 I=0.817 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missing=16)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,36 +55,36 @@ Score(3000)=0.513 I=0.816 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missin
 | walker |  | 2238 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.619 |
 | ns | 2258 |  | 166 | Details example: referring to fields from format args via `.var` / `.0` | 2.11 |  | 0.596 |
 | walker |  | 2279 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.597 |
-| walker |  | 2287 | 8 | listing of 'tests/no-std' |  |  | 0.597 |
+| walker |  | 2323 | 44 | pub-item names surface in src/provide.rs |  |  | 0.597 |
+| walker |  | 2368 | 45 | pub-item names surface in src/display.rs |  |  | 0.597 |
+| walker |  | 2414 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.581 |
 | ns | 2414 |  | 156 | When to use thiserror vs anyhow | 2.12 |  | 0.581 |
-| ns | 2529 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.563 |
-| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.537 |
-| walker |  | 2814 | 527 | listing of 'tests/ui' |  |  | 0.537 |
-| walker |  | 2858 | 44 | pub-item names surface in src/provide.rs |  |  | 0.537 |
-| walker |  | 2903 | 45 | pub-item names surface in src/display.rs |  |  | 0.538 |
-| walker |  | 2949 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.538 |
-| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.512 |
-| walker |  | 2993 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.513 |
-| walker |  | 2993 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.513 |
-| walker |  | 2993 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.513 |
-| walker |  | 3252 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.513 |
-| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.478 |
-| walker |  | 3374 | 122 | [package] in impl/Cargo.toml |  |  | 0.478 |
-| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.459 |
-| walker |  | 3533 | 159 | manifest config in impl/Cargo.toml |  |  | 0.460 |
-| walker |  | 3592 | 59 | README.md section #11 |  |  | 0.463 |
-| walker |  | 3677 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.463 |
-| walker |  | 3677 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.463 |
-| walker |  | 3677 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.463 |
-| walker |  | 3677 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.463 |
-| walker |  | 3677 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.463 |
-| walker |  | 3688 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.463 |
-| walker |  | 3700 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.463 |
+| walker |  | 2458 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.581 |
+| walker |  | 2458 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.581 |
+| walker |  | 2458 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.581 |
+| ns | 2529 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.564 |
+| walker |  | 2717 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.564 |
+| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.538 |
+| walker |  | 2839 | 122 | [package] in impl/Cargo.toml |  |  | 0.539 |
+| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.513 |
+| walker |  | 2998 | 159 | manifest config in impl/Cargo.toml |  |  | 0.513 |
+| walker |  | 3057 | 59 | README.md section #11 |  |  | 0.517 |
+| walker |  | 3065 | 8 | listing of 'tests/no-std' |  |  | 0.518 |
+| walker |  | 3150 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.518 |
+| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.518 |
+| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.518 |
+| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.518 |
+| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.518 |
+| walker |  | 3161 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.518 |
+| walker |  | 3173 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.518 |
+| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.482 |
+| walker |  | 3507 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.482 |
+| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.463 |
+| walker |  | 3791 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.463 |
 | ns | 3851 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.434 |
-| walker |  | 4034 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.434 |
 | ns | 4044 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.424 |
 | ns | 4190 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.419 |
-| walker |  | 4318 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.419 |
+| walker |  | 4318 | 527 | listing of 'tests/ui' |  |  | 0.419 |
 | walker |  | 4369 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.419 |
 | walker |  | 4422 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.419 |
 | ns | 4482 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.411 |

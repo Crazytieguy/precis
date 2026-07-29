@@ -60,20 +60,20 @@ Score(3000)=0.875 I=0.930 C=0.824 ns_rows≤3K=20/61 (reached=15 partial=2 missi
 | ns | 3245 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.848 |
 | walker |  | 3309 | 314 | imports in src/index.tsx |  |  | 0.921 |
 | ns | 3357 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.908 |
-| walker |  | 3374 | 65 | listing of 'test/tests' |  |  | 0.909 |
-| walker |  | 3488 | 114 | listing of 'test/src/app' |  |  | 0.911 |
-| ns | 3636 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.881 |
-| walker |  | 3664 | 176 | package identity metadata in package.json |  |  | 0.881 |
-| walker |  | 3775 | 111 | json config tsconfig.json |  |  | 0.882 |
-| walker |  | 3811 | 36 | export names surface in src/context.ts |  |  | 0.882 |
-| walker |  | 3811 | 0 | export at src/context.ts:69 |  |  | 0.882 |
-| ns | 3816 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.858 |
-| walker |  | 3828 | 17 | imports in playwright.config.ts |  |  | 0.858 |
-| walker |  | 3865 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.858 |
-| walker |  | 3865 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.858 |
-| walker |  | 3873 | 8 | listing of 'test/public' |  |  | 0.858 |
-| walker |  | 3885 | 12 | imports in src/use-controllable-state.ts |  |  | 0.858 |
-| walker |  | 3899 | 14 | imports in src/use-composed-refs.ts |  |  | 0.858 |
+| walker |  | 3485 | 176 | package identity metadata in package.json |  |  | 0.908 |
+| walker |  | 3596 | 111 | json config tsconfig.json |  |  | 0.909 |
+| walker |  | 3632 | 36 | export names surface in src/context.ts |  |  | 0.909 |
+| walker |  | 3632 | 0 | export at src/context.ts:69 |  |  | 0.909 |
+| ns | 3636 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.879 |
+| walker |  | 3649 | 17 | imports in playwright.config.ts |  |  | 0.879 |
+| walker |  | 3686 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.879 |
+| walker |  | 3686 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.879 |
+| walker |  | 3751 | 65 | listing of 'test/tests' |  |  | 0.880 |
+| ns | 3816 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.856 |
+| walker |  | 3865 | 114 | listing of 'test/src/app' |  |  | 0.858 |
+| walker |  | 3877 | 12 | imports in src/use-controllable-state.ts |  |  | 0.858 |
+| walker |  | 3891 | 14 | imports in src/use-composed-refs.ts |  |  | 0.858 |
+| walker |  | 3899 | 8 | listing of 'test/public' |  |  | 0.858 |
 | ns | 3915 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.845 |
 | walker |  | 4023 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.845 |
 | ns | 4025 |  | 110 | useSnapPoints: entry point and its complete return surface | 3.8 |  | 0.827 |

@@ -470,32 +470,31 @@ Score(3000)=0.530 I=0.542 C=0.518 ns_rows≤3K=16/44 (reached=7 partial=0 missin
 | walker |  | 9349 | 15 | go decl doc at internal/alerts/alerts_history.go:20 |  |  | 0.430 |
 | walker |  | 9364 | 15 | go decl doc at internal/hub/update.go:58 |  |  | 0.430 |
 | walker |  | 9393 | 29 | go decl doc at agent/cpu.go:16 |  |  | 0.430 |
-| walker |  | 9396 | 3 | listing of 'agent/tools/fetchsmartctl' |  |  | 0.430 |
-| walker |  | 9420 | 24 | go decl body at internal/users/users.go:18 |  |  | 0.430 |
-| walker |  | 9438 | 18 | go decl doc at internal/hub/server_development.go:18 |  |  | 0.430 |
+| walker |  | 9417 | 24 | go decl body at internal/users/users.go:18 |  |  | 0.430 |
+| walker |  | 9435 | 18 | go decl doc at internal/hub/server_development.go:18 |  |  | 0.430 |
 | ns | 9486 |  | 142 | Frontend route components (complete listings) | 6.2 |  | 0.449 |
-| walker |  | 9503 | 65 | go decl names surface in internal/hub/transport/transport.go |  |  | 0.449 |
-| walker |  | 9503 | 0 | go decl at internal/hub/transport/transport.go:32 |  |  | 0.449 |
-| walker |  | 9503 | 0 | go decl at internal/hub/transport/transport.go:48 |  |  | 0.449 |
-| walker |  | 9519 | 16 | go decl doc at internal/alerts/alerts_history.go:58 |  |  | 0.449 |
-| walker |  | 9548 | 29 | go decl doc at agent/gpu_darwin_unsupported.go:9 |  |  | 0.449 |
-| walker |  | 9578 | 30 | go decl doc at agent/gpu_darwin_unsupported.go:6 |  |  | 0.449 |
+| walker |  | 9500 | 65 | go decl names surface in internal/hub/transport/transport.go |  |  | 0.449 |
+| walker |  | 9500 | 0 | go decl at internal/hub/transport/transport.go:32 |  |  | 0.449 |
+| walker |  | 9500 | 0 | go decl at internal/hub/transport/transport.go:48 |  |  | 0.449 |
+| walker |  | 9516 | 16 | go decl doc at internal/alerts/alerts_history.go:58 |  |  | 0.449 |
+| walker |  | 9545 | 29 | go decl doc at agent/gpu_darwin_unsupported.go:9 |  |  | 0.449 |
+| walker |  | 9575 | 30 | go decl doc at agent/gpu_darwin_unsupported.go:6 |  |  | 0.449 |
 | ns | 9629 |  | 143 | Frontend chart, table, login and ui-primitive listings (complete) | 6.3 |  | 0.465 |
-| walker |  | 9694 | 116 | go decl names surface in internal/records/records_deletion.go |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:14 |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:41 |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:60 |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:102 |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:116 |  |  | 0.465 |
-| walker |  | 9694 | 0 | go decl at internal/records/records_deletion.go:130 |  |  | 0.465 |
-| walker |  | 9703 | 9 | go decl doc at internal/records/records_deletion.go:14 |  |  | 0.465 |
-| walker |  | 9714 | 11 | go decl doc at internal/records/records_deletion.go:41 |  |  | 0.465 |
-| walker |  | 9730 | 16 | go decl doc at internal/records/records_deletion.go:130 |  |  | 0.465 |
+| walker |  | 9691 | 116 | go decl names surface in internal/records/records_deletion.go |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:14 |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:41 |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:60 |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:102 |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:116 |  |  | 0.465 |
+| walker |  | 9691 | 0 | go decl at internal/records/records_deletion.go:130 |  |  | 0.465 |
+| walker |  | 9700 | 9 | go decl doc at internal/records/records_deletion.go:14 |  |  | 0.465 |
+| walker |  | 9711 | 11 | go decl doc at internal/records/records_deletion.go:41 |  |  | 0.465 |
+| walker |  | 9727 | 16 | go decl doc at internal/records/records_deletion.go:130 |  |  | 0.465 |
 | ns | 9745 |  | 116 | Frontend route table (router.tsx) | 6.4 |  | 0.461 |
-| walker |  | 9782 | 52 | go package + imports in agent/systemd_nonlinux.go |  |  | 0.461 |
+| walker |  | 9779 | 52 | go package + imports in agent/systemd_nonlinux.go |  |  | 0.461 |
 | ns | 9796 |  | 51 | internal/site/src/lib listing (complete) | 6.5 |  | 0.468 |
-| walker |  | 9819 | 37 | go decl doc at internal/alerts/alerts_api.go:81 |  |  | 0.468 |
-| walker |  | 9836 | 17 | go decl doc at internal/hub/collections.go:17 |  |  | 0.468 |
-| walker |  | 9852 | 16 | go decl doc at internal/hub/server_development.go:48 |  |  | 0.468 |
-| walker |  | 9868 | 16 | go decl doc at internal/hub/server_production.go:18 |  |  | 0.468 |
+| walker |  | 9816 | 37 | go decl doc at internal/alerts/alerts_api.go:81 |  |  | 0.468 |
+| walker |  | 9833 | 17 | go decl doc at internal/hub/collections.go:17 |  |  | 0.468 |
+| walker |  | 9849 | 16 | go decl doc at internal/hub/server_development.go:48 |  |  | 0.468 |
+| walker |  | 9865 | 16 | go decl doc at internal/hub/server_production.go:18 |  |  | 0.468 |
 | ns | 9925 |  | 129 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.478 |

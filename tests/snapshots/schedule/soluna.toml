@@ -1,7 +1,7 @@
 fixture = "soluna"
 budget = 10000
-cumulative_tokens = 9916
-batch_count = 281
+cumulative_tokens = 9912
+batch_count = 280
 
 [[batches]]
 position = 1
@@ -7649,24 +7649,10 @@ kind = "full"
 
 [[batches]]
 position = 269
-key = 'Fs(DirListing { dir: ".github/actions" })'
-descriptor = "listing of '.github/actions'"
-cost_tokens = 4
-cum_tokens = 9015
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/actions"
-entries = ["soluna"]
-
-[[batches]]
-position = 270
 key = 'Lua(MetaFileWhole { file: "docs/layout.lua" })'
 descriptor = "lua meta-file at docs/layout.lua"
 cost_tokens = 373
-cum_tokens = 9388
+cum_tokens = 9384
 
 [batches.content]
 kind = "lines"
@@ -7680,11 +7666,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 271
+position = 270
 key = 'Lua(DeclNames { file: "src/lualib/fontmgr.lua" })'
 descriptor = "lua decl names surface in src/lualib/fontmgr.lua"
 cost_tokens = 96
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7797,42 +7783,42 @@ kind = "ellipsis"
 path = "src/lualib/fontmgr.lua"
 start = 298
 end = 298
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 271
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 15 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:15"
+cost_tokens = 0
+cum_tokens = 9480
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 272
-key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 15 })'
-descriptor = "lua decl at src/lualib/fontmgr.lua:15"
-cost_tokens = 0
-cum_tokens = 9484
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lualib/fontmgr.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lualib/fontmgr.lua"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 273
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 214 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:214"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7854,11 +7840,11 @@ end = 215
 kind = "ellipsis"
 
 [[batches]]
-position = 274
+position = 273
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 252 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:252"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7880,11 +7866,11 @@ end = 253
 kind = "ellipsis"
 
 [[batches]]
-position = 275
+position = 274
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 258 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:258"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7906,11 +7892,11 @@ end = 259
 kind = "ellipsis"
 
 [[batches]]
-position = 276
+position = 275
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 264 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:264"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7932,11 +7918,11 @@ end = 265
 kind = "ellipsis"
 
 [[batches]]
-position = 277
+position = 276
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 290 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:290"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7958,11 +7944,11 @@ end = 291
 kind = "ellipsis"
 
 [[batches]]
-position = 278
+position = 277
 key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 297 })'
 descriptor = "lua decl at src/lualib/fontmgr.lua:297"
 cost_tokens = 0
-cum_tokens = 9484
+cum_tokens = 9480
 
 [batches.content]
 kind = "lines"
@@ -7984,11 +7970,11 @@ end = 298
 kind = "ellipsis"
 
 [[batches]]
-position = 279
+position = 278
 key = 'Lua(MetaFileWhole { file: "docs/app.lua" })'
 descriptor = "lua meta-file at docs/app.lua"
 cost_tokens = 378
-cum_tokens = 9862
+cum_tokens = 9858
 
 [batches.content]
 kind = "lines"
@@ -8002,11 +7988,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 280
+position = 279
 key = 'C(Decl { file: "src/material_util.c", start_line: 43 })'
 descriptor = "c decl at src/material_util.c:43"
 cost_tokens = 29
-cum_tokens = 9891
+cum_tokens = 9887
 
 [batches.content]
 kind = "lines"
@@ -8028,11 +8014,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 281
+position = 280
 key = 'C(DeclBody { file: "src/ime_char_filter.h", start_line: 47 })'
 descriptor = "c decl body at src/ime_char_filter.h:47"
 cost_tokens = 25
-cum_tokens = 9916
+cum_tokens = 9912
 
 [batches.content]
 kind = "lines"

@@ -70,32 +70,32 @@ Score(3000)=0.718 I=0.834 C=0.618 ns_rows≤3K=16/40 (reached=8 partial=0 missin
 | ns | 2672 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.718 |
 | walker |  | 2777 | 109 | listing of 'sig' |  |  | 0.718 |
 | walker |  | 2797 | 20 | c decl names surface in src/jv_utf8_tables.h |  |  | 0.718 |
-| walker |  | 2963 | 166 | listing of 'vendor/decNumber' |  |  | 0.718 |
-| walker |  | 2967 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.718 |
-| walker |  | 2971 | 4 | listing of 'tests/torture' |  |  | 0.718 |
-| walker |  | 3037 | 66 | c whole header in src/jv_private.h |  |  | 0.718 |
+| walker |  | 2863 | 66 | c whole header in src/jv_private.h |  |  | 0.718 |
+| walker |  | 2937 | 74 | c decl names surface in src/linker.c |  |  | 0.718 |
+| walker |  | 2937 | 0 | c decl at src/linker.c:409 |  |  | 0.718 |
+| walker |  | 2937 | 0 | c decl at src/linker.c:435 |  |  | 0.718 |
+| walker |  | 2963 | 26 | c decl at src/linker.c:28 |  |  | 0.718 |
+| walker |  | 2991 | 28 | c decl at src/linker.c:23 |  |  | 0.718 |
 | ns | 3062 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.687 |
-| walker |  | 3111 | 74 | c decl names surface in src/linker.c |  |  | 0.687 |
-| walker |  | 3111 | 0 | c decl at src/linker.c:409 |  |  | 0.687 |
-| walker |  | 3111 | 0 | c decl at src/linker.c:435 |  |  | 0.687 |
-| walker |  | 3137 | 26 | c decl at src/linker.c:28 |  |  | 0.687 |
-| walker |  | 3165 | 28 | c decl at src/linker.c:23 |  |  | 0.687 |
-| ns | 3229 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.673 |
-| walker |  | 3248 | 83 | README.md section #7 |  |  | 0.673 |
-| walker |  | 3279 | 31 | README.md section #3 |  |  | 0.673 |
-| walker |  | 3364 | 85 | c decl names surface in src/main.c |  |  | 0.675 |
-| walker |  | 3445 | 81 | c whole header in src/linker.h |  |  | 0.678 |
+| walker |  | 3074 | 83 | README.md section #7 |  |  | 0.687 |
+| walker |  | 3105 | 31 | README.md section #3 |  |  | 0.687 |
+| walker |  | 3190 | 85 | c decl names surface in src/main.c |  |  | 0.687 |
+| ns | 3229 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.675 |
+| walker |  | 3271 | 81 | c whole header in src/linker.h |  |  | 0.678 |
+| walker |  | 3356 | 85 | README.md section #8 |  |  | 0.678 |
 | ns | 3452 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.663 |
-| walker |  | 3530 | 85 | README.md section #8 |  |  | 0.663 |
 | ns | 3692 |  | 240 | Makefile.am: the TESTS list and test environment | 3.6 |  | 0.643 |
-| walker |  | 3911 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.703 |
-| walker |  | 3911 | 0 | c decl at src/jq.h:60 |  |  | 0.703 |
+| walker |  | 3737 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.703 |
+| walker |  | 3737 | 0 | c decl at src/jq.h:60 |  |  | 0.703 |
+| walker |  | 3767 | 30 | README.md section #2 |  |  | 0.703 |
+| walker |  | 3873 | 106 | c decl names surface in src/jv_print.c |  |  | 0.703 |
+| walker |  | 3873 | 0 | c decl at src/jv_print.c:40 |  |  | 0.703 |
 | ns | 3930 |  | 238 | tests/setup + tests/jqtest: how one test driver actually runs | 3.7 |  | 0.686 |
-| walker |  | 3941 | 30 | README.md section #2 |  |  | 0.686 |
+| walker |  | 4039 | 166 | listing of 'vendor/decNumber' |  |  | 0.686 |
 | ns | 4043 |  | 113 | tests/jq.test: the three-line test format, with the first cases | 3.8 |  | 0.670 |
-| walker |  | 4047 | 106 | c decl names surface in src/jv_print.c |  |  | 0.670 |
-| walker |  | 4047 | 0 | c decl at src/jv_print.c:40 |  |  | 0.670 |
-| walker |  | 4144 | 97 | c whole header in src/jq_parser.h |  |  | 0.675 |
+| walker |  | 4136 | 97 | c whole header in src/jq_parser.h |  |  | 0.675 |
+| walker |  | 4140 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.675 |
+| walker |  | 4144 | 4 | listing of 'tests/torture' |  |  | 0.675 |
 | walker |  | 4230 | 86 | c decl names surface in src/util.h |  |  | 0.675 |
 | walker |  | 4245 | 15 | c decl at src/util.h:44 |  |  | 0.675 |
 | ns | 4276 |  | 233 | jv.h: jv_kind enum and the jv struct | 4.1 |  | 0.687 |

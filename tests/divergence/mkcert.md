@@ -99,29 +99,29 @@ Score(3000)=0.641 I=0.845 C=0.486 ns_rows≤3K=19/48 (reached=10 partial=0 missi
 | walker |  | 4093 | 198 | README.md section #13 |  |  | 0.623 |
 | walker |  | 4148 | 55 | README.md section #4 |  |  | 0.623 |
 | walker |  | 4188 | 40 | README.md section #22 |  |  | 0.623 |
-| walker |  | 4196 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.631 |
-| walker |  | 4239 | 43 | README.md section #17 |  |  | 0.631 |
-| walker |  | 4283 | 44 | README.md section #15 |  |  | 0.635 |
-| walker |  | 4328 | 45 | README.md section #24 |  |  | 0.635 |
-| ns | 4376 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.601 |
-| walker |  | 4536 | 208 | go decl at truststore_nss.go:17 |  |  | 0.654 |
-| walker |  | 4583 | 47 | README.md section #19 |  |  | 0.654 |
-| walker |  | 4630 | 47 | README.md section #21 |  |  | 0.654 |
-| walker |  | 4698 | 68 | README.md section #7 |  |  | 0.654 |
-| ns | 4778 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.622 |
-| walker |  | 4814 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.622 |
-| walker |  | 4869 | 55 | go decl body at main.go:336 |  |  | 0.622 |
-| walker |  | 4951 | 82 | go decl body at cert.go:166 |  |  | 0.623 |
-| walker |  | 5027 | 76 | README.md section #5 |  |  | 0.623 |
-| ns | 5037 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.601 |
-| walker |  | 5167 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.612 |
-| walker |  | 5167 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.612 |
-| walker |  | 5167 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.612 |
-| walker |  | 5167 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.612 |
-| walker |  | 5178 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.614 |
-| ns | 5191 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.603 |
-| walker |  | 5200 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.603 |
-| walker |  | 5407 | 207 | README.md section #12 |  |  | 0.629 |
+| walker |  | 4231 | 43 | README.md section #17 |  |  | 0.623 |
+| walker |  | 4275 | 44 | README.md section #15 |  |  | 0.627 |
+| walker |  | 4320 | 45 | README.md section #24 |  |  | 0.627 |
+| ns | 4376 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.593 |
+| walker |  | 4528 | 208 | go decl at truststore_nss.go:17 |  |  | 0.646 |
+| walker |  | 4575 | 47 | README.md section #19 |  |  | 0.646 |
+| walker |  | 4622 | 47 | README.md section #21 |  |  | 0.646 |
+| walker |  | 4690 | 68 | README.md section #7 |  |  | 0.646 |
+| ns | 4778 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.614 |
+| walker |  | 4806 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.614 |
+| walker |  | 4861 | 55 | go decl body at main.go:336 |  |  | 0.615 |
+| walker |  | 4943 | 82 | go decl body at cert.go:166 |  |  | 0.616 |
+| walker |  | 5019 | 76 | README.md section #5 |  |  | 0.616 |
+| ns | 5037 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.594 |
+| walker |  | 5159 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.605 |
+| walker |  | 5159 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.605 |
+| walker |  | 5159 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.605 |
+| walker |  | 5159 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.605 |
+| walker |  | 5170 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.607 |
+| ns | 5191 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.596 |
+| walker |  | 5192 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.596 |
+| walker |  | 5399 | 207 | README.md section #12 |  |  | 0.622 |
+| walker |  | 5407 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.629 |
 | ns | 5545 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.612 |
 | walker |  | 5556 | 149 | go decl names surface in truststore_linux.go |  |  | 0.639 |
 | walker |  | 5556 | 0 | go decl at truststore_linux.go:27 |  |  | 0.639 |

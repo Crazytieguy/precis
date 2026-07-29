@@ -2103,24 +2103,10 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 8
-cum_tokens = 4196
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug-report.md", "config.yml"]
-
-[[batches]]
-position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
 descriptor = "README.md section #17"
 cost_tokens = 43
-cum_tokens = 4239
+cum_tokens = 4231
 
 [batches.content]
 kind = "lines"
@@ -2134,11 +2120,11 @@ end = 168
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false })'
 descriptor = "README.md section #15"
 cost_tokens = 44
-cum_tokens = 4283
+cum_tokens = 4275
 
 [batches.content]
 kind = "lines"
@@ -2152,11 +2138,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false })'
 descriptor = "README.md section #24"
 cost_tokens = 45
-cum_tokens = 4328
+cum_tokens = 4320
 
 [batches.content]
 kind = "lines"
@@ -2170,11 +2156,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 17 })'
 descriptor = "go decl at truststore_nss.go:17"
 cost_tokens = 208
-cum_tokens = 4536
+cum_tokens = 4528
 
 [batches.content]
 kind = "lines"
@@ -2188,11 +2174,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false })'
 descriptor = "README.md section #19"
 cost_tokens = 47
-cum_tokens = 4583
+cum_tokens = 4575
 
 [batches.content]
 kind = "lines"
@@ -2206,11 +2192,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
 descriptor = "README.md section #21"
 cost_tokens = 47
-cum_tokens = 4630
+cum_tokens = 4622
 
 [batches.content]
 kind = "lines"
@@ -2224,11 +2210,11 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 68
-cum_tokens = 4698
+cum_tokens = 4690
 
 [batches.content]
 kind = "lines"
@@ -2242,11 +2228,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 120 })'
 descriptor = "go decl body at truststore_nss.go:120"
 cost_tokens = 116
-cum_tokens = 4814
+cum_tokens = 4806
 
 [batches.content]
 kind = "lines"
@@ -2260,11 +2246,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Go(DeclBody { file: "main.go", start_line: 336 })'
 descriptor = "go decl body at main.go:336"
 cost_tokens = 55
-cum_tokens = 4869
+cum_tokens = 4861
 
 [batches.content]
 kind = "lines"
@@ -2278,11 +2264,11 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Go(DeclBody { file: "cert.go", start_line: 166 })'
 descriptor = "go decl body at cert.go:166"
 cost_tokens = 82
-cum_tokens = 4951
+cum_tokens = 4943
 
 [batches.content]
 kind = "lines"
@@ -2296,11 +2282,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 76
-cum_tokens = 5027
+cum_tokens = 5019
 
 [batches.content]
 kind = "lines"
@@ -2314,11 +2300,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Go(DeclNames { file: "truststore_darwin.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_darwin.go"
 cost_tokens = 140
-cum_tokens = 5167
+cum_tokens = 5159
 
 [batches.content]
 kind = "lines"
@@ -2388,11 +2374,11 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 25 })'
 descriptor = "go decl at truststore_darwin.go:25"
 cost_tokens = 0
-cum_tokens = 5167
+cum_tokens = 5159
 
 [batches.content]
 kind = "lines"
@@ -2406,11 +2392,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 52 })'
 descriptor = "go decl at truststore_darwin.go:52"
 cost_tokens = 0
-cum_tokens = 5167
+cum_tokens = 5159
 
 [batches.content]
 kind = "lines"
@@ -2424,11 +2410,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 105 })'
 descriptor = "go decl at truststore_darwin.go:105"
 cost_tokens = 0
-cum_tokens = 5167
+cum_tokens = 5159
 
 [batches.content]
 kind = "lines"
@@ -2442,11 +2428,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 18 })'
 descriptor = "go decl at truststore_darwin.go:18"
 cost_tokens = 11
-cum_tokens = 5178
+cum_tokens = 5170
 
 [batches.content]
 kind = "lines"
@@ -2460,11 +2446,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Go(DeclDoc { file: "truststore_darwin.go", start_line: 25 })'
 descriptor = "go decl doc at truststore_darwin.go:25"
 cost_tokens = 22
-cum_tokens = 5200
+cum_tokens = 5192
 
 [batches.content]
 kind = "lines"
@@ -2478,11 +2464,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 207
-cum_tokens = 5407
+cum_tokens = 5399
 
 [batches.content]
 kind = "lines"
@@ -2494,6 +2480,20 @@ end = 125
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 8
+cum_tokens = 5407
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug-report.md", "config.yml"]
 
 [[batches]]
 position = 95

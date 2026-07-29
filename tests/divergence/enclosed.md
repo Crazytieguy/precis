@@ -182,59 +182,59 @@ Score(3000)=0.528 I=0.801 C=0.348 ns_rows≤3K=16/47 (reached=5 partial=0 missin
 | walker |  | 5916 | 127 | README.md section #26 |  |  | 0.590 |
 | walker |  | 5941 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.590 |
 | walker |  | 6048 | 107 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.590 |
-| walker |  | 6061 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.590 |
 | ns | 6120 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.578 |
-| walker |  | 6150 | 89 | declaration surface of packages/docs/src/components/credential-inputs.vue |  |  | 0.578 |
-| walker |  | 6218 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.578 |
-| walker |  | 6235 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.578 |
-| walker |  | 6264 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.578 |
-| walker |  | 6280 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.578 |
-| walker |  | 6296 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.578 |
+| walker |  | 6137 | 89 | declaration surface of packages/docs/src/components/credential-inputs.vue |  |  | 0.578 |
+| walker |  | 6205 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6222 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6251 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6267 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.578 |
+| walker |  | 6283 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.578 |
 | ns | 6317 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.565 |
-| walker |  | 6390 | 94 | declaration surface of packages/docs/src/components/toggle.vue |  |  | 0.565 |
-| walker |  | 6479 | 89 | packages/crypto/README.md section #1 |  |  | 0.565 |
-| ns | 6520 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.559 |
-| walker |  | 6642 | 163 | README.md section #23 |  |  | 0.578 |
+| walker |  | 6377 | 94 | declaration surface of packages/docs/src/components/toggle.vue |  |  | 0.565 |
+| walker |  | 6466 | 89 | packages/crypto/README.md section #1 |  |  | 0.565 |
+| ns | 6520 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.558 |
+| walker |  | 6629 | 163 | README.md section #23 |  |  | 0.578 |
 | ns | 6808 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.567 |
-| walker |  | 6835 | 193 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.567 |
-| walker |  | 6912 | 77 | package identity in packages/app-client/package.json |  |  | 0.567 |
-| walker |  | 6963 | 51 | package runtime metadata in packages/app-client/package.json |  |  | 0.567 |
+| walker |  | 6822 | 193 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.567 |
+| walker |  | 6899 | 77 | package identity in packages/app-client/package.json |  |  | 0.567 |
+| walker |  | 6950 | 51 | package runtime metadata in packages/app-client/package.json |  |  | 0.567 |
 | ns | 7023 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.561 |
-| walker |  | 7040 | 77 | package identity in packages/app-server/package.json |  |  | 0.561 |
-| walker |  | 7091 | 51 | package runtime metadata in packages/app-server/package.json |  |  | 0.561 |
-| walker |  | 7168 | 77 | package identity in packages/docs/package.json |  |  | 0.561 |
-| walker |  | 7182 | 14 | package entrypoints in packages/docs/package.json |  |  | 0.561 |
-| walker |  | 7199 | 17 | package runtime metadata in packages/docs/package.json |  |  | 0.561 |
-| ns | 7222 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.555 |
-| walker |  | 7286 | 87 | package scripts in packages/docs/package.json |  |  | 0.555 |
-| walker |  | 7317 | 31 | package runtime dependencies in packages/docs/package.json |  |  | 0.555 |
-| walker |  | 7396 | 79 | package identity in packages/crypto/package.json |  |  | 0.555 |
-| ns | 7442 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.546 |
-| walker |  | 7447 | 51 | package runtime metadata in packages/crypto/package.json |  |  | 0.546 |
-| walker |  | 7598 | 151 | package scripts in packages/crypto/package.json |  |  | 0.546 |
+| walker |  | 7027 | 77 | package identity in packages/app-server/package.json |  |  | 0.561 |
+| walker |  | 7078 | 51 | package runtime metadata in packages/app-server/package.json |  |  | 0.561 |
+| walker |  | 7155 | 77 | package identity in packages/docs/package.json |  |  | 0.561 |
+| walker |  | 7169 | 14 | package entrypoints in packages/docs/package.json |  |  | 0.561 |
+| walker |  | 7186 | 17 | package runtime metadata in packages/docs/package.json |  |  | 0.561 |
+| ns | 7222 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.554 |
+| walker |  | 7273 | 87 | package scripts in packages/docs/package.json |  |  | 0.554 |
+| walker |  | 7304 | 31 | package runtime dependencies in packages/docs/package.json |  |  | 0.554 |
+| walker |  | 7383 | 79 | package identity in packages/crypto/package.json |  |  | 0.554 |
+| walker |  | 7434 | 51 | package runtime metadata in packages/crypto/package.json |  |  | 0.554 |
+| ns | 7442 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.545 |
+| walker |  | 7585 | 151 | package scripts in packages/crypto/package.json |  |  | 0.545 |
 | ns | 7611 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.538 |
-| walker |  | 7629 | 31 | package runtime dependencies in packages/crypto/package.json |  |  | 0.538 |
-| walker |  | 7708 | 79 | package identity in packages/lib/package.json |  |  | 0.538 |
+| walker |  | 7616 | 31 | package runtime dependencies in packages/crypto/package.json |  |  | 0.538 |
+| walker |  | 7695 | 79 | package identity in packages/lib/package.json |  |  | 0.538 |
+| walker |  | 7746 | 51 | package runtime metadata in packages/lib/package.json |  |  | 0.538 |
 | ns | 7747 |  | 136 | Complete file roster of packages/cli | 4.2 |  | 0.555 |
-| walker |  | 7759 | 51 | package runtime metadata in packages/lib/package.json |  |  | 0.555 |
-| walker |  | 7883 | 124 | package entrypoints in packages/lib/package.json |  |  | 0.555 |
+| walker |  | 7870 | 124 | package entrypoints in packages/lib/package.json |  |  | 0.555 |
 | ns | 8011 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.546 |
-| walker |  | 8032 | 149 | package scripts in packages/lib/package.json |  |  | 0.546 |
-| walker |  | 8232 | 200 | package scripts in packages/app-client/package.json |  |  | 0.546 |
+| walker |  | 8019 | 149 | package scripts in packages/lib/package.json |  |  | 0.546 |
+| walker |  | 8219 | 200 | package scripts in packages/app-client/package.json |  |  | 0.546 |
 | ns | 8269 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.537 |
-| walker |  | 8312 | 80 | package identity in packages/cli/package.json |  |  | 0.537 |
-| walker |  | 8363 | 51 | package runtime metadata in packages/cli/package.json |  |  | 0.537 |
-| walker |  | 8447 | 84 | package entrypoints in packages/cli/package.json |  |  | 0.537 |
+| walker |  | 8299 | 80 | package identity in packages/cli/package.json |  |  | 0.537 |
+| walker |  | 8350 | 51 | package runtime metadata in packages/cli/package.json |  |  | 0.537 |
+| walker |  | 8434 | 84 | package entrypoints in packages/cli/package.json |  |  | 0.537 |
 | ns | 8562 |  | 293 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.568 |
-| walker |  | 8598 | 151 | package scripts in packages/cli/package.json |  |  | 0.568 |
-| walker |  | 8648 | 50 | README.md section #22 |  |  | 0.568 |
-| ns | 8793 |  | 231 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.588 |
-| walker |  | 8795 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.588 |
-| walker |  | 8859 | 64 | README.md section #14 |  |  | 0.601 |
-| walker |  | 8945 | 86 | packages/lib/README.md section #1 |  |  | 0.601 |
-| walker |  | 9005 | 60 | packages/docs/src/how-it-works.md section #0 |  |  | 0.601 |
-| ns | 9036 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.590 |
-| walker |  | 9169 | 164 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.590 |
+| walker |  | 8585 | 151 | package scripts in packages/cli/package.json |  |  | 0.568 |
+| walker |  | 8635 | 50 | README.md section #22 |  |  | 0.568 |
+| walker |  | 8782 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.568 |
+| ns | 8793 |  | 231 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.587 |
+| walker |  | 8846 | 64 | README.md section #14 |  |  | 0.601 |
+| walker |  | 8932 | 86 | packages/lib/README.md section #1 |  |  | 0.601 |
+| walker |  | 8992 | 60 | packages/docs/src/how-it-works.md section #0 |  |  | 0.601 |
+| ns | 9036 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.589 |
+| walker |  | 9156 | 164 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.589 |
+| walker |  | 9169 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.590 |
 | walker |  | 9212 | 43 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.590 |
 | walker |  | 9237 | 25 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.590 |
 | ns | 9272 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.586 |

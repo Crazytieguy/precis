@@ -1,7 +1,7 @@
 fixture = "beszel"
 budget = 10000
-cumulative_tokens = 9868
-batch_count = 453
+cumulative_tokens = 9865
+batch_count = 452
 
 [[batches]]
 position = 1
@@ -9867,24 +9867,10 @@ kind = "full"
 
 [[batches]]
 position = 430
-key = 'Fs(DirListing { dir: "agent/tools/fetchsmartctl" })'
-descriptor = "listing of 'agent/tools/fetchsmartctl'"
-cost_tokens = 3
-cum_tokens = 9396
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "agent/tools/fetchsmartctl"
-entries = ["main.go"]
-
-[[batches]]
-position = 431
 key = 'Go(DeclBody { file: "internal/users/users.go", start_line: 18 })'
 descriptor = "go decl body at internal/users/users.go:18"
 cost_tokens = 24
-cum_tokens = 9420
+cum_tokens = 9417
 
 [batches.content]
 kind = "lines"
@@ -9898,11 +9884,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 432
+position = 431
 key = 'Go(DeclDoc { file: "internal/hub/server_development.go", start_line: 18 })'
 descriptor = "go decl doc at internal/hub/server_development.go:18"
 cost_tokens = 18
-cum_tokens = 9438
+cum_tokens = 9435
 
 [batches.content]
 kind = "lines"
@@ -9916,11 +9902,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 433
+position = 432
 key = 'Go(DeclNames { file: "internal/hub/transport/transport.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/transport/transport.go"
 cost_tokens = 65
-cum_tokens = 9503
+cum_tokens = 9500
 
 [batches.content]
 kind = "lines"
@@ -9974,11 +9960,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 434
+position = 433
 key = 'Go(Decl { file: "internal/hub/transport/transport.go", start_line: 32 })'
 descriptor = "go decl at internal/hub/transport/transport.go:32"
 cost_tokens = 0
-cum_tokens = 9503
+cum_tokens = 9500
 
 [batches.content]
 kind = "lines"
@@ -9992,11 +9978,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 435
+position = 434
 key = 'Go(Decl { file: "internal/hub/transport/transport.go", start_line: 48 })'
 descriptor = "go decl at internal/hub/transport/transport.go:48"
 cost_tokens = 0
-cum_tokens = 9503
+cum_tokens = 9500
 
 [batches.content]
 kind = "lines"
@@ -10010,11 +9996,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 436
+position = 435
 key = 'Go(DeclDoc { file: "internal/alerts/alerts_history.go", start_line: 58 })'
 descriptor = "go decl doc at internal/alerts/alerts_history.go:58"
 cost_tokens = 16
-cum_tokens = 9519
+cum_tokens = 9516
 
 [batches.content]
 kind = "lines"
@@ -10028,11 +10014,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 437
+position = 436
 key = 'Go(DeclDoc { file: "agent/gpu_darwin_unsupported.go", start_line: 9 })'
 descriptor = "go decl doc at agent/gpu_darwin_unsupported.go:9"
 cost_tokens = 29
-cum_tokens = 9548
+cum_tokens = 9545
 
 [batches.content]
 kind = "lines"
@@ -10046,11 +10032,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 438
+position = 437
 key = 'Go(DeclDoc { file: "agent/gpu_darwin_unsupported.go", start_line: 6 })'
 descriptor = "go decl doc at agent/gpu_darwin_unsupported.go:6"
 cost_tokens = 30
-cum_tokens = 9578
+cum_tokens = 9575
 
 [batches.content]
 kind = "lines"
@@ -10064,11 +10050,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 439
+position = 438
 key = 'Go(DeclNames { file: "internal/records/records_deletion.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/records/records_deletion.go"
 cost_tokens = 116
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10170,11 +10156,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 440
+position = 439
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 14 })'
 descriptor = "go decl at internal/records/records_deletion.go:14"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10188,11 +10174,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 441
+position = 440
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 41 })'
 descriptor = "go decl at internal/records/records_deletion.go:41"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10206,11 +10192,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 442
+position = 441
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 60 })'
 descriptor = "go decl at internal/records/records_deletion.go:60"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10224,11 +10210,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 443
+position = 442
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 102 })'
 descriptor = "go decl at internal/records/records_deletion.go:102"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10242,11 +10228,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 444
+position = 443
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 116 })'
 descriptor = "go decl at internal/records/records_deletion.go:116"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10260,11 +10246,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 445
+position = 444
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 130 })'
 descriptor = "go decl at internal/records/records_deletion.go:130"
 cost_tokens = 0
-cum_tokens = 9694
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -10278,11 +10264,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 446
+position = 445
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 14 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:14"
 cost_tokens = 9
-cum_tokens = 9703
+cum_tokens = 9700
 
 [batches.content]
 kind = "lines"
@@ -10296,11 +10282,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 447
+position = 446
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 41 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:41"
 cost_tokens = 11
-cum_tokens = 9714
+cum_tokens = 9711
 
 [batches.content]
 kind = "lines"
@@ -10314,11 +10300,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 448
+position = 447
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 130 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:130"
 cost_tokens = 16
-cum_tokens = 9730
+cum_tokens = 9727
 
 [batches.content]
 kind = "lines"
@@ -10332,11 +10318,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 449
+position = 448
 key = 'Go(PackageImports { file: "agent/systemd_nonlinux.go" })'
 descriptor = "go package + imports in agent/systemd_nonlinux.go"
 cost_tokens = 52
-cum_tokens = 9782
+cum_tokens = 9779
 
 [batches.content]
 kind = "lines"
@@ -10350,11 +10336,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 450
+position = 449
 key = 'Go(DeclDoc { file: "internal/alerts/alerts_api.go", start_line: 81 })'
 descriptor = "go decl doc at internal/alerts/alerts_api.go:81"
 cost_tokens = 37
-cum_tokens = 9819
+cum_tokens = 9816
 
 [batches.content]
 kind = "lines"
@@ -10368,11 +10354,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 451
+position = 450
 key = 'Go(DeclDoc { file: "internal/hub/collections.go", start_line: 17 })'
 descriptor = "go decl doc at internal/hub/collections.go:17"
 cost_tokens = 17
-cum_tokens = 9836
+cum_tokens = 9833
 
 [batches.content]
 kind = "lines"
@@ -10386,11 +10372,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 452
+position = 451
 key = 'Go(DeclDoc { file: "internal/hub/server_development.go", start_line: 48 })'
 descriptor = "go decl doc at internal/hub/server_development.go:48"
 cost_tokens = 16
-cum_tokens = 9852
+cum_tokens = 9849
 
 [batches.content]
 kind = "lines"
@@ -10404,11 +10390,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 453
+position = 452
 key = 'Go(DeclDoc { file: "internal/hub/server_production.go", start_line: 18 })'
 descriptor = "go decl doc at internal/hub/server_production.go:18"
 cost_tokens = 16
-cum_tokens = 9868
+cum_tokens = 9865
 
 [batches.content]
 kind = "lines"

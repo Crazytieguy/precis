@@ -1,7 +1,7 @@
 fixture = "pluggy"
 budget = 10000
-cumulative_tokens = 9996
-batch_count = 230
+cumulative_tokens = 9986
+batch_count = 229
 
 [[batches]]
 position = 1
@@ -405,24 +405,10 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Fs(DirListing { dir: "docs/examples/eggsample/eggsample" })'
-descriptor = "listing of 'docs/examples/eggsample/eggsample'"
-cost_tokens = 19
-cum_tokens = 1557
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples/eggsample/eggsample"
-entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
-
-[[batches]]
-position = 26
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 80
-cum_tokens = 1637
+cum_tokens = 1618
 
 [batches.content]
 kind = "lines"
@@ -452,11 +438,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Fs(DirListing { dir: "testing" })'
 descriptor = "listing of 'testing'"
 cost_tokens = 61
-cum_tokens = 1698
+cum_tokens = 1679
 
 [batches.content]
 kind = "fs"
@@ -466,11 +452,11 @@ parent = "testing"
 entries = ["benchmark.py", "conftest.py", "test_details.py", "test_helpers.py", "test_hookcaller.py", "test_invocations.py", "test_multicall.py", "test_pluginmanager.py", "test_result.py", "test_tracer.py", "test_warnings.py"]
 
 [[batches]]
-position = 28
+position = 27
 key = 'Python(Imports { file: "src/pluggy/_warnings.py" })'
 descriptor = "python imports in src/pluggy/_warnings.py"
 cost_tokens = 11
-cum_tokens = 1709
+cum_tokens = 1690
 
 [batches.content]
 kind = "lines"
@@ -482,6 +468,20 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "docs/examples/eggsample/eggsample" })'
+descriptor = "listing of 'docs/examples/eggsample/eggsample'"
+cost_tokens = 19
+cum_tokens = 1709
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/examples/eggsample/eggsample"
+entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
 
 [[batches]]
 position = 29
@@ -4965,24 +4965,10 @@ kind = "full"
 
 [[batches]]
 position = 205
-key = 'Fs(DirListing { dir: "docs/examples/eggsample-spam" })'
-descriptor = "listing of 'docs/examples/eggsample-spam'"
-cost_tokens = 10
-cum_tokens = 8866
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/examples/eggsample-spam"
-entries = ["eggsample_spam.py", "setup.py"]
-
-[[batches]]
-position = 206
 key = 'Plaintext(DeclSurface { file: "TIDELIFT.rst" })'
 descriptor = "declaration surface of TIDELIFT.rst"
 cost_tokens = 134
-cum_tokens = 9000
+cum_tokens = 8990
 
 [batches.content]
 kind = "lines"
@@ -5004,11 +4990,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 207
+position = 206
 key = 'Python(DeclNames { file: "src/pluggy/_tracing.py" })'
 descriptor = "python decl names surface in src/pluggy/_tracing.py"
 cost_tokens = 67
-cum_tokens = 9067
+cum_tokens = 9057
 
 [batches.content]
 kind = "lines"
@@ -5030,11 +5016,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 208
+position = 207
 key = 'Python(Decl { file: "src/pluggy/_tracing.py", start_line: 16 })'
 descriptor = "python decl at src/pluggy/_tracing.py:16"
 cost_tokens = 0
-cum_tokens = 9067
+cum_tokens = 9057
 
 [batches.content]
 kind = "lines"
@@ -5048,11 +5034,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 209
+position = 208
 key = 'Python(Decl { file: "src/pluggy/_tracing.py", start_line: 59 })'
 descriptor = "python decl at src/pluggy/_tracing.py:59"
 cost_tokens = 0
-cum_tokens = 9067
+cum_tokens = 9057
 
 [batches.content]
 kind = "lines"
@@ -5066,11 +5052,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 210
+position = 209
 key = 'Python(MethodSigs { file: "src/pluggy/_tracing.py" })'
 descriptor = "python method sigs in src/pluggy/_tracing.py"
 cost_tokens = 210
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5220,11 +5206,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 210
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 17 })'
 descriptor = "python method at src/pluggy/_tracing.py:17"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5238,11 +5224,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 212
+position = 211
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 22 })'
 descriptor = "python method at src/pluggy/_tracing.py:22"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5256,11 +5242,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 213
+position = 212
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 25 })'
 descriptor = "python method at src/pluggy/_tracing.py:25"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5274,11 +5260,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 214
+position = 213
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 42 })'
 descriptor = "python method at src/pluggy/_tracing.py:42"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5292,11 +5278,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 215
+position = 214
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 48 })'
 descriptor = "python method at src/pluggy/_tracing.py:48"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5310,11 +5296,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 216
+position = 215
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 51 })'
 descriptor = "python method at src/pluggy/_tracing.py:51"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5328,11 +5314,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 217
+position = 216
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 60 })'
 descriptor = "python method at src/pluggy/_tracing.py:60"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5346,11 +5332,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 218
+position = 217
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 64 })'
 descriptor = "python method at src/pluggy/_tracing.py:64"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5364,11 +5350,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 219
+position = 218
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 67 })'
 descriptor = "python method at src/pluggy/_tracing.py:67"
 cost_tokens = 0
-cum_tokens = 9277
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -5382,11 +5368,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 220
+position = 219
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 48, body_start_line: 49 })'
 descriptor = "python method body at src/pluggy/_tracing.py:48 body 49"
 cost_tokens = 9
-cum_tokens = 9286
+cum_tokens = 9276
 
 [batches.content]
 kind = "lines"
@@ -5400,11 +5386,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 221
+position = 220
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at src/pluggy/_tracing.py:22 body 23"
 cost_tokens = 12
-cum_tokens = 9298
+cum_tokens = 9288
 
 [batches.content]
 kind = "lines"
@@ -5418,11 +5404,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 222
+position = 221
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 64, body_start_line: 65 })'
 descriptor = "python method body at src/pluggy/_tracing.py:64 body 65"
 cost_tokens = 13
-cum_tokens = 9311
+cum_tokens = 9301
 
 [batches.content]
 kind = "lines"
@@ -5436,11 +5422,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 223
+position = 222
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 67, body_start_line: 68 })'
 descriptor = "python method body at src/pluggy/_tracing.py:67 body 68"
 cost_tokens = 17
-cum_tokens = 9328
+cum_tokens = 9318
 
 [batches.content]
 kind = "lines"
@@ -5454,11 +5440,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 224
+position = 223
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 60, body_start_line: 61 })'
 descriptor = "python method body at src/pluggy/_tracing.py:60 body 61"
 cost_tokens = 18
-cum_tokens = 9346
+cum_tokens = 9336
 
 [batches.content]
 kind = "lines"
@@ -5472,11 +5458,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 225
+position = 224
 key = 'Python(Imports { file: "src/pluggy/_result.py" })'
 descriptor = "python imports in src/pluggy/_result.py"
 cost_tokens = 109
-cum_tokens = 9455
+cum_tokens = 9445
 
 [batches.content]
 kind = "lines"
@@ -5490,11 +5476,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 226
+position = 225
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 176 })'
 descriptor = "python method doc at src/pluggy/_manager.py:176"
 cost_tokens = 135
-cum_tokens = 9590
+cum_tokens = 9580
 
 [batches.content]
 kind = "lines"
@@ -5508,11 +5494,11 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 227
+position = 226
 key = 'Python(DeclDoc { file: "src/pluggy/_callers.py", start_line: 82 })'
 descriptor = "python decl doc at src/pluggy/_callers.py:82"
 cost_tokens = 56
-cum_tokens = 9646
+cum_tokens = 9636
 
 [batches.content]
 kind = "lines"
@@ -5526,11 +5512,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 228
+position = 227
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 125 })'
 descriptor = "python method doc at src/pluggy/_manager.py:125"
 cost_tokens = 137
-cum_tokens = 9783
+cum_tokens = 9773
 
 [batches.content]
 kind = "lines"
@@ -5544,11 +5530,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 229
+position = 228
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 278 })'
 descriptor = "python method doc at src/pluggy/_manager.py:278"
 cost_tokens = 146
-cum_tokens = 9929
+cum_tokens = 9919
 
 [batches.content]
 kind = "lines"
@@ -5562,11 +5548,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 230
+position = 229
 key = 'Python(Imports { file: "src/pluggy/_tracing.py" })'
 descriptor = "python imports in src/pluggy/_tracing.py"
 cost_tokens = 67
-cum_tokens = 9996
+cum_tokens = 9986
 
 [batches.content]
 kind = "lines"

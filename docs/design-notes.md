@@ -2380,33 +2380,6 @@ batch.** Applying the same all-checking-tools test to the generic
 config appendix that is purely checking tooling, so the extra branch
 was pure dead code and was dropped.
 
-### Interior-of-a-supporting-corpus listing suppression — measured MIXED, not shipped
-
-The same histogram over listings splits by a parent-relative
-condition: when a listed directory *and its parent* are both
-non-essential, the listing is enumerating a supporting corpus's
-internal partitioning (thiserror `tests/ui` at 527 tokens, a docs
-site's per-language page dirs) rather than telling the reader the
-corpus exists — 806 credited vs 2400 uncredited tokens, against 74%
-credited for depth-1 corpus entries. Distinct from the dead
-`small_listing_decay` (size-gated), from sibling-count devaluation
-(sibling-count-gated) and from catalog-child suppression (parent is a
-high-fanout source catalog); the depth-1 repo-map floor is untouched
-because a corpus's own entry has the root as its parent, and the
-`.github/workflows` carve-out is excluded because its own
-classification is essential.
-
-Magnitude sweep on top of the shipped config lever (3000): 1.0→0.6165
-· 0.85→0.6167 · 0.75→0.6170 · 0.70→0.6167 · 0.65→0.6163 · 0.50→0.6154.
-Grid at the 0.75 peak vs the shipped state: 1000 +0.0029 · 1442
-−0.0018 · 2080 +0.0009 · 3000 +0.0005 · 4327 −0.0002 · 6240 −0.0012 ·
-9000 −0.0013. Per-fixture swings are large in both directions at 0.50
-(tomli +0.130, flask +0.061 against anyhow −0.061, click −0.043, ky
-−0.030). Not shipped: a shallow ±0.0005 ridge that trades four budgets
-for two is not worth ~35 lines against a class that gates the whole fs
-expansion. Worth re-measuring only if a later tree is specifically
-short at B=1000, where it is the strongest lever measured this lane.
-
 ## Data-model schemas and C interface headers (2026-07-29)
 
 Zero point 0.6151 / 71 training fixtures. Two narrow ships, plus five

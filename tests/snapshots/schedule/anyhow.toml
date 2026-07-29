@@ -677,124 +677,10 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Fs(DirListing { dir: "tests/common" })'
-descriptor = "listing of 'tests/common'"
-cost_tokens = 3
-cum_tokens = 1812
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/common"
-entries = ["mod.rs"]
-
-[[batches]]
-position = 24
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
-descriptor = "pub-item doc lede at src/lib.rs:415"
-cost_tokens = 41
-cum_tokens = 1853
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 394
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
-descriptor = "pub-item doc lede at src/lib.rs:616"
-cost_tokens = 65
-cum_tokens = 1918
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 470
-end = 476
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "tests/drop" })'
-descriptor = "listing of 'tests/drop'"
-cost_tokens = 3
-cum_tokens = 1921
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/drop"
-entries = ["mod.rs"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "tests/ui" })'
-descriptor = "listing of 'tests/ui'"
-cost_tokens = 81
-cum_tokens = 2002
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/ui"
-entries = ["chained-comparison.rs", "chained-comparison.stderr", "empty-ensure.rs", "empty-ensure.stderr", "ensure-nonbool.rs", "ensure-nonbool.stderr", "must-use.rs", "must-use.stderr", "no-impl.rs", "no-impl.stderr", "temporary-value.rs", "temporary-value.stderr", "wrong-interpolation.rs", "wrong-interpolation.stderr"]
-
-[[batches]]
-position = 28
-key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 58 })'
-descriptor = "macro_export body at src/macros.rs:58"
-cost_tokens = 138
-cum_tokens = 2140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/macros.rs"
-start = 58
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 390 })'
-descriptor = "pub-item doc lede at src/lib.rs:390"
-cost_tokens = 174
-cum_tokens = 2314
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 288
-end = 300
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
 key = 'Rust(MethodSigs { file: "src/context.rs" })'
 descriptor = "impl method sigs in src/context.rs"
 cost_tokens = 166
-cum_tokens = 2480
+cum_tokens = 1975
 
 [batches.content]
 kind = "lines"
@@ -872,11 +758,111 @@ end = 104
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 24
+key = 'Fs(DirListing { dir: "tests/common" })'
+descriptor = "listing of 'tests/common'"
+cost_tokens = 3
+cum_tokens = 1978
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/common"
+entries = ["mod.rs"]
+
+[[batches]]
+position = 25
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
+descriptor = "pub-item doc lede at src/lib.rs:415"
+cost_tokens = 41
+cum_tokens = 2019
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 394
+end = 397
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
+descriptor = "pub-item doc lede at src/lib.rs:616"
+cost_tokens = 65
+cum_tokens = 2084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 470
+end = 476
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 58 })'
+descriptor = "macro_export body at src/macros.rs:58"
+cost_tokens = 138
+cum_tokens = 2222
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/macros.rs"
+start = 58
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 390 })'
+descriptor = "pub-item doc lede at src/lib.rs:390"
+cost_tokens = 174
+cum_tokens = 2396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 288
+end = 300
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "tests/drop" })'
+descriptor = "listing of 'tests/drop'"
+cost_tokens = 3
+cum_tokens = 2399
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/drop"
+entries = ["mod.rs"]
+
+[[batches]]
+position = 30
 key = 'Rust(CrateAttrs { file: "src/lib.rs" })'
 descriptor = "crate attributes in src/lib.rs"
 cost_tokens = 401
-cum_tokens = 2881
+cum_tokens = 2800
 
 [batches.content]
 kind = "lines"
@@ -890,11 +876,11 @@ end = 237
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Rust(PubItem { file: "src/backtrace.rs", start_line: 8 })'
 descriptor = "pub item at src/backtrace.rs:8"
 cost_tokens = 34
-cum_tokens = 2915
+cum_tokens = 2834
 
 [batches.content]
 kind = "lines"
@@ -906,6 +892,20 @@ end = 8
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "tests/ui" })'
+descriptor = "listing of 'tests/ui'"
+cost_tokens = 81
+cum_tokens = 2915
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/ui"
+entries = ["chained-comparison.rs", "chained-comparison.stderr", "empty-ensure.rs", "empty-ensure.stderr", "ensure-nonbool.rs", "ensure-nonbool.stderr", "must-use.rs", "must-use.stderr", "no-impl.rs", "no-impl.stderr", "temporary-value.rs", "temporary-value.stderr", "wrong-interpolation.rs", "wrong-interpolation.stderr"]
 
 [[batches]]
 position = 33
@@ -2983,24 +2983,10 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Fs(DirListing { dir: "tests/crate" })'
-descriptor = "listing of 'tests/crate'"
-cost_tokens = 13
-cum_tokens = 6127
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/crate"
-entries = [".gitignore", "Cargo.toml", "test.rs"]
-
-[[batches]]
-position = 83
 key = 'Rust(ImplMethod { file: "src/error.rs", start_line: 1002 })'
 descriptor = "impl method at src/error.rs:1002"
 cost_tokens = 13
-cum_tokens = 6140
+cum_tokens = 6127
 
 [batches.content]
 kind = "lines"
@@ -3022,11 +3008,11 @@ end = 1003
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Rust(ImplMethodBody { file: "src/ptr.rs", start_line: 115, body_start_line: 116 })'
 descriptor = "impl method body at src/ptr.rs:115 body 116"
 cost_tokens = 13
-cum_tokens = 6153
+cum_tokens = 6140
 
 [batches.content]
 kind = "lines"
@@ -3040,11 +3026,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Rust(MethodSigs { file: "src/fmt.rs" })'
 descriptor = "impl method sigs in src/fmt.rs"
 cost_tokens = 72
-cum_tokens = 6225
+cum_tokens = 6212
 
 [batches.content]
 kind = "lines"
@@ -3082,11 +3068,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Rust(ImplMethod { file: "src/fmt.rs", start_line: 7 })'
 descriptor = "impl method at src/fmt.rs:7"
 cost_tokens = 0
-cum_tokens = 6225
+cum_tokens = 6212
 
 [batches.content]
 kind = "lines"
@@ -3108,11 +3094,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Rust(ImplMethod { file: "src/fmt.rs", start_line: 20 })'
 descriptor = "impl method at src/fmt.rs:20"
 cost_tokens = 0
-cum_tokens = 6225
+cum_tokens = 6212
 
 [batches.content]
 kind = "lines"
@@ -3134,11 +3120,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 218
-cum_tokens = 6443
+cum_tokens = 6430
 
 [batches.content]
 kind = "lines"
@@ -3152,11 +3138,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Rust(PubItem { file: "src/chain.rs", start_line: 16 })'
 descriptor = "pub item at src/chain.rs:16"
 cost_tokens = 99
-cum_tokens = 6542
+cum_tokens = 6529
 
 [batches.content]
 kind = "lines"
@@ -3170,11 +3156,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Rust(CrateDocTail { file: "src/lib.rs", start_line: 95 })'
 descriptor = "crate-doc tail at src/lib.rs:95"
 cost_tokens = 369
-cum_tokens = 6911
+cum_tokens = 6898
 
 [batches.content]
 kind = "lines"
@@ -3204,11 +3190,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Rust(CrateDocTail { file: "src/lib.rs", start_line: 142 })'
 descriptor = "crate-doc tail at src/lib.rs:142"
 cost_tokens = 381
-cum_tokens = 7292
+cum_tokens = 7279
 
 [batches.content]
 kind = "lines"
@@ -3238,11 +3224,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Rust(CrateDocTail { file: "src/lib.rs", start_line: 179 })'
 descriptor = "crate-doc tail at src/lib.rs:179"
 cost_tokens = 310
-cum_tokens = 7602
+cum_tokens = 7589
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3258,11 @@ end = 207
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Rust(PubItem { file: "src/error.rs", start_line: 934 })'
 descriptor = "pub item at src/error.rs:934"
 cost_tokens = 83
-cum_tokens = 7685
+cum_tokens = 7672
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3276,11 @@ end = 940
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Rust(ImplMethodBody { file: "src/ptr.rs", start_line: 119, body_start_line: 120 })'
 descriptor = "impl method body at src/ptr.rs:119 body 120"
 cost_tokens = 15
-cum_tokens = 7700
+cum_tokens = 7687
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3294,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Rust(ImplMethodBody { file: "src/ptr.rs", start_line: 175, body_start_line: 176 })'
 descriptor = "impl method body at src/ptr.rs:175 body 176"
 cost_tokens = 15
-cum_tokens = 7715
+cum_tokens = 7702
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3312,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Rust(ImplMethodBody { file: "src/ptr.rs", start_line: 169, body_start_line: 170 })'
 descriptor = "impl method body at src/ptr.rs:169 body 170"
 cost_tokens = 16
-cum_tokens = 7731
+cum_tokens = 7718
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3330,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Rust(ImplMethodBody { file: "src/ptr.rs", start_line: 44, body_start_line: 45 })'
 descriptor = "impl method body at src/ptr.rs:44 body 45"
 cost_tokens = 17
-cum_tokens = 7748
+cum_tokens = 7735
 
 [batches.content]
 kind = "lines"
@@ -3360,6 +3346,20 @@ end = 45
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "tests/crate" })'
+descriptor = "listing of 'tests/crate'"
+cost_tokens = 13
+cum_tokens = 7748
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/crate"
+entries = [".gitignore", "Cargo.toml", "test.rs"]
 
 [[batches]]
 position = 98

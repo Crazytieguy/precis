@@ -268,7 +268,20 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_TIER_SCALE
+    let supporting_corpus_interior_factor = if non_essential < 1.0
+        && dir
+            .parent()
+            .is_some_and(|parent| ctx.non_essential_factor(parent) < 1.0)
+    {
+        SUPPORTING_CORPUS_INTERIOR_LISTING_SCALE
+    } else {
+        1.0
+    };
+    mix_signals(cat, fu, ztu, depth)
+        * fanout
+        * catalog_child_factor
+        * supporting_corpus_interior_factor
+        * LISTING_TIER_SCALE
 }
 
 /// Uniform price of the directory-listing class against the source
@@ -288,6 +301,11 @@ const CATALOG_PARENT_MIN_CHILD_DIRS: usize = 10;
 /// low enough to push it past the primary budget, non-zero so it stays
 /// reachable at large budgets.
 const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
+
+/// Deferral for listings below an already non-essential parent. The
+/// parent listing says the supporting corpus exists; deeper listings mostly
+/// enumerate its internal partitions and should yield to primary content.
+const SUPPORTING_CORPUS_INTERIOR_LISTING_SCALE: f64 = 0.85;
 
 /// True when `dir`'s parent is a high-fanout source-inventory catalog:
 /// a directory of many uniform child dirs (monaco's `definitions/`,
