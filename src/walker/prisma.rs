@@ -33,9 +33,7 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::value::mix_signals;
 
-use super::{
-    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
-};
+use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_content};
 
 /// Cap on TOC entries — budget hedge. Also caps the per-decl body
 /// batches emitted (a schema with more top-level decls than this is
@@ -141,7 +139,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             value: toc_value(&file, ctx),
         });
 
-        let depth = path_depth_factor(&file, ctx);
+        let depth = schema_depth_factor(&file, ctx);
         let mut body_index = 0;
         for decl in &decls {
             if !decl.warrants_body() {
@@ -290,7 +288,29 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
 }
 
 fn toc_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
+    mix_signals(1.0, 0.7, 0.85, schema_depth_factor(file, ctx))
+}
+
+/// Depth factor for a data-model definition file, pinned to root tier.
+///
+/// A schema that declares the application's persistent entities is
+/// application spine: every backend question resolves against it, and
+/// the NS ranks its catalog beside the root manifest. Where it sits in
+/// the tree records only which workspace package owns the ORM client
+/// (`packages/prisma/`, `db/`, `server/prisma/`), so the generic
+/// depth damp reads that packaging choice as a centrality signal and
+/// pushes the catalog behind hundreds of directory listings. Pinning is
+/// the same clamp [`super::file_depth_factor`] already grants an
+/// entrypoint, for the same reason.
+///
+/// The pin is bound to the *data model*, not to configuration in
+/// general: deploy / CI / tool config (compose files, workflows,
+/// Makefiles, tsconfig) describes how the project is built and run, and
+/// its depth genuinely tracks its scope — a workflow under
+/// `apps/web/.github/` governs only that app. Nothing outside this
+/// walker's `schema.prisma` gate is affected.
+fn schema_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    super::file_depth_factor(file, ctx, true)
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
