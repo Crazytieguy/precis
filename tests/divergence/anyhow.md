@@ -38,22 +38,22 @@ Score(3000)=0.703 I=0.901 C=0.548 ns_rows≤3K=20/63 (reached=11 partial=1 missi
 | walker |  | 1684 | 93 | listing of 'tests' |  |  | 0.763 |
 | ns | 1783 |  | 166 | Display representations — `{}` and `{:#}`, with sample output | 2.4 | 1.4 | 0.741 |
 | walker |  | 1809 | 125 | manifest config in Cargo.toml |  |  | 0.741 |
-| walker |  | 1812 | 3 | listing of 'tests/common' |  |  | 0.741 |
-| walker |  | 1853 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.741 |
-| walker |  | 1918 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.742 |
-| ns | 1920 |  | 137 | Debug representations — `{:?}` and `{:#?}` | 2.5 | 2.4 | 0.716 |
-| walker |  | 1921 | 3 | listing of 'tests/drop' |  |  | 0.716 |
-| walker |  | 2002 | 81 | listing of 'tests/ui' |  |  | 0.718 |
-| ns | 2036 |  | 116 | Context trait doc — sealed, and outermost-first cause printing | 2.6 | 2.3 | 0.703 |
-| walker |  | 2140 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.705 |
-| ns | 2217 |  | 181 | Context + downcasting — the guarantee, in both directions | 2.7 | 2.6 | 0.675 |
-| walker |  | 2314 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.732 |
-| ns | 2365 |  | 148 | Result alias and Ok() helper semantics | 2.8 | 2.1 | 0.711 |
-| walker |  | 2480 | 166 | impl method sigs in src/context.rs |  |  | 0.712 |
-| ns | 2541 |  | 176 | no_std support contract | 2.9 |  | 0.692 |
-| ns | 2773 |  | 232 | Trait impls on Error — complete list | 2.10 | 2.2 | 0.667 |
-| walker |  | 2881 | 401 | crate attributes in src/lib.rs |  |  | 0.703 |
-| walker |  | 2915 | 34 | pub item at src/backtrace.rs:8 |  |  | 0.703 |
+| ns | 1920 |  | 137 | Debug representations — `{:?}` and `{:#?}` | 2.5 | 2.4 | 0.715 |
+| walker |  | 1975 | 166 | impl method sigs in src/context.rs |  |  | 0.716 |
+| walker |  | 1978 | 3 | listing of 'tests/common' |  |  | 0.716 |
+| walker |  | 2019 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.716 |
+| ns | 2036 |  | 116 | Context trait doc — sealed, and outermost-first cause printing | 2.6 | 2.3 | 0.695 |
+| walker |  | 2084 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.701 |
+| ns | 2217 |  | 181 | Context + downcasting — the guarantee, in both directions | 2.7 | 2.6 | 0.672 |
+| walker |  | 2222 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.674 |
+| ns | 2365 |  | 148 | Result alias and Ok() helper semantics | 2.8 | 2.1 | 0.655 |
+| walker |  | 2396 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.710 |
+| walker |  | 2399 | 3 | listing of 'tests/drop' |  |  | 0.710 |
+| ns | 2541 |  | 176 | no_std support contract | 2.9 |  | 0.691 |
+| ns | 2773 |  | 232 | Trait impls on Error — complete list | 2.10 | 2.2 | 0.666 |
+| walker |  | 2800 | 401 | crate attributes in src/lib.rs |  |  | 0.701 |
+| walker |  | 2834 | 34 | pub item at src/backtrace.rs:8 |  |  | 0.701 |
+| walker |  | 2915 | 81 | listing of 'tests/ui' |  |  | 0.703 |
 | ns | 3007 |  | 234 | What bail! and ensure! mean | 3.1 |  | 0.681 |
 | walker |  | 3137 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.685 |
 | walker |  | 3174 | 37 | impl method sigs in src/ensure.rs |  |  | 0.685 |
@@ -120,31 +120,31 @@ Score(3000)=0.703 I=0.901 C=0.548 ns_rows≤3K=20/63 (reached=11 partial=1 missi
 | walker |  | 6076 | 9 | pub item at src/wrapper.rs:11 |  |  | 0.574 |
 | walker |  | 6085 | 9 | pub item at src/wrapper.rs:34 |  |  | 0.574 |
 | walker |  | 6114 | 29 | pub item at src/wrapper.rs:58 |  |  | 0.574 |
-| walker |  | 6127 | 13 | listing of 'tests/crate' |  |  | 0.574 |
-| walker |  | 6140 | 13 | impl method at src/error.rs:1002 |  |  | 0.574 |
-| walker |  | 6153 | 13 | impl method body at src/ptr.rs:115 body 116 |  |  | 0.574 |
-| walker |  | 6225 | 72 | impl method sigs in src/fmt.rs |  |  | 0.574 |
-| walker |  | 6225 | 0 | impl method at src/fmt.rs:7 |  |  | 0.574 |
-| walker |  | 6225 | 0 | impl method at src/fmt.rs:20 |  |  | 0.574 |
+| walker |  | 6127 | 13 | impl method at src/error.rs:1002 |  |  | 0.574 |
+| walker |  | 6140 | 13 | impl method body at src/ptr.rs:115 body 116 |  |  | 0.574 |
+| walker |  | 6212 | 72 | impl method sigs in src/fmt.rs |  |  | 0.574 |
+| walker |  | 6212 | 0 | impl method at src/fmt.rs:7 |  |  | 0.574 |
+| walker |  | 6212 | 0 | impl method at src/fmt.rs:20 |  |  | 0.574 |
 | ns | 6257 |  | 250 | ErrorVTable — the hand-rolled vtable layout | 5.1 |  | 0.565 |
-| walker |  | 6443 | 218 | README.md section #7 |  |  | 0.565 |
+| walker |  | 6430 | 218 | README.md section #7 |  |  | 0.565 |
 | ns | 6488 |  | 231 | ErrorImpl, ContextError, and the vtable reader | 5.2 | 5.1 | 0.556 |
-| walker |  | 6542 | 99 | pub item at src/chain.rs:16 |  |  | 0.557 |
+| walker |  | 6529 | 99 | pub item at src/chain.rs:16 |  |  | 0.557 |
 | ns | 6620 |  | 132 | Error::construct — allocation and type erasure | 5.3 | 5.2 | 0.549 |
 | ns | 6723 |  | 103 | impl Error — roster of the non-public fns | 5.4 | 5.3 | 0.554 |
 | ns | 6894 |  | 171 | Vtable function roster in error.rs | 5.5 | 5.1 | 0.547 |
-| walker |  | 6911 | 369 | crate-doc tail at src/lib.rs:95 |  |  | 0.547 |
+| walker |  | 6898 | 369 | crate-doc tail at src/lib.rs:95 |  |  | 0.547 |
 | ns | 7045 |  | 151 | ErrorImpl methods and trait impls | 5.6 | 5.2 | 0.548 |
+| walker |  | 7279 | 381 | crate-doc tail at src/lib.rs:142 |  |  | 0.548 |
 | ns | 7280 |  | 235 | ptr.rs — Own / Ref / Mut / CastTo declarations | 5.7 |  | 0.568 |
-| walker |  | 7292 | 381 | crate-doc tail at src/lib.rs:142 |  |  | 0.568 |
 | ns | 7445 |  | 165 | chain.rs — Chain and ChainState | 6.1 |  | 0.576 |
 | ns | 7562 |  | 117 | chain.rs — every trait impl on Chain | 6.2 | 6.1 | 0.571 |
-| walker |  | 7602 | 310 | crate-doc tail at src/lib.rs:179 |  |  | 0.586 |
-| walker |  | 7685 | 83 | pub item at src/error.rs:934 |  |  | 0.594 |
-| walker |  | 7700 | 15 | impl method body at src/ptr.rs:119 body 120 |  |  | 0.594 |
-| walker |  | 7715 | 15 | impl method body at src/ptr.rs:175 body 176 |  |  | 0.594 |
-| walker |  | 7731 | 16 | impl method body at src/ptr.rs:169 body 170 |  |  | 0.594 |
-| walker |  | 7748 | 17 | impl method body at src/ptr.rs:44 body 45 |  |  | 0.594 |
+| walker |  | 7589 | 310 | crate-doc tail at src/lib.rs:179 |  |  | 0.586 |
+| walker |  | 7672 | 83 | pub item at src/error.rs:934 |  |  | 0.594 |
+| walker |  | 7687 | 15 | impl method body at src/ptr.rs:119 body 120 |  |  | 0.594 |
+| walker |  | 7702 | 15 | impl method body at src/ptr.rs:175 body 176 |  |  | 0.594 |
+| walker |  | 7718 | 16 | impl method body at src/ptr.rs:169 body 170 |  |  | 0.594 |
+| walker |  | 7735 | 17 | impl method body at src/ptr.rs:44 body 45 |  |  | 0.594 |
+| walker |  | 7748 | 13 | listing of 'tests/crate' |  |  | 0.594 |
 | ns | 7787 |  | 225 | wrapper.rs — the three error adapters and their impls | 6.3 |  | 0.588 |
 | walker |  | 7848 | 100 | impl method sigs in src/kind.rs |  |  | 0.589 |
 | walker |  | 7848 | 0 | impl method at src/kind.rs:117 |  |  | 0.589 |

@@ -40,20 +40,20 @@ Score(3000)=0.598 I=0.849 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | walker |  | 1245 | 64 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.681 |
 | walker |  | 1346 | 101 | package scripts in package.json |  |  | 0.681 |
 | walker |  | 1387 | 41 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.682 |
-| walker |  | 1418 | 31 | listing of 'test/helpers' |  |  | 0.731 |
-| ns | 1468 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.678 |
-| walker |  | 1721 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.680 |
-| ns | 1738 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.673 |
-| walker |  | 1821 | 100 | imports in source/index.ts |  |  | 0.673 |
-| walker |  | 1835 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.673 |
-| ns | 1990 |  | 252 | `KyInstance`: every member signature (types/ky.ts) | 2.1 |  | 0.623 |
-| ns | 2101 |  | 111 | `ResponsePromise`: all six body-shortcut signatures | 2.2 |  | 0.605 |
-| walker |  | 2175 | 340 | headings outline in readme.md |  |  | 0.720 |
-| walker |  | 2191 | 16 | readme.md section #49 |  |  | 0.720 |
-| walker |  | 2211 | 20 | readme.md section #48 |  |  | 0.720 |
-| walker |  | 2226 | 15 | readme.md section #22 |  |  | 0.720 |
-| walker |  | 2244 | 18 | readme.md section #7 |  |  | 0.720 |
-| walker |  | 2263 | 19 | readme.md section #11 |  |  | 0.720 |
+| ns | 1468 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.633 |
+| walker |  | 1690 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.635 |
+| ns | 1738 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.629 |
+| walker |  | 1790 | 100 | imports in source/index.ts |  |  | 0.629 |
+| walker |  | 1804 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.629 |
+| ns | 1990 |  | 252 | `KyInstance`: every member signature (types/ky.ts) | 2.1 |  | 0.582 |
+| ns | 2101 |  | 111 | `ResponsePromise`: all six body-shortcut signatures | 2.2 |  | 0.565 |
+| walker |  | 2144 | 340 | headings outline in readme.md |  |  | 0.684 |
+| walker |  | 2160 | 16 | readme.md section #49 |  |  | 0.684 |
+| walker |  | 2180 | 20 | readme.md section #48 |  |  | 0.684 |
+| walker |  | 2195 | 15 | readme.md section #22 |  |  | 0.684 |
+| walker |  | 2213 | 18 | readme.md section #7 |  |  | 0.684 |
+| walker |  | 2232 | 19 | readme.md section #11 |  |  | 0.684 |
+| walker |  | 2263 | 31 | listing of 'test/helpers' |  |  | 0.720 |
 | ns | 2333 |  | 232 | `KyOptions`: every ky-specific option with its type | 2.3 |  | 0.668 |
 | walker |  | 2345 | 82 | json config tsconfig.json |  |  | 0.669 |
 | walker |  | 2357 | 12 | export names surface in source/core/Ky.ts |  |  | 0.669 |

@@ -44,14 +44,14 @@ Score(3000)=0.467 I=0.762 C=0.286 ns_rows≤3K=18/54 (reached=5 partial=1 missin
 | walker |  | 1624 | 83 | README.md section #25 |  |  | 0.533 |
 | walker |  | 1655 | 31 | README.md section #23 |  |  | 0.533 |
 | walker |  | 1688 | 33 | README.md section #21 |  |  | 0.533 |
-| walker |  | 1695 | 7 | listing of 'tests/data' |  |  | 0.534 |
-| ns | 1726 |  | 143 | parse_value() signature and the inline-nesting recursion guard | 2.4 | 2.1 | 0.512 |
-| walker |  | 1870 | 175 | tomllib.md section #0 |  |  | 0.512 |
-| walker |  | 1910 | 40 | README.md section #9 |  |  | 0.512 |
-| ns | 1931 |  | 205 | MAX_INLINE_NESTING and the mypyc stack-overflow rationale | 2.5 | 2.4 | 0.492 |
-| walker |  | 1949 | 39 | README.md section #22 |  |  | 0.492 |
-| walker |  | 1958 | 9 | README headline in benchmark/README.md |  |  | 0.492 |
-| walker |  | 2007 | 49 | README.md section #17 |  |  | 0.492 |
+| ns | 1726 |  | 143 | parse_value() signature and the inline-nesting recursion guard | 2.4 | 2.1 | 0.511 |
+| walker |  | 1863 | 175 | tomllib.md section #0 |  |  | 0.511 |
+| walker |  | 1903 | 40 | README.md section #9 |  |  | 0.511 |
+| ns | 1931 |  | 205 | MAX_INLINE_NESTING and the mypyc stack-overflow rationale | 2.5 | 2.4 | 0.491 |
+| walker |  | 1942 | 39 | README.md section #22 |  |  | 0.491 |
+| walker |  | 1951 | 9 | README headline in benchmark/README.md |  |  | 0.491 |
+| walker |  | 2000 | 49 | README.md section #17 |  |  | 0.491 |
+| walker |  | 2007 | 7 | listing of 'tests/data' |  |  | 0.492 |
 | walker |  | 2063 | 56 | README.md section #5 |  |  | 0.492 |
 | walker |  | 2119 | 56 | README.md section #8 |  |  | 0.492 |
 | walker |  | 2177 | 58 | README.md section #4 |  |  | 0.492 |
@@ -127,41 +127,43 @@ Score(3000)=0.467 I=0.762 C=0.286 ns_rows≤3K=18/54 (reached=5 partial=1 missin
 | ns | 7812 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.371 |
 | ns | 8046 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.365 |
 | walker |  | 8063 | 1057 | YAML config at .pre-commit-config.yaml |  |  | 0.365 |
+| walker |  | 8074 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.365 |
 | ns | 8138 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.363 |
-| walker |  | 8168 | 105 | listing of 'tests/data/valid' |  |  | 0.363 |
-| walker |  | 8173 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.363 |
-| walker |  | 8179 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.363 |
-| walker |  | 8200 | 21 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.363 |
-| walker |  | 8225 | 25 | listing of 'tests/data/valid/array' |  |  | 0.363 |
-| walker |  | 8250 | 25 | listing of 'tests/data/valid/inline-table' |  |  | 0.363 |
-| walker |  | 8277 | 27 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.363 |
-| walker |  | 8288 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.363 |
+| walker |  | 8179 | 105 | listing of 'tests/data/valid' |  |  | 0.363 |
+| walker |  | 8184 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.363 |
+| walker |  | 8190 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.363 |
+| walker |  | 8211 | 21 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.363 |
+| walker |  | 8236 | 25 | listing of 'tests/data/valid/array' |  |  | 0.363 |
+| walker |  | 8261 | 25 | listing of 'tests/data/valid/inline-table' |  |  | 0.363 |
+| walker |  | 8288 | 27 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.363 |
 | walker |  | 8293 | 5 | json config tests/data/valid/no-newlines.json |  |  | 0.363 |
+| walker |  | 8319 | 26 | python test names surface in tests/test_data.py |  |  | 0.363 |
+| walker |  | 8363 | 44 | plaintext config fuzzer/requirements.txt |  |  | 0.363 |
 | ns | 8365 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.357 |
-| walker |  | 8458 | 165 | listing of 'tests/data/invalid' |  |  | 0.357 |
-| walker |  | 8463 | 5 | listing of 'tests/data/invalid/_external' |  |  | 0.357 |
-| walker |  | 8468 | 5 | listing of 'tests/data/invalid/dates-and-times' |  |  | 0.357 |
-| walker |  | 8473 | 5 | listing of 'tests/data/invalid/literal-str' |  |  | 0.357 |
-| walker |  | 8479 | 6 | listing of 'tests/data/invalid/_external/toml-test' |  |  | 0.357 |
-| walker |  | 8493 | 14 | listing of 'tests/data/invalid/multiline-literal-str' |  |  | 0.357 |
-| walker |  | 8510 | 17 | listing of 'tests/data/invalid/array-of-tables' |  |  | 0.357 |
-| walker |  | 8527 | 17 | listing of 'tests/data/invalid/boolean' |  |  | 0.357 |
 | ns | 8540 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.375 |
-| walker |  | 8547 | 20 | listing of 'tests/data/invalid/table' |  |  | 0.375 |
-| walker |  | 8569 | 22 | listing of 'tests/data/invalid/array' |  |  | 0.375 |
-| walker |  | 8601 | 32 | listing of 'tests/data/invalid/dotted-keys' |  |  | 0.375 |
-| walker |  | 8640 | 39 | listing of 'tests/data/invalid/keys-and-vals' |  |  | 0.375 |
-| walker |  | 8681 | 41 | listing of 'tests/data/invalid/multiline-basic-str' |  |  | 0.375 |
-| walker |  | 8769 | 88 | listing of 'tests/data/invalid/inline-table' |  |  | 0.375 |
 | ns | 8777 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.394 |
-| walker |  | 8795 | 26 | python test names surface in tests/test_data.py |  |  | 0.394 |
-| walker |  | 8839 | 44 | plaintext config fuzzer/requirements.txt |  |  | 0.394 |
 | ns | 8906 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.394 |
 | ns | 9138 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.391 |
 | ns | 9344 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.399 |
 | ns | 9478 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.394 |
-| ns | 9643 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.391 |
-| ns | 9814 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.402 |
-| walker |  | 9967 | 1128 | tool.tox config in pyproject.toml |  |  | 0.429 |
-| walker |  | 9981 | 14 | python decl names surface in profiler/profiler_script.py |  |  | 0.429 |
+| walker |  | 9491 | 1128 | tool.tox config in pyproject.toml |  |  | 0.423 |
+| walker |  | 9505 | 14 | python decl names surface in profiler/profiler_script.py |  |  | 0.423 |
+| walker |  | 9537 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.423 |
+| walker |  | 9564 | 27 | python decl names surface in benchmark/run.py |  |  | 0.423 |
+| walker |  | 9564 | 0 | python decl at benchmark/run.py:37 |  |  | 0.423 |
+| walker |  | 9624 | 60 | python decl at benchmark/run.py:15 |  |  | 0.423 |
+| ns | 9643 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.420 |
+| walker |  | 9789 | 165 | listing of 'tests/data/invalid' |  |  | 0.420 |
+| walker |  | 9794 | 5 | listing of 'tests/data/invalid/_external' |  |  | 0.420 |
+| walker |  | 9799 | 5 | listing of 'tests/data/invalid/dates-and-times' |  |  | 0.420 |
+| walker |  | 9804 | 5 | listing of 'tests/data/invalid/literal-str' |  |  | 0.420 |
+| walker |  | 9810 | 6 | listing of 'tests/data/invalid/_external/toml-test' |  |  | 0.420 |
+| ns | 9814 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.429 |
+| walker |  | 9824 | 14 | listing of 'tests/data/invalid/multiline-literal-str' |  |  | 0.429 |
+| walker |  | 9841 | 17 | listing of 'tests/data/invalid/array-of-tables' |  |  | 0.429 |
+| walker |  | 9858 | 17 | listing of 'tests/data/invalid/boolean' |  |  | 0.429 |
+| walker |  | 9878 | 20 | listing of 'tests/data/invalid/table' |  |  | 0.429 |
+| walker |  | 9900 | 22 | listing of 'tests/data/invalid/array' |  |  | 0.429 |
+| walker |  | 9932 | 32 | listing of 'tests/data/invalid/dotted-keys' |  |  | 0.429 |
+| walker |  | 9971 | 39 | listing of 'tests/data/invalid/keys-and-vals' |  |  | 0.429 |
 | ns | 9999 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.425 |

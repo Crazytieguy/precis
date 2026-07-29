@@ -225,10 +225,9 @@ Score(3000)=0.615 I=0.854 C=0.443 ns_rows≤3K=20/57 (reached=10 partial=1 missi
 | walker |  | 9588 | 43 | python method doc at py3xui/api/api_base.py:104 |  |  | 0.599 |
 | walker |  | 9631 | 43 | python method doc at py3xui/api/api_base.py:112 |  |  | 0.599 |
 | walker |  | 9674 | 43 | python method doc at py3xui/api/api_base.py:120 |  |  | 0.599 |
-| walker |  | 9687 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.602 |
-| walker |  | 9700 | 13 | python decl names surface in py3xui/async_api/async_api_base.py |  |  | 0.602 |
-| walker |  | 9700 | 0 | python decl at py3xui/async_api/async_api_base.py:16 |  |  | 0.602 |
-| ns | 9720 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.590 |
-| walker |  | 9722 | 22 | python decl doc at py3xui/async_api/async_api_base.py:16 |  |  | 0.590 |
-| ns | 9911 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.583 |
-| ns | 9982 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.582 |
+| walker |  | 9687 | 13 | python decl names surface in py3xui/async_api/async_api_base.py |  |  | 0.599 |
+| walker |  | 9687 | 0 | python decl at py3xui/async_api/async_api_base.py:16 |  |  | 0.599 |
+| walker |  | 9709 | 22 | python decl doc at py3xui/async_api/async_api_base.py:16 |  |  | 0.599 |
+| ns | 9720 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.587 |
+| ns | 9911 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.581 |
+| ns | 9982 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.579 |

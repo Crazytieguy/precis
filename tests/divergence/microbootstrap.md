@@ -1,4 +1,4 @@
-Score(3000)=0.621 I=0.875 C=0.441 ns_rows≤3K=16/47 (reached=8 partial=1 missing=7)
+Score(3000)=0.623 I=0.873 C=0.444 ns_rows≤3K=16/47 (reached=8 partial=1 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,15 +37,15 @@ Score(3000)=0.621 I=0.875 C=0.441 ns_rows≤3K=16/47 (reached=8 partial=1 missin
 | walker |  | 1479 | 375 | README prelude in README.md |  |  | 0.843 |
 | ns | 1485 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.773 |
 | walker |  | 1719 | 240 | headings outline in README.md |  |  | 0.847 |
-| walker |  | 1754 | 35 | listing of 'tests/bootstrappers' |  |  | 0.847 |
-| walker |  | 1769 | 15 | README.md section #22 |  |  | 0.847 |
+| walker |  | 1734 | 15 | README.md section #22 |  |  | 0.847 |
 | ns | 1799 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.757 |
-| walker |  | 1841 | 72 | [package] in pyproject.toml |  |  | 0.757 |
-| walker |  | 1873 | 32 | manifest config in pyproject.toml |  |  | 0.757 |
-| walker |  | 1972 | 99 | package metadata in pyproject.toml |  |  | 0.757 |
+| walker |  | 1806 | 72 | [package] in pyproject.toml |  |  | 0.757 |
+| walker |  | 1838 | 32 | manifest config in pyproject.toml |  |  | 0.757 |
+| walker |  | 1937 | 99 | package metadata in pyproject.toml |  |  | 0.757 |
 | ns | 2000 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.709 |
-| walker |  | 2081 | 109 | tool.uv+mypy config in pyproject.toml |  |  | 0.709 |
-| walker |  | 2134 | 53 | README.md section #33 |  |  | 0.709 |
+| walker |  | 2046 | 109 | tool.uv+mypy config in pyproject.toml |  |  | 0.709 |
+| walker |  | 2099 | 53 | README.md section #33 |  |  | 0.709 |
+| walker |  | 2134 | 35 | listing of 'tests/bootstrappers' |  |  | 0.709 |
 | walker |  | 2147 | 13 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.709 |
 | walker |  | 2147 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.709 |
 | walker |  | 2169 | 22 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.709 |
@@ -67,40 +67,40 @@ Score(3000)=0.621 I=0.875 C=0.441 ns_rows≤3K=16/47 (reached=8 partial=1 missin
 | walker |  | 2421 | 0 | python method at microbootstrap/console_writer.py:31 |  |  | 0.680 |
 | walker |  | 2471 | 50 | python method at microbootstrap/console_writer.py:22 |  |  | 0.647 |
 | ns | 2471 |  | 250 | `instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster | 3.1 |  | 0.647 |
-| walker |  | 2532 | 61 | listing of 'tests/instruments' |  |  | 0.648 |
-| walker |  | 2593 | 61 | python method at microbootstrap/instruments_setupper.py:40 |  |  | 0.648 |
-| walker |  | 2640 | 47 | python class body at microbootstrap/console_writer.py:10 |  |  | 0.648 |
-| walker |  | 2669 | 29 | python decl names surface in microbootstrap/granian_server.py |  |  | 0.648 |
-| walker |  | 2721 | 52 | python decl at microbootstrap/granian_server.py:27 |  |  | 0.648 |
-| walker |  | 2766 | 45 | python decl names surface in microbootstrap/exceptions.py |  |  | 0.648 |
-| walker |  | 2766 | 0 | python decl at microbootstrap/exceptions.py:1 |  |  | 0.648 |
-| walker |  | 2766 | 0 | python decl at microbootstrap/exceptions.py:5 |  |  | 0.648 |
-| walker |  | 2766 | 0 | python decl at microbootstrap/exceptions.py:9 |  |  | 0.648 |
-| walker |  | 2775 | 9 | python decl doc at microbootstrap/exceptions.py:1 |  |  | 0.648 |
-| walker |  | 2791 | 16 | python decl doc at microbootstrap/exceptions.py:5 |  |  | 0.648 |
-| walker |  | 2808 | 17 | python decl doc at microbootstrap/exceptions.py:9 |  |  | 0.648 |
-| ns | 2835 |  | 364 | Instrument roster: every instrument class with its `instrument_name` and `ready_condition` | 3.2 |  | 0.616 |
-| walker |  | 2887 | 79 | python decl at microbootstrap/granian_server.py:16 |  |  | 0.616 |
-| walker |  | 2916 | 29 | README.md section #42 |  |  | 0.616 |
-| walker |  | 2997 | 81 | python decl names surface in microbootstrap/instruments/base.py |  |  | 0.621 |
-| walker |  | 2997 | 0 | python decl at microbootstrap/instruments/base.py:19 |  |  | 0.621 |
-| walker |  | 3015 | 18 | python decl at microbootstrap/instruments/base.py:23 |  |  | 0.624 |
-| ns | 3032 |  | 197 | `InstrumentBox`: registry fields, `initialize`, and remaining member roster | 3.3 |  | 0.605 |
-| walker |  | 3152 | 137 | python method sigs in microbootstrap/instruments/base.py |  |  | 0.626 |
-| walker |  | 3152 | 0 | python method at microbootstrap/instruments/base.py:35 |  |  | 0.626 |
-| walker |  | 3152 | 0 | python method at microbootstrap/instruments/base.py:50 |  |  | 0.626 |
-| walker |  | 3152 | 0 | python method at microbootstrap/instruments/base.py:53 |  |  | 0.626 |
-| walker |  | 3152 | 0 | python method at microbootstrap/instruments/base.py:56 |  |  | 0.626 |
-| walker |  | 3152 | 0 | python method at microbootstrap/instruments/base.py:60 |  |  | 0.626 |
-| walker |  | 3162 | 10 | python method at microbootstrap/instruments/base.py:42 |  |  | 0.626 |
-| walker |  | 3162 | 0 | python method body at microbootstrap/instruments/base.py:42 body 43 |  |  | 0.626 |
-| walker |  | 3178 | 16 | python method at microbootstrap/instruments/base.py:45 |  |  | 0.626 |
-| walker |  | 3184 | 6 | python method body at microbootstrap/instruments/base.py:50 body 51 |  |  | 0.626 |
-| ns | 3191 |  | 159 | `Instrument` abstract methods and default hook implementations (bodies) | 3.4 | 3.1 | 0.615 |
-| walker |  | 3212 | 28 | python method at microbootstrap/instruments/base.py:29 |  |  | 0.616 |
-| walker |  | 3231 | 19 | python method doc at microbootstrap/instruments/base.py:56 |  |  | 0.621 |
-| walker |  | 3250 | 19 | python method doc at microbootstrap/instruments/base.py:60 |  |  | 0.628 |
-| walker |  | 3286 | 36 | python class body at microbootstrap/instruments/base.py:23 |  |  | 0.641 |
+| walker |  | 2532 | 61 | python method at microbootstrap/instruments_setupper.py:40 |  |  | 0.647 |
+| walker |  | 2579 | 47 | python class body at microbootstrap/console_writer.py:10 |  |  | 0.647 |
+| walker |  | 2608 | 29 | python decl names surface in microbootstrap/granian_server.py |  |  | 0.647 |
+| walker |  | 2660 | 52 | python decl at microbootstrap/granian_server.py:27 |  |  | 0.647 |
+| walker |  | 2705 | 45 | python decl names surface in microbootstrap/exceptions.py |  |  | 0.647 |
+| walker |  | 2705 | 0 | python decl at microbootstrap/exceptions.py:1 |  |  | 0.647 |
+| walker |  | 2705 | 0 | python decl at microbootstrap/exceptions.py:5 |  |  | 0.647 |
+| walker |  | 2705 | 0 | python decl at microbootstrap/exceptions.py:9 |  |  | 0.647 |
+| walker |  | 2714 | 9 | python decl doc at microbootstrap/exceptions.py:1 |  |  | 0.647 |
+| walker |  | 2730 | 16 | python decl doc at microbootstrap/exceptions.py:5 |  |  | 0.647 |
+| walker |  | 2747 | 17 | python decl doc at microbootstrap/exceptions.py:9 |  |  | 0.647 |
+| walker |  | 2826 | 79 | python decl at microbootstrap/granian_server.py:16 |  |  | 0.647 |
+| ns | 2835 |  | 364 | Instrument roster: every instrument class with its `instrument_name` and `ready_condition` | 3.2 |  | 0.615 |
+| walker |  | 2855 | 29 | README.md section #42 |  |  | 0.615 |
+| walker |  | 2936 | 81 | python decl names surface in microbootstrap/instruments/base.py |  |  | 0.620 |
+| walker |  | 2936 | 0 | python decl at microbootstrap/instruments/base.py:19 |  |  | 0.620 |
+| walker |  | 2954 | 18 | python decl at microbootstrap/instruments/base.py:23 |  |  | 0.623 |
+| ns | 3032 |  | 197 | `InstrumentBox`: registry fields, `initialize`, and remaining member roster | 3.3 |  | 0.604 |
+| walker |  | 3091 | 137 | python method sigs in microbootstrap/instruments/base.py |  |  | 0.625 |
+| walker |  | 3091 | 0 | python method at microbootstrap/instruments/base.py:35 |  |  | 0.625 |
+| walker |  | 3091 | 0 | python method at microbootstrap/instruments/base.py:50 |  |  | 0.625 |
+| walker |  | 3091 | 0 | python method at microbootstrap/instruments/base.py:53 |  |  | 0.625 |
+| walker |  | 3091 | 0 | python method at microbootstrap/instruments/base.py:56 |  |  | 0.625 |
+| walker |  | 3091 | 0 | python method at microbootstrap/instruments/base.py:60 |  |  | 0.625 |
+| walker |  | 3101 | 10 | python method at microbootstrap/instruments/base.py:42 |  |  | 0.625 |
+| walker |  | 3101 | 0 | python method body at microbootstrap/instruments/base.py:42 body 43 |  |  | 0.625 |
+| walker |  | 3117 | 16 | python method at microbootstrap/instruments/base.py:45 |  |  | 0.625 |
+| walker |  | 3123 | 6 | python method body at microbootstrap/instruments/base.py:50 body 51 |  |  | 0.625 |
+| walker |  | 3151 | 28 | python method at microbootstrap/instruments/base.py:29 |  |  | 0.625 |
+| walker |  | 3170 | 19 | python method doc at microbootstrap/instruments/base.py:56 |  |  | 0.626 |
+| walker |  | 3189 | 19 | python method doc at microbootstrap/instruments/base.py:60 |  |  | 0.626 |
+| ns | 3191 |  | 159 | `Instrument` abstract methods and default hook implementations (bodies) | 3.4 | 3.1 | 0.627 |
+| walker |  | 3225 | 36 | python class body at microbootstrap/instruments/base.py:23 |  |  | 0.640 |
+| walker |  | 3286 | 61 | listing of 'tests/instruments' |  |  | 0.641 |
 | ns | 3312 |  | 121 | `Instrument.configure_instrument` and `write_status` (bodies) | 3.5 | 3.1 | 0.630 |
 | walker |  | 3449 | 163 | python decl names surface in microbootstrap/settings.py |  |  | 0.655 |
 | walker |  | 3449 | 0 | python decl at microbootstrap/settings.py:53 |  |  | 0.655 |

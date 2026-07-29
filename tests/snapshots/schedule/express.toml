@@ -873,24 +873,10 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Fs(DirListing { dir: "test/acceptance" })'
-descriptor = "listing of 'test/acceptance'"
-cost_tokens = 85
-cum_tokens = 1870
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/acceptance"
-entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
-
-[[batches]]
-position = 30
 key = 'Typescript(ExportNames { file: "lib/express.js" })'
 descriptor = "export names surface in lib/express.js"
 cost_tokens = 133
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -968,11 +954,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Typescript(Export { file: "lib/express.js", start_line: 27 })'
 descriptor = "export at lib/express.js:27"
 cost_tokens = 0
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -986,11 +972,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Typescript(Export { file: "lib/express.js", start_line: 36 })'
 descriptor = "export at lib/express.js:36"
 cost_tokens = 0
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -1012,11 +998,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Typescript(Export { file: "lib/express.js", start_line: 62 })'
 descriptor = "export at lib/express.js:62"
 cost_tokens = 0
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -1030,11 +1016,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Typescript(Export { file: "lib/express.js", start_line: 70 })'
 descriptor = "export at lib/express.js:70"
 cost_tokens = 0
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -1048,11 +1034,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Typescript(Export { file: "lib/express.js", start_line: 77 })'
 descriptor = "export at lib/express.js:77"
 cost_tokens = 0
-cum_tokens = 2003
+cum_tokens = 1918
 
 [batches.content]
 kind = "lines"
@@ -1066,11 +1052,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 70 })'
 descriptor = "export doc at lib/express.js:70"
 cost_tokens = 17
-cum_tokens = 2020
+cum_tokens = 1935
 
 [batches.content]
 kind = "lines"
@@ -1084,11 +1070,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 77 })'
 descriptor = "export doc at lib/express.js:77"
 cost_tokens = 17
-cum_tokens = 2037
+cum_tokens = 1952
 
 [batches.content]
 kind = "lines"
@@ -1102,11 +1088,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 62 })'
 descriptor = "export doc at lib/express.js:62"
 cost_tokens = 20
-cum_tokens = 2057
+cum_tokens = 1972
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1106,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package runtime dependencies in package.json"
 cost_tokens = 460
-cum_tokens = 2517
+cum_tokens = 2432
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1124,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 27 })'
 descriptor = "export doc at lib/express.js:27"
 cost_tokens = 22
-cum_tokens = 2539
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1142,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Typescript(Imports { file: "lib/request.js" })'
 descriptor = "imports in lib/request.js"
 cost_tokens = 24
-cum_tokens = 2563
+cum_tokens = 2478
 
 [batches.content]
 kind = "lines"
@@ -1182,11 +1168,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 37 })'
 descriptor = "export doc at lib/request.js:37"
 cost_tokens = 26
-cum_tokens = 2589
+cum_tokens = 2504
 
 [batches.content]
 kind = "lines"
@@ -1200,11 +1186,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Typescript(Imports { file: "lib/express.js" })'
 descriptor = "imports in lib/express.js"
 cost_tokens = 25
-cum_tokens = 2614
+cum_tokens = 2529
 
 [batches.content]
 kind = "lines"
@@ -1226,11 +1212,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Typescript(Imports { file: "lib/application.js" })'
 descriptor = "imports in lib/application.js"
 cost_tokens = 27
-cum_tokens = 2641
+cum_tokens = 2556
 
 [batches.content]
 kind = "lines"
@@ -1250,6 +1236,20 @@ end = 16
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "test/acceptance" })'
+descriptor = "listing of 'test/acceptance'"
+cost_tokens = 85
+cum_tokens = 2641
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/acceptance"
+entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
 
 [[batches]]
 position = 45

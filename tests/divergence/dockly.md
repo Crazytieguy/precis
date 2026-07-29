@@ -66,16 +66,16 @@ Score(3000)=0.648 I=0.893 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missi
 | ns | 1418 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.590 |
 | walker |  | 1427 | 12 | listing of 'docs/src/pages' |  |  | 0.590 |
 | walker |  | 1534 | 107 | package entrypoints in package.json |  |  | 0.750 |
-| walker |  | 1558 | 24 | listing of 'docs/src/components' |  |  | 0.751 |
-| walker |  | 1569 | 11 | export member at src/screen.js:18 member 79 |  |  | 0.751 |
-| ns | 1741 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.693 |
-| walker |  | 1764 | 195 | package runtime dependencies in package.json |  |  | 0.743 |
-| walker |  | 1774 | 10 | export names surface in src/enum.js |  |  | 0.743 |
-| ns | 1861 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.721 |
-| walker |  | 1894 | 120 | package scripts in package.json |  |  | 0.749 |
-| walker |  | 1907 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.749 |
-| walker |  | 1918 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.749 |
-| walker |  | 2013 | 95 | module item body at index.js:72 body 73 |  |  | 0.749 |
+| walker |  | 1545 | 11 | export member at src/screen.js:18 member 79 |  |  | 0.750 |
+| walker |  | 1740 | 195 | package runtime dependencies in package.json |  |  | 0.804 |
+| ns | 1741 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.742 |
+| walker |  | 1750 | 10 | export names surface in src/enum.js |  |  | 0.742 |
+| ns | 1861 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.720 |
+| walker |  | 1870 | 120 | package scripts in package.json |  |  | 0.748 |
+| walker |  | 1883 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.748 |
+| walker |  | 1894 | 11 | export member at src/screen.js:18 member 86 |  |  | 0.749 |
+| walker |  | 1989 | 95 | module item body at index.js:72 body 73 |  |  | 0.749 |
+| walker |  | 2013 | 24 | listing of 'docs/src/components' |  |  | 0.749 |
 | walker |  | 2024 | 11 | export member at src/screen.js:18 member 107 |  |  | 0.750 |
 | walker |  | 2038 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.750 |
 | ns | 2047 |  | 186 | src/cli.js: the four docker-connection options in full (socketPath, host, port, protocol) | 2.3 | 2.2 | 0.701 |
@@ -85,22 +85,22 @@ Score(3000)=0.648 I=0.893 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missi
 | walker |  | 2207 | 0 | export at src/baseWidget.js:4 |  |  | 0.704 |
 | ns | 2210 |  | 163 | src/cli.js: the four behavioural options in full (help, version, containerFilters, theme) | 2.4 | 2.2 | 0.663 |
 | walker |  | 2221 | 14 | export member at src/dockerUtil.js:5 member 100 |  |  | 0.663 |
-| walker |  | 2225 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.663 |
-| walker |  | 2247 | 22 | export names surface in src/assetsLoader.js |  |  | 0.663 |
-| walker |  | 2258 | 11 | export member at src/screen.js:18 member 138 |  |  | 0.663 |
+| walker |  | 2243 | 22 | export names surface in src/assetsLoader.js |  |  | 0.663 |
+| walker |  | 2254 | 11 | export member at src/screen.js:18 member 138 |  |  | 0.663 |
 | ns | 2273 |  | 63 | src/cli.js: every prototype method and the singleton export | 2.5 |  | 0.653 |
-| walker |  | 2282 | 24 | imports in src/dockerUtil.js |  |  | 0.653 |
-| walker |  | 2294 | 12 | export names surface in src/themes/styles.js |  |  | 0.653 |
+| walker |  | 2278 | 24 | imports in src/dockerUtil.js |  |  | 0.653 |
+| walker |  | 2290 | 12 | export names surface in src/themes/styles.js |  |  | 0.653 |
 | ns | 2343 |  | 70 | README: install and launch commands | 2.6 |  | 0.643 |
-| ns | 2459 |  | 116 | README: --containerFilters semantics | 2.7 |  | 0.638 |
-| walker |  | 2478 | 184 | module item body at index.js:47 body 48 |  |  | 0.638 |
-| walker |  | 2492 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.638 |
-| walker |  | 2599 | 107 | imports in index.js |  |  | 0.661 |
-| walker |  | 2610 | 11 | export member at src/screen.js:18 member 152 |  |  | 0.662 |
-| walker |  | 2624 | 14 | export names surface in src/themes/theme.selector.js |  |  | 0.662 |
-| walker |  | 2624 | 0 | export at src/themes/theme.selector.js:13 |  |  | 0.662 |
-| ns | 2629 |  | 170 | Dockerfile in full | 2.8 |  | 0.679 |
-| walker |  | 2661 | 37 | export at src/assetsLoader.js:10 |  |  | 0.679 |
+| ns | 2459 |  | 116 | README: --containerFilters semantics | 2.7 |  | 0.637 |
+| walker |  | 2474 | 184 | module item body at index.js:47 body 48 |  |  | 0.637 |
+| walker |  | 2488 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.638 |
+| walker |  | 2595 | 107 | imports in index.js |  |  | 0.661 |
+| walker |  | 2606 | 11 | export member at src/screen.js:18 member 152 |  |  | 0.662 |
+| walker |  | 2620 | 14 | export names surface in src/themes/theme.selector.js |  |  | 0.662 |
+| walker |  | 2620 | 0 | export at src/themes/theme.selector.js:13 |  |  | 0.662 |
+| ns | 2629 |  | 170 | Dockerfile in full | 2.8 |  | 0.678 |
+| walker |  | 2657 | 37 | export at src/assetsLoader.js:10 |  |  | 0.679 |
+| walker |  | 2661 | 4 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.679 |
 | walker |  | 2677 | 16 | export member at src/dockerUtil.js:5 member 155 |  |  | 0.679 |
 | walker |  | 2689 | 12 | export member at src/screen.js:18 member 114 |  |  | 0.679 |
 | walker |  | 2717 | 28 | export names surface in src/widgetsTemplates/list.widget.template.js |  |  | 0.679 |
@@ -155,26 +155,26 @@ Score(3000)=0.648 I=0.893 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missi
 | walker |  | 4732 | 32 | export body at src/screen.js:18 body 133 |  |  | 0.605 |
 | ns | 4875 |  | 203 | src/assetsLoader.js: the loader body and the asset naming rule | 3.10 | 3.9 | 0.593 |
 | walker |  | 5022 | 290 | README.md section #5 |  |  | 0.593 |
-| walker |  | 5038 | 16 | listing of 'docs/src/assets' |  |  | 0.593 |
-| walker |  | 5043 | 5 | listing of 'docs/src/assets/css' |  |  | 0.593 |
-| walker |  | 5069 | 26 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.593 |
+| walker |  | 5048 | 26 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.593 |
 | ns | 5153 |  | 278 | src/grid.config.js: the containers-mode layout in full | 3.11 |  | 0.584 |
-| walker |  | 5176 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.584 |
-| walker |  | 5295 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.585 |
-| walker |  | 5332 | 37 | headings outline in SECURITY.md |  |  | 0.585 |
-| walker |  | 5332 | 0 | SECURITY.md section #0 |  |  | 0.585 |
-| walker |  | 5359 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.585 |
-| walker |  | 5395 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.585 |
-| walker |  | 5422 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.585 |
-| walker |  | 5491 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.585 |
-| walker |  | 5528 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.585 |
-| walker |  | 5545 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.586 |
+| walker |  | 5155 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.584 |
+| walker |  | 5274 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.585 |
+| walker |  | 5311 | 37 | headings outline in SECURITY.md |  |  | 0.585 |
+| walker |  | 5311 | 0 | SECURITY.md section #0 |  |  | 0.585 |
+| walker |  | 5338 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.585 |
+| walker |  | 5374 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.585 |
+| walker |  | 5401 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.585 |
+| walker |  | 5470 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.585 |
+| walker |  | 5507 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.585 |
+| walker |  | 5524 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.586 |
 | ns | 5558 |  | 405 | src/grid.config.js: the services and images layouts plus the export block | 3.12 | 3.11 | 0.571 |
-| walker |  | 5611 | 66 | package identity in docs/package.json |  |  | 0.571 |
-| walker |  | 5618 | 7 | plaintext config .nvmrc |  |  | 0.571 |
-| walker |  | 5653 | 35 | imports in src/assetsLoader.js |  |  | 0.573 |
-| walker |  | 5666 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.573 |
-| walker |  | 5681 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.573 |
+| walker |  | 5590 | 66 | package identity in docs/package.json |  |  | 0.571 |
+| walker |  | 5597 | 7 | plaintext config .nvmrc |  |  | 0.571 |
+| walker |  | 5632 | 35 | imports in src/assetsLoader.js |  |  | 0.573 |
+| walker |  | 5645 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.573 |
+| walker |  | 5660 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.573 |
+| walker |  | 5676 | 16 | listing of 'docs/src/assets' |  |  | 0.573 |
+| walker |  | 5681 | 5 | listing of 'docs/src/assets/css' |  |  | 0.573 |
 | walker |  | 5735 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.573 |
 | walker |  | 5752 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.573 |
 | walker |  | 5769 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.573 |
@@ -203,47 +203,46 @@ Score(3000)=0.648 I=0.893 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missi
 | walker |  | 7178 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 119 |  |  | 0.592 |
 | walker |  | 7209 | 31 | package dev/peer dependencies in package.json |  |  | 0.592 |
 | walker |  | 7250 | 41 | docs/README.md section #0 |  |  | 0.592 |
-| walker |  | 7279 | 29 | listing of 'docs/src/assets/scss' |  |  | 0.592 |
-| walker |  | 7289 | 10 | listing of 'docs/src/assets/scss/base' |  |  | 0.592 |
-| walker |  | 7325 | 36 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.595 |
-| walker |  | 7361 | 36 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.595 |
-| walker |  | 7403 | 42 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.595 |
+| walker |  | 7286 | 36 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.595 |
+| walker |  | 7322 | 36 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.595 |
+| walker |  | 7364 | 42 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.595 |
 | ns | 7413 |  | 288 | src/widgetsTemplates/info.widget.template.js and logs.widget.template.js: method rosters | 5.4 |  | 0.600 |
-| ns | 7574 |  | 161 | src/widgetsTemplates/help.widget.template.js: method roster around the help text | 5.5 |  | 0.599 |
-| walker |  | 7597 | 194 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.615 |
-| walker |  | 7611 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.616 |
-| walker |  | 7627 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.616 |
-| walker |  | 7669 | 42 | export body at src/dockerUtil.js:5 body 188 |  |  | 0.616 |
-| walker |  | 7690 | 21 | listing of 'docs/src/assets/scss/libs' |  |  | 0.616 |
-| walker |  | 7714 | 24 | listing of 'docs/src/assets/scss/layout' |  |  | 0.616 |
-| walker |  | 7787 | 73 | export body at src/screen.js:18 body 72 |  |  | 0.618 |
-| walker |  | 7839 | 52 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.620 |
-| walker |  | 7883 | 44 | listing of 'docs/src/assets/fonts' |  |  | 0.620 |
-| ns | 7923 |  | 349 | hooks/: complete method rosters of all four hooks | 6.1 |  | 0.605 |
-| walker |  | 7967 | 84 | CONTRIBUTING.md section #0 |  |  | 0.605 |
-| walker |  | 7981 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 135 |  |  | 0.606 |
-| walker |  | 7997 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 136 |  |  | 0.606 |
-| walker |  | 8060 | 63 | export body at src/dockerUtil.js:5 body 56 |  |  | 0.606 |
-| walker |  | 8121 | 61 | listing of 'docs/src/assets/images' |  |  | 0.606 |
-| ns | 8132 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.597 |
-| walker |  | 8187 | 66 | export body at src/dockerUtil.js:5 body 34 |  |  | 0.597 |
-| walker |  | 8201 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.599 |
-| walker |  | 8217 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.599 |
-| walker |  | 8337 | 120 | export body at src/screen.js:18 body 36 |  |  | 0.608 |
-| walker |  | 8409 | 72 | export body at src/dockerUtil.js:5 body 79 |  |  | 0.608 |
-| ns | 8486 |  | 354 | hooks/shell.hook.js: openShell() plus dockerRunScript.sh's docker exec line | 6.3 | 6.1 | 0.598 |
-| walker |  | 8535 | 126 | export body at src/screen.js:18 body 20 |  |  | 0.610 |
-| walker |  | 8549 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.611 |
-| walker |  | 8565 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.611 |
+| walker |  | 7558 | 194 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.616 |
+| walker |  | 7572 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.617 |
+| ns | 7574 |  | 161 | src/widgetsTemplates/help.widget.template.js: method roster around the help text | 5.5 |  | 0.616 |
+| walker |  | 7588 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.616 |
+| walker |  | 7630 | 42 | export body at src/dockerUtil.js:5 body 188 |  |  | 0.616 |
+| walker |  | 7703 | 73 | export body at src/screen.js:18 body 72 |  |  | 0.618 |
+| walker |  | 7755 | 52 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.620 |
+| walker |  | 7839 | 84 | CONTRIBUTING.md section #0 |  |  | 0.620 |
+| walker |  | 7853 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 135 |  |  | 0.621 |
+| walker |  | 7869 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 136 |  |  | 0.621 |
+| walker |  | 7898 | 29 | listing of 'docs/src/assets/scss' |  |  | 0.621 |
+| walker |  | 7908 | 10 | listing of 'docs/src/assets/scss/base' |  |  | 0.621 |
+| ns | 7923 |  | 349 | hooks/: complete method rosters of all four hooks | 6.1 |  | 0.606 |
+| walker |  | 7929 | 21 | listing of 'docs/src/assets/scss/libs' |  |  | 0.606 |
+| walker |  | 7992 | 63 | export body at src/dockerUtil.js:5 body 56 |  |  | 0.606 |
+| walker |  | 8016 | 24 | listing of 'docs/src/assets/scss/layout' |  |  | 0.606 |
+| walker |  | 8082 | 66 | export body at src/dockerUtil.js:5 body 34 |  |  | 0.606 |
+| walker |  | 8096 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.608 |
+| walker |  | 8112 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.608 |
+| ns | 8132 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.599 |
+| walker |  | 8232 | 120 | export body at src/screen.js:18 body 36 |  |  | 0.608 |
+| walker |  | 8276 | 44 | listing of 'docs/src/assets/fonts' |  |  | 0.608 |
+| walker |  | 8348 | 72 | export body at src/dockerUtil.js:5 body 79 |  |  | 0.608 |
+| walker |  | 8474 | 126 | export body at src/screen.js:18 body 20 |  |  | 0.620 |
+| ns | 8486 |  | 354 | hooks/shell.hook.js: openShell() plus dockerRunScript.sh's docker exec line | 6.3 | 6.1 | 0.610 |
+| walker |  | 8488 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.611 |
+| walker |  | 8504 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.611 |
+| walker |  | 8586 | 82 | export body at src/dockerUtil.js:5 body 44 |  |  | 0.611 |
 | ns | 8587 |  | 101 | src/enum.js in full — the ContainerState vocabulary | 7.1 |  | 0.615 |
-| walker |  | 8620 | 55 | listing of 'docs/src/assets/scss/components' |  |  | 0.615 |
-| walker |  | 8702 | 82 | export body at src/dockerUtil.js:5 body 44 |  |  | 0.615 |
-| walker |  | 8835 | 133 | export body at src/screen.js:18 body 139 |  |  | 0.620 |
+| walker |  | 8719 | 133 | export body at src/screen.js:18 body 139 |  |  | 0.620 |
+| walker |  | 8780 | 61 | listing of 'docs/src/assets/images' |  |  | 0.620 |
 | ns | 8897 |  | 310 | src/themes/theme.selector.js in full and the dark/light style keys | 7.2 |  | 0.612 |
 | ns | 9183 |  | 286 | widgets/containers/containerList.widget.js: complete method roster | 7.3 |  | 0.604 |
+| walker |  | 9428 | 648 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.604 |
 | ns | 9452 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.596 |
-| walker |  | 9483 | 648 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.596 |
-| walker |  | 9569 | 86 | export body at src/dockerUtil.js:5 body 89 |  |  | 0.596 |
+| walker |  | 9514 | 86 | export body at src/dockerUtil.js:5 body 89 |  |  | 0.596 |
 | ns | 9600 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.592 |
 | ns | 9645 |  | 45 | Complete listings of .github/ and its subdirectories | 8.1 |  | 0.595 |
 | ns | 9747 |  | 102 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.602 |

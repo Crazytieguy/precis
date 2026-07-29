@@ -3243,24 +3243,10 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Fs(DirListing { dir: "test/thirdparty" })'
-descriptor = "listing of 'test/thirdparty'"
-cost_tokens = 25
-cum_tokens = 7336
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/thirdparty"
-entries = ["common", "cpython.sh", "git.sh", "libpng.sh", "sqlite.sh", "tinycc.sh"]
-
-[[batches]]
-position = 111
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 461
-cum_tokens = 7797
+cum_tokens = 7772
 
 [batches.content]
 kind = "lines"
@@ -3274,11 +3260,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'C(WholeFile { file: "test/include1.h" })'
 descriptor = "c whole header in test/include1.h"
 cost_tokens = 57
-cum_tokens = 7854
+cum_tokens = 7829
 
 [batches.content]
 kind = "lines"
@@ -3292,11 +3278,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'C(DeclBody { file: "main.c", start_line: 586 })'
 descriptor = "c decl body at main.c:586"
 cost_tokens = 22
-cum_tokens = 7876
+cum_tokens = 7851
 
 [batches.content]
 kind = "lines"
@@ -3310,11 +3296,11 @@ end = 588
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'C(DeclDoc { file: "strings.c", start_line: 20 })'
 descriptor = "c decl doc at strings.c:20"
 cost_tokens = 17
-cum_tokens = 7893
+cum_tokens = 7868
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3314,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 115
+position = 114
 key = 'C(WholeFile { file: "include/stddef.h" })'
 descriptor = "c whole header in include/stddef.h"
 cost_tokens = 123
-cum_tokens = 8016
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -3346,11 +3332,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 361
-cum_tokens = 8377
+cum_tokens = 8352
 
 [batches.content]
 kind = "lines"
@@ -3364,11 +3350,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 217
-cum_tokens = 8594
+cum_tokens = 8569
 
 [batches.content]
 kind = "lines"
@@ -3382,11 +3368,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'C(DeclDoc { file: "parse.c", start_line: 75 })'
 descriptor = "c decl doc at parse.c:75"
 cost_tokens = 10
-cum_tokens = 8604
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -3400,11 +3386,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl doc at chibicc.h:126"
 cost_tokens = 9
-cum_tokens = 8613
+cum_tokens = 8588
 
 [batches.content]
 kind = "lines"
@@ -3418,11 +3404,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'C(DeclNames { file: "hashmap.c", chunk_index: 0 })'
 descriptor = "c decl names surface in hashmap.c"
 cost_tokens = 211
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3604,11 +3590,11 @@ end = 137
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 120
 key = 'C(Decl { file: "hashmap.c", start_line: 6 })'
 descriptor = "c decl at hashmap.c:6"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3622,11 +3608,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'C(Decl { file: "hashmap.c", start_line: 9 })'
 descriptor = "c decl at hashmap.c:9"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3626,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'C(Decl { file: "hashmap.c", start_line: 12 })'
 descriptor = "c decl at hashmap.c:12"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3658,11 +3644,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'C(Decl { file: "hashmap.c", start_line: 15 })'
 descriptor = "c decl at hashmap.c:15"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3676,11 +3662,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'C(Decl { file: "hashmap.c", start_line: 108 })'
 descriptor = "c decl at hashmap.c:108"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3688,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 125
 key = 'C(Decl { file: "hashmap.c", start_line: 112 })'
 descriptor = "c decl at hashmap.c:112"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3728,11 +3714,11 @@ end = 113
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 126
 key = 'C(Decl { file: "hashmap.c", start_line: 117 })'
 descriptor = "c decl at hashmap.c:117"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3754,11 +3740,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 127
 key = 'C(Decl { file: "hashmap.c", start_line: 121 })'
 descriptor = "c decl at hashmap.c:121"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3780,11 +3766,11 @@ end = 122
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 128
 key = 'C(Decl { file: "hashmap.c", start_line: 126 })'
 descriptor = "c decl at hashmap.c:126"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3806,11 +3792,11 @@ end = 127
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 129
 key = 'C(Decl { file: "hashmap.c", start_line: 130 })'
 descriptor = "c decl at hashmap.c:130"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3832,11 +3818,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 130
 key = 'C(Decl { file: "hashmap.c", start_line: 136 })'
 descriptor = "c decl at hashmap.c:136"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -3858,11 +3844,11 @@ end = 137
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 131
 key = 'C(Includes { file: "hashmap.c" })'
 descriptor = "c includes in hashmap.c"
 cost_tokens = 12
-cum_tokens = 8836
+cum_tokens = 8811
 
 [batches.content]
 kind = "lines"
@@ -3876,11 +3862,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'C(DeclDoc { file: "hashmap.c", start_line: 6 })'
 descriptor = "c decl doc at hashmap.c:6"
 cost_tokens = 8
-cum_tokens = 8844
+cum_tokens = 8819
 
 [batches.content]
 kind = "lines"
@@ -3894,11 +3880,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 134
+position = 133
 key = 'C(DeclDoc { file: "hashmap.c", start_line: 15 })'
 descriptor = "c decl doc at hashmap.c:15"
 cost_tokens = 9
-cum_tokens = 8853
+cum_tokens = 8828
 
 [batches.content]
 kind = "lines"
@@ -3912,11 +3898,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'C(DeclBody { file: "hashmap.c", start_line: 126 })'
 descriptor = "c decl body at hashmap.c:126"
 cost_tokens = 15
-cum_tokens = 8868
+cum_tokens = 8843
 
 [batches.content]
 kind = "lines"
@@ -3930,11 +3916,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'C(DeclBody { file: "hashmap.c", start_line: 108 })'
 descriptor = "c decl body at hashmap.c:108"
 cost_tokens = 16
-cum_tokens = 8884
+cum_tokens = 8859
 
 [batches.content]
 kind = "lines"
@@ -3948,11 +3934,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'C(DeclNames { file: "preprocess.c", chunk_index: 0 })'
 descriptor = "c decl names surface in preprocess.c"
 cost_tokens = 212
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +4112,11 @@ end = 1199
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 137
 key = 'C(Decl { file: "preprocess.c", start_line: 54 })'
 descriptor = "c decl at preprocess.c:54"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +4130,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'C(Decl { file: "preprocess.c", start_line: 685 })'
 descriptor = "c decl at preprocess.c:685"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4170,11 +4156,11 @@ end = 686
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 139
 key = 'C(Decl { file: "preprocess.c", start_line: 993 })'
 descriptor = "c decl at preprocess.c:993"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4196,11 +4182,11 @@ end = 994
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 140
 key = 'C(Decl { file: "preprocess.c", start_line: 998 })'
 descriptor = "c decl at preprocess.c:998"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4222,11 +4208,11 @@ end = 999
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 141
 key = 'C(Decl { file: "preprocess.c", start_line: 1060 })'
 descriptor = "c decl at preprocess.c:1060"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4248,11 +4234,11 @@ end = 1061
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 142
 key = 'C(Decl { file: "preprocess.c", start_line: 1198 })'
 descriptor = "c decl at preprocess.c:1198"
 cost_tokens = 0
-cum_tokens = 9096
+cum_tokens = 9071
 
 [batches.content]
 kind = "lines"
@@ -4274,11 +4260,11 @@ end = 1199
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 143
 key = 'C(Decl { file: "preprocess.c", start_line: 28 })'
 descriptor = "c decl at preprocess.c:28"
 cost_tokens = 22
-cum_tokens = 9118
+cum_tokens = 9093
 
 [batches.content]
 kind = "lines"
@@ -4292,11 +4278,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'C(Decl { file: "preprocess.c", start_line: 63 })'
 descriptor = "c decl at preprocess.c:63"
 cost_tokens = 25
-cum_tokens = 9143
+cum_tokens = 9118
 
 [batches.content]
 kind = "lines"
@@ -4310,11 +4296,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'C(Includes { file: "preprocess.c" })'
 descriptor = "c includes in preprocess.c"
 cost_tokens = 12
-cum_tokens = 9155
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -4328,11 +4314,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 147
+position = 146
 key = 'C(DeclBody { file: "preprocess.c", start_line: 998 })'
 descriptor = "c decl body at preprocess.c:998"
 cost_tokens = 13
-cum_tokens = 9168
+cum_tokens = 9143
 
 [batches.content]
 kind = "lines"
@@ -4346,11 +4332,11 @@ end = 999
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'C(Decl { file: "preprocess.c", start_line: 1115 })'
 descriptor = "c decl at preprocess.c:1115"
 cost_tokens = 34
-cum_tokens = 9202
+cum_tokens = 9177
 
 [batches.content]
 kind = "lines"
@@ -4364,11 +4350,11 @@ end = 1117
 kind = "full"
 
 [[batches]]
-position = 149
+position = 148
 key = 'C(Decl { file: "preprocess.c", start_line: 34 })'
 descriptor = "c decl at preprocess.c:34"
 cost_tokens = 41
-cum_tokens = 9243
+cum_tokens = 9218
 
 [batches.content]
 kind = "lines"
@@ -4382,11 +4368,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'C(Decl { file: "preprocess.c", start_line: 55 })'
 descriptor = "c decl at preprocess.c:55"
 cost_tokens = 51
-cum_tokens = 9294
+cum_tokens = 9269
 
 [batches.content]
 kind = "lines"
@@ -4400,11 +4386,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'C(Decl { file: "preprocess.c", start_line: 44 })'
 descriptor = "c decl at preprocess.c:44"
 cost_tokens = 72
-cum_tokens = 9366
+cum_tokens = 9341
 
 [batches.content]
 kind = "lines"
@@ -4418,11 +4404,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'C(DeclNames { file: "include/stdarg.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdarg.h"
 cost_tokens = 129
-cum_tokens = 9495
+cum_tokens = 9470
 
 [batches.content]
 kind = "lines"
@@ -4508,11 +4494,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 152
 key = 'C(Decl { file: "include/stdarg.h", start_line: 13 })'
 descriptor = "c decl at include/stdarg.h:13"
 cost_tokens = 23
-cum_tokens = 9518
+cum_tokens = 9493
 
 [batches.content]
 kind = "lines"
@@ -4526,11 +4512,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'C(Decl { file: "include/stdarg.h", start_line: 4 })'
 descriptor = "c decl at include/stdarg.h:4"
 cost_tokens = 49
-cum_tokens = 9567
+cum_tokens = 9542
 
 [batches.content]
 kind = "lines"
@@ -4544,11 +4530,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 155
+position = 154
 key = 'C(Decl { file: "codegen.c", start_line: 356 })'
 descriptor = "c decl at codegen.c:356"
 cost_tokens = 55
-cum_tokens = 9622
+cum_tokens = 9597
 
 [batches.content]
 kind = "lines"
@@ -4562,11 +4548,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'C(DeclBody { file: "hashmap.c", start_line: 117 })'
 descriptor = "c decl body at hashmap.c:117"
 cost_tokens = 17
-cum_tokens = 9639
+cum_tokens = 9614
 
 [batches.content]
 kind = "lines"
@@ -4580,11 +4566,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 355
-cum_tokens = 9994
+cum_tokens = 9969
 
 [batches.content]
 kind = "lines"
@@ -4596,3 +4582,17 @@ end = 209
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 157
+key = 'Fs(DirListing { dir: "test/thirdparty" })'
+descriptor = "listing of 'test/thirdparty'"
+cost_tokens = 25
+cum_tokens = 9994
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/thirdparty"
+entries = ["common", "cpython.sh", "git.sh", "libpng.sh", "sqlite.sh", "tinycc.sh"]

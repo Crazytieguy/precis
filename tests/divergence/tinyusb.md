@@ -148,131 +148,129 @@ Score(3000)=0.541 I=0.705 C=0.415 ns_rows≤3K=17/48 (reached=4 partial=0 missin
 | ns | 5177 |  | 94 | src/tusb_option.h: TypeC enable and compile-time configuration validation | 3.11 |  | 0.438 |
 | walker |  | 5488 | 975 | c decl names surface in src/common/tusb_common.h |  |  | 0.438 |
 | walker |  | 5488 | 0 | c decl at src/common/tusb_common.h:37 |  |  | 0.438 |
-| walker |  | 5506 | 18 | listing of 'test/unit-test' |  |  | 0.438 |
-| walker |  | 5524 | 18 | listing of 'test/unit-test/test' |  |  | 0.438 |
-| ns | 5530 |  | 353 | src/device/usbd_pvt.h: the device class-driver vtable | 4.1 |  | 0.429 |
-| walker |  | 5540 | 16 | c decl doc at src/tusb.h:147 |  |  | 0.432 |
+| walker |  | 5504 | 16 | c decl doc at src/tusb.h:147 |  |  | 0.441 |
+| ns | 5530 |  | 353 | src/device/usbd_pvt.h: the device class-driver vtable | 4.1 |  | 0.432 |
 | ns | 5839 |  | 309 | src/host/usbh_pvt.h: the host class-driver vtable and USBH hooks | 4.2 |  | 0.423 |
-| walker |  | 5948 | 408 | c decl names surface in src/device/usbd.h |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:63 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:67 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:73 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:83 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:86 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:91 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:100 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:107 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:110 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:114 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:117 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:120 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:131 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:135 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:139 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:142 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:147 |  |  | 0.453 |
-| walker |  | 5948 | 0 | c decl at src/device/usbd.h:150 |  |  | 0.453 |
-| walker |  | 5959 | 11 | c decl at src/device/usbd.h:51 |  |  | 0.453 |
-| walker |  | 5969 | 10 | c decl at src/device/usbd.h:123 |  |  | 0.456 |
-| walker |  | 5980 | 11 | c decl at src/device/usbd.h:94 |  |  | 0.458 |
-| walker |  | 6013 | 33 | c decl at src/device/usbd.h:37 |  |  | 0.459 |
-| walker |  | 6027 | 14 | c decl body at src/device/usbd.h:94 |  |  | 0.459 |
-| walker |  | 6098 | 71 | c decl at src/device/usbd.h:42 |  |  | 0.459 |
-| walker |  | 6113 | 15 | c includes in src/device/usbd.h |  |  | 0.459 |
+| walker |  | 5912 | 408 | c decl names surface in src/device/usbd.h |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:63 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:67 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:73 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:83 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:86 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:91 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:100 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:107 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:110 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:114 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:117 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:120 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:131 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:135 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:139 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:142 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:147 |  |  | 0.453 |
+| walker |  | 5912 | 0 | c decl at src/device/usbd.h:150 |  |  | 0.453 |
+| walker |  | 5923 | 11 | c decl at src/device/usbd.h:51 |  |  | 0.453 |
+| walker |  | 5933 | 10 | c decl at src/device/usbd.h:123 |  |  | 0.455 |
+| walker |  | 5944 | 11 | c decl at src/device/usbd.h:94 |  |  | 0.458 |
+| walker |  | 5977 | 33 | c decl at src/device/usbd.h:37 |  |  | 0.459 |
+| walker |  | 5991 | 14 | c decl body at src/device/usbd.h:94 |  |  | 0.459 |
+| walker |  | 6062 | 71 | c decl at src/device/usbd.h:42 |  |  | 0.459 |
+| walker |  | 6077 | 15 | c includes in src/device/usbd.h |  |  | 0.459 |
 | ns | 6215 |  | 376 | src/device/dcd.h: complete device-controller porting contract (names only) | 4.3 |  | 0.443 |
 | ns | 6514 |  | 299 | src/host/hcd.h: complete host-controller porting contract (names only) | 4.4 |  | 0.431 |
-| walker |  | 6590 | 477 | c decl names surface in src/host/usbh_pvt.h |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:60 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:63 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:72 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:75 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:95 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:98 |  |  | 0.432 |
-| walker |  | 6590 | 0 | c decl at src/host/usbh_pvt.h:101 |  |  | 0.432 |
-| walker |  | 6606 | 16 | c decl at src/host/usbh_pvt.h:85 |  |  | 0.432 |
-| walker |  | 6642 | 36 | c decl at src/host/usbh_pvt.h:88 |  |  | 0.432 |
-| walker |  | 6652 | 10 | c decl doc at src/host/usbh_pvt.h:101 |  |  | 0.432 |
-| walker |  | 6682 | 30 | c decl body at src/host/usbh_pvt.h:88 |  |  | 0.432 |
-| walker |  | 6693 | 11 | c decl doc at src/host/usbh_pvt.h:98 |  |  | 0.432 |
+| walker |  | 6554 | 477 | c decl names surface in src/host/usbh_pvt.h |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:60 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:63 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:72 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:75 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:95 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:98 |  |  | 0.432 |
+| walker |  | 6554 | 0 | c decl at src/host/usbh_pvt.h:101 |  |  | 0.432 |
+| walker |  | 6570 | 16 | c decl at src/host/usbh_pvt.h:85 |  |  | 0.432 |
+| walker |  | 6606 | 36 | c decl at src/host/usbh_pvt.h:88 |  |  | 0.432 |
+| walker |  | 6616 | 10 | c decl doc at src/host/usbh_pvt.h:101 |  |  | 0.432 |
+| walker |  | 6646 | 30 | c decl body at src/host/usbh_pvt.h:88 |  |  | 0.432 |
+| walker |  | 6657 | 11 | c decl doc at src/host/usbh_pvt.h:98 |  |  | 0.432 |
 | ns | 6931 |  | 417 | src/osal/osal.h: the OSAL porting contract | 4.5 |  | 0.421 |
 | ns | 7074 |  | 143 | hw/bsp/board_api.h: complete board porting API (names only) | 4.6 |  | 0.415 |
-| walker |  | 7266 | 573 | c decl names surface in src/tusb_option.h |  |  | 0.424 |
-| walker |  | 7266 | 0 | c decl at src/tusb_option.h:32 |  |  | 0.424 |
-| walker |  | 7266 | 0 | c decl at src/tusb_option.h:47 |  |  | 0.424 |
-| walker |  | 7266 | 0 | c decl at src/tusb_option.h:60 |  |  | 0.424 |
-| walker |  | 7266 | 0 | c decl at src/tusb_option.h:64 |  |  | 0.424 |
-| walker |  | 7266 | 0 | c decl at src/tusb_option.h:68 |  |  | 0.424 |
-| walker |  | 7271 | 5 | c decl doc at src/tusb_option.h:47 |  |  | 0.424 |
-| walker |  | 7276 | 5 | c decl doc at src/tusb_option.h:64 |  |  | 0.424 |
-| walker |  | 7282 | 6 | c decl doc at src/tusb_option.h:60 |  |  | 0.424 |
-| walker |  | 7304 | 22 | c decl doc at src/tusb_option.h:32 |  |  | 0.424 |
-| walker |  | 7309 | 5 | c decl doc at src/tusb_option.h:68 |  |  | 0.424 |
+| walker |  | 7230 | 573 | c decl names surface in src/tusb_option.h |  |  | 0.424 |
+| walker |  | 7230 | 0 | c decl at src/tusb_option.h:32 |  |  | 0.424 |
+| walker |  | 7230 | 0 | c decl at src/tusb_option.h:47 |  |  | 0.424 |
+| walker |  | 7230 | 0 | c decl at src/tusb_option.h:60 |  |  | 0.424 |
+| walker |  | 7230 | 0 | c decl at src/tusb_option.h:64 |  |  | 0.424 |
+| walker |  | 7230 | 0 | c decl at src/tusb_option.h:68 |  |  | 0.424 |
+| walker |  | 7235 | 5 | c decl doc at src/tusb_option.h:47 |  |  | 0.424 |
+| walker |  | 7240 | 5 | c decl doc at src/tusb_option.h:64 |  |  | 0.424 |
+| walker |  | 7246 | 6 | c decl doc at src/tusb_option.h:60 |  |  | 0.424 |
+| walker |  | 7268 | 22 | c decl doc at src/tusb_option.h:32 |  |  | 0.424 |
+| walker |  | 7273 | 5 | c decl doc at src/tusb_option.h:68 |  |  | 0.424 |
 | ns | 7336 |  | 262 | Endpoint API a class driver is allowed to call | 4.7 |  | 0.417 |
-| walker |  | 7379 | 70 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.417 |
-| walker |  | 7543 | 164 | c decl at src/host/usbh_pvt.h:47 |  |  | 0.428 |
+| walker |  | 7343 | 70 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.417 |
+| walker |  | 7507 | 164 | c decl at src/host/usbh_pvt.h:47 |  |  | 0.427 |
 | ns | 7641 |  | 305 | Complete file inventory of every USB class driver | 5.1 |  | 0.405 |
 | ns | 7899 |  | 258 | src/device/usbd.c: the built-in device class-driver table | 5.2 |  | 0.400 |
-| walker |  | 7993 | 450 | c decl names surface in src/host/usbh.h |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:47 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:89 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:128 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:133 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:136 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:142 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:145 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:155 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:159 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:165 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:175 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:179 |  |  | 0.412 |
-| walker |  | 7993 | 0 | c decl at src/host/usbh.h:184 |  |  | 0.412 |
-| ns | 8022 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.410 |
-| walker |  | 8025 | 32 | c decl at src/host/usbh.h:76 |  |  | 0.413 |
-| walker |  | 8065 | 40 | c decl at src/host/usbh.h:107 |  |  | 0.413 |
-| walker |  | 8105 | 40 | c decl at src/host/usbh.h:111 |  |  | 0.413 |
-| walker |  | 8158 | 53 | c decl at src/host/usbh.h:81 |  |  | 0.421 |
-| walker |  | 8221 | 63 | c decl at src/host/usbh.h:115 |  |  | 0.421 |
-| walker |  | 8311 | 90 | c decl at src/host/usbh.h:101 |  |  | 0.421 |
-| ns | 8360 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.413 |
-| walker |  | 8404 | 93 | c decl at src/host/usbh.h:93 |  |  | 0.422 |
-| ns | 8583 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.417 |
+| walker |  | 7957 | 450 | c decl names surface in src/host/usbh.h |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:47 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:89 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:128 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:133 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:136 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:142 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:145 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:155 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:159 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:165 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:175 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:179 |  |  | 0.412 |
+| walker |  | 7957 | 0 | c decl at src/host/usbh.h:184 |  |  | 0.412 |
+| walker |  | 7989 | 32 | c decl at src/host/usbh.h:76 |  |  | 0.415 |
+| ns | 8022 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.412 |
+| walker |  | 8029 | 40 | c decl at src/host/usbh.h:107 |  |  | 0.412 |
+| walker |  | 8069 | 40 | c decl at src/host/usbh.h:111 |  |  | 0.412 |
+| walker |  | 8122 | 53 | c decl at src/host/usbh.h:81 |  |  | 0.421 |
+| walker |  | 8185 | 63 | c decl at src/host/usbh.h:115 |  |  | 0.421 |
+| walker |  | 8275 | 90 | c decl at src/host/usbh.h:101 |  |  | 0.421 |
+| ns | 8360 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.412 |
+| walker |  | 8368 | 93 | c decl at src/host/usbh.h:93 |  |  | 0.422 |
+| ns | 8583 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.416 |
 | ns | 8792 |  | 209 | src/common/tusb_types.h: packed USB descriptor structs and the setup packet | 6.2 |  | 0.412 |
-| walker |  | 9010 | 606 | c decl names surface in src/host/hcd.h |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:98 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:102 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:106 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:113 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:116 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:119 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:122 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:125 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:128 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:131 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:138 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:142 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:145 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:148 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:151 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:159 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:162 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:165 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:169 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:172 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:175 |  |  | 0.434 |
-| walker |  | 9010 | 0 | c decl at src/host/hcd.h:182 |  |  | 0.434 |
-| walker |  | 9032 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.436 |
-| ns | 9047 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.428 |
-| walker |  | 9054 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.430 |
-| walker |  | 9096 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.433 |
-| walker |  | 9102 | 6 | c decl doc at src/host/hcd.h:122 |  |  | 0.433 |
-| walker |  | 9178 | 76 | c decl at src/host/hcd.h:56 |  |  | 0.433 |
-| walker |  | 9185 | 7 | c decl doc at src/host/hcd.h:125 |  |  | 0.433 |
-| walker |  | 9192 | 7 | c decl doc at src/host/hcd.h:128 |  |  | 0.433 |
+| walker |  | 8974 | 606 | c decl names surface in src/host/hcd.h |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:98 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:102 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:106 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:113 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:116 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:119 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:122 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:125 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:128 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:131 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:138 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:142 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:145 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:148 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:151 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:159 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:162 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:165 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:169 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:172 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:175 |  |  | 0.434 |
+| walker |  | 8974 | 0 | c decl at src/host/hcd.h:182 |  |  | 0.434 |
+| walker |  | 8996 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.436 |
+| walker |  | 9018 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.438 |
+| ns | 9047 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.430 |
+| walker |  | 9060 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.433 |
+| walker |  | 9066 | 6 | c decl doc at src/host/hcd.h:122 |  |  | 0.433 |
+| walker |  | 9142 | 76 | c decl at src/host/hcd.h:56 |  |  | 0.433 |
+| walker |  | 9149 | 7 | c decl doc at src/host/hcd.h:125 |  |  | 0.433 |
+| walker |  | 9156 | 7 | c decl doc at src/host/hcd.h:128 |  |  | 0.433 |
 | ns | 9235 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.428 |
-| walker |  | 9345 | 153 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:65 |  |  | 0.428 |
-| walker |  | 9381 | 36 | c includes in src/typec/pd_types.h |  |  | 0.428 |
-| walker |  | 9412 | 31 | listing of 'hw/mcu/dialog/da1469x/src' |  |  | 0.428 |
+| walker |  | 9309 | 153 | c decl at hw/mcu/dialog/da1469x/include/hal/hal_gpio.h:65 |  |  | 0.428 |
+| walker |  | 9345 | 36 | c includes in src/typec/pd_types.h |  |  | 0.428 |
+| walker |  | 9376 | 31 | listing of 'hw/mcu/dialog/da1469x/src' |  |  | 0.428 |
 | ns | 9628 |  | 393 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.412 |
-| ns | 9771 |  | 143 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.408 |
-| ns | 9779 |  | 8 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.409 |
-| ns | 9981 |  | 202 | Maintenance tooling and documentation sources | 7.5 |  | 0.412 |
+| ns | 9771 |  | 143 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.404 |
+| ns | 9779 |  | 8 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.405 |
+| ns | 9981 |  | 202 | Maintenance tooling and documentation sources | 7.5 |  | 0.408 |

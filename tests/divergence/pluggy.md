@@ -37,10 +37,10 @@ Score(3000)=0.600 I=0.765 C=0.470 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 1475 | 51 | tool.setuptools config in pyproject.toml |  |  | 0.609 |
 | ns | 1536 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.565 |
 | walker |  | 1538 | 63 | manifest config in pyproject.toml |  |  | 0.565 |
-| walker |  | 1557 | 19 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.589 |
-| walker |  | 1637 | 80 | package metadata in pyproject.toml |  |  | 0.589 |
-| walker |  | 1698 | 61 | listing of 'testing' |  |  | 0.663 |
-| walker |  | 1709 | 11 | python imports in src/pluggy/_warnings.py |  |  | 0.663 |
+| walker |  | 1618 | 80 | package metadata in pyproject.toml |  |  | 0.565 |
+| walker |  | 1679 | 61 | listing of 'testing' |  |  | 0.640 |
+| walker |  | 1690 | 11 | python imports in src/pluggy/_warnings.py |  |  | 0.640 |
+| walker |  | 1709 | 19 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.663 |
 | walker |  | 1729 | 20 | python decl names surface in src/pluggy/_warnings.py |  |  | 0.663 |
 | walker |  | 1729 | 0 | python decl at src/pluggy/_warnings.py:4 |  |  | 0.663 |
 | walker |  | 1745 | 16 | python decl at src/pluggy/_warnings.py:10 |  |  | 0.663 |
@@ -242,36 +242,35 @@ Score(3000)=0.600 I=0.765 C=0.470 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | ns | 8768 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.520 |
 | walker |  | 8797 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.523 |
 | walker |  | 8856 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.531 |
-| walker |  | 8866 | 10 | listing of 'docs/examples/eggsample-spam' |  |  | 0.536 |
-| walker |  | 9000 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.536 |
-| walker |  | 9067 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.537 |
-| walker |  | 9067 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.537 |
-| walker |  | 9067 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.537 |
-| ns | 9104 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.525 |
-| ns | 9247 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.521 |
-| walker |  | 9277 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.537 |
-| walker |  | 9277 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.537 |
-| walker |  | 9286 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.537 |
-| walker |  | 9298 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.537 |
-| walker |  | 9311 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.537 |
-| walker |  | 9328 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.537 |
-| walker |  | 9346 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.537 |
-| walker |  | 9455 | 109 | python imports in src/pluggy/_result.py |  |  | 0.537 |
-| ns | 9495 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.528 |
-| walker |  | 9590 | 135 | python method doc at src/pluggy/_manager.py:176 |  |  | 0.528 |
-| walker |  | 9646 | 56 | python decl doc at src/pluggy/_callers.py:82 |  |  | 0.528 |
-| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.528 |
-| walker |  | 9783 | 137 | python method doc at src/pluggy/_manager.py:125 |  |  | 0.540 |
-| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.535 |
-| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.532 |
-| walker |  | 9929 | 146 | python method doc at src/pluggy/_manager.py:278 |  |  | 0.532 |
-| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.534 |
-| walker |  | 9996 | 67 | python imports in src/pluggy/_tracing.py |  |  | 0.534 |
+| walker |  | 8990 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.531 |
+| walker |  | 9057 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.532 |
+| walker |  | 9057 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.532 |
+| walker |  | 9057 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.532 |
+| ns | 9104 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.520 |
+| ns | 9247 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.516 |
+| walker |  | 9267 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.532 |
+| walker |  | 9267 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.532 |
+| walker |  | 9276 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.532 |
+| walker |  | 9288 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.532 |
+| walker |  | 9301 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.532 |
+| walker |  | 9318 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.532 |
+| walker |  | 9336 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.532 |
+| walker |  | 9445 | 109 | python imports in src/pluggy/_result.py |  |  | 0.532 |
+| ns | 9495 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.523 |
+| walker |  | 9580 | 135 | python method doc at src/pluggy/_manager.py:176 |  |  | 0.523 |
+| walker |  | 9636 | 56 | python decl doc at src/pluggy/_callers.py:82 |  |  | 0.523 |
+| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.523 |
+| walker |  | 9773 | 137 | python method doc at src/pluggy/_manager.py:125 |  |  | 0.535 |
+| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.530 |
+| walker |  | 9919 | 146 | python method doc at src/pluggy/_manager.py:278 |  |  | 0.530 |
+| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.528 |
+| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.530 |
+| walker |  | 9986 | 67 | python imports in src/pluggy/_tracing.py |  |  | 0.530 |

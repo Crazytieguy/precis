@@ -21,14 +21,14 @@ Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missin
 | walker |  | 492 | 63 | README.md section #0 |  |  | 0.812 |
 | ns | 596 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.747 |
 | walker |  | 642 | 150 | c whole header in include/varnum.h |  |  | 0.752 |
-| walker |  | 657 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.753 |
 | ns | 666 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.712 |
-| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.652 |
-| walker |  | 901 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
-| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.606 |
-| walker |  | 1237 | 336 | c whole header in include/worldgen.h |  |  | 0.609 |
-| walker |  | 1264 | 27 | c decl names surface in src/main.c |  |  | 0.610 |
-| walker |  | 1264 | 0 | c decl at src/main.c:68 |  |  | 0.610 |
+| walker |  | 886 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
+| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.654 |
+| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.605 |
+| walker |  | 1222 | 336 | c whole header in include/worldgen.h |  |  | 0.609 |
+| walker |  | 1249 | 27 | c decl names surface in src/main.c |  |  | 0.609 |
+| walker |  | 1249 | 0 | c decl at src/main.c:68 |  |  | 0.609 |
+| walker |  | 1264 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.610 |
 | ns | 1266 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.566 |
 | ns | 1561 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.530 |
 | walker |  | 1635 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.582 |

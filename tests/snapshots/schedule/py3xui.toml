@@ -1,7 +1,7 @@
 fixture = "py3xui"
 budget = 10000
-cumulative_tokens = 9722
-batch_count = 173
+cumulative_tokens = 9709
+batch_count = 172
 
 [[batches]]
 position = 1
@@ -4756,24 +4756,28 @@ kind = "full"
 
 [[batches]]
 position = 170
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+key = 'Python(DeclNames { file: "py3xui/async_api/async_api_base.py" })'
+descriptor = "python decl names surface in py3xui/async_api/async_api_base.py"
 cost_tokens = 13
 cum_tokens = 9687
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["config.yml", "py3xui-issue-template.md"]
+[[batches.content.spans]]
+path = "py3xui/async_api/async_api_base.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 171
-key = 'Python(DeclNames { file: "py3xui/async_api/async_api_base.py" })'
-descriptor = "python decl names surface in py3xui/async_api/async_api_base.py"
-cost_tokens = 13
-cum_tokens = 9700
+key = 'Python(Decl { file: "py3xui/async_api/async_api_base.py", start_line: 16 })'
+descriptor = "python decl at py3xui/async_api/async_api_base.py:16"
+cost_tokens = 0
+cum_tokens = 9687
 
 [batches.content]
 kind = "lines"
@@ -4788,28 +4792,10 @@ kind = "full"
 
 [[batches]]
 position = 172
-key = 'Python(Decl { file: "py3xui/async_api/async_api_base.py", start_line: 16 })'
-descriptor = "python decl at py3xui/async_api/async_api_base.py:16"
-cost_tokens = 0
-cum_tokens = 9700
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "py3xui/async_api/async_api_base.py"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_base.py", start_line: 16 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_base.py:16"
 cost_tokens = 22
-cum_tokens = 9722
+cum_tokens = 9709
 
 [batches.content]
 kind = "lines"
