@@ -49,9 +49,11 @@ exec.go …
 exec_test.go …
 focus.go
        1→package tea
-    …
+       3→// FocusMsg represents a terminal focus message.
+       4→// This occurs when the terminal gains focus.
        5→type FocusMsg struct{}
-    …
+       7→// BlurMsg represents a terminal blur message.
+       8→// This occurs when the terminal loses focus.
        9→type BlurMsg struct{}
 go.mod
        1→module charm.land/bubbletea/v2
@@ -65,7 +67,18 @@ input.go
     …
 key.go …
 keyboard.go …
-logging.go …
+logging.go
+    …
+      23→func LogToFile(path string, prefix string) (*os.File, error) {
+      24→	return LogToFileWith(path, prefix, log.Default())
+    …
+      29→type LogOptionsSetter interface {
+      30→	SetOutput(io.Writer)
+      31→	SetPrefix(string)
+      32→}
+      34→// LogToFileWith does allows to call LogToFile with a custom LogOptionsSetter.
+      35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
+    …
 logging_test.go …
 mod.go …
 mouse.go …
@@ -113,7 +126,12 @@ screen.go
       26→type clearScreenMsg struct{}
     …
       62→type ModeReportMsg struct {
-    …
+      63→	// Mode is the mode number.
+      64→	Mode ansi.Mode
+      65→
+      66→	// Value is the mode value.
+      67→	Value ansi.ModeSetting
+      68→}
 screen_test.go …
 signals_unix.go …
 signals_windows.go …
@@ -152,15 +170,7 @@ tea.go
       63→	// view is rendered after every Update.
       64→	View() View
       65→}
-      67→// NewView is a helper function to create a new [View] with the given styled
-      68→// string. A styled string represents text with styles and hyperlinks encoded
-      69→// as ANSI escape codes.
-      70→//
-      71→// Example:
-      72→//
-      73→//	```go
-      74→//	v := tea.NewView("Hello, World!")
-      75→//	```
+    …
       76→func NewView(s string) View {
     …
       82→// View represents a terminal view that can be composed of multiple layers.
@@ -213,23 +223,13 @@ tea.go
      373→// position.
      374→func NewCursor(x, y int) *Cursor {
     …
-     383→// Cmd is an IO operation that returns a message when it's complete. If it's
-     384→// nil it's considered a no-op. Use it for things like HTTP requests, timers,
-     385→// saving and loading from disk, and so on.
-     386→//
-     387→// Note that there's almost never a reason to use a command to send a message
-     388→// to another part of your program. That can almost always be done in the
-     389→// update function.
      390→type Cmd func() Msg
-     392→// channelHandlers manages the series of channels returned by various processes.
-     393→// It allows us to wait for those processes to terminate before exiting the
-     394→// program.
+    …
      395→type channelHandlers struct {
      396→	handlers []chan struct{}
      397→	mu       sync.RWMutex
      398→}
-     400→// Adds a channel to the list of handlers. We wait for all handlers to terminate
-     401→// gracefully on shutdown.
+    …
      402→func (h *channelHandlers) add(ch chan struct{}) {
     …
      408→// shutdown waits for all handlers to terminate.

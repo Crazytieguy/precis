@@ -150,7 +150,7 @@ const BREADTH_MIN_TRAINS: usize = 2;
 /// escalates depth rather than pulling one file in front of the
 /// repository's orientation. Swept full-corpus; see
 /// `docs/design-notes.md` ("Dominant source file").
-const DOMINANT_FILE_RATIO_BOOST: f64 = 1.45;
+const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
@@ -699,14 +699,15 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Ratio premium for `id` when it draws only on the dominant source
-    /// file. Surface batches only: the spine file's roster is what the
-    /// scheduler under-buys, while its docs and bodies already rank
-    /// locally once the train is open, and boosting those front-loads
-    /// one file's depth over the rest of the repository's orientation.
+    /// file. Surface batches only ([`WalkerKey::is_dominant_file_surface`]):
+    /// the spine file's roster is what the scheduler under-buys, while
+    /// its docs and bodies already rank locally once the train is open,
+    /// and boosting those front-loads one file's depth over the rest of
+    /// the repository's orientation.
     fn dominant_file_boost(&self, id: BatchId) -> f64 {
         if self.dominant_file_entered
             && self.dominant_file_batches.contains(&id)
-            && !self.entries[id.index()].key.is_depth_follow_up()
+            && self.entries[id.index()].key.is_dominant_file_surface()
         {
             DOMINANT_FILE_RATIO_BOOST
         } else {

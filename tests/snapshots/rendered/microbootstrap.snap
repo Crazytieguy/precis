@@ -84,32 +84,7 @@ README.md
       71→  - [Application configuration](#application-configuration)
       72→- [Advanced](#advanced)
       74→## Installation
-      75→
-      76→Also, you can specify extras during installation for concrete framework:
-      77→
-      78→- `fastapi`
-      79→- `litestar`
-      80→- `faststream` (ASGI app)
-      81→
-      82→Also we have `granian` extra that is requires for `create_granian_server`.
-      83→
-      84→For uv:
-      85→
-      86→```bash
-      87→uv add "microbootstrap[fastapi]"
-      88→```
-      89→
-      90→For poetry:
-      91→
-      92→```bash
-      93→poetry add microbootstrap -E fastapi
-      94→```
-      95→
-      96→For pip:
-      97→
-      98→```bash
-      99→pip install "microbootstrap[fastapi]"
-     100→```
+    …
      102→## Quickstart
     …
      141→### FastAPI
@@ -153,6 +128,7 @@ README.md
     …
      710→### Using microbootstrap without a framework
     …
+     744→Like bootstrappers, you can reconfigure instruments using the `configure_instrument()` and `configure_instruments()` methods.
      746→## Advanced
     …
 examples/
@@ -237,12 +213,19 @@ microbootstrap/
            1→class MicroBootstrapBaseError(Exception):
            2→    """Base for all exceptions."""
            5→class ConfigMergeError(MicroBootstrapBaseError):
-        …
+           6→    """Raises when it's impossible to merge configs due to type mismatch."""
            9→class MissingInstrumentError(MicroBootstrapBaseError):
-        …
+          10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
         …
           16→GRANIAN_LOG_LEVELS_MAP = {
+          17→    logging.CRITICAL: LogLevels.critical,
+          18→    logging.ERROR: LogLevels.error,
+          19→    logging.WARNING: LogLevels.warning,
+          20→    logging.WARNING: LogLevels.warn,
+          21→    logging.INFO: LogLevels.info,
+          22→    logging.DEBUG: LogLevels.debug,
+          23→}
         …
           27→def create_granian_server(
           28→    target: str,
@@ -253,7 +236,16 @@ microbootstrap/
     helpers.py …
     instruments/
         __init__.py
-        base.py …
+        base.py
+            …
+              15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
+              16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+              17→
+              18→
+              19→class BaseInstrumentConfig(pydantic.BaseModel):
+            …
+              23→@dataclasses.dataclass
+            …
         cors_instrument.py …
         health_checks_instrument.py …
         instrument_box.py …

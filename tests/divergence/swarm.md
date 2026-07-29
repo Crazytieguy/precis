@@ -92,9 +92,9 @@ Score(3000)=0.697 I=0.826 C=0.588 ns_rows≤3K=25/66 (reached=11 partial=2 missi
 | walker |  | 3131 | 10 | listing of 'tests/test_runs' |  |  | 0.686 |
 | ns | 3181 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.677 |
 | walker |  | 3192 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.678 |
-| walker |  | 3358 | 166 | python imports in swarm/core.py |  |  | 0.730 |
-| walker |  | 3362 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.730 |
-| walker |  | 3366 | 4 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.730 |
+| walker |  | 3196 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.678 |
+| walker |  | 3200 | 4 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.678 |
+| walker |  | 3366 | 166 | python imports in swarm/core.py |  |  | 0.730 |
 | ns | 3378 |  | 197 | Examples index: what each example directory demonstrates | 3.10 |  | 0.715 |
 | ns | 3504 |  | 126 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.713 |
 | walker |  | 3518 | 152 | README.md section #12 |  |  | 0.713 |

@@ -212,28 +212,28 @@ Score(3000)=0.547 I=0.807 C=0.371 ns_rows≤3K=20/56 (reached=8 partial=2 missin
 | walker |  | 7774 | 12 | c decl doc at aho_corasick.c:55 |  |  | 0.639 |
 | walker |  | 7786 | 12 | c decl doc at krep.c:125 |  |  | 0.639 |
 | walker |  | 7854 | 68 | c decl doc at krep.h:298 |  |  | 0.639 |
-| ns | 7884 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.629 |
-| ns | 8053 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.619 |
-| ns | 8210 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.608 |
-| ns | 8463 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.612 |
-| walker |  | 8577 | 723 | c includes in krep.c |  |  | 0.612 |
-| walker |  | 8600 | 23 | c decl doc at krep.h:49 |  |  | 0.617 |
-| ns | 8697 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.619 |
-| walker |  | 8775 | 175 | c decl names surface in aho_corasick.c |  |  | 0.629 |
-| walker |  | 8775 | 0 | c decl at aho_corasick.c:293 |  |  | 0.629 |
-| walker |  | 8775 | 0 | c decl at aho_corasick.c:296 |  |  | 0.629 |
-| walker |  | 8780 | 5 | c decl at aho_corasick.c:111 |  |  | 0.629 |
-| walker |  | 8785 | 5 | c decl at aho_corasick.c:274 |  |  | 0.629 |
-| walker |  | 8790 | 5 | c decl at aho_corasick.c:287 |  |  | 0.629 |
-| walker |  | 8827 | 37 | c decl at aho_corasick.c:299 |  |  | 0.629 |
-| walker |  | 8840 | 13 | c decl doc at aho_corasick.c:299 |  |  | 0.629 |
-| walker |  | 8901 | 61 | c decl at aho_corasick.c:26 |  |  | 0.631 |
-| ns | 8967 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.624 |
-| walker |  | 9198 | 297 | README.md section #22 |  |  | 0.632 |
-| walker |  | 9267 | 69 | README.md section #46 |  |  | 0.632 |
+| walker |  | 7877 | 23 | c decl doc at krep.h:49 |  |  | 0.645 |
+| ns | 7884 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.634 |
+| walker |  | 8052 | 175 | c decl names surface in aho_corasick.c |  |  | 0.646 |
+| walker |  | 8052 | 0 | c decl at aho_corasick.c:293 |  |  | 0.646 |
+| walker |  | 8052 | 0 | c decl at aho_corasick.c:296 |  |  | 0.646 |
+| ns | 8053 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.636 |
+| walker |  | 8057 | 5 | c decl at aho_corasick.c:111 |  |  | 0.636 |
+| walker |  | 8062 | 5 | c decl at aho_corasick.c:274 |  |  | 0.636 |
+| walker |  | 8067 | 5 | c decl at aho_corasick.c:287 |  |  | 0.636 |
+| walker |  | 8104 | 37 | c decl at aho_corasick.c:299 |  |  | 0.636 |
+| walker |  | 8117 | 13 | c decl doc at aho_corasick.c:299 |  |  | 0.636 |
+| walker |  | 8178 | 61 | c decl at aho_corasick.c:26 |  |  | 0.638 |
+| ns | 8210 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.627 |
+| ns | 8463 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.630 |
+| walker |  | 8475 | 297 | README.md section #22 |  |  | 0.639 |
+| walker |  | 8544 | 69 | README.md section #46 |  |  | 0.639 |
+| ns | 8697 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.640 |
+| walker |  | 8834 | 290 | README.md section #41 |  |  | 0.640 |
+| walker |  | 8860 | 26 | c header banner in test/test_krep.h |  |  | 0.640 |
+| ns | 8967 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.632 |
 | ns | 9300 |  | 333 | select_search_algorithm: dispatch head through the short-pattern branch | 6.4 |  | 0.619 |
-| walker |  | 9557 | 290 | README.md section #41 |  |  | 0.619 |
-| walker |  | 9583 | 26 | c header banner in test/test_krep.h |  |  | 0.619 |
+| walker |  | 9583 | 723 | c includes in krep.c |  |  | 0.619 |
 | walker |  | 9603 | 20 | c decl doc at krep.h:34 |  |  | 0.619 |
 | ns | 9686 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.604 |
 | walker |  | 9692 | 89 | README.md section #48 |  |  | 0.614 |

@@ -133,6 +133,7 @@ xxhash.go
       37→}
       39→// New creates a new Digest with a zero seed.
       40→func New() *Digest {
+      41→	return NewWithSeed(0)
     …
       44→// NewWithSeed creates a new Digest with the given seed.
       45→func NewWithSeed(seed uint64) *Digest {

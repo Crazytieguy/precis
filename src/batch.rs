@@ -79,6 +79,9 @@ macro_rules! impl_batchkey {
             fn is_depth_follow_up(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
             }
+            fn is_dominant_file_surface(&self) -> bool {
+                match self { $(BatchKey::$variant(k) => InnerKey::is_dominant_file_surface(k),)* }
+            }
         }
     };
 }
@@ -116,6 +119,10 @@ trait InnerKey {
     /// breadth-pressure penalty; surfaces and orientation never
     /// qualify.
     fn is_depth_follow_up(&self) -> bool {
+        false
+    }
+    /// See [`WalkerKey::is_dominant_file_surface`].
+    fn is_dominant_file_surface(&self) -> bool {
         false
     }
 }
@@ -632,6 +639,16 @@ pub trait WalkerKey:
     fn is_depth_follow_up(&self) -> bool {
         false
     }
+
+    /// True for the batch classes that earn the scheduler's
+    /// dominant-source-file premium: declaration/name rosters and
+    /// catalogs, public-surface item heads, and the imports-level
+    /// top-of-file surface. Opt-in per walker, defaulting false —
+    /// bodies, tails, doc prose, and member/field groups are the depth
+    /// the premium is meant to *reach*, not the depth it front-loads.
+    fn is_dominant_file_surface(&self) -> bool {
+        false
+    }
 }
 
 impl InnerKey for FsKey {
@@ -659,6 +676,21 @@ impl InnerKey for RustKey {
                 | RustKey::PubItemDocBody { .. }
                 | RustKey::MacroBody { .. }
                 | RustKey::ImplMethodBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            RustKey::CrateAttrs { .. }
+                | RustKey::ModUse { .. }
+                | RustKey::PubItemNames { .. }
+                | RustKey::PubItem { .. }
+                | RustKey::EntryItem { .. }
+                | RustKey::MethodSigs { .. }
+                | RustKey::ImplMethod { .. }
+                | RustKey::RegistrationRoster { .. }
+                | RustKey::MacroNames { .. }
         )
     }
 
@@ -780,6 +812,20 @@ impl InnerKey for TsKey {
                 | TsKey::ExportMember { .. }
                 | TsKey::ExportTail { .. }
                 | TsKey::ModuleItemBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            TsKey::Imports { .. }
+                | TsKey::ImportChunk { .. }
+                | TsKey::ExportNames { .. }
+                | TsKey::Export { .. }
+                | TsKey::ExportMemberNames { .. }
+                | TsKey::ExportMemberNamesChunk { .. }
+                | TsKey::ModuleItemNames { .. }
+                | TsKey::ModuleItem { .. }
         )
     }
 
@@ -941,6 +987,13 @@ impl InnerKey for PlaintextKey {
     fn is_orientation(&self) -> bool {
         matches!(self, PlaintextKey::ManLede { .. })
     }
+
+    /// The language-agnostic declaration surface is how an unparsed
+    /// source language (Ruby, Swift, C++, …) presents its roster.
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(self, PlaintextKey::DeclSurface { .. })
+    }
+
     fn describe(&self, root: &Path) -> String {
         match self {
             PlaintextKey::Whole { file } => {
@@ -1035,6 +1088,13 @@ impl InnerKey for GoKey {
         matches!(self, GoKey::DeclBody { .. })
     }
 
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            GoKey::PackageImports { .. } | GoKey::DeclNames { .. } | GoKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` (matches the C walker) —
     /// short decls plus dozens per file would otherwise dominate the
     /// rank against larger anchors at the default 0.35.
@@ -1082,6 +1142,19 @@ impl InnerKey for PythonKey {
             PythonKey::DeclDocRest { .. }
                 | PythonKey::DeclBody { .. }
                 | PythonKey::MethodBody { .. }
+        )
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            PythonKey::Imports { .. }
+                | PythonKey::ImportChunk { .. }
+                | PythonKey::DeclNames { .. }
+                | PythonKey::DeclNamesChunk { .. }
+                | PythonKey::Decl { .. }
+                | PythonKey::MethodSigs { .. }
+                | PythonKey::Method { .. }
         )
     }
 
@@ -1168,6 +1241,16 @@ impl InnerKey for CKey {
         matches!(self, CKey::DeclDoc { .. } | CKey::DeclBody { .. })
     }
 
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            CKey::WholeFile { .. }
+                | CKey::Includes { .. }
+                | CKey::DeclNames { .. }
+                | CKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
     /// stack dominate larger anchor batches. `DeclDoc` joins them: a
@@ -1212,6 +1295,16 @@ impl InnerKey for CKey {
 }
 
 impl InnerKey for LuaKey {
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(
+            self,
+            LuaKey::ModuleIdentity { .. }
+                | LuaKey::MetaFileWhole { .. }
+                | LuaKey::DeclNames { .. }
+                | LuaKey::Decl { .. }
+        )
+    }
+
     /// Per-decl batches steepen to `0.45` (matches C / Python).
     /// `MetaFileWhole` keeps the default — LuaCATS specs are
     /// load-bearing and shouldn't be pushed later.

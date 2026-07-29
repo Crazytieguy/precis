@@ -263,7 +263,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 77
 cum_tokens = 407
@@ -281,7 +281,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 39
 cum_tokens = 446
@@ -563,7 +563,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 56
 cum_tokens = 833
@@ -831,7 +831,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 92
 cum_tokens = 1230
@@ -1557,7 +1557,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 153
 cum_tokens = 1955
@@ -5461,28 +5461,10 @@ kind = "full"
 
 [[batches]]
 position = 211
-key = 'Python(Imports { file: "nanovllm/engine/model_runner.py" })'
-descriptor = "python imports in nanovllm/engine/model_runner.py"
-cost_tokens = 152
-cum_tokens = 5260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/engine/model_runner.py"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 212
 key = 'Python(MethodBody { file: "nanovllm/engine/block_manager.py", start_line: 93, body_start_line: 94 })'
 descriptor = "python method body at nanovllm/engine/block_manager.py:93 body 94"
 cost_tokens = 23
-cum_tokens = 5283
+cum_tokens = 5131
 
 [batches.content]
 kind = "lines"
@@ -5496,11 +5478,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 213
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+position = 212
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 222
-cum_tokens = 5505
+cum_tokens = 5353
 
 [batches.content]
 kind = "lines"
@@ -5514,11 +5496,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 214
+position = 213
 key = 'Python(Imports { file: "nanovllm/layers/embed_head.py" })'
 descriptor = "python imports in nanovllm/layers/embed_head.py"
 cost_tokens = 56
-cum_tokens = 5561
+cum_tokens = 5409
 
 [batches.content]
 kind = "lines"
@@ -5532,11 +5514,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 215
+position = 214
 key = 'Python(DeclNames { file: "nanovllm/utils/loader.py" })'
 descriptor = "python decl names surface in nanovllm/utils/loader.py"
 cost_tokens = 37
-cum_tokens = 5598
+cum_tokens = 5446
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +5556,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 215
 key = 'Python(Decl { file: "nanovllm/utils/loader.py", start_line: 8 })'
 descriptor = "python decl at nanovllm/utils/loader.py:8"
 cost_tokens = 0
-cum_tokens = 5598
+cum_tokens = 5446
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +5574,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 217
+position = 216
 key = 'Python(Decl { file: "nanovllm/utils/loader.py", start_line: 12 })'
 descriptor = "python decl at nanovllm/utils/loader.py:12"
 cost_tokens = 0
-cum_tokens = 5598
+cum_tokens = 5446
 
 [batches.content]
 kind = "lines"
@@ -5610,11 +5592,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 218
+position = 217
 key = 'Python(DeclBody { file: "nanovllm/utils/loader.py", start_line: 8, body_start_line: 9 })'
 descriptor = "python decl body at nanovllm/utils/loader.py:8 body 9"
 cost_tokens = 10
-cum_tokens = 5608
+cum_tokens = 5456
 
 [batches.content]
 kind = "lines"
@@ -5628,11 +5610,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 219
+position = 218
 key = 'Python(Imports { file: "nanovllm/engine/scheduler.py" })'
 descriptor = "python imports in nanovllm/engine/scheduler.py"
 cost_tokens = 58
-cum_tokens = 5666
+cum_tokens = 5514
 
 [batches.content]
 kind = "lines"
@@ -5641,6 +5623,24 @@ kind = "lines"
 path = "nanovllm/engine/scheduler.py"
 start = 1
 end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'Python(Imports { file: "nanovllm/engine/model_runner.py" })'
+descriptor = "python imports in nanovllm/engine/model_runner.py"
+cost_tokens = 152
+cum_tokens = 5666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/engine/model_runner.py"
+start = 1
+end = 12
 
 [batches.content.spans.render]
 kind = "full"

@@ -165,54 +165,48 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | ns | 8525 |  | 89 | HashEntry / HashMap structs | 4.14 | 2.9 | 0.693 |
 | walker |  | 8594 | 217 | README.md section #2 |  |  | 0.693 |
 | walker |  | 8604 | 10 | c decl doc at parse.c:75 |  |  | 0.693 |
-| ns | 8616 |  | 91 | main(): driver entry and the -cc1 self-re-exec split | 5.1 | 3.4 | 0.688 |
-| ns | 8914 |  | 298 | cc1(): the compile pipeline in one function | 5.2 | 5.1 | 0.673 |
-| walker |  | 9030 | 426 | c decl names surface #1 in parse.c |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:85 |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:88 |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:93 |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:96 |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:100 |  |  | 0.677 |
-| walker |  | 9030 | 0 | c decl at parse.c:105 |  |  | 0.677 |
-| walker |  | 9043 | 13 | c decl doc at parse.c:88 |  |  | 0.677 |
-| walker |  | 9057 | 14 | c decl doc at parse.c:93 |  |  | 0.677 |
-| walker |  | 9071 | 14 | c decl doc at parse.c:100 |  |  | 0.677 |
-| walker |  | 9087 | 16 | c decl doc at parse.c:96 |  |  | 0.677 |
-| walker |  | 9096 | 9 | c decl doc at chibicc.h:126 |  |  | 0.679 |
-| ns | 9184 |  | 270 | parse(): the top-level program loop | 5.3 |  | 0.667 |
-| walker |  | 9307 | 211 | c decl names surface in hashmap.c |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:6 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:9 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:12 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:15 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:108 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:112 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:117 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:121 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:126 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:130 |  |  | 0.667 |
-| walker |  | 9307 | 0 | c decl at hashmap.c:136 |  |  | 0.667 |
-| walker |  | 9319 | 12 | c includes in hashmap.c |  |  | 0.667 |
-| walker |  | 9327 | 8 | c decl doc at hashmap.c:6 |  |  | 0.667 |
-| walker |  | 9336 | 9 | c decl doc at hashmap.c:15 |  |  | 0.667 |
-| walker |  | 9351 | 15 | c decl body at hashmap.c:126 |  |  | 0.667 |
-| walker |  | 9367 | 16 | c decl body at hashmap.c:108 |  |  | 0.667 |
-| ns | 9431 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.660 |
-| walker |  | 9579 | 212 | c decl names surface in preprocess.c |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:54 |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:685 |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:993 |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:998 |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:1060 |  |  | 0.661 |
-| walker |  | 9579 | 0 | c decl at preprocess.c:1198 |  |  | 0.661 |
-| walker |  | 9601 | 22 | c decl at preprocess.c:28 |  |  | 0.661 |
-| walker |  | 9626 | 25 | c decl at preprocess.c:63 |  |  | 0.661 |
-| walker |  | 9638 | 12 | c includes in preprocess.c |  |  | 0.661 |
-| walker |  | 9651 | 13 | c decl body at preprocess.c:998 |  |  | 0.661 |
-| walker |  | 9685 | 34 | c decl at preprocess.c:1115 |  |  | 0.661 |
-| walker |  | 9726 | 41 | c decl at preprocess.c:34 |  |  | 0.661 |
-| ns | 9757 |  | 326 | The expression precedence chain, as grammar comments | 6.2 | 3.9 | 0.654 |
-| walker |  | 9777 | 51 | c decl at preprocess.c:55 |  |  | 0.654 |
-| walker |  | 9849 | 72 | c decl at preprocess.c:44 |  |  | 0.654 |
-| walker |  | 9978 | 129 | c decl names surface in include/stdarg.h |  |  | 0.654 |
-| ns | 9990 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.648 |
+| walker |  | 8613 | 9 | c decl doc at chibicc.h:126 |  |  | 0.695 |
+| ns | 8616 |  | 91 | main(): driver entry and the -cc1 self-re-exec split | 5.1 | 3.4 | 0.689 |
+| walker |  | 8824 | 211 | c decl names surface in hashmap.c |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:6 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:9 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:12 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:15 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:108 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:112 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:117 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:121 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:126 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:130 |  |  | 0.689 |
+| walker |  | 8824 | 0 | c decl at hashmap.c:136 |  |  | 0.689 |
+| walker |  | 8836 | 12 | c includes in hashmap.c |  |  | 0.689 |
+| walker |  | 8844 | 8 | c decl doc at hashmap.c:6 |  |  | 0.689 |
+| walker |  | 8853 | 9 | c decl doc at hashmap.c:15 |  |  | 0.689 |
+| walker |  | 8868 | 15 | c decl body at hashmap.c:126 |  |  | 0.689 |
+| walker |  | 8884 | 16 | c decl body at hashmap.c:108 |  |  | 0.689 |
+| ns | 8914 |  | 298 | cc1(): the compile pipeline in one function | 5.2 | 5.1 | 0.675 |
+| walker |  | 9096 | 212 | c decl names surface in preprocess.c |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:54 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:685 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:993 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:998 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:1060 |  |  | 0.675 |
+| walker |  | 9096 | 0 | c decl at preprocess.c:1198 |  |  | 0.675 |
+| walker |  | 9118 | 22 | c decl at preprocess.c:28 |  |  | 0.675 |
+| walker |  | 9143 | 25 | c decl at preprocess.c:63 |  |  | 0.675 |
+| walker |  | 9155 | 12 | c includes in preprocess.c |  |  | 0.675 |
+| walker |  | 9168 | 13 | c decl body at preprocess.c:998 |  |  | 0.675 |
+| ns | 9184 |  | 270 | parse(): the top-level program loop | 5.3 |  | 0.664 |
+| walker |  | 9202 | 34 | c decl at preprocess.c:1115 |  |  | 0.664 |
+| walker |  | 9243 | 41 | c decl at preprocess.c:34 |  |  | 0.664 |
+| walker |  | 9294 | 51 | c decl at preprocess.c:55 |  |  | 0.664 |
+| walker |  | 9366 | 72 | c decl at preprocess.c:44 |  |  | 0.664 |
+| ns | 9431 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.657 |
+| walker |  | 9495 | 129 | c decl names surface in include/stdarg.h |  |  | 0.657 |
+| walker |  | 9518 | 23 | c decl at include/stdarg.h:13 |  |  | 0.657 |
+| walker |  | 9567 | 49 | c decl at include/stdarg.h:4 |  |  | 0.657 |
+| walker |  | 9622 | 55 | c decl at codegen.c:356 |  |  | 0.657 |
+| walker |  | 9639 | 17 | c decl body at hashmap.c:117 |  |  | 0.657 |
+| ns | 9757 |  | 326 | The expression precedence chain, as grammar comments | 6.2 | 3.9 | 0.650 |
+| ns | 9990 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.644 |
+| walker |  | 9994 | 355 | README.md section #9 |  |  | 0.644 |

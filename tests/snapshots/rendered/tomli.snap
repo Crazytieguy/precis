@@ -154,6 +154,23 @@ src/
                7→
                8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
+               1→# SPDX-License-Identifier: MIT
+               2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+               3→# Licensed to PSF under a Contributor Agreement.
+               4→
+               5→from __future__ import annotations
+               6→
+               7→import sys
+               8→from types import MappingProxyType
+               9→
+              10→from ._re import (
+              11→    RE_DATETIME,
+              12→    RE_LOCALTIME,
+              13→    RE_NUMBER,
+              14→    match_to_datetime,
+              15→    match_to_localtime,
+              16→    match_to_number,
+              17→)
             …
               71→class DEPRECATED_DEFAULT:
             …

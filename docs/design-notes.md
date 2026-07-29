@@ -471,18 +471,41 @@ Shipped mechanism, two pieces:
   primary-language gate (act's spine is Go, but a vendored
   `pkg/runner/hashfiles/index.js` is its biggest single file). Fires on
   39/93 fixtures.
-- `Scheduler::dominant_file_boost` — a ×1.45 ratio premium on that
-  file's non-follow-up batches, **gated on the file already having been
+- `Scheduler::dominant_file_boost` — a ×1.35 ratio premium on that
+  file's *surface* batches, **gated on the file already having been
   entered** on its own merits.
+
+  "Surface" is `WalkerKey::is_dominant_file_surface`, a positive
+  per-walker opt-in (declaration/name rosters and catalogs,
+  public-surface item heads, imports-level surface). The lane originally
+  spelled it `!is_depth_follow_up()`, which is the wrong instrument:
+  `is_depth_follow_up` is a *breadth-pressure* opt-in, so a walker that
+  never needed pressure never listed anything and the premium fell
+  through to everything it emitted — Lua and Prisma have no override at
+  all (middleclass.lua is ~85% of its repo's source mass, so its whole
+  depth train was boosted), Go excluded only `DeclBody` (doc ledes/bodies,
+  `DeclDoc`, struct field groups all boosted), C excluded only
+  `DeclDoc`/`DeclBody` (aggregate member groups boosted). Two taxonomies
+  with different purposes must not share one predicate.
 
 Mass-share was explicitly not among the four proxies in the dead "Go
 spine centrality" entry, and the entered-gate is what makes it work.
 The gate is the whole result: every variant that let the premium pull
 the spine file *forward* traded orientation for depth and lost.
 
-- Boost magnitude, entered-gate, surface-only: 1.15→0.6155 ·
-  1.30→0.6170 · 1.40→0.6173 · **1.45→0.6179 (shipped)** · 1.50→0.6179 ·
-  1.55→0.6179 · 1.60→0.6160 (vaul −0.138 crosses a cliff)
+- Boost magnitude, entered-gate, `!is_depth_follow_up` surface (the
+  lane's original sweep, isolated on 0.6151): 1.15→0.6155 · 1.30→0.6170 ·
+  1.40→0.6173 · 1.45→0.6179 · 1.50→0.6179 · 1.55→0.6179 · 1.60→0.6160
+  (vaul −0.138 crosses a cliff)
+- Re-swept on the true surface predicate over the merged integration
+  tree, since the boosted set shrank — grid means, `B=1000 … 9000`:
+  1.35 → 0.6134/0.6239/0.6307/**0.62094**/0.5916/0.5665/0.5643 ·
+  1.45 → 0.6146/0.6231/0.6306/**0.62087**/0.5916/0.5656/0.5636 ·
+  1.55 → 0.6147/0.6209/0.6292/**0.62123**/0.5918/0.5656/0.5630.
+  Flat at the primary within 0.0004; **1.35 shipped** — it wins or ties
+  six of seven budgets and 1.55 pays for its primary sliver at 1442
+  (−0.0030) and 2080 (−0.0015). The lever is a plateau, not a peak;
+  don't re-tune it on sub-0.001 primary moves.
 - Including depth follow-ups in the premium: 1.50→0.6169 (−0.0010).
   Rosters are the under-bought class; the file's own docs and bodies
   already rank once its train is open.

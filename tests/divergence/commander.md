@@ -46,56 +46,56 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 1450 | 0 | export at lib/command.js:13 |  |  | 0.563 |
 | walker |  | 1450 | 0 | export at lib/command.js:2752 |  |  | 0.563 |
 | ns | 1451 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.531 |
-| ns | 1529 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.516 |
-| ns | 1662 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.493 |
-| walker |  | 1703 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.543 |
-| walker |  | 1756 | 53 | export names surface in lib/error.js |  |  | 0.543 |
-| walker |  | 1767 | 11 | export at lib/error.js:25 |  |  | 0.543 |
-| ns | 1772 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.552 |
-| walker |  | 1783 | 16 | export at lib/error.js:4 |  |  | 0.552 |
-| walker |  | 1796 | 13 | imports in typings/esm.d.mts |  |  | 0.552 |
-| ns | 1856 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.544 |
-| walker |  | 1865 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.545 |
-| walker |  | 1876 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.545 |
-| walker |  | 1936 | 60 | export names surface in lib/argument.js |  |  | 0.546 |
-| walker |  | 1936 | 0 | export at lib/argument.js:143 |  |  | 0.546 |
-| walker |  | 1970 | 34 | export doc at lib/command.js:2752 |  |  | 0.546 |
+| walker |  | 1503 | 53 | export names surface in lib/error.js |  |  | 0.531 |
+| walker |  | 1514 | 11 | export at lib/error.js:25 |  |  | 0.531 |
+| ns | 1529 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.517 |
+| walker |  | 1530 | 16 | export at lib/error.js:4 |  |  | 0.517 |
+| walker |  | 1543 | 13 | imports in typings/esm.d.mts |  |  | 0.517 |
+| walker |  | 1612 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.518 |
+| walker |  | 1623 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.518 |
+| ns | 1662 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.494 |
+| walker |  | 1683 | 60 | export names surface in lib/argument.js |  |  | 0.495 |
+| walker |  | 1683 | 0 | export at lib/argument.js:143 |  |  | 0.495 |
+| ns | 1772 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.475 |
+| ns | 1856 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.462 |
+| walker |  | 1936 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.546 |
 | ns | 2003 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.526 |
-| walker |  | 2066 | 96 | export at lib/argument.js:3 |  |  | 0.528 |
-| walker |  | 2123 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.529 |
+| walker |  | 2032 | 96 | export at lib/argument.js:3 |  |  | 0.528 |
+| walker |  | 2089 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.529 |
+| walker |  | 2100 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.529 |
+| walker |  | 2117 | 17 | export doc at lib/error.js:4 |  |  | 0.529 |
 | ns | 2133 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.513 |
-| walker |  | 2134 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.513 |
-| walker |  | 2151 | 17 | export doc at lib/error.js:4 |  |  | 0.513 |
-| walker |  | 2203 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.513 |
-| walker |  | 2258 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.513 |
-| walker |  | 2278 | 20 | export doc at lib/error.js:25 |  |  | 0.513 |
+| walker |  | 2169 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.513 |
+| walker |  | 2224 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.513 |
+| walker |  | 2244 | 20 | export doc at lib/error.js:25 |  |  | 0.513 |
+| walker |  | 2258 | 14 | imports in lib/argument.js |  |  | 0.513 |
+| walker |  | 2272 | 14 | imports in lib/option.js |  |  | 0.513 |
+| walker |  | 2283 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.513 |
 | ns | 2289 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.497 |
-| walker |  | 2292 | 14 | imports in lib/argument.js |  |  | 0.497 |
-| walker |  | 2306 | 14 | imports in lib/option.js |  |  | 0.497 |
-| walker |  | 2317 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.497 |
-| walker |  | 2334 | 17 | imports in lib/help.js |  |  | 0.497 |
-| walker |  | 2350 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.497 |
+| walker |  | 2300 | 17 | imports in lib/help.js |  |  | 0.497 |
+| walker |  | 2316 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.497 |
 | ns | 2363 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.488 |
-| walker |  | 2431 | 81 | imports in index.js |  |  | 0.516 |
-| walker |  | 2442 | 11 | export names surface in esm.mjs |  |  | 0.516 |
-| ns | 2448 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.506 |
-| walker |  | 2453 | 11 | imports in esm.mjs |  |  | 0.507 |
-| walker |  | 2550 | 97 | export at esm.mjs:4 |  |  | 0.555 |
+| walker |  | 2397 | 81 | imports in index.js |  |  | 0.516 |
+| walker |  | 2408 | 11 | export names surface in esm.mjs |  |  | 0.516 |
+| walker |  | 2419 | 11 | imports in esm.mjs |  |  | 0.517 |
+| ns | 2448 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.507 |
+| walker |  | 2516 | 97 | export at esm.mjs:4 |  |  | 0.555 |
 | ns | 2600 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.535 |
-| walker |  | 2699 | 149 | package identity metadata in package.json |  |  | 0.539 |
+| walker |  | 2665 | 149 | package identity metadata in package.json |  |  | 0.539 |
 | ns | 2708 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.527 |
 | ns | 2760 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.529 |
 | ns | 2856 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.520 |
-| walker |  | 2981 | 282 | package entrypoints in package.json |  |  | 0.553 |
+| walker |  | 2947 | 282 | package entrypoints in package.json |  |  | 0.553 |
 | ns | 2999 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.556 |
 | ns | 3127 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.572 |
-| walker |  | 3238 | 257 | package scripts in package.json |  |  | 0.580 |
-| walker |  | 3250 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.582 |
+| walker |  | 3204 | 257 | package scripts in package.json |  |  | 0.580 |
+| walker |  | 3216 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.582 |
 | ns | 3358 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.576 |
 | ns | 3401 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.572 |
 | ns | 3481 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.564 |
 | ns | 3613 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.551 |
-| walker |  | 3686 | 436 | export member names at lib/help.js:12 |  |  | 0.602 |
+| walker |  | 3652 | 436 | export member names at lib/help.js:12 |  |  | 0.602 |
+| walker |  | 3686 | 34 | export doc at lib/command.js:2752 |  |  | 0.602 |
 | walker |  | 3714 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.605 |
 | walker |  | 3714 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.605 |
 | ns | 3809 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.622 |
@@ -223,7 +223,15 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | ns | 9098 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.615 |
 | ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.618 |
 | walker |  | 9218 | 249 | docs/terminology.md section #0 |  |  | 0.641 |
+| walker |  | 9249 | 31 | module item at examples/options-negatable.js:19 |  |  | 0.641 |
 | ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.645 |
-| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.639 |
-| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.644 |
-| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.640 |
+| walker |  | 9534 | 285 | docs/parsing-and-hooks.md section #0 |  |  | 0.672 |
+| walker |  | 9574 | 40 | module item body at examples/configure-output.js:4 body 5 |  |  | 0.672 |
+| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.665 |
+| walker |  | 9738 | 164 | json config tsconfig.js.json |  |  | 0.665 |
+| walker |  | 9752 | 14 | export member at lib/option.js:3 member 100 |  |  | 0.666 |
+| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.671 |
+| walker |  | 9917 | 165 | json config package-support.json |  |  | 0.671 |
+| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.668 |
+| walker |  | 9949 | 32 | headings outline in CONTRIBUTING.md |  |  | 0.668 |
+| walker |  | 9949 | 0 | CONTRIBUTING.md section #0 |  |  | 0.668 |

@@ -246,17 +246,17 @@ Score(3000)=0.734 I=0.902 C=0.598 ns_rows≤3K=22/55 (reached=13 partial=2 missi
 | walker |  | 5009 | 55 | python method at nanovllm/models/qwen3.py:145 |  |  | 0.651 |
 | ns | 5059 |  | 249 | LLMEngine.__init__ — config filtering and TP worker spawn | 3.9 | 2.3 | 0.635 |
 | walker |  | 5108 | 99 | python class body at nanovllm/models/qwen3.py:185 |  |  | 0.654 |
+| walker |  | 5131 | 23 | python method body at nanovllm/engine/block_manager.py:93 body 94 |  |  | 0.654 |
 | ns | 5163 |  | 104 | LLMEngine.exit and add_request | 3.10 | 2.3 | 0.646 |
-| walker |  | 5260 | 152 | python imports in nanovllm/engine/model_runner.py |  |  | 0.673 |
-| walker |  | 5283 | 23 | python method body at nanovllm/engine/block_manager.py:93 body 94 |  |  | 0.673 |
-| ns | 5345 |  | 182 | BlockManager.__init__ and compute_hash | 3.11 | 2.5 | 0.663 |
-| walker |  | 5505 | 222 | README.md section #5 |  |  | 0.663 |
-| walker |  | 5561 | 56 | python imports in nanovllm/layers/embed_head.py |  |  | 0.663 |
-| walker |  | 5598 | 37 | python decl names surface in nanovllm/utils/loader.py |  |  | 0.663 |
-| walker |  | 5598 | 0 | python decl at nanovllm/utils/loader.py:8 |  |  | 0.663 |
-| walker |  | 5598 | 0 | python decl at nanovllm/utils/loader.py:12 |  |  | 0.663 |
-| walker |  | 5608 | 10 | python decl body at nanovllm/utils/loader.py:8 body 9 |  |  | 0.663 |
-| walker |  | 5666 | 58 | python imports in nanovllm/engine/scheduler.py |  |  | 0.666 |
+| ns | 5345 |  | 182 | BlockManager.__init__ and compute_hash | 3.11 | 2.5 | 0.636 |
+| walker |  | 5353 | 222 | README.md section #5 |  |  | 0.636 |
+| walker |  | 5409 | 56 | python imports in nanovllm/layers/embed_head.py |  |  | 0.636 |
+| walker |  | 5446 | 37 | python decl names surface in nanovllm/utils/loader.py |  |  | 0.636 |
+| walker |  | 5446 | 0 | python decl at nanovllm/utils/loader.py:8 |  |  | 0.636 |
+| walker |  | 5446 | 0 | python decl at nanovllm/utils/loader.py:12 |  |  | 0.636 |
+| walker |  | 5456 | 10 | python decl body at nanovllm/utils/loader.py:8 body 9 |  |  | 0.636 |
+| walker |  | 5514 | 58 | python imports in nanovllm/engine/scheduler.py |  |  | 0.639 |
+| walker |  | 5666 | 152 | python imports in nanovllm/engine/model_runner.py |  |  | 0.666 |
 | ns | 5686 |  | 341 | BlockManager.can_allocate and allocate — the prefix-cache hit path | 3.12 | 2.5 | 0.645 |
 | walker |  | 5765 | 99 | python decl names surface in nanovllm/utils/context.py |  |  | 0.648 |
 | walker |  | 5765 | 0 | python decl at nanovllm/utils/context.py:18 |  |  | 0.648 |

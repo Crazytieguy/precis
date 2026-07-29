@@ -11,24 +11,24 @@ Score(3000)=0.573 I=0.827 C=0.397 ns_rows≤3K=21/56 (reached=7 partial=1 missin
 | ns | 189 |  | 43 | Complete root directory listing | 1.3 |  | 0.425 |
 | walker |  | 201 | 63 | export names surface in source/index.ts |  |  | 0.428 |
 | walker |  | 234 | 33 | export at source/index.ts:16 |  |  | 0.428 |
-| ns | 246 |  | 57 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.349 |
-| walker |  | 254 | 20 | export doc at source/index.ts:16 |  |  | 0.358 |
-| walker |  | 261 | 7 | listing of '.github' |  |  | 0.359 |
-| walker |  | 264 | 3 | listing of '.github/workflows' |  |  | 0.359 |
-| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.357 |
-| walker |  | 465 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.361 |
-| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.306 |
-| walker |  | 532 | 67 | README headline in readme.md |  |  | 0.593 |
+| walker |  | 241 | 7 | listing of '.github' |  |  | 0.429 |
+| walker |  | 244 | 3 | listing of '.github/workflows' |  |  | 0.429 |
+| ns | 246 |  | 57 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.350 |
+| ns | 381 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.327 |
+| walker |  | 445 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.330 |
+| ns | 497 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.280 |
+| walker |  | 512 | 67 | README headline in readme.md |  |  | 0.561 |
+| walker |  | 532 | 20 | export doc at source/index.ts:16 |  |  | 0.593 |
 | ns | 565 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.567 |
 | walker |  | 586 | 54 | package runtime dependencies in package.json |  |  | 0.567 |
 | walker |  | 617 | 31 | package runtime metadata in package.json |  |  | 0.569 |
-| walker |  | 701 | 84 | imports in source/index.ts |  |  | 0.572 |
-| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.512 |
-| walker |  | 731 | 30 | listing of 'test' |  |  | 0.644 |
-| walker |  | 768 | 37 | export names surface in source/priority-queue.ts |  |  | 0.644 |
-| walker |  | 785 | 17 | export at source/priority-queue.ts:7 |  |  | 0.644 |
-| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.600 |
-| walker |  | 1003 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.604 |
+| walker |  | 647 | 30 | listing of 'test' |  |  | 0.716 |
+| walker |  | 684 | 37 | export names surface in source/priority-queue.ts |  |  | 0.716 |
+| walker |  | 701 | 17 | export at source/priority-queue.ts:7 |  |  | 0.716 |
+| ns | 714 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.641 |
+| ns | 903 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.597 |
+| walker |  | 919 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.601 |
+| walker |  | 1003 | 84 | imports in source/index.ts |  |  | 0.604 |
 | ns | 1037 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.592 |
 | walker |  | 1124 | 121 | headings outline in readme.md |  |  | 0.696 |
 | walker |  | 1253 | 129 | export at source/priority-queue.ts:11 |  |  | 0.697 |

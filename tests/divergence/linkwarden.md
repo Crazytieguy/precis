@@ -215,94 +215,94 @@ Score(3000)=0.693 I=0.882 C=0.545 ns_rows≤3K=15/51 (reached=7 partial=1 missin
 | walker |  | 6410 | 17 | imports in apps/worker/index.ts |  |  | 0.688 |
 | walker |  | 6457 | 47 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.700 |
 | walker |  | 6486 | 29 | README.md section #3 |  |  | 0.704 |
-| walker |  | 6534 | 48 | package dev/peer dependencies in package.json |  |  | 0.704 |
-| walker |  | 6565 | 31 | README.md section #14 |  |  | 0.709 |
+| walker |  | 6517 | 31 | README.md section #14 |  |  | 0.709 |
 | ns | 6587 |  | 257 | packages/router — the links, collections and tags hook exports | 4.6 |  | 0.693 |
-| walker |  | 6655 | 90 | listing of 'apps/web/pages/api/v1' |  |  | 0.719 |
-| walker |  | 6658 | 3 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.719 |
-| walker |  | 6661 | 3 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.720 |
-| walker |  | 6664 | 3 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.720 |
-| walker |  | 6667 | 3 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.720 |
-| walker |  | 6670 | 3 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.720 |
-| walker |  | 6673 | 3 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.721 |
-| walker |  | 6676 | 3 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.721 |
-| walker |  | 6679 | 3 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.722 |
-| walker |  | 6684 | 5 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.722 |
-| walker |  | 6692 | 8 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.723 |
-| walker |  | 6700 | 8 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.725 |
-| walker |  | 6709 | 9 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.725 |
-| walker |  | 6718 | 9 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.726 |
-| walker |  | 6727 | 9 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.728 |
-| walker |  | 6736 | 9 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.729 |
-| walker |  | 6747 | 11 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.730 |
-| walker |  | 6752 | 5 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.731 |
-| walker |  | 6757 | 5 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.732 |
-| walker |  | 6769 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.734 |
-| ns | 6771 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.728 |
-| walker |  | 6772 | 3 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.729 |
-| walker |  | 6784 | 12 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.732 |
-| walker |  | 6793 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.735 |
-| walker |  | 6806 | 13 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.739 |
-| walker |  | 6818 | 12 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.743 |
-| walker |  | 6821 | 3 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.745 |
-| walker |  | 6824 | 3 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.747 |
-| walker |  | 6841 | 17 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.753 |
-| walker |  | 6859 | 18 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.758 |
-| walker |  | 6872 | 13 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.762 |
-| walker |  | 6875 | 3 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.763 |
-| walker |  | 6878 | 3 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.765 |
-| walker |  | 6899 | 21 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.772 |
-| walker |  | 6924 | 25 | imports in apps/web/pages/index.tsx |  |  | 0.772 |
-| walker |  | 6927 | 3 | listing of 'apps/web/scripts' |  |  | 0.772 |
+| walker |  | 6607 | 90 | listing of 'apps/web/pages/api/v1' |  |  | 0.719 |
+| walker |  | 6610 | 3 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.719 |
+| walker |  | 6613 | 3 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.720 |
+| walker |  | 6616 | 3 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.720 |
+| walker |  | 6619 | 3 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.720 |
+| walker |  | 6622 | 3 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.720 |
+| walker |  | 6625 | 3 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.721 |
+| walker |  | 6628 | 3 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.721 |
+| walker |  | 6631 | 3 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.722 |
+| walker |  | 6636 | 5 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.722 |
+| walker |  | 6644 | 8 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.723 |
+| walker |  | 6652 | 8 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.725 |
+| walker |  | 6661 | 9 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.725 |
+| walker |  | 6670 | 9 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.726 |
+| walker |  | 6679 | 9 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.728 |
+| walker |  | 6688 | 9 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.729 |
+| walker |  | 6699 | 11 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.730 |
+| walker |  | 6704 | 5 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.731 |
+| walker |  | 6709 | 5 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.732 |
+| walker |  | 6721 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.734 |
+| walker |  | 6724 | 3 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.735 |
+| walker |  | 6736 | 12 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.738 |
+| walker |  | 6745 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.741 |
+| walker |  | 6758 | 13 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.745 |
+| walker |  | 6770 | 12 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.749 |
+| ns | 6771 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.743 |
+| walker |  | 6773 | 3 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.745 |
+| walker |  | 6776 | 3 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.747 |
+| walker |  | 6793 | 17 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.753 |
+| walker |  | 6811 | 18 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.758 |
+| walker |  | 6824 | 13 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.762 |
+| walker |  | 6827 | 3 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.763 |
+| walker |  | 6830 | 3 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.765 |
+| walker |  | 6851 | 21 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.772 |
+| walker |  | 6876 | 25 | imports in apps/web/pages/index.tsx |  |  | 0.772 |
+| walker |  | 6879 | 3 | listing of 'apps/web/scripts' |  |  | 0.772 |
 | ns | 6940 |  | 169 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.778 |
-| ns | 7209 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.765 |
-| walker |  | 7248 | 321 | listing of 'apps/web/components' |  |  | 0.769 |
-| walker |  | 7257 | 9 | listing of 'apps/web/components/LinkViews' |  |  | 0.769 |
-| walker |  | 7272 | 15 | listing of 'apps/web/components/InputSelect' |  |  | 0.769 |
-| walker |  | 7297 | 25 | listing of 'apps/web/components/Preservation' |  |  | 0.769 |
-| walker |  | 7337 | 40 | listing of 'apps/web/components/ui' |  |  | 0.770 |
-| walker |  | 7398 | 61 | listing of 'apps/web/components/LinkViews/LinkComponents' |  |  | 0.770 |
+| walker |  | 7200 | 321 | listing of 'apps/web/components' |  |  | 0.781 |
+| walker |  | 7209 | 9 | listing of 'apps/web/components/LinkViews' |  |  | 0.769 |
+| ns | 7209 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.769 |
+| walker |  | 7224 | 15 | listing of 'apps/web/components/InputSelect' |  |  | 0.769 |
+| walker |  | 7249 | 25 | listing of 'apps/web/components/Preservation' |  |  | 0.769 |
+| walker |  | 7289 | 40 | listing of 'apps/web/components/ui' |  |  | 0.770 |
+| walker |  | 7350 | 61 | listing of 'apps/web/components/LinkViews/LinkComponents' |  |  | 0.770 |
 | ns | 7402 |  | 193 | archiveHandler's signature and its SSRF / skip-preservation guard | 5.3 |  | 0.760 |
-| walker |  | 7565 | 167 | listing of 'apps/web/components/ModalContent' |  |  | 0.762 |
+| walker |  | 7517 | 167 | listing of 'apps/web/components/ModalContent' |  |  | 0.762 |
 | ns | 7665 |  | 263 | Every UI page route under apps/web/pages | 6.1 |  | 0.771 |
-| walker |  | 7940 | 375 | package scripts in package.json |  |  | 0.798 |
+| walker |  | 7894 | 377 | package scripts in package.json |  |  | 0.798 |
 | ns | 8027 |  | 362 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.807 |
 | ns | 8305 |  | 278 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.812 |
-| walker |  | 8462 | 522 | plaintext config tail of Dockerfile |  |  | 0.812 |
+| walker |  | 8416 | 522 | plaintext config tail of Dockerfile |  |  | 0.812 |
 | ns | 8532 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.809 |
 | ns | 8772 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.797 |
-| walker |  | 8835 | 373 | Prisma decl tail at packages/prisma/schema.prisma:28 body 51 |  |  | 0.818 |
-| walker |  | 8923 | 88 | README.md section #31 |  |  | 0.818 |
+| walker |  | 8789 | 373 | Prisma decl tail at packages/prisma/schema.prisma:28 body 51 |  |  | 0.818 |
+| walker |  | 8877 | 88 | README.md section #31 |  |  | 0.818 |
+| walker |  | 8981 | 104 | README.md section #28 |  |  | 0.818 |
 | ns | 9007 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.820 |
-| walker |  | 9027 | 104 | README.md section #28 |  |  | 0.820 |
-| walker |  | 9069 | 42 | package identity in packages/lib/package.json |  |  | 0.820 |
-| walker |  | 9081 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.820 |
-| walker |  | 9123 | 42 | package identity in packages/router/package.json |  |  | 0.821 |
-| walker |  | 9135 | 12 | package entrypoints in packages/router/package.json |  |  | 0.821 |
-| walker |  | 9177 | 42 | package identity in packages/types/package.json |  |  | 0.822 |
-| walker |  | 9189 | 12 | package entrypoints in packages/types/package.json |  |  | 0.822 |
+| walker |  | 9023 | 42 | package identity in packages/lib/package.json |  |  | 0.820 |
+| walker |  | 9035 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.820 |
+| walker |  | 9077 | 42 | package identity in packages/router/package.json |  |  | 0.821 |
+| walker |  | 9089 | 12 | package entrypoints in packages/router/package.json |  |  | 0.821 |
+| walker |  | 9131 | 42 | package identity in packages/types/package.json |  |  | 0.822 |
+| walker |  | 9143 | 12 | package entrypoints in packages/types/package.json |  |  | 0.822 |
+| walker |  | 9186 | 43 | package runtime dependencies in packages/types/package.json |  |  | 0.822 |
 | ns | 9221 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.817 |
-| walker |  | 9232 | 43 | package runtime dependencies in packages/types/package.json |  |  | 0.817 |
-| walker |  | 9275 | 43 | package identity in apps/worker/package.json |  |  | 0.819 |
-| walker |  | 9287 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.819 |
-| walker |  | 9345 | 58 | package scripts in apps/worker/package.json |  |  | 0.819 |
-| walker |  | 9388 | 43 | package identity in packages/filesystem/package.json |  |  | 0.820 |
-| walker |  | 9400 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.818 |
+| walker |  | 9229 | 43 | package identity in apps/worker/package.json |  |  | 0.819 |
+| walker |  | 9241 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.819 |
+| walker |  | 9299 | 58 | package scripts in apps/worker/package.json |  |  | 0.819 |
+| walker |  | 9342 | 43 | package identity in packages/filesystem/package.json |  |  | 0.820 |
+| walker |  | 9354 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.820 |
+| walker |  | 9388 | 34 | package runtime dependencies in packages/filesystem/package.json |  |  | 0.820 |
 | ns | 9400 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.818 |
-| walker |  | 9434 | 34 | package runtime dependencies in packages/filesystem/package.json |  |  | 0.818 |
-| walker |  | 9477 | 43 | package identity in packages/prisma/package.json |  |  | 0.820 |
-| walker |  | 9504 | 27 | package entrypoints in packages/prisma/package.json |  |  | 0.820 |
+| walker |  | 9431 | 43 | package identity in packages/prisma/package.json |  |  | 0.820 |
+| walker |  | 9458 | 27 | package entrypoints in packages/prisma/package.json |  |  | 0.820 |
+| walker |  | 9529 | 71 | package scripts in packages/prisma/package.json |  |  | 0.820 |
 | ns | 9547 |  | 147 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.823 |
-| walker |  | 9575 | 71 | package scripts in packages/prisma/package.json |  |  | 0.823 |
-| walker |  | 9621 | 46 | package runtime dependencies in packages/prisma/package.json |  |  | 0.823 |
-| walker |  | 9644 | 23 | imports in vitest.config.mts |  |  | 0.823 |
-| walker |  | 9690 | 46 | package identity in apps/mobile/package.json |  |  | 0.825 |
-| walker |  | 9702 | 12 | package entrypoints in apps/mobile/package.json |  |  | 0.825 |
-| ns | 9776 |  | 229 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.829 |
-| walker |  | 9797 | 95 | package scripts in apps/mobile/package.json |  |  | 0.829 |
-| walker |  | 9800 | 3 | listing of 'apps/web/e2e/data' |  |  | 0.830 |
-| walker |  | 9814 | 14 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.830 |
-| walker |  | 9814 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.830 |
-| walker |  | 9875 | 61 | package identity in apps/web/package.json |  |  | 0.833 |
-| walker |  | 9887 | 12 | package entrypoints in apps/web/package.json |  |  | 0.833 |
+| walker |  | 9575 | 46 | package runtime dependencies in packages/prisma/package.json |  |  | 0.823 |
+| walker |  | 9598 | 23 | imports in vitest.config.mts |  |  | 0.823 |
+| walker |  | 9644 | 46 | package identity in apps/mobile/package.json |  |  | 0.825 |
+| walker |  | 9656 | 12 | package entrypoints in apps/mobile/package.json |  |  | 0.825 |
+| walker |  | 9751 | 95 | package scripts in apps/mobile/package.json |  |  | 0.825 |
+| walker |  | 9754 | 3 | listing of 'apps/web/e2e/data' |  |  | 0.826 |
+| walker |  | 9768 | 14 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.826 |
+| walker |  | 9768 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.826 |
+| ns | 9776 |  | 229 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.830 |
+| walker |  | 9829 | 61 | package identity in apps/web/package.json |  |  | 0.833 |
+| walker |  | 9841 | 12 | package entrypoints in apps/web/package.json |  |  | 0.833 |
+| walker |  | 9969 | 128 | package scripts in apps/web/package.json |  |  | 0.833 |
 | ns | 9978 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.835 |

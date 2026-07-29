@@ -81,19 +81,40 @@ README.md
       41→See the [github wiki page](https://github.com/kikito/middleclass/wiki) for examples & documentation.
       42→
       43→You can read the `CHANGELOG.md` file to see what has changed on each version of this library.
-    …
+      45→If you need help updating to a new middleclass version, read `UPDATING.md`.
+      46→
       47→Installation
       48→============
-    …
+      49→
+      50→Just copy the middleclass.lua file wherever you want it (for example on a lib/ folder). Then write this in any Lua file where you want to use it:
+      51→
+      52→```lua
+      53→local class = require 'middleclass'
+      54→```
+      55→
       56→Specs
       57→=====
-    …
+      58→
+      59→This project uses [busted](http://olivinelabs.com/busted/) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following:
+      60→
+      61→```bash
+      62→cd /folder/where/the/spec/folder/is
+      63→busted
+      64→```
+      65→
       66→Performance tests
       67→=================
-    …
+      68→
+      69→Middleclass also comes with a small performance test suite. Just run the following command:
+      70→
+      71→```bash
+      72→lua performance/run.lua
+      73→```
+      74→
       75→License
       76→=======
-    …
+      77→
+      78→Middleclass is distributed under the MIT license.
 UPDATING.md
        1→Updating from 3.x to 4.x
        2→========================
@@ -155,31 +176,6 @@ middleclass.lua
       79→local function _call(self, ...) return self:new(...) end
       80→
       81→local function _createClass(name, super)
-      82→  local dict = {}
-      83→  dict.__index = dict
-      84→
-      85→  local aClass = { name = name, super = super, static = {},
-      86→                   __instanceDict = dict, __declaredMethods = {},
-      87→                   subclasses = setmetatable({}, {__mode='k'})  }
-      88→
-      89→  if super then
-      90→    setmetatable(aClass.static, {
-      91→      __index = function(_,k)
-      92→        local result = rawget(dict,k)
-      93→        if result == nil then
-      94→          return super.static[k]
-      95→        end
-      96→        return result
-      97→      end
-      98→    })
-      99→  else
-     100→    setmetatable(aClass.static, { __index = function(_,k) return rawget(dict,k) end })
-     101→  end
-     102→
-     103→  setmetatable(aClass, { __index = aClass.static, __tostring = _tostring,
-     104→                         __call = _call, __newindex = _declareInstanceMethod })
-     105→
-     106→  return aClass
     …
      109→local function _includeMixin(aClass, mixin)
      110→  assert(type(mixin) == 'table', "mixin must be a table")

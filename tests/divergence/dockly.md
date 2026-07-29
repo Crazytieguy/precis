@@ -1,4 +1,4 @@
-Score(3000)=0.647 I=0.889 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missing=11)
+Score(3000)=0.648 I=0.893 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -110,80 +110,80 @@ Score(3000)=0.647 I=0.889 C=0.471 ns_rows≤3K=22/55 (reached=10 partial=1 missi
 | walker |  | 2738 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 88 |  |  | 0.669 |
 | walker |  | 2749 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 107 |  |  | 0.669 |
 | walker |  | 2760 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 127 |  |  | 0.669 |
-| ns | 2880 |  | 152 | .github/workflows/main.yml: the lint job | 2.10 |  | 0.647 |
-| ns | 3091 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.628 |
-| walker |  | 3139 | 379 | README.md section #1 |  |  | 0.655 |
-| walker |  | 3151 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.655 |
-| walker |  | 3167 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.656 |
-| ns | 3174 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.662 |
-| walker |  | 3186 | 19 | export at src/themes/styles.js:55 |  |  | 0.662 |
-| walker |  | 3212 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.662 |
-| walker |  | 3238 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.662 |
-| walker |  | 3264 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.662 |
-| walker |  | 3276 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.663 |
-| ns | 3379 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.646 |
-| walker |  | 3436 | 160 | README.md section #2 |  |  | 0.663 |
-| walker |  | 3452 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.664 |
-| walker |  | 3480 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.664 |
-| walker |  | 3504 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.664 |
-| walker |  | 3519 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.664 |
-| ns | 3577 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.677 |
-| walker |  | 3664 | 145 | README.md section #4 |  |  | 0.677 |
-| walker |  | 3726 | 62 | imports in src/cli.js |  |  | 0.677 |
-| ns | 3774 |  | 197 | src/screen.js: init() — the full boot sequence | 3.4 | 3.3 | 0.657 |
-| ns | 3904 |  | 130 | src/screen.js: constructor state fields | 3.5 | 3.3 | 0.644 |
-| ns | 4028 |  | 124 | src/screen.js: initScreen() — blessed screen and the 12x12 grid | 3.6 | 3.3 | 0.634 |
-| walker |  | 4193 | 467 | package identity metadata in package.json |  |  | 0.634 |
-| walker |  | 4209 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.634 |
-| walker |  | 4222 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.643 |
-| walker |  | 4238 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.643 |
-| walker |  | 4254 | 16 | export member at src/dockerUtil.js:5 member 180 |  |  | 0.644 |
-| walker |  | 4266 | 12 | export member at src/widgetsTemplates/list.widget.template.js:8 member 155 |  |  | 0.644 |
-| ns | 4290 |  | 262 | src/screen.js: initHooks() and initWidgets() — instantiation and layout gating | 3.7 | 3.3 | 0.623 |
-| ns | 4584 |  | 294 | src/screen.js: toggleMode() and registerEvents() — the global q/v keys and focus borders | 3.8 | 3.3 | 0.602 |
-| ns | 4672 |  | 88 | src/assetsLoader.js: the glob patterns that define the plugin conventions | 3.9 |  | 0.596 |
-| walker |  | 4848 | 582 | README.md section #3 |  |  | 0.596 |
-| walker |  | 4864 | 16 | export member at src/dockerUtil.js:5 member 187 |  |  | 0.596 |
-| ns | 4875 |  | 203 | src/assetsLoader.js: the loader body and the asset naming rule | 3.10 | 3.9 | 0.584 |
-| walker |  | 4973 | 109 | imports in src/screen.js |  |  | 0.592 |
-| walker |  | 5064 | 91 | export at src/enum.js:1 |  |  | 0.592 |
-| walker |  | 5090 | 26 | export body at src/dockerUtil.js:5 body 166 |  |  | 0.592 |
-| ns | 5153 |  | 278 | src/grid.config.js: the containers-mode layout in full | 3.11 |  | 0.583 |
-| walker |  | 5176 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.583 |
-| walker |  | 5208 | 32 | export body at src/screen.js:18 body 127 |  |  | 0.583 |
-| walker |  | 5234 | 26 | export body at src/dockerUtil.js:5 body 171 |  |  | 0.583 |
-| walker |  | 5254 | 20 | imports in src/baseWidget.js |  |  | 0.583 |
-| walker |  | 5267 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 147 |  |  | 0.584 |
-| walker |  | 5282 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 148 |  |  | 0.584 |
-| walker |  | 5314 | 32 | export body at src/screen.js:18 body 133 |  |  | 0.584 |
-| ns | 5558 |  | 405 | src/grid.config.js: the services and images layouts plus the export block | 3.12 | 3.11 | 0.569 |
-| walker |  | 5604 | 290 | README.md section #5 |  |  | 0.569 |
-| walker |  | 5620 | 16 | listing of 'docs/src/assets' |  |  | 0.569 |
-| walker |  | 5625 | 5 | listing of 'docs/src/assets/css' |  |  | 0.569 |
-| walker |  | 5651 | 26 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.569 |
-| walker |  | 5758 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.570 |
-| walker |  | 5877 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.570 |
-| ns | 5888 |  | 330 | src/dockerUtil.js: complete method roster of the dockerode wrapper | 4.1 |  | 0.583 |
-| walker |  | 5914 | 37 | headings outline in SECURITY.md |  |  | 0.583 |
-| walker |  | 5914 | 0 | SECURITY.md section #0 |  |  | 0.583 |
-| walker |  | 5941 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.583 |
-| walker |  | 5977 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.583 |
-| walker |  | 6004 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.583 |
-| walker |  | 6073 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.584 |
-| walker |  | 6110 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.584 |
-| walker |  | 6127 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.589 |
-| ns | 6168 |  | 280 | src/dockerUtil.js: constructor — connection config and containerFilters parsing | 4.2 | 4.1 | 0.576 |
-| walker |  | 6193 | 66 | package identity in docs/package.json |  |  | 0.576 |
-| walker |  | 6200 | 7 | plaintext config .nvmrc |  |  | 0.576 |
-| walker |  | 6235 | 35 | imports in src/assetsLoader.js |  |  | 0.577 |
-| walker |  | 6248 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.577 |
-| walker |  | 6263 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.577 |
-| walker |  | 6317 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.577 |
-| ns | 6318 |  | 150 | src/dockerUtil.js: getInfo() — the host fields surfaced to the status widgets | 4.3 | 4.1 | 0.571 |
-| walker |  | 6334 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.576 |
-| walker |  | 6351 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.582 |
-| ns | 6433 |  | 115 | src/dockerUtil.js: log streaming options for containers and services | 4.4 | 4.1 | 0.575 |
-| walker |  | 6537 | 186 | export body at src/baseWidget.js:4 body 5 |  |  | 0.577 |
+| walker |  | 2772 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.669 |
+| walker |  | 2788 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.669 |
+| walker |  | 2807 | 19 | export at src/themes/styles.js:55 |  |  | 0.669 |
+| walker |  | 2833 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.670 |
+| walker |  | 2859 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.670 |
+| ns | 2880 |  | 152 | .github/workflows/main.yml: the lint job | 2.10 |  | 0.648 |
+| walker |  | 2885 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.648 |
+| walker |  | 2897 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.648 |
+| walker |  | 3057 | 160 | README.md section #2 |  |  | 0.668 |
+| walker |  | 3073 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.668 |
+| ns | 3091 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.648 |
+| walker |  | 3101 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.648 |
+| walker |  | 3125 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.649 |
+| walker |  | 3140 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.649 |
+| ns | 3174 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.656 |
+| walker |  | 3285 | 145 | README.md section #4 |  |  | 0.656 |
+| walker |  | 3347 | 62 | imports in src/cli.js |  |  | 0.656 |
+| ns | 3379 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.639 |
+| ns | 3577 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.655 |
+| ns | 3774 |  | 197 | src/screen.js: init() — the full boot sequence | 3.4 | 3.3 | 0.635 |
+| walker |  | 3814 | 467 | package identity metadata in package.json |  |  | 0.635 |
+| walker |  | 3830 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.636 |
+| walker |  | 3843 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.644 |
+| walker |  | 3859 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.645 |
+| walker |  | 3875 | 16 | export member at src/dockerUtil.js:5 member 180 |  |  | 0.645 |
+| walker |  | 3887 | 12 | export member at src/widgetsTemplates/list.widget.template.js:8 member 155 |  |  | 0.645 |
+| walker |  | 3903 | 16 | export member at src/dockerUtil.js:5 member 187 |  |  | 0.646 |
+| ns | 3904 |  | 130 | src/screen.js: constructor state fields | 3.5 | 3.3 | 0.633 |
+| walker |  | 4012 | 109 | imports in src/screen.js |  |  | 0.641 |
+| ns | 4028 |  | 124 | src/screen.js: initScreen() — blessed screen and the 12x12 grid | 3.6 | 3.3 | 0.631 |
+| walker |  | 4103 | 91 | export at src/enum.js:1 |  |  | 0.632 |
+| walker |  | 4129 | 26 | export body at src/dockerUtil.js:5 body 166 |  |  | 0.632 |
+| walker |  | 4215 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.633 |
+| walker |  | 4247 | 32 | export body at src/screen.js:18 body 127 |  |  | 0.633 |
+| ns | 4290 |  | 262 | src/screen.js: initHooks() and initWidgets() — instantiation and layout gating | 3.7 | 3.3 | 0.612 |
+| ns | 4584 |  | 294 | src/screen.js: toggleMode() and registerEvents() — the global q/v keys and focus borders | 3.8 | 3.3 | 0.591 |
+| walker |  | 4626 | 379 | README.md section #1 |  |  | 0.610 |
+| walker |  | 4652 | 26 | export body at src/dockerUtil.js:5 body 171 |  |  | 0.610 |
+| walker |  | 4672 | 20 | imports in src/baseWidget.js |  |  | 0.605 |
+| ns | 4672 |  | 88 | src/assetsLoader.js: the glob patterns that define the plugin conventions | 3.9 |  | 0.605 |
+| walker |  | 4685 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 147 |  |  | 0.605 |
+| walker |  | 4700 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 148 |  |  | 0.605 |
+| walker |  | 4732 | 32 | export body at src/screen.js:18 body 133 |  |  | 0.605 |
+| ns | 4875 |  | 203 | src/assetsLoader.js: the loader body and the asset naming rule | 3.10 | 3.9 | 0.593 |
+| walker |  | 5022 | 290 | README.md section #5 |  |  | 0.593 |
+| walker |  | 5038 | 16 | listing of 'docs/src/assets' |  |  | 0.593 |
+| walker |  | 5043 | 5 | listing of 'docs/src/assets/css' |  |  | 0.593 |
+| walker |  | 5069 | 26 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.593 |
+| ns | 5153 |  | 278 | src/grid.config.js: the containers-mode layout in full | 3.11 |  | 0.584 |
+| walker |  | 5176 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.584 |
+| walker |  | 5295 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.585 |
+| walker |  | 5332 | 37 | headings outline in SECURITY.md |  |  | 0.585 |
+| walker |  | 5332 | 0 | SECURITY.md section #0 |  |  | 0.585 |
+| walker |  | 5359 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.585 |
+| walker |  | 5395 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.585 |
+| walker |  | 5422 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.585 |
+| walker |  | 5491 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.585 |
+| walker |  | 5528 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.585 |
+| walker |  | 5545 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.586 |
+| ns | 5558 |  | 405 | src/grid.config.js: the services and images layouts plus the export block | 3.12 | 3.11 | 0.571 |
+| walker |  | 5611 | 66 | package identity in docs/package.json |  |  | 0.571 |
+| walker |  | 5618 | 7 | plaintext config .nvmrc |  |  | 0.571 |
+| walker |  | 5653 | 35 | imports in src/assetsLoader.js |  |  | 0.573 |
+| walker |  | 5666 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.573 |
+| walker |  | 5681 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.573 |
+| walker |  | 5735 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.573 |
+| walker |  | 5752 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.573 |
+| walker |  | 5769 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.573 |
+| ns | 5888 |  | 330 | src/dockerUtil.js: complete method roster of the dockerode wrapper | 4.1 |  | 0.602 |
+| walker |  | 5955 | 186 | export body at src/baseWidget.js:4 body 5 |  |  | 0.603 |
+| ns | 6168 |  | 280 | src/dockerUtil.js: constructor — connection config and containerFilters parsing | 4.2 | 4.1 | 0.590 |
+| ns | 6318 |  | 150 | src/dockerUtil.js: getInfo() — the host fields surfaced to the status widgets | 4.3 | 4.1 | 0.583 |
+| ns | 6433 |  | 115 | src/dockerUtil.js: log streaming options for containers and services | 4.4 | 4.1 | 0.577 |
+| walker |  | 6537 | 582 | README.md section #3 |  |  | 0.577 |
 | ns | 6660 |  | 227 | src/baseWidget.js — the mixin every widget and hook extends | 5.1 |  | 0.589 |
 | walker |  | 6772 | 235 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.607 |
 | walker |  | 6835 | 63 | README headline in docs/README.md |  |  | 0.607 |
