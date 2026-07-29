@@ -85,118 +85,128 @@ Score(3000)=0.449 I=0.764 C=0.264 ns_rows≤3K=18/60 (reached=6 partial=0 missin
 | walker |  | 3984 | 42 | c decl at sqlite-vec.c:598 |  |  | 0.363 |
 | ns | 4034 |  | 93 | Metadata column kinds | 2.15 |  | 0.358 |
 | walker |  | 4064 | 80 | c decl at sqlite-vec.c:115 |  |  | 0.359 |
-| walker |  | 4078 | 14 | listing of 'tests/leak-fixtures' |  |  | 0.359 |
-| walker |  | 4146 | 68 | c decl body at sqlite-vec.c:591 |  |  | 0.359 |
 | ns | 4164 |  | 130 | vec0 constructor parser: function roster | 2.16 |  | 0.352 |
-| walker |  | 4222 | 76 | c decl body at sqlite-vec.c:646 |  |  | 0.352 |
-| walker |  | 4375 | 153 | c includes in sqlite-vec.c |  |  | 0.352 |
-| walker |  | 4412 | 37 | ARCHITECTURE.md section #6 |  |  | 0.357 |
-| ns | 4446 |  | 282 | chunk_size table option: validation and default | 2.17 |  | 0.344 |
-| walker |  | 4448 | 36 | ARCHITECTURE.md section #5 |  |  | 0.349 |
-| walker |  | 4485 | 37 | ARCHITECTURE.md section #4 |  |  | 0.355 |
-| walker |  | 4521 | 36 | ARCHITECTURE.md section #3 |  |  | 0.362 |
-| ns | 4549 |  | 103 | vec0 constructor and lifecycle functions (roster) | 2.18 |  | 0.357 |
-| walker |  | 4556 | 35 | python decl names surface in bindings/python/extra_init.py |  |  | 0.357 |
-| walker |  | 4556 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.357 |
-| walker |  | 4556 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.357 |
-| walker |  | 4573 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.357 |
-| walker |  | 4595 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.357 |
-| walker |  | 4619 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.357 |
-| walker |  | 4636 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.357 |
-| walker |  | 4676 | 40 | ARCHITECTURE.md section #7 |  |  | 0.357 |
-| ns | 4743 |  | 194 | vec0 column dispatch helpers (roster) | 2.19 |  | 0.349 |
-| walker |  | 4947 | 271 | README.md section #1 |  |  | 0.349 |
-| ns | 4957 |  | 214 | vec0 storage helpers (roster) | 2.20 |  | 0.341 |
-| walker |  | 4963 | 16 | mod/use plumbing in benchmarks/micro/src/lib.rs |  |  | 0.341 |
-| walker |  | 5004 | 41 | ARCHITECTURE.md section #8 |  |  | 0.341 |
-| ns | 5193 |  | 236 | vec0 cursor and per-query-plan state | 2.21 | 2.6 | 0.331 |
-| walker |  | 5215 | 211 | python decl body at tmp-static.py:25 body 26 |  |  | 0.331 |
-| walker |  | 5238 | 23 | listing of 'tests/afbd' |  |  | 0.331 |
-| walker |  | 5245 | 7 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.331 |
-| walker |  | 5298 | 53 | ARCHITECTURE.md section #2 |  |  | 0.337 |
-| ns | 5311 |  | 118 | KNN primitives: bitmaps and merge (roster) | 2.22 |  | 0.332 |
-| walker |  | 5351 | 53 | ARCHITECTURE.md section #1 |  |  | 0.338 |
-| walker |  | 5392 | 41 | [package] in tests/Cargo.toml |  |  | 0.338 |
-| walker |  | 5422 | 30 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.338 |
-| ns | 5537 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.330 |
-| ns | 5823 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.321 |
-| walker |  | 5922 | 500 | c decl names surface #1 in sqlite-vec.c |  |  | 0.336 |
-| walker |  | 5922 | 0 | c decl at sqlite-vec.c:1317 |  |  | 0.336 |
-| walker |  | 5922 | 0 | c decl at sqlite-vec.c:1812 |  |  | 0.336 |
-| walker |  | 5922 | 0 | c decl at sqlite-vec.c:1816 |  |  | 0.336 |
-| walker |  | 5922 | 0 | c decl at sqlite-vec.c:1824 |  |  | 0.336 |
-| walker |  | 5922 | 0 | c decl at sqlite-vec.c:1892 |  |  | 0.336 |
-| walker |  | 5933 | 11 | c decl at sqlite-vec.c:1886 |  |  | 0.336 |
-| walker |  | 5958 | 25 | c decl at sqlite-vec.c:1050 |  |  | 0.336 |
-| walker |  | 5992 | 34 | c decl at sqlite-vec.c:1880 |  |  | 0.336 |
-| ns | 6002 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.329 |
-| walker |  | 6022 | 30 | c decl at sqlite-vec.c:964 |  |  | 0.329 |
-| walker |  | 6060 | 38 | c decl at sqlite-vec.c:1806 |  |  | 0.329 |
-| walker |  | 6095 | 35 | c decl at sqlite-vec.c:1900 |  |  | 0.329 |
-| ns | 6103 |  | 101 | Registered virtual table modules | 3.2 |  | 0.326 |
-| walker |  | 6133 | 38 | c decl at sqlite-vec.c:1956 |  |  | 0.326 |
-| walker |  | 6171 | 38 | c decl at sqlite-vec.c:2033 |  |  | 0.326 |
-| ns | 6212 |  | 109 | vec_debug build string | 3.3 |  | 0.323 |
-| walker |  | 6213 | 42 | c decl at sqlite-vec.c:2111 |  |  | 0.323 |
-| walker |  | 6267 | 54 | c decl at sqlite-vec.c:998 |  |  | 0.323 |
-| walker |  | 6336 | 69 | c decl at sqlite-vec.c:1798 |  |  | 0.323 |
-| walker |  | 6419 | 83 | c decl at sqlite-vec.c:2091 |  |  | 0.341 |
-| ns | 6446 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.333 |
-| walker |  | 6458 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.333 |
-| walker |  | 6465 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.333 |
-| walker |  | 6533 | 68 | ARCHITECTURE.md section #11 |  |  | 0.333 |
-| ns | 6537 |  | 91 | Vector element types | 3.5 |  | 0.346 |
-| walker |  | 6600 | 67 | ARCHITECTURE.md section #12 |  |  | 0.346 |
-| walker |  | 6640 | 40 | listing of 'tests/__snapshots__' |  |  | 0.346 |
-| ns | 6812 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.338 |
-| ns | 6988 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.347 |
-| walker |  | 7114 | 474 | README.md section #4 |  |  | 0.347 |
-| ns | 7196 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.342 |
-| ns | 7336 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.338 |
-| ns | 7402 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.336 |
-| walker |  | 7452 | 338 | README.md section #5 |  |  | 0.336 |
-| walker |  | 7526 | 74 | ARCHITECTURE.md section #15 |  |  | 0.336 |
-| walker |  | 7572 | 46 | listing of 'site/public' |  |  | 0.336 |
-| ns | 7630 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.329 |
-| walker |  | 7663 | 91 | c decl body at sqlite-vec.c:656 |  |  | 0.329 |
-| ns | 7808 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.324 |
-| ns | 7999 |  | 191 | Compile-time options | 4.3 |  | 0.321 |
-| walker |  | 8124 | 461 | c decl names surface #2 in sqlite-vec.c |  |  | 0.334 |
-| walker |  | 8124 | 0 | c decl at sqlite-vec.c:2280 |  |  | 0.334 |
-| walker |  | 8124 | 0 | c decl at sqlite-vec.c:2731 |  |  | 0.334 |
-| walker |  | 8128 | 4 | c decl at sqlite-vec.c:2430 |  |  | 0.334 |
-| walker |  | 8132 | 4 | c decl at sqlite-vec.c:2877 |  |  | 0.334 |
-| walker |  | 8143 | 11 | c decl at sqlite-vec.c:2267 |  |  | 0.329 |
-| ns | 8143 |  | 144 | Public header template | 4.4 |  | 0.329 |
-| walker |  | 8154 | 11 | c decl at sqlite-vec.c:2724 |  |  | 0.329 |
-| walker |  | 8168 | 14 | c decl at sqlite-vec.c:2641 |  |  | 0.329 |
-| walker |  | 8183 | 15 | c decl at sqlite-vec.c:2294 |  |  | 0.329 |
-| walker |  | 8207 | 24 | c decl at sqlite-vec.c:2261 |  |  | 0.331 |
-| walker |  | 8240 | 33 | c decl at sqlite-vec.c:2250 |  |  | 0.332 |
-| walker |  | 8273 | 33 | c decl at sqlite-vec.c:2256 |  |  | 0.334 |
-| walker |  | 8310 | 37 | c decl at sqlite-vec.c:2718 |  |  | 0.334 |
-| ns | 8338 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.330 |
-| walker |  | 8350 | 40 | c decl at sqlite-vec.c:2635 |  |  | 0.330 |
-| walker |  | 8393 | 43 | c decl at sqlite-vec.c:2881 |  |  | 0.334 |
-| walker |  | 8431 | 38 | c decl at sqlite-vec.c:2171 |  |  | 0.334 |
-| walker |  | 8490 | 59 | c decl at sqlite-vec.c:2236 |  |  | 0.343 |
-| ns | 8497 |  | 159 | Distribution manifest | 4.6 |  | 0.363 |
-| walker |  | 8551 | 61 | c decl at sqlite-vec.c:2242 |  |  | 0.381 |
-| walker |  | 8612 | 61 | c decl at sqlite-vec.c:2435 |  |  | 0.381 |
-| ns | 8662 |  | 165 | TODO / roadmap | 4.7 |  | 0.393 |
-| walker |  | 8669 | 57 | c decl at sqlite-vec.c:2740 |  |  | 0.393 |
-| ns | 8674 |  | 12 | CI workflows | 4.8 |  | 0.396 |
-| walker |  | 8803 | 134 | c decl at sqlite-vec.c:2622 |  |  | 0.396 |
-| ns | 8822 |  | 148 | tests/ listing (complete) | 5.1 |  | 0.421 |
-| ns | 8909 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.419 |
-| walker |  | 8932 | 129 | c whole header in tests/sqlite-vec-internal.h |  |  | 0.419 |
-| walker |  | 8961 | 29 | c decl body at sqlite-vec.c:1816 |  |  | 0.419 |
-| walker |  | 9002 | 41 | [package] in benchmarks/micro/Cargo.toml |  |  | 0.419 |
-| ns | 9211 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.409 |
-| ns | 9306 |  | 95 | examples/ listing (complete) | 5.4 |  | 0.422 |
-| ns | 9477 |  | 171 | Python example, end to end | 5.5 |  | 0.417 |
-| ns | 9531 |  | 54 | bindings/ listings (complete) | 5.6 |  | 0.426 |
-| ns | 9675 |  | 144 | Documentation site listings (complete) | 5.7 |  | 0.447 |
-| ns | 9875 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.441 |
-| walker |  | 9910 | 908 | README.md section #2 |  |  | 0.441 |
-| ns | 9988 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.438 |
+| walker |  | 4217 | 153 | c includes in sqlite-vec.c |  |  | 0.352 |
+| ns | 4446 |  | 282 | chunk_size table option: validation and default | 2.17 |  | 0.339 |
+| ns | 4549 |  | 103 | vec0 constructor and lifecycle functions (roster) | 2.18 |  | 0.334 |
+| walker |  | 4717 | 500 | c decl names surface #1 in sqlite-vec.c |  |  | 0.353 |
+| walker |  | 4717 | 0 | c decl at sqlite-vec.c:1317 |  |  | 0.353 |
+| walker |  | 4717 | 0 | c decl at sqlite-vec.c:1812 |  |  | 0.353 |
+| walker |  | 4717 | 0 | c decl at sqlite-vec.c:1816 |  |  | 0.353 |
+| walker |  | 4717 | 0 | c decl at sqlite-vec.c:1824 |  |  | 0.353 |
+| walker |  | 4717 | 0 | c decl at sqlite-vec.c:1892 |  |  | 0.353 |
+| walker |  | 4728 | 11 | c decl at sqlite-vec.c:1886 |  |  | 0.353 |
+| ns | 4743 |  | 194 | vec0 column dispatch helpers (roster) | 2.19 |  | 0.345 |
+| walker |  | 4753 | 25 | c decl at sqlite-vec.c:1050 |  |  | 0.345 |
+| walker |  | 4787 | 34 | c decl at sqlite-vec.c:1880 |  |  | 0.345 |
+| walker |  | 4817 | 30 | c decl at sqlite-vec.c:964 |  |  | 0.345 |
+| walker |  | 4855 | 38 | c decl at sqlite-vec.c:1806 |  |  | 0.345 |
+| walker |  | 4890 | 35 | c decl at sqlite-vec.c:1900 |  |  | 0.345 |
+| walker |  | 4928 | 38 | c decl at sqlite-vec.c:1956 |  |  | 0.345 |
+| ns | 4957 |  | 214 | vec0 storage helpers (roster) | 2.20 |  | 0.337 |
+| walker |  | 4966 | 38 | c decl at sqlite-vec.c:2033 |  |  | 0.337 |
+| walker |  | 5008 | 42 | c decl at sqlite-vec.c:2111 |  |  | 0.337 |
+| walker |  | 5062 | 54 | c decl at sqlite-vec.c:998 |  |  | 0.337 |
+| walker |  | 5131 | 69 | c decl at sqlite-vec.c:1798 |  |  | 0.337 |
+| ns | 5193 |  | 236 | vec0 cursor and per-query-plan state | 2.21 | 2.6 | 0.327 |
+| walker |  | 5214 | 83 | c decl at sqlite-vec.c:2091 |  |  | 0.348 |
+| ns | 5311 |  | 118 | KNN primitives: bitmaps and merge (roster) | 2.22 |  | 0.342 |
+| ns | 5537 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.334 |
+| walker |  | 5688 | 474 | README.md section #4 |  |  | 0.334 |
+| walker |  | 5702 | 14 | listing of 'tests/leak-fixtures' |  |  | 0.334 |
+| walker |  | 5770 | 68 | c decl body at sqlite-vec.c:591 |  |  | 0.334 |
+| ns | 5823 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.325 |
+| ns | 6002 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.318 |
+| ns | 6103 |  | 101 | Registered virtual table modules | 3.2 |  | 0.315 |
+| ns | 6212 |  | 109 | vec_debug build string | 3.3 |  | 0.312 |
+| walker |  | 6231 | 461 | c decl names surface #2 in sqlite-vec.c |  |  | 0.327 |
+| walker |  | 6231 | 0 | c decl at sqlite-vec.c:2280 |  |  | 0.327 |
+| walker |  | 6231 | 0 | c decl at sqlite-vec.c:2731 |  |  | 0.327 |
+| walker |  | 6235 | 4 | c decl at sqlite-vec.c:2430 |  |  | 0.327 |
+| walker |  | 6239 | 4 | c decl at sqlite-vec.c:2877 |  |  | 0.327 |
+| walker |  | 6250 | 11 | c decl at sqlite-vec.c:2267 |  |  | 0.327 |
+| walker |  | 6261 | 11 | c decl at sqlite-vec.c:2724 |  |  | 0.327 |
+| walker |  | 6275 | 14 | c decl at sqlite-vec.c:2641 |  |  | 0.327 |
+| walker |  | 6290 | 15 | c decl at sqlite-vec.c:2294 |  |  | 0.327 |
+| walker |  | 6314 | 24 | c decl at sqlite-vec.c:2261 |  |  | 0.329 |
+| walker |  | 6347 | 33 | c decl at sqlite-vec.c:2250 |  |  | 0.331 |
+| walker |  | 6380 | 33 | c decl at sqlite-vec.c:2256 |  |  | 0.334 |
+| walker |  | 6417 | 37 | c decl at sqlite-vec.c:2718 |  |  | 0.334 |
+| ns | 6446 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.326 |
+| walker |  | 6457 | 40 | c decl at sqlite-vec.c:2635 |  |  | 0.326 |
+| walker |  | 6500 | 43 | c decl at sqlite-vec.c:2881 |  |  | 0.326 |
+| ns | 6537 |  | 91 | Vector element types | 3.5 |  | 0.339 |
+| walker |  | 6538 | 38 | c decl at sqlite-vec.c:2171 |  |  | 0.339 |
+| walker |  | 6597 | 59 | c decl at sqlite-vec.c:2236 |  |  | 0.351 |
+| walker |  | 6658 | 61 | c decl at sqlite-vec.c:2242 |  |  | 0.374 |
+| walker |  | 6719 | 61 | c decl at sqlite-vec.c:2435 |  |  | 0.374 |
+| walker |  | 6776 | 57 | c decl at sqlite-vec.c:2740 |  |  | 0.374 |
+| ns | 6812 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.366 |
+| walker |  | 6910 | 134 | c decl at sqlite-vec.c:2622 |  |  | 0.366 |
+| walker |  | 6947 | 37 | ARCHITECTURE.md section #6 |  |  | 0.369 |
+| walker |  | 6983 | 36 | ARCHITECTURE.md section #5 |  |  | 0.373 |
+| ns | 6988 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.380 |
+| walker |  | 7020 | 37 | ARCHITECTURE.md section #4 |  |  | 0.384 |
+| walker |  | 7056 | 36 | ARCHITECTURE.md section #3 |  |  | 0.388 |
+| walker |  | 7091 | 35 | python decl names surface in bindings/python/extra_init.py |  |  | 0.388 |
+| walker |  | 7091 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.388 |
+| walker |  | 7091 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.388 |
+| walker |  | 7108 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.388 |
+| walker |  | 7130 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.388 |
+| walker |  | 7154 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.388 |
+| walker |  | 7171 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.388 |
+| ns | 7196 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.382 |
+| walker |  | 7211 | 40 | ARCHITECTURE.md section #7 |  |  | 0.382 |
+| ns | 7336 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.382 |
+| ns | 7402 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.380 |
+| walker |  | 7482 | 271 | README.md section #1 |  |  | 0.380 |
+| walker |  | 7498 | 16 | mod/use plumbing in benchmarks/micro/src/lib.rs |  |  | 0.380 |
+| walker |  | 7539 | 41 | ARCHITECTURE.md section #8 |  |  | 0.380 |
+| ns | 7630 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.372 |
+| walker |  | 7750 | 211 | python decl body at tmp-static.py:25 body 26 |  |  | 0.372 |
+| walker |  | 7773 | 23 | listing of 'tests/afbd' |  |  | 0.372 |
+| walker |  | 7780 | 7 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.372 |
+| ns | 7808 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.366 |
+| walker |  | 7856 | 76 | c decl body at sqlite-vec.c:646 |  |  | 0.366 |
+| walker |  | 7909 | 53 | ARCHITECTURE.md section #2 |  |  | 0.370 |
+| walker |  | 7962 | 53 | ARCHITECTURE.md section #1 |  |  | 0.375 |
+| ns | 7999 |  | 191 | Compile-time options | 4.3 |  | 0.372 |
+| walker |  | 8003 | 41 | [package] in tests/Cargo.toml |  |  | 0.372 |
+| walker |  | 8033 | 30 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.372 |
+| ns | 8143 |  | 144 | Public header template | 4.4 |  | 0.367 |
+| ns | 8338 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.362 |
+| ns | 8497 |  | 159 | Distribution manifest | 4.6 |  | 0.381 |
+| walker |  | 8599 | 566 | c decl names surface #3 in sqlite-vec.c |  |  | 0.404 |
+| walker |  | 8599 | 0 | c decl at sqlite-vec.c:3414 |  |  | 0.404 |
+| walker |  | 8607 | 8 | c decl at sqlite-vec.c:2887 |  |  | 0.404 |
+| walker |  | 8654 | 47 | c decl at sqlite-vec.c:3026 |  |  | 0.404 |
+| ns | 8662 |  | 165 | TODO / roadmap | 4.7 |  | 0.415 |
+| ns | 8674 |  | 12 | CI workflows | 4.8 |  | 0.418 |
+| walker |  | 8710 | 56 | c decl at sqlite-vec.c:3417 |  |  | 0.422 |
+| walker |  | 8794 | 84 | c decl at sqlite-vec.c:3394 |  |  | 0.433 |
+| ns | 8822 |  | 148 | tests/ listing (complete) | 5.1 |  | 0.455 |
+| walker |  | 8847 | 53 | c aggregate member group at sqlite-vec.c:2887 group 2888 |  |  | 0.455 |
+| ns | 8909 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.452 |
+| walker |  | 8935 | 88 | c decl at sqlite-vec.c:3405 |  |  | 0.453 |
+| walker |  | 9027 | 92 | c decl at sqlite-vec.c:3384 |  |  | 0.469 |
+| walker |  | 9088 | 61 | c aggregate member group at sqlite-vec.c:2887 group 2897 |  |  | 0.469 |
+| walker |  | 9163 | 75 | c aggregate member group at sqlite-vec.c:2887 group 2917 |  |  | 0.469 |
+| walker |  | 9181 | 18 | c decl doc at sqlite-vec.c:3384 |  |  | 0.469 |
+| walker |  | 9199 | 18 | c decl doc at sqlite-vec.c:3394 |  |  | 0.469 |
+| ns | 9211 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.459 |
+| walker |  | 9238 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.459 |
+| walker |  | 9245 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.459 |
+| ns | 9306 |  | 95 | examples/ listing (complete) | 5.4 |  | 0.470 |
+| walker |  | 9313 | 68 | ARCHITECTURE.md section #11 |  |  | 0.470 |
+| walker |  | 9380 | 67 | ARCHITECTURE.md section #12 |  |  | 0.470 |
+| walker |  | 9420 | 40 | listing of 'tests/__snapshots__' |  |  | 0.470 |
+| walker |  | 9438 | 18 | c decl doc at sqlite-vec.c:3414 |  |  | 0.470 |
+| ns | 9477 |  | 171 | Python example, end to end | 5.5 |  | 0.464 |
+| ns | 9531 |  | 54 | bindings/ listings (complete) | 5.6 |  | 0.472 |
+| ns | 9675 |  | 144 | Documentation site listings (complete) | 5.7 |  | 0.491 |
+| walker |  | 9776 | 338 | README.md section #5 |  |  | 0.491 |
+| walker |  | 9850 | 74 | ARCHITECTURE.md section #15 |  |  | 0.491 |
+| ns | 9875 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.484 |
+| walker |  | 9896 | 46 | listing of 'site/public' |  |  | 0.484 |
+| walker |  | 9987 | 91 | c decl body at sqlite-vec.c:656 |  |  | 0.484 |
+| ns | 9988 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.481 |

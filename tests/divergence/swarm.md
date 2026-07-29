@@ -1,4 +1,4 @@
-Score(3000)=0.659 I=0.810 C=0.537 ns_rows≤3K=25/66 (reached=10 partial=2 missing=13)
+Score(3000)=0.697 I=0.826 C=0.588 ns_rows≤3K=25/66 (reached=11 partial=2 missing=12)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -51,75 +51,75 @@ Score(3000)=0.659 I=0.810 C=0.537 ns_rows≤3K=25/66 (reached=10 partial=2 missi
 | walker |  | 1248 | 0 | python method at swarm/core.py:27 |  |  | 0.536 |
 | walker |  | 1248 | 0 | python method at swarm/core.py:71 |  |  | 0.536 |
 | ns | 1254 |  | 106 | `Swarm.run()` full signature with defaults | 2.6 | 2.2 | 0.505 |
-| walker |  | 1323 | 75 | README.md section #10 |  |  | 0.506 |
-| ns | 1346 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.482 |
-| walker |  | 1386 | 63 | python method at swarm/core.py:89 |  |  | 0.485 |
-| ns | 1491 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.471 |
-| ns | 1583 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.454 |
-| ns | 1757 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.421 |
-| ns | 1923 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.411 |
-| walker |  | 1983 | 597 | README.md section #0 |  |  | 0.539 |
-| ns | 2077 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.530 |
-| walker |  | 2251 | 268 | plaintext config setup.cfg |  |  | 0.524 |
-| ns | 2251 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.524 |
-| walker |  | 2333 | 82 | README.md section #11 |  |  | 0.526 |
-| walker |  | 2396 | 63 | python decl names surface in swarm/types.py |  |  | 0.533 |
-| walker |  | 2396 | 0 | python decl at swarm/types.py:14 |  |  | 0.533 |
-| walker |  | 2396 | 0 | python decl at swarm/types.py:23 |  |  | 0.533 |
-| walker |  | 2396 | 0 | python decl at swarm/types.py:29 |  |  | 0.533 |
-| ns | 2407 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.525 |
-| walker |  | 2429 | 33 | python class body at swarm/types.py:23 |  |  | 0.536 |
-| walker |  | 2464 | 35 | python class body at swarm/types.py:29 |  |  | 0.556 |
-| walker |  | 2552 | 88 | python class body at swarm/types.py:14 |  |  | 0.594 |
-| ns | 2612 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.582 |
-| walker |  | 2639 | 87 | python decl doc at swarm/types.py:29 |  |  | 0.586 |
-| walker |  | 2713 | 74 | python method at swarm/core.py:32 |  |  | 0.628 |
-| ns | 2775 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.617 |
-| walker |  | 2781 | 68 | python decl names surface in swarm/util.py |  |  | 0.632 |
-| walker |  | 2781 | 0 | python decl at swarm/util.py:5 |  |  | 0.632 |
-| walker |  | 2781 | 0 | python decl at swarm/util.py:13 |  |  | 0.632 |
-| walker |  | 2781 | 0 | python decl at swarm/util.py:21 |  |  | 0.632 |
-| walker |  | 2781 | 0 | python decl at swarm/util.py:31 |  |  | 0.632 |
-| walker |  | 2785 | 4 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.632 |
-| walker |  | 2812 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.632 |
-| walker |  | 2836 | 24 | python imports in swarm/repl/repl.py |  |  | 0.632 |
-| ns | 2906 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.625 |
-| walker |  | 2928 | 92 | python method at swarm/core.py:139 |  |  | 0.659 |
-| ns | 3027 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.649 |
-| walker |  | 3036 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.649 |
-| walker |  | 3039 | 3 | listing of 'examples/customer_service_streaming/src/runs' |  |  | 0.649 |
-| walker |  | 3042 | 3 | listing of 'examples/customer_service_streaming/src/tasks' |  |  | 0.649 |
-| walker |  | 3052 | 10 | listing of 'tests/test_runs' |  |  | 0.649 |
-| walker |  | 3113 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.650 |
-| ns | 3181 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.641 |
-| walker |  | 3219 | 106 | python method at swarm/core.py:231 |  |  | 0.678 |
-| walker |  | 3223 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.678 |
-| walker |  | 3227 | 4 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.678 |
-| ns | 3378 |  | 197 | Examples index: what each example directory demonstrates | 3.10 |  | 0.664 |
-| walker |  | 3379 | 152 | README.md section #12 |  |  | 0.664 |
-| ns | 3504 |  | 126 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.663 |
-| walker |  | 3581 | 202 | README.md section #2 |  |  | 0.686 |
-| walker |  | 3620 | 39 | python decl names surface in swarm/repl/repl.py |  |  | 0.692 |
-| walker |  | 3620 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.692 |
-| walker |  | 3620 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.692 |
-| walker |  | 3646 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.702 |
-| ns | 3679 |  | 175 | `Agent` definition and `instructions` semantics | 3.12 |  | 0.697 |
-| walker |  | 3732 | 86 | YAML config at .pre-commit-config.yaml |  |  | 0.698 |
-| walker |  | 3812 | 80 | python imports in swarm/types.py |  |  | 0.717 |
-| walker |  | 3815 | 3 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.717 |
-| walker |  | 3818 | 3 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.717 |
-| walker |  | 3821 | 3 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.717 |
-| ns | 3856 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.718 |
-| walker |  | 3911 | 90 | python decl body at swarm/util.py:5 body 6 |  |  | 0.718 |
-| ns | 4001 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.716 |
-| walker |  | 4005 | 94 | python decl body at swarm/util.py:21 body 22 |  |  | 0.717 |
-| walker |  | 4016 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.717 |
-| walker |  | 4020 | 4 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.717 |
-| ns | 4072 |  | 71 | Listings for the three simple examples (complete) | 4.1 |  | 0.726 |
-| ns | 4328 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.715 |
-| walker |  | 4355 | 335 | README.md section #1 |  |  | 0.749 |
-| ns | 4451 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.729 |
-| walker |  | 4521 | 166 | python imports in swarm/core.py |  |  | 0.771 |
+| walker |  | 1311 | 63 | python method at swarm/core.py:89 |  |  | 0.509 |
+| ns | 1346 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.485 |
+| walker |  | 1385 | 74 | python method at swarm/core.py:32 |  |  | 0.493 |
+| walker |  | 1477 | 92 | python method at swarm/core.py:139 |  |  | 0.539 |
+| ns | 1491 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.557 |
+| walker |  | 1583 | 106 | python method at swarm/core.py:231 |  |  | 0.579 |
+| ns | 1583 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.579 |
+| walker |  | 1658 | 75 | README.md section #10 |  |  | 0.579 |
+| ns | 1757 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.537 |
+| ns | 1923 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.524 |
+| ns | 2077 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.515 |
+| ns | 2251 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.507 |
+| walker |  | 2255 | 597 | README.md section #0 |  |  | 0.648 |
+| ns | 2407 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.639 |
+| walker |  | 2523 | 268 | plaintext config setup.cfg |  |  | 0.641 |
+| walker |  | 2605 | 82 | README.md section #11 |  |  | 0.643 |
+| ns | 2612 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.630 |
+| walker |  | 2668 | 63 | python decl names surface in swarm/types.py |  |  | 0.636 |
+| walker |  | 2668 | 0 | python decl at swarm/types.py:14 |  |  | 0.636 |
+| walker |  | 2668 | 0 | python decl at swarm/types.py:23 |  |  | 0.636 |
+| walker |  | 2668 | 0 | python decl at swarm/types.py:29 |  |  | 0.636 |
+| walker |  | 2701 | 33 | python class body at swarm/types.py:23 |  |  | 0.646 |
+| walker |  | 2736 | 35 | python class body at swarm/types.py:29 |  |  | 0.664 |
+| ns | 2775 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.653 |
+| walker |  | 2824 | 88 | python class body at swarm/types.py:14 |  |  | 0.687 |
+| ns | 2906 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.679 |
+| walker |  | 2911 | 87 | python decl doc at swarm/types.py:29 |  |  | 0.683 |
+| walker |  | 2979 | 68 | python decl names surface in swarm/util.py |  |  | 0.697 |
+| walker |  | 2979 | 0 | python decl at swarm/util.py:5 |  |  | 0.697 |
+| walker |  | 2979 | 0 | python decl at swarm/util.py:13 |  |  | 0.697 |
+| walker |  | 2979 | 0 | python decl at swarm/util.py:21 |  |  | 0.697 |
+| walker |  | 2979 | 0 | python decl at swarm/util.py:31 |  |  | 0.697 |
+| walker |  | 2983 | 4 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.697 |
+| walker |  | 3007 | 24 | python imports in swarm/repl/repl.py |  |  | 0.697 |
+| ns | 3027 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.686 |
+| walker |  | 3115 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.686 |
+| walker |  | 3118 | 3 | listing of 'examples/customer_service_streaming/src/runs' |  |  | 0.686 |
+| walker |  | 3121 | 3 | listing of 'examples/customer_service_streaming/src/tasks' |  |  | 0.686 |
+| walker |  | 3131 | 10 | listing of 'tests/test_runs' |  |  | 0.686 |
+| ns | 3181 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.677 |
+| walker |  | 3192 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.678 |
+| walker |  | 3358 | 166 | python imports in swarm/core.py |  |  | 0.730 |
+| walker |  | 3362 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.730 |
+| walker |  | 3366 | 4 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.730 |
+| ns | 3378 |  | 197 | Examples index: what each example directory demonstrates | 3.10 |  | 0.715 |
+| ns | 3504 |  | 126 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.713 |
+| walker |  | 3518 | 152 | README.md section #12 |  |  | 0.713 |
+| ns | 3679 |  | 175 | `Agent` definition and `instructions` semantics | 3.12 |  | 0.708 |
+| walker |  | 3720 | 202 | README.md section #2 |  |  | 0.730 |
+| walker |  | 3759 | 39 | python decl names surface in swarm/repl/repl.py |  |  | 0.736 |
+| walker |  | 3759 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.736 |
+| walker |  | 3759 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.736 |
+| walker |  | 3785 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.746 |
+| ns | 3856 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.745 |
+| walker |  | 3871 | 86 | YAML config at .pre-commit-config.yaml |  |  | 0.746 |
+| walker |  | 3951 | 80 | python imports in swarm/types.py |  |  | 0.764 |
+| walker |  | 3954 | 3 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.764 |
+| walker |  | 3957 | 3 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.764 |
+| walker |  | 3960 | 3 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.764 |
+| ns | 4001 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.762 |
+| walker |  | 4050 | 90 | python decl body at swarm/util.py:5 body 6 |  |  | 0.762 |
+| ns | 4072 |  | 71 | Listings for the three simple examples (complete) | 4.1 |  | 0.768 |
+| walker |  | 4077 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.768 |
+| walker |  | 4171 | 94 | python decl body at swarm/util.py:21 body 22 |  |  | 0.769 |
+| walker |  | 4182 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.769 |
+| walker |  | 4186 | 4 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.769 |
+| ns | 4328 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.758 |
+| ns | 4451 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.738 |
+| walker |  | 4521 | 335 | README.md section #1 |  |  | 0.771 |
 | walker |  | 4529 | 8 | python decl body at swarm/repl/repl.py:6 body 7 |  |  | 0.771 |
 | walker |  | 4624 | 95 | json config logs/session_20240425-135655.json |  |  | 0.771 |
 | walker |  | 4721 | 97 | json config logs/session_20240402-112456.json |  |  | 0.771 |

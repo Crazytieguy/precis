@@ -83,6 +83,13 @@ pub struct Scheduler<W: Walker> {
     /// touching that file, so their cached costs are dropped when one
     /// of them is scheduled.
     batches_by_path: HashMap<PathBuf, Vec<BatchId>>,
+    /// Batches drawn entirely from the tree's dominant source file —
+    /// they rank at a [`DOMINANT_FILE_RATIO_BOOST`] premium.
+    dominant_file_batches: HashSet<BatchId>,
+    /// Whether any dominant-file batch has been scheduled yet — the
+    /// premium escalates depth into a file already entered rather than
+    /// pulling it in front of the repository's orientation.
+    dominant_file_entered: bool,
     /// Memoized transitive predecessor root per batch (the head of its
     /// gated train). Resolved at ranking time, when eligibility
     /// guarantees the chain is fully materialized.
@@ -134,6 +141,17 @@ const TRAIN_SUBSTANTIAL_MEMBERS: usize = 3;
 /// follow-ups just buys worse batches.
 const BREADTH_MIN_TRAINS: usize = 2;
 
+/// Ranking premium for content drawn from the tree's dominant source
+/// file ([`WalkCtx::dominant_source_file`]). When one file holds most of
+/// a repository's implementation, "what is this repo" and "what is in
+/// that file" are the same question, and the marginal token buys more
+/// inside that file than on another lap of breadth. Gated on the file
+/// having already been entered on its own merits, so the premium
+/// escalates depth rather than pulling one file in front of the
+/// repository's orientation. Swept full-corpus; see
+/// `docs/design-notes.md` ("Dominant source file").
+const DOMINANT_FILE_RATIO_BOOST: f64 = 1.45;
+
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
         Self::with_source_cache(root, walker, token_budget, byte_budget, SourceCache::new())
@@ -163,6 +181,8 @@ impl<W: Walker> Scheduler<W> {
             cost_cache: HashMap::new(),
             approx_cost_cache: HashMap::new(),
             batches_by_path: HashMap::new(),
+            dominant_file_batches: HashSet::new(),
+            dominant_file_entered: false,
             train_root_memo: HashMap::new(),
             scheduled_per_root: HashMap::new(),
             train_member_counts: HashMap::new(),
@@ -267,6 +287,13 @@ impl<W: Walker> Scheduler<W> {
                         .push(id);
                     last = Some(&span.path);
                 }
+            }
+            let in_dominant_file = self
+                .ctx
+                .dominant_source_file()
+                .is_some_and(|dominant| spans.iter().all(|span| span.path == dominant));
+            if in_dominant_file {
+                self.dominant_file_batches.insert(id);
             }
         }
 
@@ -400,7 +427,7 @@ impl<W: Walker> Scheduler<W> {
                 let c = self.tree.marginal_cost(content);
                 self.cost_cache.insert(id, c);
             }
-            let pressure = self.train_pressure(id);
+            let pressure = self.train_pressure(id) * self.dominant_file_boost(id);
             let exact_cost = self.cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(
@@ -441,7 +468,7 @@ impl<W: Walker> Scheduler<W> {
 
         let mut candidates: Vec<(f64, BatchId)> = Vec::with_capacity(eligible.len());
         for &id in eligible {
-            let pressure = self.train_pressure(id);
+            let pressure = self.train_pressure(id) * self.dominant_file_boost(id);
             let approx_tokens = self.approx_cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio =
@@ -503,6 +530,7 @@ impl<W: Walker> Scheduler<W> {
             );
         }
         self.scheduled.insert(id);
+        self.dominant_file_entered |= self.dominant_file_batches.contains(&id);
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
@@ -668,6 +696,22 @@ impl<W: Walker> Scheduler<W> {
         };
         self.train_root_memo.insert(id, root);
         root
+    }
+
+    /// Ratio premium for `id` when it draws only on the dominant source
+    /// file. Surface batches only: the spine file's roster is what the
+    /// scheduler under-buys, while its docs and bodies already rank
+    /// locally once the train is open, and boosting those front-loads
+    /// one file's depth over the rest of the repository's orientation.
+    fn dominant_file_boost(&self, id: BatchId) -> f64 {
+        if self.dominant_file_entered
+            && self.dominant_file_batches.contains(&id)
+            && !self.entries[id.index()].key.is_depth_follow_up()
+        {
+            DOMINANT_FILE_RATIO_BOOST
+        } else {
+            1.0
+        }
     }
 
     /// Breadth-pressure multiplier for `id`'s ratio. Applies only to

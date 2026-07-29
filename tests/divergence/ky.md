@@ -1,4 +1,4 @@
-Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missing=10)
+Score(3000)=0.598 I=0.849 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,40 +57,40 @@ Score(3000)=0.598 I=0.848 C=0.421 ns_rows≤3K=19/52 (reached=8 partial=1 missin
 | ns | 2333 |  | 232 | `KyOptions`: every ky-specific option with its type | 2.3 |  | 0.668 |
 | walker |  | 2345 | 82 | json config tsconfig.json |  |  | 0.669 |
 | walker |  | 2357 | 12 | export names surface in source/core/Ky.ts |  |  | 0.669 |
-| walker |  | 2378 | 21 | readme.md section #13 |  |  | 0.669 |
-| walker |  | 2398 | 20 | readme.md section #12 |  |  | 0.669 |
-| walker |  | 2420 | 22 | readme.md section #18 |  |  | 0.669 |
-| walker |  | 2437 | 17 | imports in source/types/retry.ts |  |  | 0.669 |
-| walker |  | 2459 | 22 | readme.md section #45 |  |  | 0.669 |
-| walker |  | 2553 | 94 | readme.md section #1 |  |  | 0.669 |
-| walker |  | 2572 | 19 | imports in source/types/ResponsePromise.ts |  |  | 0.669 |
-| walker |  | 2587 | 15 | export names surface in source/errors/NonError.ts |  |  | 0.669 |
+| walker |  | 2402 | 45 | export at source/core/Ky.ts:33 |  |  | 0.669 |
+| walker |  | 2423 | 21 | readme.md section #13 |  |  | 0.669 |
+| walker |  | 2443 | 20 | readme.md section #12 |  |  | 0.669 |
+| walker |  | 2465 | 22 | readme.md section #18 |  |  | 0.669 |
+| walker |  | 2482 | 17 | imports in source/types/retry.ts |  |  | 0.669 |
+| walker |  | 2504 | 22 | readme.md section #45 |  |  | 0.669 |
+| walker |  | 2598 | 94 | readme.md section #1 |  |  | 0.669 |
 | ns | 2607 |  | 274 | Concrete retry defaults (`defaultRetryOptions`, utils/normalize.ts) | 2.4 |  | 0.639 |
-| walker |  | 2684 | 97 | export names surface in source/utils/type-guards.ts |  |  | 0.639 |
-| walker |  | 2684 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.639 |
-| walker |  | 2684 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.639 |
-| walker |  | 2684 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.639 |
-| walker |  | 2684 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.639 |
-| walker |  | 2705 | 21 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.639 |
-| walker |  | 2726 | 21 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.639 |
-| walker |  | 2749 | 23 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.639 |
-| walker |  | 2772 | 23 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.639 |
-| walker |  | 2842 | 70 | readme.md section #51 |  |  | 0.639 |
+| walker |  | 2617 | 19 | imports in source/types/ResponsePromise.ts |  |  | 0.639 |
+| walker |  | 2632 | 15 | export names surface in source/errors/NonError.ts |  |  | 0.639 |
+| walker |  | 2729 | 97 | export names surface in source/utils/type-guards.ts |  |  | 0.639 |
+| walker |  | 2729 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.639 |
+| walker |  | 2729 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.639 |
+| walker |  | 2729 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.639 |
+| walker |  | 2729 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.639 |
+| walker |  | 2750 | 21 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.639 |
+| walker |  | 2771 | 21 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.639 |
+| walker |  | 2794 | 23 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.639 |
+| walker |  | 2817 | 23 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.639 |
 | ns | 2872 |  | 265 | Where the non-retry defaults are applied (core/Ky.ts constructor) | 2.5 |  | 0.610 |
-| walker |  | 2917 | 75 | readme.md section #50 |  |  | 0.610 |
+| walker |  | 2887 | 70 | readme.md section #51 |  |  | 0.610 |
 | ns | 2941 |  | 69 | `Hooks`: the four hook arrays | 2.6 |  | 0.598 |
-| walker |  | 3065 | 148 | export body at source/errors/HTTPError.ts:5 body 11 |  |  | 0.600 |
-| walker |  | 3098 | 33 | readme.md section #8 |  |  | 0.600 |
-| walker |  | 3134 | 36 | export at source/errors/NonError.ts:6 |  |  | 0.600 |
+| walker |  | 2962 | 75 | readme.md section #50 |  |  | 0.598 |
+| walker |  | 3110 | 148 | export body at source/errors/HTTPError.ts:5 body 11 |  |  | 0.600 |
+| walker |  | 3143 | 33 | readme.md section #8 |  |  | 0.600 |
 | ns | 3146 |  | 205 | `RetryOptions`: every retry field (types/retry.ts) | 2.7 |  | 0.570 |
-| walker |  | 3181 | 47 | export doc at source/errors/ForceRetryError.ts:8 |  |  | 0.570 |
-| walker |  | 3211 | 30 | imports in source/errors/ForceRetryError.ts |  |  | 0.570 |
-| walker |  | 3248 | 37 | readme.md section #19 |  |  | 0.570 |
+| walker |  | 3179 | 36 | export at source/errors/NonError.ts:6 |  |  | 0.570 |
+| walker |  | 3226 | 47 | export doc at source/errors/ForceRetryError.ts:8 |  |  | 0.570 |
+| walker |  | 3256 | 30 | imports in source/errors/ForceRetryError.ts |  |  | 0.570 |
+| walker |  | 3293 | 37 | readme.md section #19 |  |  | 0.570 |
 | ns | 3487 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.537 |
-| walker |  | 3547 | 299 | package identity metadata in package.json |  |  | 0.543 |
-| walker |  | 3732 | 185 | export body at source/errors/ForceRetryError.ts:8 body 15 |  |  | 0.543 |
+| walker |  | 3592 | 299 | package identity metadata in package.json |  |  | 0.544 |
 | ns | 3752 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.572 |
-| walker |  | 3777 | 45 | export at source/core/Ky.ts:33 |  |  | 0.572 |
+| walker |  | 3777 | 185 | export body at source/errors/ForceRetryError.ts:8 body 15 |  |  | 0.572 |
 | walker |  | 3803 | 26 | export names surface in source/utils/delay.ts |  |  | 0.572 |
 | walker |  | 3818 | 15 | export at source/utils/delay.ts:5 |  |  | 0.572 |
 | walker |  | 3846 | 28 | export at source/utils/delay.ts:9 |  |  | 0.572 |
