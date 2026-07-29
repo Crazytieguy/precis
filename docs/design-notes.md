@@ -2305,3 +2305,75 @@ Grid at the 0.75 peak vs the shipped state: 1000 +0.0029 · 1442
 for two is not worth ~35 lines against a class that gates the whole fs
 expansion. Worth re-measuring only if a later tree is specifically
 short at B=1000, where it is the strongest lever measured this lane.
+||||||| cc0132cb
+
+
+## Data-model schemas and C interface headers (2026-07-29)
+
+Zero point 0.6151 / 71 training fixtures. Two narrow ships, plus five
+dead lever shapes on the C side.
+
+**A data-model schema is priced at root tier.** A file declaring the
+application's persistent entities is spine — NS authors rank its catalog
+beside the root manifest — while its filesystem depth records only which
+workspace package owns the ORM client. Pinning the Prisma walker's depth
+factor to root (the clamp `file_depth_factor` already gives entrypoints)
+is +0.0033 corpus, all of it linkwarden 0.457 → 0.693 @3000, with the
+whole grid up except 6240 (−0.0003). Measured as a multiplier over the
+un-pinned factor (the pin is ×1.7 at that file's depth): 1.2 0.450 ·
+1.35 0.532 · 1.5 0.614 · 1.65 0.676 · **1.7 (pin) 0.693** · 1.9 0.707 ·
+2.2 0.707 · 3.0 0.767, with budget-1000 collapsing above ~2.0. Adding
+`roster_mass_factor` on the catalog is bit-inert on top of the pin.
+
+The gate is the data model, not configuration: this is deliberately
+narrower than the measured-dead ops-config class boost. Deploy / CI /
+tool config describes how a project is built and run, and its depth does
+track its scope. **Only linkwarden carries a schema in training** —
+drizzle-orm is holdout, no fixture has SQL migration or GraphQL schema
+files the oracle wants (sqlite-vec's `SQL schema contracts` chunk has
+oracle mass 0), so the rule generalizes on its statement, not on corpus
+breadth.
+
+**C header centrality ranks on total include in-degree.** The public
+header of a library is included by implementations, examples and board
+support, not by other headers, so the header-to-header ranking
+under-rated it: tinyusb `usbh.h`/`usbd.h` sit at h2h 1 / total 20 and
+were unscheduled at every budget ≤10K. Switching only the *boost basis*
+to total is +0.0001 @3000 but +0.0008 @2080, +0.0005 @6240, +0.0011
+@9000, and the two movers rise almost monotonically (tinyusb +0.079
+@9000, htop +0.052 @2080). The two graphs answer different questions and
+both are load-bearing: on the ten-fixture C subset at 3000 (base 0.6196),
+moving `is_top_include_hub`'s roster-mass test to total is 0.5856 and
+moving the spine gate is 0.5970.
+
+Measured dead in the same lane (C subset means at 3000, base 0.6196):
+
+- **`roster_mass_factor` on C `DeclNames` outside top include hubs**
+  — 0.6006 class-wide (chibicc −0.123, bareiron −0.097, neco −0.031),
+  0.6103 gated to the repo-eponymous header (chibicc −0.123, neco
+  −0.031, krep −0.007, jq +0.068). The pre-refreeze verdict survives the
+  v2 key unchanged; the failure is the same early-budget displacement of
+  NS tier-1 orientation. tinyusb is bit-identical under both — its
+  public headers lose on cost, and mass alone does not close the gap.
+- **Flattening the names-surface chunk decay for C headers** (so a big
+  roster arrives complete): falloff 0.25 (shipped) 0.6196 · 0.15 0.6194 ·
+  0.10 0.6164 · 0.05 0.6088 · 0.0 0.6028. Gains at 4327–9000, loses at
+  the primary budget, and tinyusb never moves — the tail chunks are not
+  what blocks it.
+- **Damping `AggregateMemberGroup`** despite oracle mass 0 for the class
+  corpus-wide against 858 walker tokens (all chibicc): ×0.8 0.6171 ·
+  ×0.6/0.45/0.3/0.15 all 0.6163. The freed budget does not go anywhere
+  the NS wants; the over-buy is real but the demotion is not the lever.
+- **Boost magnitude on the total-in-degree basis**: 0.4 0.6209 ·
+  **0.6 (shipped) 0.6204** · 0.9 0.6204 · 1.2 0.6176 · 1.6 0.5987 ·
+  2.2 0.5986 — flat plateau, keep the existing constant.
+
+Two shape findings for whoever retries the C cluster. sqlite-vec is the
+counter-example to "header first": it is a single-`.c` library and its
+oracle buys `sqlite-vec.c` names surfaces #3/#4, no header at all. And
+no single structural proxy selects the NS-wanted header across the
+corpus — largest project roster picks a vendored `lib/networking/ndis.h`
+in tinyusb, highest total in-degree picks `globals.h` over `packets.h` in
+bareiron, and the repo-eponymous test does not exist in bareiron, htop or
+tinyusb. The value-ranking boost above is deliberately graded rather than
+a selection.

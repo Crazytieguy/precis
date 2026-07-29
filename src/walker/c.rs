@@ -194,10 +194,16 @@ struct IncludeInDegreeIndex {
     /// hubs (htop `Object.h`/`Process.h`) while leaving utility headers
     /// (`XUtils.h`, `Macros.h`) that only `.c` files pull in unboosted.
     header_to_header: HashMap<String, usize>,
-    /// In-degree counting includes from every `.c`/`.h` file. Used for
-    /// the leaf test — a header no other file includes is a leaf even
-    /// when the header-to-header graph is silent about it.
+    /// In-degree counting includes from every `.c`/`.h` file. This is
+    /// the *interface* signal: a library's public header is the one its
+    /// consumers include — implementation `.c` files, examples, board
+    /// support — not the one other headers pull in for types. tinyusb's
+    /// `usbh.h`/`usbd.h` have header-to-header in-degree 1 and total 20,
+    /// and the header-to-header ranking put a vendored BSP's type header
+    /// above them. Also drives the leaf test — a header no other file
+    /// includes is a leaf even when the header-to-header graph is silent.
     total: HashMap<String, usize>,
+    max_total: usize,
     max_header_to_header: usize,
     /// Headers seen tree-wide — the leaf damp only fires in projects
     /// with enough headers that breadth-pricing them all alike floods
@@ -281,6 +287,7 @@ fn collect_include_in_degree(root: &Path, filter: &DirFilter) -> IncludeInDegree
         }
     }
     index.max_header_to_header = index.header_to_header.values().copied().max().unwrap_or(0);
+    index.max_total = index.total.values().copied().max().unwrap_or(0);
     index
 }
 
@@ -295,10 +302,20 @@ fn quoted_include_basename(line: &str) -> Option<&str> {
 }
 
 /// Include-graph centrality factor for a header's decl-tier batches.
-/// Hubs of the header-to-header graph get a bounded log boost (up to
+/// Central headers get a bounded log boost (up to
 /// `1 + INCLUDE_HUB_BOOST`); headers nothing includes get a mild damp
 /// in header-rich projects. `.c` files and projects without an include
 /// spine are neutral by construction.
+///
+/// The boost ranks on *total* in-degree: the header the repo's own
+/// sources include most is its public interface catalog, and that is
+/// what the NS wants first. The header-to-header graph asks a different
+/// question — which header is the type spine — and as a value ranking it
+/// systematically under-rates the interface, because a public API header
+/// is included by implementations and consumers rather than by other
+/// headers. It still answers its own question well, so both the spine
+/// gate below and [`is_top_include_hub`]'s roster-mass test stay on it;
+/// moving either to total in-degree measured much worse.
 fn include_centrality_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if !is_header_file(file) {
         return 1.0;
@@ -311,11 +328,11 @@ fn include_centrality_factor(file: &Path, ctx: &WalkCtx) -> f64 {
         .include_in_degree(ctx.root(), ctx.dir_filter());
     let mut factor = 1.0;
     if index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
-        && let Some(&in_degree) = index.header_to_header.get(name)
+        && let Some(&in_degree) = index.total.get(name)
     {
         factor *= 1.0
             + INCLUDE_HUB_BOOST * ((1 + in_degree) as f64).ln()
-                / ((1 + index.max_header_to_header) as f64).ln();
+                / ((1 + index.max_total) as f64).ln();
     }
     if index.header_count >= INCLUDE_LEAF_MIN_PROJECT_HEADERS
         && index.total.get(name).copied().unwrap_or(0) <= 1
