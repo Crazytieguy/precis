@@ -259,10 +259,11 @@ impl WalkCtx {
     }
 
     /// The single source file the repository is *about*, when one
-    /// exists: the largest essential source file, provided it carries at
-    /// least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's essential
-    /// source bytes. Single-implementation-file libraries (a one-file
-    /// parser, a single amalgamated `.c`, a `core.py`) put the content
+    /// exists: a mass-dominant essential source file that independently
+    /// carries at least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's source
+    /// bytes. The largest is the default, but a materially denser public
+    /// surface can replace it. Single-implementation-file libraries (a
+    /// one-file parser, a single amalgamated `.c`, a `core.py`) put the content
     /// an NS author wants in one place, and the scheduler's
     /// breadth-first instincts spend the marginal token elsewhere.
     /// Returns `None` when source mass is spread across peers, which is
@@ -397,10 +398,11 @@ const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
 /// reader is meant to read more of.
 const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
 
-/// Largest hand-authored source file in the tree, if it carries at least
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. Non-essential subtrees
-/// (tests, examples, vendored, tooling) are excluded from both the
-/// numerator and the denominator so a big test file can neither win nor
+/// Select a hand-authored source file that carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. The largest qualifying file
+/// is the default; a materially denser public surface may replace it.
+/// Non-essential subtrees (tests, examples, vendored, tooling) are
+/// excluded from both the numerator and the denominator so a big test file can neither win nor
 /// dilute the share.
 ///
 /// Enumeration mirrors the walkers' own rules rather than inventing a
@@ -476,14 +478,39 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
     candidates.retain(|(_, len, language)| {
         *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
     });
-    // Descending by size, so the line-shape probe reads at most a
-    // handful of files rather than every source file in the tree; path
-    // breaks size ties, since directory read order is not stable.
-    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
-    candidates
+    candidates.retain(|(path, _, _)| is_hand_authored(path));
+    let mut candidates: Vec<_> = candidates
         .into_iter()
-        .find(|(path, _, _)| is_hand_authored(path))
-        .map(|(path, _, _)| path)
+        .map(|(path, len, language)| {
+            let surface_lines = public_surface_line_count(&path, language);
+            (path, len, language, surface_lines)
+        })
+        .collect();
+    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+    let largest = candidates.first()?.clone();
+    let largest_is_declaration_stub = typescript::is_declaration_file(&largest.0);
+    let densest = candidates
+        .iter()
+        .filter(|(path, _, _, _)| {
+            typescript::is_declaration_file(path) == largest_is_declaration_stub
+        })
+        .max_by(
+            |(path_a, len_a, _, surface_a), (path_b, len_b, _, surface_b)| {
+                (*surface_a * *len_b)
+                    .cmp(&(*surface_b * *len_a))
+                    .then_with(|| len_a.cmp(len_b))
+                    .then_with(|| path_b.cmp(path_a))
+            },
+        )
+        .cloned()
+        .unwrap_or_else(|| largest.clone());
+    let density_clears_margin =
+        surface_density_clears_margin(densest.3, densest.1, largest.3, largest.1);
+    Some(if density_clears_margin {
+        densest.0
+    } else {
+        largest.0
+    })
 }
 
 /// Extension → language family, collapsing the families whose files sit
@@ -503,6 +530,69 @@ fn language_group(path: &Path) -> Option<&'static str> {
         "zig" => "zig",
         _ => return None,
     })
+}
+
+fn surface_density_clears_margin(
+    candidate_surface: u64,
+    candidate_bytes: u64,
+    baseline_surface: u64,
+    baseline_bytes: u64,
+) -> bool {
+    candidate_surface * baseline_bytes * 5 >= baseline_surface * candidate_bytes * 6
+}
+
+fn public_surface_line_count(path: &Path, language: &str) -> u64 {
+    let Ok(source) = std::fs::read_to_string(path) else {
+        return 0;
+    };
+    source
+        .lines()
+        .filter(|line| {
+            let trimmed = line.trim_start();
+            if trimmed.len() != line.len() {
+                return false;
+            }
+            match language {
+                "rs" => {
+                    trimmed.starts_with("pub ")
+                        || trimmed.starts_with("pub(")
+                        || trimmed.starts_with("#[macro_export]")
+                }
+                "js" => {
+                    trimmed.starts_with("export ")
+                        || trimmed.starts_with("module.exports")
+                        || trimmed.starts_with("exports.")
+                        || is_property_assignment(trimmed)
+                }
+                _ => false,
+            }
+        })
+        .count() as u64
+}
+
+fn is_property_assignment(line: &str) -> bool {
+    let Some((left, right)) = line.split_once('=') else {
+        return false;
+    };
+    if right.starts_with(['=', '>']) {
+        return false;
+    }
+    let mut parts = left.trim_end().split('.');
+    let Some(receiver) = parts.next() else {
+        return false;
+    };
+    let Some(property) = parts.next() else {
+        return false;
+    };
+    parts.next().is_none() && is_js_identifier(receiver) && is_js_identifier(property)
+}
+
+fn is_js_identifier(text: &str) -> bool {
+    let mut chars = text.chars();
+    chars
+        .next()
+        .is_some_and(|ch| ch == '_' || ch == '$' || ch.is_ascii_alphabetic())
+        && chars.all(|ch| ch == '_' || ch == '$' || ch.is_ascii_alphanumeric())
 }
 
 /// Line-shape check for "a person typed this": mean bytes per line over
@@ -1184,6 +1274,54 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    #[test]
+    fn walker_mod_dominant_file_prefers_public_surface_density() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("machinery.rs"), "fn hidden() {}\n".repeat(180)).unwrap();
+        std::fs::write(root.join("api.rs"), "pub fn visible() {}\n".repeat(120)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("api.rs").as_path()));
+    }
+
+    #[test]
+    fn walker_mod_dominant_file_does_not_cross_declaration_stub_boundary() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(
+            root.join("implementation.js"),
+            "implementation.run = function run() {}\n".repeat(40) + &"// internal\n".repeat(200),
+        )
+        .unwrap();
+        std::fs::write(
+            root.join("index.d.ts"),
+            "export declare function run(): void;\n".repeat(100),
+        )
+        .unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(
+            found.as_deref(),
+            Some(root.join("implementation.js").as_path())
+        );
+    }
+
+    #[test]
+    fn walker_mod_surface_density_requires_one_fifth_margin() {
+        assert!(surface_density_clears_margin(12, 100, 10, 100));
+        assert!(!surface_density_clears_margin(11, 100, 10, 100));
+    }
+
+    #[test]
+    fn walker_mod_property_assignment_requires_top_level_member_assignment() {
+        assert!(is_property_assignment("app.handle = function handle() {}"));
+        assert!(is_property_assignment("exports.run = run"));
+        assert!(!is_property_assignment("const value = app.handle"));
+        assert!(!is_property_assignment("app.handle === value"));
+        assert!(!is_property_assignment("app.nested.handle = value"));
     }
 
     /// The spine detector runs on whatever path a user points precis

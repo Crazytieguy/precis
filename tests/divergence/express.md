@@ -1,4 +1,4 @@
-Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missing=13)
+Score(3000)=0.505 I=0.806 C=0.317 ns_rows≤3K=19/51 (reached=7 partial=1 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -64,73 +64,73 @@ Score(3000)=0.417 I=0.772 C=0.226 ns_rows≤3K=19/51 (reached=6 partial=0 missin
 | walker |  | 2614 | 25 | imports in lib/express.js |  |  | 0.464 |
 | walker |  | 2641 | 27 | imports in lib/application.js |  |  | 0.464 |
 | ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.446 |
-| walker |  | 2664 | 23 | Readme.md section #19 |  |  | 0.446 |
-| walker |  | 2687 | 23 | Readme.md section #30 |  |  | 0.446 |
-| walker |  | 2711 | 24 | Readme.md section #12 |  |  | 0.446 |
-| walker |  | 2735 | 24 | Readme.md section #32 |  |  | 0.446 |
-| walker |  | 2777 | 42 | export doc at lib/express.js:36 |  |  | 0.446 |
-| walker |  | 2802 | 25 | Readme.md section #18 |  |  | 0.446 |
-| walker |  | 2884 | 82 | Readme.md section #7 |  |  | 0.446 |
-| walker |  | 2910 | 26 | Readme.md section #23 |  |  | 0.446 |
-| walker |  | 2935 | 25 | Readme.md section #24 |  |  | 0.446 |
-| ns | 2958 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.417 |
-| walker |  | 2962 | 27 | Readme.md section #13 |  |  | 0.417 |
-| walker |  | 2988 | 26 | Readme.md section #14 |  |  | 0.417 |
-| walker |  | 3015 | 27 | Readme.md section #15 |  |  | 0.417 |
-| walker |  | 3041 | 26 | Readme.md section #16 |  |  | 0.417 |
-| walker |  | 3066 | 25 | Readme.md section #17 |  |  | 0.417 |
-| walker |  | 3094 | 28 | Readme.md section #22 |  |  | 0.417 |
-| ns | 3143 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.401 |
-| ns | 3360 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.383 |
-| walker |  | 3370 | 276 | export names surface in lib/application.js |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:59 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:90 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:152 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:190 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:256 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:294 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:322 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:351 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:399 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:420 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:439 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:451 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:463 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:494 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:522 |  |  | 0.463 |
-| walker |  | 3370 | 0 | export at lib/application.js:598 |  |  | 0.463 |
-| walker |  | 3387 | 17 | export doc at lib/application.js:90 |  |  | 0.463 |
+| walker |  | 2917 | 276 | export names surface in lib/application.js |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:59 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:90 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:152 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:190 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:256 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:294 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:322 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:351 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:399 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:420 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:439 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:451 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:463 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:494 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:522 |  |  | 0.539 |
+| walker |  | 2917 | 0 | export at lib/application.js:598 |  |  | 0.539 |
+| walker |  | 2934 | 17 | export doc at lib/application.js:90 |  |  | 0.539 |
+| walker |  | 2957 | 23 | Readme.md section #19 |  |  | 0.539 |
+| ns | 2958 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.505 |
+| walker |  | 2980 | 23 | Readme.md section #30 |  |  | 0.505 |
+| walker |  | 3004 | 24 | Readme.md section #12 |  |  | 0.505 |
+| walker |  | 3028 | 24 | Readme.md section #32 |  |  | 0.505 |
+| walker |  | 3070 | 42 | export doc at lib/express.js:36 |  |  | 0.505 |
+| walker |  | 3095 | 25 | Readme.md section #18 |  |  | 0.505 |
+| ns | 3143 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.485 |
+| walker |  | 3177 | 82 | Readme.md section #7 |  |  | 0.485 |
+| walker |  | 3203 | 26 | Readme.md section #23 |  |  | 0.485 |
+| walker |  | 3228 | 25 | Readme.md section #24 |  |  | 0.485 |
+| walker |  | 3255 | 27 | Readme.md section #13 |  |  | 0.485 |
+| walker |  | 3281 | 26 | Readme.md section #14 |  |  | 0.485 |
+| walker |  | 3308 | 27 | Readme.md section #15 |  |  | 0.485 |
+| walker |  | 3334 | 26 | Readme.md section #16 |  |  | 0.485 |
+| walker |  | 3359 | 25 | Readme.md section #17 |  |  | 0.485 |
+| ns | 3360 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.463 |
+| walker |  | 3387 | 28 | Readme.md section #22 |  |  | 0.463 |
 | walker |  | 3428 | 41 | imports in lib/response.js |  |  | 0.463 |
+| walker |  | 3458 | 30 | Readme.md section #27 |  |  | 0.463 |
+| walker |  | 3488 | 30 | Readme.md section #29 |  |  | 0.463 |
+| walker |  | 3517 | 29 | Readme.md section #28 |  |  | 0.463 |
 | ns | 3559 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.449 |
 | ns | 3691 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.439 |
-| walker |  | 3738 | 310 | export names surface in lib/response.js |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:49 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:64 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:97 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:125 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:232 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:260 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:321 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:371 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:433 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:569 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:604 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:629 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:696 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:709 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:742 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:794 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:812 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:875 |  |  | 0.517 |
-| walker |  | 3738 | 0 | export at lib/response.js:894 |  |  | 0.517 |
-| walker |  | 3751 | 13 | export at lib/response.js:503 |  |  | 0.524 |
-| walker |  | 3765 | 14 | export at lib/response.js:664 |  |  | 0.531 |
-| walker |  | 3791 | 26 | export doc at lib/response.js:49 |  |  | 0.531 |
-| walker |  | 3936 | 145 | export body at lib/response.js:232 body 233 |  |  | 0.531 |
-| walker |  | 3966 | 30 | Readme.md section #27 |  |  | 0.531 |
-| ns | 3984 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.514 |
-| walker |  | 3996 | 30 | Readme.md section #29 |  |  | 0.514 |
-| walker |  | 4025 | 29 | Readme.md section #28 |  |  | 0.514 |
+| walker |  | 3827 | 310 | export names surface in lib/response.js |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:49 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:64 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:97 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:125 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:232 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:260 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:321 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:371 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:433 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:569 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:604 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:629 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:696 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:709 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:742 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:794 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:812 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:875 |  |  | 0.517 |
+| walker |  | 3827 | 0 | export at lib/response.js:894 |  |  | 0.517 |
+| walker |  | 3840 | 13 | export at lib/response.js:503 |  |  | 0.524 |
+| walker |  | 3854 | 14 | export at lib/response.js:664 |  |  | 0.531 |
+| walker |  | 3880 | 26 | export doc at lib/response.js:49 |  |  | 0.531 |
+| ns | 3984 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.513 |
+| walker |  | 4025 | 145 | export body at lib/response.js:232 body 233 |  |  | 0.514 |
 | walker |  | 4082 | 57 | export doc at lib/application.js:451 |  |  | 0.514 |
 | ns | 4104 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.503 |
 | walker |  | 4139 | 57 | export doc at lib/application.js:463 |  |  | 0.503 |
