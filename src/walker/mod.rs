@@ -259,10 +259,11 @@ impl WalkCtx {
     }
 
     /// The single source file the repository is *about*, when one
-    /// exists: the largest essential source file, provided it carries at
-    /// least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's essential
-    /// source bytes. Single-implementation-file libraries (a one-file
-    /// parser, a single amalgamated `.c`, a `core.py`) put the content
+    /// exists: a mass-dominant essential source file that independently
+    /// carries at least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's source
+    /// bytes. The largest is the default, but a materially denser public
+    /// surface can replace it. Single-implementation-file libraries (a
+    /// one-file parser, a single amalgamated `.c`, a `core.py`) put the content
     /// an NS author wants in one place, and the scheduler's
     /// breadth-first instincts spend the marginal token elsewhere.
     /// Returns `None` when source mass is spread across peers, which is
@@ -397,10 +398,11 @@ const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
 /// reader is meant to read more of.
 const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
 
-/// Largest hand-authored source file in the tree, if it carries at least
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. Non-essential subtrees
-/// (tests, examples, vendored, tooling) are excluded from both the
-/// numerator and the denominator so a big test file can neither win nor
+/// Select a hand-authored source file that carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. The largest qualifying file
+/// is the default; a materially denser public surface may replace it.
+/// Non-essential subtrees (tests, examples, vendored, tooling) are
+/// excluded from both the numerator and the denominator so a big test file can neither win nor
 /// dilute the share.
 ///
 /// Enumeration mirrors the walkers' own rules rather than inventing a
@@ -476,14 +478,36 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
     candidates.retain(|(_, len, language)| {
         *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
     });
-    // Descending by size, so the line-shape probe reads at most a
-    // handful of files rather than every source file in the tree; path
-    // breaks size ties, since directory read order is not stable.
-    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
-    candidates
+    candidates.retain(|(path, _, _)| is_hand_authored(path));
+    let mut candidates: Vec<_> = candidates
         .into_iter()
-        .find(|(path, _, _)| is_hand_authored(path))
-        .map(|(path, _, _)| path)
+        .map(|(path, len, language)| {
+            let (surface_items, type_machinery) = dominant_surface_profile(&path, language);
+            (path, len, surface_items, type_machinery)
+        })
+        .collect();
+    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+    let largest = candidates.first()?.clone();
+    let densest = candidates
+        .iter()
+        .filter(|(_, _, _, type_machinery)| *type_machinery == largest.3)
+        .max_by(
+            |(path_a, len_a, surface_a, _), (path_b, len_b, surface_b, _)| {
+                (*surface_a * *len_b)
+                    .cmp(&(*surface_b * *len_a))
+                    .then_with(|| len_a.cmp(len_b))
+                    .then_with(|| path_b.cmp(path_a))
+            },
+        )
+        .cloned()
+        .unwrap_or_else(|| largest.clone());
+    let density_clears_margin =
+        surface_density_clears_margin(densest.2, densest.1, largest.2, largest.1);
+    Some(if density_clears_margin {
+        densest.0
+    } else {
+        largest.0
+    })
 }
 
 /// Extension → language family, collapsing the families whose files sit
@@ -503,6 +527,30 @@ fn language_group(path: &Path) -> Option<&'static str> {
         "zig" => "zig",
         _ => return None,
     })
+}
+
+fn surface_density_clears_margin(
+    candidate_surface: u64,
+    candidate_bytes: u64,
+    baseline_surface: u64,
+    baseline_bytes: u64,
+) -> bool {
+    candidate_surface * baseline_bytes * 5 >= baseline_surface * candidate_bytes * 6
+}
+
+fn dominant_surface_profile(path: &Path, language: &str) -> (u64, bool) {
+    let Ok(source) = std::fs::read_to_string(path) else {
+        return (0, typescript::is_declaration_file(path));
+    };
+    match language {
+        "rs" => (
+            rust::dominant_surface_item_count(&source).unwrap_or(0),
+            false,
+        ),
+        "js" => typescript::dominant_surface_profile(path, &source)
+            .unwrap_or((0, typescript::is_declaration_file(path))),
+        _ => (0, false),
+    }
 }
 
 /// Line-shape check for "a person typed this": mean bytes per line over
@@ -1184,6 +1232,138 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    #[test]
+    fn walker_mod_dominant_file_prefers_public_surface_density() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("machinery.rs"), "fn hidden() {}\n".repeat(180)).unwrap();
+        std::fs::write(root.join("api.rs"), "pub fn visible() {}\n".repeat(120)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("api.rs").as_path()));
+    }
+
+    #[test]
+    fn walker_mod_dominant_file_does_not_cross_type_machinery_boundary() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(
+            root.join("implementation.js"),
+            "const implementation = {};\n".to_string()
+                + &"implementation.run = function run() {};\n".repeat(20)
+                + &"// internal implementation detail\n".repeat(400)
+                + "module.exports = implementation;\n",
+        )
+        .unwrap();
+        std::fs::write(
+            root.join("types.ts"),
+            "export interface Shape { value: string }\n".repeat(100),
+        )
+        .unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(
+            found.as_deref(),
+            Some(root.join("implementation.js").as_path())
+        );
+    }
+
+    #[test]
+    fn walker_mod_surface_density_requires_one_fifth_margin() {
+        assert!(surface_density_clears_margin(12, 100, 10, 100));
+        assert!(!surface_density_clears_margin(11, 100, 10, 100));
+    }
+
+    #[test]
+    fn walker_mod_surface_profiles_count_only_module_syntax() {
+        let rust_source = r##"
+const RAW: &str = r#"pub fn in_raw_string() {}"#;
+/* pub fn in_block_comment() {} */
+pub fn real() {}
+"##;
+        assert_eq!(rust::dominant_surface_item_count(rust_source), Some(1));
+
+        let clean_js = r#"
+const app = {};
+app.run = function run() {};
+module.exports = app;
+"#;
+        let noisy_js = r#"
+const template = `export function inTemplate() {}`;
+/* export function inComment() {} */
+const state = {};
+state.phase = function phase() {};
+const app = {};
+app.run = function run() {};
+module.exports = app;
+"#;
+        let clean = typescript::dominant_surface_profile(Path::new("file.js"), clean_js);
+        let noisy = typescript::dominant_surface_profile(Path::new("file.js"), noisy_js);
+        assert_eq!(noisy, clean);
+    }
+
+    #[test]
+    fn walker_mod_type_only_barrels_classify_as_type_machinery() {
+        let barrels = [
+            "export type { Foo } from \"./foo\";\n",
+            "export { type Foo, type Bar } from \"./foo\";\n",
+            "type Foo = { value: string };\nexport { Foo };\n",
+            "import type { Base } from \"./base\";\nexport { Base };\n",
+            "import { type Base as B } from \"./base\";\nexport { B };\n",
+        ];
+        for src in barrels {
+            let (_, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("types.ts"), src).unwrap();
+            assert!(type_machinery, "not classified as type machinery: {src}");
+        }
+        let runtime = [
+            "export { run } from \"./run\";\n",
+            "const run = () => {};\nexport { run };\n",
+            "export * from \"./everything\";\n",
+            "export default function run() {}\n",
+            "export type { Foo } from \"./foo\";\nexport { run } from \"./run\";\n",
+        ];
+        for src in runtime {
+            let (_, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("index.ts"), src).unwrap();
+            assert!(!type_machinery, "misclassified as type machinery: {src}");
+        }
+    }
+
+    #[test]
+    fn walker_mod_receiver_methods_count_once_across_synthesis_threshold() {
+        // find_export_starts synthesizes receiver methods into its export
+        // list at 3+ methods; the surface profile must not inherit that
+        // discontinuity — each statement counts exactly once.
+        let make = |methods: usize| {
+            format!(
+                "const app = {{}};\n{}module.exports = app;\n",
+                "app.m = function m() {};\n"
+                    .repeat(methods)
+                    .split('\n')
+                    .filter(|l| !l.is_empty())
+                    .enumerate()
+                    .map(|(i, l)| l.replace("app.m", &format!("app.m{i}")))
+                    .collect::<Vec<_>>()
+                    .join("\n")
+                    + "\n"
+            )
+        };
+        for methods in [1, 2, 3, 4] {
+            let src = make(methods);
+            let (count, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("app.js"), &src).unwrap();
+            assert_eq!(
+                count,
+                methods as u64 + 1,
+                "expected {} surface items (one per statement) at {} methods, got {count}",
+                methods + 1,
+                methods
+            );
+            assert!(!type_machinery);
+        }
     }
 
     /// The spine detector runs on whatever path a user points precis

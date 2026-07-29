@@ -1,6 +1,6 @@
 fixture = "debug"
 budget = 10000
-cumulative_tokens = 9995
+cumulative_tokens = 9875
 batch_count = 112
 
 [[batches]]
@@ -1595,10 +1595,28 @@ kind = "full"
 
 [[batches]]
 position = 60
+key = 'Typescript(Export { file: "src/browser.js", start_line: 12 })'
+descriptor = "export at src/browser.js:12"
+cost_tokens = 98
+cum_tokens = 3923
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/browser.js"
+start = 12
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 220 })'
 descriptor = "export body at src/common.js:7 body 220"
 cost_tokens = 35
-cum_tokens = 3860
+cum_tokens = 3958
 
 [batches.content]
 kind = "lines"
@@ -1612,11 +1630,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 284 })'
 descriptor = "export body at src/common.js:7 body 284"
 cost_tokens = 38
-cum_tokens = 3898
+cum_tokens = 3996
 
 [batches.content]
 kind = "lines"
@@ -1630,11 +1648,11 @@ end = 284
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 273 })'
 descriptor = "export body at src/common.js:7 body 273"
 cost_tokens = 41
-cum_tokens = 3939
+cum_tokens = 4037
 
 [batches.content]
 kind = "lines"
@@ -1648,11 +1666,11 @@ end = 276
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 150 })'
 descriptor = "export body at src/common.js:7 body 150"
 cost_tokens = 52
-cum_tokens = 3991
+cum_tokens = 4089
 
 [batches.content]
 kind = "lines"
@@ -1666,11 +1684,11 @@ end = 152
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 169 })'
 descriptor = "export body at src/common.js:7 body 169"
 cost_tokens = 58
-cum_tokens = 4049
+cum_tokens = 4147
 
 [batches.content]
 kind = "lines"
@@ -1684,11 +1702,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 234 })'
 descriptor = "export body at src/common.js:7 body 234"
 cost_tokens = 66
-cum_tokens = 4115
+cum_tokens = 4213
 
 [batches.content]
 kind = "lines"
@@ -1697,24 +1715,6 @@ kind = "lines"
 path = "src/common.js"
 start = 234
 end = 239
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Typescript(Export { file: "src/browser.js", start_line: 12 })'
-descriptor = "export at src/browser.js:12"
-cost_tokens = 98
-cum_tokens = 4213
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/browser.js"
-start = 12
-end = 21
 
 [batches.content.spans.render]
 kind = "full"
@@ -2777,36 +2777,36 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 198 })'
-descriptor = "export body at src/common.js:7 body 198"
-cost_tokens = 259
-cum_tokens = 9358
+key = 'Typescript(Export { file: "src/browser.js", start_line: 27 })'
+descriptor = "export at src/browser.js:27"
+cost_tokens = 761
+cum_tokens = 9860
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/common.js"
-start = 198
-end = 217
+path = "src/browser.js"
+start = 27
+end = 104
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 112
-key = 'Typescript(ExportBody { file: "karma.conf.js", start_line: 1, body_start_line: 2 })'
-descriptor = "export body at karma.conf.js:1 body 2"
-cost_tokens = 637
-cum_tokens = 9995
+key = 'Typescript(ExportDoc { file: "src/browser.js", start_line: 27 })'
+descriptor = "export doc at src/browser.js:27"
+cost_tokens = 15
+cum_tokens = 9875
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "karma.conf.js"
-start = 2
-end = 56
+path = "src/browser.js"
+start = 23
+end = 25
 
 [batches.content.spans.render]
 kind = "full"

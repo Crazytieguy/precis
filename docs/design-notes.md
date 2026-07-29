@@ -536,13 +536,27 @@ log +0.050, bubbletea +0.046, swarm +0.038, cobra +0.025, xxhash
 buy their new content at cum 2966–2983 — cliff-adjacent, discount them;
 log and bubbletea re-order at 1094–2020 and are the robust evidence.
 
-Known mis-targets the detector keeps (all measured harmless or better
-at the shipped gate): anyhow `src/ensure.rs` and thiserror
-`impl/src/expand.rs` are `#[doc(hidden)]` macro machinery rather than
-the crate spine, and express picks `lib/response.js` over the NS's
-`lib/application.js`. A declaration-density discriminator ("a spine
-file is dense in declarations, not just bytes") is the obvious repair
-if this lever is revisited.
+The detector's original largest-file tie-break mis-targeted anyhow
+`src/ensure.rs`, thiserror `impl/src/expand.rs`, and express
+`lib/response.js`. A public-surface-density discriminator now retargets
+among files that independently clear the 20% mass floor. The count is
+syntax-backed: real public top-level Rust items and `macro_export`
+definitions; real JS/TS exports plus method assignments on a receiver
+proven to flow to `module.exports`. Comments, raw strings, template
+literals, and internal object assignments do not count. It retargets
+thiserror and express; anyhow remains on `src/ensure.rs` because its
+preferred `src/lib.rs` does not independently clear the mass floor. The
+largest file remains the default; a challenger must be at least 20%
+denser and must match the largest file's semantic type-machinery class —
+`.d.*` files and ordinary TS modules whose exports are all type-only stay
+separate from runtime implementations. The guards came from the measured variants: unconditionally
+choosing the densest candidate moved express +0.088 but log −0.050 at
+3000; adding the 20% margin removed log, and the declaration-stub guard
+removed commander −0.081 at 2080. Final training grid versus the wave-1
+baseline: 0.6134/0.6239/0.6307/**0.6221**/0.5911/0.5662/0.5638 — only
+the primary budget moves (+0.0012), through express. Its last walker row
+lands at 2980, so treat the fixture magnitude as cliff-adjacent even
+though the newly credited application roster itself ends at 2917.
 
 ### v2-key un-ship generalization losses (2026-07-28, corpus-invisible)
 
