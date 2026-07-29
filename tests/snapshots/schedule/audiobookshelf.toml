@@ -1,7 +1,7 @@
 fixture = "audiobookshelf"
 budget = 10000
-cumulative_tokens = 9966
-batch_count = 318
+cumulative_tokens = 9983
+batch_count = 319
 
 [[batches]]
 position = 1
@@ -6523,3 +6523,17 @@ end = 45
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 319
+key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams" })'
+descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams'"
+cost_tokens = 17
+cum_tokens = 9983
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams"
+entries = ["BufferList.js", "destroy.js", "stream-browser.js", "stream.js"]

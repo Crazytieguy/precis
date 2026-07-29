@@ -2211,3 +2211,97 @@ off-primary cost: `TEST_INDEX_LISTING_BOOST` (−0.0016 at 1442, ~25
 lines). If a future lane wants a late-prose tier back, note that the
 window fraction is *also* inert (0.15 / 0.25 / 0.35 all →0.6151), so
 the shape — not the constants — is what failed.
+||||||| cc0132cb
+
+
+## Contributor-toolchain demotion (2026-07-29): 0.6151 → 0.6165
+
+Lane premise: at B=3000 the walker over-buys against the NS-aware
+oracle by class — listings −21.6K tokens, config −8.4K, manifest
+−6.6K, imports −2.4K. Cross-referencing every walker row ≤3000 in the
+divergence reports against the oracle's purchase list at the same
+budget gives a *credited vs uncredited* histogram per class, and the
+config/manifest over-buy turns out not to be uniform. Two sub-classes
+are essentially never credited:
+
+| sub-class | oracle-also (tok) | uncredited (tok) |
+|---|--:|--:|
+| `tool.<name>` config families in a Python manifest | 236 | 2734 |
+| dev / build / target / peer dependency rosters | 0 | 1022 |
+| whole `config` class for comparison | 3982 | 12382 |
+
+The 236 credited tool-config tokens are `tool.poe` (a task runner) and
+`tool.setuptools` (a build backend) — not one linter, formatter, type
+checker, test runner or coverage table is credited anywhere in the
+corpus. That is the discriminator: a table that configures the
+**contributor's checking toolchain** says nothing about the project,
+while a build-backend or task-runner table says how it is built and
+invoked. Both shipped mechanisms are that one rule.
+
+- `walker::toml::CHECKING_TOOLCHAIN_CONFIG_SCALE = 0.35` — demotes a
+  `ToolConfig` batch when *every* family in its pack is a checking
+  tool. A mixed or unrecognized pack keeps full value, so the rule
+  never fires on an appendix it cannot classify.
+- `value::DEV_DEPENDENCY_ROSTER_SCALE = 0.3` — the same distinction one
+  class out, applied at both dev-roster sites (Cargo dev/build/target
+  tables + PEP 735 groups; `package.json` dev/peer dependencies).
+
+Grid (71 training fixtures): 1000 0.6132→0.6132 · 1442 0.6217→0.6234 ·
+2080 0.6277→0.6279 · **3000 0.6151→0.6165** · 4327 0.5851→0.5882 ·
+6240 0.5649→0.5653 · 9000 0.5606→0.5632. Positive or flat at all seven
+budgets. Movers @3000: tomli +0.068 (295 tokens of frontier slack, not
+a cliff artifact), requests +0.020\*, typeguard +0.006\*, pluggy
++0.004, debug +0.002, click −0.001\* (\* = last walker row within 40
+tokens of 3000).
+
+Sweeps, all measured on the full corpus:
+
+- `CHECKING_TOOLCHAIN_CONFIG_SCALE`: 1.0→0.6151 · 0.60→0.6164 ·
+  0.35→0.6164 · 0.15→0.6164. Broad plateau from 0.6 down; 0.35 chosen
+  as its centre.
+- `DEV_DEPENDENCY_ROSTER_SCALE` (on the shipped config scale):
+  1.0→0.6164 · 0.6→0.6165 · 0.3→0.6165 · 0.15→0.6165. Flat at 3000;
+  0.3 chosen on the higher-budget grid (+0.0008 @4327, +0.0021 @9000
+  over 1.0, and 0.15 adds nothing further).
+
+**Measured dead: the undiscriminated version of the same lever.** A
+blanket `config_value` rescale to 0.80 across the whole manifest config
+appendix costs −0.0010 (htmy −0.051, requests −0.015, beets −0.010
+against peepdb +0.008, pluggy +0.004) — the credited fixtures lose more
+than the uncredited ones gain. The tool-name axis is what makes the
+demotion pay; do not retry the class-wide form.
+
+**Measured inert: extending the rule to the unpartitioned `Config`
+batch.** Applying the same all-checking-tools test to the generic
+`TomlKey::Config` appendix (which owns the tool tables when they total
+≤ `TOOL_CONFIG_FAMILY_MAX_TOKENS`) produced a **byte-identical** corpus
+— every divergence report unchanged. No training manifest has a small
+config appendix that is purely checking tooling, so the extra branch
+was pure dead code and was dropped.
+
+### Interior-of-a-supporting-corpus listing suppression — measured MIXED, not shipped
+
+The same histogram over listings splits by a parent-relative
+condition: when a listed directory *and its parent* are both
+non-essential, the listing is enumerating a supporting corpus's
+internal partitioning (thiserror `tests/ui` at 527 tokens, a docs
+site's per-language page dirs) rather than telling the reader the
+corpus exists — 806 credited vs 2400 uncredited tokens, against 74%
+credited for depth-1 corpus entries. Distinct from the dead
+`small_listing_decay` (size-gated), from sibling-count devaluation
+(sibling-count-gated) and from catalog-child suppression (parent is a
+high-fanout source catalog); the depth-1 repo-map floor is untouched
+because a corpus's own entry has the root as its parent, and the
+`.github/workflows` carve-out is excluded because its own
+classification is essential.
+
+Magnitude sweep on top of the shipped config lever (3000): 1.0→0.6165
+· 0.85→0.6167 · 0.75→0.6170 · 0.70→0.6167 · 0.65→0.6163 · 0.50→0.6154.
+Grid at the 0.75 peak vs the shipped state: 1000 +0.0029 · 1442
+−0.0018 · 2080 +0.0009 · 3000 +0.0005 · 4327 −0.0002 · 6240 −0.0012 ·
+9000 −0.0013. Per-fixture swings are large in both directions at 0.50
+(tomli +0.130, flask +0.061 against anyhow −0.061, click −0.043, ky
+−0.030). Not shipped: a shallow ±0.0005 ridge that trades four budgets
+for two is not worth ~35 lines against a class that gates the whole fs
+expansion. Worth re-measuring only if a later tree is specifically
+short at B=1000, where it is the strongest lever measured this lane.

@@ -134,18 +134,7 @@ pyproject.toml
       38→
       39→[project.entry-points]
       40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
-      42→[dependency-groups]
-      43→test = [
-      44→    "coverage[toml] >= 7",
-      45→    "pytest >= 7",
-      46→    'mypy >= 1.2.0; python_implementation != "PyPy"',
-      47→]
-      48→doc = [
-      49→    "packaging",
-      50→    "Sphinx >= 7",
-      51→    "sphinx-autodoc-typehints >= 1.2.0",
-      52→    "sphinx-rtd-theme >= 1.3.0",
-      53→]
+    …
       55→[tool.setuptools.package-data]
       56→typeguard = ["py.typed"]
       57→
@@ -168,45 +157,7 @@ pyproject.toml
       74→    "pragma: no cover",
       75→    "if TYPE_CHECKING:"
       76→]
-      78→[tool.ruff]
-      79→src = ["src"]
-      80→
-      81→[tool.ruff.per-file-target-version]
-      82→"tests/dummymodule_py312.py" = "py312"
-      83→
-      84→[tool.ruff.lint]
-      85→extend-select = [
-      86→    "B0",           # flake8-bugbear
-      87→    "I",            # isort
-      88→    "PGH",          # pygrep-hooks
-      89→    "UP",           # pyupgrade
-      90→    "W",            # pycodestyle warnings
-      91→]
-      92→ignore = [
-      93→    "S307",
-      94→    "B008",
-      95→    "UP006",
-      96→    "UP035",
-      97→]
-      99→[tool.mypy]
-     100→python_version = "3.11"
-     101→strict = true
-     102→pretty = true
-     103→files = ["src"]
-     105→[tool.tox]
-     106→env_list = ["py39", "py310", "py311", "py312", "py313", "py314"]
-     107→skip_missing_interpreters = true
-     108→requires = ["tox >= 4.22"]
-     109→
-     110→[tool.tox.env_run_base]
-     111→commands = [["coverage", "run", "-m", "pytest", { replace = "posargs", extend = true }]]
-     112→package = "editable"
-     113→dependency_groups = ["test"]
-     114→
-     115→[tool.tox.env.docs]
-     116→depends = []
-     117→dependency_groups = ["doc"]
-     118→commands = [["sphinx-build", "-W", "-n", "docs", "build/sphinx"]]
+    …
 src/
     typeguard/
         __init__.py
@@ -249,11 +200,44 @@ src/
               43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
             …
         _checkers.py …
-        _config.py …
+        _config.py
+            …
+              11→T = TypeVar("T")
+              12→
+              13→
+              14→class ForwardRefPolicy(Enum):
+            …
+              30→class CollectionCheckStrategy(Enum):
+            …
+              62→@dataclass
+            …
+             106→global_config = TypeCheckConfiguration()
         _decorators.py …
         _exceptions.py
                1→from collections import deque
                2→from typing import Deque
+               5→class TypeHintWarning(UserWarning):
+               6→    """
+               7→    A warning that is emitted when a type hint in string form could not be resolved to
+               8→    an actual type.
+               9→    """
+              12→class TypeCheckWarning(UserWarning):
+              13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
+              15→    def __init__(self, message: str):
+              16→        super().__init__(message)
+              19→class InstrumentationWarning(UserWarning):
+              20→    """Emitted when there's a problem with instrumenting a function for type checks."""
+              22→    def __init__(self, message: str):
+              23→        super().__init__(message)
+              26→class TypeCheckError(Exception):
+              27→    """
+              28→    Raised by typeguard's type checkers when a type mismatch is detected.
+              29→    """
+              31→    def __init__(self, message: str):
+            …
+              35→    def append_path_element(self, element: str) -> None:
+              36→        self._path.append(element)
+              38→    def __str__(self) -> str:
             …
         _functions.py …
         _importhook.py …
@@ -263,10 +247,32 @@ src/
                9→    """
               10→    Contains information necessary for type checkers to do their work.
             …
+              35→    __slots__ = "globals", "locals", "self_type", "config"
               37→    def __init__(
+              38→        self,
+              39→        globals: dict[str, Any],
+              40→        locals: dict[str, Any],
+              41→        *,
+              42→        self_type: type | None = None,
+              43→        config: TypeCheckConfiguration = global_config,
+              44→    ):
             …
         _pytest_plugin.py …
-        _suppression.py …
+        _suppression.py
+            …
+              15→P = ParamSpec("P")
+              16→T = TypeVar("T")
+              17→
+              18→type_checks_suppressed = 0
+              19→type_checks_suppress_lock = Lock()
+              22→@overload
+              23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
+              26→@overload
+              27→def suppress_type_checks() -> ContextManager[None]: ...
+              30→def suppress_type_checks(
+              31→    func: Callable[P, T] | None = None,
+              32→) -> Callable[P, T] | ContextManager[None]:
+            …
         _transformer.py …
         _utils.py …
         py.typed

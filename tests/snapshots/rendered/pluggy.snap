@@ -144,58 +144,17 @@ pyproject.toml
       34→readme = {file = "README.rst", content-type = "text/x-rst"}
       35→requires-python = ">=3.10"
       37→dynamic = ["version"]
-      38→[dependency-groups]
-      39→dev = ["pre-commit", "tox"]
-      40→testing = ["pytest", "pytest-benchmark", "coverage"]
+    …
       43→[tool.setuptools]
       44→packages = ["pluggy"]
       45→package-dir =  {""="src"}
       46→package-data = {"pluggy" = ["py.typed"]}
-      49→[tool.ruff.lint]
-      50→extend-select = [
-      51→  "I",  # isort
-      52→  "F","E", "W",
-      53→  "UP", "ANN",
-      54→]
-      55→extend-ignore = ["ANN401"]
-      56→
-      57→[tool.ruff.lint.extend-per-file-ignores]
-      58→"testing/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
-      59→"docs/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
-      60→
-      61→[tool.ruff.lint.isort]
-      62→force-single-line = true
-      63→combine-as-imports = true
-      64→force-sort-within-sections = true
-      65→order-by-type = false
-      66→known-local-folder = ["pluggy"]
-      67→lines-after-imports = 2
+    …
       69→[tool.setuptools_scm]
       70→
       71→[tool.uv]
       72→default-groups = ["dev", "testing"]
     …
-     112→[tool.mypy]
-     113→mypy_path = "src"
-     114→check_untyped_defs = true
-     115→# Hopefully we can set this someday!
-     116→# disallow_any_expr = true
-     117→disallow_any_generics = true
-     118→disallow_any_unimported = true
-     119→disallow_subclassing_any = true
-     120→disallow_untyped_calls = true
-     121→disallow_untyped_decorators = true
-     122→ignore_missing_imports = true
-     123→implicit_reexport = false
-     124→no_implicit_optional = true
-     125→show_error_codes = true
-     126→strict_equality = true
-     127→strict_optional = true
-     128→warn_redundant_casts = true
-     129→warn_return_any = true
-     130→warn_unreachable = true
-     131→warn_unused_configs = true
-     132→warn_unused_ignores = true
 scripts/
     release.py …
     towncrier-draft-to-file.py …
@@ -244,7 +203,8 @@ src/
             …
               36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
               37→_AfterTrace: TypeAlias = Callable[
-            …
+              38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
+              39→]
               42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
             …
               52→class PluginValidationError(Exception):
@@ -260,7 +220,7 @@ src/
               83→class PluginManager:
             …
              525→def _formatdef(func: Callable[..., object]) -> str:
-            …
+             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
             …
               16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]

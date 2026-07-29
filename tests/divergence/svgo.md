@@ -188,25 +188,28 @@ Score(3000)=0.651 I=0.852 C=0.497 ns_rows≤3K=14/54 (reached=6 partial=0 missin
 | walker |  | 8749 | 58 | declaration surface of docs/04-plugins/inlineStyles.mdx |  |  | 0.571 |
 | walker |  | 8807 | 58 | declaration surface of docs/04-plugins/minifyStyles.mdx |  |  | 0.571 |
 | walker |  | 8834 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.571 |
+| walker |  | 8849 | 15 | imports in lib/svgo/plugins.js |  |  | 0.571 |
 | ns | 8914 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.566 |
+| walker |  | 8949 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.566 |
+| walker |  | 9014 | 65 | declaration surface of docs/04-plugins/cleanupNumericValues.mdx |  |  | 0.566 |
 | ns | 9027 |  | 113 | css-select adapter | 6.9 |  | 0.563 |
 | ns | 9044 |  | 17 | mapNodesToParents | 6.10 |  | 0.563 |
+| walker |  | 9079 | 65 | declaration surface of docs/04-plugins/convertShapeToPath.mdx |  |  | 0.563 |
+| walker |  | 9144 | 65 | declaration surface of docs/04-plugins/removeStyleElement.mdx |  |  | 0.563 |
+| walker |  | 9271 | 127 | declaration surface of docs/01-index.mdx |  |  | 0.563 |
 | ns | 9278 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.569 |
-| walker |  | 9280 | 446 | package dev/peer dependencies in package.json |  |  | 0.569 |
-| walker |  | 9295 | 15 | imports in lib/svgo/plugins.js |  |  | 0.569 |
+| walker |  | 9339 | 68 | declaration surface of docs/04-plugins/removeDoctype.mdx |  |  | 0.569 |
+| walker |  | 9348 | 9 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.569 |
 | ns | 9354 |  | 76 | test/ tree listing | 7.2 |  | 0.577 |
-| walker |  | 9395 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.577 |
-| walker |  | 9460 | 65 | declaration surface of docs/04-plugins/cleanupNumericValues.mdx |  |  | 0.577 |
+| walker |  | 9419 | 71 | declaration surface of docs/04-plugins/removeNonInheritableGroupAttrs.mdx |  |  | 0.577 |
+| walker |  | 9455 | 36 | export doc at lib/path.js:302 |  |  | 0.577 |
 | ns | 9469 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.575 |
-| walker |  | 9525 | 65 | declaration surface of docs/04-plugins/convertShapeToPath.mdx |  |  | 0.575 |
-| walker |  | 9590 | 65 | declaration surface of docs/04-plugins/removeStyleElement.mdx |  |  | 0.575 |
+| walker |  | 9529 | 74 | declaration surface of docs/04-plugins/cleanupAttrs.mdx |  |  | 0.575 |
 | ns | 9602 |  | 133 | docs/ and remaining leaf directory listings | 7.4 |  | 0.584 |
-| walker |  | 9717 | 127 | declaration surface of docs/01-index.mdx |  |  | 0.584 |
+| walker |  | 9604 | 75 | declaration surface of docs/04-plugins/removeEmptyText.mdx |  |  | 0.584 |
+| walker |  | 9679 | 75 | declaration surface of docs/04-plugins/removeUselessDefs.mdx |  |  | 0.584 |
 | ns | 9737 |  | 135 | Migration guide outlines | 7.5 |  | 0.580 |
-| walker |  | 9785 | 68 | declaration surface of docs/04-plugins/removeDoctype.mdx |  |  | 0.580 |
-| walker |  | 9794 | 9 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.580 |
+| walker |  | 9802 | 123 | README.md section #11 |  |  | 0.580 |
+| walker |  | 9842 | 40 | export doc at lib/path.js:141 |  |  | 0.580 |
 | ns | 9861 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.580 |
-| walker |  | 9865 | 71 | declaration surface of docs/04-plugins/removeNonInheritableGroupAttrs.mdx |  |  | 0.580 |
-| walker |  | 9901 | 36 | export doc at lib/path.js:302 |  |  | 0.580 |
-| walker |  | 9975 | 74 | declaration surface of docs/04-plugins/cleanupAttrs.mdx |  |  | 0.580 |
 | ns | 9986 |  | 125 | Runtime dependencies | 7.7 |  | 0.584 |

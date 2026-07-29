@@ -146,7 +146,25 @@ README.md
      354→You can also manually toggle this property to force the debug instance to be
      355→enabled or disabled.
      357→## Usage in child processes
-    …
+     358→
+     359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
+     360→For example:
+     361→
+     362→```javascript
+     363→worker = fork(WORKER_WRAP_PATH, [workerPath], {
+     364→  stdio: [
+     365→    /* stdin: */ 0,
+     366→    /* stdout: */ 'pipe',
+     367→    /* stderr: */ 'pipe',
+     368→    'ipc',
+     369→  ],
+     370→  env: Object.assign({}, process.env, {
+     371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
+     372→  }),
+     373→});
+     374→
+     375→worker.stderr.pipe(process.stderr, { end: false });
+     376→```
      379→## Authors
      380→
      381→ - TJ Holowaychuk
@@ -198,24 +216,7 @@ package.json
       33→  "dependencies": {
       34→    "ms": "^2.1.3"
       35→  },
-      36→  "devDependencies": {
-      37→    "brfs": "^2.0.1",
-      38→    "browserify": "^16.2.3",
-      39→    "coveralls": "^3.0.2",
-      40→    "karma": "^3.1.4",
-      41→    "karma-browserify": "^6.0.0",
-      42→    "karma-chrome-launcher": "^2.2.0",
-      43→    "karma-mocha": "^1.3.0",
-      44→    "mocha": "^5.2.0",
-      45→    "mocha-lcov-reporter": "^1.2.0",
-      46→    "sinon": "^14.0.0",
-      47→    "xo": "^0.23.0"
-      48→  },
-      49→  "peerDependenciesMeta": {
-      50→    "supports-color": {
-      51→      "optional": true
-      52→    }
-      53→  },
+    …
       54→  "main": "./src/index.js",
       55→  "browser": "./src/browser.js",
       56→  "engines": {
@@ -257,4 +258,10 @@ test.js
        3→const assert = require('assert');
        4→const debug = require('./src');
     …
-test.node.js …
+test.node.js
+    …
+       3→const assert = require('assert');
+       4→const util = require('util');
+       5→const sinon = require('sinon');
+       6→const debug = require('./src/node');
+    …

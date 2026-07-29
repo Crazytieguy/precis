@@ -241,10 +241,13 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 9115 | 0 | impl method at src/command.rs:254 |  |  | 0.664 |
 | walker |  | 9115 | 0 | impl method at src/command.rs:260 |  |  | 0.664 |
 | walker |  | 9170 | 55 | impl method at src/command.rs:42 |  |  | 0.664 |
+| walker |  | 9197 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.664 |
 | ns | 9203 |  | 187 | src/command.rs: Commands and its complete method roster, with the three construction modes | 6.3 |  | 0.663 |
 | ns | 9432 |  | 229 | src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize() | 6.4 |  | 0.665 |
-| walker |  | 9498 | 328 | dev/build/target dependencies in Cargo.toml |  |  | 0.665 |
-| walker |  | 9525 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.665 |
 | ns | 9582 |  | 150 | build.rs: shell completions generated from the same clap command | 7.1 | 2.1 | 0.659 |
-| ns | 9791 |  | 209 | .github/workflows/CICD.yml: the complete job set and the commands each runs | 7.2 |  | 0.652 |
-| ns | 9983 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.645 |
+| walker |  | 9782 | 585 | pub item at src/options.rs:198 |  |  | 0.687 |
+| ns | 9791 |  | 209 | .github/workflows/CICD.yml: the complete job set and the commands each runs | 7.2 |  | 0.679 |
+| walker |  | 9826 | 44 | impl method at src/benchmark/scheduler.rs:21 |  |  | 0.679 |
+| walker |  | 9839 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.679 |
+| walker |  | 9900 | 61 | impl method body at src/parameter/mod.rs:14 body 15 |  |  | 0.679 |
+| ns | 9983 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.672 |

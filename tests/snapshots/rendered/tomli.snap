@@ -132,58 +132,7 @@ pyproject.toml
       28→[project.urls]
       29→"Homepage" = "https://github.com/hukkin/tomli"
       30→"Changelog" = "https://github.com/hukkin/tomli/blob/master/CHANGELOG.md"
-      33→[tool.isort]
-      34→# Force imports to be sorted by module, independent of import type
-      35→force_sort_within_sections = true
-      36→# Group first party and local folder imports together
-      37→no_lines_before = ["LOCALFOLDER"]
-      38→
-      39→# Configure isort to work without access to site-packages
-      40→known_first_party = ["tomli", "tests"]
-      41→
-      42→# Settings for Black compatibility
-      43→profile = "black"
     …
-     129→[tool.coverage.run]
-     130→branch = true
-     131→source = ['tomli']
-     132→
-     133→[tool.coverage.report]
-     134→# Regexes for lines to exclude from consideration
-     135→exclude_lines = [
-     136→    # Re-enable the standard pragma (with extra strictness)
-     137→    '# pragma: no cover\b',
-     138→    # Code for static type checkers
-     139→    'if TYPE_CHECKING:',
-     140→    # Scripts
-     141→    'if __name__ == .__main__.:',
-     142→]
-     145→[tool.mypy]
-     146→show_error_codes = true
-     147→warn_unreachable = true
-     148→strict = true
-     149→strict_bytes = true
-     150→local_partial_types = true
-     151→# Disabling incremental mode is required for `warn_unused_configs = true`
-     152→# (implied by `strict = true`) to work
-     153→incremental = false
-     154→
-     155→enable_error_code = ["ignore-without-code"]
-     156→
-     157→[[tool.mypy.overrides]]
-     158→module = "tests.*"
-     159→disallow_untyped_defs = false
-     160→
-     161→[[tool.mypy.overrides]]
-     162→# This matches `benchmark/run.py`. Since benchmark/ is
-     163→# not a package, we use the module name here.
-     164→module = "run"
-     165→ignore_errors = true
-     166→
-     167→[[tool.mypy.overrides]]
-     168→# This matches `fuzzer/fuzz.py`.
-     169→module = "fuzz"
-     170→ignore_errors = true
 scripts/
     mypyc_tox …
     requirements.txt …
@@ -204,7 +153,56 @@ src/
                6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
                7→
                8→from ._parser import TOMLDecodeError, load, loads
-        _parser.py …
+        _parser.py
+            …
+              71→class DEPRECATED_DEFAULT:
+            …
+              76→class TOMLDecodeError(ValueError):
+            …
+             137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+            …
+             149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+            …
+             220→class Flags:
+            …
+             278→class NestedDict:
+            …
+             312→class Output:
+            …
+             318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+            …
+             327→def skip_until(
+            …
+             349→def skip_comment(src: str, pos: Pos) -> Pos:
+            …
+             361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+            …
+             370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+            …
+             390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+            …
+             413→def key_value_rule(
+            …
+             447→def parse_key_value_pair(
+            …
+             463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
+            …
+             481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
+             497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
+             502→def parse_array(
+            …
+             528→def parse_inline_table(
+            …
+             564→def parse_basic_str_escape(
+            …
+             595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
+             599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
+            …
+             612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
         _re.py …
         _types.py
             …
@@ -238,4 +236,6 @@ tomllib.md
       15→### Sync status
     …
       20→### Steps to convert
+    …
+      24→- Remove `__version__ = ...` line from `cpython:Lib/tomllib/__init__.py`
     …
