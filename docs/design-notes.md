@@ -2561,3 +2561,32 @@ identified secondary-module breadth (helper modules bought before the
 primary API/data model, 5/8 fixtures) as the largest unaddressed
 displacer class; the dominant-file detector is the candidate
 primary-vs-helper discriminator uniform sibling damps lacked.
+
+## Wave-3 state (2026-07-29, session close)
+
+One ship: Python data-model catalog roster promotion (19df2070) —
+0.6224 → 0.6249 at 3000, grid flat elsewhere. The census lane measured
+DEAD an entire candidate class: **contributor scaffolding is not a
+coherent demotable value class.** Its census (method: oracle-purchase
+vs walker-purchase mass + direct training-NS credit checks): contributor
+templates are credited by many NSes (go-multierror/mitt credit bodies;
+8+ fixtures credit the directory listings); .github structure listings
+carry 724 oracle tokens across 35 fixtures (the 1.3K uncredited excess
+is real but inseparable from credited topology closure at batch
+granularity); changelog tails and sub-100-line Makefiles are UNDER-
+bought per the oracle; manifest identity appendices are bimodal (3.0K
+oracle tokens / 20 fixtures). Do not re-attempt scaffolding demotion at
+these boundaries; a retry needs a finer-than-batch listing
+representation.
+
+Measured this wave on the data-model shape: rendered-row field counts
+and a per-class fields≥2×methods ratio both fail (the ratio admits
+ORM model files — linkding −0.041 — and drops mixin-shell settings
+classes whose model is the bases list). The shipped gate is file-level:
+≥4 public classes, ≥4 AST field assignments, ≤2 AST methods across
+them, per-chunk majority-class application, entrypoint-exempt.
+
+Open (lane died to route errors before reaching them): the two other
+helper-breadth shapes — scheduler-side breadth gate on the dominant
+train, and value-side sibling roster damp gated on the dominant-file
+detector.
