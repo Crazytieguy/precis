@@ -150,52 +150,52 @@ Score(3000)=0.528 I=0.801 C=0.348 ns_rows≤3K=16/47 (reached=5 partial=0 missin
 | walker |  | 4455 | 100 | headings outline in packages/cli/README.md |  |  | 0.511 |
 | walker |  | 4483 | 28 | packages/cli/README.md section #2 |  |  | 0.511 |
 | ns | 4541 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.503 |
-| walker |  | 4646 | 163 | README.md section #23 |  |  | 0.528 |
-| ns | 4681 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.520 |
-| walker |  | 4810 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.536 |
-| walker |  | 4836 | 26 | packages/crypto/README.md section #3 |  |  | 0.536 |
-| ns | 4910 |  | 229 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.572 |
-| walker |  | 4951 | 115 | headings outline in packages/app-client/README.md |  |  | 0.572 |
-| walker |  | 4951 | 0 | packages/app-client/README.md section #3 |  |  | 0.572 |
-| walker |  | 5028 | 77 | packages/app-client/README.md section #0 |  |  | 0.572 |
-| walker |  | 5054 | 26 | packages/cli/README.md section #7 |  |  | 0.572 |
-| walker |  | 5087 | 33 | packages/crypto/README.md section #2 |  |  | 0.572 |
-| walker |  | 5117 | 30 | packages/app-client/README.md section #2 |  |  | 0.572 |
-| walker |  | 5153 | 36 | README.md section #1 |  |  | 0.578 |
-| ns | 5169 |  | 259 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.610 |
-| walker |  | 5179 | 26 | packages/lib/README.md section #4 |  |  | 0.610 |
-| walker |  | 5230 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.610 |
-| walker |  | 5263 | 33 | packages/cli/README.md section #6 |  |  | 0.610 |
-| walker |  | 5321 | 58 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.610 |
-| walker |  | 5354 | 33 | packages/lib/README.md section #3 |  |  | 0.610 |
-| ns | 5397 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.593 |
-| walker |  | 5414 | 60 | json config renovate.json |  |  | 0.593 |
-| walker |  | 5443 | 29 | README.md section #31 |  |  | 0.593 |
-| walker |  | 5474 | 31 | README.md section #30 |  |  | 0.593 |
-| walker |  | 5512 | 38 | README.md section #16 |  |  | 0.593 |
-| walker |  | 5627 | 115 | README.md section #24 |  |  | 0.593 |
-| walker |  | 5712 | 85 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.593 |
-| walker |  | 5712 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.593 |
-| walker |  | 5725 | 13 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.594 |
-| walker |  | 5785 | 60 | README.md section #13 |  |  | 0.600 |
-| walker |  | 5823 | 38 | README.md section #29 |  |  | 0.600 |
-| ns | 5894 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.580 |
-| walker |  | 5984 | 161 | plaintext config pnpm-workspace.yaml |  |  | 0.611 |
-| walker |  | 6111 | 127 | README.md section #26 |  |  | 0.611 |
-| ns | 6120 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.598 |
-| walker |  | 6136 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.598 |
-| walker |  | 6243 | 107 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.598 |
-| walker |  | 6256 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.599 |
-| ns | 6317 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.585 |
-| walker |  | 6345 | 89 | declaration surface of packages/docs/src/components/credential-inputs.vue |  |  | 0.585 |
-| walker |  | 6413 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.585 |
-| walker |  | 6430 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.585 |
-| walker |  | 6459 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.585 |
-| walker |  | 6475 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.585 |
-| walker |  | 6491 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.585 |
-| ns | 6520 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.578 |
-| walker |  | 6585 | 94 | declaration surface of packages/docs/src/components/toggle.vue |  |  | 0.578 |
-| walker |  | 6674 | 89 | packages/crypto/README.md section #1 |  |  | 0.578 |
+| walker |  | 4647 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.519 |
+| walker |  | 4673 | 26 | packages/crypto/README.md section #3 |  |  | 0.519 |
+| ns | 4681 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.511 |
+| walker |  | 4788 | 115 | headings outline in packages/app-client/README.md |  |  | 0.511 |
+| walker |  | 4788 | 0 | packages/app-client/README.md section #3 |  |  | 0.511 |
+| walker |  | 4865 | 77 | packages/app-client/README.md section #0 |  |  | 0.511 |
+| walker |  | 4891 | 26 | packages/cli/README.md section #7 |  |  | 0.511 |
+| ns | 4910 |  | 229 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.548 |
+| walker |  | 4924 | 33 | packages/crypto/README.md section #2 |  |  | 0.548 |
+| walker |  | 4954 | 30 | packages/app-client/README.md section #2 |  |  | 0.548 |
+| walker |  | 4990 | 36 | README.md section #1 |  |  | 0.555 |
+| walker |  | 5016 | 26 | packages/lib/README.md section #4 |  |  | 0.555 |
+| walker |  | 5067 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.555 |
+| walker |  | 5100 | 33 | packages/cli/README.md section #6 |  |  | 0.555 |
+| walker |  | 5158 | 58 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.555 |
+| ns | 5169 |  | 259 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.588 |
+| walker |  | 5191 | 33 | packages/lib/README.md section #3 |  |  | 0.588 |
+| walker |  | 5251 | 60 | json config renovate.json |  |  | 0.588 |
+| walker |  | 5280 | 29 | README.md section #31 |  |  | 0.588 |
+| walker |  | 5311 | 31 | README.md section #30 |  |  | 0.588 |
+| walker |  | 5349 | 38 | README.md section #16 |  |  | 0.588 |
+| ns | 5397 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.572 |
+| walker |  | 5464 | 115 | README.md section #24 |  |  | 0.572 |
+| walker |  | 5549 | 85 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.572 |
+| walker |  | 5549 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.572 |
+| walker |  | 5562 | 13 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.572 |
+| walker |  | 5622 | 60 | README.md section #13 |  |  | 0.579 |
+| walker |  | 5660 | 38 | README.md section #29 |  |  | 0.579 |
+| walker |  | 5821 | 161 | plaintext config pnpm-workspace.yaml |  |  | 0.611 |
+| ns | 5894 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.590 |
+| walker |  | 5948 | 127 | README.md section #26 |  |  | 0.590 |
+| walker |  | 5973 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.590 |
+| walker |  | 6080 | 107 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.590 |
+| walker |  | 6093 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.590 |
+| ns | 6120 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.578 |
+| walker |  | 6182 | 89 | declaration surface of packages/docs/src/components/credential-inputs.vue |  |  | 0.578 |
+| walker |  | 6250 | 68 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6267 | 17 | package runtime metadata in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6296 | 29 | package scripts in packages/deploy-cloudflare/package.json |  |  | 0.578 |
+| walker |  | 6312 | 16 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.578 |
+| ns | 6317 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.565 |
+| walker |  | 6328 | 16 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.565 |
+| walker |  | 6422 | 94 | declaration surface of packages/docs/src/components/toggle.vue |  |  | 0.565 |
+| walker |  | 6511 | 89 | packages/crypto/README.md section #1 |  |  | 0.565 |
+| ns | 6520 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.559 |
+| walker |  | 6674 | 163 | README.md section #23 |  |  | 0.578 |
 | ns | 6808 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.567 |
 | walker |  | 6867 | 193 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.567 |
 | walker |  | 6944 | 77 | package identity in packages/app-client/package.json |  |  | 0.567 |

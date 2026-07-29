@@ -50,16 +50,16 @@ Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missi
 | ns | 2800 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.568 |
 | walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.777 |
 | walker |  | 2983 | 145 | README.md section #5 |  |  | 0.779 |
+| walker |  | 3013 | 30 | README.md section #12 |  |  | 0.779 |
 | ns | 3035 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.785 |
-| ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.760 |
-| walker |  | 3263 | 280 | README.md section #2 |  |  | 0.817 |
-| ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.798 |
-| walker |  | 3293 | 30 | README.md section #12 |  |  | 0.798 |
-| walker |  | 3442 | 149 | json config tsconfig.json |  |  | 0.831 |
-| walker |  | 3475 | 33 | README.md section #10 |  |  | 0.831 |
-| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.837 |
-| walker |  | 3586 | 111 | README.md section #4 |  |  | 0.837 |
-| walker |  | 3621 | 35 | README.md section #6 |  |  | 0.838 |
+| walker |  | 3162 | 149 | json config tsconfig.json |  |  | 0.789 |
+| ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.795 |
+| walker |  | 3195 | 33 | README.md section #10 |  |  | 0.795 |
+| ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.776 |
+| walker |  | 3306 | 111 | README.md section #4 |  |  | 0.777 |
+| walker |  | 3341 | 35 | README.md section #6 |  |  | 0.777 |
+| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.787 |
+| walker |  | 3621 | 280 | README.md section #2 |  |  | 0.838 |
 | ns | 3659 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.841 |
 | walker |  | 3676 | 55 | README.md section #16 |  |  | 0.841 |
 | ns | 3737 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.832 |

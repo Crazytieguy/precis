@@ -173,7 +173,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         file: file.clone(),
                         section_index: idx,
                         reference_shaped,
-                        deferred_mass_prose: false,
                     }
                     .into(),
                     predecessor: headline_emitted.clone(),
@@ -302,7 +301,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     section_index: idx,
                     reference_shaped: range.reference_shaped,
-                    deferred_mass_prose: range.deferred_mass_prose,
                 };
                 // Roster chunks deliver in source order: each chunk
                 // gates on its predecessor chunk.
@@ -746,7 +744,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             is_reference_usage_section: false,
             reference_shaped: false,
             dev_workflow_section: false,
-            deferred_mass_prose: false,
             roster_entries: 0,
             chained_to_previous: false,
         },
@@ -1883,9 +1880,6 @@ struct SectionRange {
     /// (commands, setup/test/debug steps, env vars, or concrete repo
     /// paths). Valued above peripheral-doc prose.
     dev_workflow_section: bool,
-    /// Operationally dense prose section eligible for the late scheduler
-    /// prose tier.
-    deferred_mass_prose: bool,
     /// Non-zero for a link-index roster chunk: the count of intra-doc
     /// link entries this chunk catalogs. Valued as a names surface
     /// (cat lift + [`roster_mass_factor`]) instead of section prose.
@@ -2156,34 +2150,11 @@ fn is_dev_workflow_doc(file: &Path) -> bool {
 
 const DEV_WORKFLOW_MIN_SIGNALS: usize = 2;
 const DEV_WORKFLOW_MAX_BYTES: usize = 2200;
-const OPERATIONAL_DENSITY_MIN_SIGNALS: usize = 3;
 
 fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let (bytes, signals) = range_density_signal_count(src_lines, start, end, DensitySignal::Dev);
-    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
-}
-
-fn range_has_operational_density_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let (_, signals) =
-        range_density_signal_count(src_lines, start, end, DensitySignal::Operational);
-    signals >= OPERATIONAL_DENSITY_MIN_SIGNALS
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum DensitySignal {
-    Dev,
-    Operational,
-}
-
-fn range_density_signal_count(
-    src_lines: &[&str],
-    start: usize,
-    end: usize,
-    mode: DensitySignal,
-) -> (usize, usize) {
     let last = end.min(src_lines.len());
     if start > last {
-        return (0, 0);
+        return false;
     }
     let mut bytes = 0usize;
     let mut signals = 0usize;
@@ -2204,22 +2175,22 @@ fn range_density_signal_count(
             continue;
         }
         if in_fence {
-            if line_has_density_signal(t, true, mode) {
+            if line_has_density_signal(t, true) {
                 fence_has_signal = true;
             }
             continue;
         }
-        if line_has_density_signal(t, false, mode) {
+        if line_has_density_signal(t, false) {
             signals += 1;
         }
     }
     if in_fence && fence_has_signal {
         signals += 1;
     }
-    (bytes, signals)
+    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
 }
 
-fn line_has_density_signal(t: &str, in_fence: bool, mode: DensitySignal) -> bool {
+fn line_has_density_signal(t: &str, in_fence: bool) -> bool {
     if in_fence {
         return is_dev_command_line(t)
             || is_dev_config_line(t)
@@ -2229,31 +2200,7 @@ fn line_has_density_signal(t: &str, in_fence: bool, mode: DensitySignal) -> bool
     is_dev_command_line(t)
         || is_dev_config_line(t)
         || is_repo_path_line(t)
-        || (mode == DensitySignal::Operational && looks_like_option_or_env_row(t))
         || (is_numbered_step_line(t) && contains_dev_action(t))
-}
-
-fn looks_like_option_or_env_row(t: &str) -> bool {
-    if is_markdown_rule_row(t) {
-        return false;
-    }
-    let table = t.starts_with('|');
-    let list = is_list_item_line(t) || is_numbered_step_line(t);
-    if !table && !list {
-        return false;
-    }
-    if table {
-        return t
-            .trim_matches('|')
-            .split('|')
-            .any(|cell| cell_has_option_env_or_config(cell.trim()));
-    }
-    t.split_whitespace().any(|token| {
-        let trimmed = token.trim_matches(|c: char| {
-            matches!(c, '`' | ',' | '.' | ':' | ';' | ')' | '(' | '[' | ']')
-        });
-        trimmed.starts_with("--") || is_env_var_token(trimmed) || is_config_key_token(trimmed)
-    })
 }
 
 fn is_markdown_rule_row(t: &str) -> bool {
@@ -2262,19 +2209,6 @@ fn is_markdown_rule_row(t: &str) -> bool {
         && stripped
             .bytes()
             .all(|b| matches!(b, b'-' | b':' | b' ' | b'\t' | b'|'))
-}
-
-fn is_list_item_line(t: &str) -> bool {
-    t.starts_with("- ") || t.starts_with("* ") || t.starts_with("+ ")
-}
-
-fn cell_has_option_env_or_config(cell: &str) -> bool {
-    cell.split_whitespace().any(|token| {
-        let trimmed = token.trim_matches(|c: char| {
-            matches!(c, '`' | ',' | '.' | ':' | ';' | ')' | '(' | '[' | ']')
-        });
-        trimmed.starts_with("--") || is_env_var_token(trimmed) || is_config_key_token(trimmed)
-    })
 }
 
 fn is_config_key_token(token: &str) -> bool {
@@ -2463,7 +2397,6 @@ fn logical_sections(
                         is_reference_usage_section: false,
                         reference_shaped: false,
                         dev_workflow_section: false,
-                        deferred_mass_prose: false,
                         roster_entries: 0,
                         chained_to_previous: false,
                     },
@@ -2580,7 +2513,6 @@ fn logical_sections(
                                 is_reference_usage_section: reference_h2,
                                 reference_shaped: false,
                                 dev_workflow_section: false,
-                                deferred_mass_prose: false,
                                 roster_entries: 0,
                                 chained_to_previous: false,
                             },
@@ -2626,28 +2558,7 @@ fn logical_sections(
             range.reference_shaped |= range.dev_workflow_section;
         }
     }
-    if readme || is_dev_workflow_doc(file) {
-        for range in &mut out {
-            // Oversize tails are exempt: they are predecessor-gated
-            // continuations, and deferring a mid-train tail would
-            // strand every chunk gated behind it past the window the
-            // head opened.
-            range.deferred_mass_prose = range.roster_entries == 0
-                && range.kind != SectionKind::OversizeTail
-                && !range.reference_shaped
-                && !is_initial_orientation_range(range)
-                && range_has_operational_density_signal(&src_lines, range.start, range.end);
-        }
-    }
     out
-}
-
-fn is_initial_orientation_range(range: &SectionRange) -> bool {
-    if range.synthetic_intro_present {
-        range.parent_index <= 1
-    } else {
-        range.parent_index == 0
-    }
 }
 
 /// Minimum intra-doc link entries for a body to count as a link index,
@@ -2765,7 +2676,6 @@ fn push_link_index_chunks(
             is_reference_usage_section: false,
             reference_shaped: true,
             dev_workflow_section: false,
-            deferred_mass_prose: false,
             roster_entries: entries,
             chained_to_previous: i > 0,
         });
@@ -2818,7 +2728,6 @@ fn push_canonical_usage_fence_split(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
-        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2833,7 +2742,6 @@ fn push_canonical_usage_fence_split(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
-        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2991,7 +2899,6 @@ fn push_whole_or_head_split(
                 is_reference_usage_section: head.is_reference_usage_section,
                 reference_shaped: false,
                 dev_workflow_section: false,
-                deferred_mass_prose: false,
                 roster_entries: 0,
                 chained_to_previous: true,
             });
@@ -3038,7 +2945,6 @@ fn push_intro<'a>(
         is_reference_usage_section: reference_h2,
         reference_shaped: false,
         dev_workflow_section: false,
-        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -3079,7 +2985,6 @@ fn push_h3_child_or_body_blocks(
         is_reference_usage_section: reference_h3,
         reference_shaped: false,
         dev_workflow_section: false,
-        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -3105,7 +3010,6 @@ fn push_body_block_ranges(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
-        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     }));
@@ -4701,56 +4605,21 @@ mod tests {
             "```",
             "npm test",
             "```",
+            "```",
+            "cargo build",
+            "```",
         ];
-        assert!(!range_has_operational_density_signal(&src, 1, 6));
-        assert!(!range_has_operational_density_signal(&src, 1, 9));
+        // Prose fences contribute nothing; only the command fences do,
+        // and one alone is below the dev-workflow signal minimum.
+        assert!(!range_has_dev_workflow_signal(&src, 1, 6));
+        assert!(!range_has_dev_workflow_signal(&src, 1, 9));
+        assert!(range_has_dev_workflow_signal(&src, 1, 12));
     }
 
     #[test]
-    fn markdown_option_rows_require_table_or_list_context() {
-        assert!(!looks_like_option_or_env_row(
-            "Use --token in ordinary prose."
-        ));
-        assert!(!looks_like_option_or_env_row("| --- | --- |"));
-        assert!(!looks_like_option_or_env_row("| `name` | `value` |"));
-        assert!(looks_like_option_or_env_row(
-            "- `--token` controls the budget."
-        ));
-        assert!(looks_like_option_or_env_row("| `--token` | budget |"));
-        assert!(looks_like_option_or_env_row("| `NODE_ENV` | production |"));
-        assert!(looks_like_option_or_env_row("| `exports` | ./index.js |"));
-        assert!(line_has_density_signal(
-            "\"plugins\": [\"svgo\"]",
-            true,
-            DensitySignal::Operational
-        ));
-    }
-
-    #[test]
-    fn markdown_deferred_mass_excludes_rosters_and_reference_shapes() {
-        let mut src =
-            String::from("# lo\n\nTagline.\n\n## Spec\n\nSupported helpers for slices:\n\n");
-        for i in 0..30 {
-            src.push_str(&format!("- [Helper{i}](#helper{i})\n"));
-        }
-        src.push('\n');
-        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
-            src.push_str(&format!(
-                "\n### Helper{i}\n\nRun `npm test -- --filter thing`.\n"
-            ));
-        }
-        src.push_str(
-            "\n## Options\n\n| `--token` | budget |\n| `NODE_ENV` | prod |\n| `exports` | path |\n",
-        );
-
-        let ranges = sections("README.md", &src);
-        assert!(
-            ranges
-                .iter()
-                .filter(|r| r.roster_entries > 0 || r.reference_shaped)
-                .all(|r| !r.deferred_mass_prose),
-            "roster/reference-shaped ranges must not be deferred: {ranges:?}",
-        );
+    fn markdown_in_fence_config_snippet_is_a_density_signal() {
+        assert!(line_has_density_signal("\"plugins\": [\"svgo\"]", true));
+        assert!(!line_has_density_signal("\"plugins\": [\"svgo\"]", false));
     }
 
     #[test]

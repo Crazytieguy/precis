@@ -160,36 +160,35 @@ Score(3000)=0.718 I=0.834 C=0.618 ns_rows≤3K=16/40 (reached=8 partial=0 missin
 | ns | 7454 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.584 |
 | walker |  | 7628 | 181 | c whole header in src/jv_alloc.h |  |  | 0.584 |
 | walker |  | 7816 | 188 | c whole header in src/jv_unicode.h |  |  | 0.584 |
-| walker |  | 7975 | 159 | README.md section #4 |  |  | 0.584 |
-| walker |  | 8021 | 46 | c includes in src/jv_unicode.c |  |  | 0.584 |
-| walker |  | 8070 | 49 | c includes in src/jv_alloc.c |  |  | 0.584 |
+| walker |  | 7862 | 46 | c includes in src/jv_unicode.c |  |  | 0.584 |
+| walker |  | 7911 | 49 | c includes in src/jv_alloc.c |  |  | 0.584 |
+| walker |  | 8102 | 191 | c decl names surface in src/bytecode.h |  |  | 0.584 |
 | ns | 8125 |  | 671 | builtin.c: function_list, part 1 - libm, binops, conversions, keys, strings, paths, sorting | 5.4 |  | 0.564 |
-| walker |  | 8261 | 191 | c decl names surface in src/bytecode.h |  |  | 0.564 |
-| walker |  | 8298 | 37 | c decl at src/bytecode.h:59 |  |  | 0.564 |
-| walker |  | 8367 | 69 | c decl at src/bytecode.h:32 |  |  | 0.564 |
-| walker |  | 8408 | 41 | c decl at src/exec_stack.h:40 |  |  | 0.564 |
+| walker |  | 8139 | 37 | c decl at src/bytecode.h:59 |  |  | 0.564 |
+| walker |  | 8208 | 69 | c decl at src/bytecode.h:32 |  |  | 0.564 |
+| walker |  | 8249 | 41 | c decl at src/exec_stack.h:40 |  |  | 0.564 |
+| walker |  | 8514 | 265 | c decl names surface in src/jv_aux.c |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:80 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:146 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:230 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:372 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:431 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:504 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:554 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:566 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:600 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:711 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:726 |  |  | 0.564 |
+| walker |  | 8514 | 0 | c decl at src/jv_aux.c:754 |  |  | 0.564 |
+| walker |  | 8536 | 22 | c decl at src/jv_aux.c:675 |  |  | 0.564 |
+| walker |  | 8603 | 67 | c decl at src/jv_print.c:31 |  |  | 0.564 |
 | ns | 8626 |  | 501 | builtin.c: function_list, part 2 - search, min/max, errors, env, regex, I/O, time | 5.5 |  | 0.550 |
-| walker |  | 8673 | 265 | c decl names surface in src/jv_aux.c |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:80 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:146 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:230 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:372 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:431 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:504 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:554 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:566 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:600 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:711 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:726 |  |  | 0.550 |
-| walker |  | 8673 | 0 | c decl at src/jv_aux.c:754 |  |  | 0.550 |
-| walker |  | 8695 | 22 | c decl at src/jv_aux.c:675 |  |  | 0.550 |
-| walker |  | 8762 | 67 | c decl at src/jv_print.c:31 |  |  | 0.550 |
-| walker |  | 8976 | 214 | c decl names surface #5 in src/jv.h |  |  | 0.563 |
-| ns | 9138 |  | 512 | builtin.jq: every jq-defined builtin, part 1 (lines 1-115) | 5.6 |  | 0.536 |
-| walker |  | 9248 | 272 | c whole header in src/builtin.h |  |  | 0.539 |
-| walker |  | 9310 | 62 | c includes in src/inject_errors.c |  |  | 0.539 |
+| walker |  | 8817 | 214 | c decl names surface #5 in src/jv.h |  |  | 0.563 |
+| walker |  | 9089 | 272 | c whole header in src/builtin.h |  |  | 0.566 |
+| ns | 9138 |  | 512 | builtin.jq: every jq-defined builtin, part 1 (lines 1-115) | 5.6 |  | 0.539 |
+| walker |  | 9151 | 62 | c includes in src/inject_errors.c |  |  | 0.539 |
+| walker |  | 9431 | 280 | c whole header in src/locfile.h |  |  | 0.539 |
 | ns | 9487 |  | 349 | builtin.jq: every jq-defined builtin, part 2 (lines 116-244) | 5.7 |  | 0.523 |
-| walker |  | 9590 | 280 | c whole header in src/locfile.h |  |  | 0.523 |
+| walker |  | 9720 | 289 | c whole header in src/jv_dtoa.h |  |  | 0.523 |
 | ns | 9797 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.511 |
-| walker |  | 9879 | 289 | c whole header in src/jv_dtoa.h |  |  | 0.511 |
 | ns | 9996 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.506 |

@@ -407,10 +407,6 @@ impl<W: Walker> Scheduler<W> {
                 entry.value,
                 exact_cost.tokens,
                 entry.key.concavity_exponent(),
-            ) * crate::value::prose_mass_tier_multiplier(
-                self.consumed.tokens,
-                self.token_budget,
-                entry.key.is_deferred_mass_prose(),
             ) * pressure;
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
                 ratio > *br
@@ -448,13 +444,8 @@ impl<W: Walker> Scheduler<W> {
             let pressure = self.train_pressure(id);
             let approx_tokens = self.approx_cost_cache[&id];
             let entry = &self.entries[id.index()];
-            let ratio = score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent())
-                * crate::value::prose_mass_tier_multiplier(
-                    self.consumed.tokens,
-                    self.token_budget,
-                    entry.key.is_deferred_mass_prose(),
-                )
-                * pressure;
+            let ratio =
+                score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent()) * pressure;
             candidates.push((ratio, id));
         }
 

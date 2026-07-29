@@ -568,36 +568,6 @@ fn is_locale_language(s: &str) -> bool {
 /// batches via [`crate::batch::WalkerKey::concavity_exponent`].
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
-/// Late-budget tier for operationally dense prose sections. These
-/// batches keep their normal ratio while the protected early budget is
-/// filling, then compete with a multiplier once compact source rosters
-/// have had first chance to schedule. Expressed as a fraction so small
-/// runs still get a live tier and large runs do not turn deferred prose
-/// on for nearly the whole schedule. The initial 0.5 boundary delayed
-/// too much prose past the 3K scoring prefix in 10K schedule snapshots;
-/// 0.25 keeps the corpus mean stable while still scaling with budget.
-pub const PROSE_MASS_WINDOW_FRACTION: f64 = 0.25;
-pub const PROSE_MASS_BOOST: f64 = 1.5;
-
-/// Ratio multiplier for deferred operational prose after the early
-/// source-roster window.
-pub fn prose_mass_tier_multiplier(
-    consumed_tokens: usize,
-    token_budget: usize,
-    is_deferred_mass_prose: bool,
-) -> f64 {
-    let window = prose_mass_window_tokens(token_budget);
-    if is_deferred_mass_prose && consumed_tokens >= window {
-        PROSE_MASS_BOOST
-    } else {
-        1.0
-    }
-}
-
-fn prose_mass_window_tokens(token_budget: usize) -> usize {
-    ((token_budget as f64) * PROSE_MASS_WINDOW_FRACTION).round() as usize
-}
-
 /// Convert a value and a marginal token cost into the scheduling ratio.
 /// The scheduler passes `entry.key.concavity_exponent()` so prose-shaped
 /// batches see a steeper cost penalty than structural ones.
@@ -612,25 +582,6 @@ pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -
 mod tests {
     use super::*;
     use std::path::Path;
-
-    #[test]
-    fn prose_mass_window_scales_with_token_budget() {
-        assert_eq!(prose_mass_window_tokens(1_200), 300);
-        assert_eq!(prose_mass_window_tokens(3_000), 750);
-        assert_eq!(prose_mass_window_tokens(20_000), 5_000);
-
-        assert_eq!(prose_mass_tier_multiplier(749, 3_000, true), 1.0);
-        assert_eq!(
-            prose_mass_tier_multiplier(750, 3_000, true),
-            PROSE_MASS_BOOST
-        );
-        assert_eq!(prose_mass_tier_multiplier(1_500, 20_000, true), 1.0);
-        assert_eq!(
-            prose_mass_tier_multiplier(5_000, 20_000, true),
-            PROSE_MASS_BOOST
-        );
-        assert_eq!(prose_mass_tier_multiplier(5_000, 20_000, false), 1.0);
-    }
 
     #[test]
     fn conserved_catalog_chunk_factors_sum_to_one() {

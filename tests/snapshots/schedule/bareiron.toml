@@ -219,7 +219,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 63
 cum_tokens = 492
@@ -2241,28 +2241,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 79
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #3"
-cost_tokens = 329
-cum_tokens = 4454
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 28
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 41 })'
 descriptor = "c decl doc at include/globals.h:41"
 cost_tokens = 13
-cum_tokens = 4467
+cum_tokens = 4138
 
 [batches.content]
 kind = "lines"
@@ -2276,11 +2258,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 81
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+position = 80
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 119
-cum_tokens = 4586
+cum_tokens = 4257
 
 [batches.content]
 kind = "lines"
@@ -2294,11 +2276,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'C(Decl { file: "src/crafting.c", start_line: 349 })'
 descriptor = "c decl at src/crafting.c:349"
 cost_tokens = 28
-cum_tokens = 4614
+cum_tokens = 4285
 
 [batches.content]
 kind = "lines"
@@ -2312,11 +2294,11 @@ end = 350
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in include/procedures.h"
 cost_tokens = 358
-cum_tokens = 4972
+cum_tokens = 4643
 
 [batches.content]
 kind = "lines"
@@ -2338,11 +2320,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 84
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+position = 83
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 25
-cum_tokens = 4997
+cum_tokens = 4668
 
 [batches.content]
 kind = "lines"
@@ -2356,11 +2338,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'C(AggregateMemberGroup { file: "include/globals.h", start_line: 200, group_start_line: 201 })'
 descriptor = "c aggregate member group at include/globals.h:200 group 201"
 cost_tokens = 243
-cum_tokens = 5240
+cum_tokens = 4911
 
 [batches.content]
 kind = "lines"
@@ -2374,11 +2356,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'C(AggregateMemberGroup { file: "include/globals.h", start_line: 200, group_start_line: 223 })'
 descriptor = "c aggregate member group at include/globals.h:200 group 223"
 cost_tokens = 247
-cum_tokens = 5487
+cum_tokens = 5158
 
 [batches.content]
 kind = "lines"
@@ -2392,11 +2374,11 @@ end = 237
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 35 })'
 descriptor = "c decl doc at include/globals.h:35"
 cost_tokens = 14
-cum_tokens = 5501
+cum_tokens = 5172
 
 [batches.content]
 kind = "lines"
@@ -2410,11 +2392,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Plaintext(Whole { file: "build.sh" })'
 descriptor = "plaintext config build.sh"
 cost_tokens = 529
-cum_tokens = 6030
+cum_tokens = 5701
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2410,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 89
+position = 88
 key = 'C(DeclDoc { file: "src/structures.c", start_line: 16 })'
 descriptor = "c decl doc at src/structures.c:16"
 cost_tokens = 14
-cum_tokens = 6044
+cum_tokens = 5715
 
 [batches.content]
 kind = "lines"
@@ -2446,11 +2428,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Plaintext(Whole { file: "extract_registries.sh" })'
 descriptor = "plaintext config extract_registries.sh"
 cost_tokens = 690
-cum_tokens = 6734
+cum_tokens = 6405
 
 [batches.content]
 kind = "lines"
@@ -2472,11 +2454,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 91
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+position = 90
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 40
-cum_tokens = 6774
+cum_tokens = 6445
 
 [batches.content]
 kind = "lines"
@@ -2490,11 +2472,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 38 })'
 descriptor = "c decl doc at include/globals.h:38"
 cost_tokens = 17
-cum_tokens = 6791
+cum_tokens = 6462
 
 [batches.content]
 kind = "lines"
@@ -2508,11 +2490,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 93
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
+position = 92
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 41
-cum_tokens = 6832
+cum_tokens = 6503
 
 [batches.content]
 kind = "lines"
@@ -2526,11 +2508,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in include/packets.h"
 cost_tokens = 752
-cum_tokens = 7584
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2552,11 +2534,11 @@ end = 64
 kind = "ellipsis"
 
 [[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+position = 94
+key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 45
-cum_tokens = 7629
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -2570,11 +2552,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 96
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+position = 95
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 47
-cum_tokens = 7676
+cum_tokens = 7347
 
 [batches.content]
 kind = "lines"
@@ -2583,6 +2565,24 @@ kind = "lines"
 path = "README.md"
 start = 53
 end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
+descriptor = "README.md section #3"
+cost_tokens = 329
+cum_tokens = 7676
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 37
 
 [batches.content.spans.render]
 kind = "full"
@@ -3243,7 +3243,7 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 275
 cum_tokens = 8786
