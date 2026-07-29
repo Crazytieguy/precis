@@ -20,12 +20,18 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
-/// Demotion for the dev / build / test / peer dependency roster of a
-/// manifest, applied on top of the class's own tier. The runtime roster
-/// says what the package is built on; the development roster says what
-/// its contributors install to check it — the same "contributor
-/// toolchain, not project" distinction that demotes checking-tool config
-/// tables, one class further out.
+/// Demotion for the dev / build / test dependency roster of a manifest,
+/// applied on top of the class's own tier. The runtime roster says what
+/// the package is built on; the development roster says what its
+/// contributors install to check it — the same "contributor toolchain,
+/// not project" distinction that demotes checking-tool config tables,
+/// one class further out.
+///
+/// **Peer dependencies are not in the class.** `peerDependencies` is a
+/// consumer-facing compatibility contract ("this plugin works against
+/// React 18"), not a contributor tool, and several North Stars rank it
+/// as runtime surface. A batch carrying peer content keeps full value —
+/// see `walker::json::dev_dependencies_value`.
 pub const DEV_DEPENDENCY_ROSTER_SCALE: f64 = 0.3;
 
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this

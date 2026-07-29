@@ -2339,7 +2339,15 @@ invoked. Both shipped mechanisms are that one rule.
   never fires on an appendix it cannot classify.
 - `value::DEV_DEPENDENCY_ROSTER_SCALE = 0.3` — the same distinction one
   class out, applied at both dev-roster sites (Cargo dev/build/target
-  tables + PEP 735 groups; `package.json` dev/peer dependencies).
+  tables + PEP 735 groups; `package.json` `devDependencies`).
+
+  **Not** `peerDependencies`. `JsonKey::DevDependencies` spans
+  `devDependencies` + `peerDependencies` + `peerDependenciesMeta` for
+  batching reasons, but a peer roster is a consumer-facing compatibility
+  contract, not a contributor toolchain — the demotion applies only to a
+  peer-free batch (`walker::json::dev_dependencies_value`, corrected
+  2026-07-29). Cargo and PEP 735 have no peer analogue, so that site is
+  unaffected.
 
 Grid (71 training fixtures): 1000 0.6132→0.6132 · 1442 0.6217→0.6234 ·
 2080 0.6277→0.6279 · **3000 0.6151→0.6165** · 4327 0.5851→0.5882 ·
