@@ -455,18 +455,31 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
     }
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
-    // but it is not what the repo is about.
-    let primary = *per_language.iter().max_by_key(|&(_, &bytes)| bytes)?.0;
-    let total: u64 = per_language.values().sum();
+    // but it is not what the repo is about. Ranked over a sorted vector
+    // rather than the hash map's iteration order, and a tie for the lead
+    // yields no primary at all: "the language this repo is written in"
+    // has no answer there, and answering it by hasher seeding would make
+    // the output differ between processes on identical input.
+    let mut by_mass: Vec<(&'static str, u64)> = per_language.into_iter().collect();
+    by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
+    let (primary, primary_bytes) = *by_mass.first()?;
+    if by_mass
+        .get(1)
+        .is_some_and(|&(_, bytes)| bytes == primary_bytes)
+    {
+        return None;
+    }
+    let total: u64 = by_mass.iter().map(|&(_, bytes)| bytes).sum();
     if total == 0 {
         return None;
     }
     candidates.retain(|(_, len, language)| {
         *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
     });
-    // Descending, so the line-shape probe reads at most a handful of
-    // files rather than every source file in the tree.
-    candidates.sort_by_key(|(_, len, _)| std::cmp::Reverse(*len));
+    // Descending by size, so the line-shape probe reads at most a
+    // handful of files rather than every source file in the tree; path
+    // breaks size ties, since directory read order is not stable.
+    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
     candidates
         .into_iter()
         .find(|(path, _, _)| is_hand_authored(path))
@@ -1219,6 +1232,25 @@ mod tests {
         assert_eq!(
             find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
             Some(root.join("helper.py").as_path())
+        );
+    }
+
+    /// Two languages at exactly equal mass have no "primary", and the
+    /// answer must not come from hash iteration order — same input, same
+    /// output, across processes.
+    #[test]
+    fn walker_mod_dominant_file_declines_a_tied_primary_language() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100)).unwrap();
+        std::fs::write(root.join("core.go"), "y = 2\n".repeat(100)).unwrap();
+        assert_eq!(find_dominant_source_file(root, &DirFilter::new(root)), None);
+
+        // One byte of lead is enough to make the question answerable.
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100) + "z").unwrap();
+        assert_eq!(
+            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            Some(root.join("core.py").as_path())
         );
     }
 
