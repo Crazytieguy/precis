@@ -402,35 +402,53 @@ const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
 /// (tests, examples, vendored, tooling) are excluded from both the
 /// numerator and the denominator so a big test file can neither win nor
 /// dilute the share.
+///
+/// Enumeration mirrors the walkers' own rules rather than inventing a
+/// second traversal policy: gitignore exclusion via `filter`, the
+/// heavy-directory blocklist via [`crate::fs_util::should_skip_dir`]
+/// (the only thing bounding a walk of a non-repository tree, where the
+/// filter is inert by design), and non-following file types so a
+/// symlink is neither descended into nor weighed as source — the same
+/// containment answer typed source discovery gives. The
+/// generated/vendored [`MASS_SHARE_EXCLUDED_DIRS`] narrowing applies on
+/// top of that shared universe.
 fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
     let mut stack = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
-        for (name, kind) in crate::fs_util::list_dir(&dir, filter) {
-            let path = dir.join(&name);
-            match kind {
-                crate::fs_util::EntryKind::Directory => {
-                    let excluded =
-                        MASS_SHARE_EXCLUDED_DIRS.contains(&name.to_ascii_lowercase().as_str());
-                    if !excluded {
-                        stack.push(path);
-                    }
+        let Ok(entries) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            let path = entry.path();
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
+            if file_type.is_dir() {
+                let name = entry.file_name();
+                let name = name.to_string_lossy();
+                let skipped = crate::fs_util::should_skip_dir(&name)
+                    || MASS_SHARE_EXCLUDED_DIRS.contains(&name.to_ascii_lowercase().as_str());
+                if !skipped {
+                    stack.push(path);
                 }
-                crate::fs_util::EntryKind::File => {
-                    let Some(language) = language_group(&path) else {
-                        continue;
-                    };
-                    if crate::value::non_essential_factor(&path, root) < 1.0 {
-                        continue;
-                    }
-                    let Ok(len) = std::fs::metadata(&path).map(|m| m.len()) else {
-                        continue;
-                    };
-                    *per_language.entry(language).or_default() += len;
-                    if len <= MASS_SHARE_MAX_FILE_BYTES {
-                        candidates.push((path, len, language));
-                    }
+            } else if file_type.is_file() {
+                let Some(language) = language_group(&path) else {
+                    continue;
+                };
+                if crate::value::non_essential_factor(&path, root) < 1.0 {
+                    continue;
+                }
+                let Ok(len) = entry.metadata().map(|m| m.len()) else {
+                    continue;
+                };
+                *per_language.entry(language).or_default() += len;
+                if len <= MASS_SHARE_MAX_FILE_BYTES {
+                    candidates.push((path, len, language));
                 }
             }
         }
@@ -1153,6 +1171,55 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    /// The spine detector runs on whatever path a user points precis
+    /// at, including trees that are not repositories — where `DirFilter`
+    /// is inert and the heavy-directory blocklist is the only thing
+    /// between the scan and a dependency tree.
+    #[test]
+    fn walker_mod_dominant_file_skips_heavy_dirs_on_non_git_tree() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("node_modules/dep")).unwrap();
+        std::fs::create_dir_all(root.join("src")).unwrap();
+        // Bigger than the spine, and in the same language — if it were
+        // scanned it would both win the candidate race and dilute the
+        // share out of range.
+        std::fs::write(
+            root.join("node_modules/dep/bundle.js"),
+            "x = 1\n".repeat(4000),
+        )
+        .unwrap();
+        std::fs::write(root.join("src/core.js"), "y = 2\n".repeat(100)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("src/core.js").as_path()));
+    }
+
+    /// Typed source discovery rejects symlinks (non-following file
+    /// types), so a link must not be weighed as source mass or selected
+    /// as the spine — otherwise the scheduler boosts a path no walker
+    /// ever emits, and the link's target is double-counted.
+    #[cfg(unix)]
+    #[test]
+    fn walker_mod_dominant_file_ignores_in_root_file_symlink() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("core.py"), "y = 2\n".repeat(100)).unwrap();
+        std::os::unix::fs::symlink("core.py", root.join("alias.py")).unwrap();
+        std::fs::write(root.join("helper.py"), "z = 3\n".repeat(60)).unwrap();
+
+        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        assert_eq!(found.as_deref(), Some(root.join("core.py").as_path()));
+
+        // Removing the real file leaves only the link plus a peer; the
+        // link must not stand in for the mass it points at.
+        std::fs::remove_file(root.join("core.py")).unwrap();
+        assert_eq!(
+            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            Some(root.join("helper.py").as_path())
+        );
     }
 
     #[test]
