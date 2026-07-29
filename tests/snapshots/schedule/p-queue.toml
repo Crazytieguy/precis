@@ -133,10 +133,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
+key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
+descriptor = "export doc at source/index.ts:16"
+cost_tokens = 20
+cum_tokens = 254
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 13
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 241
+cum_tokens = 261
 
 [batches.content]
 kind = "fs"
@@ -146,11 +164,11 @@ parent = ".github"
 entries = ["security.md", "workflows"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 3
-cum_tokens = 244
+cum_tokens = 264
 
 [batches.content]
 kind = "fs"
@@ -160,11 +178,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 201
-cum_tokens = 445
+cum_tokens = 465
 
 [batches.content]
 kind = "lines"
@@ -178,11 +196,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 67
-cum_tokens = 512
+cum_tokens = 532
 
 [batches.content]
 kind = "lines"
@@ -191,24 +209,6 @@ kind = "lines"
 path = "readme.md"
 start = 1
 end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
-descriptor = "export doc at source/index.ts:16"
-cost_tokens = 20
-cum_tokens = 532
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 13
-end = 15
 
 [batches.content.spans.render]
 kind = "full"
@@ -251,10 +251,28 @@ kind = "full"
 
 [[batches]]
 position = 14
+key = 'Typescript(Imports { file: "source/index.ts" })'
+descriptor = "imports in source/index.ts"
+cost_tokens = 84
+cum_tokens = 701
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 30
-cum_tokens = 647
+cum_tokens = 731
 
 [batches.content]
 kind = "fs"
@@ -264,11 +282,11 @@ parent = "test"
 entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
 descriptor = "export names surface in source/priority-queue.ts"
 cost_tokens = 37
-cum_tokens = 684
+cum_tokens = 768
 
 [batches.content]
 kind = "lines"
@@ -306,11 +324,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
 descriptor = "export at source/priority-queue.ts:7"
 cost_tokens = 17
-cum_tokens = 701
+cum_tokens = 785
 
 [batches.content]
 kind = "lines"
@@ -324,11 +342,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 0 })'
 descriptor = "export tail #1 at source/index.ts:16"
 cost_tokens = 218
-cum_tokens = 919
+cum_tokens = 1003
 
 [batches.content]
 kind = "lines"
@@ -414,11 +432,11 @@ end = 589
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 121
-cum_tokens = 1040
+cum_tokens = 1124
 
 [batches.content]
 kind = "lines"
@@ -600,11 +618,11 @@ end = 1072
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 129
-cum_tokens = 1169
+cum_tokens = 1253
 
 [batches.content]
 kind = "lines"
@@ -714,11 +732,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #5"
 cost_tokens = 10
-cum_tokens = 1179
+cum_tokens = 1263
 
 [batches.content]
 kind = "lines"
@@ -732,11 +750,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 1 })'
 descriptor = "export tail #2 at source/index.ts:16"
 cost_tokens = 289
-cum_tokens = 1468
+cum_tokens = 1552
 
 [batches.content]
 kind = "lines"
@@ -1014,11 +1032,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
-cum_tokens = 1560
+cum_tokens = 1644
 
 [batches.content]
 kind = "lines"
@@ -1040,11 +1058,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 104
-cum_tokens = 1664
+cum_tokens = 1748
 
 [batches.content]
 kind = "lines"
@@ -1058,11 +1076,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Markdown(Section { file: "readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #24"
 cost_tokens = 15
-cum_tokens = 1679
+cum_tokens = 1763
 
 [batches.content]
 kind = "lines"
@@ -1076,11 +1094,11 @@ end = 440
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Typescript(Imports { file: "source/options.ts" })'
 descriptor = "imports in source/options.ts"
 cost_tokens = 20
-cum_tokens = 1699
+cum_tokens = 1783
 
 [batches.content]
 kind = "lines"
@@ -1089,24 +1107,6 @@ kind = "lines"
 path = "source/options.ts"
 start = 1
 end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Typescript(Imports { file: "source/index.ts" })'
-descriptor = "imports in source/index.ts"
-cost_tokens = 84
-cum_tokens = 1783
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 1
-end = 5
 
 [batches.content.spans.render]
 kind = "full"

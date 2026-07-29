@@ -225,7 +225,10 @@ package.json
 src/
     browser.js …
     common.js
-        …
+           2→/**
+           3→ * This is the common logic for both the Node.js and web browser
+           4→ * implementations of `debug()`.
+           5→ */
            7→function setup(env) {
         …
           61→		let prevTime;
@@ -239,8 +242,6 @@ src/
         …
          146→		return debug;
         …
-         163→		createDebug.save(namespaces);
-         164→		createDebug.namespaces = namespaces;
          166→		createDebug.names = [];
          167→		createDebug.skips = [];
         …

@@ -1,4 +1,4 @@
-Score(3000)=0.720 I=0.891 C=0.581 ns_rows≤3K=16/47 (reached=9 partial=0 missing=7)
+Score(3000)=0.729 I=0.901 C=0.589 ns_rows≤3K=16/47 (reached=9 partial=0 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -54,60 +54,60 @@ Score(3000)=0.720 I=0.891 C=0.581 ns_rows≤3K=16/47 (reached=9 partial=0 missin
 | walker |  | 2177 | 0 | export at cmdk/src/index.tsx:909 |  |  | 0.742 |
 | walker |  | 2203 | 26 | export doc at cmdk/src/index.tsx:882 |  |  | 0.742 |
 | walker |  | 2230 | 27 | export doc at cmdk/src/index.tsx:899 |  |  | 0.742 |
-| ns | 2305 |  | 179 | Component declaration roster (all nine forwardRef components) | 2.4 |  | 0.750 |
-| walker |  | 2334 | 104 | export body at cmdk/src/index.tsx:774 body 775 |  |  | 0.750 |
-| walker |  | 2364 | 30 | export doc at cmdk/src/index.tsx:909 |  |  | 0.750 |
-| walker |  | 2401 | 37 | export doc at cmdk/src/index.tsx:729 |  |  | 0.751 |
-| ns | 2414 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.726 |
-| walker |  | 2439 | 38 | export doc at cmdk/src/index.tsx:787 |  |  | 0.727 |
-| walker |  | 2487 | 48 | export doc at cmdk/src/index.tsx:774 |  |  | 0.728 |
-| walker |  | 2539 | 52 | export doc at cmdk/src/index.tsx:833 |  |  | 0.730 |
-| walker |  | 2605 | 66 | export doc at cmdk/src/index.tsx:664 |  |  | 0.734 |
+| walker |  | 2260 | 30 | export doc at cmdk/src/index.tsx:909 |  |  | 0.742 |
+| walker |  | 2297 | 37 | export doc at cmdk/src/index.tsx:729 |  |  | 0.743 |
+| ns | 2305 |  | 179 | Component declaration roster (all nine forwardRef components) | 2.4 |  | 0.751 |
+| walker |  | 2335 | 38 | export doc at cmdk/src/index.tsx:787 |  |  | 0.752 |
+| walker |  | 2383 | 48 | export doc at cmdk/src/index.tsx:774 |  |  | 0.754 |
+| ns | 2414 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.728 |
+| walker |  | 2435 | 52 | export doc at cmdk/src/index.tsx:833 |  |  | 0.730 |
+| walker |  | 2501 | 66 | export doc at cmdk/src/index.tsx:664 |  |  | 0.733 |
 | ns | 2738 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.757 |
 | ns | 2992 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.720 |
-| walker |  | 3100 | 495 | module item names surface in cmdk/src/index.tsx |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:10 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:79 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:154 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:155 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:156 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:157 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:158 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:159 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:160 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:161 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:163 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:164 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:165 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:166 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:167 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:963 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:972 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:981 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:991 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:993 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:1046 |  |  | 0.729 |
-| walker |  | 3100 | 0 | module item at cmdk/src/index.tsx:1061 |  |  | 0.729 |
-| walker |  | 3122 | 22 | module item at cmdk/src/index.tsx:149 |  |  | 0.729 |
-| walker |  | 3172 | 50 | module item at cmdk/src/index.tsx:1071 |  |  | 0.729 |
+| walker |  | 2996 | 495 | module item names surface in cmdk/src/index.tsx |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:10 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:79 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:154 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:155 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:156 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:157 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:158 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:159 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:160 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:161 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:163 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:164 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:165 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:166 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:167 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:963 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:972 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:981 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:991 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:993 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:1046 |  |  | 0.729 |
+| walker |  | 2996 | 0 | module item at cmdk/src/index.tsx:1061 |  |  | 0.729 |
+| walker |  | 3018 | 22 | module item at cmdk/src/index.tsx:149 |  |  | 0.729 |
+| walker |  | 3068 | 50 | module item at cmdk/src/index.tsx:1071 |  |  | 0.729 |
+| walker |  | 3125 | 57 | module item at cmdk/src/index.tsx:137 |  |  | 0.729 |
+| walker |  | 3190 | 65 | module item at cmdk/src/index.tsx:1010 |  |  | 0.729 |
 | ns | 3211 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.699 |
-| walker |  | 3229 | 57 | module item at cmdk/src/index.tsx:137 |  |  | 0.699 |
-| walker |  | 3294 | 65 | module item at cmdk/src/index.tsx:1010 |  |  | 0.699 |
-| walker |  | 3368 | 74 | module item at cmdk/src/index.tsx:143 |  |  | 0.700 |
-| walker |  | 3427 | 59 | module item at cmdk/src/index.tsx:930 |  |  | 0.729 |
+| walker |  | 3264 | 74 | module item at cmdk/src/index.tsx:143 |  |  | 0.700 |
+| walker |  | 3323 | 59 | module item at cmdk/src/index.tsx:930 |  |  | 0.729 |
 | ns | 3438 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.706 |
-| walker |  | 3592 | 165 | module item at cmdk/src/index.tsx:123 |  |  | 0.710 |
+| walker |  | 3488 | 165 | module item at cmdk/src/index.tsx:123 |  |  | 0.710 |
 | ns | 3596 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.692 |
-| walker |  | 3714 | 122 | module item at cmdk/src/index.tsx:1081 |  |  | 0.692 |
-| ns | 3723 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.678 |
-| walker |  | 3822 | 108 | imports in cmdk/src/index.tsx |  |  | 0.698 |
-| walker |  | 3854 | 32 | ARCHITECTURE.md section #4 |  |  | 0.702 |
-| walker |  | 3873 | 19 | README.md section #24 |  |  | 0.702 |
-| walker |  | 4014 | 141 | README.md section #37 |  |  | 0.747 |
-| walker |  | 4073 | 59 | listing of 'test/pages' |  |  | 0.748 |
+| walker |  | 3610 | 122 | module item at cmdk/src/index.tsx:1081 |  |  | 0.692 |
+| walker |  | 3718 | 108 | imports in cmdk/src/index.tsx |  |  | 0.712 |
+| ns | 3723 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.698 |
+| walker |  | 3750 | 32 | ARCHITECTURE.md section #4 |  |  | 0.702 |
+| walker |  | 3769 | 19 | README.md section #24 |  |  | 0.702 |
+| walker |  | 3910 | 141 | README.md section #37 |  |  | 0.746 |
+| walker |  | 3969 | 59 | listing of 'test/pages' |  |  | 0.748 |
+| walker |  | 3995 | 26 | README.md section #19 |  |  | 0.748 |
+| walker |  | 4021 | 26 | README.md section #22 |  |  | 0.748 |
 | ns | 4088 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.742 |
-| walker |  | 4099 | 26 | README.md section #19 |  |  | 0.742 |
-| walker |  | 4125 | 26 | README.md section #22 |  |  | 0.742 |
+| walker |  | 4125 | 104 | export body at cmdk/src/index.tsx:774 body 775 |  |  | 0.742 |
 | walker |  | 4237 | 112 | package dev/peer dependencies in package.json |  |  | 0.742 |
 | walker |  | 4310 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.742 |
 | walker |  | 4335 | 25 | README.md section #23 |  |  | 0.742 |

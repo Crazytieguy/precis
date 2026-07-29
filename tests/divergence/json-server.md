@@ -83,44 +83,44 @@ Score(3000)=0.544 I=0.550 C=0.538 ns_rows≤3K=22/54 (reached=10 partial=0 missi
 | walker |  | 3300 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.521 |
 | ns | 3339 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.513 |
 | ns | 3459 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.522 |
-| walker |  | 3475 | 175 | README.md section #20 |  |  | 0.537 |
-| ns | 3529 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.542 |
-| ns | 3640 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.532 |
-| ns | 3813 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.515 |
-| ns | 3964 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.505 |
-| ns | 4187 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.490 |
-| walker |  | 4207 | 732 | README.md section #2 |  |  | 0.638 |
-| walker |  | 4262 | 55 | README.md section #12 |  |  | 0.647 |
-| walker |  | 4323 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.656 |
-| walker |  | 4336 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.658 |
-| walker |  | 4385 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.666 |
-| walker |  | 4399 | 14 | imports in src/adapters/observer.ts |  |  | 0.666 |
-| ns | 4407 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.642 |
-| walker |  | 4516 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.644 |
-| ns | 4520 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.630 |
-| walker |  | 4587 | 71 | README.md section #17 |  |  | 0.634 |
-| ns | 4640 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.641 |
-| walker |  | 4741 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.665 |
-| walker |  | 4827 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.668 |
-| ns | 4918 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.648 |
-| walker |  | 4933 | 106 | README.md section #4 |  |  | 0.648 |
-| ns | 5144 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.629 |
-| walker |  | 5288 | 355 | export at src/service.ts:81 |  |  | 0.667 |
-| walker |  | 5330 | 42 | imports in src/matches-where.ts |  |  | 0.667 |
+| ns | 3529 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.527 |
+| ns | 3640 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.518 |
+| walker |  | 3655 | 355 | export at src/service.ts:81 |  |  | 0.561 |
+| ns | 3813 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.543 |
+| walker |  | 3830 | 175 | README.md section #20 |  |  | 0.557 |
+| ns | 3964 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.546 |
+| ns | 4187 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.529 |
+| ns | 4407 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.510 |
+| ns | 4520 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.500 |
+| walker |  | 4562 | 732 | README.md section #2 |  |  | 0.647 |
+| walker |  | 4617 | 55 | README.md section #12 |  |  | 0.655 |
+| ns | 4640 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.645 |
+| walker |  | 4678 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.653 |
+| walker |  | 4691 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.654 |
+| walker |  | 4740 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.661 |
+| walker |  | 4754 | 14 | imports in src/adapters/observer.ts |  |  | 0.661 |
+| walker |  | 4871 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.679 |
+| ns | 4918 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.659 |
+| walker |  | 4942 | 71 | README.md section #17 |  |  | 0.662 |
+| walker |  | 5096 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.684 |
+| ns | 5144 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.664 |
+| walker |  | 5182 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.667 |
+| walker |  | 5286 | 104 | imports in src/service.ts |  |  | 0.667 |
+| walker |  | 5392 | 106 | README.md section #4 |  |  | 0.667 |
 | ns | 5400 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.648 |
-| walker |  | 5489 | 159 | README.md section #5 |  |  | 0.648 |
-| walker |  | 5616 | 127 | README.md section #11 |  |  | 0.662 |
-| walker |  | 5673 | 57 | imports in src/parse-where.ts |  |  | 0.662 |
-| walker |  | 5813 | 140 | README.md section #10 |  |  | 0.680 |
-| ns | 5865 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.660 |
-| walker |  | 5968 | 155 | README.md section #14 |  |  | 0.677 |
+| walker |  | 5434 | 42 | imports in src/matches-where.ts |  |  | 0.648 |
+| walker |  | 5593 | 159 | README.md section #5 |  |  | 0.648 |
+| walker |  | 5720 | 127 | README.md section #11 |  |  | 0.662 |
+| walker |  | 5777 | 57 | imports in src/parse-where.ts |  |  | 0.662 |
+| ns | 5865 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.643 |
+| walker |  | 5917 | 140 | README.md section #10 |  |  | 0.660 |
+| walker |  | 6072 | 155 | README.md section #14 |  |  | 0.677 |
 | ns | 6106 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.659 |
-| walker |  | 6290 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.661 |
-| ns | 6392 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.644 |
-| walker |  | 6541 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.648 |
-| walker |  | 6589 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.648 |
+| ns | 6392 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.642 |
+| walker |  | 6394 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.644 |
+| walker |  | 6645 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.648 |
 | ns | 6692 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.630 |
-| walker |  | 6693 | 104 | imports in src/service.ts |  |  | 0.630 |
+| walker |  | 6693 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.630 |
 | ns | 6944 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.639 |
 | walker |  | 7019 | 326 | README.md section #3 |  |  | 0.639 |
 | walker |  | 7190 | 171 | imports in src/app.ts |  |  | 0.641 |

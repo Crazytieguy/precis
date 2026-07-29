@@ -1,4 +1,4 @@
-Score(3000)=0.569 I=0.780 C=0.416 ns_rows≤3K=21/54 (reached=10 partial=0 missing=11)
+Score(3000)=0.575 I=0.784 C=0.422 ns_rows≤3K=21/54 (reached=10 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,98 +44,98 @@ Score(3000)=0.569 I=0.780 C=0.416 ns_rows≤3K=21/54 (reached=10 partial=0 missi
 | walker |  | 1632 | 261 | README.md section #8 |  |  | 0.530 |
 | ns | 1645 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.510 |
 | walker |  | 1761 | 129 | README.md section #14 |  |  | 0.513 |
-| ns | 1803 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.540 |
-| walker |  | 1928 | 167 | README.md section #7 |  |  | 0.543 |
-| walker |  | 1940 | 12 | export body at src/common.js:7 body 166 |  |  | 0.543 |
-| walker |  | 1966 | 26 | imports in test.js |  |  | 0.543 |
-| ns | 1989 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.522 |
-| ns | 2156 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.545 |
-| walker |  | 2183 | 217 | README.md section #5 |  |  | 0.545 |
-| walker |  | 2194 | 11 | export body at src/common.js:7 body 167 |  |  | 0.545 |
-| ns | 2218 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.536 |
-| walker |  | 2434 | 240 | package dev/peer dependencies in package.json |  |  | 0.537 |
-| ns | 2439 |  | 221 | README: the canonical usage example | 3.5 |  | 0.510 |
-| ns | 2646 |  | 207 | README: namespace colors — when they turn on, per environment | 3.6 |  | 0.497 |
-| walker |  | 2823 | 389 | README.md section #9 |  |  | 0.543 |
-| walker |  | 2835 | 12 | export body at src/common.js:7 body 164 |  |  | 0.543 |
-| walker |  | 2846 | 11 | export body at src/common.js:7 body 163 |  |  | 0.543 |
-| ns | 2856 |  | 210 | README: namespace naming conventions + the `DEBUG_*` → `util.inspect` options note | 3.7 |  | 0.554 |
-| ns | 2950 |  | 94 | README: checking and forcing `debug.enabled` | 3.8 |  | 0.569 |
-| walker |  | 3075 | 229 | README.md section #15 |  |  | 0.572 |
-| ns | 3076 |  | 126 | README: `log.extend()` for sub-namespaces | 3.9 |  | 0.588 |
-| walker |  | 3125 | 50 | imports in test.node.js |  |  | 0.588 |
-| ns | 3201 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.570 |
-| ns | 3381 |  | 180 | README: `enable(namespaces)` / `disable()` contract and the round-trip caveat | 3.11 |  | 0.553 |
-| walker |  | 3495 | 370 | README.md section #4 |  |  | 0.582 |
-| ns | 3571 |  | 190 | README: adding a custom formatter | 3.12 |  | 0.598 |
-| walker |  | 3647 | 152 | export names surface in src/browser.js |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:7 |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:115 |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:149 |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:192 |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:200 |  |  | 0.622 |
-| walker |  | 3647 | 0 | export at src/browser.js:219 |  |  | 0.622 |
-| walker |  | 3661 | 14 | export body at src/common.js:7 body 117 |  |  | 0.622 |
-| walker |  | 3673 | 12 | export body at src/common.js:7 body 118 |  |  | 0.622 |
-| walker |  | 3687 | 14 | export body at src/common.js:7 body 193 |  |  | 0.622 |
-| walker |  | 3699 | 12 | export body at src/common.js:7 body 194 |  |  | 0.622 |
-| walker |  | 3711 | 12 | export body at src/common.js:7 body 195 |  |  | 0.622 |
-| walker |  | 3723 | 12 | export body at src/common.js:7 body 196 |  |  | 0.622 |
-| walker |  | 3737 | 14 | export body at src/common.js:7 body 224 |  |  | 0.622 |
-| ns | 3743 |  | 172 | README: redirecting output by overriding `log` | 3.13 |  | 0.605 |
-| walker |  | 3752 | 15 | export body at src/common.js:7 body 219 |  |  | 0.605 |
-| walker |  | 3769 | 17 | export body at src/common.js:7 body 141 |  |  | 0.605 |
-| walker |  | 3794 | 25 | export body at src/common.js:7 body 120 |  |  | 0.605 |
-| walker |  | 3825 | 31 | export body at src/common.js:7 body 142 |  |  | 0.606 |
-| walker |  | 3860 | 35 | export body at src/common.js:7 body 220 |  |  | 0.606 |
-| walker |  | 3898 | 38 | export body at src/common.js:7 body 284 |  |  | 0.606 |
-| walker |  | 3939 | 41 | export body at src/common.js:7 body 273 |  |  | 0.606 |
-| ns | 3974 |  | 231 | README: browser build, `localStorage.debug`, and the Chromium Verbose caveat | 3.14 |  | 0.592 |
-| walker |  | 3991 | 52 | export body at src/common.js:7 body 150 |  |  | 0.592 |
-| walker |  | 4049 | 58 | export body at src/common.js:7 body 169 |  |  | 0.593 |
-| ns | 4067 |  | 93 | README: setting `DEBUG` on Windows (CMD and PowerShell) | 3.15 |  | 0.582 |
-| walker |  | 4115 | 66 | export body at src/common.js:7 body 234 |  |  | 0.583 |
-| ns | 4167 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.584 |
-| walker |  | 4213 | 98 | export at src/browser.js:12 |  |  | 0.586 |
-| walker |  | 4289 | 76 | export body at src/common.js:7 body 175 |  |  | 0.588 |
-| ns | 4362 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.601 |
-| walker |  | 4377 | 88 | export body at src/common.js:7 body 8 |  |  | 0.618 |
-| walker |  | 4469 | 92 | export body at src/common.js:7 body 41 |  |  | 0.636 |
-| ns | 4477 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.632 |
-| walker |  | 4735 | 266 | README.md section #11 |  |  | 0.660 |
-| ns | 4793 |  | 316 | test.js: header plus every `describe`/`it` title | 4.2 |  | 0.641 |
-| walker |  | 4841 | 106 | export body at src/browser.js:200 body 201 |  |  | 0.642 |
-| walker |  | 4867 | 26 | export doc at src/browser.js:7 |  |  | 0.651 |
-| ns | 4971 |  | 178 | test.node.js: the node-only suite and its sinon harness | 4.3 |  | 0.636 |
-| walker |  | 4976 | 109 | export body at src/common.js:7 body 42 |  |  | 0.637 |
-| walker |  | 5002 | 26 | imports in src/node.js |  |  | 0.637 |
-| ns | 5115 |  | 144 | karma.conf.js: frameworks and the browser test file set | 4.4 |  | 0.627 |
-| ns | 5247 |  | 132 | .travis.yml in full — the CI matrix | 4.5 |  | 0.637 |
-| walker |  | 5506 | 504 | README.md section #2 |  |  | 0.668 |
-| ns | 5534 |  | 287 | karma.conf.js: launcher, preprocessors and run mode | 4.6 | 4.4 | 0.645 |
-| walker |  | 5627 | 121 | export body at src/common.js:7 body 250 |  |  | 0.647 |
-| walker |  | 5663 | 36 | export doc at src/browser.js:149 |  |  | 0.647 |
-| ns | 5733 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.651 |
-| walker |  | 5864 | 201 | export names surface in src/node.js |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:12 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:27 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:155 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:167 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:193 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:203 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:220 |  |  | 0.672 |
-| walker |  | 5864 | 0 | export at src/node.js:231 |  |  | 0.672 |
-| walker |  | 5887 | 23 | export body at src/node.js:193 body 194 |  |  | 0.672 |
-| walker |  | 5934 | 47 | export at src/node.js:18 |  |  | 0.677 |
-| ns | 5951 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.660 |
-| walker |  | 5973 | 39 | export body at src/node.js:155 body 156 |  |  | 0.660 |
-| walker |  | 5988 | 15 | export doc at src/node.js:27 |  |  | 0.660 |
-| walker |  | 6077 | 89 | export body at src/node.js:203 body 204 |  |  | 0.660 |
-| walker |  | 6101 | 24 | export doc at src/node.js:12 |  |  | 0.668 |
-| walker |  | 6130 | 29 | export doc at src/node.js:155 |  |  | 0.668 |
-| walker |  | 6162 | 32 | export doc at src/node.js:193 |  |  | 0.668 |
-| walker |  | 6199 | 37 | export doc at src/node.js:167 |  |  | 0.668 |
-| walker |  | 6237 | 38 | export doc at src/common.js:7 |  |  | 0.682 |
+| walker |  | 1799 | 38 | export doc at src/common.js:7 |  |  | 0.522 |
+| ns | 1803 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.548 |
+| walker |  | 1966 | 167 | README.md section #7 |  |  | 0.551 |
+| ns | 1989 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.530 |
+| walker |  | 1992 | 26 | imports in test.js |  |  | 0.530 |
+| ns | 2156 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.552 |
+| walker |  | 2209 | 217 | README.md section #5 |  |  | 0.552 |
+| ns | 2218 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.543 |
+| walker |  | 2221 | 12 | export body at src/common.js:7 body 166 |  |  | 0.543 |
+| ns | 2439 |  | 221 | README: the canonical usage example | 3.5 |  | 0.516 |
+| walker |  | 2461 | 240 | package dev/peer dependencies in package.json |  |  | 0.517 |
+| walker |  | 2472 | 11 | export body at src/common.js:7 body 167 |  |  | 0.517 |
+| ns | 2646 |  | 207 | README: namespace colors — when they turn on, per environment | 3.6 |  | 0.504 |
+| ns | 2856 |  | 210 | README: namespace naming conventions + the `DEBUG_*` → `util.inspect` options note | 3.7 |  | 0.516 |
+| walker |  | 2861 | 389 | README.md section #9 |  |  | 0.560 |
+| ns | 2950 |  | 94 | README: checking and forcing `debug.enabled` | 3.8 |  | 0.575 |
+| ns | 3076 |  | 126 | README: `log.extend()` for sub-namespaces | 3.9 |  | 0.591 |
+| walker |  | 3090 | 229 | README.md section #15 |  |  | 0.594 |
+| walker |  | 3140 | 50 | imports in test.node.js |  |  | 0.594 |
+| walker |  | 3152 | 12 | export body at src/common.js:7 body 164 |  |  | 0.594 |
+| ns | 3201 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.576 |
+| ns | 3381 |  | 180 | README: `enable(namespaces)` / `disable()` contract and the round-trip caveat | 3.11 |  | 0.558 |
+| walker |  | 3522 | 370 | README.md section #4 |  |  | 0.587 |
+| ns | 3571 |  | 190 | README: adding a custom formatter | 3.12 |  | 0.603 |
+| walker |  | 3674 | 152 | export names surface in src/browser.js |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:7 |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:115 |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:149 |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:192 |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:200 |  |  | 0.627 |
+| walker |  | 3674 | 0 | export at src/browser.js:219 |  |  | 0.627 |
+| walker |  | 3685 | 11 | export body at src/common.js:7 body 163 |  |  | 0.627 |
+| walker |  | 3699 | 14 | export body at src/common.js:7 body 117 |  |  | 0.627 |
+| walker |  | 3711 | 12 | export body at src/common.js:7 body 118 |  |  | 0.627 |
+| walker |  | 3725 | 14 | export body at src/common.js:7 body 193 |  |  | 0.627 |
+| walker |  | 3737 | 12 | export body at src/common.js:7 body 194 |  |  | 0.627 |
+| ns | 3743 |  | 172 | README: redirecting output by overriding `log` | 3.13 |  | 0.610 |
+| walker |  | 3749 | 12 | export body at src/common.js:7 body 195 |  |  | 0.610 |
+| walker |  | 3761 | 12 | export body at src/common.js:7 body 196 |  |  | 0.610 |
+| walker |  | 3775 | 14 | export body at src/common.js:7 body 224 |  |  | 0.610 |
+| walker |  | 3790 | 15 | export body at src/common.js:7 body 219 |  |  | 0.610 |
+| walker |  | 3807 | 17 | export body at src/common.js:7 body 141 |  |  | 0.610 |
+| walker |  | 3832 | 25 | export body at src/common.js:7 body 120 |  |  | 0.610 |
+| walker |  | 3863 | 31 | export body at src/common.js:7 body 142 |  |  | 0.610 |
+| walker |  | 3898 | 35 | export body at src/common.js:7 body 220 |  |  | 0.610 |
+| walker |  | 3936 | 38 | export body at src/common.js:7 body 284 |  |  | 0.610 |
+| ns | 3974 |  | 231 | README: browser build, `localStorage.debug`, and the Chromium Verbose caveat | 3.14 |  | 0.596 |
+| walker |  | 3977 | 41 | export body at src/common.js:7 body 273 |  |  | 0.597 |
+| walker |  | 4029 | 52 | export body at src/common.js:7 body 150 |  |  | 0.597 |
+| ns | 4067 |  | 93 | README: setting `DEBUG` on Windows (CMD and PowerShell) | 3.15 |  | 0.586 |
+| walker |  | 4087 | 58 | export body at src/common.js:7 body 169 |  |  | 0.587 |
+| walker |  | 4153 | 66 | export body at src/common.js:7 body 234 |  |  | 0.587 |
+| ns | 4167 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.589 |
+| walker |  | 4251 | 98 | export at src/browser.js:12 |  |  | 0.591 |
+| walker |  | 4327 | 76 | export body at src/common.js:7 body 175 |  |  | 0.592 |
+| ns | 4362 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.605 |
+| walker |  | 4415 | 88 | export body at src/common.js:7 body 8 |  |  | 0.636 |
+| ns | 4477 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.631 |
+| walker |  | 4507 | 92 | export body at src/common.js:7 body 41 |  |  | 0.649 |
+| walker |  | 4773 | 266 | README.md section #11 |  |  | 0.677 |
+| ns | 4793 |  | 316 | test.js: header plus every `describe`/`it` title | 4.2 |  | 0.658 |
+| walker |  | 4879 | 106 | export body at src/browser.js:200 body 201 |  |  | 0.658 |
+| walker |  | 4905 | 26 | export doc at src/browser.js:7 |  |  | 0.667 |
+| ns | 4971 |  | 178 | test.node.js: the node-only suite and its sinon harness | 4.3 |  | 0.652 |
+| walker |  | 5014 | 109 | export body at src/common.js:7 body 42 |  |  | 0.652 |
+| walker |  | 5040 | 26 | imports in src/node.js |  |  | 0.653 |
+| ns | 5115 |  | 144 | karma.conf.js: frameworks and the browser test file set | 4.4 |  | 0.642 |
+| ns | 5247 |  | 132 | .travis.yml in full — the CI matrix | 4.5 |  | 0.652 |
+| ns | 5534 |  | 287 | karma.conf.js: launcher, preprocessors and run mode | 4.6 | 4.4 | 0.630 |
+| walker |  | 5544 | 504 | README.md section #2 |  |  | 0.659 |
+| walker |  | 5665 | 121 | export body at src/common.js:7 body 250 |  |  | 0.661 |
+| walker |  | 5701 | 36 | export doc at src/browser.js:149 |  |  | 0.661 |
+| ns | 5733 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.665 |
+| walker |  | 5902 | 201 | export names surface in src/node.js |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:12 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:27 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:155 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:167 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:193 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:203 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:220 |  |  | 0.686 |
+| walker |  | 5902 | 0 | export at src/node.js:231 |  |  | 0.686 |
+| walker |  | 5925 | 23 | export body at src/node.js:193 body 194 |  |  | 0.686 |
+| ns | 5951 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.669 |
+| walker |  | 5972 | 47 | export at src/node.js:18 |  |  | 0.673 |
+| walker |  | 6011 | 39 | export body at src/node.js:155 body 156 |  |  | 0.673 |
+| walker |  | 6026 | 15 | export doc at src/node.js:27 |  |  | 0.673 |
+| walker |  | 6115 | 89 | export body at src/node.js:203 body 204 |  |  | 0.673 |
+| walker |  | 6139 | 24 | export doc at src/node.js:12 |  |  | 0.682 |
+| walker |  | 6168 | 29 | export doc at src/node.js:155 |  |  | 0.682 |
+| walker |  | 6200 | 32 | export doc at src/node.js:193 |  |  | 0.682 |
+| walker |  | 6237 | 37 | export doc at src/node.js:167 |  |  | 0.682 |
 | ns | 6265 |  | 314 | src/common.js: `debug(...args)` — the `%`-formatter substitution loop and log dispatch | 5.3 | 5.2 | 0.662 |
 | walker |  | 6281 | 44 | export doc at src/browser.js:200 |  |  | 0.662 |
 | ns | 6599 |  | 334 | src/common.js: per-instance properties and the `enabled` getter/setter | 5.4 | 2.3 | 0.645 |

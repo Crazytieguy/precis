@@ -91,105 +91,102 @@ Score(3000)=0.763 I=0.889 C=0.655 ns_rows≤3K=21/54 (reached=13 partial=3 missi
 | walker |  | 3972 | 19 | c decl body at sds.c:307 |  |  | 0.728 |
 | walker |  | 3991 | 19 | c decl body at sds.c:421 |  |  | 0.728 |
 | ns | 4007 |  | 216 | sdsHdrSize() and sdsReqType() — the type-selection policy | 4.4 | 4.1 | 0.700 |
-| walker |  | 4011 | 20 | c decl doc at sds.c:154 |  |  | 0.700 |
-| walker |  | 4038 | 27 | c decl body at sds.c:184 |  |  | 0.700 |
-| walker |  | 4065 | 27 | c decl body at sds.c:193 |  |  | 0.701 |
-| walker |  | 4086 | 21 | c decl doc at sds.c:494 |  |  | 0.701 |
-| walker |  | 4108 | 22 | c decl doc at sds.c:534 |  |  | 0.701 |
-| walker |  | 4131 | 23 | c decl doc at sds.c:165 |  |  | 0.701 |
-| walker |  | 4163 | 32 | c decl body at sds.c:165 |  |  | 0.701 |
-| walker |  | 4195 | 32 | c decl body at sds.c:300 |  |  | 0.701 |
-| ns | 4216 |  | 209 | sdsnewlen() doc comment — NULL vs SDS_NOINIT init, and the always-null-terminated guarantee | 4.5 |  | 0.685 |
-| walker |  | 4232 | 37 | c decl body at sds.c:154 |  |  | 0.686 |
-| walker |  | 4266 | 34 | c decl doc at sds.c:307 |  |  | 0.686 |
-| walker |  | 4302 | 36 | c decl doc at sds.c:149 |  |  | 0.687 |
-| walker |  | 4349 | 47 | c decl body at sds.c:526 |  |  | 0.687 |
-| walker |  | 4432 | 83 | c includes in sds.c |  |  | 0.708 |
-| walker |  | 4473 | 41 | c decl doc at sds.c:440 |  |  | 0.708 |
-| walker |  | 4515 | 42 | c decl doc at sds.c:427 |  |  | 0.708 |
-| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.680 |
-| walker |  | 4680 | 165 | c decl body at sds.h:87 |  |  | 0.708 |
-| walker |  | 4845 | 165 | c decl body at sds.h:180 |  |  | 0.716 |
-| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.688 |
-| walker |  | 4896 | 51 | c decl doc at sds.c:526 |  |  | 0.688 |
-| walker |  | 5101 | 205 | c decl body at sds.h:197 |  |  | 0.705 |
-| walker |  | 5168 | 67 | c decl doc at sds.c:421 |  |  | 0.705 |
-| ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.680 |
-| walker |  | 5405 | 237 | c decl body at sds.h:130 |  |  | 0.687 |
-| walker |  | 5473 | 68 | c decl doc at sds.c:413 |  |  | 0.687 |
-| ns | 5486 |  | 233 | sdsempty/sdsnew/sdsdup/sdsfree bodies, with sdsfree's NULL contract | 4.9 | 4.1 | 0.689 |
-| walker |  | 5542 | 69 | c decl doc at sds.c:193 |  |  | 0.690 |
-| walker |  | 5786 | 244 | c decl body at sds.h:104 |  |  | 0.707 |
-| ns | 5808 |  | 322 | sdsIncrLen() doc comment — the zero-copy read-into-the-buffer pattern | 4.10 |  | 0.686 |
-| ns | 6023 |  | 215 | sdscatfmt() doc comment — the supported format specifiers | 4.11 |  | 0.673 |
-| walker |  | 6038 | 252 | c decl body at sds.h:154 |  |  | 0.697 |
-| walker |  | 6111 | 73 | c decl doc at sds.c:380 |  |  | 0.697 |
-| ns | 6118 |  | 95 | README: the error-handling contract (NULL on out of memory) | 5.1 |  | 0.692 |
-| walker |  | 6211 | 100 | c decl body at sds.c:427 |  |  | 0.692 |
-| walker |  | 6315 | 104 | c decl body at sds.c:398 |  |  | 0.693 |
-| ns | 6345 |  | 227 | README: the preallocation algorithm and the SDS_MAX_PREALLOC cap | 5.2 |  | 0.682 |
-| ns | 6485 |  | 140 | README: the internals section's `struct sdshdr` — documentation that is stale | 5.3 |  | 0.673 |
-| ns | 6751 |  | 266 | README: the two disadvantages — reassign the return value, and shared strings | 5.4 |  | 0.664 |
-| walker |  | 6755 | 440 | c decl names surface #1 in sds.c |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:591 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:616 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:725 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:756 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:783 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:790 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:807 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:835 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:885 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:898 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:925 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:932 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:973 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:1092 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:1108 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:1120 |  |  | 0.695 |
-| walker |  | 6755 | 0 | c decl at sds.c:1136 |  |  | 0.695 |
-| walker |  | 6775 | 20 | c decl doc at sds.c:1120 |  |  | 0.695 |
-| walker |  | 6796 | 21 | c decl doc at sds.c:783 |  |  | 0.695 |
-| walker |  | 6817 | 21 | c decl doc at sds.c:790 |  |  | 0.695 |
-| walker |  | 6843 | 26 | c decl doc at sds.c:885 |  |  | 0.695 |
-| walker |  | 6882 | 39 | c decl body at sds.c:885 |  |  | 0.695 |
-| walker |  | 6915 | 33 | c decl doc at sds.c:925 |  |  | 0.695 |
-| walker |  | 6949 | 34 | c decl doc at sds.c:932 |  |  | 0.695 |
-| ns | 6968 |  | 217 | README basics: `sds` is a `char *`, and the three rules of the minimal program | 5.5 |  | 0.686 |
-| walker |  | 6997 | 48 | c decl body at sds.c:783 |  |  | 0.686 |
-| walker |  | 7045 | 48 | c decl body at sds.c:790 |  |  | 0.686 |
-| walker |  | 7094 | 49 | c decl body at sds.c:925 |  |  | 0.686 |
-| walker |  | 7132 | 38 | c decl doc at sds.c:1108 |  |  | 0.686 |
-| ns | 7160 |  | 192 | README: why sdstrim/sdsrange return void, and how negative indexes work | 5.6 |  | 0.678 |
-| walker |  | 7196 | 64 | c decl body at sds.c:591 |  |  | 0.678 |
-| walker |  | 7300 | 104 | c decl body at sds.c:1108 |  |  | 0.678 |
-| ns | 7382 |  | 222 | README: swapping the allocator, and why sds_malloc/sds_realloc/sds_free are exported | 5.7 |  | 0.670 |
-| walker |  | 7408 | 108 | c decl body at sds.c:1120 |  |  | 0.670 |
-| walker |  | 7493 | 85 | c decl doc at sds.c:398 |  |  | 0.670 |
-| ns | 7527 |  | 145 | README: the exact escaping rules sdscatrepr applies | 5.8 |  | 0.666 |
-| walker |  | 7581 | 88 | c decl doc at sds.c:300 |  |  | 0.666 |
-| walker |  | 7667 | 86 | c decl doc at sds.c:450 |  |  | 0.666 |
+| walker |  | 4074 | 83 | c includes in sds.c |  |  | 0.722 |
+| walker |  | 4094 | 20 | c decl doc at sds.c:154 |  |  | 0.722 |
+| walker |  | 4121 | 27 | c decl body at sds.c:184 |  |  | 0.722 |
+| walker |  | 4148 | 27 | c decl body at sds.c:193 |  |  | 0.722 |
+| walker |  | 4169 | 21 | c decl doc at sds.c:494 |  |  | 0.722 |
+| walker |  | 4191 | 22 | c decl doc at sds.c:534 |  |  | 0.722 |
+| walker |  | 4214 | 23 | c decl doc at sds.c:165 |  |  | 0.722 |
+| ns | 4216 |  | 209 | sdsnewlen() doc comment — NULL vs SDS_NOINIT init, and the always-null-terminated guarantee | 4.5 |  | 0.706 |
+| walker |  | 4246 | 32 | c decl body at sds.c:165 |  |  | 0.707 |
+| walker |  | 4278 | 32 | c decl body at sds.c:300 |  |  | 0.707 |
+| walker |  | 4315 | 37 | c decl body at sds.c:154 |  |  | 0.707 |
+| walker |  | 4349 | 34 | c decl doc at sds.c:307 |  |  | 0.708 |
+| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.679 |
+| walker |  | 4789 | 440 | c decl names surface #1 in sds.c |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:591 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:616 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:725 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:756 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:783 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:790 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:807 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:835 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:885 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:898 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:925 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:932 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:973 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:1092 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:1108 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:1120 |  |  | 0.720 |
+| walker |  | 4789 | 0 | c decl at sds.c:1136 |  |  | 0.720 |
+| walker |  | 4809 | 20 | c decl doc at sds.c:1120 |  |  | 0.720 |
+| walker |  | 4830 | 21 | c decl doc at sds.c:783 |  |  | 0.720 |
+| walker |  | 4851 | 21 | c decl doc at sds.c:790 |  |  | 0.720 |
+| walker |  | 4877 | 26 | c decl doc at sds.c:885 |  |  | 0.720 |
+| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.692 |
+| walker |  | 4916 | 39 | c decl body at sds.c:885 |  |  | 0.692 |
+| walker |  | 4949 | 33 | c decl doc at sds.c:925 |  |  | 0.692 |
+| walker |  | 4983 | 34 | c decl doc at sds.c:932 |  |  | 0.692 |
+| walker |  | 5019 | 36 | c decl doc at sds.c:149 |  |  | 0.693 |
+| walker |  | 5066 | 47 | c decl body at sds.c:526 |  |  | 0.693 |
+| walker |  | 5114 | 48 | c decl body at sds.c:783 |  |  | 0.693 |
+| walker |  | 5162 | 48 | c decl body at sds.c:790 |  |  | 0.693 |
+| walker |  | 5211 | 49 | c decl body at sds.c:925 |  |  | 0.693 |
+| walker |  | 5249 | 38 | c decl doc at sds.c:1108 |  |  | 0.693 |
+| ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.668 |
+| walker |  | 5290 | 41 | c decl doc at sds.c:440 |  |  | 0.668 |
+| walker |  | 5332 | 42 | c decl doc at sds.c:427 |  |  | 0.668 |
+| ns | 5486 |  | 233 | sdsempty/sdsnew/sdsdup/sdsfree bodies, with sdsfree's NULL contract | 4.9 | 4.1 | 0.671 |
+| walker |  | 5497 | 165 | c decl body at sds.h:87 |  |  | 0.695 |
+| walker |  | 5662 | 165 | c decl body at sds.h:180 |  |  | 0.701 |
+| walker |  | 5726 | 64 | c decl body at sds.c:591 |  |  | 0.701 |
+| walker |  | 5777 | 51 | c decl doc at sds.c:526 |  |  | 0.701 |
+| ns | 5808 |  | 322 | sdsIncrLen() doc comment — the zero-copy read-into-the-buffer pattern | 4.10 |  | 0.681 |
+| walker |  | 5982 | 205 | c decl body at sds.h:197 |  |  | 0.696 |
+| ns | 6023 |  | 215 | sdscatfmt() doc comment — the supported format specifiers | 4.11 |  | 0.682 |
+| walker |  | 6049 | 67 | c decl doc at sds.c:421 |  |  | 0.682 |
+| ns | 6118 |  | 95 | README: the error-handling contract (NULL on out of memory) | 5.1 |  | 0.677 |
+| walker |  | 6286 | 237 | c decl body at sds.h:130 |  |  | 0.684 |
+| ns | 6345 |  | 227 | README: the preallocation algorithm and the SDS_MAX_PREALLOC cap | 5.2 |  | 0.673 |
+| walker |  | 6354 | 68 | c decl doc at sds.c:413 |  |  | 0.673 |
+| walker |  | 6423 | 69 | c decl doc at sds.c:193 |  |  | 0.674 |
+| ns | 6485 |  | 140 | README: the internals section's `struct sdshdr` — documentation that is stale | 5.3 |  | 0.665 |
+| walker |  | 6667 | 244 | c decl body at sds.h:104 |  |  | 0.680 |
+| ns | 6751 |  | 266 | README: the two disadvantages — reassign the return value, and shared strings | 5.4 |  | 0.671 |
+| walker |  | 6919 | 252 | c decl body at sds.h:154 |  |  | 0.694 |
+| ns | 6968 |  | 217 | README basics: `sds` is a `char *`, and the three rules of the minimal program | 5.5 |  | 0.685 |
+| walker |  | 6992 | 73 | c decl doc at sds.c:380 |  |  | 0.685 |
+| walker |  | 7092 | 100 | c decl body at sds.c:427 |  |  | 0.685 |
+| ns | 7160 |  | 192 | README: why sdstrim/sdsrange return void, and how negative indexes work | 5.6 |  | 0.677 |
+| ns | 7382 |  | 222 | README: swapping the allocator, and why sds_malloc/sds_realloc/sds_free are exported | 5.7 |  | 0.669 |
+| ns | 7527 |  | 145 | README: the exact escaping rules sdscatrepr applies | 5.8 |  | 0.665 |
+| walker |  | 7583 | 491 | c header banner in sds.c |  |  | 0.665 |
+| walker |  | 7687 | 104 | c decl body at sds.c:398 |  |  | 0.666 |
 | ns | 7716 |  | 189 | README: tokenizer ownership rules and sdssplitargs' quoting behaviour | 5.9 |  | 0.658 |
-| walker |  | 7765 | 98 | c decl doc at sds.c:256 |  |  | 0.658 |
+| walker |  | 7791 | 104 | c decl body at sds.c:1108 |  |  | 0.658 |
 | ns | 7880 |  | 164 | README: the camelCase warning and how heap checkers see SDS strings | 5.10 |  | 0.654 |
-| walker |  | 7898 | 133 | c decl body at sds.c:1092 |  |  | 0.654 |
-| walker |  | 8001 | 103 | c decl doc at sds.c:1136 |  |  | 0.654 |
+| walker |  | 7899 | 108 | c decl body at sds.c:1120 |  |  | 0.654 |
+| walker |  | 7984 | 85 | c decl doc at sds.c:398 |  |  | 0.654 |
+| walker |  | 8072 | 88 | c decl doc at sds.c:300 |  |  | 0.654 |
+| walker |  | 8158 | 86 | c decl doc at sds.c:450 |  |  | 0.654 |
 | ns | 8197 |  | 317 | sdsrange() body — negative-index normalisation and clamping | 6.1 | 4.2 | 0.638 |
+| walker |  | 8256 | 98 | c decl doc at sds.c:256 |  |  | 0.638 |
 | ns | 8383 |  | 186 | sdscatlen/sdscat/sdscatsds bodies — the append path | 6.2 | 4.1 | 0.643 |
-| walker |  | 8426 | 425 | README.md section #1 |  |  | 0.643 |
+| walker |  | 8389 | 133 | c decl body at sds.c:1092 |  |  | 0.643 |
+| walker |  | 8492 | 103 | c decl doc at sds.c:1136 |  |  | 0.643 |
 | ns | 8591 |  | 208 | sdsRemoveFreeSpace() — contract and the shrink decision | 6.3 | 4.1 | 0.633 |
 | ns | 8763 |  | 172 | sdstrim() body — how both ends are walked and the survivor moved down | 6.4 | 4.2 | 0.626 |
-| walker |  | 8844 | 418 | README.md section #2 |  |  | 0.639 |
-| ns | 9015 |  | 252 | sdssplitargs() doc comment — REPL-style parsing and its failure mode | 6.5 |  | 0.629 |
-| walker |  | 9252 | 408 | README.md section #3 |  |  | 0.631 |
-| ns | 9256 |  | 241 | The small inspect/reset bodies: sdsupdatelen, sdsclear, sdsAllocSize, sdsAllocPtr | 6.6 | 4.1 | 0.636 |
-| ns | 9375 |  | 119 | The test entry points in sds.c: the SDS_TEST_MAIN guard, sdsTest() and main() | 7.1 | 4.2 | 0.629 |
-| walker |  | 9387 | 135 | c decl body at sds.c:380 |  |  | 0.629 |
-| walker |  | 9525 | 138 | c decl body at sds.c:807 |  |  | 0.629 |
-| ns | 9582 |  | 207 | testhelp.h: the complete test_cond / test_report macro pair | 7.2 |  | 0.635 |
-| walker |  | 9635 | 110 | c decl doc at sds.c:898 |  |  | 0.635 |
-| ns | 9665 |  | 83 | A representative excerpt of the sdsTest() body | 7.3 |  | 0.632 |
-| walker |  | 9746 | 111 | c decl doc at sds.c:204 |  |  | 0.635 |
-| ns | 9794 |  | 129 | The complete Changelog (v1.0 and v2.0) | 7.4 |  | 0.629 |
-| walker |  | 9903 | 157 | c decl body at sds.c:725 |  |  | 0.642 |
-| ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.638 |
+| walker |  | 8917 | 425 | README.md section #1 |  |  | 0.626 |
+| ns | 9015 |  | 252 | sdssplitargs() doc comment — REPL-style parsing and its failure mode | 6.5 |  | 0.616 |
+| ns | 9256 |  | 241 | The small inspect/reset bodies: sdsupdatelen, sdsclear, sdsAllocSize, sdsAllocPtr | 6.6 | 4.1 | 0.621 |
+| walker |  | 9335 | 418 | README.md section #2 |  |  | 0.634 |
+| ns | 9375 |  | 119 | The test entry points in sds.c: the SDS_TEST_MAIN guard, sdsTest() and main() | 7.1 | 4.2 | 0.628 |
+| ns | 9582 |  | 207 | testhelp.h: the complete test_cond / test_report macro pair | 7.2 |  | 0.633 |
+| ns | 9665 |  | 83 | A representative excerpt of the sdsTest() body | 7.3 |  | 0.630 |
+| walker |  | 9743 | 408 | README.md section #3 |  |  | 0.632 |
+| ns | 9794 |  | 129 | The complete Changelog (v1.0 and v2.0) | 7.4 |  | 0.626 |
+| walker |  | 9878 | 135 | c decl body at sds.c:380 |  |  | 0.626 |
+| ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.622 |

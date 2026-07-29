@@ -63,46 +63,46 @@ Score(3000)=0.399 I=0.730 C=0.218 ns_rows≤3K=18/54 (reached=5 partial=0 missin
 | walker |  | 2760 | 34 | python decl names surface in src/tomli/_types.py |  |  | 0.399 |
 | ns | 3129 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.373 |
 | walker |  | 3224 | 464 | python decl names surface in src/tomli/_parser.py |  |  | 0.436 |
-| walker |  | 3254 | 30 | tomllib.md section #3 |  |  | 0.436 |
+| walker |  | 3383 | 159 | python imports in src/tomli/_parser.py |  |  | 0.436 |
+| walker |  | 3413 | 30 | tomllib.md section #3 |  |  | 0.436 |
 | ns | 3460 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.418 |
-| walker |  | 3555 | 301 | README.md section #1 |  |  | 0.474 |
-| ns | 3557 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.466 |
-| walker |  | 3587 | 32 | tomllib.md section #2 |  |  | 0.466 |
-| walker |  | 3658 | 71 | README.md section #10 |  |  | 0.466 |
-| walker |  | 3668 | 10 | CHANGELOG.md section #0 |  |  | 0.466 |
-| ns | 3669 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.459 |
-| walker |  | 3739 | 71 | README.md section #20 |  |  | 0.459 |
-| walker |  | 3812 | 73 | README.md section #15 |  |  | 0.459 |
+| ns | 3557 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.411 |
+| ns | 3669 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.405 |
+| walker |  | 3714 | 301 | README.md section #1 |  |  | 0.459 |
+| walker |  | 3746 | 32 | tomllib.md section #2 |  |  | 0.459 |
+| walker |  | 3817 | 71 | README.md section #10 |  |  | 0.459 |
+| walker |  | 3827 | 10 | CHANGELOG.md section #0 |  |  | 0.459 |
 | ns | 3843 |  | 174 | BASIC_STR_ESCAPE_REPLACEMENTS: the full escape table | 2.12 |  | 0.448 |
 | ns | 3881 |  | 38 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.464 |
+| walker |  | 3898 | 71 | README.md section #20 |  |  | 0.464 |
 | ns | 3940 |  | 59 | tests/__init__.py: the tomli-as-tomllib alias | 3.2 |  | 0.459 |
-| walker |  | 3973 | 161 | python decl names surface in src/tomli/_re.py |  |  | 0.460 |
-| walker |  | 3973 | 0 | python decl at src/tomli/_re.py:59 |  |  | 0.460 |
-| walker |  | 3973 | 0 | python decl at src/tomli/_re.py:109 |  |  | 0.460 |
-| walker |  | 3973 | 0 | python decl at src/tomli/_re.py:116 |  |  | 0.460 |
-| walker |  | 3999 | 26 | python decl at src/tomli/_re.py:98 |  |  | 0.460 |
-| walker |  | 4033 | 34 | python decl body at src/tomli/_re.py:116 body 117 |  |  | 0.460 |
-| walker |  | 4095 | 62 | python decl doc at src/tomli/_re.py:59 |  |  | 0.460 |
+| walker |  | 3971 | 73 | README.md section #15 |  |  | 0.459 |
+| walker |  | 4132 | 161 | python decl names surface in src/tomli/_re.py |  |  | 0.460 |
+| walker |  | 4132 | 0 | python decl at src/tomli/_re.py:59 |  |  | 0.460 |
+| walker |  | 4132 | 0 | python decl at src/tomli/_re.py:109 |  |  | 0.460 |
+| walker |  | 4132 | 0 | python decl at src/tomli/_re.py:116 |  |  | 0.460 |
+| walker |  | 4158 | 26 | python decl at src/tomli/_re.py:98 |  |  | 0.460 |
+| walker |  | 4192 | 34 | python decl body at src/tomli/_re.py:116 body 117 |  |  | 0.460 |
 | ns | 4204 |  | 264 | Complete roster of test classes and test methods | 3.3 |  | 0.445 |
+| walker |  | 4254 | 62 | python decl doc at src/tomli/_re.py:59 |  |  | 0.445 |
 | ns | 4380 |  | 176 | tox core configuration: the interpreter matrix and default command | 3.4 |  | 0.437 |
 | ns | 4532 |  | 152 | setup.py: the mypyc build path | 3.5 |  | 0.428 |
 | ns | 4726 |  | 194 | pyproject.toml: build backend and project metadata | 3.6 |  | 0.450 |
 | ns | 4780 |  | 54 | Listings of the helper trees: benchmark, fuzzer, profiler, scripts, workflows | 3.7 |  | 0.469 |
 | ns | 4963 |  | 183 | test_data.py: how the TOML corpus is discovered and compared | 3.8 | 3.3 | 0.460 |
 | ns | 5102 |  | 139 | tests/burntsushi.py: purpose and complete function roster | 3.9 |  | 0.454 |
-| walker |  | 5223 | 1128 | tool.tox config in pyproject.toml |  |  | 0.478 |
-| walker |  | 5287 | 64 | python imports in src/tomli/_types.py |  |  | 0.483 |
-| ns | 5353 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.470 |
-| walker |  | 5384 | 97 | README.md section #11 |  |  | 0.470 |
-| walker |  | 5454 | 70 | python decl body at src/tomli/_re.py:98 body 100 |  |  | 0.471 |
+| ns | 5353 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.442 |
+| walker |  | 5382 | 1128 | tool.tox config in pyproject.toml |  |  | 0.466 |
+| walker |  | 5446 | 64 | python imports in src/tomli/_types.py |  |  | 0.470 |
 | ns | 5477 |  | 124 | NestedDict: the parsed-document container and its two methods | 4.2 | 2.2 | 0.463 |
-| walker |  | 5555 | 101 | README.md section #7 |  |  | 0.463 |
-| walker |  | 5606 | 51 | tomllib.md section #7 |  |  | 0.463 |
+| walker |  | 5543 | 97 | README.md section #11 |  |  | 0.463 |
+| walker |  | 5613 | 70 | python decl body at src/tomli/_re.py:98 body 100 |  |  | 0.463 |
+| walker |  | 5714 | 101 | README.md section #7 |  |  | 0.463 |
 | ns | 5738 |  | 261 | create_dict_rule(): the [table] statement | 4.3 | 2.1 | 0.453 |
-| walker |  | 5765 | 159 | python decl at src/tomli/_re.py:46 |  |  | 0.453 |
-| walker |  | 5881 | 116 | README.md section #12 |  |  | 0.453 |
+| walker |  | 5765 | 51 | tomllib.md section #7 |  |  | 0.453 |
+| walker |  | 5924 | 159 | python decl at src/tomli/_re.py:46 |  |  | 0.453 |
 | ns | 6038 |  | 300 | create_list_rule(): the [[array of tables]] statement | 4.4 | 2.1 | 0.442 |
-| walker |  | 6040 | 159 | python imports in src/tomli/_parser.py |  |  | 0.442 |
+| walker |  | 6040 | 116 | README.md section #12 |  |  | 0.442 |
 | walker |  | 6143 | 103 | python imports in src/tomli/_re.py |  |  | 0.442 |
 | walker |  | 6260 | 117 | README.md section #6 |  |  | 0.442 |
 | walker |  | 6336 | 76 | tomllib.md section #4 |  |  | 0.442 |

@@ -449,6 +449,78 @@ sits within ~40 tokens of the 3000 cliff, so individual fixture
 magnitudes are not trustworthy. The ship decisions rest on the plateau
 shapes above and on whole-NS-row bucket changes.
 
+## Dominant source file (2026-07-29): 0.6151 → 0.6179
+
+The largest v2-key loss class was "unscheduled": one implementation
+file per repo that the walker can emit but never schedules at 10K
+(tomli `_parser.py` 0.515 of |A_3K|, sqlite-vec.c 0.440, act
+`cmd/root.go` 0.505, xlstm `model.py` 0.478). The NS wants *more of
+the same file*; the walker spends the marginal token on breadth.
+
+Shipped mechanism, two pieces:
+
+- `WalkCtx::dominant_source_file` — walk-time detection of the file a
+  repository is *about*: the largest essential source file, when it
+  holds ≥ 20% of the tree's essential source bytes. Guards that all
+  earned their place on the corpus probe: non-essential subtrees plus a
+  `dist`/`vendor`/`spec`/`testdata`/`libs` exclusion list (both numerator
+  and denominator); a 400 KB ceiling and a 200 bytes/line mean ceiling
+  (minified and generated bundles — healthchecks `zxcvbn.min.js`,
+  monaco `typescriptServices.js`, rqlite `testdata/chinook/db.go`,
+  rough-viz `dist/roughviz.es.js` all won the raw mass race); and a
+  primary-language gate (act's spine is Go, but a vendored
+  `pkg/runner/hashfiles/index.js` is its biggest single file). Fires on
+  39/93 fixtures.
+- `Scheduler::dominant_file_boost` — a ×1.45 ratio premium on that
+  file's non-follow-up batches, **gated on the file already having been
+  entered** on its own merits.
+
+Mass-share was explicitly not among the four proxies in the dead "Go
+spine centrality" entry, and the entered-gate is what makes it work.
+The gate is the whole result: every variant that let the premium pull
+the spine file *forward* traded orientation for depth and lost.
+
+- Boost magnitude, entered-gate, surface-only: 1.15→0.6155 ·
+  1.30→0.6170 · 1.40→0.6173 · **1.45→0.6179 (shipped)** · 1.50→0.6179 ·
+  1.55→0.6179 · 1.60→0.6160 (vaul −0.138 crosses a cliff)
+- Including depth follow-ups in the premium: 1.50→0.6169 (−0.0010).
+  Rosters are the under-bought class; the file's own docs and bodies
+  already rank once its train is open.
+- **DEAD — budget-window gate** (premium suppressed until
+  `consumed ≥ 0.25 × budget`, no entered-gate): 0.20→0.6163 ·
+  0.25→0.6170 · 0.28→0.6151 (inert). Scores at 3000 but is an artifact:
+  0.25 × the 10K schedule budget lands the premium in the 2500–3000
+  slice of the scored prefix, and the grid gives it all back
+  (4327 −0.0029, 6240 −0.0015, 9000 −0.0008). It also behaves
+  differently at a real user budget than at the measured one. Do not
+  re-try budget-fraction gates on this lever.
+- **DEAD — ungated premium** (no window, no entered-gate): surface-only
+  1.30→0.6144, all batches 1.30→0.6137. Big targeted wins
+  (express +0.117, tomli +0.061) fully cancelled by front-loading
+  collapses (cmdk −0.192, neco −0.107 where the boosted `neco.c` roster
+  displaced the `neco.h` public API, anyhow −0.036, pluggy −0.031).
+- **DEAD — per-file concavity relief** (rank at `cost^(k−0.10)` inside
+  the dominant file, so the premium grows with batch size): 0.6071
+  ungated, 0.6152 with the 0.25 window. Strictly worse than the flat
+  premium at every gate tried.
+
+Shipped grid (before → after): B=1000 0.6132→0.6150 · 1442
+0.6217→0.6204 · 2080 0.6277→0.6266 · **3000 0.6151→0.6179** · 4327
+0.5851→0.5863 · 6240 0.5649→0.5635 · 9000 0.5606→0.5585. Net-neutral
+off-primary. Eight movers at 3000, all positive, no fixture regresses:
+log +0.050, bubbletea +0.046, swarm +0.038, cobra +0.025, xxhash
++0.013, middleclass +0.012, cmdk +0.009, debug +0.006. swarm and cobra
+buy their new content at cum 2966–2983 — cliff-adjacent, discount them;
+log and bubbletea re-order at 1094–2020 and are the robust evidence.
+
+Known mis-targets the detector keeps (all measured harmless or better
+at the shipped gate): anyhow `src/ensure.rs` and thiserror
+`impl/src/expand.rs` are `#[doc(hidden)]` macro machinery rather than
+the crate spine, and express picks `lib/response.js` over the NS's
+`lib/application.js`. A declaration-density discriminator ("a spine
+file is dense in declarations, not just bytes") is the obvious repair
+if this lever is revisited.
+
 ### v2-key un-ship generalization losses (2026-07-28, corpus-invisible)
 
 The same lanes deleted mechanisms whose corpus contribution was flat or

@@ -146,6 +146,9 @@ pub struct WalkCtx {
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// Nested SQL files named exactly by a root README/build file.
     sql_cited_paths: OnceCell<HashSet<PathBuf>>,
+    /// The one source file that carries a dominant share of the tree's
+    /// essential source bytes, if any.
+    dominant_source_file: OnceCell<Option<PathBuf>>,
 }
 
 impl WalkCtx {
@@ -167,6 +170,7 @@ impl WalkCtx {
             python_state: python::PythonState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
+            dominant_source_file: OnceCell::new(),
         }
     }
 
@@ -252,6 +256,21 @@ impl WalkCtx {
             .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root, self));
         let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
         cited.contains(&canonical)
+    }
+
+    /// The single source file the repository is *about*, when one
+    /// exists: the largest essential source file, provided it carries at
+    /// least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's essential
+    /// source bytes. Single-implementation-file libraries (a one-file
+    /// parser, a single amalgamated `.c`, a `core.py`) put the content
+    /// an NS author wants in one place, and the scheduler's
+    /// breadth-first instincts spend the marginal token elsewhere.
+    /// Returns `None` when source mass is spread across peers, which is
+    /// the common case.
+    pub fn dominant_source_file(&self) -> Option<&Path> {
+        self.dominant_source_file
+            .get_or_init(|| find_dominant_source_file(&self.root, &self.dir_filter))
+            .as_deref()
     }
 
     /// True when `path` is an auto-injected agent doc (AGENTS.md /
@@ -342,6 +361,135 @@ pub(in crate::walker) fn first_child_of_kind<'a>(
     let mut cursor = node.walk();
     node.children(&mut cursor)
         .find(|child| (!named_only || child.is_named()) && child.kind() == kind)
+}
+
+/// Minimum share of the tree's essential source bytes for the largest
+/// source file to count as the repository's spine. Swept full-corpus;
+/// see `docs/design-notes.md` ("Dominant source file").
+const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
+
+/// Directories holding code that nobody wrote by hand: build outputs,
+/// vendored copies, and generated test corpora. Their contents are
+/// source bytes but not *the repository's* source, so they neither win
+/// nor dilute the mass share. Complements
+/// [`crate::value::non_essential_factor`]'s classifier, which covers
+/// `tests/` / `examples/` / `benches/` but not these.
+const MASS_SHARE_EXCLUDED_DIRS: &[&str] = &[
+    "dist",
+    "build",
+    "generated",
+    "libs",
+    "spec",
+    "specs",
+    "testdata",
+    "third_party",
+    "vendor",
+    "vendored",
+];
+
+/// Mean bytes per line above which a file reads as minified or bundled
+/// rather than hand-authored. Hand-written code across the corpus sits
+/// near 20–55; minified bundles are in the thousands.
+const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
+
+/// Upper bound on a spine file's size. Past this, a single file is a
+/// generated table or an amalgamated bundle rather than something a
+/// reader is meant to read more of.
+const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
+
+/// Largest hand-authored source file in the tree, if it carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. Non-essential subtrees
+/// (tests, examples, vendored, tooling) are excluded from both the
+/// numerator and the denominator so a big test file can neither win nor
+/// dilute the share.
+fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
+    let mut per_language: HashMap<&'static str, u64> = HashMap::new();
+    let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
+    let mut stack = vec![root.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        for (name, kind) in crate::fs_util::list_dir(&dir, filter) {
+            let path = dir.join(&name);
+            match kind {
+                crate::fs_util::EntryKind::Directory => {
+                    let excluded =
+                        MASS_SHARE_EXCLUDED_DIRS.contains(&name.to_ascii_lowercase().as_str());
+                    if !excluded {
+                        stack.push(path);
+                    }
+                }
+                crate::fs_util::EntryKind::File => {
+                    let Some(language) = language_group(&path) else {
+                        continue;
+                    };
+                    if crate::value::non_essential_factor(&path, root) < 1.0 {
+                        continue;
+                    }
+                    let Ok(len) = std::fs::metadata(&path).map(|m| m.len()) else {
+                        continue;
+                    };
+                    *per_language.entry(language).or_default() += len;
+                    if len <= MASS_SHARE_MAX_FILE_BYTES {
+                        candidates.push((path, len, language));
+                    }
+                }
+            }
+        }
+    }
+    // The spine has to be written in the language the repository is
+    // written in — a vendored JS bundle inside a Go tree is source mass
+    // but it is not what the repo is about.
+    let primary = *per_language.iter().max_by_key(|&(_, &bytes)| bytes)?.0;
+    let total: u64 = per_language.values().sum();
+    if total == 0 {
+        return None;
+    }
+    candidates.retain(|(_, len, language)| {
+        *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
+    });
+    // Descending, so the line-shape probe reads at most a handful of
+    // files rather than every source file in the tree.
+    candidates.sort_by_key(|(_, len, _)| std::cmp::Reverse(*len));
+    candidates
+        .into_iter()
+        .find(|(path, _, _)| is_hand_authored(path))
+        .map(|(path, _, _)| path)
+}
+
+/// Extension → language family, collapsing the families whose files sit
+/// side by side in one codebase (a `.h` beside its `.c`, a `.js` beside
+/// its `.ts`). `None` for anything that isn't hand-authored code.
+fn language_group(path: &Path) -> Option<&'static str> {
+    let ext = path.extension()?.to_str()?.to_ascii_lowercase();
+    Some(match ext.as_str() {
+        "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" => "c",
+        "js" | "jsx" | "cjs" | "mjs" | "ts" | "tsx" => "js",
+        "go" => "go",
+        "lua" => "lua",
+        "py" => "py",
+        "rb" => "rb",
+        "rs" => "rs",
+        "swift" => "swift",
+        "zig" => "zig",
+        _ => return None,
+    })
+}
+
+/// Line-shape check for "a person typed this": mean bytes per line over
+/// a leading sample stays under [`MASS_SHARE_MAX_MEAN_LINE_BYTES`].
+fn is_hand_authored(path: &Path) -> bool {
+    use std::io::Read;
+    let Ok(mut file) = std::fs::File::open(path) else {
+        return false;
+    };
+    let mut sample = [0u8; 64 * 1024];
+    let Ok(read) = file.read(&mut sample) else {
+        return false;
+    };
+    if read == 0 {
+        return false;
+    }
+    let newlines = sample[..read].iter().filter(|&&b| b == b'\n').count();
+    read as f64 / (newlines + 1) as f64 <= MASS_SHARE_MAX_MEAN_LINE_BYTES
 }
 
 /// Scan the seed root's README for relative-path hyperlinks to source

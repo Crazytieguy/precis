@@ -1152,28 +1152,10 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Go(DeclBody { file: "multierror.go", start_line: 42 })'
-descriptor = "go decl body at multierror.go:42"
-cost_tokens = 15
-cum_tokens = 835
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 102 })'
 descriptor = "go decl doc at multierror.go:102"
 cost_tokens = 9
-cum_tokens = 844
+cum_tokens = 829
 
 [batches.content]
 kind = "lines"
@@ -1187,11 +1169,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 13 })'
 descriptor = "go decl doc at multierror.go:13"
 cost_tokens = 38
-cum_tokens = 882
+cum_tokens = 867
 
 [batches.content]
 kind = "lines"
@@ -1205,29 +1187,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 47
-key = 'Go(DeclBody { file: "multierror.go", start_line: 102 })'
-descriptor = "go decl body at multierror.go:102"
-cost_tokens = 11
-cum_tokens = 893
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
+position = 46
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 122 })'
 descriptor = "go decl doc at multierror.go:122"
 cost_tokens = 16
-cum_tokens = 909
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -1241,11 +1205,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 49
+position = 47
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 117 })'
 descriptor = "go decl doc at multierror.go:117"
 cost_tokens = 18
-cum_tokens = 927
+cum_tokens = 901
 
 [batches.content]
 kind = "lines"
@@ -1259,47 +1223,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 50
-key = 'Go(DeclBody { file: "multierror.go", start_line: 117 })'
-descriptor = "go decl body at multierror.go:117"
-cost_tokens = 13
-cum_tokens = 940
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
-key = 'Go(DeclBody { file: "multierror.go", start_line: 122 })'
-descriptor = "go decl body at multierror.go:122"
-cost_tokens = 13
-cum_tokens = 953
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 123
-end = 123
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
+position = 48
 key = 'Go(PackageImports { file: "multierror.go" })'
 descriptor = "go package + imports in multierror.go"
 cost_tokens = 38
-cum_tokens = 991
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -1313,119 +1241,29 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'Go(DeclBody { file: "multierror.go", start_line: 53 })'
-descriptor = "go decl body at multierror.go:53"
-cost_tokens = 31
-cum_tokens = 1022
+position = 49
+key = 'Go(DeclBody { file: "multierror.go", start_line: 42 })'
+descriptor = "go decl body at multierror.go:42"
+cost_tokens = 15
+cum_tokens = 954
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "multierror.go"
-start = 54
-end = 57
+start = 43
+end = 43
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 54
-key = 'Go(DeclDoc { file: "group.go", start_line: 10 })'
-descriptor = "go decl doc at group.go:10"
-cost_tokens = 29
-cum_tokens = 1051
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "group.go"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
-key = 'Go(DeclBody { file: "sort.go", start_line: 21 })'
-descriptor = "go decl body at sort.go:21"
-cost_tokens = 18
-cum_tokens = 1069
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sort.go"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Go(DeclDoc { file: "format.go", start_line: 13 })'
-descriptor = "go decl doc at format.go:13"
-cost_tokens = 33
-cum_tokens = 1102
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Go(DeclDoc { file: "flatten.go", start_line: 8 })'
-descriptor = "go decl doc at flatten.go:8"
-cost_tokens = 28
-cum_tokens = 1130
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Go(PackageImports { file: "group.go" })'
-descriptor = "go package + imports in group.go"
-cost_tokens = 21
-cum_tokens = 1151
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "group.go"
-start = 4
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
+position = 50
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 31 })'
 descriptor = "go decl doc at multierror.go:31"
 cost_tokens = 72
-cum_tokens = 1223
+cum_tokens = 1026
 
 [batches.content]
 kind = "lines"
@@ -1439,11 +1277,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 60
+position = 51
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 108 })'
 descriptor = "go decl doc at multierror.go:108"
 cost_tokens = 34
-cum_tokens = 1257
+cum_tokens = 1060
 
 [batches.content]
 kind = "lines"
@@ -1457,101 +1295,29 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 61
-key = 'Go(DeclBody { file: "sort.go", start_line: 16 })'
-descriptor = "go decl body at sort.go:16"
-cost_tokens = 21
-cum_tokens = 1278
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sort.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Go(DeclDoc { file: "group.go", start_line: 36 })'
-descriptor = "go decl doc at group.go:36"
-cost_tokens = 30
-cum_tokens = 1308
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "group.go"
-start = 34
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Go(DeclDoc { file: "format.go", start_line: 17 })'
-descriptor = "go decl doc at format.go:17"
-cost_tokens = 34
-cum_tokens = 1342
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 15
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Go(DeclBody { file: "multierror.go", start_line: 18 })'
-descriptor = "go decl body at multierror.go:18"
-cost_tokens = 50
-cum_tokens = 1392
+position = 52
+key = 'Go(DeclBody { file: "multierror.go", start_line: 102 })'
+descriptor = "go decl body at multierror.go:102"
+cost_tokens = 11
+cum_tokens = 1071
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "multierror.go"
-start = 19
-end = 24
+start = 103
+end = 103
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 65
-key = 'Go(PackageImports { file: "prefix.go" })'
-descriptor = "go package + imports in prefix.go"
-cost_tokens = 33
-cum_tokens = 1425
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "prefix.go"
-start = 4
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
+position = 53
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 53 })'
 descriptor = "go decl doc at multierror.go:53"
 cost_tokens = 118
-cum_tokens = 1543
+cum_tokens = 1189
 
 [batches.content]
 kind = "lines"
@@ -1565,119 +1331,83 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Go(DeclBody { file: "multierror.go", start_line: 31 })'
-descriptor = "go decl body at multierror.go:31"
-cost_tokens = 62
-cum_tokens = 1605
+position = 54
+key = 'Go(DeclBody { file: "multierror.go", start_line: 117 })'
+descriptor = "go decl body at multierror.go:117"
+cost_tokens = 13
+cum_tokens = 1202
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "multierror.go"
-start = 32
-end = 39
+start = 118
+end = 118
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 68
-key = 'Go(PackageImports { file: "format.go" })'
-descriptor = "go package + imports in format.go"
-cost_tokens = 38
-cum_tokens = 1643
+position = 55
+key = 'Go(DeclBody { file: "multierror.go", start_line: 122 })'
+descriptor = "go decl body at multierror.go:122"
+cost_tokens = 13
+cum_tokens = 1215
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "format.go"
-start = 4
+path = "multierror.go"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Go(DeclBody { file: "multierror.go", start_line: 53 })'
+descriptor = "go decl body at multierror.go:53"
+cost_tokens = 31
+cum_tokens = 1246
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "multierror.go"
+start = 54
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Go(DeclDoc { file: "group.go", start_line: 10 })'
+descriptor = "go decl doc at group.go:10"
+cost_tokens = 29
+cum_tokens = 1275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "group.go"
+start = 8
 end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Go(DeclDoc { file: "group.go", start_line: 20 })'
-descriptor = "go decl doc at group.go:20"
-cost_tokens = 50
-cum_tokens = 1693
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "group.go"
-start = 16
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'Go(DeclBody { file: "group.go", start_line: 36 })'
-descriptor = "go decl body at group.go:36"
-cost_tokens = 36
-cum_tokens = 1729
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "group.go"
-start = 37
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Go(DeclBody { file: "sort.go", start_line: 7 })'
-descriptor = "go decl body at sort.go:7"
-cost_tokens = 38
-cum_tokens = 1767
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sort.go"
-start = 8
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Go(DeclBody { file: "multierror.go", start_line: 108 })'
-descriptor = "go decl body at multierror.go:108"
-cost_tokens = 40
-cum_tokens = 1807
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 109
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
+position = 58
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 71 })'
 descriptor = "go decl doc at multierror.go:71"
 cost_tokens = 175
-cum_tokens = 1982
+cum_tokens = 1450
 
 [batches.content]
 kind = "lines"
@@ -1691,11 +1421,299 @@ end = 70
 kind = "full"
 
 [[batches]]
+position = 59
+key = 'Go(DeclBody { file: "sort.go", start_line: 21 })'
+descriptor = "go decl body at sort.go:21"
+cost_tokens = 18
+cum_tokens = 1468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sort.go"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Go(DeclDoc { file: "format.go", start_line: 13 })'
+descriptor = "go decl doc at format.go:13"
+cost_tokens = 33
+cum_tokens = 1501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Go(DeclDoc { file: "flatten.go", start_line: 8 })'
+descriptor = "go decl doc at flatten.go:8"
+cost_tokens = 28
+cum_tokens = 1529
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Go(PackageImports { file: "group.go" })'
+descriptor = "go package + imports in group.go"
+cost_tokens = 21
+cum_tokens = 1550
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "group.go"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Go(DeclBody { file: "sort.go", start_line: 16 })'
+descriptor = "go decl body at sort.go:16"
+cost_tokens = 21
+cum_tokens = 1571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sort.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Go(DeclDoc { file: "group.go", start_line: 36 })'
+descriptor = "go decl doc at group.go:36"
+cost_tokens = 30
+cum_tokens = 1601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "group.go"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Go(DeclDoc { file: "format.go", start_line: 17 })'
+descriptor = "go decl doc at format.go:17"
+cost_tokens = 34
+cum_tokens = 1635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Go(DeclBody { file: "multierror.go", start_line: 18 })'
+descriptor = "go decl body at multierror.go:18"
+cost_tokens = 50
+cum_tokens = 1685
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "multierror.go"
+start = 19
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Go(DeclDoc { file: "multierror.go", start_line: 99 })'
+descriptor = "go decl doc at multierror.go:99"
+cost_tokens = 177
+cum_tokens = 1862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "multierror.go"
+start = 88
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Go(PackageImports { file: "prefix.go" })'
+descriptor = "go package + imports in prefix.go"
+cost_tokens = 33
+cum_tokens = 1895
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "prefix.go"
+start = 4
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Go(DeclBody { file: "multierror.go", start_line: 31 })'
+descriptor = "go decl body at multierror.go:31"
+cost_tokens = 62
+cum_tokens = 1957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "multierror.go"
+start = 32
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Go(PackageImports { file: "format.go" })'
+descriptor = "go package + imports in format.go"
+cost_tokens = 38
+cum_tokens = 1995
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 4
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Go(DeclDoc { file: "group.go", start_line: 20 })'
+descriptor = "go decl doc at group.go:20"
+cost_tokens = 50
+cum_tokens = 2045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "group.go"
+start = 16
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Go(DeclBody { file: "group.go", start_line: 36 })'
+descriptor = "go decl body at group.go:36"
+cost_tokens = 36
+cum_tokens = 2081
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "group.go"
+start = 37
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Go(DeclBody { file: "sort.go", start_line: 7 })'
+descriptor = "go decl body at sort.go:7"
+cost_tokens = 38
+cum_tokens = 2119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sort.go"
+start = 8
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 74
+key = 'Go(DeclBody { file: "multierror.go", start_line: 108 })'
+descriptor = "go decl body at multierror.go:108"
+cost_tokens = 40
+cum_tokens = 2159
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "multierror.go"
+start = 109
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 388
-cum_tokens = 2370
+cum_tokens = 2547
 
 [batches.content]
 kind = "lines"
@@ -1709,11 +1727,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Go(DeclDoc { file: "prefix.go", start_line: 16 })'
 descriptor = "go decl doc at prefix.go:16"
 cost_tokens = 86
-cum_tokens = 2456
+cum_tokens = 2633
 
 [batches.content]
 kind = "lines"
@@ -1727,11 +1745,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Go(DeclDoc { file: "append.go", start_line: 14 })'
 descriptor = "go decl doc at append.go:14"
 cost_tokens = 122
-cum_tokens = 2578
+cum_tokens = 2755
 
 [batches.content]
 kind = "lines"
@@ -1740,24 +1758,6 @@ kind = "lines"
 path = "append.go"
 start = 6
 end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'Go(DeclDoc { file: "multierror.go", start_line: 99 })'
-descriptor = "go decl doc at multierror.go:99"
-cost_tokens = 177
-cum_tokens = 2755
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "multierror.go"
-start = 88
-end = 98
 
 [batches.content.spans.render]
 kind = "full"

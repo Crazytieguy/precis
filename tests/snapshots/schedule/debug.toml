@@ -903,10 +903,28 @@ kind = "full"
 
 [[batches]]
 position = 30
+key = 'Typescript(ExportDoc { file: "src/common.js", start_line: 7 })'
+descriptor = "export doc at src/common.js:7"
+cost_tokens = 38
+cum_tokens = 1799
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 167
-cum_tokens = 1928
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -920,29 +938,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 31
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 166 })'
-descriptor = "export body at src/common.js:7 body 166"
-cost_tokens = 12
-cum_tokens = 1940
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 32
 key = 'Typescript(Imports { file: "test.js" })'
 descriptor = "imports in test.js"
 cost_tokens = 26
-cum_tokens = 1966
+cum_tokens = 1992
 
 [batches.content]
 kind = "lines"
@@ -960,7 +960,7 @@ position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 217
-cum_tokens = 2183
+cum_tokens = 2209
 
 [batches.content]
 kind = "lines"
@@ -975,18 +975,18 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 167 })'
-descriptor = "export body at src/common.js:7 body 167"
-cost_tokens = 11
-cum_tokens = 2194
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 166 })'
+descriptor = "export body at src/common.js:7 body 166"
+cost_tokens = 12
+cum_tokens = 2221
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "src/common.js"
-start = 167
-end = 167
+start = 166
+end = 166
 
 [batches.content.spans.render]
 kind = "full"
@@ -996,7 +996,7 @@ position = 35
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 240
-cum_tokens = 2434
+cum_tokens = 2461
 
 [batches.content]
 kind = "lines"
@@ -1011,10 +1011,28 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 167 })'
+descriptor = "export body at src/common.js:7 body 167"
+cost_tokens = 11
+cum_tokens = 2472
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 389
-cum_tokens = 2823
+cum_tokens = 2861
 
 [batches.content]
 kind = "lines"
@@ -1028,47 +1046,11 @@ end = 212
 kind = "full"
 
 [[batches]]
-position = 37
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 164 })'
-descriptor = "export body at src/common.js:7 body 164"
-cost_tokens = 12
-cum_tokens = 2835
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 38
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
-descriptor = "export body at src/common.js:7 body 163"
-cost_tokens = 11
-cum_tokens = 2846
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 229
-cum_tokens = 3075
+cum_tokens = 3090
 
 [batches.content]
 kind = "lines"
@@ -1082,11 +1064,11 @@ end = 376
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Typescript(Imports { file: "test.node.js" })'
 descriptor = "imports in test.node.js"
 cost_tokens = 50
-cum_tokens = 3125
+cum_tokens = 3140
 
 [batches.content]
 kind = "lines"
@@ -1100,11 +1082,29 @@ end = 6
 kind = "full"
 
 [[batches]]
+position = 40
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 164 })'
+descriptor = "export body at src/common.js:7 body 164"
+cost_tokens = 12
+cum_tokens = 3152
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 41
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 370
-cum_tokens = 3495
+cum_tokens = 3522
 
 [batches.content]
 kind = "lines"
@@ -1122,7 +1122,7 @@ position = 42
 key = 'Typescript(ExportNames { file: "src/browser.js" })'
 descriptor = "export names surface in src/browser.js"
 cost_tokens = 152
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1260,7 +1260,7 @@ position = 43
 key = 'Typescript(Export { file: "src/browser.js", start_line: 7 })'
 descriptor = "export at src/browser.js:7"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1278,7 +1278,7 @@ position = 44
 key = 'Typescript(Export { file: "src/browser.js", start_line: 115 })'
 descriptor = "export at src/browser.js:115"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1304,7 +1304,7 @@ position = 45
 key = 'Typescript(Export { file: "src/browser.js", start_line: 149 })'
 descriptor = "export at src/browser.js:149"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1330,7 +1330,7 @@ position = 46
 key = 'Typescript(Export { file: "src/browser.js", start_line: 192 })'
 descriptor = "export at src/browser.js:192"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1348,7 +1348,7 @@ position = 47
 key = 'Typescript(Export { file: "src/browser.js", start_line: 200 })'
 descriptor = "export at src/browser.js:200"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1374,7 +1374,7 @@ position = 48
 key = 'Typescript(Export { file: "src/browser.js", start_line: 219 })'
 descriptor = "export at src/browser.js:219"
 cost_tokens = 0
-cum_tokens = 3647
+cum_tokens = 3674
 
 [batches.content]
 kind = "lines"
@@ -1397,10 +1397,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 49
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
+descriptor = "export body at src/common.js:7 body 163"
+cost_tokens = 11
+cum_tokens = 3685
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 117 })'
 descriptor = "export body at src/common.js:7 body 117"
 cost_tokens = 14
-cum_tokens = 3661
+cum_tokens = 3699
 
 [batches.content]
 kind = "lines"
@@ -1414,11 +1432,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 118 })'
 descriptor = "export body at src/common.js:7 body 118"
 cost_tokens = 12
-cum_tokens = 3673
+cum_tokens = 3711
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +1450,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 193 })'
 descriptor = "export body at src/common.js:7 body 193"
 cost_tokens = 14
-cum_tokens = 3687
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +1468,11 @@ end = 193
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 194 })'
 descriptor = "export body at src/common.js:7 body 194"
 cost_tokens = 12
-cum_tokens = 3699
+cum_tokens = 3737
 
 [batches.content]
 kind = "lines"
@@ -1468,11 +1486,11 @@ end = 194
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 195 })'
 descriptor = "export body at src/common.js:7 body 195"
 cost_tokens = 12
-cum_tokens = 3711
+cum_tokens = 3749
 
 [batches.content]
 kind = "lines"
@@ -1486,11 +1504,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 196 })'
 descriptor = "export body at src/common.js:7 body 196"
 cost_tokens = 12
-cum_tokens = 3723
+cum_tokens = 3761
 
 [batches.content]
 kind = "lines"
@@ -1504,11 +1522,11 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 224 })'
 descriptor = "export body at src/common.js:7 body 224"
 cost_tokens = 14
-cum_tokens = 3737
+cum_tokens = 3775
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1540,11 @@ end = 224
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 219 })'
 descriptor = "export body at src/common.js:7 body 219"
 cost_tokens = 15
-cum_tokens = 3752
+cum_tokens = 3790
 
 [batches.content]
 kind = "lines"
@@ -1540,11 +1558,11 @@ end = 219
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 141 })'
 descriptor = "export body at src/common.js:7 body 141"
 cost_tokens = 17
-cum_tokens = 3769
+cum_tokens = 3807
 
 [batches.content]
 kind = "lines"
@@ -1558,11 +1576,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 120 })'
 descriptor = "export body at src/common.js:7 body 120"
 cost_tokens = 25
-cum_tokens = 3794
+cum_tokens = 3832
 
 [batches.content]
 kind = "lines"
@@ -1576,11 +1594,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 142 })'
 descriptor = "export body at src/common.js:7 body 142"
 cost_tokens = 31
-cum_tokens = 3825
+cum_tokens = 3863
 
 [batches.content]
 kind = "lines"
@@ -1594,11 +1612,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 220 })'
 descriptor = "export body at src/common.js:7 body 220"
 cost_tokens = 35
-cum_tokens = 3860
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -1612,11 +1630,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 284 })'
 descriptor = "export body at src/common.js:7 body 284"
 cost_tokens = 38
-cum_tokens = 3898
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -1630,11 +1648,11 @@ end = 284
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 273 })'
 descriptor = "export body at src/common.js:7 body 273"
 cost_tokens = 41
-cum_tokens = 3939
+cum_tokens = 3977
 
 [batches.content]
 kind = "lines"
@@ -1648,11 +1666,11 @@ end = 276
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 150 })'
 descriptor = "export body at src/common.js:7 body 150"
 cost_tokens = 52
-cum_tokens = 3991
+cum_tokens = 4029
 
 [batches.content]
 kind = "lines"
@@ -1666,11 +1684,11 @@ end = 152
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 169 })'
 descriptor = "export body at src/common.js:7 body 169"
 cost_tokens = 58
-cum_tokens = 4049
+cum_tokens = 4087
 
 [batches.content]
 kind = "lines"
@@ -1684,11 +1702,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 234 })'
 descriptor = "export body at src/common.js:7 body 234"
 cost_tokens = 66
-cum_tokens = 4115
+cum_tokens = 4153
 
 [batches.content]
 kind = "lines"
@@ -1702,11 +1720,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Typescript(Export { file: "src/browser.js", start_line: 12 })'
 descriptor = "export at src/browser.js:12"
 cost_tokens = 98
-cum_tokens = 4213
+cum_tokens = 4251
 
 [batches.content]
 kind = "lines"
@@ -1720,11 +1738,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 175 })'
 descriptor = "export body at src/common.js:7 body 175"
 cost_tokens = 76
-cum_tokens = 4289
+cum_tokens = 4327
 
 [batches.content]
 kind = "lines"
@@ -1738,11 +1756,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 8 })'
 descriptor = "export body at src/common.js:7 body 8"
 cost_tokens = 88
-cum_tokens = 4377
+cum_tokens = 4415
 
 [batches.content]
 kind = "lines"
@@ -1756,11 +1774,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 41 })'
 descriptor = "export body at src/common.js:7 body 41"
 cost_tokens = 92
-cum_tokens = 4469
+cum_tokens = 4507
 
 [batches.content]
 kind = "lines"
@@ -1838,11 +1856,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 266
-cum_tokens = 4735
+cum_tokens = 4773
 
 [batches.content]
 kind = "lines"
@@ -1856,11 +1874,11 @@ end = 272
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Typescript(ExportBody { file: "src/browser.js", start_line: 200, body_start_line: 201 })'
 descriptor = "export body at src/browser.js:200 body 201"
 cost_tokens = 106
-cum_tokens = 4841
+cum_tokens = 4879
 
 [batches.content]
 kind = "lines"
@@ -1874,11 +1892,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Typescript(ExportDoc { file: "src/browser.js", start_line: 7 })'
 descriptor = "export doc at src/browser.js:7"
 cost_tokens = 26
-cum_tokens = 4867
+cum_tokens = 4905
 
 [batches.content]
 kind = "lines"
@@ -1892,11 +1910,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 42 })'
 descriptor = "export body at src/common.js:7 body 42"
 cost_tokens = 109
-cum_tokens = 4976
+cum_tokens = 5014
 
 [batches.content]
 kind = "lines"
@@ -1910,11 +1928,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Typescript(Imports { file: "src/node.js" })'
 descriptor = "imports in src/node.js"
 cost_tokens = 26
-cum_tokens = 5002
+cum_tokens = 5040
 
 [batches.content]
 kind = "lines"
@@ -1928,11 +1946,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 504
-cum_tokens = 5506
+cum_tokens = 5544
 
 [batches.content]
 kind = "lines"
@@ -1946,11 +1964,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 250 })'
 descriptor = "export body at src/common.js:7 body 250"
 cost_tokens = 121
-cum_tokens = 5627
+cum_tokens = 5665
 
 [batches.content]
 kind = "lines"
@@ -1964,11 +1982,11 @@ end = 262
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Typescript(ExportDoc { file: "src/browser.js", start_line: 149 })'
 descriptor = "export doc at src/browser.js:149"
 cost_tokens = 36
-cum_tokens = 5663
+cum_tokens = 5701
 
 [batches.content]
 kind = "lines"
@@ -1982,11 +2000,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Typescript(ExportNames { file: "src/node.js" })'
 descriptor = "export names surface in src/node.js"
 cost_tokens = 201
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2152,11 +2170,11 @@ end = 241
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Typescript(Export { file: "src/node.js", start_line: 12 })'
 descriptor = "export at src/node.js:12"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2170,11 +2188,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Typescript(Export { file: "src/node.js", start_line: 27 })'
 descriptor = "export at src/node.js:27"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2188,11 +2206,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Typescript(Export { file: "src/node.js", start_line: 155 })'
 descriptor = "export at src/node.js:155"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2214,11 +2232,11 @@ end = 156
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Typescript(Export { file: "src/node.js", start_line: 167 })'
 descriptor = "export at src/node.js:167"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2240,11 +2258,11 @@ end = 168
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Typescript(Export { file: "src/node.js", start_line: 193 })'
 descriptor = "export at src/node.js:193"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2266,11 +2284,11 @@ end = 194
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Typescript(Export { file: "src/node.js", start_line: 203 })'
 descriptor = "export at src/node.js:203"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2292,11 +2310,11 @@ end = 204
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Typescript(Export { file: "src/node.js", start_line: 220 })'
 descriptor = "export at src/node.js:220"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2318,11 +2336,11 @@ end = 221
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Typescript(Export { file: "src/node.js", start_line: 231 })'
 descriptor = "export at src/node.js:231"
 cost_tokens = 0
-cum_tokens = 5864
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -2344,11 +2362,11 @@ end = 232
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Typescript(ExportBody { file: "src/node.js", start_line: 193, body_start_line: 194 })'
 descriptor = "export body at src/node.js:193 body 194"
 cost_tokens = 23
-cum_tokens = 5887
+cum_tokens = 5925
 
 [batches.content]
 kind = "lines"
@@ -2362,11 +2380,11 @@ end = 194
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Typescript(Export { file: "src/node.js", start_line: 18 })'
 descriptor = "export at src/node.js:18"
 cost_tokens = 47
-cum_tokens = 5934
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -2380,11 +2398,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Typescript(ExportBody { file: "src/node.js", start_line: 155, body_start_line: 156 })'
 descriptor = "export body at src/node.js:155 body 156"
 cost_tokens = 39
-cum_tokens = 5973
+cum_tokens = 6011
 
 [batches.content]
 kind = "lines"
@@ -2398,11 +2416,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 27 })'
 descriptor = "export doc at src/node.js:27"
 cost_tokens = 15
-cum_tokens = 5988
+cum_tokens = 6026
 
 [batches.content]
 kind = "lines"
@@ -2416,11 +2434,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Typescript(ExportBody { file: "src/node.js", start_line: 203, body_start_line: 204 })'
 descriptor = "export body at src/node.js:203 body 204"
 cost_tokens = 89
-cum_tokens = 6077
+cum_tokens = 6115
 
 [batches.content]
 kind = "lines"
@@ -2434,11 +2452,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 12 })'
 descriptor = "export doc at src/node.js:12"
 cost_tokens = 24
-cum_tokens = 6101
+cum_tokens = 6139
 
 [batches.content]
 kind = "lines"
@@ -2452,11 +2470,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 155 })'
 descriptor = "export doc at src/node.js:155"
 cost_tokens = 29
-cum_tokens = 6130
+cum_tokens = 6168
 
 [batches.content]
 kind = "lines"
@@ -2470,11 +2488,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 193 })'
 descriptor = "export doc at src/node.js:193"
 cost_tokens = 32
-cum_tokens = 6162
+cum_tokens = 6200
 
 [batches.content]
 kind = "lines"
@@ -2488,11 +2506,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 167 })'
 descriptor = "export doc at src/node.js:167"
 cost_tokens = 37
-cum_tokens = 6199
+cum_tokens = 6237
 
 [batches.content]
 kind = "lines"
@@ -2501,24 +2519,6 @@ kind = "lines"
 path = "src/node.js"
 start = 161
 end = 165
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Typescript(ExportDoc { file: "src/common.js", start_line: 7 })'
-descriptor = "export doc at src/common.js:7"
-cost_tokens = 38
-cum_tokens = 6237
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 2
-end = 5
 
 [batches.content.spans.render]
 kind = "full"

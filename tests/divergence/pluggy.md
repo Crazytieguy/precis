@@ -204,68 +204,49 @@ Score(3000)=0.596 I=0.764 C=0.465 ns_rows≤3K=16/43 (reached=6 partial=3 missin
 | walker |  | 6565 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.542 |
 | ns | 6635 |  | 196 | `PluginManager.__init__`: the complete state of a plugin manager | 3.11 | 2.1 | 0.536 |
 | walker |  | 6644 | 79 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.536 |
-| walker |  | 6694 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.536 |
-| ns | 7001 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.523 |
-| walker |  | 7086 | 392 | tool.towncrier config in pyproject.toml |  |  | 0.523 |
-| walker |  | 7147 | 61 | python method doc at src/pluggy/_result.py:80 |  |  | 0.523 |
-| ns | 7201 |  | 200 | Complete attribute sets of `HookImpl` and `HookSpec` (`__slots__`) | 3.13 |  | 0.538 |
-| walker |  | 7244 | 97 | python method at src/pluggy/_hooks.py:111 |  |  | 0.544 |
-| walker |  | 7307 | 63 | python method doc at src/pluggy/_manager.py:252 |  |  | 0.544 |
-| walker |  | 7370 | 63 | python method doc at src/pluggy/_result.py:91 |  |  | 0.544 |
-| walker |  | 7435 | 65 | python method doc at src/pluggy/_manager.py:434 |  |  | 0.544 |
-| ns | 7511 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.530 |
-| walker |  | 7540 | 105 | python method at src/pluggy/_hooks.py:101 |  |  | 0.530 |
-| walker |  | 7540 | 0 | python method body at src/pluggy/_hooks.py:101 body 109 |  |  | 0.530 |
-| walker |  | 7644 | 104 | python method at src/pluggy/_hooks.py:91 |  |  | 0.531 |
-| walker |  | 7644 | 0 | python method body at src/pluggy/_hooks.py:91 body 99 |  |  | 0.531 |
-| ns | 7705 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.528 |
-| walker |  | 7756 | 112 | python method at src/pluggy/_hooks.py:202 |  |  | 0.545 |
-| walker |  | 7833 | 77 | python method doc at src/pluggy/_hooks.py:499 |  |  | 0.549 |
-| ns | 7937 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.542 |
-| walker |  | 7953 | 120 | python method at src/pluggy/_hooks.py:190 |  |  | 0.542 |
-| walker |  | 7953 | 0 | python method body at src/pluggy/_hooks.py:190 body 200 |  |  | 0.542 |
-| walker |  | 8072 | 119 | python method at src/pluggy/_hooks.py:178 |  |  | 0.543 |
-| walker |  | 8072 | 0 | python method body at src/pluggy/_hooks.py:178 body 188 |  |  | 0.543 |
-| walker |  | 8159 | 87 | python method doc at src/pluggy/_manager.py:201 |  |  | 0.543 |
-| walker |  | 8199 | 40 | declaration surface of changelog/590.trivial.rst |  |  | 0.543 |
-| ns | 8267 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.528 |
-| walker |  | 8296 | 97 | declaration surface of tox.ini |  |  | 0.528 |
-| walker |  | 8485 | 189 | python decl doc at src/pluggy/_manager.py:83 |  |  | 0.528 |
+| walker |  | 6741 | 97 | python method at src/pluggy/_hooks.py:111 |  |  | 0.542 |
+| walker |  | 6846 | 105 | python method at src/pluggy/_hooks.py:101 |  |  | 0.542 |
+| walker |  | 6846 | 0 | python method body at src/pluggy/_hooks.py:101 body 109 |  |  | 0.542 |
+| walker |  | 6950 | 104 | python method at src/pluggy/_hooks.py:91 |  |  | 0.543 |
+| walker |  | 6950 | 0 | python method body at src/pluggy/_hooks.py:91 body 99 |  |  | 0.543 |
+| ns | 7001 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.530 |
+| walker |  | 7062 | 112 | python method at src/pluggy/_hooks.py:202 |  |  | 0.548 |
+| walker |  | 7139 | 77 | python method doc at src/pluggy/_hooks.py:499 |  |  | 0.552 |
+| ns | 7201 |  | 200 | Complete attribute sets of `HookImpl` and `HookSpec` (`__slots__`) | 3.13 |  | 0.566 |
+| walker |  | 7259 | 120 | python method at src/pluggy/_hooks.py:190 |  |  | 0.566 |
+| walker |  | 7259 | 0 | python method body at src/pluggy/_hooks.py:190 body 200 |  |  | 0.566 |
+| walker |  | 7378 | 119 | python method at src/pluggy/_hooks.py:178 |  |  | 0.567 |
+| walker |  | 7378 | 0 | python method body at src/pluggy/_hooks.py:178 body 188 |  |  | 0.567 |
+| walker |  | 7476 | 98 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.568 |
+| ns | 7511 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.553 |
+| walker |  | 7692 | 216 | python class body at src/pluggy/_hooks.py:593 |  |  | 0.553 |
+| ns | 7705 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.550 |
+| walker |  | 7742 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.550 |
+| ns | 7937 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.543 |
+| walker |  | 8134 | 392 | tool.towncrier config in pyproject.toml |  |  | 0.543 |
+| walker |  | 8195 | 61 | python method doc at src/pluggy/_result.py:80 |  |  | 0.543 |
+| walker |  | 8258 | 63 | python method doc at src/pluggy/_manager.py:252 |  |  | 0.543 |
+| ns | 8267 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.529 |
+| walker |  | 8321 | 63 | python method doc at src/pluggy/_result.py:91 |  |  | 0.529 |
+| walker |  | 8386 | 65 | python method doc at src/pluggy/_manager.py:434 |  |  | 0.529 |
+| walker |  | 8473 | 87 | python method doc at src/pluggy/_manager.py:201 |  |  | 0.529 |
+| walker |  | 8513 | 40 | declaration surface of changelog/590.trivial.rst |  |  | 0.529 |
 | ns | 8548 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.518 |
-| walker |  | 8674 | 189 | python decl doc at src/pluggy/_warnings.py:10 |  |  | 0.520 |
-| ns | 8768 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.511 |
-| walker |  | 8771 | 97 | python method doc at src/pluggy/_manager.py:304 |  |  | 0.511 |
-| walker |  | 8869 | 98 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.511 |
-| walker |  | 8968 | 99 | python method doc at src/pluggy/_result.py:67 |  |  | 0.511 |
-| walker |  | 9071 | 103 | python method doc at src/pluggy/_manager.py:395 |  |  | 0.516 |
-| ns | 9104 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.504 |
-| ns | 9247 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.500 |
-| walker |  | 9287 | 216 | python class body at src/pluggy/_hooks.py:593 |  |  | 0.500 |
-| walker |  | 9367 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.502 |
-| walker |  | 9398 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.503 |
-| walker |  | 9429 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.503 |
-| walker |  | 9458 | 29 | python decl at src/pluggy/_callers.py:70 |  |  | 0.505 |
-| walker |  | 9492 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.508 |
-| ns | 9495 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.499 |
-| walker |  | 9551 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.507 |
-| walker |  | 9561 | 10 | listing of 'docs/examples/eggsample-spam' |  |  | 0.511 |
-| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.516 |
-| walker |  | 9695 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.516 |
-| walker |  | 9762 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.517 |
-| walker |  | 9762 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.517 |
-| walker |  | 9762 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.517 |
-| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.512 |
-| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.516 |
-| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.518 |
-| walker |  | 9972 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.533 |
-| walker |  | 9972 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.533 |
-| walker |  | 9981 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.533 |
-| walker |  | 9993 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.533 |
+| walker |  | 8610 | 97 | declaration surface of tox.ini |  |  | 0.518 |
+| ns | 8768 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.510 |
+| walker |  | 8799 | 189 | python decl doc at src/pluggy/_manager.py:83 |  |  | 0.510 |
+| walker |  | 8988 | 189 | python decl doc at src/pluggy/_warnings.py:10 |  |  | 0.511 |
+| ns | 9104 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.500 |
+| walker |  | 9209 | 221 | python imports in src/pluggy/_hooks.py |  |  | 0.500 |
+| ns | 9247 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.496 |
+| walker |  | 9306 | 97 | python method doc at src/pluggy/_manager.py:304 |  |  | 0.496 |
+| walker |  | 9405 | 99 | python method doc at src/pluggy/_result.py:67 |  |  | 0.496 |
+| ns | 9495 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.488 |
+| walker |  | 9508 | 103 | python method doc at src/pluggy/_manager.py:395 |  |  | 0.492 |
+| ns | 9654 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.497 |
+| ns | 9833 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.492 |
+| walker |  | 9862 | 354 | python method doc at src/pluggy/_hooks.py:111 |  |  | 0.492 |
+| ns | 9923 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.496 |
+| walker |  | 9942 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.497 |
+| ns | 9954 |  | 31 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.500 |
+| walker |  | 9973 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.501 |
