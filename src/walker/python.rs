@@ -100,6 +100,7 @@ const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 /// (tomli −0.053), so the target is a live knob.
 const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
+const DATA_MODEL_ROSTER_FACTOR: f64 = 1.30;
 
 /// Two-sided, unlike the shared [`crate::value::roster_mass_factor`]:
 /// the boost-only form prices a one-decl module's 11-token roster at the
@@ -225,6 +226,32 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         }
 
         let methods_by_class = collect_methods_by_class(&decls, &source);
+        // Data-model catalogs — settings/schema modules that declare the
+        // application's configuration or data surface as a battery of
+        // public classes with essentially no behavior — earn a roster
+        // promotion, applied per-chunk below so a helper-occupied head
+        // chunk can't spend it. The behavior ceiling is absolute and
+        // strict: admitting behavior-bearing model files (ORM models
+        // with per-class methods) measured a net loss — their NSes rank
+        // method surface, which the method-sig batches already carry.
+        // Shell classes whose whole declaration is their bases list
+        // (mixin-composed settings) count as catalog classes; their
+        // model is the base list, not body fields. Entrypoints keep the
+        // same exemption as the roster-mass factor.
+        let public_class_decls: HashSet<usize> = decls
+            .iter()
+            .filter(|d| d.kind == DeclKind::Class && !d.underscore_private)
+            .map(|d| d.inner_node.start_byte())
+            .collect();
+        let (total_fields, total_methods) = decls
+            .iter()
+            .filter(|d| public_class_decls.contains(&d.inner_node.start_byte()))
+            .map(class_field_method_counts)
+            .fold((0, 0), |(f, m), (cf, cm)| (f + cf, m + cm));
+        let file_is_data_model_catalog = !is_python_entrypoint(file)
+            && public_class_decls.len() >= 4
+            && total_fields >= 4
+            && total_methods <= 2;
         // The same exclusion [`names_roster`] applies to top-level
         // defs, for the same reason: an overload stack is one method,
         // and what discriminates its variants is the return annotation
@@ -266,22 +293,35 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let mut chunk_contents = Vec::with_capacity(names_chunk_ranges.len());
         for (chunk_index, range) in names_chunk_ranges.iter().enumerate() {
             let chunk_decls = &roster_decls[range.clone()];
+            let model_factor = if file_is_data_model_catalog
+                && chunk_decls
+                    .iter()
+                    .filter(|d| public_class_decls.contains(&d.inner_node.start_byte()))
+                    .count()
+                    * 2
+                    >= chunk_decls.len()
+            {
+                DATA_MODEL_ROSTER_FACTOR
+            } else {
+                1.0
+            };
             let chunk_lines = collect_decl_names_from(chunk_decls, &all_name_lines);
             if let Some(content) = single_file_lines_content(file, &source, chunk_lines) {
-                chunk_contents.push((chunk_index, content));
+                chunk_contents.push((chunk_index, content, model_factor));
             }
         }
         let chunk_factors = if chunk_contents.len() > 1 {
             let costs: Vec<usize> = chunk_contents
                 .iter()
-                .map(|(_, content)| ctx.marginal_tokens(content))
+                .map(|(_, content, _)| ctx.marginal_tokens(content))
                 .collect();
             conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT)
         } else {
             vec![1.0; chunk_contents.len()]
         };
         let mut names_keys = Vec::with_capacity(chunk_contents.len());
-        for ((chunk_index, content), chunk_factor) in chunk_contents.into_iter().zip(chunk_factors)
+        for ((chunk_index, content, model_factor), chunk_factor) in
+            chunk_contents.into_iter().zip(chunk_factors)
         {
             let key = BatchKey::Python(if chunk_index == 0 {
                 PythonKey::DeclNames { file: file.clone() }
@@ -296,7 +336,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 key: key.clone(),
                 predecessor,
                 content,
-                value: names_base_value * chunk_factor,
+                value: names_base_value * chunk_factor * model_factor,
             });
             names_keys.push(key);
         }
@@ -1501,6 +1541,42 @@ fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         1.0
     }
+}
+
+/// Direct AST field (assignment) and method counts for a class body.
+/// AST-counted, so multiline defaults, docstrings, and nested blocks
+/// don't inflate the evidence the way rendered-row counts would.
+fn class_field_method_counts(class_decl: &DeclInfo<'_>) -> (usize, usize) {
+    let Some(body) = class_decl.inner_node.child_by_field_name("body") else {
+        return (0, 0);
+    };
+    let mut fields = 0usize;
+    let mut methods = 0usize;
+    let mut cursor = body.walk();
+    for stmt in body.children(&mut cursor) {
+        match stmt.kind() {
+            "expression_statement" => {
+                if stmt
+                    .named_child(0)
+                    .is_some_and(|c| c.kind() == "assignment")
+                {
+                    fields += 1;
+                }
+            }
+            "function_definition" => methods += 1,
+            "decorated_definition" => {
+                let mut dc = stmt.walk();
+                if stmt
+                    .children(&mut dc)
+                    .any(|c| c.kind() == "function_definition")
+                {
+                    methods += 1;
+                }
+            }
+            _ => {}
+        }
+    }
+    (fields, methods)
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
