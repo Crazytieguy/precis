@@ -868,7 +868,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 26
-key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false })'
 descriptor = "README.md section #28"
 cost_tokens = 14
 cum_tokens = 1733
@@ -886,7 +886,7 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 26
 cum_tokens = 1759
@@ -904,7 +904,7 @@ kind = "full"
 
 [[batches]]
 position = 28
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 44
 cum_tokens = 1803
@@ -2256,7 +2256,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 4, reference_shaped: false })'
 descriptor = "ARCHITECTURE.md section #4"
 cost_tokens = 32
 cum_tokens = 3854
@@ -2274,7 +2274,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false })'
 descriptor = "README.md section #24"
 cost_tokens = 19
 cum_tokens = 3873
@@ -2292,28 +2292,10 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Markdown(Section { file: "README.md", section_index: 37, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #37"
-cost_tokens = 141
-cum_tokens = 4014
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 462
-end = 481
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
 key = 'Fs(DirListing { dir: "test/pages" })'
 descriptor = "listing of 'test/pages'"
 cost_tokens = 59
-cum_tokens = 4073
+cum_tokens = 3932
 
 [batches.content]
 kind = "fs"
@@ -2323,11 +2305,11 @@ parent = "test/pages"
 entries = ["_app.tsx", "dialog.tsx", "group.tsx", "huge.tsx", "index.tsx", "item-advanced.tsx", "item.tsx", "keybinds.tsx", "numeric.tsx", "portal.tsx", "props.tsx"]
 
 [[batches]]
-position = 84
-key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
+position = 83
+key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false })'
 descriptor = "README.md section #19"
 cost_tokens = 26
-cum_tokens = 4099
+cum_tokens = 3958
 
 [batches.content]
 kind = "lines"
@@ -2341,11 +2323,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 85
-key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
+position = 84
+key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
 descriptor = "README.md section #22"
 cost_tokens = 26
-cum_tokens = 4125
+cum_tokens = 3984
 
 [batches.content]
 kind = "lines"
@@ -2359,11 +2341,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 112
-cum_tokens = 4237
+cum_tokens = 4096
 
 [batches.content]
 kind = "lines"
@@ -2377,11 +2359,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Typescript(Export { file: "cmdk/tsup.config.ts", start_line: 3 })'
 descriptor = "export at cmdk/tsup.config.ts:3"
 cost_tokens = 73
-cum_tokens = 4310
+cum_tokens = 4169
 
 [batches.content]
 kind = "lines"
@@ -2395,11 +2377,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 88
-key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
+position = 87
+key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false })'
 descriptor = "README.md section #23"
 cost_tokens = 25
-cum_tokens = 4335
+cum_tokens = 4194
 
 [batches.content]
 kind = "lines"
@@ -2413,11 +2395,11 @@ end = 258
 kind = "full"
 
 [[batches]]
-position = 89
-key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
+position = 88
+key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
 descriptor = "README.md section #21"
 cost_tokens = 35
-cum_tokens = 4370
+cum_tokens = 4229
 
 [batches.content]
 kind = "lines"
@@ -2431,11 +2413,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Typescript(Imports { file: "playwright.config.ts" })'
 descriptor = "imports in playwright.config.ts"
 cost_tokens = 19
-cum_tokens = 4389
+cum_tokens = 4248
 
 [batches.content]
 kind = "lines"
@@ -2449,11 +2431,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Json(DevDependencies { file: "cmdk/package.json" })'
 descriptor = "package dev/peer dependencies in cmdk/package.json"
 cost_tokens = 91
-cum_tokens = 4480
+cum_tokens = 4339
 
 [batches.content]
 kind = "lines"
@@ -2475,11 +2457,37 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Typescript(ExportNames { file: "cmdk/src/command-score.ts" })'
 descriptor = "export names surface in cmdk/src/command-score.ts"
 cost_tokens = 26
-cum_tokens = 4506
+cum_tokens = 4365
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmdk/src/command-score.ts"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 92
+key = 'Typescript(Export { file: "cmdk/src/command-score.ts", start_line: 155 })'
+descriptor = "export at cmdk/src/command-score.ts:155"
+cost_tokens = 0
+cum_tokens = 4365
 
 [batches.content]
 kind = "lines"
@@ -2502,36 +2510,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 93
-key = 'Typescript(Export { file: "cmdk/src/command-score.ts", start_line: 155 })'
-descriptor = "export at cmdk/src/command-score.ts:155"
-cost_tokens = 0
-cum_tokens = 4506
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 94
-key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 3, reference_shaped: false })'
 descriptor = "ARCHITECTURE.md section #3"
 cost_tokens = 68
-cum_tokens = 4574
+cum_tokens = 4433
 
 [batches.content]
 kind = "lines"
@@ -2545,11 +2527,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+position = 94
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 52
-cum_tokens = 4626
+cum_tokens = 4485
 
 [batches.content]
 kind = "lines"
@@ -2563,11 +2545,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 96
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+position = 95
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 52
-cum_tokens = 4678
+cum_tokens = 4537
 
 [batches.content]
 kind = "lines"
@@ -2581,11 +2563,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Typescript(Imports { file: "cmdk/tsup.config.ts" })'
 descriptor = "imports in cmdk/tsup.config.ts"
 cost_tokens = 12
-cum_tokens = 4690
+cum_tokens = 4549
 
 [batches.content]
 kind = "lines"
@@ -2599,11 +2581,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 98
-key = 'Markdown(Section { file: "README.md", section_index: 34, reference_shaped: false, deferred_mass_prose: false })'
+position = 97
+key = 'Markdown(Section { file: "README.md", section_index: 34, reference_shaped: false })'
 descriptor = "README.md section #34"
 cost_tokens = 40
-cum_tokens = 4730
+cum_tokens = 4589
 
 [batches.content]
 kind = "lines"
@@ -2617,8 +2599,26 @@ end = 428
 kind = "full"
 
 [[batches]]
+position = 98
+key = 'Markdown(Section { file: "README.md", section_index: 37, reference_shaped: false })'
+descriptor = "README.md section #37"
+cost_tokens = 141
+cum_tokens = 4730
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 462
+end = 481
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 99
-key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false })'
 descriptor = "README.md section #36"
 cost_tokens = 151
 cum_tokens = 4881
@@ -2650,7 +2650,7 @@ entries = ["cmdk", "globals.scss", "index.module.scss"]
 
 [[batches]]
 position = 101
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
 cost_tokens = 63
 cum_tokens = 4957
@@ -2668,7 +2668,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
 descriptor = "README.md section #17"
 cost_tokens = 63
 cum_tokens = 5020
@@ -2704,7 +2704,7 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
 descriptor = "README.md section #26"
 cost_tokens = 66
 cum_tokens = 5328
@@ -2722,7 +2722,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
 descriptor = "README.md section #20"
 cost_tokens = 71
 cum_tokens = 5399
@@ -2740,7 +2740,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false })'
 descriptor = "README.md section #27"
 cost_tokens = 73
 cum_tokens = 5472
@@ -2786,7 +2786,7 @@ entries = ["icons.module.scss", "index.tsx"]
 
 [[batches]]
 position = 109
-key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false })'
 descriptor = "README.md section #18"
 cost_tokens = 77
 cum_tokens = 5567
@@ -2804,7 +2804,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 439
 cum_tokens = 6006
@@ -2822,7 +2822,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false })'
 descriptor = "README.md section #15"
 cost_tokens = 82
 cum_tokens = 6088
@@ -2840,7 +2840,7 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'Markdown(Section { file: "README.md", section_index: 32, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 32, reference_shaped: false })'
 descriptor = "README.md section #32"
 cost_tokens = 92
 cum_tokens = 6180
@@ -2858,7 +2858,7 @@ kind = "full"
 
 [[batches]]
 position = 113
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 104
 cum_tokens = 6284
@@ -2876,7 +2876,7 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
 cost_tokens = 105
 cum_tokens = 6389
@@ -2912,7 +2912,7 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false })'
 descriptor = "README.md section #25"
 cost_tokens = 89
 cum_tokens = 6935
@@ -2930,7 +2930,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 94
 cum_tokens = 7029
@@ -2948,7 +2948,7 @@ kind = "full"
 
 [[batches]]
 position = 118
-key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false })'
 descriptor = "README.md section #16"
 cost_tokens = 118
 cum_tokens = 7147
@@ -2966,7 +2966,7 @@ kind = "full"
 
 [[batches]]
 position = 119
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 126
 cum_tokens = 7273
@@ -2984,7 +2984,7 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 131
 cum_tokens = 7404
@@ -3016,7 +3016,7 @@ entries = ["framer.scss", "linear.scss", "raycast.scss", "vercel.scss"]
 
 [[batches]]
 position = 122
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 135
 cum_tokens = 7557
@@ -3084,7 +3084,7 @@ entries = ["favicon.svg", "grid.svg", "inter-var-latin.woff2", "line.svg", "og.p
 
 [[batches]]
 position = 126
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 156
 cum_tokens = 7766
@@ -3102,7 +3102,7 @@ kind = "full"
 
 [[batches]]
 position = 127
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
 cost_tokens = 156
 cum_tokens = 7922
@@ -3146,7 +3146,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 129
-key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false })'
 descriptor = "README.md section #35"
 cost_tokens = 433
 cum_tokens = 8367
@@ -3200,7 +3200,7 @@ kind = "full"
 
 [[batches]]
 position = 132
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 641
 cum_tokens = 9819

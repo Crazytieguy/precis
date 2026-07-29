@@ -108,62 +108,62 @@ Score(3000)=0.641 I=0.845 C=0.486 ns_rows≤3K=19/48 (reached=10 partial=0 missi
 | walker |  | 4412 | 47 | README.md section #19 |  |  | 0.655 |
 | walker |  | 4459 | 47 | README.md section #21 |  |  | 0.655 |
 | walker |  | 4527 | 68 | README.md section #7 |  |  | 0.655 |
-| walker |  | 4626 | 99 | README.md section #20 |  |  | 0.655 |
-| walker |  | 4742 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.655 |
+| walker |  | 4643 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.655 |
+| walker |  | 4698 | 55 | go decl body at main.go:336 |  |  | 0.655 |
+| walker |  | 4774 | 76 | README.md section #5 |  |  | 0.655 |
 | ns | 4778 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.623 |
-| walker |  | 4797 | 55 | go decl body at main.go:336 |  |  | 0.623 |
-| walker |  | 4873 | 76 | README.md section #5 |  |  | 0.623 |
-| walker |  | 5013 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.635 |
-| walker |  | 5013 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.635 |
-| walker |  | 5013 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.635 |
-| walker |  | 5013 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.635 |
-| walker |  | 5024 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.637 |
+| walker |  | 4914 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.635 |
+| walker |  | 4914 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.635 |
+| walker |  | 4914 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.635 |
+| walker |  | 4914 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.635 |
+| walker |  | 4925 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.637 |
+| walker |  | 4947 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.637 |
 | ns | 5037 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.614 |
-| walker |  | 5046 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.614 |
-| ns | 5191 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.603 |
-| walker |  | 5253 | 207 | README.md section #12 |  |  | 0.629 |
-| walker |  | 5402 | 149 | go decl names surface in truststore_linux.go |  |  | 0.657 |
-| walker |  | 5402 | 0 | go decl at truststore_linux.go:27 |  |  | 0.657 |
-| walker |  | 5402 | 0 | go decl at truststore_linux.go:51 |  |  | 0.657 |
-| walker |  | 5402 | 0 | go decl at truststore_linux.go:55 |  |  | 0.657 |
-| walker |  | 5402 | 0 | go decl at truststore_linux.go:77 |  |  | 0.657 |
-| walker |  | 5495 | 93 | go decl body at main.go:345 |  |  | 0.679 |
-| walker |  | 5524 | 29 | go decl at truststore_linux.go:17 |  |  | 0.685 |
+| walker |  | 5154 | 207 | README.md section #12 |  |  | 0.641 |
+| ns | 5191 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.629 |
+| walker |  | 5303 | 149 | go decl names surface in truststore_linux.go |  |  | 0.657 |
+| walker |  | 5303 | 0 | go decl at truststore_linux.go:27 |  |  | 0.657 |
+| walker |  | 5303 | 0 | go decl at truststore_linux.go:51 |  |  | 0.657 |
+| walker |  | 5303 | 0 | go decl at truststore_linux.go:55 |  |  | 0.657 |
+| walker |  | 5303 | 0 | go decl at truststore_linux.go:77 |  |  | 0.657 |
+| walker |  | 5396 | 93 | go decl body at main.go:345 |  |  | 0.679 |
+| walker |  | 5425 | 29 | go decl at truststore_linux.go:17 |  |  | 0.685 |
 | ns | 5545 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.666 |
-| walker |  | 5690 | 166 | go decl body at main.go:382 |  |  | 0.668 |
+| walker |  | 5591 | 166 | go decl body at main.go:382 |  |  | 0.668 |
 | ns | 5697 |  | 152 | main(): the flag.Usage override, -help and -version handling | 3.6 | 2.1 | 0.655 |
-| walker |  | 5807 | 117 | go decl body at cert.go:37 |  |  | 0.656 |
+| walker |  | 5708 | 117 | go decl body at cert.go:37 |  |  | 0.656 |
 | ns | 5878 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.662 |
 | ns | 5963 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.665 |
-| walker |  | 6063 | 256 | go decl body at main.go:240 |  |  | 0.700 |
-| walker |  | 6088 | 25 | go decl body at truststore_linux.go:51 |  |  | 0.700 |
+| walker |  | 5964 | 256 | go decl body at main.go:240 |  |  | 0.700 |
+| walker |  | 5989 | 25 | go decl body at truststore_linux.go:51 |  |  | 0.700 |
 | ns | 6229 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.681 |
-| walker |  | 6341 | 253 | go package + imports in cert.go |  |  | 0.681 |
-| walker |  | 6475 | 134 | go decl body at truststore_java.go:81 |  |  | 0.682 |
+| walker |  | 6242 | 253 | go package + imports in cert.go |  |  | 0.681 |
+| walker |  | 6376 | 134 | go decl body at truststore_java.go:81 |  |  | 0.682 |
+| walker |  | 6514 | 138 | go decl body at truststore_java.go:94 |  |  | 0.682 |
 | ns | 6560 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.664 |
-| walker |  | 6613 | 138 | go decl body at truststore_java.go:94 |  |  | 0.664 |
-| walker |  | 6763 | 150 | go decl body at truststore_java.go:110 |  |  | 0.664 |
-| walker |  | 6906 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.664 |
-| walker |  | 6961 | 55 | README.md section #16 |  |  | 0.664 |
+| walker |  | 6664 | 150 | go decl body at truststore_java.go:110 |  |  | 0.664 |
+| walker |  | 6807 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.664 |
+| walker |  | 6862 | 55 | README.md section #16 |  |  | 0.664 |
 | ns | 6983 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.646 |
-| walker |  | 7110 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.646 |
-| walker |  | 7213 | 103 | README.md section #3 |  |  | 0.646 |
+| walker |  | 7011 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.646 |
+| walker |  | 7114 | 103 | README.md section #3 |  |  | 0.646 |
+| walker |  | 7221 | 107 | README.md section #6 |  |  | 0.646 |
 | ns | 7234 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.636 |
-| walker |  | 7320 | 107 | README.md section #6 |  |  | 0.636 |
 | ns | 7517 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.622 |
-| walker |  | 7710 | 390 | go decl body at main.go:307 |  |  | 0.622 |
+| walker |  | 7611 | 390 | go decl body at main.go:307 |  |  | 0.622 |
+| walker |  | 7701 | 90 | README.md section #18 |  |  | 0.622 |
 | ns | 7761 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.613 |
-| walker |  | 7800 | 90 | README.md section #18 |  |  | 0.613 |
-| walker |  | 7897 | 97 | README.md section #23 |  |  | 0.613 |
+| walker |  | 7798 | 97 | README.md section #23 |  |  | 0.613 |
 | ns | 8001 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.603 |
-| walker |  | 8114 | 217 | go decl body at cert.go:148 |  |  | 0.604 |
+| walker |  | 8015 | 217 | go decl body at cert.go:148 |  |  | 0.604 |
 | ns | 8214 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.611 |
-| walker |  | 8331 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.611 |
-| walker |  | 8406 | 75 | go package + imports in truststore_linux.go |  |  | 0.611 |
+| walker |  | 8232 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.611 |
+| walker |  | 8307 | 75 | go package + imports in truststore_linux.go |  |  | 0.611 |
+| walker |  | 8441 | 134 | README.md section #2 |  |  | 0.611 |
 | ns | 8478 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.602 |
-| walker |  | 8540 | 134 | README.md section #2 |  |  | 0.602 |
 | ns | 8607 |  | 129 | printHosts(): the certificate name list and the second-level wildcard warning | 4.11 | 1.6 | 0.606 |
-| walker |  | 8796 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.607 |
+| walker |  | 8697 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.607 |
+| walker |  | 8796 | 99 | README.md section #20 |  |  | 0.607 |
 | ns | 8858 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.599 |
 | walker |  | 9059 | 263 | go decl body at cert.go:176 |  |  | 0.624 |
 | ns | 9090 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.614 |

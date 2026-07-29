@@ -84,32 +84,7 @@ README.md
       71→  - [Application configuration](#application-configuration)
       72→- [Advanced](#advanced)
       74→## Installation
-      75→
-      76→Also, you can specify extras during installation for concrete framework:
-      77→
-      78→- `fastapi`
-      79→- `litestar`
-      80→- `faststream` (ASGI app)
-      81→
-      82→Also we have `granian` extra that is requires for `create_granian_server`.
-      83→
-      84→For uv:
-      85→
-      86→```bash
-      87→uv add "microbootstrap[fastapi]"
-      88→```
-      89→
-      90→For poetry:
-      91→
-      92→```bash
-      93→poetry add microbootstrap -E fastapi
-      94→```
-      95→
-      96→For pip:
-      97→
-      98→```bash
-      99→pip install "microbootstrap[fastapi]"
-     100→```
+    …
      102→## Quickstart
     …
      141→### FastAPI
@@ -233,12 +208,29 @@ microbootstrap/
         …
           31→    def print_bootstrap_table(self) -> None:
         …
-    exceptions.py …
+    exceptions.py
+           1→class MicroBootstrapBaseError(Exception):
+           2→    """Base for all exceptions."""
+           5→class ConfigMergeError(MicroBootstrapBaseError):
+           6→    """Raises when it's impossible to merge configs due to type mismatch."""
+           9→class MissingInstrumentError(MicroBootstrapBaseError):
+          10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
         …
           16→GRANIAN_LOG_LEVELS_MAP = {
+          17→    logging.CRITICAL: LogLevels.critical,
+          18→    logging.ERROR: LogLevels.error,
+          19→    logging.WARNING: LogLevels.warning,
+          20→    logging.WARNING: LogLevels.warn,
+          21→    logging.INFO: LogLevels.info,
+          22→    logging.DEBUG: LogLevels.debug,
+          23→}
         …
           27→def create_granian_server(
+          28→    target: str,
+          29→    settings: ServerConfig,
+          30→    **granian_options: typing.Any,  # noqa: ANN401
+          31→) -> GranianServer[typing.Any]:
         …
     helpers.py …
     instruments/

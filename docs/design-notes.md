@@ -696,7 +696,8 @@ state — four moved, four+ confirmed: ORIENTATION_TIER_WINDOW
 (+0.0009, tinyusb +0.063). Confirmed at optimum on the new state:
 concavity 0.35 (sharp), ORIENTATION_TIER_BOOST 1.4 (both
 ORIENTATION_TIER_* since deleted — see the budget-tier entry), roster cap 2.2,
-PROSE_MASS_WINDOW_FRACTION 0.25, TRAIN_PRESSURE_K 0.15,
+PROSE_MASS_WINDOW_FRACTION 0.25 (both PROSE_MASS_* since deleted —
+see the README-ordering entry), TRAIN_PRESSURE_K 0.15,
 BODY_BLOCK/README_SUB scales, GO_ENTRY_FACTOR 1.4, go unexported
 0.6, REFERENCE_USAGE 1.3, python init factor 3.0. Lesson: every
 structural ship moves nearby knob optima — re-sweep the neighborhood
@@ -889,9 +890,9 @@ worst −0.004. Calibration knowledge from the tuning loop:
 - **Tail factor 0.85, not BodyBlock's 0.60.** At 0.60 the tails
   strand past the window their head opened (middleclass README tail
   at 3618 vs the old whole-lump at 1634); 0.85 restores near-lump
-  train completion while the head still buys early. Tails are also
-  exempt from the `deferred_mass_prose` pass — deferring a mid-train
-  tail strands everything gated behind it.
+  train completion while the head still buys early. (Tails were also
+  exempt from the `deferred_mass_prose` pass, which was un-shipped
+  2026-07-29 as inert — see the README-ordering entry below.)
 - **README-late fixtures with content past ~4K stayed flat at 3K**
   (go-multierror, debug, cmdk, commander): the split re-orders their
   README delivery but the chunks still price past the 3K frontier.
@@ -2131,3 +2132,82 @@ form re-expresses the same fit rather than generalizing it. Pushing to
 tinyusb −0.224 @2080, which is exactly the wrong-header promotion the
 inventory warned the role would cause on unseen repos. Do not sweep
 this constant upward on training score.
+
+## README orientation-vs-source ordering: the value knobs are exhausted (2026-07-29, v2 key)
+
+Lane target was the README-class "late" loss — 52 of 71 training
+fixtures carry it and ~64% of that mass is content that *is* scheduled,
+just past 3K (go-multierror README 0.415, mitt 0.289, cmdk 0.251, krep
+0.212). The oracle-vs-walker class gap says the walker under-buys
+substantive README `Section` mass (22.0K vs 33.3K) while over-buying
+`ReadmeHeadline` and `HeadingsOutline`. Every knob that could close
+that gap was re-swept on the v2 key and **every one already sits at its
+local optimum**; the zero point was 0.6151 over the 71 training
+fixtures throughout.
+
+- `CANONICAL_USAGE_SECTION_FACTOR`: 1.8→0.6135 · **2.2→0.6151** ·
+  2.4→0.6149 · 2.6→0.6149 · 3.0→0.6149. The pre-refreeze 2.2 survives
+  the re-freeze; above it the curve is a flat plateau slightly below.
+- **Uniform README-section value factor** (all sections × k, the level
+  axis the old "section-mass factor" entry never isolated):
+  0.9→0.6081 · **1.0→0.6151** · 1.12→0.6145 · 1.25→0.6110 ·
+  1.5→0.6043. Clean single peak at the shipped value.
+- `readme_index_decay`: exponent 0.0→0.6087 · 0.08→0.6148 ·
+  **0.15→0.6151** · 0.25→0.6142; floor 0.7 (shipped) →0.6151 ·
+  0.8→0.6148 · 0.85→0.6155 · 0.9→0.6132 · 0.95→0.6095. The 0.85 point
+  is a knife edge — both neighbours sit below base — same signature as
+  the `DEFAULT_CONCAVITY_EXPONENT` 0.36 artifact.
+- **README section-mass factor, re-measured on the v2 key** (value ×
+  `(tokens/100)^e`, baseline 100): boost-only e0.10→0.6148 ·
+  e0.20→0.6155 · e0.35→0.6136; demote-only e0.10/floor0.7→0.6138 ·
+  e0.35/floor0.7→0.6144 · e0.35/floor0.5→0.6148. **The old key's
+  demote-only +0.0025 has flipped negative.** The boost-only peak is
+  not a lever: it moves 12 fixtures and is dominated by commander
+  −0.139 against beszel +0.096 — the same tiny-section bimodality the
+  old entry recorded, with the signs reshuffled.
+- `MarkdownKey::Section` concavity exponent (index ≥1, non-reference):
+  0.40→0.6107 · 0.42→0.6150 · **0.45→0.6151** · 0.48→0.6103. Sharp
+  peak; this is the knob that makes tiny sections beat big ones in the
+  ratio race, and it cannot be relaxed.
+- **Canonical-usage sections exempted from the steep prose exponent**
+  (the `reference_shaped` argument applied to code-dominant demo
+  sections): −0.0007. Dead.
+- **README sections delivered in document order** (each root-README
+  section gated on its predecessor, the `chained_to_previous` shape
+  generalized): all sections →0.6119, prose-only (reference-shaped and
+  roster ranges stay free) →0.6118, first-4-prose-only →0.6132. The
+  winners are the fixtures whose walker was buying scattered tiny
+  sections (mitt +0.060, tomli +0.068, p-queue +0.055); the losers are
+  reference READMEs whose valuable sections are late-index and get
+  blocked (json-server −0.115, sqlite-vec −0.111, krep −0.094 — krep's
+  oracle buys sections #45/#48/#43 first). No walk-time signal
+  separates "read top-down" from "addressable reference" READMEs.
+
+Conclusion for the next session: the README-late bucket is not
+reachable by value or ordering knobs on the markdown side. The oracle
+funds its extra README mass out of the classes the walker over-buys —
+listing (+21.6K), config (+8.4K), manifest (+6.6K) — so the lever lives
+in *those* lanes, or in new recall, not here. This is the same shape as
+the "early-budget ratio wall" verdict, re-confirmed on the v2 key.
+
+### Un-ship: the deferred-mass-prose scheduler tier (inert at 3000)
+
+`prose_mass_tier_multiplier` gave operationally dense README/dev-doc
+prose sections a 1.5× ratio boost once 25% of the budget was consumed,
+and excluded them from `is_orientation`. **Both halves are inert at the
+primary budget**: boost 1.0 (mechanism off) / 1.2 / 1.35 / 1.5
+(shipped) all score 0.6151, and 1.9 costs −0.0006. Zeroing the
+`deferred_mass_prose` flag as well — which also flips `is_orientation`
+back to unconditionally true for markdown — gives the identical result.
+Only dockly and microbootstrap move, both +0.001.
+
+Grid on removal: 1000/1442/2080/3000 bit-identical (0.6132 / 0.6217 /
+0.6277 / 0.6151), 4327 0.5851→0.5839, 6240 0.5649→0.5654, 9000
+0.5606→0.5604. The −0.0012 at 4327 is the only real cost, against
+−264/+19 lines: the `DensitySignal` two-mode plumbing collapses to the
+single dev-workflow path, and `looks_like_option_or_env_row` plus its
+two exclusive helpers go with it. Precedent for accepting the
+off-primary cost: `TEST_INDEX_LISTING_BOOST` (−0.0016 at 1442, ~25
+lines). If a future lane wants a late-prose tier back, note that the
+window fraction is *also* inert (0.15 / 0.25 / 0.35 all →0.6151), so
+the shape — not the constants — is what failed.

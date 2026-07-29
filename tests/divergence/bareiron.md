@@ -103,42 +103,42 @@ Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missin
 | walker |  | 4125 | 67 | c decl names surface in src/crafting.c |  |  | 0.635 |
 | walker |  | 4125 | 0 | c decl at src/crafting.c:9 |  |  | 0.635 |
 | walker |  | 4125 | 0 | c decl at src/crafting.c:352 |  |  | 0.635 |
+| walker |  | 4138 | 13 | c decl doc at include/globals.h:41 |  |  | 0.635 |
 | ns | 4177 |  | 198 | src/globals.c — definitions of the global state, MOTD and brand | 3.9 |  | 0.616 |
+| walker |  | 4257 | 119 | README.md section #1 |  |  | 0.616 |
 | ns | 4261 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.613 |
+| walker |  | 4285 | 28 | c decl at src/crafting.c:349 |  |  | 0.613 |
 | ns | 4403 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.610 |
-| walker |  | 4454 | 329 | README.md section #3 |  |  | 0.621 |
-| walker |  | 4467 | 13 | c decl doc at include/globals.h:41 |  |  | 0.621 |
-| ns | 4489 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.613 |
-| walker |  | 4586 | 119 | README.md section #1 |  |  | 0.613 |
-| walker |  | 4614 | 28 | c decl at src/crafting.c:349 |  |  | 0.613 |
-| ns | 4722 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.627 |
-| walker |  | 4972 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.630 |
-| ns | 4986 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.643 |
-| walker |  | 4997 | 25 | README.md section #5 |  |  | 0.643 |
-| walker |  | 5240 | 243 | c aggregate member group at include/globals.h:200 group 201 |  |  | 0.693 |
-| ns | 5305 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.703 |
-| ns | 5416 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.709 |
-| walker |  | 5487 | 247 | c aggregate member group at include/globals.h:200 group 223 |  |  | 0.739 |
-| walker |  | 5501 | 14 | c decl doc at include/globals.h:35 |  |  | 0.739 |
-| ns | 5588 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.743 |
-| ns | 5795 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.747 |
-| ns | 5992 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.751 |
-| walker |  | 6030 | 529 | plaintext config build.sh |  |  | 0.775 |
-| walker |  | 6044 | 14 | c decl doc at src/structures.c:16 |  |  | 0.775 |
-| ns | 6130 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.770 |
-| ns | 6326 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.774 |
-| ns | 6411 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.775 |
-| ns | 6500 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.767 |
-| walker |  | 6734 | 690 | plaintext config extract_registries.sh |  |  | 0.767 |
-| ns | 6756 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.753 |
-| walker |  | 6774 | 40 | README.md section #6 |  |  | 0.753 |
-| walker |  | 6791 | 17 | c decl doc at include/globals.h:38 |  |  | 0.753 |
-| walker |  | 6832 | 41 | README.md section #7 |  |  | 0.753 |
-| ns | 7082 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.731 |
-| ns | 7351 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.716 |
-| walker |  | 7584 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.778 |
-| walker |  | 7629 | 45 | README.md section #8 |  |  | 0.778 |
-| walker |  | 7676 | 47 | README.md section #9 |  |  | 0.778 |
+| ns | 4489 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.601 |
+| walker |  | 4643 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.605 |
+| walker |  | 4668 | 25 | README.md section #5 |  |  | 0.605 |
+| ns | 4722 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.619 |
+| walker |  | 4911 | 243 | c aggregate member group at include/globals.h:200 group 201 |  |  | 0.672 |
+| ns | 4986 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.683 |
+| walker |  | 5158 | 247 | c aggregate member group at include/globals.h:200 group 223 |  |  | 0.716 |
+| walker |  | 5172 | 14 | c decl doc at include/globals.h:35 |  |  | 0.716 |
+| ns | 5305 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.725 |
+| ns | 5416 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.731 |
+| ns | 5588 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.735 |
+| walker |  | 5701 | 529 | plaintext config build.sh |  |  | 0.759 |
+| walker |  | 5715 | 14 | c decl doc at src/structures.c:16 |  |  | 0.759 |
+| ns | 5795 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.763 |
+| ns | 5992 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.768 |
+| ns | 6130 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.763 |
+| ns | 6326 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.767 |
+| walker |  | 6405 | 690 | plaintext config extract_registries.sh |  |  | 0.767 |
+| ns | 6411 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.768 |
+| walker |  | 6445 | 40 | README.md section #6 |  |  | 0.768 |
+| walker |  | 6462 | 17 | c decl doc at include/globals.h:38 |  |  | 0.768 |
+| ns | 6500 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.760 |
+| walker |  | 6503 | 41 | README.md section #7 |  |  | 0.760 |
+| ns | 6756 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.746 |
+| ns | 7082 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.724 |
+| walker |  | 7255 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.787 |
+| walker |  | 7300 | 45 | README.md section #8 |  |  | 0.787 |
+| walker |  | 7347 | 47 | README.md section #9 |  |  | 0.787 |
+| ns | 7351 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.771 |
+| walker |  | 7676 | 329 | README.md section #3 |  |  | 0.778 |
 | ns | 7693 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.757 |
 | walker |  | 7904 | 228 | c decl names surface in src/globals.c |  |  | 0.768 |
 | walker |  | 7923 | 19 | c decl doc at include/globals.h:56 |  |  | 0.768 |

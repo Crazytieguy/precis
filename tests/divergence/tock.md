@@ -262,72 +262,87 @@ Score(3000)=0.622 I=0.835 C=0.463 ns_rows≤3K=25/59 (reached=12 partial=0 missi
 | walker |  | 7448 | 22 | go decl at internal/adapters/cli/watch.go:90 |  |  | 0.493 |
 | ns | 7479 |  | 234 | iCalendar generator | 5.8 |  | 0.492 |
 | walker |  | 7515 | 67 | go package + imports in internal/extra/extra.go |  |  | 0.492 |
-| ns | 7661 |  | 182 | config.Config — the top-level settings struct | 6.1 |  | 0.487 |
-| walker |  | 7915 | 400 | README.md section #19 |  |  | 0.489 |
-| ns | 8027 |  | 366 | All nested config structs (complete) | 6.2 |  | 0.511 |
-| walker |  | 8030 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.514 |
-| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.514 |
-| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.514 |
-| walker |  | 8030 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.514 |
-| walker |  | 8037 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.514 |
-| ns | 8141 |  | 114 | Config defaults | 6.3 |  | 0.510 |
-| walker |  | 8205 | 168 | go decl at internal/config/config.go:12 |  |  | 0.525 |
-| walker |  | 8248 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.525 |
-| walker |  | 8322 | 74 | go package + imports in internal/config/config.go |  |  | 0.525 |
-| ns | 8466 |  | 325 | Complete TOCK_* environment variable bindings | 6.4 |  | 0.519 |
-| walker |  | 8532 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.519 |
-| walker |  | 8532 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.519 |
-| walker |  | 8539 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.519 |
-| walker |  | 8589 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.519 |
-| ns | 8714 |  | 248 | timeutil.Formatter — 12/24-hour formats and method roster | 6.5 |  | 0.527 |
-| walker |  | 8734 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.529 |
-| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.529 |
-| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.529 |
-| walker |  | 8734 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.529 |
-| walker |  | 8745 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.529 |
-| walker |  | 8754 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.529 |
-| walker |  | 8771 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.531 |
-| walker |  | 8785 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.531 |
-| walker |  | 8839 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.531 |
-| ns | 8902 |  | 188 | Theme type and the complete theme constructor roster | 6.6 |  | 0.542 |
-| walker |  | 9009 | 170 | go decl names surface in internal/adapters/repositories/file/repository.go |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:23 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:27 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:93 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:130 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:168 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:229 |  |  | 0.550 |
-| walker |  | 9009 | 0 | go decl at internal/adapters/repositories/file/repository.go:250 |  |  | 0.550 |
-| walker |  | 9020 | 11 | go decl at internal/adapters/repositories/file/repository.go:19 |  |  | 0.552 |
-| walker |  | 9034 | 14 | go decl body at internal/adapters/repositories/file/repository.go:23 |  |  | 0.554 |
-| ns | 9060 |  | 158 | GetTheme — accepted theme names and auto-detection | 6.7 | 6.6 | 0.546 |
-| ns | 9230 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.546 |
-| walker |  | 9303 | 269 | go decl names surface in internal/adapters/cli/root.go |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:31 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:107 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:115 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:119 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:123 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:127 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:134 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:173 |  |  | 0.558 |
-| walker |  | 9303 | 0 | go decl at internal/adapters/cli/root.go:195 |  |  | 0.558 |
-| walker |  | 9312 | 9 | go decl at internal/adapters/cli/root.go:21 |  |  | 0.558 |
-| ns | 9385 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.553 |
-| walker |  | 9465 | 153 | go decl at internal/adapters/cli/analyze.go:70 |  |  | 0.564 |
-| ns | 9531 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.556 |
-| walker |  | 9731 | 266 | docs/commands.md section #0 |  |  | 0.556 |
-| ns | 9768 |  | 237 | Direct dependency set | 8.1 |  | 0.563 |
-| walker |  | 9796 | 65 | go package + imports in internal/services/ics/generator.go |  |  | 0.563 |
-| ns | 9816 |  | 48 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.569 |
-| walker |  | 9955 | 159 | go decl at internal/core/ports/ports.go:11 |  |  | 0.581 |
-| ns | 9972 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.577 |
+| walker |  | 7630 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.496 |
+| walker |  | 7630 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.496 |
+| walker |  | 7630 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.496 |
+| walker |  | 7630 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.496 |
+| walker |  | 7637 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.496 |
+| ns | 7661 |  | 182 | config.Config — the top-level settings struct | 6.1 |  | 0.491 |
+| walker |  | 7805 | 168 | go decl at internal/config/config.go:12 |  |  | 0.508 |
+| walker |  | 7848 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.508 |
+| walker |  | 7922 | 74 | go package + imports in internal/config/config.go |  |  | 0.508 |
+| ns | 8027 |  | 366 | All nested config structs (complete) | 6.2 |  | 0.528 |
+| walker |  | 8132 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.528 |
+| walker |  | 8132 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.528 |
+| walker |  | 8139 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.528 |
+| ns | 8141 |  | 114 | Config defaults | 6.3 |  | 0.524 |
+| walker |  | 8189 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.524 |
+| walker |  | 8334 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.526 |
+| walker |  | 8334 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.526 |
+| walker |  | 8334 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.526 |
+| walker |  | 8334 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.526 |
+| walker |  | 8345 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.526 |
+| walker |  | 8354 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.526 |
+| walker |  | 8371 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.528 |
+| walker |  | 8385 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.528 |
+| walker |  | 8439 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.528 |
+| ns | 8466 |  | 325 | Complete TOCK_* environment variable bindings | 6.4 |  | 0.521 |
+| walker |  | 8609 | 170 | go decl names surface in internal/adapters/repositories/file/repository.go |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:23 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:27 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:93 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:130 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:168 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:229 |  |  | 0.530 |
+| walker |  | 8609 | 0 | go decl at internal/adapters/repositories/file/repository.go:250 |  |  | 0.530 |
+| walker |  | 8620 | 11 | go decl at internal/adapters/repositories/file/repository.go:19 |  |  | 0.533 |
+| walker |  | 8634 | 14 | go decl body at internal/adapters/repositories/file/repository.go:23 |  |  | 0.535 |
+| ns | 8714 |  | 248 | timeutil.Formatter — 12/24-hour formats and method roster | 6.5 |  | 0.542 |
+| ns | 8902 |  | 188 | Theme type and the complete theme constructor roster | 6.6 |  | 0.552 |
+| walker |  | 8903 | 269 | go decl names surface in internal/adapters/cli/root.go |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:31 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:107 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:115 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:119 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:123 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:127 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:134 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:173 |  |  | 0.564 |
+| walker |  | 8903 | 0 | go decl at internal/adapters/cli/root.go:195 |  |  | 0.564 |
+| walker |  | 8912 | 9 | go decl at internal/adapters/cli/root.go:21 |  |  | 0.564 |
+| ns | 9060 |  | 158 | GetTheme — accepted theme names and auto-detection | 6.7 | 6.6 | 0.556 |
+| walker |  | 9065 | 153 | go decl at internal/adapters/cli/analyze.go:70 |  |  | 0.557 |
+| ns | 9230 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.557 |
+| walker |  | 9331 | 266 | docs/commands.md section #0 |  |  | 0.557 |
+| ns | 9385 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.563 |
+| walker |  | 9396 | 65 | go package + imports in internal/services/ics/generator.go |  |  | 0.563 |
+| ns | 9531 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.555 |
+| walker |  | 9555 | 159 | go decl at internal/core/ports/ports.go:11 |  |  | 0.568 |
+| ns | 9768 |  | 237 | Direct dependency set | 8.1 |  | 0.575 |
+| ns | 9816 |  | 48 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.580 |
+| walker |  | 9847 | 292 | go decl names surface in internal/services/activity/service.go |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:20 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:24 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:68 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:118 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:141 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:149 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:186 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:210 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:214 |  |  | 0.597 |
+| walker |  | 9847 | 0 | go decl at internal/services/activity/service.go:218 |  |  | 0.597 |
+| walker |  | 9865 | 18 | go decl body at internal/services/activity/service.go:20 |  |  | 0.598 |
+| walker |  | 9891 | 26 | go decl at internal/services/activity/service.go:15 |  |  | 0.602 |
+| walker |  | 9902 | 11 | go decl body at internal/services/activity/service.go:210 |  |  | 0.603 |
+| walker |  | 9914 | 12 | go decl body at internal/services/activity/service.go:214 |  |  | 0.603 |
+| ns | 9972 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.599 |
+| walker |  | 9979 | 65 | go decl at internal/adapters/cli/add.go:16 |  |  | 0.599 |

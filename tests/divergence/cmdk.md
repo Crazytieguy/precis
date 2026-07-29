@@ -103,26 +103,26 @@ Score(3000)=0.720 I=0.891 C=0.581 ns_rows≤3K=16/47 (reached=9 partial=0 missin
 | walker |  | 3822 | 108 | imports in cmdk/src/index.tsx |  |  | 0.698 |
 | walker |  | 3854 | 32 | ARCHITECTURE.md section #4 |  |  | 0.702 |
 | walker |  | 3873 | 19 | README.md section #24 |  |  | 0.702 |
-| walker |  | 4014 | 141 | README.md section #37 |  |  | 0.747 |
-| walker |  | 4073 | 59 | listing of 'test/pages' |  |  | 0.748 |
-| ns | 4088 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.742 |
-| walker |  | 4099 | 26 | README.md section #19 |  |  | 0.742 |
-| walker |  | 4125 | 26 | README.md section #22 |  |  | 0.742 |
-| walker |  | 4237 | 112 | package dev/peer dependencies in package.json |  |  | 0.742 |
-| walker |  | 4310 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.742 |
-| walker |  | 4335 | 25 | README.md section #23 |  |  | 0.742 |
-| walker |  | 4370 | 35 | README.md section #21 |  |  | 0.742 |
-| walker |  | 4389 | 19 | imports in playwright.config.ts |  |  | 0.742 |
-| ns | 4446 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.758 |
-| walker |  | 4480 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.761 |
-| walker |  | 4506 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.761 |
-| walker |  | 4506 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.761 |
-| walker |  | 4574 | 68 | ARCHITECTURE.md section #3 |  |  | 0.761 |
-| walker |  | 4626 | 52 | README.md section #4 |  |  | 0.761 |
-| ns | 4667 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.767 |
-| walker |  | 4678 | 52 | README.md section #5 |  |  | 0.767 |
-| walker |  | 4690 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.767 |
-| walker |  | 4730 | 40 | README.md section #34 |  |  | 0.767 |
+| walker |  | 3932 | 59 | listing of 'test/pages' |  |  | 0.703 |
+| walker |  | 3958 | 26 | README.md section #19 |  |  | 0.703 |
+| walker |  | 3984 | 26 | README.md section #22 |  |  | 0.703 |
+| ns | 4088 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.698 |
+| walker |  | 4096 | 112 | package dev/peer dependencies in package.json |  |  | 0.698 |
+| walker |  | 4169 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.698 |
+| walker |  | 4194 | 25 | README.md section #23 |  |  | 0.698 |
+| walker |  | 4229 | 35 | README.md section #21 |  |  | 0.698 |
+| walker |  | 4248 | 19 | imports in playwright.config.ts |  |  | 0.698 |
+| walker |  | 4339 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.701 |
+| walker |  | 4365 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.701 |
+| walker |  | 4365 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.701 |
+| walker |  | 4433 | 68 | ARCHITECTURE.md section #3 |  |  | 0.701 |
+| ns | 4446 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.721 |
+| walker |  | 4485 | 52 | README.md section #4 |  |  | 0.721 |
+| walker |  | 4537 | 52 | README.md section #5 |  |  | 0.721 |
+| walker |  | 4549 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.721 |
+| walker |  | 4589 | 40 | README.md section #34 |  |  | 0.721 |
+| ns | 4667 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.729 |
+| walker |  | 4730 | 141 | README.md section #37 |  |  | 0.767 |
 | walker |  | 4881 | 151 | README.md section #36 |  |  | 0.752 |
 | ns | 4881 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.752 |
 | walker |  | 4894 | 13 | listing of 'website/styles' |  |  | 0.752 |

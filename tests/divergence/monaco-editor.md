@@ -227,87 +227,87 @@ Score(3000)=0.699 I=0.783 C=0.624 ns_rows≤3K=21/56 (reached=6 partial=0 missin
 | walker |  | 7196 | 24 | imports in src/languages/register.all.ts |  |  | 0.590 |
 | walker |  | 7199 | 3 | listing of 'test/smoke/amd' |  |  | 0.590 |
 | ns | 7289 |  | 353 | common/lspLanguageFeatures.ts — the shared provider adapters and LSP conversion helpers | 5.3 |  | 0.581 |
-| walker |  | 7347 | 148 | samples/README.md section #2 |  |  | 0.581 |
-| walker |  | 7451 | 104 | README.md section #3 |  |  | 0.581 |
-| walker |  | 7527 | 76 | README.md section #20 |  |  | 0.581 |
-| walker |  | 7578 | 51 | MAINTAINING.md section #2 |  |  | 0.581 |
+| walker |  | 7303 | 104 | README.md section #3 |  |  | 0.581 |
+| walker |  | 7379 | 76 | README.md section #20 |  |  | 0.581 |
+| walker |  | 7430 | 51 | MAINTAINING.md section #2 |  |  | 0.581 |
+| walker |  | 7464 | 34 | package runtime dependencies in webpack-plugin/package.json |  |  | 0.581 |
+| walker |  | 7551 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.581 |
 | ns | 7596 |  | 307 | Web-worker plumbing: MonacoEnvironment hooks, createWebWorker, IWebWorkerOptions fields, worker entry points | 5.4 |  | 0.570 |
-| walker |  | 7612 | 34 | package runtime dependencies in webpack-plugin/package.json |  |  | 0.570 |
-| walker |  | 7699 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.570 |
 | ns | 7751 |  | 155 | WorkerManager lifecycle and the CSSWorker entry points | 5.5 |  | 0.565 |
-| walker |  | 7942 | 243 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.565 |
-| walker |  | 7953 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 631 |  |  | 0.565 |
-| walker |  | 7965 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 357 |  |  | 0.565 |
-| walker |  | 7975 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 359 |  |  | 0.565 |
-| walker |  | 7987 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 372 |  |  | 0.565 |
-| walker |  | 7998 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 373 |  |  | 0.565 |
+| walker |  | 7794 | 243 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.565 |
+| walker |  | 7805 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 631 |  |  | 0.565 |
+| walker |  | 7817 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 357 |  |  | 0.565 |
+| walker |  | 7827 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 359 |  |  | 0.565 |
+| walker |  | 7839 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 372 |  |  | 0.565 |
+| walker |  | 7850 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 373 |  |  | 0.565 |
+| walker |  | 7860 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 374 |  |  | 0.565 |
+| walker |  | 7872 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 388 |  |  | 0.565 |
+| walker |  | 7884 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 406 |  |  | 0.565 |
+| walker |  | 7895 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 407 |  |  | 0.565 |
+| walker |  | 7905 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 408 |  |  | 0.565 |
+| walker |  | 7917 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 448 |  |  | 0.565 |
+| walker |  | 7929 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 452 |  |  | 0.565 |
+| walker |  | 7941 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 487 |  |  | 0.565 |
+| walker |  | 7953 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 488 |  |  | 0.565 |
+| walker |  | 7963 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 489 |  |  | 0.565 |
+| walker |  | 7978 | 15 | export names surface in monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.565 |
+| walker |  | 7993 | 15 | export at monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.565 |
+| walker |  | 8001 | 8 | listing of 'website/scripts' |  |  | 0.565 |
 | ns | 8005 |  | 254 | typescript/languageFeatures.ts — the TypeScript-specific adapter roster | 5.6 |  | 0.558 |
-| walker |  | 8008 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 374 |  |  | 0.558 |
-| walker |  | 8020 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 388 |  |  | 0.558 |
-| walker |  | 8032 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 406 |  |  | 0.558 |
-| walker |  | 8043 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 407 |  |  | 0.558 |
-| walker |  | 8053 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 408 |  |  | 0.558 |
-| walker |  | 8065 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 448 |  |  | 0.558 |
-| walker |  | 8077 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 452 |  |  | 0.558 |
+| walker |  | 8009 | 8 | listing of 'website/static' |  |  | 0.558 |
 | ns | 8087 |  | 82 | monaco-lsp-client package: complete tree listing | 6.1 |  | 0.566 |
-| walker |  | 8089 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 487 |  |  | 0.566 |
-| walker |  | 8101 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 488 |  |  | 0.566 |
-| walker |  | 8111 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 489 |  |  | 0.566 |
-| walker |  | 8126 | 15 | export names surface in monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.566 |
-| walker |  | 8141 | 15 | export at monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.566 |
-| walker |  | 8149 | 8 | listing of 'website/scripts' |  |  | 0.566 |
-| walker |  | 8157 | 8 | listing of 'website/static' |  |  | 0.566 |
+| walker |  | 8161 | 152 | README.md section #2 |  |  | 0.566 |
+| walker |  | 8261 | 100 | samples/README.md section #1 |  |  | 0.566 |
 | ns | 8294 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.561 |
-| walker |  | 8309 | 152 | README.md section #2 |  |  | 0.561 |
+| walker |  | 8298 | 37 | README.md section #15 |  |  | 0.561 |
+| walker |  | 8335 | 37 | README.md section #16 |  |  | 0.561 |
+| walker |  | 8344 | 9 | listing of 'website/typedoc' |  |  | 0.561 |
 | ns | 8345 |  | 51 | webpack-plugin package: complete tree listing | 6.3 |  | 0.566 |
-| walker |  | 8409 | 100 | samples/README.md section #1 |  |  | 0.566 |
-| walker |  | 8446 | 37 | README.md section #15 |  |  | 0.566 |
-| walker |  | 8483 | 37 | README.md section #16 |  |  | 0.566 |
-| walker |  | 8492 | 9 | listing of 'website/typedoc' |  |  | 0.566 |
-| walker |  | 8591 | 99 | docs/integrate-esm.md section #0 |  |  | 0.566 |
+| walker |  | 8443 | 99 | docs/integrate-esm.md section #0 |  |  | 0.566 |
+| walker |  | 8484 | 41 | README.md section #12 |  |  | 0.566 |
+| walker |  | 8525 | 41 | README.md section #14 |  |  | 0.566 |
+| walker |  | 8530 | 5 | listing of 'website/index/samples' |  |  | 0.566 |
+| walker |  | 8577 | 47 | imports in samples/browser-esm-vite-react/src/main.tsx |  |  | 0.566 |
+| walker |  | 8619 | 42 | README.md section #11 |  |  | 0.566 |
 | ns | 8629 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.561 |
-| walker |  | 8632 | 41 | README.md section #12 |  |  | 0.561 |
-| walker |  | 8673 | 41 | README.md section #14 |  |  | 0.561 |
-| walker |  | 8678 | 5 | listing of 'website/index/samples' |  |  | 0.561 |
-| walker |  | 8725 | 47 | imports in samples/browser-esm-vite-react/src/main.tsx |  |  | 0.561 |
-| walker |  | 8767 | 42 | README.md section #11 |  |  | 0.561 |
-| walker |  | 8779 | 12 | docs/integrate-esm.md section #4 |  |  | 0.561 |
-| walker |  | 8791 | 12 | docs/integrate-esm.md section #15 |  |  | 0.561 |
+| walker |  | 8631 | 12 | docs/integrate-esm.md section #4 |  |  | 0.561 |
+| walker |  | 8643 | 12 | docs/integrate-esm.md section #15 |  |  | 0.561 |
+| walker |  | 8655 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 515 |  |  | 0.561 |
 | ns | 8799 |  | 170 | build/ and scripts/ tree listings | 7.1 |  | 0.550 |
-| walker |  | 8803 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 515 |  |  | 0.550 |
+| walker |  | 8825 | 170 | package identity metadata in webpack-plugin/package.json |  |  | 0.550 |
+| walker |  | 8838 | 13 | export names surface in src/languages/features/css/workerManager.ts |  |  | 0.550 |
+| walker |  | 8851 | 13 | export names surface in src/languages/features/html/workerManager.ts |  |  | 0.550 |
+| walker |  | 8864 | 13 | export names surface in src/languages/features/json/workerManager.ts |  |  | 0.550 |
+| walker |  | 8877 | 13 | export names surface in src/languages/features/typescript/workerManager.ts |  |  | 0.550 |
+| walker |  | 8929 | 52 | imports in samples/browser-esm-webpack-typescript-react/src/index.tsx |  |  | 0.550 |
 | ns | 8948 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.547 |
-| walker |  | 8973 | 170 | package identity metadata in webpack-plugin/package.json |  |  | 0.547 |
-| walker |  | 8986 | 13 | export names surface in src/languages/features/css/workerManager.ts |  |  | 0.547 |
-| walker |  | 8999 | 13 | export names surface in src/languages/features/html/workerManager.ts |  |  | 0.547 |
-| walker |  | 9012 | 13 | export names surface in src/languages/features/json/workerManager.ts |  |  | 0.547 |
-| walker |  | 9025 | 13 | export names surface in src/languages/features/typescript/workerManager.ts |  |  | 0.547 |
-| walker |  | 9077 | 52 | imports in samples/browser-esm-webpack-typescript-react/src/index.tsx |  |  | 0.547 |
-| ns | 9186 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.539 |
-| walker |  | 9192 | 115 | module item body at monaco-lsp-client/generator/index.ts:7 body 27 |  |  | 0.539 |
-| walker |  | 9205 | 13 | docs/integrate-esm.md section #9 |  |  | 0.539 |
-| walker |  | 9255 | 50 | README.md section #8 |  |  | 0.540 |
-| ns | 9352 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.545 |
-| walker |  | 9366 | 111 | json config webpack-plugin/tsconfig.json |  |  | 0.545 |
-| walker |  | 9418 | 52 | README.md section #9 |  |  | 0.545 |
-| walker |  | 9430 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 520 |  |  | 0.545 |
-| walker |  | 9493 | 63 | imports in monaco-lsp-client/src/index.ts |  |  | 0.547 |
-| walker |  | 9500 | 7 | listing of 'test/smoke/esbuild' |  |  | 0.547 |
-| walker |  | 9507 | 7 | listing of 'test/smoke/vite' |  |  | 0.547 |
-| walker |  | 9514 | 7 | listing of 'test/smoke/webpack' |  |  | 0.547 |
-| walker |  | 9526 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.547 |
+| walker |  | 9044 | 115 | module item body at monaco-lsp-client/generator/index.ts:7 body 27 |  |  | 0.547 |
+| walker |  | 9057 | 13 | docs/integrate-esm.md section #9 |  |  | 0.547 |
+| walker |  | 9107 | 50 | README.md section #8 |  |  | 0.547 |
+| ns | 9186 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.540 |
+| walker |  | 9218 | 111 | json config webpack-plugin/tsconfig.json |  |  | 0.540 |
+| walker |  | 9270 | 52 | README.md section #9 |  |  | 0.540 |
+| walker |  | 9282 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 520 |  |  | 0.540 |
+| walker |  | 9345 | 63 | imports in monaco-lsp-client/src/index.ts |  |  | 0.542 |
+| walker |  | 9352 | 7 | listing of 'test/smoke/esbuild' |  |  | 0.547 |
+| ns | 9352 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.547 |
+| walker |  | 9359 | 7 | listing of 'test/smoke/vite' |  |  | 0.547 |
+| walker |  | 9366 | 7 | listing of 'test/smoke/webpack' |  |  | 0.547 |
+| walker |  | 9378 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.547 |
+| walker |  | 9485 | 107 | samples/README.md section #3 |  |  | 0.547 |
+| walker |  | 9503 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.547 |
+| walker |  | 9503 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.547 |
+| walker |  | 9521 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.547 |
+| walker |  | 9521 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.547 |
 | ns | 9606 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.543 |
-| walker |  | 9633 | 107 | samples/README.md section #3 |  |  | 0.543 |
-| walker |  | 9651 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.543 |
-| walker |  | 9651 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.543 |
-| walker |  | 9669 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.543 |
-| walker |  | 9669 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.543 |
-| ns | 9722 |  | 116 | samples/ listing — every integration sample directory | 8.3 |  | 0.550 |
-| walker |  | 9756 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.550 |
-| ns | 9759 |  | 37 | docs/ listing | 8.4 |  | 0.553 |
-| walker |  | 9808 | 52 | README.md section #7 |  |  | 0.554 |
+| walker |  | 9608 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.543 |
+| walker |  | 9660 | 52 | README.md section #7 |  |  | 0.544 |
+| walker |  | 9719 | 59 | README.md section #13 |  |  | 0.544 |
+| ns | 9722 |  | 116 | samples/ listing — every integration sample directory | 8.3 |  | 0.551 |
+| ns | 9759 |  | 37 | docs/ listing | 8.4 |  | 0.554 |
+| walker |  | 9800 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.554 |
+| walker |  | 9812 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.554 |
+| walker |  | 9841 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.554 |
 | ns | 9842 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.556 |
-| walker |  | 9867 | 59 | README.md section #13 |  |  | 0.556 |
-| walker |  | 9948 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.556 |
-| walker |  | 9960 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.556 |
+| walker |  | 9864 | 23 | export at src/internal/common/workers.ts:92 |  |  | 0.557 |
 | ns | 9974 |  | 132 | website/ and CI/publishing config listings | 8.6 |  | 0.567 |
-| walker |  | 9989 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.567 |

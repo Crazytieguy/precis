@@ -145,78 +145,81 @@ Score(3000)=0.703 I=0.901 C=0.548 ns_rows≤3K=20/63 (reached=11 partial=1 missi
 | ns | 7787 |  | 225 | wrapper.rs — the three error adapters and their impls | 6.3 |  | 0.588 |
 | walker |  | 7795 | 15 | impl method body at src/ptr.rs:119 body 120 |  |  | 0.588 |
 | walker |  | 7810 | 15 | impl method body at src/ptr.rs:175 body 176 |  |  | 0.588 |
+| walker |  | 7826 | 16 | impl method body at src/ptr.rs:169 body 170 |  |  | 0.588 |
+| walker |  | 7843 | 17 | impl method body at src/ptr.rs:44 body 45 |  |  | 0.588 |
+| walker |  | 7943 | 100 | impl method sigs in src/kind.rs |  |  | 0.589 |
+| walker |  | 7943 | 0 | impl method at src/kind.rs:117 |  |  | 0.589 |
 | ns | 7964 |  | 177 | context.rs — where .context() is implemented | 6.4 | 2.3 | 0.583 |
-| walker |  | 8037 | 227 | README.md section #4 |  |  | 0.583 |
-| walker |  | 8053 | 16 | impl method body at src/ptr.rs:169 body 170 |  |  | 0.583 |
-| walker |  | 8070 | 17 | impl method body at src/ptr.rs:44 body 45 |  |  | 0.583 |
+| walker |  | 8034 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.583 |
+| walker |  | 8034 | 0 | pub item at src/nightly.rs:41 |  |  | 0.583 |
+| walker |  | 8034 | 0 | pub item at src/nightly.rs:52 |  |  | 0.583 |
+| walker |  | 8034 | 0 | pub item at src/nightly.rs:56 |  |  | 0.583 |
+| walker |  | 8046 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.583 |
+| walker |  | 8059 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.583 |
+| walker |  | 8073 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.583 |
+| walker |  | 8091 | 18 | impl method body at src/error.rs:1010 body 1011 |  |  | 0.583 |
+| walker |  | 8110 | 19 | impl method at src/error.rs:432 |  |  | 0.583 |
+| walker |  | 8128 | 18 | impl method body at src/error.rs:432 body 433 |  |  | 0.583 |
 | ns | 8138 |  | 174 | context.rs — ContextError impls, Quoted, and the Sealed trait | 6.5 | 6.4 | 0.578 |
-| walker |  | 8170 | 100 | impl method sigs in src/kind.rs |  |  | 0.578 |
-| walker |  | 8170 | 0 | impl method at src/kind.rs:117 |  |  | 0.578 |
-| walker |  | 8261 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.578 |
-| walker |  | 8261 | 0 | pub item at src/nightly.rs:41 |  |  | 0.578 |
-| walker |  | 8261 | 0 | pub item at src/nightly.rs:52 |  |  | 0.578 |
-| walker |  | 8261 | 0 | pub item at src/nightly.rs:56 |  |  | 0.578 |
+| walker |  | 8147 | 19 | impl method at src/error.rs:985 |  |  | 0.578 |
+| walker |  | 8166 | 19 | impl method body at src/error.rs:675 body 676 |  |  | 0.578 |
 | ns | 8266 |  | 128 | fmt.rs — the rendering entry points | 6.6 | 5.6 | 0.573 |
-| walker |  | 8273 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.573 |
-| walker |  | 8286 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.573 |
-| walker |  | 8300 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.573 |
-| walker |  | 8318 | 18 | impl method body at src/error.rs:1010 body 1011 |  |  | 0.573 |
-| walker |  | 8337 | 19 | impl method at src/error.rs:432 |  |  | 0.573 |
-| walker |  | 8355 | 18 | impl method body at src/error.rs:432 body 433 |  |  | 0.573 |
-| walker |  | 8374 | 19 | impl method at src/error.rs:985 |  |  | 0.573 |
-| walker |  | 8393 | 19 | impl method body at src/error.rs:675 body 676 |  |  | 0.573 |
-| ns | 8418 |  | 152 | build.rs — the complete custom-cfg vocabulary | 7.1 |  | 0.569 |
-| walker |  | 8496 | 103 | pub-item names surface in src/kind.rs |  |  | 0.573 |
-| walker |  | 8516 | 20 | pub item at src/kind.rs:100 |  |  | 0.574 |
-| ns | 8532 |  | 114 | build.rs — which compiler turns each cfg on | 7.2 | 7.1 | 0.571 |
-| walker |  | 8537 | 21 | impl method at src/error.rs:974 |  |  | 0.571 |
-| walker |  | 8584 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.572 |
-| walker |  | 8584 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.572 |
-| walker |  | 8584 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.572 |
-| walker |  | 8584 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.572 |
-| walker |  | 8594 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.572 |
-| walker |  | 8610 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.572 |
+| walker |  | 8269 | 103 | pub-item names surface in src/kind.rs |  |  | 0.577 |
+| walker |  | 8289 | 20 | pub item at src/kind.rs:100 |  |  | 0.578 |
+| walker |  | 8310 | 21 | impl method at src/error.rs:974 |  |  | 0.578 |
+| walker |  | 8357 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.579 |
+| walker |  | 8357 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.579 |
+| walker |  | 8357 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.579 |
+| walker |  | 8357 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.579 |
+| walker |  | 8367 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.579 |
+| walker |  | 8383 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.579 |
+| ns | 8418 |  | 152 | build.rs — the complete custom-cfg vocabulary | 7.1 |  | 0.575 |
+| ns | 8532 |  | 114 | build.rs — which compiler turns each cfg on | 7.2 | 7.1 | 0.572 |
 | ns | 8642 |  | 110 | backtrace.rs — the three definitions of Backtrace | 7.3 |  | 0.568 |
-| ns | 8818 |  | 176 | backtrace.rs — impl_backtrace! and backtrace!(), both arms each | 7.4 | 7.3 | 0.563 |
-| walker |  | 8902 | 292 | README.md section #9 |  |  | 0.565 |
-| walker |  | 8925 | 23 | impl method at src/error.rs:140 |  |  | 0.565 |
-| walker |  | 8948 | 23 | impl method at src/error.rs:459 |  |  | 0.565 |
-| ns | 8959 |  | 141 | backtrace.rs — backtrace_if_absent! and the vendored capture module | 7.5 | 7.3 | 0.560 |
-| walker |  | 8965 | 17 | impl method body at src/error.rs:459 body 460 |  |  | 0.560 |
-| walker |  | 8988 | 23 | impl method at src/error.rs:622 |  |  | 0.560 |
-| walker |  | 9012 | 24 | impl method at src/kind.rs:91 |  |  | 0.561 |
-| walker |  | 9020 | 8 | impl method body at src/kind.rs:91 body 95 |  |  | 0.561 |
+| walker |  | 8675 | 292 | README.md section #9 |  |  | 0.571 |
+| walker |  | 8698 | 23 | impl method at src/error.rs:140 |  |  | 0.571 |
+| walker |  | 8721 | 23 | impl method at src/error.rs:459 |  |  | 0.571 |
+| walker |  | 8738 | 17 | impl method body at src/error.rs:459 body 460 |  |  | 0.571 |
+| walker |  | 8761 | 23 | impl method at src/error.rs:622 |  |  | 0.571 |
+| walker |  | 8785 | 24 | impl method at src/kind.rs:91 |  |  | 0.572 |
+| walker |  | 8793 | 8 | impl method body at src/kind.rs:91 body 95 |  |  | 0.572 |
+| ns | 8818 |  | 176 | backtrace.rs — impl_backtrace! and backtrace!(), both arms each | 7.4 | 7.3 | 0.566 |
+| walker |  | 8930 | 137 | README.md section #6 |  |  | 0.566 |
+| walker |  | 8954 | 24 | impl method body at src/ptr.rs:38 body 39 |  |  | 0.566 |
+| ns | 8959 |  | 141 | backtrace.rs — backtrace_if_absent! and the vendored capture module | 7.5 | 7.3 | 0.561 |
+| walker |  | 8978 | 24 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.561 |
 | ns | 9091 |  | 132 | nightly.rs — the build probe and generic-member-access shims | 7.6 | 7.1 | 0.558 |
-| walker |  | 9157 | 137 | README.md section #6 |  |  | 0.558 |
-| walker |  | 9181 | 24 | impl method body at src/ptr.rs:38 body 39 |  |  | 0.558 |
-| walker |  | 9205 | 24 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.558 |
+| walker |  | 9123 | 145 | README.md section #3 |  |  | 0.558 |
+| walker |  | 9142 | 19 | mod/use plumbing in tests/common/mod.rs |  |  | 0.558 |
+| walker |  | 9171 | 29 | impl method at src/context.rs:46 |  |  | 0.558 |
+| walker |  | 9200 | 29 | impl method at src/context.rs:91 |  |  | 0.558 |
 | ns | 9222 |  | 131 | Toolchain pin and the no_std check-crate | 7.7 |  | 0.552 |
-| walker |  | 9348 | 143 | README.md section #3 |  |  | 0.552 |
-| walker |  | 9367 | 19 | mod/use plumbing in tests/common/mod.rs |  |  | 0.552 |
+| walker |  | 9229 | 29 | impl method at src/error.rs:198 |  |  | 0.552 |
+| walker |  | 9258 | 29 | impl method at src/error.rs:372 |  |  | 0.552 |
+| walker |  | 9289 | 31 | impl method at src/error.rs:77 |  |  | 0.552 |
+| walker |  | 9307 | 18 | impl method body at src/error.rs:77 body 81 |  |  | 0.552 |
+| walker |  | 9338 | 31 | impl method at src/error.rs:170 |  |  | 0.552 |
+| walker |  | 9369 | 31 | impl method at src/error.rs:482 |  |  | 0.552 |
 | ns | 9383 |  | 161 | CI job roster and toolchain matrix | 7.8 |  | 0.546 |
-| walker |  | 9396 | 29 | impl method at src/context.rs:46 |  |  | 0.546 |
-| walker |  | 9425 | 29 | impl method at src/context.rs:91 |  |  | 0.546 |
-| walker |  | 9454 | 29 | impl method at src/error.rs:198 |  |  | 0.546 |
-| walker |  | 9483 | 29 | impl method at src/error.rs:372 |  |  | 0.546 |
-| walker |  | 9514 | 31 | impl method at src/error.rs:77 |  |  | 0.546 |
-| walker |  | 9532 | 18 | impl method body at src/error.rs:77 body 81 |  |  | 0.546 |
-| walker |  | 9563 | 31 | impl method at src/error.rs:170 |  |  | 0.546 |
-| ns | 9575 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.542 |
-| walker |  | 9594 | 31 | impl method at src/error.rs:482 |  |  | 0.542 |
-| walker |  | 9609 | 15 | impl method body at src/error.rs:482 body 486 |  |  | 0.542 |
-| walker |  | 9640 | 31 | impl method at src/error.rs:490 |  |  | 0.542 |
-| ns | 9663 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.539 |
-| walker |  | 9671 | 31 | impl method at src/error.rs:554 |  |  | 0.539 |
-| walker |  | 9702 | 31 | impl method at src/error.rs:568 |  |  | 0.539 |
-| walker |  | 9733 | 31 | impl method at src/kind.rs:69 |  |  | 0.541 |
+| walker |  | 9384 | 15 | impl method body at src/error.rs:482 body 486 |  |  | 0.546 |
+| walker |  | 9415 | 31 | impl method at src/error.rs:490 |  |  | 0.546 |
+| walker |  | 9446 | 31 | impl method at src/error.rs:554 |  |  | 0.546 |
+| walker |  | 9477 | 31 | impl method at src/error.rs:568 |  |  | 0.546 |
+| walker |  | 9508 | 31 | impl method at src/kind.rs:69 |  |  | 0.548 |
+| walker |  | 9526 | 18 | impl method body at src/kind.rs:69 body 73 |  |  | 0.548 |
+| walker |  | 9556 | 30 | impl method body at src/ptr.rs:94 body 95 |  |  | 0.548 |
+| ns | 9575 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.544 |
+| walker |  | 9587 | 31 | impl method body at src/chain.rs:28 body 29 |  |  | 0.544 |
+| walker |  | 9620 | 33 | impl method body at src/ptr.rs:48 body 49 |  |  | 0.544 |
+| walker |  | 9653 | 33 | impl method body at src/ptr.rs:55 body 56 |  |  | 0.544 |
+| ns | 9663 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.541 |
+| walker |  | 9686 | 33 | impl method body at src/ptr.rs:108 body 109 |  |  | 0.541 |
+| walker |  | 9719 | 33 | impl method body at src/ptr.rs:155 body 156 |  |  | 0.541 |
 | ns | 9744 |  | 81 | tests/ui file listing | 8.2 | 8.1 | 0.549 |
-| walker |  | 9751 | 18 | impl method body at src/kind.rs:69 body 73 |  |  | 0.549 |
-| walker |  | 9781 | 30 | impl method body at src/ptr.rs:94 body 95 |  |  | 0.549 |
-| walker |  | 9812 | 31 | impl method body at src/chain.rs:28 body 29 |  |  | 0.549 |
-| walker |  | 9845 | 33 | impl method body at src/ptr.rs:48 body 49 |  |  | 0.549 |
+| walker |  | 9752 | 33 | impl method body at src/ptr.rs:162 body 163 |  |  | 0.549 |
+| walker |  | 9786 | 34 | impl method body at src/ptr.rs:101 body 102 |  |  | 0.549 |
+| walker |  | 9820 | 34 | impl method body at src/ptr.rs:148 body 149 |  |  | 0.549 |
 | ns | 9853 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.545 |
-| walker |  | 9878 | 33 | impl method body at src/ptr.rs:55 body 56 |  |  | 0.545 |
-| walker |  | 9911 | 33 | impl method body at src/ptr.rs:108 body 109 |  |  | 0.545 |
-| walker |  | 9944 | 33 | impl method body at src/ptr.rs:155 body 156 |  |  | 0.545 |
-| walker |  | 9977 | 33 | impl method body at src/ptr.rs:162 body 163 |  |  | 0.545 |
+| walker |  | 9855 | 35 | impl method body at src/kind.rs:117 body 118 |  |  | 0.545 |
+| walker |  | 9890 | 35 | impl method body at src/ptr.rs:32 body 33 |  |  | 0.545 |
 | ns | 9994 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.544 |

@@ -224,7 +224,12 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 9195 | 20 | export body at lib/option.js:3 body 231 |  |  | 0.620 |
 | ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.622 |
 | walker |  | 9444 | 249 | docs/terminology.md section #0 |  |  | 0.645 |
+| walker |  | 9475 | 31 | module item at examples/options-negatable.js:19 |  |  | 0.649 |
 | ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.649 |
 | ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.643 |
-| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.648 |
-| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.645 |
+| walker |  | 9760 | 285 | docs/parsing-and-hooks.md section #0 |  |  | 0.670 |
+| walker |  | 9800 | 40 | module item body at examples/configure-output.js:4 body 5 |  |  | 0.670 |
+| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.674 |
+| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.671 |
+| walker |  | 9964 | 164 | json config tsconfig.js.json |  |  | 0.671 |
+| walker |  | 9978 | 14 | export member at lib/option.js:3 member 100 |  |  | 0.672 |
