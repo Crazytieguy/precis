@@ -1342,6 +1342,175 @@ fn has_ambient_declaration(stmt: Node) -> bool {
         .any(|c| c.kind() == "ambient_declaration")
 }
 
+/// Surface profile for the dominant-file detector: `(surface item
+/// count, is type machinery)`. Deliberately NOT built on
+/// `find_export_starts` — that list is render-oriented: it skips
+/// `from`-sourced re-exports and synthesizes receiver methods into it
+/// past a threshold, so reusing it either misses type-only barrels or
+/// double-counts CommonJS surface. Here every top-level statement is
+/// counted at most once, by AST span.
+pub(super) fn dominant_surface_profile(file: &Path, source: &str) -> Option<(u64, bool)> {
+    let language = if is_tsx_file(file) {
+        tree_sitter_typescript::LANGUAGE_TSX.into()
+    } else {
+        tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into()
+    };
+    let mut parser = tree_sitter::Parser::new();
+    parser.set_language(&language).ok()?;
+    let tree = parser.parse(source, None)?;
+    let root = tree.root_node();
+    let local_type_names = collect_top_level_type_names(&tree, source);
+    let module_receivers = collect_module_exports_receivers(&tree, source);
+    let receiver_methods = collect_prototype_method_assignments(&tree, source, &module_receivers);
+
+    let mut surface_spans: HashSet<(usize, usize)> = HashSet::new();
+    let mut export_statements = 0u64;
+    let mut runtime_export_statements = 0u64;
+    let mut commonjs_exports = 0u64;
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() == "export_statement" {
+            surface_spans.insert((stmt.start_byte(), stmt.end_byte()));
+            export_statements += 1;
+            if !export_statement_is_type_only(stmt, source, &local_type_names) {
+                runtime_export_statements += 1;
+            }
+        } else if classify_commonjs_export(stmt, source).is_some() {
+            surface_spans.insert((stmt.start_byte(), stmt.end_byte()));
+            commonjs_exports += 1;
+        }
+    }
+    for method in &receiver_methods {
+        surface_spans.insert((method.anchor.start_byte(), method.anchor.end_byte()));
+    }
+    let type_machinery = is_declaration_file(file)
+        || (commonjs_exports == 0
+            && receiver_methods.is_empty()
+            && export_statements > 0
+            && runtime_export_statements == 0);
+    Some((surface_spans.len() as u64, type_machinery))
+}
+
+/// Whether a top-level `export_statement` exposes only types. Handles
+/// the forms `find_export_starts` doesn't model: `export type { X }
+/// from '…'`, per-specifier modifiers (`export { type X }`), and bare
+/// local clauses (`export { Foo }`) whose every name resolves to a
+/// top-level type declaration or type-only import. `export * from`,
+/// default exports, and value declarations are runtime; an
+/// unresolvable bare name is conservatively runtime.
+fn export_statement_is_type_only(
+    stmt: Node,
+    source: &str,
+    local_type_names: &HashSet<String>,
+) -> bool {
+    if has_export_type_keyword(stmt, source) {
+        return true;
+    }
+    if let Some(decl) = first_decl_child(stmt) {
+        return matches!(
+            decl.kind(),
+            "interface_declaration" | "type_alias_declaration"
+        );
+    }
+    if has_default_keyword(stmt, source) {
+        return false;
+    }
+    let from_clause = has_from_source(stmt);
+    let mut saw_specifier = false;
+    let mut sc = stmt.walk();
+    for clause in stmt.children(&mut sc) {
+        if clause.kind() == "namespace_export" {
+            return false;
+        }
+        if clause.kind() != "export_clause" {
+            continue;
+        }
+        let mut cc = clause.walk();
+        for spec in clause.children(&mut cc) {
+            if spec.kind() != "export_specifier" {
+                continue;
+            }
+            saw_specifier = true;
+            if has_inline_type_modifier(spec) {
+                continue;
+            }
+            if from_clause {
+                return false;
+            }
+            let Some(name_node) = first_identifier_child(spec) else {
+                return false;
+            };
+            if !local_type_names.contains(&source[name_node.start_byte()..name_node.end_byte()]) {
+                return false;
+            }
+        }
+    }
+    saw_specifier
+}
+
+/// Names that are types in this module's top level: interface / type
+/// alias declarations (exported or not) and type-only import bindings
+/// (`import type { A }` / `import { type A }`), keyed by local name
+/// (the alias when one is present).
+fn collect_top_level_type_names(tree: &Tree, source: &str) -> HashSet<String> {
+    let root = tree.root_node();
+    let mut out = HashSet::new();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        let decl = if stmt.kind() == "export_statement" {
+            first_decl_child(stmt)
+        } else {
+            Some(stmt)
+        };
+        if let Some(decl) = decl
+            && matches!(
+                decl.kind(),
+                "interface_declaration" | "type_alias_declaration"
+            )
+        {
+            if let Some(name) = decl.child_by_field_name("name") {
+                out.insert(source[name.start_byte()..name.end_byte()].to_string());
+            }
+            continue;
+        }
+        if stmt.kind() != "import_statement" {
+            continue;
+        }
+        let whole_import_is_type = has_export_type_keyword(stmt, source)
+            || stmt
+                .child_by_field_name("import_clause")
+                .is_some_and(|c| has_export_type_keyword(c, source));
+        let mut sc = stmt.walk();
+        for clause in stmt.children(&mut sc) {
+            if clause.kind() != "import_clause" {
+                continue;
+            }
+            let mut nc = clause.walk();
+            for named in clause.children(&mut nc) {
+                if named.kind() != "named_imports" {
+                    continue;
+                }
+                let mut ic = named.walk();
+                for spec in named.children(&mut ic) {
+                    if spec.kind() != "import_specifier" {
+                        continue;
+                    }
+                    if !(whole_import_is_type || has_inline_type_modifier(spec)) {
+                        continue;
+                    }
+                    let local = spec
+                        .child_by_field_name("alias")
+                        .or_else(|| spec.child_by_field_name("name"));
+                    if let Some(local) = local {
+                        out.insert(source[local.start_byte()..local.end_byte()].to_string());
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+
 /// True for TypeScript declaration files (`.d.ts` / `.d.tsx`).
 pub(crate) fn is_declaration_file(path: &Path) -> bool {
     path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {

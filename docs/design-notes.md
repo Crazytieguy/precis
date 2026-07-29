@@ -539,14 +539,17 @@ log and bubbletea re-order at 1094–2020 and are the robust evidence.
 The detector's original largest-file tie-break mis-targeted anyhow
 `src/ensure.rs`, thiserror `impl/src/expand.rs`, and express
 `lib/response.js`. A public-surface-density discriminator now retargets
-among files that independently clear the 20% mass floor: top-level Rust
-`pub`/macro-export lines and JS/TS exports or module-property assignments
-per byte. It retargets thiserror and express; anyhow remains on
-`src/ensure.rs` because its preferred `src/lib.rs` does not independently
-clear the mass floor. The largest file remains the default; a
-challenger must be at least 20% denser and must match the largest file's declaration-stub class,
-so an API declaration file cannot displace the implementation it
-summarizes. The guards came from the measured variants: unconditionally
+among files that independently clear the 20% mass floor. The count is
+syntax-backed: real public top-level Rust items and `macro_export`
+definitions; real JS/TS exports plus method assignments on a receiver
+proven to flow to `module.exports`. Comments, raw strings, template
+literals, and internal object assignments do not count. It retargets
+thiserror and express; anyhow remains on `src/ensure.rs` because its
+preferred `src/lib.rs` does not independently clear the mass floor. The
+largest file remains the default; a challenger must be at least 20%
+denser and must match the largest file's semantic type-machinery class —
+`.d.*` files and ordinary TS modules whose exports are all type-only stay
+separate from runtime implementations. The guards came from the measured variants: unconditionally
 choosing the densest candidate moved express +0.088 but log −0.050 at
 3000; adding the 20% margin removed log, and the declaration-stub guard
 removed commander −0.081 at 2080. Final training grid versus the wave-1

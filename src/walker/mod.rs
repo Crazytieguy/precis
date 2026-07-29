@@ -482,20 +482,17 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
     let mut candidates: Vec<_> = candidates
         .into_iter()
         .map(|(path, len, language)| {
-            let surface_lines = public_surface_line_count(&path, language);
-            (path, len, language, surface_lines)
+            let (surface_items, type_machinery) = dominant_surface_profile(&path, language);
+            (path, len, surface_items, type_machinery)
         })
         .collect();
     candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
     let largest = candidates.first()?.clone();
-    let largest_is_declaration_stub = typescript::is_declaration_file(&largest.0);
     let densest = candidates
         .iter()
-        .filter(|(path, _, _, _)| {
-            typescript::is_declaration_file(path) == largest_is_declaration_stub
-        })
+        .filter(|(_, _, _, type_machinery)| *type_machinery == largest.3)
         .max_by(
-            |(path_a, len_a, _, surface_a), (path_b, len_b, _, surface_b)| {
+            |(path_a, len_a, surface_a, _), (path_b, len_b, surface_b, _)| {
                 (*surface_a * *len_b)
                     .cmp(&(*surface_b * *len_a))
                     .then_with(|| len_a.cmp(len_b))
@@ -505,7 +502,7 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
         .cloned()
         .unwrap_or_else(|| largest.clone());
     let density_clears_margin =
-        surface_density_clears_margin(densest.3, densest.1, largest.3, largest.1);
+        surface_density_clears_margin(densest.2, densest.1, largest.2, largest.1);
     Some(if density_clears_margin {
         densest.0
     } else {
@@ -541,58 +538,19 @@ fn surface_density_clears_margin(
     candidate_surface * baseline_bytes * 5 >= baseline_surface * candidate_bytes * 6
 }
 
-fn public_surface_line_count(path: &Path, language: &str) -> u64 {
+fn dominant_surface_profile(path: &Path, language: &str) -> (u64, bool) {
     let Ok(source) = std::fs::read_to_string(path) else {
-        return 0;
+        return (0, typescript::is_declaration_file(path));
     };
-    source
-        .lines()
-        .filter(|line| {
-            let trimmed = line.trim_start();
-            if trimmed.len() != line.len() {
-                return false;
-            }
-            match language {
-                "rs" => {
-                    trimmed.starts_with("pub ")
-                        || trimmed.starts_with("pub(")
-                        || trimmed.starts_with("#[macro_export]")
-                }
-                "js" => {
-                    trimmed.starts_with("export ")
-                        || trimmed.starts_with("module.exports")
-                        || trimmed.starts_with("exports.")
-                        || is_property_assignment(trimmed)
-                }
-                _ => false,
-            }
-        })
-        .count() as u64
-}
-
-fn is_property_assignment(line: &str) -> bool {
-    let Some((left, right)) = line.split_once('=') else {
-        return false;
-    };
-    if right.starts_with(['=', '>']) {
-        return false;
+    match language {
+        "rs" => (
+            rust::dominant_surface_item_count(&source).unwrap_or(0),
+            false,
+        ),
+        "js" => typescript::dominant_surface_profile(path, &source)
+            .unwrap_or((0, typescript::is_declaration_file(path))),
+        _ => (0, false),
     }
-    let mut parts = left.trim_end().split('.');
-    let Some(receiver) = parts.next() else {
-        return false;
-    };
-    let Some(property) = parts.next() else {
-        return false;
-    };
-    parts.next().is_none() && is_js_identifier(receiver) && is_js_identifier(property)
-}
-
-fn is_js_identifier(text: &str) -> bool {
-    let mut chars = text.chars();
-    chars
-        .next()
-        .is_some_and(|ch| ch == '_' || ch == '$' || ch.is_ascii_alphabetic())
-        && chars.all(|ch| ch == '_' || ch == '$' || ch.is_ascii_alphanumeric())
 }
 
 /// Line-shape check for "a person typed this": mean bytes per line over
@@ -1288,17 +1246,20 @@ mod tests {
     }
 
     #[test]
-    fn walker_mod_dominant_file_does_not_cross_declaration_stub_boundary() {
+    fn walker_mod_dominant_file_does_not_cross_type_machinery_boundary() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
         std::fs::write(
             root.join("implementation.js"),
-            "implementation.run = function run() {}\n".repeat(40) + &"// internal\n".repeat(200),
+            "const implementation = {};\n".to_string()
+                + &"implementation.run = function run() {};\n".repeat(20)
+                + &"// internal implementation detail\n".repeat(400)
+                + "module.exports = implementation;\n",
         )
         .unwrap();
         std::fs::write(
-            root.join("index.d.ts"),
-            "export declare function run(): void;\n".repeat(100),
+            root.join("types.ts"),
+            "export interface Shape { value: string }\n".repeat(100),
         )
         .unwrap();
 
@@ -1316,12 +1277,93 @@ mod tests {
     }
 
     #[test]
-    fn walker_mod_property_assignment_requires_top_level_member_assignment() {
-        assert!(is_property_assignment("app.handle = function handle() {}"));
-        assert!(is_property_assignment("exports.run = run"));
-        assert!(!is_property_assignment("const value = app.handle"));
-        assert!(!is_property_assignment("app.handle === value"));
-        assert!(!is_property_assignment("app.nested.handle = value"));
+    fn walker_mod_surface_profiles_count_only_module_syntax() {
+        let rust_source = r##"
+const RAW: &str = r#"pub fn in_raw_string() {}"#;
+/* pub fn in_block_comment() {} */
+pub fn real() {}
+"##;
+        assert_eq!(rust::dominant_surface_item_count(rust_source), Some(1));
+
+        let clean_js = r#"
+const app = {};
+app.run = function run() {};
+module.exports = app;
+"#;
+        let noisy_js = r#"
+const template = `export function inTemplate() {}`;
+/* export function inComment() {} */
+const state = {};
+state.phase = function phase() {};
+const app = {};
+app.run = function run() {};
+module.exports = app;
+"#;
+        let clean = typescript::dominant_surface_profile(Path::new("file.js"), clean_js);
+        let noisy = typescript::dominant_surface_profile(Path::new("file.js"), noisy_js);
+        assert_eq!(noisy, clean);
+    }
+
+    #[test]
+    fn walker_mod_type_only_barrels_classify_as_type_machinery() {
+        let barrels = [
+            "export type { Foo } from \"./foo\";\n",
+            "export { type Foo, type Bar } from \"./foo\";\n",
+            "type Foo = { value: string };\nexport { Foo };\n",
+            "import type { Base } from \"./base\";\nexport { Base };\n",
+            "import { type Base as B } from \"./base\";\nexport { B };\n",
+        ];
+        for src in barrels {
+            let (_, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("types.ts"), src).unwrap();
+            assert!(type_machinery, "not classified as type machinery: {src}");
+        }
+        let runtime = [
+            "export { run } from \"./run\";\n",
+            "const run = () => {};\nexport { run };\n",
+            "export * from \"./everything\";\n",
+            "export default function run() {}\n",
+            "export type { Foo } from \"./foo\";\nexport { run } from \"./run\";\n",
+        ];
+        for src in runtime {
+            let (_, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("index.ts"), src).unwrap();
+            assert!(!type_machinery, "misclassified as type machinery: {src}");
+        }
+    }
+
+    #[test]
+    fn walker_mod_receiver_methods_count_once_across_synthesis_threshold() {
+        // find_export_starts synthesizes receiver methods into its export
+        // list at 3+ methods; the surface profile must not inherit that
+        // discontinuity — each statement counts exactly once.
+        let make = |methods: usize| {
+            format!(
+                "const app = {{}};\n{}module.exports = app;\n",
+                "app.m = function m() {};\n"
+                    .repeat(methods)
+                    .split('\n')
+                    .filter(|l| !l.is_empty())
+                    .enumerate()
+                    .map(|(i, l)| l.replace("app.m", &format!("app.m{i}")))
+                    .collect::<Vec<_>>()
+                    .join("\n")
+                    + "\n"
+            )
+        };
+        for methods in [1, 2, 3, 4] {
+            let src = make(methods);
+            let (count, type_machinery) =
+                typescript::dominant_surface_profile(Path::new("app.js"), &src).unwrap();
+            assert_eq!(
+                count,
+                methods as u64 + 1,
+                "expected {} surface items (one per statement) at {} methods, got {count}",
+                methods + 1,
+                methods
+            );
+            assert!(!type_machinery);
+        }
     }
 
     /// The spine detector runs on whatever path a user points precis

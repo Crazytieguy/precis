@@ -2899,6 +2899,24 @@ fn resolve_mod(parent_file: &Path, name: &str) -> Option<PathBuf> {
 
 // --- AST predicates ---
 
+pub(super) fn dominant_surface_item_count(source: &str) -> Option<u64> {
+    let mut parser = tree_sitter::Parser::new();
+    parser
+        .set_language(&tree_sitter_rust::LANGUAGE.into())
+        .ok()?;
+    let tree = parser.parse(source, None)?;
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    Some(
+        root.children(&mut cursor)
+            .filter(|child| {
+                (child.kind() == "macro_definition" && has_macro_export(*child, source))
+                    || (item_kind_of(*child).is_some() && item_visibility(*child, source).is_some())
+            })
+            .count() as u64,
+    )
+}
+
 /// Classify the visibility of a top-level item. `None` for items without
 /// any `visibility_modifier` (i.e. private — these aren't `PubItem`
 /// candidates). Plain `pub` → `Public`; any restricted form
