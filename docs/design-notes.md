@@ -2306,8 +2306,6 @@ off-primary cost: `TEST_INDEX_LISTING_BOOST` (−0.0016 at 1442, ~25
 lines). If a future lane wants a late-prose tier back, note that the
 window fraction is *also* inert (0.15 / 0.25 / 0.35 all →0.6151), so
 the shape — not the constants — is what failed.
-||||||| cc0132cb
-
 
 ## Contributor-toolchain demotion (2026-07-29): 0.6151 → 0.6165
 
@@ -2408,8 +2406,6 @@ Grid at the 0.75 peak vs the shipped state: 1000 +0.0029 · 1442
 for two is not worth ~35 lines against a class that gates the whole fs
 expansion. Worth re-measuring only if a later tree is specifically
 short at B=1000, where it is the strongest lever measured this lane.
-||||||| cc0132cb
-
 
 ## Data-model schemas and C interface headers (2026-07-29)
 
