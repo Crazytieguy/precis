@@ -240,7 +240,11 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
             return Some(Class::Toolchain);
         }
-        "Makefile" => return Some(Class::BuildEntrypoint),
+        // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
+        // runner's target roster. The YAML walker enumerates the
+        // extension but classifies only deployment / CI / tooling
+        // configs, so it declines this one and ownership stays here.
+        "Makefile" | "Taskfile.yaml" | "Taskfile.yml" => return Some(Class::BuildEntrypoint),
         "Dockerfile" | "Containerfile" => return Some(Class::Dockerfile),
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         "setup.cfg" => return Some(Class::PackageConfig),
@@ -878,9 +882,17 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 /// `justfile`) requires lifting their class too, and that was measured
 /// on the full corpus: net −0.0003 at Score(3000), and −0.055 on
 /// microbootstrap when it reached an already-`SourceText` `Justfile`.
+///
+/// `Taskfile.yaml` is here because the promotion is what makes
+/// claiming it worth anything: emitting it alone left the corpus mean
+/// exactly flat (bubbletea's landed at cum 3677 against an NS position
+/// of 2134), and the promotion is what pulls it inside the budget.
 fn is_build_file_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    matches!(lower.as_str(), "makefile" | "build.sh" | "configure.ac")
+    matches!(
+        lower.as_str(),
+        "makefile" | "taskfile.yaml" | "taskfile.yml" | "build.sh" | "configure.ac"
+    )
 }
 
 /// Mild promotion for a small build file at the repository root. A
@@ -1676,6 +1688,8 @@ mod tests {
             (".tool-versions", Some(Class::Toolchain)),
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             ("Makefile", Some(Class::BuildEntrypoint)),
+            ("Taskfile.yaml", Some(Class::BuildEntrypoint)),
+            ("Taskfile.yml", Some(Class::BuildEntrypoint)),
             ("Dockerfile", Some(Class::Dockerfile)),
             ("Containerfile", Some(Class::Dockerfile)),
             ("testall.sh", Some(Class::BuildScript)),
