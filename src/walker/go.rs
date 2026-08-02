@@ -6,15 +6,20 @@
 //!   Plumbing batch. Predecessor: the file's `DeclNames` head chunk when
 //!   the file declares anything — imports refine a summarized file, they
 //!   don't open an unsummarized one.
-//! - `DeclNames { file }`: surface listing of every top-level
-//!   declaration's first line — visibility-blind catastrophic-omission
-//!   hedge. Grouped `type ( … )` / `var ( … )` / `const ( … )` blocks
-//!   contribute one entry per inner spec, so the hedge surfaces every
-//!   exported name even when the whole-group `Decl` batch isn't
-//!   scheduled. A decl's `Deprecated:` doc line rides here rather than
-//!   in `DeclDoc`: the roster is often the only place a decl appears,
-//!   and listing a deprecated decl among live siblings without its
-//!   marker steers the reader onto the API the package disowned.
+//! - `DeclNames { file, chunk_index }`: surface listing of every
+//!   top-level declaration's first line — visibility-blind
+//!   catastrophic-omission hedge. Grouped `type ( … )` / `var ( … )` /
+//!   `const ( … )` blocks contribute one entry per inner spec, so the
+//!   hedge surfaces every exported name even when the whole-group
+//!   `Decl` batch isn't scheduled. Fat files partition the roster into
+//!   source-order chunks; on a directory's spine file whose roster the
+//!   chunker left whole, chunk 0 is instead a rank-chosen gate slice
+//!   with the remainder keeping its unsplit factors (see
+//!   [`decl_names_chunk_groups`]). A decl's `Deprecated:` doc line
+//!   rides here rather than in `DeclDoc`: the roster is often the only
+//!   place a decl appears, and listing a deprecated decl among live
+//!   siblings without its marker steers the reader onto the API the
+//!   package disowned.
 //! - `TestNames { file }`: in `_test.go` files only, surface listing of
 //!   `Test*` / `Benchmark*` / `Example*` first lines (Go's `go test`
 //!   lookup contract). No bodies / docs from test files.
@@ -456,11 +461,18 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             let chunk_index = chunk_of_decl[decl_index];
             let names_predecessor = BatchKey::Go(names_keys[chunk_index].clone());
             let chunk_names_lines = &names_lines_by_chunk[chunk_index];
+            // Declarations that share a source row render as ONE `Decl`
+            // batch keyed by the set's representative: sibling batches
+            // both rendering the shared row would be a non-ancestor
+            // overlap, and trimming the later one instead can leave a
+            // one-row declaration with nothing to render while its doc
+            // and body still gate on it. The set's other members emit
+            // their docs/bodies gated on the representative's batch.
+            let representative = roster.co_location[decl_index];
             let decl_key = GoKey::Decl {
                 file: file.clone(),
-                start_line: info.start_line,
+                start_line: decls[representative].1.start_line,
             };
-            let decl_lines = collect_decl(info);
             // The marker line belongs to the names surface; dropping it
             // here keeps the two batches' line sets disjoint.
             let mut doc_lines = collect_doc_comments_above(*node, &source);
@@ -472,16 +484,42 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             } else {
                 FileLines::new(Vec::new())
             };
-            let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
-            if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
-                && let Some(content) = single_file_lines_content(file, &source, decl_lines)
-            {
-                out.push(Batch {
-                    key: decl_key.clone().into(),
-                    predecessor: Some(names_predecessor.clone()),
-                    content,
-                    value: GoRole::Decl.value(file, ctx, entry_factor, info.kv(package_main)),
+            if decl_index == representative {
+                let members: Vec<usize> = (decl_index..decls.len())
+                    .filter(|&member| roster.co_location[member] == representative)
+                    .collect();
+                let decl_lines = FileLines::new(dedup_sorted(
+                    members
+                        .iter()
+                        .flat_map(|&member| collect_decl(&decls[member].1).full)
+                        .collect(),
+                ));
+                // Any member's doc or body gates on this one batch, so
+                // their existence forces its emission just as the
+                // representative's own descendants would.
+                let set_has_descendants = members.iter().any(|&member| {
+                    let (member_node, member_info) = &decls[member];
+                    let mut member_doc = collect_doc_comments_above(*member_node, &source);
+                    member_doc
+                        .full
+                        .retain(|l| Some(*l) != member_info.deprecation_marker);
+                    !member_doc.full.is_empty()
+                        || (member_info.kind.has_body()
+                            && !collect_decl_body(member_info, &src_lines).full.is_empty())
                 });
+                // The representative's own factors price the merged
+                // batch: co-located members share its statement row, and
+                // summing would charge the reader twice for one unit.
+                if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || set_has_descendants)
+                    && let Some(content) = single_file_lines_content(file, &source, decl_lines)
+                {
+                    out.push(Batch {
+                        key: decl_key.clone().into(),
+                        predecessor: Some(names_predecessor.clone()),
+                        content,
+                        value: GoRole::Decl.value(file, ctx, entry_factor, info.kv(package_main)),
+                    });
+                }
             }
             let decl_predecessor = BatchKey::Go(decl_key);
             if let Some(content) = single_file_lines_content(file, &source, doc_lines) {
@@ -645,16 +683,36 @@ fn decl_names_chunk_groups(
         return Vec::new();
     }
     let source_order_chunks = |indices: &[usize]| -> Vec<Vec<usize>> {
-        if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
-            && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
+        if decls.len() <= GO_DECL_NAMES_CHUNK_THRESHOLD
+            || line_count <= GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
         {
-            indices
-                .chunks(GO_DECL_NAMES_CHUNK_SIZE)
-                .map(<[usize]>::to_vec)
-                .collect()
-        } else {
-            vec![indices.to_vec()]
+            return vec![indices.to_vec()];
         }
+        // Cut only between co-location sets: a boundary through one
+        // strands a shared row in one chunk while another chunk's decl
+        // train renders it — the same non-ancestor overlap
+        // [`decl_row_claimants`] exists to prevent. Sets are contiguous
+        // in source order, so growing a chunk to the set boundary is a
+        // shift of the cut, not a reordering.
+        let mut chunks: Vec<Vec<usize>> = Vec::new();
+        let mut current: Vec<usize> = Vec::new();
+        let mut cursor = 0;
+        while cursor < indices.len() {
+            let set = roster.co_location[indices[cursor]];
+            let mut set_end = cursor + 1;
+            while set_end < indices.len() && roster.co_location[indices[set_end]] == set {
+                set_end += 1;
+            }
+            current.extend(&indices[cursor..set_end]);
+            cursor = set_end;
+            if current.len() >= GO_DECL_NAMES_CHUNK_SIZE {
+                chunks.push(std::mem::take(&mut current));
+            }
+        }
+        if !current.is_empty() {
+            chunks.push(current);
+        }
+        chunks
     };
     let priced = |groups: Vec<Vec<usize>>| -> Vec<NamesChunk> {
         let count = groups.len();
@@ -690,19 +748,20 @@ fn decl_names_chunk_groups(
     // catalog the gate was supposed to make reachable: on a file whose
     // roster *did* fit, the split would then buy a cheap gate at the
     // price of pushing the complete roster out of budget, which is a
-    // strictly worse trade than not splitting at all.
-    let legacy_count = legacy.len();
-    let mut groups = vec![NamesChunk {
-        decls: entry,
-        value_factor: GO_ENTRY_SLICE_VALUE_FACTOR,
-    }];
-    groups.extend(source_order_chunks(&remainder).into_iter().enumerate().map(
-        |(chunk_index, decls)| NamesChunk {
-            decls,
-            value_factor: names_surface_chunk_factor(chunk_index, legacy_count),
+    // strictly worse trade than not splitting at all. `legacy.len() == 1`
+    // on this path, so the remainder is one chunk at the unsplit factor
+    // — the gate's 0.9 plus this 1.0 is the deliberate 1.9× documented
+    // at [`GO_ENTRY_SLICE_VALUE_FACTOR`].
+    vec![
+        NamesChunk {
+            decls: entry,
+            value_factor: GO_ENTRY_SLICE_VALUE_FACTOR,
         },
-    ));
-    groups
+        NamesChunk {
+            decls: remainder,
+            value_factor: names_surface_chunk_factor(0, 1),
+        },
+    ]
 }
 
 /// One names-surface batch's declarations and its share of the
@@ -715,7 +774,10 @@ struct NamesChunk {
 /// Everything needed to render and price an arbitrary slice of one
 /// file's declaration roster. The partitioner measures candidate slices
 /// with the same code that later emits them, so a slice can never be
-/// chosen on a cost the emitted batch does not have.
+/// chosen on a cost the emitted batch does not have — with one scoped
+/// exception: `//go:build` constraint rows are folded into chunk 0
+/// after selection, so a gate on a constrained file renders a row or
+/// two above the ceiling it was priced against.
 struct RosterCtx<'a, 'tree> {
     file: &'a Path,
     ctx: &'a WalkCtx,
@@ -759,7 +821,18 @@ impl RosterCtx<'_, '_> {
 /// `None` when no slice within the ceilings can serve as a gate.
 fn entry_slice(roster: &RosterCtx) -> Option<Vec<usize>> {
     let decls = roster.decls;
-    if decls.len() <= GO_ENTRY_SLICE_DECLS {
+    // The "already small enough" test uses surfaced rows, the unit the
+    // gate is rationed in and the unit spine selection is judged by — a
+    // grouped block is one `DeclInfo` but surfaces one row per inner
+    // spec, and a roster of eight grouped rows needs no gate any more
+    // than one of eight declarations does. A file whose surface is one
+    // fat grouped block still declines below: the block is a single
+    // slicing unit, so no candidate fits the ceiling.
+    let surfaced_rows: HashSet<usize> = decls
+        .iter()
+        .flat_map(|(_, info)| info.name_lines.iter().copied())
+        .collect();
+    if surfaced_rows.len() <= GO_ENTRY_SLICE_DECLS {
         return None;
     }
     let ranks: Vec<f64> = decls
@@ -865,8 +938,13 @@ fn surface_name_count(tree: &Tree, source: &str) -> usize {
 
 /// Whether the file carries Go's generated-code header — the convention
 /// from `go/build`: a `// Code generated ... DO NOT EDIT.` line before
-/// any non-comment, non-blank text.
+/// any non-comment, non-blank text. Matching mirrors go/build's regexp:
+/// the marker starts at column 0, and the prefix and suffix may not
+/// overlap (a single-space `// Code generated DO NOT EDIT.` is not a
+/// header Go itself would honor).
 fn is_generated(source: &str) -> bool {
+    const PREFIX: &str = "// Code generated ";
+    const SUFFIX: &str = " DO NOT EDIT.";
     source
         .lines()
         .take_while(|line| {
@@ -874,8 +952,9 @@ fn is_generated(source: &str) -> bool {
             trimmed.is_empty() || trimmed.starts_with("//")
         })
         .any(|line| {
-            let trimmed = line.trim();
-            trimmed.starts_with("// Code generated ") && trimmed.ends_with(" DO NOT EDIT.")
+            line.starts_with(PREFIX)
+                && line.ends_with(SUFFIX)
+                && line.len() >= PREFIX.len() + SUFFIX.len()
         })
 }
 
@@ -1610,12 +1689,13 @@ fn decl_row_claimants(
 /// One representative declaration index per set of declarations that
 /// share a source row, transitively.
 ///
-/// A roster chunk renders a shared row once, but every co-located
-/// declaration's own `Decl` batch renders it too — so the row is only
-/// safe if all of its claimants gate on the same chunk. Splitting them
-/// is the same non-ancestor overlap [`decl_row_claimants`] exists to
-/// prevent, one the row-owner filter cannot reach because the offending
-/// batch belongs to the declaration train rather than the roster.
+/// A shared row is safe only under a single owner on each level of the
+/// batch tree: every chunk cut keeps a set's claimants on one side
+/// (both the entry slice and [`decl_names_chunk_groups`]'s source-order
+/// chunks close over these sets), and the set's declaration trains
+/// merge into one `Decl` batch keyed by the representative, so no two
+/// sibling batches ever render the row. Splitting either level apart is
+/// the non-ancestor overlap [`decl_row_claimants`] exists to prevent.
 fn co_location_representatives(
     decl_count: usize,
     claimants: &HashMap<usize, Vec<usize>>,
@@ -1643,24 +1723,31 @@ fn co_location_representatives(
 /// One full + ellipsis pair per name line so a grouped block surfaces
 /// every inner spec, not just the `type (` opener.
 ///
-/// Both are filtered through [`decl_row_claimants`]: a declaration only
-/// renders the roster rows it owns, and only trails an ellipsis onto a
-/// row no *other* declaration claims. The ellipsis rule is deliberately
-/// blind to which chunk the other declaration landed in — that keeps
-/// the rows a chunk renders independent of how the file was partitioned,
-/// which is what lets the partitioner price candidate slices with the
-/// same function that emits them.
+/// Both are filtered through [`decl_row_claimants`]: a row renders in
+/// the slice holding its first claimant — its owner — and renders once,
+/// so a name line another declaration's span reaches (`); var Tail = 3`)
+/// still surfaces, in the slice that owns it, rather than nowhere. An
+/// ellipsis only trails onto a row no *other* declaration claims. Both
+/// rules read only the slice's own members and the file-global claimant
+/// map, never the rest of the partition — that keeps the rows a chunk
+/// renders independent of how the file was partitioned, which is what
+/// lets the partitioner price candidate slices with the same function
+/// that emits them.
 fn collect_decl_names_from<'a>(
     decls: impl IntoIterator<Item = (usize, &'a DeclInfo)>,
     all_name_lines: &HashSet<usize>,
     row_claimants: &HashMap<usize, Vec<usize>>,
 ) -> FileLines {
+    let decls: Vec<(usize, &DeclInfo)> = decls.into_iter().collect();
+    let slice: HashSet<usize> = decls.iter().map(|&(index, _)| index).collect();
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    let owns = |decl_index: usize, row: usize| {
+    let mut rendered = HashSet::new();
+    let owner_in_slice = |row: usize| {
         row_claimants
             .get(&row)
-            .is_some_and(|claimants| claimants.first() == Some(&decl_index))
+            .and_then(|claimants| claimants.first())
+            .is_some_and(|owner| slice.contains(owner))
     };
     for (decl_index, info) in decls {
         // The roster is often the *only* place a decl appears, and a
@@ -1670,10 +1757,10 @@ fn collect_decl_names_from<'a>(
         // so it cannot be separated from what it negates.
         full.extend(
             info.deprecation_marker
-                .filter(|&marker| owns(decl_index, marker)),
+                .filter(|&marker| owner_in_slice(marker) && rendered.insert(marker)),
         );
         for &line in &info.name_lines {
-            if !owns(decl_index, line) {
+            if !owner_in_slice(line) || !rendered.insert(line) {
                 continue;
             }
             full.push(line);
@@ -2404,6 +2491,92 @@ var Charlie = 1
             1,
             "the hand-written subject still carves its gate: {batches:?}"
         );
+    }
+
+    #[test]
+    fn go_co_located_decls_render_as_one_train() {
+        // `}; var Tail = 3` — Tail's name row is also Alpha's closing
+        // row. Sibling `Decl` batches would fight over it (a debug
+        // panic; a silently dropped roster row in release), so the set
+        // renders as one batch and the roster surfaces the row in the
+        // slice that owns it.
+        let src = "package subject\n\nvar Alpha = []string{\n\t\"a\",\n}; var Tail = 3\n\nfunc Bravo() int { return Tail }\n";
+        let rendered = schedule_go_source(src);
+        assert!(
+            rendered.contains("}; var Tail = 3"),
+            "the shared row must render:\n{rendered}"
+        );
+        let batches = names_batches(&[("subject.go", src.to_string())]);
+        let shared_row_listings = batches
+            .iter()
+            .flat_map(|(_, rows)| rows.iter())
+            .filter(|&&row| row == 5)
+            .count();
+        assert_eq!(
+            shared_row_listings, 1,
+            "Tail's name row surfaces exactly once in the roster: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_legacy_chunks_keep_a_co_location_set_together() {
+        // 34 padded declarations put the file on the legacy chunked
+        // path; declarations 8 and 9 share one source row, exactly
+        // straddling the chunk-of-8 boundary. A cut through the pair
+        // leaves the shared row owned by chunk 0 while a chunk-1 train
+        // renders it.
+        let mut src = String::from("package subject\n\n");
+        for index in 0..34 {
+            if index == 7 {
+                src.push_str("var alphaSeven = 1; var alphaEight = 2\n");
+            } else if index == 8 {
+                // co-located with index 7 above
+            } else {
+                src.push_str(&format!("var alpha{index} = {index}\n"));
+            }
+            // Non-blank padding: span building bridges all-blank gaps,
+            // and a bridged roster would hide which chunk owns a row.
+            // The blank rows fence the comments off the next decl so
+            // they are not read as its doc block.
+            src.push('\n');
+            src.push_str(&"// padding\n".repeat(23));
+            src.push('\n');
+        }
+        let rendered = schedule_go_source(&src);
+        assert!(
+            rendered.contains("var alphaSeven = 1; var alphaEight = 2"),
+            "the shared row must render:\n{rendered}"
+        );
+        let batches = names_batches(&[("subject.go", src)]);
+        let owning_chunks: Vec<usize> = batches
+            .iter()
+            .filter(|(_, rows)| rows.contains(&185))
+            .map(|(chunk_index, _)| *chunk_index)
+            .collect();
+        assert_eq!(
+            owning_chunks.len(),
+            1,
+            "the shared row lives in exactly one chunk: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_generated_marker_matches_the_go_build_convention() {
+        assert!(is_generated(
+            "// Code generated by protoc-gen-go. DO NOT EDIT.\n\npackage subject\n"
+        ));
+        // go/build anchors the marker at column 0.
+        assert!(!is_generated(
+            "   // Code generated by tool. DO NOT EDIT.\n\npackage subject\n"
+        ));
+        // Prefix and suffix may not overlap on their shared space.
+        assert!(!is_generated(
+            "// Code generated DO NOT EDIT.\n\npackage subject\n"
+        ));
+        // The marker must precede any non-comment text.
+        assert!(!is_generated(
+            "package subject\n\n// Code generated by tool. DO NOT EDIT.\n"
+        ));
     }
 
     #[test]
