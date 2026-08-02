@@ -1148,17 +1148,23 @@ fn find_export_starts<'a>(
                 .and_then(|name| default_identifier_reexports.get(name).copied());
             let kind = if default_predecessor.is_some() {
                 decl_kind(child)
-            } else if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
-                && synthetic_export_name(child, source, reexports).is_some()
-            {
-                Some(ItemKind::Const)
+            } else if let Some(kind) = synthetic_local_export_kind(child, source, reexports) {
+                Some(kind)
             } else {
                 synthetic_commonjs_export_kind(child, source, commonjs_reexports)
             };
 
             let Some(kind) = kind else { continue };
+            let is_type_only = matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
             let mut info = make_export_info(
-                start_line, kind, child, child, file, source, src_lines, false,
+                start_line,
+                kind,
+                child,
+                child,
+                file,
+                source,
+                src_lines,
+                is_type_only,
             );
             info.predecessor_start_line = default_predecessor;
             out.push(info);
@@ -1922,24 +1928,43 @@ fn first_identifier_child(node: Node) -> Option<Node> {
 }
 
 /// Returns the exported local declaration kind when `decl` is named by a
-/// top-level CommonJS value export. Function and class declarations are
-/// keyed directly by their declared name; const/let declarations keep the
-/// narrower fn-init rule used for ESM re-export synthesis.
-fn synthetic_commonjs_export_kind(
+/// top-level re-export clause (`export { X }`) whose names are in
+/// `reexport_set`. Named declarations are keyed directly by their
+/// declared name; const/let declarations keep the narrower fn-init rule
+/// (see [`synthetic_export_name`]), which excludes pure-data consts.
+fn synthetic_local_export_kind(
     decl: Node,
     source: &str,
     reexport_set: &HashSet<String>,
 ) -> Option<ItemKind> {
     let kind = decl_kind(decl)?;
     match kind {
-        ItemKind::Function | ItemKind::Class => {
+        ItemKind::Const => synthetic_export_name(decl, source, reexport_set).map(|_| kind),
+        ItemKind::Function
+        | ItemKind::Class
+        | ItemKind::Interface
+        | ItemKind::TypeAlias
+        | ItemKind::Enum => {
             let name = name_of(decl, source)?;
             reexport_set.contains(name).then_some(kind)
         }
-        ItemKind::Const => synthetic_export_name(decl, source, reexport_set).map(|_| kind),
-        ItemKind::Interface | ItemKind::TypeAlias | ItemKind::Enum => None,
         ItemKind::Default | ItemKind::NamedReexport => None,
     }
+}
+
+/// [`synthetic_local_export_kind`] restricted to runtime declarations —
+/// a CommonJS `exports.X = X` assignment can only name a runtime value.
+fn synthetic_commonjs_export_kind(
+    decl: Node,
+    source: &str,
+    reexport_set: &HashSet<String>,
+) -> Option<ItemKind> {
+    let kind = synthetic_local_export_kind(decl, source, reexport_set)?;
+    (!matches!(
+        kind,
+        ItemKind::Interface | ItemKind::TypeAlias | ItemKind::Enum
+    ))
+    .then_some(kind)
 }
 
 /// Returns the local declared name when `decl` is a single-binding
@@ -5200,6 +5225,61 @@ export { Item as CommandItem };
     }
 
     #[test]
+    fn walker_typescript_synthetic_export_covers_named_declarations() {
+        // A local `export { … }` clause naming a function / class / type
+        // declaration synthesizes the Export at the declaration, not just
+        // the one-line NamedReexport clause.
+        let src = "\
+export { createNote, Store, NoteId };
+
+async function createNote(opts) {
+  return opts;
+}
+
+class Store {
+  get(id) { return id; }
+}
+
+type NoteId = string;
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        let kind_at = |line: usize| {
+            exports
+                .iter()
+                .find(|e| e.start_line == line)
+                .map(|e| e.kind)
+        };
+        assert_eq!(kind_at(3), Some(ItemKind::Function));
+        assert_eq!(kind_at(7), Some(ItemKind::Class));
+        assert_eq!(kind_at(11), Some(ItemKind::TypeAlias));
+        assert!(
+            exports
+                .iter()
+                .find(|e| e.start_line == 11)
+                .is_some_and(|e| e.is_type_only),
+            "a synthesized type declaration must still count as type-only \
+             so the type-machinery damp sees it"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_needs_the_reexport_name() {
+        // An unmentioned sibling declaration stays module-private.
+        let src = "\
+export { kept };
+
+function kept() { return 1; }
+
+function dropped() { return 2; }
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert!(exports.iter().any(|e| e.start_line == 3));
+        assert!(exports.iter().all(|e| e.start_line != 5));
+    }
+
+    #[test]
     fn walker_typescript_synthetic_const_only_when_value_reexport() {
         // `export type { X }` does not synthesize a value Export for X.
         let src = "\
@@ -5250,7 +5330,9 @@ export { a, b };
     }
 
     #[test]
-    fn walker_typescript_esm_function_reexport_does_not_synthesize_local_function() {
+    fn walker_typescript_esm_function_reexport_synthesizes_local_functions() {
+        // Every name in the clause is public surface, so each declaration
+        // gets its own Export alongside the one-line clause.
         let src = "\
 function composeRefs() {
   return null;
@@ -5262,9 +5344,17 @@ export { composeRefs, useComposedRefs };
 ";
         let tree = parse(src);
         let exports = export_infos(&tree, src);
-        assert_eq!(exports.len(), 1);
-        assert_eq!(exports[0].start_line, 7);
-        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
+        assert_eq!(
+            exports
+                .iter()
+                .map(|e| (e.start_line, e.kind))
+                .collect::<Vec<_>>(),
+            vec![
+                (1, ItemKind::Function),
+                (4, ItemKind::Function),
+                (7, ItemKind::NamedReexport),
+            ]
+        );
     }
 
     #[test]

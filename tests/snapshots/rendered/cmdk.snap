@@ -191,13 +191,11 @@ cmdk/
              729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
             …
              774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-             775→  const { alwaysRender, ...etc } = props
-             776→  const ref = React.useRef<HTMLDivElement>(null)
-             777→  const render = useCmdk((state) => !state.search)
-             778→
-             779→  if (!alwaysRender && !render) return null
-             780→  return <Primitive.div ref={composeRefs(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
             …
+             783→/**
+             784→ * Command menu input.
+             785→ * All props are forwarded to the underyling `input` element.
+             786→ */
              787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
             …
              833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
@@ -242,6 +240,9 @@ cmdk/
              991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
              992→
              993→function useLazyRef<T>(fn: () => T) {
+            …
+            1003→/** Run a selector against the store state. */
+            1004→function useCmdk<T = any>(selector: (state: State) => T): T {
             …
             1010→function useValue(
             …
