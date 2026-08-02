@@ -50,7 +50,7 @@
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -364,12 +364,18 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .chain(info.deprecation_marker)
             })
             .collect();
-        let names_groups = decl_names_chunk_groups(
+        let row_claimants = decl_row_claimants(&decls, &source, &src_lines);
+        let roster = RosterCtx {
             file,
             ctx,
-            &source,
-            &decls,
-            &all_name_lines,
+            source: &source,
+            decls: &decls,
+            all_name_lines: &all_name_lines,
+            co_location: co_location_representatives(decls.len(), &row_claimants),
+            row_claimants: &row_claimants,
+        };
+        let names_groups = decl_names_chunk_groups(
+            &roster,
             line_count,
             spine.as_deref() == Some(file.as_path()),
         );
@@ -388,9 +394,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .collect();
         let mut names_lines_by_chunk: Vec<FileLines> = names_groups
             .iter()
-            .map(|group| {
-                collect_decl_names_from(group.decls.iter().map(|&i| &decls[i].1), &all_name_lines)
-            })
+            .map(|group| roster.lines(&group.decls))
             .collect();
         // A `//go:build` constraint negates the roster's claim that
         // these declarations are the package's API: they exist only for
@@ -617,14 +621,11 @@ fn entry_slice_rank(info: &DeclInfo, has_doc: bool) -> f64 {
 /// train, so handing one to every fat file in a package trades the
 /// package's breadth for a scattering of half-read files.
 fn decl_names_chunk_groups(
-    file: &Path,
-    ctx: &WalkCtx,
-    source: &str,
-    decls: &[(Node, DeclInfo)],
-    all_name_lines: &HashSet<usize>,
+    roster: &RosterCtx,
     line_count: usize,
     is_spine: bool,
 ) -> Vec<NamesChunk> {
+    let decls = roster.decls;
     if decls.is_empty() {
         return Vec::new();
     }
@@ -653,21 +654,15 @@ fn decl_names_chunk_groups(
     };
     let all: Vec<usize> = (0..decls.len()).collect();
     let legacy = source_order_chunks(&all);
-    let cost_of = |indices: &[usize]| -> usize {
-        let lines = collect_decl_names_from(indices.iter().map(|&i| &decls[i].1), all_name_lines);
-        single_file_lines_content(file, source, lines)
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
     // Only a roster the chunker left whole gets a gate slice. Where the
     // surface is already chunked the head chunk *is* an entry slice, one
     // the chunker sized; carving a second, smaller gate out of it only
     // lengthens a train that already opens cheaply, and it displaces the
     // source-order roster halves an NS asks for as units.
-    if !is_spine || legacy.len() > 1 || cost_of(&legacy[0]) <= GO_ENTRY_SLICE_SPLIT_TOKENS {
+    if !is_spine || legacy.len() > 1 || roster.cost(&legacy[0]) <= GO_ENTRY_SLICE_SPLIT_TOKENS {
         return priced(legacy);
     }
-    let Some(entry) = entry_slice(decls, source, &cost_of) else {
+    let Some(entry) = entry_slice(roster) else {
         return priced(legacy);
     };
     let remainder: Vec<usize> = all
@@ -702,20 +697,62 @@ struct NamesChunk {
     value_factor: f64,
 }
 
+/// Everything needed to render and price an arbitrary slice of one
+/// file's declaration roster. The partitioner measures candidate slices
+/// with the same code that later emits them, so a slice can never be
+/// chosen on a cost the emitted batch does not have.
+struct RosterCtx<'a, 'tree> {
+    file: &'a Path,
+    ctx: &'a WalkCtx,
+    source: &'a str,
+    decls: &'a [(Node<'tree>, DeclInfo)],
+    all_name_lines: &'a HashSet<usize>,
+    row_claimants: &'a HashMap<usize, Vec<usize>>,
+    co_location: Vec<usize>,
+}
+
+impl RosterCtx<'_, '_> {
+    fn lines(&self, indices: &[usize]) -> FileLines {
+        collect_decl_names_from(
+            indices.iter().map(|&i| (i, &self.decls[i].1)),
+            self.all_name_lines,
+            self.row_claimants,
+        )
+    }
+
+    fn cost(&self, indices: &[usize]) -> usize {
+        single_file_lines_content(self.file, self.source, self.lines(indices))
+            .map(|content| self.ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    }
+
+    /// `indices` grown to whole co-location sets, in source order, so a
+    /// chunk cut along this boundary keeps every claimant of a shared
+    /// row on the same side of it.
+    fn co_located_closure(&self, indices: &[usize]) -> Vec<usize> {
+        let sets: HashSet<usize> = indices
+            .iter()
+            .map(|&index| self.co_location[index])
+            .collect();
+        (0..self.decls.len())
+            .filter(|&index| sets.contains(&self.co_location[index]))
+            .collect()
+    }
+}
+
 /// The head slice of [`decl_names_chunk_groups`], in source order, or
-/// `None` when there is no room to carve one out.
-fn entry_slice(
-    decls: &[(Node, DeclInfo)],
-    source: &str,
-    cost_of: &impl Fn(&[usize]) -> usize,
-) -> Option<Vec<usize>> {
+/// `None` when no slice within the ceilings can serve as a gate.
+fn entry_slice(roster: &RosterCtx) -> Option<Vec<usize>> {
+    let decls = roster.decls;
     if decls.len() <= GO_ENTRY_SLICE_DECLS {
         return None;
     }
     let ranks: Vec<f64> = decls
         .iter()
         .map(|(node, info)| {
-            let has_doc = !collect_doc_comments_above(*node, source).full.is_empty();
+            let has_doc = !collect_doc_comments_above(*node, roster.source)
+                .full
+                .is_empty();
             entry_slice_rank(info, has_doc)
         })
         .collect();
@@ -726,10 +763,11 @@ fn entry_slice(
     // Descending rank order means popping the tail; the survivors go
     // back into source order so the slice renders as a reading of the
     // file rather than of the ranking.
-    while by_rank.len() > 1 && cost_of(&sorted(&by_rank)) > GO_ENTRY_SLICE_TOKENS {
+    let candidate = |chosen: &[usize]| roster.co_located_closure(&sorted(chosen));
+    while by_rank.len() > 1 && roster.cost(&candidate(&by_rank)) > GO_ENTRY_SLICE_TOKENS {
         by_rank.pop();
     }
-    Some(sorted(&by_rank))
+    Some(candidate(&by_rank))
 }
 
 /// The directory's **spine**: the one source file declaring strictly
@@ -1458,25 +1496,127 @@ fn truncate_at_first_blank_row(lines: FileLines, source: &str) -> FileLines {
     FileLines::new(kept)
 }
 
+/// Every row any single declaration's batches can render, mapped to the
+/// declarations that claim it, ascending. The first claimant is the
+/// row's owner; a row with more than one claimant is *co-located*.
+///
+/// Roster chunks consult this to stay disjoint. Two declarations can
+/// share a source row (`var a = 1; var b = 2`), and the row after a
+/// body-less declaration is routinely the *next* declaration's doc
+/// comment — so without an owner map, one chunk's roster row or
+/// continuation ellipsis lands on a row another declaration's train
+/// later renders. While chunks were cut in source order that was almost
+/// always the same chunk, hence an ancestor; a rank-chosen gate slice
+/// scatters neighbours across chunks and makes it a non-ancestor
+/// overlap: a debug panic, and a silently dropped row in release.
+fn decl_row_claimants(
+    decls: &[(Node, DeclInfo)],
+    source: &str,
+    src_lines: &[&str],
+) -> HashMap<usize, Vec<usize>> {
+    let mut claimants: HashMap<usize, Vec<usize>> = HashMap::new();
+    for (decl_index, (node, info)) in decls.iter().enumerate() {
+        let rows = info
+            .name_lines
+            .iter()
+            .copied()
+            .chain(info.decl_lines.iter().copied())
+            .chain(collect_doc_comments_above(*node, source).full)
+            .chain(collect_decl_body(info, src_lines).full)
+            .chain(
+                info.struct_field_groups
+                    .iter()
+                    .flat_map(|(_, rows)| rows.iter().copied()),
+            );
+        for row in rows {
+            let row_claimants = claimants.entry(row).or_default();
+            if row_claimants.last() != Some(&decl_index) {
+                row_claimants.push(decl_index);
+            }
+        }
+    }
+    claimants
+}
+
+/// One representative declaration index per set of declarations that
+/// share a source row, transitively.
+///
+/// A roster chunk renders a shared row once, but every co-located
+/// declaration's own `Decl` batch renders it too — so the row is only
+/// safe if all of its claimants gate on the same chunk. Splitting them
+/// is the same non-ancestor overlap [`decl_row_claimants`] exists to
+/// prevent, one the row-owner filter cannot reach because the offending
+/// batch belongs to the declaration train rather than the roster.
+fn co_location_representatives(
+    decl_count: usize,
+    claimants: &HashMap<usize, Vec<usize>>,
+) -> Vec<usize> {
+    let mut representatives: Vec<usize> = (0..decl_count).collect();
+    for row_claimants in claimants.values().filter(|shared| shared.len() > 1) {
+        let merged = row_claimants
+            .iter()
+            .map(|&decl| representatives[decl])
+            .min()
+            .unwrap_or_default();
+        let replaced: Vec<usize> = row_claimants
+            .iter()
+            .map(|&decl| representatives[decl])
+            .collect();
+        for representative in &mut representatives {
+            if replaced.contains(representative) {
+                *representative = merged;
+            }
+        }
+    }
+    representatives
+}
+
 /// One full + ellipsis pair per name line so a grouped block surfaces
 /// every inner spec, not just the `type (` opener.
+///
+/// Both are filtered through [`decl_row_claimants`]: a declaration only
+/// renders the roster rows it owns, and only trails an ellipsis onto a
+/// row no *other* declaration claims. The ellipsis rule is deliberately
+/// blind to which chunk the other declaration landed in — that keeps
+/// the rows a chunk renders independent of how the file was partitioned,
+/// which is what lets the partitioner price candidate slices with the
+/// same function that emits them.
 fn collect_decl_names_from<'a>(
-    decls: impl IntoIterator<Item = &'a DeclInfo>,
+    decls: impl IntoIterator<Item = (usize, &'a DeclInfo)>,
     all_name_lines: &HashSet<usize>,
+    row_claimants: &HashMap<usize, Vec<usize>>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for info in decls {
+    let owns = |decl_index: usize, row: usize| {
+        row_claimants
+            .get(&row)
+            .is_some_and(|claimants| claimants.first() == Some(&decl_index))
+    };
+    for (decl_index, info) in decls {
         // The roster is often the *only* place a decl appears, and a
         // deprecated decl listed among live siblings steers the reader
         // onto the API the package told them not to use. The marker
         // rides with the roster line instead of competing as `DeclDoc`,
         // so it cannot be separated from what it negates.
-        full.extend(info.deprecation_marker);
+        full.extend(
+            info.deprecation_marker
+                .filter(|&marker| owns(decl_index, marker)),
+        );
         for &line in &info.name_lines {
+            if !owns(decl_index, line) {
+                continue;
+            }
             full.push(line);
             let ellipsis_line = line + 1;
-            if !all_name_lines.contains(&ellipsis_line) {
+            // A declaration's own body row is the normal target — that
+            // ellipsis is the marker saying the body was elided. Only
+            // somebody else's row is off limits.
+            if !all_name_lines.contains(&ellipsis_line)
+                && row_claimants
+                    .get(&ellipsis_line)
+                    .is_none_or(|claimants| claimants.iter().all(|&claim| claim == decl_index))
+            {
                 ellipses.push(ellipsis_line);
             }
         }
@@ -1742,7 +1882,16 @@ const (
             .iter()
             .flat_map(|(_, info)| info.name_lines.iter().copied())
             .collect();
-        let names = collect_decl_names_from(decls.iter().map(|(_, info)| info), &all_name_lines);
+        let row_claimants =
+            decl_row_claimants(&decls, &source, &source.lines().collect::<Vec<_>>());
+        let names = collect_decl_names_from(
+            decls
+                .iter()
+                .enumerate()
+                .map(|(index, (_, info))| (index, info)),
+            &all_name_lines,
+            &row_claimants,
+        );
         // Inner spec lines: Public@4, Other@5, Format12Hour@9, Format24Hour@10.
         assert_eq!(names.full, vec![4, 5, 9, 10]);
     }
@@ -1819,7 +1968,16 @@ func New() {}
                     .chain(info.deprecation_marker)
             })
             .collect();
-        let names = collect_decl_names_from(decls.iter().map(|(_, info)| info), &all_name_lines);
+        let row_claimants =
+            decl_row_claimants(&decls, &source, &source.lines().collect::<Vec<_>>());
+        let names = collect_decl_names_from(
+            decls
+                .iter()
+                .enumerate()
+                .map(|(index, (_, info))| (index, info)),
+            &all_name_lines,
+            &row_claimants,
+        );
         assert_eq!(
             names.full,
             vec![5, 6, 9],
@@ -1969,6 +2127,94 @@ package foo
             .collect();
         out.sort();
         out
+    }
+
+    /// Ten long unexported helpers — enough rendered cost to clear the
+    /// split threshold. `lead` and `tail` bracket them so a caller can
+    /// place a seam at either end of the roster.
+    fn roster_with(lead: &str, tail: &str) -> String {
+        let mut src = format!("package subject\n\n{lead}");
+        for index in 0..10 {
+            src.push_str(&format!(
+                "func helper{index}(ctx context.Context, name string, options map[string]string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        src.push_str(tail);
+        src
+    }
+
+    /// Schedule a one-file repo at a budget large enough to reach every
+    /// batch. In debug builds the scheduler panics when a batch writes a
+    /// row a non-ancestor already owns, so this is the seam harness.
+    fn schedule_go_source(src: &str) -> String {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("subject.go"), src).unwrap();
+        std::fs::write(
+            root.join("go.mod"),
+            "module example.com/subject\n\ngo 1.22\n",
+        )
+        .unwrap();
+        Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None)
+            .run_with_report()
+            .tree
+            .render()
+    }
+
+    #[test]
+    fn go_roster_ellipsis_never_lands_on_a_later_decls_doc() {
+        // Two documented exported funcs fill the gate; `Charlie` still
+        // fits under the token ceiling but `helper0` does not, so the
+        // body-less `Charlie` ends up in the gate with the row after its
+        // roster line belonging to `helper0`'s doc train — reached
+        // through a different chunk.
+        let rendered = schedule_go_source(&roster_with(
+            "// Alpha is exported and documented.
+func Alpha(ctx context.Context, name string, options map[string]string) (*Result, error) { return nil, nil }
+// Bravo is exported and documented.
+func Bravo(ctx context.Context, name string, options map[string]string) (*Result, error) { return nil, nil }
+var Charlie = 1
+// helper0 explains itself.
+",
+            "",
+        ));
+        assert!(
+            rendered.contains("var Charlie = 1"),
+            "gate row must survive:\n{rendered}"
+        );
+        assert!(
+            rendered.contains("helper0 explains itself"),
+            "the remainder decl's doc row must survive:\n{rendered}"
+        );
+    }
+
+    #[test]
+    fn go_roster_ellipsis_never_lands_on_a_gate_decls_doc() {
+        // The reverse seam: a body-less *remainder* declaration whose
+        // next row is the gate declaration's doc comment.
+        let rendered = schedule_go_source(&roster_with(
+            "",
+            "var quiet = 1\n// Alpha is the exported knob.\nvar Alpha = 2\n",
+        ));
+        assert!(
+            rendered.contains("var Alpha = 2"),
+            "gate row must survive:\n{rendered}"
+        );
+        assert!(
+            rendered.contains("Alpha is the exported knob"),
+            "the gate decl's doc row must survive:\n{rendered}"
+        );
+    }
+
+    #[test]
+    fn go_roster_rows_stay_disjoint_when_two_decls_share_a_row() {
+        // Two top-level declarations on one source row land in different
+        // chunks; only one roster may claim the row.
+        let rendered = schedule_go_source(&roster_with("var Alpha = 1; var beta = 2\n", ""));
+        assert!(
+            rendered.contains("var Alpha = 1; var beta = 2"),
+            "the shared row must render once:\n{rendered}"
+        );
     }
 
     #[test]
