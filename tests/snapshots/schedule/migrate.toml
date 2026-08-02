@@ -1,7 +1,7 @@
 fixture = "migrate"
 budget = 10000
-cumulative_tokens = 9995
-batch_count = 301
+cumulative_tokens = 9823
+batch_count = 292
 
 [[batches]]
 position = 1
@@ -4623,208 +4623,10 @@ kind = "full"
 
 [[batches]]
 position = 206
-key = 'Go(DeclNames { file: "source/migration.go", chunk_index: 0 })'
-descriptor = "go decl names surface in source/migration.go"
-cost_tokens = 71
-cum_tokens = 7354
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 207
-key = 'Go(Decl { file: "source/migration.go", start_line: 8 })'
-descriptor = "go decl at source/migration.go:8"
-cost_tokens = 0
-cum_tokens = 7354
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 208
-key = 'Go(Decl { file: "source/migration.go", start_line: 41 })'
-descriptor = "go decl at source/migration.go:41"
-cost_tokens = 0
-cum_tokens = 7354
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 209
-key = 'Go(Decl { file: "source/migration.go", start_line: 48 })'
-descriptor = "go decl at source/migration.go:48"
-cost_tokens = 0
-cum_tokens = 7354
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 210
-key = 'Go(Decl { file: "source/migration.go", start_line: 36 })'
-descriptor = "go decl at source/migration.go:36"
-cost_tokens = 28
-cum_tokens = 7382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 36
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 211
-key = 'Go(DeclDoc { file: "source/migration.go", start_line: 8 })'
-descriptor = "go decl doc at source/migration.go:8"
-cost_tokens = 12
-cum_tokens = 7394
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 212
-key = 'Go(DeclDoc { file: "source/migration.go", start_line: 36 })'
-descriptor = "go decl doc at source/migration.go:36"
-cost_tokens = 27
-cum_tokens = 7421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 34
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 213
 key = 'Go(DeclNames { file: "source/parse.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/parse.go"
 cost_tokens = 100
-cum_tokens = 7521
+cum_tokens = 7383
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4696,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 214
+position = 207
 key = 'Go(Decl { file: "source/parse.go", start_line: 22 })'
 descriptor = "go decl at source/parse.go:22"
 cost_tokens = 0
-cum_tokens = 7521
+cum_tokens = 7383
 
 [batches.content]
 kind = "lines"
@@ -4912,11 +4714,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 215
+position = 208
 key = 'Go(Decl { file: "source/parse.go", start_line: 25 })'
 descriptor = "go decl at source/parse.go:25"
 cost_tokens = 0
-cum_tokens = 7521
+cum_tokens = 7383
 
 [batches.content]
 kind = "lines"
@@ -4930,11 +4732,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 216
+position = 209
 key = 'Go(Decl { file: "source/parse.go", start_line: 9 })'
 descriptor = "go decl at source/parse.go:9"
 cost_tokens = 11
-cum_tokens = 7532
+cum_tokens = 7394
 
 [batches.content]
 kind = "lines"
@@ -4948,11 +4750,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 217
+position = 210
 key = 'Go(Decl { file: "source/parse.go", start_line: 13 })'
 descriptor = "go decl at source/parse.go:13"
 cost_tokens = 9
-cum_tokens = 7541
+cum_tokens = 7403
 
 [batches.content]
 kind = "lines"
@@ -4966,11 +4768,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 218
+position = 211
 key = 'Go(DeclDoc { file: "source/parse.go", start_line: 25 })'
 descriptor = "go decl doc at source/parse.go:25"
 cost_tokens = 11
-cum_tokens = 7552
+cum_tokens = 7414
 
 [batches.content]
 kind = "lines"
@@ -4984,11 +4786,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 219
+position = 212
 key = 'Go(DeclDoc { file: "cmd/migrate/version.go", start_line: 4 })'
 descriptor = "go decl doc at cmd/migrate/version.go:4"
 cost_tokens = 13
-cum_tokens = 7565
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
@@ -5002,11 +4804,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 220
+position = 213
 key = 'Go(DeclNames { file: "migrate.go", chunk_index: 4 })'
 descriptor = "go decl names surface #4 in migrate.go"
 cost_tokens = 66
-cum_tokens = 7631
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -5060,11 +4862,11 @@ end = 976
 kind = "ellipsis"
 
 [[batches]]
-position = 221
+position = 214
 key = 'Go(Decl { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl at migrate.go:961"
 cost_tokens = 0
-cum_tokens = 7631
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -5078,11 +4880,11 @@ end = 961
 kind = "full"
 
 [[batches]]
-position = 222
+position = 215
 key = 'Go(Decl { file: "migrate.go", start_line: 968 })'
 descriptor = "go decl at migrate.go:968"
 cost_tokens = 0
-cum_tokens = 7631
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -5096,11 +4898,11 @@ end = 968
 kind = "full"
 
 [[batches]]
-position = 223
+position = 216
 key = 'Go(Decl { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl at migrate.go:975"
 cost_tokens = 0
-cum_tokens = 7631
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -5114,11 +4916,11 @@ end = 975
 kind = "full"
 
 [[batches]]
-position = 224
+position = 217
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl doc at migrate.go:961"
 cost_tokens = 15
-cum_tokens = 7646
+cum_tokens = 7508
 
 [batches.content]
 kind = "lines"
@@ -5132,11 +4934,11 @@ end = 960
 kind = "full"
 
 [[batches]]
-position = 225
+position = 218
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl doc at migrate.go:975"
 cost_tokens = 16
-cum_tokens = 7662
+cum_tokens = 7524
 
 [batches.content]
 kind = "lines"
@@ -5150,11 +4952,11 @@ end = 974
 kind = "full"
 
 [[batches]]
-position = 226
+position = 219
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 968 })'
 descriptor = "go decl doc at migrate.go:968"
 cost_tokens = 22
-cum_tokens = 7684
+cum_tokens = 7546
 
 [batches.content]
 kind = "lines"
@@ -5168,11 +4970,11 @@ end = 967
 kind = "full"
 
 [[batches]]
-position = 227
+position = 220
 key = 'Go(DeclBody { file: "migrate.go", start_line: 961 })'
 descriptor = "go decl body at migrate.go:961"
 cost_tokens = 28
-cum_tokens = 7712
+cum_tokens = 7574
 
 [batches.content]
 kind = "lines"
@@ -5186,11 +4988,11 @@ end = 964
 kind = "full"
 
 [[batches]]
-position = 228
+position = 221
 key = 'Go(DeclNames { file: "internal/url/url.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/url/url.go"
 cost_tokens = 55
-cum_tokens = 7767
+cum_tokens = 7629
 
 [batches.content]
 kind = "lines"
@@ -5228,11 +5030,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 229
+position = 222
 key = 'Go(Decl { file: "internal/url/url.go", start_line: 12 })'
 descriptor = "go decl at internal/url/url.go:12"
 cost_tokens = 0
-cum_tokens = 7767
+cum_tokens = 7629
 
 [batches.content]
 kind = "lines"
@@ -5246,11 +5048,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 230
+position = 223
 key = 'Go(DeclDoc { file: "internal/url/url.go", start_line: 12 })'
 descriptor = "go decl doc at internal/url/url.go:12"
 cost_tokens = 14
-cum_tokens = 7781
+cum_tokens = 7643
 
 [batches.content]
 kind = "lines"
@@ -5264,11 +5066,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 231
+position = 224
 key = 'Go(PackageImports { file: "migration.go" })'
 descriptor = "go package + imports in migration.go"
 cost_tokens = 58
-cum_tokens = 7839
+cum_tokens = 7701
 
 [batches.content]
 kind = "lines"
@@ -5282,11 +5084,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 232
+position = 225
 key = 'Fs(DirListing { dir: "source/testing" })'
 descriptor = "listing of 'source/testing'"
 cost_tokens = 3
-cum_tokens = 7842
+cum_tokens = 7704
 
 [batches.content]
 kind = "fs"
@@ -5296,11 +5098,11 @@ parent = "source/testing"
 entries = ["testing.go"]
 
 [[batches]]
-position = 233
+position = 226
 key = 'Go(DeclBody { file: "migrate.go", start_line: 975 })'
 descriptor = "go decl body at migrate.go:975"
 cost_tokens = 32
-cum_tokens = 7874
+cum_tokens = 7736
 
 [batches.content]
 kind = "lines"
@@ -5314,11 +5116,11 @@ end = 978
 kind = "full"
 
 [[batches]]
-position = 234
+position = 227
 key = 'Go(DeclNames { file: "source/httpfs/driver.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/httpfs/driver.go"
 cost_tokens = 58
-cum_tokens = 7932
+cum_tokens = 7794
 
 [batches.content]
 kind = "lines"
@@ -5372,11 +5174,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 235
+position = 228
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 19 })'
 descriptor = "go decl at source/httpfs/driver.go:19"
 cost_tokens = 0
-cum_tokens = 7932
+cum_tokens = 7794
 
 [batches.content]
 kind = "lines"
@@ -5390,11 +5192,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 236
+position = 229
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 29 })'
 descriptor = "go decl at source/httpfs/driver.go:29"
 cost_tokens = 0
-cum_tokens = 7932
+cum_tokens = 7794
 
 [batches.content]
 kind = "lines"
@@ -5408,11 +5210,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 237
+position = 230
 key = 'Go(Decl { file: "source/httpfs/driver.go", start_line: 13 })'
 descriptor = "go decl at source/httpfs/driver.go:13"
 cost_tokens = 13
-cum_tokens = 7945
+cum_tokens = 7807
 
 [batches.content]
 kind = "lines"
@@ -5426,11 +5228,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 238
+position = 231
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 47
-cum_tokens = 7992
+cum_tokens = 7854
 
 [batches.content]
 kind = "lines"
@@ -5444,11 +5246,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 239
+position = 232
 key = 'Go(PackageDocBody { file: "source/iofs/doc.go" })'
 descriptor = "go package doc body in source/iofs/doc.go"
 cost_tokens = 75
-cum_tokens = 8067
+cum_tokens = 7929
 
 [batches.content]
 kind = "lines"
@@ -5462,11 +5264,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 240
+position = 233
 key = 'Go(DeclNames { file: "migrate.go", chunk_index: 2 })'
 descriptor = "go decl names surface #2 in migrate.go"
 cost_tokens = 171
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5600,11 +5402,11 @@ end = 533
 kind = "ellipsis"
 
 [[batches]]
-position = 241
+position = 234
 key = 'Go(Decl { file: "migrate.go", start_line: 265 })'
 descriptor = "go decl at migrate.go:265"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5618,11 +5420,11 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 242
+position = 235
 key = 'Go(Decl { file: "migrate.go", start_line: 287 })'
 descriptor = "go decl at migrate.go:287"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5636,11 +5438,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 243
+position = 236
 key = 'Go(Decl { file: "migrate.go", start_line: 307 })'
 descriptor = "go decl at migrate.go:307"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5654,11 +5456,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 244
+position = 237
 key = 'Go(Decl { file: "migrate.go", start_line: 321 })'
 descriptor = "go decl at migrate.go:321"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5672,11 +5474,11 @@ end = 321
 kind = "full"
 
 [[batches]]
-position = 245
+position = 238
 key = 'Go(Decl { file: "migrate.go", start_line: 365 })'
 descriptor = "go decl at migrate.go:365"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5690,11 +5492,11 @@ end = 365
 kind = "full"
 
 [[batches]]
-position = 246
+position = 239
 key = 'Go(Decl { file: "migrate.go", start_line: 383 })'
 descriptor = "go decl at migrate.go:383"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5708,11 +5510,11 @@ end = 383
 kind = "full"
 
 [[batches]]
-position = 247
+position = 240
 key = 'Go(Decl { file: "migrate.go", start_line: 400 })'
 descriptor = "go decl at migrate.go:400"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5726,11 +5528,11 @@ end = 400
 kind = "full"
 
 [[batches]]
-position = 248
+position = 241
 key = 'Go(Decl { file: "migrate.go", start_line: 532 })'
 descriptor = "go decl at migrate.go:532"
 cost_tokens = 0
-cum_tokens = 8238
+cum_tokens = 8100
 
 [batches.content]
 kind = "lines"
@@ -5744,11 +5546,11 @@ end = 532
 kind = "full"
 
 [[batches]]
-position = 249
+position = 242
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 307 })'
 descriptor = "go decl doc at migrate.go:307"
 cost_tokens = 12
-cum_tokens = 8250
+cum_tokens = 8112
 
 [batches.content]
 kind = "lines"
@@ -5762,11 +5564,11 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 250
+position = 243
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 265 })'
 descriptor = "go decl doc at migrate.go:265"
 cost_tokens = 33
-cum_tokens = 8283
+cum_tokens = 8145
 
 [batches.content]
 kind = "lines"
@@ -5780,11 +5582,11 @@ end = 264
 kind = "full"
 
 [[batches]]
-position = 251
+position = 244
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 287 })'
 descriptor = "go decl doc at migrate.go:287"
 cost_tokens = 33
-cum_tokens = 8316
+cum_tokens = 8178
 
 [batches.content]
 kind = "lines"
@@ -5798,11 +5600,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 252
+position = 245
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 383 })'
 descriptor = "go decl doc at migrate.go:383"
 cost_tokens = 34
-cum_tokens = 8350
+cum_tokens = 8212
 
 [batches.content]
 kind = "lines"
@@ -5816,11 +5618,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 253
+position = 246
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 365 })'
 descriptor = "go decl doc at migrate.go:365"
 cost_tokens = 40
-cum_tokens = 8390
+cum_tokens = 8252
 
 [batches.content]
 kind = "lines"
@@ -5834,11 +5636,11 @@ end = 364
 kind = "full"
 
 [[batches]]
-position = 254
+position = 247
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 321 })'
 descriptor = "go decl doc at migrate.go:321"
 cost_tokens = 62
-cum_tokens = 8452
+cum_tokens = 8314
 
 [batches.content]
 kind = "lines"
@@ -5852,11 +5654,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 255
+position = 248
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 400 })'
 descriptor = "go decl doc at migrate.go:400"
 cost_tokens = 76
-cum_tokens = 8528
+cum_tokens = 8390
 
 [batches.content]
 kind = "lines"
@@ -5870,11 +5672,11 @@ end = 399
 kind = "full"
 
 [[batches]]
-position = 256
+position = 249
 key = 'Go(DeclDoc { file: "migrate.go", start_line: 532 })'
 descriptor = "go decl doc at migrate.go:532"
 cost_tokens = 98
-cum_tokens = 8626
+cum_tokens = 8488
 
 [batches.content]
 kind = "lines"
@@ -5888,11 +5690,11 @@ end = 531
 kind = "full"
 
 [[batches]]
-position = 257
+position = 250
 key = 'Go(DeclNames { file: "source/file/file.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/file/file.go"
 cost_tokens = 63
-cum_tokens = 8689
+cum_tokens = 8551
 
 [batches.content]
 kind = "lines"
@@ -5962,11 +5764,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 258
+position = 251
 key = 'Go(Decl { file: "source/file/file.go", start_line: 12 })'
 descriptor = "go decl at source/file/file.go:12"
 cost_tokens = 0
-cum_tokens = 8689
+cum_tokens = 8551
 
 [batches.content]
 kind = "lines"
@@ -5980,11 +5782,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 259
+position = 252
 key = 'Go(Decl { file: "source/file/file.go", start_line: 22 })'
 descriptor = "go decl at source/file/file.go:22"
 cost_tokens = 0
-cum_tokens = 8689
+cum_tokens = 8551
 
 [batches.content]
 kind = "lines"
@@ -5998,11 +5800,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 260
+position = 253
 key = 'Go(Decl { file: "source/file/file.go", start_line: 37 })'
 descriptor = "go decl at source/file/file.go:37"
 cost_tokens = 0
-cum_tokens = 8689
+cum_tokens = 8551
 
 [batches.content]
 kind = "lines"
@@ -6016,11 +5818,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 261
+position = 254
 key = 'Go(Decl { file: "source/file/file.go", start_line: 16 })'
 descriptor = "go decl at source/file/file.go:16"
 cost_tokens = 28
-cum_tokens = 8717
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -6034,11 +5836,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 262
+position = 255
 key = 'Markdown(ReadmeHeadline { file: "source/gitlab/README.md" })'
 descriptor = "README headline in source/gitlab/README.md"
 cost_tokens = 180
-cum_tokens = 8897
+cum_tokens = 8759
 
 [batches.content]
 kind = "lines"
@@ -6052,11 +5854,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 263
+position = 256
 key = 'Markdown(HeadingsOutline { file: "database/cockroachdb/TUTORIAL.md" })'
 descriptor = "headings outline in database/cockroachdb/TUTORIAL.md"
 cost_tokens = 79
-cum_tokens = 8976
+cum_tokens = 8838
 
 [batches.content]
 kind = "lines"
@@ -6142,11 +5944,11 @@ end = 120
 kind = "ellipsis"
 
 [[batches]]
-position = 264
+position = 257
 key = 'Markdown(Section { file: "database/cockroachdb/TUTORIAL.md", section_index: 0, reference_shaped: false })'
 descriptor = "database/cockroachdb/TUTORIAL.md section #0"
 cost_tokens = 0
-cum_tokens = 8976
+cum_tokens = 8838
 
 [batches.content]
 kind = "lines"
@@ -6160,29 +5962,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 265
-key = 'Go(PackageImports { file: "source/migration.go" })'
-descriptor = "go package + imports in source/migration.go"
-cost_tokens = 29
-cum_tokens = 9005
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/migration.go"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 266
+position = 258
 key = 'Go(DeclDoc { file: "util.go", start_line: 45 })'
 descriptor = "go decl doc at util.go:45"
 cost_tokens = 43
-cum_tokens = 9048
+cum_tokens = 8881
 
 [batches.content]
 kind = "lines"
@@ -6196,11 +5980,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 267
+position = 259
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 56
-cum_tokens = 9104
+cum_tokens = 8937
 
 [batches.content]
 kind = "lines"
@@ -6214,11 +5998,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 268
+position = 260
 key = 'Go(PackageImports { file: "cli/main.go" })'
 descriptor = "go package + imports in cli/main.go"
 cost_tokens = 30
-cum_tokens = 9134
+cum_tokens = 8967
 
 [batches.content]
 kind = "lines"
@@ -6232,11 +6016,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 269
+position = 261
 key = 'Go(PackageImports { file: "database/error.go" })'
 descriptor = "go package + imports in database/error.go"
 cost_tokens = 30
-cum_tokens = 9164
+cum_tokens = 8997
 
 [batches.content]
 kind = "lines"
@@ -6250,11 +6034,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 270
+position = 262
 key = 'Markdown(Section { file: "database/rqlite/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "database/rqlite/README.md section #1"
 cost_tokens = 32
-cum_tokens = 9196
+cum_tokens = 9029
 
 [batches.content]
 kind = "lines"
@@ -6268,11 +6052,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 271
+position = 263
 key = 'Go(DeclNames { file: "database/driver.go", chunk_index: 0 })'
 descriptor = "go decl names surface in database/driver.go"
 cost_tokens = 136
-cum_tokens = 9332
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6374,11 +6158,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 272
+position = 264
 key = 'Go(Decl { file: "database/driver.go", start_line: 85 })'
 descriptor = "go decl at database/driver.go:85"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6392,11 +6176,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 273
+position = 265
 key = 'Go(Decl { file: "database/driver.go", start_line: 102 })'
 descriptor = "go decl at database/driver.go:102"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6410,11 +6194,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 274
+position = 266
 key = 'Go(Decl { file: "database/driver.go", start_line: 115 })'
 descriptor = "go decl at database/driver.go:115"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6428,11 +6212,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 275
+position = 267
 key = 'Go(Decl { file: "database/driver.go", start_line: 15 })'
 descriptor = "go decl at database/driver.go:15"
 cost_tokens = 9
-cum_tokens = 9341
+cum_tokens = 9174
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6230,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 276
+position = 268
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 102 })'
 descriptor = "go decl doc at database/driver.go:102"
 cost_tokens = 11
-cum_tokens = 9352
+cum_tokens = 9185
 
 [batches.content]
 kind = "lines"
@@ -6464,11 +6248,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 277
+position = 269
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 115 })'
 descriptor = "go decl doc at database/driver.go:115"
 cost_tokens = 11
-cum_tokens = 9363
+cum_tokens = 9196
 
 [batches.content]
 kind = "lines"
@@ -6482,11 +6266,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 278
+position = 270
 key = 'Go(DeclDoc { file: "database/driver.go", start_line: 85 })'
 descriptor = "go decl doc at database/driver.go:85"
 cost_tokens = 12
-cum_tokens = 9375
+cum_tokens = 9208
 
 [batches.content]
 kind = "lines"
@@ -6500,11 +6284,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 279
+position = 271
 key = 'Go(DeclBody { file: "migrate.go", start_line: 52 })'
 descriptor = "go decl body at migrate.go:52"
 cost_tokens = 22
-cum_tokens = 9397
+cum_tokens = 9230
 
 [batches.content]
 kind = "lines"
@@ -6518,11 +6302,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 280
+position = 272
 key = 'Markdown(HeadingsOutline { file: "database/postgres/TUTORIAL.md" })'
 descriptor = "headings outline in database/postgres/TUTORIAL.md"
 cost_tokens = 88
-cum_tokens = 9485
+cum_tokens = 9318
 
 [batches.content]
 kind = "lines"
@@ -6624,11 +6408,11 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 281
+position = 273
 key = 'Markdown(Section { file: "database/postgres/TUTORIAL.md", section_index: 0, reference_shaped: false })'
 descriptor = "database/postgres/TUTORIAL.md section #0"
 cost_tokens = 0
-cum_tokens = 9485
+cum_tokens = 9318
 
 [batches.content]
 kind = "lines"
@@ -6642,11 +6426,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 282
+position = 274
 key = 'Go(DeclNames { file: "source/godoc_vfs/vfs.go", chunk_index: 0 })'
 descriptor = "go decl names surface in source/godoc_vfs/vfs.go"
 cost_tokens = 73
-cum_tokens = 9558
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -6716,11 +6500,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 283
+position = 275
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 17 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:17"
 cost_tokens = 0
-cum_tokens = 9558
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -6734,11 +6518,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 284
+position = 276
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 33 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:33"
 cost_tokens = 0
-cum_tokens = 9558
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -6752,11 +6536,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 285
+position = 277
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 41 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:41"
 cost_tokens = 0
-cum_tokens = 9558
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -6770,11 +6554,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 286
+position = 278
 key = 'Go(DeclBody { file: "source/godoc_vfs/vfs.go", start_line: 33 })'
 descriptor = "go decl body at source/godoc_vfs/vfs.go:33"
 cost_tokens = 9
-cum_tokens = 9567
+cum_tokens = 9400
 
 [batches.content]
 kind = "lines"
@@ -6788,11 +6572,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 287
+position = 279
 key = 'Go(Decl { file: "source/godoc_vfs/vfs.go", start_line: 23 })'
 descriptor = "go decl at source/godoc_vfs/vfs.go:23"
 cost_tokens = 33
-cum_tokens = 9600
+cum_tokens = 9433
 
 [batches.content]
 kind = "lines"
@@ -6806,11 +6590,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 288
+position = 280
 key = 'Go(DeclDoc { file: "source/godoc_vfs/vfs.go", start_line: 23 })'
 descriptor = "go decl doc at source/godoc_vfs/vfs.go:23"
 cost_tokens = 27
-cum_tokens = 9627
+cum_tokens = 9460
 
 [batches.content]
 kind = "lines"
@@ -6824,175 +6608,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 289
-key = 'Go(DeclNames { file: "database/spanner/spanner.go", chunk_index: 0 })'
-descriptor = "go decl names surface in database/spanner/spanner.go"
-cost_tokens = 57
-cum_tokens = 9684
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 290
-key = 'Go(Decl { file: "database/spanner/spanner.go", start_line: 77 })'
-descriptor = "go decl at database/spanner/spanner.go:77"
-cost_tokens = 0
-cum_tokens = 9684
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 291
-key = 'Go(Decl { file: "database/spanner/spanner.go", start_line: 64 })'
-descriptor = "go decl at database/spanner/spanner.go:64"
-cost_tokens = 28
-cum_tokens = 9712
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 64
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 292
-key = 'Go(DeclDoc { file: "database/spanner/spanner.go", start_line: 77 })'
-descriptor = "go decl doc at database/spanner/spanner.go:77"
-cost_tokens = 11
-cum_tokens = 9723
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 293
-key = 'Go(Decl { file: "database/spanner/spanner.go", start_line: 56 })'
-descriptor = "go decl at database/spanner/spanner.go:56"
-cost_tokens = 37
-cum_tokens = 9760
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 56
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 294
-key = 'Go(DeclDoc { file: "database/spanner/spanner.go", start_line: 56 })'
-descriptor = "go decl doc at database/spanner/spanner.go:56"
-cost_tokens = 16
-cum_tokens = 9776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/spanner/spanner.go"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 295
+position = 281
 key = 'Go(DeclDoc { file: "source/parse.go", start_line: 22 })'
 descriptor = "go decl doc at source/parse.go:22"
 cost_tokens = 36
-cum_tokens = 9812
+cum_tokens = 9496
 
 [batches.content]
 kind = "lines"
@@ -7006,157 +6626,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 296
-key = 'Go(DeclNames { file: "database/cockroachdb/cockroachdb.go", chunk_index: 0 })'
-descriptor = "go decl names surface in database/cockroachdb/cockroachdb.go"
-cost_tokens = 60
-cum_tokens = 9872
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 187
-end = 187
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 297
-key = 'Go(Decl { file: "database/cockroachdb/cockroachdb.go", start_line: 149 })'
-descriptor = "go decl at database/cockroachdb/cockroachdb.go:149"
-cost_tokens = 0
-cum_tokens = 9872
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 298
-key = 'Go(Decl { file: "database/cockroachdb/cockroachdb.go", start_line: 186 })'
-descriptor = "go decl at database/cockroachdb/cockroachdb.go:186"
-cost_tokens = 0
-cum_tokens = 9872
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 299
-key = 'Go(Decl { file: "database/cockroachdb/cockroachdb.go", start_line: 35 })'
-descriptor = "go decl at database/cockroachdb/cockroachdb.go:35"
-cost_tokens = 42
-cum_tokens = 9914
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 35
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 300
-key = 'Go(Decl { file: "database/cockroachdb/cockroachdb.go", start_line: 42 })'
-descriptor = "go decl at database/cockroachdb/cockroachdb.go:42"
-cost_tokens = 56
-cum_tokens = 9970
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "database/cockroachdb/cockroachdb.go"
-start = 42
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 301
+position = 282
 key = 'Go(DeclBody { file: "migration.go", start_line: 107 })'
 descriptor = "go decl body at migration.go:107"
 cost_tokens = 25
-cum_tokens = 9995
+cum_tokens = 9521
 
 [batches.content]
 kind = "lines"
@@ -7165,6 +6639,226 @@ kind = "lines"
 path = "migration.go"
 start = 108
 end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 283
+key = 'Markdown(Section { file: "database/sqlite3/README.md", section_index: 1, reference_shaped: false })'
+descriptor = "database/sqlite3/README.md section #1"
+cost_tokens = 38
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/sqlite3/README.md"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 284
+key = 'Go(Decl { file: "database/error.go", start_line: 8 })'
+descriptor = "go decl at database/error.go:8"
+cost_tokens = 104
+cum_tokens = 9663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/error.go"
+start = 8
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
+key = 'Go(DeclDoc { file: "database/error.go", start_line: 8 })'
+descriptor = "go decl doc at database/error.go:8"
+cost_tokens = 16
+cum_tokens = 9679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/error.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 286
+key = 'Go(DeclBody { file: "migrate.go", start_line: 968 })'
+descriptor = "go decl body at migrate.go:968"
+cost_tokens = 35
+cum_tokens = 9714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "migrate.go"
+start = 969
+end = 971
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 287
+key = 'Go(DeclNames { file: "database/multistmt/parse.go", chunk_index: 0 })'
+descriptor = "go decl names surface in database/multistmt/parse.go"
+cost_tokens = 95
+cum_tokens = 9809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 16
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 288
+key = 'Go(Decl { file: "database/multistmt/parse.go", start_line: 11 })'
+descriptor = "go decl at database/multistmt/parse.go:11"
+cost_tokens = 0
+cum_tokens = 9809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 289
+key = 'Go(Decl { file: "database/multistmt/parse.go", start_line: 16 })'
+descriptor = "go decl at database/multistmt/parse.go:16"
+cost_tokens = 0
+cum_tokens = 9809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 290
+key = 'Go(Decl { file: "database/multistmt/parse.go", start_line: 18 })'
+descriptor = "go decl at database/multistmt/parse.go:18"
+cost_tokens = 0
+cum_tokens = 9809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 291
+key = 'Go(Decl { file: "database/multistmt/parse.go", start_line: 35 })'
+descriptor = "go decl at database/multistmt/parse.go:35"
+cost_tokens = 0
+cum_tokens = 9809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 292
+key = 'Go(DeclDoc { file: "database/multistmt/parse.go", start_line: 35 })'
+descriptor = "go decl doc at database/multistmt/parse.go:35"
+cost_tokens = 14
+cum_tokens = 9823
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "database/multistmt/parse.go"
+start = 34
+end = 34
 
 [batches.content.spans.render]
 kind = "full"
