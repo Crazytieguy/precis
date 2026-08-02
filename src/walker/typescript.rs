@@ -366,6 +366,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
+        let mut names_gate: Option<BatchKey> = None;
         if !exports.is_empty() {
             // One pass over the exports: the catalog/chunk computations
             // are token-cost probes, too expensive to redo for the
@@ -444,7 +445,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     !disavowal_lines.contains(line) && !roster_star_lines.contains(line)
                 });
             }
-            let mut names_gate: Option<BatchKey> = None;
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
                 let key = BatchKey::Typescript(TsKey::ExportNames { file: file.clone() });
                 out.push(Batch {
@@ -460,18 +460,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ) * contract_roster_factor(true),
                 });
                 names_gate = Some(key);
-            }
-            if !reexport_tail_lines.full.is_empty()
-                && let Some(gate) = names_gate.clone()
-                && let Some(content) =
-                    single_file_lines_content(file, &source, reexport_tail_lines.clone())
-            {
-                out.push(Batch {
-                    key: TsKey::ReexportTail { file: file.clone() }.into(),
-                    predecessor: Some(gate),
-                    content,
-                    value: reexport_wall_value(file, ctx, js_factor),
-                });
             }
             let dependent_export_start_lines: HashSet<_> = exports
                 .iter()
@@ -732,6 +720,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     );
                 }
             }
+        }
+        // Outside the `exports` block on purpose: a file can publish its
+        // whole surface through a trailing block and declare nothing
+        // locally, and that surface has to render. The tail chains
+        // behind the roster when there is one so the two halves of the
+        // surface arrive in order, and otherwise roots at the module
+        // gate like every other file-surface batch here.
+        if !reexport_tail_lines.full.is_empty()
+            && let Some(content) =
+                single_file_lines_content(file, &source, reexport_tail_lines.clone())
+        {
+            out.push(Batch {
+                key: TsKey::ReexportTail { file: file.clone() }.into(),
+                predecessor: names_gate.clone().or_else(|| module_predecessor.clone()),
+                content,
+                value: reexport_wall_value(file, ctx, js_factor),
+            });
         }
         let mut reexported_local_names = local_value_reexports.clone();
         reexported_local_names.extend(commonjs_value_reexports.iter().cloned());
@@ -4984,6 +4989,52 @@ export function old() {}
         }
         let rendered = report.tree.render();
         assert!(rendered.contains("helperAlpha"), "rendered:\n{rendered}");
+    }
+
+    #[test]
+    fn walker_typescript_reexport_tail_is_the_surface_when_nothing_else_is_exported() {
+        // Implementation plus a trailing re-export block and no local
+        // exports at all: the block is the file's entire public surface,
+        // so it must render even though there is no roster to gate it.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let src = root.join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(root.join("package.json"), "{\"name\":\"repro\"}\n").unwrap();
+        std::fs::write(
+            src.join("index.ts"),
+            "\
+import {register} from './registry.js';
+
+const instance = register();
+instance.start();
+
+export {PublicAlpha} from './alpha.js';
+export {PublicBeta} from './beta.js';
+",
+        )
+        .unwrap();
+        std::fs::write(
+            src.join("alpha.ts"),
+            "export function PublicAlpha(): number {\n  return 1;\n}\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 50_000, None);
+        let report = scheduler.run_with_report();
+        let keys: std::collections::HashSet<_> =
+            report.candidates.iter().map(|b| b.key.clone()).collect();
+        for batch in &report.candidates {
+            if let Some(pred) = &batch.predecessor {
+                assert!(
+                    keys.contains(pred),
+                    "dangling predecessor {pred:?} on {:?}",
+                    batch.key
+                );
+            }
+        }
+        let rendered = report.tree.render();
+        assert!(rendered.contains("PublicBeta"), "rendered:\n{rendered}");
     }
 
     #[test]
