@@ -1771,11 +1771,14 @@ fn collect_module_exports_receivers_from_assignment(
     let Some((left, right)) = assignment_sides(assignment) else {
         return;
     };
-    // `module.exports = X` — X is the receiver.
+    // `module.exports = X` — X is the receiver. When the module exports
+    // an instance (`module.exports = new Cli()`) or a factory result,
+    // the constructor/factory carries the surface, so it is the receiver.
     if matches!(
         commonjs_export_target(left, source),
         Some(CommonJsExportTarget::Namespace)
-    ) && let Some(name) = identifier_text(right, source)
+    ) && let Some(name) =
+        identifier_text(right, source).or_else(|| expression_callee_name(right, source))
     {
         receivers.insert(name.to_string());
         return;
@@ -5442,6 +5445,35 @@ exports.createCommand = (name) => new Command(name);
         );
         let lines = collect_export_lines(&tree, src, 3);
         assert_eq!(lines.full, vec![3]);
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_instance_export_names_its_constructor() {
+        // `module.exports = new Cli()` exports the instance, so `Cli` is
+        // the receiver whose prototype methods are the public surface.
+        let src = "\
+function Cli () {
+}
+Cli.prototype.showVersion = function () {
+  return 1;
+};
+Cli.prototype.showUsage = function () {
+  return 2;
+};
+Cli.prototype.cliParse = function () {
+  return 3;
+};
+module.exports = new Cli()
+";
+        let tree = parse(src);
+        assert!(collect_module_exports_receivers(&tree, src).contains("Cli"));
+        let exports = export_infos_for_path(Path::new("cli.js"), &tree, src);
+        let method_lines: Vec<usize> = exports
+            .iter()
+            .filter(|e| matches!(e.kind, ItemKind::Function))
+            .map(|e| e.start_line)
+            .collect();
+        assert_eq!(method_lines, vec![3, 6, 9]);
     }
 
     #[test]
