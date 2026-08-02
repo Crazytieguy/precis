@@ -65,15 +65,12 @@ const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
 const BUILD_ENTRYPOINT_BYTE_GATE: usize = BUILD_ENTRYPOINT_LINE_CAP * 80;
 
 /// Promotion for a small root build file — see
-/// [`small_build_file_factor`]. Swept on the full corpus at 3000:
-/// +0.0013 at ×1.15 and ×1.3, +0.0021 at ×1.5, and +0.0028 from ×1.8
-/// upward, flat out to ×4.5. The plateau settings buy the build file
-/// INSIDE the first thousand tokens on Makefile-bearing fixtures,
-/// displacing orientation there (B=1000 mean −0.004 vs ×1.5; rich
-/// −0.44, go-multierror −0.18 at the extreme). ×1.5 gives back 0.0007
-/// at 3000 to hold B=1000/2080 — same trade direction the
-/// LISTING_TIER_SCALE re-sweep settled on.
-const SMALL_BUILD_FILE_PROMOTION: f64 = 1.5;
+/// [`small_build_file_factor`]. Swept on the full corpus: +0.0013 at
+/// ×1.15 and ×1.3, +0.0021 at ×1.5, and +0.0028 from ×1.8 upward, flat
+/// out to ×4.5 (the promoted files are cheap enough that once they win
+/// their rank race, more value cannot move them further). Set inside
+/// that plateau rather than at its edge.
+const SMALL_BUILD_FILE_PROMOTION: f64 = 2.0;
 
 /// Line count past which a build file stops being the compact "here is
 /// how you build and run this" surface and becomes a build *system*

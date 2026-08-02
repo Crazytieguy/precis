@@ -16,23 +16,23 @@ Score(3000)=0.684 I=0.796 C=0.587 ns_rows≤3K=17/49 (reached=9 partial=0 missin
 | walker |  | 227 | 20 | listing of 'docs/user' |  |  | 0.467 |
 | walker |  | 264 | 37 | listing of 'docs/community' |  |  | 0.478 |
 | ns | 324 |  | 105 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.378 |
-| walker |  | 353 | 89 | listing of 'src/requests' |  |  | 0.607 |
-| ns | 471 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.540 |
-| ns | 589 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.507 |
-| ns | 688 |  | 99 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.449 |
-| ns | 768 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.431 |
-| ns | 896 |  | 128 | `docs/` tree listing (complete) | 1.9 |  | 0.487 |
-| ns | 1198 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.441 |
-| walker |  | 1355 | 1002 | python imports in src/requests/__init__.py |  |  | 0.454 |
-| walker |  | 1389 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.454 |
-| walker |  | 1405 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.454 |
-| ns | 1469 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.494 |
-| ns | 1543 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.482 |
-| walker |  | 1580 | 175 | README headline in README.md |  |  | 0.600 |
-| walker |  | 1620 | 40 | headings outline in README.md |  |  | 0.624 |
-| walker |  | 1667 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.624 |
-| ns | 1896 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.584 |
-| walker |  | 2023 | 356 | plaintext config Makefile |  |  | 0.610 |
+| ns | 471 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.337 |
+| ns | 589 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.316 |
+| walker |  | 620 | 356 | plaintext config Makefile |  |  | 0.322 |
+| ns | 688 |  | 99 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.286 |
+| walker |  | 709 | 89 | listing of 'src/requests' |  |  | 0.456 |
+| ns | 768 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.477 |
+| ns | 896 |  | 128 | `docs/` tree listing (complete) | 1.9 |  | 0.522 |
+| ns | 1198 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.473 |
+| ns | 1469 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.431 |
+| ns | 1543 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.421 |
+| walker |  | 1711 | 1002 | python imports in src/requests/__init__.py |  |  | 0.509 |
+| walker |  | 1745 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.509 |
+| walker |  | 1761 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.509 |
+| ns | 1896 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.476 |
+| walker |  | 1936 | 175 | README headline in README.md |  |  | 0.588 |
+| walker |  | 1976 | 40 | headings outline in README.md |  |  | 0.610 |
+| walker |  | 2023 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.610 |
 | walker |  | 2067 | 44 | listing of '.github' |  |  | 0.624 |
 | ns | 2072 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.597 |
 | walker |  | 2107 | 40 | listing of '.github/workflows' |  |  | 0.629 |

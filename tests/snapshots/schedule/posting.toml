@@ -135,10 +135,28 @@ entries = ["coverage.yml", "docs.yml", "test.yml"]
 
 [[batches]]
 position = 10
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 219
+cum_tokens = 372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 2
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 91
-cum_tokens = 244
+cum_tokens = 463
 
 [batches.content]
 kind = "lines"
@@ -152,11 +170,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 42
-cum_tokens = 286
+cum_tokens = 505
 
 [batches.content]
 kind = "lines"
@@ -226,11 +244,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "docs/guide" })'
 descriptor = "listing of 'docs/guide'"
 cost_tokens = 55
-cum_tokens = 341
+cum_tokens = 560
 
 [batches.content]
 kind = "fs"
@@ -238,24 +256,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/guide"
 entries = ["collections.md", "command_palette.md", "configuration.md", "environments.md", "external_tools.md", "help_system.md", "importing.md", "index.md", "keymap.md", "navigation.md", "requests.md", "scripting.md", "themes.md"]
-
-[[batches]]
-position = 13
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 219
-cum_tokens = 560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 2
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 14

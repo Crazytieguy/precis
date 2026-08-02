@@ -22,55 +22,55 @@ Score(3000)=0.622 I=0.830 C=0.466 ns_rows≤3K=20/55 (reached=10 partial=1 missi
 | ns | 596 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.747 |
 | walker |  | 642 | 150 | c whole header in include/varnum.h |  |  | 0.752 |
 | ns | 666 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.712 |
-| walker |  | 886 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
-| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.654 |
-| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.605 |
-| walker |  | 1222 | 336 | c whole header in include/worldgen.h |  |  | 0.609 |
-| walker |  | 1249 | 27 | c decl names surface in src/main.c |  |  | 0.609 |
-| walker |  | 1249 | 0 | c decl at src/main.c:68 |  |  | 0.609 |
-| walker |  | 1264 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.610 |
-| ns | 1266 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.566 |
-| ns | 1561 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.530 |
-| walker |  | 1635 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.582 |
-| walker |  | 1635 | 0 | c decl at include/globals.h:103 |  |  | 0.582 |
-| walker |  | 1635 | 0 | c decl at include/globals.h:106 |  |  | 0.582 |
-| walker |  | 1643 | 8 | c decl at include/globals.h:200 |  |  | 0.582 |
-| walker |  | 1664 | 21 | c decl at include/globals.h:255 |  |  | 0.582 |
-| walker |  | 1708 | 44 | c decl at include/globals.h:191 |  |  | 0.584 |
-| walker |  | 1765 | 57 | c decl at include/globals.h:260 |  |  | 0.585 |
-| walker |  | 1778 | 13 | c decl doc at include/globals.h:106 |  |  | 0.585 |
-| ns | 1850 |  | 289 | packets.h — clientbound declarations, entities, health and registries | 2.6 |  | 0.549 |
-| ns | 1950 |  | 100 | varnum.h in full — VarInt encoding primitives and error sentinel | 2.7 |  | 0.572 |
-| ns | 2020 |  | 70 | globals.h — BlockChange record and the packed-struct pragma | 3.1 |  | 0.577 |
-| walker |  | 2156 | 378 | c decl names surface in include/globals.h |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:19 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:23 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:26 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:29 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:32 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:35 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:38 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:41 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:45 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:49 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:53 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:56 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:59 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:63 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:66 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:71 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:75 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:93 |  |  | 0.582 |
-| walker |  | 2167 | 11 | c decl doc at include/globals.h:26 |  |  | 0.582 |
-| walker |  | 2178 | 11 | c decl doc at include/globals.h:29 |  |  | 0.582 |
-| walker |  | 2192 | 14 | c decl doc at include/globals.h:19 |  |  | 0.582 |
-| walker |  | 2230 | 38 | c decl doc at include/globals.h:23 |  |  | 0.582 |
-| walker |  | 2238 | 8 | c decl doc at include/globals.h:59 |  |  | 0.582 |
-| walker |  | 2260 | 22 | c includes in include/globals.h |  |  | 0.582 |
-| ns | 2270 |  | 250 | globals.h — PlayerData fields (identity through inventory) | 3.2 |  | 0.533 |
-| ns | 2527 |  | 257 | globals.h — PlayerData flag bits and the overloaded flagval fields | 3.3 | 3.2 | 0.505 |
-| ns | 2757 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.483 |
-| walker |  | 2789 | 529 | plaintext config build.sh |  |  | 0.528 |
+| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.651 |
+| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.603 |
+| walker |  | 1171 | 529 | plaintext config build.sh |  |  | 0.682 |
+| ns | 1266 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.634 |
+| walker |  | 1415 | 244 | c whole header in include/serialize.h |  |  | 0.636 |
+| ns | 1561 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.596 |
+| walker |  | 1751 | 336 | c whole header in include/worldgen.h |  |  | 0.599 |
+| walker |  | 1778 | 27 | c decl names surface in src/main.c |  |  | 0.599 |
+| walker |  | 1778 | 0 | c decl at src/main.c:68 |  |  | 0.599 |
+| walker |  | 1793 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.600 |
+| ns | 1850 |  | 289 | packets.h — clientbound declarations, entities, health and registries | 2.6 |  | 0.563 |
+| ns | 1950 |  | 100 | varnum.h in full — VarInt encoding primitives and error sentinel | 2.7 |  | 0.584 |
+| ns | 2020 |  | 70 | globals.h — BlockChange record and the packed-struct pragma | 3.1 |  | 0.564 |
+| walker |  | 2164 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.608 |
+| walker |  | 2164 | 0 | c decl at include/globals.h:103 |  |  | 0.608 |
+| walker |  | 2164 | 0 | c decl at include/globals.h:106 |  |  | 0.608 |
+| walker |  | 2172 | 8 | c decl at include/globals.h:200 |  |  | 0.608 |
+| walker |  | 2193 | 21 | c decl at include/globals.h:255 |  |  | 0.608 |
+| walker |  | 2237 | 44 | c decl at include/globals.h:191 |  |  | 0.632 |
+| ns | 2270 |  | 250 | globals.h — PlayerData fields (identity through inventory) | 3.2 |  | 0.579 |
+| walker |  | 2294 | 57 | c decl at include/globals.h:260 |  |  | 0.580 |
+| walker |  | 2307 | 13 | c decl doc at include/globals.h:106 |  |  | 0.580 |
+| ns | 2527 |  | 257 | globals.h — PlayerData flag bits and the overloaded flagval fields | 3.3 | 3.2 | 0.549 |
+| walker |  | 2685 | 378 | c decl names surface in include/globals.h |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:19 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:23 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:26 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:29 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:32 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:35 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:38 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:41 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:45 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:49 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:53 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:56 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:59 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:63 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:66 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:71 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:75 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:93 |  |  | 0.554 |
+| walker |  | 2696 | 11 | c decl doc at include/globals.h:26 |  |  | 0.554 |
+| walker |  | 2707 | 11 | c decl doc at include/globals.h:29 |  |  | 0.554 |
+| walker |  | 2721 | 14 | c decl doc at include/globals.h:19 |  |  | 0.554 |
+| ns | 2757 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.528 |
+| walker |  | 2759 | 38 | c decl doc at include/globals.h:23 |  |  | 0.528 |
+| walker |  | 2767 | 8 | c decl doc at include/globals.h:59 |  |  | 0.528 |
+| walker |  | 2789 | 22 | c includes in include/globals.h |  |  | 0.528 |
 | walker |  | 2799 | 10 | c decl doc at include/globals.h:66 |  |  | 0.528 |
 | walker |  | 2940 | 141 | c decl at include/globals.h:240 |  |  | 0.594 |
 | ns | 2995 |  | 238 | globals.h — all extern global state declarations | 3.5 |  | 0.622 |

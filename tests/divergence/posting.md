@@ -13,13 +13,13 @@ Score(3000)=0.667 I=0.882 C=0.504 ns_rows≤3K=19/49 (reached=8 partial=1 missin
 | walker |  | 142 | 8 | listing of '.github' |  |  | 0.000 |
 | ns | 144 |  | 53 | Repository root listing | 1.2 |  | 0.540 |
 | walker |  | 153 | 11 | listing of '.github/workflows' |  |  | 0.540 |
-| walker |  | 244 | 91 | README headline in README.md |  |  | 1.000 |
-| ns | 248 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.771 |
-| walker |  | 286 | 42 | headings outline in README.md |  |  | 0.771 |
-| walker |  | 341 | 55 | listing of 'docs/guide' |  |  | 0.783 |
-| ns | 348 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.693 |
-| ns | 506 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.473 |
-| walker |  | 560 | 219 | plaintext config Makefile |  |  | 0.474 |
+| ns | 248 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.414 |
+| ns | 348 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.367 |
+| walker |  | 372 | 219 | plaintext config Makefile |  |  | 0.368 |
+| walker |  | 463 | 91 | README headline in README.md |  |  | 0.683 |
+| walker |  | 505 | 42 | headings outline in README.md |  |  | 0.683 |
+| ns | 506 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.467 |
+| walker |  | 560 | 55 | listing of 'docs/guide' |  |  | 0.474 |
 | ns | 608 |  | 102 | Widget package and importer package listings | 1.6 |  | 0.407 |
 | walker |  | 717 | 157 | listing of 'src/posting' |  |  | 0.711 |
 | walker |  | 730 | 13 | listing of 'src/posting/importing' |  |  | 0.714 |

@@ -1,4 +1,4 @@
-Score(3000)=0.632 I=0.804 C=0.497 ns_rows≤3K=19/50 (reached=10 partial=0 missing=9)
+Score(3000)=0.681 I=0.798 C=0.582 ns_rows≤3K=19/50 (reached=10 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,100 +23,100 @@ Score(3000)=0.632 I=0.804 C=0.497 ns_rows≤3K=19/50 (reached=10 partial=0 missi
 | walker |  | 1047 | 96 | README headline in README.md |  |  | 0.573 |
 | walker |  | 1069 | 22 | listing of 'site/content/completions' |  |  | 0.578 |
 | ns | 1222 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.501 |
-| walker |  | 1266 | 197 | go decl names surface in command.go |  |  | 0.504 |
-| walker |  | 1266 | 0 | go decl at command.go:42 |  |  | 0.504 |
-| walker |  | 1266 | 0 | go decl at command.go:269 |  |  | 0.504 |
-| walker |  | 1266 | 0 | go decl at command.go:275 |  |  | 0.504 |
-| walker |  | 1266 | 0 | go decl at command.go:281 |  |  | 0.504 |
-| walker |  | 1266 | 0 | go decl at command.go:289 |  |  | 0.504 |
-| walker |  | 1273 | 7 | go decl at command.go:54 |  |  | 0.504 |
-| walker |  | 1284 | 11 | go decl at command.go:33 |  |  | 0.504 |
-| walker |  | 1305 | 21 | go decl at command.go:45 |  |  | 0.505 |
-| ns | 1306 |  | 84 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.546 |
-| walker |  | 1314 | 9 | go struct field group at command.go:54 group 80 |  |  | 0.546 |
-| walker |  | 1323 | 9 | go struct field group at command.go:54 group 115 |  |  | 0.546 |
-| walker |  | 1333 | 10 | go struct field group at command.go:54 group 64 |  |  | 0.547 |
-| walker |  | 1343 | 10 | go struct field group at command.go:54 group 74 |  |  | 0.547 |
-| walker |  | 1353 | 10 | go struct field group at command.go:54 group 77 |  |  | 0.547 |
-| walker |  | 1363 | 10 | go struct field group at command.go:54 group 83 |  |  | 0.548 |
-| walker |  | 1373 | 10 | go struct field group at command.go:54 group 105 |  |  | 0.548 |
-| ns | 1378 |  | 72 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.573 |
-| walker |  | 1383 | 10 | go struct field group at command.go:54 group 195 |  |  | 0.573 |
-| walker |  | 1393 | 10 | go struct field group at command.go:54 group 218 |  |  | 0.573 |
-| walker |  | 1403 | 10 | go struct field group at command.go:54 group 233 |  |  | 0.573 |
-| walker |  | 1413 | 10 | go struct field group at command.go:54 group 259 |  |  | 0.574 |
-| walker |  | 1424 | 11 | go struct field group at command.go:54 group 67 |  |  | 0.574 |
-| walker |  | 1435 | 11 | go struct field group at command.go:54 group 149 |  |  | 0.574 |
-| walker |  | 1446 | 11 | go struct field group at command.go:54 group 230 |  |  | 0.575 |
-| walker |  | 1457 | 11 | go struct field group at command.go:54 group 255 |  |  | 0.575 |
-| walker |  | 1469 | 12 | go struct field group at command.go:54 group 71 |  |  | 0.576 |
-| walker |  | 1481 | 12 | go struct field group at command.go:54 group 93 |  |  | 0.576 |
-| walker |  | 1493 | 12 | go struct field group at command.go:54 group 98 |  |  | 0.576 |
-| walker |  | 1505 | 12 | go struct field group at command.go:54 group 102 |  |  | 0.577 |
-| walker |  | 1517 | 12 | go struct field group at command.go:54 group 109 |  |  | 0.577 |
-| walker |  | 1529 | 12 | go struct field group at command.go:54 group 192 |  |  | 0.577 |
-| walker |  | 1541 | 12 | go struct field group at command.go:54 group 208 |  |  | 0.578 |
-| walker |  | 1553 | 12 | go struct field group at command.go:54 group 236 |  |  | 0.578 |
-| walker |  | 1565 | 12 | go struct field group at command.go:54 group 239 |  |  | 0.579 |
-| walker |  | 1577 | 12 | go struct field group at command.go:54 group 243 |  |  | 0.579 |
-| walker |  | 1590 | 13 | go struct field group at command.go:54 group 189 |  |  | 0.579 |
-| walker |  | 1603 | 13 | go struct field group at command.go:54 group 247 |  |  | 0.580 |
-| ns | 1616 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.562 |
-| walker |  | 1617 | 14 | go struct field group at command.go:54 group 251 |  |  | 0.563 |
-| walker |  | 1632 | 15 | go struct field group at command.go:54 group 205 |  |  | 0.563 |
-| walker |  | 1643 | 11 | go decl doc at command.go:45 |  |  | 0.570 |
-| walker |  | 1659 | 16 | go decl doc at command.go:42 |  |  | 0.578 |
-| walker |  | 1684 | 25 | go struct field group at command.go:54 group 86 |  |  | 0.579 |
-| ns | 1688 |  | 72 | Command fields: naming and help text (Use .. Example) | 2.2 | 2.1 | 0.588 |
-| walker |  | 1717 | 33 | go struct field group at command.go:54 group 198 |  |  | 0.588 |
-| walker |  | 1762 | 45 | go struct field group at command.go:54 group 211 |  |  | 0.588 |
-| ns | 1780 |  | 92 | Command fields: argument validation, completion, metadata | 2.3 | 2.1 | 0.596 |
-| walker |  | 1796 | 34 | go decl doc at command.go:275 |  |  | 0.596 |
-| walker |  | 1833 | 37 | go decl doc at command.go:289 |  |  | 0.596 |
-| walker |  | 1896 | 63 | headings outline in README.md |  |  | 0.596 |
-| walker |  | 1908 | 12 | README.md section #0 |  |  | 0.596 |
-| walker |  | 2007 | 99 | go module file go.mod |  |  | 0.698 |
-| walker |  | 2049 | 42 | go decl doc at command.go:281 |  |  | 0.698 |
-| walker |  | 2108 | 59 | go struct field group at command.go:54 group 221 |  |  | 0.698 |
-| ns | 2129 |  | 349 | Command fields: the ten *Run hooks with the documented ordering comment | 2.4 | 2.1 | 0.656 |
-| walker |  | 2175 | 67 | go decl doc at command.go:54 |  |  | 0.687 |
-| ns | 2268 |  | 139 | Command fields: behaviour toggles, with ellipses over the unexported state | 2.5 | 2.1 | 0.692 |
-| walker |  | 2347 | 172 | go decl names surface #1 in command.go |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:296 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:302 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:308 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:313 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:318 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:328 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:333 |  |  | 0.694 |
-| walker |  | 2347 | 0 | go decl at command.go:338 |  |  | 0.694 |
-| walker |  | 2357 | 10 | go decl body at command.go:333 |  |  | 0.694 |
-| walker |  | 2367 | 10 | go decl body at command.go:338 |  |  | 0.694 |
-| ns | 2376 |  | 108 | Command method roster: execution and lifecycle | 3.1 |  | 0.678 |
-| walker |  | 2379 | 12 | go decl doc at command.go:338 |  |  | 0.678 |
-| walker |  | 2390 | 11 | go decl body at command.go:296 |  |  | 0.678 |
-| walker |  | 2408 | 18 | go decl doc at command.go:318 |  |  | 0.678 |
-| walker |  | 2426 | 18 | go decl doc at command.go:333 |  |  | 0.678 |
-| walker |  | 2445 | 19 | go decl doc at command.go:313 |  |  | 0.678 |
-| walker |  | 2472 | 27 | go decl doc at command.go:328 |  |  | 0.678 |
-| walker |  | 2503 | 31 | go decl doc at command.go:296 |  |  | 0.678 |
-| ns | 2518 |  | 142 | Command method roster: building and traversing the command tree | 3.2 |  | 0.656 |
-| walker |  | 2534 | 31 | go decl doc at command.go:302 |  |  | 0.656 |
-| walker |  | 2565 | 31 | go decl doc at command.go:308 |  |  | 0.656 |
-| walker |  | 2671 | 106 | go package + imports in command.go |  |  | 0.678 |
-| ns | 2744 |  | 226 | Command method roster: the complete flag API | 3.3 |  | 0.649 |
-| walker |  | 2746 | 75 | go decl names surface in fish_completions.go |  |  | 0.649 |
-| walker |  | 2746 | 0 | go decl at fish_completions.go:25 |  |  | 0.649 |
-| walker |  | 2746 | 0 | go decl at fish_completions.go:276 |  |  | 0.649 |
-| walker |  | 2746 | 0 | go decl at fish_completions.go:284 |  |  | 0.649 |
-| walker |  | 2760 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.649 |
-| walker |  | 2779 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.649 |
-| walker |  | 2873 | 94 | headings outline in CONDUCT.md |  |  | 0.649 |
-| ns | 2959 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.632 |
-| walker |  | 3084 | 211 | README prelude in README.md |  |  | 0.636 |
-| ns | 3146 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.616 |
-| ns | 3336 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.597 |
-| walker |  | 3469 | 385 | plaintext config Makefile |  |  | 0.664 |
+| ns | 1306 |  | 84 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.543 |
+| ns | 1378 |  | 72 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.568 |
+| walker |  | 1454 | 385 | plaintext config Makefile |  |  | 0.675 |
+| ns | 1616 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.627 |
+| walker |  | 1651 | 197 | go decl names surface in command.go |  |  | 0.643 |
+| walker |  | 1651 | 0 | go decl at command.go:42 |  |  | 0.643 |
+| walker |  | 1651 | 0 | go decl at command.go:269 |  |  | 0.643 |
+| walker |  | 1651 | 0 | go decl at command.go:275 |  |  | 0.643 |
+| walker |  | 1651 | 0 | go decl at command.go:281 |  |  | 0.643 |
+| walker |  | 1651 | 0 | go decl at command.go:289 |  |  | 0.643 |
+| walker |  | 1658 | 7 | go decl at command.go:54 |  |  | 0.643 |
+| walker |  | 1669 | 11 | go decl at command.go:33 |  |  | 0.645 |
+| ns | 1688 |  | 72 | Command fields: naming and help text (Use .. Example) | 2.2 | 2.1 | 0.630 |
+| walker |  | 1690 | 21 | go decl at command.go:45 |  |  | 0.637 |
+| walker |  | 1699 | 9 | go struct field group at command.go:54 group 80 |  |  | 0.637 |
+| walker |  | 1708 | 9 | go struct field group at command.go:54 group 115 |  |  | 0.637 |
+| walker |  | 1718 | 10 | go struct field group at command.go:54 group 64 |  |  | 0.638 |
+| walker |  | 1728 | 10 | go struct field group at command.go:54 group 74 |  |  | 0.640 |
+| walker |  | 1738 | 10 | go struct field group at command.go:54 group 77 |  |  | 0.643 |
+| walker |  | 1748 | 10 | go struct field group at command.go:54 group 83 |  |  | 0.647 |
+| walker |  | 1758 | 10 | go struct field group at command.go:54 group 105 |  |  | 0.648 |
+| walker |  | 1768 | 10 | go struct field group at command.go:54 group 195 |  |  | 0.648 |
+| walker |  | 1778 | 10 | go struct field group at command.go:54 group 218 |  |  | 0.648 |
+| ns | 1780 |  | 92 | Command fields: argument validation, completion, metadata | 2.3 | 2.1 | 0.632 |
+| walker |  | 1788 | 10 | go struct field group at command.go:54 group 233 |  |  | 0.632 |
+| walker |  | 1798 | 10 | go struct field group at command.go:54 group 259 |  |  | 0.632 |
+| walker |  | 1809 | 11 | go struct field group at command.go:54 group 67 |  |  | 0.637 |
+| walker |  | 1820 | 11 | go struct field group at command.go:54 group 149 |  |  | 0.637 |
+| walker |  | 1831 | 11 | go struct field group at command.go:54 group 230 |  |  | 0.638 |
+| walker |  | 1842 | 11 | go struct field group at command.go:54 group 255 |  |  | 0.638 |
+| walker |  | 1854 | 12 | go struct field group at command.go:54 group 71 |  |  | 0.645 |
+| walker |  | 1866 | 12 | go struct field group at command.go:54 group 93 |  |  | 0.647 |
+| walker |  | 1878 | 12 | go struct field group at command.go:54 group 98 |  |  | 0.649 |
+| walker |  | 1890 | 12 | go struct field group at command.go:54 group 102 |  |  | 0.653 |
+| walker |  | 1902 | 12 | go struct field group at command.go:54 group 109 |  |  | 0.657 |
+| walker |  | 1914 | 12 | go struct field group at command.go:54 group 192 |  |  | 0.657 |
+| walker |  | 1926 | 12 | go struct field group at command.go:54 group 208 |  |  | 0.658 |
+| walker |  | 1938 | 12 | go struct field group at command.go:54 group 236 |  |  | 0.658 |
+| walker |  | 1950 | 12 | go struct field group at command.go:54 group 239 |  |  | 0.659 |
+| walker |  | 1962 | 12 | go struct field group at command.go:54 group 243 |  |  | 0.659 |
+| walker |  | 1975 | 13 | go struct field group at command.go:54 group 189 |  |  | 0.659 |
+| walker |  | 1988 | 13 | go struct field group at command.go:54 group 247 |  |  | 0.660 |
+| walker |  | 2002 | 14 | go struct field group at command.go:54 group 251 |  |  | 0.661 |
+| walker |  | 2017 | 15 | go struct field group at command.go:54 group 205 |  |  | 0.662 |
+| walker |  | 2028 | 11 | go decl doc at command.go:45 |  |  | 0.667 |
+| walker |  | 2044 | 16 | go decl doc at command.go:42 |  |  | 0.674 |
+| walker |  | 2069 | 25 | go struct field group at command.go:54 group 86 |  |  | 0.686 |
+| walker |  | 2102 | 33 | go struct field group at command.go:54 group 198 |  |  | 0.686 |
+| ns | 2129 |  | 349 | Command fields: the ten *Run hooks with the documented ordering comment | 2.4 | 2.1 | 0.644 |
+| walker |  | 2147 | 45 | go struct field group at command.go:54 group 211 |  |  | 0.644 |
+| walker |  | 2181 | 34 | go decl doc at command.go:275 |  |  | 0.644 |
+| walker |  | 2218 | 37 | go decl doc at command.go:289 |  |  | 0.644 |
+| ns | 2268 |  | 139 | Command fields: behaviour toggles, with ellipses over the unexported state | 2.5 | 2.1 | 0.648 |
+| walker |  | 2281 | 63 | headings outline in README.md |  |  | 0.648 |
+| walker |  | 2293 | 12 | README.md section #0 |  |  | 0.648 |
+| ns | 2376 |  | 108 | Command method roster: execution and lifecycle | 3.1 |  | 0.633 |
+| walker |  | 2392 | 99 | go module file go.mod |  |  | 0.728 |
+| walker |  | 2434 | 42 | go decl doc at command.go:281 |  |  | 0.728 |
+| walker |  | 2493 | 59 | go struct field group at command.go:54 group 221 |  |  | 0.728 |
+| ns | 2518 |  | 142 | Command method roster: building and traversing the command tree | 3.2 |  | 0.706 |
+| walker |  | 2560 | 67 | go decl doc at command.go:54 |  |  | 0.731 |
+| walker |  | 2732 | 172 | go decl names surface #1 in command.go |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:296 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:302 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:308 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:313 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:318 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:328 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:333 |  |  | 0.733 |
+| walker |  | 2732 | 0 | go decl at command.go:338 |  |  | 0.733 |
+| walker |  | 2742 | 10 | go decl body at command.go:333 |  |  | 0.733 |
+| ns | 2744 |  | 226 | Command method roster: the complete flag API | 3.3 |  | 0.701 |
+| walker |  | 2752 | 10 | go decl body at command.go:338 |  |  | 0.701 |
+| walker |  | 2764 | 12 | go decl doc at command.go:338 |  |  | 0.701 |
+| walker |  | 2775 | 11 | go decl body at command.go:296 |  |  | 0.701 |
+| walker |  | 2793 | 18 | go decl doc at command.go:318 |  |  | 0.701 |
+| walker |  | 2811 | 18 | go decl doc at command.go:333 |  |  | 0.701 |
+| walker |  | 2830 | 19 | go decl doc at command.go:313 |  |  | 0.701 |
+| walker |  | 2857 | 27 | go decl doc at command.go:328 |  |  | 0.701 |
+| walker |  | 2888 | 31 | go decl doc at command.go:296 |  |  | 0.701 |
+| walker |  | 2919 | 31 | go decl doc at command.go:302 |  |  | 0.701 |
+| walker |  | 2950 | 31 | go decl doc at command.go:308 |  |  | 0.701 |
+| ns | 2959 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.681 |
+| walker |  | 3056 | 106 | go package + imports in command.go |  |  | 0.702 |
+| walker |  | 3131 | 75 | go decl names surface in fish_completions.go |  |  | 0.702 |
+| walker |  | 3131 | 0 | go decl at fish_completions.go:25 |  |  | 0.702 |
+| walker |  | 3131 | 0 | go decl at fish_completions.go:276 |  |  | 0.702 |
+| walker |  | 3131 | 0 | go decl at fish_completions.go:284 |  |  | 0.702 |
+| walker |  | 3145 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.702 |
+| ns | 3146 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.680 |
+| walker |  | 3164 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.680 |
+| walker |  | 3258 | 94 | headings outline in CONDUCT.md |  |  | 0.680 |
+| ns | 3336 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.660 |
+| walker |  | 3469 | 211 | README prelude in README.md |  |  | 0.664 |
 | ns | 3520 |  | 184 | user_guide.md: complete H2 section map | 4.1 |  | 0.645 |
 | walker |  | 3577 | 108 | go decl names surface in bash_completionsV2.go |  |  | 0.645 |
 | walker |  | 3577 | 0 | go decl at bash_completionsV2.go:24 |  |  | 0.645 |

@@ -157,24 +157,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 211
-cum_tokens = 435
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["alignof.c", "alloca.c", "arith.c", "asm.c", "atomic.c", "attribute.c", "bitfield.c", "builtin.c", "cast.c", "common", "commonsym.c", "compat.c", "complit.c", "const.c", "constexpr.c", "control.c", "decl.c", "driver.sh", "enum.c", "extern.c", "float.c", "function.c", "generic.c", "include1.h", "include2.h", "include3.h", "include4.h", "initializer.c", "line.c", "literal.c", "macro.c", "offsetof.c", "pointer.c", "pragma-once.c", "sizeof.c", "stdhdr.c", "string.c", "struct.c", "test.h", "thirdparty", "tls.c", "typedef.c", "typeof.c", "unicode.c", "union.c", "usualconv.c", "varargs.c", "variable.c", "vla.c"]
-
-[[batches]]
-position = 6
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 682
-cum_tokens = 1117
+cum_tokens = 906
 
 [batches.content]
 kind = "lines"
@@ -186,6 +172,20 @@ end = 50
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 211
+cum_tokens = 1117
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["alignof.c", "alloca.c", "arith.c", "asm.c", "atomic.c", "attribute.c", "bitfield.c", "builtin.c", "cast.c", "common", "commonsym.c", "compat.c", "complit.c", "const.c", "constexpr.c", "control.c", "decl.c", "driver.sh", "enum.c", "extern.c", "float.c", "function.c", "generic.c", "include1.h", "include2.h", "include3.h", "include4.h", "initializer.c", "line.c", "literal.c", "macro.c", "offsetof.c", "pointer.c", "pragma-once.c", "sizeof.c", "stdhdr.c", "string.c", "struct.c", "test.h", "thirdparty", "tls.c", "typedef.c", "typeof.c", "unicode.c", "union.c", "usualconv.c", "varargs.c", "variable.c", "vla.c"]
 
 [[batches]]
 position = 7

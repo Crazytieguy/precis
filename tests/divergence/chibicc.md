@@ -11,14 +11,14 @@ Score(3000)=0.694 I=0.839 C=0.573 ns_rows≤3K=23/51 (reached=12 partial=0 missi
 | ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.523 |
 | ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.440 |
 | ns | 417 |  | 59 | All README H2 headings | 1.5 |  | 0.470 |
-| walker |  | 435 | 211 | listing of 'test' |  |  | 0.513 |
-| ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.456 |
-| ns | 604 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.427 |
-| ns | 767 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.375 |
-| ns | 907 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.349 |
-| ns | 1005 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.335 |
-| ns | 1040 |  | 35 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.366 |
-| walker |  | 1117 | 682 | plaintext config Makefile |  |  | 0.563 |
+| ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.418 |
+| ns | 604 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.392 |
+| ns | 767 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.344 |
+| walker |  | 906 | 682 | plaintext config Makefile |  |  | 0.484 |
+| ns | 907 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.504 |
+| ns | 1005 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.514 |
+| ns | 1040 |  | 35 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.523 |
+| walker |  | 1117 | 211 | listing of 'test' |  |  | 0.563 |
 | ns | 1274 |  | 234 | README Status: supported and unsupported C11 features | 1.12 | 1.5 | 0.499 |
 | ns | 1485 |  | 211 | Complete test/ listing | 1.13 |  | 0.549 |
 | walker |  | 1537 | 420 | c decl names surface in chibicc.h |  |  | 0.555 |

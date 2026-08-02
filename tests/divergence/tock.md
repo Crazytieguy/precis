@@ -30,22 +30,22 @@ Score(3000)=0.622 I=0.835 C=0.463 ns_rows≤3K=25/59 (reached=12 partial=0 missi
 | walker |  | 254 | 8 | listing of 'internal/adapters/repositories/notes' |  |  | 0.739 |
 | walker |  | 262 | 8 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.740 |
 | ns | 300 |  | 77 | README feature bullets, part 2 (Bartib/TimeWarrior compat, themes, iCal) | 1.5 |  | 0.691 |
-| walker |  | 353 | 91 | README headline in README.md |  |  | 0.696 |
-| walker |  | 367 | 14 | listing of '.github' |  |  | 0.697 |
-| ns | 368 |  | 68 | Binary entry point | 1.6 |  | 0.589 |
-| walker |  | 374 | 7 | listing of '.github/workflows' |  |  | 0.589 |
-| ns | 433 |  | 65 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.637 |
-| ns | 506 |  | 73 | Domain, service and support package file listings (complete) | 1.8 |  | 0.621 |
-| ns | 633 |  | 127 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.511 |
-| walker |  | 718 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.511 |
-| walker |  | 735 | 17 | listing of 'internal/adapters/repositories/file' |  |  | 0.526 |
-| ns | 738 |  | 105 | README section headings (all H2) | 1.10 |  | 0.494 |
-| walker |  | 752 | 17 | listing of 'internal/core/ports/mocks' |  |  | 0.528 |
-| walker |  | 764 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.529 |
-| walker |  | 764 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.529 |
-| ns | 912 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.503 |
-| ns | 1036 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.482 |
-| walker |  | 1097 | 333 | plaintext config Makefile |  |  | 0.482 |
+| ns | 368 |  | 68 | Binary entry point | 1.6 |  | 0.584 |
+| ns | 433 |  | 65 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.632 |
+| ns | 506 |  | 73 | Domain, service and support package file listings (complete) | 1.8 |  | 0.615 |
+| walker |  | 595 | 333 | plaintext config Makefile |  |  | 0.615 |
+| ns | 633 |  | 127 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.507 |
+| walker |  | 686 | 91 | README headline in README.md |  |  | 0.510 |
+| walker |  | 700 | 14 | listing of '.github' |  |  | 0.511 |
+| walker |  | 707 | 7 | listing of '.github/workflows' |  |  | 0.511 |
+| ns | 738 |  | 105 | README section headings (all H2) | 1.10 |  | 0.481 |
+| ns | 912 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.457 |
+| ns | 1036 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.438 |
+| walker |  | 1051 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.438 |
+| walker |  | 1068 | 17 | listing of 'internal/adapters/repositories/file' |  |  | 0.451 |
+| walker |  | 1085 | 17 | listing of 'internal/core/ports/mocks' |  |  | 0.481 |
+| walker |  | 1097 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.482 |
+| walker |  | 1097 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.482 |
 | walker |  | 1105 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.485 |
 | walker |  | 1183 | 78 | listing of 'internal/adapters/cli' |  |  | 0.614 |
 | ns | 1189 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.585 |

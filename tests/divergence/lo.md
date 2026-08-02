@@ -30,40 +30,40 @@ Score(3000)=0.589 I=0.646 C=0.538 ns_rows≤3K=16/55 (reached=8 partial=0 missin
 | ns | 838 |  | 194 | internal/ and exp/ listings | 1.7 |  | 0.773 |
 | walker |  | 851 | 35 | go module identity in exp/simd/go.mod |  |  | 0.773 |
 | walker |  | 948 | 97 | headings outline in README.md |  |  | 0.777 |
-| walker |  | 988 | 40 | go decl names surface in it/string.go |  |  | 0.777 |
-| walker |  | 988 | 0 | go decl at it/string.go:13 |  |  | 0.777 |
-| walker |  | 1060 | 72 | README headline in exp/simd/README.md |  |  | 0.777 |
-| walker |  | 1086 | 26 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.777 |
-| walker |  | 1100 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.668 |
-| ns | 1100 |  | 262 | Non-Go trees: docs/, benchmark/, .github/ listings | 1.8 |  | 0.668 |
-| walker |  | 1126 | 26 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.668 |
-| walker |  | 1126 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.668 |
-| walker |  | 1153 | 27 | README.md section #436 |  |  | 0.668 |
-| walker |  | 1217 | 64 | listing of 'docs' |  |  | 0.704 |
-| walker |  | 1221 | 4 | listing of 'docs/plugins' |  |  | 0.704 |
-| walker |  | 1228 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.704 |
-| walker |  | 1235 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.704 |
-| ns | 1278 |  | 178 | Scope caveat, versioning contract, zero dependencies, Go floor | 1.9 |  | 0.676 |
-| walker |  | 1323 | 88 | README headline in internal/xtime/README.md |  |  | 0.676 |
-| walker |  | 1362 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.676 |
-| walker |  | 1362 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.676 |
-| ns | 1390 |  | 112 | Makefile: every target name | 1.10 |  | 0.651 |
-| ns | 1483 |  | 93 | README section skeleton: all H2 headings | 1.11 |  | 0.656 |
-| ns | 1623 |  | 140 | Anatomy of a helper: Filter and FilterErr in full | 2.1 |  | 0.647 |
-| walker |  | 1648 | 286 | go module file go.mod |  |  | 0.650 |
-| walker |  | 1712 | 64 | go module file exp/simd/go.mod |  |  | 0.651 |
-| walker |  | 1750 | 38 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.651 |
-| walker |  | 1750 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.651 |
-| walker |  | 1750 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.651 |
-| walker |  | 1758 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.651 |
-| walker |  | 1773 | 15 | README.md section #139 |  |  | 0.651 |
-| walker |  | 1788 | 15 | README.md section #144 |  |  | 0.651 |
-| walker |  | 1838 | 50 | headings outline in exp/simd/README.md |  |  | 0.651 |
-| walker |  | 1848 | 10 | go package + imports in exp/simd/simd.go |  |  | 0.651 |
+| ns | 1100 |  | 262 | Non-Go trees: docs/, benchmark/, .github/ listings | 1.8 |  | 0.667 |
+| ns | 1278 |  | 178 | Scope caveat, versioning contract, zero dependencies, Go floor | 1.9 |  | 0.641 |
+| ns | 1390 |  | 112 | Makefile: every target name | 1.10 |  | 0.617 |
+| ns | 1483 |  | 93 | README section skeleton: all H2 headings | 1.11 |  | 0.623 |
+| ns | 1623 |  | 140 | Anatomy of a helper: Filter and FilterErr in full | 2.1 |  | 0.614 |
+| walker |  | 1885 | 937 | plaintext config Makefile |  |  | 0.650 |
+| walker |  | 1925 | 40 | go decl names surface in it/string.go |  |  | 0.650 |
+| walker |  | 1925 | 0 | go decl at it/string.go:13 |  |  | 0.650 |
+| walker |  | 1997 | 72 | README headline in exp/simd/README.md |  |  | 0.651 |
+| walker |  | 2023 | 26 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.651 |
+| walker |  | 2037 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.651 |
+| walker |  | 2063 | 26 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.586 |
+| walker |  | 2063 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.586 |
 | ns | 2063 |  | 440 | slice.go roster 1/2: transform, group, build (L12-L709) | 2.2 | 2.1 | 0.586 |
-| ns | 2430 |  | 367 | slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297) | 2.3 |  | 0.545 |
-| ns | 2591 |  | 161 | find.go roster 1/2: index, find, uniques (L13-L270) | 2.4 |  | 0.530 |
-| walker |  | 2785 | 937 | plaintext config Makefile |  |  | 0.558 |
+| walker |  | 2090 | 27 | README.md section #436 |  |  | 0.586 |
+| walker |  | 2154 | 64 | listing of 'docs' |  |  | 0.614 |
+| walker |  | 2158 | 4 | listing of 'docs/plugins' |  |  | 0.614 |
+| walker |  | 2165 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.614 |
+| walker |  | 2172 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.614 |
+| walker |  | 2260 | 88 | README headline in internal/xtime/README.md |  |  | 0.614 |
+| walker |  | 2299 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.614 |
+| walker |  | 2299 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.614 |
+| ns | 2430 |  | 367 | slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297) | 2.3 |  | 0.571 |
+| walker |  | 2585 | 286 | go module file go.mod |  |  | 0.574 |
+| ns | 2591 |  | 161 | find.go roster 1/2: index, find, uniques (L13-L270) | 2.4 |  | 0.558 |
+| walker |  | 2649 | 64 | go module file exp/simd/go.mod |  |  | 0.558 |
+| walker |  | 2687 | 38 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.558 |
+| walker |  | 2687 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.558 |
+| walker |  | 2687 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.558 |
+| walker |  | 2695 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.558 |
+| walker |  | 2710 | 15 | README.md section #139 |  |  | 0.558 |
+| walker |  | 2725 | 15 | README.md section #144 |  |  | 0.558 |
+| walker |  | 2775 | 50 | headings outline in exp/simd/README.md |  |  | 0.558 |
+| walker |  | 2785 | 10 | go package + imports in exp/simd/simd.go |  |  | 0.558 |
 | walker |  | 2805 | 20 | go package + imports in it/string.go |  |  | 0.558 |
 | ns | 2923 |  | 332 | find.go roster 2/2: min/max, first/last/nth, sampling (L352-L988) | 2.5 |  | 0.528 |
 | walker |  | 2957 | 152 | listing of 'benchmark' |  |  | 0.589 |

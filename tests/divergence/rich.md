@@ -8,11 +8,11 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 (reached=7 partial=0 missin
 | walker |  | 213 | 11 | listing of 'assets' |  |  | 0.000 |
 | walker |  | 233 | 20 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 241 | 8 | listing of 'docs/images' |  |  | 0.000 |
-| walker |  | 248 | 7 | listing of '.faq' |  |  | 0.000 |
 | ns | 263 |  | 134 | pyproject identity block | 1.3 |  | 0.000 |
-| walker |  | 320 | 72 | listing of 'questions' |  |  | 0.000 |
 | ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.000 |
-| walker |  | 474 | 154 | plaintext config Makefile |  |  | 0.000 |
+| walker |  | 395 | 154 | plaintext config Makefile |  |  | 0.000 |
+| walker |  | 402 | 7 | listing of '.faq' |  |  | 0.000 |
+| walker |  | 474 | 72 | listing of 'questions' |  |  | 0.000 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.000 |
 | walker |  | 571 | 97 | listing of 'imgs' |  |  | 0.000 |
 | walker |  | 616 | 45 | README headline in questions/README.md |  |  | 0.000 |
