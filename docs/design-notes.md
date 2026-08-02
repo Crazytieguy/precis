@@ -2590,3 +2590,211 @@ Open (lane died to route errors before reaching them): the two other
 helper-breadth shapes — scheduler-side breadth gate on the dominant
 train, and value-side sibling roster damp gated on the dominant-file
 detector.
+
+## Session 2026-08-01 (final polish + unshipping): 0.6249 → 0.6320
+
+Grid (71 training fixtures), 07-29 close → this close: 1000
+0.6159→0.6106 · 1442 0.6233→0.6264 · 2080 0.6311→0.6315 · **3000
+0.6249→0.6319** · 4327 0.5908→0.5959 · 6240 0.5657→0.5690 · 9000
+0.5637→0.5660. Up at six of seven budgets; the 1000 regression is a
+recorded trade — see "budget-grid discipline" below, and the
+Go entry-slice item (measured to repay it, reverted on a review
+blocker). Session artifacts in `ignore/session-2026-08-01/` (plan.md is
+the running log; probe crate and ranking traces under `probe/` and
+`out/`).
+
+### Ships (each merge re-measured; two adversarial review passes)
+
+- **TS/JS export-surface recall** (+0.0028; ky +0.106, chalk +0.029,
+  ts-pattern +0.024, p-queue +0.016, dockly +0.016, cmdk +0.009, zero
+  drops): local `export { name };` clauses synthesize Exports at
+  function/class/type declarations; CJS receivers resolve through
+  `new`/call expressions (`module.exports = new Cli()`); trailing bare
+  re-export blocks get `TsKey::ReexportTail` (gated behind ExportNames,
+  roster-priced, surface class, concavity 0.38). Review fixes, all
+  corpus-neutral generality completions: tail-only files emit the tail
+  (chained behind the roster when present, else module_predecessor),
+  ambient `.d.ts` declarations unwrap through the synthesis path,
+  statement-level and per-specifier type-only clauses synthesize their
+  type declarations without overstating the runtime surface. Recall
+  lens that made this the session's biggest ship where past recall
+  extensions died: the content is 30–70-token, NS tier-1/2, and lands
+  ≤3K (verified per sub-lever).
+- **Small root build-file promotion** (+0.0034 with the Taskfile claim):
+  Makefile/build.sh/configure.ac at root, ≤100 lines, on
+  BuildEntrypoint/BuildScript, ×2.0 (3000-plateau ×1.8–4.5). chibicc
+  +0.091, cobra +0.049, bareiron +0.033, lo +0.026. Root
+  Taskfile.yaml/Taskfile.yml claimed by classify_plaintext (was claimed
+  by no walker; bubbletea +0.042 — emit-only was inert, the promotion
+  is what pulls it inside budget). Measured dead alongside: lifting
+  SourceProse-floor build files (microbootstrap −0.055 via its
+  Justfile); over-cap Makefile head-samples AT the promoted tier
+  (−0.0066/−0.0074 — the 60–100-line head is creditless variable
+  preamble, and promotion makes buying it catastrophic; unpromoted
+  reproduces the old ±0 verdict).
+- **Python roster gating** (+0.0004; tomli +0.030, sole mover): chunked
+  rosters gated the whole per-decl train on the LAST chunk — conserved
+  head-heavy chunk values mean the tail carries ~11% of the value at
+  ~95% of the head's cost, prices past the horizon, and forfeits the
+  file's depth. Now each roster decl gates on the chunk OWNING its name
+  line (Go's spelling); the method-sig catalog keeps the full-chain
+  gate (it spans classes across chunks). The intermediate head-chunk
+  form left overlap ancestry ranking-dependent — a probe lane's
+  reordering panicked on beets — so owning-chunk is also a contract
+  repair, not just a preference.
+- **Dependency-roster saturation** (+0.0004; chronos +0.024 — the
+  corpus-worst fixture finally moved; posting +0.005, express −0.002,
+  bimodal config trio provably flat): value saturates at 200 measured
+  content tokens, (200/mass)^0.5 past it, on package.json
+  dependencies/devDependencies + TOML Dependencies. Damp-only,
+  size-keyed; threshold plateau 160–240. Ceiling is structural: of ~22
+  fixtures with >200-token tables, most schedule past 3K already. Use
+  the real tokenizer for any mass gate — bytes/3.6 undercounts
+  dependency rosters ~1.8×. Related one-liner: the dev-roster
+  demotion's peer exemption now requires a real `peerDependencies`
+  table — `peerDependenciesMeta` alone is an optionality annotation,
+  and a 5-line Meta stub was exempting whole dev toolchains (debug
+  +0.002).
+- **Go entry-slice — measured KEEP, review-BLOCKED, reverted
+  (e73d10ae); first item for next session.** The mechanism: in a Go
+  directory, the file declaring strictly more top-level names than any
+  sibling, whose roster the chunker left whole and which still costs
+  >250 tokens, gets a gate slice of its ≤8 highest-rank declarations
+  (exported + doc-carrying, ≤80 tok); the remainder follows with its
+  unsplit value factors; decl trains gate on the owning chunk. Measured
+  (lane V5, 9 variants): +0.0001 @3000, **+0.0048 @1000 true grid** —
+  it repays the build-promotion's B=1000 debt with no fixture down.
+  Adversarial review then found: a reproduced BLOCKER (cross-slice
+  ellipsis ownership — a gate decl adjacent to a remainder decl's
+  comment yields a non-ancestor overlap: debug panic, silent row
+  omission in release; also co-located decls split across chunks), the
+  80-tok cap unenforced for a single over-cap decl, spine selection
+  counting DeclInfo nodes not surfaced names (grouped blocks
+  undercounted) with no generated-file exclusion, and a deliberate 1.9×
+  value non-conservation (gate 0.9 + remainder 1.0 — RULED
+  measured-deliberate, conserved forms V1–V3 measured worse, xxhash
+  −0.045; document, don't "fix"). Three fix-pass agents were lost to
+  API stalls at session close, so the merge was reverted rather than
+  shipped with a known silent-omission bug. Everything needed to finish
+  is preserved: lane worktree `agent-aee06211fdeab0682` (branch at
+  dd3a8ec4 + partial finding-1/4 edits uncommitted), the four findings
+  with fix guidance in the session log, and the V-grid. Measured
+  constraints for the redo: remainder must KEEP pre-carve value factors
+  (re-indexing demotes the catalog the gate exists to reach); confine
+  to the directory spine with unchunked rosters (cheap gates repo-wide
+  admit half-read depth trains — gin −0.228; lo's decl-count "spine" is
+  tuples.go boilerplate). V9 variant for a small-budget session:
+  remainder chained behind gate + depth gated on remainder reaches
+  B1000 +0.0100 for −0.0015 @3000.
+
+### Un-ship audit (re-measured on this session's base — verdicts do not transfer across re-freezes)
+
+Nothing un-ships; all marginals positive. Dominant-file stack +0.0022
+TOTAL and it pays ONLY via the scheduler premium (detector has no other
+consumer — stubbing it changes nothing else); carriers express/log/swarm
+are frontier-packed (slack 20/8/21); costs cmdk −0.060; ~330 LOC.
+Re-audit after the next NS re-freeze. Interior-listing 0.85: +0.0002
+@3000 (superstruct, slack 4) / +0.0025 @1000 (cmdk, slack 17). Prisma
+pin +0.0033 (100% linkwarden, NOT packed — slack 88). C total-in-degree
++0.0001 @3000 (pays at 2080/9000 per its ship grid). Python data-model
+promotion +0.0025 (~99% microbootstrap, not packed). Catalog concavity
+0.38 → 0.35 would cost 0.0029 across nine fixtures — the only broadly
+supported constant.
+
+Knob re-sweep on the close frontier: all six settled constants
+CONFIRMED (LISTING_TIER_SCALE 1.13, catalog exponent 0.38, default
+exponent 0.35, dominant boost 1.35, suppression 0.85, TRAIN_PRESSURE_K
+0.15). LISTING_TIER_SCALE 1.19 (+0.0007) and boost 1.20 (+0.0005) are
+cliff-shuffle, rejected on the full diff (cliff-packed count 37→39/40,
+±1-row flips, mdbook landing 6 tokens from the cliff). Unexplored if
+the frontier moves: LISTING_TIER_SCALE × suppression 2-D sweep (both
+price listings in fs.rs).
+
+### Helper-breadth: both queued shapes measured DEAD (queue closed)
+
+Scheduler-side breadth gate: best +0.0001 across an 8-point grid.
+Structural kill via instrumented duty cycle — migrate/peepdb detect NO
+dominant file; superstruct/chronos detect one that NEVER ENTERS
+(entered=false through 10K, every surface unscheduled), so
+entered-gating makes premium and damp live only where the primary
+already got in. Ungated damp −0.0047 with the targets WORSE —
+"ungated breadth damp" joins "ungated premium" in the dead list.
+Same-subtree scoping silently degenerates to repo-wide when the
+dominant file sits at the root (mkcert, cobra). Value-side sibling
+roster damp: all sweep points negative, non-monotone; the same-dir gate
+catches the INTERFACE ANCHOR the NS ranks first (sds.h damped under
+sds.c −0.051, gin.go under context.go −0.074, nano-vllm engine breadth
+−0.079). The detector fires on 35/71 fixtures and frequently names the
+wrong file (C: the big .c over the NS-wanted header — krep.c/krep.h,
+parse.c/chibicc.h; chronos: chronos2/pipeline.py over chronos.py).
+chronos is unreachable by any sibling rule (its NS primaries are in the
+PARENT dir of the detected file).
+
+### The never-entered class: ranking side closed, emission side open
+
+Instrumented trace (probe crate; per-round ratio/eligibility dumps):
+file-entry rosters carry class-flat value against N-linear cost, so a
+spine file's entry ratio decays like N^-k and ranks LAST within its
+class; the roster is a gate, so losing the race forfeits the file (act
+root.go 673/374tok ratio 84.7 vs a same-value 34-token sibling at 196;
+superstruct types.ts eligible from cum 107 and never bought at 10K).
+Breadth pressure and the dominant boost are not involved (pressure 1.00
+on every trace row; the boost is entered-gated and provably inert on
+never-entered files). The whole ranking-side fix family is now measured
+dead: class-constant entry factors (three kills, incl. capped
+roster-mass extension −0.0009 and uncapped cost-graded −0.0112 with gin
+−0.325); ADDITIVE bundle credit (rank a gate by value + covered
+dependents' values: −0.18/−0.14/−0.04 at w=1.0/0.25/0.05 — a fat
+roster inherits 5–10× its own value, no constant weight reconciles);
+BOUNDED self-normalizing bundle (1 + c·bundle/(bundle+value):
+−0.013/−0.024/−0.033 at c=0.2/0.35/0.5 — the saturation term measures
+0.38–0.97 on real rosters, so the multiplier is a near-uniform
+×(1+~0.85c) = the class-constant family again; act needs 1.63×
+within-class separation ⇒ c≥1.8 ⇒ inside the dead band). Two decisive
+observations for whoever returns here: entry without credit is
+DISPLACEMENT (lo's spine entered at cum 2438 under the bundle and lo
+LOST 0.077), and the oracle's +0.26 on this class comes from chain-cost
+ranking the scheduler cannot approximate with any per-batch factor. The
+live direction is emission-side entry-unit shrink (the Go entry-slice
+above is the beachhead; rank-chosen slices only — source-order slices
+are completion-damped, measured on lo).
+
+### Other dead levers this session (extend the existing entries)
+
+- README section-mass factor: a section-COUNT gate separates shattered
+  from anchored READMEs cleanly (krep 35 tiny sections, lo 114 vs
+  commander 1, svgo 3) and still loses (−0.0024/−0.0012/−0.0007 at
+  N=8/15/25). Mechanism: shattered-README micro-sections are
+  COVERAGE-POSITIVE at 3K (they partially cover NS tier-2 README rows);
+  what replaces them is NS tier-3 API detail. The bucket is unreachable
+  by re-pricing tiny sections in either direction.
+- AggregateMemberGroup damp: re-probed post-build-promotion at
+  ×0.8/0.6/0.4 — still dead (best +0.000014); the promotion already
+  took the chibicc win directly and the ≤3K member-group wall fell 858
+  → 215 tokens.
+- Oversized names-roster chunk damp (size-graded, per-chunk): no
+  threshold separates chibicc (win needs ≤213 content-mass tokens) from
+  sds (NS-anchor chunks damaged below 263 — same band). The +0.092
+  chibicc effect is mid-budget; converting it to Score(3000) requires
+  damping the whole train = the dead class-wide lever. State units for
+  any mass gate: content mass ≈0.62–0.72× rendered cost (gutter).
+- Roster-before-depth same-file ordering damp: −0.0003..−0.0005; the
+  per-item surface heads never exhaust so the gate is near-always-on (=
+  blanket damp, ground held by train_pressure), and the actual chibicc
+  displacers aren't in `is_depth_follow_up` at all. Budget-leftover
+  affordability gates are structurally inert under the 10K harness.
+
+### Budget-grid discipline (new, learned the expensive way)
+
+Lane contracts that measure only the Score(3000) mean hide small-budget
+displacement: the ×2.0 build promotion silently cost −0.0053 at B=1000
+(rich −0.44, go-multierror −0.18, requests −0.15 — Makefiles bought
+inside the first thousand tokens). Caught only by the close-out
+diagnose_loss --budgets. Two rules: (1) lane contracts carry a B=1000
+check next to the 3000 mean; (2) budget trade decisions need the TRUE
+grid — a last-full-row Score(B=cum) proxy overstated a B=1000 recovery
+5× and briefly shipped a wrong retune (reverted in 719f6160; the ×1.5
+"recovery" was cliff roulette — chibicc −0.16 against go-multierror
++0.18). The session closes with the −0.0053 standing as a recorded
+trade; the Go entry-slice (above) is the measured repayment
+(+0.0048 @1000) once its review blocker is fixed.
