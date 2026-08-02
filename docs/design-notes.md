@@ -2798,3 +2798,67 @@ grid — a last-full-row Score(B=cum) proxy overstated a B=1000 recovery
 +0.18). The session closes with the −0.0053 standing as a recorded
 trade; the Go entry-slice (above) is the measured repayment
 (+0.0048 @1000) once its review blocker is fixed.
+
+## Session 2026-08-02, lane W4-GO: Go spine discriminator + chunked entry gate
+
+Retry of the W2-GO sub-lever B ("rank-chosen gate ahead of a *chunked*
+spine roster"), which had measured −0.0011 @3000 only because
+`spine_file` picked by raw surfaced-row count and so never reached the
+files it was named for.
+
+**Shipped.** Two coupled changes, grid
+0.6154 / 0.6274 / 0.6327 / **0.6320** / 0.5958 / 0.5692 / 0.5666
+(baseline 0.6154 / 0.6271 / 0.6317 / 0.6320 / 0.5958 / 0.5691 / 0.5665)
+— Pareto non-negative, +0.0010 @2080, **flat at the 3000 headline**.
+
+1. Spine selection counts *concepts*, not roster rows
+   (`surface_concept_count`): distinct declared names, trailing digit
+   runs stripped, methods folded onto their receiver type. Two shapes
+   out-row the file a package is about without introducing more of it —
+   repetitive name families (`Zip2`…`Zip9`) and member files (one type +
+   dozens of methods). Alone this is inert (+0.0001 at 6240/9000).
+2. An already-chunked spine roster may also carve a gate. Its
+   precondition is *not* the unsplit path's ">250 tokens": on a chunked
+   roster the head chunk is what everything gates on, and it is sized by
+   the chunker (measured 176–298 tok corpus-wide), so an absolute test
+   there only asks where the chunker happened to land — B2's "head chunk
+   > 250" excluded migrate.go (186) and gin.go (176), i.e. both payoff
+   carriers. Chunked gates take their own value factor (0.75; 0.9 costs
+   B=1000 −0.0012 via gin) and must carry at least half a names chunk.
+
+**The floor is the load-bearing part.** Without it the gate unlocks the
+file's whole doc-carrying `Decl` ladder while naming almost nothing:
+lo slice.go (2 rows) and migrate migrate.go (3 rows) each cost ~−0.04
+@3000 while gaining at every *other* budget — a pure 3000-cliff
+signature. Gates of 5–6 rows (gin gin.go, cobra completions.go) do not
+show it. Note the shipped unchunked path independently produces 4–5-row
+gates, so the floor is where that path already lives.
+
+### Dead / rejected in this lane (all full 7-budget grids)
+
+- **No count-based discriminator can satisfy gin and cobra at once.**
+  gin's context.go is 133 method rows / 22 non-method stems; cobra's
+  command.go is 119 / 23 — the same shape — while their runners-up
+  differ only in that gin.go has 29 non-method stems against
+  completions.go's 39. Any method discount lifting gin.go over
+  context.go also lifts completions.go over command.go. Verified
+  end-to-end: the digit-stem-only discriminator (gin → context.go,
+  cobra → command.go) reproduces W2-GO's cobra failure almost exactly,
+  −0.178 @1442 (mean −0.0025).
+- **Conserved re-split** (gate + tails rescaled to the legacy chunked
+  total): 3000 −0.0005, and it costs migrate −0.028 @4327. Note the
+  repo's `conserved_catalog_chunk_factors` is the wrong machinery here —
+  its head premium would price a 70-tok gate *above* an unsplit head.
+- **Chunked gate at 0.6**: inert (gate never bought inside 3000).
+  **At 0.9**: B=1000 −0.0012.
+- **Two gates per directory** (leader of each discriminator may carve):
+  the only variant measuring 3000 *up*, +0.0002 — but the entire gain is
+  cobra +0.015, whose last in-budget row lands at cum 2991, and it buys
+  it with cobra −0.054 @2080. Rejected as cliff roulette under the
+  budget-grid discipline above.
+
+**For a future lane:** this mechanism has no Score(3000) upside left —
+its payoff sits in the 1442–2080 band (gin +0.017/+0.072, budget-robust:
+positive at six of seven budgets). Only two files in the whole corpus
+take a chunked gate (gin gin.go, cobra completions.go), so widening the
+carrier set — not retuning the factor — is where any further gain is.
