@@ -436,8 +436,12 @@ fn is_dev_dependencies_key(k: &str) -> bool {
 }
 
 /// The consumer-facing half of [`is_dev_dependencies_key`]'s span.
+/// `peerDependenciesMeta` alone does not qualify: it carries optionality
+/// flags for peers declared elsewhere, not a version contract, so a
+/// manifest with only the Meta table is still a pure contributor-
+/// toolchain roster for demotion purposes.
 fn is_peer_dependencies_key(k: &str) -> bool {
-    matches!(k, "peerDependencies" | "peerDependenciesMeta")
+    k == "peerDependencies"
 }
 
 fn is_package_section_key(k: &str) -> bool {
