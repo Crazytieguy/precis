@@ -96,6 +96,7 @@ Score(3000)=0.563 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 2300 | 84 | json config tsconfig.json |  |  | 0.644 |
 | walker |  | 2334 | 34 | listing of 'tests/smoke/deno/tests' |  |  | 0.644 |
 | walker |  | 2344 | 10 | export names surface in lib/core/Axios.js |  |  | 0.644 |
+| walker |  | 2344 | 0 | export at lib/core/Axios.js:281 |  |  | 0.644 |
 | walker |  | 2354 | 10 | export names surface in lib/helpers/null.js |  |  | 0.644 |
 | walker |  | 2364 | 10 | export names surface in lib/helpers/throttle.js |  |  | 0.644 |
 | ns | 2406 |  | 289 | _request: config normalization and header flattening | 2.8 |  | 0.611 |
@@ -118,6 +119,7 @@ Score(3000)=0.563 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 2798 | 12 | export names surface in lib/core/InterceptorManager.js |  |  | 0.583 |
 | walker |  | 2810 | 12 | export names surface in lib/helpers/AxiosTransformStream.js |  |  | 0.583 |
 | walker |  | 2822 | 12 | export names surface in lib/helpers/HttpStatusCode.js |  |  | 0.583 |
+| walker |  | 2822 | 0 | export at lib/helpers/HttpStatusCode.js:77 |  |  | 0.583 |
 | walker |  | 2834 | 12 | export names surface in lib/helpers/toFormData.js |  |  | 0.583 |
 | walker |  | 2874 | 40 | COLLABORATOR_GUIDE.md section #1 |  |  | 0.583 |
 | walker |  | 2877 | 3 | listing of 'docs/data' |  |  | 0.583 |
@@ -265,34 +267,39 @@ Score(3000)=0.563 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 8207 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.424 |
 | ns | 8611 |  | 535 | utils.js: the complete exported utility set | 6.1 |  | 0.407 |
 | walker |  | 8669 | 462 | package scripts in package.json |  |  | 0.407 |
-| walker |  | 8690 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.407 |
-| walker |  | 8690 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.407 |
-| walker |  | 8755 | 65 | export at index.d.ts:251 |  |  | 0.407 |
+| walker |  | 8690 | 21 | export at lib/helpers/HttpStatusCode.js:73 |  |  | 0.407 |
+| walker |  | 8711 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.407 |
+| walker |  | 8711 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.407 |
+| walker |  | 8724 | 13 | export body at lib/helpers/HttpStatusCode.js:73 body 74 |  |  | 0.407 |
+| walker |  | 8789 | 65 | export at index.d.ts:251 |  |  | 0.407 |
 | ns | 8853 |  | 242 | Helper signatures: URL, params and form-data | 6.2 |  | 0.406 |
-| walker |  | 8870 | 115 | listing of 'tests/smoke/esm/tests' |  |  | 0.406 |
-| walker |  | 8892 | 22 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.407 |
-| walker |  | 8892 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.407 |
-| walker |  | 8916 | 24 | imports in lib/platform/index.js |  |  | 0.413 |
-| walker |  | 8941 | 25 | export names surface in lib/core/buildFullPath.js |  |  | 0.413 |
-| walker |  | 8941 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.413 |
-| walker |  | 9072 | 131 | listing of 'tests/smoke/cjs/tests' |  |  | 0.413 |
-| walker |  | 9143 | 71 | CONTRIBUTORS.md section #3 |  |  | 0.413 |
-| walker |  | 9242 | 99 | export at index.d.ts:338 |  |  | 0.413 |
+| walker |  | 8904 | 115 | listing of 'tests/smoke/esm/tests' |  |  | 0.406 |
+| walker |  | 8926 | 22 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.407 |
+| walker |  | 8926 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.407 |
+| walker |  | 8950 | 24 | imports in lib/platform/index.js |  |  | 0.413 |
+| walker |  | 8975 | 25 | export names surface in lib/core/buildFullPath.js |  |  | 0.413 |
+| walker |  | 8975 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.413 |
+| walker |  | 9106 | 131 | listing of 'tests/smoke/cjs/tests' |  |  | 0.413 |
+| walker |  | 9177 | 71 | CONTRIBUTORS.md section #3 |  |  | 0.413 |
 | ns | 9265 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.411 |
-| walker |  | 9268 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.411 |
-| walker |  | 9268 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.411 |
-| walker |  | 9345 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.411 |
-| walker |  | 9374 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.411 |
-| walker |  | 9381 | 7 | listing of 'examples/abort-controller' |  |  | 0.411 |
-| walker |  | 9388 | 7 | listing of 'examples/get' |  |  | 0.411 |
-| walker |  | 9395 | 7 | listing of 'examples/post' |  |  | 0.411 |
-| walker |  | 9402 | 7 | listing of 'examples/postMultipartFormData' |  |  | 0.411 |
-| walker |  | 9409 | 7 | listing of 'examples/upload' |  |  | 0.411 |
-| walker |  | 9438 | 29 | export names surface in lib/adapters/http.js |  |  | 0.412 |
-| walker |  | 9449 | 11 | export names surface in lib/platform/node/classes/FormData.js |  |  | 0.412 |
-| walker |  | 9475 | 26 | THREATMODEL.md section #52 |  |  | 0.412 |
-| walker |  | 9504 | 29 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.412 |
-| walker |  | 9533 | 29 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.412 |
-| ns | 9631 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.404 |
-| ns | 9841 |  | 210 | Documentation site tree | 7.2 |  | 0.432 |
-| ns | 9974 |  | 133 | Test tree: suites and the unit-test file set | 7.3 |  | 0.447 |
+| walker |  | 9276 | 99 | export at index.d.ts:338 |  |  | 0.411 |
+| walker |  | 9302 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.411 |
+| walker |  | 9302 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.411 |
+| walker |  | 9379 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.411 |
+| walker |  | 9408 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.411 |
+| walker |  | 9458 | 50 | module statements at lib/defaults/index.js:173 |  |  | 0.412 |
+| walker |  | 9465 | 7 | listing of 'examples/abort-controller' |  |  | 0.412 |
+| walker |  | 9472 | 7 | listing of 'examples/get' |  |  | 0.412 |
+| walker |  | 9479 | 7 | listing of 'examples/post' |  |  | 0.412 |
+| walker |  | 9486 | 7 | listing of 'examples/postMultipartFormData' |  |  | 0.412 |
+| walker |  | 9493 | 7 | listing of 'examples/upload' |  |  | 0.412 |
+| walker |  | 9523 | 30 | export at lib/core/Axios.js:241 |  |  | 0.412 |
+| walker |  | 9553 | 30 | export at lib/core/Axios.js:254 |  |  | 0.413 |
+| walker |  | 9582 | 29 | export names surface in lib/adapters/http.js |  |  | 0.413 |
+| walker |  | 9593 | 11 | export names surface in lib/platform/node/classes/FormData.js |  |  | 0.413 |
+| walker |  | 9619 | 26 | THREATMODEL.md section #52 |  |  | 0.413 |
+| ns | 9631 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.405 |
+| walker |  | 9648 | 29 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.405 |
+| walker |  | 9677 | 29 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.405 |
+| ns | 9841 |  | 210 | Documentation site tree | 7.2 |  | 0.433 |
+| ns | 9974 |  | 133 | Test tree: suites and the unit-test file set | 7.3 |  | 0.448 |

@@ -313,6 +313,10 @@ pub enum TsKey {
         start_line: usize,
         body_start_line: usize,
     },
+    /// One uninterrupted run of module-scope statements in a script the
+    /// project runs directly — the executable's own flow, which declares
+    /// nothing and so has no declaration batch. Same gate as `ModuleItem`.
+    ModuleStatements { file: PathBuf, start_line: usize },
 }
 
 /// JSON batches. `package.json` splits along the `Cargo.toml` ontology
@@ -836,6 +840,7 @@ impl InnerKey for TsKey {
                 | TsKey::ExportMemberNamesChunk { .. }
                 | TsKey::ModuleItemNames { .. }
                 | TsKey::ModuleItem { .. }
+                | TsKey::ModuleStatements { .. }
         )
     }
 
@@ -928,6 +933,9 @@ impl InnerKey for TsKey {
                 *body_start_line,
                 root,
             ),
+            TsKey::ModuleStatements { file, start_line } => {
+                describe_at("module statements", file, *start_line, root)
+            }
         }
     }
 }

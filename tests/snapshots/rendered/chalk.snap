@@ -243,6 +243,7 @@ source/
         …
          168→const applyStyle = (self, string) => {
         …
+         202→Object.defineProperties(createChalk.prototype, styles);
          204→const chalk = createChalk();
          205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
          207→export {
