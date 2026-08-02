@@ -207,13 +207,6 @@ source/
           22→const styles = Object.create(null);
           23→
           24→const applyOptions = (object, options = {}) => {
-          25→	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
-          26→		throw new Error('The `level` option should be an integer from 0 to 3');
-          27→	}
-          28→
-          29→	// Detect level if not set manually
-          30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
-          31→	object.level = options.level === undefined ? colorLevel : options.level;
         …
           34→export class Chalk {
           35→	constructor(options) {
@@ -231,6 +224,23 @@ source/
           50→function createChalk(options) {
           51→	return chalkFactory(options);
         …
+          54→Object.setPrototypeOf(createChalk.prototype, Function.prototype);
+          56→for (const [styleName, style] of Object.entries(ansiStyles)) {
+          57→	styles[styleName] = {
+          58→		get() {
+          59→			const builder = createBuilder(this, createStyler(style.open, style.close, this[STYLER]), this[IS_EMPTY]);
+          60→			Object.defineProperty(this, styleName, {value: builder});
+          61→			return builder;
+          62→		},
+          63→	};
+          64→}
+          66→styles.visible = {
+          67→	get() {
+          68→		const builder = createBuilder(this, this[STYLER], true);
+          69→		Object.defineProperty(this, 'visible', {value: builder});
+          70→		return builder;
+          71→	},
+          72→};
           74→const getModelAnsi = (model, level, type, ...arguments_) => {
         …
           94→const usedModels = ['rgb', 'hex', 'ansi256'];
@@ -243,6 +253,7 @@ source/
         …
          168→const applyStyle = (self, string) => {
         …
+         202→Object.defineProperties(createChalk.prototype, styles);
          204→const chalk = createChalk();
          205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
          207→export {

@@ -251,7 +251,11 @@ src/
            2→ * Detect Electron renderer / nwjs process, which is node, but we should
            3→ * treat as a browser.
            4→ */
-        …
+           6→if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+           7→	module.exports = require('./browser.js');
+           8→} else {
+           9→	module.exports = require('./node.js');
+          10→}
     node.js …
 test.js
     …

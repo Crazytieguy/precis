@@ -845,9 +845,83 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
+        // Script flow: the run-directly half of a private-emitting file.
+        // Its declarations are already covered above; what is left is the
+        // statements that actually execute, which belong to no declaration
+        // and would otherwise have no batch at all. Scripts only — in a
+        // compiled component module, module scope carries registration
+        // trivia rather than the program's flow.
+        if emit_private_nonclass && is_js_file(file) {
+            for lines in script_flow_statement_lines(&tree, &source) {
+                let Some(start_line) = lines.full.first().copied() else {
+                    continue;
+                };
+                // A member-defining call is an expression statement too, and
+                // it already renders as an export. Two peer batches over the
+                // same rows would be a scheduler conflict.
+                if export_start_lines.contains(&start_line) {
+                    continue;
+                }
+                let Some(content) = single_file_lines_content(file, &source, lines) else {
+                    continue;
+                };
+                out.push(Batch {
+                    key: TsKey::ModuleStatements {
+                        file: file.clone(),
+                        start_line,
+                    }
+                    .into(),
+                    predecessor: module_items_gate
+                        .clone()
+                        .or_else(|| names_gate.clone())
+                        .or_else(|| module_predecessor.clone()),
+                    content,
+                    value: module_item_value(file, ItemKind::Const, ctx, js_factor)
+                        * per_export_factor,
+                });
+            }
+        }
     }
 
     out
+}
+
+/// Statement kinds that make up a script's flow — everything a program
+/// does at module scope that isn't a declaration, an import, or an
+/// export.
+fn is_script_flow_statement(node: Node) -> bool {
+    matches!(
+        node.kind(),
+        "expression_statement"
+            | "if_statement"
+            | "for_statement"
+            | "for_in_statement"
+            | "while_statement"
+            | "do_statement"
+            | "switch_statement"
+            | "try_statement"
+            | "throw_statement"
+            | "labeled_statement"
+    )
+}
+
+/// Module-scope script-flow statements, one entry apiece. Per statement
+/// rather than per contiguous run: a run is the whole tail of a bin
+/// script and prices itself out of the early budget as one slab, while
+/// each statement (a dispatch guard, a bootstrap chain) is already an
+/// NS-sized unit. String directives (`'use strict'`) are import prologue
+/// and stay with the imports batch.
+fn script_flow_statement_lines(tree: &Tree, source: &str) -> Vec<FileLines> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter(|child| is_script_flow_statement(*child) && !is_string_directive(*child))
+        .map(|child| {
+            let mut lines = Vec::new();
+            extend_span(&mut lines, child, source);
+            FileLines::new(dedup_sorted(lines))
+        })
+        .collect()
 }
 
 /// Key of the import-shaped batch the module entrypoint will actually
@@ -1236,6 +1310,34 @@ fn find_export_starts<'a>(
                     needs_sort = true;
                 }
             }
+        }
+        // Member-defining call statements — the dynamic half of the same
+        // surface (`defineGetter(r, 'x', fn)`, `list.forEach(m => r[m] = …)`).
+        // They refine the receiver's own export when that export renders,
+        // which keeps them off the file's names surface: a roster that grew
+        // by every dynamic definition would price itself out of the early
+        // budget and starve the whole file's train behind it.
+        let exported_receivers = collect_exported_receivers(tree, source);
+        for stmt in collect_member_defining_statements(tree, source, &exported_receivers) {
+            if emitted_lines.contains(&stmt.start_line) {
+                continue;
+            }
+            let mut info = make_export_info(
+                stmt.start_line,
+                ItemKind::Function,
+                stmt.anchor,
+                stmt.definer,
+                file,
+                source,
+                src_lines,
+                false,
+            );
+            info.predecessor_start_line = emitted_lines
+                .contains(&stmt.receiver_line)
+                .then_some(stmt.receiver_line);
+            out.push(info);
+            emitted_lines.insert(stmt.start_line);
+            needs_sort = true;
         }
     }
 
@@ -1776,12 +1878,23 @@ fn collect_module_exports_receivers(tree: &Tree, source: &str) -> HashSet<String
     let mut cursor = root.walk();
     let mut receivers: HashSet<String> = HashSet::new();
     for stmt in root.children(&mut cursor) {
+        collect_module_exports_receivers_from_statement(stmt, source, &mut receivers);
+    }
+    receivers
+}
+
+fn collect_module_exports_receivers_from_statement(
+    stmt: Node,
+    source: &str,
+    receivers: &mut HashSet<String>,
+) {
+    {
         match stmt.kind() {
             "expression_statement" => {
                 if let Some(expr) = stmt.named_child(0)
                     && expr.kind() == "assignment_expression"
                 {
-                    collect_module_exports_receivers_from_assignment(expr, source, &mut receivers);
+                    collect_module_exports_receivers_from_assignment(expr, source, receivers);
                 }
             }
             "lexical_declaration" | "variable_declaration" => {
@@ -1808,7 +1921,6 @@ fn collect_module_exports_receivers(tree: &Tree, source: &str) -> HashSet<String
             _ => {}
         }
     }
-    receivers
 }
 
 /// Extract receivers from a top-level `assignment_expression`. A
@@ -1857,6 +1969,181 @@ fn chain_contains_module_exports(node: Node, source: &str) -> bool {
         return false;
     };
     is_module_exports_member(left, source) || chain_contains_module_exports(right, source)
+}
+
+/// Every name the file publishes, mapped to the 1-based line of the
+/// statement that publishes it: `module.exports` aliases plus locally
+/// declared names an ESM `export` statement re-publishes. A member-defining
+/// statement only counts as surface when it installs onto one of these —
+/// members of a purely local object are implementation detail — and the
+/// publishing line is where its batch chains.
+fn collect_exported_receivers(tree: &Tree, source: &str) -> HashMap<String, usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut receivers: HashMap<String, usize> = HashMap::new();
+    for stmt in root.children(&mut cursor) {
+        let start_line = stmt.start_position().row + 1;
+        let mut names: HashSet<String> = HashSet::new();
+        collect_module_exports_receivers_from_statement(stmt, source, &mut names);
+        if stmt.kind() == "export_statement" {
+            // `export default X` / `export = X`.
+            if let Some(name) = stmt
+                .child_by_field_name("value")
+                .and_then(|value| identifier_text(value, source))
+            {
+                names.insert(name.to_string());
+            }
+            // `export class X` / `export function X` / `export const X = …`.
+            if let Some(name) =
+                first_decl_child(stmt).and_then(|decl| local_decl_name(decl, source))
+            {
+                names.insert(name.to_string());
+            }
+            // `export { X, Y as Z }` — the local name is what statements target.
+            let mut clause_cursor = stmt.walk();
+            for clause in stmt
+                .children(&mut clause_cursor)
+                .filter(|child| child.kind() == "export_clause")
+            {
+                let mut spec_cursor = clause.walk();
+                for spec in clause.named_children(&mut spec_cursor) {
+                    if let Some(name) = spec
+                        .child_by_field_name("name")
+                        .or_else(|| spec.named_child(0))
+                        .and_then(|n| identifier_text(n, source))
+                    {
+                        names.insert(name.to_string());
+                    }
+                }
+            }
+        }
+        for name in names {
+            receivers.entry(name).or_insert(start_line);
+        }
+    }
+    receivers
+}
+
+/// One module-scope call statement that installs members on an exported
+/// receiver — the dynamic counterpart of a `Receiver.m = function …`
+/// assignment.
+#[derive(Debug, Clone)]
+struct MemberDefiningStatement<'a> {
+    start_line: usize,
+    anchor: Node<'a>,
+    /// The function argument that carries the definition — the surface
+    /// line and body slices are taken from it.
+    definer: Node<'a>,
+    /// Line that publishes the receiver, so the statement can chain onto
+    /// the receiver's own export rather than the file's names surface.
+    receiver_line: usize,
+}
+
+/// Top-level call statements that define members on a tracked receiver.
+/// Two shapes qualify, both requiring a function argument:
+/// - the receiver is the call's first argument, so the call is a
+///   property-definition helper (`defineGetter(req, 'ip', fn)`,
+///   `Object.defineProperty(exports, 'x', fn)`);
+/// - the function argument's body assigns to a receiver-rooted member,
+///   so the call is an installation loop (`methods.forEach(m => app[m] = …)`).
+fn collect_member_defining_statements<'a>(
+    tree: &'a Tree,
+    source: &str,
+    receivers: &HashMap<String, usize>,
+) -> Vec<MemberDefiningStatement<'a>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "expression_statement" {
+            continue;
+        }
+        let Some(call) = stmt
+            .named_child(0)
+            .filter(|e| e.kind() == "call_expression")
+        else {
+            continue;
+        };
+        let Some(arguments) = call.child_by_field_name("arguments") else {
+            continue;
+        };
+        let mut arg_cursor = arguments.walk();
+        let args: Vec<Node> = arguments.named_children(&mut arg_cursor).collect();
+        let Some(definer) = args
+            .iter()
+            .rev()
+            .find(|arg| is_function_node(**arg))
+            .copied()
+        else {
+            continue;
+        };
+        let receiver = args
+            .first()
+            .and_then(|arg| identifier_text(*arg, source))
+            .filter(|name| receivers.contains_key(*name))
+            .or_else(|| installed_receiver_name(definer, source, receivers));
+        let Some(receiver_line) = receiver.and_then(|name| receivers.get(name)).copied() else {
+            continue;
+        };
+        out.push(MemberDefiningStatement {
+            start_line: stmt.start_position().row + 1,
+            anchor: stmt,
+            definer,
+            receiver_line,
+        });
+    }
+    out
+}
+
+fn is_function_node(node: Node) -> bool {
+    matches!(
+        node.kind(),
+        "function_expression" | "arrow_function" | "generator_function"
+    )
+}
+
+/// Name of the tracked receiver some assignment under `node` installs a
+/// member on — `R.m = …`, `R[m] = …`, `R.prototype[m] = …`.
+fn installed_receiver_name<'a>(
+    node: Node,
+    source: &'a str,
+    receivers: &HashMap<String, usize>,
+) -> Option<&'a str> {
+    let mut cursor = node.walk();
+    let mut pending = vec![node];
+    while let Some(current) = pending.pop() {
+        if current.kind() == "assignment_expression"
+            && let Some((left, _)) = assignment_sides(current)
+            && let Some(name) = receiver_member_target_name(left, source, receivers)
+        {
+            return Some(name);
+        }
+        pending.extend(current.named_children(&mut cursor));
+    }
+    None
+}
+
+/// Receiver name when `node` is a member or subscript access rooted at a
+/// tracked receiver, directly or through its `prototype`.
+fn receiver_member_target_name<'a>(
+    node: Node,
+    source: &'a str,
+    receivers: &HashMap<String, usize>,
+) -> Option<&'a str> {
+    let object = match node.kind() {
+        "member_expression" => member_object_property(node).map(|(object, _)| object),
+        "subscript_expression" => subscript_object(node),
+        _ => None,
+    }?;
+    let direct = identifier_text(object, source).filter(|name| receivers.contains_key(*name));
+    if direct.is_some() {
+        return direct;
+    }
+    let (inner_object, inner_property) = member_object_property(object)?;
+    (object.kind() == "member_expression" && identifier_eq(inner_property, source, "prototype"))
+        .then(|| identifier_text(inner_object, source))
+        .flatten()
+        .filter(|name| receivers.contains_key(*name))
 }
 
 /// One `Receiver.member = function …` (or `.prototype.member = …`)

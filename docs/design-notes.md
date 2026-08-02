@@ -748,7 +748,19 @@ Measured-dead this cycle (specifics block retries):
   small libraries; needs the package-role signal folded in before any
   retry.
 - **Script-flow batches** (entry-file expression statements): built,
-  measured zero movement, reverted.
+  measured zero movement, reverted — **verdict flipped under the v2
+  answer key (2026-08-02): shipped** as `TsKey::ModuleStatements` at
+  +0.0018 @3000 (debug +0.042, dockly +0.083, chalk +0.033 @9000). Two
+  constraints the dead version missed. Restricted to
+  `.js`/`.mjs`/`.cjs`: including `.tsx` costs vaul −0.138 @3000 (three
+  one-line `Component.displayName = …` statements), because in a
+  compiled component module, module scope carries registration trivia
+  rather than the program's flow. And **one batch per statement, not
+  per contiguous run**: grouped, dockly's post-prologue run is a
+  271-token slab that enters at cum 3122 — split, its dispatch guards
+  and bootstrap chain enter at 1035/2425 (+0.078 @3000 for the split
+  alone). A run is the whole tail of a bin script; a single guard is
+  already an NS-sized unit.
 - **Dev-doc routing past the peripheral damp** (mdbook/vite/enclosed
   CONTRIBUTING): both variants negative (peepdb −0.066 unflagged);
   mdbook's test-command section is outside the frontier even at 30K —
@@ -1479,7 +1491,10 @@ evidence):
   (svgo resolvePluginConfig target): JS+TS gate −0.001 mean with
   json-server −0.069; JS-only retune +0.00001 with svgo flat and
   mixed high-budget regressions. The referenced-private recall class
-  doesn't pay at current pricing; svgo's helper stays absent.
+  doesn't pay at current pricing; svgo's helper stays absent. Still
+  dead as stated; what shipped 2026-08-02 is the narrower
+  entrypoint-script gate (`ModuleStatements`, JS only), which leaves
+  json-server byte-identical because it never reaches a `.ts` bin.
 - **TS full-declaration ≥450 split (all exported decls)**: p-queue
   −0.058, mean −0.0008 — only the class-surface variant with the
   export-roster boost survives (shipped). Interface/JSDoc-slice

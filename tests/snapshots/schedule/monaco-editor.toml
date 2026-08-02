@@ -1,7 +1,7 @@
 fixture = "monaco-editor"
 budget = 10000
-cumulative_tokens = 9843
-batch_count = 250
+cumulative_tokens = 9905
+batch_count = 251
 
 [[batches]]
 position = 1
@@ -4757,10 +4757,28 @@ entries = ["monarch", "monarch-static.html"]
 
 [[batches]]
 position = 235
+key = 'Typescript(ModuleStatements { file: "samples/browser-esm-parcel/src/index.js", start_line: 26 })'
+descriptor = "module statements at samples/browser-esm-parcel/src/index.js:26"
+cost_tokens = 62
+cum_tokens = 9330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-parcel/src/index.js"
+start = 26
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
 key = 'Typescript(Imports { file: "monaco-lsp-client/src/index.ts" })'
 descriptor = "imports in monaco-lsp-client/src/index.ts"
 cost_tokens = 63
-cum_tokens = 9331
+cum_tokens = 9393
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4792,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 236
+position = 237
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 557 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 557"
 cost_tokens = 12
-cum_tokens = 9343
+cum_tokens = 9405
 
 [batches.content]
 kind = "lines"
@@ -4792,11 +4810,11 @@ end = 557
 kind = "full"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Fs(DirListing { dir: "website/typedoc" })'
 descriptor = "listing of 'website/typedoc'"
 cost_tokens = 9
-cum_tokens = 9352
+cum_tokens = 9414
 
 [batches.content]
 kind = "fs"
@@ -4806,11 +4824,11 @@ parent = "website/typedoc"
 entries = ["tsconfig.json", "typedoc.json"]
 
 [[batches]]
-position = 238
+position = 239
 key = 'Markdown(Section { file: "samples/README.md", section_index: 3, reference_shaped: false })'
 descriptor = "samples/README.md section #3"
 cost_tokens = 107
-cum_tokens = 9459
+cum_tokens = 9521
 
 [batches.content]
 kind = "lines"
@@ -4824,37 +4842,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 239
+position = 240
 key = 'Typescript(ExportNames { file: "samples/browser-esm-vite-react/src/components/Editor.tsx" })'
 descriptor = "export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx"
 cost_tokens = 18
-cum_tokens = 9477
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 240
-key = 'Typescript(Export { file: "samples/browser-esm-vite-react/src/components/Editor.tsx", start_line: 5 })'
-descriptor = "export at samples/browser-esm-vite-react/src/components/Editor.tsx:5"
-cost_tokens = 0
-cum_tokens = 9477
+cum_tokens = 9539
 
 [batches.content]
 kind = "lines"
@@ -4877,36 +4869,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 241
-key = 'Typescript(ExportNames { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx" })'
-descriptor = "export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
-cost_tokens = 18
-cum_tokens = 9495
+key = 'Typescript(Export { file: "samples/browser-esm-vite-react/src/components/Editor.tsx", start_line: 5 })'
+descriptor = "export at samples/browser-esm-vite-react/src/components/Editor.tsx:5"
+cost_tokens = 0
+cum_tokens = 9539
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
-start = 23
-end = 23
+path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
-start = 24
-end = 24
+path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 242
-key = 'Typescript(Export { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx", start_line: 23 })'
-descriptor = "export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23"
-cost_tokens = 0
-cum_tokens = 9495
+key = 'Typescript(ExportNames { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx" })'
+descriptor = "export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
+cost_tokens = 18
+cum_tokens = 9557
 
 [batches.content]
 kind = "lines"
@@ -4929,10 +4921,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 243
+key = 'Typescript(Export { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx", start_line: 23 })'
+descriptor = "export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23"
+cost_tokens = 0
+cum_tokens = 9557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 244
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 182 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 182"
 cost_tokens = 87
-cum_tokens = 9582
+cum_tokens = 9644
 
 [batches.content]
 kind = "lines"
@@ -4946,11 +4964,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 244
+position = 245
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 52
-cum_tokens = 9634
+cum_tokens = 9696
 
 [batches.content]
 kind = "lines"
@@ -4964,11 +4982,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 245
+position = 246
 key = 'Fs(DirListing { dir: "website/index/samples" })'
 descriptor = "listing of 'website/index/samples'"
 cost_tokens = 5
-cum_tokens = 9639
+cum_tokens = 9701
 
 [batches.content]
 kind = "fs"
@@ -4978,11 +4996,11 @@ parent = "website/index/samples"
 entries = ["sample.mdx.txt"]
 
 [[batches]]
-position = 246
+position = 247
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 59
-cum_tokens = 9698
+cum_tokens = 9760
 
 [batches.content]
 kind = "lines"
@@ -4996,11 +5014,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Json(Dependencies { file: "monaco-lsp-client/package.json" })'
 descriptor = "package runtime dependencies in monaco-lsp-client/package.json"
 cost_tokens = 81
-cum_tokens = 9779
+cum_tokens = 9841
 
 [batches.content]
 kind = "lines"
@@ -5014,11 +5032,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 248
+position = 249
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 559 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 559"
 cost_tokens = 12
-cum_tokens = 9791
+cum_tokens = 9853
 
 [batches.content]
 kind = "lines"
@@ -5032,11 +5050,11 @@ end = 559
 kind = "full"
 
 [[batches]]
-position = 249
+position = 250
 key = 'Typescript(ExportNames { file: "src/internal/common/workers.ts" })'
 descriptor = "export names surface in src/internal/common/workers.ts"
 cost_tokens = 29
-cum_tokens = 9820
+cum_tokens = 9882
 
 [batches.content]
 kind = "lines"
@@ -5074,11 +5092,11 @@ end = 114
 kind = "ellipsis"
 
 [[batches]]
-position = 250
+position = 251
 key = 'Typescript(Export { file: "src/internal/common/workers.ts", start_line: 92 })'
 descriptor = "export at src/internal/common/workers.ts:92"
 cost_tokens = 23
-cum_tokens = 9843
+cum_tokens = 9905
 
 [batches.content]
 kind = "lines"
