@@ -85,7 +85,23 @@ cmd/
         …
          176→func init() {
         …
-    root.go …
+    root.go
+        …
+          66→// agentUIAdapter adapts agent.Agent to ui.AgentInterface
+          67→type agentUIAdapter struct {
+          68→	agent *agent.Agent
+          69→}
+        …
+         131→func GetRootCommand(v string) *cobra.Command {
+         132→	rootCmd.Version = v
+         133→	return rootCmd
+        …
+         143→func InitConfig() {
+        …
+         225→func LoadConfigWithEnvSubstitution(configPath string) error {
+        …
+         758→type AgenticLoopConfig struct {
+        …
     script.go …
     script_deepseek_test.go …
     script_integration_test.go …
@@ -112,36 +128,7 @@ go.mod
        3→go 1.24.0
        4→
        5→toolchain go1.24.5
-       6→
-       7→require (
-       8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
-       9→	github.com/PuerkitoBio/goquery v1.10.3
-      10→	github.com/bytedance/sonic v1.15.0
-      11→	github.com/charmbracelet/fang v0.4.0
-      12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-      13→	github.com/cloudwego/eino v0.7.13
-      14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
-      15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
-      16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
-      17→	github.com/eino-contrib/jsonschema v1.0.3
-      18→	github.com/getkin/kin-openapi v0.131.0
-      19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
-      20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
-      21→	github.com/spf13/cobra v1.10.1
-      22→	github.com/spf13/viper v1.20.1
-      23→	github.com/tidwall/gjson v1.18.0
-      24→	golang.org/x/term v0.37.0
-      25→	google.golang.org/genai v1.22.0
-      26→	gopkg.in/yaml.v3 v3.0.1
-      27→)
     …
-     143→require (
-    …
-     145→	github.com/charmbracelet/bubbles v0.21.0
-     146→	github.com/charmbracelet/bubbletea v1.3.10
-     147→	github.com/charmbracelet/glamour v0.10.0
-    …
-     165→)
 go.sum …
 internal/
     agent/

@@ -141,6 +141,7 @@ xxhash.go
       51→// Reset clears the Digest's state so that it can be reused.
       52→// It uses a seed value of zero.
       53→func (d *Digest) Reset() {
+      54→	d.ResetWithSeed(0)
     …
       57→// ResetWithSeed clears the Digest's state so that it can be reused.
       58→// It uses the given seed to initialize the state.

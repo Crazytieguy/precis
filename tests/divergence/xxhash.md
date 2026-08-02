@@ -1,4 +1,4 @@
-Score(3000)=0.692 I=0.821 C=0.583 ns_rows≤3K=24/60 (reached=13 partial=0 missing=11)
+Score(3000)=0.696 I=0.823 C=0.589 ns_rows≤3K=24/60 (reached=13 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -14,100 +14,101 @@ Score(3000)=0.692 I=0.821 C=0.583 ns_rows≤3K=24/60 (reached=13 partial=0 missi
 | walker |  | 161 | 0 | go module file go.mod |  |  | 0.000 |
 | walker |  | 200 | 39 | go package doc lede in xxhash.go |  |  | 0.763 |
 | ns | 200 |  | 87 | Complete root directory listing | 1.3 |  | 0.763 |
-| walker |  | 266 | 66 | README headline in README.md |  |  | 0.939 |
-| ns | 277 |  | 77 | README: the complete public API block | 1.4 |  | 0.795 |
-| walker |  | 297 | 31 | headings outline in README.md |  |  | 0.800 |
-| walker |  | 332 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.800 |
-| ns | 361 |  | 84 | README: Digest's key methods and hash.Hash64 conformance | 1.5 |  | 0.713 |
-| ns | 437 |  | 76 | README: pure-Go vs assembly, and the `purego` tag | 1.6 |  | 0.665 |
-| ns | 478 |  | 41 | All subdirectory listings (complete) | 1.7 |  | 0.696 |
-| ns | 507 |  | 29 | README: remaining H2 section headings | 1.8 |  | 0.703 |
-| ns | 538 |  | 31 | Root `go.mod`: module path and Go floor | 1.9 |  | 0.709 |
-| ns | 680 |  | 142 | `Digest` doc comment and all seven struct fields | 2.1 |  | 0.631 |
-| ns | 848 |  | 168 | `xxhash_asm.go` in full: build tags + the two assembly-backed declarations | 2.2 |  | 0.565 |
-| walker |  | 956 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.568 |
-| ns | 969 |  | 121 | `xxhash_other.go`: complementary build tags + pure-Go `Sum64`/`writeBlocks` signatures | 2.3 |  | 0.533 |
-| walker |  | 1010 | 54 | go decl names surface in xxhash_safe.go |  |  | 0.533 |
-| walker |  | 1010 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.533 |
-| walker |  | 1010 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.533 |
-| walker |  | 1021 | 11 | go decl body at xxhash_safe.go:9 |  |  | 0.534 |
-| walker |  | 1031 | 10 | go package + imports in xxhash_safe.go |  |  | 0.534 |
-| walker |  | 1042 | 11 | go decl body at xxhash_safe.go:14 |  |  | 0.534 |
-| walker |  | 1103 | 61 | go decl names surface in xxhash_asm.go |  |  | 0.547 |
-| walker |  | 1103 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.547 |
-| walker |  | 1103 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.547 |
-| walker |  | 1113 | 10 | go package + imports in xxhash_asm.go |  |  | 0.552 |
-| walker |  | 1120 | 7 | go decl doc at xxhash_asm.go:15 |  |  | 0.557 |
-| walker |  | 1186 | 66 | go decl names surface in xxhash_unsafe.go |  |  | 0.558 |
-| walker |  | 1186 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.558 |
-| walker |  | 1186 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.558 |
-| walker |  | 1205 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.558 |
-| walker |  | 1226 | 21 | go decl doc at xxhash_safe.go:9 |  |  | 0.559 |
-| walker |  | 1247 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.560 |
-| ns | 1251 |  | 282 | `xxhash_unsafe.go`: `!appengine` tag, `Sum64String`/`WriteString` signatures, `sliceHeader` | 2.4 |  | 0.504 |
-| walker |  | 1281 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.528 |
-| walker |  | 1327 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.529 |
-| walker |  | 1327 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.529 |
-| walker |  | 1327 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.529 |
-| walker |  | 1327 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.529 |
-| ns | 1431 |  | 180 | `xxhash_safe.go` in full: the `appengine` fallbacks | 2.5 |  | 0.521 |
-| ns | 1540 |  | 109 | Constructors: `New` and `NewWithSeed`, with bodies | 2.6 |  | 0.498 |
-| ns | 1717 |  | 177 | `Reset`, `ResetWithSeed`, `Size`, `BlockSize` signatures | 2.7 |  | 0.475 |
-| ns | 1829 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.460 |
-| ns | 2021 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.441 |
-| walker |  | 2042 | 715 | go decl names surface in xxhash.go |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:23 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:40 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:45 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:53 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:59 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:69 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:72 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:75 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:113 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:129 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:176 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:190 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:208 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:214 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:222 |  |  | 0.486 |
-| walker |  | 2042 | 0 | go decl at xxhash.go:229 |  |  | 0.486 |
-| walker |  | 2053 | 11 | go decl at xxhash.go:11 |  |  | 0.489 |
-| walker |  | 2064 | 11 | go decl at xxhash.go:170 |  |  | 0.489 |
-| walker |  | 2075 | 11 | go decl doc at xxhash.go:72 |  |  | 0.492 |
-| walker |  | 2086 | 11 | go decl body at xxhash.go:40 |  |  | 0.495 |
-| walker |  | 2098 | 12 | go decl doc at xxhash.go:69 |  |  | 0.498 |
-| walker |  | 2110 | 12 | go decl doc at xxhash.go:129 |  |  | 0.503 |
-| walker |  | 2125 | 15 | go decl doc at xxhash.go:40 |  |  | 0.508 |
-| ns | 2144 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.508 |
-| walker |  | 2202 | 77 | go decl at xxhash.go:29 |  |  | 0.525 |
-| walker |  | 2216 | 14 | go decl doc at xxhash.go:176 |  |  | 0.541 |
-| ns | 2216 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.541 |
-| walker |  | 2233 | 17 | go decl doc at xxhash.go:45 |  |  | 0.548 |
-| walker |  | 2251 | 18 | go decl doc at xxhash.go:75 |  |  | 0.556 |
-| walker |  | 2269 | 18 | go decl doc at xxhash.go:190 |  |  | 0.566 |
-| walker |  | 2288 | 19 | go decl doc at xxhash.go:113 |  |  | 0.576 |
-| walker |  | 2336 | 48 | go package + imports in xxhash.go |  |  | 0.615 |
-| walker |  | 2367 | 31 | go decl doc at xxhash.go:53 |  |  | 0.625 |
-| walker |  | 2402 | 35 | go decl doc at xxhash.go:59 |  |  | 0.641 |
-| ns | 2435 |  | 219 | Roster: `round`, `mergeRound`, and the complete `rol*` rotate family | 2.12 |  | 0.652 |
-| walker |  | 2453 | 51 | go decl doc at xxhash.go:29 |  |  | 0.687 |
-| ns | 2510 |  | 75 | `ResetWithSeed` body: how a seed becomes the four lanes | 3.1 | 2.7 | 0.674 |
-| walker |  | 2570 | 117 | plaintext config testall.sh |  |  | 0.676 |
-| walker |  | 2614 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.684 |
-| ns | 2615 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.663 |
-| walker |  | 2655 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.674 |
-| walker |  | 2689 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.686 |
-| ns | 2736 |  | 121 | `xxhash_unsafe.go`: the actual unsafe string-to-slice conversion | 3.3 | 2.4 | 0.671 |
-| walker |  | 2802 | 113 | go module file xxhashbench/go.mod |  |  | 0.671 |
-| walker |  | 2855 | 53 | go decl doc at xxhash.go:23 |  |  | 0.692 |
-| ns | 3009 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.657 |
-| walker |  | 3100 | 245 | README.md section #0 |  |  | 0.742 |
-| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.723 |
-| walker |  | 3190 | 90 | go decl names surface in dynamic/plugin.go |  |  | 0.723 |
-| walker |  | 3190 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.723 |
-| walker |  | 3190 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.723 |
-| walker |  | 3201 | 11 | go decl body at xxhash.go:53 |  |  | 0.727 |
+| walker |  | 274 | 74 | go decl names surface in xxhash.go |  |  | 0.764 |
+| walker |  | 274 | 0 | go decl at xxhash.go:40 |  |  | 0.764 |
+| walker |  | 274 | 0 | go decl at xxhash.go:45 |  |  | 0.764 |
+| walker |  | 274 | 0 | go decl at xxhash.go:53 |  |  | 0.764 |
+| walker |  | 274 | 0 | go decl at xxhash.go:59 |  |  | 0.764 |
+| ns | 277 |  | 77 | README: the complete public API block | 1.4 |  | 0.647 |
+| walker |  | 285 | 11 | go decl body at xxhash.go:40 |  |  | 0.647 |
+| walker |  | 296 | 11 | go decl body at xxhash.go:53 |  |  | 0.647 |
+| walker |  | 311 | 15 | go decl doc at xxhash.go:40 |  |  | 0.648 |
+| ns | 361 |  | 84 | README: Digest's key methods and hash.Hash64 conformance | 1.5 |  | 0.577 |
+| walker |  | 388 | 77 | go decl at xxhash.go:29 |  |  | 0.583 |
+| walker |  | 405 | 17 | go decl doc at xxhash.go:45 |  |  | 0.584 |
+| ns | 437 |  | 76 | README: pure-Go vs assembly, and the `purego` tag | 1.6 |  | 0.545 |
+| walker |  | 471 | 66 | README headline in README.md |  |  | 0.668 |
+| ns | 478 |  | 41 | All subdirectory listings (complete) | 1.7 |  | 0.699 |
+| walker |  | 502 | 31 | headings outline in README.md |  |  | 0.704 |
+| ns | 507 |  | 29 | README: remaining H2 section headings | 1.8 |  | 0.712 |
+| ns | 538 |  | 31 | Root `go.mod`: module path and Go floor | 1.9 |  | 0.718 |
+| walker |  | 552 | 50 | go package + imports in xxhash.go |  |  | 0.778 |
+| walker |  | 587 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.778 |
+| ns | 680 |  | 142 | `Digest` doc comment and all seven struct fields | 2.1 |  | 0.725 |
+| ns | 848 |  | 168 | `xxhash_asm.go` in full: build tags + the two assembly-backed declarations | 2.2 |  | 0.649 |
+| ns | 969 |  | 121 | `xxhash_other.go`: complementary build tags + pure-Go `Sum64`/`writeBlocks` signatures | 2.3 |  | 0.609 |
+| walker |  | 1211 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.612 |
+| walker |  | 1242 | 31 | go decl doc at xxhash.go:53 |  |  | 0.612 |
+| ns | 1251 |  | 282 | `xxhash_unsafe.go`: `!appengine` tag, `Sum64String`/`WriteString` signatures, `sliceHeader` | 2.4 |  | 0.538 |
+| walker |  | 1277 | 35 | go decl doc at xxhash.go:59 |  |  | 0.540 |
+| walker |  | 1331 | 54 | go decl names surface in xxhash_safe.go |  |  | 0.540 |
+| walker |  | 1331 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.540 |
+| walker |  | 1331 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.540 |
+| walker |  | 1342 | 11 | go decl body at xxhash_safe.go:9 |  |  | 0.540 |
+| walker |  | 1352 | 10 | go package + imports in xxhash_safe.go |  |  | 0.540 |
+| walker |  | 1363 | 11 | go decl body at xxhash_safe.go:14 |  |  | 0.541 |
+| walker |  | 1416 | 53 | go decl doc at xxhash.go:29 |  |  | 0.601 |
+| ns | 1431 |  | 180 | `xxhash_safe.go` in full: the `appengine` fallbacks | 2.5 |  | 0.573 |
+| walker |  | 1477 | 61 | go decl names surface in xxhash_asm.go |  |  | 0.582 |
+| walker |  | 1477 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.582 |
+| walker |  | 1477 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.582 |
+| walker |  | 1487 | 10 | go package + imports in xxhash_asm.go |  |  | 0.586 |
+| walker |  | 1494 | 7 | go decl doc at xxhash_asm.go:15 |  |  | 0.590 |
+| ns | 1540 |  | 109 | Constructors: `New` and `NewWithSeed`, with bodies | 2.6 |  | 0.583 |
+| walker |  | 1560 | 66 | go decl names surface in xxhash_unsafe.go |  |  | 0.589 |
+| walker |  | 1560 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.589 |
+| walker |  | 1560 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.589 |
+| walker |  | 1579 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.593 |
+| walker |  | 1600 | 21 | go decl doc at xxhash_safe.go:9 |  |  | 0.602 |
+| walker |  | 1621 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.611 |
+| ns | 1717 |  | 177 | `Reset`, `ResetWithSeed`, `Size`, `BlockSize` signatures | 2.7 |  | 0.603 |
+| ns | 1829 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.585 |
+| ns | 2021 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.560 |
+| ns | 2144 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.543 |
+| ns | 2216 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.537 |
+| walker |  | 2260 | 639 | go decl names surface #1 in xxhash.go |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:23 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:69 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:72 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:75 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:113 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:129 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:176 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:190 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:208 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:214 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:222 |  |  | 0.608 |
+| walker |  | 2260 | 0 | go decl at xxhash.go:229 |  |  | 0.608 |
+| walker |  | 2269 | 9 | go decl at xxhash.go:11 |  |  | 0.610 |
+| walker |  | 2280 | 11 | go decl at xxhash.go:170 |  |  | 0.613 |
+| walker |  | 2291 | 11 | go decl doc at xxhash.go:72 |  |  | 0.619 |
+| walker |  | 2303 | 12 | go decl doc at xxhash.go:69 |  |  | 0.626 |
+| walker |  | 2315 | 12 | go decl doc at xxhash.go:129 |  |  | 0.630 |
+| walker |  | 2329 | 14 | go decl doc at xxhash.go:176 |  |  | 0.639 |
+| walker |  | 2347 | 18 | go decl doc at xxhash.go:75 |  |  | 0.647 |
+| walker |  | 2365 | 18 | go decl doc at xxhash.go:190 |  |  | 0.657 |
+| walker |  | 2384 | 19 | go decl doc at xxhash.go:113 |  |  | 0.667 |
+| walker |  | 2418 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.682 |
+| ns | 2435 |  | 219 | Roster: `round`, `mergeRound`, and the complete `rol*` rotate family | 2.12 |  | 0.692 |
+| walker |  | 2464 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.692 |
+| walker |  | 2464 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.692 |
+| walker |  | 2464 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.692 |
+| walker |  | 2464 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.692 |
+| ns | 2510 |  | 75 | `ResetWithSeed` body: how a seed becomes the four lanes | 3.1 | 2.7 | 0.679 |
+| walker |  | 2581 | 117 | plaintext config testall.sh |  |  | 0.680 |
+| ns | 2615 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.660 |
+| walker |  | 2625 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.668 |
+| walker |  | 2666 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.678 |
+| walker |  | 2700 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.690 |
+| ns | 2736 |  | 121 | `xxhash_unsafe.go`: the actual unsafe string-to-slice conversion | 3.3 | 2.4 | 0.675 |
+| walker |  | 2813 | 113 | go module file xxhashbench/go.mod |  |  | 0.676 |
+| walker |  | 2866 | 53 | go decl doc at xxhash.go:23 |  |  | 0.696 |
+| ns | 3009 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.661 |
+| walker |  | 3111 | 245 | README.md section #0 |  |  | 0.746 |
+| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.726 |
+| walker |  | 3201 | 90 | go decl names surface in dynamic/plugin.go |  |  | 0.727 |
+| walker |  | 3201 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.727 |
+| walker |  | 3201 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.727 |
 | walker |  | 3210 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.727 |
 | walker |  | 3236 | 26 | go decl body at xxhash.go:45 |  |  | 0.737 |
 | walker |  | 3257 | 21 | go decl body at xxhash.go:214 |  |  | 0.738 |
