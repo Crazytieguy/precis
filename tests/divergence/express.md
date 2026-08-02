@@ -6,7 +6,6 @@ Score(3000)=0.554 I=0.821 C=0.374 ns_rows≤3K=19/51 (reached=8 partial=1 missin
 | ns | 47 |  | 47 | Repository root listing | 1.1 |  | 1.000 |
 | walker |  | 70 | 23 | listing of 'lib' |  |  | 1.000 |
 | walker |  | 85 | 15 | export names surface in index.js |  |  | 1.000 |
-| walker |  | 85 | 0 | module statements at index.js:11 |  |  | 1.000 |
 | ns | 139 |  | 92 | package.json identity | 1.2 |  | 0.827 |
 | walker |  | 148 | 63 | package identity in package.json |  |  | 0.908 |
 | walker |  | 156 | 8 | listing of '.github' |  |  | 0.908 |
