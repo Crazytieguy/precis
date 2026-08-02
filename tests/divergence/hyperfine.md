@@ -204,50 +204,54 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 7677 | 0 | impl method at src/benchmark/mod.rs:141 |  |  | 0.676 |
 | ns | 7699 |  | 162 | src/export/mod.rs: the Exporter trait and ExportManager | 5.5 | 5.4 | 0.669 |
 | ns | 7836 |  | 137 | Flag-to-exporter wiring and the '-' means stdout convention | 5.6 | 5.5 | 0.664 |
-| walker |  | 7863 | 186 | impl method sigs in src/options.rs |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:49 |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:57 |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:133 |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:165 |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:276 |  |  | 0.664 |
-| walker |  | 7863 | 0 | impl method at src/options.rs:470 |  |  | 0.664 |
-| ns | 8052 |  | 216 | src/export/markup.rs: the shared table shape and the blanket Exporter impl | 5.7 | 5.5 | 0.657 |
-| walker |  | 8132 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.675 |
-| walker |  | 8206 | 74 | README.md section #13 |  |  | 0.675 |
+| walker |  | 7946 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.683 |
+| walker |  | 8020 | 74 | README.md section #13 |  |  | 0.683 |
+| ns | 8052 |  | 216 | src/export/markup.rs: the shared table shape and the blanket Exporter impl | 5.7 | 5.5 | 0.675 |
+| walker |  | 8102 | 82 | README.md section #11 |  |  | 0.675 |
 | ns | 8268 |  | 216 | The five exporter types, and the CSV column set | 5.8 | 5.4 | 0.669 |
-| walker |  | 8288 | 82 | README.md section #11 |  |  | 0.669 |
+| walker |  | 8432 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.669 |
 | ns | 8525 |  | 257 | src/output/format.rs: automatic time-unit selection, and the Unit type | 5.9 |  | 0.663 |
-| walker |  | 8618 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.663 |
+| walker |  | 8565 | 133 | impl method sigs in src/export/asciidoc.rs |  |  | 0.663 |
+| walker |  | 8565 | 0 | impl method at src/export/asciidoc.rs:8 |  |  | 0.663 |
+| walker |  | 8565 | 0 | impl method at src/export/asciidoc.rs:22 |  |  | 0.663 |
+| walker |  | 8565 | 0 | impl method at src/export/asciidoc.rs:26 |  |  | 0.663 |
+| walker |  | 8565 | 0 | impl method at src/export/asciidoc.rs:30 |  |  | 0.663 |
+| walker |  | 8565 | 0 | impl method at src/export/asciidoc.rs:34 |  |  | 0.663 |
 | ns | 8662 |  | 137 | src/output/warnings.rs: the complete Warnings set | 5.10 | 4.12 | 0.664 |
-| walker |  | 8751 | 133 | impl method sigs in src/export/asciidoc.rs |  |  | 0.664 |
-| walker |  | 8751 | 0 | impl method at src/export/asciidoc.rs:8 |  |  | 0.664 |
-| walker |  | 8751 | 0 | impl method at src/export/asciidoc.rs:22 |  |  | 0.664 |
-| walker |  | 8751 | 0 | impl method at src/export/asciidoc.rs:26 |  |  | 0.664 |
-| walker |  | 8751 | 0 | impl method at src/export/asciidoc.rs:30 |  |  | 0.664 |
-| walker |  | 8751 | 0 | impl method at src/export/asciidoc.rs:34 |  |  | 0.664 |
 | ns | 8870 |  | 208 | src/command.rs: the Command type and its complete method roster | 6.1 |  | 0.658 |
-| ns | 9016 |  | 146 | How {param} placeholders are substituted, and why naively | 6.2 | 6.1 | 0.654 |
-| walker |  | 9115 | 364 | impl method sigs in src/command.rs |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:34 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:54 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:61 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:77 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:81 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:96 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:100 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:106 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:137 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:250 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:254 |  |  | 0.664 |
-| walker |  | 9115 | 0 | impl method at src/command.rs:260 |  |  | 0.664 |
-| walker |  | 9170 | 55 | impl method at src/command.rs:42 |  |  | 0.664 |
-| walker |  | 9197 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.664 |
+| walker |  | 8929 | 364 | impl method sigs in src/command.rs |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:34 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:54 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:61 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:77 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:81 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:96 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:100 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:106 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:137 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:250 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:254 |  |  | 0.669 |
+| walker |  | 8929 | 0 | impl method at src/command.rs:260 |  |  | 0.669 |
+| walker |  | 8984 | 55 | impl method at src/command.rs:42 |  |  | 0.669 |
+| ns | 9016 |  | 146 | How {param} placeholders are substituted, and why naively | 6.2 | 6.1 | 0.664 |
 | ns | 9203 |  | 187 | src/command.rs: Commands and its complete method roster, with the three construction modes | 6.3 |  | 0.663 |
-| ns | 9432 |  | 229 | src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize() | 6.4 |  | 0.665 |
-| ns | 9582 |  | 150 | build.rs: shell completions generated from the same clap command | 7.1 | 2.1 | 0.659 |
-| walker |  | 9782 | 585 | pub item at src/options.rs:198 |  |  | 0.687 |
-| ns | 9791 |  | 209 | .github/workflows/CICD.yml: the complete job set and the commands each runs | 7.2 |  | 0.679 |
-| walker |  | 9826 | 44 | impl method at src/benchmark/scheduler.rs:21 |  |  | 0.679 |
-| walker |  | 9839 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.679 |
-| walker |  | 9900 | 61 | impl method body at src/parameter/mod.rs:14 body 15 |  |  | 0.679 |
-| ns | 9983 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.672 |
+| walker |  | 9254 | 270 | impl method sigs in src/options.rs |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:33 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:49 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:57 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:117 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:133 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:165 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:192 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:252 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:276 |  |  | 0.670 |
+| walker |  | 9254 | 0 | impl method at src/options.rs:470 |  |  | 0.670 |
+| walker |  | 9281 | 27 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.670 |
+| ns | 9432 |  | 229 | src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize() | 6.4 |  | 0.671 |
+| ns | 9582 |  | 150 | build.rs: shell completions generated from the same clap command | 7.1 | 2.1 | 0.665 |
+| ns | 9791 |  | 209 | .github/workflows/CICD.yml: the complete job set and the commands each runs | 7.2 |  | 0.658 |
+| walker |  | 9864 | 583 | pub item at src/options.rs:198 |  |  | 0.685 |
+| walker |  | 9908 | 44 | impl method at src/benchmark/scheduler.rs:21 |  |  | 0.685 |
+| walker |  | 9921 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.685 |
+| walker |  | 9982 | 61 | impl method body at src/parameter/mod.rs:14 body 15 |  |  | 0.685 |
+| ns | 9983 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.678 |

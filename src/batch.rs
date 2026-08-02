@@ -156,6 +156,10 @@ pub enum RustKey {
     /// Surface listing of every top-level `pub` item name in a file —
     /// catastrophic-omission hedge.
     PubItemNames { file: PathBuf },
+    /// Surface listing of a file's top-level private `fn` names — the
+    /// internal implementation TOC, emitted only when private fns
+    /// outnumber the file's pub items (see `private_fn_roster_items`).
+    PrivateItemNames { file: PathBuf },
     /// Whole top-level `pub` item (sig with body marker for fn).
     PubItem { file: PathBuf, start_line: usize },
     /// Body slice of a public fn, split by top-level statement.
@@ -175,6 +179,11 @@ pub enum RustKey {
         start_line: usize,
         body_start_line: usize,
     },
+    /// All top-level private `static`/`const` items of an entrypoint
+    /// file as one grouped batch — NS rows anchor on module state as a
+    /// unit, and per-item batches would be schedule crumbs (see
+    /// `module_state_rows` for membership and the token floor).
+    ModuleState { file: PathBuf },
     /// Rustdoc up to the first `# Heading`. Predecessor: `PubItem`.
     PubItemDocLede { file: PathBuf, start_line: usize },
     /// Rustdoc body from the first `# Heading` onward. Predecessor:
@@ -694,8 +703,10 @@ impl InnerKey for RustKey {
             RustKey::CrateAttrs { .. }
                 | RustKey::ModUse { .. }
                 | RustKey::PubItemNames { .. }
+                | RustKey::PrivateItemNames { .. }
                 | RustKey::PubItem { .. }
                 | RustKey::EntryItem { .. }
+                | RustKey::ModuleState { .. }
                 | RustKey::MethodSigs { .. }
                 | RustKey::ImplMethod { .. }
                 | RustKey::RegistrationRoster { .. }
@@ -726,6 +737,9 @@ impl InnerKey for RustKey {
             RustKey::CrateAttrs { file } => describe_in("crate attributes", file, root),
             RustKey::ModUse { file } => describe_in("mod/use plumbing", file, root),
             RustKey::PubItemNames { file } => describe_in("pub-item names surface", file, root),
+            RustKey::PrivateItemNames { file } => {
+                describe_in("private-fn names surface", file, root)
+            }
             RustKey::PubItem { file, start_line } => {
                 describe_at("pub item", file, *start_line, root)
             }
@@ -742,6 +756,7 @@ impl InnerKey for RustKey {
                 start_line,
                 body_start_line,
             } => describe_at_body("entry item body", file, *start_line, *body_start_line, root),
+            RustKey::ModuleState { file } => describe_in("private module state", file, root),
             RustKey::PubItemDocLede { file, start_line } => {
                 describe_at("pub-item doc lede", file, *start_line, root)
             }

@@ -1,4 +1,4 @@
-Score(3000)=0.513 I=0.817 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missing=16)
+Score(3000)=0.550 I=0.824 C=0.367 ns_rows≤3K=24/56 (reached=7 partial=2 missing=15)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -63,138 +63,137 @@ Score(3000)=0.513 I=0.817 C=0.323 ns_rows≤3K=24/56 (reached=6 partial=2 missin
 | walker |  | 2458 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.581 |
 | walker |  | 2458 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.581 |
 | ns | 2529 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.564 |
-| walker |  | 2717 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.564 |
-| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.538 |
-| walker |  | 2839 | 122 | [package] in impl/Cargo.toml |  |  | 0.539 |
-| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.513 |
-| walker |  | 2998 | 159 | manifest config in impl/Cargo.toml |  |  | 0.513 |
-| walker |  | 3057 | 59 | README.md section #11 |  |  | 0.517 |
-| walker |  | 3065 | 8 | listing of 'tests/no-std' |  |  | 0.518 |
-| walker |  | 3150 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.518 |
-| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.518 |
-| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.518 |
-| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.518 |
-| walker |  | 3150 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.518 |
-| walker |  | 3161 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.518 |
-| walker |  | 3173 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.518 |
-| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.482 |
-| walker |  | 3507 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.482 |
-| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.463 |
-| walker |  | 3791 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.463 |
-| ns | 3851 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.434 |
-| ns | 4044 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.424 |
-| ns | 4190 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.419 |
-| walker |  | 4318 | 527 | listing of 'tests/ui' |  |  | 0.419 |
-| walker |  | 4369 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.419 |
-| walker |  | 4422 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.419 |
-| ns | 4482 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.411 |
-| walker |  | 4494 | 72 | README.md section #2 |  |  | 0.422 |
-| ns | 4651 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.413 |
-| ns | 4863 |  | 212 | attr.rs: which attributes `get` recognises, plus the file's function roster | 3.11 |  | 0.404 |
-| walker |  | 4883 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.404 |
-| ns | 5100 |  | 237 | impl/src/prop.rs: complete accessor roster for source/from/backtrace fields | 3.12 |  | 0.392 |
-| walker |  | 5262 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.392 |
-| ns | 5309 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.381 |
-| walker |  | 5407 | 145 | mod/use plumbing in impl/src/expand.rs |  |  | 0.381 |
-| walker |  | 5537 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.381 |
-| walker |  | 5537 | 0 | impl method at impl/src/generics.rs:13 |  |  | 0.381 |
-| walker |  | 5537 | 0 | impl method at impl/src/generics.rs:19 |  |  | 0.381 |
-| walker |  | 5537 | 0 | impl method at impl/src/generics.rs:54 |  |  | 0.381 |
-| walker |  | 5537 | 0 | impl method at impl/src/generics.rs:61 |  |  | 0.381 |
-| walker |  | 5537 | 0 | impl method at impl/src/generics.rs:74 |  |  | 0.381 |
-| walker |  | 5569 | 32 | impl method body at impl/src/generics.rs:19 body 20 |  |  | 0.381 |
-| ns | 5599 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.371 |
-| walker |  | 5700 | 131 | impl method sigs in impl/src/valid.rs |  |  | 0.389 |
-| walker |  | 5700 | 0 | impl method at impl/src/valid.rs:6 |  |  | 0.389 |
-| walker |  | 5700 | 0 | impl method at impl/src/valid.rs:15 |  |  | 0.389 |
-| walker |  | 5700 | 0 | impl method at impl/src/valid.rs:46 |  |  | 0.389 |
-| walker |  | 5700 | 0 | impl method at impl/src/valid.rs:67 |  |  | 0.389 |
-| walker |  | 5700 | 0 | impl method at impl/src/valid.rs:92 |  |  | 0.389 |
-| ns | 5730 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.384 |
-| walker |  | 5778 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.386 |
-| walker |  | 5804 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.388 |
-| walker |  | 5867 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.388 |
-| ns | 5909 |  | 179 | ast.rs: ContainerKind and its six display strings | 3.16 |  | 0.385 |
-| walker |  | 5920 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.393 |
-| walker |  | 5973 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.404 |
-| walker |  | 6027 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.418 |
-| walker |  | 6092 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.439 |
-| walker |  | 6189 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.448 |
-| ns | 6202 |  | 293 | ast.rs: complete from_syn constructor roster | 3.17 |  | 0.440 |
-| walker |  | 6226 | 37 | impl method body at impl/src/generics.rs:13 body 14 |  |  | 0.440 |
-| walker |  | 6263 | 37 | impl method body at impl/src/generics.rs:54 body 55 |  |  | 0.440 |
-| ns | 6361 |  | 159 | impl/src/generics.rs: ParamsInScope and InferredBounds | 3.18 |  | 0.452 |
-| ns | 6610 |  | 249 | impl/src/unraw.rs: IdentUnraw/MemberUnraw and the raw-identifier rule | 3.19 |  | 0.447 |
-| walker |  | 6804 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.447 |
-| ns | 6914 |  | 304 | impl/src/fallback.rs: the invalid-input fallback expansion | 3.20 |  | 0.437 |
-| walker |  | 7109 | 305 | README.md section #12 |  |  | 0.453 |
-| ns | 7125 |  | 211 | impl/src/scan_expr.rs: the Input/Action alphabet of the expression scanner | 3.21 |  | 0.442 |
-| walker |  | 7132 | 23 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.442 |
-| walker |  | 7207 | 75 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.442 |
-| walker |  | 7319 | 112 | pub-item names surface in impl/src/attr.rs |  |  | 0.444 |
-| walker |  | 7319 | 0 | pub item at impl/src/attr.rs:69 |  |  | 0.444 |
-| walker |  | 7355 | 36 | pub item at impl/src/attr.rs:51 |  |  | 0.447 |
-| walker |  | 7391 | 36 | pub item at impl/src/attr.rs:45 |  |  | 0.452 |
-| walker |  | 7427 | 36 | pub item at impl/src/attr.rs:39 |  |  | 0.458 |
-| walker |  | 7463 | 36 | pub item at impl/src/attr.rs:33 |  |  | 0.465 |
-| ns | 7481 |  | 356 | expand.rs: the gate line for every conditionally generated impl | 3.22 | 3.1 | 0.456 |
-| walker |  | 7555 | 92 | pub item at impl/src/attr.rs:57 |  |  | 0.481 |
-| ns | 7641 |  | 160 | src/private.rs: the complete generated-code support surface | 4.1 |  | 0.475 |
-| walker |  | 7645 | 90 | pub item at impl/src/attr.rs:11 |  |  | 0.481 |
-| walker |  | 7757 | 112 | pub item at impl/src/attr.rs:21 |  |  | 0.501 |
-| walker |  | 7856 | 99 | mod/use plumbing in impl/src/generics.rs |  |  | 0.496 |
-| ns | 7856 |  | 215 | src/aserror.rs: AsDynError and its five blanket/dyn impls | 4.2 |  | 0.496 |
-| walker |  | 7956 | 100 | mod/use plumbing in impl/src/unraw.rs |  |  | 0.496 |
-| walker |  | 8005 | 49 | impl method body at impl/src/unraw.rs:88 body 89 |  |  | 0.496 |
+| walker |  | 2627 | 169 | private-fn names surface in impl/src/expand.rs |  |  | 0.604 |
+| ns | 2727 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.577 |
+| walker |  | 2886 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.577 |
+| ns | 2954 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.550 |
+| walker |  | 3008 | 122 | [package] in impl/Cargo.toml |  |  | 0.550 |
+| walker |  | 3167 | 159 | manifest config in impl/Cargo.toml |  |  | 0.550 |
+| walker |  | 3226 | 59 | README.md section #11 |  |  | 0.554 |
+| walker |  | 3234 | 8 | listing of 'tests/no-std' |  |  | 0.555 |
+| ns | 3294 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.516 |
+| walker |  | 3319 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.516 |
+| walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.516 |
+| walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.516 |
+| walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.516 |
+| walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.516 |
+| walker |  | 3330 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.516 |
+| walker |  | 3342 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.516 |
+| ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.496 |
+| walker |  | 3676 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.496 |
+| ns | 3851 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.465 |
+| walker |  | 3960 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.465 |
+| ns | 4044 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.454 |
+| ns | 4190 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.449 |
+| ns | 4482 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.440 |
+| walker |  | 4487 | 527 | listing of 'tests/ui' |  |  | 0.440 |
+| walker |  | 4538 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.440 |
+| walker |  | 4591 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.440 |
+| ns | 4651 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.432 |
+| walker |  | 4663 | 72 | README.md section #2 |  |  | 0.442 |
+| ns | 4863 |  | 212 | attr.rs: which attributes `get` recognises, plus the file's function roster | 3.11 |  | 0.431 |
+| walker |  | 5052 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.431 |
+| ns | 5100 |  | 237 | impl/src/prop.rs: complete accessor roster for source/from/backtrace fields | 3.12 |  | 0.418 |
+| ns | 5309 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.407 |
+| walker |  | 5431 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.407 |
+| walker |  | 5576 | 145 | mod/use plumbing in impl/src/expand.rs |  |  | 0.407 |
+| ns | 5599 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.396 |
+| walker |  | 5706 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.397 |
+| walker |  | 5706 | 0 | impl method at impl/src/generics.rs:13 |  |  | 0.397 |
+| walker |  | 5706 | 0 | impl method at impl/src/generics.rs:19 |  |  | 0.397 |
+| walker |  | 5706 | 0 | impl method at impl/src/generics.rs:54 |  |  | 0.397 |
+| walker |  | 5706 | 0 | impl method at impl/src/generics.rs:61 |  |  | 0.397 |
+| walker |  | 5706 | 0 | impl method at impl/src/generics.rs:74 |  |  | 0.397 |
+| ns | 5730 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.392 |
+| walker |  | 5738 | 32 | impl method body at impl/src/generics.rs:19 body 20 |  |  | 0.392 |
+| walker |  | 5869 | 131 | impl method sigs in impl/src/valid.rs |  |  | 0.408 |
+| walker |  | 5869 | 0 | impl method at impl/src/valid.rs:6 |  |  | 0.408 |
+| walker |  | 5869 | 0 | impl method at impl/src/valid.rs:15 |  |  | 0.408 |
+| walker |  | 5869 | 0 | impl method at impl/src/valid.rs:46 |  |  | 0.408 |
+| walker |  | 5869 | 0 | impl method at impl/src/valid.rs:67 |  |  | 0.408 |
+| walker |  | 5869 | 0 | impl method at impl/src/valid.rs:92 |  |  | 0.408 |
+| ns | 5909 |  | 179 | ast.rs: ContainerKind and its six display strings | 3.16 |  | 0.400 |
+| walker |  | 5947 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.402 |
+| walker |  | 5973 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.404 |
+| walker |  | 6036 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.409 |
+| walker |  | 6089 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.416 |
+| walker |  | 6142 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.426 |
+| walker |  | 6196 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.440 |
+| ns | 6202 |  | 293 | ast.rs: complete from_syn constructor roster | 3.17 |  | 0.432 |
+| walker |  | 6261 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.452 |
+| walker |  | 6358 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.463 |
+| ns | 6361 |  | 159 | impl/src/generics.rs: ParamsInScope and InferredBounds | 3.18 |  | 0.474 |
+| walker |  | 6395 | 37 | impl method body at impl/src/generics.rs:13 body 14 |  |  | 0.474 |
+| walker |  | 6432 | 37 | impl method body at impl/src/generics.rs:54 body 55 |  |  | 0.474 |
+| walker |  | 6575 | 143 | private-fn names surface in impl/src/prop.rs |  |  | 0.478 |
+| ns | 6610 |  | 249 | impl/src/unraw.rs: IdentUnraw/MemberUnraw and the raw-identifier rule | 3.19 |  | 0.472 |
+| ns | 6914 |  | 304 | impl/src/fallback.rs: the invalid-input fallback expansion | 3.20 |  | 0.461 |
+| walker |  | 7116 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.461 |
+| ns | 7125 |  | 211 | impl/src/scan_expr.rs: the Input/Action alphabet of the expression scanner | 3.21 |  | 0.450 |
+| walker |  | 7281 | 165 | private-fn names surface in impl/src/fmt.rs |  |  | 0.456 |
+| ns | 7481 |  | 356 | expand.rs: the gate line for every conditionally generated impl | 3.22 | 3.1 | 0.447 |
+| walker |  | 7586 | 305 | README.md section #12 |  |  | 0.462 |
+| walker |  | 7609 | 23 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.462 |
+| ns | 7641 |  | 160 | src/private.rs: the complete generated-code support surface | 4.1 |  | 0.457 |
+| walker |  | 7684 | 75 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.457 |
+| walker |  | 7796 | 112 | pub-item names surface in impl/src/attr.rs |  |  | 0.458 |
+| walker |  | 7796 | 0 | pub item at impl/src/attr.rs:69 |  |  | 0.458 |
+| walker |  | 7832 | 36 | pub item at impl/src/attr.rs:51 |  |  | 0.461 |
+| ns | 7856 |  | 215 | src/aserror.rs: AsDynError and its five blanket/dyn impls | 4.2 |  | 0.457 |
+| walker |  | 7868 | 36 | pub item at impl/src/attr.rs:45 |  |  | 0.461 |
+| walker |  | 7904 | 36 | pub item at impl/src/attr.rs:39 |  |  | 0.467 |
+| walker |  | 7940 | 36 | pub item at impl/src/attr.rs:33 |  |  | 0.473 |
+| walker |  | 8032 | 92 | pub item at impl/src/attr.rs:57 |  |  | 0.497 |
 | ns | 8098 |  | 242 | src/display.rs: AsDisplay and the std-only Path/PathBuf specializations | 4.3 |  | 0.489 |
-| walker |  | 8117 | 112 | mod/use plumbing in impl/src/ast.rs |  |  | 0.489 |
-| walker |  | 8251 | 134 | README.md section #9 |  |  | 0.492 |
-| walker |  | 8281 | 30 | pub item at impl/src/fallback.rs:7 |  |  | 0.492 |
-| walker |  | 8333 | 52 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.492 |
-| ns | 8380 |  | 282 | src/provide.rs (ThiserrorProvide) and src/var.rs (Var) end to end | 4.4 |  | 0.482 |
-| ns | 8493 |  | 113 | impl/src/lib.rs: the version-stamped `private` path token | 4.5 |  | 0.483 |
-| walker |  | 8650 | 317 | impl method sigs in impl/src/prop.rs |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:7 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:11 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:15 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:19 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:26 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:32 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:38 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:54 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:58 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:62 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:66 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:73 |  |  | 0.494 |
-| walker |  | 8650 | 0 | impl method at impl/src/prop.rs:77 |  |  | 0.494 |
-| walker |  | 8674 | 24 | pub-item names surface in tests/test_backtrace.rs |  |  | 0.494 |
-| walker |  | 8686 | 12 | pub item at tests/test_backtrace.rs:8 |  |  | 0.494 |
-| walker |  | 8711 | 25 | pub-item names surface in tests/test_expr.rs |  |  | 0.494 |
-| walker |  | 8736 | 25 | pub-item names surface in tests/test_path.rs |  |  | 0.494 |
-| ns | 8742 |  | 249 | build.rs: the generated __private module and the cfg declarations | 4.6 |  | 0.487 |
-| walker |  | 8887 | 151 | mod/use plumbing in impl/src/attr.rs |  |  | 0.487 |
-| ns | 8950 |  | 208 | build.rs: rustc capability decisions, function roster, and the probe file | 4.7 |  | 0.483 |
-| ns | 9047 |  | 97 | Complete tests/, tests/no-std/ and .github/ listings | 5.1 |  | 0.496 |
-| ns | 9135 |  | 88 | tests/compiletest.rs: the trybuild UI harness in full | 5.2 |  | 0.494 |
-| walker |  | 9181 | 294 | impl method sigs in impl/src/ast.rs |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:55 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:68 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:86 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:119 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:131 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:139 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:157 |  |  | 0.507 |
-| walker |  | 9181 | 0 | impl method at impl/src/ast.rs:165 |  |  | 0.507 |
-| walker |  | 9223 | 42 | impl method sigs in impl/src/fmt.rs |  |  | 0.507 |
-| walker |  | 9223 | 0 | impl method at impl/src/fmt.rs:16 |  |  | 0.507 |
-| walker |  | 9233 | 10 | pub item body at impl/src/attr.rs:69 body 121 |  |  | 0.507 |
-| ns | 9266 |  | 131 | tests/no-std/test.rs: the no_std smoke test's error types | 5.3 |  | 0.501 |
-| ns | 9393 |  | 127 | Cargo.toml: std-feature rationale and dev-dependencies | 5.4 |  | 0.500 |
-| walker |  | 9405 | 172 | README.md section #7 |  |  | 0.511 |
-| walker |  | 9430 | 25 | pub item at src/aserror.rs:5 |  |  | 0.513 |
-| ns | 9519 |  | 126 | impl/Cargo.toml: the proc-macro crate's manifest | 5.5 |  | 0.518 |
-| walker |  | 9612 | 182 | README.md section #5 |  |  | 0.536 |
-| walker |  | 9685 | 73 | dev/build/target dependencies in Cargo.toml |  |  | 0.542 |
-| ns | 9693 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.536 |
-| walker |  | 9723 | 38 | pub item at tests/test_path.rs:29 |  |  | 0.536 |
-| walker |  | 9915 | 192 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.536 |
+| walker |  | 8122 | 90 | pub item at impl/src/attr.rs:11 |  |  | 0.495 |
+| walker |  | 8234 | 112 | pub item at impl/src/attr.rs:21 |  |  | 0.514 |
+| walker |  | 8333 | 99 | mod/use plumbing in impl/src/generics.rs |  |  | 0.514 |
+| ns | 8380 |  | 282 | src/provide.rs (ThiserrorProvide) and src/var.rs (Var) end to end | 4.4 |  | 0.503 |
+| walker |  | 8433 | 100 | mod/use plumbing in impl/src/unraw.rs |  |  | 0.503 |
+| walker |  | 8482 | 49 | impl method body at impl/src/unraw.rs:88 body 89 |  |  | 0.503 |
+| ns | 8493 |  | 113 | impl/src/lib.rs: the version-stamped `private` path token | 4.5 |  | 0.504 |
+| walker |  | 8594 | 112 | mod/use plumbing in impl/src/ast.rs |  |  | 0.504 |
+| walker |  | 8728 | 134 | README.md section #9 |  |  | 0.507 |
+| ns | 8742 |  | 249 | build.rs: the generated __private module and the cfg declarations | 4.6 |  | 0.499 |
+| walker |  | 8758 | 30 | pub item at impl/src/fallback.rs:7 |  |  | 0.500 |
+| walker |  | 8810 | 52 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.500 |
+| ns | 8950 |  | 208 | build.rs: rustc capability decisions, function roster, and the probe file | 4.7 |  | 0.495 |
+| ns | 9047 |  | 97 | Complete tests/, tests/no-std/ and .github/ listings | 5.1 |  | 0.508 |
+| walker |  | 9127 | 317 | impl method sigs in impl/src/prop.rs |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:7 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:11 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:15 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:19 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:26 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:32 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:38 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:54 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:58 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:62 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:66 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:73 |  |  | 0.530 |
+| walker |  | 9127 | 0 | impl method at impl/src/prop.rs:77 |  |  | 0.530 |
+| ns | 9135 |  | 88 | tests/compiletest.rs: the trybuild UI harness in full | 5.2 |  | 0.527 |
+| walker |  | 9151 | 24 | pub-item names surface in tests/test_backtrace.rs |  |  | 0.527 |
+| walker |  | 9163 | 12 | pub item at tests/test_backtrace.rs:8 |  |  | 0.527 |
+| walker |  | 9188 | 25 | pub-item names surface in tests/test_expr.rs |  |  | 0.527 |
+| walker |  | 9213 | 25 | pub-item names surface in tests/test_path.rs |  |  | 0.527 |
+| walker |  | 9253 | 40 | impl method sigs in impl/src/fmt.rs |  |  | 0.527 |
+| walker |  | 9253 | 0 | impl method at impl/src/fmt.rs:16 |  |  | 0.527 |
+| ns | 9266 |  | 131 | tests/no-std/test.rs: the no_std smoke test's error types | 5.3 |  | 0.521 |
+| ns | 9393 |  | 127 | Cargo.toml: std-feature rationale and dev-dependencies | 5.4 |  | 0.520 |
+| walker |  | 9404 | 151 | mod/use plumbing in impl/src/attr.rs |  |  | 0.520 |
+| ns | 9519 |  | 126 | impl/Cargo.toml: the proc-macro crate's manifest | 5.5 |  | 0.525 |
+| ns | 9693 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.519 |
+| walker |  | 9698 | 294 | impl method sigs in impl/src/ast.rs |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:55 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:68 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:86 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:119 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:131 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:139 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:157 |  |  | 0.531 |
+| walker |  | 9698 | 0 | impl method at impl/src/ast.rs:165 |  |  | 0.531 |
+| walker |  | 9708 | 10 | pub item body at impl/src/attr.rs:69 body 121 |  |  | 0.531 |
+| walker |  | 9880 | 172 | README.md section #7 |  |  | 0.542 |
+| walker |  | 9905 | 25 | pub item at src/aserror.rs:5 |  |  | 0.543 |

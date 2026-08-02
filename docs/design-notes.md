@@ -2798,3 +2798,49 @@ grid — a last-full-row Score(B=cum) proxy overstated a B=1000 recovery
 +0.18). The session closes with the −0.0053 standing as a recorded
 trade; the Go entry-slice (above) is the measured repayment
 (+0.0048 @1000) once its review blocker is fixed.
+
+## Rust private-item recall lane (2026-08-02, W1-RS): 0.6320 → 0.6325
+
+The absent-census E4 class (NS atoms with no emitter concentrated in
+Rust private/internal content). Three shipped shapes, one measured-dead
+appendage:
+
+- **`PrivateItemNames`** — a private-fn *wall* roster: non-entrypoint
+  package source file, top-level private fns (test-marked excluded)
+  outnumber pub items AND ≥5 survive after dropping RegistrationRoster
+  fns. Priced on the impl-roster tier (`mix(0.6,0.7,0.35,depth) ×
+  roster_mass_factor`), **no per-item visibility damp** — at
+  `pub_item_names_value` (which folds the 0.4 file-visibility axis) the
+  one roster the NS wants landed @5705 while six 2-fn helper rosters
+  queue-jumped a cliff (hyperfine −0.083 @3K). The wall gate + tier
+  pricing turned that into thiserror +0.037 @3K (roster @2627 vs NS slot
+  2529) with every other fixture byte-identical.
+- **`ModuleState`** — an entrypoint file's top-level private
+  `static`/`const` items as ONE grouped batch (per-item batches would be
+  crumbs; a 20-token VERSION-const group bought at cum 501 cost mdbook
+  −0.006 @B1000 until the `CRATE_ATTRS_MIN_TOKENS` floor was applied).
+  log +0.027 @4327 / +0.015 @6200; flat @3K — the block lands @3678
+  against an NS slot of 1936, and a cat bump 0.42→0.55 measured
+  byte-identical (the sub-3K band outprices it; don't re-sweep).
+- **`Default`-impl admission** in `is_own_api_impl`: `impl Default` on a
+  pub type the file declares joins the OwnApiOnly surface. Recall works
+  (hyperfine absent 0.241→0.169, oracle +0.012) but pays only at 10K
+  (+0.011): the dive chains behind `MethodSigs {options.rs}` at cum
+  7863 — the roster-pricing blocker from the 2026-07-26 per-impl-method
+  entry, not a recall failure. Widening past `Default` (Display/From) is
+  contra-indicated by NS text (anyhow: trait-impl methods "deliberately
+  not part of this roster").
+
+Measured dead in-lane: **per-fn sig/body dive behind the private roster**
+(`PrivateItem`/`PrivateItemBody`, pub_item_value pricing with the
+Restricted 0.4 axis) — never bought ≤10K anywhere, and its only grid
+effect was anyhow −0.005 @10K; removed. The ≤3K NS mass of the class is
+roster-shaped here exactly as the 2026-07-26 impl-method entry predicted
+for anyhow/log/sps; the body mass (thiserror 3.2/3.3 quote! tails,
+hyperfine builder-chain detail) stays absent pending either undamped
+body pricing (unswept — flood-shaped) or the roster-pricing lever.
+
+Sub-lever grid rows (each measured alone) live in
+ignore/session-2026-08-02/lane-w1-rs-recall.md. Also noted there: the
+census's "no crate-doc-body key" claim was stale — `CrateDocBody`/
+`CrateDocTail` already ship and schedule (thiserror @2113/@2717).
