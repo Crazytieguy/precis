@@ -196,20 +196,52 @@ src/
               42→
               43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
             …
-        _checkers.py …
-        _config.py
+        _checkers.py
             …
-              11→T = TypeVar("T")
-              12→
-              13→
-              14→class ForwardRefPolicy(Enum):
+             153→def check_callable(
+             154→    value: Any,
+             155→    origin_type: Any,
+             156→    args: tuple[Any, ...],
+             157→    memo: TypeCheckMemo,
+             158→) -> None:
             …
-              30→class CollectionCheckStrategy(Enum):
+             212→def check_mapping(
+             213→    value: Any,
+             214→    origin_type: Any,
+             215→    args: tuple[Any, ...],
+             216→    memo: TypeCheckMemo,
+             217→) -> None:
             …
-              62→@dataclass
-              63→class TypeCheckConfiguration:
+             247→def check_typed_dict(
+             248→    value: Any,
+             249→    origin_type: Any,
+             250→    args: tuple[Any, ...],
+             251→    memo: TypeCheckMemo,
+             252→) -> None:
             …
-             106→global_config = TypeCheckConfiguration()
+             305→def check_list(
+             306→    value: Any,
+             307→    origin_type: Any,
+             308→    args: tuple[Any, ...],
+             309→    memo: TypeCheckMemo,
+             310→) -> None:
+            …
+             324→def check_sequence(
+             325→    value: Any,
+             326→    origin_type: Any,
+             327→    args: tuple[Any, ...],
+             328→    memo: TypeCheckMemo,
+             329→) -> None:
+            …
+             924→def check_type_internal(
+             925→    value: Any,
+             926→    annotation: Any,
+             927→    memo: TypeCheckMemo,
+             928→) -> None:
+            …
+            1099→def load_plugins() -> None:
+            …
+        _config.py …
         _decorators.py …
         _exceptions.py
                1→from collections import deque
@@ -221,21 +253,14 @@ src/
                9→    """
               12→class TypeCheckWarning(UserWarning):
               13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
-              15→    def __init__(self, message: str):
-              16→        super().__init__(message)
+            …
               19→class InstrumentationWarning(UserWarning):
               20→    """Emitted when there's a problem with instrumenting a function for type checks."""
-              22→    def __init__(self, message: str):
-              23→        super().__init__(message)
+            …
               26→class TypeCheckError(Exception):
               27→    """
               28→    Raised by typeguard's type checkers when a type mismatch is detected.
               29→    """
-              31→    def __init__(self, message: str):
-            …
-              35→    def append_path_element(self, element: str) -> None:
-              36→        self._path.append(element)
-              38→    def __str__(self) -> str:
             …
         _functions.py …
         _importhook.py …
@@ -245,7 +270,6 @@ src/
                9→    """
               10→    Contains information necessary for type checkers to do their work.
             …
-              35→    __slots__ = "globals", "locals", "self_type", "config"
               37→    def __init__(
               38→        self,
               39→        globals: dict[str, Any],
@@ -256,21 +280,7 @@ src/
               44→    ):
             …
         _pytest_plugin.py …
-        _suppression.py
-            …
-              15→P = ParamSpec("P")
-              16→T = TypeVar("T")
-              17→
-              18→type_checks_suppressed = 0
-              19→type_checks_suppress_lock = Lock()
-              22→@overload
-              23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
-              26→@overload
-              27→def suppress_type_checks() -> ContextManager[None]: ...
-              30→def suppress_type_checks(
-              31→    func: Callable[P, T] | None = None,
-              32→) -> Callable[P, T] | ContextManager[None]:
-            …
+        _suppression.py …
         _transformer.py …
         _utils.py …
         py.typed

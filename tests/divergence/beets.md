@@ -168,37 +168,87 @@ Score(3000)=0.508 I=0.474 C=0.544 ns_rows≤3K=17/44 (reached=7 partial=0 missin
 | walker |  | 7493 | 395 | python imports in beets/autotag/__init__.py |  |  | 0.504 |
 | ns | 7617 |  | 246 | BeetsPlugin method roster (complete) | 6.2 | 6.1 | 0.500 |
 | walker |  | 7900 | 407 | python imports in beets/ui/commands/__init__.py |  |  | 0.500 |
-| walker |  | 7909 | 9 | python imports in beets/util/units.py |  |  | 0.500 |
-| walker |  | 7918 | 9 | python imports #14 in beets/util/__init__.py |  |  | 0.500 |
+| walker |  | 7965 | 65 | python decl names surface in beets/ui/__init__.py |  |  | 0.500 |
+| walker |  | 7965 | 0 | python decl at beets/ui/__init__.py:71 |  |  | 0.500 |
+| walker |  | 7965 | 0 | python decl at beets/ui/__init__.py:111 |  |  | 0.500 |
+| walker |  | 7965 | 0 | python decl at beets/ui/__init__.py:498 |  |  | 0.500 |
+| walker |  | 7965 | 0 | python decl at beets/ui/__init__.py:637 |  |  | 0.500 |
+| walker |  | 7965 | 0 | python decl at beets/ui/__init__.py:676 |  |  | 0.500 |
+| walker |  | 7984 | 19 | python class body at beets/ui/__init__.py:676 |  |  | 0.500 |
+| walker |  | 8007 | 23 | python class body at beets/ui/__init__.py:637 |  |  | 0.500 |
+| walker |  | 8038 | 31 | python decl doc at beets/ui/__init__.py:676 |  |  | 0.500 |
 | ns | 8039 |  | 422 | The complete `EventType` literal — every plugin event name | 6.3 | 6.1 | 0.486 |
+| walker |  | 8074 | 36 | python decl doc at beets/ui/__init__.py:637 |  |  | 0.486 |
+| walker |  | 8111 | 37 | python decl doc at beets/ui/__init__.py:71 |  |  | 0.486 |
+| walker |  | 8192 | 81 | python decl doc at beets/ui/__init__.py:111 |  |  | 0.486 |
+| walker |  | 8261 | 69 | python decl names surface in beetsplug/bpd/__init__.py |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:110 |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:174 |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:180 |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:193 |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:754 |  |  | 0.486 |
+| walker |  | 8261 | 0 | python decl at beetsplug/bpd/__init__.py:794 |  |  | 0.486 |
+| walker |  | 8277 | 16 | python class body at beetsplug/bpd/__init__.py:193 |  |  | 0.486 |
+| walker |  | 8292 | 15 | python decl doc at beetsplug/bpd/__init__.py:754 |  |  | 0.486 |
+| walker |  | 8310 | 18 | python decl doc at beetsplug/bpd/__init__.py:794 |  |  | 0.486 |
+| walker |  | 8334 | 24 | python class body at beetsplug/bpd/__init__.py:110 |  |  | 0.486 |
 | ns | 8343 |  | 304 | plugins.py module-level API roster (complete) | 6.4 |  | 0.480 |
-| walker |  | 8421 | 503 | python imports in beets/ui/__init__.py |  |  | 0.480 |
-| walker |  | 8528 | 107 | python decl at beets/ui/commands/__init__.py:50 |  |  | 0.491 |
-| ns | 8655 |  | 312 | MetadataSourcePlugin: the metadata-backend contract | 6.5 |  | 0.485 |
-| ns | 8852 |  | 197 | Query-string prefixes: how `beet ls artist:foo` is parsed | 7.1 |  | 0.480 |
-| walker |  | 9034 | 506 | python imports in beets/dbcore/__init__.py |  |  | 0.500 |
-| walker |  | 9041 | 7 | python method body at beetsplug/metasync/__init__.py:79 body 80 |  |  | 0.500 |
-| walker |  | 9098 | 57 | python decl body at beets/__init__.py:26 body 28 |  |  | 0.500 |
-| walker |  | 9110 | 12 | python imports in beets/library/exceptions.py |  |  | 0.500 |
-| walker |  | 9163 | 53 | python decl doc at beets/ui/commands/import_/__init__.py:134 |  |  | 0.500 |
-| walker |  | 9187 | 24 | python imports in beets/context.py |  |  | 0.500 |
-| ns | 9209 |  | 357 | dbcore/query.py class roster (complete) | 7.2 |  | 0.490 |
-| ns | 9561 |  | 352 | beets.autotag exports, Recommendation, Proposal | 8.1 |  | 0.482 |
-| walker |  | 9659 | 472 | listing of 'docs/plugins' |  |  | 0.482 |
-| walker |  | 9685 | 26 | python decl names surface in beetsplug/ihate.py |  |  | 0.482 |
-| walker |  | 9685 | 0 | python decl at beetsplug/ihate.py:26 |  |  | 0.482 |
-| walker |  | 9685 | 0 | python decl at beetsplug/ihate.py:36 |  |  | 0.482 |
-| walker |  | 9716 | 31 | python decl doc at beetsplug/ihate.py:26 |  |  | 0.482 |
-| walker |  | 9765 | 49 | python method sigs in beetsplug/ihate.py |  |  | 0.482 |
-| walker |  | 9765 | 0 | python method at beetsplug/ihate.py:37 |  |  | 0.482 |
-| walker |  | 9765 | 0 | python method at beetsplug/ihate.py:64 |  |  | 0.482 |
-| walker |  | 9773 | 8 | python method at beetsplug/ihate.py:49 |  |  | 0.482 |
-| walker |  | 9787 | 14 | python decl names surface in beetsplug/substitute.py |  |  | 0.482 |
-| walker |  | 9787 | 0 | python decl at beetsplug/substitute.py:25 |  |  | 0.482 |
-| ns | 9797 |  | 236 | autotag/hooks.py and distance.py symbol roster | 8.2 |  | 0.477 |
-| walker |  | 9815 | 28 | python method sigs in beetsplug/substitute.py |  |  | 0.477 |
-| walker |  | 9815 | 0 | python method at beetsplug/substitute.py:33 |  |  | 0.477 |
-| walker |  | 9815 | 0 | python method at beetsplug/substitute.py:42 |  |  | 0.477 |
-| walker |  | 9826 | 11 | python method doc at beetsplug/substitute.py:33 |  |  | 0.477 |
-| walker |  | 9893 | 67 | python decl doc at beetsplug/substitute.py:25 |  |  | 0.477 |
-| ns | 9992 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.471 |
+| walker |  | 8364 | 30 | python decl doc at beetsplug/bpd/__init__.py:174 |  |  | 0.480 |
+| walker |  | 8397 | 33 | python decl doc at beetsplug/bpd/__init__.py:110 |  |  | 0.480 |
+| walker |  | 8439 | 42 | python decl doc at beetsplug/bpd/__init__.py:180 |  |  | 0.480 |
+| walker |  | 8448 | 9 | python imports in beets/util/units.py |  |  | 0.480 |
+| walker |  | 8521 | 73 | python decl names surface in beetsplug/web/__init__.py |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:83 |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:103 |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:109 |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:252 |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:268 |  |  | 0.480 |
+| walker |  | 8521 | 0 | python decl at beetsplug/web/__init__.py:520 |  |  | 0.480 |
+| walker |  | 8540 | 19 | python decl doc at beetsplug/web/__init__.py:252 |  |  | 0.480 |
+| walker |  | 8560 | 20 | python decl doc at beetsplug/web/__init__.py:268 |  |  | 0.480 |
+| walker |  | 8577 | 17 | python decl doc at beetsplug/web/__init__.py:103 |  |  | 0.480 |
+| walker |  | 8592 | 15 | python decl body at beetsplug/web/__init__.py:103 body 106 |  |  | 0.480 |
+| walker |  | 8622 | 30 | python decl doc at beetsplug/web/__init__.py:109 |  |  | 0.480 |
+| walker |  | 8639 | 17 | python decl body at beetsplug/web/__init__.py:109 body 114 |  |  | 0.480 |
+| ns | 8655 |  | 312 | MetadataSourcePlugin: the metadata-backend contract | 6.5 |  | 0.474 |
+| walker |  | 8711 | 72 | python decl names surface in beetsplug/fetchart.py |  |  | 0.474 |
+| walker |  | 8711 | 0 | python decl at beetsplug/fetchart.py:61 |  |  | 0.474 |
+| walker |  | 8711 | 0 | python decl at beetsplug/fetchart.py:72 |  |  | 0.474 |
+| walker |  | 8711 | 0 | python decl at beetsplug/fetchart.py:82 |  |  | 0.474 |
+| walker |  | 8711 | 0 | python decl at beetsplug/fetchart.py:342 |  |  | 0.474 |
+| walker |  | 8711 | 0 | python decl at beetsplug/fetchart.py:726 |  |  | 0.474 |
+| walker |  | 8728 | 17 | python decl at beetsplug/fetchart.py:360 |  |  | 0.474 |
+| walker |  | 8744 | 16 | python decl doc at beetsplug/fetchart.py:726 |  |  | 0.474 |
+| walker |  | 8763 | 19 | python decl doc at beetsplug/fetchart.py:61 |  |  | 0.474 |
+| walker |  | 8782 | 19 | python decl doc at beetsplug/fetchart.py:72 |  |  | 0.474 |
+| walker |  | 8817 | 35 | python decl doc at beetsplug/fetchart.py:82 |  |  | 0.474 |
+| ns | 8852 |  | 197 | Query-string prefixes: how `beet ls artist:foo` is parsed | 7.1 |  | 0.469 |
+| walker |  | 8856 | 39 | python decl doc at beetsplug/fetchart.py:342 |  |  | 0.469 |
+| walker |  | 8866 | 10 | python class body at beetsplug/fetchart.py:342 |  |  | 0.469 |
+| walker |  | 8887 | 21 | python class body at beetsplug/fetchart.py:72 |  |  | 0.469 |
+| walker |  | 8961 | 74 | python decl names surface in extra/release.py |  |  | 0.469 |
+| walker |  | 8961 | 0 | python decl at extra/release.py:37 |  |  | 0.469 |
+| walker |  | 8961 | 0 | python decl at extra/release.py:78 |  |  | 0.469 |
+| walker |  | 8961 | 0 | python decl at extra/release.py:97 |  |  | 0.469 |
+| walker |  | 8961 | 0 | python decl at extra/release.py:220 |  |  | 0.469 |
+| walker |  | 8988 | 27 | python decl at extra/release.py:206 |  |  | 0.469 |
+| walker |  | 9002 | 14 | python decl doc at extra/release.py:220 |  |  | 0.469 |
+| walker |  | 9018 | 16 | python decl doc at extra/release.py:206 |  |  | 0.469 |
+| walker |  | 9037 | 19 | python decl doc at extra/release.py:37 |  |  | 0.469 |
+| walker |  | 9054 | 17 | python decl doc at extra/release.py:97 |  |  | 0.469 |
+| walker |  | 9072 | 18 | python decl doc at extra/release.py:78 |  |  | 0.469 |
+| walker |  | 9103 | 31 | python class body at extra/release.py:37 |  |  | 0.469 |
+| walker |  | 9112 | 9 | python imports #14 in beets/util/__init__.py |  |  | 0.469 |
+| walker |  | 9187 | 75 | python decl names surface in beets/plugins.py |  |  | 0.469 |
+| walker |  | 9187 | 0 | python decl at beets/plugins.py:108 |  |  | 0.469 |
+| walker |  | 9187 | 0 | python decl at beets/plugins.py:116 |  |  | 0.469 |
+| walker |  | 9187 | 0 | python decl at beets/plugins.py:127 |  |  | 0.469 |
+| walker |  | 9187 | 0 | python decl at beets/plugins.py:153 |  |  | 0.469 |
+| walker |  | 9187 | 0 | python decl at beets/plugins.py:401 |  |  | 0.469 |
+| ns | 9209 |  | 357 | dbcore/query.py class roster (complete) | 7.2 |  | 0.459 |
+| walker |  | 9218 | 31 | python decl doc at beets/plugins.py:127 |  |  | 0.459 |
+| ns | 9561 |  | 352 | beets.autotag exports, Recommendation, Proposal | 8.1 |  | 0.451 |
+| walker |  | 9719 | 501 | python imports in beets/ui/__init__.py |  |  | 0.451 |
+| ns | 9797 |  | 236 | autotag/hooks.py and distance.py symbol roster | 8.2 |  | 0.447 |
+| walker |  | 9826 | 107 | python decl at beets/ui/commands/__init__.py:50 |  |  | 0.458 |
+| ns | 9992 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.452 |
