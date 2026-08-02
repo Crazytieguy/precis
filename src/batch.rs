@@ -313,9 +313,9 @@ pub enum TsKey {
         start_line: usize,
         body_start_line: usize,
     },
-    /// One uninterrupted run of module-scope statements in a script the
-    /// project runs directly — the executable's own flow, which declares
-    /// nothing and so has no declaration batch. Same gate as `ModuleItem`.
+    /// One module-scope statement in a script the project runs directly —
+    /// the executable's own flow, which declares nothing and so has no
+    /// declaration batch. Same gate as `ModuleItem`.
     ModuleStatements { file: PathBuf, start_line: usize },
 }
 

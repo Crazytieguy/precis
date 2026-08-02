@@ -852,11 +852,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // compiled component module, module scope carries registration
         // trivia rather than the program's flow.
         if emit_private_nonclass && is_js_file(file) {
-            for run in collect_statement_runs(&tree, &source) {
-                let Some(start_line) = run.full.first().copied() else {
+            for lines in script_flow_statement_lines(&tree, &source) {
+                let Some(start_line) = lines.full.first().copied() else {
                     continue;
                 };
-                let Some(content) = single_file_lines_content(file, &source, run) else {
+                // A member-defining call is an expression statement too, and
+                // it already renders as an export. Two peer batches over the
+                // same rows would be a scheduler conflict.
+                if export_start_lines.contains(&start_line) {
+                    continue;
+                }
+                let Some(content) = single_file_lines_content(file, &source, lines) else {
                     continue;
                 };
                 out.push(Batch {
@@ -899,33 +905,22 @@ fn is_script_flow_statement(node: Node) -> bool {
     )
 }
 
-/// Contiguous runs of module-scope script-flow statements. A declaration
-/// breaks the run, so each batch is one uninterrupted stretch of the
-/// file's control flow and never straddles a declaration that already
-/// has its own batch. String directives (`'use strict'`) are import
-/// prologue and stay with the imports batch.
-fn collect_statement_runs(tree: &Tree, source: &str) -> Vec<FileLines> {
+/// Module-scope script-flow statements, one entry apiece. Per statement
+/// rather than per contiguous run: a run is the whole tail of a bin
+/// script and prices itself out of the early budget as one slab, while
+/// each statement (a dispatch guard, a bootstrap chain) is already an
+/// NS-sized unit. String directives (`'use strict'`) are import prologue
+/// and stay with the imports batch.
+fn script_flow_statement_lines(tree: &Tree, source: &str) -> Vec<FileLines> {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut runs: Vec<Vec<usize>> = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    for child in root.children(&mut cursor) {
-        if matches!(child.kind(), "comment" | "hash_bang_line") {
-            continue;
-        }
-        if !is_script_flow_statement(child) || is_string_directive(child) {
-            if !current.is_empty() {
-                runs.push(std::mem::take(&mut current));
-            }
-            continue;
-        }
-        extend_span(&mut current, child, source);
-    }
-    if !current.is_empty() {
-        runs.push(current);
-    }
-    runs.into_iter()
-        .map(|lines| FileLines::new(dedup_sorted(lines)))
+    root.children(&mut cursor)
+        .filter(|child| is_script_flow_statement(*child) && !is_string_directive(*child))
+        .map(|child| {
+            let mut lines = Vec::new();
+            extend_span(&mut lines, child, source);
+            FileLines::new(dedup_sorted(lines))
+        })
         .collect()
 }
 

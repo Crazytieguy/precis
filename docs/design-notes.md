@@ -749,11 +749,18 @@ Measured-dead this cycle (specifics block retries):
   retry.
 - **Script-flow batches** (entry-file expression statements): built,
   measured zero movement, reverted — **verdict flipped under the v2
-  answer key (2026-08-02): shipped** at +0.0007 @3000 (debug +0.042,
-  dockly +0.005) once restricted to `.js`/`.mjs`/`.cjs`. Including
-  `.tsx` costs vaul −0.138 @3000 (three one-line
-  `Component.displayName = …` runs): in a compiled component module,
-  module scope carries registration trivia, not the program's flow.
+  answer key (2026-08-02): shipped** as `TsKey::ModuleStatements` at
+  +0.0018 @3000 (debug +0.042, dockly +0.083, chalk +0.033 @9000). Two
+  constraints the dead version missed. Restricted to
+  `.js`/`.mjs`/`.cjs`: including `.tsx` costs vaul −0.138 @3000 (three
+  one-line `Component.displayName = …` statements), because in a
+  compiled component module, module scope carries registration trivia
+  rather than the program's flow. And **one batch per statement, not
+  per contiguous run**: grouped, dockly's post-prologue run is a
+  271-token slab that enters at cum 3122 — split, its dispatch guards
+  and bootstrap chain enter at 1035/2425 (+0.078 @3000 for the split
+  alone). A run is the whole tail of a bin script; a single guard is
+  already an NS-sized unit.
 - **Dev-doc routing past the peripheral damp** (mdbook/vite/enclosed
   CONTRIBUTING): both variants negative (peepdb −0.066 unflagged);
   mdbook's test-command section is outside the frontier even at 30K —
