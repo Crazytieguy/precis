@@ -247,8 +247,11 @@ pub enum TsKey {
     /// Bare `export … from` statements sitting past a file's import
     /// prologue — the trailing re-export block a module puts after its
     /// implementation. `Imports` only claims the prologue, so without
-    /// this key the block is invisible. Predecessor: the file's
-    /// `ExportNames`; priced as roster, not plumbing.
+    /// this key the block is invisible. Priced as roster, not plumbing.
+    /// Predecessor: the file's `ExportNames` when it has one, so the two
+    /// halves of a split surface arrive in order; otherwise the module
+    /// gate, since a file can publish everything through the block and
+    /// declare nothing locally.
     ReexportTail { file: PathBuf },
     /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },

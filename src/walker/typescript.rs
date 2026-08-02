@@ -330,7 +330,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let src_lines: Vec<&str> = source.lines().collect();
-        let local_value_reexports = collect_local_value_reexports(&tree, &source);
+        let local_reexports = collect_local_reexports(&tree, &source);
         let commonjs_value_reexports = collect_commonjs_value_reexports(&tree, &source);
         let default_implementation_exports = if is_entrypoint_file(file) {
             collect_default_implementation_exports(&tree, &source)
@@ -342,7 +342,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &tree,
             &source,
             &src_lines,
-            &local_value_reexports,
+            &local_reexports,
             &commonjs_value_reexports,
             &default_implementation_exports,
         );
@@ -366,6 +366,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
+        let mut names_gate: Option<BatchKey> = None;
         if !exports.is_empty() {
             // One pass over the exports: the catalog/chunk computations
             // are token-cost probes, too expensive to redo for the
@@ -444,7 +445,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     !disavowal_lines.contains(line) && !roster_star_lines.contains(line)
                 });
             }
-            let mut names_gate: Option<BatchKey> = None;
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
                 let key = BatchKey::Typescript(TsKey::ExportNames { file: file.clone() });
                 out.push(Batch {
@@ -460,18 +460,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ) * contract_roster_factor(true),
                 });
                 names_gate = Some(key);
-            }
-            if !reexport_tail_lines.full.is_empty()
-                && let Some(gate) = names_gate.clone()
-                && let Some(content) =
-                    single_file_lines_content(file, &source, reexport_tail_lines.clone())
-            {
-                out.push(Batch {
-                    key: TsKey::ReexportTail { file: file.clone() }.into(),
-                    predecessor: Some(gate),
-                    content,
-                    value: reexport_wall_value(file, ctx, js_factor),
-                });
             }
             let dependent_export_start_lines: HashSet<_> = exports
                 .iter()
@@ -733,7 +721,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
-        let mut reexported_local_names = local_value_reexports.clone();
+        // Outside the `exports` block on purpose: a file can publish its
+        // whole surface through a trailing block and declare nothing
+        // locally, and that surface has to render. The tail chains
+        // behind the roster when there is one so the two halves of the
+        // surface arrive in order, and otherwise roots at the module
+        // gate like every other file-surface batch here.
+        if !reexport_tail_lines.full.is_empty()
+            && let Some(content) =
+                single_file_lines_content(file, &source, reexport_tail_lines.clone())
+        {
+            out.push(Batch {
+                key: TsKey::ReexportTail { file: file.clone() }.into(),
+                predecessor: names_gate.clone().or_else(|| module_predecessor.clone()),
+                content,
+                value: reexport_wall_value(file, ctx, js_factor),
+            });
+        }
+        let mut reexported_local_names = local_reexports.value.clone();
         reexported_local_names.extend(commonjs_value_reexports.iter().cloned());
         let module_items = find_module_items(
             &tree,
@@ -1125,7 +1130,7 @@ fn find_export_starts<'a>(
     tree: &'a Tree,
     source: &str,
     src_lines: &[&str],
-    reexports: &HashSet<String>,
+    reexports: &LocalReexports,
     commonjs_reexports: &HashSet<String>,
     default_identifier_reexports: &HashMap<String, usize>,
 ) -> Vec<ExportInfo<'a>> {
@@ -1166,23 +1171,35 @@ fn find_export_starts<'a>(
                 continue;
             }
 
-            let default_predecessor = local_decl_name(child, source)
+            // The rules key off the declaration, but the rendered
+            // surface is the wrapper — it carries the `declare`.
+            let ambient_inner = ambient_inner_decl(child);
+            let decl = ambient_inner.unwrap_or(child);
+
+            let default_predecessor = local_decl_name(decl, source)
                 .and_then(|name| default_identifier_reexports.get(name).copied());
             let kind = if default_predecessor.is_some() {
-                decl_kind(child)
-            } else if let Some(kind) = synthetic_local_export_kind(child, source, reexports) {
+                decl_kind(decl)
+            } else if let Some(kind) = synthetic_local_export_kind(decl, source, &reexports.value) {
+                Some(kind)
+            } else if let Some(kind) =
+                synthetic_local_type_export_kind(decl, source, &reexports.type_only)
+            {
                 Some(kind)
             } else {
-                synthetic_commonjs_export_kind(child, source, commonjs_reexports)
+                synthetic_commonjs_export_kind(decl, source, commonjs_reexports)
             };
 
             let Some(kind) = kind else { continue };
-            let is_type_only = matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
+            // An ambient declaration carries no runtime value, same as
+            // the `export declare …` arm of `is_export_type_only`.
+            let is_type_only = ambient_inner.is_some()
+                || matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
             let mut info = make_export_info(
                 start_line,
                 kind,
                 child,
-                child,
+                decl,
                 file,
                 source,
                 src_lines,
@@ -1574,23 +1591,33 @@ fn is_declared_api_contract(file: &Path, ctx: &WalkCtx) -> bool {
 
 const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.35;
 
-/// Local identifier names in top-level value re-export clauses
-/// (`export { X }` / `export { X as Y }`). Excludes type-only and
-/// any clause with a `from` source.
-fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
+/// Local identifier names in top-level re-export clauses (`export { X }`
+/// / `export { X as Y }`), split by what the clause publishes. Clauses
+/// with a `from` source are plumbing and appear in neither set.
+#[derive(Default)]
+struct LocalReexports {
+    /// Names published as runtime values.
+    value: HashSet<String>,
+    /// Names published type-only — either a statement-level `export type
+    /// { … }` or a per-specifier `export { type … }` modifier.
+    type_only: HashSet<String>,
+}
+
+impl LocalReexports {
+    fn is_empty(&self) -> bool {
+        self.value.is_empty() && self.type_only.is_empty()
+    }
+}
+
+fn collect_local_reexports(tree: &Tree, source: &str) -> LocalReexports {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = HashSet::new();
+    let mut out = LocalReexports::default();
     for stmt in root.children(&mut cursor) {
-        if stmt.kind() != "export_statement" {
+        if stmt.kind() != "export_statement" || has_from_source(stmt) {
             continue;
         }
-        if has_from_source(stmt) {
-            continue;
-        }
-        if has_export_type_keyword(stmt, source) {
-            continue;
-        }
+        let statement_type_only = has_export_type_keyword(stmt, source);
         let mut sc = stmt.walk();
         for clause in stmt.children(&mut sc) {
             if !matches!(clause.kind(), "export_clause" | "namespace_export") {
@@ -1601,12 +1628,14 @@ fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
                 if spec.kind() != "export_specifier" {
                     continue;
                 }
-                if has_inline_type_modifier(spec) {
+                let Some(name_node) = first_identifier_child(spec) else {
                     continue;
-                }
-                if let Some(name_node) = first_identifier_child(spec) {
-                    let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
-                    out.insert(name);
+                };
+                let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+                if statement_type_only || has_inline_type_modifier(spec) {
+                    out.type_only.insert(name);
+                } else {
+                    out.value.insert(name);
                 }
             }
         }
@@ -1977,6 +2006,24 @@ fn synthetic_local_export_kind(
     }
 }
 
+/// [`synthetic_local_export_kind`] for a type-only clause (`export type
+/// { X }` / `export { type X }`). Only declarations that exist purely in
+/// the type world qualify: such a clause deliberately withholds the
+/// runtime binding, so promoting a const / function / class / enum
+/// behind one would overstate the module's runtime surface.
+fn synthetic_local_type_export_kind(
+    decl: Node,
+    source: &str,
+    reexport_set: &HashSet<String>,
+) -> Option<ItemKind> {
+    let kind = decl_kind(decl)?;
+    if !matches!(kind, ItemKind::Interface | ItemKind::TypeAlias) {
+        return None;
+    }
+    let name = name_of(decl, source)?;
+    reexport_set.contains(name).then_some(kind)
+}
+
 /// [`synthetic_local_export_kind`] restricted to runtime declarations —
 /// a CommonJS `exports.X = X` assignment can only name a runtime value.
 fn synthetic_commonjs_export_kind(
@@ -2247,18 +2294,25 @@ fn identifier_text<'a>(node: Node, source: &'a str) -> Option<&'a str> {
 /// `export declare …` (function / class / interface / namespace / const).
 fn first_decl_child(node: Node) -> Option<Node> {
     let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        if decl_kind(child).is_some() {
-            return Some(child);
-        }
-        if child.kind() == "ambient_declaration" {
-            let mut inner = child.walk();
-            if let Some(inner_decl) = child.children(&mut inner).find(|c| decl_kind(*c).is_some()) {
-                return Some(inner_decl);
-            }
-        }
+    node.children(&mut cursor).find_map(|child| {
+        decl_kind(child)
+            .is_some()
+            .then_some(child)
+            .or_else(|| ambient_inner_decl(child))
+    })
+}
+
+/// The declaration inside an `ambient_declaration` wrapper. Tree-sitter
+/// interposes that node for `declare function …` / `declare class …` /
+/// `declare const …`, which is how nearly everything in a `.d.ts` is
+/// spelled; callers that reason about declaration kinds have to see
+/// through it.
+fn ambient_inner_decl(node: Node) -> Option<Node> {
+    if node.kind() != "ambient_declaration" {
+        return None;
     }
-    None
+    let mut cursor = node.walk();
+    node.children(&mut cursor).find(|c| decl_kind(*c).is_some())
 }
 
 fn has_export_clause(node: Node) -> bool {
@@ -3657,7 +3711,7 @@ fn has_multiline_statement_block(body: Node) -> bool {
 fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> Vec<BodyPart> {
     let file = Path::new("fixture.ts");
     let src_lines: Vec<&str> = source.lines().collect();
-    let reexports = collect_local_value_reexports(tree, source);
+    let reexports = collect_local_reexports(tree, source);
     let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
     let default_identifier_reexports = if is_entrypoint_file(file) {
         collect_default_implementation_exports(tree, source)
@@ -4472,7 +4526,7 @@ mod tests {
 
     fn export_infos_for_path<'a>(file: &Path, tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
         let src_lines: Vec<&str> = source.lines().collect();
-        let reexports = collect_local_value_reexports(tree, source);
+        let reexports = collect_local_reexports(tree, source);
         let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
         let default_identifier_reexports = if is_entrypoint_file(file) {
             collect_default_implementation_exports(tree, source)
@@ -4987,6 +5041,52 @@ export function old() {}
     }
 
     #[test]
+    fn walker_typescript_reexport_tail_is_the_surface_when_nothing_else_is_exported() {
+        // Implementation plus a trailing re-export block and no local
+        // exports at all: the block is the file's entire public surface,
+        // so it must render even though there is no roster to gate it.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let src = root.join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(root.join("package.json"), "{\"name\":\"repro\"}\n").unwrap();
+        std::fs::write(
+            src.join("index.ts"),
+            "\
+import {register} from './registry.js';
+
+const instance = register();
+instance.start();
+
+export {PublicAlpha} from './alpha.js';
+export {PublicBeta} from './beta.js';
+",
+        )
+        .unwrap();
+        std::fs::write(
+            src.join("alpha.ts"),
+            "export function PublicAlpha(): number {\n  return 1;\n}\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 50_000, None);
+        let report = scheduler.run_with_report();
+        let keys: std::collections::HashSet<_> =
+            report.candidates.iter().map(|b| b.key.clone()).collect();
+        for batch in &report.candidates {
+            if let Some(pred) = &batch.predecessor {
+                assert!(
+                    keys.contains(pred),
+                    "dangling predecessor {pred:?} on {:?}",
+                    batch.key
+                );
+            }
+        }
+        let rendered = report.tree.render();
+        assert!(rendered.contains("PublicBeta"), "rendered:\n{rendered}");
+    }
+
+    #[test]
     fn walker_typescript_export_body_emit_rows() {
         const CASES: &[(&str, &[usize])] = &[
             // Body interior rows = 2..3 (line numbers 2, 3); brace rows 1, 4
@@ -5277,7 +5377,7 @@ export const cfg = buildConfig(input, () => {
     }
 
     #[test]
-    fn walker_typescript_collect_local_value_reexports_excludes_type_only() {
+    fn walker_typescript_collect_local_reexports_splits_value_from_type_only() {
         let src = "\
 const X = () => { return 1; };
 const Y = () => { return 2; };
@@ -5287,19 +5387,26 @@ export type { X };
 export { type Y };
 export { Z };
 export { W as Renamed };
+export { A } from './a';
 ";
         let tree = parse(src);
-        let names = collect_local_value_reexports(&tree, src);
+        let names = collect_local_reexports(&tree, src);
         assert!(
-            !names.contains("X"),
-            "type-only stmt-level should be excluded"
+            !names.value.contains("X"),
+            "type-only stmt-level should not be a value export"
         );
         assert!(
-            !names.contains("Y"),
-            "inline type modifier should be excluded"
+            !names.value.contains("Y"),
+            "inline type modifier should not be a value export"
         );
-        assert!(names.contains("Z"));
-        assert!(names.contains("W"));
+        assert!(names.value.contains("Z"));
+        assert!(names.value.contains("W"));
+        assert!(names.type_only.contains("X"));
+        assert!(names.type_only.contains("Y"));
+        assert!(
+            !names.value.contains("A") && !names.type_only.contains("A"),
+            "a clause with a `from` source is plumbing, not a local re-export"
+        );
     }
 
     #[test]
@@ -5358,6 +5465,122 @@ type NoteId = string;
                 .is_some_and(|e| e.is_type_only),
             "a synthesized type declaration must still count as type-only \
              so the type-machinery damp sees it"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_covers_type_only_clauses() {
+        // `export type { … }` and `export { type … }` are the idiomatic
+        // spellings for publishing a type; both must reach the type
+        // declarations they name.
+        let src = "\
+export type { Options, Handler };
+export { type Result, run };
+
+interface Options {
+  strict: boolean;
+}
+
+type Handler = (input: string) => void;
+
+type Result = {ok: boolean};
+
+function run() {
+  return 1;
+}
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        let kind_at = |line: usize| {
+            exports
+                .iter()
+                .find(|e| e.start_line == line)
+                .map(|e| e.kind)
+        };
+        assert_eq!(kind_at(4), Some(ItemKind::Interface));
+        assert_eq!(kind_at(8), Some(ItemKind::TypeAlias));
+        assert_eq!(kind_at(10), Some(ItemKind::TypeAlias));
+        assert_eq!(
+            kind_at(12),
+            Some(ItemKind::Function),
+            "a value specifier in a mixed clause still publishes its runtime declaration"
+        );
+        for line in [4, 8, 10] {
+            assert!(
+                exports
+                    .iter()
+                    .find(|e| e.start_line == line)
+                    .is_some_and(|e| e.is_type_only),
+                "line {line} is a type declaration"
+            );
+        }
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_type_clause_withholds_runtime_decls() {
+        // A type-only clause deliberately withholds the runtime binding,
+        // so it must not promote a const / function / class / enum.
+        let src = "\
+export type { Value, helper, Widget };
+
+const Value = () => { return 1; };
+
+function helper() {
+  return 2;
+}
+
+class Widget {
+}
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert!(
+            exports.iter().all(|e| e.start_line == 1),
+            "only the clause itself is an export: {:?}",
+            exports.iter().map(|e| e.start_line).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_sees_through_ambient_declarations() {
+        // `.d.ts` spells nearly everything as `declare …`, which
+        // tree-sitter wraps in an `ambient_declaration`. The synthesis
+        // has to unwrap it or a declaration file's whole re-exported
+        // surface is invisible.
+        let src = "\
+export {parse, Parser, Options};
+
+declare function parse(input: string): Options;
+
+declare class Parser {
+}
+
+declare const VERSION: string;
+
+type Options = {strict: boolean};
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("index.d.ts"), &tree, src);
+        let kind_at = |line: usize| {
+            exports
+                .iter()
+                .find(|e| e.start_line == line)
+                .map(|e| e.kind)
+        };
+        assert_eq!(kind_at(3), Some(ItemKind::Function));
+        assert_eq!(kind_at(5), Some(ItemKind::Class));
+        assert_eq!(kind_at(10), Some(ItemKind::TypeAlias));
+        assert!(
+            exports
+                .iter()
+                .filter(|e| e.start_line != 1)
+                .all(|e| e.is_type_only),
+            "an ambient declaration carries no runtime value"
+        );
+        assert_eq!(
+            kind_at(8),
+            None,
+            "`declare const` has no fn initializer, so the const rule still declines it"
         );
     }
 
