@@ -320,6 +320,16 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             vec![1.0; chunk_contents.len()]
         };
         let mut names_keys = Vec::with_capacity(chunk_contents.len());
+        // Each roster decl's depth train gates on the chunk that OWNS
+        // its name line, not the tail of the chunk chain: chunk values
+        // are conserved (head-heavy), so the tail chunk carries a
+        // fraction of the catalog's value at nearly the head's cost and
+        // can price past the schedule horizon — gating a decl's train on
+        // it would forfeit the file's depth whenever the tail roster
+        // loses its ratio race. Owning-chunk gating (Go's spelling) also
+        // keeps overlap ancestry local: a decl cannot become schedulable
+        // while a non-ancestor chunk still owns its name row.
+        let mut decl_gate_by_start_line: HashMap<usize, BatchKey> = HashMap::new();
         for ((chunk_index, content, model_factor), chunk_factor) in
             chunk_contents.into_iter().zip(chunk_factors)
         {
@@ -332,6 +342,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 }
             });
             let predecessor = names_keys.last().cloned();
+            for decl in &roster_decls[names_chunk_ranges[chunk_index].clone()] {
+                decl_gate_by_start_line.insert(decl.start_line, key.clone());
+            }
             out.push(Batch {
                 key: key.clone(),
                 predecessor,
@@ -340,16 +353,13 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             });
             names_keys.push(key);
         }
-        // The per-decl train gates on the HEAD roster chunk, not the
-        // tail: chunk values are conserved (head-heavy), so the tail
-        // chunk carries a fraction of the catalog's value at nearly the
-        // head's cost and can price past the schedule horizon — gating
-        // the train on it would forfeit the file's depth whenever the
-        // tail roster loses its ratio race. Go gates each decl on the
-        // chunk that owns it (the fuller form); the head gate is the
-        // measured minimal fix and keeps decl trains reachable once the
-        // file has entered.
+        // Fallback gate for decls outside the roster (their name lines
+        // appear in no chunk, so any chunk's ancestry is safe — the head
+        // keeps them reachable once the file has entered).
         let names_gate = names_keys.first().cloned();
+        // The method-signature catalog spans classes across every chunk,
+        // so its only overlap-safe predecessor is the full chunk chain.
+        let names_chain_gate = names_keys.last().cloned();
 
         // Method-signature catalog — likewise one unified batch. Gated
         // on the names surface: the `Full+Ellipsis` pair can share the
@@ -372,7 +382,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 let key = BatchKey::Python(PythonKey::MethodSigs { file: file.clone() });
                 out.push(Batch {
                     key: key.clone(),
-                    predecessor: names_gate.clone(),
+                    predecessor: names_chain_gate.clone(),
                     content,
                     value: method_sigs_value(file, ctx)
                         * python_roster_mass_factor(file, flat_methods.len()),
@@ -393,7 +403,10 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             {
                 out.push(Batch {
                     key: decl_key.clone().into(),
-                    predecessor: names_gate.clone(),
+                    predecessor: decl_gate_by_start_line
+                        .get(&decl.start_line)
+                        .cloned()
+                        .or_else(|| names_gate.clone()),
                     content,
                     value: decl_value(file, decl, ctx),
                 });
