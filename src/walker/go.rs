@@ -764,8 +764,20 @@ fn entry_slice(roster: &RosterCtx) -> Option<Vec<usize>> {
     // back into source order so the slice renders as a reading of the
     // file rather than of the ranking.
     let candidate = |chosen: &[usize]| roster.co_located_closure(&sorted(chosen));
-    while by_rank.len() > 1 && roster.cost(&candidate(&by_rank)) > GO_ENTRY_SLICE_TOKENS {
+    while !by_rank.is_empty() && roster.cost(&candidate(&by_rank)) > GO_ENTRY_SLICE_TOKENS {
         by_rank.pop();
+    }
+    // The ceiling is the whole mechanism: a gate priced like the roster
+    // it was carved from admits nothing the roster would not have
+    // admitted on its own, and still costs the remainder a chunk seam.
+    // So when even the top-ranked declaration renders over the ceiling,
+    // fall back to the best-ranked declaration that does fit — and when
+    // none does, decline to split.
+    if by_rank.is_empty() {
+        let fits = (0..decls.len())
+            .filter(|&index| roster.cost(&candidate(&[index])) <= GO_ENTRY_SLICE_TOKENS)
+            .max_by(|&a, &b| ranks[a].total_cmp(&ranks[b]).then(b.cmp(&a)))?;
+        by_rank.push(fits);
     }
     Some(candidate(&by_rank))
 }
@@ -2228,6 +2240,35 @@ var Charlie = 1
         assert!(
             batches[1].1.contains(&5) && !batches[1].1.contains(&4),
             "remainder holds the rest: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_entry_slice_skips_a_top_ranked_decl_that_blows_the_ceiling() {
+        // `Alpha` outranks everything — exported and documented — but its
+        // signature alone renders over the gate ceiling, so the gate has
+        // to fall through to the best-ranked declaration that fits.
+        let params: String = (0..40)
+            .map(|index| format!("argument{index} map[string]string, "))
+            .collect();
+        let mut src = format!(
+            "package subject\n\n// Alpha is the documented entry point.\nfunc Alpha({params}) (*Result, error) {{ return nil, nil }}\n// Bravo is documented too.\nfunc Bravo(ctx context.Context) error {{ return nil }}\n"
+        );
+        for index in 0..10 {
+            src.push_str(&format!(
+                "func helper{index}(ctx context.Context, name string, options map[string]string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        let batches = names_batches(&[("subject.go", src)]);
+        assert_eq!(batches.len(), 2, "roster still splits: {batches:?}");
+        assert_eq!(
+            batches[0].1,
+            vec![6],
+            "gate is `Bravo`, not the over-ceiling `Alpha`: {batches:?}"
+        );
+        assert!(
+            batches[1].1.contains(&4),
+            "`Alpha` rides the remainder: {batches:?}"
         );
     }
 
