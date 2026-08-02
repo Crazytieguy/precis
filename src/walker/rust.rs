@@ -7,7 +7,12 @@
 //! - `PubItemNames { file }`: every pub item's first line as a surface
 //!   listing — a cheap catastrophic-omission hedge when individual item
 //!   decls don't all fit
+//! - `PrivateItemNames { file }`: top-level private fns' first lines,
+//!   for files whose surface is mostly private implementation — see
+//!   [`private_fn_roster_items`] for membership
 //! - `MethodSigs { file }`: inherent + trait impl headers + method sigs
+//! - `ModuleState { file }`: grouped top-level private `static`/`const`
+//!   items (entrypoint files, non-example)
 //!
 //! Per-item keys (keyed by start line so each item has a distinct batch):
 //! - `PubItem { file, start_line }`: one pub item's declaration (struct
@@ -536,7 +541,8 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
 
         if !is_entrypoint_file(file) && is_package_source_file(file, ctx) {
-            for roster in collect_registration_rosters(&tree, &source) {
+            let registration_rosters = collect_registration_rosters(&tree, &source);
+            for roster in &registration_rosters {
                 if let Some(content) =
                     single_file_lines_content(file, &source, roster.lines.clone())
                 {
@@ -551,12 +557,34 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ));
                 }
             }
+            let private_fns = private_fn_roster_items(
+                file,
+                ctx,
+                &tree,
+                &source,
+                items.len(),
+                &registration_rosters,
+            );
+            if !private_fns.is_empty()
+                && let Some(content) = single_file_lines_content(
+                    file,
+                    &source,
+                    collect_item_name_lines(&private_fns, &source),
+                )
+            {
+                out.push(batch(
+                    RustKey::PrivateItemNames { file: file.clone() },
+                    None,
+                    content,
+                    private_fn_names_value(file, ctx, private_fns.len()),
+                ));
+            }
         }
         // The file's declaration entry ticket: the names roster when one
         // is emitted, otherwise the lone item's own batch.
         let mut first_pub_item_key: Option<BatchKey> = None;
         if !items.is_empty() {
-            let parent_names_lines = collect_pub_item_names(&items, &source);
+            let parent_names_lines = collect_item_name_lines(&items, &source);
             if emit_names_surface
                 && let Some(content) =
                     single_file_lines_content(file, &source, parent_names_lines.clone())
@@ -687,6 +715,31 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if is_entrypoint_file(file) {
             let entry_items =
                 find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Private);
+            // Example entrypoints already render every private item
+            // whole via the peer-entry path below; a state group there
+            // would double-own the same lines.
+            if !example_entry {
+                let state_rows = module_state_rows(&entry_items, &source);
+                // Same floor as `CrateAttrs`, same reason: a lone
+                // VERSION-const one-liner is not the "global state"
+                // block NS rows anchor on, and tiny groups queue-jump
+                // the early budget on ratio.
+                let state_tokens: usize = state_rows
+                    .iter()
+                    .map(|&n| super::markdown::row_tokens(&src_lines, n))
+                    .sum();
+                if state_tokens >= CRATE_ATTRS_MIN_TOKENS
+                    && let Some(content) =
+                        single_file_lines_content(file, &source, FileLines::new(state_rows))
+                {
+                    out.push(batch(
+                        RustKey::ModuleState { file: file.clone() },
+                        None,
+                        content,
+                        module_state_value(file, ctx),
+                    ));
+                }
+            }
             // Thin-`fn main` wrapper pattern: src/main.rs's `fn main` body
             // is just `match run() { ... }` (or similar error-shim), with
             // the real call-graph living in a private `fn run`/etc. NS
@@ -1164,7 +1217,10 @@ fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
 /// budget (measured: hyperfine −0.050 / toasty −0.013 at a 100-token
 /// floor; log −0.02..−0.05 on 4-8K rows at 140 tokens). Policy-heavy
 /// blocks (`no_std` + feature gates + lint policy, anyhow ~400
-/// tokens) clear it easily.
+/// tokens) clear it easily. Second client: `ModuleState` applies the
+/// same floor to an entrypoint's private static/const group (a lone
+/// VERSION-const one-liner bought at cum ~500 measured −0.006 at
+/// B=1000) — retuning this constant retunes both gates.
 const CRATE_ATTRS_MIN_TOKENS: usize = 150;
 
 /// Same modest tier as plumbing-shaped `ModUse`: the attribute block
@@ -1175,6 +1231,15 @@ const CRATE_ATTRS_MIN_TOKENS: usize = 150;
 fn crate_attrs_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let catastrophic = (0.42 * entrypoint_boost(file)).min(1.0);
     mix_signals(catastrophic, 0.65, 0.38, rust_depth_factor(file, ctx))
+}
+
+/// Private module state — an entrypoint file's top-level `static` /
+/// `const` items, grouped. Deliberately tracks the `CrateAttrs` tier:
+/// both are secondary crate-configuration surface, and an independent
+/// cat bump for the state group (0.42 → 0.55) measured byte-identical
+/// across the grid, so there is no separate calibration pull to encode.
+fn module_state_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    crate_attrs_value(file, ctx)
 }
 
 fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {
@@ -1394,6 +1459,17 @@ fn impl_method_body_value(file: &Path, method: &ImplMethodInfo<'_>, ctx: &WalkCt
     )
 }
 
+/// A private-fn wall is the file's primary partition the same way an
+/// impl-heavy file's method surface is — priced on the impl-roster
+/// tier ([`method_sigs_value`]'s roster arm), not as a visibility-
+/// damped hedge: the membership gate has already decided the file IS
+/// its private implementation, and rosters carry no per-item
+/// visibility axis (the C internal-`DeclNames` precedent — a damp on
+/// the internal roster measured strictly worse there).
+fn private_fn_names_value(file: &Path, ctx: &WalkCtx, fn_count: usize) -> f64 {
+    mix_signals(0.6, 0.7, 0.35, rust_depth_factor(file, ctx)) * roster_mass_factor(fn_count)
+}
+
 fn registration_roster_value(file: &Path, ctx: &WalkCtx, entry_count: usize) -> f64 {
     mix_signals(0.995, 0.995, 0.795, rust_depth_factor(file, ctx)) * roster_mass_factor(entry_count)
 }
@@ -1434,6 +1510,111 @@ fn collect_registration_rosters(tree: &Tree, source: &str) -> Vec<RegistrationRo
         }
     }
     out
+}
+
+/// A private-fn roster only exists for a *wall* — enough fns that they
+/// are the file's table of contents. Below this, the handful of private
+/// helpers is incidental to the file, and emitting tiny helper rosters
+/// floods cliff-adjacent budgets (measured at min 2: six 2-fn rosters
+/// in one repo's export/ and timer/ modules, −0.083 on that fixture's
+/// primary budget).
+const PRIVATE_FN_NAMES_MIN: usize = 5;
+
+/// Membership of a file's [`RustKey::PrivateItemNames`] roster: its
+/// top-level private `fn`s, when they outnumber the file's top-level
+/// pub items — the file's surface is then mostly private
+/// implementation, and the pub roster alone misrepresents what the
+/// file contains. Cargo auto-target dirs (tests/benches/examples) and
+/// `#[test]`-marked fns are excluded: test cases are not
+/// implementation surface. Fns already surfaced by a
+/// [`RustKey::RegistrationRoster`] stay off the roster — their
+/// signature line is that batch's opener, and a second unrelated owner
+/// would violate line ownership.
+///
+/// The two gates deliberately count different sets: the outnumber gate
+/// counts *every* untested private fn (a wall is a wall even when one
+/// fn is surfaced by a registration roster), while the wall minimum
+/// sizes the roster that will actually render, post-exclusion.
+fn private_fn_roster_items<'a>(
+    file: &Path,
+    ctx: &WalkCtx,
+    tree: &'a Tree,
+    source: &str,
+    pub_item_count: usize,
+    registration_rosters: &[RegistrationRoster],
+) -> Vec<PubItemInfo<'a>> {
+    if is_example_source_path(ctx.root(), file) || is_test_target_path(ctx.root(), file) {
+        return Vec::new();
+    }
+    let private_fns: Vec<PubItemInfo<'a>> =
+        find_top_level_item_starts(tree, source, TopLevelItemVisibility::Private)
+            .into_iter()
+            .filter(|item| matches!(item.kind, ItemKind::Fn))
+            .filter(|item| !has_test_marker_attribute(item.node, source))
+            .collect();
+    if private_fns.len() <= pub_item_count {
+        return Vec::new();
+    }
+    let roster_fn_lines: HashSet<usize> = registration_rosters
+        .iter()
+        .map(|roster| roster.start_line)
+        .collect();
+    let eligible: Vec<PubItemInfo<'a>> = private_fns
+        .into_iter()
+        .filter(|item| !roster_fn_lines.contains(&item.start_line))
+        .collect();
+    if eligible.len() < PRIVATE_FN_NAMES_MIN {
+        return Vec::new();
+    }
+    eligible
+}
+
+/// `true` iff the fn is a test case rather than implementation — a
+/// `#[test]`-family attribute (`#[test]`, `#[tokio::test]`, …) or a
+/// `#[cfg(test)]` gate. Catches test walls living outside the cargo
+/// auto-target dirs (`src/**/tests.rs` companion modules).
+fn has_test_marker_attribute(node: Node, source: &str) -> bool {
+    !attr_rows_above(node, source, |attr, src| {
+        let text = attribute_body(attr, src);
+        text.starts_with("cfg(test")
+            || text
+                .split(['(', ']'])
+                .next()
+                .is_some_and(|path| path.trim().ends_with("test"))
+    })
+    .is_empty()
+}
+
+/// `true` iff `path` sits under a cargo test/bench auto-target dir.
+fn is_test_target_path(root: &Path, path: &Path) -> bool {
+    path_has_dir_component(root, path, &["tests", "test", "benches"])
+}
+
+/// Whether any directory component of `path` (relative to `root`)
+/// matches one of `names`. Shared matcher behind
+/// [`is_example_source_path`] and [`is_test_target_path`].
+fn path_has_dir_component(root: &Path, path: &Path, names: &[&str]) -> bool {
+    path.strip_prefix(root)
+        .unwrap_or(path)
+        .components()
+        .any(|c| c.as_os_str().to_str().is_some_and(|s| names.contains(&s)))
+}
+
+/// Rows of an entrypoint file's [`RustKey::ModuleState`] group: every
+/// top-level private `static`/`const` item, whole, with its API-shape
+/// and polarity attributes.
+fn module_state_rows(entry_items: &[PubItemInfo<'_>], source: &str) -> Vec<usize> {
+    let mut rows = Vec::new();
+    for item in entry_items {
+        if !matches!(item.kind, ItemKind::Static | ItemKind::Const) {
+            continue;
+        }
+        rows.extend(attr_rows_above(item.node, source, |attr, src| {
+            is_api_shape_attribute(attr, src) || is_polarity_attribute(attr, src)
+        }));
+        extend_span(&mut rows, item.node, source);
+    }
+    dedup_sorted(rows)
 }
 
 fn registration_roster_for_fn(function: Node, source: &str) -> Option<RegistrationRoster> {
@@ -1552,14 +1733,7 @@ fn collect_cargo_source_dirs(root: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
 }
 
 fn is_example_source_path(root: &Path, path: &Path) -> bool {
-    path.strip_prefix(root)
-        .unwrap_or(path)
-        .components()
-        .any(|c| {
-            c.as_os_str()
-                .to_str()
-                .is_some_and(|s| matches!(s, "examples" | "example"))
-        })
+    path_has_dir_component(root, path, &["examples", "example"])
 }
 
 fn rust_parent_dirs_under(dir: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
@@ -1978,10 +2152,11 @@ fn collect_mod_use(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// Header lines for every top-level pub item (name + first line only, with
-/// an ellipsis marker where the body would be). Surface listing — see
-/// `PubItemNames`.
-fn collect_pub_item_names(items: &[PubItemInfo<'_>], source: &str) -> FileLines {
+/// Header lines for a names roster (first line per item, with an
+/// ellipsis marker where the body would be), plus each item's
+/// disavowal attributes. Serves both surface listings: `PubItemNames`
+/// and `PrivateItemNames`.
+fn collect_item_name_lines(items: &[PubItemInfo<'_>], source: &str) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
@@ -2269,11 +2444,48 @@ enum MethodSigScope {
 /// the private constructors and helpers by name alongside the `pub`
 /// ones, because a roster that silently drops them reads as the
 /// complete list when it is not.
-fn is_own_api_impl(impl_node: Node, source: &str, pub_traits: &HashSet<String>) -> bool {
+///
+/// One foreign trait is admitted: `Default` on a pub type the file
+/// itself declares. Unlike the Display/Debug integration plumbing the
+/// scope exists to skip, a `Default` body is the type's concrete
+/// default configuration — the only place those values are stated.
+fn is_own_api_impl(
+    impl_node: Node,
+    source: &str,
+    pub_traits: &HashSet<String>,
+    pub_type_names: &HashSet<String>,
+) -> bool {
     match impl_trait_name(impl_node, source) {
-        Some(trait_name) => pub_traits.contains(trait_name),
+        Some(trait_name) => {
+            pub_traits.contains(trait_name)
+                || (trait_name == "Default"
+                    && impl_self_type_name(impl_node, source)
+                        .is_some_and(|t| pub_type_names.contains(t)))
+        }
         None => true,
     }
+}
+
+/// Base name of the type a trait impl is for (`impl Default for Options`
+/// → `Options`).
+fn impl_self_type_name<'a>(impl_node: Node, source: &'a str) -> Option<&'a str> {
+    base_type_name(impl_node.child_by_field_name("type")?, source)
+}
+
+/// Names of the file's own top-level pub type declarations — the
+/// receivers [`is_own_api_impl`]'s `Default` admission checks against.
+fn file_pub_type_names(tree: &Tree, source: &str) -> HashSet<String> {
+    find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
+        .iter()
+        .filter(|item| {
+            matches!(
+                item.kind,
+                ItemKind::Struct | ItemKind::Enum | ItemKind::Union | ItemKind::TypeAlias
+            )
+        })
+        .filter_map(|item| name_of(item.node, source))
+        .map(str::to_string)
+        .collect()
 }
 
 /// Base name of the trait a trait-impl implements (`None` for inherent
@@ -2315,6 +2527,13 @@ fn collect_impl_methods<'a>(
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
+    // Only the `OwnApiOnly` arm's `Default` admission reads this; the
+    // `All` path must not pay the extra top-level scan.
+    let pub_type_names = if scope == MethodSigScope::OwnApiOnly {
+        file_pub_type_names(tree, source)
+    } else {
+        HashSet::new()
+    };
     for impl_node in root.children(&mut cursor) {
         if impl_node.kind() != "impl_item" {
             continue;
@@ -2322,7 +2541,9 @@ fn collect_impl_methods<'a>(
         let Some(body) = impl_node.child_by_field_name("body") else {
             continue;
         };
-        if scope == MethodSigScope::OwnApiOnly && !is_own_api_impl(impl_node, source, pub_traits) {
+        if scope == MethodSigScope::OwnApiOnly
+            && !is_own_api_impl(impl_node, source, pub_traits, &pub_type_names)
+        {
             continue;
         }
         let trait_impl = impl_trait_name(impl_node, source).is_some();
@@ -2364,7 +2585,7 @@ fn collect_impl_methods<'a>(
 ///
 /// Both the impl header and the method rows carry their
 /// [`is_disavowal_attribute`] run, on the same refines-vs-contradicts
-/// split [`collect_pub_item_names`] uses: this roster claims these
+/// split [`collect_item_name_lines`] uses: this roster claims these
 /// methods are the type's surface, which `#[cfg]` refines but
 /// `#[doc(hidden)]` / `#[deprecated]` contradict.
 fn collect_method_sigs(
@@ -2524,7 +2745,7 @@ fn count_own_api_impl_methods(tree: &Tree, source: &str, pub_traits: &HashSet<St
 /// macro is exported only because `macro_rules!` has no other way to
 /// reach a sibling module, so a roster that lists it clean asserts the
 /// opposite of what the crate says about it — the same contradicts-the-
-/// roster rule [`collect_pub_item_names`] applies to pub items.
+/// roster rule [`collect_item_name_lines`] applies to pub items.
 fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
     let mut out = Vec::new();
     let mut ellipses = Vec::new();
@@ -3047,6 +3268,16 @@ mod tests {
         out
     }
 
+    /// The minimal `[package]` manifest that makes a temp tree a cargo
+    /// package for `is_package_source_file`.
+    fn write_package_manifest(dir: &TempDir) {
+        std::fs::write(
+            dir.path().join("Cargo.toml"),
+            "[package]\nname='t'\nversion='0.1.0'\n",
+        )
+        .unwrap();
+    }
+
     fn write_vis_tree(files: &[(&str, &str)]) -> (TempDir, PathBuf) {
         let dir = tempdir();
         let src = dir.path().join("src");
@@ -3163,7 +3394,7 @@ pub struct Plain;
         let tree = parse(src);
         let items = find_top_level_item_starts(&tree, src, TopLevelItemVisibility::Public);
         assert_eq!(
-            rendered(src, &collect_pub_item_names(&items, src)),
+            rendered(src, &collect_item_name_lines(&items, src)),
             vec![
                 "#[doc(hidden)]",
                 "pub trait Sealed {}",
@@ -3785,11 +4016,7 @@ use self::not_pub::Hidden;
              }\n",
             ),
         ]);
-        std::fs::write(
-            dir.path().join("Cargo.toml"),
-            "[package]\nname='t'\nversion='0.1.0'\n",
-        )
-        .unwrap();
+        write_package_manifest(&dir);
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         let batches = expand_in_dir(&src, &ctx);
         let sigs = BatchKey::Rust(RustKey::MethodSigs {
@@ -3820,14 +4047,134 @@ use self::not_pub::Hidden;
         );
     }
 
+    #[test]
+    fn rust_private_fn_roster_gates_on_wall_and_test_markers() {
+        let wall = "pub fn api() {}\n\
+             fn a() {}\n\
+             fn b() {}\n\
+             fn c() {}\n\
+             fn d() {}\n\
+             fn e() {}\n\
+             #[test]\n\
+             fn t() {}\n";
+        let (dir, src) = write_vis_tree(&[
+            ("lib.rs", "mod wall;\nmod thin;\n"),
+            ("wall.rs", wall),
+            ("thin.rs", "pub fn api() {}\nfn a() {}\nfn b() {}\n"),
+        ]);
+        write_package_manifest(&dir);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(&src, &ctx);
+        let roster_files: Vec<&PathBuf> = batches
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Rust(RustKey::PrivateItemNames { file }) => Some(file),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(
+            roster_files,
+            vec![&src.join("wall.rs")],
+            "five untested private fns clear the wall gate; two do not, \
+             and lib.rs is an entrypoint"
+        );
+        let roster = batches
+            .iter()
+            .find(|b| matches!(&b.key, BatchKey::Rust(RustKey::PrivateItemNames { .. })))
+            .unwrap();
+        let BatchContent::Lines { spans } = &roster.content else {
+            panic!("roster renders as lines");
+        };
+        assert!(
+            spans
+                .iter()
+                .filter(|span| matches!(span.render, crate::content::Render::Full))
+                .all(|span| span.start <= 6),
+            "the #[test]-marked fn stays off the roster"
+        );
+    }
+
+    #[test]
+    fn rust_default_impl_on_own_pub_type_joins_method_surface() {
+        let (dir, src) = write_vis_tree(&[
+            ("lib.rs", "pub mod thing;\n"),
+            (
+                "thing.rs",
+                "pub struct Thing;\n\
+                 struct Hidden;\n\
+                 \n\
+                 impl Default for Thing {\n\
+                 \x20   fn default() -> Self {\n\
+                 \x20       Thing\n\
+                 \x20   }\n\
+                 }\n\
+                 \n\
+                 impl Default for Hidden {\n\
+                 \x20   fn default() -> Self {\n\
+                 \x20       Hidden\n\
+                 \x20   }\n\
+                 }\n\
+                 \n\
+                 impl std::fmt::Debug for Thing {\n\
+                 \x20   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n\
+                 \x20       f.write_str(\"Thing\")\n\
+                 \x20   }\n\
+                 }\n",
+            ),
+        ]);
+        write_package_manifest(&dir);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(&src, &ctx);
+        let method_lines: Vec<usize> = batches
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Rust(RustKey::ImplMethod { start_line, .. }) => Some(*start_line),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(
+            method_lines,
+            vec![5],
+            "Default on the file's own pub type joins the surface; Default \
+             on a private type and the Debug plumbing stay off"
+        );
+    }
+
+    #[test]
+    fn rust_module_state_groups_entry_statics_above_floor() {
+        let filler = "x".repeat(40);
+        let big_state: String = (0..12)
+            .map(|i| format!("static S{i}: &str = \"{filler}\";\n"))
+            .collect();
+        let (dir, src) = write_vis_tree(&[(
+            "lib.rs",
+            &format!("pub fn api() {{}}\nconst TINY: usize = 1;\n{big_state}"),
+        )]);
+        write_package_manifest(&dir);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(&src, &ctx);
+        assert!(
+            batches
+                .iter()
+                .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::ModuleState { .. }))),
+            "a wide static block clears the floor and groups into one batch"
+        );
+
+        let (dir2, src2) = write_vis_tree(&[("lib.rs", "pub fn api() {}\nconst V: usize = 1;\n")]);
+        write_package_manifest(&dir2);
+        let ctx2 = WalkCtx::new(dir2.path().to_path_buf());
+        assert!(
+            !expand_in_dir(&src2, &ctx2)
+                .iter()
+                .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::ModuleState { .. }))),
+            "a lone one-liner const stays unemitted"
+        );
+    }
+
     /// `ModUse` predecessor for a single-crate `src/lib.rs`.
     fn mod_use_predecessor(lib_rs: &str) -> Option<BatchKey> {
         let (dir, src) = write_vis_tree(&[("lib.rs", lib_rs)]);
-        std::fs::write(
-            dir.path().join("Cargo.toml"),
-            "[package]\nname='t'\nversion='0.1.0'\n",
-        )
-        .unwrap();
+        write_package_manifest(&dir);
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         expand_in_dir(&src, &ctx)
             .into_iter()
