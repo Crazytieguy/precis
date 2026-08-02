@@ -2825,8 +2825,10 @@ appendage:
 - **`Default`-impl admission** in `is_own_api_impl`: `impl Default` on a
   pub type the file declares joins the OwnApiOnly surface. Recall works
   (hyperfine absent 0.241→0.169, oracle +0.012) but pays only at 10K
-  (+0.011): the dive chains behind `MethodSigs {options.rs}` at cum
-  7863 — the roster-pricing blocker from the 2026-07-26 per-impl-method
+  (+0.011): the dive chains behind `MethodSigs {options.rs}` — cum 7863
+  in the pre-lane baseline, 9254 in the shipped tree (the roster grew
+  186→270 tokens with the admitted Default sigs and priced even later)
+  — the roster-pricing blocker from the 2026-07-26 per-impl-method
   entry, not a recall failure. Widening past `Default` (Display/From) is
   contra-indicated by NS text (anyhow: trait-impl methods "deliberately
   not part of this roster").
