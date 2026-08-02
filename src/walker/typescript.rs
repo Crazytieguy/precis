@@ -244,16 +244,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             .filter(|_| module_entrypoint.as_deref() != Some(file.as_path()))
             .cloned();
 
+        // File-surface batches this file actually emits, in the order a
+        // reader meets them. Script statements gate on the first of them
+        // — see `script_flow_gate`.
+        let mut doc_lede_gate: Option<BatchKey> = None;
+        let mut imports_gate: Option<BatchKey> = None;
         if ep
             && let Some(content) =
                 build_per_file_content(file, ctx, parse_ts, collect_module_doc_lede)
         {
+            let key = BatchKey::Typescript(TsKey::ModuleDocLede { file: file.clone() });
             out.push(Batch {
-                key: TsKey::ModuleDocLede { file: file.clone() }.into(),
+                key: key.clone(),
                 predecessor: module_predecessor.clone(),
                 content,
                 value: module_doc_lede_value(file, ctx, js_factor),
             });
+            doc_lede_gate = Some(key);
         }
 
         // Lines the imports / re-export-chunk batches would claim on
@@ -287,16 +294,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     } else {
                         imports_value(file, ctx, js_factor)
                     };
+                    let key = BatchKey::Typescript(TsKey::ImportChunk {
+                        file: file.clone(),
+                        chunk_index,
+                    });
                     out.push(Batch {
-                        key: TsKey::ImportChunk {
-                            file: file.clone(),
-                            chunk_index,
-                        }
-                        .into(),
+                        key: key.clone(),
                         predecessor: module_predecessor.clone(),
                         content,
                         value: base_value * reexport_import_chunk_factor(chunk_index, chunk_count),
                     });
+                    imports_gate.get_or_insert(key);
                 }
             } else {
                 let mut lines = collect_imports(&tree, &source);
@@ -306,8 +314,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     && is_mostly_reexport(&lines, &collect_bare_reexport_lines(&tree, &source));
                 lines.full.retain(|line| !roster_star_lines.contains(line));
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
+                    let key = BatchKey::Typescript(TsKey::Imports { file: file.clone() });
                     out.push(Batch {
-                        key: TsKey::Imports { file: file.clone() }.into(),
+                        key: key.clone(),
                         predecessor: module_predecessor.clone(),
                         content,
                         value: if is_reexport_wall {
@@ -316,6 +325,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             imports_value(file, ctx, js_factor)
                         },
                     });
+                    imports_gate = Some(key);
                 }
             }
             let mut claimed = import_owned_lines.clone();
@@ -337,7 +347,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         } else {
             HashMap::new()
         };
-        let exports = find_export_starts(
+        let mut exports = find_export_starts(
             file,
             &tree,
             &source,
@@ -347,6 +357,48 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &default_implementation_exports,
         );
         let top_level_decl_start_lines = top_level_decl_start_lines(&tree);
+        // Module items are discovered before the exports are emitted: a
+        // member-defining statement resolves its predecessor against them,
+        // and the script-flow statements have to be known while the names
+        // surface is choosing where to put its courtesy ellipses.
+        let mut reexported_local_names = local_reexports.value.clone();
+        reexported_local_names.extend(commonjs_value_reexports.iter().cloned());
+        let module_items = find_module_items(
+            &tree,
+            &source,
+            &src_lines,
+            &exports.iter().map(|item| item.start_line).collect(),
+            &reexported_local_names,
+        );
+        // README-cited JS files (canonical example scripts referenced from
+        // the root README) emit private statements as module items even
+        // though they aren't entrypoints — those statements ARE the
+        // example's content the NS author anchored on.
+        let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
+            && (is_tsx_file(file) || is_js_file(file));
+        let emitted_items: Vec<&ModuleItemInfo> = module_items
+            .iter()
+            .filter(|item| emit_private_nonclass || matches!(item.kind, ItemKind::Class))
+            .collect();
+        let emitted_item_start_lines: HashSet<usize> =
+            emitted_items.iter().map(|item| item.start_line).collect();
+        // A member-defining statement is only surface if the receiver it
+        // installs onto actually renders. Chaining it to the roster instead
+        // measured dead — the roster is the gate for the whole file's train,
+        // so widening it prices out everything behind it — hence: resolve a
+        // real predecessor batch or drop the statement entirely.
+        let real_export_start_lines: HashSet<usize> = exports
+            .iter()
+            .filter(|item| item.member_definition_receiver_line.is_none())
+            .map(|item| item.start_line)
+            .collect();
+        exports.retain(|item| {
+            let Some(receiver_line) = item.member_definition_receiver_line else {
+                return true;
+            };
+            emitted_item_start_lines.contains(&receiver_line)
+                || real_export_start_lines.contains(&receiver_line)
+        });
         // The declared API contract's roster shapes (names surface,
         // member-chunked decls and their catalogs) are exempt from the
         // machinery damp: a root-level `.d.ts` the manifest's `types`
@@ -365,8 +417,36 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         };
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
+        // Script flow: the run-directly half of a script. Scripts only —
+        // in a compiled component module, module scope carries
+        // registration trivia rather than the program's flow. Admission
+        // is decided at emission time, where the file's first surface
+        // batch is known; see `script_flow_gate`.
+        let script_statements = if emit_private_nonclass && is_js_file(file) {
+            let declaration_owned = declaration_owned_rows(&tree, &source);
+            script_flow_statement_lines(&tree, &source)
+                .into_iter()
+                // A statement sharing a physical line with a declaration or
+                // an export (`const s = {}; run(s);`) is already rendered by
+                // that declaration's batch, and a second peer batch over the
+                // row would be a scheduler conflict.
+                .filter(|lines| {
+                    lines
+                        .full
+                        .iter()
+                        .all(|line| !declaration_owned.contains(line))
+                })
+                .collect()
+        } else {
+            Vec::new()
+        };
+        let script_statement_rows: HashSet<usize> = script_statements
+            .iter()
+            .flat_map(|lines| lines.full.iter().copied())
+            .collect();
         let mut body_segment_index = 0usize;
         let mut names_gate: Option<BatchKey> = None;
+        let mut names_owned_rows: HashSet<usize> = HashSet::new();
         if !exports.is_empty() {
             // One pass over the exports: the catalog/chunk computations
             // are token-cost probes, too expensive to redo for the
@@ -414,6 +494,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 &export_start_lines,
                 &import_owned_lines,
                 &top_level_decl_start_lines,
+                &script_statement_rows,
             );
             // A roster claims "these exports exist". A JSDoc tag that
             // disavows one contradicts that claim, and it lives in
@@ -460,6 +541,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ) * contract_roster_factor(true),
                 });
                 names_gate = Some(key);
+                names_owned_rows = names_lines
+                    .full
+                    .iter()
+                    .chain(names_lines.ellipses.iter())
+                    .copied()
+                    .collect();
             }
             let dependent_export_start_lines: HashSet<_> = exports
                 .iter()
@@ -476,13 +563,28 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     member_catalog_chunks,
                     oversized_export_chunks,
                 } = plan;
+                // A member-defining statement whose receiver is a private
+                // declaration chains to that declaration's `ModuleItem`;
+                // `retain` above already dropped the ones with neither an
+                // export nor a module item to ride.
                 let export_surface_predecessor = item
                     .predecessor_start_line
                     .map(|start_line| {
-                        BatchKey::Typescript(TsKey::Export {
-                            file: file.clone(),
-                            start_line,
-                        })
+                        BatchKey::Typescript(
+                            if item.member_definition_receiver_line == Some(start_line)
+                                && !export_start_lines.contains(&start_line)
+                            {
+                                TsKey::ModuleItem {
+                                    file: file.clone(),
+                                    start_line,
+                                }
+                            } else {
+                                TsKey::Export {
+                                    file: file.clone(),
+                                    start_line,
+                                }
+                            },
+                        )
                     })
                     .or_else(|| names_gate.clone());
                 let partitioned_member_catalog = member_catalog_chunks
@@ -738,25 +840,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: reexport_wall_value(file, ctx, js_factor),
             });
         }
-        let mut reexported_local_names = local_reexports.value.clone();
-        reexported_local_names.extend(commonjs_value_reexports.iter().cloned());
-        let module_items = find_module_items(
-            &tree,
-            &source,
-            &src_lines,
-            &export_start_lines,
-            &reexported_local_names,
-        );
-        // README-cited JS files (canonical example scripts referenced from
-        // the root README) emit private statements as module items even
-        // though they aren't entrypoints — those statements ARE the
-        // example's content the NS author anchored on.
-        let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
-            && (is_tsx_file(file) || is_js_file(file));
-        let emitted_items: Vec<&ModuleItemInfo> = module_items
-            .iter()
-            .filter(|item| emit_private_nonclass || matches!(item.kind, ItemKind::Class))
-            .collect();
         // A wide private surface ships as one first-line catalog with
         // the per-item batches gated (and line-covered) behind it —
         // NS authors anchor on the roster as a unit, and without it
@@ -764,6 +847,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // early budget ahead of orientation content (cmdk index.tsx:
         // ~40 items, ~1.5K tokens before the workspace manifests).
         let mut module_items_gate: Option<BatchKey> = None;
+        // When a file has too few declarations for a catalog, its first
+        // declaration batch is the admitted declaration content instead.
+        let mut first_module_item_gate: Option<BatchKey> = None;
         if emitted_items.len() >= MODULE_ITEM_CATALOG_MIN {
             let names_lines =
                 FileLines::new(emitted_items.iter().map(|item| item.start_line).collect());
@@ -796,6 +882,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     content,
                     value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
                 });
+                first_module_item_gate
+                    .get_or_insert_with(|| BatchKey::Typescript(item_key.clone()));
             }
             if !item.body_parts.is_empty() {
                 let item_predecessor = BatchKey::Typescript(item_key);
@@ -845,14 +933,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
-        // Script flow: the run-directly half of a private-emitting file.
-        // Its declarations are already covered above; what is left is the
-        // statements that actually execute, which belong to no declaration
-        // and would otherwise have no batch at all. Scripts only — in a
-        // compiled component module, module scope carries registration
-        // trivia rather than the program's flow.
-        if emit_private_nonclass && is_js_file(file) {
-            for lines in script_flow_statement_lines(&tree, &source) {
+        // The declarations are covered above; what is left is the statements
+        // that actually execute, which belong to no declaration and would
+        // otherwise have no batch at all. Membership was decided with the
+        // rest of the file's line ownership — see `script_statements`.
+        {
+            for lines in script_statements {
                 let Some(start_line) = lines.full.first().copied() else {
                     continue;
                 };
@@ -862,6 +948,28 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 if export_start_lines.contains(&start_line) {
                     continue;
                 }
+                // The names surface is the only gate that can own one of
+                // these rows (its courtesy ellipsis). Rows are kept disjoint
+                // above, so this is the belt to that braces: when it ever
+                // does overlap, chain under the owner rather than beside it.
+                let overlaps_names_surface = lines
+                    .full
+                    .iter()
+                    .any(|line| names_owned_rows.contains(line));
+                let Some(gate) = (if overlaps_names_surface {
+                    names_gate.clone()
+                } else {
+                    script_flow_gate(
+                        module_items_gate
+                            .as_ref()
+                            .or(first_module_item_gate.as_ref()),
+                        doc_lede_gate.as_ref(),
+                        names_gate.as_ref(),
+                        imports_gate.as_ref(),
+                    )
+                }) else {
+                    continue;
+                };
                 let Some(content) = single_file_lines_content(file, &source, lines) else {
                     continue;
                 };
@@ -871,10 +979,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         start_line,
                     }
                     .into(),
-                    predecessor: module_items_gate
-                        .clone()
-                        .or_else(|| names_gate.clone())
-                        .or_else(|| module_predecessor.clone()),
+                    predecessor: Some(gate),
                     content,
                     value: module_item_value(file, ItemKind::Const, ctx, js_factor)
                         * per_export_factor,
@@ -884,6 +989,43 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     }
 
     out
+}
+
+/// The file's first admitted surface — the batch a reader necessarily
+/// meets before any of its statements, and therefore the price of
+/// admission for them. A file that publishes no surface at all emits no
+/// statement batches rather than root-level crumbs that jump the queue.
+fn script_flow_gate(
+    declaration_gate: Option<&BatchKey>,
+    doc_lede_gate: Option<&BatchKey>,
+    names_gate: Option<&BatchKey>,
+    imports_gate: Option<&BatchKey>,
+) -> Option<BatchKey> {
+    declaration_gate
+        .or(doc_lede_gate)
+        .or(names_gate)
+        .or(imports_gate)
+        .cloned()
+}
+
+/// Every row spanned by a top-level declaration or export statement —
+/// the rows some declaration-shaped batch may claim. A script-flow
+/// statement sharing one of them (`const s = {}; run(s);` on a single
+/// line) is already rendered there, and a peer batch over the same row
+/// is a scheduler conflict.
+fn declaration_owned_rows(tree: &Tree, source: &str) -> HashSet<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut rows = HashSet::new();
+    for child in root.children(&mut cursor) {
+        if decl_kind(child).is_none() && child.kind() != "export_statement" {
+            continue;
+        }
+        for row in child.start_position().row..=node_end_row_trimmed(child, source) {
+            rows.insert(row + 1);
+        }
+    }
+    rows
 }
 
 /// Statement kinds that make up a script's flow — everything a program
@@ -1178,6 +1320,11 @@ struct ExportInfo<'a> {
     /// Export surface line that this synthesized local implementation
     /// refines. Used for thin `export default localName` entrypoints.
     predecessor_start_line: Option<usize>,
+    /// Set only for a member-defining statement: the line publishing the
+    /// receiver it installs onto. The statement is surface only while
+    /// that line renders, and it never joins the names surface — see the
+    /// `retain` in `expand_in_dir`.
+    member_definition_receiver_line: Option<usize>,
 }
 
 #[derive(Debug, Clone)]
@@ -1313,10 +1460,12 @@ fn find_export_starts<'a>(
         }
         // Member-defining call statements — the dynamic half of the same
         // surface (`defineGetter(r, 'x', fn)`, `list.forEach(m => r[m] = …)`).
-        // They refine the receiver's own export when that export renders,
-        // which keeps them off the file's names surface: a roster that grew
-        // by every dynamic definition would price itself out of the early
-        // budget and starve the whole file's train behind it.
+        // They always refine the batch that renders the receiver, which
+        // keeps them off the file's names surface: a roster that grew by
+        // every dynamic definition would price itself out of the early
+        // budget and starve the whole file's train behind it (measured
+        // dead). `expand_in_dir` drops the ones whose receiver has no
+        // rendering batch rather than letting them fall back to the roster.
         let exported_receivers = collect_exported_receivers(tree, source);
         for stmt in collect_member_defining_statements(tree, source, &exported_receivers) {
             if emitted_lines.contains(&stmt.start_line) {
@@ -1332,9 +1481,8 @@ fn find_export_starts<'a>(
                 src_lines,
                 false,
             );
-            info.predecessor_start_line = emitted_lines
-                .contains(&stmt.receiver_line)
-                .then_some(stmt.receiver_line);
+            info.predecessor_start_line = Some(stmt.receiver_line);
+            info.member_definition_receiver_line = Some(stmt.receiver_line);
             out.push(info);
             emitted_lines.insert(stmt.start_line);
             needs_sort = true;
@@ -1397,6 +1545,7 @@ fn make_export_info<'a>(
         is_type_only,
         factory_sibling_body_parts,
         predecessor_start_line: None,
+        member_definition_receiver_line: None,
     }
 }
 
@@ -2109,18 +2258,95 @@ fn installed_receiver_name<'a>(
     source: &'a str,
     receivers: &HashMap<String, usize>,
 ) -> Option<&'a str> {
+    // A callback parameter or local can shadow the module-scope receiver
+    // (`values.forEach(api => { api.local = … })`). Assigning to the
+    // shadow mutates a local object, not the published one, so treating
+    // it as surface would promote implementation-only code as public API.
+    let shadowed = locally_bound_names(node, source);
     let mut cursor = node.walk();
     let mut pending = vec![node];
     while let Some(current) = pending.pop() {
         if current.kind() == "assignment_expression"
             && let Some((left, _)) = assignment_sides(current)
             && let Some(name) = receiver_member_target_name(left, source, receivers)
+            && !shadowed.contains(name)
         {
             return Some(name);
         }
         pending.extend(current.named_children(&mut cursor));
     }
     None
+}
+
+/// Every name bound anywhere inside `node` — parameters of the function
+/// and of any nested function, declared variables, function and class
+/// declaration names, and `catch` bindings. Deliberately scope-flat: a
+/// name bound anywhere under the callback cannot be relied on to mean the
+/// module-scope receiver at the assignment site.
+fn locally_bound_names(node: Node, source: &str) -> HashSet<String> {
+    let mut cursor = node.walk();
+    let mut names = HashSet::new();
+    let mut pending = vec![node];
+    while let Some(current) = pending.pop() {
+        let binder = match current.kind() {
+            "formal_parameters" | "object_pattern" | "array_pattern" => Some(current),
+            "variable_declarator" | "lexical_binding" => current.child_by_field_name("name"),
+            "function_declaration"
+            | "generator_function_declaration"
+            | "class_declaration"
+            | "arrow_function"
+            | "function_expression" => current.child_by_field_name("name").or_else(|| {
+                // `x => …` binds its single parameter without a
+                // `formal_parameters` wrapper.
+                current
+                    .child_by_field_name("parameter")
+                    .filter(|_| current.kind() == "arrow_function")
+            }),
+            "catch_clause" => current.child_by_field_name("parameter"),
+            _ => None,
+        };
+        if let Some(binder) = binder {
+            collect_pattern_identifiers(binder, source, &mut names);
+        }
+        pending.extend(current.named_children(&mut cursor));
+    }
+    names
+}
+
+/// Identifier names introduced by a binding form — the node itself when
+/// it is a plain identifier, otherwise every identifier under it that is
+/// not a property key or a default-value expression.
+fn collect_pattern_identifiers(node: Node, source: &str, names: &mut HashSet<String>) {
+    if let Some(name) = identifier_text(node, source) {
+        names.insert(name.to_string());
+        return;
+    }
+    let mut cursor = node.walk();
+    let mut pending = vec![node];
+    while let Some(current) = pending.pop() {
+        if matches!(
+            current.kind(),
+            "identifier" | "shorthand_property_identifier_pattern"
+        ) {
+            names.insert(source[current.start_byte()..current.end_byte()].to_string());
+            continue;
+        }
+        // `{ key: local }` binds `local`; `key` is a property name.
+        if current.kind() == "pair_pattern" {
+            if let Some(value) = current.child_by_field_name("value") {
+                pending.push(value);
+            }
+            continue;
+        }
+        // `x = fallback` binds `x`; the fallback is an expression.
+        if current.kind() == "assignment_pattern" {
+            if let Some(left) = current.child_by_field_name("left") {
+                pending.push(left);
+            }
+            continue;
+        }
+        pending.extend(current.named_children(&mut cursor));
+    }
 }
 
 /// Receiver name when `node` is a member or subscript access rooted at a
@@ -3436,6 +3662,7 @@ fn collect_export_names_from(
     export_start_lines: &HashSet<usize>,
     import_owned_lines: &HashSet<usize>,
     top_level_decl_start_lines: &HashSet<usize>,
+    script_statement_rows: &HashSet<usize>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
@@ -3447,13 +3674,15 @@ fn collect_export_names_from(
         let ellipsis_line = item.start_line + 1;
         // Suppress the courtesy ellipsis when the next source line is
         // structural — another real export start, or a line owned by
-        // the imports / re-export-chunk batch. The latter only matters
-        // when an inline `export const` / `export type { … }` sits
-        // adjacent to a bare re-export wall (TS entrypoint pattern):
-        // peer batches can't overlap line ownership.
+        // the imports / re-export-chunk batch, or a row a script-flow
+        // statement batch claims. The import case only matters when an
+        // inline `export const` / `export type { … }` sits adjacent to a
+        // bare re-export wall (TS entrypoint pattern): peer batches can't
+        // overlap line ownership.
         if !export_start_lines.contains(&ellipsis_line)
             && !import_owned_lines.contains(&ellipsis_line)
             && !top_level_decl_start_lines.contains(&ellipsis_line)
+            && !script_statement_rows.contains(&ellipsis_line)
         {
             ellipses.push(ellipsis_line);
         }
@@ -4829,6 +5058,84 @@ mod tests {
             &commonjs_reexports,
             &default_identifier_reexports,
         )
+    }
+
+    /// Receiver names a member-defining statement resolves against, for
+    /// a JS source parsed as a module.
+    fn member_definition_receiver_lines(source: &str) -> Vec<usize> {
+        let tree = parse(source);
+        let receivers = collect_exported_receivers(&tree, source);
+        collect_member_defining_statements(&tree, source, &receivers)
+            .into_iter()
+            .map(|stmt| stmt.start_line)
+            .collect()
+    }
+
+    #[test]
+    fn walker_typescript_member_definition_matches_the_exported_receiver() {
+        let source = "\
+export const api = {};
+
+values.forEach(function (name) {
+  api[name] = () => name;
+});
+";
+        assert_eq!(
+            member_definition_receiver_lines(source),
+            vec![3],
+            "a callback installing onto the exported receiver is the shape this recalls"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_member_definition_rejects_a_shadowing_parameter() {
+        let source = "\
+export const api = {};
+
+values.forEach(function (api) {
+  api.local = 1;
+});
+";
+        assert!(
+            member_definition_receiver_lines(source).is_empty(),
+            "the parameter shadows the module-scope receiver, so the assignment \
+             mutates a local object and is not public surface"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_member_definition_rejects_a_shadow_bound_in_a_nested_function() {
+        let source = "\
+export const api = {};
+
+register(function () {
+  function inner(api) {
+    api.local = 1;
+  }
+  return inner;
+});
+";
+        assert!(
+            member_definition_receiver_lines(source).is_empty(),
+            "a name bound anywhere under the callback cannot be relied on to mean \
+             the module-scope receiver at the assignment site"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_member_definition_rejects_a_shadowing_local_declaration() {
+        let source = "\
+export const api = {};
+
+register(function () {
+  const { api } = getContext();
+  api.local = 1;
+});
+";
+        assert!(
+            member_definition_receiver_lines(source).is_empty(),
+            "a destructured local shadows the receiver just as a parameter does"
+        );
     }
 
     #[test]

@@ -286,26 +286,25 @@ Score(3000)=0.699 I=0.783 C=0.624 ns_rows≤3K=21/56 (reached=6 partial=0 missin
 | walker |  | 9252 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 520 |  |  | 0.540 |
 | walker |  | 9260 | 8 | listing of 'website/scripts' |  |  | 0.540 |
 | walker |  | 9268 | 8 | listing of 'website/static' |  |  | 0.540 |
-| walker |  | 9330 | 62 | module statements at samples/browser-esm-parcel/src/index.js:26 |  |  | 0.540 |
-| ns | 9352 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.545 |
-| walker |  | 9393 | 63 | imports in monaco-lsp-client/src/index.ts |  |  | 0.547 |
-| walker |  | 9405 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.547 |
-| walker |  | 9414 | 9 | listing of 'website/typedoc' |  |  | 0.547 |
-| walker |  | 9521 | 107 | samples/README.md section #3 |  |  | 0.547 |
-| walker |  | 9539 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.547 |
-| walker |  | 9539 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.547 |
-| walker |  | 9557 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.547 |
-| walker |  | 9557 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.547 |
+| walker |  | 9331 | 63 | imports in monaco-lsp-client/src/index.ts |  |  | 0.542 |
+| walker |  | 9343 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.542 |
+| walker |  | 9352 | 9 | listing of 'website/typedoc' |  |  | 0.547 |
+| ns | 9352 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.547 |
+| walker |  | 9459 | 107 | samples/README.md section #3 |  |  | 0.547 |
+| walker |  | 9477 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.547 |
+| walker |  | 9477 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.547 |
+| walker |  | 9495 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.547 |
+| walker |  | 9495 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.547 |
+| walker |  | 9582 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.547 |
 | ns | 9606 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.543 |
-| walker |  | 9644 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.543 |
-| walker |  | 9696 | 52 | README.md section #7 |  |  | 0.544 |
-| walker |  | 9701 | 5 | listing of 'website/index/samples' |  |  | 0.544 |
+| walker |  | 9634 | 52 | README.md section #7 |  |  | 0.544 |
+| walker |  | 9639 | 5 | listing of 'website/index/samples' |  |  | 0.544 |
+| walker |  | 9698 | 59 | README.md section #13 |  |  | 0.544 |
 | ns | 9722 |  | 116 | samples/ listing — every integration sample directory | 8.3 |  | 0.551 |
 | ns | 9759 |  | 37 | docs/ listing | 8.4 |  | 0.554 |
-| walker |  | 9760 | 59 | README.md section #13 |  |  | 0.554 |
-| walker |  | 9841 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.554 |
+| walker |  | 9779 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.554 |
+| walker |  | 9791 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.554 |
+| walker |  | 9820 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.554 |
 | ns | 9842 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.556 |
-| walker |  | 9853 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.556 |
-| walker |  | 9882 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.556 |
-| walker |  | 9905 | 23 | export at src/internal/common/workers.ts:92 |  |  | 0.557 |
+| walker |  | 9843 | 23 | export at src/internal/common/workers.ts:92 |  |  | 0.557 |
 | ns | 9974 |  | 132 | website/ and CI/publishing config listings | 8.6 |  | 0.567 |
