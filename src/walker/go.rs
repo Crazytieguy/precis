@@ -566,6 +566,21 @@ const GO_ENTRY_SLICE_TOKENS: usize = 80;
 /// The gate slice's share of the file's roster value. Held just under
 /// an unsplit roster's so a small file whose whole surface lands in one
 /// batch still wins a comparable rank race.
+///
+/// Deliberately not conserved: the remainder keeps the full factors it
+/// would have carried unsplit, so gate + remainder price the roster at
+/// 1.9x what it was worth whole. The gate is priced as an *additional*
+/// view of the surface rather than a slice taken out of it — a reader
+/// who gets only the gate has learned what the file is for, which is
+/// worth close to the whole roster, and one who gets both has not been
+/// overcharged for the seam. Conserved variants were measured and came
+/// out worse (xxhash -0.045).
+///
+/// This knowingly neighbours the dead class-constant entry-factor
+/// family, which failed for adding value without adding a cheap way in.
+/// The difference is the [`GO_ENTRY_SLICE_TOKENS`] admission unit: the
+/// extra value here is attached to a batch small enough to change what
+/// the budget can afford, not to the surface that was already unaffordable.
 const GO_ENTRY_SLICE_VALUE_FACTOR: f64 = 0.9;
 
 /// Rank premium for a declaration carrying a godoc comment. Below the
@@ -806,7 +821,16 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
         let Some((source, tree)) = parse_go(ctx, file) else {
             continue;
         };
-        let count = find_decls(&tree, &source).len();
+        // A generated file neither competes for the gate nor denies it
+        // to a hand-written sibling: nobody reads `zz_generated_*.go` to
+        // learn what a package is for, and letting one out-declare the
+        // package's real subject would either hand it the gate or, by
+        // tying, take the gate away from the file that deserves it. Its
+        // own content still emits as usual.
+        if is_generated(&source) {
+            continue;
+        }
+        let count = surface_name_count(&tree, &source);
         match best {
             Some((_, best_count)) if count < best_count => {}
             Some((_, best_count)) if count == best_count => tied = true,
@@ -820,6 +844,39 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
         Some((file, _)) if !tied => Some(file.clone()),
         _ => None,
     }
+}
+
+/// How many roster rows a file's declaration surface renders.
+///
+/// Not the declaration count: a grouped `type (`/`var (`/`const (` block
+/// is one declaration but surfaces one row per inner spec, so counting
+/// declarations reads a file that groups its API as far smaller than the
+/// same API written out, and hands the gate to whichever sibling
+/// happened not to group. Rows are also what the gate is rationed
+/// against, which is what makes them the right unit for "the file with
+/// the most surface".
+fn surface_name_count(tree: &Tree, source: &str) -> usize {
+    find_decls(tree, source)
+        .iter()
+        .flat_map(|(_, info)| info.name_lines.iter().copied())
+        .collect::<HashSet<usize>>()
+        .len()
+}
+
+/// Whether the file carries Go's generated-code header — the convention
+/// from `go/build`: a `// Code generated ... DO NOT EDIT.` line before
+/// any non-comment, non-blank text.
+fn is_generated(source: &str) -> bool {
+    source
+        .lines()
+        .take_while(|line| {
+            let trimmed = line.trim();
+            trimmed.is_empty() || trimmed.starts_with("//")
+        })
+        .any(|line| {
+            let trimmed = line.trim();
+            trimmed.starts_with("// Code generated ") && trimmed.ends_with(" DO NOT EDIT.")
+        })
 }
 
 fn sorted(indices: &[usize]) -> Vec<usize> {
@@ -2301,6 +2358,51 @@ var Charlie = 1
         assert!(
             batches.iter().all(|(chunk_index, _)| *chunk_index == 0),
             "no remainder chunks: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_entry_slice_counts_a_grouped_siblings_inner_specs() {
+        // The sibling writes the same twelve names as one grouped `var`
+        // block. Counted as declarations it has one; counted as roster
+        // rows it ties the subject, and a tie leaves the directory
+        // without a spine.
+        let mut sibling = String::from("package subject\n\nvar (\n");
+        for index in 0..12 {
+            sibling.push_str(&format!(
+                "\tGrouped{index} = buildSomethingLongEnoughToCost(\"{index}\", nil, nil)\n"
+            ));
+        }
+        sibling.push_str(")\n");
+        let batches = names_batches(&[
+            ("subject.go", oversize_roster_source()),
+            ("sibling.go", sibling),
+        ]);
+        assert!(
+            batches.iter().all(|(chunk_index, _)| *chunk_index == 0),
+            "a grouped sibling ties the subject, so no gate: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_entry_slice_ignores_a_generated_sibling() {
+        // The sibling out-declares the subject but is generated, so it
+        // neither takes the gate nor denies it to the subject.
+        let mut sibling =
+            String::from("// Code generated by protoc-gen-go. DO NOT EDIT.\n\npackage subject\n\n");
+        for index in 0..20 {
+            sibling.push_str(&format!(
+                "func Generated{index}(ctx context.Context, name string, options map[string]string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        let batches = names_batches(&[
+            ("subject.go", oversize_roster_source()),
+            ("sibling.go", sibling),
+        ]);
+        assert_eq!(
+            batches.iter().filter(|(index, _)| *index == 1).count(),
+            1,
+            "the hand-written subject still carves its gate: {batches:?}"
         );
     }
 
