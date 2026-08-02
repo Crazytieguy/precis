@@ -102,6 +102,47 @@ const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 const DATA_MODEL_ROSTER_FACTOR: f64 = 1.30;
 
+/// A names-surface **entry unit** — the batch every other batch in the
+/// file gates on — costing more than this gets an entry slice split off
+/// its head. See [`entry_slice`].
+const PYTHON_ENTRY_SLICE_SPLIT_TOKENS: usize = 250;
+
+/// Ceiling on the entry slice's roster-row count.
+const PYTHON_ENTRY_SLICE_ROWS: usize = 8;
+
+/// Ceiling on the entry slice's rendered cost — the knob that actually
+/// controls whether the file enters, since the gate's rank is
+/// `value / cost^k`.
+const PYTHON_ENTRY_SLICE_TOKENS: usize = 80;
+
+/// The gate slice's share of the entry unit's value.
+///
+/// Deliberately not conserved: the remainder keeps the factor it would
+/// have carried unsplit, so gate + remainder price the entry unit at
+/// 1.7× what it was worth whole. The gate is an *additional* view of the
+/// surface rather than a slice taken out of it — a reader who gets only
+/// the gate has learned what the module is for, and one who gets both
+/// has not been overcharged for the seam. Conserving the total instead
+/// measures −0.0016 at 3000 (pluggy −0.045, and it turns tomli's +0.040
+/// into −0.027): the gate then has to win the rank race on a demoted
+/// share of a surface that already lost it.
+///
+/// Swept 0.5/0.6/0.7/0.8/0.9 on the true grid. Go's 0.9 costs −0.0002 at
+/// 3000 — at that price the gate's whole depth train outruns its
+/// package's breadth (linkding −0.037, README overview displaced by four
+/// module rosters; pluggy −0.012, `_hooks.py`'s method catalog bought at
+/// the cost of `_manager.py` and `_result.py` entirely). 0.5 and 0.6 buy
+/// a better 3000 than this but go negative at 2080 and 4327; 0.7 is the
+/// only point up-or-flat across all seven budgets.
+const PYTHON_ENTRY_SLICE_VALUE_FACTOR: f64 = 0.7;
+
+/// Rank premium for a declaration carrying a docstring. Below the gap
+/// between the [`VISIBILITY_PUBLIC`] and [`VISIBILITY_UNDERSCORE`]
+/// factors on purpose: PEP 8's leading underscore is the stronger
+/// statement about what the module offers outward, and a docstring only
+/// orders declarations *within* a visibility class.
+const PYTHON_ENTRY_SLICE_DOC_PREMIUM: f64 = 1.15;
+
 /// Two-sided, unlike the shared [`crate::value::roster_mass_factor`]:
 /// the boost-only form prices a one-decl module's 11-token roster at the
 /// same size-invariant value as a 40-decl module's 600-token one, so the
@@ -171,10 +212,12 @@ fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKe
 
 fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
+    let spine = spine_file(source_files, ctx);
     for file in source_files {
         let Some((source, tree)) = parse_python(ctx, file) else {
             continue;
         };
+        let is_spine = spine.as_deref() == Some(file.as_path());
         let src_lines: Vec<&str> = source.lines().collect();
         let decls = find_top_level_decls(&tree, &source);
 
@@ -290,35 +333,68 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             decl_names_chunk_ranges(file, ctx, &source, &roster_decls, &all_name_lines);
         let names_base_value =
             decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len());
-        let mut chunk_contents = Vec::with_capacity(names_chunk_ranges.len());
-        for (chunk_index, range) in names_chunk_ranges.iter().enumerate() {
-            let chunk_decls = &roster_decls[range.clone()];
+        let group_lines = |group: &[usize]| {
+            let picked: Vec<DeclInfo> = group.iter().map(|&index| roster_decls[index]).collect();
+            collect_decl_names_from(&picked, &all_name_lines)
+        };
+        let group_cost = |group: &[usize]| {
+            single_file_lines_content(file, &source, group_lines(group))
+                .map(|content| ctx.marginal_tokens(&content))
+                .unwrap_or(0)
+        };
+        let mut names_groups: Vec<Vec<usize>> = names_chunk_ranges
+            .iter()
+            .map(|range| range.clone().collect())
+            .collect();
+        let mut chunk_factors: Vec<f64> = if names_groups.len() > 1 {
+            let costs: Vec<usize> = names_groups.iter().map(|group| group_cost(group)).collect();
+            conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT)
+        } else {
+            vec![1.0; names_groups.len()]
+        };
+        // Carve the entry unit's gate slice. Only the directory's spine
+        // module qualifies, and only once its entry unit is fat enough
+        // that the gate is a real discount on admission.
+        let mut carved = false;
+        if is_spine
+            && let Some(entry_unit) = names_groups.first()
+            && group_cost(entry_unit) > PYTHON_ENTRY_SLICE_SPLIT_TOKENS
+            && let Some(gate) = entry_slice(entry_unit, &roster_decls, &source, group_cost)
+        {
+            let remainder: Vec<usize> = entry_unit
+                .iter()
+                .copied()
+                .filter(|index| !gate.contains(index))
+                .collect();
+            names_groups[0] = remainder;
+            names_groups.insert(0, gate);
+            // The remainder keeps the factor it would have carried
+            // uncarved: re-indexing it into the conserved allocation
+            // demotes the catalog the gate exists to make reachable, and
+            // measured worse across the grid.
+            chunk_factors.insert(0, PYTHON_ENTRY_SLICE_VALUE_FACTOR * chunk_factors[0]);
+            carved = true;
+        }
+        let mut chunk_contents = Vec::with_capacity(names_groups.len());
+        for (chunk_index, group) in names_groups.iter().enumerate() {
             let model_factor = if file_is_data_model_catalog
-                && chunk_decls
+                && group
                     .iter()
-                    .filter(|d| public_class_decls.contains(&d.inner_node.start_byte()))
+                    .filter(|&&index| {
+                        public_class_decls.contains(&roster_decls[index].inner_node.start_byte())
+                    })
                     .count()
                     * 2
-                    >= chunk_decls.len()
+                    >= group.len()
             {
                 DATA_MODEL_ROSTER_FACTOR
             } else {
                 1.0
             };
-            let chunk_lines = collect_decl_names_from(chunk_decls, &all_name_lines);
-            if let Some(content) = single_file_lines_content(file, &source, chunk_lines) {
+            if let Some(content) = single_file_lines_content(file, &source, group_lines(group)) {
                 chunk_contents.push((chunk_index, content, model_factor));
             }
         }
-        let chunk_factors = if chunk_contents.len() > 1 {
-            let costs: Vec<usize> = chunk_contents
-                .iter()
-                .map(|(_, content, _)| ctx.marginal_tokens(content))
-                .collect();
-            conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT)
-        } else {
-            vec![1.0; chunk_contents.len()]
-        };
         let mut names_keys = Vec::with_capacity(chunk_contents.len());
         // Each roster decl's depth train gates on the chunk that OWNS
         // its name line, not the tail of the chunk chain: chunk values
@@ -330,9 +406,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // keeps overlap ancestry local: a decl cannot become schedulable
         // while a non-ancestor chunk still owns its name row.
         let mut decl_gate_by_start_line: HashMap<usize, BatchKey> = HashMap::new();
-        for ((chunk_index, content, model_factor), chunk_factor) in
-            chunk_contents.into_iter().zip(chunk_factors)
-        {
+        for (chunk_index, content, model_factor) in chunk_contents {
             let key = BatchKey::Python(if chunk_index == 0 {
                 PythonKey::DeclNames { file: file.clone() }
             } else {
@@ -341,10 +415,30 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     chunk_index,
                 }
             });
-            let predecessor = names_keys.last().cloned();
-            for decl in &roster_decls[names_chunk_ranges[chunk_index].clone()] {
-                decl_gate_by_start_line.insert(decl.start_line, key.clone());
+            // Continuations chain so they do not become independently
+            // schedulable crumbs. The carved remainder is the exception:
+            // it inherits the entry unit's ungated slot, leaving the gate
+            // a sibling rather than a toll in front of the complete
+            // roster. The two are disjoint by construction (the gate is
+            // closed over shared rows), so sibling status is
+            // overlap-safe.
+            let predecessor = if carved && chunk_index == 1 {
+                None
+            } else {
+                names_keys.last().cloned()
+            };
+            // Two top-level statements can share a row (`A = 1; B = 2`),
+            // and a chunker cut can put them in different chunks. Chunks
+            // are emitted in order and each chained continuation is a
+            // descendant of its predecessors, so resolving a shared row
+            // to the LAST claiming chunk gates both claimants on a batch
+            // that descends from every chunk rendering the row. (The
+            // gate/remainder pair, the one unchained seam, cannot share a
+            // row: the gate is closed over shared-row sets.)
+            for &index in &names_groups[chunk_index] {
+                decl_gate_by_start_line.insert(roster_decls[index].start_line, key.clone());
             }
+            let chunk_factor = chunk_factors[chunk_index];
             out.push(Batch {
                 key: key.clone(),
                 predecessor,
@@ -1022,6 +1116,190 @@ fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) 
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
+}
+
+/// Within-file prominence rank used to choose the entry slice. Only
+/// signals the language itself defines are used: PEP 8's leading-`_`
+/// convention, the presence of a docstring, and the declaration kind.
+fn entry_slice_rank(decl: &DeclInfo, source: &str) -> f64 {
+    let doc = if collect_doc_for(decl.inner_node, source).full.is_empty() {
+        1.0
+    } else {
+        PYTHON_ENTRY_SLICE_DOC_PREMIUM
+    };
+    decl.kind.kind_weight() * decl.visibility_factor() * doc
+}
+
+/// `positions` (into `group`) grown to whole shared-row sets, in group
+/// order, so the gate/remainder cut keeps every claimant of a roster row
+/// on the same side of it. Two top-level statements can share a row
+/// (`A = 1; B = 2`), and a set is not contiguous in roster order because
+/// the roster trails module constants after classes and defs.
+fn co_located_closure(
+    group: &[usize],
+    roster_decls: &[DeclInfo],
+    positions: &[usize],
+) -> Vec<usize> {
+    let rows: HashSet<usize> = positions
+        .iter()
+        .map(|&position| roster_decls[group[position]].start_line)
+        .collect();
+    group
+        .iter()
+        .copied()
+        .filter(|&index| rows.contains(&roster_decls[index].start_line))
+        .collect()
+}
+
+/// The head slice of a file's names-surface **entry unit** — the batch
+/// every other batch in the file gates on, and therefore the price of
+/// admission to the file's whole train — or `None` when no slice within
+/// the ceilings can serve as a gate.
+///
+/// A fat entry unit makes that price ruinous. Roster value is near
+/// size-invariant while cost grows with the declaration count, so within
+/// one file class the ratio decays and the *spine* module — the one with
+/// the most declarations, and the one an NS author ranks first — is the
+/// last to be admitted, if ever. Splitting a small, rank-chosen gate
+/// slice off the head buys entry at a fraction of the cost while the
+/// remainder keeps carrying the catastrophic-omission hedge.
+///
+/// The slice must be rank-chosen rather than source-ordered: a
+/// source-order head is an arbitrary prefix of the API, so it neither
+/// names what the module is for nor completes any roster an NS asks for.
+/// Ranking by [`entry_slice_rank`] puts the public, documented
+/// declarations in the gate.
+///
+/// `cost` prices a set of roster indices with the same code that later
+/// emits it, so a slice can never be chosen on a cost the emitted batch
+/// does not have.
+fn entry_slice(
+    group: &[usize],
+    roster_decls: &[DeclInfo],
+    source: &str,
+    cost: impl Fn(&[usize]) -> usize,
+) -> Option<Vec<usize>> {
+    // A unit this small is its own best gate; slicing it would only
+    // strand the remainder. Each roster decl surfaces exactly one row,
+    // so the member count is the row count.
+    if group.len() <= PYTHON_ENTRY_SLICE_ROWS {
+        return None;
+    }
+    let ranks: Vec<f64> = group
+        .iter()
+        .map(|&index| entry_slice_rank(&roster_decls[index], source))
+        .collect();
+    // Only declarations that define an API can name what the module is
+    // for. A module constant's roster row *is* its value — a settings
+    // module's `BASE_DIR = os.path.dirname(...)` says nothing about the
+    // package and costs a whole gate — which is why [`names_roster`]
+    // already trails constants behind classes and defs; a gate is that
+    // ordering taken to its conclusion. Constants sharing a row with a
+    // chosen declaration still ride along, for row ownership.
+    let mut by_rank: Vec<usize> = (0..group.len())
+        .filter(|&position| roster_decls[group[position]].kind != DeclKind::Const)
+        .collect();
+    by_rank.sort_by(|&a, &b| ranks[b].total_cmp(&ranks[a]).then(a.cmp(&b)));
+    by_rank.truncate(PYTHON_ENTRY_SLICE_ROWS);
+    let candidate = |chosen: &[usize]| co_located_closure(group, roster_decls, chosen);
+    // Trim the lowest-ranked members until the gate fits its ceiling.
+    // Descending rank order means popping the tail; the survivors go back
+    // into roster order so the slice renders as a reading of the module
+    // rather than of the ranking.
+    while !by_rank.is_empty() && cost(&candidate(&by_rank)) > PYTHON_ENTRY_SLICE_TOKENS {
+        by_rank.pop();
+    }
+    // The ceiling is the whole mechanism: a gate priced like the unit it
+    // was carved from admits nothing the unit would not have admitted on
+    // its own, and still costs the remainder a chunk seam. So when even
+    // the top-ranked declaration renders over the ceiling, fall back to
+    // the best-ranked declaration that does fit — and when none does,
+    // decline to split.
+    if by_rank.is_empty() {
+        let fits = (0..group.len())
+            .filter(|&position| roster_decls[group[position]].kind != DeclKind::Const)
+            .filter(|&position| cost(&candidate(&[position])) <= PYTHON_ENTRY_SLICE_TOKENS)
+            .max_by(|&a, &b| ranks[a].total_cmp(&ranks[b]).then(b.cmp(&a)))?;
+        by_rank.push(fits);
+    }
+    let slice = candidate(&by_rank);
+    // A closure that swallowed the unit leaves no remainder to gate.
+    (slice.len() < group.len()).then_some(slice)
+}
+
+/// The directory's **spine**: the one module surfacing strictly more
+/// top-level roster rows than any of its siblings.
+///
+/// Roster value is near size-invariant while roster cost grows with the
+/// declaration count, so inside one directory the entry ratio decays
+/// with `N` and the module with the most declarations is the last of its
+/// siblings to be admitted — usually never, at the budgets that matter.
+/// That inversion is what the gate slice exists to undo, and confining
+/// it to one module per directory is what keeps a package's breadth from
+/// being spent on a scattering of half-read modules.
+///
+/// Roster-row count is a coarse stand-in for importance, used only to
+/// pick *which* module may carve a gate, never to price anything.
+/// Returns `None` on a tie, when no module stands out from its siblings.
+///
+/// Only the repo's essential tree competes. A gate buys admission to the
+/// whole depth train behind it, and a `docs/conf.py` or a `tests/`
+/// support module is the sole or largest `.py` in its directory often
+/// enough that "most declarations here" would hand the discount to
+/// exactly the subtrees the walker already prices down.
+fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
+    let mut best: Option<(&PathBuf, usize)> = None;
+    let mut tied = false;
+    for file in source_files {
+        if ctx.non_essential_factor(file) < 1.0 {
+            continue;
+        }
+        let Some((source, tree)) = parse_python(ctx, file) else {
+            continue;
+        };
+        // A generated module neither competes for the gate nor denies it
+        // to a hand-written sibling: nobody reads a migration to learn
+        // what a package is for, and letting one out-declare the
+        // package's real subject would either hand it the gate or, by
+        // tying, take the gate away from the module that deserves it.
+        // Its own content still emits as usual.
+        if is_generated(&source) {
+            continue;
+        }
+        let decls = find_top_level_decls(&tree, &source);
+        let count = names_roster(&decls, &source).len();
+        match best {
+            Some((_, best_count)) if count < best_count => {}
+            Some((_, best_count)) if count == best_count => tied = true,
+            _ => {
+                best = Some((file, count));
+                tied = false;
+            }
+        }
+    }
+    match best {
+        Some((file, _)) if !tied => Some(file.clone()),
+        _ => None,
+    }
+}
+
+/// Whether the module carries a generated-code header in its leading
+/// comment block — the conventions Python code generators share
+/// (`# Generated by Django …`, `# @generated`, protobuf's
+/// `… DO NOT EDIT!`).
+fn is_generated(source: &str) -> bool {
+    source
+        .lines()
+        .take_while(|line| {
+            let trimmed = line.trim();
+            trimmed.is_empty() || trimmed.starts_with('#')
+        })
+        .any(|line| {
+            let marker = line.trim_start().trim_start_matches('#').trim();
+            marker.starts_with("Generated by ")
+                || marker.contains("@generated")
+                || marker.contains("DO NOT EDIT")
+        })
 }
 
 /// Source-roster-order ranges for a Python names surface: greedily cut
@@ -1762,17 +2040,21 @@ mod tests {
         let _ = scheduler.run_with_report();
     }
 
+    /// The file a names-surface batch belongs to, or `None` for any
+    /// other batch.
+    fn names_batch_file(key: &BatchKey) -> Option<&PathBuf> {
+        match key {
+            BatchKey::Python(
+                PythonKey::DeclNames { file } | PythonKey::DeclNamesChunk { file, .. },
+            ) => Some(file),
+            _ => None,
+        }
+    }
+
     fn decl_name_batches(batches: &[Batch<BatchKey>]) -> Vec<&Batch<BatchKey>> {
         batches
             .iter()
-            .filter(|batch| {
-                matches!(
-                    batch.key,
-                    BatchKey::Python(
-                        PythonKey::DeclNames { .. } | PythonKey::DeclNamesChunk { .. }
-                    )
-                )
-            })
+            .filter(|batch| names_batch_file(&batch.key).is_some())
             .collect()
     }
 
@@ -1791,14 +2073,23 @@ mod tests {
         ));
 
         let large_file = dir.path().join("large.py");
+        let twin_file = dir.path().join("twin.py");
         let mut source = String::new();
         for i in 0..48 {
             source.push_str(&format!(
                 "def public_function_{i:02}(first_argument: SomeLongProtocol, second_argument: AnotherLongProtocol) -> ReturnProtocol:\n    return first_argument\n\n"
             ));
         }
-        std::fs::write(&large_file, source).unwrap();
-        let large = expand_source_files(std::slice::from_ref(&large_file), &ctx);
+        std::fs::write(&large_file, &source).unwrap();
+        std::fs::write(&twin_file, &source).unwrap();
+        // Equal roster sizes, so the directory has no spine and no entry
+        // slice is carved — this asserts the chunker's own conserved
+        // allocation, which the gate deliberately does not respect.
+        let expanded = expand_source_files(&[large_file.clone(), twin_file], &ctx);
+        let large: Vec<Batch<BatchKey>> = expanded
+            .into_iter()
+            .filter(|batch| names_batch_file(&batch.key) == Some(&large_file))
+            .collect();
         let large_names = decl_name_batches(&large);
         assert!(large_names.len() > 1, "expected an oversize split");
         assert!(matches!(
@@ -1843,6 +2134,209 @@ mod tests {
             }
         }
         assert_eq!(covered.len(), 96, "48 signatures plus 48 ellipses");
+    }
+
+    /// A roster of `count` defs, `head_public` of them public and
+    /// docstring-carrying, the rest leading-underscore helpers. Each row
+    /// is long enough that the surface clears the split threshold.
+    fn entry_slice_module(count: usize, head_public: usize) -> String {
+        let mut source = String::new();
+        for index in 0..count {
+            if index < head_public {
+                source.push_str(&format!(
+                    "def public_entry_{index:02}(first: SomeProtocol, second: OtherProtocol) -> Result:\n    \"\"\"What this entry point does.\"\"\"\n    return first\n\n"
+                ));
+            } else {
+                source.push_str(&format!(
+                    "def _private_helper_{index:02}(first: SomeProtocol, second: OtherProtocol) -> Result:\n    return first\n\n"
+                ));
+            }
+        }
+        source
+    }
+
+    /// The gate slice and the remainder of one names surface, by cost.
+    fn entry_slice_split(
+        batches: &[Batch<BatchKey>],
+        file: &Path,
+        ctx: &WalkCtx,
+    ) -> Vec<(BatchKey, usize, f64)> {
+        batches
+            .iter()
+            .filter(|batch| names_batch_file(&batch.key).is_some_and(|owner| owner == file))
+            .map(|batch| {
+                (
+                    batch.key.clone(),
+                    ctx.marginal_tokens(&batch.content),
+                    batch.value,
+                )
+            })
+            .collect()
+    }
+
+    #[test]
+    fn python_entry_slice_gates_an_oversize_spine_roster_on_its_highest_rank_decls() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("spine.py");
+        let sibling = dir.path().join("sibling.py");
+        std::fs::write(&spine, entry_slice_module(24, 4)).unwrap();
+        std::fs::write(&sibling, entry_slice_module(6, 6)).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling.clone()], &ctx);
+
+        let chunks = entry_slice_split(&batches, &spine, &ctx);
+        assert_eq!(chunks.len(), 2, "expected a gate plus a remainder");
+        let (gate_key, gate_cost, gate_value) = chunks[0].clone();
+        let (_, remainder_cost, remainder_value) = chunks[1].clone();
+        assert!(matches!(
+            gate_key,
+            BatchKey::Python(PythonKey::DeclNames { .. })
+        ));
+        assert!(
+            gate_cost <= PYTHON_ENTRY_SLICE_TOKENS,
+            "gate must respect its ceiling: {gate_cost}"
+        );
+        assert!(gate_cost * 3 < remainder_cost, "gate must be the discount");
+        // Non-conserved by design: the remainder carries the uncarved
+        // roster's full value and the gate is priced on top of it.
+        let unsplit = decl_names_value(&spine, &ctx) * python_roster_mass_factor(&spine, 24);
+        assert!((remainder_value - unsplit).abs() < 1e-9);
+        assert!((gate_value - PYTHON_ENTRY_SLICE_VALUE_FACTOR * unsplit).abs() < 1e-9);
+        // The gate names the public, documented entry points, not a
+        // source-order prefix — here they happen to lead the file, so
+        // assert the ranking directly instead.
+        let (source, tree) = parse(&std::fs::read_to_string(&spine).unwrap());
+        let decls = find_top_level_decls(&tree, &source);
+        let roster: Vec<DeclInfo> = names_roster(&decls, &source)
+            .into_iter()
+            .map(|index| decls[index])
+            .collect();
+        let ranked = entry_slice_rank(&roster[0], &source);
+        assert!(
+            roster
+                .iter()
+                .skip(4)
+                .all(|decl| entry_slice_rank(decl, &source) < ranked),
+            "public documented decls must outrank the private helpers"
+        );
+
+        // The sibling is not the spine, so its surface is untouched.
+        assert_eq!(entry_slice_split(&batches, &sibling, &ctx).len(), 1);
+    }
+
+    #[test]
+    fn python_entry_slice_leaves_a_roster_that_already_fits_whole() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("spine.py");
+        let sibling = dir.path().join("sibling.py");
+        // Over the row ceiling but under the token threshold.
+        std::fs::write(
+            &spine,
+            (0..12).fold(String::new(), |mut acc, i| {
+                acc.push_str(&format!("def short_{i:02}():\n    pass\n\n"));
+                acc
+            }),
+        )
+        .unwrap();
+        std::fs::write(&sibling, "def only():\n    pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+        assert_eq!(entry_slice_split(&batches, &spine, &ctx).len(), 1);
+    }
+
+    #[test]
+    fn python_entry_slice_abstains_when_no_module_out_declares_its_siblings() {
+        let dir = tempfile::tempdir().unwrap();
+        let first = dir.path().join("first.py");
+        let second = dir.path().join("second.py");
+        std::fs::write(&first, entry_slice_module(24, 4)).unwrap();
+        std::fs::write(&second, entry_slice_module(24, 4)).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[first.clone(), second.clone()], &ctx);
+        assert_eq!(entry_slice_split(&batches, &first, &ctx).len(), 1);
+        assert_eq!(entry_slice_split(&batches, &second, &ctx).len(), 1);
+    }
+
+    /// A generated sibling that out-declares the hand-written module
+    /// must not take the gate for itself — nor deny it by tying.
+    #[test]
+    fn python_entry_slice_ignores_a_generated_sibling() {
+        // Same two modules, differing only in the generated header.
+        let carved_chunks = |header: &str| {
+            let dir = tempfile::tempdir().unwrap();
+            let spine = dir.path().join("spine.py");
+            let sibling = dir.path().join("0001_initial.py");
+            std::fs::write(&spine, entry_slice_module(24, 4)).unwrap();
+            std::fs::write(&sibling, format!("{header}{}", entry_slice_module(30, 30))).unwrap();
+            let ctx = WalkCtx::new(dir.path().to_path_buf());
+            let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+            entry_slice_split(&batches, &spine, &ctx).len()
+        };
+        assert_eq!(
+            carved_chunks("# Generated by Django 5.0 on 2024-01-01\n\n"),
+            2
+        );
+        assert_eq!(carved_chunks(""), 1);
+    }
+
+    #[test]
+    fn python_entry_slice_skips_a_module_constant_wall() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("settings.py");
+        let sibling = dir.path().join("sibling.py");
+        let consts = (0..24).fold(String::new(), |mut acc, i| {
+            acc.push_str(&format!(
+                "SETTING_NAME_{i:02} = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n"
+            ));
+            acc
+        });
+        std::fs::write(&spine, consts).unwrap();
+        std::fs::write(&sibling, "def only():\n    pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+        let chunks = entry_slice_split(&batches, &spine, &ctx);
+        assert!(
+            chunks.iter().all(|(key, cost, _)| {
+                !matches!(key, BatchKey::Python(PythonKey::DeclNames { .. }))
+                    || *cost > PYTHON_ENTRY_SLICE_TOKENS
+            }),
+            "a constant wall offers no declaration that names what the module is for"
+        );
+    }
+
+    /// Two top-level statements can share a source row (`A = 1; B = 2`).
+    /// Splitting such a pair across the gate and the remainder would have
+    /// both batches render the row from non-ancestor siblings.
+    #[test]
+    fn python_entry_slice_keeps_co_located_row_claimants_together() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("spine.py");
+        let sibling = dir.path().join("sibling.py");
+        let mut source = entry_slice_module(24, 4);
+        source.push_str("FIRST_SHARED = compute_something(); SECOND_SHARED = compute_other()\n");
+        std::fs::write(&spine, &source).unwrap();
+        std::fs::write(&sibling, "def only():\n    pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+
+        let mut rendered: HashMap<usize, usize> = HashMap::new();
+        for (chunk_index, batch) in batches
+            .iter()
+            .filter(|batch| names_batch_file(&batch.key).is_some_and(|owner| *owner == spine))
+            .enumerate()
+        {
+            let BatchContent::Lines { spans } = &batch.content else {
+                panic!("names surfaces emit line spans");
+            };
+            for (_, line, _) in crate::content::explode_spans(spans) {
+                let previous = rendered.insert(line, chunk_index);
+                assert!(
+                    previous.is_none_or(|owner| owner == chunk_index),
+                    "row {line} claimed by two names chunks"
+                );
+            }
+        }
+        assert_python_scheduler_overlap_free(&source);
     }
 
     /// A small docstring-led method body splits via `block_child_parts`;

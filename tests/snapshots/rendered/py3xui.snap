@@ -104,8 +104,6 @@ demo.py
       65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
       66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
       67→SERVER_PORT = 443  # ⬅️ Your server port here.
-      68→
-      69→
       70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
     …
      103→connection_string = get_connection_string(inbound, "**********", email)
