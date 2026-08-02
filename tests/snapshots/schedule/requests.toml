@@ -145,10 +145,28 @@ entries = ["faq.rst", "out-there.rst", "recommended.rst", "release-process.rst",
 
 [[batches]]
 position = 11
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 356
+cum_tokens = 620
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Fs(DirListing { dir: "src/requests" })'
 descriptor = "listing of 'src/requests'"
 cost_tokens = 89
-cum_tokens = 353
+cum_tokens = 709
 
 [batches.content]
 kind = "fs"
@@ -158,11 +176,11 @@ parent = "src/requests"
 entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
 
 [[batches]]
-position = 12
+position = 13
 key = 'Python(Imports { file: "src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 1002
-cum_tokens = 1355
+cum_tokens = 1711
 
 [batches.content]
 kind = "lines"
@@ -192,11 +210,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
-cum_tokens = 1389
+cum_tokens = 1745
 
 [batches.content]
 kind = "lines"
@@ -234,11 +252,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
 descriptor = "python decl at src/requests/__init__.py:99"
 cost_tokens = 16
-cum_tokens = 1405
+cum_tokens = 1761
 
 [batches.content]
 kind = "lines"
@@ -252,11 +270,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 175
-cum_tokens = 1580
+cum_tokens = 1936
 
 [batches.content]
 kind = "lines"
@@ -278,11 +296,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 40
-cum_tokens = 1620
+cum_tokens = 1976
 
 [batches.content]
 kind = "lines"
@@ -336,11 +354,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
 descriptor = "python decl at src/requests/__init__.py:60"
 cost_tokens = 47
-cum_tokens = 1667
+cum_tokens = 2023
 
 [batches.content]
 kind = "lines"
@@ -354,11 +372,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 44
-cum_tokens = 1711
+cum_tokens = 2067
 
 [batches.content]
 kind = "fs"
@@ -368,11 +386,11 @@ parent = ".github"
 entries = ["CODEOWNERS", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "FUNDING.yml", "ISSUE_TEMPLATE", "ISSUE_TEMPLATE.md", "SECURITY.md", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 19
+position = 20
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 40
-cum_tokens = 1751
+cum_tokens = 2107
 
 [batches.content]
 kind = "fs"
@@ -382,11 +400,11 @@ parent = ".github/workflows"
 entries = ["close-issues.yml", "codeql-analysis.yml", "lint.yml", "lock-issues.yml", "publish.yml", "run-tests.yml", "typecheck.yml", "zizmor.yml"]
 
 [[batches]]
-position = 20
+position = 21
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 58
-cum_tokens = 1809
+cum_tokens = 2165
 
 [batches.content]
 kind = "lines"
@@ -408,11 +426,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 147
-cum_tokens = 1956
+cum_tokens = 2312
 
 [batches.content]
 kind = "lines"
@@ -426,11 +444,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 13
-cum_tokens = 1969
+cum_tokens = 2325
 
 [batches.content]
 kind = "fs"
@@ -440,11 +458,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["Bug_report.md", "Custom.md", "Feature_request.md"]
 
 [[batches]]
-position = 23
+position = 24
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 77
-cum_tokens = 2046
+cum_tokens = 2402
 
 [batches.content]
 kind = "lines"
@@ -466,11 +484,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 20
-cum_tokens = 2066
+cum_tokens = 2422
 
 [batches.content]
 kind = "lines"
@@ -492,11 +510,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "setuptools" })'
 descriptor = "tool.setuptools config in pyproject.toml"
 cost_tokens = 82
-cum_tokens = 2148
+cum_tokens = 2504
 
 [batches.content]
 kind = "lines"
@@ -510,11 +528,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 139
-cum_tokens = 2287
+cum_tokens = 2643
 
 [batches.content]
 kind = "lines"
@@ -536,11 +554,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 63
-cum_tokens = 2350
+cum_tokens = 2706
 
 [batches.content]
 kind = "lines"
@@ -554,11 +572,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 125
-cum_tokens = 2475
+cum_tokens = 2831
 
 [batches.content]
 kind = "lines"
@@ -580,11 +598,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 78
-cum_tokens = 2553
+cum_tokens = 2909
 
 [batches.content]
 kind = "fs"
@@ -594,11 +612,11 @@ parent = "tests"
 entries = ["__init__.py", "certs", "compat.py", "conftest.py", "test_adapters.py", "test_help.py", "test_hooks.py", "test_lowlevel.py", "test_packages.py", "test_requests.py", "test_structures.py", "test_testserver.py", "test_utils.py", "testserver", "utils.py"]
 
 [[batches]]
-position = 30
+position = 31
 key = 'Fs(DirListing { dir: "tests/testserver" })'
 descriptor = "listing of 'tests/testserver'"
 cost_tokens = 9
-cum_tokens = 2562
+cum_tokens = 2918
 
 [batches.content]
 kind = "fs"
@@ -608,11 +626,11 @@ parent = "tests/testserver"
 entries = ["__init__.py", "server.py"]
 
 [[batches]]
-position = 31
+position = 32
 key = 'Fs(DirListing { dir: "tests/certs" })'
 descriptor = "listing of 'tests/certs'"
 cost_tokens = 16
-cum_tokens = 2578
+cum_tokens = 2934
 
 [batches.content]
 kind = "fs"
@@ -620,24 +638,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "tests/certs"
 entries = ["README.md", "expired", "mtls", "valid"]
-
-[[batches]]
-position = 32
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 356
-cum_tokens = 2934
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 1
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 33

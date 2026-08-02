@@ -1,4 +1,4 @@
-Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missing=10)
+Score(3000)=0.622 I=0.830 C=0.466 ns_rows≤3K=20/55 (reached=10 partial=1 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,105 +22,105 @@ Score(3000)=0.589 I=0.814 C=0.426 ns_rows≤3K=20/55 (reached=9 partial=1 missin
 | ns | 596 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.747 |
 | walker |  | 642 | 150 | c whole header in include/varnum.h |  |  | 0.752 |
 | ns | 666 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.712 |
-| walker |  | 886 | 244 | c whole header in include/serialize.h |  |  | 0.654 |
-| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.654 |
-| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.605 |
-| walker |  | 1222 | 336 | c whole header in include/worldgen.h |  |  | 0.609 |
-| walker |  | 1249 | 27 | c decl names surface in src/main.c |  |  | 0.609 |
-| walker |  | 1249 | 0 | c decl at src/main.c:68 |  |  | 0.609 |
-| walker |  | 1264 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.610 |
-| ns | 1266 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.566 |
-| ns | 1561 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.530 |
-| walker |  | 1635 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.582 |
-| walker |  | 1635 | 0 | c decl at include/globals.h:103 |  |  | 0.582 |
-| walker |  | 1635 | 0 | c decl at include/globals.h:106 |  |  | 0.582 |
-| walker |  | 1643 | 8 | c decl at include/globals.h:200 |  |  | 0.582 |
-| walker |  | 1664 | 21 | c decl at include/globals.h:255 |  |  | 0.582 |
-| walker |  | 1708 | 44 | c decl at include/globals.h:191 |  |  | 0.584 |
-| walker |  | 1765 | 57 | c decl at include/globals.h:260 |  |  | 0.585 |
-| walker |  | 1778 | 13 | c decl doc at include/globals.h:106 |  |  | 0.585 |
-| ns | 1850 |  | 289 | packets.h — clientbound declarations, entities, health and registries | 2.6 |  | 0.549 |
-| ns | 1950 |  | 100 | varnum.h in full — VarInt encoding primitives and error sentinel | 2.7 |  | 0.572 |
-| ns | 2020 |  | 70 | globals.h — BlockChange record and the packed-struct pragma | 3.1 |  | 0.577 |
-| walker |  | 2156 | 378 | c decl names surface in include/globals.h |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:19 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:23 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:26 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:29 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:32 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:35 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:38 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:41 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:45 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:49 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:53 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:56 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:59 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:63 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:66 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:71 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:75 |  |  | 0.582 |
-| walker |  | 2156 | 0 | c decl at include/globals.h:93 |  |  | 0.582 |
-| walker |  | 2167 | 11 | c decl doc at include/globals.h:26 |  |  | 0.582 |
-| walker |  | 2178 | 11 | c decl doc at include/globals.h:29 |  |  | 0.582 |
-| walker |  | 2192 | 14 | c decl doc at include/globals.h:19 |  |  | 0.582 |
-| walker |  | 2230 | 38 | c decl doc at include/globals.h:23 |  |  | 0.582 |
-| walker |  | 2238 | 8 | c decl doc at include/globals.h:59 |  |  | 0.582 |
-| walker |  | 2260 | 22 | c includes in include/globals.h |  |  | 0.582 |
-| walker |  | 2270 | 10 | c decl doc at include/globals.h:66 |  |  | 0.533 |
-| ns | 2270 |  | 250 | globals.h — PlayerData fields (identity through inventory) | 3.2 |  | 0.533 |
-| walker |  | 2411 | 141 | c decl at include/globals.h:240 |  |  | 0.538 |
-| ns | 2527 |  | 257 | globals.h — PlayerData flag bits and the overloaded flagval fields | 3.3 | 3.2 | 0.510 |
-| ns | 2757 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.552 |
-| walker |  | 2889 | 478 | c decl names surface in include/tools.h |  |  | 0.556 |
-| walker |  | 2889 | 0 | c decl at include/tools.h:8 |  |  | 0.556 |
-| walker |  | 2889 | 0 | c decl at include/tools.h:11 |  |  | 0.556 |
-| walker |  | 2906 | 17 | c decl body at include/tools.h:8 |  |  | 0.556 |
-| walker |  | 2931 | 25 | c includes in include/tools.h |  |  | 0.556 |
-| walker |  | 2956 | 25 | c decl body at include/tools.h:11 |  |  | 0.556 |
-| ns | 2995 |  | 238 | globals.h — all extern global state declarations | 3.5 |  | 0.589 |
-| walker |  | 3008 | 52 | c decl names surface in src/tools.c |  |  | 0.589 |
-| walker |  | 3008 | 0 | c decl at src/tools.c:42 |  |  | 0.589 |
-| walker |  | 3008 | 0 | c decl at src/tools.c:44 |  |  | 0.589 |
-| ns | 3345 |  | 350 | build_registries.js — the template that generates include/registries.h | 3.6 |  | 0.557 |
-| walker |  | 3424 | 416 | c decl names surface in include/packets.h |  |  | 0.631 |
-| walker |  | 3424 | 0 | c decl at include/packets.h:5 |  |  | 0.631 |
-| walker |  | 3424 | 0 | c decl at include/packets.h:28 |  |  | 0.631 |
-| walker |  | 3431 | 7 | c decl doc at include/packets.h:28 |  |  | 0.632 |
-| walker |  | 3440 | 9 | c decl doc at include/packets.h:5 |  |  | 0.637 |
-| walker |  | 3495 | 55 | c decl names surface in src/structures.c |  |  | 0.637 |
-| walker |  | 3495 | 0 | c decl at src/structures.c:9 |  |  | 0.637 |
-| walker |  | 3495 | 0 | c decl at src/structures.c:16 |  |  | 0.637 |
-| walker |  | 3553 | 58 | c decl names surface in src/varnum.c |  |  | 0.637 |
-| walker |  | 3553 | 0 | c decl at src/varnum.c:14 |  |  | 0.637 |
-| walker |  | 3553 | 0 | c decl at src/varnum.c:34 |  |  | 0.637 |
-| walker |  | 3553 | 0 | c decl at src/varnum.c:43 |  |  | 0.637 |
-| walker |  | 3565 | 12 | c includes in src/serialize.c |  |  | 0.637 |
-| ns | 3705 |  | 360 | globals.h — configuration macro roster, part 1 (world and player sizing) | 3.7 |  | 0.653 |
-| ns | 3979 |  | 274 | globals.h — configuration macro roster, part 2 (feature toggles, including the commented-out ones) | 3.8 |  | 0.630 |
-| walker |  | 4033 | 468 | c decl names surface in include/procedures.h |  |  | 0.635 |
-| walker |  | 4058 | 25 | c includes in include/procedures.h |  |  | 0.635 |
-| walker |  | 4125 | 67 | c decl names surface in src/crafting.c |  |  | 0.635 |
-| walker |  | 4125 | 0 | c decl at src/crafting.c:9 |  |  | 0.635 |
-| walker |  | 4125 | 0 | c decl at src/crafting.c:352 |  |  | 0.635 |
-| walker |  | 4138 | 13 | c decl doc at include/globals.h:41 |  |  | 0.635 |
-| ns | 4177 |  | 198 | src/globals.c — definitions of the global state, MOTD and brand | 3.9 |  | 0.616 |
-| walker |  | 4257 | 119 | README.md section #1 |  |  | 0.616 |
-| ns | 4261 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.613 |
-| walker |  | 4285 | 28 | c decl at src/crafting.c:349 |  |  | 0.613 |
-| ns | 4403 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.610 |
-| ns | 4489 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.601 |
-| walker |  | 4643 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.605 |
-| walker |  | 4668 | 25 | README.md section #5 |  |  | 0.605 |
-| ns | 4722 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.619 |
-| walker |  | 4911 | 243 | c aggregate member group at include/globals.h:200 group 201 |  |  | 0.672 |
-| ns | 4986 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.683 |
-| walker |  | 5158 | 247 | c aggregate member group at include/globals.h:200 group 223 |  |  | 0.716 |
-| walker |  | 5172 | 14 | c decl doc at include/globals.h:35 |  |  | 0.716 |
-| ns | 5305 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.725 |
-| ns | 5416 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.731 |
-| ns | 5588 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.735 |
-| walker |  | 5701 | 529 | plaintext config build.sh |  |  | 0.759 |
+| ns | 886 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.651 |
+| ns | 1039 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.603 |
+| walker |  | 1171 | 529 | plaintext config build.sh |  |  | 0.682 |
+| ns | 1266 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.634 |
+| walker |  | 1415 | 244 | c whole header in include/serialize.h |  |  | 0.636 |
+| ns | 1561 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.596 |
+| walker |  | 1751 | 336 | c whole header in include/worldgen.h |  |  | 0.599 |
+| walker |  | 1778 | 27 | c decl names surface in src/main.c |  |  | 0.599 |
+| walker |  | 1778 | 0 | c decl at src/main.c:68 |  |  | 0.599 |
+| walker |  | 1793 | 15 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.600 |
+| ns | 1850 |  | 289 | packets.h — clientbound declarations, entities, health and registries | 2.6 |  | 0.563 |
+| ns | 1950 |  | 100 | varnum.h in full — VarInt encoding primitives and error sentinel | 2.7 |  | 0.584 |
+| ns | 2020 |  | 70 | globals.h — BlockChange record and the packed-struct pragma | 3.1 |  | 0.564 |
+| walker |  | 2164 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.608 |
+| walker |  | 2164 | 0 | c decl at include/globals.h:103 |  |  | 0.608 |
+| walker |  | 2164 | 0 | c decl at include/globals.h:106 |  |  | 0.608 |
+| walker |  | 2172 | 8 | c decl at include/globals.h:200 |  |  | 0.608 |
+| walker |  | 2193 | 21 | c decl at include/globals.h:255 |  |  | 0.608 |
+| walker |  | 2237 | 44 | c decl at include/globals.h:191 |  |  | 0.632 |
+| ns | 2270 |  | 250 | globals.h — PlayerData fields (identity through inventory) | 3.2 |  | 0.579 |
+| walker |  | 2294 | 57 | c decl at include/globals.h:260 |  |  | 0.580 |
+| walker |  | 2307 | 13 | c decl doc at include/globals.h:106 |  |  | 0.580 |
+| ns | 2527 |  | 257 | globals.h — PlayerData flag bits and the overloaded flagval fields | 3.3 | 3.2 | 0.549 |
+| walker |  | 2685 | 378 | c decl names surface in include/globals.h |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:19 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:23 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:26 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:29 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:32 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:35 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:38 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:41 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:45 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:49 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:53 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:56 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:59 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:63 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:66 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:71 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:75 |  |  | 0.554 |
+| walker |  | 2685 | 0 | c decl at include/globals.h:93 |  |  | 0.554 |
+| walker |  | 2696 | 11 | c decl doc at include/globals.h:26 |  |  | 0.554 |
+| walker |  | 2707 | 11 | c decl doc at include/globals.h:29 |  |  | 0.554 |
+| walker |  | 2721 | 14 | c decl doc at include/globals.h:19 |  |  | 0.554 |
+| ns | 2757 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.528 |
+| walker |  | 2759 | 38 | c decl doc at include/globals.h:23 |  |  | 0.528 |
+| walker |  | 2767 | 8 | c decl doc at include/globals.h:59 |  |  | 0.528 |
+| walker |  | 2789 | 22 | c includes in include/globals.h |  |  | 0.528 |
+| walker |  | 2799 | 10 | c decl doc at include/globals.h:66 |  |  | 0.528 |
+| walker |  | 2940 | 141 | c decl at include/globals.h:240 |  |  | 0.594 |
+| ns | 2995 |  | 238 | globals.h — all extern global state declarations | 3.5 |  | 0.622 |
+| ns | 3345 |  | 350 | build_registries.js — the template that generates include/registries.h | 3.6 |  | 0.588 |
+| walker |  | 3418 | 478 | c decl names surface in include/tools.h |  |  | 0.592 |
+| walker |  | 3418 | 0 | c decl at include/tools.h:8 |  |  | 0.592 |
+| walker |  | 3418 | 0 | c decl at include/tools.h:11 |  |  | 0.592 |
+| walker |  | 3435 | 17 | c decl body at include/tools.h:8 |  |  | 0.592 |
+| walker |  | 3460 | 25 | c includes in include/tools.h |  |  | 0.592 |
+| walker |  | 3485 | 25 | c decl body at include/tools.h:11 |  |  | 0.593 |
+| walker |  | 3537 | 52 | c decl names surface in src/tools.c |  |  | 0.593 |
+| walker |  | 3537 | 0 | c decl at src/tools.c:42 |  |  | 0.593 |
+| walker |  | 3537 | 0 | c decl at src/tools.c:44 |  |  | 0.593 |
+| ns | 3705 |  | 360 | globals.h — configuration macro roster, part 1 (world and player sizing) | 3.7 |  | 0.614 |
+| walker |  | 3953 | 416 | c decl names surface in include/packets.h |  |  | 0.680 |
+| walker |  | 3953 | 0 | c decl at include/packets.h:5 |  |  | 0.680 |
+| walker |  | 3953 | 0 | c decl at include/packets.h:28 |  |  | 0.680 |
+| walker |  | 3960 | 7 | c decl doc at include/packets.h:28 |  |  | 0.681 |
+| walker |  | 3969 | 9 | c decl doc at include/packets.h:5 |  |  | 0.685 |
+| ns | 3979 |  | 274 | globals.h — configuration macro roster, part 2 (feature toggles, including the commented-out ones) | 3.8 |  | 0.660 |
+| walker |  | 4024 | 55 | c decl names surface in src/structures.c |  |  | 0.660 |
+| walker |  | 4024 | 0 | c decl at src/structures.c:9 |  |  | 0.660 |
+| walker |  | 4024 | 0 | c decl at src/structures.c:16 |  |  | 0.660 |
+| walker |  | 4082 | 58 | c decl names surface in src/varnum.c |  |  | 0.660 |
+| walker |  | 4082 | 0 | c decl at src/varnum.c:14 |  |  | 0.660 |
+| walker |  | 4082 | 0 | c decl at src/varnum.c:34 |  |  | 0.660 |
+| walker |  | 4082 | 0 | c decl at src/varnum.c:43 |  |  | 0.660 |
+| walker |  | 4094 | 12 | c includes in src/serialize.c |  |  | 0.660 |
+| ns | 4177 |  | 198 | src/globals.c — definitions of the global state, MOTD and brand | 3.9 |  | 0.641 |
+| ns | 4261 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.638 |
+| ns | 4403 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.635 |
+| ns | 4489 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.626 |
+| walker |  | 4562 | 468 | c decl names surface in include/procedures.h |  |  | 0.630 |
+| walker |  | 4587 | 25 | c includes in include/procedures.h |  |  | 0.630 |
+| walker |  | 4654 | 67 | c decl names surface in src/crafting.c |  |  | 0.630 |
+| walker |  | 4654 | 0 | c decl at src/crafting.c:9 |  |  | 0.630 |
+| walker |  | 4654 | 0 | c decl at src/crafting.c:352 |  |  | 0.630 |
+| walker |  | 4667 | 13 | c decl doc at include/globals.h:41 |  |  | 0.630 |
+| ns | 4722 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.644 |
+| walker |  | 4786 | 119 | README.md section #1 |  |  | 0.644 |
+| walker |  | 4814 | 28 | c decl at src/crafting.c:349 |  |  | 0.644 |
+| ns | 4986 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.650 |
+| walker |  | 5172 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.660 |
+| walker |  | 5197 | 25 | README.md section #5 |  |  | 0.660 |
+| ns | 5305 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.673 |
+| ns | 5416 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.680 |
+| walker |  | 5440 | 243 | c aggregate member group at include/globals.h:200 group 201 |  |  | 0.726 |
+| ns | 5588 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.730 |
+| walker |  | 5687 | 247 | c aggregate member group at include/globals.h:200 group 223 |  |  | 0.759 |
+| walker |  | 5701 | 14 | c decl doc at include/globals.h:35 |  |  | 0.759 |
 | walker |  | 5715 | 14 | c decl doc at src/structures.c:16 |  |  | 0.759 |
 | ns | 5795 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.763 |
 | ns | 5992 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.768 |

@@ -5,9 +5,9 @@ Score(3000)=0.763 I=0.889 C=0.655 ns_rows≤3K=21/54 (reached=13 partial=3 missi
 | walker |  | 31 | 31 | listing of '.' |  |  | 0.000 |
 | ns | 94 |  | 94 | README title + the one-paragraph definition of SDS | 1.1 |  | 0.000 |
 | ns | 125 |  | 31 | Complete root directory listing | 1.2 |  | 0.333 |
-| walker |  | 140 | 109 | README headline in README.md |  |  | 0.352 |
-| ns | 251 |  | 126 | The header-before-the-pointer design + ASCII layout diagram | 1.3 |  | 0.269 |
-| walker |  | 257 | 117 | plaintext config Makefile |  |  | 0.288 |
+| walker |  | 148 | 117 | plaintext config Makefile |  |  | 0.360 |
+| ns | 251 |  | 126 | The header-before-the-pointer design + ASCII layout diagram | 1.3 |  | 0.275 |
+| walker |  | 257 | 109 | README headline in README.md |  |  | 0.288 |
 | walker |  | 290 | 33 | c decl names surface in sdsalloc.h |  |  | 0.289 |
 | walker |  | 348 | 58 | c decl names surface in testhelp.h |  |  | 0.289 |
 | ns | 365 |  | 114 | sds.h preamble: include guard, SDS_MAX_PREALLOC, SDS_NOINIT, `typedef char *sds` | 1.4 |  | 0.232 |

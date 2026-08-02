@@ -25,7 +25,21 @@ README.md
       11→based on [The Elm Architecture][elm]. Bubble Tea is well-suited for simple and
       12→complex terminal applications, either inline, full-window, or a mix of both.
     …
-Taskfile.yaml …
+Taskfile.yaml
+       1→# https://taskfile.dev
+       2→
+       3→version: "3"
+       4→
+       5→tasks:
+       6→  lint:
+       7→    desc: Run lint
+       8→    cmds:
+       9→      - golangci-lint run
+      10→
+      11→  test:
+      12→    desc: Run tests
+      13→    cmds:
+      14→      - go test -race -count 4 -cpu 1,4 ./... {{.CLI_ARGS}}
 UPGRADE_GUIDE_V2.md …
 clipboard.go …
 color.go …
@@ -274,14 +288,6 @@ tea.go
      518→	environ uv.Environ
     …
      520→	logger uv.Logger
-    …
-     523→	input io.Reader
-    …
-     525→	ttyInput              term.File
-     526→	previousTtyInputState *term.State
-     527→	cancelReader          cancelreader.CancelReader
-     528→	inputScanner          *uv.TerminalReader
-     529→	readLoopDone          chan struct{}
     …
      532→	ignoreSignals uint32
     …

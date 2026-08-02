@@ -19,28 +19,10 @@ entries = [".gitignore", "Changelog", "LICENSE", "Makefile", "README.md", "sds.c
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 109
-cum_tokens = 140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 3
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 117
-cum_tokens = 257
+cum_tokens = 148
 
 [batches.content]
 kind = "lines"
@@ -49,6 +31,24 @@ kind = "lines"
 path = "Makefile"
 start = 1
 end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 109
+cum_tokens = 257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 7
 
 [batches.content.spans.render]
 kind = "full"

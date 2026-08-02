@@ -135,10 +135,28 @@ entries = ["coverage.yml", "docs.yml", "test.yml"]
 
 [[batches]]
 position = 10
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 219
+cum_tokens = 372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 2
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 91
-cum_tokens = 244
+cum_tokens = 463
 
 [batches.content]
 kind = "lines"
@@ -152,11 +170,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 42
-cum_tokens = 286
+cum_tokens = 505
 
 [batches.content]
 kind = "lines"
@@ -226,11 +244,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "docs/guide" })'
 descriptor = "listing of 'docs/guide'"
 cost_tokens = 55
-cum_tokens = 341
+cum_tokens = 560
 
 [batches.content]
 kind = "fs"
@@ -240,11 +258,11 @@ parent = "docs/guide"
 entries = ["collections.md", "command_palette.md", "configuration.md", "environments.md", "external_tools.md", "help_system.md", "importing.md", "index.md", "keymap.md", "navigation.md", "requests.md", "scripting.md", "themes.md"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "src/posting" })'
 descriptor = "listing of 'src/posting'"
 cost_tokens = 157
-cum_tokens = 498
+cum_tokens = 717
 
 [batches.content]
 kind = "fs"
@@ -254,11 +272,11 @@ parent = "src/posting"
 entries = ["__init__.py", "__main__.py", "_start_time.py", "app.py", "auth.py", "collection.py", "commands.py", "config.py", "exit_codes.py", "files.py", "help_data.py", "help_screen.py", "highlight_url.py", "highlighters.py", "importing", "jump_overlay.py", "jumper.py", "locations.py", "messages.py", "posting.scss", "request_headers.py", "save_request.py", "scripts.py", "suggesters.py", "themes.py", "tuple_to_multidict.py", "types.py", "urls.py", "user_host.py", "variables.py", "version.py", "widgets", "xresources.py", "yaml.py"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: "src/posting/importing" })'
 descriptor = "listing of 'src/posting/importing'"
 cost_tokens = 13
-cum_tokens = 511
+cum_tokens = 730
 
 [batches.content]
 kind = "fs"
@@ -268,11 +286,11 @@ parent = "src/posting/importing"
 entries = ["curl.py", "open_api.py", "postman.py"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Python(Imports { file: "src/posting/__init__.py" })'
 descriptor = "python imports in src/posting/__init__.py"
 cost_tokens = 267
-cum_tokens = 778
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -302,11 +320,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "src/posting/widgets" })'
 descriptor = "listing of 'src/posting/widgets'"
 cost_tokens = 89
-cum_tokens = 867
+cum_tokens = 1086
 
 [batches.content]
 kind = "fs"
@@ -316,11 +334,11 @@ parent = "src/posting/widgets"
 entries = ["__init__.py", "center_middle.py", "collection", "confirmation.py", "datatable.py", "input.py", "key_value.py", "key_value_copy_modal.py", "load_env_file_dialog.py", "request", "response", "rich_log.py", "select.py", "tabbed_content.py", "text_area.py", "tree.py", "variable_autocomplete.py", "variable_input.py"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Fs(DirListing { dir: "src/posting/widgets/response" })'
 descriptor = "listing of 'src/posting/widgets/response'"
 cost_tokens = 29
-cum_tokens = 896
+cum_tokens = 1115
 
 [batches.content]
 kind = "fs"
@@ -330,11 +348,11 @@ parent = "src/posting/widgets/response"
 entries = ["cookies_table.py", "response_area.py", "response_body.py", "response_headers.py", "response_trace.py", "script_output.py"]
 
 [[batches]]
-position = 18
+position = 19
 key = 'Fs(DirListing { dir: "src/posting/widgets/collection" })'
 descriptor = "listing of 'src/posting/widgets/collection'"
 cost_tokens = 9
-cum_tokens = 905
+cum_tokens = 1124
 
 [batches.content]
 kind = "fs"
@@ -344,11 +362,11 @@ parent = "src/posting/widgets/collection"
 entries = ["browser.py", "new_request_modal.py"]
 
 [[batches]]
-position = 19
+position = 20
 key = 'Fs(DirListing { dir: "src/posting/widgets/request" })'
 descriptor = "listing of 'src/posting/widgets/request'"
 cost_tokens = 65
-cum_tokens = 970
+cum_tokens = 1189
 
 [batches.content]
 kind = "fs"
@@ -358,11 +376,11 @@ parent = "src/posting/widgets/request"
 entries = ["__init__.py", "form_editor.py", "header_editor.py", "method_selection.py", "path_editor.py", "query_editor.py", "request_auth.py", "request_body.py", "request_editor.py", "request_metadata.py", "request_options.py", "request_scripts.py", "url_bar.py"]
 
 [[batches]]
-position = 20
+position = 21
 key = 'Fs(DirListing { dir: "docs/assets" })'
 descriptor = "listing of 'docs/assets'"
 cost_tokens = 85
-cum_tokens = 1055
+cum_tokens = 1274
 
 [batches.content]
 kind = "fs"
@@ -372,11 +390,11 @@ parent = "docs/assets"
 entries = ["collection-tree.png", "compact-mode-and-themes.mp4", "contextual-help.png", "curl-export.png", "default-collection.png", "environments.mp4", "home-efficiency-video.mp4", "home-image-ad-15aug24.svg", "jump-mode.png", "request-method-dropdown.png", "scripts-tab.png", "search-requests.png", "url-autocomplete.gif", "url-bar.png"]
 
 [[batches]]
-position = 21
+position = 22
 key = 'Markdown(HeadingsOutline { file: "docs/roadmap.md" })'
 descriptor = "headings outline in docs/roadmap.md"
 cost_tokens = 55
-cum_tokens = 1110
+cum_tokens = 1329
 
 [batches.content]
 kind = "lines"
@@ -462,11 +480,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 41
-cum_tokens = 1151
+cum_tokens = 1370
 
 [batches.content]
 kind = "lines"
@@ -480,11 +498,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 73
-cum_tokens = 1224
+cum_tokens = 1443
 
 [batches.content]
 kind = "lines"
@@ -506,11 +524,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(Imports { file: "src/posting/_start_time.py" })'
 descriptor = "python imports in src/posting/_start_time.py"
 cost_tokens = 9
-cum_tokens = 1233
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -524,11 +542,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
 cost_tokens = 88
-cum_tokens = 1321
+cum_tokens = 1540
 
 [batches.content]
 kind = "lines"
@@ -545,24 +563,6 @@ kind = "full"
 path = "pyproject.toml"
 start = 27
 end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 219
-cum_tokens = 1540
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 2
-end = 15
 
 [batches.content.spans.render]
 kind = "full"

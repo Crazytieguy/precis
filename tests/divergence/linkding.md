@@ -14,58 +14,58 @@ Score(3000)=0.682 I=0.856 C=0.543 ns_rows≤3K=18/51 (reached=9 partial=1 missin
 | ns | 234 |  | 122 | Repository root listing (complete) | 1.3 |  | 0.714 |
 | walker |  | 259 | 54 | README headline in README.md |  |  | 0.945 |
 | ns | 365 |  | 131 | bookmarks/ app package listing (complete) | 1.4 |  | 0.647 |
-| walker |  | 390 | 131 | listing of 'bookmarks' |  |  | 0.957 |
-| walker |  | 393 | 3 | listing of 'bookmarks/management' |  |  | 0.957 |
-| walker |  | 410 | 17 | listing of 'bookmarks/api' |  |  | 0.958 |
-| walker |  | 427 | 17 | listing of 'bookmarks/templatetags' |  |  | 0.958 |
-| walker |  | 448 | 21 | listing of 'bookmarks/settings' |  |  | 0.961 |
-| ns | 462 |  | 97 | README feature overview (head) | 1.5 |  | 0.896 |
-| walker |  | 467 | 19 | listing of 'bookmarks/frontend' |  |  | 0.896 |
-| walker |  | 499 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.897 |
-| walker |  | 532 | 33 | listing of 'bookmarks/templates' |  |  | 0.897 |
-| walker |  | 536 | 4 | listing of 'bookmarks/templates/admin' |  |  | 0.897 |
-| walker |  | 551 | 15 | listing of 'bookmarks/templates/registration' |  |  | 0.897 |
-| ns | 600 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.855 |
-| walker |  | 624 | 73 | listing of 'bookmarks/views' |  |  | 0.877 |
-| walker |  | 643 | 19 | listing of 'bookmarks/templates/bundles' |  |  | 0.877 |
-| walker |  | 662 | 19 | listing of 'bookmarks/templates/tags' |  |  | 0.877 |
-| ns | 690 |  | 90 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.877 |
-| walker |  | 742 | 80 | listing of 'bookmarks/services' |  |  | 0.892 |
-| walker |  | 768 | 26 | listing of 'bookmarks/frontend/utils' |  |  | 0.892 |
-| ns | 770 |  | 80 | bookmarks/services/ listing (complete) | 1.8 |  | 0.890 |
-| walker |  | 794 | 26 | listing of 'bookmarks/templates/settings' |  |  | 0.890 |
-| walker |  | 863 | 69 | listing of 'bookmarks/styles' |  |  | 0.890 |
-| walker |  | 903 | 40 | listing of 'bookmarks/templates/shared' |  |  | 0.890 |
-| ns | 945 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.818 |
-| walker |  | 948 | 45 | listing of 'bookmarks/management/commands' |  |  | 0.818 |
-| walker |  | 1040 | 92 | listing of 'bookmarks/static' |  |  | 0.818 |
-| walker |  | 1044 | 4 | listing of 'bookmarks/static/vendor' |  |  | 0.818 |
-| walker |  | 1141 | 97 | headings outline in README.md |  |  | 0.818 |
-| ns | 1162 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.749 |
-| walker |  | 1177 | 36 | listing of 'docs' |  |  | 0.750 |
-| walker |  | 1236 | 59 | listing of 'bookmarks/frontend/components' |  |  | 0.751 |
-| walker |  | 1305 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.751 |
-| walker |  | 1321 | 16 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.751 |
-| ns | 1446 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.700 |
-| walker |  | 1448 | 127 | YAML config at docker-compose.yml |  |  | 0.700 |
-| ns | 1467 |  | 21 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.705 |
-| walker |  | 1498 | 50 | listing of 'scripts' |  |  | 0.707 |
-| walker |  | 1509 | 11 | python decl names surface in manage.py |  |  | 0.707 |
-| walker |  | 1509 | 0 | python decl at manage.py:7 |  |  | 0.707 |
-| walker |  | 1595 | 86 | listing of 'bookmarks/styles/theme' |  |  | 0.707 |
-| ns | 1609 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.683 |
-| ns | 1718 |  | 109 | docs/ site and its content pages (complete) | 1.14 |  | 0.646 |
-| walker |  | 1759 | 164 | plaintext config .env.sample |  |  | 0.646 |
-| ns | 1893 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.618 |
-| walker |  | 1914 | 155 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.618 |
-| walker |  | 1934 | 20 | listing of 'docs/src' |  |  | 0.618 |
-| walker |  | 1941 | 7 | listing of 'docs/src/content' |  |  | 0.618 |
-| walker |  | 1954 | 13 | python imports in bookmarks/apps.py |  |  | 0.618 |
-| walker |  | 2156 | 202 | [dependencies] in pyproject.toml |  |  | 0.645 |
-| walker |  | 2193 | 37 | python imports in manage.py |  |  | 0.645 |
-| ns | 2304 |  | 411 | Bookmark model fields (complete) | 2.2 | 2.1 | 0.604 |
-| ns | 2447 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.581 |
-| walker |  | 2554 | 361 | plaintext config Makefile |  |  | 0.672 |
+| ns | 462 |  | 97 | README feature overview (head) | 1.5 |  | 0.604 |
+| ns | 600 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.576 |
+| walker |  | 620 | 361 | plaintext config Makefile |  |  | 0.593 |
+| ns | 690 |  | 90 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.515 |
+| walker |  | 751 | 131 | listing of 'bookmarks' |  |  | 0.758 |
+| walker |  | 754 | 3 | listing of 'bookmarks/management' |  |  | 0.758 |
+| ns | 770 |  | 80 | bookmarks/services/ listing (complete) | 1.8 |  | 0.691 |
+| walker |  | 771 | 17 | listing of 'bookmarks/api' |  |  | 0.696 |
+| walker |  | 788 | 17 | listing of 'bookmarks/templatetags' |  |  | 0.696 |
+| walker |  | 809 | 21 | listing of 'bookmarks/settings' |  |  | 0.698 |
+| walker |  | 828 | 19 | listing of 'bookmarks/frontend' |  |  | 0.698 |
+| walker |  | 860 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.698 |
+| walker |  | 893 | 33 | listing of 'bookmarks/templates' |  |  | 0.698 |
+| walker |  | 897 | 4 | listing of 'bookmarks/templates/admin' |  |  | 0.698 |
+| walker |  | 912 | 15 | listing of 'bookmarks/templates/registration' |  |  | 0.698 |
+| ns | 945 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.693 |
+| walker |  | 985 | 73 | listing of 'bookmarks/views' |  |  | 0.799 |
+| walker |  | 1004 | 19 | listing of 'bookmarks/templates/bundles' |  |  | 0.799 |
+| walker |  | 1023 | 19 | listing of 'bookmarks/templates/tags' |  |  | 0.799 |
+| walker |  | 1103 | 80 | listing of 'bookmarks/services' |  |  | 0.880 |
+| walker |  | 1129 | 26 | listing of 'bookmarks/frontend/utils' |  |  | 0.880 |
+| walker |  | 1155 | 26 | listing of 'bookmarks/templates/settings' |  |  | 0.880 |
+| ns | 1162 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.881 |
+| walker |  | 1224 | 69 | listing of 'bookmarks/styles' |  |  | 0.881 |
+| walker |  | 1264 | 40 | listing of 'bookmarks/templates/shared' |  |  | 0.881 |
+| walker |  | 1309 | 45 | listing of 'bookmarks/management/commands' |  |  | 0.881 |
+| walker |  | 1401 | 92 | listing of 'bookmarks/static' |  |  | 0.881 |
+| walker |  | 1405 | 4 | listing of 'bookmarks/static/vendor' |  |  | 0.881 |
+| ns | 1446 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.821 |
+| ns | 1467 |  | 21 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.823 |
+| walker |  | 1502 | 97 | headings outline in README.md |  |  | 0.823 |
+| walker |  | 1538 | 36 | listing of 'docs' |  |  | 0.824 |
+| walker |  | 1597 | 59 | listing of 'bookmarks/frontend/components' |  |  | 0.826 |
+| ns | 1609 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.798 |
+| walker |  | 1666 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.798 |
+| walker |  | 1682 | 16 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.798 |
+| ns | 1718 |  | 109 | docs/ site and its content pages (complete) | 1.14 |  | 0.752 |
+| walker |  | 1809 | 127 | YAML config at docker-compose.yml |  |  | 0.752 |
+| walker |  | 1859 | 50 | listing of 'scripts' |  |  | 0.753 |
+| walker |  | 1870 | 11 | python decl names surface in manage.py |  |  | 0.753 |
+| walker |  | 1870 | 0 | python decl at manage.py:7 |  |  | 0.753 |
+| ns | 1893 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.721 |
+| walker |  | 1956 | 86 | listing of 'bookmarks/styles/theme' |  |  | 0.721 |
+| walker |  | 2120 | 164 | plaintext config .env.sample |  |  | 0.721 |
+| walker |  | 2275 | 155 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.721 |
+| walker |  | 2295 | 20 | listing of 'docs/src' |  |  | 0.721 |
+| walker |  | 2302 | 7 | listing of 'docs/src/content' |  |  | 0.721 |
+| ns | 2304 |  | 411 | Bookmark model fields (complete) | 2.2 | 2.1 | 0.675 |
+| walker |  | 2315 | 13 | python imports in bookmarks/apps.py |  |  | 0.675 |
+| ns | 2447 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.650 |
+| walker |  | 2517 | 202 | [dependencies] in pyproject.toml |  |  | 0.672 |
+| walker |  | 2554 | 37 | python imports in manage.py |  |  | 0.672 |
 | walker |  | 2571 | 17 | README.md section #11 |  |  | 0.672 |
 | walker |  | 2588 | 17 | README.md section #20 |  |  | 0.672 |
 | ns | 2831 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.641 |

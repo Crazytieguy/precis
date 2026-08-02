@@ -64,6 +64,31 @@ const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
 /// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]).
 const BUILD_ENTRYPOINT_BYTE_GATE: usize = BUILD_ENTRYPOINT_LINE_CAP * 80;
 
+/// Promotion for a small root build file — see
+/// [`small_build_file_factor`]. Swept on the full corpus: +0.0013 at
+/// ×1.15 and ×1.3, +0.0021 at ×1.5, and +0.0028 from ×1.8 upward, flat
+/// out to ×4.5 (the promoted files are cheap enough that once they win
+/// their rank race, more value cannot move them further). Set inside
+/// that plateau rather than at its edge.
+const SMALL_BUILD_FILE_PROMOTION: f64 = 2.0;
+
+/// Line count past which a build file stops being the compact "here is
+/// how you build and run this" surface and becomes a build *system*
+/// (generated autotools input, a 900-line BSP rules file) that a
+/// reader consults rather than reads. Set at the census boundary and
+/// to match [`BUILD_ENTRYPOINT_LINE_CAP`]; a 60-line cap measures
+/// identically, because the content gates already bound every path
+/// that reaches here.
+const SMALL_BUILD_FILE_LINE_CAP: usize = 100;
+
+/// Keeps the promotion at the repository root. Depth is counted in
+/// `WalkCtx::depth_from_root` terms, where a root-level file is 1.
+/// Load-bearing only for [`Class::BuildScript`]: unlike
+/// [`Class::BuildEntrypoint`], its location gate admits a `scripts/`
+/// directory at *any* depth, and a `packages/foo/scripts/build.sh` is
+/// one component's build step rather than the project's.
+const SMALL_BUILD_FILE_MAX_DEPTH: usize = 1;
+
 /// Larger read gate used only to extract the bounded contract skeleton
 /// from an over-cap Dockerfile. Build-command bodies remain suppressed.
 const DOCKERFILE_SKELETON_BYTE_GATE: usize = 256 * 1024;
@@ -215,7 +240,11 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
             return Some(Class::Toolchain);
         }
-        "Makefile" => return Some(Class::BuildEntrypoint),
+        // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
+        // runner's target roster. The YAML walker enumerates the
+        // extension but classifies only deployment / CI / tooling
+        // configs, so it declines this one and ownership stays here.
+        "Makefile" | "Taskfile.yaml" | "Taskfile.yml" => return Some(Class::BuildEntrypoint),
         "Dockerfile" | "Containerfile" => return Some(Class::Dockerfile),
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         "setup.cfg" => return Some(Class::PackageConfig),
@@ -834,6 +863,70 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::SourceProse => (0.22, 0.30, 0.25),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
+        * small_build_file_factor(class, file, ctx)
+}
+
+/// Conventional names for the file that says how a project is built
+/// and run. Narrow on purpose, in two directions:
+///
+/// - deploy / CI / linter config describes the contributor's
+///   toolchain rather than the project, and boosting that is a
+///   measured-dead class — so this is not "config at the root";
+/// - it also excludes the sibling classes the promotion reaches
+///   without the name check: `.gitmodules` (submodule config) and the
+///   `release.sh` / `test.sh` scripts that share `Class::BuildScript`
+///   with `build.sh` but are not the build surface.
+///
+/// Extending the list to the names that price at the `SourceProse`
+/// fallback instead (`CMakeLists.txt`, `*.mk`, `meson.build`,
+/// `justfile`) requires lifting their class too, and that was measured
+/// on the full corpus: net −0.0003 at Score(3000), and −0.055 on
+/// microbootstrap when it reached an already-`SourceText` `Justfile`.
+///
+/// `Taskfile.yaml` is here because the promotion is what makes
+/// claiming it worth anything: emitting it alone left the corpus mean
+/// exactly flat (bubbletea's landed at cum 3677 against an NS position
+/// of 2134), and the promotion is what pulls it inside the budget.
+fn is_build_file_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    matches!(
+        lower.as_str(),
+        "makefile" | "taskfile.yaml" | "taskfile.yml" | "build.sh" | "configure.ac"
+    )
+}
+
+/// Mild promotion for a small build file at the repository root. A
+/// compact root `Makefile` / `build.sh` is the answer to "how do I
+/// build and run this", which NS authors buy in the first screenful —
+/// ahead of most of the source it builds — while the class's own
+/// preset prices it as one config file among many and it loses the
+/// `value/cost^k` race to source. Bounded on both axes so the
+/// promotion cannot reach a build *system*: past
+/// [`SMALL_BUILD_FILE_LINE_CAP`] the file is reference material, and
+/// past [`SMALL_BUILD_FILE_MAX_DEPTH`] it is one component's build
+/// step rather than the project's.
+fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
+    if matches!(class, Class::BuildEntrypoint | Class::BuildScript)
+        && file
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(is_build_file_name)
+        && ctx.depth_from_root(file) <= SMALL_BUILD_FILE_MAX_DEPTH
+        && is_small_build_file(file, ctx)
+    {
+        SMALL_BUILD_FILE_PROMOTION
+    } else {
+        1.0
+    }
+}
+
+/// Line count behind the same FS-metadata pre-flight the content gates
+/// use, so an oversized file is never read just to measure it. The
+/// read itself is cached, so this costs nothing beyond the classified
+/// file's own extraction.
+fn is_small_build_file(file: &Path, ctx: &WalkCtx) -> bool {
+    gated_read_source(file, ctx, SMALL_BUILD_FILE_LINE_CAP * 80)
+        .is_some_and(|source| source.lines().count() <= SMALL_BUILD_FILE_LINE_CAP)
 }
 
 fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
@@ -1595,6 +1688,8 @@ mod tests {
             (".tool-versions", Some(Class::Toolchain)),
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             ("Makefile", Some(Class::BuildEntrypoint)),
+            ("Taskfile.yaml", Some(Class::BuildEntrypoint)),
+            ("Taskfile.yml", Some(Class::BuildEntrypoint)),
             ("Dockerfile", Some(Class::Dockerfile)),
             ("Containerfile", Some(Class::Dockerfile)),
             ("testall.sh", Some(Class::BuildScript)),
@@ -1646,6 +1741,55 @@ mod tests {
                 "classify_plaintext({name:?})",
             );
         }
+    }
+
+    /// The root build-file promotion fires on the build classes only,
+    /// and each of its three gates (name, depth, size) can veto it.
+    #[test]
+    fn plaintext_small_build_file_factor_gates() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("packages/api/scripts")).unwrap();
+        let short = "all:\n\tcc -o app main.c\n";
+        for path in [
+            "Makefile",
+            "build.sh",
+            "release.sh",
+            ".gitmodules",
+            "packages/api/scripts/build.sh",
+        ] {
+            std::fs::write(root.join(path), short).unwrap();
+        }
+        // Over the line cap: a build *system*, not a build surface.
+        std::fs::write(
+            root.join("configure.ac"),
+            "AC_CHECK_HEADERS([x.h])\n".repeat(SMALL_BUILD_FILE_LINE_CAP + 1),
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+
+        let factor = |path: &str, class| small_build_file_factor(class, &root.join(path), &ctx);
+        assert_eq!(
+            factor("Makefile", Class::BuildEntrypoint),
+            SMALL_BUILD_FILE_PROMOTION
+        );
+        assert_eq!(
+            factor("build.sh", Class::BuildScript),
+            SMALL_BUILD_FILE_PROMOTION
+        );
+        // Name gate: BuildScript siblings that are not the build surface.
+        assert_eq!(factor("release.sh", Class::BuildScript), 1.0);
+        assert_eq!(factor(".gitmodules", Class::BuildScript), 1.0);
+        // Depth gate: a nested `scripts/` dir still classifies as
+        // BuildScript, but is one component's build step.
+        assert_eq!(
+            factor("packages/api/scripts/build.sh", Class::BuildScript),
+            1.0
+        );
+        // Size gate.
+        assert_eq!(factor("configure.ac", Class::BuildScript), 1.0);
+        // Class gate: the fallback tiers never receive the promotion.
+        assert_eq!(factor("build.sh", Class::SourceProse), 1.0);
     }
 
     #[test]

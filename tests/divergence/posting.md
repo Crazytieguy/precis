@@ -13,33 +13,33 @@ Score(3000)=0.662 I=0.880 C=0.498 ns_rows≤3K=19/49 (reached=8 partial=1 missin
 | walker |  | 142 | 8 | listing of '.github' |  |  | 0.000 |
 | ns | 144 |  | 53 | Repository root listing | 1.2 |  | 0.540 |
 | walker |  | 153 | 11 | listing of '.github/workflows' |  |  | 0.540 |
-| walker |  | 244 | 91 | README headline in README.md |  |  | 1.000 |
-| ns | 248 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.771 |
-| walker |  | 286 | 42 | headings outline in README.md |  |  | 0.771 |
-| walker |  | 341 | 55 | listing of 'docs/guide' |  |  | 0.783 |
-| ns | 348 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.693 |
-| walker |  | 498 | 157 | listing of 'src/posting' |  |  | 0.734 |
-| ns | 506 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.826 |
-| walker |  | 511 | 13 | listing of 'src/posting/importing' |  |  | 0.826 |
-| ns | 608 |  | 102 | Widget package and importer package listings | 1.6 |  | 0.713 |
-| ns | 754 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.655 |
-| walker |  | 778 | 267 | python imports in src/posting/__init__.py |  |  | 0.655 |
-| walker |  | 867 | 89 | listing of 'src/posting/widgets' |  |  | 0.787 |
-| walker |  | 896 | 29 | listing of 'src/posting/widgets/response' |  |  | 0.788 |
-| walker |  | 905 | 9 | listing of 'src/posting/widgets/collection' |  |  | 0.789 |
-| ns | 940 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.724 |
-| walker |  | 970 | 65 | listing of 'src/posting/widgets/request' |  |  | 0.734 |
-| ns | 1043 |  | 103 | UI sub-package listings: request, response, collection | 1.9 |  | 0.757 |
-| walker |  | 1055 | 85 | listing of 'docs/assets' |  |  | 0.757 |
-| walker |  | 1110 | 55 | headings outline in docs/roadmap.md |  |  | 0.757 |
-| ns | 1142 |  | 99 | Documentation tree listing | 1.10 |  | 0.772 |
-| walker |  | 1151 | 41 | README.md section #2 |  |  | 0.772 |
-| walker |  | 1224 | 73 | [package] in pyproject.toml |  |  | 0.784 |
-| walker |  | 1233 | 9 | python imports in src/posting/_start_time.py |  |  | 0.784 |
-| ns | 1279 |  | 137 | Test tree and sample-collection listings | 1.11 |  | 0.730 |
-| walker |  | 1321 | 88 | package metadata in pyproject.toml |  |  | 0.743 |
-| ns | 1469 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.720 |
-| walker |  | 1540 | 219 | plaintext config Makefile |  |  | 0.721 |
+| ns | 248 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.414 |
+| ns | 348 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.367 |
+| walker |  | 372 | 219 | plaintext config Makefile |  |  | 0.368 |
+| walker |  | 463 | 91 | README headline in README.md |  |  | 0.683 |
+| walker |  | 505 | 42 | headings outline in README.md |  |  | 0.683 |
+| ns | 506 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.467 |
+| walker |  | 560 | 55 | listing of 'docs/guide' |  |  | 0.474 |
+| ns | 608 |  | 102 | Widget package and importer package listings | 1.6 |  | 0.407 |
+| walker |  | 717 | 157 | listing of 'src/posting' |  |  | 0.711 |
+| walker |  | 730 | 13 | listing of 'src/posting/importing' |  |  | 0.714 |
+| ns | 754 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.656 |
+| ns | 940 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.602 |
+| walker |  | 997 | 267 | python imports in src/posting/__init__.py |  |  | 0.602 |
+| ns | 1043 |  | 103 | UI sub-package listings: request, response, collection | 1.9 |  | 0.549 |
+| walker |  | 1086 | 89 | listing of 'src/posting/widgets' |  |  | 0.660 |
+| walker |  | 1115 | 29 | listing of 'src/posting/widgets/response' |  |  | 0.669 |
+| walker |  | 1124 | 9 | listing of 'src/posting/widgets/collection' |  |  | 0.675 |
+| ns | 1142 |  | 99 | Documentation tree listing | 1.10 |  | 0.704 |
+| walker |  | 1189 | 65 | listing of 'src/posting/widgets/request' |  |  | 0.773 |
+| walker |  | 1274 | 85 | listing of 'docs/assets' |  |  | 0.773 |
+| ns | 1279 |  | 137 | Test tree and sample-collection listings | 1.11 |  | 0.720 |
+| walker |  | 1329 | 55 | headings outline in docs/roadmap.md |  |  | 0.720 |
+| walker |  | 1370 | 41 | README.md section #2 |  |  | 0.720 |
+| walker |  | 1443 | 73 | [package] in pyproject.toml |  |  | 0.731 |
+| walker |  | 1452 | 9 | python imports in src/posting/_start_time.py |  |  | 0.731 |
+| ns | 1469 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.707 |
+| walker |  | 1540 | 88 | package metadata in pyproject.toml |  |  | 0.721 |
 | walker |  | 1644 | 104 | listing of 'tests' |  |  | 0.763 |
 | walker |  | 1694 | 50 | README.md section #3 |  |  | 0.763 |
 | ns | 1698 |  | 229 | Every CLI argument and option | 2.2 |  | 0.724 |
