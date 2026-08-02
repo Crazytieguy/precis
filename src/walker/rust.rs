@@ -569,7 +569,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 && let Some(content) = single_file_lines_content(
                     file,
                     &source,
-                    collect_item_name_lines(&private_fns, &source),
+                    collect_item_name_lines(&private_fns, &source, false),
                 )
             {
                 out.push(batch(
@@ -584,7 +584,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // is emitted, otherwise the lone item's own batch.
         let mut first_pub_item_key: Option<BatchKey> = None;
         if !items.is_empty() {
-            let parent_names_lines = collect_item_name_lines(&items, &source);
+            let parent_names_lines = collect_item_name_lines(&items, &source, true);
             if emit_names_surface
                 && let Some(content) =
                     single_file_lines_content(file, &source, parent_names_lines.clone())
@@ -2156,13 +2156,28 @@ fn collect_mod_use(tree: &Tree, source: &str) -> FileLines {
 /// ellipsis marker where the body would be), plus each item's
 /// disavowal attributes. Serves both surface listings: `PubItemNames`
 /// and `PrivateItemNames`.
-fn collect_item_name_lines(items: &[PubItemInfo<'_>], source: &str) -> FileLines {
+///
+/// `mark_one_line_items`: for a one-line item the marker row is the
+/// NEXT source row, which the item does not own. The pub roster keeps
+/// the legacy marker there — every same-file pub batch descends from
+/// it, so the overlap stays inside the predecessor chain. The private
+/// roster must pass `false`: its adjacent rows can open a
+/// `RegistrationRoster` fn or an independent pub item, and a marker on
+/// a non-descendant's signature row is a non-ancestor overlap (debug
+/// panic in the scheduler's ownership assert).
+fn collect_item_name_lines(
+    items: &[PubItemInfo<'_>],
+    source: &str,
+    mark_one_line_items: bool,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
         full.extend(attr_rows_above(item.node, source, is_disavowal_attribute));
         full.push(item.start_line);
-        ellipses.push(item.start_line + 1);
+        if mark_one_line_items || item.node.end_position().row > item.node.start_position().row {
+            ellipses.push(item.start_line + 1);
+        }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
 }
@@ -2474,6 +2489,9 @@ fn impl_self_type_name<'a>(impl_node: Node, source: &'a str) -> Option<&'a str> 
 
 /// Names of the file's own top-level pub type declarations — the
 /// receivers [`is_own_api_impl`]'s `Default` admission checks against.
+/// Strictly `pub`: the `Public` visibility filter passes every explicit
+/// modifier through, but a `pub(crate)`/`pub(super)` type is not API
+/// surface and its `Default` body is internal plumbing.
 fn file_pub_type_names(tree: &Tree, source: &str) -> HashSet<String> {
     find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
         .iter()
@@ -2481,7 +2499,7 @@ fn file_pub_type_names(tree: &Tree, source: &str) -> HashSet<String> {
             matches!(
                 item.kind,
                 ItemKind::Struct | ItemKind::Enum | ItemKind::Union | ItemKind::TypeAlias
-            )
+            ) && matches!(item.surface.visibility, Visibility::Public)
         })
         .filter_map(|item| name_of(item.node, source))
         .map(str::to_string)
@@ -3394,7 +3412,7 @@ pub struct Plain;
         let tree = parse(src);
         let items = find_top_level_item_starts(&tree, src, TopLevelItemVisibility::Public);
         assert_eq!(
-            rendered(src, &collect_item_name_lines(&items, src)),
+            rendered(src, &collect_item_name_lines(&items, src, true)),
             vec![
                 "#[doc(hidden)]",
                 "pub trait Sealed {}",
@@ -4102,6 +4120,7 @@ use self::not_pub::Hidden;
                 "thing.rs",
                 "pub struct Thing;\n\
                  struct Hidden;\n\
+                 pub(crate) struct Crated;\n\
                  \n\
                  impl Default for Thing {\n\
                  \x20   fn default() -> Self {\n\
@@ -4112,6 +4131,12 @@ use self::not_pub::Hidden;
                  impl Default for Hidden {\n\
                  \x20   fn default() -> Self {\n\
                  \x20       Hidden\n\
+                 \x20   }\n\
+                 }\n\
+                 \n\
+                 impl Default for Crated {\n\
+                 \x20   fn default() -> Self {\n\
+                 \x20       Crated\n\
                  \x20   }\n\
                  }\n\
                  \n\
@@ -4134,9 +4159,10 @@ use self::not_pub::Hidden;
             .collect();
         assert_eq!(
             method_lines,
-            vec![5],
-            "Default on the file's own pub type joins the surface; Default \
-             on a private type and the Debug plumbing stay off"
+            vec![6],
+            "Default on the file's own strictly-pub type joins the surface; \
+             Default on a private or pub(crate) type and the Debug plumbing \
+             stay off"
         );
     }
 
@@ -4168,6 +4194,76 @@ use self::not_pub::Hidden;
                 .iter()
                 .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::ModuleState { .. }))),
             "a lone one-liner const stays unemitted"
+        );
+    }
+
+    /// Full-budget schedule over a temp package — exercises the
+    /// scheduler's line-ownership assert (debug builds panic on any
+    /// non-ancestor overlap), which membership-only assertions cannot.
+    fn schedule_descriptors(dir: &TempDir) -> Vec<String> {
+        let schedule = crate::render_schedule(&[dir.path()], 10_000).unwrap();
+        schedule.batches.into_iter().map(|b| b.descriptor).collect()
+    }
+
+    #[test]
+    fn rust_private_roster_one_liner_before_registration_fn_schedules() {
+        // `fn e` is one line and the very next row opens the
+        // registration-roster fn: a trailing ellipsis marker on that row
+        // would be a non-ancestor overlap with the RegistrationRoster
+        // batch that owns the signature line.
+        let registrations: String = (0..8).map(|i| format!("    Thing::new({i});\n")).collect();
+        let roster_rs = format!(
+            "fn a() {{}}\n\
+             fn b() {{}}\n\
+             fn c() {{}}\n\
+             fn d() {{}}\n\
+             fn e() {{}}\n\
+             fn build() -> u32 {{\n{registrations}    0\n}}\n"
+        );
+        let (dir, _src) = write_vis_tree(&[("lib.rs", "mod roster;\n"), ("roster.rs", &roster_rs)]);
+        write_package_manifest(&dir);
+        let descriptors = schedule_descriptors(&dir);
+        assert!(
+            descriptors
+                .iter()
+                .any(|d| d.contains("private-fn names surface in src/roster.rs")),
+            "the wall roster schedules"
+        );
+        assert!(
+            descriptors
+                .iter()
+                .any(|d| d.contains("registration roster at src/roster.rs:6")),
+            "the registration roster schedules alongside it"
+        );
+    }
+
+    #[test]
+    fn rust_private_roster_one_liner_before_pub_item_schedules() {
+        // Same shape with pub items on the adjacent row — their
+        // `PubItemNames` surface owns that row and does not descend
+        // from the private roster.
+        let wall_rs = "fn a() {}\n\
+             fn b() {}\n\
+             fn c() {}\n\
+             fn d() {}\n\
+             fn e() {}\n\
+             pub struct Neighbor;\n\
+             \n\
+             pub struct Other;\n";
+        let (dir, _src) = write_vis_tree(&[("lib.rs", "mod wall;\n"), ("wall.rs", wall_rs)]);
+        write_package_manifest(&dir);
+        let descriptors = schedule_descriptors(&dir);
+        assert!(
+            descriptors
+                .iter()
+                .any(|d| d.contains("private-fn names surface in src/wall.rs")),
+            "the wall roster schedules"
+        );
+        assert!(
+            descriptors
+                .iter()
+                .any(|d| d.contains("pub-item names surface in src/wall.rs")),
+            "the adjacent pub surface schedules alongside it"
         );
     }
 
