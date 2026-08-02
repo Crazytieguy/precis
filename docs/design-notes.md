@@ -760,7 +760,56 @@ Measured-dead this cycle (specifics block retries):
   271-token slab that enters at cum 3122 — split, its dispatch guards
   and bootstrap chain enter at 1035/2425 (+0.078 @3000 for the split
   alone). A run is the whole tail of a bin script; a single guard is
-  already an NS-sized unit.
+  already an NS-sized unit. Line ownership is the trap here: these
+  statements are peers of every declaration and export batch in the
+  file, so the ExportNames courtesy ellipsis must treat their rows as
+  structural, and a statement sharing a physical line with a
+  declaration (`const s = {}; run(s);`) has to be dropped rather than
+  emitted beside it. Both shapes panicked the scheduler in debug and
+  silently dropped the statement in release; `tests/
+  js_statement_ownership.rs` pins them.
+  **Gating (`script_flow_gate`)**: a statement batch chains to the
+  file's *first admitted surface*, following the same law as Go's
+  imports gating — the file's surface is the price of admission for its
+  cheap content. The ladder is the file's surface batches in reader
+  order: declaration content (the `ModuleItemNames` catalog, else the
+  first `ModuleItem` when the file has too few declarations for a
+  catalog) → module doc lede → export surface → imports. A file that
+  publishes *no* surface at all emits no statement batches rather than
+  root-level crumbs that jump the queue. Every rung is load-bearing on
+  the corpus: dropping the first-`ModuleItem` rung costs dockly −0.046
+  @2080 (4 declarations, below the catalog minimum of 6, so it falls
+  through to its 105-token import block), and stopping the ladder at
+  the export surface costs dockly −0.083 @3000 outright; requiring a
+  declaration instead of a surface costs debug −0.042 @3000, whose
+  `src/index.js` is a doc comment and one `if/else` and nothing else.
+- **JS dynamic-member recall** (`defineGetter(req, 'ip', fn)`,
+  `methods.forEach(m => app[m] = …)`), shipped 2026-08-02 alongside the
+  above, express +0.051 @3000 (absent 0.147 → 0.060). A module-scope
+  call installing members on a name the file exports is synthesized
+  into the export set as a function-shaped item. Three constraints, all
+  load-bearing:
+  - **It never joins `ExportNames`.** Putting the recalled lines on the
+    roster measured DEAD at 3000 (express −0.003): the roster is the
+    predecessor of the whole file's train, so growing it 111 → 200
+    tokens pushed the gate itself out of budget. The statement instead
+    chains to whatever batch renders its receiver — the receiver's
+    `Export`, or its `ModuleItem` when the receiver is a private
+    declaration (`const api = module.exports = {}`). If neither exists
+    the statement is dropped; falling back to the roster is the dead
+    variant and must not be reintroduced.
+  - **JS only**, mirroring the prototype-method synthesis it extends.
+  - **Callback receiver matching is scope-aware**: a name bound as a
+    parameter or local anywhere under the callback shadows the
+    module-scope receiver, and promoting `values.forEach(api => {
+    api.local = … })` would publish implementation-only code as API.
+  The unpaid half is worth knowing: axios's two `utils.forEach`
+  prototype-alias blocks now reach the pool (absent 0.222 → 0.114) and
+  their surface lines render by 10K, but their bodies never schedule —
+  `lib/core/Axios.js`'s own export roster does not enter until cum
+  2344, so nothing chained behind it can reach the 3K window at any
+  price. Emission-side recall in a file whose surface enters late is
+  worth nothing at 3000.
 - **Dev-doc routing past the peripheral damp** (mdbook/vite/enclosed
   CONTRIBUTING): both variants negative (peepdb −0.066 unflagged);
   mdbook's test-command section is outside the frontier even at 30K —
