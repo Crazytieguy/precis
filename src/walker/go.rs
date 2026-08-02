@@ -621,6 +621,16 @@ const GO_ENTRY_SLICE_TOKENS: usize = 80;
 /// the budget can afford, not to the surface that was already unaffordable.
 const GO_ENTRY_SLICE_VALUE_FACTOR: f64 = 0.9;
 
+/// The gate slice's share when the roster was *already* chunked. Swept
+/// separately from the unsplit-path factor above: there the gate's only
+/// competitor is the whole roster, here it competes with a head chunk
+/// the chunker already sized to be affordable, so the same premium buys
+/// a much earlier entry.
+const GO_CHUNKED_ENTRY_SLICE_VALUE_FACTOR: f64 = 0.75;
+
+/// Floor on the chunked gate's surfaced-row count — half a names chunk.
+const GO_CHUNKED_ENTRY_SLICE_MIN_ROWS: usize = GO_DECL_NAMES_CHUNK_SIZE / 2;
+
 /// Rank premium for a declaration carrying a godoc comment. Below the
 /// gap between the exported and unexported [`visibility_factor`]s on
 /// purpose: Go's capitalization rule is the stronger statement about
@@ -727,41 +737,66 @@ fn decl_names_chunk_groups(
     };
     let all: Vec<usize> = (0..decls.len()).collect();
     let legacy = source_order_chunks(&all);
-    // Only a roster the chunker left whole gets a gate slice. Where the
-    // surface is already chunked the head chunk *is* an entry slice, one
-    // the chunker sized; carving a second, smaller gate out of it only
-    // lengthens a train that already opens cheaply, and it displaces the
-    // source-order roster halves an NS asks for as units.
-    if !is_spine || legacy.len() > 1 || roster.cost(&legacy[0]) <= GO_ENTRY_SLICE_SPLIT_TOKENS {
+    // An unchunked roster is its own price of admission, so the whole
+    // surface has to be expensive before a gate is worth a seam. An
+    // already-chunked one has a head chunk the chunker sized, and that
+    // head — not the whole roster — is the barrier the gate lowers, so
+    // the same absolute test would only be asking whether the chunker
+    // happened to land above or below it.
+    if !is_spine || (legacy.len() == 1 && roster.cost(&legacy[0]) <= GO_ENTRY_SLICE_SPLIT_TOKENS) {
         return priced(legacy);
     }
     let Some(entry) = entry_slice(roster) else {
         return priced(legacy);
     };
+    // On an already-chunked roster the gate displaces a head chunk the
+    // chunker had already sized to be affordable, and it unlocks the
+    // file's whole per-declaration train behind it. A slice naming a
+    // couple of a hundred declarations does not say what the file is
+    // for; it only buys that train cheaply. Requiring half a names
+    // chunk keeps the gate a roster rather than a teaser.
+    if legacy.len() > 1
+        && entry
+            .iter()
+            .map(|&index| decls[index].1.name_lines.len())
+            .sum::<usize>()
+            < GO_CHUNKED_ENTRY_SLICE_MIN_ROWS
+    {
+        return priced(legacy);
+    }
     let remainder: Vec<usize> = all
         .iter()
         .copied()
         .filter(|index| !entry.contains(index))
         .collect();
-    // The remainder keeps the factors it would have carried had no slice
-    // been taken. Re-indexing it behind the gate would demote the
+    let tails = if legacy.len() > 1 {
+        source_order_chunks(&remainder)
+    } else {
+        vec![remainder]
+    };
+    // The tails keep the factors they would have carried had no slice
+    // been taken. Re-indexing them behind the gate would demote the
     // catalog the gate was supposed to make reachable: on a file whose
     // roster *did* fit, the split would then buy a cheap gate at the
     // price of pushing the complete roster out of budget, which is a
-    // strictly worse trade than not splitting at all. `legacy.len() == 1`
-    // on this path, so the remainder is one chunk at the unsplit factor
-    // — the gate's 0.9 plus this 1.0 is the deliberate 1.9× documented
-    // at [`GO_ENTRY_SLICE_VALUE_FACTOR`].
-    vec![
-        NamesChunk {
+    // strictly worse trade than not splitting at all. On the unsplit
+    // path the single tail carries the unsplit factor — the gate's 0.9
+    // plus that 1.0 is the deliberate 1.9x documented at
+    // [`GO_ENTRY_SLICE_VALUE_FACTOR`].
+    if legacy.len() == 1 {
+        let mut out = vec![NamesChunk {
             decls: entry,
             value_factor: GO_ENTRY_SLICE_VALUE_FACTOR,
-        },
-        NamesChunk {
-            decls: remainder,
-            value_factor: names_surface_chunk_factor(0, 1),
-        },
-    ]
+        }];
+        out.extend(priced(tails));
+        return out;
+    }
+    let mut out = vec![NamesChunk {
+        decls: entry,
+        value_factor: GO_CHUNKED_ENTRY_SLICE_VALUE_FACTOR,
+    }];
+    out.extend(priced(tails));
+    out
 }
 
 /// One names-surface batch's declarations and its share of the
@@ -870,8 +905,9 @@ fn entry_slice(roster: &RosterCtx) -> Option<Vec<usize>> {
     Some(candidate(&by_rank))
 }
 
-/// The directory's **spine**: the one source file declaring strictly
-/// more top-level names than any of its siblings.
+/// The directory's **spine**: the one source file introducing strictly
+/// more of the package's API than any of its siblings, measured by
+/// [`surface_concept_count`].
 ///
 /// Roster value is near size-invariant while roster cost grows with the
 /// declaration count, so inside one directory the entry ratio decays
@@ -881,12 +917,10 @@ fn entry_slice(roster: &RosterCtx) -> Option<Vec<usize>> {
 /// it to one file per directory is what keeps a package's breadth from
 /// being spent on a scattering of half-read files.
 ///
-/// Declaration count is a coarse stand-in for importance — a generated
-/// or repetitive file (`Zip2`…`Zip9`) can out-declare the file the
-/// package is actually about. It is used only to pick *which* file may
-/// carve a gate, never to price anything, and the caller applies further
-/// conditions before carving. Returns `None` on a tie, when no file
-/// stands out from its siblings.
+/// The count is a coarse stand-in for importance. It is used only to
+/// pick *which* file may carve a gate, never to price anything, and the
+/// caller applies further conditions before carving. Returns `None` on a
+/// tie, when no file stands out from its siblings.
 fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
     let mut best: Option<(&PathBuf, usize)> = None;
     let mut tied = false;
@@ -903,7 +937,7 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
         if is_generated(&source) {
             continue;
         }
-        let count = surface_name_count(&tree, &source);
+        let count = surface_concept_count(&find_decls(&tree, &source));
         match best {
             Some((_, best_count)) if count < best_count => {}
             Some((_, best_count)) if count == best_count => tied = true,
@@ -919,21 +953,41 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
     }
 }
 
-/// How many roster rows a file's declaration surface renders.
+/// How much of the package's API a file introduces: distinct declared
+/// names, with a method counted toward its receiver type and a trailing
+/// digit run stripped off every name.
 ///
-/// Not the declaration count: a grouped `type (`/`var (`/`const (` block
-/// is one declaration but surfaces one row per inner spec, so counting
-/// declarations reads a file that groups its API as far smaller than the
-/// same API written out, and hands the gate to whichever sibling
-/// happened not to group. Rows are also what the gate is rationed
-/// against, which is what makes them the right unit for "the file with
-/// the most surface".
-fn surface_name_count(tree: &Tree, source: &str) -> usize {
-    find_decls(tree, source)
+/// Not the surfaced-row count. Rows are what the gate is *rationed* in,
+/// but two shapes of file out-row the file a package is actually about
+/// without introducing more of it:
+///
+/// - A repetitive name family (`Zip2`…`Zip9`, `T2`…`T9`) is one idea
+///   written nine times; the trailing-digit strip collapses it to the
+///   one name a reader learns.
+/// - A member file — one type and dozens of methods on it — documents a
+///   single type however long it runs, so folding methods onto the
+///   receiver reads it as the one concept it introduces. Methods on a
+///   type declared in a *sibling* file likewise add nothing new here,
+///   and fold onto that same receiver.
+///
+/// A grouped `type (`/`var (`/`const ( … )` block still contributes one
+/// name per inner spec, so a file that groups its API is not read as
+/// smaller than the same API written out.
+fn surface_concept_count(decls: &[(Node, DeclInfo)]) -> usize {
+    decls
         .iter()
-        .flat_map(|(_, info)| info.name_lines.iter().copied())
-        .collect::<HashSet<usize>>()
+        .flat_map(|(_, info)| {
+            let receiver = info.receiver.as_deref();
+            info.names
+                .iter()
+                .map(move |name| name_stem(receiver.unwrap_or(name.as_str())))
+        })
+        .collect::<HashSet<&str>>()
         .len()
+}
+
+fn name_stem(name: &str) -> &str {
+    name.trim_end_matches(|c: char| c.is_ascii_digit())
 }
 
 /// Whether the file carries Go's generated-code header — the convention
@@ -1005,6 +1059,11 @@ struct DeclInfo {
     /// One entry per name on the names surface — one per inner spec
     /// for grouped `type/var/const ( … )` blocks.
     name_lines: Vec<usize>,
+    /// The declared names themselves, parallel to `name_lines`.
+    names: Vec<String>,
+    /// Root identifier of a method's receiver type; `None` for every
+    /// other kind.
+    receiver: Option<String>,
     body_rows: Option<(usize, usize)>,
     exported: bool,
     /// Line of the doc comment's `Deprecated:` marker, if any. Rides
@@ -1130,6 +1189,10 @@ fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclI
         start_line,
         decl_lines,
         name_lines: vec![start_line],
+        names: vec![name.to_string()],
+        receiver: matches!(kind, DeclKind::Method)
+            .then(|| receiver_type_name(node, source))
+            .flatten(),
         body_rows: body_interior_rows(node),
         exported,
         deprecation_marker: None,
@@ -1140,6 +1203,7 @@ fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclI
 fn grouped_type_info(node: Node, source: &str, src_lines: &[&str]) -> DeclInfo {
     let mut cursor = node.walk();
     let mut name_lines = Vec::new();
+    let mut names = Vec::new();
     let mut exported = false;
     let mut single_type_spec: Option<Node> = None;
     let mut type_spec_count = 0;
@@ -1150,10 +1214,12 @@ fn grouped_type_info(node: Node, source: &str, src_lines: &[&str]) -> DeclInfo {
         type_spec_count += 1;
         single_type_spec = Some(spec);
         name_lines.push(spec.start_position().row + 1);
-        if let Some(name_node) = spec.child_by_field_name("name")
-            && is_exported(&source[name_node.start_byte()..name_node.end_byte()])
-        {
-            exported = true;
+        if let Some(name_node) = spec.child_by_field_name("name") {
+            let name = &source[name_node.start_byte()..name_node.end_byte()];
+            names.push(name.to_string());
+            if is_exported(name) {
+                exported = true;
+            }
         }
     }
     let start_row = node.start_position().row;
@@ -1234,6 +1300,8 @@ fn grouped_type_info(node: Node, source: &str, src_lines: &[&str]) -> DeclInfo {
         start_line: start_row + 1,
         decl_lines,
         name_lines,
+        names,
+        receiver: None,
         body_rows: None,
         exported,
         deprecation_marker: None,
@@ -1309,14 +1377,23 @@ fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {
     let mut specs = Vec::new();
     walk_specs(node, &mut specs);
     let mut name_lines = Vec::new();
+    let mut names = Vec::new();
     let mut exported = false;
     for spec in &specs {
         name_lines.push(spec.start_position().row + 1);
         let mut name_cursor = spec.walk();
-        for n in spec.children_by_field_name("name", &mut name_cursor) {
-            if is_exported(&source[n.start_byte()..n.end_byte()]) {
+        // A spec may bind several names (`var a, b = …`); the first is
+        // the one the surfaced row leads with.
+        for (position, n) in spec
+            .children_by_field_name("name", &mut name_cursor)
+            .enumerate()
+        {
+            let name = &source[n.start_byte()..n.end_byte()];
+            if position == 0 {
+                names.push(name.to_string());
+            }
+            if is_exported(name) {
                 exported = true;
-                break;
             }
         }
     }
@@ -1331,6 +1408,8 @@ fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {
         start_line: node.start_position().row + 1,
         decl_lines,
         name_lines,
+        names,
+        receiver: None,
         body_rows: None,
         exported,
         deprecation_marker: None,
@@ -1345,19 +1424,23 @@ fn is_exported(name: &str) -> bool {
 }
 
 fn receiver_type_exported(method: Node, source: &str) -> bool {
-    let Some(receiver) = method.child_by_field_name("receiver") else {
-        return false;
-    };
+    receiver_type_name(method, source).is_some_and(|name| is_exported(&name))
+}
+
+/// Root identifier of a method's receiver type (`func (c *Context) …`
+/// → `Context`).
+fn receiver_type_name(method: Node, source: &str) -> Option<String> {
+    let receiver = method.child_by_field_name("receiver")?;
     let mut cursor = receiver.walk();
     for child in receiver.children(&mut cursor) {
         if child.kind() == "parameter_declaration" {
             let Some(ty) = child.child_by_field_name("type") else {
                 continue;
             };
-            return type_root_identifier(ty, source).is_some_and(is_exported);
+            return type_root_identifier(ty, source).map(str::to_string);
         }
     }
-    false
+    None
 }
 
 /// Root `type_identifier` of a type, stripping `*T`/`T[U]` wrappers.
@@ -2450,14 +2533,15 @@ var Charlie = 1
 
     #[test]
     fn go_entry_slice_counts_a_grouped_siblings_inner_specs() {
-        // The sibling writes the same twelve names as one grouped `var`
-        // block. Counted as declarations it has one; counted as roster
-        // rows it ties the subject, and a tie leaves the directory
-        // without a spine.
+        // The subject introduces three names — `Alpha`, the `helper`
+        // family and `zulu`. The sibling writes three of its own as one
+        // grouped `var` block: counted as a declaration the block is one
+        // and the subject would out-declare it, but counted per inner
+        // spec it ties, and a tie leaves the directory without a spine.
         let mut sibling = String::from("package subject\n\nvar (\n");
-        for index in 0..12 {
+        for name in ["GroupedAlpha", "GroupedBravo", "GroupedCharlie"] {
             sibling.push_str(&format!(
-                "\tGrouped{index} = buildSomethingLongEnoughToCost(\"{index}\", nil, nil)\n"
+                "\t{name} = buildSomethingLongEnoughToCost(\"{name}\", nil, nil)\n"
             ));
         }
         sibling.push_str(")\n");
@@ -2490,6 +2574,125 @@ var Charlie = 1
             batches.iter().filter(|(index, _)| *index == 1).count(),
             1,
             "the hand-written subject still carves its gate: {batches:?}"
+        );
+    }
+
+    /// A spine roster the chunker splits: over the declaration and line
+    /// thresholds, with eight documented exported entries whose rendered
+    /// rows are `signature` wide. The entries sit *mid-file*, so a
+    /// rank-chosen gate is distinguishable from a source-order head.
+    fn chunked_roster_source(signature: &str) -> String {
+        let mut src = String::from("package subject\n\n");
+        let helper = |src: &mut String, index: usize| {
+            src.push_str(&format!("func helperNumber{index}(x int) error {{\n"));
+            for _ in 0..20 {
+                src.push_str("\t// body row\n");
+            }
+            src.push_str("\treturn nil\n}\n");
+        };
+        for index in 0..16 {
+            helper(&mut src, index);
+        }
+        for index in 0..8 {
+            src.push_str(&format!(
+                "// Exported{index} is the documented entry point.\nfunc Exported{index}{signature} {{ return nil }}\n"
+            ));
+        }
+        for index in 16..40 {
+            helper(&mut src, index);
+        }
+        src
+    }
+
+    /// `(chunk 0's rows, the file's first surfaced row)`.
+    fn head_and_first_row(batches: &[(usize, Vec<usize>)]) -> (Vec<usize>, usize) {
+        let head = batches
+            .iter()
+            .find(|(chunk_index, _)| *chunk_index == 0)
+            .expect("chunk 0 always exists")
+            .1
+            .clone();
+        let first = batches
+            .iter()
+            .flat_map(|(_, rows)| rows.iter().copied())
+            .min()
+            .expect("the roster is non-empty");
+        (head, first)
+    }
+
+    #[test]
+    fn go_chunked_spine_carves_a_gate_ahead_of_its_head_chunk() {
+        let batches = names_batches(&[("subject.go", chunked_roster_source("(x int) error"))]);
+        assert!(
+            batches.len() > 2,
+            "an already-chunked roster keeps its tail chunks: {batches:?}"
+        );
+        let (head, first_row) = head_and_first_row(&batches);
+        assert!(
+            (GO_CHUNKED_ENTRY_SLICE_MIN_ROWS..=GO_ENTRY_SLICE_DECLS).contains(&head.len()),
+            "the gate is a bounded slice: {batches:?}"
+        );
+        assert!(
+            !head.contains(&first_row),
+            "the gate is rank-chosen, not the source-order head: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_chunked_spine_declines_a_gate_too_small_to_be_a_roster() {
+        // Each entry point renders wide enough that only a name or two
+        // fits the gate's ceiling — too few to say what the file is for,
+        // so the roster keeps the chunking it had.
+        let wide = "(ctx context.Context, name string, options map[string]string, fallback func(string) (*Result, error)) (*Result, error)";
+        let batches = names_batches(&[("subject.go", chunked_roster_source(wide))]);
+        let (head, first_row) = head_and_first_row(&batches);
+        assert!(
+            head.contains(&first_row),
+            "chunk 0 is the chunker's source-order head, not a gate: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_spine_reads_a_repetitive_name_family_as_one_name() {
+        // The sibling declares far more names than the subject, but they
+        // are one idea written nine times. It must not take the gate off
+        // the subject, nor tie it away.
+        let mut sibling = String::from("package subject\n\n");
+        for index in 2..=9 {
+            sibling.push_str(&format!(
+                "func Zip{index}(ctx context.Context, name string, options map[string]string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        let batches = names_batches(&[
+            ("subject.go", oversize_roster_source()),
+            ("sibling.go", sibling),
+        ]);
+        assert_eq!(
+            batches.iter().filter(|(index, _)| *index == 1).count(),
+            1,
+            "the subject still carves its gate: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_spine_reads_a_single_receivers_methods_as_one_concept() {
+        // The sibling is a member file: one type and a long run of
+        // methods on it. However long it runs it documents one type, so
+        // it must not out-declare a subject that introduces three names.
+        let mut sibling = String::from("package subject\n\ntype Member struct{}\n");
+        for index in 0..20 {
+            sibling.push_str(&format!(
+                "func (m *Member) Method{index}(ctx context.Context, name string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        let batches = names_batches(&[
+            ("subject.go", oversize_roster_source()),
+            ("sibling.go", sibling),
+        ]);
+        assert_eq!(
+            batches.iter().filter(|(index, _)| *index == 1).count(),
+            1,
+            "the subject still carves its gate: {batches:?}"
         );
     }
 

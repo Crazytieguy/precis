@@ -174,6 +174,10 @@ gin.go
       57→type HandlersChain []HandlerFunc
       59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
       60→func (c HandlersChain) Last() HandlerFunc {
+      61→	if length := len(c); length > 0 {
+      62→		return c[length-1]
+      63→	}
+      64→	return nil
     …
       67→// RouteInfo represents a request route's specification which contains method and path and its handler.
       68→type RouteInfo struct {
@@ -244,13 +248,6 @@ gin.go
      200→// - UseEscapedPath: 		 false
      201→// - UnescapePathValues:     true
      202→func New(opts ...OptionFunc) *Engine {
-    …
-     235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
-     236→func Default(opts ...OptionFunc) *Engine {
-    …
-     243→func (engine *Engine) Handler() http.Handler {
-    …
-     820→func redirectRequest(c *Context) {
     …
 ginS/
     README.md
