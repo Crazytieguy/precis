@@ -36,30 +36,7 @@ README.md
        1→# mkcert
        2→
        3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
-       5→```
-       6→$ mkcert -install
-       7→Created a new local CA 💥
-       8→The local CA is now installed in the system trust store! ⚡️
-       9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
-      10→
-      11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
-      12→
-      13→Created a new certificate valid for the following names 📜
-      14→ - "example.com"
-      15→ - "*.example.com"
-      16→ - "example.test"
-      17→ - "localhost"
-      18→ - "127.0.0.1"
-      19→ - "::1"
-      20→
-      21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
-      22→```
-      23→
-      24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
-      25→
-      26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
-      27→
-      28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
+    …
       30→## Installation
       31→
       32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
@@ -185,7 +162,6 @@ main.go
     …
      152→const rootName = "rootCA.pem"
      153→const rootKeyName = "rootCA-key.pem"
-     154→
      155→type mkcert struct {
      156→	installMode, uninstallMode bool
      157→	pkcs12, ecdsa, client      bool
@@ -210,8 +186,24 @@ main.go
      307→func (m *mkcert) uninstall() {
     …
      336→func (m *mkcert) checkPlatform() bool {
+     337→	if m.ignoreCheckFailure {
+     338→		return true
+     339→	}
+     340→
+     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
+     342→	return err == nil
     …
      345→func storeEnabled(name string) bool {
+     346→	stores := os.Getenv("TRUST_STORES")
+     347→	if stores == "" {
+     348→		return true
+     349→	}
+     350→	for _, store := range strings.Split(stores, ",") {
+     351→		if store == name {
+     352→			return true
+     353→		}
+     354→	}
+     355→	return false
     …
      358→func fatalIfErr(err error, msg string) {
      359→	if err != nil {
@@ -261,18 +253,6 @@ truststore_java.go
     …
 truststore_linux.go …
 truststore_nss.go
-    …
-       5→package main
-       6→
-       7→import (
-       8→	"bytes"
-       9→	"log"
-      10→	"os"
-      11→	"os/exec"
-      12→	"path/filepath"
-      13→	"runtime"
-      14→	"strings"
-      15→)
     …
       18→	hasNSS       bool
       19→	hasCertutil  bool

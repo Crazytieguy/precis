@@ -293,6 +293,7 @@ fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKe
 
 fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
+    let spine = spine_file(source_files, ctx);
     for file in source_files {
         let Some((source, tree)) = parse_go(ctx, file) else {
             continue;
@@ -354,23 +355,6 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 });
             }
         }
-        // Names-surface chunking: only oversized API files (both many
-        // decls AND many lines) chunk. Smaller files emit their full
-        // surface so it can land in one batch at small budgets.
-        let chunk_count = if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
-            && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
-        {
-            decls.len().div_ceil(GO_DECL_NAMES_CHUNK_SIZE)
-        } else {
-            1
-        };
-        let names_keys: Vec<GoKey> = (0..chunk_count)
-            .map(|chunk_index| GoKey::DeclNames {
-                file: file.clone(),
-                chunk_index,
-            })
-            .collect();
-        // chunk_count == 1: single batch covers all decls.
         let all_name_lines: HashSet<usize> = decls
             .iter()
             .flat_map(|(_, info)| {
@@ -380,14 +364,34 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .chain(info.deprecation_marker)
             })
             .collect();
-        let mut names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
-            vec![collect_decl_names_from(&decls, &all_name_lines)]
-        } else {
-            decls
-                .chunks(GO_DECL_NAMES_CHUNK_SIZE)
-                .map(|chunk| collect_decl_names_from(chunk, &all_name_lines))
-                .collect()
-        };
+        let names_groups = decl_names_chunk_groups(
+            file,
+            ctx,
+            &source,
+            &decls,
+            &all_name_lines,
+            line_count,
+            spine.as_deref() == Some(file.as_path()),
+        );
+        let chunk_count = names_groups.len();
+        let mut chunk_of_decl = vec![0usize; decls.len()];
+        for (chunk_index, group) in names_groups.iter().enumerate() {
+            for &decl_index in &group.decls {
+                chunk_of_decl[decl_index] = chunk_index;
+            }
+        }
+        let names_keys: Vec<GoKey> = (0..chunk_count)
+            .map(|chunk_index| GoKey::DeclNames {
+                file: file.clone(),
+                chunk_index,
+            })
+            .collect();
+        let mut names_lines_by_chunk: Vec<FileLines> = names_groups
+            .iter()
+            .map(|group| {
+                collect_decl_names_from(group.decls.iter().map(|&i| &decls[i].1), &all_name_lines)
+            })
+            .collect();
         // A `//go:build` constraint negates the roster's claim that
         // these declarations are the package's API: they exist only for
         // the builds it names. It sits above the `package` clause, in no
@@ -414,7 +418,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     predecessor: None,
                     content,
                     value: GoRole::DeclNames.value(file, ctx, entry_factor, 1.0)
-                        * names_surface_chunk_factor(chunk_index, chunk_count),
+                        * names_groups[chunk_index].value_factor,
                 });
             }
         }
@@ -439,8 +443,13 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
-            let chunk_index = decl_index / GO_DECL_NAMES_CHUNK_SIZE;
-            let chunk_index = chunk_index.min(chunk_count - 1);
+            // Gate each decl's train on the chunk that OWNS its name
+            // line, not on a positional chunk: the entry slice is
+            // rank-chosen, so a decl's owner is not a function of its
+            // source position, and gating on a non-owner would make the
+            // decl schedulable while a non-ancestor chunk still holds
+            // its roster row.
+            let chunk_index = chunk_of_decl[decl_index];
             let names_predecessor = BatchKey::Go(names_keys[chunk_index].clone());
             let chunk_names_lines = &names_lines_by_chunk[chunk_index];
             let decl_key = GoKey::Decl {
@@ -537,6 +546,237 @@ const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
 /// Co-gate — only chunk when the file's full names surface plausibly
 /// won't fit at 3K.
 const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 800;
+
+/// A names surface costing more than this gets an entry slice split off
+/// its head. See [`decl_names_chunk_groups`].
+const GO_ENTRY_SLICE_SPLIT_TOKENS: usize = 250;
+
+/// Ceiling on the entry slice's decl count.
+const GO_ENTRY_SLICE_DECLS: usize = 8;
+
+/// Ceiling on the entry slice's rendered cost — the knob that actually
+/// controls whether the file enters, since the gate's rank is
+/// `value / cost^k`.
+const GO_ENTRY_SLICE_TOKENS: usize = 80;
+
+/// The gate slice's share of the file's roster value. Held just under
+/// an unsplit roster's so a small file whose whole surface lands in one
+/// batch still wins a comparable rank race.
+const GO_ENTRY_SLICE_VALUE_FACTOR: f64 = 0.9;
+
+/// Rank premium for a declaration carrying a godoc comment. Below the
+/// gap between the exported and unexported [`visibility_factor`]s on
+/// purpose: Go's capitalization rule is the stronger statement about
+/// what the package offers outward, and a doc comment only orders
+/// declarations *within* a visibility class.
+const GO_ENTRY_SLICE_DOC_PREMIUM: f64 = 1.15;
+
+/// Within-file prominence rank used to choose the entry slice. Only
+/// signals the language itself defines are used: the exported-name
+/// rule, the presence of a godoc comment, and the declaration kind.
+///
+/// Unlike [`DeclInfo::kv`], the visibility discount is **not** waived in
+/// `package main`. `kv` waives it because nothing can import a `main`
+/// package, so exportedness carries no cross-package signal; but this
+/// rank orders declarations against each other inside one file, where a
+/// capitalized name is still the author's own marking of the file's
+/// outward-facing surface (`func Execute` against its unexported
+/// helpers).
+fn entry_slice_rank(info: &DeclInfo, has_doc: bool) -> f64 {
+    let doc = if has_doc {
+        GO_ENTRY_SLICE_DOC_PREMIUM
+    } else {
+        1.0
+    };
+    info.kind.kind_weight() * info.visibility_factor() * doc
+}
+
+/// Partition a file's declarations into names-surface chunks, group 0
+/// being the file's **entry unit** — the batch every other batch in the
+/// file gates on, and therefore the price of admission to the file's
+/// whole train.
+///
+/// A fat roster makes that price ruinous. Roster value is near
+/// size-invariant while cost grows with the declaration count, so within
+/// one file class the ratio decays and the *spine* file — the one with
+/// the most declarations, and the one an NS author ranks first — is the
+/// last to be admitted, if ever. Splitting a small, rank-chosen gate
+/// slice off the head buys entry at a fraction of the cost while the
+/// remainder keeps carrying the catastrophic-omission hedge.
+///
+/// The slice must be rank-chosen rather than source-ordered: a
+/// source-order head is an arbitrary prefix of the API, so it neither
+/// names what the file is for nor completes any roster an NS asks for.
+/// Ranking by [`entry_slice_rank`] puts the exported, documented
+/// declarations in the gate.
+///
+/// Below [`GO_ENTRY_SLICE_SPLIT_TOKENS`] no split happens: an entry unit
+/// that already fits is its own best gate, and slicing it would only
+/// strand the remainder. Nor does it happen off the directory's spine
+/// file ([`spine_file`]) — a cheap gate admits the whole file's depth
+/// train, so handing one to every fat file in a package trades the
+/// package's breadth for a scattering of half-read files.
+fn decl_names_chunk_groups(
+    file: &Path,
+    ctx: &WalkCtx,
+    source: &str,
+    decls: &[(Node, DeclInfo)],
+    all_name_lines: &HashSet<usize>,
+    line_count: usize,
+    is_spine: bool,
+) -> Vec<NamesChunk> {
+    if decls.is_empty() {
+        return Vec::new();
+    }
+    let source_order_chunks = |indices: &[usize]| -> Vec<Vec<usize>> {
+        if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
+            && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
+        {
+            indices
+                .chunks(GO_DECL_NAMES_CHUNK_SIZE)
+                .map(<[usize]>::to_vec)
+                .collect()
+        } else {
+            vec![indices.to_vec()]
+        }
+    };
+    let priced = |groups: Vec<Vec<usize>>| -> Vec<NamesChunk> {
+        let count = groups.len();
+        groups
+            .into_iter()
+            .enumerate()
+            .map(|(chunk_index, decls)| NamesChunk {
+                decls,
+                value_factor: names_surface_chunk_factor(chunk_index, count),
+            })
+            .collect()
+    };
+    let all: Vec<usize> = (0..decls.len()).collect();
+    let legacy = source_order_chunks(&all);
+    let cost_of = |indices: &[usize]| -> usize {
+        let lines = collect_decl_names_from(indices.iter().map(|&i| &decls[i].1), all_name_lines);
+        single_file_lines_content(file, source, lines)
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    // Only a roster the chunker left whole gets a gate slice. Where the
+    // surface is already chunked the head chunk *is* an entry slice, one
+    // the chunker sized; carving a second, smaller gate out of it only
+    // lengthens a train that already opens cheaply, and it displaces the
+    // source-order roster halves an NS asks for as units.
+    if !is_spine || legacy.len() > 1 || cost_of(&legacy[0]) <= GO_ENTRY_SLICE_SPLIT_TOKENS {
+        return priced(legacy);
+    }
+    let Some(entry) = entry_slice(decls, source, &cost_of) else {
+        return priced(legacy);
+    };
+    let remainder: Vec<usize> = all
+        .iter()
+        .copied()
+        .filter(|index| !entry.contains(index))
+        .collect();
+    // The remainder keeps the factors it would have carried had no slice
+    // been taken. Re-indexing it behind the gate would demote the
+    // catalog the gate was supposed to make reachable: on a file whose
+    // roster *did* fit, the split would then buy a cheap gate at the
+    // price of pushing the complete roster out of budget, which is a
+    // strictly worse trade than not splitting at all.
+    let legacy_count = legacy.len();
+    let mut groups = vec![NamesChunk {
+        decls: entry,
+        value_factor: GO_ENTRY_SLICE_VALUE_FACTOR,
+    }];
+    groups.extend(source_order_chunks(&remainder).into_iter().enumerate().map(
+        |(chunk_index, decls)| NamesChunk {
+            decls,
+            value_factor: names_surface_chunk_factor(chunk_index, legacy_count),
+        },
+    ));
+    groups
+}
+
+/// One names-surface batch's declarations and its share of the
+/// file's roster value.
+struct NamesChunk {
+    decls: Vec<usize>,
+    value_factor: f64,
+}
+
+/// The head slice of [`decl_names_chunk_groups`], in source order, or
+/// `None` when there is no room to carve one out.
+fn entry_slice(
+    decls: &[(Node, DeclInfo)],
+    source: &str,
+    cost_of: &impl Fn(&[usize]) -> usize,
+) -> Option<Vec<usize>> {
+    if decls.len() <= GO_ENTRY_SLICE_DECLS {
+        return None;
+    }
+    let ranks: Vec<f64> = decls
+        .iter()
+        .map(|(node, info)| {
+            let has_doc = !collect_doc_comments_above(*node, source).full.is_empty();
+            entry_slice_rank(info, has_doc)
+        })
+        .collect();
+    let mut by_rank: Vec<usize> = (0..decls.len()).collect();
+    by_rank.sort_by(|&a, &b| ranks[b].total_cmp(&ranks[a]).then(a.cmp(&b)));
+    by_rank.truncate(GO_ENTRY_SLICE_DECLS);
+    // Trim the lowest-ranked members until the gate fits its ceiling.
+    // Descending rank order means popping the tail; the survivors go
+    // back into source order so the slice renders as a reading of the
+    // file rather than of the ranking.
+    while by_rank.len() > 1 && cost_of(&sorted(&by_rank)) > GO_ENTRY_SLICE_TOKENS {
+        by_rank.pop();
+    }
+    Some(sorted(&by_rank))
+}
+
+/// The directory's **spine**: the one source file declaring strictly
+/// more top-level names than any of its siblings.
+///
+/// Roster value is near size-invariant while roster cost grows with the
+/// declaration count, so inside one directory the entry ratio decays
+/// with `N` and the file with the most declarations is the last of its
+/// siblings to be admitted — usually never, at the budgets that matter.
+/// That inversion is what the gate slice exists to undo, and confining
+/// it to one file per directory is what keeps a package's breadth from
+/// being spent on a scattering of half-read files.
+///
+/// Declaration count is a coarse stand-in for importance — a generated
+/// or repetitive file (`Zip2`…`Zip9`) can out-declare the file the
+/// package is actually about. It is used only to pick *which* file may
+/// carve a gate, never to price anything, and the caller applies further
+/// conditions before carving. Returns `None` on a tie, when no file
+/// stands out from its siblings.
+fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
+    let mut best: Option<(&PathBuf, usize)> = None;
+    let mut tied = false;
+    for file in source_files {
+        let Some((source, tree)) = parse_go(ctx, file) else {
+            continue;
+        };
+        let count = find_decls(&tree, &source).len();
+        match best {
+            Some((_, best_count)) if count < best_count => {}
+            Some((_, best_count)) if count == best_count => tied = true,
+            _ => {
+                best = Some((file, count));
+                tied = false;
+            }
+        }
+    }
+    match best {
+        Some((file, _)) if !tied => Some(file.clone()),
+        _ => None,
+    }
+}
+
+fn sorted(indices: &[usize]) -> Vec<usize> {
+    let mut out = indices.to_vec();
+    out.sort_unstable();
+    out
+}
 
 fn is_test_file(file: &Path) -> bool {
     file.file_name()
@@ -1220,13 +1460,13 @@ fn truncate_at_first_blank_row(lines: FileLines, source: &str) -> FileLines {
 
 /// One full + ellipsis pair per name line so a grouped block surfaces
 /// every inner spec, not just the `type (` opener.
-fn collect_decl_names_from(
-    decls: &[(Node, DeclInfo)],
+fn collect_decl_names_from<'a>(
+    decls: impl IntoIterator<Item = &'a DeclInfo>,
     all_name_lines: &HashSet<usize>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for (_, info) in decls {
+    for info in decls {
         // The roster is often the *only* place a decl appears, and a
         // deprecated decl listed among live siblings steers the reader
         // onto the API the package told them not to use. The marker
@@ -1502,7 +1742,7 @@ const (
             .iter()
             .flat_map(|(_, info)| info.name_lines.iter().copied())
             .collect();
-        let names = collect_decl_names_from(&decls, &all_name_lines);
+        let names = collect_decl_names_from(decls.iter().map(|(_, info)| info), &all_name_lines);
         // Inner spec lines: Public@4, Other@5, Format12Hour@9, Format24Hour@10.
         assert_eq!(names.full, vec![4, 5, 9, 10]);
     }
@@ -1579,7 +1819,7 @@ func New() {}
                     .chain(info.deprecation_marker)
             })
             .collect();
-        let names = collect_decl_names_from(&decls, &all_name_lines);
+        let names = collect_decl_names_from(decls.iter().map(|(_, info)| info), &all_name_lines);
         assert_eq!(
             names.full,
             vec![5, 6, 9],
@@ -1685,6 +1925,96 @@ package foo
         // No roster exists to gate on, so gating would strand the batch.
         let pred = package_imports_predecessor("package foo\n\nimport \"strings\"\n");
         assert_eq!(pred, None);
+    }
+
+    /// Twelve long declarations: enough rendered cost to clear the split
+    /// threshold, with only `Alpha` exported and only `Alpha` /
+    /// `zulu` documented, so the entry-slice rank has something to sort.
+    fn oversize_roster_source() -> String {
+        let mut src = String::from(
+            "package subject\n\n// Alpha is the documented entry point.\nfunc Alpha(ctx context.Context, name string, options map[string]string) (*Result, error) { return nil, nil }\n",
+        );
+        for index in 0..10 {
+            src.push_str(&format!(
+                "func helper{index}(ctx context.Context, name string, options map[string]string) (*Result, error) {{ return nil, nil }}\n"
+            ));
+        }
+        src.push_str("// zulu is documented but unexported.\nfunc zulu(ctx context.Context, name string, options map[string]string) (*Result, error) { return nil, nil }\n");
+        src
+    }
+
+    fn names_batches(files: &[(&str, String)]) -> Vec<(usize, Vec<usize>)> {
+        let dir = tempfile::tempdir().unwrap();
+        let paths: Vec<PathBuf> = files
+            .iter()
+            .map(|(name, src)| {
+                let path = dir.path().join(name);
+                std::fs::write(&path, src).unwrap();
+                path
+            })
+            .collect();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let mut out: Vec<(usize, Vec<usize>)> = expand_source_files(&paths, &ctx)
+            .into_iter()
+            .filter_map(|batch| match (&batch.key, &batch.content) {
+                (
+                    BatchKey::Go(GoKey::DeclNames { chunk_index, .. }),
+                    BatchContent::Lines { spans },
+                ) => Some((
+                    *chunk_index,
+                    spans.iter().map(|span| span.start).collect::<Vec<_>>(),
+                )),
+                _ => None,
+            })
+            .collect();
+        out.sort();
+        out
+    }
+
+    #[test]
+    fn go_entry_slice_gates_an_oversize_roster_on_its_highest_rank_decls() {
+        let batches = names_batches(&[("subject.go", oversize_roster_source())]);
+        assert_eq!(batches.len(), 2, "roster splits into gate + remainder");
+        // Exported beats documented-unexported beats bare unexported, so
+        // the gate takes `Alpha` (line 4) and `zulu` (line 16) — not the
+        // source-order prefix, and not a contiguous run.
+        assert_eq!(batches[0].1, vec![4, 16], "gate slice: {batches:?}");
+        assert!(
+            batches[1].1.contains(&5) && !batches[1].1.contains(&4),
+            "remainder holds the rest: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_entry_slice_leaves_a_roster_that_already_fits_whole() {
+        let batches = names_batches(&[(
+            "subject.go",
+            "package subject\n\nfunc Alpha() {}\nfunc Bravo() {}\n".to_string(),
+        )]);
+        assert_eq!(
+            batches.len(),
+            1,
+            "small roster stays one batch: {batches:?}"
+        );
+    }
+
+    #[test]
+    fn go_entry_slice_is_confined_to_the_directorys_spine_file() {
+        // Two files with identical oversize rosters: neither out-declares
+        // the other, so no spine stands out and neither carves a gate.
+        let batches = names_batches(&[
+            ("subject.go", oversize_roster_source()),
+            ("sibling.go", oversize_roster_source()),
+        ]);
+        assert_eq!(
+            batches.len(),
+            2,
+            "one whole roster per file, no gate: {batches:?}"
+        );
+        assert!(
+            batches.iter().all(|(chunk_index, _)| *chunk_index == 0),
+            "no remainder chunks: {batches:?}"
+        );
     }
 
     #[test]
