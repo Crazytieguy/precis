@@ -1171,23 +1171,31 @@ fn find_export_starts<'a>(
                 continue;
             }
 
-            let default_predecessor = local_decl_name(child, source)
+            // The rules key off the declaration, but the rendered
+            // surface is the wrapper — it carries the `declare`.
+            let ambient_inner = ambient_inner_decl(child);
+            let decl = ambient_inner.unwrap_or(child);
+
+            let default_predecessor = local_decl_name(decl, source)
                 .and_then(|name| default_identifier_reexports.get(name).copied());
             let kind = if default_predecessor.is_some() {
-                decl_kind(child)
-            } else if let Some(kind) = synthetic_local_export_kind(child, source, reexports) {
+                decl_kind(decl)
+            } else if let Some(kind) = synthetic_local_export_kind(decl, source, reexports) {
                 Some(kind)
             } else {
-                synthetic_commonjs_export_kind(child, source, commonjs_reexports)
+                synthetic_commonjs_export_kind(decl, source, commonjs_reexports)
             };
 
             let Some(kind) = kind else { continue };
-            let is_type_only = matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
+            // An ambient declaration carries no runtime value, same as
+            // the `export declare …` arm of `is_export_type_only`.
+            let is_type_only = ambient_inner.is_some()
+                || matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
             let mut info = make_export_info(
                 start_line,
                 kind,
                 child,
-                child,
+                decl,
                 file,
                 source,
                 src_lines,
@@ -2252,18 +2260,25 @@ fn identifier_text<'a>(node: Node, source: &'a str) -> Option<&'a str> {
 /// `export declare …` (function / class / interface / namespace / const).
 fn first_decl_child(node: Node) -> Option<Node> {
     let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        if decl_kind(child).is_some() {
-            return Some(child);
-        }
-        if child.kind() == "ambient_declaration" {
-            let mut inner = child.walk();
-            if let Some(inner_decl) = child.children(&mut inner).find(|c| decl_kind(*c).is_some()) {
-                return Some(inner_decl);
-            }
-        }
+    node.children(&mut cursor).find_map(|child| {
+        decl_kind(child)
+            .is_some()
+            .then_some(child)
+            .or_else(|| ambient_inner_decl(child))
+    })
+}
+
+/// The declaration inside an `ambient_declaration` wrapper. Tree-sitter
+/// interposes that node for `declare function …` / `declare class …` /
+/// `declare const …`, which is how nearly everything in a `.d.ts` is
+/// spelled; callers that reason about declaration kinds have to see
+/// through it.
+fn ambient_inner_decl(node: Node) -> Option<Node> {
+    if node.kind() != "ambient_declaration" {
+        return None;
     }
-    None
+    let mut cursor = node.walk();
+    node.children(&mut cursor).find(|c| decl_kind(*c).is_some())
 }
 
 fn has_export_clause(node: Node) -> bool {
@@ -5409,6 +5424,49 @@ type NoteId = string;
                 .is_some_and(|e| e.is_type_only),
             "a synthesized type declaration must still count as type-only \
              so the type-machinery damp sees it"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_sees_through_ambient_declarations() {
+        // `.d.ts` spells nearly everything as `declare …`, which
+        // tree-sitter wraps in an `ambient_declaration`. The synthesis
+        // has to unwrap it or a declaration file's whole re-exported
+        // surface is invisible.
+        let src = "\
+export {parse, Parser, Options};
+
+declare function parse(input: string): Options;
+
+declare class Parser {
+}
+
+declare const VERSION: string;
+
+type Options = {strict: boolean};
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("index.d.ts"), &tree, src);
+        let kind_at = |line: usize| {
+            exports
+                .iter()
+                .find(|e| e.start_line == line)
+                .map(|e| e.kind)
+        };
+        assert_eq!(kind_at(3), Some(ItemKind::Function));
+        assert_eq!(kind_at(5), Some(ItemKind::Class));
+        assert_eq!(kind_at(10), Some(ItemKind::TypeAlias));
+        assert!(
+            exports
+                .iter()
+                .filter(|e| e.start_line != 1)
+                .all(|e| e.is_type_only),
+            "an ambient declaration carries no runtime value"
+        );
+        assert_eq!(
+            kind_at(8),
+            None,
+            "`declare const` has no fn initializer, so the const rule still declines it"
         );
     }
 
