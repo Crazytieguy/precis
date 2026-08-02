@@ -1,4 +1,4 @@
-Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missing=14)
+Score(3000)=0.694 I=0.839 C=0.573 ns_rows≤3K=23/51 (reached=12 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,66 +11,66 @@ Score(3000)=0.603 I=0.791 C=0.460 ns_rows≤3K=23/51 (reached=9 partial=0 missin
 | ns | 265 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.523 |
 | ns | 358 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.440 |
 | ns | 417 |  | 59 | All README H2 headings | 1.5 |  | 0.470 |
-| walker |  | 435 | 211 | listing of 'test' |  |  | 0.513 |
-| ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.456 |
-| ns | 604 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.427 |
-| ns | 767 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.375 |
-| walker |  | 855 | 420 | c decl names surface in chibicc.h |  |  | 0.379 |
-| walker |  | 855 | 0 | c decl at chibicc.h:73 |  |  | 0.379 |
-| walker |  | 886 | 31 | c decl at chibicc.h:38 |  |  | 0.381 |
-| walker |  | 894 | 8 | c decl doc at chibicc.h:73 |  |  | 0.381 |
-| ns | 907 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.355 |
-| walker |  | 961 | 67 | c decl at chibicc.h:62 |  |  | 0.357 |
-| ns | 1005 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.342 |
-| ns | 1040 |  | 35 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.374 |
-| walker |  | 1066 | 105 | c decl at chibicc.h:52 |  |  | 0.376 |
-| walker |  | 1073 | 7 | c decl doc at chibicc.h:52 |  |  | 0.376 |
-| ns | 1274 |  | 234 | README Status: supported and unsupported C11 features | 1.12 | 1.5 | 0.333 |
-| walker |  | 1439 | 366 | README.md section #0 |  |  | 0.556 |
-| ns | 1485 |  | 211 | Complete test/ listing | 1.13 |  | 0.668 |
-| ns | 1570 |  | 85 | The four stage entry points declared in chibicc.h | 2.1 |  | 0.654 |
-| walker |  | 1754 | 315 | c decl names surface #1 in chibicc.h |  |  | 0.668 |
-| walker |  | 1754 | 0 | c decl at chibicc.h:126 |  |  | 0.668 |
-| walker |  | 1754 | 0 | c decl at chibicc.h:167 |  |  | 0.668 |
-| walker |  | 1759 | 5 | c decl at chibicc.h:228 |  |  | 0.668 |
-| walker |  | 1766 | 7 | c decl at chibicc.h:127 |  |  | 0.668 |
-| walker |  | 1773 | 7 | c decl at chibicc.h:320 |  |  | 0.668 |
-| walker |  | 1783 | 10 | c decl at chibicc.h:176 |  |  | 0.668 |
-| ns | 1799 |  | 229 | chibicc.h: rest of the tokenize.c public API | 2.2 | 2.1 | 0.681 |
-| walker |  | 1804 | 21 | c decl at chibicc.h:108 |  |  | 0.682 |
-| walker |  | 1845 | 41 | c decl at chibicc.h:168 |  |  | 0.682 |
-| walker |  | 1851 | 6 | c decl doc at chibicc.h:176 |  |  | 0.682 |
-| walker |  | 1858 | 7 | c decl doc at chibicc.h:228 |  |  | 0.682 |
-| ns | 1878 |  | 79 | chibicc.h: rest of the preprocess.c API + the unreachable() macro | 2.3 | 2.1 | 0.689 |
-| walker |  | 1905 | 47 | c aggregate member group at chibicc.h:228 group 238 |  |  | 0.689 |
-| ns | 1967 |  | 89 | chibicc.h: parse.c's other exports + the main.c section | 2.4 | 2.1 | 0.674 |
-| walker |  | 2015 | 110 | c decl at chibicc.h:362 |  |  | 0.676 |
-| ns | 2056 |  | 89 | chibicc.h: strings.c section (StringArray + strarray_push + format) | 2.5 |  | 0.680 |
-| walker |  | 2068 | 53 | c aggregate member group at chibicc.h:228 group 261 |  |  | 0.681 |
-| walker |  | 2121 | 53 | c aggregate member group at chibicc.h:228 group 282 |  |  | 0.681 |
-| walker |  | 2183 | 62 | c aggregate member group at chibicc.h:228 group 270 |  |  | 0.682 |
-| ns | 2211 |  | 155 | chibicc.h: type.c function API | 2.6 |  | 0.659 |
-| walker |  | 2325 | 142 | c decl at chibicc.h:301 |  |  | 0.661 |
-| ns | 2359 |  | 148 | chibicc.h: the extern singleton Types | 2.7 | 2.6 | 0.635 |
-| walker |  | 2394 | 69 | c aggregate member group at chibicc.h:320 group 350 |  |  | 0.635 |
-| ns | 2437 |  | 78 | chibicc.h: unicode.c API | 2.8 |  | 0.627 |
-| walker |  | 2467 | 73 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.628 |
-| walker |  | 2544 | 77 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.628 |
-| ns | 2571 |  | 134 | chibicc.h: hashmap.c API | 2.9 |  | 0.617 |
-| walker |  | 2621 | 77 | c aggregate member group at chibicc.h:320 group 336 |  |  | 0.618 |
-| walker |  | 2702 | 81 | c aggregate member group at chibicc.h:127 group 136 |  |  | 0.619 |
-| ns | 2737 |  | 166 | parse.c file-header comment: how to read the parser | 3.1 |  | 0.600 |
-| walker |  | 2787 | 85 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.601 |
-| walker |  | 2873 | 86 | c aggregate member group at chibicc.h:228 group 245 |  |  | 0.602 |
-| walker |  | 2968 | 95 | c aggregate member group at chibicc.h:127 group 150 |  |  | 0.603 |
-| walker |  | 2978 | 10 | c whole header in test/include3.h |  |  | 0.603 |
-| walker |  | 2988 | 10 | c whole header in test/include4.h |  |  | 0.603 |
-| walker |  | 2999 | 11 | c whole header in test/include2.h |  |  | 0.603 |
-| ns | 3101 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.574 |
-| ns | 3230 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.562 |
-| walker |  | 3265 | 266 | c decl at chibicc.h:74 |  |  | 0.564 |
-| ns | 3562 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.535 |
-| walker |  | 3947 | 682 | plaintext config Makefile |  |  | 0.621 |
+| ns | 530 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.418 |
+| ns | 604 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.392 |
+| ns | 767 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.344 |
+| walker |  | 906 | 682 | plaintext config Makefile |  |  | 0.484 |
+| ns | 907 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.504 |
+| ns | 1005 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.514 |
+| ns | 1040 |  | 35 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.523 |
+| walker |  | 1117 | 211 | listing of 'test' |  |  | 0.563 |
+| ns | 1274 |  | 234 | README Status: supported and unsupported C11 features | 1.12 | 1.5 | 0.499 |
+| ns | 1485 |  | 211 | Complete test/ listing | 1.13 |  | 0.549 |
+| walker |  | 1537 | 420 | c decl names surface in chibicc.h |  |  | 0.555 |
+| walker |  | 1537 | 0 | c decl at chibicc.h:73 |  |  | 0.555 |
+| walker |  | 1568 | 31 | c decl at chibicc.h:38 |  |  | 0.557 |
+| ns | 1570 |  | 85 | The four stage entry points declared in chibicc.h | 2.1 |  | 0.546 |
+| walker |  | 1576 | 8 | c decl doc at chibicc.h:73 |  |  | 0.546 |
+| walker |  | 1643 | 67 | c decl at chibicc.h:62 |  |  | 0.548 |
+| walker |  | 1748 | 105 | c decl at chibicc.h:52 |  |  | 0.549 |
+| walker |  | 1755 | 7 | c decl doc at chibicc.h:52 |  |  | 0.550 |
+| ns | 1799 |  | 229 | chibicc.h: rest of the tokenize.c public API | 2.2 | 2.1 | 0.548 |
+| ns | 1878 |  | 79 | chibicc.h: rest of the preprocess.c API + the unreachable() macro | 2.3 | 2.1 | 0.537 |
+| ns | 1967 |  | 89 | chibicc.h: parse.c's other exports + the main.c section | 2.4 | 2.1 | 0.524 |
+| ns | 2056 |  | 89 | chibicc.h: strings.c section (StringArray + strarray_push + format) | 2.5 |  | 0.527 |
+| walker |  | 2121 | 366 | README.md section #0 |  |  | 0.748 |
+| ns | 2211 |  | 155 | chibicc.h: type.c function API | 2.6 |  | 0.724 |
+| ns | 2359 |  | 148 | chibicc.h: the extern singleton Types | 2.7 | 2.6 | 0.694 |
+| walker |  | 2436 | 315 | c decl names surface #1 in chibicc.h |  |  | 0.727 |
+| walker |  | 2436 | 0 | c decl at chibicc.h:126 |  |  | 0.727 |
+| walker |  | 2436 | 0 | c decl at chibicc.h:167 |  |  | 0.727 |
+| ns | 2437 |  | 78 | chibicc.h: unicode.c API | 2.8 |  | 0.718 |
+| walker |  | 2441 | 5 | c decl at chibicc.h:228 |  |  | 0.718 |
+| walker |  | 2448 | 7 | c decl at chibicc.h:127 |  |  | 0.718 |
+| walker |  | 2455 | 7 | c decl at chibicc.h:320 |  |  | 0.718 |
+| walker |  | 2465 | 10 | c decl at chibicc.h:176 |  |  | 0.718 |
+| walker |  | 2486 | 21 | c decl at chibicc.h:108 |  |  | 0.724 |
+| walker |  | 2527 | 41 | c decl at chibicc.h:168 |  |  | 0.725 |
+| walker |  | 2533 | 6 | c decl doc at chibicc.h:176 |  |  | 0.725 |
+| walker |  | 2540 | 7 | c decl doc at chibicc.h:228 |  |  | 0.725 |
+| ns | 2571 |  | 134 | chibicc.h: hashmap.c API | 2.9 |  | 0.713 |
+| walker |  | 2587 | 47 | c aggregate member group at chibicc.h:228 group 238 |  |  | 0.713 |
+| walker |  | 2697 | 110 | c decl at chibicc.h:362 |  |  | 0.714 |
+| ns | 2737 |  | 166 | parse.c file-header comment: how to read the parser | 3.1 |  | 0.693 |
+| walker |  | 2750 | 53 | c aggregate member group at chibicc.h:228 group 261 |  |  | 0.693 |
+| walker |  | 2803 | 53 | c aggregate member group at chibicc.h:228 group 282 |  |  | 0.693 |
+| walker |  | 2865 | 62 | c aggregate member group at chibicc.h:228 group 270 |  |  | 0.694 |
+| walker |  | 3007 | 142 | c decl at chibicc.h:301 |  |  | 0.695 |
+| walker |  | 3076 | 69 | c aggregate member group at chibicc.h:320 group 350 |  |  | 0.696 |
+| ns | 3101 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.662 |
+| walker |  | 3149 | 73 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.662 |
+| walker |  | 3226 | 77 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.662 |
+| ns | 3230 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.649 |
+| walker |  | 3303 | 77 | c aggregate member group at chibicc.h:320 group 336 |  |  | 0.649 |
+| walker |  | 3384 | 81 | c aggregate member group at chibicc.h:127 group 136 |  |  | 0.650 |
+| walker |  | 3469 | 85 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.651 |
+| walker |  | 3555 | 86 | c aggregate member group at chibicc.h:228 group 245 |  |  | 0.652 |
+| ns | 3562 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.618 |
+| walker |  | 3650 | 95 | c aggregate member group at chibicc.h:127 group 150 |  |  | 0.619 |
+| walker |  | 3660 | 10 | c whole header in test/include3.h |  |  | 0.619 |
+| walker |  | 3670 | 10 | c whole header in test/include4.h |  |  | 0.619 |
+| walker |  | 3681 | 11 | c whole header in test/include2.h |  |  | 0.619 |
+| walker |  | 3947 | 266 | c decl at chibicc.h:74 |  |  | 0.621 |
 | ns | 3966 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.586 |
 | walker |  | 3984 | 37 | c decl names surface in strings.c |  |  | 0.586 |
 | walker |  | 3984 | 0 | c decl at strings.c:3 |  |  | 0.586 |

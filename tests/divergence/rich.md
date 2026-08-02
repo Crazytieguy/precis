@@ -8,26 +8,26 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 (reached=7 partial=0 missin
 | walker |  | 213 | 11 | listing of 'assets' |  |  | 0.000 |
 | walker |  | 233 | 20 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 241 | 8 | listing of 'docs/images' |  |  | 0.000 |
-| walker |  | 248 | 7 | listing of '.faq' |  |  | 0.000 |
 | ns | 263 |  | 134 | pyproject identity block | 1.3 |  | 0.000 |
-| walker |  | 320 | 72 | listing of 'questions' |  |  | 0.000 |
 | ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.000 |
-| walker |  | 417 | 97 | listing of 'imgs' |  |  | 0.000 |
-| walker |  | 462 | 45 | README headline in questions/README.md |  |  | 0.000 |
+| walker |  | 395 | 154 | plaintext config Makefile |  |  | 0.000 |
+| walker |  | 402 | 7 | listing of '.faq' |  |  | 0.000 |
+| walker |  | 474 | 72 | listing of 'questions' |  |  | 0.000 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.000 |
-| walker |  | 609 | 147 | README headline in README.md |  |  | 0.179 |
-| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.152 |
-| walker |  | 690 | 81 | README prelude in README.md |  |  | 0.152 |
-| walker |  | 714 | 24 | listing of '.github' |  |  | 0.152 |
-| walker |  | 743 | 29 | listing of '.github/workflows' |  |  | 0.152 |
-| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.159 |
-| walker |  | 764 | 21 | listing of 'benchmarks' |  |  | 0.159 |
-| walker |  | 855 | 91 | headings outline in README.md |  |  | 0.381 |
-| walker |  | 877 | 22 | README.md section #0 |  |  | 0.402 |
-| walker |  | 960 | 83 | [dependencies] in pyproject.toml |  |  | 0.597 |
-| ns | 960 |  | 202 | Repository root listing (complete) | 1.8 |  | 0.597 |
-| walker |  | 1002 | 42 | listing of 'tools' |  |  | 0.598 |
-| walker |  | 1156 | 154 | plaintext config Makefile |  |  | 0.600 |
+| walker |  | 571 | 97 | listing of 'imgs' |  |  | 0.000 |
+| walker |  | 616 | 45 | README headline in questions/README.md |  |  | 0.000 |
+| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.000 |
+| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.000 |
+| walker |  | 763 | 147 | README headline in README.md |  |  | 0.160 |
+| walker |  | 844 | 81 | README prelude in README.md |  |  | 0.160 |
+| walker |  | 868 | 24 | listing of '.github' |  |  | 0.160 |
+| walker |  | 897 | 29 | listing of '.github/workflows' |  |  | 0.160 |
+| walker |  | 918 | 21 | listing of 'benchmarks' |  |  | 0.160 |
+| ns | 960 |  | 202 | Repository root listing (complete) | 1.8 |  | 0.470 |
+| walker |  | 1009 | 91 | headings outline in README.md |  |  | 0.568 |
+| walker |  | 1031 | 22 | README.md section #0 |  |  | 0.577 |
+| walker |  | 1114 | 83 | [dependencies] in pyproject.toml |  |  | 0.599 |
+| walker |  | 1156 | 42 | listing of 'tools' |  |  | 0.600 |
 | walker |  | 1292 | 136 | listing of 'docs/source' |  |  | 0.604 |
 | walker |  | 1301 | 9 | listing of 'docs/source/appendix' |  |  | 0.604 |
 | ns | 1321 |  | 361 | rich/ package module roster (complete) | 1.9 |  | 0.430 |

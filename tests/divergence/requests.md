@@ -16,41 +16,41 @@ Score(3000)=0.684 I=0.796 C=0.587 ns_rows≤3K=17/49 (reached=9 partial=0 missin
 | walker |  | 227 | 20 | listing of 'docs/user' |  |  | 0.467 |
 | walker |  | 264 | 37 | listing of 'docs/community' |  |  | 0.478 |
 | ns | 324 |  | 105 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.378 |
-| walker |  | 353 | 89 | listing of 'src/requests' |  |  | 0.607 |
-| ns | 471 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.540 |
-| ns | 589 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.507 |
-| ns | 688 |  | 99 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.449 |
-| ns | 768 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.431 |
-| ns | 896 |  | 128 | `docs/` tree listing (complete) | 1.9 |  | 0.487 |
-| ns | 1198 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.441 |
-| walker |  | 1355 | 1002 | python imports in src/requests/__init__.py |  |  | 0.454 |
-| walker |  | 1389 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.454 |
-| walker |  | 1405 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.454 |
-| ns | 1469 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.494 |
-| ns | 1543 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.482 |
-| walker |  | 1580 | 175 | README headline in README.md |  |  | 0.600 |
-| walker |  | 1620 | 40 | headings outline in README.md |  |  | 0.624 |
-| walker |  | 1667 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.624 |
-| walker |  | 1711 | 44 | listing of '.github' |  |  | 0.639 |
-| walker |  | 1751 | 40 | listing of '.github/workflows' |  |  | 0.675 |
-| walker |  | 1809 | 58 | [package] in pyproject.toml |  |  | 0.678 |
-| ns | 1896 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.634 |
-| walker |  | 1956 | 147 | README.md section #0 |  |  | 0.634 |
-| walker |  | 1969 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.651 |
-| walker |  | 2046 | 77 | manifest config in pyproject.toml |  |  | 0.656 |
-| walker |  | 2066 | 20 | python imports in setup.py |  |  | 0.656 |
-| ns | 2072 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.628 |
-| walker |  | 2148 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.628 |
-| walker |  | 2287 | 139 | [dependencies] in pyproject.toml |  |  | 0.641 |
-| ns | 2343 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.604 |
-| walker |  | 2350 | 63 | README.md section #1 |  |  | 0.604 |
-| walker |  | 2475 | 125 | package metadata in pyproject.toml |  |  | 0.643 |
-| walker |  | 2553 | 78 | listing of 'tests' |  |  | 0.680 |
-| walker |  | 2562 | 9 | listing of 'tests/testserver' |  |  | 0.690 |
-| walker |  | 2578 | 16 | listing of 'tests/certs' |  |  | 0.713 |
-| ns | 2631 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.686 |
-| ns | 2882 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.663 |
-| walker |  | 2934 | 356 | plaintext config Makefile |  |  | 0.684 |
+| ns | 471 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.337 |
+| ns | 589 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.316 |
+| walker |  | 620 | 356 | plaintext config Makefile |  |  | 0.322 |
+| ns | 688 |  | 99 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.286 |
+| walker |  | 709 | 89 | listing of 'src/requests' |  |  | 0.456 |
+| ns | 768 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.477 |
+| ns | 896 |  | 128 | `docs/` tree listing (complete) | 1.9 |  | 0.522 |
+| ns | 1198 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.473 |
+| ns | 1469 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.431 |
+| ns | 1543 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.421 |
+| walker |  | 1711 | 1002 | python imports in src/requests/__init__.py |  |  | 0.509 |
+| walker |  | 1745 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.509 |
+| walker |  | 1761 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.509 |
+| ns | 1896 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.476 |
+| walker |  | 1936 | 175 | README headline in README.md |  |  | 0.588 |
+| walker |  | 1976 | 40 | headings outline in README.md |  |  | 0.610 |
+| walker |  | 2023 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.610 |
+| walker |  | 2067 | 44 | listing of '.github' |  |  | 0.624 |
+| ns | 2072 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.597 |
+| walker |  | 2107 | 40 | listing of '.github/workflows' |  |  | 0.629 |
+| walker |  | 2165 | 58 | [package] in pyproject.toml |  |  | 0.631 |
+| walker |  | 2312 | 147 | README.md section #0 |  |  | 0.631 |
+| walker |  | 2325 | 13 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.648 |
+| ns | 2343 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.610 |
+| walker |  | 2402 | 77 | manifest config in pyproject.toml |  |  | 0.615 |
+| walker |  | 2422 | 20 | python imports in setup.py |  |  | 0.615 |
+| walker |  | 2504 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.615 |
+| ns | 2631 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.592 |
+| walker |  | 2643 | 139 | [dependencies] in pyproject.toml |  |  | 0.603 |
+| walker |  | 2706 | 63 | README.md section #1 |  |  | 0.603 |
+| walker |  | 2831 | 125 | package metadata in pyproject.toml |  |  | 0.640 |
+| ns | 2882 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.619 |
+| walker |  | 2909 | 78 | listing of 'tests' |  |  | 0.652 |
+| walker |  | 2918 | 9 | listing of 'tests/testserver' |  |  | 0.662 |
+| walker |  | 2934 | 16 | listing of 'tests/certs' |  |  | 0.684 |
 | walker |  | 2973 | 39 | plaintext config docs/requirements.txt |  |  | 0.684 |
 | walker |  | 2999 | 26 | python imports in src/requests/packages.py |  |  | 0.684 |
 | ns | 3065 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.667 |

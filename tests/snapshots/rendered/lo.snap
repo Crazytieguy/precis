@@ -16,7 +16,64 @@ expression: rendered
 .gitignore …
 .golangci.yml …
 LICENSE …
-Makefile …
+Makefile
+       1→# Only build/test/lint exp/simd when Go version is >= 1.26 (requires goexperiment.simd)
+       2→GO_VERSION := $(shell go version 2>/dev/null | sed -n 's/.*go\([0-9]*\)\.\([0-9]*\).*/\1.\2/p')
+       3→GO_SIMD_SUPPORT := $(shell ver="$(GO_VERSION)"; [ -n "$$ver" ] && [ "$$(printf '%s\n1.26\n' "$$ver" | sort -V | tail -1)" = "$$ver" ] && echo yes)
+       4→
+       5→build:
+       6→	go build -v ./...
+       7→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && GOEXPERIMENT=simd go build -v ./; fi
+       8→
+       9→test:
+      10→	go test -race ./...
+      11→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && GOEXPERIMENT=simd go test -race ./; fi
+      12→watch-test:
+      13→	reflex -t 50ms -s -- sh -c 'gotest -race ./...'
+      14→
+      15→bench:
+      16→	go test -v -run=^Benchmark -benchmem -count 3 -bench ./...
+      17→watch-bench:
+      18→	reflex -t 50ms -s -- sh -c 'go test -v -run=^Benchmark -benchmem -count 3 -bench ./...'
+      19→
+      20→coverage:
+      21→	go test -v -coverprofile=cover.out -covermode=atomic ./...
+      22→	go tool cover -html=cover.out -o cover.html
+      23→
+      24→tools:
+      25→	go install github.com/cespare/reflex@latest
+      26→	go install github.com/rakyll/gotest@latest
+      27→	go install github.com/psampaz/go-mod-outdated@latest
+      28→	go install github.com/jondot/goweight@latest
+      29→	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      30→	go get -t -u golang.org/x/tools/cmd/cover
+      31→	go install github.com/sonatype-nexus-community/nancy@latest
+      32→	go install golang.org/x/perf/cmd/benchstat@latest
+      33→	go install github.com/cespare/prettybench@latest
+      34→	go mod tidy
+      35→
+      36→	# brew install hougesen/tap/mdsf
+      37→
+      38→lint:
+      39→	golangci-lint run --timeout 60s --max-same-issues 50 ./...
+      40→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && golangci-lint run --timeout 60s --max-same-issues 50 ./; fi
+      41→	# mdsf verify --debug --log-level warn docs/
+      42→lint-fix:
+      43→	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
+      44→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && golangci-lint run --timeout 60s --max-same-issues 50 --fix ./; fi
+      45→	# mdsf format --debug --log-level warn docs/
+      46→
+      47→audit:
+      48→	go list -json -m all | nancy sleuth
+      49→
+      50→outdated:
+      51→	go list -u -m -json all | go-mod-outdated -update -direct
+      52→
+      53→weight:
+      54→	goweight
+      55→
+      56→doc:
+      57→	cd docs && npm install && npm start
 README.md
        2→# lo - Iterate over slices, maps, channels...
     …
@@ -29,75 +86,6 @@ README.md
       68→## 💡 Usage
     …
      100→## 🤠 Spec
-     101→
-     102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
-     103→
-     104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
-     105→
-     106→Supported helpers for slices:
-     107→
-     108→- [Filter](#filter)
-     109→- [Map](#map)
-     110→- [UniqMap](#uniqmap)
-     111→- [FilterMap](#filtermap)
-     112→- [FlatMap](#flatmap)
-     113→- [Reduce](#reduce)
-     114→- [ReduceRight](#reduceright)
-     115→- [ForEach](#foreach)
-     116→- [ForEachWhile](#foreachwhile)
-     117→- [Times](#times)
-     118→- [Uniq](#uniq)
-     119→- [UniqBy](#uniqby)
-     120→- [GroupBy](#groupby)
-     121→- [GroupByMap](#groupbymap)
-     122→- [Chunk](#chunk)
-     123→- [Window](#window)
-     124→- [Sliding](#sliding)
-     125→- [PartitionBy](#partitionby)
-     126→- [Flatten](#flatten)
-     127→- [Concat](#concat)
-     128→- [Interleave](#interleave)
-     129→- [Shuffle](#shuffle)
-     130→- [Reverse](#reverse)
-     131→- [Fill](#fill)
-     132→- [Repeat](#repeat)
-     133→- [RepeatBy](#repeatby)
-     134→- [KeyBy](#keyby)
-     135→- [SliceToMap / Associate](#slicetomap-alias-associate)
-     136→- [FilterSliceToMap](#filterslicetomap)
-     137→- [Keyify](#keyify)
-     138→- [Take](#take)
-     139→- [TakeWhile](#takewhile)
-     140→- [TakeFilter](#takefilter)
-     141→- [Drop](#drop)
-     142→- [DropRight](#dropright)
-     143→- [DropWhile](#dropwhile)
-     144→- [DropRightWhile](#droprightwhile)
-     145→- [DropByIndex](#DropByIndex)
-     146→- [Reject](#reject)
-     147→- [RejectMap](#rejectmap)
-     148→- [FilterReject](#filterreject)
-     149→- [Count](#count)
-     150→- [CountBy](#countby)
-     151→- [CountValues](#countvalues)
-     152→- [CountValuesBy](#countvaluesby)
-     153→- [Subset](#subset)
-     154→- [Slice](#slice)
-     155→- [Replace](#replace)
-     156→- [ReplaceAll](#replaceall)
-     157→- [Clone](#clone)
-     158→- [Compact](#compact)
-     159→- [IsSorted](#issorted)
-     160→- [IsSortedBy](#issortedby)
-     161→- [Splice](#Splice)
-     162→- [Cut](#Cut)
-     163→- [CutPrefix](#CutPrefix)
-     164→- [CutSuffix](#CutSuffix)
-     165→- [Trim](#Trim)
-     166→- [TrimLeft](#TrimLeft)
-     167→- [TrimPrefix](#TrimPrefix)
-     168→- [TrimRight](#TrimRight)
-     169→- [TrimSuffix](#TrimSuffix)
     …
     1624→Creates a slice of the map keys.
     …

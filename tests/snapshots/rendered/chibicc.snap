@@ -4,7 +4,57 @@ expression: rendered
 ---
 .gitignore …
 LICENSE …
-Makefile …
+Makefile
+       1→CFLAGS=-std=c11 -g -fno-common -Wall -Wno-switch
+       2→
+       3→SRCS=$(wildcard *.c)
+       4→OBJS=$(SRCS:.c=.o)
+       5→
+       6→TEST_SRCS=$(wildcard test/*.c)
+       7→TESTS=$(TEST_SRCS:.c=.exe)
+       8→
+       9→# Stage 1
+      10→
+      11→chibicc: $(OBJS)
+      12→	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+      13→
+      14→$(OBJS): chibicc.h
+      15→
+      16→test/%.exe: chibicc test/%.c
+      17→	./chibicc -Iinclude -Itest -c -o test/$*.o test/$*.c
+      18→	$(CC) -pthread -o $@ test/$*.o -xc test/common
+      19→
+      20→test: $(TESTS)
+      21→	for i in $^; do echo $$i; ./$$i || exit 1; echo; done
+      22→	test/driver.sh ./chibicc
+      23→
+      24→test-all: test test-stage2
+      25→
+      26→# Stage 2
+      27→
+      28→stage2/chibicc: $(OBJS:%=stage2/%)
+      29→	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+      30→
+      31→stage2/%.o: chibicc %.c
+      32→	mkdir -p stage2/test
+      33→	./chibicc -c -o $(@D)/$*.o $*.c
+      34→
+      35→stage2/test/%.exe: stage2/chibicc test/%.c
+      36→	mkdir -p stage2/test
+      37→	./stage2/chibicc -Iinclude -Itest -c -o stage2/test/$*.o test/$*.c
+      38→	$(CC) -pthread -o $@ stage2/test/$*.o -xc test/common
+      39→
+      40→test-stage2: $(TESTS:test/%=stage2/test/%)
+      41→	for i in $^; do echo $$i; ./$$i || exit 1; echo; done
+      42→	test/driver.sh ./stage2/chibicc
+      43→
+      44→# Misc.
+      45→
+      46→clean:
+      47→	rm -rf chibicc tmp* $(TESTS) test/*.s test/*.exe stage2
+      48→	find * -type f '(' -name '*~' -o -name '*.o' ')' -exec rm {} ';'
+      49→
+      50→.PHONY: test clean test-stage2
 README.md
        1→# chibicc: A Small C Compiler
        2→
@@ -114,35 +164,7 @@ chibicc.h
     …
      126→typedef struct Obj Obj;
      127→struct Obj {
-     128→  Obj *next;
-     129→  char *name;    // Variable name
-     130→  Type *ty;      // Type
-     131→  Token *tok;    // representative token
-     132→  bool is_local; // local or global/function
-     133→  int align;     // alignment
     …
-     136→  int offset;
-    …
-     139→  bool is_function;
-     140→  bool is_definition;
-     141→  bool is_static;
-    …
-     144→  bool is_tentative;
-     145→  bool is_tls;
-     146→  char *init_data;
-     147→  Relocation *rel;
-    …
-     150→  bool is_inline;
-     151→  Obj *params;
-     152→  Node *body;
-     153→  Obj *locals;
-     154→  Obj *va_area;
-     155→  Obj *alloca_bottom;
-     156→  int stack_size;
-    …
-     159→  bool is_live;
-     160→  bool is_root;
-     161→  StringArray refs;
      162→};
     …
      167→typedef struct Relocation Relocation;
@@ -159,30 +181,12 @@ chibicc.h
      227→// AST node type
      228→struct Node {
      229→  NodeKind kind; // Node kind
-     230→  Node *next;    // Next node
-     231→  Type *ty;      // Type, e.g. int or pointer to int
-     232→  Token *tok;    // Representative token
-     233→
-     234→  Node *lhs;     // Left-hand side
-     235→  Node *rhs;     // Right-hand side
     …
      238→  Node *cond;
      239→  Node *then;
      240→  Node *els;
      241→  Node *init;
      242→  Node *inc;
-    …
-     245→  char *brk_label;
-     246→  char *cont_label;
-    …
-     249→  Node *body;
-    …
-     252→  Member *member;
-    …
-     255→  Type *func_ty;
-     256→  Node *args;
-     257→  bool pass_by_stack;
-     258→  Obj *ret_buffer;
     …
      261→  char *label;
      262→  char *unique_label;
@@ -213,49 +217,10 @@ chibicc.h
      295→Obj *parse(Token *tok);
     …
      301→typedef enum {
-     302→  TY_VOID,
-     303→  TY_BOOL,
-     304→  TY_CHAR,
-     305→  TY_SHORT,
-     306→  TY_INT,
-     307→  TY_LONG,
-     308→  TY_FLOAT,
-     309→  TY_DOUBLE,
-     310→  TY_LDOUBLE,
-     311→  TY_ENUM,
-     312→  TY_PTR,
-     313→  TY_FUNC,
-     314→  TY_ARRAY,
-     315→  TY_VLA, // variable-length array
-     316→  TY_STRUCT,
-     317→  TY_UNION,
-     318→} TypeKind;
+    …
      320→struct Type {
      321→  TypeKind kind;
-     322→  int size;           // sizeof() value
-     323→  int align;          // alignment
-     324→  bool is_unsigned;   // unsigned or signed
-     325→  bool is_atomic;     // true if _Atomic
-     326→  Type *origin;       // for type compatibility check
     …
-     336→  Type *base;
-    …
-     339→  Token *name;
-     340→  Token *name_pos;
-    …
-     343→  int array_len;
-    …
-     346→  Node *vla_len; // # of elements
-     347→  Obj *vla_size; // sizeof() value
-    …
-     350→  Member *members;
-     351→  bool is_flexible;
-     352→  bool is_packed;
-    …
-     355→  Type *return_ty;
-     356→  Type *params;
-     357→  bool is_variadic;
-     358→  Type *next;
      359→};
     …
      362→struct Member {
@@ -314,12 +279,9 @@ test/
     function.c …
     generic.c …
     include1.h …
-    include2.h
-           1→int include2 = 7;
-    include3.h
-           1→#define foo 3
-    include4.h
-           1→#define foo 4
+    include2.h …
+    include3.h …
+    include4.h …
     initializer.c …
     line.c …
     literal.c …
