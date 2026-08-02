@@ -3094,3 +3094,51 @@ requests re-emit and no Score(3000) headline moves.
   20 constants packed onto one line was beating a 10-fn sibling it
   should have tied with. `entry_slice`'s "already small enough" test
   is rationed in rows for the same reason.
+
+## Session 2026-08-02 close: 0.6319 → 0.6353, all seven budgets up
+
+Grid (71 training fixtures), start → close: 1000 0.6106→0.6165 · 1442
+0.6264→0.6284 · 2080 0.6315→0.6358 · **3000 0.6319→0.6353** · 4327
+0.5959→0.5984 · 6240 0.5690→0.5720 · 9000 0.5660→0.5700. The
+2026-08-01 B=1000 trade (−0.0053) is repaid and exceeded. Validation
+(final unbiased read only): 0.5492 → 0.5497. Per-mechanism entries are
+the sections above; full ledger in ignore/session-2026-08-02/
+(plan.md, session-report.md, lane reports, censuses, GPT reviews).
+
+**Entry-slice family verdict (all four languages now measured).** Go
+pays (per-name NS credit, past-frontier surfaces, B1000 window);
+Python pays smaller with five measured deviations (0.7 gate, chunk-0
+targeting, essential-tree spine, no constants in the gate,
+non-contiguous closure); TS is structurally blocked (NSes credit
+complete catalogs as units — a gate collects ~zero; affordable-fat
+carves are pure pull-forward displacement); C is structurally blocked
+(the remainder's carve-intrinsic ratio bump jumps NS-ordered bands;
+the NS-credited mass IS the catalog rows left in the remainder).
+Remaining upside is reach (only gin/cobra take the chunked gate
+today) and the 1442–2080 band, not the 3000 headline.
+
+**Cross-walker law hardened three times this session (Go, Rust,
+Python — and once in JS): every row a batch can render needs exactly
+one owner on each level of the batch tree.** The recurring seams:
+one-line declarations stamping an ellipsis on the next row; co-located
+declarations sharing a row across sibling trains; chunk cuts through
+co-location sets; anything a roster deliberately omits ("not in the
+map" silently means "gated on the cheapest way into the file" — the
+Python overload fall-through). New emitters must place markers only on
+rows their own node covers, and adversarial review of every merge
+found a real instance of this class all three times it ran.
+
+**JS statement gating law (W3-JS)**: a module-scope statement batch
+gates on the file's first admitted surface (module-item catalog →
+doc lede → export surface → imports); a file with no admitted surface
+emits no statement batches. This is the Go imports-gating precedent
+generalized, and it resolved the review's ungated-crumbs finding at
+zero corpus cost where the literal "requires declarations" rule cost
+debug's entire +0.042.
+
+**Open item from the same review (pre-existing, untouched):**
+`MODULE_ITEM_CATALOG_MIN = 6` leaves a 4–5-declaration file emitting
+per-item `ModuleItem` batches gated only on `module_predecessor`,
+which is `None` for a repo-root entry file — dockly's four are
+root-level ungated today. Same queue-jumping class; wants a measured
+lane, not a drive-by fix.
