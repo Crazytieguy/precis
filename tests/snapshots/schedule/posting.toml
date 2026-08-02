@@ -739,28 +739,10 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 298
-cum_tokens = 3095
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 8
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
 key = 'Markdown(HeadingsOutline { file: "docs/guide/themes.md" })'
 descriptor = "headings outline in docs/guide/themes.md"
 cost_tokens = 31
-cum_tokens = 3126
+cum_tokens = 2828
 
 [batches.content]
 kind = "lines"
@@ -814,11 +796,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Python(Imports { file: "src/posting/request_headers.py" })'
 descriptor = "python imports in src/posting/request_headers.py"
 cost_tokens = 12
-cum_tokens = 3138
+cum_tokens = 2840
 
 [batches.content]
 kind = "lines"
@@ -832,11 +814,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Python(Imports { file: "src/posting/version.py" })'
 descriptor = "python imports in src/posting/version.py"
 cost_tokens = 13
-cum_tokens = 3151
+cum_tokens = 2853
 
 [batches.content]
 kind = "lines"
@@ -850,11 +832,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Python(DeclNames { file: "src/posting/__main__.py" })'
 descriptor = "python decl names surface in src/posting/__main__.py"
 cost_tokens = 112
-cum_tokens = 3263
+cum_tokens = 2965
 
 [batches.content]
 kind = "lines"
@@ -988,11 +970,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 21 })'
 descriptor = "python decl at src/posting/__main__.py:21"
 cost_tokens = 0
-cum_tokens = 3263
+cum_tokens = 2965
 
 [batches.content]
 kind = "lines"
@@ -1006,11 +988,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 32 })'
 descriptor = "python decl at src/posting/__main__.py:32"
 cost_tokens = 0
-cum_tokens = 3263
+cum_tokens = 2965
 
 [batches.content]
 kind = "lines"
@@ -1024,11 +1006,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl at src/posting/__main__.py:45"
 cost_tokens = 10
-cum_tokens = 3273
+cum_tokens = 2975
 
 [batches.content]
 kind = "lines"
@@ -1042,11 +1024,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl at src/posting/__main__.py:177"
 cost_tokens = 10
-cum_tokens = 3283
+cum_tokens = 2985
 
 [batches.content]
 kind = "lines"
@@ -1060,11 +1042,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl doc at src/posting/__main__.py:45"
 cost_tokens = 12
-cum_tokens = 3295
+cum_tokens = 2997
 
 [batches.content]
 kind = "lines"
@@ -1078,11 +1060,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl doc at src/posting/__main__.py:177"
 cost_tokens = 12
-cum_tokens = 3307
+cum_tokens = 3009
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1078,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 76 })'
 descriptor = "python decl at src/posting/__main__.py:76"
 cost_tokens = 41
-cum_tokens = 3348
+cum_tokens = 3050
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1096,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl at src/posting/__main__.py:194"
 cost_tokens = 44
-cum_tokens = 3392
+cum_tokens = 3094
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1114,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl doc at src/posting/__main__.py:194"
 cost_tokens = 17
-cum_tokens = 3409
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1132,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl at src/posting/__main__.py:96"
 cost_tokens = 146
-cum_tokens = 3555
+cum_tokens = 3257
 
 [batches.content]
 kind = "lines"
@@ -1168,11 +1150,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Python(DeclDoc { file: "src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl doc at src/posting/__main__.py:96"
 cost_tokens = 16
-cum_tokens = 3571
+cum_tokens = 3273
 
 [batches.content]
 kind = "lines"
@@ -1186,11 +1168,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Python(Decl { file: "src/posting/__main__.py", start_line: 50 })'
 descriptor = "python decl at src/posting/__main__.py:50"
 cost_tokens = 147
-cum_tokens = 3718
+cum_tokens = 3420
 
 [batches.content]
 kind = "lines"
@@ -1204,11 +1186,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 246
-cum_tokens = 3964
+cum_tokens = 3666
 
 [batches.content]
 kind = "lines"
@@ -1225,6 +1207,24 @@ kind = "full"
 path = "pyproject.toml"
 start = 72
 end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 298
+cum_tokens = 3964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 8
+end = 24
 
 [batches.content.spans.render]
 kind = "full"

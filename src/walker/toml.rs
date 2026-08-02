@@ -32,12 +32,12 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TomlKey};
-use crate::value::mix_signals;
+use crate::value::{dependency_table_mass_factor, mix_signals};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
-    single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, lines_content_tokens,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// In a primary-name collision, manifests that definitely are not a
@@ -139,15 +139,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         {
             let key: BatchKey = TomlKey::Dependencies { file: file.clone() }.into();
             runtime_dependencies = Some(key.clone());
+            let tier = if is_cargo_manifest(&file) {
+                cargo_dependencies_value(&file, ctx)
+            } else {
+                dependencies_value(&file, ctx)
+            };
+            let value =
+                tier * dependency_table_mass_factor(lines_content_tokens(&source, &content));
             out.push(Batch {
                 key,
                 predecessor: None,
                 content,
-                value: if is_cargo_manifest(&file) {
-                    cargo_dependencies_value(&file, ctx)
-                } else {
-                    dependencies_value(&file, ctx)
-                },
+                value,
             });
         }
         if let Some(content) = build_development_dependencies_content(

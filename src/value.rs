@@ -34,6 +34,48 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 /// see `walker::json::dev_dependencies_value`.
 pub const DEV_DEPENDENCY_ROSTER_SCALE: f64 = 0.3;
 
+/// Token mass at which a manifest dependency roster's usefulness
+/// saturates — see [`dependency_table_mass_factor`]. Swept on the
+/// 2026-08-01 corpus at grade 0.5: 120 → 0.6313 (a 156-token
+/// `linkding` roster the NS wants gets caught, −0.021), 160 and 200 →
+/// 0.6315, 240 → 0.6315, 300 → inert. 200 sits inside the plateau.
+const DEPENDENCY_TABLE_SATURATION_TOKENS: f64 = 200.0;
+
+/// How hard mass past [`DEPENDENCY_TABLE_SATURATION_TOKENS`] is damped.
+/// `1.0` prices the batch as if its value grew linearly with roster size
+/// and stopped at the saturation point; `0.0` disables the damp. Graded
+/// at T=200: 0.25 → 0.6315, 0.5 and 1.0 → 0.6315 on the same three
+/// fixtures. The mover set saturates by 0.5 — every roster the damp can
+/// push past the frontier is already past it — so the class takes the
+/// gentler of the two settings that reach the peak.
+const DEPENDENCY_TABLE_DAMP_GRADE: f64 = 0.5;
+
+/// Size-graded damp for a manifest's dependency roster. A dozen
+/// dependency lines say what a package is built on; the next fifty say
+/// the same thing again at five times the price, and a fat roster
+/// arriving early displaces the primary source an NS ranks above it
+/// (`chronos`'s `[dependencies]` + `[project.optional-dependencies]`
+/// block landed at cum 2574 for 426 rendered tokens). Value is therefore
+/// treated as saturating: it tracks roster mass up to
+/// [`DEPENDENCY_TABLE_SATURATION_TOKENS`] and stops, so the effective
+/// per-token value of an oversized table falls off as
+/// `(T / mass)^grade`. Damp-only (≤ 1) and size-keyed, not
+/// fixture-keyed: small rosters — the ones NS authors reliably buy
+/// whole — are left exactly where they were.
+///
+/// Reach is narrow by construction. Roughly a third of the corpus has a
+/// dependency table over the threshold, but at a 3K budget nearly all of
+/// them are already scheduled past the frontier, where re-pricing them
+/// changes nothing; the damp only bites on the few that were landing
+/// inside the window.
+pub fn dependency_table_mass_factor(tokens: usize) -> f64 {
+    let mass = tokens as f64;
+    if mass <= DEPENDENCY_TABLE_SATURATION_TOKENS {
+        return 1.0;
+    }
+    (DEPENDENCY_TABLE_SATURATION_TOKENS / mass).powf(DEPENDENCY_TABLE_DAMP_GRADE)
+}
+
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;
@@ -596,6 +638,24 @@ pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -
 mod tests {
     use super::*;
     use std::path::Path;
+
+    /// The dependency-table damp is one-sided and keyed on size alone:
+    /// neutral up to the saturation point, monotonically decreasing past
+    /// it, and never a boost.
+    #[test]
+    fn value_dependency_table_mass_factor_is_damp_only_past_saturation() {
+        let saturation = DEPENDENCY_TABLE_SATURATION_TOKENS as usize;
+        for tokens in [0, 1, 50, saturation - 1, saturation] {
+            assert_eq!(dependency_table_mass_factor(tokens), 1.0, "{tokens}");
+        }
+        let mut previous = 1.0;
+        for tokens in [saturation + 1, 300, 500, 1000] {
+            let factor = dependency_table_mass_factor(tokens);
+            assert!(factor < previous, "{tokens} did not damp further");
+            assert!(factor > 0.0, "{tokens} damped to zero");
+            previous = factor;
+        }
+    }
 
     #[test]
     fn conserved_catalog_chunk_factors_sum_to_one() {

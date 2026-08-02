@@ -2081,28 +2081,10 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Json(DevDependencies { file: "package.json" })'
-descriptor = "package dev/peer dependencies in package.json"
-cost_tokens = 302
-cum_tokens = 6126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 47
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
 key = 'Typescript(ExportNames { file: "src/constants.ts" })'
 descriptor = "export names surface in src/constants.ts"
 cost_tokens = 144
-cum_tokens = 6270
+cum_tokens = 5968
 
 [batches.content]
 kind = "lines"
@@ -2132,11 +2114,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Typescript(Export { file: "src/constants.ts", start_line: 1 })'
 descriptor = "export at src/constants.ts:1"
 cost_tokens = 40
-cum_tokens = 6310
+cum_tokens = 6008
 
 [batches.content]
 kind = "lines"
@@ -2150,11 +2132,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Typescript(Imports { file: "src/use-prevent-scroll.ts" })'
 descriptor = "imports in src/use-prevent-scroll.ts"
 cost_tokens = 32
-cum_tokens = 6342
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -2168,11 +2150,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Typescript(Export { file: "src/use-snap-points.ts", start_line: 7 })'
 descriptor = "export at src/use-snap-points.ts:7"
 cost_tokens = 249
-cum_tokens = 6591
+cum_tokens = 6289
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2176,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Typescript(ExportNames { file: "src/helpers.ts" })'
 descriptor = "export names surface in src/helpers.ts"
 cost_tokens = 171
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2327,42 +2309,42 @@ kind = "ellipsis"
 path = "src/helpers.ts"
 start = 109
 end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 88
+key = 'Typescript(Export { file: "src/helpers.ts", start_line: 9 })'
+descriptor = "export at src/helpers.ts:9"
+cost_tokens = 0
+cum_tokens = 6460
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/helpers.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/helpers.ts"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 89
-key = 'Typescript(Export { file: "src/helpers.ts", start_line: 9 })'
-descriptor = "export at src/helpers.ts:9"
-cost_tokens = 0
-cum_tokens = 6762
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/helpers.ts"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 90
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 23 })'
 descriptor = "export at src/helpers.ts:23"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2384,11 +2366,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 42 })'
 descriptor = "export at src/helpers.ts:42"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2410,11 +2392,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 59 })'
 descriptor = "export at src/helpers.ts:59"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2436,11 +2418,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 72 })'
 descriptor = "export at src/helpers.ts:72"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2462,11 +2444,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 90 })'
 descriptor = "export at src/helpers.ts:90"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2488,11 +2470,11 @@ end = 91
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 94 })'
 descriptor = "export at src/helpers.ts:94"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2514,11 +2496,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Typescript(Export { file: "src/helpers.ts", start_line: 108 })'
 descriptor = "export at src/helpers.ts:108"
 cost_tokens = 0
-cum_tokens = 6762
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -2540,11 +2522,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Typescript(ExportDoc { file: "src/helpers.ts", start_line: 108 })'
 descriptor = "export doc at src/helpers.ts:108"
 cost_tokens = 29
-cum_tokens = 6791
+cum_tokens = 6489
 
 [batches.content]
 kind = "lines"
@@ -2558,11 +2540,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 98
+position = 97
 key = 'Typescript(ExportBody { file: "src/helpers.ts", start_line: 59, body_start_line: 60 })'
 descriptor = "export body at src/helpers.ts:59 body 60"
 cost_tokens = 85
-cum_tokens = 6876
+cum_tokens = 6574
 
 [batches.content]
 kind = "lines"
@@ -2576,11 +2558,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 99
+position = 98
 key = 'Typescript(ExportBody { file: "src/helpers.ts", start_line: 9, body_start_line: 10 })'
 descriptor = "export body at src/helpers.ts:9 body 10"
 cost_tokens = 116
-cum_tokens = 6992
+cum_tokens = 6690
 
 [batches.content]
 kind = "lines"
@@ -2594,11 +2576,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 100
+position = 99
 key = 'Typescript(ExportBody { file: "src/helpers.ts", start_line: 42, body_start_line: 43 })'
 descriptor = "export body at src/helpers.ts:42 body 43"
 cost_tokens = 146
-cum_tokens = 7138
+cum_tokens = 6836
 
 [batches.content]
 kind = "lines"
@@ -2607,6 +2589,24 @@ kind = "lines"
 path = "src/helpers.ts"
 start = 43
 end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 302
+cum_tokens = 7138
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 47
+end = 64
 
 [batches.content.spans.render]
 kind = "full"

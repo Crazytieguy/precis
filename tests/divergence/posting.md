@@ -1,4 +1,4 @@
-Score(3000)=0.662 I=0.880 C=0.498 ns_rows≤3K=19/49 (reached=8 partial=1 missing=10)
+Score(3000)=0.667 I=0.882 C=0.504 ns_rows≤3K=19/49 (reached=8 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -53,30 +53,30 @@ Score(3000)=0.662 I=0.880 C=0.498 ns_rows≤3K=19/49 (reached=8 partial=1 missin
 | ns | 2783 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.672 |
 | walker |  | 2786 | 23 | headings outline in docs/guide/help_system.md |  |  | 0.672 |
 | walker |  | 2797 | 11 | python decl names surface in src/posting/_start_time.py |  |  | 0.672 |
+| walker |  | 2828 | 31 | headings outline in docs/guide/themes.md |  |  | 0.672 |
+| walker |  | 2840 | 12 | python imports in src/posting/request_headers.py |  |  | 0.672 |
+| walker |  | 2853 | 13 | python imports in src/posting/version.py |  |  | 0.672 |
 | ns | 2943 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.662 |
-| walker |  | 3095 | 298 | [dependencies] in pyproject.toml |  |  | 0.708 |
-| walker |  | 3126 | 31 | headings outline in docs/guide/themes.md |  |  | 0.708 |
-| walker |  | 3138 | 12 | python imports in src/posting/request_headers.py |  |  | 0.708 |
-| walker |  | 3151 | 13 | python imports in src/posting/version.py |  |  | 0.708 |
-| ns | 3154 |  | 211 | Key-value, option and script models | 3.5 | 3.1 | 0.682 |
-| walker |  | 3263 | 112 | python decl names surface in src/posting/__main__.py |  |  | 0.683 |
-| walker |  | 3263 | 0 | python decl at src/posting/__main__.py:21 |  |  | 0.683 |
-| walker |  | 3263 | 0 | python decl at src/posting/__main__.py:32 |  |  | 0.683 |
-| walker |  | 3273 | 10 | python decl at src/posting/__main__.py:45 |  |  | 0.684 |
-| walker |  | 3283 | 10 | python decl at src/posting/__main__.py:177 |  |  | 0.685 |
-| walker |  | 3295 | 12 | python decl doc at src/posting/__main__.py:45 |  |  | 0.686 |
-| walker |  | 3307 | 12 | python decl doc at src/posting/__main__.py:177 |  |  | 0.688 |
-| walker |  | 3348 | 41 | python decl at src/posting/__main__.py:76 |  |  | 0.690 |
-| ns | 3358 |  | 204 | Collection tree: loading a directory, saving it back | 3.6 | 3.1 | 0.671 |
-| walker |  | 3392 | 44 | python decl at src/posting/__main__.py:194 |  |  | 0.673 |
-| walker |  | 3409 | 17 | python decl doc at src/posting/__main__.py:194 |  |  | 0.675 |
-| walker |  | 3555 | 146 | python decl at src/posting/__main__.py:96 |  |  | 0.688 |
-| walker |  | 3571 | 16 | python decl doc at src/posting/__main__.py:96 |  |  | 0.692 |
-| ns | 3572 |  | 214 | config.py structure and settings-source configuration | 4.1 |  | 0.673 |
-| walker |  | 3718 | 147 | python decl at src/posting/__main__.py:50 |  |  | 0.706 |
-| ns | 3723 |  | 151 | Settings keys, part 1 | 4.2 |  | 0.692 |
-| ns | 3901 |  | 178 | Settings keys, part 2 | 4.3 | 4.2 | 0.679 |
-| walker |  | 3964 | 246 | manifest config in pyproject.toml |  |  | 0.691 |
+| walker |  | 2965 | 112 | python decl names surface in src/posting/__main__.py |  |  | 0.663 |
+| walker |  | 2965 | 0 | python decl at src/posting/__main__.py:21 |  |  | 0.663 |
+| walker |  | 2965 | 0 | python decl at src/posting/__main__.py:32 |  |  | 0.663 |
+| walker |  | 2975 | 10 | python decl at src/posting/__main__.py:45 |  |  | 0.664 |
+| walker |  | 2985 | 10 | python decl at src/posting/__main__.py:177 |  |  | 0.665 |
+| walker |  | 2997 | 12 | python decl doc at src/posting/__main__.py:45 |  |  | 0.667 |
+| walker |  | 3009 | 12 | python decl doc at src/posting/__main__.py:177 |  |  | 0.668 |
+| walker |  | 3050 | 41 | python decl at src/posting/__main__.py:76 |  |  | 0.671 |
+| walker |  | 3094 | 44 | python decl at src/posting/__main__.py:194 |  |  | 0.673 |
+| walker |  | 3111 | 17 | python decl doc at src/posting/__main__.py:194 |  |  | 0.675 |
+| ns | 3154 |  | 211 | Key-value, option and script models | 3.5 | 3.1 | 0.650 |
+| walker |  | 3257 | 146 | python decl at src/posting/__main__.py:96 |  |  | 0.665 |
+| walker |  | 3273 | 16 | python decl doc at src/posting/__main__.py:96 |  |  | 0.669 |
+| ns | 3358 |  | 204 | Collection tree: loading a directory, saving it back | 3.6 | 3.1 | 0.650 |
+| walker |  | 3420 | 147 | python decl at src/posting/__main__.py:50 |  |  | 0.685 |
+| ns | 3572 |  | 214 | config.py structure and settings-source configuration | 4.1 |  | 0.666 |
+| walker |  | 3666 | 246 | manifest config in pyproject.toml |  |  | 0.678 |
+| ns | 3723 |  | 151 | Settings keys, part 1 | 4.2 |  | 0.665 |
+| ns | 3901 |  | 178 | Settings keys, part 2 | 4.3 | 4.2 | 0.652 |
+| walker |  | 3964 | 298 | [dependencies] in pyproject.toml |  |  | 0.691 |
 | walker |  | 3979 | 15 | python imports in src/posting/help_data.py |  |  | 0.691 |
 | walker |  | 4020 | 41 | headings outline in docs/guide/keymap.md |  |  | 0.691 |
 | walker |  | 4037 | 17 | python imports in src/posting/types.py |  |  | 0.691 |
