@@ -267,6 +267,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // Star re-exports handed to the export roster — see
         // [`roster_star_reexport_lines`].
         let mut roster_star_lines: Vec<usize> = Vec::new();
+        // Re-export block past the import prologue — see
+        // [`collect_reexport_tail`]. Emitted below, once the roster it
+        // hangs off exists.
+        let mut reexport_tail_lines = FileLines::default();
         if let Some((source, tree)) = parse_ts(ctx, file) {
             let api_spine = ep && is_api_spine_entrypoint(file, ctx);
             roster_star_lines = roster_star_reexport_lines(&tree, &source);
@@ -314,6 +318,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
             }
+            let mut claimed = import_owned_lines.clone();
+            claimed.extend(roster_star_lines.iter().copied());
+            reexport_tail_lines = collect_reexport_tail(&tree, &source, &claimed);
+            // The tail is a peer of the roster, so the roster's courtesy
+            // ellipsis must not land on one of its rows.
+            import_owned_lines.extend(reexport_tail_lines.full.iter().copied());
         }
 
         let Some((source, tree)) = parse_ts(ctx, file) else {
@@ -450,6 +460,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ) * contract_roster_factor(true),
                 });
                 names_gate = Some(key);
+            }
+            if !reexport_tail_lines.full.is_empty()
+                && let Some(gate) = names_gate.clone()
+                && let Some(content) =
+                    single_file_lines_content(file, &source, reexport_tail_lines.clone())
+            {
+                out.push(Batch {
+                    key: TsKey::ReexportTail { file: file.clone() }.into(),
+                    predecessor: Some(gate),
+                    content,
+                    value: reexport_wall_value(file, ctx, js_factor),
+                });
             }
             let dependent_export_start_lines: HashSet<_> = exports
                 .iter()
@@ -1148,17 +1170,23 @@ fn find_export_starts<'a>(
                 .and_then(|name| default_identifier_reexports.get(name).copied());
             let kind = if default_predecessor.is_some() {
                 decl_kind(child)
-            } else if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
-                && synthetic_export_name(child, source, reexports).is_some()
-            {
-                Some(ItemKind::Const)
+            } else if let Some(kind) = synthetic_local_export_kind(child, source, reexports) {
+                Some(kind)
             } else {
                 synthetic_commonjs_export_kind(child, source, commonjs_reexports)
             };
 
             let Some(kind) = kind else { continue };
+            let is_type_only = matches!(kind, ItemKind::Interface | ItemKind::TypeAlias);
             let mut info = make_export_info(
-                start_line, kind, child, child, file, source, src_lines, false,
+                start_line,
+                kind,
+                child,
+                child,
+                file,
+                source,
+                src_lines,
+                is_type_only,
             );
             info.predecessor_start_line = default_predecessor;
             out.push(info);
@@ -1765,11 +1793,14 @@ fn collect_module_exports_receivers_from_assignment(
     let Some((left, right)) = assignment_sides(assignment) else {
         return;
     };
-    // `module.exports = X` — X is the receiver.
+    // `module.exports = X` — X is the receiver. When the module exports
+    // an instance (`module.exports = new Cli()`) or a factory result,
+    // the constructor/factory carries the surface, so it is the receiver.
     if matches!(
         commonjs_export_target(left, source),
         Some(CommonJsExportTarget::Namespace)
-    ) && let Some(name) = identifier_text(right, source)
+    ) && let Some(name) =
+        identifier_text(right, source).or_else(|| expression_callee_name(right, source))
     {
         receivers.insert(name.to_string());
         return;
@@ -1922,24 +1953,43 @@ fn first_identifier_child(node: Node) -> Option<Node> {
 }
 
 /// Returns the exported local declaration kind when `decl` is named by a
-/// top-level CommonJS value export. Function and class declarations are
-/// keyed directly by their declared name; const/let declarations keep the
-/// narrower fn-init rule used for ESM re-export synthesis.
-fn synthetic_commonjs_export_kind(
+/// top-level re-export clause (`export { X }`) whose names are in
+/// `reexport_set`. Named declarations are keyed directly by their
+/// declared name; const/let declarations keep the narrower fn-init rule
+/// (see [`synthetic_export_name`]), which excludes pure-data consts.
+fn synthetic_local_export_kind(
     decl: Node,
     source: &str,
     reexport_set: &HashSet<String>,
 ) -> Option<ItemKind> {
     let kind = decl_kind(decl)?;
     match kind {
-        ItemKind::Function | ItemKind::Class => {
+        ItemKind::Const => synthetic_export_name(decl, source, reexport_set).map(|_| kind),
+        ItemKind::Function
+        | ItemKind::Class
+        | ItemKind::Interface
+        | ItemKind::TypeAlias
+        | ItemKind::Enum => {
             let name = name_of(decl, source)?;
             reexport_set.contains(name).then_some(kind)
         }
-        ItemKind::Const => synthetic_export_name(decl, source, reexport_set).map(|_| kind),
-        ItemKind::Interface | ItemKind::TypeAlias | ItemKind::Enum => None,
         ItemKind::Default | ItemKind::NamedReexport => None,
     }
+}
+
+/// [`synthetic_local_export_kind`] restricted to runtime declarations —
+/// a CommonJS `exports.X = X` assignment can only name a runtime value.
+fn synthetic_commonjs_export_kind(
+    decl: Node,
+    source: &str,
+    reexport_set: &HashSet<String>,
+) -> Option<ItemKind> {
+    let kind = synthetic_local_export_kind(decl, source, reexport_set)?;
+    (!matches!(
+        kind,
+        ItemKind::Interface | ItemKind::TypeAlias | ItemKind::Enum
+    ))
+    .then_some(kind)
 }
 
 /// Returns the local declared name when `decl` is a single-binding
@@ -2802,6 +2852,31 @@ fn collect_reexport_import_chunks(
             })
             .collect(),
     )
+}
+
+/// Bare `export … from` statements past the file's import prologue.
+///
+/// [`collect_imports`] stops at the first statement that isn't import
+/// plumbing, and the chunked path bails once the file carries more than
+/// a few lines of other code, so a re-export block placed *after* a
+/// module's implementation is claimed by nothing. On that shape the
+/// block is the module's declared public surface — commonly its whole
+/// type surface — rather than plumbing, which is why it gets its own
+/// roster-priced key instead of widening the imports batch.
+///
+/// `claimed` carries the lines the imports batch and the export roster
+/// already own; peer batches may not overlap.
+fn collect_reexport_tail(tree: &Tree, source: &str, claimed: &HashSet<usize>) -> FileLines {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut lines = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "export_statement" && is_bare_reexport(child) {
+            extend_span(&mut lines, child, source);
+        }
+    }
+    lines.retain(|line| !claimed.contains(line));
+    FileLines::new(dedup_sorted(lines))
 }
 
 /// 1-based lines of top-level bare `export … from` statements.
@@ -4459,6 +4534,54 @@ export const VERSION = '1';
     }
 
     #[test]
+    fn walker_typescript_reexport_tail_claims_what_the_prologue_left_behind() {
+        let src = "\
+import {Ky} from './core/Ky.js';
+
+const ky = createInstance();
+
+export default ky;
+
+export type {KyInstance} from './types/ky.js';
+export {
+\tHTTPError,
+\tTimeoutError,
+} from './errors/index.js';
+";
+        let tree = parse(src);
+        let imports = collect_imports(&tree, src);
+        assert_eq!(
+            imports.full,
+            vec![1],
+            "the prologue still stops at the first implementation statement"
+        );
+        let claimed: HashSet<usize> = imports.full.iter().copied().collect();
+        assert_eq!(
+            collect_reexport_tail(&tree, src, &claimed).full,
+            vec![7, 8, 9, 10, 11]
+        );
+    }
+
+    #[test]
+    fn walker_typescript_reexport_tail_never_double_claims_the_prologue() {
+        // A file whose re-exports are all inside the prologue leaves the
+        // tail empty — `Imports` already renders them.
+        let src = "\
+import a from './a.js';
+export {b} from './b.js';
+export * from './c.js';
+
+const local = 1;
+";
+        let tree = parse(src);
+        let imports = collect_imports(&tree, src);
+        assert_eq!(imports.full, vec![1, 2, 3]);
+        let mut claimed: HashSet<usize> = imports.full.iter().copied().collect();
+        claimed.extend(roster_star_reexport_lines(&tree, src));
+        assert!(collect_reexport_tail(&tree, src, &claimed).full.is_empty());
+    }
+
+    #[test]
     fn walker_typescript_disavowing_jsdoc_tags_are_the_only_ones_hoisted() {
         let src = "\
 /**
@@ -5200,6 +5323,61 @@ export { Item as CommandItem };
     }
 
     #[test]
+    fn walker_typescript_synthetic_export_covers_named_declarations() {
+        // A local `export { … }` clause naming a function / class / type
+        // declaration synthesizes the Export at the declaration, not just
+        // the one-line NamedReexport clause.
+        let src = "\
+export { createNote, Store, NoteId };
+
+async function createNote(opts) {
+  return opts;
+}
+
+class Store {
+  get(id) { return id; }
+}
+
+type NoteId = string;
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        let kind_at = |line: usize| {
+            exports
+                .iter()
+                .find(|e| e.start_line == line)
+                .map(|e| e.kind)
+        };
+        assert_eq!(kind_at(3), Some(ItemKind::Function));
+        assert_eq!(kind_at(7), Some(ItemKind::Class));
+        assert_eq!(kind_at(11), Some(ItemKind::TypeAlias));
+        assert!(
+            exports
+                .iter()
+                .find(|e| e.start_line == 11)
+                .is_some_and(|e| e.is_type_only),
+            "a synthesized type declaration must still count as type-only \
+             so the type-machinery damp sees it"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_needs_the_reexport_name() {
+        // An unmentioned sibling declaration stays module-private.
+        let src = "\
+export { kept };
+
+function kept() { return 1; }
+
+function dropped() { return 2; }
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert!(exports.iter().any(|e| e.start_line == 3));
+        assert!(exports.iter().all(|e| e.start_line != 5));
+    }
+
+    #[test]
     fn walker_typescript_synthetic_const_only_when_value_reexport() {
         // `export type { X }` does not synthesize a value Export for X.
         let src = "\
@@ -5250,7 +5428,9 @@ export { a, b };
     }
 
     #[test]
-    fn walker_typescript_esm_function_reexport_does_not_synthesize_local_function() {
+    fn walker_typescript_esm_function_reexport_synthesizes_local_functions() {
+        // Every name in the clause is public surface, so each declaration
+        // gets its own Export alongside the one-line clause.
         let src = "\
 function composeRefs() {
   return null;
@@ -5262,9 +5442,17 @@ export { composeRefs, useComposedRefs };
 ";
         let tree = parse(src);
         let exports = export_infos(&tree, src);
-        assert_eq!(exports.len(), 1);
-        assert_eq!(exports[0].start_line, 7);
-        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
+        assert_eq!(
+            exports
+                .iter()
+                .map(|e| (e.start_line, e.kind))
+                .collect::<Vec<_>>(),
+            vec![
+                (1, ItemKind::Function),
+                (4, ItemKind::Function),
+                (7, ItemKind::NamedReexport),
+            ]
+        );
     }
 
     #[test]
@@ -5352,6 +5540,35 @@ exports.createCommand = (name) => new Command(name);
         );
         let lines = collect_export_lines(&tree, src, 3);
         assert_eq!(lines.full, vec![3]);
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_instance_export_names_its_constructor() {
+        // `module.exports = new Cli()` exports the instance, so `Cli` is
+        // the receiver whose prototype methods are the public surface.
+        let src = "\
+function Cli () {
+}
+Cli.prototype.showVersion = function () {
+  return 1;
+};
+Cli.prototype.showUsage = function () {
+  return 2;
+};
+Cli.prototype.cliParse = function () {
+  return 3;
+};
+module.exports = new Cli()
+";
+        let tree = parse(src);
+        assert!(collect_module_exports_receivers(&tree, src).contains("Cli"));
+        let exports = export_infos_for_path(Path::new("cli.js"), &tree, src);
+        let method_lines: Vec<usize> = exports
+            .iter()
+            .filter(|e| matches!(e.kind, ItemKind::Function))
+            .map(|e| e.start_line)
+            .collect();
+        assert_eq!(method_lines, vec![3, 6, 9]);
     }
 
     #[test]

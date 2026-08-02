@@ -164,14 +164,9 @@ readme.md
     1344→
     1345→Node.js 18 and later.
     1347→## Related
-    1348→
-    1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-    1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
+    …
     1352→## Maintainers
-    1353→
-    1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-    1355→- [Seth Holladay](https://github.com/sholladay)
-    1356→- [Szymon Marczak](https://github.com/szmarczak)
+    …
 source/
     core/
         Ky.ts
@@ -250,6 +245,42 @@ source/
           31→	return ky as KyInstance;
         …
           36→export default ky;
+          38→export type {KyInstance} from './types/ky.js';
+          39→
+          40→export type {
+          41→	Input,
+          42→	Options,
+          43→	NormalizedOptions,
+          44→	RetryOptions,
+          45→	ShouldRetryState,
+          46→	SearchParamsOption,
+          47→	Progress,
+          48→} from './types/options.js';
+          49→
+          50→export type {
+          51→	Hooks,
+          52→	BeforeRequestHook,
+          53→	BeforeRequestState,
+          54→	BeforeRetryHook,
+          55→	BeforeRetryState,
+          56→	BeforeErrorHook,
+          57→	BeforeErrorState,
+          58→	AfterResponseHook,
+          59→	AfterResponseState,
+          60→} from './types/hooks.js';
+          61→
+          62→export type {ResponsePromise} from './types/ResponsePromise.js';
+          63→export type {KyRequest} from './types/request.js';
+          64→export type {KyResponse} from './types/response.js';
+          65→export {HTTPError} from './errors/HTTPError.js';
+          66→export {TimeoutError} from './errors/TimeoutError.js';
+          67→export {ForceRetryError} from './errors/ForceRetryError.js';
+          68→export {
+          69→	isKyError,
+          70→	isHTTPError,
+          71→	isTimeoutError,
+          72→	isForceRetryError,
+          73→} from './utils/type-guards.js';
         …
     types/
         ResponsePromise.ts
@@ -273,20 +304,7 @@ source/
         normalize.ts …
         options.ts …
         timeout.ts …
-        type-guards.ts
-            …
-              27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-              28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
-            …
-              49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-              50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
-            …
-              71→export function isTimeoutError(error: unknown): error is TimeoutError {
-              72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
-            …
-              98→export function isForceRetryError(error: unknown): error is ForceRetryError {
-              99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
-            …
+        type-guards.ts …
         types.ts …
 test/
     browser.ts …

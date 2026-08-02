@@ -244,6 +244,12 @@ pub enum TsKey {
     /// Surface listing of every top-level export's first line — one
     /// unified catalog per file; catastrophic-omission hedge.
     ExportNames { file: PathBuf },
+    /// Bare `export … from` statements sitting past a file's import
+    /// prologue — the trailing re-export block a module puts after its
+    /// implementation. `Imports` only claims the prologue, so without
+    /// this key the block is invisible. Predecessor: the file's
+    /// `ExportNames`; priced as roster, not plumbing.
+    ReexportTail { file: PathBuf },
     /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },
     /// JSDoc above a single export. Predecessor: matching `Export`.
@@ -821,6 +827,7 @@ impl InnerKey for TsKey {
             TsKey::Imports { .. }
                 | TsKey::ImportChunk { .. }
                 | TsKey::ExportNames { .. }
+                | TsKey::ReexportTail { .. }
                 | TsKey::Export { .. }
                 | TsKey::ExportMemberNames { .. }
                 | TsKey::ExportMemberNamesChunk { .. }
@@ -829,14 +836,16 @@ impl InnerKey for TsKey {
         )
     }
 
-    /// `ExportNames` / `ImportChunk` for TS/TSX impl files use a mild
-    /// `0.38` (flatter than per-decl, steeper than coherent anchors).
-    /// Declaration files and JS runtime exports keep the default —
-    /// flattening them demotes load-bearing anchors. `ExportMember`
-    /// uses `0.45` (per-decl tier).
+    /// `ExportNames` / `ReexportTail` / `ImportChunk` for TS/TSX impl
+    /// files use a mild `0.38` (flatter than per-decl, steeper than
+    /// coherent anchors). Declaration files and JS runtime exports keep
+    /// the default — flattening them demotes load-bearing anchors.
+    /// `ExportMember` uses `0.45` (per-decl tier).
     fn concavity_exponent(&self) -> f64 {
         match self {
-            TsKey::ExportNames { file, .. } | TsKey::ImportChunk { file, .. }
+            TsKey::ExportNames { file, .. }
+            | TsKey::ReexportTail { file, .. }
+            | TsKey::ImportChunk { file, .. }
                 if crate::walker::typescript::is_ts_or_tsx_file(file)
                     && !crate::walker::typescript::is_declaration_file(file) =>
             {
@@ -861,6 +870,7 @@ impl InnerKey for TsKey {
                 describe_chunked_surface("imports", file, *chunk_index, root)
             }
             TsKey::ExportNames { file } => describe_in("export names surface", file, root),
+            TsKey::ReexportTail { file } => describe_in("trailing re-export block", file, root),
             TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
             TsKey::ExportDoc { file, start_line } => {
                 describe_at("export doc", file, *start_line, root)

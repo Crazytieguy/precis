@@ -141,9 +141,6 @@ readme.md
      162→### queue
      164→`PQueue` instance.
     …
-     236→#### .addAll(fns, options?)
-     237→
-     238→Same as `.add()`, but accepts an array of sync or async functions and returns a promise that resolves when all functions are resolved.
      240→#### .pause()
      241→
      242→Put queue execution on hold.
@@ -251,6 +248,11 @@ source/
          956→		readonly timeout?: number;
          957→	}> {
         …
+         963→export type {Queue} from './queue.js';
+         964→export {default as PriorityQueue} from './priority-queue.js';
+         965→export {type QueueAddOptions, type Options} from './options.js';
+        …
+         985→export {TimeoutError} from 'p-timeout';
     lower-bound.ts
         …
            3→export default function lowerBound<T>(array: readonly T[], value: T, comparator: (a: T, b: T) => number): number {
