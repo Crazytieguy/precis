@@ -340,7 +340,16 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             });
             names_keys.push(key);
         }
-        let names_gate = names_keys.last().cloned();
+        // The per-decl train gates on the HEAD roster chunk, not the
+        // tail: chunk values are conserved (head-heavy), so the tail
+        // chunk carries a fraction of the catalog's value at nearly the
+        // head's cost and can price past the schedule horizon — gating
+        // the train on it would forfeit the file's depth whenever the
+        // tail roster loses its ratio race. Go gates each decl on the
+        // chunk that owns it (the fuller form); the head gate is the
+        // measured minimal fix and keeps decl trains reachable once the
+        // file has entered.
+        let names_gate = names_keys.first().cloned();
 
         // Method-signature catalog — likewise one unified batch. Gated
         // on the names surface: the `Full+Ellipsis` pair can share the
