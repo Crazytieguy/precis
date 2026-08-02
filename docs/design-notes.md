@@ -2861,7 +2861,6 @@ Sub-lever grid rows (each measured alone) live in
 ignore/session-2026-08-02/lane-w1-rs-recall.md. Also noted there: the
 census's "no crate-doc-body key" claim was stale — `CrateDocBody`/
 `CrateDocTail` already ship and schedule (thiserror @2113/@2717).
-||||||| 6aa3148e
 
 ## Session 2026-08-02
 
