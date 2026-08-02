@@ -1,4 +1,4 @@
-Score(3000)=0.505 I=0.806 C=0.317 ns_rows≤3K=19/51 (reached=7 partial=1 missing=11)
+Score(3000)=0.503 I=0.800 C=0.317 ns_rows≤3K=19/51 (reached=7 partial=1 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -52,55 +52,55 @@ Score(3000)=0.505 I=0.806 C=0.317 ns_rows≤3K=19/51 (reached=7 partial=1 missin
 | walker |  | 1935 | 17 | export doc at lib/express.js:70 |  |  | 0.565 |
 | walker |  | 1952 | 17 | export doc at lib/express.js:77 |  |  | 0.565 |
 | walker |  | 1972 | 20 | export doc at lib/express.js:62 |  |  | 0.565 |
+| walker |  | 1994 | 22 | export doc at lib/express.js:27 |  |  | 0.565 |
+| walker |  | 2018 | 24 | imports in lib/request.js |  |  | 0.565 |
+| walker |  | 2044 | 26 | export doc at lib/request.js:37 |  |  | 0.565 |
+| walker |  | 2069 | 25 | imports in lib/express.js |  |  | 0.565 |
+| walker |  | 2096 | 27 | imports in lib/application.js |  |  | 0.565 |
 | ns | 2156 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.523 |
 | ns | 2247 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.500 |
-| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.473 |
-| walker |  | 2432 | 460 | package runtime dependencies in package.json |  |  | 0.474 |
-| walker |  | 2454 | 22 | export doc at lib/express.js:27 |  |  | 0.474 |
-| walker |  | 2478 | 24 | imports in lib/request.js |  |  | 0.474 |
-| ns | 2481 |  | 109 | Default settings established at boot | 3.1 |  | 0.463 |
-| walker |  | 2504 | 26 | export doc at lib/request.js:37 |  |  | 0.463 |
-| walker |  | 2529 | 25 | imports in lib/express.js |  |  | 0.463 |
-| walker |  | 2556 | 27 | imports in lib/application.js |  |  | 0.463 |
-| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.445 |
-| walker |  | 2832 | 276 | export names surface in lib/application.js |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:59 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:90 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:152 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:190 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:256 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:294 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:322 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:351 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:399 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:420 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:439 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:451 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:463 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:494 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:522 |  |  | 0.538 |
-| walker |  | 2832 | 0 | export at lib/application.js:598 |  |  | 0.538 |
-| walker |  | 2849 | 17 | export doc at lib/application.js:90 |  |  | 0.538 |
-| walker |  | 2934 | 85 | listing of 'test/acceptance' |  |  | 0.539 |
-| walker |  | 2957 | 23 | Readme.md section #19 |  |  | 0.539 |
-| ns | 2958 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.505 |
-| walker |  | 2980 | 23 | Readme.md section #30 |  |  | 0.505 |
-| walker |  | 3004 | 24 | Readme.md section #12 |  |  | 0.505 |
-| walker |  | 3028 | 24 | Readme.md section #32 |  |  | 0.505 |
-| walker |  | 3070 | 42 | export doc at lib/express.js:36 |  |  | 0.505 |
-| walker |  | 3095 | 25 | Readme.md section #18 |  |  | 0.505 |
-| ns | 3143 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.485 |
-| walker |  | 3177 | 82 | Readme.md section #7 |  |  | 0.485 |
-| walker |  | 3203 | 26 | Readme.md section #23 |  |  | 0.485 |
-| walker |  | 3228 | 25 | Readme.md section #24 |  |  | 0.485 |
-| walker |  | 3255 | 27 | Readme.md section #13 |  |  | 0.485 |
-| walker |  | 3281 | 26 | Readme.md section #14 |  |  | 0.485 |
-| walker |  | 3308 | 27 | Readme.md section #15 |  |  | 0.485 |
-| walker |  | 3334 | 26 | Readme.md section #16 |  |  | 0.485 |
-| walker |  | 3359 | 25 | Readme.md section #17 |  |  | 0.485 |
-| ns | 3360 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.463 |
-| walker |  | 3387 | 28 | Readme.md section #22 |  |  | 0.463 |
-| walker |  | 3428 | 41 | imports in lib/response.js |  |  | 0.463 |
+| walker |  | 2372 | 276 | export names surface in lib/application.js |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:59 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:90 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:152 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:190 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:256 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:294 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:322 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:351 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:399 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:420 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:439 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:451 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:463 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:494 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:522 |  |  | 0.572 |
+| walker |  | 2372 | 0 | export at lib/application.js:598 |  |  | 0.572 |
+| ns | 2372 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.572 |
+| walker |  | 2389 | 17 | export doc at lib/application.js:90 |  |  | 0.572 |
+| walker |  | 2474 | 85 | listing of 'test/acceptance' |  |  | 0.573 |
+| ns | 2481 |  | 109 | Default settings established at boot | 3.1 |  | 0.560 |
+| walker |  | 2497 | 23 | Readme.md section #19 |  |  | 0.560 |
+| walker |  | 2520 | 23 | Readme.md section #30 |  |  | 0.560 |
+| walker |  | 2544 | 24 | Readme.md section #12 |  |  | 0.560 |
+| walker |  | 2568 | 24 | Readme.md section #32 |  |  | 0.560 |
+| walker |  | 2610 | 42 | export doc at lib/express.js:36 |  |  | 0.560 |
+| walker |  | 2635 | 25 | Readme.md section #18 |  |  | 0.560 |
+| ns | 2654 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.538 |
+| walker |  | 2717 | 82 | Readme.md section #7 |  |  | 0.538 |
+| walker |  | 2743 | 26 | Readme.md section #23 |  |  | 0.538 |
+| walker |  | 2768 | 25 | Readme.md section #24 |  |  | 0.538 |
+| walker |  | 2795 | 27 | Readme.md section #13 |  |  | 0.538 |
+| walker |  | 2821 | 26 | Readme.md section #14 |  |  | 0.538 |
+| walker |  | 2848 | 27 | Readme.md section #15 |  |  | 0.538 |
+| walker |  | 2874 | 26 | Readme.md section #16 |  |  | 0.538 |
+| walker |  | 2899 | 25 | Readme.md section #17 |  |  | 0.538 |
+| walker |  | 2927 | 28 | Readme.md section #22 |  |  | 0.538 |
+| ns | 2958 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.503 |
+| walker |  | 2968 | 41 | imports in lib/response.js |  |  | 0.503 |
+| ns | 3143 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.483 |
+| ns | 3360 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.462 |
+| walker |  | 3428 | 460 | package runtime dependencies in package.json |  |  | 0.463 |
 | walker |  | 3458 | 30 | Readme.md section #27 |  |  | 0.463 |
 | walker |  | 3488 | 30 | Readme.md section #29 |  |  | 0.463 |
 | walker |  | 3517 | 29 | Readme.md section #28 |  |  | 0.463 |

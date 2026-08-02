@@ -16,14 +16,14 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
-use crate::value::{depth_factor, mix_signals};
+use crate::value::{dependency_table_mass_factor, depth_factor, mix_signals};
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
 };
 use super::{
     FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
-    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    gated_whole_file_content, lines_content_tokens, path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -148,42 +148,57 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         is_scripts_key
     };
     let mut sections = Vec::new();
-    let mut collect = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
-        let Some(content) = section_content(file, &source, &pairs, name_match) else {
-            return;
+    // `mass_graded` marks the dependency rosters, the one section class
+    // whose value stops tracking its size — see
+    // `crate::value::dependency_table_mass_factor`.
+    let mut collect =
+        |key: JsonKey, value: f64, name_match: fn(&str) -> bool, mass_graded: bool| {
+            let Some(content) = section_content(file, &source, &pairs, name_match) else {
+                return;
+            };
+            let grade = if mass_graded {
+                dependency_table_mass_factor(lines_content_tokens(&source, &content))
+            } else {
+                1.0
+            };
+            sections.push((key, content, value * shell_factor * grade));
         };
-        sections.push((key, content, value * shell_factor));
-    };
     let f = file.to_path_buf();
     collect(
         JsonKey::Identity { file: f.clone() },
         identity_value(file, ctx),
         is_identity_key,
+        false,
     );
     collect(
         JsonKey::Entry { file: f.clone() },
         entry_value(file, ctx),
         is_entry_key,
+        false,
     );
     collect(
         JsonKey::Runtime { file: f.clone() },
         runtime_value(file, ctx),
         is_runtime_key,
+        false,
     );
     collect(
         JsonKey::Scripts { file: f.clone() },
         scripts_value(file, ctx) * scripts_deps_factor,
         scripts_key_match,
+        false,
     );
     collect(
         JsonKey::Dependencies { file: f.clone() },
         dependencies_value(file, ctx) * scripts_deps_factor,
         is_runtime_dependencies_key,
+        true,
     );
     collect(
         JsonKey::IdentityMeta { file: f.clone() },
         identity_meta_value(file, ctx),
         is_identity_meta_key,
+        false,
     );
     let carries_peer_dependencies = pairs
         .iter()
@@ -192,6 +207,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         JsonKey::DevDependencies { file: f },
         dev_dependencies_value(file, ctx, carries_peer_dependencies) * scripts_deps_factor,
         is_dev_dependencies_key,
+        true,
     );
 
     let overlap_chain = package_sections_share_lines(&pairs);

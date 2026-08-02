@@ -1103,28 +1103,10 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Json(DevDependencies { file: "package.json" })'
-descriptor = "package dev/peer dependencies in package.json"
-cost_tokens = 368
-cum_tokens = 5287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 62
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
 key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 0, reference_shaped: false })'
 descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #0"
 cost_tokens = 110
-cum_tokens = 5397
+cum_tokens = 5029
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1120,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Typescript(Imports { file: "test/test-types-compilation.ts" })'
 descriptor = "imports in test/test-types-compilation.ts"
 cost_tokens = 13
-cum_tokens = 5410
+cum_tokens = 5042
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1138,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Plaintext(Whole { file: ".gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 74
-cum_tokens = 5484
+cum_tokens = 5116
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1156,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Plaintext(Whole { file: ".editorconfig" })'
 descriptor = "plaintext config .editorconfig"
 cost_tokens = 165
-cum_tokens = 5649
+cum_tokens = 5281
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1174,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Plaintext(Whole { file: "LICENSE" })'
 descriptor = "plaintext config LICENSE"
 cost_tokens = 309
-cum_tokens = 5958
+cum_tokens = 5590
 
 [batches.content]
 kind = "lines"
@@ -1205,6 +1187,24 @@ kind = "lines"
 path = "LICENSE"
 start = 1
 end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 368
+cum_tokens = 5958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 62
+end = 84
 
 [batches.content.spans.render]
 kind = "full"

@@ -747,6 +747,29 @@ pub(crate) fn single_file_lines_content(
     Some(BatchContent::Lines { spans })
 }
 
+/// Token mass of the source text a single-file `Lines` batch covers,
+/// for walkers that price a batch against its own size. Real tokens, not
+/// the `bytes / k` estimate: the estimate is calibrated on the corpus
+/// median and undercounts a dependency roster — version specifiers like
+/// `"peft>=0.13.0,<0.18"` run near two bytes per token — by enough to
+/// move a size threshold across a class. Excludes the render gutter, so
+/// it reads a little under the scheduler's marginal cost for the same
+/// batch.
+pub(crate) fn lines_content_tokens(source: &str, content: &BatchContent) -> usize {
+    let BatchContent::Lines { spans } = content else {
+        return 0;
+    };
+    let source_lines: Vec<&str> = source.lines().collect();
+    let mut covered = String::new();
+    for line in spans.iter().flat_map(|span| span.start..=span.end) {
+        if let Some(text) = source_lines.get(line - 1) {
+            covered.push_str(text);
+            covered.push('\n');
+        }
+    }
+    crate::tokenizer::count(&covered)
+}
+
 /// `BatchContent::Lines` covering every line of `source`. `None` when
 /// the file is empty (all-blank files fall out via empty spans).
 pub(crate) fn whole_file_lines_content(file: &Path, source: &str) -> Option<BatchContent> {

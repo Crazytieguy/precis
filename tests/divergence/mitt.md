@@ -77,17 +77,17 @@ Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missi
 | walker |  | 4891 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.836 |
 | walker |  | 4919 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.836 |
 | ns | 4933 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.816 |
-| ns | 5129 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.797 |
-| ns | 5282 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.780 |
-| walker |  | 5287 | 368 | package dev/peer dependencies in package.json |  |  | 0.782 |
-| walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.783 |
-| walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.783 |
+| walker |  | 5029 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.817 |
+| walker |  | 5042 | 13 | imports in test/test-types-compilation.ts |  |  | 0.817 |
+| walker |  | 5116 | 74 | plaintext config .gitignore |  |  | 0.818 |
+| ns | 5129 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.798 |
+| walker |  | 5281 | 165 | plaintext config .editorconfig |  |  | 0.799 |
+| ns | 5282 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.783 |
 | ns | 5453 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.761 |
-| walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.762 |
-| walker |  | 5649 | 165 | plaintext config .editorconfig |  |  | 0.763 |
-| ns | 5680 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.745 |
-| ns | 5839 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.733 |
-| walker |  | 5958 | 309 | plaintext config LICENSE |  |  | 0.733 |
+| walker |  | 5590 | 309 | plaintext config LICENSE |  |  | 0.761 |
+| ns | 5680 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.743 |
+| ns | 5839 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.731 |
+| walker |  | 5958 | 368 | package dev/peer dependencies in package.json |  |  | 0.733 |
 | ns | 6121 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.711 |
 | ns | 6339 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.697 |
 | walker |  | 6458 | 500 | plaintext config .eslintrc |  |  | 0.700 |

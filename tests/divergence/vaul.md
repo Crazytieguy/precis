@@ -120,29 +120,29 @@ Score(3000)=0.875 I=0.930 C=0.824 ns_rows≤3K=20/61 (reached=15 partial=2 missi
 | walker |  | 5786 | 37 | export doc at src/use-composed-refs.ts:23 |  |  | 0.729 |
 | walker |  | 5824 | 38 | export doc at src/use-composed-refs.ts:31 |  |  | 0.729 |
 | ns | 5870 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.719 |
-| ns | 6007 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.708 |
-| walker |  | 6126 | 302 | package dev/peer dependencies in package.json |  |  | 0.708 |
-| ns | 6217 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.694 |
-| walker |  | 6270 | 144 | export names surface in src/constants.ts |  |  | 0.712 |
-| walker |  | 6310 | 40 | export at src/constants.ts:1 |  |  | 0.719 |
-| walker |  | 6342 | 32 | imports in src/use-prevent-scroll.ts |  |  | 0.719 |
-| ns | 6567 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.694 |
-| walker |  | 6591 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.725 |
-| walker |  | 6762 | 171 | export names surface in src/helpers.ts |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:9 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:23 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:42 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:59 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:72 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:90 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:94 |  |  | 0.736 |
-| walker |  | 6762 | 0 | export at src/helpers.ts:108 |  |  | 0.736 |
-| walker |  | 6791 | 29 | export doc at src/helpers.ts:108 |  |  | 0.736 |
+| walker |  | 5968 | 144 | export names surface in src/constants.ts |  |  | 0.738 |
+| ns | 6007 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.727 |
+| walker |  | 6008 | 40 | export at src/constants.ts:1 |  |  | 0.734 |
+| walker |  | 6040 | 32 | imports in src/use-prevent-scroll.ts |  |  | 0.734 |
+| ns | 6217 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.719 |
+| walker |  | 6289 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.750 |
+| walker |  | 6460 | 171 | export names surface in src/helpers.ts |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:9 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:23 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:42 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:59 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:72 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:90 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:94 |  |  | 0.762 |
+| walker |  | 6460 | 0 | export at src/helpers.ts:108 |  |  | 0.762 |
+| walker |  | 6489 | 29 | export doc at src/helpers.ts:108 |  |  | 0.762 |
+| ns | 6567 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.735 |
+| walker |  | 6574 | 85 | export body at src/helpers.ts:59 body 60 |  |  | 0.735 |
+| walker |  | 6690 | 116 | export body at src/helpers.ts:9 body 10 |  |  | 0.735 |
 | ns | 6816 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.718 |
-| walker |  | 6876 | 85 | export body at src/helpers.ts:59 body 60 |  |  | 0.718 |
-| walker |  | 6992 | 116 | export body at src/helpers.ts:9 body 10 |  |  | 0.718 |
-| ns | 7045 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.706 |
-| walker |  | 7138 | 146 | export body at src/helpers.ts:42 body 43 |  |  | 0.706 |
+| walker |  | 6836 | 146 | export body at src/helpers.ts:42 body 43 |  |  | 0.718 |
+| ns | 7045 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.705 |
+| walker |  | 7138 | 302 | package dev/peer dependencies in package.json |  |  | 0.706 |
 | walker |  | 7325 | 187 | export body at src/use-prevent-scroll.ts:68 body 69 |  |  | 0.706 |
 | ns | 7358 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.689 |
 | walker |  | 7383 | 58 | export doc at src/use-prevent-scroll.ts:68 |  |  | 0.689 |
