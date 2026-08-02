@@ -2937,3 +2937,47 @@ reason — its `model.py` entry unit is only 170 tokens, below the
 250-token split threshold, so the lever never fires there; the four
 roster-entry-bound carriers W1-PY named are not all reachable by the
 same knob.
+
+#### Review fix pass (corpus-neutral: +0.0001 @9000, every other budget unchanged)
+
+Four precision fixes on the merged lever; only flask, microbootstrap and
+requests re-emit and no Score(3000) headline moves.
+
+- **One-line declarations must not mark the row below them** (this was a
+  latent Python-walker bug, not the carve's — but the cheap gate made
+  its blast radius much larger). Both the top-level roster and
+  `MethodSigs` put a body-elision ellipsis on `declaration_row + 1`,
+  suppressed only when that row was in `all_name_lines`. Imports,
+  dunder assignments, `setup()` manifest rows and class FIELDS are not
+  in that set and are emitted by independent, non-descendant batches:
+  `def f(): pass` above `import os` panics DeclNames-vs-Imports, and
+  `class C:` with a one-line method above a field panics
+  MethodSigs-vs-ClassBody — and in release the marker WINS, so every
+  following class-field row vanished even at B=1M. `elision_row_within`
+  now only marks a row the declaration's own node covers. Same fix and
+  same reason as the Rust walker's `collect_item_name_lines`
+  (1c38a881); when a walker surfaces a name row and marks the row after
+  it, that marker needs the declaration to actually reach that far.
+- **Collapsed `@overload` stubs gate on their implementation's chunk.**
+  Stubs are excluded from `names_roster`, so their start lines matched
+  no chunk and fell through to the head chunk — i.e. straight to the
+  80-token gate. At B=300 a synthetic stack rendered eight full stub
+  variants while the implementation row that stands for them, and the
+  remainder, were both absent: exactly the breadth leak the entry slice
+  exists to prevent. Anything the roster deliberately *omits* still
+  needs an explicit owner; "not in the map" silently means "gated on
+  the cheapest way into the file".
+- **The data-model multiplier is read before the carve.** It describes
+  the chunk the chunker built, so deriving it from the mutated groups
+  let the split move it: a promoted entry unit whose gate takes its
+  classes leaves a remainder that loses the class majority and drops
+  1.30 → 1.0, and an unpromoted unit can yield a class-only gate that
+  gains 1.30 — measured at a gate/remainder ratio of 0.91 instead of
+  the configured 0.7. "The remainder keeps its pre-carve factors" has
+  to mean *all* of them, not just the conserved chunk value.
+- **Spine selection counts rendered rows, not roster members** —
+  `surface_name_count`, the same unit fix the Go walker shipped.
+  `A = 1; B = 2` is two declarations on one row, so a 9-fn module with
+  20 constants packed onto one line was beating a 10-fn sibling it
+  should have tied with. `entry_slice`'s "already small enough" test
+  is rationed in rows for the same reason.

@@ -352,6 +352,31 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         } else {
             vec![1.0; names_groups.len()]
         };
+        // The data-model promotion is a statement about the CHUNK the
+        // chunker built — whether that slice of the catalog is mostly
+        // model classes — so it is read once, before any carve. Deriving
+        // it from the carved groups instead would let the split itself
+        // move the multiplier: a promoted entry unit whose gate takes its
+        // classes leaves a remainder that loses the class majority and
+        // drops to 1.0, and an unpromoted unit can yield a class-only gate
+        // that gains 1.30 — either way the remainder stops keeping the
+        // factor it would have carried uncarved.
+        let mut model_factors: Vec<f64> = names_groups
+            .iter()
+            .map(|group| {
+                let model_classes = group
+                    .iter()
+                    .filter(|&&index| {
+                        public_class_decls.contains(&roster_decls[index].inner_node.start_byte())
+                    })
+                    .count();
+                if file_is_data_model_catalog && model_classes * 2 >= group.len() {
+                    DATA_MODEL_ROSTER_FACTOR
+                } else {
+                    1.0
+                }
+            })
+            .collect();
         // Carve the entry unit's gate slice. Only the directory's spine
         // module qualifies, and only once its entry unit is fat enough
         // that the gate is a real discount on admission.
@@ -368,31 +393,21 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 .collect();
             names_groups[0] = remainder;
             names_groups.insert(0, gate);
-            // The remainder keeps the factor it would have carried
-            // uncarved: re-indexing it into the conserved allocation
-            // demotes the catalog the gate exists to make reachable, and
-            // measured worse across the grid.
+            // The remainder keeps the factors it would have carried
+            // uncarved: re-indexing its value into the conserved
+            // allocation demotes the catalog the gate exists to make
+            // reachable, and measured worse across the grid. The gate is
+            // priced as a discounted view of that same unit, so it
+            // inherits the unit's model multiplier rather than earning or
+            // losing one on its own membership.
             chunk_factors.insert(0, PYTHON_ENTRY_SLICE_VALUE_FACTOR * chunk_factors[0]);
+            model_factors.insert(0, model_factors[0]);
             carved = true;
         }
         let mut chunk_contents = Vec::with_capacity(names_groups.len());
         for (chunk_index, group) in names_groups.iter().enumerate() {
-            let model_factor = if file_is_data_model_catalog
-                && group
-                    .iter()
-                    .filter(|&&index| {
-                        public_class_decls.contains(&roster_decls[index].inner_node.start_byte())
-                    })
-                    .count()
-                    * 2
-                    >= group.len()
-            {
-                DATA_MODEL_ROSTER_FACTOR
-            } else {
-                1.0
-            };
             if let Some(content) = single_file_lines_content(file, &source, group_lines(group)) {
-                chunk_contents.push((chunk_index, content, model_factor));
+                chunk_contents.push((chunk_index, content, model_factors[chunk_index]));
             }
         }
         let mut names_keys = Vec::with_capacity(chunk_contents.len());
@@ -461,14 +476,18 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // ancestry local.
         let mut method_sigs_gate: Option<BatchKey> = None;
         {
-            let full: Vec<_> = flat_methods
+            let surfaced: Vec<&DeclInfo> = flat_methods
                 .iter()
-                .map(|(_, m)| signature_line(m))
-                .filter(|line| !collapsed_stub_lines.contains(line))
+                .map(|(_, method)| method)
+                .filter(|method| !collapsed_stub_lines.contains(&signature_line(method)))
                 .collect();
-            let ellipses: Vec<_> = full
+            let full: Vec<_> = surfaced
                 .iter()
-                .map(|line| *line + 1)
+                .map(|method| signature_line(method))
+                .collect();
+            let ellipses: Vec<_> = surfaced
+                .iter()
+                .filter_map(|method| elision_row_within(method.inner_node, signature_line(method)))
                 .filter(|line| !all_name_lines.contains(line))
                 .collect();
             let lines = FileLines::new(full).with_ellipses(ellipses);
@@ -485,6 +504,20 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             }
         }
 
+        // A collapsed `@overload` stub is not in the roster — the
+        // implementation's row stands for the whole stack — so its own
+        // start line owns no chunk. Gating it on the head chunk would let
+        // every stub in a stack become schedulable the moment the file's
+        // cheapest entry batch lands, rendering the variants while the row
+        // that represents them is still unbought: the breadth leak the
+        // entry slice exists to prevent. Route each stub to the chunk that
+        // owns its implementation's row instead.
+        let roster_row_of = |decl: &DeclInfo| {
+            collapsed_overload_stub(decl, &decls, &source)
+                .then(|| overload_implementation(decl, &decls, &source))
+                .flatten()
+                .map_or(decl.start_line, |index| decls[index].start_line)
+        };
         for decl in decls.iter() {
             let decl_key = PythonKey::Decl {
                 file: file.clone(),
@@ -498,7 +531,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 out.push(Batch {
                     key: decl_key.clone().into(),
                     predecessor: decl_gate_by_start_line
-                        .get(&decl.start_line)
+                        .get(&roster_row_of(decl))
                         .cloned()
                         .or_else(|| names_gate.clone()),
                     content,
@@ -1103,16 +1136,35 @@ fn collect_all_name_lines(
         .collect()
 }
 
+/// The body-elision marker row that follows a surfaced `name_row`, or
+/// `None` when `node` — the declaration the row stands for — does not
+/// reach that far.
+///
+/// A one-line declaration (`def f(): pass`, `def method(self): ...`)
+/// owns nothing after its own row, so the next row belongs to whatever
+/// follows: an `import`, a `__version__` dunder, a `setup()` manifest
+/// row, the next class field. Those are emitted by independent,
+/// non-descendant batches, and a marker on one of them is a non-ancestor
+/// overlap — a debug panic in the scheduler's ownership assert, and in
+/// release a silent race the marker can win, dropping every row the
+/// other batch would have rendered. Same fix, same reason, as the Rust
+/// walker's `collect_item_name_lines`.
+fn elision_row_within(node: Node, name_row: usize) -> Option<usize> {
+    let marker = name_row + 1;
+    // `name_row` is 1-based; tree-sitter rows are 0-based.
+    (marker <= node.end_position().row + 1).then_some(marker)
+}
+
 fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for decl in decls {
         full.push(decl.start_line);
-        if decl.kind == DeclKind::Function {
-            let ellipsis_line = decl.start_line + 1;
-            if !all_name_lines.contains(&ellipsis_line) {
-                ellipses.push(ellipsis_line);
-            }
+        if decl.kind == DeclKind::Function
+            && let Some(marker) = elision_row_within(decl.unit_node, decl.start_line)
+            && !all_name_lines.contains(&marker)
+        {
+            ellipses.push(marker);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
@@ -1180,9 +1232,15 @@ fn entry_slice(
     cost: impl Fn(&[usize]) -> usize,
 ) -> Option<Vec<usize>> {
     // A unit this small is its own best gate; slicing it would only
-    // strand the remainder. Each roster decl surfaces exactly one row,
-    // so the member count is the row count.
-    if group.len() <= PYTHON_ENTRY_SLICE_ROWS {
+    // strand the remainder. Rationed in rendered rows, not members:
+    // `A = 1; B = 2` is two declarations sharing one row, and a unit of
+    // eight such rows needs a gate no more than one of eight
+    // declarations does.
+    let rows: HashSet<usize> = group
+        .iter()
+        .map(|&index| roster_decls[index].start_line)
+        .collect();
+    if rows.len() <= PYTHON_ENTRY_SLICE_ROWS {
         return None;
     }
     let ranks: Vec<f64> = group
@@ -1242,6 +1300,12 @@ fn entry_slice(
 /// pick *which* module may carve a gate, never to price anything.
 /// Returns `None` on a tie, when no module stands out from its siblings.
 ///
+/// Rows, not roster members: `A = 1; B = 2` is two declarations on one
+/// row, so counting members reads a module that packs its constants as
+/// larger than the same module written out, and can hand the gate to it
+/// over — or take it away by tying with — a sibling that really does
+/// surface more. Rows are also the unit the gate is rationed against.
+///
 /// Only the repo's essential tree competes. A gate buys admission to the
 /// whole depth train behind it, and a `docs/conf.py` or a `tests/`
 /// support module is the sole or largest `.py` in its directory often
@@ -1266,8 +1330,7 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
         if is_generated(&source) {
             continue;
         }
-        let decls = find_top_level_decls(&tree, &source);
-        let count = names_roster(&decls, &source).len();
+        let count = surface_name_count(&tree, &source);
         match best {
             Some((_, best_count)) if count < best_count => {}
             Some((_, best_count)) if count == best_count => tied = true,
@@ -1281,6 +1344,18 @@ fn spine_file(source_files: &[PathBuf], ctx: &WalkCtx) -> Option<PathBuf> {
         Some((file, _)) if !tied => Some(file.clone()),
         _ => None,
     }
+}
+
+/// How many distinct roster rows a module's declaration surface renders
+/// — the unit [`spine_file`] compares and [`entry_slice`] rations the
+/// gate in.
+fn surface_name_count(tree: &Tree, source: &str) -> usize {
+    let decls = find_top_level_decls(tree, source);
+    names_roster(&decls, source)
+        .into_iter()
+        .map(|index| decls[index].start_line)
+        .collect::<HashSet<usize>>()
+        .len()
 }
 
 /// Whether the module carries a generated-code header in its leading
@@ -2040,6 +2115,15 @@ mod tests {
         let _ = scheduler.run_with_report();
     }
 
+    /// Whole-pipeline render of a single-module tree at a budget big
+    /// enough that nothing is dropped for cost — so a missing row means a
+    /// batch lost an ownership race, not that it ran out of budget.
+    fn render_python_module(src: &str) -> String {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("catalog.py"), src).unwrap();
+        crate::render(&[dir.path()], 1_000_000, None).expect("render")
+    }
+
     /// The file a names-surface batch belongs to, or `None` for any
     /// other batch.
     fn names_batch_file(key: &BatchKey) -> Option<&PathBuf> {
@@ -2337,6 +2421,178 @@ mod tests {
             }
         }
         assert_python_scheduler_overlap_free(&source);
+    }
+
+    /// A one-line `def` owns nothing after its own row, so the roster's
+    /// body-elision marker must not land on the import that follows it —
+    /// `Imports` is an independent batch, and in release the marker wins
+    /// the race and the import line disappears entirely.
+    #[test]
+    fn python_one_line_def_leaves_the_following_import_row_alone() {
+        let src = "def f(): pass\nimport os\n\n\ndef g(x):\n    return x\n";
+        assert_python_scheduler_overlap_free(src);
+        let rendered = render_python_module(src);
+        assert!(rendered.contains("import os"), "{rendered}");
+        assert!(rendered.contains("def f(): pass"), "{rendered}");
+    }
+
+    /// Same shape one level down: a one-line method's next row is a class
+    /// field, which `ClassBody` owns.
+    #[test]
+    fn python_one_line_method_leaves_the_following_class_field_alone() {
+        let src = "class C:\n    def method(self): pass\n    field = 1\n    other = 2\n";
+        assert_python_scheduler_overlap_free(src);
+        let rendered = render_python_module(src);
+        assert!(rendered.contains("field = 1"), "{rendered}");
+        assert!(rendered.contains("other = 2"), "{rendered}");
+    }
+
+    /// A multi-line declaration still gets its marker — the row is inside
+    /// its own node, so nothing else can own it.
+    #[test]
+    fn python_multi_line_def_keeps_its_body_elision_marker() {
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("catalog.py");
+        std::fs::write(&file, "def f(x):\n    return x\n\n\nimport os\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let (source, tree) = parse(&std::fs::read_to_string(&file).unwrap());
+        let decls = find_top_level_decls(&tree, &source);
+        let lines = collect_decl_names_from(&decls, &HashSet::new());
+        assert_eq!(lines.full, vec![1]);
+        assert_eq!(lines.ellipses, vec![2], "the marker sits on the body row");
+        drop(ctx);
+    }
+
+    /// A collapsed `@overload` stub is not in the roster, so its own
+    /// start line owns no chunk. It must gate on the chunk owning its
+    /// implementation's row — otherwise every stub in the stack becomes
+    /// schedulable behind the file's cheapest entry batch while the row
+    /// that stands for them is still unbought.
+    #[test]
+    fn python_overload_stubs_gate_on_their_implementations_chunk() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("spine.py");
+        let sibling = dir.path().join("sibling.py");
+        let mut source = entry_slice_module(24, 4);
+        for index in 0..8 {
+            source.push_str(&format!(
+                "@overload\ndef shaped(value: Type{index}, extra: OtherProtocol) -> Type{index}: ...\n"
+            ));
+        }
+        source.push_str("def shaped(value, extra):\n    return value\n");
+        std::fs::write(&spine, &source).unwrap();
+        std::fs::write(&sibling, "def only():\n    pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+
+        let (implementation_line, _) = {
+            let (parsed, tree) = parse(&source);
+            let decls = find_top_level_decls(&tree, &parsed);
+            let index = decls
+                .iter()
+                .position(|decl| {
+                    name_of(decl.inner_node, &parsed) == Some("shaped")
+                        && !is_overload_stub(decl, &parsed)
+                })
+                .expect("implementation");
+            (decls[index].start_line, index)
+        };
+        let implementation_gate = batches
+            .iter()
+            .find(|batch| {
+                matches!(&batch.key, BatchKey::Python(PythonKey::Decl { start_line, .. })
+                    if *start_line == implementation_line)
+            })
+            .and_then(|batch| batch.predecessor.clone())
+            .expect("implementation gates on a names chunk");
+        // The implementation lives in the carved remainder, so its gate
+        // is not the cheap head chunk.
+        assert!(matches!(
+            implementation_gate,
+            BatchKey::Python(PythonKey::DeclNamesChunk { .. })
+        ));
+        let stub_gates: Vec<_> = batches
+            .iter()
+            .filter(|batch| {
+                matches!(&batch.key, BatchKey::Python(PythonKey::Decl { start_line, .. })
+                    if *start_line < implementation_line && *start_line > 90)
+            })
+            .filter_map(|batch| batch.predecessor.clone())
+            .collect();
+        assert!(!stub_gates.is_empty(), "the stubs emit their own batches");
+        assert!(
+            stub_gates.iter().all(|gate| *gate == implementation_gate),
+            "every stub must wait for the chunk owning the row that stands for it"
+        );
+    }
+
+    /// The data-model promotion describes the chunk the CHUNKER built, so
+    /// carving must not move it: the gate inherits the entry unit's
+    /// multiplier and the remainder keeps it.
+    #[test]
+    fn python_entry_slice_carries_the_pre_carve_data_model_multiplier() {
+        let dir = tempfile::tempdir().unwrap();
+        let spine = dir.path().join("models.py");
+        let sibling = dir.path().join("sibling.py");
+        let mut source = String::new();
+        for index in 0..10 {
+            source.push_str(&format!(
+                "class ModelNumber{index:02}(BaseSchema):\n    \"\"\"A model.\"\"\"\n\n    first_field: str\n    second_field: int\n    third_field: bool\n    fourth_field: float\n\n"
+            ));
+        }
+        for index in 0..14 {
+            source.push_str(&format!(
+                "def _helper_function_{index:02}(first: SomeProtocol, second: OtherProtocol) -> Result:\n    return first\n\n"
+            ));
+        }
+        std::fs::write(&spine, &source).unwrap();
+        std::fs::write(&sibling, "def only():\n    pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_source_files(&[spine.clone(), sibling], &ctx);
+        let chunks = entry_slice_split(&batches, &spine, &ctx);
+        assert_eq!(chunks.len(), 2, "the spine's entry unit is carved");
+        // Both groups price off one multiplier, so the gate is exactly
+        // the configured share of the remainder however the classes fell.
+        let (_, _, gate_value) = chunks[0];
+        let (_, _, remainder_value) = chunks[1];
+        assert!(
+            (gate_value - PYTHON_ENTRY_SLICE_VALUE_FACTOR * remainder_value).abs() < 1e-9,
+            "gate {gate_value} vs remainder {remainder_value}"
+        );
+    }
+
+    /// Spine selection is rationed in rendered rows: `A = 1; B = 2` is
+    /// two declarations on one row, and counting members would let a
+    /// module that packs its constants out-declare a sibling it should
+    /// have tied with.
+    #[test]
+    fn python_spine_selection_counts_rendered_rows_not_declarations() {
+        let dir = tempfile::tempdir().unwrap();
+        let packed = dir.path().join("packed.py");
+        let plain = dir.path().join("plain.py");
+        let mut packed_source = (0..9).fold(String::new(), |mut acc, index| {
+            acc.push_str(&format!("def packed_fn_{index:02}():\n    pass\n\n"));
+            acc
+        });
+        packed_source.push_str(
+            &(0..20)
+                .map(|index| format!("PACKED_{index:02} = {index}"))
+                .collect::<Vec<_>>()
+                .join("; "),
+        );
+        packed_source.push('\n');
+        std::fs::write(&packed, packed_source).unwrap();
+        std::fs::write(
+            &plain,
+            (0..10).fold(String::new(), |mut acc, index| {
+                acc.push_str(&format!("def plain_fn_{index:02}():\n    pass\n\n"));
+                acc
+            }),
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        // 9 defs + 1 packed row against 10 defs — a tie, so nobody carves.
+        assert_eq!(spine_file(&[packed, plain], &ctx), None);
     }
 
     /// A small docstring-led method body splits via `block_child_parts`;
