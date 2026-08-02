@@ -471,28 +471,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 937
-cum_tokens = 1885
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 1
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
 key = 'Go(DeclNames { file: "it/string.go", chunk_index: 0 })'
 descriptor = "go decl names surface in it/string.go"
 cost_tokens = 40
-cum_tokens = 1925
+cum_tokens = 988
 
 [batches.content]
 kind = "lines"
@@ -522,11 +504,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Go(Decl { file: "it/string.go", start_line: 13 })'
 descriptor = "go decl at it/string.go:13"
 cost_tokens = 0
-cum_tokens = 1925
+cum_tokens = 988
 
 [batches.content]
 kind = "lines"
@@ -540,11 +522,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Markdown(ReadmeHeadline { file: "exp/simd/README.md" })'
 descriptor = "README headline in exp/simd/README.md"
 cost_tokens = 72
-cum_tokens = 1997
+cum_tokens = 1060
 
 [batches.content]
 kind = "lines"
@@ -558,11 +540,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Go(DeclNames { file: "internal/constraints/ordered_go118.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/constraints/ordered_go118.go"
 cost_tokens = 26
-cum_tokens = 2023
+cum_tokens = 1086
 
 [batches.content]
 kind = "lines"
@@ -592,11 +574,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Go(Decl { file: "internal/constraints/ordered_go118.go", start_line: 9 })'
 descriptor = "go decl at internal/constraints/ordered_go118.go:9"
 cost_tokens = 14
-cum_tokens = 2037
+cum_tokens = 1100
 
 [batches.content]
 kind = "lines"
@@ -610,11 +592,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Go(DeclNames { file: "internal/constraints/ordered_go121.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/constraints/ordered_go121.go"
 cost_tokens = 26
-cum_tokens = 2063
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -636,11 +618,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Go(Decl { file: "internal/constraints/ordered_go121.go", start_line: 13 })'
 descriptor = "go decl at internal/constraints/ordered_go121.go:13"
 cost_tokens = 0
-cum_tokens = 2063
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -654,11 +636,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 436, reference_shaped: false })'
 descriptor = "README.md section #436"
 cost_tokens = 27
-cum_tokens = 2090
+cum_tokens = 1153
 
 [batches.content]
 kind = "lines"
@@ -672,11 +654,11 @@ end = 5095
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 64
-cum_tokens = 2154
+cum_tokens = 1217
 
 [batches.content]
 kind = "fs"
@@ -686,11 +668,11 @@ parent = "docs"
 entries = [".gitignore", "CLAUDE.md", "README.md", "data", "docs", "docusaurus.config.ts", "package-lock.json", "package.json", "plugins", "scripts", "sidebars.ts", "src", "static", "tsconfig.json"]
 
 [[batches]]
-position = 32
+position = 31
 key = 'Fs(DirListing { dir: "docs/plugins" })'
 descriptor = "listing of 'docs/plugins'"
 cost_tokens = 4
-cum_tokens = 2158
+cum_tokens = 1221
 
 [batches.content]
 kind = "fs"
@@ -700,11 +682,11 @@ parent = "docs/plugins"
 entries = ["helpers-pages"]
 
 [[batches]]
-position = 33
+position = 32
 key = 'Fs(DirListing { dir: "docs/plugins/helpers-pages" })'
 descriptor = "listing of 'docs/plugins/helpers-pages'"
 cost_tokens = 7
-cum_tokens = 2165
+cum_tokens = 1228
 
 [batches.content]
 kind = "fs"
@@ -714,11 +696,11 @@ parent = "docs/plugins/helpers-pages"
 entries = ["components", "index.ts"]
 
 [[batches]]
-position = 34
+position = 33
 key = 'Go(PackageImports { file: "internal/constraints/ordered_go118.go" })'
 descriptor = "go package + imports in internal/constraints/ordered_go118.go"
 cost_tokens = 7
-cum_tokens = 2172
+cum_tokens = 1235
 
 [batches.content]
 kind = "lines"
@@ -732,11 +714,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Markdown(ReadmeHeadline { file: "internal/xtime/README.md" })'
 descriptor = "README headline in internal/xtime/README.md"
 cost_tokens = 88
-cum_tokens = 2260
+cum_tokens = 1323
 
 [batches.content]
 kind = "lines"
@@ -750,11 +732,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Markdown(HeadingsOutline { file: "exp/simd/BENCHMARK.md" })'
 descriptor = "headings outline in exp/simd/BENCHMARK.md"
 cost_tokens = 39
-cum_tokens = 2299
+cum_tokens = 1362
 
 [batches.content]
 kind = "lines"
@@ -808,11 +790,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Markdown(Section { file: "exp/simd/BENCHMARK.md", section_index: 0, reference_shaped: false })'
 descriptor = "exp/simd/BENCHMARK.md section #0"
 cost_tokens = 0
-cum_tokens = 2299
+cum_tokens = 1362
 
 [batches.content]
 kind = "lines"
@@ -826,11 +808,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Go(GoMod { file: "go.mod" })'
 descriptor = "go module file go.mod"
 cost_tokens = 286
-cum_tokens = 2585
+cum_tokens = 1648
 
 [batches.content]
 kind = "lines"
@@ -844,11 +826,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Go(GoMod { file: "exp/simd/go.mod" })'
 descriptor = "go module file exp/simd/go.mod"
 cost_tokens = 64
-cum_tokens = 2649
+cum_tokens = 1712
 
 [batches.content]
 kind = "lines"
@@ -862,11 +844,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Go(DeclNames { file: "internal/xtime/noCopy.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/xtime/noCopy.go"
 cost_tokens = 38
-cum_tokens = 2687
+cum_tokens = 1750
 
 [batches.content]
 kind = "lines"
@@ -896,11 +878,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Go(Decl { file: "internal/xtime/noCopy.go", start_line: 10 })'
 descriptor = "go decl at internal/xtime/noCopy.go:10"
 cost_tokens = 0
-cum_tokens = 2687
+cum_tokens = 1750
 
 [batches.content]
 kind = "lines"
@@ -914,11 +896,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Go(Decl { file: "internal/xtime/noCopy.go", start_line: 13 })'
 descriptor = "go decl at internal/xtime/noCopy.go:13"
 cost_tokens = 0
-cum_tokens = 2687
+cum_tokens = 1750
 
 [batches.content]
 kind = "lines"
@@ -932,11 +914,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Go(PackageImports { file: "internal/xtime/noCopy.go" })'
 descriptor = "go package + imports in internal/xtime/noCopy.go"
 cost_tokens = 8
-cum_tokens = 2695
+cum_tokens = 1758
 
 [batches.content]
 kind = "lines"
@@ -950,11 +932,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 139, reference_shaped: false })'
 descriptor = "README.md section #139"
 cost_tokens = 15
-cum_tokens = 2710
+cum_tokens = 1773
 
 [batches.content]
 kind = "lines"
@@ -968,11 +950,11 @@ end = 1624
 kind = "full"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Markdown(Section { file: "README.md", section_index: 144, reference_shaped: false })'
 descriptor = "README.md section #144"
 cost_tokens = 15
-cum_tokens = 2725
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -986,11 +968,11 @@ end = 1671
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Markdown(HeadingsOutline { file: "exp/simd/README.md" })'
 descriptor = "headings outline in exp/simd/README.md"
 cost_tokens = 50
-cum_tokens = 2775
+cum_tokens = 1838
 
 [batches.content]
 kind = "lines"
@@ -1060,11 +1042,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Go(PackageImports { file: "exp/simd/simd.go" })'
 descriptor = "go package + imports in exp/simd/simd.go"
 cost_tokens = 10
-cum_tokens = 2785
+cum_tokens = 1848
 
 [batches.content]
 kind = "lines"
@@ -1073,6 +1055,24 @@ kind = "lines"
 path = "exp/simd/simd.go"
 start = 1
 end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 937
+cum_tokens = 2785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 57
 
 [batches.content.spans.render]
 kind = "full"

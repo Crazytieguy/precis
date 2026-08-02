@@ -331,28 +331,10 @@ entries = ["repository.go", "repository_test.go"]
 
 [[batches]]
 position = 24
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 333
-cum_tokens = 595
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 2
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 91
-cum_tokens = 686
+cum_tokens = 353
 
 [batches.content]
 kind = "lines"
@@ -374,11 +356,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 14
-cum_tokens = 700
+cum_tokens = 367
 
 [batches.content]
 kind = "fs"
@@ -388,11 +370,11 @@ parent = ".github"
 entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 7
-cum_tokens = 707
+cum_tokens = 374
 
 [batches.content]
 kind = "fs"
@@ -402,11 +384,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "release.yml"]
 
 [[batches]]
-position = 28
+position = 27
 key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
 descriptor = "YAML config at .github/workflows/ci.yml"
 cost_tokens = 344
-cum_tokens = 1051
+cum_tokens = 718
 
 [batches.content]
 kind = "lines"
@@ -420,11 +402,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Fs(DirListing { dir: "internal/adapters/repositories/file" })'
 descriptor = "listing of 'internal/adapters/repositories/file'"
 cost_tokens = 17
-cum_tokens = 1068
+cum_tokens = 735
 
 [batches.content]
 kind = "fs"
@@ -434,11 +416,11 @@ parent = "internal/adapters/repositories/file"
 entries = ["parser.go", "parser_test.go", "repository.go", "repository_test.go"]
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "internal/core/ports/mocks" })'
 descriptor = "listing of 'internal/core/ports/mocks'"
 cost_tokens = 17
-cum_tokens = 1085
+cum_tokens = 752
 
 [batches.content]
 kind = "fs"
@@ -448,11 +430,11 @@ parent = "internal/core/ports/mocks"
 entries = ["mock_activityrepository.go", "mock_activityresolver.go", "mock_notesrepository.go"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Go(DeclNames { file: "cmd/tock/main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/tock/main.go"
 cost_tokens = 12
-cum_tokens = 1097
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -474,11 +456,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Go(Decl { file: "cmd/tock/main.go", start_line: 7 })'
 descriptor = "go decl at cmd/tock/main.go:7"
 cost_tokens = 0
-cum_tokens = 1097
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -487,6 +469,24 @@ kind = "lines"
 path = "cmd/tock/main.go"
 start = 7
 end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 333
+cum_tokens = 1097
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 2
+end = 13
 
 [batches.content.spans.render]
 kind = "full"

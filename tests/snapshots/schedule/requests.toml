@@ -145,28 +145,10 @@ entries = ["faq.rst", "out-there.rst", "recommended.rst", "release-process.rst",
 
 [[batches]]
 position = 11
-key = 'Plaintext(Whole { file: "Makefile" })'
-descriptor = "plaintext config Makefile"
-cost_tokens = 356
-cum_tokens = 620
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Makefile"
-start = 1
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "src/requests" })'
 descriptor = "listing of 'src/requests'"
 cost_tokens = 89
-cum_tokens = 709
+cum_tokens = 353
 
 [batches.content]
 kind = "fs"
@@ -176,11 +158,11 @@ parent = "src/requests"
 entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
 
 [[batches]]
-position = 13
+position = 12
 key = 'Python(Imports { file: "src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 1002
-cum_tokens = 1711
+cum_tokens = 1355
 
 [batches.content]
 kind = "lines"
@@ -210,11 +192,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
-cum_tokens = 1745
+cum_tokens = 1389
 
 [batches.content]
 kind = "lines"
@@ -252,11 +234,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
 descriptor = "python decl at src/requests/__init__.py:99"
 cost_tokens = 16
-cum_tokens = 1761
+cum_tokens = 1405
 
 [batches.content]
 kind = "lines"
@@ -270,11 +252,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 175
-cum_tokens = 1936
+cum_tokens = 1580
 
 [batches.content]
 kind = "lines"
@@ -296,11 +278,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 40
-cum_tokens = 1976
+cum_tokens = 1620
 
 [batches.content]
 kind = "lines"
@@ -354,11 +336,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
 descriptor = "python decl at src/requests/__init__.py:60"
 cost_tokens = 47
-cum_tokens = 2023
+cum_tokens = 1667
 
 [batches.content]
 kind = "lines"
@@ -367,6 +349,24 @@ kind = "lines"
 path = "src/requests/__init__.py"
 start = 60
 end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Plaintext(Whole { file: "Makefile" })'
+descriptor = "plaintext config Makefile"
+cost_tokens = 356
+cum_tokens = 2023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 27
 
 [batches.content.spans.render]
 kind = "full"

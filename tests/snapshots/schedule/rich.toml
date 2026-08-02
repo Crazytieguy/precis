@@ -61,10 +61,38 @@ entries = ["box.svg", "svg_export.svg"]
 
 [[batches]]
 position = 5
+key = 'Fs(DirListing { dir: ".faq" })'
+descriptor = "listing of '.faq'"
+cost_tokens = 7
+cum_tokens = 248
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".faq"
+entries = ["FAQ.md", "suggest.md"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "questions" })'
+descriptor = "listing of 'questions'"
+cost_tokens = 72
+cum_tokens = 320
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "questions"
+entries = ["README.md", "ansi_escapes.question.md", "emoji_broken.question.md", "highlight_incorrect.question.md", "highlighting_unexpected.question.md", "jupyter.question.md", "log_renderables.question.md", "logging_color.question.md", "rich_spinner.question.md", "square_brackets.question.md", "tracebacks_installed.question.md"]
+
+[[batches]]
+position = 7
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 154
-cum_tokens = 395
+cum_tokens = 474
 
 [batches.content]
 kind = "lines"
@@ -76,34 +104,6 @@ end = 15
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: ".faq" })'
-descriptor = "listing of '.faq'"
-cost_tokens = 7
-cum_tokens = 402
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".faq"
-entries = ["FAQ.md", "suggest.md"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "questions" })'
-descriptor = "listing of 'questions'"
-cost_tokens = 72
-cum_tokens = 474
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "questions"
-entries = ["README.md", "ansi_escapes.question.md", "emoji_broken.question.md", "highlight_incorrect.question.md", "highlighting_unexpected.question.md", "jupyter.question.md", "log_renderables.question.md", "logging_color.question.md", "rich_spinner.question.md", "square_brackets.question.md", "tracebacks_installed.question.md"]
 
 [[batches]]
 position = 8

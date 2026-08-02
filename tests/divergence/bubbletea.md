@@ -10,22 +10,22 @@ Score(3000)=0.592 I=0.795 C=0.440 ns_rows≤3K=18/50 (reached=7 partial=0 missin
 | walker |  | 239 | 7 | listing of 'tutorials/basics' |  |  | 0.000 |
 | walker |  | 246 | 7 | listing of 'tutorials/commands' |  |  | 0.000 |
 | ns | 266 |  | 103 | `Msg` alias and the `Cmd` type | 1.3 |  | 0.000 |
-| ns | 338 |  | 72 | Program entry points: `NewProgram`, `Run`, `ProgramOption` | 1.4 |  | 0.000 |
-| walker |  | 375 | 129 | plaintext config Taskfile.yaml |  |  | 0.000 |
-| walker |  | 404 | 29 | go module identity in go.mod |  |  | 0.039 |
-| walker |  | 418 | 14 | go decl names surface in profile.go |  |  | 0.039 |
-| walker |  | 429 | 11 | go decl at profile.go:13 |  |  | 0.039 |
-| walker |  | 450 | 21 | listing of 'testdata/TestClearMsg' |  |  | 0.033 |
-| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.033 |
-| walker |  | 472 | 22 | go decl names surface in focus.go |  |  | 0.033 |
-| walker |  | 472 | 0 | go decl at focus.go:5 |  |  | 0.033 |
-| walker |  | 472 | 0 | go decl at focus.go:9 |  |  | 0.033 |
-| walker |  | 495 | 23 | go decl names surface in input.go |  |  | 0.033 |
-| walker |  | 495 | 0 | go decl at input.go:8 |  |  | 0.033 |
-| walker |  | 521 | 26 | go decl names surface in raw.go |  |  | 0.033 |
-| walker |  | 521 | 0 | go decl at raw.go:33 |  |  | 0.033 |
-| walker |  | 534 | 13 | go decl at raw.go:5 |  |  | 0.033 |
-| walker |  | 610 | 76 | README headline in README.md |  |  | 0.033 |
+| walker |  | 275 | 29 | go module identity in go.mod |  |  | 0.043 |
+| walker |  | 289 | 14 | go decl names surface in profile.go |  |  | 0.043 |
+| walker |  | 300 | 11 | go decl at profile.go:13 |  |  | 0.043 |
+| walker |  | 321 | 21 | listing of 'testdata/TestClearMsg' |  |  | 0.043 |
+| ns | 338 |  | 72 | Program entry points: `NewProgram`, `Run`, `ProgramOption` | 1.4 |  | 0.038 |
+| walker |  | 343 | 22 | go decl names surface in focus.go |  |  | 0.038 |
+| walker |  | 343 | 0 | go decl at focus.go:5 |  |  | 0.038 |
+| walker |  | 343 | 0 | go decl at focus.go:9 |  |  | 0.038 |
+| walker |  | 366 | 23 | go decl names surface in input.go |  |  | 0.038 |
+| walker |  | 366 | 0 | go decl at input.go:8 |  |  | 0.038 |
+| walker |  | 392 | 26 | go decl names surface in raw.go |  |  | 0.038 |
+| walker |  | 392 | 0 | go decl at raw.go:33 |  |  | 0.038 |
+| walker |  | 405 | 13 | go decl at raw.go:5 |  |  | 0.038 |
+| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.032 |
+| walker |  | 481 | 76 | README headline in README.md |  |  | 0.032 |
+| walker |  | 610 | 129 | plaintext config Taskfile.yaml |  |  | 0.033 |
 | walker |  | 617 | 7 | go package + imports in focus.go |  |  | 0.033 |
 | walker |  | 624 | 7 | go package + imports in raw.go |  |  | 0.033 |
 | walker |  | 637 | 13 | listing of '.github' |  |  | 0.033 |
