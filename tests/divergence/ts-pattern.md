@@ -73,121 +73,120 @@ Score(3000)=0.645 I=0.866 C=0.481 ns_rows≤3K=20/53 (reached=8 partial=1 missin
 | walker |  | 3119 | 16 | module item body at src/match.ts:47 body 91 |  |  | 0.635 |
 | walker |  | 3138 | 19 | module item body at src/match.ts:47 body 56 |  |  | 0.635 |
 | walker |  | 3159 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.635 |
-| walker |  | 3186 | 27 | module item body at src/match.ts:47 body 111 |  |  | 0.635 |
-| walker |  | 3215 | 29 | module item body at src/match.ts:47 body 116 |  |  | 0.635 |
-| walker |  | 3246 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.635 |
-| ns | 3277 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.619 |
-| walker |  | 3308 | 62 | imports in src/is-matching.ts |  |  | 0.619 |
-| walker |  | 3462 | 154 | json config tsconfig.json |  |  | 0.620 |
-| walker |  | 3537 | 75 | imports in src/match.ts |  |  | 0.620 |
-| walker |  | 3540 | 3 | listing of 'examples/gif-fetcher/public' |  |  | 0.625 |
-| ns | 3544 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.605 |
-| walker |  | 3664 | 124 | README.md section #11 |  |  | 0.606 |
-| walker |  | 3719 | 55 | README.md section #5 |  |  | 0.610 |
-| ns | 3829 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.595 |
-| walker |  | 3904 | 185 | export names surface in src/internals/symbols.ts |  |  | 0.596 |
-| walker |  | 3904 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.596 |
-| walker |  | 4052 | 148 | README.md section #10 |  |  | 0.597 |
-| ns | 4103 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.583 |
-| walker |  | 4112 | 60 | README.md section #6 |  |  | 0.588 |
-| walker |  | 4119 | 7 | listing of 'tests/types-catalog' |  |  | 0.597 |
-| walker |  | 4182 | 63 | README.md section #1 |  |  | 0.603 |
-| walker |  | 4228 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.604 |
+| walker |  | 3221 | 62 | imports in src/is-matching.ts |  |  | 0.635 |
+| ns | 3277 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.618 |
+| walker |  | 3375 | 154 | json config tsconfig.json |  |  | 0.619 |
+| walker |  | 3402 | 27 | module item body at src/match.ts:47 body 111 |  |  | 0.620 |
+| walker |  | 3477 | 75 | imports in src/match.ts |  |  | 0.620 |
+| walker |  | 3480 | 3 | listing of 'examples/gif-fetcher/public' |  |  | 0.624 |
+| ns | 3544 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.604 |
+| walker |  | 3604 | 124 | README.md section #11 |  |  | 0.605 |
+| walker |  | 3659 | 55 | README.md section #5 |  |  | 0.609 |
+| ns | 3829 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.594 |
+| walker |  | 3844 | 185 | export names surface in src/internals/symbols.ts |  |  | 0.596 |
+| walker |  | 3844 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.596 |
+| walker |  | 3873 | 29 | module item body at src/match.ts:47 body 116 |  |  | 0.596 |
+| walker |  | 4021 | 148 | README.md section #10 |  |  | 0.597 |
+| walker |  | 4081 | 60 | README.md section #6 |  |  | 0.602 |
+| walker |  | 4088 | 7 | listing of 'tests/types-catalog' |  |  | 0.612 |
+| ns | 4103 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.597 |
+| walker |  | 4151 | 63 | README.md section #1 |  |  | 0.603 |
+| walker |  | 4182 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.603 |
 | ns | 4257 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.614 |
-| walker |  | 4321 | 93 | json config jsr.json |  |  | 0.615 |
-| walker |  | 4330 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.623 |
-| ns | 4444 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.631 |
-| walker |  | 4481 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.635 |
-| walker |  | 4526 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.636 |
-| ns | 4666 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.619 |
-| walker |  | 4756 | 230 | README.md section #9 |  |  | 0.621 |
-| ns | 4872 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.605 |
-| walker |  | 4932 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.611 |
-| ns | 4989 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.601 |
+| walker |  | 4275 | 93 | json config jsr.json |  |  | 0.614 |
+| walker |  | 4284 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.622 |
+| walker |  | 4435 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.627 |
+| ns | 4444 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.635 |
+| walker |  | 4665 | 230 | README.md section #9 |  |  | 0.637 |
+| ns | 4666 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.621 |
+| walker |  | 4841 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.626 |
+| ns | 4872 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.610 |
+| ns | 4989 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.600 |
 | ns | 5196 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.588 |
 | ns | 5424 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.603 |
-| walker |  | 5586 | 654 | export names surface in src/patterns.ts |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:116 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:241 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:294 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:356 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:672 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:782 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:793 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:805 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:928 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1075 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1201 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1211 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1221 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1231 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1241 |  |  | 0.661 |
-| walker |  | 5586 | 0 | export at src/patterns.ts:1274 |  |  | 0.661 |
-| walker |  | 5611 | 25 | export at src/patterns.ts:131 |  |  | 0.661 |
-| walker |  | 5639 | 28 | export at src/patterns.ts:246 |  |  | 0.661 |
+| walker |  | 5495 | 654 | export names surface in src/patterns.ts |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:116 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:241 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:294 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:356 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:672 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:782 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:793 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:805 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:928 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1075 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1201 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1211 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1221 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1231 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1241 |  |  | 0.661 |
+| walker |  | 5495 | 0 | export at src/patterns.ts:1274 |  |  | 0.661 |
+| walker |  | 5520 | 25 | export at src/patterns.ts:131 |  |  | 0.661 |
+| walker |  | 5548 | 28 | export at src/patterns.ts:246 |  |  | 0.661 |
+| walker |  | 5577 | 29 | export at src/patterns.ts:643 |  |  | 0.661 |
+| walker |  | 5607 | 30 | export at src/patterns.ts:1251 |  |  | 0.661 |
+| walker |  | 5637 | 30 | export at src/patterns.ts:1271 |  |  | 0.661 |
 | ns | 5643 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.669 |
-| walker |  | 5668 | 29 | export at src/patterns.ts:643 |  |  | 0.669 |
-| walker |  | 5698 | 30 | export at src/patterns.ts:1251 |  |  | 0.669 |
-| walker |  | 5728 | 30 | export at src/patterns.ts:1271 |  |  | 0.669 |
-| walker |  | 5764 | 36 | export at src/patterns.ts:445 |  |  | 0.669 |
-| walker |  | 5807 | 43 | export at src/patterns.ts:81 |  |  | 0.669 |
-| walker |  | 5849 | 42 | export at src/patterns.ts:611 |  |  | 0.669 |
-| walker |  | 5892 | 43 | export at src/patterns.ts:242 |  |  | 0.669 |
-| walker |  | 5935 | 43 | export at src/patterns.ts:295 |  |  | 0.669 |
-| walker |  | 5984 | 49 | export at src/patterns.ts:100 |  |  | 0.669 |
-| walker |  | 6028 | 44 | export at src/patterns.ts:696 |  |  | 0.669 |
-| ns | 6038 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.656 |
-| walker |  | 6073 | 45 | export at src/patterns.ts:433 |  |  | 0.656 |
-| walker |  | 6118 | 45 | export at src/patterns.ts:536 |  |  | 0.656 |
-| walker |  | 6163 | 45 | export at src/patterns.ts:572 |  |  | 0.656 |
-| ns | 6209 |  | 171 | `otherwise`, `exhaustive`, `run`, `returnType` and `narrow` bodies, and `defaultCatcher` | 3.9 | 3.6 | 0.650 |
-| walker |  | 6212 | 49 | export at src/patterns.ts:637 |  |  | 0.650 |
-| walker |  | 6262 | 50 | export at src/patterns.ts:299 |  |  | 0.650 |
-| walker |  | 6314 | 52 | export at src/patterns.ts:646 |  |  | 0.650 |
-| walker |  | 6374 | 60 | export at src/patterns.ts:187 |  |  | 0.650 |
-| ns | 6378 |  | 169 | The observable rules of `matchPattern`'s tuple/variadic branch | 3.10 | 3.3 | 0.640 |
-| walker |  | 6452 | 78 | export at src/patterns.ts:357 |  |  | 0.640 |
-| ns | 6488 |  | 110 | `MatcherType` — the complete closed set of matcher kinds | 4.1 |  | 0.633 |
-| walker |  | 6546 | 94 | export at src/patterns.ts:437 |  |  | 0.633 |
-| walker |  | 6641 | 95 | export at src/patterns.ts:362 |  |  | 0.633 |
-| ns | 6718 |  | 230 | `MatcherProtocol` and `MatchResult` — the contract a custom pattern implements | 4.2 |  | 0.620 |
-| walker |  | 6738 | 97 | export at src/patterns.ts:686 |  |  | 0.620 |
-| ns | 6875 |  | 157 | The `Matcher` interface and its `[symbols.isVariadic]` flag | 4.3 |  | 0.612 |
-| walker |  | 6888 | 150 | export at src/patterns.ts:48 |  |  | 0.619 |
-| walker |  | 7038 | 150 | export at src/patterns.ts:673 |  |  | 0.619 |
-| walker |  | 7159 | 121 | export doc at src/patterns.ts:116 |  |  | 0.619 |
-| ns | 7271 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.603 |
-| walker |  | 7276 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.603 |
-| walker |  | 7408 | 132 | export doc at src/patterns.ts:100 |  |  | 0.603 |
-| walker |  | 7515 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.603 |
-| ns | 7640 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.587 |
-| walker |  | 7646 | 131 | export doc at src/patterns.ts:294 |  |  | 0.587 |
-| walker |  | 7755 | 109 | export doc at src/patterns.ts:782 |  |  | 0.587 |
-| walker |  | 7864 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.587 |
-| walker |  | 7974 | 110 | export doc at src/patterns.ts:793 |  |  | 0.587 |
-| ns | 8012 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.577 |
-| walker |  | 8085 | 111 | export doc at src/patterns.ts:928 |  |  | 0.577 |
-| walker |  | 8199 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.577 |
-| ns | 8285 |  | 273 | package.json scripts — the complete command set for this repo | 5.1 |  | 0.585 |
-| walker |  | 8352 | 153 | export doc at src/patterns.ts:81 |  |  | 0.585 |
-| ns | 8461 |  | 176 | jest.config.cjs and tests/tsconfig.json in full — the test harness | 5.2 |  | 0.577 |
-| walker |  | 8470 | 118 | export doc at src/patterns.ts:1231 |  |  | 0.577 |
-| walker |  | 8612 | 142 | export doc at src/patterns.ts:241 |  |  | 0.577 |
-| ns | 8615 |  | 154 | tsconfig.json in full — the library's compiler settings | 5.3 |  | 0.584 |
-| walker |  | 8755 | 143 | export doc at src/patterns.ts:672 |  |  | 0.584 |
-| ns | 8861 |  | 246 | package.json `exports` map — the dual ESM/CJS and `./types` subpaths | 5.4 |  | 0.596 |
-| walker |  | 8899 | 144 | export doc at src/patterns.ts:611 |  |  | 0.596 |
-| walker |  | 9019 | 120 | export doc at src/patterns.ts:805 |  |  | 0.596 |
-| ns | 9036 |  | 175 | docs/roadmap.md — the unimplemented items | 5.5 |  | 0.591 |
-| walker |  | 9139 | 120 | export doc at src/patterns.ts:1075 |  |  | 0.591 |
-| ns | 9186 |  | 150 | Heading locations in the v4-to-v5 migration guide | 5.6 |  | 0.586 |
-| walker |  | 9259 | 120 | export doc at src/patterns.ts:1241 |  |  | 0.586 |
-| ns | 9315 |  | 129 | The internal type-guard predicates behind every wildcard in src/patterns.ts | 5.7 |  | 0.579 |
-| walker |  | 9405 | 146 | export doc at src/patterns.ts:187 |  |  | 0.579 |
-| ns | 9471 |  | 156 | tests/types-catalog/utils.ts — the shared fixture types used across the suite | 5.8 |  | 0.573 |
-| walker |  | 9559 | 154 | export doc at src/patterns.ts:637 |  |  | 0.573 |
-| ns | 9630 |  | 159 | examples/one-file-demo — the demo's table of contents | 5.9 |  | 0.570 |
-| walker |  | 9730 | 171 | export doc at src/patterns.ts:433 |  |  | 0.570 |
-| ns | 9851 |  | 221 | jsr.json in full, and package.json's devDependencies | 5.10 |  | 0.566 |
-| walker |  | 9904 | 174 | export doc at src/patterns.ts:356 |  |  | 0.566 |
-| ns | 9972 |  | 121 | `.prettierrc` in full, and the benchmark runner scripts | 5.11 |  | 0.563 |
+| walker |  | 5673 | 36 | export at src/patterns.ts:445 |  |  | 0.669 |
+| walker |  | 5716 | 43 | export at src/patterns.ts:81 |  |  | 0.669 |
+| walker |  | 5758 | 42 | export at src/patterns.ts:611 |  |  | 0.669 |
+| walker |  | 5801 | 43 | export at src/patterns.ts:242 |  |  | 0.669 |
+| walker |  | 5844 | 43 | export at src/patterns.ts:295 |  |  | 0.669 |
+| walker |  | 5893 | 49 | export at src/patterns.ts:100 |  |  | 0.669 |
+| walker |  | 5937 | 44 | export at src/patterns.ts:696 |  |  | 0.669 |
+| walker |  | 5982 | 45 | export at src/patterns.ts:433 |  |  | 0.669 |
+| walker |  | 6027 | 45 | export at src/patterns.ts:536 |  |  | 0.669 |
+| ns | 6038 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.648 |
+| walker |  | 6072 | 45 | export at src/patterns.ts:572 |  |  | 0.648 |
+| walker |  | 6121 | 49 | export at src/patterns.ts:637 |  |  | 0.648 |
+| walker |  | 6171 | 50 | export at src/patterns.ts:299 |  |  | 0.648 |
+| ns | 6209 |  | 171 | `otherwise`, `exhaustive`, `run`, `returnType` and `narrow` bodies, and `defaultCatcher` | 3.9 | 3.6 | 0.642 |
+| walker |  | 6223 | 52 | export at src/patterns.ts:646 |  |  | 0.642 |
+| walker |  | 6283 | 60 | export at src/patterns.ts:187 |  |  | 0.642 |
+| walker |  | 6361 | 78 | export at src/patterns.ts:357 |  |  | 0.642 |
+| ns | 6378 |  | 169 | The observable rules of `matchPattern`'s tuple/variadic branch | 3.10 | 3.3 | 0.632 |
+| walker |  | 6455 | 94 | export at src/patterns.ts:437 |  |  | 0.632 |
+| ns | 6488 |  | 110 | `MatcherType` — the complete closed set of matcher kinds | 4.1 |  | 0.625 |
+| walker |  | 6550 | 95 | export at src/patterns.ts:362 |  |  | 0.625 |
+| walker |  | 6647 | 97 | export at src/patterns.ts:686 |  |  | 0.625 |
+| ns | 6718 |  | 230 | `MatcherProtocol` and `MatchResult` — the contract a custom pattern implements | 4.2 |  | 0.613 |
+| walker |  | 6797 | 150 | export at src/patterns.ts:48 |  |  | 0.620 |
+| ns | 6875 |  | 157 | The `Matcher` interface and its `[symbols.isVariadic]` flag | 4.3 |  | 0.611 |
+| walker |  | 6947 | 150 | export at src/patterns.ts:673 |  |  | 0.611 |
+| walker |  | 7068 | 121 | export doc at src/patterns.ts:116 |  |  | 0.611 |
+| walker |  | 7185 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.611 |
+| ns | 7271 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.596 |
+| walker |  | 7317 | 132 | export doc at src/patterns.ts:100 |  |  | 0.596 |
+| walker |  | 7424 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.596 |
+| walker |  | 7555 | 131 | export doc at src/patterns.ts:294 |  |  | 0.596 |
+| ns | 7640 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.580 |
+| walker |  | 7664 | 109 | export doc at src/patterns.ts:782 |  |  | 0.580 |
+| walker |  | 7773 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.580 |
+| walker |  | 7883 | 110 | export doc at src/patterns.ts:793 |  |  | 0.580 |
+| walker |  | 7994 | 111 | export doc at src/patterns.ts:928 |  |  | 0.580 |
+| ns | 8012 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.570 |
+| walker |  | 8108 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.570 |
+| walker |  | 8261 | 153 | export doc at src/patterns.ts:81 |  |  | 0.570 |
+| ns | 8285 |  | 273 | package.json scripts — the complete command set for this repo | 5.1 |  | 0.578 |
+| walker |  | 8379 | 118 | export doc at src/patterns.ts:1231 |  |  | 0.578 |
+| ns | 8461 |  | 176 | jest.config.cjs and tests/tsconfig.json in full — the test harness | 5.2 |  | 0.570 |
+| walker |  | 8521 | 142 | export doc at src/patterns.ts:241 |  |  | 0.570 |
+| ns | 8615 |  | 154 | tsconfig.json in full — the library's compiler settings | 5.3 |  | 0.578 |
+| walker |  | 8664 | 143 | export doc at src/patterns.ts:672 |  |  | 0.578 |
+| walker |  | 8808 | 144 | export doc at src/patterns.ts:611 |  |  | 0.578 |
+| ns | 8861 |  | 246 | package.json `exports` map — the dual ESM/CJS and `./types` subpaths | 5.4 |  | 0.590 |
+| walker |  | 8928 | 120 | export doc at src/patterns.ts:805 |  |  | 0.590 |
+| ns | 9036 |  | 175 | docs/roadmap.md — the unimplemented items | 5.5 |  | 0.585 |
+| walker |  | 9048 | 120 | export doc at src/patterns.ts:1075 |  |  | 0.585 |
+| walker |  | 9168 | 120 | export doc at src/patterns.ts:1241 |  |  | 0.585 |
+| ns | 9186 |  | 150 | Heading locations in the v4-to-v5 migration guide | 5.6 |  | 0.580 |
+| walker |  | 9314 | 146 | export doc at src/patterns.ts:187 |  |  | 0.580 |
+| ns | 9315 |  | 129 | The internal type-guard predicates behind every wildcard in src/patterns.ts | 5.7 |  | 0.573 |
+| walker |  | 9468 | 154 | export doc at src/patterns.ts:637 |  |  | 0.573 |
+| ns | 9471 |  | 156 | tests/types-catalog/utils.ts — the shared fixture types used across the suite | 5.8 |  | 0.568 |
+| ns | 9630 |  | 159 | examples/one-file-demo — the demo's table of contents | 5.9 |  | 0.564 |
+| walker |  | 9639 | 171 | export doc at src/patterns.ts:433 |  |  | 0.564 |
+| walker |  | 9813 | 174 | export doc at src/patterns.ts:356 |  |  | 0.564 |
+| ns | 9851 |  | 221 | jsr.json in full, and package.json's devDependencies | 5.10 |  | 0.560 |
+| ns | 9972 |  | 121 | `.prettierrc` in full, and the benchmark runner scripts | 5.11 |  | 0.557 |
+| walker |  | 9988 | 175 | export doc at src/patterns.ts:572 |  |  | 0.557 |

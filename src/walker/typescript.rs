@@ -262,7 +262,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
         // File-surface batches this file actually emits, in the order a
         // reader meets them. Script statements gate on the first of them
-        // — see `script_flow_gate`.
+        // — see `first_surface_gate`.
         let mut doc_lede_gate: Option<BatchKey> = None;
         let mut imports_gate: Option<BatchKey> = None;
         if ep
@@ -433,7 +433,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // in a compiled component module, module scope carries
         // registration trivia rather than the program's flow. Admission
         // is decided at emission time, where the file's first surface
-        // batch is known; see `script_flow_gate`.
+        // batch is known; see `first_surface_gate`.
         let script_statements = if emit_private_nonclass && is_js_file(file) {
             let declaration_owned = declaration_owned_rows(&tree, &source);
             script_flow_statement_lines(&tree, &source)
@@ -877,6 +877,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 module_items_gate = Some(key);
             }
         }
+        // Below the catalog minimum there is no catalog to ride, so each
+        // item pays the same admission price a statement does: the file's
+        // first admitted surface. Without it a 4–5-declaration file in a
+        // directory with no entrypoint puts its declarations at the root
+        // of the schedule, ahead of every gated orientation batch. Every
+        // rung already chains to `module_predecessor`, so this only ever
+        // tightens the ordering; the fallback covers a file whose
+        // declarations *are* its first surface.
         for item in module_items.iter() {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
@@ -888,9 +896,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if let Some(content) = single_file_lines_content(file, &source, item.lines.clone()) {
                 out.push(Batch {
                     key: item_key.clone().into(),
-                    predecessor: module_items_gate
-                        .clone()
-                        .or_else(|| module_predecessor.clone()),
+                    predecessor: first_surface_gate(
+                        module_items_gate.as_ref(),
+                        doc_lede_gate.as_ref(),
+                        names_gate.as_ref(),
+                        imports_gate.as_ref(),
+                    )
+                    .or_else(|| module_predecessor.clone()),
                     content,
                     value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
                 });
@@ -971,7 +983,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let Some(gate) = (if overlaps_names_surface {
                     names_gate.clone()
                 } else {
-                    script_flow_gate(
+                    first_surface_gate(
                         module_items_gate
                             .as_ref()
                             .or(first_module_item_gate.as_ref()),
@@ -1004,10 +1016,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 }
 
 /// The file's first admitted surface — the batch a reader necessarily
-/// meets before any of its statements, and therefore the price of
-/// admission for them. A file that publishes no surface at all emits no
+/// meets before its module-scope content, and therefore the price of
+/// admission for it. A file that publishes no surface at all emits no
 /// statement batches rather than root-level crumbs that jump the queue.
-fn script_flow_gate(
+fn first_surface_gate(
     declaration_gate: Option<&BatchKey>,
     doc_lede_gate: Option<&BatchKey>,
     names_gate: Option<&BatchKey>,

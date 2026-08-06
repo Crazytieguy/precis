@@ -788,7 +788,7 @@ Measured-dead this cycle (specifics block retries):
   emitted beside it. Both shapes panicked the scheduler in debug and
   silently dropped the statement in release; `tests/
   js_statement_ownership.rs` pins them.
-  **Gating (`script_flow_gate`)**: a statement batch chains to the
+  **Gating (`first_surface_gate`)**: a statement batch chains to the
   file's *first admitted surface*, following the same law as Go's
   imports gating — the file's surface is the price of admission for its
   cheap content. The ladder is the file's surface batches in reader
@@ -3156,12 +3156,30 @@ generalized, and it resolved the review's ungated-crumbs finding at
 zero corpus cost where the literal "requires declarations" rule cost
 debug's entire +0.042.
 
-**Open item from the same review (pre-existing, untouched):**
-`MODULE_ITEM_CATALOG_MIN = 6` leaves a 4–5-declaration file emitting
-per-item `ModuleItem` batches gated only on `module_predecessor`,
-which is `None` for a repo-root entry file — dockly's four are
-root-level ungated today. Same queue-jumping class; wants a measured
-lane, not a drive-by fix.
+**Open item from the same review — closed 2026-08-06 (W5-MI).** The
+`MODULE_ITEM_CATALOG_MIN = 6` fall-through left sub-catalog files
+emitting per-item `ModuleItem` batches gated only on
+`module_predecessor`, `None` for a repo-root entry file. Fixed by
+running `ModuleItem` through the same ladder as the statements
+(`script_flow_gate` renamed `first_surface_gate`): module-item catalog
+→ doc lede → export surface → imports, with `module_predecessor` as
+the last rung. Every rung already chains to `module_predecessor`, so
+this is a strict tightening, never a loosening — which is why the
+uniform ladder and a narrow "only when otherwise ungated" fallback
+measure byte-identically on the corpus. The fallback stays rather than
+dropping the batch outright: a declaration in a file that publishes no
+other surface *is* that file's first surface, unlike a statement,
+which presumes one. Grid is flat at 3000 (0.6353 → 0.6353), ±0.0007
+everywhere else. **Population**: 199 files across the corpus (163 of
+them in training fixtures) emit
+ungated sub-catalog `ModuleItem` batches today (audiobookshelf 52,
+monaco-editor 34, commander 30, axios 13, linkding 10, superstruct 9,
+…) — almost all with only an import prologue to gate on, and almost
+all far out of budget, which is why the corpus barely moves. The one
+real mover is dockly −0.051 @2080: its root `index.js` has four
+declarations and no exports and no doc lede, so it now pays its
+105-token import block first — the same mechanism the W3-JS notes
+above record for the statement ladder.
 
 ## Flat-layout JS packages get their own value tier (2026-08-06, W5-FL): 0.6353 → 0.6355
 

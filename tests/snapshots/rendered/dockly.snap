@@ -5,7 +5,8 @@ expression: rendered
 .devcontainer/
     devcontainer.json …
 .github/
-    ISSUE_TEMPLATE/ …
+    ISSUE_TEMPLATE/
+        bug_report.yaml …
     PULL_REQUEST_TEMPLATE.md …
     mergify.yml …
     workflows/
@@ -152,56 +153,10 @@ index.js
       44→    return exitError(err)
       45→  })
       47→function initDockerConnection () {
-      48→  return new Promise((resolve, reject) => {
-      49→    let utils
-      50→    let docker
-      51→
-      52→    try {
-      53→      docker = new DockerUtil(cli.cliParse())
-      54→    } catch (err) {
-      55→      return exitError(err)
-      56→    }
-      57→
-      58→    docker.ping((err) => {
-      59→      if (err) {
-      60→        return reject(err)
-      61→      }
-      62→
-      63→      utils = new Map([
-      64→        ['docker', docker]
-      65→      ])
-      66→
-      67→      return resolve(utils)
-      68→    })
-      69→  })
     …
       72→function initScreens (utils) {
-      73→  return new Promise((resolve, reject) => {
-      74→    let screen
-      75→    try {
-      76→      screen = new Screen(utils)
-      77→      screen.init()
-      78→    } catch (err) {
-      79→      return reject(err)
-      80→    }
-      81→
-      82→    return resolve(screen)
-      83→  })
     …
       86→function exitError (err) {
-      87→  cli.showUsage()
-      88→
-      89→  if (err && err.message) {
-      90→    console.log('\x1b[31m')
-      91→    console.trace(err)
-      92→
-      93→    if (err.message === 'Unable to determine the domain name') {
-      94→      console.log('-> check your connection options to the docker daemon and confirm containers exist')
-      95→    }
-      96→    console.log('\x1b[0m')
-      97→  }
-      98→
-      99→  process.exit(-1)
     …
 lib/
     modes.js
@@ -264,6 +219,11 @@ src/
     assetsLoader.js
         …
           10→class assetsLoader {
+          11→  static load () {
+        …
+          16→  static resolveAssetFiles () {
+        …
+          39→  static formatAsset (assetPath) {
         …
           44→module.exports = assetsLoader
     baseWidget.js
@@ -279,7 +239,31 @@ src/
           63→  console.log()
         …
           66→Cli.prototype.showUsage = function () {
+          67→  console.log()
+          68→
+          69→  console.log(pkg.name + ' ' + pkg.version)
+          70→  console.log('Usage: dockly [OPTIONS]')
+          71→
+          72→  const usage = commandLineUsage([
+          73→    {
+          74→      header: pkg.name,
+          75→      content: pkg.description
+          76→    },
+          77→    {
+          78→      header: 'Options',
+          79→      optionList: this.cliOpts
+          80→    },
+          81→    {
+          82→      content: 'Project home: {underline https://github.com/lirantal/dockly}'
+          83→    }
+          84→  ])
+          85→
+          86→  console.log(usage)
         …
+          89→/**
+          90→ * @method cliParse
+          91→ * @return {object} [description]
+          92→ */
           93→Cli.prototype.cliParse = function () {
           94→  return commandLineArgs(this.cliOpts)
         …
@@ -309,6 +293,10 @@ src/
         …
          124→  getInfo (cb) {
         …
+         155→  getContainer (containerId, cb) {
+        …
+         160→  getService (serviceId, cb) {
+        …
          233→module.exports = Util
     enum.js
            1→module.exports = {
@@ -330,9 +318,15 @@ src/
         …
          107→  clearWidgets () {
         …
+         114→  setWidgetsRepo () {
+        …
+         120→  setWidgetsUtils () {
+        …
          132→  renderWidgets () {
         …
          138→  toggleMode () {
+        …
+         152→  registerEvents () {
         …
          180→  render () {
         …
@@ -344,13 +338,30 @@ src/
         styles.js
             …
               55→module.exports = {
+              56→  darkStyle,
+              57→  lightStyle
+              58→}
+        theme.selector.js
             …
-        theme.selector.js …
+              13→module.exports = () => {
+            …
     widgetsTemplates/
         base.hook.template.js …
         help.widget.template.js …
         info.widget.template.js …
-        list.widget.template.js …
+        list.widget.template.js
+            …
+               8→class myWidget extends baseWidget(EventEmitter) {
+            …
+              21→  init () {
+            …
+              88→  getWidget () {
+            …
+             107→  refreshList () {
+            …
+             127→  getLabel () {
+            …
+             161→module.exports = myWidget
         logs.widget.template.js …
 widgets/
     actionStatus.widget.js …
