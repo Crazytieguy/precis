@@ -1901,10 +1901,8 @@ fn crate_doc_chunks(lines: Vec<usize>, source: &str) -> Vec<Vec<usize>> {
         // Marker-matched fence state, same as the markdown splitter:
         // only a delimiter of the same char with at least the opening
         // run length closes the fence.
-        if let Some((open_char, open_run)) = open_fence {
-            if super::markdown::fence_marker(t)
-                .is_some_and(|(c, run)| c == open_char && run >= open_run)
-            {
+        if let Some(open) = open_fence {
+            if super::markdown::fence_closes(t, open) {
                 open_fence = None;
             }
             continue;

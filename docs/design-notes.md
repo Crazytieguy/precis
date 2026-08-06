@@ -3530,3 +3530,31 @@ for the decorator-JSDoc discovery gap (W5-TS feature invisible on
 decorator-heavy repos) and the requirements byte-gate/specifier
 findings; the GPT review of the DF+ML diff; the W5-CS re-measure;
 the knob re-sweep.
+
+### Block-boundary correctness behind the lede carve (W5-ML fix pass, 2026-08-06)
+
+Adversarial review found the lede cut trusting `legal_split`, which
+meant "blank line not currently believed to be inside a fence" rather
+than "Markdown block boundary". Two holes, both amplified by the
+140-token lede target (the 300-token chunker usually skated past an
+internal boundary to a genuinely external one):
+
+- **Raw HTML blocks.** CommonMark block types 1–5 (`<script>`, `<pre>`,
+  `<style>`, `<textarea>`, `<!--`, `<?`, `<!DECL`, `<![CDATA[`) end at a
+  closing token, *not* at a blank line. Blank rows inside them were
+  legal cuts, so a budget buying only the lede rendered a severed
+  construct — silent in release. `RawHtmlBlock` now tracks them exactly
+  like fence state, suppressing both `legal_split` and `safe_split`
+  (so the emergency character cap cannot cut inside one either).
+- **Fence closers.** The closer predicate accepted any same-char run of
+  sufficient length; CommonMark also requires a whitespace-only
+  remainder, so ```` ``` still-in-fence ```` desynchronized the state
+  and exposed every later in-fence blank. Now `fence_closes`, shared by
+  all four fence scanners (three in markdown, one in the Rust
+  crate-doc chunker, which had the identical bug).
+
+Grid before and after are **identical at all seven budgets and every
+fixture**, with zero baseline churn: no training fixture has either
+construct inside a head-split section's chunk-0 window today. It is a
+latent-hazard fix, and the hazard is the kind that only shows up as
+corrupt rendered output, never as a score.

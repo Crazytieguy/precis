@@ -2010,17 +2010,15 @@ fn range_has_flag_option_table(src_lines: &[&str], start: usize, end: usize) -> 
     let mut content_rows = 0usize;
     let mut table_rows = 0usize;
     let mut flag_rows = 0usize;
-    // Marker-matched fence state (see `oversize_chunk_bounds`): only a
-    // delimiter of the same char with at least the opening run length
-    // closes the fence, so inner ``` lines can't desync the state.
+    // Marker-matched fence state — see `fence_closes`.
     let mut open_fence: Option<(char, usize)> = None;
     for line in &src_lines[start - 1..last] {
         let t = line.trim();
         if t.is_empty() || t.starts_with('#') {
             continue;
         }
-        if let Some((open_char, open_run)) = open_fence {
-            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+        if let Some(open) = open_fence {
+            if fence_closes(t, open) {
                 open_fence = None;
             }
             continue;
@@ -2075,15 +2073,13 @@ fn range_has_cli_synopsis(src_lines: &[&str], start: usize, end: usize) -> bool 
     if start > last {
         return false;
     }
-    // Marker-matched fence state (see `oversize_chunk_bounds`): only a
-    // delimiter of the same char with at least the opening run length
-    // closes the fence, so inner ``` lines can't desync the state.
+    // Marker-matched fence state — see `fence_closes`.
     let mut open_fence: Option<(char, usize)> = None;
     let mut awaiting_first_line = false;
     for line in &src_lines[start - 1..last] {
         let t = line.trim();
-        if let Some((open_char, open_run)) = open_fence {
-            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+        if let Some(open) = open_fence {
+            if fence_closes(t, open) {
                 open_fence = None;
             } else if awaiting_first_line && !t.is_empty() {
                 if looks_like_cli_synopsis_line(t) {
@@ -2788,17 +2784,18 @@ fn oversize_chunk_bounds(
     let mut legal_split = vec![false; item_count];
     let mut safe_split = vec![false; item_count];
     let mut open_fence: Option<(char, usize)> = None;
+    let mut open_html: Option<RawHtmlBlock> = None;
     for (index, row) in (start..=end).enumerate() {
         token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
         let raw = src_lines.get(row - 1).copied().unwrap_or("");
         let t = raw.trim_start();
         char_prefix.push(char_prefix[index] + raw.chars().count() + 1);
-        // Marker-matched fence state: only a delimiter of the same
-        // char with at least the opening run length closes the fence,
-        // so a ``` line inside a ~~~ fence or a ````-fenced markdown
-        // example can't desync the state and permit a cut mid-fence.
-        if let Some((open_char, open_run)) = open_fence {
-            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+        // Marker-matched fence state (see `fence_closes`) and raw-HTML
+        // block state (see `RawHtmlBlock`): a blank row is only a block
+        // boundary outside both, so neither a fenced example nor a
+        // `<script>` body can be cut through the middle.
+        if let Some(open) = open_fence {
+            if fence_closes(t, open) {
                 open_fence = None;
             }
             if index + 1 < item_count {
@@ -2806,8 +2803,23 @@ fn oversize_chunk_bounds(
             }
             continue;
         }
+        if let Some(block) = open_html {
+            if block.closed_by(t) {
+                open_html = None;
+            }
+            if index + 1 < item_count {
+                safe_split[index + 1] = open_html.is_none();
+            }
+            continue;
+        }
         if let Some(marker) = fence_marker(t) {
             open_fence = Some(marker);
+            continue;
+        }
+        if let Some(block) = RawHtmlBlock::opened_by(t)
+            && !block.closed_by(t)
+        {
+            open_html = Some(block);
             continue;
         }
         if index + 1 < item_count {
@@ -2881,6 +2893,82 @@ pub(in crate::walker) fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
     }
     let run = trimmed.chars().take_while(|&x| x == c).count();
     (run >= 3).then_some((c, run))
+}
+
+/// Whether an already-trimmed line closes the fence opened by `open`.
+/// CommonMark requires a closing fence to be a run of the *same*
+/// character, at least as long as the opener, with nothing but
+/// whitespace after it — so neither a ``` line inside a ~~~ fence nor
+/// a ``` line carrying a trailing word leaves the fence. Getting the
+/// second half wrong desynchronizes the fence state and exposes the
+/// blank rows behind it as cut points.
+pub(in crate::walker) fn fence_closes(trimmed: &str, open: (char, usize)) -> bool {
+    let (open_char, open_run) = open;
+    fence_marker(trimmed).is_some_and(|(c, run)| {
+        c == open_char && run >= open_run && trimmed[run..].trim().is_empty()
+    })
+}
+
+/// Tags whose raw-HTML block (CommonMark type 1) runs verbatim to its
+/// closing tag.
+const RAW_HTML_VERBATIM_TAGS: [&str; 4] = ["script", "pre", "style", "textarea"];
+const RAW_HTML_VERBATIM_CLOSERS: [&str; 4] = ["</script>", "</pre>", "</style>", "</textarea>"];
+
+/// A raw-HTML block whose end condition is a closing token rather than
+/// a blank line — CommonMark block types 1–5. Types 6 and 7 do end at
+/// a blank line and need no tracking. Inside one of these a blank row
+/// is *not* a block boundary, so cutting a chunk there severs the
+/// construct, silently, at render time.
+#[derive(Clone, Copy)]
+enum RawHtmlBlock {
+    /// `<script` / `<pre` / `<style` / `<textarea` (type 1).
+    Verbatim,
+    /// `<!--` (2), `<?` (3), `<!DECL` (4), `<![CDATA[` (5).
+    Token(&'static str),
+}
+
+impl RawHtmlBlock {
+    /// The block an already-trimmed line opens, if any.
+    fn opened_by(trimmed: &str) -> Option<Self> {
+        if trimmed.starts_with("<!--") {
+            return Some(Self::Token("-->"));
+        }
+        if trimmed.starts_with("<?") {
+            return Some(Self::Token("?>"));
+        }
+        if trimmed.starts_with("<![CDATA[") {
+            return Some(Self::Token("]]>"));
+        }
+        if let Some(rest) = trimmed.strip_prefix("<!")
+            && rest.starts_with(|c: char| c.is_ascii_alphabetic())
+        {
+            return Some(Self::Token(">"));
+        }
+        let rest = trimmed.strip_prefix('<')?.as_bytes();
+        RAW_HTML_VERBATIM_TAGS
+            .iter()
+            .any(|tag| {
+                let tag = tag.as_bytes();
+                rest.len() >= tag.len()
+                    && rest[..tag.len()].eq_ignore_ascii_case(tag)
+                    && rest
+                        .get(tag.len())
+                        .is_none_or(|b| b.is_ascii_whitespace() || *b == b'>')
+            })
+            .then_some(Self::Verbatim)
+    }
+
+    /// Whether an already-trimmed line meets the block's end condition.
+    /// The opening line can meet it itself.
+    fn closed_by(self, trimmed: &str) -> bool {
+        let lowered = trimmed.to_ascii_lowercase();
+        match self {
+            Self::Verbatim => RAW_HTML_VERBATIM_CLOSERS
+                .iter()
+                .any(|closer| lowered.contains(closer)),
+            Self::Token(end) => lowered.contains(end),
+        }
+    }
 }
 
 fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> bool {
@@ -3920,6 +4008,88 @@ mod tests {
             .join("\n");
         let bounds = chunk_bounds_of(&source);
         assert!(bounds.len() > 1, "expected hard splits, got {bounds:?}");
+        let end = source.lines().count();
+        assert_eq!(bounds.first().unwrap().0, 1);
+        assert_eq!(bounds.last().unwrap().1, end);
+        for pair in bounds.windows(2) {
+            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
+        }
+    }
+
+    /// A raw HTML block of CommonMark type 1 (`<script>` / `<pre>` /
+    /// `<style>` / `<textarea>`) ends at its closing tag, not at the
+    /// first blank line inside it. No chunk boundary may land in its
+    /// interior, or a budget that buys only the lede renders a severed
+    /// construct.
+    #[test]
+    fn markdown_oversize_chunks_never_cut_inside_a_raw_html_block() {
+        for (open, close) in [("<script>", "</script>"), ("<pre>", "</pre>")] {
+            let source = format!(
+                "## Big\n\n{}{open}\n{}\n{}\n{close}\n\n{}",
+                prose_block(150),
+                prose_block(60),
+                prose_block(60),
+                prose_block(300),
+            );
+            let open_row = source
+                .lines()
+                .position(|l| l.trim() == open)
+                .expect("open row")
+                + 1;
+            let close_row = source
+                .lines()
+                .position(|l| l.trim() == close)
+                .expect("close row")
+                + 1;
+            for (chunk_start, _) in chunk_bounds_of(&source) {
+                assert!(
+                    !(open_row < chunk_start && chunk_start <= close_row),
+                    "{open} block rows {open_row}..={close_row} cut at {chunk_start}",
+                );
+            }
+        }
+    }
+
+    /// A line whose backtick run is followed by non-whitespace is not a
+    /// closing fence — treating it as one desynchronizes the fence
+    /// state and exposes the blank lines after it as cut points.
+    #[test]
+    fn markdown_oversize_chunks_reject_fence_closers_with_a_trailing_word() {
+        let source = format!(
+            "## Big\n\n{}```text\nin fence\n``` still-in-fence\n\n{}\n```\n\n{}",
+            prose_block(150),
+            prose_block(60),
+            prose_block(300),
+        );
+        let open_row = source
+            .lines()
+            .position(|l| l.trim() == "```text")
+            .expect("open row")
+            + 1;
+        let close_row = source
+            .lines()
+            .collect::<Vec<_>>()
+            .iter()
+            .rposition(|l| l.trim() == "```")
+            .expect("close row")
+            + 1;
+        for (chunk_start, _) in chunk_bounds_of(&source) {
+            assert!(
+                !(open_row < chunk_start && chunk_start <= close_row),
+                "fence rows {open_row}..={close_row} cut at {chunk_start}",
+            );
+        }
+    }
+
+    /// A long blank-line-free table has no legal boundary at all, so
+    /// only the emergency character cap may split it — the raw-HTML and
+    /// fence tracking must not strand it as one unpurchasable lump.
+    #[test]
+    fn markdown_oversize_chunks_split_a_long_table_only_at_the_hard_cap() {
+        let row = format!("| {} | {} |\n", "cell ".repeat(40), "cell ".repeat(40));
+        let source = format!("## Big\n\n| a | b |\n| - | - |\n{}", row.repeat(24));
+        let bounds = chunk_bounds_of(&source);
+        assert!(bounds.len() > 1, "expected hard-cap splits, got {bounds:?}");
         let end = source.lines().count();
         assert_eq!(bounds.first().unwrap().0, 1);
         assert_eq!(bounds.last().unwrap().1, end);
