@@ -421,6 +421,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // NS-credited orientation without earning catalog credit.
         let is_api_contract = is_declared_api_contract(file, ctx);
         let per_export_factor = type_machinery_factor(file, &exports);
+        // Member docs ship only from runtime modules: on a type-only
+        // module the surface a doc would hang off is itself damped and
+        // enters late or not at all, and a doc slice below an
+        // unadmitted surface collects nothing.
+        let runtime_module = is_runtime_module(file, &exports);
         let contract_roster_factor = |has_member_chunks: bool| {
             if is_api_contract && has_member_chunks {
                 1.0
@@ -640,6 +645,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     || oversized_export_chunks.is_some()
                     || (!split_js_class && !item.body_parts.is_empty())
                     || dependent_export_start_lines.contains(&item.start_line);
+                let export_surface_lines = export_lines.clone();
                 if (!file_lines_covered_by(&export_lines, &names_lines) || export_has_descendants)
                     && let Some(content) = single_file_lines_content(file, &source, export_lines)
                 {
@@ -683,7 +689,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // the catalog's ellipsis markers (non-ancestor overlap).
                 let mut body_parts_predecessor = oversized_tail_predecessor;
                 if let (Some(member_catalog), Some(member_catalog_chunks)) =
-                    (member_names_catalog, member_catalog_chunks)
+                    (&member_names_catalog, &member_catalog_chunks)
                 {
                     let member_count = member_catalog.lines.full.len();
                     if member_catalog_chunks.len() == 1 {
@@ -796,6 +802,125 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             member.body_parts.clone(),
                             &member_predecessor,
                         );
+                    }
+                }
+                if runtime_module {
+                    // Each documented member's doc rides the batch that
+                    // renders that member's signature row — the same law
+                    // as a module statement riding the file's first
+                    // admitted surface, one level down: a member's doc is
+                    // the cheap content of the member's surface. A member
+                    // whose signature no batch renders gets no doc batch;
+                    // a root-level crumb below an unadmitted surface is
+                    // credit the reader can never collect.
+                    let member_doc_owner = |sig_line: usize| -> Option<BatchKey> {
+                        // A chunked surface is one reading of the
+                        // declaration, split only for affordability, so
+                        // its docs ride the *last* chunk. Riding the
+                        // member's own chunk instead lets an early
+                        // chunk's cheap docs outrank the later chunk
+                        // carrying the other members' signatures —
+                        // measured: that inversion strands six of one
+                        // fixture's eight member-doc rows.
+                        if let Some(chunks) = &oversized_export_chunks {
+                            if !chunks.iter().any(|chunk| chunk.full.contains(&sig_line)) {
+                                return None;
+                            }
+                            return Some(BatchKey::Typescript(match chunks.len().checked_sub(2) {
+                                Some(chunk_index) => TsKey::ExportTail {
+                                    file: file.clone(),
+                                    start_line: item.start_line,
+                                    chunk_index,
+                                },
+                                // The head chunk is the `Export` batch.
+                                None => TsKey::Export {
+                                    file: file.clone(),
+                                    start_line: item.start_line,
+                                },
+                            }));
+                        }
+                        if split_js_class {
+                            return item
+                                .class_members
+                                .iter()
+                                .any(|member| member.start_line == sig_line)
+                                .then(|| {
+                                    BatchKey::Typescript(TsKey::ExportMember {
+                                        file: file.clone(),
+                                        start_line: item.start_line,
+                                        member_start_line: sig_line,
+                                    })
+                                });
+                        }
+                        // A name-only catalog does not deliver the
+                        // member's signature, only that the member
+                        // exists — so a doc block under it is not the
+                        // cheap completion of a surface already paid
+                        // for, it is the whole member arriving as
+                        // prose, against a declaration whose own
+                        // catalog chose to spend nothing on detail.
+                        if member_names_catalog
+                            .as_ref()
+                            .is_some_and(|catalog| catalog.truncate_to_name)
+                        {
+                            return None;
+                        }
+                        if let Some(chunks) = &member_catalog_chunks
+                            && chunks.len() > 1
+                        {
+                            // Catalog chunks are siblings, all gated on
+                            // the file's names surface — unlike the
+                            // chained tails above, a later chunk being
+                            // in says nothing about an earlier one. So
+                            // the doc rides the chunk that actually
+                            // holds its member's row.
+                            let chunk_index = chunks
+                                .iter()
+                                .position(|chunk| chunk.full.contains(&sig_line))?;
+                            return Some(BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            }));
+                        }
+                        if member_names_catalog.is_some() {
+                            return Some(BatchKey::Typescript(TsKey::ExportMemberNames {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            }));
+                        }
+                        // The undivided export surface renders every
+                        // member header itself.
+                        Some(export_predecessor.clone())
+                    };
+                    for member in documented_member_nodes(item, &source) {
+                        let sig_line = member.start_position().row + 1;
+                        let Some(lines) = member_doc_lines(member, &source, &src_lines) else {
+                            continue;
+                        };
+                        // A declaration whose surface spans its whole
+                        // body already delivers its members' docs; a
+                        // second batch over the same rows adds nothing.
+                        if file_lines_covered_by(&lines, &export_surface_lines) {
+                            continue;
+                        }
+                        let Some(predecessor) = member_doc_owner(sig_line) else {
+                            continue;
+                        };
+                        let Some(content) = single_file_lines_content(file, &source, lines) else {
+                            continue;
+                        };
+                        out.push(Batch {
+                            key: TsKey::ExportMemberDoc {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                member_start_line: sig_line,
+                            }
+                            .into(),
+                            predecessor: Some(predecessor),
+                            content,
+                            value: export_doc_value(file, item.kind, ctx, js_factor),
+                        });
                     }
                 }
                 if let Some(content) = single_file_lines_content(
@@ -1847,12 +1972,17 @@ pub(crate) fn is_declaration_file(path: &Path) -> bool {
 /// Callers exempt the declared API contract (see
 /// [`is_declared_api_contract`]) before applying this factor.
 fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
-    if is_declaration_file(file) || (!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
-    {
-        TYPE_MACHINERY_FILE_FACTOR
-    } else {
+    if is_runtime_module(file, exports) {
         1.0
+    } else {
+        TYPE_MACHINERY_FILE_FACTOR
     }
+}
+
+/// True when the file emits runtime code — neither a declaration file
+/// nor a module whose every export is type-only.
+fn is_runtime_module(file: &Path, exports: &[ExportInfo<'_>]) -> bool {
+    !is_declaration_file(file) && !(!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
 }
 
 /// True iff `file` is the package's declared API contract (see
@@ -4037,6 +4167,22 @@ fn member_surface_spans(kind: ItemKind, decl: Node, source: &str) -> Vec<(usize,
         .collect()
 }
 
+/// The members of an exported declaration whose signature row some
+/// batch renders — the same set the member surfaces and catalogs are
+/// built from, which is what makes a member's doc gateable on its own
+/// signature's owner.
+fn documented_member_nodes<'a>(item: &ExportInfo<'a>, source: &str) -> Vec<Node<'a>> {
+    let Some(body) = member_surface_body(item.kind, item.decl) else {
+        return Vec::new();
+    };
+    let mut cursor = body.walk();
+    let members: Vec<Node<'a>> = body
+        .children(&mut cursor)
+        .filter(|member| is_surfaced_member(item.kind, item.decl, *member, source))
+        .collect();
+    members
+}
+
 fn is_surfaced_member(kind: ItemKind, decl: Node, member: Node, source: &str) -> bool {
     let surfaced = if is_class_node(decl) {
         class_surface_member_kind(member.kind()) && !is_non_public_class_member(member, source)
@@ -4622,6 +4768,72 @@ fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>, skip_modu
             _ => break,
         }
     }
+}
+
+/// The JSDoc block documenting one member of a declaration, rendered as
+/// the member-doc batch renders it — the comment rows only, never the
+/// member's signature row, which the batch's predecessor owns.
+///
+/// A doc block is prose plus, often, a worked example costing several
+/// times the prose. The prose states the member's contract, so the
+/// batch renders down to the first example and marks the rest elided.
+/// Measured against rendering the whole block, and against the same
+/// lede with no marker: this shape wins at every budget.
+fn member_doc_lines(member: Node, source: &str, src_lines: &[&str]) -> Option<FileLines> {
+    let doc = member_jsdoc_block(member, source)?;
+    let start = doc.start_position().row + 1;
+    let end = node_end_row_trimmed(doc, source) + 1;
+    let example = (start + 1..=end).find(|line| {
+        src_lines
+            .get(line - 1)
+            .is_some_and(|text| is_worked_example_jsdoc_line(text))
+    });
+    let Some(example) = example else {
+        return Some(FileLines::new((start..=end).collect()));
+    };
+    // The blank separator line before the example belongs to neither
+    // half; the lede ends at the last row that renders prose.
+    let lede_end = (start..example).rev().find(|line| {
+        src_lines
+            .get(line - 1)
+            .is_some_and(|t| !is_blank_jsdoc_line(t))
+    })?;
+    Some(FileLines::new((start..=lede_end).collect()).with_ellipses(vec![example]))
+}
+
+/// A doc-comment row carrying no prose — empty, or the bare `*`
+/// continuation that separates paragraphs in conventional JSDoc.
+fn is_blank_jsdoc_line(text: &str) -> bool {
+    text.trim_start().trim_start_matches('*').trim().is_empty()
+}
+
+/// The `/** */` block documenting `member`, walking past the directive
+/// line comments (`// eslint-disable-next-line …`) that conventionally
+/// sit between a doc block and the member it annotates.
+fn member_jsdoc_block<'a>(member: Node<'a>, source: &str) -> Option<Node<'a>> {
+    let mut cur = member.prev_sibling();
+    while let Some(prev) = cur {
+        if prev.kind() != "comment" {
+            return None;
+        }
+        if source[prev.start_byte()..prev.end_byte()].starts_with("/**") {
+            return Some(prev);
+        }
+        cur = prev.prev_sibling();
+    }
+    None
+}
+
+/// A doc-comment row that opens a worked example — the `@example` tag
+/// or a fenced code block. Both are the documentation vocabulary for
+/// "here is the same thing again, spelled out"; the prose above is what
+/// states the contract.
+fn is_worked_example_jsdoc_line(text: &str) -> bool {
+    let body = text.trim_start().trim_start_matches('*').trim_start();
+    body.starts_with("```")
+        || body
+            .strip_prefix("@example")
+            .is_some_and(|rest| !rest.starts_with(|c: char| c.is_alphanumeric()))
 }
 
 /// Lines of the JSDoc above `node` that disavow what it documents.
@@ -5632,6 +5844,147 @@ export function old() {}
             }
         }
         assert_eq!(covered.len(), 80, "partitions must cover every member");
+    }
+
+    /// A documented class big enough to split its surface into chunks:
+    /// every method carries a doc block whose second paragraph is a
+    /// worked example.
+    fn documented_oversize_class() -> String {
+        let mut source = String::from(
+            "export class Large {\n  field: string = 'value';\n  constructor() {\n    this.field = 'constructed';\n  }\n",
+        );
+        for method in 0..30 {
+            source.push_str(&format!(
+                "  /**\n   * Runs step {method}.\n   *\n   * @example\n   * large.method_{method}();\n   */\n  method_{method}(argument: {{ first: string; second: number; third: boolean }}): string {{\n    return this.field + argument.first;\n  }}\n"
+            ));
+        }
+        source.push_str("}\n");
+        source
+    }
+
+    /// `(member_start_line, predecessor)` of every member-doc batch a
+    /// single-file directory produces.
+    fn member_doc_batches(name: &str, source: &str) -> Vec<(usize, Option<BatchKey>)> {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join(name), source).unwrap();
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        report
+            .candidates
+            .iter()
+            .filter_map(|batch| match &batch.key {
+                BatchKey::Typescript(TsKey::ExportMemberDoc {
+                    member_start_line, ..
+                }) => Some((*member_start_line, batch.predecessor.clone())),
+                _ => None,
+            })
+            .collect()
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_rides_the_last_chunk_of_a_split_surface() {
+        // Every member's doc gates on the final tail, not on the chunk
+        // holding its own signature: a chunked surface is one reading of
+        // the declaration, and letting an early chunk's cheap docs
+        // outrank a later chunk inverts the gate.
+        let source = documented_oversize_class();
+        let docs = member_doc_batches("fixture.ts", &source);
+        assert_eq!(docs.len(), 30, "one doc batch per documented method");
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, &source).unwrap();
+        let tree = parse(&source);
+        let exports = export_infos_for_path(&file, &tree, &source);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let chunks =
+            oversized_export_class_chunks(&file, exports.first().unwrap(), &source, &ctx).unwrap();
+        assert!(chunks.len() > 2, "surface splits into head + several tails");
+        for (member_start_line, predecessor) in docs {
+            let Some(BatchKey::Typescript(TsKey::ExportTail { chunk_index, .. })) = predecessor
+            else {
+                panic!("member {member_start_line} doc must ride a tail chunk");
+            };
+            assert_eq!(chunk_index, chunks.len() - 2, "the last tail");
+        }
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_elides_the_worked_example() {
+        let source = "\
+export class Small {
+  /**
+   * States the contract.
+   *
+   * @example
+   * small.run();
+   */
+  run(): void {}
+}
+";
+        let tree = parse(source);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let exports = export_infos_for_path(Path::new("fixture.ts"), &tree, source);
+        let members = documented_member_nodes(exports.first().unwrap(), source);
+        let lines = member_doc_lines(members[0], source, &src_lines).expect("documented member");
+        assert_eq!(
+            lines.full,
+            vec![2, 3],
+            "the prose, and not the signature row"
+        );
+        assert_eq!(lines.ellipses, vec![5], "the example is marked, not spent");
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_rides_its_own_catalog_chunk() {
+        // Catalog chunks are siblings gated on the file's names
+        // surface, not a chain, so a doc must ride the chunk actually
+        // holding its member's row — the last chunk being scheduled
+        // says nothing about the others.
+        let mut source =
+            String::from("export function run(): void {}\n\nexport interface Options {\n");
+        for field in 0..40 {
+            source.push_str(&format!(
+                "  /** Controls facet {field}. */\n  facet_{field}: {{ first: string; second: number; third: boolean }};\n"
+            ));
+        }
+        source.push_str("}\n");
+        let docs = member_doc_batches("fixture.ts", &source);
+        assert!(!docs.is_empty(), "documented fields get doc batches");
+        let mut chunk_indices: Vec<usize> = docs
+            .iter()
+            .map(|(member_start_line, predecessor)| {
+                let Some(BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
+                    chunk_index, ..
+                })) = predecessor
+                else {
+                    panic!("member {member_start_line} doc must ride a catalog chunk");
+                };
+                *chunk_index
+            })
+            .collect();
+        chunk_indices.dedup();
+        assert!(
+            chunk_indices.len() > 1,
+            "the catalog partitions, and the docs spread across its chunks: {chunk_indices:?}"
+        );
+        assert!(
+            chunk_indices.windows(2).all(|pair| pair[0] < pair[1]),
+            "each doc rides its own chunk, in source order: {chunk_indices:?}"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_skips_a_type_only_module() {
+        // The surface a doc would hang off is damped as type machinery
+        // and enters late or never, so a doc slice under it is credit
+        // nobody can collect.
+        let source = "\
+export interface Contract {
+  /** Runs the step. */
+  run(): void;
+}
+";
+        assert!(member_doc_batches("contract.ts", source).is_empty());
     }
 
     #[test]

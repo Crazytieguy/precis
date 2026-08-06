@@ -3247,3 +3247,64 @@ Two things worth knowing before touching this again:
 - migrate's NS states the trade explicitly ("CONTRIBUTING.md and
   SECURITY.md stay filename-only from the root listing"), so this was a
   walker/NS disagreement, not a scoring accident.
+
+## TS/JS documented-member doc slices (2026-08-06, lane W5-TS): 0.6353 → 0.6380
+
+`TsKey::ExportMemberDoc { file, start_line, member_start_line }` — one
+additive batch per documented member of an exported declaration, holding
+**only** the member's JSDoc rows, never its signature row. Grid: 1000
+0.6165 (flat) · 1442 0.6284 (flat) · 2080 0.6358→0.6362 · **3000
+0.6353→0.6380** · 4327 0.5984→0.6013 · 6240 0.5720→0.5740 · 9000
+0.5700→0.5715. Sole fixture mover ≥0.005: p-queue 0.589→0.779 (last
+in-budget row at cum 2899 — not cliff-adjacent). Every other fixture
+byte-identical.
+
+Why it pays: `completion` is byte-weighted per NS batch, so where the
+walker already delivers a member's signature and the NS row is mostly
+doc prose, adding the prose lifts completion from ~0.25 to 1.0 *and*
+re-multiplies the signature atoms already paid for. The payoff is
+superlinear in the added tokens. Seven of p-queue's eight member-doc
+rows complete inside 3K on ~600 tokens of prose.
+
+Three decisions, each measured, each a full 7-budget grid:
+
+- **Gate on the batch that owns the member's signature row**, resolved
+  down a ladder (`ExportTail` chunk → `ExportMember` → member-name
+  catalog chunk → catalog → the undivided `Export` surface → emit
+  nothing). Rung "nothing" is what keeps chalk, ky, and every
+  type-machinery fixture (monaco, superstruct, vite, d2ts, svgo)
+  *exactly* flat: their surfaces are never admitted, so no doc batch is
+  emitted at all.
+- **A chunked surface's docs ride its LAST chunk, not the chunk holding
+  their own member.** Gating each doc on its own chunk (the shape the
+  credit-story diagnosis proposed) *inverts the gate*: p-queue's cheap
+  tail-#1 docs outranked `export tail #2`, pushing it from cum 1816 to
+  3161 and stranding six of the eight target rows — the fixture went
+  −0.056 before this fix. A chunked surface is one reading of the
+  declaration, split only for affordability; its docs refine the whole.
+  Marking the doc key `is_depth_follow_up` instead only half-fixes it
+  (train pressure then damps the tails themselves: +0.0005 at 3000
+  versus +0.0027 for the last-chunk gate). **This applies only because
+  `ExportTail` chunks are a predecessor chain.** Member-name catalog
+  chunks are *siblings*, all gated on the file's names surface, so
+  there the doc must ride the chunk that actually holds its member's
+  row — a later sibling being in says nothing about an earlier one
+  (adversarial review, 2026-08-06; corpus-neutral but a live
+  overlap/unschedulable class).
+- **No doc batch under a name-only (`truncate_to_name`) catalog.** Such
+  a catalog does not deliver the signature, only that the member
+  exists, so the doc is not the cheap completion of a paid-for surface —
+  it is the whole member arriving as prose. Without this rule commander
+  loses 0.032 at 3000.
+
+Render shape: the doc lede down to the first worked example (an
+`@example` tag or a fenced block), with an ellipsis marker on the
+example's first row. Measured against the whole block and against the
+same lede with no marker — lede+ellipsis wins or ties at every budget
+(full block: −0.0005 at 3000, −0.0007 at 4327; unmarked lede: −0.0001
+at 4327/6240). It also happens to be the shape p-queue's NS itself
+chose for the three rows whose examples it elides.
+
+Eligibility is runtime modules only (`is_runtime_module`: not a
+declaration file, not an all-type-only module) — a doc slice below a
+0.35-damped surface that never enters collects nothing.

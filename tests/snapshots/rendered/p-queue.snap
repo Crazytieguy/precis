@@ -39,8 +39,7 @@ package.json
        3→	"version": "9.2.0",
        4→	"description": "Promise queue with concurrency control",
        5→	"license": "MIT",
-       6→	"repository": "sindresorhus/p-queue",
-       7→	"funding": "https://github.com/sponsors/sindresorhus",
+    …
        8→	"type": "module",
        9→	"exports": {
       10→		"types": "./dist/index.d.ts",
@@ -60,28 +59,7 @@ package.json
       24→		"dist"
       25→	],
       26→	"types": "dist/index.d.ts",
-      27→	"keywords": [
-      28→		"promise",
-      29→		"queue",
-      30→		"enqueue",
-      31→		"limit",
-      32→		"limited",
-      33→		"concurrency",
-      34→		"throttle",
-      35→		"throat",
-      36→		"rate",
-      37→		"batch",
-      38→		"ratelimit",
-      39→		"priority",
-      40→		"priorityqueue",
-      41→		"fifo",
-      42→		"job",
-      43→		"task",
-      44→		"async",
-      45→		"await",
-      46→		"promises",
-      47→		"bluebird"
-      48→	],
+    …
       49→	"dependencies": {
       50→		"eventemitter3": "^5.0.4",
       51→		"p-timeout": "^7.0.0"
@@ -93,70 +71,19 @@ readme.md
        3→> Promise queue with concurrency control
        4→
        5→Useful for rate-limiting async (or sync) operations. For example, when interacting with a REST API or when doing CPU/memory intensive tasks.
-       7→For servers, you probably want a Redis-backed [job queue](https://github.com/sindresorhus/awesome-nodejs#job-queues) instead.
-       8→
-       9→Note that the project is feature complete. We are happy to review pull requests, but we don't plan any further development. We are also not answering email support questions.
-      10→
-      11→---
-      12→
-      13→<br>
-      14→<div align="center">
-      15→	<p>
-      16→		<p>
-      17→			<sup>
-      18→				<a href="https://github.com/sponsors/sindresorhus">Sindre's open source work is supported by the community</a><br>Special thanks to:
-      19→			</sup>
-      20→		</p>
-      21→		<br>
-      22→		<br>
-      23→		<a href="https://fetchfox.ai?ref=sindre">
-      24→			<div>
-      25→				<img src="https://sindresorhus.com/assets/thanks/fetchfox-logo.svg" height="200"/>
-      26→			</div>
-      27→			<b>Scrape anything with FetchFox</b>
-      28→			<div>
-      29→				<sup>FetchFox is an AI powered scraping tool that lets you scrape data from any website</sup>
-      30→			</div>
-      31→		</a>
-      32→	</p>
-      33→	<br>
-      34→	<br>
-      35→</div>
-      36→
-      37→---
+    …
       39→## Install
-      40→
-      41→```sh
-      42→npm install p-queue
-      43→```
-      44→
-      45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
+    …
       47→## Usage
     …
       68→## API
       69→
       70→### PQueue(options?)
-      72→Returns a new `queue` instance, which is an [`EventEmitter3`](https://github.com/primus/eventemitter3) subclass.
     …
      162→### queue
      164→`PQueue` instance.
     …
-     240→#### .pause()
-     241→
-     242→Put queue execution on hold.
-    …
-     355→#### .size
-     356→
-     357→Size of the queue, the number of queued items waiting to run.
-    …
-     419→#### .pending
-     420→
-     421→Number of running items (no longer in the queue).
-    …
      440→#### [.concurrency](#concurrency)
-     442→#### .isPaused
-     443→
-     444→Whether the queue is currently paused.
     …
      512→## Events
     …
@@ -169,9 +96,7 @@ readme.md
      847→## FAQ
     …
     1066→## Maintainers
-    1067→
-    1068→- [Sindre Sorhus](https://github.com/sindresorhus)
-    1069→- [Richie Bendall](https://github.com/Richienb)
+    …
     1071→## Related
     …
 source/
@@ -187,6 +112,13 @@ source/
           15→*/
           16→export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsType> = PriorityQueue, EnqueueOptionsType extends QueueAddOptions = QueueAddOptions> extends EventEmitter<EventName> { // eslint-disable-line @typescript-eslint/naming-convention
         …
+          68→	/**
+          69→	Get or set the default timeout for all tasks. Can be changed at runtime.
+          70→
+          71→	Operations will throw a `TimeoutError` if they don't complete within the specified time.
+          72→
+          73→	The timeout begins when the operation is dequeued and starts execution, not while it's waiting in the queue.
+        …
           83→	timeout?: number;
           84→
           85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
@@ -195,11 +127,24 @@ source/
         …
          386→	set concurrency(newConcurrency: number) {
         …
+         396→	/**
+         397→	Updates the priority of a promise function by its id, affecting its execution order. Requires a defined concurrency limit to take effect.
+         398→
+         399→	For example, this can be used to prioritize a promise function to run earlier.
+        …
          432→	setPriority(id: string, priority: number) {
         …
+         440→	/**
+         441→	Adds a sync or async task to the queue. Always returns a promise.
+         442→	*/
          443→	async add<TaskResultType>(function_: Task<TaskResultType>, options?: Partial<EnqueueOptionsType>): Promise<TaskResultType>;
          444→	async add<TaskResultType>(function_: Task<TaskResultType>, options: Partial<EnqueueOptionsType> = {}): Promise<TaskResultType> {
         …
+         576→	/**
+         577→	Same as `.add()`, but accepts an array of sync or async functions.
+         578→
+         579→	@returns A promise that resolves when all functions are resolved.
+         580→	*/
          581→	async addAll<TaskResultsType>(
          582→		functions: ReadonlyArray<Task<TaskResultsType>>,
          583→		options?: Partial<EnqueueOptionsType>,
@@ -209,37 +154,103 @@ source/
          587→		options?: Partial<EnqueueOptionsType>,
          588→	): Promise<TaskResultsType[]> {
         …
+         592→	/**
+         593→	Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
+         594→	*/
          595→	start(): this {
         …
+         606→	/**
+         607→	Put queue execution on hold.
+         608→	*/
          609→	pause(): void {
         …
+         613→	/**
+         614→	Clear the queue.
+         615→	*/
          616→	clear(): void {
         …
+         647→	/**
+         648→	Can be called multiple times. Useful if you for example add additional items at a later time.
+         649→
+         650→	@returns A promise that settles when the queue becomes empty.
+         651→	*/
          652→	async onEmpty(): Promise<void> {
         …
          668→	async onSizeLessThan(limit: number): Promise<void> {
         …
+         677→	/**
+         678→	The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+         679→
+         680→	@returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
+         681→	*/
          682→	async onIdle(): Promise<void> {
         …
+         691→	/**
+         692→	The difference with `.onIdle` is that `.onPendingZero` only waits for currently running tasks to finish, ignoring queued tasks.
+         693→
+         694→	@returns A promise that settles when all currently running tasks have completed; `queue.pending === 0`.
+         695→	*/
          696→	async onPendingZero(): Promise<void> {
         …
+         704→	/**
+         705→	@returns A promise that settles when the queue becomes rate-limited due to intervalCap.
+         706→	*/
          707→	async onRateLimit(): Promise<void> {
         …
+         715→	/**
+         716→	@returns A promise that settles when the queue is no longer rate-limited.
+         717→	*/
          718→	async onRateLimitCleared(): Promise<void> {
+        …
+         726→	/**
+         727→	@returns A promise that rejects when any task in the queue errors.
+         728→
+         729→	Use with `Promise.race([queue.onError(), queue.onIdle()])` to fail fast on the first error while still resolving normally when the queue goes idle.
+         730→
+         731→	Important: The promise returned by `add()` still rejects. You must handle each `add()` promise (for example, `.catch(() => {})`) to avoid unhandled rejections.
         …
          756→	onError(): Promise<never> {
         …
+         782→	/**
+         783→	Size of the queue, the number of queued items waiting to run.
+         784→	*/
          785→	get size(): number {
         …
+         789→	/**
+         790→	Size of the queue, filtered by the given options.
+         791→
+         792→	For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+         793→	*/
          794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
         …
+         799→	/**
+         800→	Number of running items (no longer in the queue).
+         801→	*/
          802→	get pending(): number {
         …
+         806→	/**
+         807→	Whether the queue is currently paused.
+         808→	*/
          809→	get isPaused(): boolean {
         …
+         885→	/**
+         886→	Whether the queue is currently rate-limited due to intervalCap.
+         887→	*/
          888→	get isRateLimited(): boolean {
         …
+         892→	/**
+         893→	Whether the queue is saturated. Returns `true` when:
+         894→	- All concurrency slots are occupied and tasks are waiting, OR
+         895→	- The queue is rate-limited and tasks are waiting
+         896→
+         897→	Useful for detecting backpressure and potential hanging tasks.
+        …
          918→	get isSaturated(): boolean {
+        …
+         923→	/**
+         924→	The tasks currently being executed. Each task includes its `id`, `priority`, `startTime`, and `timeout` (if set).
+         925→
+         926→	Returns an array of task info objects.
         …
          952→	get runningTasks(): ReadonlyArray<{
          953→		readonly id?: string;
@@ -253,17 +264,9 @@ source/
          965→export {type QueueAddOptions, type Options} from './options.js';
         …
          985→export {TimeoutError} from 'p-timeout';
-    lower-bound.ts
-        …
-           3→export default function lowerBound<T>(array: readonly T[], value: T, comparator: (a: T, b: T) => number): number {
-        …
-    options.ts
-           1→import {type Queue, type RunFunction} from './queue.js';
-        …
+    lower-bound.ts …
+    options.ts …
     priority-queue.ts
-           1→import {type Queue, type RunFunction} from './queue.js';
-           2→import lowerBound from './lower-bound.js';
-           3→import {type QueueAddOptions} from './options.js';
         …
            7→export type PriorityQueueOptions = {
            8→	priority?: number;
@@ -295,13 +298,4 @@ test/
     validation.ts …
 test-d/
     index.test-d.ts …
-tsconfig.json
-       1→{
-       2→	"extends": "@sindresorhus/tsconfig",
-       3→	"compilerOptions": {
-       4→		"outDir": "dist"
-       5→	},
-       6→	"include": [
-       7→		"source"
-       8→	]
-       9→}
+tsconfig.json …
