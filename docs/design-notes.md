@@ -3507,3 +3507,26 @@ no tier-1 NS credit and the strongest are `CONTRIBUTING.md` prose.
 The root-README-only eligibility gate is what keeps this lever honest;
 extending head-splitting to peripheral docs would promote that class
 first.
+
+### 2026-08-06 post-close addendum: 0.6387 → 0.6428, all seven budgets up from the session zero
+
+Two in-flight lanes landed keepers after the close entry above and
+were merged, plus the W5-FL review fix pass: W5-DF's test-suite
+workflow damp (a .github/workflows file whose stem is exactly
+test/tests rejoins the non-essential tier — +0.0041 @3000 on its
+base, B=1000 +0.0112; the briefed C dominant-file lever is DEAD in
+ratio space: C spine files need an emitter unit, and decluttering is
+badly under-mined) and W5-ML's markdown section lede carve (lede cut
+inside chunk 0 at a 140-token target, body chained behind at the
+section's own value and concavity — the positional index-0 concavity
+exemption is now the explicit keeps_default_concavity flag; band-
+shaped +0.0046/+0.0040 @1442/2080). Final session grid: 1000
+**0.6289** · 1442 **0.6434** · 2080 **0.6479** · 3000 **0.6428** ·
+4327 **0.6067** · 6240 **0.5773** · 9000 **0.5730** — every budget
+above the session zero (+0.0075 at the 3000 headline, +0.0124 at
+1000). Validation on the final tree: 0.5505 vs 0.5497 at the prior
+close (+0.0008, recorded only). Still pending for next session: fix passes
+for the decorator-JSDoc discovery gap (W5-TS feature invisible on
+decorator-heavy repos) and the requirements byte-gate/specifier
+findings; the GPT review of the DF+ML diff; the W5-CS re-measure;
+the knob re-sweep.
