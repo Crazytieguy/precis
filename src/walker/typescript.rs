@@ -354,11 +354,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let src_lines: Vec<&str> = source.lines().collect();
         let local_reexports = collect_local_reexports(&tree, &source);
         let commonjs_value_reexports = collect_commonjs_value_reexports(&tree, &source);
-        let default_implementation_exports = if is_entrypoint_file(file) {
-            collect_default_implementation_exports(&tree, &source)
-        } else {
-            HashMap::new()
-        };
+        let default_implementation_exports = collect_default_implementation_exports(&tree, &source);
         let mut exports = find_export_starts(
             file,
             &tree,
@@ -1906,7 +1902,7 @@ fn collect_local_reexports(tree: &Tree, source: &str) -> LocalReexports {
     out
 }
 
-/// Implementation declarations behind entrypoint default aliases. Handles
+/// Implementation declarations behind default-export aliases. Handles
 /// both `export default fnName` and the thin instance shape
 /// `export default instance; const instance = factory();`, plus single-hop
 /// direct calls / constructors (`export default factory()` and
@@ -4241,11 +4237,7 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
     let src_lines: Vec<&str> = source.lines().collect();
     let reexports = collect_local_reexports(tree, source);
     let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
-    let default_identifier_reexports = if is_entrypoint_file(file) {
-        collect_default_implementation_exports(tree, source)
-    } else {
-        HashMap::new()
-    };
+    let default_identifier_reexports = collect_default_implementation_exports(tree, source);
     find_export_starts(
         file,
         tree,
@@ -5063,11 +5055,7 @@ mod tests {
         let src_lines: Vec<&str> = source.lines().collect();
         let reexports = collect_local_reexports(tree, source);
         let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
-        let default_identifier_reexports = if is_entrypoint_file(file) {
-            collect_default_implementation_exports(tree, source)
-        } else {
-            HashMap::new()
-        };
+        let default_identifier_reexports = collect_default_implementation_exports(tree, source);
         find_export_starts(
             file,
             tree,
