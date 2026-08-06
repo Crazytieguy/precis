@@ -47,6 +47,57 @@ Readme.md
       42→### Usage
       43→
       44→Superstruct allows you to define the shape of data you want to validate:
+      46→```js
+      47→import { assert, object, number, string, array } from 'superstruct'
+      48→
+      49→const Article = object({
+      50→  id: number(),
+      51→  title: string(),
+      52→  tags: array(string()),
+      53→  author: object({
+      54→    id: number(),
+      55→  }),
+      56→})
+      57→
+      58→const data = {
+      59→  id: 34,
+      60→  title: 'Hello World',
+      61→  tags: ['news', 'features'],
+      62→  author: {
+      63→    id: 1,
+      64→  },
+      65→}
+      66→
+      67→assert(data, Article)
+      68→// This will throw an error when the data is invalid.
+      69→// If you'd rather not throw, you can use `is()` or `validate()`.
+      70→```
+      72→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
+      73→
+      74→```js
+      75→import { is, define, object, string } from 'superstruct'
+      76→import isUuid from 'is-uuid'
+      77→import isEmail from 'is-email'
+      78→
+      79→const Email = define('Email', isEmail)
+      80→const Uuid = define('Uuid', isUuid.v4)
+      81→
+      82→const User = object({
+      83→  id: Uuid,
+      84→  email: Email,
+      85→  name: string(),
+      86→})
+      87→
+      88→const data = {
+      89→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
+      90→  email: 'jane@example.com',
+      91→  name: 'Jane',
+      92→}
+      93→
+      94→if (is(data, User)) {
+      95→  // Your data is guaranteed to be valid in this block.
+      96→}
+      97→```
     …
      145→### Why?
     …
@@ -259,67 +310,7 @@ src/
            4→export * from './structs/refinements.js'
            5→export * from './structs/types.js'
            6→export * from './structs/utilities.js'
-    struct.ts
-        …
-          10→export class Struct<T = unknown, S = unknown> {
-        …
-         123→export function assert<T, S>(
-         124→  value: unknown,
-         125→  struct: Struct<T, S>,
-         126→  message?: string
-         127→): asserts value is T {
-        …
-         139→export function create<T, S>(
-         140→  value: unknown,
-         141→  struct: Struct<T, S>,
-         142→  message?: string
-         143→): T {
-        …
-         157→export function mask<T, S>(
-         158→  value: unknown,
-         159→  struct: Struct<T, S>,
-         160→  message?: string
-         161→): T {
-        …
-         175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
-         176→  const result = validate(value, struct)
-         177→  return !result[0]
-        …
-         185→export function validate<T, S>(
-         186→  value: unknown,
-         187→  struct: Struct<T, S>,
-         188→  options: {
-         189→    coerce?: boolean
-         190→    mask?: boolean
-         191→    message?: string
-         192→  } = {}
-         193→): [StructError, undefined] | [undefined, T] {
-        …
-         221→export type Context = {
-         222→  branch: Array<any>
-         223→  path: Array<any>
-         224→  mask?: boolean
-         225→}
-        …
-         231→export type Infer<T extends Struct<any, any>> = T['TYPE']
-        …
-         237→export type Describe<T> = Struct<T, StructSchema<T>>
-         239→/**
-         240→ * A `Result` is returned from validation functions.
-         241→ */
-         243→export type Result =
-         244→  | boolean
-         245→  | string
-         246→  | Partial<Failure>
-         247→  | Iterable<boolean | string | Partial<Failure>>
-        …
-         253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
-         255→/**
-         256→ * A `Validator` takes an unknown value and validates it.
-         257→ */
-         259→export type Validator = (value: unknown, context: Context) => Result
-        …
-         266→export type Refiner<T> = (value: T, context: Context) => Result
+    struct.ts …
     structs/
         coercions.ts
             …

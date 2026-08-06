@@ -1,7 +1,7 @@
 fixture = "semver"
 budget = 10000
-cumulative_tokens = 9398
-batch_count = 204
+cumulative_tokens = 9775
+batch_count = 97
 
 [[batches]]
 position = 1
@@ -225,28 +225,10 @@ entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench
 
 [[batches]]
 position = 15
-key = 'Typescript(ExportNames { file: "classes/index.js" })'
-descriptor = "export names surface in classes/index.js"
-cost_tokens = 12
-cum_tokens = 569
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/index.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 39
-cum_tokens = 608
+cum_tokens = 596
 
 [batches.content]
 kind = "fs"
@@ -256,11 +238,11 @@ parent = "test"
 entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration", "internal", "map.js", "preload.js", "ranges"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 60
-cum_tokens = 668
+cum_tokens = 656
 
 [batches.content]
 kind = "lines"
@@ -282,11 +264,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: "test/classes" })'
 descriptor = "listing of 'test/classes'"
 cost_tokens = 16
-cum_tokens = 684
+cum_tokens = 672
 
 [batches.content]
 kind = "fs"
@@ -296,11 +278,11 @@ parent = "test/classes"
 entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
-position = 19
+position = 18
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 180
-cum_tokens = 864
+cum_tokens = 852
 
 [batches.content]
 kind = "lines"
@@ -594,11 +576,11 @@ end = 611
 kind = "ellipsis"
 
 [[batches]]
-position = 20
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+position = 19
+key = 'Markdown(Section { file: "README.md", section_index: 1, keeps_default_concavity: false })'
 descriptor = "README.md section #1"
 cost_tokens = 25
-cum_tokens = 889
+cum_tokens = 877
 
 [batches.content]
 kind = "lines"
@@ -612,11 +594,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 21
-key = 'Markdown(Section { file: "README.md", section_index: 55, reference_shaped: false })'
+position = 20
+key = 'Markdown(Section { file: "README.md", section_index: 55, keeps_default_concavity: false })'
 descriptor = "README.md section #55"
 cost_tokens = 27
-cum_tokens = 916
+cum_tokens = 904
 
 [batches.content]
 kind = "lines"
@@ -630,11 +612,11 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 135
-cum_tokens = 1051
+cum_tokens = 1039
 
 [batches.content]
 kind = "lines"
@@ -656,11 +638,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 23
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
+position = 22
+key = 'Markdown(Section { file: "README.md", section_index: 2, keeps_default_concavity: false })'
 descriptor = "README.md section #2"
 cost_tokens = 285
-cum_tokens = 1336
+cum_tokens = 1324
 
 [batches.content]
 kind = "lines"
@@ -674,11 +656,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 144
-cum_tokens = 1480
+cum_tokens = 1468
 
 [batches.content]
 kind = "lines"
@@ -692,11 +674,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: "test/internal" })'
 descriptor = "listing of 'test/internal'"
 cost_tokens = 26
-cum_tokens = 1506
+cum_tokens = 1494
 
 [batches.content]
 kind = "fs"
@@ -706,11 +688,11 @@ parent = "test/internal"
 entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "tap-snapshots/test" })'
 descriptor = "listing of 'tap-snapshots/test'"
 cost_tokens = 3
-cum_tokens = 1509
+cum_tokens = 1497
 
 [batches.content]
 kind = "fs"
@@ -720,11 +702,11 @@ parent = "tap-snapshots/test"
 entries = ["bin"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Typescript(Export { file: "index.js", start_line: 45 })'
 descriptor = "export at index.js:45"
 cost_tokens = 380
-cum_tokens = 1889
+cum_tokens = 1877
 
 [batches.content]
 kind = "lines"
@@ -738,361 +720,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 28
-key = 'Typescript(Imports { file: "classes/index.js" })'
-descriptor = "imports in classes/index.js"
-cost_tokens = 6
-cum_tokens = 1895
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/index.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Typescript(ExportNames { file: "functions/compare.js" })'
-descriptor = "export names surface in functions/compare.js"
-cost_tokens = 11
-cum_tokens = 1906
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Typescript(ExportNames { file: "functions/eq.js" })'
-descriptor = "export names surface in functions/eq.js"
-cost_tokens = 11
-cum_tokens = 1917
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/eq.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Typescript(ExportNames { file: "functions/gt.js" })'
-descriptor = "export names surface in functions/gt.js"
-cost_tokens = 11
-cum_tokens = 1928
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/gt.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Typescript(ExportNames { file: "functions/lt.js" })'
-descriptor = "export names surface in functions/lt.js"
-cost_tokens = 11
-cum_tokens = 1939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/lt.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Typescript(ExportNames { file: "functions/major.js" })'
-descriptor = "export names surface in functions/major.js"
-cost_tokens = 11
-cum_tokens = 1950
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/major.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Typescript(ExportNames { file: "functions/minor.js" })'
-descriptor = "export names surface in functions/minor.js"
-cost_tokens = 11
-cum_tokens = 1961
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/minor.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'Typescript(ExportNames { file: "functions/neq.js" })'
-descriptor = "export names surface in functions/neq.js"
-cost_tokens = 11
-cum_tokens = 1972
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/neq.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'Typescript(ExportNames { file: "functions/patch.js" })'
-descriptor = "export names surface in functions/patch.js"
-cost_tokens = 11
-cum_tokens = 1983
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/patch.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Typescript(ExportNames { file: "functions/sort.js" })'
-descriptor = "export names surface in functions/sort.js"
-cost_tokens = 11
-cum_tokens = 1994
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/sort.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Typescript(ExportNames { file: "functions/compare-loose.js" })'
-descriptor = "export names surface in functions/compare-loose.js"
-cost_tokens = 12
-cum_tokens = 2006
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-loose.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Typescript(ExportNames { file: "functions/gte.js" })'
-descriptor = "export names surface in functions/gte.js"
-cost_tokens = 12
-cum_tokens = 2018
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/gte.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Typescript(ExportNames { file: "functions/lte.js" })'
-descriptor = "export names surface in functions/lte.js"
-cost_tokens = 12
-cum_tokens = 2030
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/lte.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Typescript(ExportNames { file: "functions/rcompare.js" })'
-descriptor = "export names surface in functions/rcompare.js"
-cost_tokens = 12
-cum_tokens = 2042
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/rcompare.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Typescript(ExportNames { file: "functions/rsort.js" })'
-descriptor = "export names surface in functions/rsort.js"
-cost_tokens = 12
-cum_tokens = 2054
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/rsort.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Typescript(ExportNames { file: "internal/constants.js" })'
-descriptor = "export names surface in internal/constants.js"
-cost_tokens = 12
-cum_tokens = 2066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/constants.js"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/constants.js"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'Typescript(ExportNames { file: "ranges/gtr.js" })'
-descriptor = "export names surface in ranges/gtr.js"
-cost_tokens = 12
-cum_tokens = 2078
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/gtr.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
-key = 'Typescript(ExportNames { file: "ranges/ltr.js" })'
-descriptor = "export names surface in ranges/ltr.js"
-cost_tokens = 12
-cum_tokens = 2090
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/ltr.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Typescript(Export { file: "classes/index.js", start_line: 3 })'
-descriptor = "export at classes/index.js:3"
-cost_tokens = 42
-cum_tokens = 2132
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/index.js"
-start = 3
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
+position = 27
+key = 'Markdown(Section { file: "README.md", section_index: 21, keeps_default_concavity: false })'
 descriptor = "README.md section #21"
 cost_tokens = 21
-cum_tokens = 2153
+cum_tokens = 1898
 
 [batches.content]
 kind = "lines"
@@ -1106,11 +738,11 @@ end = 455
 kind = "full"
 
 [[batches]]
-position = 48
-key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
+position = 28
+key = 'Markdown(Section { file: "README.md", section_index: 22, keeps_default_concavity: false })'
 descriptor = "README.md section #22"
 cost_tokens = 21
-cum_tokens = 2174
+cum_tokens = 1919
 
 [batches.content]
 kind = "lines"
@@ -1124,11 +756,11 @@ end = 456
 kind = "full"
 
 [[batches]]
-position = 49
-key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false })'
+position = 29
+key = 'Markdown(Section { file: "README.md", section_index: 23, keeps_default_concavity: false })'
 descriptor = "README.md section #23"
 cost_tokens = 21
-cum_tokens = 2195
+cum_tokens = 1940
 
 [batches.content]
 kind = "lines"
@@ -1142,11 +774,11 @@ end = 457
 kind = "full"
 
 [[batches]]
-position = 50
-key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false })'
+position = 30
+key = 'Markdown(Section { file: "README.md", section_index: 24, keeps_default_concavity: false })'
 descriptor = "README.md section #24"
 cost_tokens = 21
-cum_tokens = 2216
+cum_tokens = 1961
 
 [batches.content]
 kind = "lines"
@@ -1160,29 +792,11 @@ end = 458
 kind = "full"
 
 [[batches]]
-position = 51
-key = 'Typescript(ExportNames { file: "ranges/to-comparators.js" })'
-descriptor = "export names surface in ranges/to-comparators.js"
-cost_tokens = 13
-cum_tokens = 2229
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/to-comparators.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
-key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false })'
+position = 31
+key = 'Markdown(Section { file: "README.md", section_index: 35, keeps_default_concavity: false })'
 descriptor = "README.md section #35"
 cost_tokens = 22
-cum_tokens = 2251
+cum_tokens = 1983
 
 [batches.content]
 kind = "lines"
@@ -1196,11 +810,11 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'Markdown(Section { file: "README.md", section_index: 52, reference_shaped: false })'
+position = 32
+key = 'Markdown(Section { file: "README.md", section_index: 52, keeps_default_concavity: false })'
 descriptor = "README.md section #52"
 cost_tokens = 22
-cum_tokens = 2273
+cum_tokens = 2005
 
 [batches.content]
 kind = "lines"
@@ -1214,11 +828,11 @@ end = 560
 kind = "full"
 
 [[batches]]
-position = 54
+position = 33
 key = 'Fs(DirListing { dir: ".github/matchers" })'
 descriptor = "listing of '.github/matchers'"
 cost_tokens = 3
-cum_tokens = 2276
+cum_tokens = 2008
 
 [batches.content]
 kind = "fs"
@@ -1228,11 +842,11 @@ parent = ".github/matchers"
 entries = ["tap.json"]
 
 [[batches]]
-position = 55
+position = 34
 key = 'Fs(DirListing { dir: "test/integration" })'
 descriptor = "listing of 'test/integration'"
 cost_tokens = 3
-cum_tokens = 2279
+cum_tokens = 2011
 
 [batches.content]
 kind = "fs"
@@ -1242,11 +856,11 @@ parent = "test/integration"
 entries = ["whitespace.js"]
 
 [[batches]]
-position = 56
-key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
+position = 35
+key = 'Markdown(Section { file: "README.md", section_index: 13, keeps_default_concavity: false })'
 descriptor = "README.md section #13"
 cost_tokens = 25
-cum_tokens = 2304
+cum_tokens = 2036
 
 [batches.content]
 kind = "lines"
@@ -1260,11 +874,11 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 57
+position = 36
 key = 'Fs(DirListing { dir: "test/functions" })'
 descriptor = "listing of 'test/functions'"
 cost_tokens = 104
-cum_tokens = 2408
+cum_tokens = 2140
 
 [batches.content]
 kind = "fs"
@@ -1274,11 +888,11 @@ parent = "test/functions"
 entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
-position = 58
-key = 'Markdown(Section { file: "README.md", section_index: 43, reference_shaped: false })'
+position = 37
+key = 'Markdown(Section { file: "README.md", section_index: 43, keeps_default_concavity: false })'
 descriptor = "README.md section #43"
 cost_tokens = 24
-cum_tokens = 2432
+cum_tokens = 2164
 
 [batches.content]
 kind = "lines"
@@ -1292,11 +906,11 @@ end = 508
 kind = "full"
 
 [[batches]]
-position = 59
-key = 'Markdown(Section { file: "README.md", section_index: 48, reference_shaped: false })'
+position = 38
+key = 'Markdown(Section { file: "README.md", section_index: 48, keeps_default_concavity: false })'
 descriptor = "README.md section #48"
 cost_tokens = 24
-cum_tokens = 2456
+cum_tokens = 2188
 
 [batches.content]
 kind = "lines"
@@ -1310,11 +924,11 @@ end = 533
 kind = "full"
 
 [[batches]]
-position = 60
+position = 39
 key = 'Fs(DirListing { dir: "test/ranges" })'
 descriptor = "listing of 'test/ranges'"
 cost_tokens = 55
-cum_tokens = 2511
+cum_tokens = 2243
 
 [batches.content]
 kind = "fs"
@@ -1324,11 +938,11 @@ parent = "test/ranges"
 entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
-position = 61
-key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
+position = 40
+key = 'Markdown(Section { file: "README.md", section_index: 14, keeps_default_concavity: false })'
 descriptor = "README.md section #14"
 cost_tokens = 29
-cum_tokens = 2540
+cum_tokens = 2272
 
 [batches.content]
 kind = "lines"
@@ -1342,11 +956,11 @@ end = 285
 kind = "full"
 
 [[batches]]
-position = 62
-key = 'Markdown(Section { file: "README.md", section_index: 34, reference_shaped: false })'
+position = 41
+key = 'Markdown(Section { file: "README.md", section_index: 34, keeps_default_concavity: false })'
 descriptor = "README.md section #34"
 cost_tokens = 23
-cum_tokens = 2563
+cum_tokens = 2295
 
 [batches.content]
 kind = "lines"
@@ -1360,11 +974,11 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 63
+position = 42
 key = 'Fs(DirListing { dir: "test/bin" })'
 descriptor = "listing of 'test/bin'"
 cost_tokens = 4
-cum_tokens = 2567
+cum_tokens = 2299
 
 [batches.content]
 kind = "fs"
@@ -1374,11 +988,11 @@ parent = "test/bin"
 entries = ["semver.js"]
 
 [[batches]]
-position = 64
-key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
+position = 43
+key = 'Markdown(Section { file: "README.md", section_index: 26, keeps_default_concavity: false })'
 descriptor = "README.md section #26"
 cost_tokens = 29
-cum_tokens = 2596
+cum_tokens = 2328
 
 [batches.content]
 kind = "lines"
@@ -1392,11 +1006,11 @@ end = 462
 kind = "full"
 
 [[batches]]
-position = 65
-key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false })'
+position = 44
+key = 'Markdown(Section { file: "README.md", section_index: 36, keeps_default_concavity: false })'
 descriptor = "README.md section #36"
 cost_tokens = 29
-cum_tokens = 2625
+cum_tokens = 2357
 
 [batches.content]
 kind = "lines"
@@ -1410,11 +1024,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 66
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
+position = 45
+key = 'Markdown(Section { file: "README.md", section_index: 4, keeps_default_concavity: false })'
 descriptor = "README.md section #4"
 cost_tokens = 106
-cum_tokens = 2731
+cum_tokens = 2463
 
 [batches.content]
 kind = "lines"
@@ -1428,11 +1042,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Markdown(Section { file: "README.md", section_index: 39, reference_shaped: false })'
+position = 46
+key = 'Markdown(Section { file: "README.md", section_index: 39, keeps_default_concavity: false })'
 descriptor = "README.md section #39"
 cost_tokens = 30
-cum_tokens = 2761
+cum_tokens = 2493
 
 [batches.content]
 kind = "lines"
@@ -1446,63 +1060,11 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 68
-key = 'Typescript(ExportNames { file: "ranges/simplify.js" })'
-descriptor = "export names surface in ranges/simplify.js"
-cost_tokens = 20
-cum_tokens = 2781
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 69
-key = 'Typescript(Export { file: "ranges/simplify.js", start_line: 8 })'
-descriptor = "export at ranges/simplify.js:8"
-cost_tokens = 0
-cum_tokens = 2781
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 70
+position = 47
 key = 'Fs(DirListing { dir: "test/fixtures" })'
 descriptor = "listing of 'test/fixtures'"
 cost_tokens = 83
-cum_tokens = 2864
+cum_tokens = 2576
 
 [batches.content]
 kind = "fs"
@@ -1512,129 +1074,11 @@ parent = "test/fixtures"
 entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
 
 [[batches]]
-position = 71
-key = 'Typescript(ExportNames { file: "classes/comparator.js" })'
-descriptor = "export names surface in classes/comparator.js"
-cost_tokens = 22
-cum_tokens = 2886
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 136
-end = 136
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 137
-end = 137
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 72
-key = 'Typescript(ExportNames { file: "classes/range.js" })'
-descriptor = "export names surface in classes/range.js"
-cost_tokens = 22
-cum_tokens = 2908
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 216
-end = 216
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 73
-key = 'Typescript(ExportNames { file: "classes/semver.js" })'
-descriptor = "export names surface in classes/semver.js"
-cost_tokens = 22
-cum_tokens = 2930
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 333
-end = 333
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 74
-key = 'Markdown(Section { file: "README.md", section_index: 31, reference_shaped: false })'
+position = 48
+key = 'Markdown(Section { file: "README.md", section_index: 31, keeps_default_concavity: false })'
 descriptor = "README.md section #31"
 cost_tokens = 33
-cum_tokens = 2963
+cum_tokens = 2609
 
 [batches.content]
 kind = "lines"
@@ -1648,29 +1092,11 @@ end = 473
 kind = "full"
 
 [[batches]]
-position = 75
-key = 'Typescript(Imports { file: "classes/range.js" })'
-descriptor = "imports in classes/range.js"
-cost_tokens = 8
-cum_tokens = 2971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'Markdown(Section { file: "README.md", section_index: 40, reference_shaped: false })'
+position = 49
+key = 'Markdown(Section { file: "README.md", section_index: 40, keeps_default_concavity: false })'
 descriptor = "README.md section #40"
 cost_tokens = 37
-cum_tokens = 3008
+cum_tokens = 2646
 
 [batches.content]
 kind = "lines"
@@ -1684,11 +1110,11 @@ end = 501
 kind = "full"
 
 [[batches]]
-position = 77
-key = 'Markdown(Section { file: "README.md", section_index: 41, reference_shaped: false })'
+position = 50
+key = 'Markdown(Section { file: "README.md", section_index: 41, keeps_default_concavity: false })'
 descriptor = "README.md section #41"
 cost_tokens = 36
-cum_tokens = 3044
+cum_tokens = 2682
 
 [batches.content]
 kind = "lines"
@@ -1702,11 +1128,11 @@ end = 503
 kind = "full"
 
 [[batches]]
-position = 78
-key = 'Markdown(Section { file: "README.md", section_index: 47, reference_shaped: false })'
+position = 51
+key = 'Markdown(Section { file: "README.md", section_index: 47, keeps_default_concavity: false })'
 descriptor = "README.md section #47"
 cost_tokens = 37
-cum_tokens = 3081
+cum_tokens = 2719
 
 [batches.content]
 kind = "lines"
@@ -1720,913 +1146,11 @@ end = 529
 kind = "full"
 
 [[batches]]
-position = 79
-key = 'Typescript(Export { file: "classes/range.js", start_line: 6 })'
-descriptor = "export at classes/range.js:6"
-cost_tokens = 83
-cum_tokens = 3164
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 170
-end = 170
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/range.js"
-start = 194
-end = 194
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 80
-key = 'Typescript(ExportNames { file: "functions/clean.js" })'
-descriptor = "export names surface in functions/clean.js"
-cost_tokens = 27
-cum_tokens = 3191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 81
-key = 'Typescript(Export { file: "functions/clean.js", start_line: 4 })'
-descriptor = "export at functions/clean.js:4"
-cost_tokens = 0
-cum_tokens = 3191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'Typescript(ExportNames { file: "functions/valid.js" })'
-descriptor = "export names surface in functions/valid.js"
-cost_tokens = 27
-cum_tokens = 3218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 83
-key = 'Typescript(Export { file: "functions/valid.js", start_line: 4 })'
-descriptor = "export at functions/valid.js:4"
-cost_tokens = 0
-cum_tokens = 3218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 84
-key = 'Typescript(ExportNames { file: "functions/coerce.js" })'
-descriptor = "export names surface in functions/coerce.js"
-cost_tokens = 29
-cum_tokens = 3247
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/coerce.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/coerce.js"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/coerce.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
-key = 'Typescript(Export { file: "functions/coerce.js", start_line: 7 })'
-descriptor = "export at functions/coerce.js:7"
-cost_tokens = 0
-cum_tokens = 3247
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/coerce.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/coerce.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 86
-key = 'Typescript(ExportNames { file: "functions/diff.js" })'
-descriptor = "export names surface in functions/diff.js"
-cost_tokens = 29
-cum_tokens = 3276
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 87
-key = 'Typescript(Export { file: "functions/diff.js", start_line: 5 })'
-descriptor = "export at functions/diff.js:5"
-cost_tokens = 0
-cum_tokens = 3276
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 88
-key = 'Typescript(ExportNames { file: "functions/prerelease.js" })'
-descriptor = "export names surface in functions/prerelease.js"
-cost_tokens = 29
-cum_tokens = 3305
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 89
-key = 'Typescript(Export { file: "functions/prerelease.js", start_line: 4 })'
-descriptor = "export at functions/prerelease.js:4"
-cost_tokens = 0
-cum_tokens = 3305
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 90
-key = 'Typescript(ExportNames { file: "functions/satisfies.js" })'
-descriptor = "export names surface in functions/satisfies.js"
-cost_tokens = 29
-cum_tokens = 3334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 91
-key = 'Typescript(Export { file: "functions/satisfies.js", start_line: 4 })'
-descriptor = "export at functions/satisfies.js:4"
-cost_tokens = 0
-cum_tokens = 3334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 92
-key = 'Typescript(ExportNames { file: "ranges/min-version.js" })'
-descriptor = "export names surface in ranges/min-version.js"
-cost_tokens = 29
-cum_tokens = 3363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/min-version.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-version.js"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-version.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 93
-key = 'Typescript(Export { file: "ranges/min-version.js", start_line: 7 })'
-descriptor = "export at ranges/min-version.js:7"
-cost_tokens = 0
-cum_tokens = 3363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/min-version.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-version.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 94
-key = 'Typescript(ExportNames { file: "ranges/valid.js" })'
-descriptor = "export names surface in ranges/valid.js"
-cost_tokens = 29
-cum_tokens = 3392
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 95
-key = 'Typescript(Export { file: "ranges/valid.js", start_line: 4 })'
-descriptor = "export at ranges/valid.js:4"
-cost_tokens = 0
-cum_tokens = 3392
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 96
-key = 'Typescript(ExportNames { file: "ranges/subset.js" })'
-descriptor = "export names surface in ranges/subset.js"
-cost_tokens = 30
-cum_tokens = 3422
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/subset.js"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/subset.js"
-start = 249
-end = 249
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/subset.js"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 97
-key = 'Typescript(Export { file: "ranges/subset.js", start_line: 45 })'
-descriptor = "export at ranges/subset.js:45"
-cost_tokens = 0
-cum_tokens = 3422
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/subset.js"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/subset.js"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 98
-key = 'Typescript(ExportNames { file: "functions/cmp.js" })'
-descriptor = "export names surface in functions/cmp.js"
-cost_tokens = 31
-cum_tokens = 3453
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/cmp.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/cmp.js"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/cmp.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 99
-key = 'Typescript(Export { file: "functions/cmp.js", start_line: 10 })'
-descriptor = "export at functions/cmp.js:10"
-cost_tokens = 0
-cum_tokens = 3453
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/cmp.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/cmp.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 100
-key = 'Typescript(ExportNames { file: "functions/compare-build.js" })'
-descriptor = "export names surface in functions/compare-build.js"
-cost_tokens = 31
-cum_tokens = 3484
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'Typescript(Export { file: "functions/compare-build.js", start_line: 4 })'
-descriptor = "export at functions/compare-build.js:4"
-cost_tokens = 0
-cum_tokens = 3484
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'Typescript(ExportNames { file: "ranges/intersects.js" })'
-descriptor = "export names surface in ranges/intersects.js"
-cost_tokens = 31
-cum_tokens = 3515
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'Typescript(Export { file: "ranges/intersects.js", start_line: 4 })'
-descriptor = "export at ranges/intersects.js:4"
-cost_tokens = 0
-cum_tokens = 3515
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 104
-key = 'Typescript(ExportNames { file: "ranges/outside.js" })'
-descriptor = "export names surface in ranges/outside.js"
-cost_tokens = 31
-cum_tokens = 3546
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/outside.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/outside.js"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/outside.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 105
-key = 'Typescript(Export { file: "ranges/outside.js", start_line: 13 })'
-descriptor = "export at ranges/outside.js:13"
-cost_tokens = 0
-cum_tokens = 3546
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/outside.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/outside.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 106
+position = 52
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 7
-cum_tokens = 3553
+cum_tokens = 2726
 
 [batches.content]
 kind = "fs"
@@ -2636,71 +1160,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["bug.yml", "config.yml"]
 
 [[batches]]
-position = 107
-key = 'Typescript(ExportNames { file: "functions/parse.js" })'
-descriptor = "export names surface in functions/parse.js"
-cost_tokens = 32
-cum_tokens = 3585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 108
-key = 'Typescript(Export { file: "functions/parse.js", start_line: 4 })'
-descriptor = "export at functions/parse.js:4"
-cost_tokens = 0
-cum_tokens = 3585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 109
-key = 'Markdown(Section { file: "README.md", section_index: 37, reference_shaped: false })'
+position = 53
+key = 'Markdown(Section { file: "README.md", section_index: 37, keeps_default_concavity: false })'
 descriptor = "README.md section #37"
 cost_tokens = 44
-cum_tokens = 3629
+cum_tokens = 2770
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +1178,11 @@ end = 495
 kind = "full"
 
 [[batches]]
-position = 110
-key = 'Markdown(Section { file: "README.md", section_index: 38, reference_shaped: false })'
+position = 54
+key = 'Markdown(Section { file: "README.md", section_index: 38, keeps_default_concavity: false })'
 descriptor = "README.md section #38"
 cost_tokens = 42
-cum_tokens = 3671
+cum_tokens = 2812
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +1196,11 @@ end = 497
 kind = "full"
 
 [[batches]]
-position = 111
-key = 'Markdown(Section { file: "README.md", section_index: 45, reference_shaped: false })'
+position = 55
+key = 'Markdown(Section { file: "README.md", section_index: 45, keeps_default_concavity: false })'
 descriptor = "README.md section #45"
 cost_tokens = 44
-cum_tokens = 3715
+cum_tokens = 2856
 
 [batches.content]
 kind = "lines"
@@ -2750,11 +1214,11 @@ end = 518
 kind = "full"
 
 [[batches]]
-position = 112
-key = 'Markdown(Section { file: "README.md", section_index: 53, reference_shaped: false })'
+position = 56
+key = 'Markdown(Section { file: "README.md", section_index: 53, keeps_default_concavity: false })'
 descriptor = "README.md section #53"
 cost_tokens = 45
-cum_tokens = 3760
+cum_tokens = 2901
 
 [batches.content]
 kind = "lines"
@@ -2768,191 +1232,11 @@ end = 564
 kind = "full"
 
 [[batches]]
-position = 113
-key = 'Typescript(ExportNames { file: "functions/inc.js" })'
-descriptor = "export names surface in functions/inc.js"
-cost_tokens = 34
-cum_tokens = 3794
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 114
-key = 'Typescript(Export { file: "functions/inc.js", start_line: 5 })'
-descriptor = "export at functions/inc.js:5"
-cost_tokens = 0
-cum_tokens = 3794
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 115
-key = 'Typescript(ExportNames { file: "ranges/max-satisfying.js" })'
-descriptor = "export names surface in ranges/max-satisfying.js"
-cost_tokens = 35
-cum_tokens = 3829
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 116
-key = 'Typescript(Export { file: "ranges/max-satisfying.js", start_line: 6 })'
-descriptor = "export at ranges/max-satisfying.js:6"
-cost_tokens = 0
-cum_tokens = 3829
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 117
-key = 'Typescript(ExportNames { file: "ranges/min-satisfying.js" })'
-descriptor = "export names surface in ranges/min-satisfying.js"
-cost_tokens = 35
-cum_tokens = 3864
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 118
-key = 'Typescript(Export { file: "ranges/min-satisfying.js", start_line: 5 })'
-descriptor = "export at ranges/min-satisfying.js:5"
-cost_tokens = 0
-cum_tokens = 3864
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 119
-key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false })'
+position = 57
+key = 'Markdown(Section { file: "README.md", section_index: 29, keeps_default_concavity: false })'
 descriptor = "README.md section #29"
 cost_tokens = 47
-cum_tokens = 3911
+cum_tokens = 2948
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +1250,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 120
-key = 'Markdown(Section { file: "README.md", section_index: 30, reference_shaped: false })'
+position = 58
+key = 'Markdown(Section { file: "README.md", section_index: 30, keeps_default_concavity: false })'
 descriptor = "README.md section #30"
 cost_tokens = 50
-cum_tokens = 3961
+cum_tokens = 2998
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +1268,11 @@ end = 472
 kind = "full"
 
 [[batches]]
-position = 121
-key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false })'
+position = 59
+key = 'Markdown(Section { file: "README.md", section_index: 25, keeps_default_concavity: false })'
 descriptor = "README.md section #25"
 cost_tokens = 55
-cum_tokens = 4016
+cum_tokens = 3053
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +1286,11 @@ end = 461
 kind = "full"
 
 [[batches]]
-position = 122
-key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false })'
+position = 60
+key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, keeps_default_concavity: false })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 10
-cum_tokens = 4026
+cum_tokens = 3063
 
 [batches.content]
 kind = "lines"
@@ -3020,29 +1304,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 123
-key = 'Typescript(ExportBody { file: "functions/valid.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/valid.js:4 body 5"
-cost_tokens = 26
-cum_tokens = 4052
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
+position = 61
 key = 'Fs(DirListing { dir: ".github/actions" })'
 descriptor = "listing of '.github/actions'"
 cost_tokens = 12
-cum_tokens = 4064
+cum_tokens = 3075
 
 [batches.content]
 kind = "fs"
@@ -3052,11 +1318,11 @@ parent = ".github/actions"
 entries = ["create-check", "install-latest-npm"]
 
 [[batches]]
-position = 125
+position = 62
 key = 'Fs(DirListing { dir: ".github/actions/create-check" })'
 descriptor = "listing of '.github/actions/create-check'"
 cost_tokens = 3
-cum_tokens = 4067
+cum_tokens = 3078
 
 [batches.content]
 kind = "fs"
@@ -3066,11 +1332,11 @@ parent = ".github/actions/create-check"
 entries = ["action.yml"]
 
 [[batches]]
-position = 126
+position = 63
 key = 'Fs(DirListing { dir: ".github/actions/install-latest-npm" })'
 descriptor = "listing of '.github/actions/install-latest-npm'"
 cost_tokens = 3
-cum_tokens = 4070
+cum_tokens = 3081
 
 [batches.content]
 kind = "fs"
@@ -3080,153 +1346,11 @@ parent = ".github/actions/install-latest-npm"
 entries = ["action.yml"]
 
 [[batches]]
-position = 127
-key = 'Typescript(Export { file: "classes/comparator.js", start_line: 5 })'
-descriptor = "export at classes/comparator.js:5"
-cost_tokens = 73
-cum_tokens = 4143
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 128
-key = 'Typescript(Imports { file: "classes/comparator.js" })'
-descriptor = "imports in classes/comparator.js"
-cost_tokens = 8
-cum_tokens = 4151
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/comparator.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Typescript(Imports { file: "internal/constants.js" })'
-descriptor = "imports in internal/constants.js"
-cost_tokens = 8
-cum_tokens = 4159
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/constants.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Markdown(Section { file: "README.md", section_index: 32, reference_shaped: false })'
+position = 64
+key = 'Markdown(Section { file: "README.md", section_index: 32, keeps_default_concavity: false })'
 descriptor = "README.md section #32"
 cost_tokens = 70
-cum_tokens = 4229
+cum_tokens = 3151
 
 [batches.content]
 kind = "lines"
@@ -3240,11 +1364,11 @@ end = 476
 kind = "full"
 
 [[batches]]
-position = 131
-key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false })'
+position = 65
+key = 'Markdown(Section { file: "README.md", section_index: 28, keeps_default_concavity: false })'
 descriptor = "README.md section #28"
 cost_tokens = 71
-cum_tokens = 4300
+cum_tokens = 3222
 
 [batches.content]
 kind = "lines"
@@ -3258,11 +1382,11 @@ end = 468
 kind = "full"
 
 [[batches]]
-position = 132
+position = 66
 key = 'Fs(DirListing { dir: "tap-snapshots/test/bin" })'
 descriptor = "listing of 'tap-snapshots/test/bin'"
 cost_tokens = 7
-cum_tokens = 4307
+cum_tokens = 3229
 
 [batches.content]
 kind = "fs"
@@ -3272,11 +1396,11 @@ parent = "tap-snapshots/test/bin"
 entries = ["semver.js.test.cjs"]
 
 [[batches]]
-position = 133
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
+position = 67
+key = 'Markdown(Section { file: "README.md", section_index: 6, keeps_default_concavity: false })'
 descriptor = "README.md section #6"
 cost_tokens = 77
-cum_tokens = 4384
+cum_tokens = 3306
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +1414,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 134
-key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false })'
+position = 68
+key = 'Markdown(Section { file: "README.md", section_index: 27, keeps_default_concavity: false })'
 descriptor = "README.md section #27"
 cost_tokens = 76
-cum_tokens = 4460
+cum_tokens = 3382
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +1432,11 @@ end = 466
 kind = "full"
 
 [[batches]]
-position = 135
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
+position = 69
+key = 'Markdown(Section { file: "README.md", section_index: 8, keeps_default_concavity: false })'
 descriptor = "README.md section #8"
 cost_tokens = 82
-cum_tokens = 4542
+cum_tokens = 3464
 
 [batches.content]
 kind = "lines"
@@ -3326,47 +1450,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 136
-key = 'Typescript(ExportBody { file: "functions/clean.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/clean.js:4 body 5"
-cost_tokens = 36
-cum_tokens = 4578
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Typescript(ExportBody { file: "functions/prerelease.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/prerelease.js:4 body 5"
-cost_tokens = 36
-cum_tokens = 4614
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'Markdown(Section { file: "README.md", section_index: 51, reference_shaped: false })'
+position = 70
+key = 'Markdown(Section { file: "README.md", section_index: 51, keeps_default_concavity: false })'
 descriptor = "README.md section #51"
 cost_tokens = 85
-cum_tokens = 4699
+cum_tokens = 3549
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +1468,11 @@ end = 556
 kind = "full"
 
 [[batches]]
-position = 139
+position = 71
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 576
-cum_tokens = 5275
+cum_tokens = 4125
 
 [batches.content]
 kind = "lines"
@@ -3406,11 +1494,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 140
+position = 72
 key = 'Typescript(ExportNames { file: "preload.js" })'
 descriptor = "export names surface in preload.js"
 cost_tokens = 14
-cum_tokens = 5289
+cum_tokens = 4139
 
 [batches.content]
 kind = "lines"
@@ -3424,11 +1512,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 141
+position = 73
 key = 'Typescript(ExportNames { file: "map.js" })'
 descriptor = "export names surface in map.js"
 cost_tokens = 21
-cum_tokens = 5310
+cum_tokens = 4160
 
 [batches.content]
 kind = "lines"
@@ -3442,11 +1530,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 142
+position = 74
 key = 'Typescript(Imports { file: "map.js" })'
 descriptor = "imports in map.js"
 cost_tokens = 6
-cum_tokens = 5316
+cum_tokens = 4166
 
 [batches.content]
 kind = "lines"
@@ -3460,11 +1548,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 143
+position = 75
 key = 'Typescript(Imports { file: "preload.js" })'
 descriptor = "imports in preload.js"
 cost_tokens = 8
-cum_tokens = 5324
+cum_tokens = 4174
 
 [batches.content]
 kind = "lines"
@@ -3478,11 +1566,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 144
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
+position = 76
+key = 'Markdown(Section { file: "README.md", section_index: 10, keeps_default_concavity: false })'
 descriptor = "README.md section #10"
 cost_tokens = 91
-cum_tokens = 5415
+cum_tokens = 4265
 
 [batches.content]
 kind = "lines"
@@ -3496,149 +1584,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 145
-key = 'Typescript(Export { file: "classes/semver.js", start_line: 9 })'
-descriptor = "export at classes/semver.js:9"
-cost_tokens = 101
-cum_tokens = 5516
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 9
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 109
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 194
-end = 194
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 136
-end = 136
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "classes/semver.js"
-start = 195
-end = 195
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 146
-key = 'Markdown(Section { file: "README.md", section_index: 42, reference_shaped: false })'
+position = 77
+key = 'Markdown(Section { file: "README.md", section_index: 42, keeps_default_concavity: false })'
 descriptor = "README.md section #42"
 cost_tokens = 86
-cum_tokens = 5602
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -3652,29 +1602,11 @@ end = 507
 kind = "full"
 
 [[batches]]
-position = 147
-key = 'Typescript(ExportNames { file: "internal/debug.js" })'
-descriptor = "export names surface in internal/debug.js"
-cost_tokens = 11
-cum_tokens = 5613
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/debug.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
-key = 'Markdown(Section { file: "README.md", section_index: 33, reference_shaped: false })'
+position = 78
+key = 'Markdown(Section { file: "README.md", section_index: 33, keeps_default_concavity: false })'
 descriptor = "README.md section #33"
 cost_tokens = 76
-cum_tokens = 5689
+cum_tokens = 4427
 
 [batches.content]
 kind = "lines"
@@ -3688,11 +1620,11 @@ end = 483
 kind = "full"
 
 [[batches]]
-position = 149
-key = 'Markdown(Section { file: "README.md", section_index: 57, reference_shaped: false })'
+position = 79
+key = 'Markdown(Section { file: "README.md", section_index: 57, keeps_default_concavity: false })'
 descriptor = "README.md section #57"
 cost_tokens = 73
-cum_tokens = 5762
+cum_tokens = 4500
 
 [batches.content]
 kind = "lines"
@@ -3706,29 +1638,11 @@ end = 608
 kind = "full"
 
 [[batches]]
-position = 150
-key = 'Typescript(ExportBody { file: "ranges/intersects.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at ranges/intersects.js:4 body 5"
-cost_tokens = 45
-cum_tokens = 5807
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 5
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
+position = 80
+key = 'Markdown(Section { file: "README.md", section_index: 9, keeps_default_concavity: false })'
 descriptor = "README.md section #9"
 cost_tokens = 112
-cum_tokens = 5919
+cum_tokens = 4612
 
 [batches.content]
 kind = "lines"
@@ -3742,65 +1656,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 152
-key = 'Typescript(ExportBody { file: "functions/compare-build.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/compare-build.js:4 body 5"
-cost_tokens = 52
-cum_tokens = 5971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 5
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Typescript(Export { file: "internal/constants.js", start_line: 28 })'
-descriptor = "export at internal/constants.js:28"
-cost_tokens = 88
-cum_tokens = 6059
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/constants.js"
-start = 28
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Typescript(ExportBody { file: "functions/satisfies.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/satisfies.js:4 body 5"
-cost_tokens = 55
-cum_tokens = 6114
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 5
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Markdown(Section { file: "README.md", section_index: 50, reference_shaped: false })'
+position = 81
+key = 'Markdown(Section { file: "README.md", section_index: 50, keeps_default_concavity: false })'
 descriptor = "README.md section #50"
 cost_tokens = 133
-cum_tokens = 6247
+cum_tokens = 4745
 
 [batches.content]
 kind = "lines"
@@ -3814,127 +1674,11 @@ end = 552
 kind = "full"
 
 [[batches]]
-position = 156
-key = 'Typescript(Imports { file: "ranges/gtr.js" })'
-descriptor = "imports in ranges/gtr.js"
-cost_tokens = 21
-cum_tokens = 6268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/gtr.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/gtr.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Typescript(Imports { file: "functions/clean.js" })'
-descriptor = "imports in functions/clean.js"
-cost_tokens = 22
-cum_tokens = 6290
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/clean.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Typescript(Imports { file: "functions/prerelease.js" })'
-descriptor = "imports in functions/prerelease.js"
-cost_tokens = 22
-cum_tokens = 6312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Typescript(Imports { file: "functions/valid.js" })'
-descriptor = "imports in functions/valid.js"
-cost_tokens = 22
-cum_tokens = 6334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Typescript(Imports { file: "functions/diff.js" })'
-descriptor = "imports in functions/diff.js"
-cost_tokens = 23
-cum_tokens = 6357
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'Typescript(ExportBody { file: "ranges/valid.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at ranges/valid.js:4 body 5"
-cost_tokens = 79
-cum_tokens = 6436
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 5
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'Markdown(Section { file: "README.md", section_index: 44, reference_shaped: false })'
+position = 82
+key = 'Markdown(Section { file: "README.md", section_index: 44, keeps_default_concavity: false })'
 descriptor = "README.md section #44"
 cost_tokens = 155
-cum_tokens = 6591
+cum_tokens = 4900
 
 [batches.content]
 kind = "lines"
@@ -3948,429 +1692,11 @@ end = 516
 kind = "full"
 
 [[batches]]
-position = 163
-key = 'Typescript(Imports { file: "functions/compare-loose.js" })'
-descriptor = "imports in functions/compare-loose.js"
-cost_tokens = 24
-cum_tokens = 6615
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-loose.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
-key = 'Typescript(Imports { file: "functions/eq.js" })'
-descriptor = "imports in functions/eq.js"
-cost_tokens = 24
-cum_tokens = 6639
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/eq.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 165
-key = 'Typescript(Imports { file: "functions/gt.js" })'
-descriptor = "imports in functions/gt.js"
-cost_tokens = 24
-cum_tokens = 6663
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/gt.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 166
-key = 'Typescript(Imports { file: "functions/gte.js" })'
-descriptor = "imports in functions/gte.js"
-cost_tokens = 24
-cum_tokens = 6687
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/gte.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 167
-key = 'Typescript(Imports { file: "functions/lt.js" })'
-descriptor = "imports in functions/lt.js"
-cost_tokens = 24
-cum_tokens = 6711
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/lt.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 168
-key = 'Typescript(Imports { file: "functions/lte.js" })'
-descriptor = "imports in functions/lte.js"
-cost_tokens = 24
-cum_tokens = 6735
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/lte.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 169
-key = 'Typescript(Imports { file: "functions/neq.js" })'
-descriptor = "imports in functions/neq.js"
-cost_tokens = 24
-cum_tokens = 6759
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/neq.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'Typescript(Imports { file: "functions/rcompare.js" })'
-descriptor = "imports in functions/rcompare.js"
-cost_tokens = 24
-cum_tokens = 6783
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/rcompare.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'Typescript(Imports { file: "functions/satisfies.js" })'
-descriptor = "imports in functions/satisfies.js"
-cost_tokens = 24
-cum_tokens = 6807
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/satisfies.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Typescript(Imports { file: "ranges/intersects.js" })'
-descriptor = "imports in ranges/intersects.js"
-cost_tokens = 24
-cum_tokens = 6831
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/intersects.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
-key = 'Typescript(Imports { file: "ranges/ltr.js" })'
-descriptor = "imports in ranges/ltr.js"
-cost_tokens = 24
-cum_tokens = 6855
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/ltr.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
-key = 'Typescript(Imports { file: "ranges/valid.js" })'
-descriptor = "imports in ranges/valid.js"
-cost_tokens = 24
-cum_tokens = 6879
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 175
-key = 'Typescript(ExportNames { file: "internal/lrucache.js" })'
-descriptor = "export names surface in internal/lrucache.js"
-cost_tokens = 24
-cum_tokens = 6903
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 176
-key = 'Typescript(Imports { file: "functions/compare-build.js" })'
-descriptor = "imports in functions/compare-build.js"
-cost_tokens = 26
-cum_tokens = 6929
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare-build.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
-key = 'Typescript(Imports { file: "functions/inc.js" })'
-descriptor = "imports in functions/inc.js"
-cost_tokens = 26
-cum_tokens = 6955
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/inc.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
-key = 'Typescript(Imports { file: "functions/parse.js" })'
-descriptor = "imports in functions/parse.js"
-cost_tokens = 26
-cum_tokens = 6981
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 179
-key = 'Typescript(Imports { file: "functions/rsort.js" })'
-descriptor = "imports in functions/rsort.js"
-cost_tokens = 26
-cum_tokens = 7007
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/rsort.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 180
-key = 'Typescript(Imports { file: "functions/sort.js" })'
-descriptor = "imports in functions/sort.js"
-cost_tokens = 26
-cum_tokens = 7033
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/sort.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'Typescript(Imports { file: "ranges/to-comparators.js" })'
-descriptor = "imports in ranges/to-comparators.js"
-cost_tokens = 26
-cum_tokens = 7059
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/to-comparators.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Typescript(ExportNames { file: "internal/parse-options.js" })'
-descriptor = "export names surface in internal/parse-options.js"
-cost_tokens = 25
-cum_tokens = 7084
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/parse-options.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/parse-options.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/parse-options.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 183
-key = 'Typescript(Export { file: "internal/parse-options.js", start_line: 6 })'
-descriptor = "export at internal/parse-options.js:6"
-cost_tokens = 0
-cum_tokens = 7084
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/parse-options.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/parse-options.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 184
-key = 'Markdown(Section { file: "README.md", section_index: 46, reference_shaped: false })'
+position = 83
+key = 'Markdown(Section { file: "README.md", section_index: 46, keeps_default_concavity: false })'
 descriptor = "README.md section #46"
 cost_tokens = 170
-cum_tokens = 7254
+cum_tokens = 5070
 
 [batches.content]
 kind = "lines"
@@ -4384,11 +1710,11 @@ end = 526
 kind = "full"
 
 [[batches]]
-position = 185
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
+position = 84
+key = 'Markdown(Section { file: "README.md", section_index: 7, keeps_default_concavity: false })'
 descriptor = "README.md section #7"
 cost_tokens = 185
-cum_tokens = 7439
+cum_tokens = 5255
 
 [batches.content]
 kind = "lines"
@@ -4402,101 +1728,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 186
-key = 'Typescript(Imports { file: "functions/compare.js" })'
-descriptor = "imports in functions/compare.js"
-cost_tokens = 28
-cum_tokens = 7467
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Typescript(Imports { file: "functions/major.js" })'
-descriptor = "imports in functions/major.js"
-cost_tokens = 28
-cum_tokens = 7495
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/major.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Typescript(Imports { file: "functions/minor.js" })'
-descriptor = "imports in functions/minor.js"
-cost_tokens = 28
-cum_tokens = 7523
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/minor.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Typescript(Imports { file: "functions/patch.js" })'
-descriptor = "imports in functions/patch.js"
-cost_tokens = 28
-cum_tokens = 7551
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/patch.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
-key = 'Typescript(ExportBody { file: "functions/parse.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at functions/parse.js:4 body 5"
-cost_tokens = 97
-cum_tokens = 7648
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/parse.js"
-start = 5
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 191
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
+position = 85
+key = 'Markdown(Section { file: "README.md", section_index: 5, keeps_default_concavity: false })'
 descriptor = "README.md section #5"
 cost_tokens = 598
-cum_tokens = 8246
+cum_tokens = 5853
 
 [batches.content]
 kind = "lines"
@@ -4510,97 +1746,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 192
-key = 'Typescript(ExportNames { file: "internal/identifiers.js" })'
-descriptor = "export names surface in internal/identifiers.js"
-cost_tokens = 29
-cum_tokens = 8275
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 193
-key = 'Typescript(Export { file: "internal/identifiers.js", start_line: 4 })'
-descriptor = "export at internal/identifiers.js:4"
-cost_tokens = 0
-cum_tokens = 8275
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 194
-key = 'Typescript(Export { file: "internal/identifiers.js", start_line: 26 })'
-descriptor = "export at internal/identifiers.js:26"
-cost_tokens = 20
-cum_tokens = 8295
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/identifiers.js"
-start = 26
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 195
+position = 86
 key = 'Json(Whole { file: "release-please-config.json" })'
 descriptor = "json config release-please-config.json"
 cost_tokens = 350
-cum_tokens = 8645
+cum_tokens = 6203
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +1764,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 196
-key = 'Markdown(Section { file: "README.md", section_index: 56, reference_shaped: false })'
+position = 87
+key = 'Markdown(Section { file: "README.md", section_index: 56, keeps_default_concavity: false })'
 descriptor = "README.md section #56"
 cost_tokens = 152
-cum_tokens = 8797
+cum_tokens = 6355
 
 [batches.content]
 kind = "lines"
@@ -4632,111 +1782,11 @@ end = 598
 kind = "full"
 
 [[batches]]
-position = 197
-key = 'Typescript(Export { file: "internal/lrucache.js", start_line: 3 })'
-descriptor = "export at internal/lrucache.js:3"
-cost_tokens = 46
-cum_tokens = 8843
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/lrucache.js"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 198
-key = 'Typescript(Imports { file: "ranges/simplify.js" })'
-descriptor = "imports in ranges/simplify.js"
-cost_tokens = 37
-cum_tokens = 8880
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ranges/simplify.js"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 199
-key = 'Markdown(Section { file: "README.md", section_index: 54, reference_shaped: false })'
+position = 88
+key = 'Markdown(Section { file: "README.md", section_index: 54, keeps_default_concavity: false })'
 descriptor = "README.md section #54"
 cost_tokens = 222
-cum_tokens = 9102
+cum_tokens = 6577
 
 [batches.content]
 kind = "lines"
@@ -4750,91 +1800,267 @@ end = 574
 kind = "full"
 
 [[batches]]
-position = 200
-key = 'Typescript(Imports { file: "ranges/max-satisfying.js" })'
-descriptor = "imports in ranges/max-satisfying.js"
-cost_tokens = 39
-cum_tokens = 9141
+position = 89
+key = 'Markdown(Section { file: "README.md", section_index: 20, keeps_default_concavity: false })'
+descriptor = "README.md section #20"
+cost_tokens = 748
+cum_tokens = 7325
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "ranges/max-satisfying.js"
-start = 1
-end = 4
+path = "README.md"
+start = 408
+end = 451
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 201
-key = 'Typescript(Imports { file: "ranges/min-satisfying.js" })'
-descriptor = "imports in ranges/min-satisfying.js"
-cost_tokens = 39
-cum_tokens = 9180
+position = 90
+key = 'Markdown(HeadingsOutline { file: "CONTRIBUTING.md" })'
+descriptor = "headings outline in CONTRIBUTING.md"
+cost_tokens = 119
+cum_tokens = 7444
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "ranges/min-satisfying.js"
-start = 1
-end = 4
+path = "CONTRIBUTING.md"
+start = 3
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 202
-key = 'Typescript(ExportBody { file: "functions/inc.js", start_line: 5, body_start_line: 6 })'
-descriptor = "export body at functions/inc.js:5 body 6"
-cost_tokens = 136
-cum_tokens = 9316
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 9
+end = 9
 
-[batches.content]
-kind = "lines"
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
-path = "functions/inc.js"
-start = 6
+path = "CONTRIBUTING.md"
+start = 17
 end = 19
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 42
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "CONTRIBUTING.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 203
-key = 'Typescript(Imports { file: "ranges/outside.js" })'
-descriptor = "imports in ranges/outside.js"
-cost_tokens = 41
-cum_tokens = 9357
+position = 91
+key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0, keeps_default_concavity: false })'
+descriptor = "CONTRIBUTING.md section #0"
+cost_tokens = 0
+cum_tokens = 7444
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "ranges/outside.js"
-start = 1
-end = 4
+path = "CONTRIBUTING.md"
+start = 3
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 204
-key = 'Typescript(Imports { file: "ranges/subset.js" })'
-descriptor = "imports in ranges/subset.js"
-cost_tokens = 41
-cum_tokens = 9398
+position = 92
+key = 'Markdown(Section { file: "README.md", section_index: 15, keeps_default_concavity: false })'
+descriptor = "README.md section #15"
+cost_tokens = 285
+cum_tokens = 7729
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "ranges/subset.js"
-start = 1
-end = 4
+path = "README.md"
+start = 287
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Markdown(Section { file: "README.md", section_index: 58, keeps_default_concavity: false })'
+descriptor = "README.md section #58"
+cost_tokens = 775
+cum_tokens = 8504
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 610
+end = 664
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Markdown(Section { file: "README.md", section_index: 49, keeps_default_concavity: false })'
+descriptor = "README.md section #49"
+cost_tokens = 293
+cum_tokens = 8797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 535
+end = 546
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Markdown(Section { file: "README.md", section_index: 11, keeps_default_concavity: false })'
+descriptor = "README.md section #11"
+cost_tokens = 316
+cum_tokens = 9113
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 219
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Markdown(Section { file: "README.md", section_index: 12, keeps_default_concavity: false })'
+descriptor = "README.md section #12"
+cost_tokens = 326
+cum_tokens = 9439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 250
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Markdown(Section { file: "README.md", section_index: 16, keeps_default_concavity: false })'
+descriptor = "README.md section #16"
+cost_tokens = 336
+cum_tokens = 9775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 306
+end = 322
 
 [batches.content.spans.render]
 kind = "full"
