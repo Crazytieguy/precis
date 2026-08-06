@@ -10,49 +10,7 @@ expression: rendered
     pull_request_template.md …
     workflows/
         publish.yml …
-        test.yml
-               1→name: test suite
-               2→
-               3→on:
-               4→  push:
-               5→    branches: [master]
-               6→  pull_request:
-               7→
-               8→jobs:
-               9→  test:
-              10→    strategy:
-              11→      fail-fast: false
-              12→      matrix:
-              13→        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", pypy-3.11]
-              14→    runs-on: ubuntu-latest
-              15→    steps:
-              16→    - uses: actions/checkout@v6
-              17→    - name: Set up Python ${{ matrix.python-version }}
-              18→      uses: actions/setup-python@v6
-              19→      with:
-              20→        python-version: ${{ matrix.python-version }}
-              21→        allow-prereleases: true
-              22→        cache: pip
-              23→        cache-dependency-path: pyproject.toml
-              24→    - name: Ensure pip >= v25.1
-              25→      run: python -m pip install "pip >= 25.1"
-              26→    - name: Install the project and its dependencies
-              27→      run: pip install --group test -e .
-              28→    - name: Test with pytest
-              29→      run: coverage run -m pytest
-              30→    - name: Upload Coverage
-              31→      uses: coverallsapp/github-action@v2
-              32→      with:
-              33→        parallel: true
-              34→
-              35→  coveralls:
-              36→    name: Finish Coveralls
-              37→    needs: test
-              38→    runs-on: ubuntu-latest
-              39→    steps:
-              40→    - uses: coverallsapp/github-action@v2
-              41→      with:
-              42→        parallel-finished: true
+        test.yml …
 .gitignore …
 .pre-commit-config.yaml …
 .readthedocs.yml …
@@ -241,7 +199,27 @@ src/
             …
             1099→def load_plugins() -> None:
             …
-        _config.py …
+        _config.py
+            …
+              11→T = TypeVar("T")
+              12→
+              13→
+              14→class ForwardRefPolicy(Enum):
+            …
+              25→    ERROR = auto()
+              26→    WARN = auto()
+              27→    IGNORE = auto()
+              30→class CollectionCheckStrategy(Enum):
+            …
+              49→    FIRST_ITEM = auto()
+              50→    ALL_ITEMS = auto()
+            …
+              62→@dataclass
+              63→class TypeCheckConfiguration:
+              64→    """
+              65→     You can change Typeguard's behavior with these settings.
+            …
+             106→global_config = TypeCheckConfiguration()
         _decorators.py …
         _exceptions.py
                1→from collections import deque
@@ -253,14 +231,21 @@ src/
                9→    """
               12→class TypeCheckWarning(UserWarning):
               13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
-            …
+              15→    def __init__(self, message: str):
+              16→        super().__init__(message)
               19→class InstrumentationWarning(UserWarning):
               20→    """Emitted when there's a problem with instrumenting a function for type checks."""
-            …
+              22→    def __init__(self, message: str):
+              23→        super().__init__(message)
               26→class TypeCheckError(Exception):
               27→    """
               28→    Raised by typeguard's type checkers when a type mismatch is detected.
               29→    """
+              31→    def __init__(self, message: str):
+            …
+              35→    def append_path_element(self, element: str) -> None:
+              36→        self._path.append(element)
+              38→    def __str__(self) -> str:
             …
         _functions.py …
         _importhook.py …
@@ -270,6 +255,7 @@ src/
                9→    """
               10→    Contains information necessary for type checkers to do their work.
             …
+              35→    __slots__ = "globals", "locals", "self_type", "config"
               37→    def __init__(
               38→        self,
               39→        globals: dict[str, Any],
@@ -280,7 +266,21 @@ src/
               44→    ):
             …
         _pytest_plugin.py …
-        _suppression.py …
+        _suppression.py
+            …
+              15→P = ParamSpec("P")
+              16→T = TypeVar("T")
+              17→
+              18→type_checks_suppressed = 0
+              19→type_checks_suppress_lock = Lock()
+              22→@overload
+              23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
+              26→@overload
+              27→def suppress_type_checks() -> ContextManager[None]: ...
+              30→def suppress_type_checks(
+              31→    func: Callable[P, T] | None = None,
+              32→) -> Callable[P, T] | ContextManager[None]:
+            …
         _transformer.py …
         _utils.py …
         py.typed

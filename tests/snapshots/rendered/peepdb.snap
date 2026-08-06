@@ -5,68 +5,7 @@ expression: rendered
 .github/
     workflows/
         pages.yml …
-        test.yml
-               1→name: Test and Publish Python Distribution
-               2→
-               3→on:
-               4→  push:
-               5→    branches: [ main ]
-               6→  pull_request:
-               7→    branches: [ main ]
-               8→  release:
-               9→    types: [published]
-              10→
-              11→jobs:
-              12→  test:
-              13→    runs-on: ubuntu-latest
-              14→    strategy:
-              15→      matrix:
-              16→        python-version: ['3.9', '3.10', '3.11']
-              17→
-              18→    steps:
-              19→    - uses: actions/checkout@v3
-              20→
-              21→    - name: Set up Python ${{ matrix.python-version }}
-              22→      uses: actions/setup-python@v4
-              23→      with:
-              24→        python-version: ${{ matrix.python-version }}
-              25→
-              26→    - name: Install system dependencies
-              27→      run: |
-              28→        sudo apt-get update
-              29→        sudo apt-get install -y libmariadb-dev
-              30→
-              31→    - name: Install dependencies
-              32→      run: |
-              33→        python -m pip install --upgrade pip
-              34→        pip install -r requirements.txt
-              35→        pip install -e .
-              36→
-              37→    - name: Run tests
-              38→      run: pytest peepdb/tests
-              39→
-              40→  publish-testpypi:
-              41→    needs: test
-              42→    runs-on: ubuntu-latest
-              43→    environment: test_environment
-              44→    if: github.event_name == 'release' && github.event.release.prerelease == true
-              45→    
-              46→    steps:
-              47→    - uses: actions/checkout@v3
-              48→
-              49→    - name: Clean build directories
-              50→      run: |
-              51→        rm -rf build/ dist/ *.egg-info/
-              52→
-              53→    - name: Set up Python
-              54→      uses: actions/setup-python@v4
-              55→      with:
-              56→        python-version: '3.x'
-              57→
-              58→    - name: Install system dependencies
-              59→      run: |
-              60→        sudo apt-get update
-            …
+        test.yml …
 .gitignore …
 CONTRIBUTING.md …
 LICENSE …
@@ -75,7 +14,7 @@ README.md
        1→# peepDB
        3→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL and OracleDB. peepDB is ligh…
        5→## 🚀 Features
-    …
+       7→- **Multi-Database Support**: Works with MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, MSSQL, OracleDB, and Firebase.
        8→- **Quick Data Inspection**: View all tables or a specific table with a simple command.
        9→- **User-Friendly CLI**: Easy-to-use command-line interface powered by Click.
       10→- **Secure Local Storage**: Securely store database connection details with encryption on your local machine.
@@ -157,7 +96,11 @@ docs/
            7→- can be built and previewed locally, and published on other platforms.
         …
           23→## Replace the content of the template pages
-        …
+          24→
+          25→Update the following files to your own content:
+          26→
+          27→- `index.md` (your new home page)
+          28→- `README.md` (information for those who access your site repo on GitHub)
           30→## Changing the version of the theme and/or Jekyll
           31→
           32→Simply edit the relevant line(s) in the `Gemfile`.
@@ -237,7 +180,47 @@ peepdb/
     __main__.py
            1→from .cli import main
         …
-    cli.py …
+    cli.py
+        …
+          16→class CustomEncoder(json.JSONEncoder):
+          17→    def default(self, obj):
+        …
+          25→@click.group()
+          26→@click.version_option()
+          27→def cli():
+        …
+          50→    pass
+          53→@cli.command()
+        …
+          86→@cli.command()
+          87→def list():
+          88→    """
+          89→    List saved connections.
+          90→
+          91→    Example:
+          92→    peepdb list
+          93→    """
+          94→    list_connections()
+          97→@cli.command()
+          98→@click.argument('connection_name')
+          99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
+         100→def remove(connection_name):
+        …
+         113→@cli.command()
+         114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
+         115→def remove_all():
+         116→    """
+         117→    Remove all saved connections.
+         118→
+         119→    Example:
+         120→    peepdb remove-all
+         121→    """
+        …
+         126→@cli.command()
+        …
+         181→def main():
+         182→    cli()
+        …
     config.py …
     core.py …
     db/
@@ -326,4 +309,18 @@ project.toml
 requirements.txt …
 setup.py
        1→from setuptools import setup, find_packages
+    …
+      16→    install_requires=[
+      17→        "mysql-connector-python>=9.0.0",
+      18→        "psycopg2-binary>=2.9.9",
+      19→        "pymysql>=1.1.1",
+      20→        "cryptography>=43.0.0",
+      21→        "tabulate>=0.8.9",
+      22→        "click>=8.0.0",
+      23→        "mariadb",
+      24→        "cachetools>=5.5.0",
+      25→        "keyring>=25.4.1",
+      26→        "pymongo==4.9.1",
+      27→        "dnspython==2.6.1"
+      28→    ],
     …

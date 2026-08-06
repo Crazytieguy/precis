@@ -239,6 +239,14 @@ pub(crate) fn non_essential_factor_inner(
             if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
+            // The workflows exemption is for what CI says about the
+            // project — how it builds, packages and releases. A
+            // workflow named for the test suite says only that the
+            // test suite runs, which the test tree already said, so it
+            // rejoins the tier that tree is on.
+            if names_the_test_suite(target) {
+                return 0.2;
+            }
         } else if first.starts_with('.') && first != "." && !is_dotenv_sample_filename(first) {
             // Dotenv samples are user-facing config documentation,
             // not tooling plumbing — exempt from the dot-prefix damp
@@ -356,6 +364,15 @@ pub(crate) fn non_essential_factor_inner(
         }
     }
     1.0
+}
+
+/// True iff `target`'s file stem is exactly `test` / `tests` — the file
+/// is named for the test suite and nothing else.
+fn names_the_test_suite(target: &std::path::Path) -> bool {
+    target
+        .file_stem()
+        .and_then(|stem| stem.to_str())
+        .is_some_and(|stem| stem.eq_ignore_ascii_case("test") || stem.eq_ignore_ascii_case("tests"))
 }
 
 /// Checked-in dotenv sample/template filenames. These are config-key
