@@ -372,8 +372,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     if rust_files.is_empty() {
         return Vec::new();
     }
-    let dir_depth = ctx.depth_from_root(dir);
-
     let mut out = Vec::new();
 
     for file in &rust_files {
@@ -888,7 +886,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             BatchContent::Lines {
                 spans: macro_name_spans,
             },
-            macro_names_value(dir_depth),
+            macro_names_value(dir, ctx),
         ));
     }
     let macro_predecessor = BatchKey::Rust(macro_names_key);
@@ -1474,8 +1472,12 @@ fn registration_roster_value(file: &Path, ctx: &WalkCtx, entry_count: usize) -> 
     mix_signals(0.995, 0.995, 0.795, rust_depth_factor(file, ctx)) * roster_mass_factor(entry_count)
 }
 
-fn macro_names_value(depth: usize) -> f64 {
-    mix_signals(0.75, 0.6, 0.4, depth_factor(depth))
+/// Cross-file roster, so it is priced from the owning directory rather
+/// than a file — but through the same location prior every other rust
+/// value fn pays, so a macros dir under `tests/` or `examples/` is not
+/// billed as essential.
+fn macro_names_value(dir: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.75, 0.6, 0.4, rust_depth_factor(dir, ctx))
 }
 
 /// Per-macro signals. Demotion axes stack multiplicatively:

@@ -139,104 +139,104 @@ Score(3000)=0.522 I=0.710 C=0.384 ns_rows≤3K=25/63 (reached=5 partial=4 missin
 | walker |  | 3139 | 218 | pub item at crates/mdbook-preprocessor/src/lib.rs:51 |  |  | 0.554 |
 | walker |  | 3177 | 38 | listing of 'guide/src/cli' |  |  | 0.580 |
 | walker |  | 3317 | 140 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |  |  | 0.592 |
-| walker |  | 3329 | 12 | macro_export names across crates/mdbook-core/src/utils |  |  | 0.592 |
-| walker |  | 3352 | 23 | listing of 'guide/src/format/configuration' |  |  | 0.609 |
+| walker |  | 3340 | 23 | listing of 'guide/src/format/configuration' |  |  | 0.609 |
 | ns | 3368 |  | 242 | Subcommand roster with descriptions | 4.1 |  | 0.597 |
-| walker |  | 3456 | 104 | [features] in Cargo.toml |  |  | 0.608 |
-| walker |  | 3519 | 63 | mod/use plumbing in guide/src/for_developers/mdbook-wordcount/src/main.rs |  |  | 0.608 |
-| walker |  | 3531 | 12 | listing of 'crates/xtask' |  |  | 0.608 |
-| walker |  | 3555 | 24 | [features] in crates/mdbook-html/Cargo.toml |  |  | 0.608 |
-| walker |  | 3571 | 16 | listing of 'crates/mdbook-html/src/html_handlebars/helpers' |  |  | 0.623 |
+| walker |  | 3444 | 104 | [features] in Cargo.toml |  |  | 0.608 |
+| walker |  | 3507 | 63 | mod/use plumbing in guide/src/for_developers/mdbook-wordcount/src/main.rs |  |  | 0.608 |
+| walker |  | 3519 | 12 | listing of 'crates/xtask' |  |  | 0.608 |
+| walker |  | 3543 | 24 | [features] in crates/mdbook-html/Cargo.toml |  |  | 0.608 |
+| walker |  | 3559 | 16 | listing of 'crates/mdbook-html/src/html_handlebars/helpers' |  |  | 0.623 |
 | ns | 3583 |  | 215 | `main()` dispatch | 4.2 |  | 0.612 |
-| walker |  | 3602 | 31 | mod/use plumbing in crates/mdbook-html/src/html_handlebars/helpers/mod.rs |  |  | 0.612 |
-| walker |  | 3610 | 8 | listing of 'crates/xtask/src' |  |  | 0.618 |
-| walker |  | 3625 | 15 | entry item at crates/xtask/src/main.rs:13 |  |  | 0.618 |
-| walker |  | 3634 | 9 | entry item body at crates/xtask/src/main.rs:13 body 56 |  |  | 0.618 |
-| walker |  | 3643 | 9 | entry item body at crates/xtask/src/main.rs:13 body 55 |  |  | 0.618 |
-| walker |  | 3667 | 24 | entry item body at crates/xtask/src/main.rs:13 body 34 |  |  | 0.618 |
-| walker |  | 3690 | 23 | entry item body at crates/xtask/src/main.rs:13 body 33 |  |  | 0.618 |
-| walker |  | 3739 | 49 | entry item body at crates/xtask/src/main.rs:13 body 35 |  |  | 0.618 |
-| walker |  | 3804 | 65 | entry item body at crates/xtask/src/main.rs:13 body 14 |  |  | 0.618 |
+| walker |  | 3590 | 31 | mod/use plumbing in crates/mdbook-html/src/html_handlebars/helpers/mod.rs |  |  | 0.612 |
+| walker |  | 3598 | 8 | listing of 'crates/xtask/src' |  |  | 0.618 |
+| walker |  | 3613 | 15 | entry item at crates/xtask/src/main.rs:13 |  |  | 0.618 |
+| walker |  | 3622 | 9 | entry item body at crates/xtask/src/main.rs:13 body 56 |  |  | 0.618 |
+| walker |  | 3631 | 9 | entry item body at crates/xtask/src/main.rs:13 body 55 |  |  | 0.618 |
+| walker |  | 3655 | 24 | entry item body at crates/xtask/src/main.rs:13 body 34 |  |  | 0.618 |
+| walker |  | 3678 | 23 | entry item body at crates/xtask/src/main.rs:13 body 33 |  |  | 0.618 |
+| walker |  | 3727 | 49 | entry item body at crates/xtask/src/main.rs:13 body 35 |  |  | 0.618 |
+| walker |  | 3792 | 65 | entry item body at crates/xtask/src/main.rs:13 body 14 |  |  | 0.618 |
 | ns | 3856 |  | 273 | Shared CLI argument builders | 4.3 |  | 0.602 |
-| walker |  | 3882 | 78 | impl method sigs in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.602 |
-| walker |  | 3882 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:27 |  |  | 0.602 |
-| walker |  | 3882 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:33 |  |  | 0.602 |
-| walker |  | 3882 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:37 |  |  | 0.602 |
-| walker |  | 3891 | 9 | impl method body at crates/mdbook-driver/src/builtin_renderers/mod.rs:33 body 34 |  |  | 0.602 |
-| walker |  | 3903 | 12 | impl method body at crates/mdbook-driver/src/builtin_renderers/mod.rs:27 body 28 |  |  | 0.602 |
-| walker |  | 4067 | 164 | entry item body at crates/xtask/src/main.rs:13 body 20 |  |  | 0.602 |
+| walker |  | 3870 | 78 | impl method sigs in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.602 |
+| walker |  | 3870 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:27 |  |  | 0.602 |
+| walker |  | 3870 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:33 |  |  | 0.602 |
+| walker |  | 3870 | 0 | impl method at crates/mdbook-driver/src/builtin_renderers/mod.rs:37 |  |  | 0.602 |
+| walker |  | 3879 | 9 | impl method body at crates/mdbook-driver/src/builtin_renderers/mod.rs:33 body 34 |  |  | 0.602 |
+| walker |  | 3891 | 12 | impl method body at crates/mdbook-driver/src/builtin_renderers/mod.rs:27 body 28 |  |  | 0.602 |
+| walker |  | 4055 | 164 | entry item body at crates/xtask/src/main.rs:13 body 20 |  |  | 0.602 |
 | ns | 4129 |  | 273 | `init` and `serve` subcommand flags | 4.4 |  | 0.586 |
-| walker |  | 4165 | 98 | crate-doc lede in crates/mdbook-renderer/src/lib.rs |  |  | 0.586 |
-| walker |  | 4193 | 28 | listing of 'crates/mdbook-html/front-end/playground_editor' |  |  | 0.594 |
-| walker |  | 4274 | 81 | impl method sigs in crates/mdbook-html/src/html/mod.rs |  |  | 0.594 |
-| walker |  | 4274 | 0 | impl method at crates/mdbook-html/src/html/mod.rs:47 |  |  | 0.594 |
-| walker |  | 4356 | 82 | impl method sigs in crates/mdbook-html/src/theme/mod.rs |  |  | 0.594 |
-| walker |  | 4356 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:66 |  |  | 0.594 |
-| walker |  | 4356 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:166 |  |  | 0.594 |
-| walker |  | 4356 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:201 |  |  | 0.594 |
+| walker |  | 4153 | 98 | crate-doc lede in crates/mdbook-renderer/src/lib.rs |  |  | 0.586 |
+| walker |  | 4181 | 28 | listing of 'crates/mdbook-html/front-end/playground_editor' |  |  | 0.594 |
+| walker |  | 4262 | 81 | impl method sigs in crates/mdbook-html/src/html/mod.rs |  |  | 0.594 |
+| walker |  | 4262 | 0 | impl method at crates/mdbook-html/src/html/mod.rs:47 |  |  | 0.594 |
+| walker |  | 4344 | 82 | impl method sigs in crates/mdbook-html/src/theme/mod.rs |  |  | 0.594 |
+| walker |  | 4344 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:66 |  |  | 0.594 |
+| walker |  | 4344 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:166 |  |  | 0.594 |
+| walker |  | 4344 | 0 | impl method at crates/mdbook-html/src/theme/mod.rs:201 |  |  | 0.594 |
 | ns | 4361 |  | 232 | `test`, `build`, `clean` and `watch` flags | 4.5 |  | 0.578 |
-| walker |  | 4457 | 101 | crate-doc lede in crates/mdbook-markdown/src/lib.rs |  |  | 0.578 |
+| walker |  | 4445 | 101 | crate-doc lede in crates/mdbook-markdown/src/lib.rs |  |  | 0.578 |
+| walker |  | 4546 | 101 | crate-doc lede in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.578 |
 | ns | 4548 |  | 187 | CLI function roster | 4.6 |  | 0.566 |
-| walker |  | 4558 | 101 | crate-doc lede in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.566 |
-| walker |  | 4609 | 51 | README headline in crates/mdbook-compare/README.md |  |  | 0.566 |
-| walker |  | 4732 | 123 | impl method sigs in crates/mdbook-renderer/src/lib.rs |  |  | 0.568 |
-| walker |  | 4732 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:65 |  |  | 0.568 |
-| walker |  | 4732 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:81 |  |  | 0.568 |
-| walker |  | 4732 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:86 |  |  | 0.568 |
-| walker |  | 4746 | 14 | impl method body at crates/mdbook-renderer/src/lib.rs:81 body 82 |  |  | 0.568 |
-| walker |  | 4776 | 30 | listing of 'crates/mdbook-html/front-end/css' |  |  | 0.583 |
-| walker |  | 4807 | 31 | listing of 'crates/mdbook-html/front-end/templates' |  |  | 0.587 |
-| ns | 4807 |  | 259 | Clap app assembly and `MDBOOK_LOG` | 4.7 |  | 0.587 |
+| walker |  | 4597 | 51 | README headline in crates/mdbook-compare/README.md |  |  | 0.566 |
+| walker |  | 4720 | 123 | impl method sigs in crates/mdbook-renderer/src/lib.rs |  |  | 0.568 |
+| walker |  | 4720 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:65 |  |  | 0.568 |
+| walker |  | 4720 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:81 |  |  | 0.568 |
+| walker |  | 4720 | 0 | impl method at crates/mdbook-renderer/src/lib.rs:86 |  |  | 0.568 |
+| walker |  | 4734 | 14 | impl method body at crates/mdbook-renderer/src/lib.rs:81 body 82 |  |  | 0.568 |
+| walker |  | 4764 | 30 | listing of 'crates/mdbook-html/front-end/css' |  |  | 0.583 |
+| ns | 4807 |  | 259 | Clap app assembly and `MDBOOK_LOG` | 4.7 |  | 0.572 |
+| walker |  | 4840 | 76 | pub item body at crates/mdbook-core/src/utils/mod.rs:29 body 30 |  |  | 0.572 |
+| walker |  | 4871 | 31 | listing of 'crates/mdbook-html/front-end/templates' |  |  | 0.587 |
 | ns | 4876 |  | 69 | `Book` — the tree type | 5.1 |  | 0.584 |
-| walker |  | 4996 | 189 | entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 22 |  |  | 0.584 |
 | ns | 5003 |  | 127 | `Book` method roster | 5.2 | 5.1 | 0.579 |
+| walker |  | 5060 | 189 | entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 22 |  |  | 0.579 |
 | ns | 5074 |  | 71 | `BookItem` enum | 5.3 |  | 0.574 |
 | ns | 5215 |  | 141 | `Chapter` — first fields | 5.4 |  | 0.567 |
-| walker |  | 5313 | 317 | pub item at crates/mdbook-renderer/src/lib.rs:40 |  |  | 0.580 |
-| walker |  | 5324 | 11 | pub-item doc lede at crates/mdbook-renderer/src/lib.rs:40 |  |  | 0.580 |
+| walker |  | 5377 | 317 | pub item at crates/mdbook-renderer/src/lib.rs:40 |  |  | 0.580 |
+| walker |  | 5388 | 11 | pub-item doc lede at crates/mdbook-renderer/src/lib.rs:40 |  |  | 0.580 |
 | ns | 5400 |  | 185 | `Chapter` — `path` vs `source_path`, `parent_names` | 5.5 | 5.4 | 0.574 |
 | ns | 5515 |  | 115 | `Chapter` methods, `SectionNumber`, `BookItems` | 5.6 |  | 0.570 |
 | ns | 5658 |  | 143 | `Config` — the `book.toml` root | 6.1 |  | 0.564 |
-| walker |  | 5677 | 353 | [package] in Cargo.toml |  |  | 0.583 |
-| walker |  | 5740 | 63 | mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs |  |  | 0.596 |
-| ns | 5796 |  | 138 | `Config` method roster | 6.2 | 6.1 | 0.591 |
-| walker |  | 5948 | 208 | entry item body at crates/xtask/src/main.rs:13 body 39 |  |  | 0.591 |
-| walker |  | 6009 | 61 | README headline in crates/mdbook-renderer/README.md |  |  | 0.582 |
+| walker |  | 5741 | 353 | [package] in Cargo.toml |  |  | 0.583 |
+| ns | 5796 |  | 138 | `Config` method roster | 6.2 | 6.1 | 0.578 |
+| walker |  | 5804 | 63 | mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs |  |  | 0.591 |
 | ns | 6009 |  | 213 | `[book]`, `[build]` and `[rust]` keys | 6.3 |  | 0.582 |
-| walker |  | 6070 | 61 | README headline in crates/mdbook-summary/README.md |  |  | 0.582 |
+| walker |  | 6012 | 208 | entry item body at crates/xtask/src/main.rs:13 body 39 |  |  | 0.582 |
+| walker |  | 6073 | 61 | README headline in crates/mdbook-renderer/README.md |  |  | 0.582 |
 | ns | 6121 |  | 112 | `RustEdition` variants | 6.4 |  | 0.577 |
-| walker |  | 6225 | 155 | entry item body at crates/mdbook-compare/src/main.rs:14 body 15 |  |  | 0.577 |
-| walker |  | 6236 | 11 | [dependencies] in crates/mdbook-compare/Cargo.toml |  |  | 0.577 |
-| walker |  | 6298 | 62 | README headline in crates/mdbook-markdown/README.md |  |  | 0.577 |
+| walker |  | 6134 | 61 | README headline in crates/mdbook-summary/README.md |  |  | 0.577 |
+| walker |  | 6289 | 155 | entry item body at crates/mdbook-compare/src/main.rs:14 body 15 |  |  | 0.577 |
+| walker |  | 6300 | 11 | [dependencies] in crates/mdbook-compare/Cargo.toml |  |  | 0.577 |
 | ns | 6349 |  | 228 | `[output.html]` keys, first half | 6.5 |  | 0.568 |
-| walker |  | 6360 | 62 | README headline in crates/mdbook-preprocessor/README.md |  |  | 0.568 |
-| walker |  | 6439 | 79 | pub-item names surface in crates/mdbook-html/src/html/mod.rs |  |  | 0.568 |
-| walker |  | 6439 | 0 | pub item at crates/mdbook-html/src/html/mod.rs:66 |  |  | 0.568 |
-| walker |  | 6502 | 63 | README headline in crates/mdbook-core/README.md |  |  | 0.568 |
+| walker |  | 6362 | 62 | README headline in crates/mdbook-markdown/README.md |  |  | 0.568 |
+| walker |  | 6424 | 62 | README headline in crates/mdbook-preprocessor/README.md |  |  | 0.568 |
+| walker |  | 6503 | 79 | pub-item names surface in crates/mdbook-html/src/html/mod.rs |  |  | 0.568 |
+| walker |  | 6503 | 0 | pub item at crates/mdbook-html/src/html/mod.rs:66 |  |  | 0.568 |
 | ns | 6506 |  | 157 | `[output.html]` keys, second half | 6.6 | 6.5 | 0.562 |
-| walker |  | 6538 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.562 |
-| walker |  | 6538 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.562 |
-| walker |  | 6538 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.562 |
-| walker |  | 6574 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.562 |
-| walker |  | 6574 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.562 |
-| walker |  | 6574 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.562 |
-| walker |  | 6610 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.563 |
-| walker |  | 6610 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.563 |
-| walker |  | 6610 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.563 |
-| walker |  | 6676 | 66 | mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs |  |  | 0.563 |
-| walker |  | 6713 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.563 |
-| walker |  | 6713 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.563 |
-| walker |  | 6713 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.563 |
-| walker |  | 6816 | 103 | mod/use plumbing in src/main.rs |  |  | 0.563 |
-| walker |  | 6856 | 40 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.564 |
-| walker |  | 6856 | 0 | pub item at src/cmd/command_prelude.rs:62 |  |  | 0.564 |
+| walker |  | 6566 | 63 | README headline in crates/mdbook-core/README.md |  |  | 0.562 |
+| walker |  | 6578 | 12 | macro_export names across crates/mdbook-core/src/utils |  |  | 0.562 |
+| walker |  | 6614 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.562 |
+| walker |  | 6614 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.562 |
+| walker |  | 6614 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.562 |
+| walker |  | 6650 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.562 |
+| walker |  | 6650 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.562 |
+| walker |  | 6650 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.562 |
+| walker |  | 6686 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.563 |
+| walker |  | 6686 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.563 |
+| walker |  | 6686 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.563 |
+| walker |  | 6752 | 66 | mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs |  |  | 0.563 |
+| walker |  | 6789 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.563 |
+| walker |  | 6789 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.563 |
+| walker |  | 6789 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.563 |
 | ns | 6868 |  | 362 | `[output.html.*]` sub-tables | 6.7 |  | 0.550 |
-| walker |  | 6928 | 72 | README headline in crates/mdbook-html/README.md |  |  | 0.550 |
+| walker |  | 6892 | 103 | mod/use plumbing in src/main.rs |  |  | 0.550 |
+| walker |  | 6932 | 40 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.550 |
+| walker |  | 6932 | 0 | pub item at src/cmd/command_prelude.rs:62 |  |  | 0.550 |
 | ns | 6977 |  | 109 | `MDBook` struct | 7.1 |  | 0.547 |
-| walker |  | 7075 | 147 | crate-doc lede in crates/mdbook-driver/src/lib.rs |  |  | 0.547 |
-| walker |  | 7154 | 79 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.547 |
+| walker |  | 7004 | 72 | README headline in crates/mdbook-html/README.md |  |  | 0.547 |
+| walker |  | 7151 | 147 | crate-doc lede in crates/mdbook-driver/src/lib.rs |  |  | 0.547 |
 | ns | 7199 |  | 222 | `MDBook` method roster | 7.2 | 7.1 | 0.540 |
-| walker |  | 7230 | 76 | pub item body at crates/mdbook-core/src/utils/mod.rs:29 body 30 |  |  | 0.540 |
+| walker |  | 7230 | 79 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.540 |
 | walker |  | 7275 | 45 | pub-item doc lede at crates/mdbook-core/src/lib.rs:7 |  |  | 0.540 |
 | ns | 7545 |  | 346 | Which plugins run | 7.3 |  | 0.530 |
 | walker |  | 7602 | 327 | pub item at crates/mdbook-html/src/theme/mod.rs:40 |  |  | 0.530 |
