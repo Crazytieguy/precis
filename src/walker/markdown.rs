@@ -490,8 +490,8 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
 }
 
 fn dev_workflow_section_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
-    let depth = crate::value::depth_factor(ctx.depth_from_root(file));
-    mix_signals(1.15, 1.0, 0.85, depth) * index_decay(parent_index, 0.2, 0.75)
+    mix_signals(1.15, 1.0, 0.85, path_depth_factor(file, ctx))
+        * index_decay(parent_index, 0.2, 0.75)
 }
 
 /// Per-section value. Child ranges scale the parent's value so they

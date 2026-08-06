@@ -3223,3 +3223,27 @@ gap that no factor moves.
 definition not in the pool, so a value-model lane can only ever collect
 the `unscheduled` half of an opportunity. Rank repricing levers by
 `unscheduled` alone.
+
+## Session 2026-08-06, lane W5-MD: dev-workflow section damp
+
+`dev_workflow_section_value` was the only value path in the walker tree
+that called `crate::value::depth_factor` directly instead of
+`path_depth_factor`, so it kept the depth penalty but skipped
+`non_essential_factor` — including the peripheral-doc 0.2 tier that
+`CONTRIBUTING` sits in. Routing it through `path_depth_factor` gives
+all seven budgets up-or-flat (3000 0.6353 → 0.6358) on a single mover,
+migrate +0.035, with 79 tokens of headroom (not cliff-adjacent).
+
+Two things worth knowing before touching this again:
+
+- Post-damp the whole dev-workflow promotion is **inert on this
+  corpus**: disabling the `section_value` branch, and additionally
+  dropping `reference_shaped |= dev_workflow_section`, each reproduce
+  the shipped grid bit-identically at all seven budgets. It is not dead
+  code — `is_dev_workflow_doc` also fires on DEVELOPING / DEVELOPMENT /
+  HACKING, none of which are peripheral docs and none of which occur in
+  this corpus. Deleting it would silently drop a path that is live for
+  three of its four trigger stems on unseen repos.
+- migrate's NS states the trade explicitly ("CONTRIBUTING.md and
+  SECURITY.md stay filename-only from the root listing"), so this was a
+  walker/NS disagreement, not a scoring accident.
