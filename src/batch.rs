@@ -275,6 +275,20 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
+    /// JSDoc above a single member of an exported declaration — the
+    /// comment rows only, never the member's signature row, which
+    /// already has an owner. Additive leaf: predecessor is whichever
+    /// batch renders that signature row (an `ExportTail` chunk, a
+    /// member-name catalog or chunk, an `ExportMember`, or the `Export`
+    /// surface), so the doc is the cheap continuation of a member
+    /// surface the budget has already bought.
+    ExportMemberDoc {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// First line of the documented member's signature.
+        member_start_line: usize,
+    },
     /// Whole member-name catalog of one big exported declaration
     /// (interface / object-type alias / class above the per-member
     /// split range). Predecessor: the matching `Export` header.
@@ -904,6 +918,14 @@ impl InnerKey for TsKey {
                 member_start_line,
             } => format!(
                 "export member at {}:{start_line} member {member_start_line}",
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberDoc {
+                file,
+                start_line,
+                member_start_line,
+            } => format!(
+                "export member doc at {}:{start_line} member {member_start_line}",
                 display_path(file, root)
             ),
             TsKey::ExportMemberNames { file, start_line } => format!(
