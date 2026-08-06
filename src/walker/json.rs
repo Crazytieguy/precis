@@ -798,6 +798,45 @@ pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
     })
 }
 
+/// Single-component directory names published by `<pkg_dir>/package.
+/// json`'s `files` array. Negations (`!…`), glob patterns and nested
+/// paths are skipped: only a bare top-level name is an unambiguous
+/// "this whole directory ships" statement.
+pub(super) fn published_top_level_dir_names(pkg_dir: &Path) -> Vec<String> {
+    let Some((text, tree)) = parse_manifest(pkg_dir) else {
+        return Vec::new();
+    };
+    let Some(object) = first_child_of_kind(tree.root_node(), "object", false) else {
+        return Vec::new();
+    };
+    let Some(files) = object_field_value(object, "files", &text) else {
+        return Vec::new();
+    };
+    if files.kind() != "array" {
+        return Vec::new();
+    }
+    let mut out = Vec::new();
+    let mut cur = files.walk();
+    for child in files.children(&mut cur) {
+        if child.kind() != "string" {
+            continue;
+        }
+        let entry = unquote_string(child, &text);
+        let entry = entry.strip_prefix("./").unwrap_or(&entry);
+        let entry = entry.trim_end_matches('/');
+        if entry.is_empty()
+            || entry.starts_with('!')
+            || entry.contains('*')
+            || entry.contains('?')
+            || entry.contains('/')
+        {
+            continue;
+        }
+        out.push(entry.to_string());
+    }
+    out
+}
+
 /// String targets of `<pkg_dir>/package.json`'s entry fields — `main`,
 /// `module`, and the string leaves under `exports` / `exports["."]`
 /// (conditional-export objects are descended; subpath keys other than

@@ -3142,3 +3142,46 @@ per-item `ModuleItem` batches gated only on `module_predecessor`,
 which is `None` for a repo-root entry file — dockly's four are
 root-level ungated today. Same queue-jumping class; wants a measured
 lane, not a drive-by fix.
+
+## Flat-layout JS packages get their own value tier (2026-08-06, W5-FL): 0.6353 → 0.6355
+
+`js_value_factor` had two tiers: `PRIMARY = 0.85` for anything under a
+`src`/`lib`/`source`/`sources` wrapper or at repo root, `SECONDARY =
+0.05` for everything else. A package with **no** wrapper keeps its
+source in top-level directories, so its entire source tree fell into the
+0.05 helper tier — a 17× damp on the package's actual API. Now a third
+tier, `FLAT_LAYOUT_JS_VALUE_FACTOR = 0.35`, applies to a wrapper-less
+package's top-level directories that its manifest `files` array
+publishes by bare name, minus `GENERATED_ENTRY_DIR_PREFIXES` (a
+published `dist/` is the shipped artifact, not the source).
+
+**The tier exists because full promotion measured negative.** At 0.85
+the sole corpus carrier lost **−0.077** (semver 0.689 → 0.612) and the
+corpus lost 0.0011 at 3000 / 0.0033 at 2080: promoting a whole flat
+source tree at once puts 46 files' surfaces on the frontier, and what
+entered displaced more than it bought (semver's `index.js` aggregate
+export fell to `late`). The gate side worked as intended even then —
+`unscheduled` 0.182 → 0.020 — which is the point: *the promotion was
+never the problem, the quantity was.*
+
+**Factor cliff, measured at every budget:** 0.05/0.15/0.20 are inert at
+3000; 0.25–0.35 buy +0.014–0.015; **0.40 and above cost −0.161 at
+2080** because the promoted surfaces begin clearing that frontier too.
+0.35 is the last value non-negative at every budget below 3000. The
+effect of a value factor is a step function of the frontier, not
+monotone — a factor sweep that only reads the 3000 headline picks 0.40
+and ships a 2080 regression.
+
+**Half-realized, on purpose:** the three semver class names surfaces now
+enter at 2886–2930 (from >14 000) and one NS row realizes, but the class
+exports behind them land at 3164/4143/5516, so NS 2.1–2.3 still miss.
+The corpus gain is +0.0002 from one cliff-adjacent fixture (last
+in-budget row at cum 2971). Kept for the modeling correction and because
+it is the precondition for any emitter work on this package class — the
+remaining semver mass (`classes/range.js absent 0.140`) is an emitter
+gap that no factor moves.
+
+**Screening lesson for census-style ranking:** `absent` mass is by
+definition not in the pool, so a value-model lane can only ever collect
+the `unscheduled` half of an opportunity. Rank repricing levers by
+`unscheduled` alone.
