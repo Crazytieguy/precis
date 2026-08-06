@@ -4821,19 +4821,27 @@ fn is_blank_jsdoc_line(text: &str) -> bool {
     text.trim_start().trim_start_matches('*').trim().is_empty()
 }
 
-/// The `/** */` block documenting `member`, walking past the directive
-/// line comments (`// eslint-disable-next-line …`) that conventionally
-/// sit between a doc block and the member it annotates.
+/// The `/** */` block documenting `member`.
+///
+/// Two node kinds routinely sit between a member and its doc block, and
+/// neither can belong to anything but that member, so the walk crosses
+/// both: the line-comment directives that annotate the declaration
+/// below them (`// eslint-disable-next-line …`), and **decorators** —
+/// the grammar seats each `@Decorator(…)` as its own sibling ahead of
+/// the member, so in an annotated codebase the doc block is never the
+/// member's immediate previous sibling. Anything else, including the
+/// preceding member, is the boundary: past it a doc block documents
+/// something other than this member.
 fn member_jsdoc_block<'a>(member: Node<'a>, source: &str) -> Option<Node<'a>> {
     let mut cur = member.prev_sibling();
     while let Some(prev) = cur {
-        if prev.kind() != "comment" {
-            return None;
+        match prev.kind() {
+            "comment" if source[prev.start_byte()..prev.end_byte()].starts_with("/**") => {
+                return Some(prev);
+            }
+            "comment" | "decorator" => cur = prev.prev_sibling(),
+            _ => return None,
         }
-        if source[prev.start_byte()..prev.end_byte()].starts_with("/**") {
-            return Some(prev);
-        }
-        cur = prev.prev_sibling();
     }
     None
 }
@@ -5998,6 +6006,84 @@ export class Small {
             "the prose, and not the signature row"
         );
         assert_eq!(lines.ellipses, vec![5], "the example is marked, not spent");
+    }
+
+    /// Rows of the member-doc batch for the sole documented member of
+    /// a one-class file, as `(full, ellipses)`.
+    fn sole_member_doc_rows(source: &str) -> (Vec<usize>, Vec<usize>) {
+        let tree = parse(source);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let exports = export_infos_for_path(Path::new("fixture.ts"), &tree, source);
+        let members = documented_member_nodes(exports.first().unwrap(), source);
+        let lines = member_doc_lines(*members.last().unwrap(), source, &src_lines)
+            .expect("the documented member");
+        (lines.full, lines.ellipses)
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_reaches_past_a_decorator() {
+        // The grammar seats a decorator as its own class-body sibling
+        // ahead of the member, so a doc block is not the member's
+        // immediate previous sibling in any annotated codebase.
+        let source = "\
+export class Controller {
+  /** Lists the items. */
+  @Get('/items')
+  listItems(): void {}
+}
+";
+        assert_eq!(sole_member_doc_rows(source), (vec![2], Vec::new()));
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_reaches_past_stacked_decorators() {
+        let source = "\
+export class Controller {
+  /** Lists the items. */
+  @Get('/items')
+  @UseGuards(AuthGuard)
+  @ApiResponse({ status: 200 })
+  listItems(): void {}
+}
+";
+        assert_eq!(sole_member_doc_rows(source), (vec![2], Vec::new()));
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_reaches_past_a_directive_above_decorators() {
+        let source = "\
+export class Controller {
+  /** Lists the items. */
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @Get('/items')
+  listItems(): void {}
+}
+";
+        assert_eq!(sole_member_doc_rows(source), (vec![2], Vec::new()));
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_stops_at_a_preceding_members_trailing_comment() {
+        // An ordinary comment that is not a directive belongs to what
+        // precedes it; crossing it would attach an unrelated member's
+        // doc block to this one.
+        let source = "\
+export class Controller {
+  /** Lists the items. */
+  listItems(): void {}
+
+  // Everything below is internal bookkeeping.
+  refresh(): void {}
+}
+";
+        let tree = parse(source);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let exports = export_infos_for_path(Path::new("fixture.ts"), &tree, source);
+        let members = documented_member_nodes(exports.first().unwrap(), source);
+        assert!(
+            member_doc_lines(*members.last().unwrap(), source, &src_lines).is_none(),
+            "the second member is undocumented"
+        );
     }
 
     #[test]

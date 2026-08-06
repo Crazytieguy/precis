@@ -3309,6 +3309,21 @@ Eligibility is runtime modules only (`is_runtime_module`: not a
 declaration file, not an all-type-only module) — a doc slice below a
 0.35-damped surface that never enters collects nothing.
 
+**Doc attachment crosses decorators (fix pass, GPT adversarial review).**
+The grammar seats each `@Decorator(…)` as its own class-body sibling
+*ahead* of the member, so in a decorated codebase the doc block is never
+the member's immediate previous sibling and `member_jsdoc_block` found
+`decorator` where it expected `comment` — silently emitting no member
+docs at all for NestJS/Angular/TypeORM-shaped repositories. The walk now
+crosses `decorator` alongside the line-comment directives, and stops at
+everything else (crossing an ordinary comment past the preceding member
+would attach that member's doc to this one). **Corpus-invisible: the
+score table is byte-identical on all 71 fixtures × 7 budgets**, because
+no training fixture is decorator-heavy. A reminder that the grid cannot
+falsify a recall rule whose trigger shape the corpus does not contain —
+node-kind assumptions about sibling adjacency need a unit test, not a
+measurement.
+
 ## Session 2026-08-06 close: 0.6353 → 0.6387, high budgets +0.0028–0.0047
 
 Grid (71 training fixtures), start → close: 1000 0.6165→0.6164 · 1442
