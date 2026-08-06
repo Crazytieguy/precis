@@ -856,13 +856,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         if let Some(chunks) = &member_catalog_chunks
                             && chunks.len() > 1
                         {
-                            if !chunks.iter().any(|chunk| chunk.full.contains(&sig_line)) {
-                                return None;
-                            }
+                            // Catalog chunks are siblings, all gated on
+                            // the file's names surface — unlike the
+                            // chained tails above, a later chunk being
+                            // in says nothing about an earlier one. So
+                            // the doc rides the chunk that actually
+                            // holds its member's row.
+                            let chunk_index = chunks
+                                .iter()
+                                .position(|chunk| chunk.full.contains(&sig_line))?;
                             return Some(BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
                                 file: file.clone(),
                                 start_line: item.start_line,
-                                chunk_index: chunks.len() - 1,
+                                chunk_index,
                             }));
                         }
                         if member_names_catalog.is_some() {
@@ -5758,6 +5764,45 @@ export class Small {
             "the prose, and not the signature row"
         );
         assert_eq!(lines.ellipses, vec![5], "the example is marked, not spent");
+    }
+
+    #[test]
+    fn walker_typescript_member_doc_rides_its_own_catalog_chunk() {
+        // Catalog chunks are siblings gated on the file's names
+        // surface, not a chain, so a doc must ride the chunk actually
+        // holding its member's row — the last chunk being scheduled
+        // says nothing about the others.
+        let mut source =
+            String::from("export function run(): void {}\n\nexport interface Options {\n");
+        for field in 0..40 {
+            source.push_str(&format!(
+                "  /** Controls facet {field}. */\n  facet_{field}: {{ first: string; second: number; third: boolean }};\n"
+            ));
+        }
+        source.push_str("}\n");
+        let docs = member_doc_batches("fixture.ts", &source);
+        assert!(!docs.is_empty(), "documented fields get doc batches");
+        let mut chunk_indices: Vec<usize> = docs
+            .iter()
+            .map(|(member_start_line, predecessor)| {
+                let Some(BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
+                    chunk_index, ..
+                })) = predecessor
+                else {
+                    panic!("member {member_start_line} doc must ride a catalog chunk");
+                };
+                *chunk_index
+            })
+            .collect();
+        chunk_indices.dedup();
+        assert!(
+            chunk_indices.len() > 1,
+            "the catalog partitions, and the docs spread across its chunks: {chunk_indices:?}"
+        );
+        assert!(
+            chunk_indices.windows(2).all(|pair| pair[0] < pair[1]),
+            "each doc rides its own chunk, in source order: {chunk_indices:?}"
+        );
     }
 
     #[test]

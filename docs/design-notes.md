@@ -3179,7 +3179,13 @@ Three decisions, each measured, each a full 7-budget grid:
   declaration, split only for affordability; its docs refine the whole.
   Marking the doc key `is_depth_follow_up` instead only half-fixes it
   (train pressure then damps the tails themselves: +0.0005 at 3000
-  versus +0.0027 for the last-chunk gate).
+  versus +0.0027 for the last-chunk gate). **This applies only because
+  `ExportTail` chunks are a predecessor chain.** Member-name catalog
+  chunks are *siblings*, all gated on the file's names surface, so
+  there the doc must ride the chunk that actually holds its member's
+  row — a later sibling being in says nothing about an earlier one
+  (adversarial review, 2026-08-06; corpus-neutral but a live
+  overlap/unschedulable class).
 - **No doc batch under a name-only (`truncate_to_name`) catalog.** Such
   a catalog does not deliver the signature, only that the member
   exists, so the doc is not the cheap completion of a paid-for surface —
