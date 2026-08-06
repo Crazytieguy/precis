@@ -3378,3 +3378,75 @@ knob re-sweep was NOT run this session — it is the first item of
 next session's debt alongside audit-unship-candidates.md (ranked №1:
 the dominant-file scheduler stack, ~330 LOC, carriers all
 frontier-packed).
+
+## Test-suite CI workflows (2026-08-06, lane W5-DF): 0.6355 → 0.6396
+
+`.github/` is damped to 0.2 with one exception, `.github/workflows/`,
+kept at full weight because CI config says how a project builds,
+packages and releases. A workflow whose file stem is exactly `test` /
+`tests` says only that the test suite runs — which the test tree
+already said — so it rejoins the tier that tree is on
+(`value::names_the_test_suite`, applied inside the workflows
+exemption).
+
+Grid: 0.6277/0.6393/0.6437/**0.6396**/0.6011/0.5748/0.5711 — all seven
+budgets up, +0.0112 at B=1000 and +0.0041 at 3000. Movers at 3000, all
+positive: xxhash +0.157, peepdb +0.057 (last in-budget row at 2983,
+cliff-adjacent — discount), cmdk +0.031, cobra +0.025, commander
++0.010, typeguard +0.009, mkcert +0.001. Nine
+`.github/workflows/test*.yml` batches leave the schedules and nothing
+else changes.
+
+**DEAD — the same stem test applied to files generally** (any
+`test.*` / `tests.*` outside prose extensions, `.github` clause
+included): 0.6277/0.6393/0.6437/**0.6396**/0.6011/0.5752/0.5710 —
+identical at every budget ≤ 4327, so the whole effect is the CI clause
+above and the general clause pays only false positives. mdbook's
+`src/cmd/test.rs` is the `mdbook test` **subcommand implementation**,
+first-class product source; sqlite-vec's `test.sql` and debug's
+`test.js` are real tests but worth ~0.001 together. A file named
+`test` is not reliably a test.
+
+### Dominant source file: the entered-gate holds in its minimal form
+
+The premium is unreachable by construction on the class it exists for.
+Measured on sqlite-vec at B=3000: `dominant_source_file` fires
+(`sqlite-vec.c`, the amalgamation that *is* the library), its roster
+gate prices at ratio **79.1** (cost 396, value 641.7, k 0.35) against a
+frontier of **105**, and the per-decl batches behind that gate price at
+**177–204** — the entire loss is one 396-token door. ×1.35 is exactly
+the 1.33 it needs, and `dominant_file_entered` can never flip.
+
+**DEAD — pre-entry premium confined to the file's *ungated* surface
+batches** (predecessor-free only; exactly one batch per repository, and
+the shipped entered-gate governs everything after):
+0.6141/0.6220/0.6288/**0.6323**/0.5980/0.5740/0.5716 — 3000 −0.0032,
+2500 −0.0071, 2000 −0.0064, B=1000 −0.0024. The recorded "DEAD —
+ungated premium" verdict therefore holds in its *minimal* form too, on
+a baseline 0.020 higher and with the corrected
+`is_dominant_file_surface` predicate. **Do not re-try pre-entry
+premiums on this lever**; the only remaining route into an unentered
+spine file is the cost side (a narrower door), not the ratio side.
+
+### jq: no dominant file, and the reachable unit is not the credited one
+
+`find_dominant_source_file` returns `None` for jq — `src/main.c` is
+1.5% of its C mass (largest file `src/parser.c` is 7.9%, and it is
+generated tables). The gate `c decl names surface in src/main.c`
+prices at 111.5 inside a 105–118 frontier band and loses only on
+affordability ordering, so it needs ≈1.06×.
+
+**DEAD — C entrypoint depth pin** (a translation unit that defines a
+default-configuration `main`, or is named `main.c`, pinned to depth 1
+like a header): 0.6165/0.6284/0.6359/**0.6355**/0.5996/0.5739/0.5708 —
+bit-identical at every budget ≤ 6000. The rule fires and the roster
+really does enter (ratio 111.5 → 150.6, cum 1219), but a C decl-names
+roster buys *signature lines* and jq's NS credits the help text and
+exit-code enum **inside** the bodies, which price at 85.6 / 67.3. Same
+wall W5-C5 hit from the recall side: for jq the reachable unit and the
+credited unit are different units.
+
+Incidental finding: jq's `main` sits in `#ifdef WIN32 … #else … #endif`
+with a brace-balancing comment, and tree-sitter parses the whole region
+as one `ERROR` node. `defines_unconditional_main` is a lower bound for
+any preprocessor-guarded entrypoint.

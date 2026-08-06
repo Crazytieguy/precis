@@ -5,42 +5,7 @@ expression: rendered
 .github/
     FUNDING.yml …
     workflows/
-        test.yml
-               1→name: Run E2E tests
-               2→
-               3→on:
-               4→  push:
-               5→    branches: [main]
-               6→  pull_request:
-               7→    branches: [main]
-               8→
-               9→jobs:
-              10→  test:
-              11→    runs-on: ubuntu-latest
-              12→
-              13→    steps:
-              14→      - uses: actions/checkout@v4
-              15→
-              16→      - uses: pnpm/action-setup@v4 # respects packageManager in package.json
-              17→
-              18→      - uses: actions/setup-node@v4
-              19→        with:
-              20→          cache: 'pnpm'
-              21→
-              22→      - run: pnpm install
-              23→        env:
-              24→          CI: true
-              25→
-              26→      - run: pnpm build
-              27→      - run: pnpm test:format
-              28→      - run: pnpm playwright install --with-deps
-              29→      - run: pnpm test || exit 1
-              30→
-              31→      - name: Upload test results
-              32→        uses: actions/upload-artifact@v4
-              33→        with:
-              34→          name: playwright-report
-              35→          path: playwright-report.json
+        test.yml …
 .gitignore …
 .husky/
     pre-commit …
@@ -159,9 +124,17 @@ cmdk/
              123→type Context = {
             …
              137→type State = {
-            …
+             138→  search: string
+             139→  value: string
+             140→  selectedItemId?: string
+             141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+             142→}
              143→type Store = {
-            …
+             144→  subscribe: (callback: () => void) => () => void
+             145→  snapshot: () => State
+             146→  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
+             147→  emit: () => void
+             148→}
              149→type Group = {
              150→  id: string
              151→  forceMount?: boolean
@@ -216,7 +189,15 @@ cmdk/
              909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
             …
              930→const pkg = Object.assign(Command, {
-            …
+             931→  List,
+             932→  Item,
+             933→  Input,
+             934→  Group,
+             935→  Separator,
+             936→  Dialog,
+             937→  Empty,
+             938→  Loading,
+             939→})
              941→export { useCmdk as useCommandState }
              942→export { pkg as Command }
              943→export { defaultFilter }
@@ -245,6 +226,11 @@ cmdk/
             1004→function useCmdk<T = any>(selector: (state: State) => T): T {
             …
             1010→function useValue(
+            1011→  id: string,
+            1012→  ref: React.RefObject<HTMLElement>,
+            1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+            1014→  aliases: string[] = [],
+            1015→) {
             …
             1046→const useScheduleLayoutEffect = () => {
             …

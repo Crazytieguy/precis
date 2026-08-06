@@ -6,37 +6,37 @@ expression: rendered
     ISSUE_TEMPLATE/ …
     workflows/
         release.yml …
-        test.yml
-               1→on: [push, pull_request]
-               2→name: Test
-               3→jobs:
-               4→  test:
-               5→    name: Go tests
-               6→    strategy:
-               7→      fail-fast: false
-               8→      matrix:
-               9→        os: [ubuntu-latest, macos-latest, windows-latest]
-              10→    runs-on: ${{ matrix.os }}
-              11→    steps:
-              12→      - name: Install Go ${{ matrix.go }}
-              13→        uses: actions/setup-go@v2
-              14→        with:
-              15→          go-version: 1.x
-              16→      - name: Checkout repository
-              17→        uses: actions/checkout@v2
-              18→      - name: Run staticcheck
-              19→        run: |
-              20→          go install honnef.co/go/tools/cmd/staticcheck@latest
-              21→          staticcheck ./...
-              22→      - name: Run tests
-              23→        run: go test -race ./...
+        test.yml …
 AUTHORS …
 LICENSE …
 README.md
        1→# mkcert
        2→
        3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
-    …
+       5→```
+       6→$ mkcert -install
+       7→Created a new local CA 💥
+       8→The local CA is now installed in the system trust store! ⚡️
+       9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
+      10→
+      11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+      12→
+      13→Created a new certificate valid for the following names 📜
+      14→ - "example.com"
+      15→ - "*.example.com"
+      16→ - "example.test"
+      17→ - "localhost"
+      18→ - "127.0.0.1"
+      19→ - "::1"
+      20→
+      21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
+      22→```
+      23→
+      24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
+      25→
+      26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
+      27→
+      28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
       30→## Installation
       31→
       32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
@@ -46,6 +46,7 @@ README.md
     …
       92→### Windows
     …
+     107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
      109→If you're running into permission problems try running `mkcert` as an Administrator.
      111→## Supported root stores
     …
@@ -80,6 +81,10 @@ cert.go
      176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
     …
      202→func randomSerialNumber() *big.Int {
+     203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
+     204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
+     205→	fatalIfErr(err, "failed to generate serial number")
+     206→	return serialNumber
     …
      209→func (m *mkcert) makeCertFromCSR() {
     …
@@ -253,6 +258,18 @@ truststore_java.go
     …
 truststore_linux.go …
 truststore_nss.go
+    …
+       5→package main
+       6→
+       7→import (
+       8→	"bytes"
+       9→	"log"
+      10→	"os"
+      11→	"os/exec"
+      12→	"path/filepath"
+      13→	"runtime"
+      14→	"strings"
+      15→)
     …
       18→	hasNSS       bool
       19→	hasCertutil  bool
