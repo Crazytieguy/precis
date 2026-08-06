@@ -102,6 +102,18 @@ const OVERSIZE_SECTION_SPLIT_TOKENS: usize = 500;
 /// pair doesn't overshoot it before the first cut candidate.
 const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 
+/// Token target for the *first* chunk of a head-split section — the
+/// section lede. A section's opening paragraph is what an NS credits
+/// when it wants the section's subject rather than its detail, so the
+/// entry price for a section should be its lede's, not a generic
+/// chunk's. Both halves price off the section's own value, undiscounted
+/// — a carve that split the value by row share would make ratio scale
+/// as `cost^(1-k)`, i.e. make entry strictly *worse*, which is the same
+/// arithmetic that killed conservation in the Go and Python
+/// entry-slice families; a 0.7 lede discount measured −0.0027 at 3000
+/// here and lost both carriers.
+const LEDE_TARGET_TOKENS: usize = 140;
+
 /// Tail-chunk value factor relative to the parent section. Above the
 /// generic `BODY_BLOCK_SIGNAL_SCALE`: a tail is the direct
 /// continuation of content whose head just won purchase, and the NS
@@ -172,7 +184,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: MarkdownKey::Section {
                         file: file.clone(),
                         section_index: idx,
-                        reference_shaped,
+                        keeps_default_concavity: reference_shaped,
                     }
                     .into(),
                     predecessor: headline_emitted.clone(),
@@ -300,7 +312,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let key = MarkdownKey::Section {
                     file: file.clone(),
                     section_index: idx,
-                    reference_shaped: range.reference_shaped,
+                    keeps_default_concavity: range.reference_shaped
+                        || range.kind == SectionKind::LedeBody,
                 };
                 // Roster chunks deliver in source order: each chunk
                 // gates on its predecessor chunk.
@@ -425,8 +438,10 @@ fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     // `OversizeTail` is the continuation of a boosted `Whole` head —
     // it inherits the boost so the tail prices at head * tail factor.
     let canonical = if range.parent_is_canonical_usage_h2
-        && matches!(range.kind, SectionKind::Whole | SectionKind::OversizeTail)
-    {
+        && matches!(
+            range.kind,
+            SectionKind::Whole | SectionKind::OversizeTail | SectionKind::LedeBody
+        ) {
         CANONICAL_USAGE_SECTION_FACTOR
     } else {
         1.0
@@ -530,6 +545,7 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
         SectionKind::H3Child => parent * sub_scale,
         SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
         SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
+        SectionKind::LedeBody => parent,
     }
 }
 
@@ -1901,6 +1917,9 @@ enum SectionKind {
     BodyBlock,
     /// Predecessor-chained tail chunk of an oversize head-split.
     OversizeTail,
+    /// The section body directly behind a carved lede — the rest of
+    /// what the unsplit section would have delivered.
+    LedeBody,
 }
 
 /// Minimum fraction of a range's non-blank out-of-fence rows that must
@@ -2753,8 +2772,14 @@ fn push_canonical_usage_fence_split(
 /// once the running chunk reaches [`OVERSIZE_CHUNK_TARGET_TOKENS`]. A
 /// cut is skipped when the next non-blank row opens a fence (the
 /// fence binds to the paragraph introducing it) or when the remainder
-/// would fall below [`OVERSIZE_CHUNK_MIN_TAIL_TOKENS`].
-fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(usize, usize)> {
+/// would fall below [`OVERSIZE_CHUNK_MIN_TAIL_TOKENS`]. Chunk 0 is
+/// then refined into a lede plus body; the returned flag says whether
+/// that lede cut was taken.
+fn oversize_chunk_bounds(
+    src_lines: &[&str],
+    start: usize,
+    end: usize,
+) -> (Vec<(usize, usize)>, bool) {
     let item_count = end - start + 1;
     let mut token_prefix = Vec::with_capacity(item_count + 1);
     token_prefix.push(0);
@@ -2806,17 +2831,34 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
             chunk_start = index;
         }
     }
-    budget_chunk_ranges(
+    let mut ranges = budget_chunk_ranges(
         item_count,
         |range| token_prefix[range.end] - token_prefix[range.start],
         OVERSIZE_CHUNK_TARGET_TOKENS,
         OVERSIZE_CHUNK_MIN_TAIL_TOKENS,
         |index| legal_split[index],
         |_| true,
-    )
-    .into_iter()
-    .map(|range| (start + range.start, start + range.end - 1))
-    .collect()
+    );
+    // The lede cut refines chunk 0 only: the earliest legal boundary
+    // past `LEDE_TARGET_TOKENS`, taken when enough of that chunk
+    // remains behind it to be worth its own batch. Later chunk bounds
+    // are untouched, so carving a lede never makes the section's body
+    // more expensive than it was unsplit.
+    let head = ranges[0].clone();
+    let lede = (head.start + 1..head.end).find(|&index| {
+        legal_split[index]
+            && token_prefix[index] - token_prefix[head.start] >= LEDE_TARGET_TOKENS
+            && token_prefix[head.end] - token_prefix[index] >= OVERSIZE_CHUNK_MIN_TAIL_TOKENS
+    });
+    if let Some(index) = lede {
+        ranges[0] = index..head.end;
+        ranges.insert(0, head.start..index);
+    }
+    let bounds = ranges
+        .into_iter()
+        .map(|range| (start + range.start, start + range.end - 1))
+        .collect();
+    (bounds, lede.is_some())
 }
 
 /// Per-row token count (row is 1-based; includes the newline). Rides
@@ -2860,7 +2902,9 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// `OversizeTail` chunks. Tails carry the head's boost flags so a
 /// boosted section's continuation is priced off the same base the head
 /// won its rank with ([`OVERSIZE_TAIL_FACTOR`]'s rationale); the other
-/// fields stay positional.
+/// fields stay positional. When the head itself carves a lede
+/// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is a
+/// [`SectionKind::LedeBody`] rather than a tail.
 fn push_whole_or_head_split(
     out: &mut Vec<SectionRange>,
     src_lines: &[&str],
@@ -2877,14 +2921,25 @@ fn push_whole_or_head_split(
         out.push(head);
         return;
     }
-    for (i, (chunk_start, chunk_end)) in oversize_chunk_bounds(src_lines, start, end)
-        .into_iter()
-        .enumerate()
-    {
+    let (bounds, lede) = oversize_chunk_bounds(src_lines, start, end);
+    for (i, (chunk_start, chunk_end)) in bounds.into_iter().enumerate() {
+        // Chunk 0 is the lede when one was carved; the chunk directly
+        // behind it is the section remainder and keeps the section's
+        // own price (the entry-slice law: re-pricing the remainder
+        // demotes the content the carve exists to reach). Only further
+        // chunks are continuations.
         if i == 0 {
             out.push(SectionRange {
                 start: chunk_start,
                 end: chunk_end,
+                ..head
+            });
+        } else if i == 1 && lede {
+            out.push(SectionRange {
+                start: chunk_start,
+                end: chunk_end,
+                kind: SectionKind::LedeBody,
+                chained_to_previous: true,
                 ..head
             });
         } else {
@@ -3792,7 +3847,7 @@ mod tests {
     fn chunk_bounds_of(source: &str) -> Vec<(usize, usize)> {
         let src_lines: Vec<&str> = source.lines().collect();
         let end = src_lines.len();
-        oversize_chunk_bounds(&src_lines, 1, end)
+        oversize_chunk_bounds(&src_lines, 1, end).0
     }
 
     /// A blank-separated prose paragraph of ~`tokens` tokens.

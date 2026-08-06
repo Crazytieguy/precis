@@ -136,7 +136,7 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 3975 | 81 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.636 |
 | ns | 4190 |  | 389 | src/error.rs: the complete OptionsError variant set with messages | 3.10 |  | 0.614 |
 | walker |  | 4223 | 248 | [dependencies] in Cargo.toml |  |  | 0.614 |
-| walker |  | 4262 | 39 | README.md section #9 |  |  | 0.614 |
+| walker |  | 4262 | 39 | README.md section #11 |  |  | 0.614 |
 | walker |  | 4331 | 69 | pub item at src/benchmark/scheduler.rs:13 |  |  | 0.614 |
 | ns | 4408 |  | 218 | src/error.rs: the complete ParameterScanError variant set | 3.11 | 3.10 | 0.600 |
 | walker |  | 4430 | 99 | pub item at src/parameter/range_step.rs:7 |  |  | 0.600 |
@@ -177,7 +177,7 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 5994 | 40 | pub item at src/benchmark/relative_speed.rs:98 |  |  | 0.667 |
 | walker |  | 6048 | 54 | pub item at src/benchmark/relative_speed.rs:86 |  |  | 0.667 |
 | walker |  | 6131 | 83 | pub item at src/benchmark/relative_speed.rs:7 |  |  | 0.668 |
-| walker |  | 6185 | 54 | README.md section #12 |  |  | 0.668 |
+| walker |  | 6185 | 54 | README.md section #14 |  |  | 0.668 |
 | ns | 6209 |  | 275 | src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster | 4.10 |  | 0.657 |
 | walker |  | 6325 | 140 | pub item at src/benchmark/timing_result.rs:5 |  |  | 0.658 |
 | ns | 6419 |  | 210 | How the number of runs is decided | 4.11 | 4.10 | 0.646 |
@@ -205,9 +205,9 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | ns | 7699 |  | 162 | src/export/mod.rs: the Exporter trait and ExportManager | 5.5 | 5.4 | 0.669 |
 | ns | 7836 |  | 137 | Flag-to-exporter wiring and the '-' means stdout convention | 5.6 | 5.5 | 0.664 |
 | walker |  | 7946 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.683 |
-| walker |  | 8020 | 74 | README.md section #13 |  |  | 0.683 |
+| walker |  | 8020 | 74 | README.md section #15 |  |  | 0.683 |
 | ns | 8052 |  | 216 | src/export/markup.rs: the shared table shape and the blanket Exporter impl | 5.7 | 5.5 | 0.675 |
-| walker |  | 8102 | 82 | README.md section #11 |  |  | 0.675 |
+| walker |  | 8102 | 82 | README.md section #13 |  |  | 0.675 |
 | ns | 8268 |  | 216 | The five exporter types, and the CSV column set | 5.8 | 5.4 | 0.669 |
 | walker |  | 8432 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.669 |
 | ns | 8525 |  | 257 | src/output/format.rs: automatic time-unit selection, and the Unit type | 5.9 |  | 0.663 |

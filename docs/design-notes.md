@@ -3162,3 +3162,46 @@ per-item `ModuleItem` batches gated only on `module_predecessor`,
 which is `None` for a repo-root entry file — dockly's four are
 root-level ungated today. Same queue-jumping class; wants a measured
 lane, not a drive-by fix.
+
+## Markdown section lede carve (lane W5-ML, 2026-08-06) — SHIPPED
+
+The first chunk of a head-split markdown section is refined into a
+*lede* (`LEDE_TARGET_TOKENS = 140`, cut at the earliest legal blank-row
+boundary past the target) plus the section body behind it. Grid
+1000/1442/2080/3000/4327/6240/9000: 0.6179 · 0.6330 · 0.6398 ·
+**0.6354** · 0.6015 · 0.5733 · 0.5707 (+0.0014/+0.0046/+0.0040/
+**+0.0001**/+0.0021/−0.0006/−0.0002). Only 3000 mover ≥0.005 is
+debug +0.012, whose last in-budget row sits at cum 2758 — 242 tokens
+of slack, so it is a content gain, not a cliff shuffle.
+
+Three measured constraints, each of which was a full variant:
+
+- **The lede must refine chunk 0, not restart the chunk budget.**
+  Cutting a lede and then re-chunking the remainder at
+  `OVERSIZE_CHUNK_TARGET_TOKENS` makes the body *larger* than the
+  chunk it replaced (sds README: 365 → 494 tokens) and it stops
+  entering. −0.0048 @3000.
+- **The body must keep the section's index-0 concavity.** This was the
+  whole of the sds −0.271 / sqlite-vec −0.057 regression: the lede
+  takes `section_index 0`, which demoted the body to the index-≥1
+  prose exponent 0.45 and dropped its ratio 124.8 → 74.3 for content
+  that had been comfortably in budget. `MarkdownKey::Section`'s
+  `reference_shaped` flag is therefore renamed
+  `keeps_default_concavity` and now has two producers. Any future
+  carve that inserts a batch ahead of an existing index-0 range has
+  the same hazard.
+- **Conservation is dead here too**, as in Go and Python. Both halves
+  price off the section's own value undiscounted; a 0.7 lede factor
+  measured −0.0027 @3000 and lost both carriers (debug, superstruct).
+
+Measured dead alongside: lowering `OVERSIZE_SECTION_SPLIT_TOKENS`
+500 → 300 to bring the 250–400-token README sections the corpus scan
+flagged (xxhash, tomli, swarm) into scope — +0.0053 @1442 but
+−0.0003 @3000.
+
+Corpus-scan note for future markdown lanes: of the 45 out-of-window
+sections whose lede would clear their fixture's 3K frontier, 41 carry
+no tier-1 NS credit and the strongest are `CONTRIBUTING.md` prose.
+The root-README-only eligibility gate is what keeps this lever honest;
+extending head-splitting to peripheral docs would promote that class
+first.

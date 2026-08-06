@@ -108,50 +108,52 @@ Score(3000)=0.535 I=0.569 C=0.502 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | ns | 3301 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.566 |
 | walker |  | 3332 | 81 | go decl body at flatten.go:20 |  |  | 0.569 |
 | ns | 3484 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.545 |
-| walker |  | 3530 | 198 | go decl body at prefix.go:16 |  |  | 0.549 |
-| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.532 |
-| walker |  | 3837 | 307 | README.md section #3 |  |  | 0.548 |
-| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.517 |
-| walker |  | 4157 | 320 | go decl body at append.go:14 |  |  | 0.523 |
-| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.545 |
-| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.552 |
-| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.558 |
-| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.559 |
-| walker |  | 4879 | 722 | README.md section #1 |  |  | 0.660 |
-| ns | 4938 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.661 |
-| walker |  | 5118 | 239 | README.md section #2 |  |  | 0.809 |
-| ns | 5136 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.812 |
-| ns | 5310 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.812 |
-| ns | 5400 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.810 |
-| ns | 5476 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.811 |
-| ns | 5519 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.808 |
-| walker |  | 5672 | 554 | README.md section #4 |  |  | 0.874 |
-| walker |  | 5728 | 56 | headings outline in CHANGELOG.md |  |  | 0.874 |
-| walker |  | 5728 | 0 | CHANGELOG.md section #0 |  |  | 0.874 |
-| walker |  | 5762 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.874 |
+| walker |  | 3582 | 250 | README.md section #5 |  |  | 0.592 |
+| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.574 |
+| walker |  | 3881 | 299 | README.md section #6 |  |  | 0.623 |
+| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.588 |
+| walker |  | 4257 | 376 | README.md section #1 |  |  | 0.656 |
+| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.623 |
+| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.626 |
+| walker |  | 4598 | 341 | README.md section #2 |  |  | 0.677 |
+| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.678 |
+| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.675 |
+| walker |  | 4837 | 239 | README.md section #3 |  |  | 0.810 |
+| ns | 4938 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.810 |
+| walker |  | 5035 | 198 | go decl body at prefix.go:16 |  |  | 0.813 |
+| ns | 5136 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.816 |
+| ns | 5310 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.817 |
+| walker |  | 5342 | 307 | README.md section #4 |  |  | 0.841 |
+| ns | 5400 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.838 |
+| ns | 5476 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.839 |
+| ns | 5519 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.836 |
+| walker |  | 5662 | 320 | go decl body at append.go:14 |  |  | 0.874 |
+| walker |  | 5718 | 56 | headings outline in CHANGELOG.md |  |  | 0.874 |
+| walker |  | 5718 | 0 | CHANGELOG.md section #0 |  |  | 0.874 |
+| walker |  | 5752 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.874 |
 | ns | 5824 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.851 |
 | ns | 6010 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.843 |
 | ns | 6245 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.820 |
-| walker |  | 6315 | 553 | README.md section #5 |  |  | 0.880 |
-| walker |  | 6332 | 17 | go test names surface in group_test.go |  |  | 0.880 |
-| walker |  | 6534 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.882 |
-| walker |  | 6558 | 24 | .github/pull_request_template.md section #0 |  |  | 0.882 |
-| walker |  | 6592 | 34 | go test names surface in flatten_test.go |  |  | 0.882 |
-| walker |  | 6626 | 34 | go test names surface in sort_test.go |  |  | 0.883 |
-| ns | 6657 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.854 |
-| walker |  | 6664 | 38 | go test names surface in format_test.go |  |  | 0.855 |
-| walker |  | 6718 | 54 | go test names surface in prefix_test.go |  |  | 0.857 |
-| walker |  | 6741 | 23 | .github/pull_request_template.md section #2 |  |  | 0.857 |
+| walker |  | 6305 | 553 | README.md section #7 |  |  | 0.880 |
+| walker |  | 6322 | 17 | go test names surface in group_test.go |  |  | 0.880 |
+| walker |  | 6524 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.882 |
+| walker |  | 6548 | 24 | .github/pull_request_template.md section #0 |  |  | 0.882 |
+| walker |  | 6582 | 34 | go test names surface in flatten_test.go |  |  | 0.882 |
+| walker |  | 6616 | 34 | go test names surface in sort_test.go |  |  | 0.883 |
+| walker |  | 6654 | 38 | go test names surface in format_test.go |  |  | 0.884 |
+| ns | 6657 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.855 |
+| walker |  | 6708 | 54 | go test names surface in prefix_test.go |  |  | 0.857 |
+| walker |  | 6731 | 23 | .github/pull_request_template.md section #2 |  |  | 0.857 |
 | ns | 6836 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.843 |
 | ns | 7253 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.814 |
 | ns | 7360 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.803 |
 | ns | 7386 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.804 |
 | ns | 7460 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.805 |
-| walker |  | 7598 | 857 | YAML config at .github/workflows/go-multierror.yml |  |  | 0.809 |
-| ns | 7709 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.811 |
-| walker |  | 7710 | 112 | go test names surface in append_test.go |  |  | 0.817 |
-| walker |  | 7846 | 136 | go test names surface in multierror_test.go |  |  | 0.829 |
-| walker |  | 7883 | 37 | .github/pull_request_template.md section #1 |  |  | 0.829 |
+| walker |  | 7588 | 857 | YAML config at .github/workflows/go-multierror.yml |  |  | 0.809 |
+| walker |  | 7700 | 112 | go test names surface in append_test.go |  |  | 0.815 |
+| ns | 7709 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.817 |
+| walker |  | 7836 | 136 | go test names surface in multierror_test.go |  |  | 0.829 |
+| walker |  | 7873 | 37 | .github/pull_request_template.md section #1 |  |  | 0.829 |
 | ns | 8034 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.817 |
 | ns | 8466 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.820 |
 | ns | 8851 |  | 385 | CI: how the linux test job actually runs the suite | 5.6 | 5.4 | 0.805 |

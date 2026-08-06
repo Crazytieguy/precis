@@ -114,7 +114,7 @@ Score(3000)=0.653 I=0.840 C=0.508 ns_rows≤3K=18/51 (reached=8 partial=1 missin
 | ns | 2110 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.685 |
 | walker |  | 2113 | 48 | README.md section #31 |  |  | 0.686 |
 | walker |  | 2147 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.686 |
-| walker |  | 2187 | 40 | README.md section #54 |  |  | 0.686 |
+| walker |  | 2187 | 40 | README.md section #57 |  |  | 0.686 |
 | walker |  | 2207 | 20 | README.md section #19 |  |  | 0.694 |
 | ns | 2236 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.687 |
 | walker |  | 2264 | 57 | go decl names surface in internal/config/merger.go |  |  | 0.687 |
@@ -203,7 +203,7 @@ Score(3000)=0.653 I=0.840 C=0.508 ns_rows≤3K=18/51 (reached=8 partial=1 missin
 | walker |  | 4972 | 64 | go decl at internal/models/models_data.go:7 |  |  | 0.542 |
 | walker |  | 4984 | 12 | go decl doc at internal/models/models_data.go:7 |  |  | 0.542 |
 | ns | 5019 |  | 192 | The tool-calling loop: step bound, tool-call branch and the approval gate | 4.3 | 4.2 | 0.532 |
-| walker |  | 5042 | 58 | README.md section #52 |  |  | 0.533 |
+| walker |  | 5042 | 58 | README.md section #55 |  |  | 0.533 |
 | walker |  | 5076 | 34 | go decl doc at internal/models/generate_models.go:50 |  |  | 0.533 |
 | walker |  | 5141 | 65 | go decl at internal/hooks/config.go:21 |  |  | 0.534 |
 | ns | 5198 |  | 179 | agent factory: AgentCreationOptions fields and both functions | 4.4 |  | 0.527 |
@@ -239,7 +239,7 @@ Score(3000)=0.653 I=0.840 C=0.508 ns_rows≤3K=18/51 (reached=8 partial=1 missin
 | walker |  | 5694 | 23 | go decl at internal/auth/credentials.go:14 |  |  | 0.514 |
 | walker |  | 5728 | 34 | go decl doc at internal/auth/credentials.go:14 |  |  | 0.514 |
 | ns | 5777 |  | 216 | AgenticLoopConfig head and every mode-driving function in cmd/root.go (locations) | 4.6 |  | 0.503 |
-| walker |  | 5794 | 66 | README.md section #55 |  |  | 0.505 |
+| walker |  | 5794 | 66 | README.md section #58 |  |  | 0.505 |
 | walker |  | 5835 | 41 | go decl doc at internal/agent/agent.go:43 |  |  | 0.505 |
 | ns | 5919 |  | 142 | CreateProvider: the complete list of supported providers | 5.1 |  | 0.498 |
 | walker |  | 6048 | 213 | go decl names surface in sdk/mcphost.go |  |  | 0.498 |
