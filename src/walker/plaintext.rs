@@ -308,19 +308,28 @@ fn is_split_requirements_file(name: &str, dir: &Path) -> bool {
             .is_some_and(|d| d.eq_ignore_ascii_case("requirements"))
 }
 
+/// Bytes read when deciding whether a file reads as a requirements
+/// roster. Deliberately not [`PLAINTEXT_BYTE_GATE`]: that gate says how
+/// much of a file this walker is willing to *render*, and reusing it
+/// here would make "too big to print" mean "not a dependency list" — a
+/// generated freeze of a few hundred pins would be handed to the prose
+/// fallback without a single line being read. A roster's shape is
+/// evident in its first lines, so a bounded prefix decides it.
+const REQUIREMENTS_SNIFF_BYTES: usize = 4096;
+
 /// Whether a file's body reads as a pip requirements roster: most of
 /// its content lines are requirement specifiers rather than sentences.
 /// Required of every spelling except the exact `requirements.txt`,
 /// because the roster treatment is destructive when it lands on prose
 /// — an 8-line head sample behind a roster-sized byte gate turns a
 /// long notes document into nothing at all.
-fn reads_as_requirements_roster(file: &Path, ctx: &WalkCtx) -> bool {
-    let Some(source) = gated_read_source(file, ctx, PLAINTEXT_BYTE_GATE) else {
+fn reads_as_requirements_roster(file: &Path) -> bool {
+    let Some(prefix) = read_head_bytes(file, REQUIREMENTS_SNIFF_BYTES) else {
         return false;
     };
     let (mut lines, mut specifiers) = (0usize, 0usize);
-    for line in source.lines() {
-        let body = line.split('#').next().unwrap_or("").trim();
+    for line in prefix.lines() {
+        let body = strip_hash_comment(line);
         if body.is_empty() {
             continue;
         }
@@ -330,37 +339,181 @@ fn reads_as_requirements_roster(file: &Path, ctx: &WalkCtx) -> bool {
     lines > 0 && specifiers * 2 > lines
 }
 
-/// Whether one comment-stripped line is a requirement specifier: a pip
-/// option (`-r base.txt`, `-e .`, `--index-url …`) or a distribution
-/// name carrying nothing but a version constraint and an environment
-/// marker. Prose loses on the token count — a specifier is one token,
-/// and the two-token allowance covers the spaced `requests >= 2.0`
-/// spelling. The short-option arm checks the letter *and* what follows
-/// it so a prose bullet (`- pin urllib3`) is not read as `-p`.
+/// A file's leading `limit` bytes as text, truncated back to the last
+/// complete line so the caller never judges a half-read one. Lossy on
+/// purpose — this decides a classification, and a file whose prefix
+/// needs replacement characters is not a requirements roster anyway.
+fn read_head_bytes(file: &Path, limit: usize) -> Option<String> {
+    use std::io::Read;
+    let mut buf = Vec::with_capacity(limit);
+    std::fs::File::open(file)
+        .ok()?
+        .take(limit as u64)
+        .read_to_end(&mut buf)
+        .ok()?;
+    let text = String::from_utf8_lossy(&buf).into_owned();
+    if buf.len() < limit {
+        return Some(text);
+    }
+    let end = text.rfind('\n')?;
+    Some(text[..end].to_string())
+}
+
+/// A requirements line with its trailing comment removed. `#` only
+/// opens a comment at the start of the line or after whitespace —
+/// inside a direct reference it is the URL fragment that carries the
+/// `#egg=` name.
+fn strip_hash_comment(line: &str) -> &str {
+    let trimmed = line.trim();
+    if trimmed.starts_with('#') {
+        return "";
+    }
+    let mut after_space = false;
+    for (offset, ch) in trimmed.char_indices() {
+        if ch == '#' && after_space {
+            return trimmed[..offset].trim_end();
+        }
+        after_space = ch.is_whitespace();
+    }
+    trimmed
+}
+
+/// Whether one comment-stripped line is a requirements-file entry. The
+/// whole line has to fit one of the grammar's shapes, not just its
+/// first token — "Development requirements" opens with a valid
+/// distribution name and would pass any check that stops there.
+///
+/// The shapes: a pip option (`-r base.txt`, `-e .`, `--hash=sha256:…`),
+/// a direct reference (VCS URL, wheel URL, `file://`, a local path), or
+/// a distribution name followed by nothing but extras, a version
+/// constraint and an environment marker.
 fn is_requirement_specifier(body: &str) -> bool {
+    // A continuation backslash belongs to the line above's constraint
+    // list and says nothing about this line's shape.
+    let body = body.strip_suffix('\\').unwrap_or(body).trim_end();
+    if body.is_empty() {
+        return false;
+    }
+    if is_pip_option(body) {
+        return true;
+    }
+    let (spec, marker) = match body.split_once(';') {
+        Some((spec, marker)) => (spec.trim_end(), Some(marker.trim())),
+        None => (body, None),
+    };
+    if marker.is_some_and(|marker| !is_environment_marker(marker)) {
+        return false;
+    }
+    is_requirement_spec(spec)
+}
+
+/// `-r`/`-c`/`-e` and the `--long` options, but not a prose bullet:
+/// a short option is one letter followed by its argument separator, so
+/// `- pin urllib3` is not read as `-p`.
+fn is_pip_option(body: &str) -> bool {
     if let Some(rest) = body.strip_prefix("--") {
         return rest.starts_with(|c: char| c.is_ascii_alphabetic());
     }
-    if let Some(rest) = body.strip_prefix('-') {
-        let mut chars = rest.chars();
-        return chars.next().is_some_and(|c| c.is_ascii_alphabetic())
-            && chars.next().is_none_or(|c| c == ' ' || c == '=');
-    }
-    let mut tokens = body.split(';').next().unwrap_or("").split_whitespace();
-    let Some(first) = tokens.next() else {
+    let Some(rest) = body.strip_prefix('-') else {
         return false;
     };
-    if tokens.count() > 2 {
+    let mut chars = rest.chars();
+    chars.next().is_some_and(|c| c.is_ascii_alphabetic())
+        && chars.next().is_none_or(|c| c == ' ' || c == '=')
+}
+
+/// The marker half of a PEP 508 line: comparisons between environment
+/// variables and quoted literals (`python_version < "3.9"`). Prose
+/// after a semicolon has neither.
+fn is_environment_marker(marker: &str) -> bool {
+    !marker.is_empty()
+        && (marker.contains('\'')
+            || marker.contains('"')
+            || marker.contains("==")
+            || marker.contains("!=")
+            || marker.contains('<')
+            || marker.contains('>'))
+}
+
+/// The requirement half of a line, with any environment marker already
+/// removed.
+fn is_requirement_spec(spec: &str) -> bool {
+    let spec = spec.trim();
+    if spec.is_empty() {
         return false;
     }
-    let name = first
-        .split(['[', '<', '>', '=', '!', '~', '@'])
-        .next()
-        .unwrap_or("");
-    !name.is_empty()
+    if is_direct_reference(spec) {
+        return true;
+    }
+    // PEP 508 `name @ url`.
+    if let Some((name, url)) = spec.split_once('@') {
+        return is_distribution_name(name.trim()) && is_direct_reference(url.trim());
+    }
+    let (name, rest) = split_distribution_name(spec);
+    is_distribution_name(name) && is_version_constraint(rest)
+}
+
+/// A URL, VCS reference or local path standing on its own — the forms
+/// that carry no distribution name at all.
+fn is_direct_reference(spec: &str) -> bool {
+    if spec.split_whitespace().count() != 1 {
+        return false;
+    }
+    let lower = spec.to_ascii_lowercase();
+    ["git+", "hg+", "bzr+", "svn+"]
+        .iter()
+        .chain(["http://", "https://", "file://", "ftp://"].iter())
+        .any(|prefix| lower.starts_with(prefix))
+        || spec == "."
+        || spec.starts_with("./")
+        || spec.starts_with("../")
+        || spec.starts_with('/')
+}
+
+/// Split off the leading distribution name and its optional extras
+/// block, returning the name and whatever follows.
+fn split_distribution_name(spec: &str) -> (&str, &str) {
+    let name_end = spec
+        .find(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '.' | '_' | '-'))
+        .unwrap_or(spec.len());
+    let (name, rest) = spec.split_at(name_end);
+    let rest = rest.trim_start();
+    match rest.strip_prefix('[').and_then(|r| r.split_once(']')) {
+        Some((_, after_extras)) => (name, after_extras.trim_start()),
+        None => (name, rest),
+    }
+}
+
+fn is_distribution_name(name: &str) -> bool {
+    name.starts_with(|c: char| c.is_ascii_alphanumeric())
         && name
             .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-' | '/'))
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-'))
+}
+
+/// Whatever trails a distribution name: either nothing, or a version
+/// constraint list. The leading comparison operator is what separates
+/// `requests >= 2.0` from `Development requirements` — a second bare
+/// word is prose, not a constraint.
+fn is_version_constraint(rest: &str) -> bool {
+    let rest = rest.trim();
+    if rest.is_empty() {
+        return true;
+    }
+    let inner = rest
+        .strip_prefix('(')
+        .and_then(|r| r.strip_suffix(')'))
+        .unwrap_or(rest)
+        .trim();
+    inner.starts_with(['<', '>', '=', '!', '~'])
+        && inner.chars().all(|c| {
+            c.is_ascii_alphanumeric()
+                || c.is_ascii_whitespace()
+                || matches!(
+                    c,
+                    '.' | '*' | ',' | '<' | '>' | '=' | '!' | '~' | '+' | '-' | '_'
+                )
+        })
 }
 
 /// Whether a requirements roster is the project's runtime install
@@ -865,7 +1018,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // to read like one too.
                 Class::Requirements => {
                     name.eq_ignore_ascii_case("requirements.txt")
-                        || reads_as_requirements_roster(&file, ctx)
+                        || reads_as_requirements_roster(&file)
                 }
                 _ => true,
             });
@@ -1999,6 +2152,79 @@ mod tests {
             expanded_key_kind(root, &ctx, "requirements-dev.txt"),
             "whole"
         );
+    }
+
+    #[test]
+    fn plaintext_requirements_sniff_is_independent_of_the_render_gate() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        // A generated freeze is a roster no matter how long it is. The
+        // byte gate says how much this walker will render, and must not
+        // double as evidence about what the file *is*.
+        let body: String = (0..400)
+            .map(|i| format!("package-with-a-longish-name-{i}==1.{i}.0\n"))
+            .collect();
+        assert!(body.len() > PLAINTEXT_BYTE_GATE);
+        std::fs::write(root.join("requirements-dev.txt"), &body).unwrap();
+
+        // It classifies as a roster, so it takes the roster's fate at
+        // the render gate — suppressed, exactly as an oversized
+        // `requirements.txt` already is. What it must *not* do is fall
+        // to the prose fallback, which is what happens when the render
+        // gate is consulted as classification evidence.
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert_eq!(
+            expanded_key_kind(root, &ctx, "requirements-dev.txt"),
+            "absent",
+        );
+    }
+
+    #[test]
+    fn plaintext_requirement_specifier_covers_direct_references_and_rejects_terse_prose() {
+        for line in [
+            "git+https://github.com/psf/requests.git@v2.31.0#egg=requests",
+            "git+ssh://git@github.com/acme/lib.git",
+            "https://files.example.org/wheels/acme-1.0-py3-none-any.whl",
+            "file:///opt/wheels/acme-1.0.tar.gz",
+            "./vendor/acme",
+            "../shared",
+            ".",
+            "acme @ https://files.example.org/acme-1.0.tar.gz",
+            "uvicorn[standard] >= 0.30, < 0.40",
+            "numpy ; python_version < '3.9'",
+            "-r base.txt",
+            "--hash=sha256:0123456789abcdef",
+            "django==5.0 \\",
+        ] {
+            assert!(is_requirement_specifier(line), "specifier: {line:?}");
+        }
+        for line in [
+            "Development requirements",
+            "Run tests locally",
+            "Install these first",
+            "Pinned for CI",
+            "- pin urllib3",
+        ] {
+            assert!(!is_requirement_specifier(line), "prose: {line:?}");
+        }
+    }
+
+    #[test]
+    fn plaintext_vcs_only_split_roster_is_a_roster() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let reqs = root.join("requirements");
+        std::fs::create_dir(&reqs).unwrap();
+        std::fs::write(
+            reqs.join("vendor.txt"),
+            "git+https://github.com/acme/lib.git@main#egg=lib\n\
+             https://files.example.org/wheels/acme-1.0-py3-none-any.whl\n\
+             file:///opt/wheels/tool-2.0.tar.gz\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert_eq!(expanded_key_kind(&reqs, &ctx, "vendor.txt"), "whole");
     }
 
     #[test]
