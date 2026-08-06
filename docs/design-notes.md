@@ -3308,3 +3308,17 @@ chose for the three rows whose examples it elides.
 Eligibility is runtime modules only (`is_runtime_module`: not a
 declaration file, not an all-type-only module) — a doc slice below a
 0.35-damped surface that never enters collects nothing.
+
+**Fix pass (2026-08-06, adversarial review).** Two latent bugs in the
+tier, both inert on the training corpus (semver is its only carrier and
+has neither shape), both live for any repo outside it:
+`is_flat_layout_source_path` was path-only and sits *above* the
+`is_js_file` branch, so a wrapper-less **TypeScript** package's whole API
+fell from 1.0 to 0.35 — the predicate now fails closed for non-JS. And
+`published_top_level_dir_names` collected positives while merely
+skipping negations, so `["classes","!classes/fixtures/**"]` published
+the carved-out subtree anyway; negations now retract the top-level
+directory they land in, order-independently. The retraction is
+deliberately whole-directory: with any part of a subtree excluded the
+`files` array no longer says "this whole directory ships", which is the
+only statement this tier is entitled to read.

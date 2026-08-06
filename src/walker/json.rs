@@ -798,10 +798,14 @@ pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
     })
 }
 
-/// Single-component directory names published by `<pkg_dir>/package.
-/// json`'s `files` array. Negations (`!…`), glob patterns and nested
-/// paths are skipped: only a bare top-level name is an unambiguous
-/// "this whole directory ships" statement.
+/// Single-component directory names published *whole* by `<pkg_dir>/
+/// package.json`'s `files` array. Glob patterns and nested paths do not
+/// qualify as positives: only a bare top-level name is an unambiguous
+/// "this whole directory ships" statement. A negation anywhere in the
+/// array retracts the directory it lands in — `!classes` and
+/// `!classes/fixtures/**` both disqualify `classes`, because with any
+/// part of the subtree carved out the array no longer says the whole
+/// directory ships. Order-independent: negations are collected first.
 pub(super) fn published_top_level_dir_names(pkg_dir: &Path) -> Vec<String> {
     let Some((text, tree)) = parse_manifest(pkg_dir) else {
         return Vec::new();
@@ -815,26 +819,49 @@ pub(super) fn published_top_level_dir_names(pkg_dir: &Path) -> Vec<String> {
     if files.kind() != "array" {
         return Vec::new();
     }
-    let mut out = Vec::new();
+    let mut candidates = Vec::new();
+    let mut retracted = Vec::new();
     let mut cur = files.walk();
     for child in files.children(&mut cur) {
         if child.kind() != "string" {
             continue;
         }
         let entry = unquote_string(child, &text);
-        let entry = entry.strip_prefix("./").unwrap_or(&entry);
-        let entry = entry.trim_end_matches('/');
-        if entry.is_empty()
-            || entry.starts_with('!')
-            || entry.contains('*')
-            || entry.contains('?')
-            || entry.contains('/')
-        {
+        let entry = entry.trim();
+        if let Some(negated) = entry.strip_prefix('!') {
+            // A negation's own first component is the top-level
+            // directory whose publication it qualifies.
+            if let Some(head) = top_level_component(negated) {
+                retracted.push(head.to_string());
+            }
             continue;
         }
-        out.push(entry.to_string());
+        let Some(head) = top_level_component(entry) else {
+            continue;
+        };
+        if head
+            == entry
+                .strip_prefix("./")
+                .unwrap_or(entry)
+                .trim_end_matches('/')
+        {
+            candidates.push(head.to_string());
+        }
     }
-    out
+    candidates.retain(|name| !retracted.iter().any(|dir| dir == name));
+    candidates
+}
+
+/// First path component of a `files` entry, with `./` and trailing
+/// slashes stripped. `None` when the entry is empty or its leading
+/// component is a glob (which names no single directory).
+fn top_level_component(entry: &str) -> Option<&str> {
+    let entry = entry.strip_prefix("./").unwrap_or(entry);
+    let head = entry.split('/').next().unwrap_or_default();
+    if head.is_empty() || head.contains('*') || head.contains('?') {
+        return None;
+    }
+    Some(head)
 }
 
 /// String targets of `<pkg_dir>/package.json`'s entry fields — `main`,
