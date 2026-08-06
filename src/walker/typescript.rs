@@ -3195,6 +3195,13 @@ fn is_primary_js_source_path(path: &Path, ctx: &WalkCtx) -> bool {
 /// set so unpublished siblings (tests, benchmarks, examples) stay
 /// secondary, and inert wherever a wrapper exists.
 fn is_flat_layout_source_path(path: &Path, ctx: &WalkCtx) -> bool {
+    // Fail closed for non-JS: this is a tier *within* the JS value
+    // ladder, and it sits above the `is_js_file` branch in
+    // `js_value_factor`, so a path-only answer would demote a
+    // wrapper-less package's TypeScript off the 1.0 default.
+    if !is_js_file(path) {
+        return false;
+    }
     let root = ctx.root();
     let state = ctx.typescript_state();
     let pkg_dir = state
@@ -5694,6 +5701,58 @@ export function old() {}
             !is_flat_layout_source_path(&root.join("dist/a.js"), &ctx),
             "published build output is not source"
         );
+    }
+
+    #[test]
+    fn walker_typescript_flat_layout_tier_is_js_only() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"main":"index.js","files":["classes"]}"#,
+        )
+        .unwrap();
+        std::fs::create_dir(root.join("classes")).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        for ext in ["ts", "tsx", "mts", "cts"] {
+            let file = root.join("classes").join(format!("a.{ext}"));
+            assert_eq!(
+                js_value_factor(&file, &ctx),
+                1.0,
+                "the flat-layout tier is a JS tier; TypeScript keeps full weight: {}",
+                file.display()
+            );
+        }
+        assert_eq!(
+            js_value_factor(&root.join("classes/a.js"), &ctx),
+            FLAT_LAYOUT_JS_VALUE_FACTOR
+        );
+    }
+
+    #[test]
+    fn walker_typescript_flat_layout_honors_files_negations() {
+        for (files, promoted) in [
+            (r#"["classes","!classes"]"#, false),
+            (r#"["!classes","classes"]"#, false),
+            (r#"["classes","!classes/fixtures/**"]"#, false),
+            (r#"["!classes/fixtures/**","classes"]"#, false),
+            (r#"["classes","!.DS_Store"]"#, true),
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            let root = dir.path();
+            std::fs::write(
+                root.join("package.json"),
+                format!(r#"{{"main":"index.js","files":{files}}}"#),
+            )
+            .unwrap();
+            std::fs::create_dir(root.join("classes")).unwrap();
+            let ctx = WalkCtx::new(root.to_path_buf());
+            assert_eq!(
+                is_flat_layout_source_path(&root.join("classes/a.js"), &ctx),
+                promoted,
+                "files {files}"
+            );
+        }
     }
 
     #[test]

@@ -155,6 +155,11 @@ lib/
         …
           13→  constructor(name, description) {
         …
+          42→  /**
+          43→   * Return argument name.
+          44→   *
+          45→   * @return {string}
+          46→   */
           48→  name() {
         …
           56→  _collectValue(value, previous) {
@@ -165,8 +170,18 @@ lib/
         …
           98→  choices(values) {
         …
+         114→  /**
+         115→   * Make argument required.
+         116→   *
+         117→   * @returns {Argument}
+         118→   */
          119→  argRequired() {
         …
+         124→  /**
+         125→   * Make argument optional.
+         126→   *
+         127→   * @returns {Argument}
+         128→   */
          129→  argOptional() {
         …
          140→ * @private
@@ -279,8 +294,6 @@ lib/
         …
          120→  env(name) {
         …
-         132→  argParser(fn) {
-        …
          181→  choices(values) {
         …
          203→  name() {
@@ -288,6 +301,7 @@ lib/
          217→  attributeName() {
         …
          243→  is(arg) {
+         244→    return this.short === arg || this.long === arg;
         …
          256→  isBoolean() {
         …

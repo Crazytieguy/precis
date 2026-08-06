@@ -3450,3 +3450,17 @@ Incidental finding: jq's `main` sits in `#ifdef WIN32 … #else … #endif`
 with a brace-balancing comment, and tree-sitter parses the whole region
 as one `ERROR` node. `defines_unconditional_main` is a lower bound for
 any preprocessor-guarded entrypoint.
+
+**Fix pass (2026-08-06, adversarial review).** Two latent bugs in the
+tier, both inert on the training corpus (semver is its only carrier and
+has neither shape), both live for any repo outside it:
+`is_flat_layout_source_path` was path-only and sits *above* the
+`is_js_file` branch, so a wrapper-less **TypeScript** package's whole API
+fell from 1.0 to 0.35 — the predicate now fails closed for non-JS. And
+`published_top_level_dir_names` collected positives while merely
+skipping negations, so `["classes","!classes/fixtures/**"]` published
+the carved-out subtree anyway; negations now retract the top-level
+directory they land in, order-independently. The retraction is
+deliberately whole-directory: with any part of a subtree excluded the
+`files` array no longer says "this whole directory ships", which is the
+only statement this tier is entitled to read.
