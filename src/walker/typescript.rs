@@ -124,6 +124,10 @@ pub struct TypescriptState {
     /// is immutable for the run, and the uncached form re-parses it
     /// once per entrypoint-named file in the package.
     entry_targets_lookup: RefCell<HashMap<PathBuf, Vec<String>>>,
+    /// Per package dir: the manifest-published top-level directories that
+    /// act as the package's source tree when it has no source-dir wrapper.
+    /// Empty whenever a wrapper exists — the wrapper is then the answer.
+    flat_source_dirs_lookup: RefCell<HashMap<PathBuf, Vec<String>>>,
 }
 
 /// Reachability results over the TS/JS import graph, canonicalized.
@@ -2976,6 +2980,10 @@ fn is_pinned_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
 const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
 const PRIMARY_JS_VALUE_FACTOR: f64 = 0.85;
 const SECONDARY_JS_VALUE_FACTOR: f64 = 0.05;
+/// Own tier between the two: a flat-layout package's published
+/// directories are the source tree, but they are not the wrapper the
+/// primary tier was calibrated on, so they rank between the two.
+const FLAT_LAYOUT_JS_VALUE_FACTOR: f64 = 0.35;
 
 /// Multiplier applied to every per-file TS/JS batch: full weight for
 /// files in the project's public surface (entrypoint-reachable via
@@ -3004,6 +3012,8 @@ fn js_value_factor(path: &Path, ctx: &WalkCtx) -> f64 {
         // README-cited JS files (e.g. canonical example scripts) are
         // primary by author intent — promote them out of the secondary tier.
         PRIMARY_JS_VALUE_FACTOR
+    } else if is_flat_layout_source_path(path, ctx) {
+        FLAT_LAYOUT_JS_VALUE_FACTOR
     } else if is_js_file(path) {
         // Secondary JS helpers/scripts are useful fallback context, not the
         // primary surface when source files exist elsewhere.
@@ -3028,6 +3038,61 @@ fn is_primary_js_source_path(path: &Path, ctx: &WalkCtx) -> bool {
         }
     }
     component_count == 1
+}
+
+/// A package with no `src`/`lib`/`source` wrapper keeps its source at the
+/// top level, so the directories its manifest publishes *are* the source
+/// tree — not secondary helpers next to one. Restricted to the published
+/// set so unpublished siblings (tests, benchmarks, examples) stay
+/// secondary, and inert wherever a wrapper exists.
+fn is_flat_layout_source_path(path: &Path, ctx: &WalkCtx) -> bool {
+    let root = ctx.root();
+    let state = ctx.typescript_state();
+    let pkg_dir = state
+        .nearest_subpackage_dir(path, root)
+        .unwrap_or_else(|| root.to_path_buf());
+    let Ok(rel) = path.strip_prefix(&pkg_dir) else {
+        return false;
+    };
+    let Some(std::path::Component::Normal(top)) = rel.components().next() else {
+        return false;
+    };
+    let Some(top) = top.to_str() else {
+        return false;
+    };
+    let mut cache = state.flat_source_dirs_lookup.borrow_mut();
+    cache
+        .entry(pkg_dir.clone())
+        .or_insert_with(|| flat_layout_source_dirs(&pkg_dir))
+        .iter()
+        .any(|dir| dir == top)
+}
+
+fn flat_layout_source_dirs(pkg_dir: &Path) -> Vec<String> {
+    let Ok(entries) = std::fs::read_dir(pkg_dir) else {
+        return Vec::new();
+    };
+    let mut child_dirs = Vec::new();
+    for entry in entries.flatten() {
+        if !entry.path().is_dir() {
+            continue;
+        }
+        if is_source_dir(&entry.path()) {
+            return Vec::new();
+        }
+        if let Some(name) = entry.file_name().to_str() {
+            child_dirs.push(name.to_string());
+        }
+    }
+    super::json::published_top_level_dir_names(pkg_dir)
+        .into_iter()
+        .filter(|name| {
+            // A published *build output* directory is the package's
+            // shipped artifact, not the source that produced it.
+            !GENERATED_ENTRY_DIR_PREFIXES.contains(&name.as_str())
+                && child_dirs.iter().any(|dir| dir == name)
+        })
+        .collect()
 }
 
 fn is_js_config_file(path: &Path) -> bool {
@@ -5373,6 +5438,51 @@ export function old() {}
             "a declaration file is never a runtime entry seed — its imports are type plumbing"
         );
         assert!(!surface.reexport_targets.contains(&plumbing));
+    }
+
+    #[test]
+    fn walker_typescript_flat_layout_published_dirs_are_primary_source() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"main":"index.js","files":["classes/","dist","index.js"]}"#,
+        )
+        .unwrap();
+        for sub in ["classes", "dist", "test"] {
+            std::fs::create_dir(root.join(sub)).unwrap();
+            std::fs::write(root.join(sub).join("a.js"), "module.exports = 1;\n").unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(is_flat_layout_source_path(&root.join("classes/a.js"), &ctx));
+        assert!(
+            !is_flat_layout_source_path(&root.join("test/a.js"), &ctx),
+            "unpublished siblings stay secondary"
+        );
+        assert!(
+            !is_flat_layout_source_path(&root.join("dist/a.js"), &ctx),
+            "published build output is not source"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_source_wrapper_suppresses_flat_layout_promotion() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"main":"index.js","files":["widgets","lib"]}"#,
+        )
+        .unwrap();
+        for sub in ["widgets", "lib"] {
+            std::fs::create_dir(root.join(sub)).unwrap();
+            std::fs::write(root.join(sub).join("a.js"), "module.exports = 1;\n").unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(
+            !is_flat_layout_source_path(&root.join("widgets/a.js"), &ctx),
+            "a package with a source-dir wrapper keeps the wrapper as its source tree"
+        );
     }
 
     #[test]
