@@ -2076,14 +2076,21 @@ fn collect_default_implementation_exports(tree: &Tree, source: &str) -> HashMap<
         if let Some(default_name) = identifier_text(value, source)
             && let Some(default_decl) = decls.get(default_name).copied()
         {
-            if local_decl_has_implementation_body(default_decl) {
-                out.insert(default_name.to_string(), export_line);
-            } else if let Some(factory_name) = const_factory_callee_name(default_decl, source)
+            // A thin `const instance = factory()` alias is a handle on the
+            // implementation, not the implementation — chase one hop so the
+            // export lands on the declaration a reader wants. Everything
+            // else the name refers to *is* the module's value, whatever its
+            // shape: a data const, an enum and a function are equally the
+            // thing the file publishes.
+            if !local_decl_has_implementation_body(default_decl)
+                && let Some(factory_name) = const_factory_callee_name(default_decl, source)
                 && decls
                     .get(factory_name)
                     .is_some_and(|decl| local_decl_has_implementation_body(*decl))
             {
                 out.insert(factory_name.to_string(), export_line);
+            } else {
+                out.insert(default_name.to_string(), export_line);
             }
         } else if let Some(factory_name) = expression_callee_name(value, source)
             && decls
@@ -6826,6 +6833,65 @@ export default instance;
         assert!(matches!(local.kind, ItemKind::Class));
         assert_eq!(local.predecessor_start_line, Some(7));
         assert!(local.body_parts.iter().any(|part| part.lines == vec![3]));
+    }
+
+    #[test]
+    fn walker_typescript_default_data_const_synthesizes_the_declaration() {
+        let src = "\
+const config = {
+  retries: 3,
+};
+export default config;
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("source/options.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(matches!(local.kind, ItemKind::Const));
+        assert_eq!(local.predecessor_start_line, Some(4));
+    }
+
+    #[test]
+    fn walker_typescript_default_primitive_const_synthesizes_the_declaration() {
+        let src = "\
+const VERSION = '1.2.3';
+export default VERSION;
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("source/version.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(matches!(local.kind, ItemKind::Const));
+        assert_eq!(local.predecessor_start_line, Some(2));
+    }
+
+    #[test]
+    fn walker_typescript_default_enum_synthesizes_the_declaration() {
+        let src = "\
+enum Level {
+  Info,
+  Warn,
+}
+export default Level;
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("source/level.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert_eq!(local.predecessor_start_line, Some(5));
+    }
+
+    #[test]
+    fn walker_typescript_default_identifier_alias_synthesizes_the_named_declaration() {
+        let src = "\
+const base = {
+  retries: 3,
+};
+const config = base;
+export default config;
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("source/options.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 4).unwrap();
+        assert!(matches!(local.kind, ItemKind::Const));
+        assert_eq!(local.predecessor_start_line, Some(5));
     }
 
     #[test]

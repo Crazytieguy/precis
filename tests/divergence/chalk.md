@@ -47,6 +47,7 @@ Score(3000)=0.637 I=0.878 C=0.462 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 1403 | 37 | readme.md section #31 |  |  | 0.837 |
 | walker |  | 1431 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.837 |
 | walker |  | 1431 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.837 |
+| walker |  | 1431 | 0 | export at source/vendor/supports-color/index.js:190 |  |  | 0.837 |
 | walker |  | 1445 | 14 | readme.md section #17 |  |  | 0.837 |
 | walker |  | 1459 | 14 | readme.md section #18 |  |  | 0.837 |
 | ns | 1462 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.818 |
@@ -121,89 +122,91 @@ Score(3000)=0.637 I=0.878 C=0.462 ns_rows≤3K=21/59 (reached=9 partial=0 missin
 | walker |  | 4108 | 256 | export member names #1 at source/index.d.ts:32 |  |  | 0.667 |
 | ns | 4163 |  | 209 | readme: modifier list with human descriptions | 3.5 | 1.7 | 0.666 |
 | walker |  | 4184 | 76 | imports in source/index.d.ts |  |  | 0.666 |
-| walker |  | 4214 | 30 | readme.md section #25 |  |  | 0.671 |
-| walker |  | 4244 | 30 | readme.md section #26 |  |  | 0.676 |
-| walker |  | 4414 | 170 | readme.md section #28 |  |  | 0.676 |
+| walker |  | 4242 | 58 | export at source/vendor/supports-color/index.js:185 |  |  | 0.667 |
+| walker |  | 4272 | 30 | readme.md section #25 |  |  | 0.671 |
+| walker |  | 4302 | 30 | readme.md section #26 |  |  | 0.677 |
 | ns | 4471 |  | 308 | readme: 256/Truecolor section and the `rgb`/`hex`/`ansi256` colour models | 3.6 | 1.5 | 0.664 |
-| walker |  | 4554 | 140 | readme.md section #1 |  |  | 0.664 |
+| walker |  | 4472 | 170 | readme.md section #28 |  |  | 0.664 |
 | ns | 4565 |  | 94 | `source/index.js` imports and the stdout/stderr colour split | 4.1 |  | 0.668 |
-| walker |  | 4588 | 34 | readme.md section #11 |  |  | 0.669 |
-| walker |  | 4622 | 34 | readme.md section #13 |  |  | 0.671 |
+| walker |  | 4612 | 140 | readme.md section #1 |  |  | 0.668 |
+| walker |  | 4646 | 34 | readme.md section #11 |  |  | 0.670 |
+| walker |  | 4680 | 34 | readme.md section #13 |  |  | 0.671 |
 | ns | 4847 |  | 282 | `source/index.js`: complete top-level declaration roster | 4.2 |  | 0.680 |
-| walker |  | 4908 | 286 | module statements at source/index.js:96 |  |  | 0.685 |
-| walker |  | 4965 | 57 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.685 |
+| walker |  | 4966 | 286 | module statements at source/index.js:96 |  |  | 0.685 |
 | ns | 4986 |  | 139 | `Chalk` class, `chalkFactory`, `createChalk` | 4.3 | 4.2 | 0.687 |
-| walker |  | 5002 | 37 | readme.md section #15 |  |  | 0.690 |
-| walker |  | 5017 | 15 | imports in benchmark.js |  |  | 0.690 |
-| walker |  | 5063 | 46 | export names surface in source/utilities.js |  |  | 0.690 |
-| walker |  | 5063 | 0 | export at source/utilities.js:2 |  |  | 0.690 |
-| walker |  | 5063 | 0 | export at source/utilities.js:21 |  |  | 0.690 |
+| walker |  | 5023 | 57 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.687 |
+| walker |  | 5060 | 37 | readme.md section #15 |  |  | 0.690 |
+| walker |  | 5075 | 15 | imports in benchmark.js |  |  | 0.690 |
 | ns | 5104 |  | 118 | `applyOptions`: level validation and auto-detection | 4.4 | 4.2 | 0.683 |
-| walker |  | 5105 | 42 | readme.md section #8 |  |  | 0.686 |
-| walker |  | 5197 | 92 | code-of-conduct.md section #6 |  |  | 0.686 |
-| walker |  | 5251 | 54 | readme.md section #5 |  |  | 0.692 |
-| ns | 5274 |  | 170 | Style-property generation loop, `visible`, and prototype installation | 4.5 | 4.2 | 0.700 |
-| walker |  | 5391 | 140 | export at source/index.d.ts:12 |  |  | 0.722 |
+| walker |  | 5121 | 46 | export names surface in source/utilities.js |  |  | 0.683 |
+| walker |  | 5121 | 0 | export at source/utilities.js:2 |  |  | 0.683 |
+| walker |  | 5121 | 0 | export at source/utilities.js:21 |  |  | 0.683 |
+| walker |  | 5163 | 42 | readme.md section #8 |  |  | 0.686 |
+| walker |  | 5255 | 92 | code-of-conduct.md section #6 |  |  | 0.686 |
+| ns | 5274 |  | 170 | Style-property generation loop, `visible`, and prototype installation | 4.5 | 4.2 | 0.694 |
+| walker |  | 5309 | 54 | readme.md section #5 |  |  | 0.700 |
+| walker |  | 5449 | 140 | export at source/index.d.ts:12 |  |  | 0.722 |
 | ns | 5465 |  | 191 | `createBuilder`: the chainable callable | 4.6 | 4.2 | 0.710 |
-| walker |  | 5506 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.720 |
-| walker |  | 5552 | 46 | readme.md section #36 |  |  | 0.720 |
-| ns | 5611 |  | 146 | `createStyler`: the open/close linked list | 4.7 | 4.2 | 0.704 |
-| walker |  | 5653 | 101 | code-of-conduct.md section #1 |  |  | 0.704 |
-| walker |  | 5764 | 111 | code-of-conduct.md section #4 |  |  | 0.704 |
-| walker |  | 5818 | 54 | readme.md section #14 |  |  | 0.708 |
-| walker |  | 5874 | 56 | readme.md section #32 |  |  | 0.708 |
+| walker |  | 5564 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.720 |
+| walker |  | 5610 | 46 | readme.md section #36 |  |  | 0.720 |
+| ns | 5611 |  | 146 | `createStyler`: the open/close linked list | 4.7 | 4.2 | 0.705 |
+| walker |  | 5711 | 101 | code-of-conduct.md section #1 |  |  | 0.705 |
+| walker |  | 5822 | 111 | code-of-conduct.md section #4 |  |  | 0.705 |
+| walker |  | 5876 | 54 | readme.md section #14 |  |  | 0.708 |
 | ns | 5911 |  | 300 | `applyStyle`: the string-wrapping algorithm | 4.8 | 4.2 | 0.685 |
+| walker |  | 5932 | 56 | readme.md section #32 |  |  | 0.685 |
 | ns | 6004 |  | 93 | `proto` and the `level` getter/setter delegation | 4.9 | 4.2 | 0.677 |
 | ns | 6060 |  | 56 | `levelMapping`: numeric level → ansi-styles method name | 4.10 | 4.2 | 0.675 |
 | ns | 6259 |  | 199 | `getModelAnsi`: RGB/hex downsampling dispatch | 4.11 | 4.2 | 0.662 |
-| ns | 6532 |  | 273 | Colour-model property generation for `rgb`/`hex`/`ansi256` and their `bg*` twins | 4.12 | 4.2 | 0.672 |
+| ns | 6532 |  | 273 | Colour-model property generation for `rgb`/`hex`/`ansi256` and their `bg*` twins | 4.12 | 4.2 | 0.673 |
 | ns | 6597 |  | 65 | `source/utilities.js`: both exported helpers, signatures only | 4.13 |  | 0.672 |
-| ns | 6820 |  | 223 | supports-color: complete declaration roster and default export | 5.1 |  | 0.662 |
-| ns | 6964 |  | 144 | supports-color: the `--color` / `--no-color` flag block | 5.2 | 5.1 | 0.653 |
-| ns | 7099 |  | 135 | supports-color: `envForceColor` (`FORCE_COLOR` parsing) | 5.3 | 5.1 | 0.646 |
-| ns | 7189 |  | 90 | supports-color: `translateLevel` — the `ColorInfo` shape | 5.4 | 5.1 | 0.640 |
-| ns | 7413 |  | 224 | `_supportsColor`: force-colour precedence and explicit `--color=` levels | 5.5 | 5.1 | 0.627 |
-| walker |  | 7582 | 1708 | export body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.627 |
-| walker |  | 7655 | 73 | readme.md section #9 |  |  | 0.635 |
-| ns | 7852 |  | 439 | `_supportsColor`: TTY, Windows and CI detection | 5.6 | 5.5 | 0.615 |
-| ns | 8253 |  | 401 | `_supportsColor`: TeamCity, `COLORTERM` and terminal-emulator sniffing | 5.7 | 5.6 | 0.602 |
-| ns | 8313 |  | 60 | supports-color: `createSupportsColor` body | 5.8 | 5.1 | 0.604 |
-| walker |  | 8433 | 778 | module item at source/vendor/ansi-styles/index.js:9 |  |  | 0.667 |
-| walker |  | 8469 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.668 |
-| ns | 8478 |  | 165 | supports-color `index.d.ts`: complete type roster | 5.9 |  | 0.661 |
-| walker |  | 8480 | 11 | export names surface in source/vendor/supports-color/browser.js |  |  | 0.661 |
-| walker |  | 8561 | 81 | readme.md section #10 |  |  | 0.672 |
-| ns | 8687 |  | 209 | supports-color browser build: `browser.js` level detection and export shape | 5.10 |  | 0.662 |
-| ns | 8700 |  | 13 | `browser.d.ts` (one-line type re-export) | 5.11 |  | 0.661 |
-| walker |  | 8704 | 143 | code-of-conduct.md section #3 |  |  | 0.661 |
-| walker |  | 8771 | 67 | readme.md section #34 |  |  | 0.661 |
-| ns | 8772 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.658 |
-| walker |  | 8836 | 65 | readme.md section #35 |  |  | 0.658 |
-| walker |  | 8904 | 68 | readme.md section #33 |  |  | 0.658 |
-| walker |  | 8920 | 16 | export doc at source/index.d.ts:268 |  |  | 0.658 |
-| walker |  | 9083 | 163 | code-of-conduct.md section #5 |  |  | 0.658 |
-| walker |  | 9150 | 67 | readme.md section #38 |  |  | 0.658 |
-| ns | 9193 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.648 |
-| walker |  | 9255 | 105 | readme.md section #16 |  |  | 0.651 |
-| walker |  | 9269 | 14 | export doc at source/index.d.ts:302 |  |  | 0.651 |
-| walker |  | 9377 | 108 | readme.md section #12 |  |  | 0.655 |
-| walker |  | 9392 | 15 | export doc at source/index.d.ts:309 |  |  | 0.655 |
-| walker |  | 9407 | 15 | export doc at source/index.d.ts:316 |  |  | 0.655 |
-| walker |  | 9420 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.655 |
-| ns | 9429 |  | 236 | Every test title in the four remaining ava files | 6.3 |  | 0.651 |
-| walker |  | 9438 | 18 | export doc at source/index.d.ts:30 |  |  | 0.651 |
-| ns | 9526 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.649 |
-| walker |  | 9662 | 224 | code-of-conduct.md section #2 |  |  | 0.649 |
-| ns | 9757 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.641 |
-| walker |  | 9779 | 117 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.649 |
-| walker |  | 9779 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.649 |
-| walker |  | 9826 | 47 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.653 |
-| ns | 9900 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.648 |
-| walker |  | 9904 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.648 |
-| walker |  | 9991 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.656 |
-| ns | 9993 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.653 |
+| ns | 6820 |  | 223 | supports-color: complete declaration roster and default export | 5.1 |  | 0.665 |
+| ns | 6964 |  | 144 | supports-color: the `--color` / `--no-color` flag block | 5.2 | 5.1 | 0.656 |
+| ns | 7099 |  | 135 | supports-color: `envForceColor` (`FORCE_COLOR` parsing) | 5.3 | 5.1 | 0.648 |
+| ns | 7189 |  | 90 | supports-color: `translateLevel` — the `ColorInfo` shape | 5.4 | 5.1 | 0.642 |
+| ns | 7413 |  | 224 | `_supportsColor`: force-colour precedence and explicit `--color=` levels | 5.5 | 5.1 | 0.630 |
+| walker |  | 7640 | 1708 | export body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.630 |
+| walker |  | 7713 | 73 | readme.md section #9 |  |  | 0.637 |
+| ns | 7852 |  | 439 | `_supportsColor`: TTY, Windows and CI detection | 5.6 | 5.5 | 0.617 |
+| ns | 8253 |  | 401 | `_supportsColor`: TeamCity, `COLORTERM` and terminal-emulator sniffing | 5.7 | 5.6 | 0.604 |
+| ns | 8313 |  | 60 | supports-color: `createSupportsColor` body | 5.8 | 5.1 | 0.606 |
+| ns | 8478 |  | 165 | supports-color `index.d.ts`: complete type roster | 5.9 |  | 0.600 |
+| walker |  | 8491 | 778 | module item at source/vendor/ansi-styles/index.js:9 |  |  | 0.662 |
+| walker |  | 8527 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.664 |
+| walker |  | 8538 | 11 | export names surface in source/vendor/supports-color/browser.js |  |  | 0.664 |
+| walker |  | 8538 | 0 | export at source/vendor/supports-color/browser.js:34 |  |  | 0.664 |
+| walker |  | 8619 | 81 | readme.md section #10 |  |  | 0.675 |
+| ns | 8687 |  | 209 | supports-color browser build: `browser.js` level detection and export shape | 5.10 |  | 0.665 |
+| ns | 8700 |  | 13 | `browser.d.ts` (one-line type re-export) | 5.11 |  | 0.664 |
+| walker |  | 8762 | 143 | code-of-conduct.md section #3 |  |  | 0.664 |
+| ns | 8772 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.661 |
+| walker |  | 8829 | 67 | readme.md section #34 |  |  | 0.661 |
+| walker |  | 8894 | 65 | readme.md section #35 |  |  | 0.661 |
+| walker |  | 8962 | 68 | readme.md section #33 |  |  | 0.661 |
+| walker |  | 8996 | 34 | export at source/vendor/supports-color/browser.js:29 |  |  | 0.662 |
+| walker |  | 9012 | 16 | export doc at source/index.d.ts:268 |  |  | 0.662 |
+| walker |  | 9175 | 163 | code-of-conduct.md section #5 |  |  | 0.662 |
+| ns | 9193 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.652 |
+| walker |  | 9242 | 67 | readme.md section #38 |  |  | 0.652 |
+| walker |  | 9347 | 105 | readme.md section #16 |  |  | 0.655 |
+| walker |  | 9361 | 14 | export doc at source/index.d.ts:302 |  |  | 0.655 |
+| ns | 9429 |  | 236 | Every test title in the four remaining ava files | 6.3 |  | 0.650 |
+| walker |  | 9469 | 108 | readme.md section #12 |  |  | 0.654 |
+| walker |  | 9484 | 15 | export doc at source/index.d.ts:309 |  |  | 0.654 |
+| walker |  | 9499 | 15 | export doc at source/index.d.ts:316 |  |  | 0.654 |
+| walker |  | 9512 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.655 |
+| ns | 9526 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.652 |
+| walker |  | 9618 | 106 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.662 |
+| walker |  | 9618 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.662 |
+| walker |  | 9696 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.662 |
+| ns | 9757 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.654 |
+| walker |  | 9783 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.663 |
+| ns | 9900 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.657 |
+| walker |  | 9915 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.667 |
+| walker |  | 9933 | 18 | export doc at source/index.d.ts:30 |  |  | 0.667 |
+| ns | 9993 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.664 |

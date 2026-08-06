@@ -33,6 +33,7 @@ Score(3000)=0.564 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 660 | 10 | listing of 'lib/platform/node/classes' |  |  | 0.810 |
 | walker |  | 673 | 13 | export at lib/axios.js:28 |  |  | 0.810 |
 | walker |  | 683 | 10 | export names surface in lib/defaults/index.js |  |  | 0.810 |
+| walker |  | 683 | 0 | export at lib/defaults/index.js:177 |  |  | 0.810 |
 | walker |  | 694 | 11 | export names surface in lib/platform/index.js |  |  | 0.810 |
 | walker |  | 713 | 19 | export at lib/platform/index.js:4 |  |  | 0.810 |
 | walker |  | 726 | 13 | imports in index.js |  |  | 0.810 |
@@ -318,16 +319,17 @@ Score(3000)=0.564 I=0.807 C=0.394 ns_rows≤3K=19/52 (reached=6 partial=1 missin
 | walker |  | 9658 | 99 | export at index.d.ts:338 |  |  | 0.428 |
 | walker |  | 9684 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.429 |
 | walker |  | 9684 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.429 |
-| walker |  | 9750 | 66 | export doc at lib/axios.js:28 |  |  | 0.429 |
-| walker |  | 9772 | 22 | export at lib/helpers/formDataToStream.js:68 |  |  | 0.431 |
+| walker |  | 9684 | 0 | export at lib/adapters/fetch.js:473 |  |  | 0.429 |
+| walker |  | 9694 | 10 | export at lib/adapters/fetch.js:471 |  |  | 0.429 |
+| walker |  | 9760 | 66 | export doc at lib/axios.js:28 |  |  | 0.429 |
+| walker |  | 9782 | 22 | export at lib/helpers/formDataToStream.js:68 |  |  | 0.431 |
 | ns | 9841 |  | 210 | Documentation site tree | 7.2 |  | 0.456 |
-| walker |  | 9849 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.456 |
-| walker |  | 9878 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.456 |
-| walker |  | 9928 | 50 | module statements at lib/defaults/index.js:173 |  |  | 0.457 |
-| walker |  | 9935 | 7 | listing of 'examples/abort-controller' |  |  | 0.457 |
-| walker |  | 9942 | 7 | listing of 'examples/get' |  |  | 0.457 |
-| walker |  | 9949 | 7 | listing of 'examples/post' |  |  | 0.457 |
-| walker |  | 9956 | 7 | listing of 'examples/postMultipartFormData' |  |  | 0.457 |
-| walker |  | 9963 | 7 | listing of 'examples/upload' |  |  | 0.457 |
-| ns | 9974 |  | 133 | Test tree: suites and the unit-test file set | 7.3 |  | 0.470 |
-| walker |  | 9993 | 30 | export at lib/core/Axios.js:241 |  |  | 0.471 |
+| walker |  | 9859 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.456 |
+| walker |  | 9888 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.456 |
+| walker |  | 9938 | 50 | module statements at lib/defaults/index.js:173 |  |  | 0.457 |
+| walker |  | 9945 | 7 | listing of 'examples/abort-controller' |  |  | 0.457 |
+| walker |  | 9952 | 7 | listing of 'examples/get' |  |  | 0.457 |
+| walker |  | 9959 | 7 | listing of 'examples/post' |  |  | 0.457 |
+| walker |  | 9966 | 7 | listing of 'examples/postMultipartFormData' |  |  | 0.457 |
+| walker |  | 9973 | 7 | listing of 'examples/upload' |  |  | 0.457 |
+| ns | 9974 |  | 133 | Test tree: suites and the unit-test file set | 7.3 |  | 0.471 |
