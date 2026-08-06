@@ -144,47 +144,44 @@ Score(3000)=0.536 I=0.807 C=0.356 ns_rows≤3K=18/54 (reached=7 partial=1 missin
 | ns | 6038 |  | 300 | create_list_rule(): the [[array of tables]] statement | 4.4 | 2.1 | 0.471 |
 | walker |  | 6053 | 150 | tool.coverage config in pyproject.toml |  |  | 0.471 |
 | walker |  | 6225 | 172 | README.md section #3 |  |  | 0.471 |
-| walker |  | 6233 | 8 | plaintext config scripts/requirements.txt |  |  | 0.471 |
-| walker |  | 6417 | 184 | README.md section #27 |  |  | 0.471 |
-| walker |  | 6426 | 9 | plaintext config profiler/requirements.txt |  |  | 0.471 |
+| walker |  | 6409 | 184 | README.md section #27 |  |  | 0.471 |
 | ns | 6516 |  | 478 | key_value_rule(): dotted keys, pending flags and immutability | 4.5 | 2.1 | 0.454 |
-| walker |  | 6554 | 128 | tomllib.md section #6 |  |  | 0.454 |
-| walker |  | 6624 | 70 | python decl body at src/tomli/_parser.py:361 body 362 |  |  | 0.454 |
-| walker |  | 6638 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.455 |
+| walker |  | 6537 | 128 | tomllib.md section #6 |  |  | 0.454 |
+| walker |  | 6607 | 70 | python decl body at src/tomli/_parser.py:361 body 362 |  |  | 0.454 |
+| walker |  | 6621 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.455 |
 | ns | 6695 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.448 |
-| walker |  | 6910 | 272 | tool.mypy config in pyproject.toml |  |  | 0.448 |
+| walker |  | 6893 | 272 | tool.mypy config in pyproject.toml |  |  | 0.448 |
+| walker |  | 6976 | 83 | python decl body at src/tomli/_re.py:109 body 110 |  |  | 0.448 |
 | ns | 6980 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.438 |
-| walker |  | 6993 | 83 | python decl body at src/tomli/_re.py:109 body 110 |  |  | 0.438 |
-| walker |  | 7044 | 51 | headings outline in benchmark/README.md |  |  | 0.438 |
-| walker |  | 7305 | 261 | README.md section #24 |  |  | 0.438 |
-| walker |  | 7402 | 97 | tomllib.md section #1 |  |  | 0.438 |
+| walker |  | 7027 | 51 | headings outline in benchmark/README.md |  |  | 0.438 |
+| walker |  | 7288 | 261 | README.md section #24 |  |  | 0.438 |
+| walker |  | 7385 | 97 | tomllib.md section #1 |  |  | 0.438 |
 | ns | 7469 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.423 |
 | ns | 7670 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.418 |
-| walker |  | 7706 | 304 | README.md section #26 |  |  | 0.418 |
-| walker |  | 7798 | 92 | python decl body at src/tomli/_parser.py:612 body 613 |  |  | 0.419 |
+| walker |  | 7689 | 304 | README.md section #26 |  |  | 0.418 |
+| walker |  | 7781 | 92 | python decl body at src/tomli/_parser.py:612 body 613 |  |  | 0.419 |
 | ns | 7812 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.429 |
 | ns | 8046 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.422 |
 | ns | 8138 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.419 |
 | ns | 8365 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.412 |
 | ns | 8540 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.428 |
 | ns | 8777 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.444 |
-| walker |  | 8855 | 1057 | YAML config at .pre-commit-config.yaml |  |  | 0.445 |
-| walker |  | 8866 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.445 |
+| walker |  | 8838 | 1057 | YAML config at .pre-commit-config.yaml |  |  | 0.445 |
+| walker |  | 8849 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.445 |
 | ns | 8906 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.445 |
-| walker |  | 8966 | 100 | python decl body at src/tomli/_parser.py:349 body 350 |  |  | 0.445 |
-| walker |  | 9071 | 105 | listing of 'tests/data/valid' |  |  | 0.445 |
-| walker |  | 9076 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.445 |
-| walker |  | 9082 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.445 |
-| walker |  | 9103 | 21 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.445 |
-| walker |  | 9128 | 25 | listing of 'tests/data/valid/array' |  |  | 0.445 |
+| walker |  | 8949 | 100 | python decl body at src/tomli/_parser.py:349 body 350 |  |  | 0.445 |
+| walker |  | 9054 | 105 | listing of 'tests/data/valid' |  |  | 0.445 |
+| walker |  | 9059 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.445 |
+| walker |  | 9065 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.445 |
+| walker |  | 9086 | 21 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.445 |
+| walker |  | 9111 | 25 | listing of 'tests/data/valid/array' |  |  | 0.445 |
+| walker |  | 9136 | 25 | listing of 'tests/data/valid/inline-table' |  |  | 0.445 |
 | ns | 9138 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.440 |
-| walker |  | 9153 | 25 | listing of 'tests/data/valid/inline-table' |  |  | 0.440 |
-| walker |  | 9180 | 27 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.440 |
-| walker |  | 9185 | 5 | json config tests/data/valid/no-newlines.json |  |  | 0.440 |
-| walker |  | 9211 | 26 | python test names surface in tests/test_data.py |  |  | 0.441 |
+| walker |  | 9163 | 27 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.440 |
+| walker |  | 9168 | 5 | json config tests/data/valid/no-newlines.json |  |  | 0.440 |
+| walker |  | 9194 | 26 | python test names surface in tests/test_data.py |  |  | 0.441 |
+| walker |  | 9342 | 148 | python decl body at src/tomli/_parser.py:447 body 450 |  |  | 0.441 |
 | ns | 9344 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.448 |
-| walker |  | 9359 | 148 | python decl body at src/tomli/_parser.py:447 body 450 |  |  | 0.448 |
-| walker |  | 9403 | 44 | plaintext config fuzzer/requirements.txt |  |  | 0.448 |
 | ns | 9478 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.443 |
 | ns | 9643 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.439 |
 | ns | 9814 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.449 |

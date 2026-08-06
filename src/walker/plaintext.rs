@@ -248,8 +248,10 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         "Dockerfile" | "Containerfile" => return Some(Class::Dockerfile),
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         "setup.cfg" => return Some(Class::PackageConfig),
-        "requirements.txt" => return Some(Class::Requirements),
         _ => {}
+    }
+    if is_requirements_filename(&lower) {
+        return Some(Class::Requirements);
     }
     if crate::value::is_dotenv_sample_filename(name) {
         return Some(Class::DotenvSample);
@@ -273,6 +275,32 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::Todo);
     }
     None
+}
+
+/// A pip requirements roster: `requirements.txt` and the conventional
+/// qualified variants (`requirements-dev.txt`, `dev-requirements.txt`,
+/// `requirements/docs.txt`). Without the variants a qualified roster
+/// falls to the `.txt` prose fallback, which prices it as an
+/// unclassified head slice rather than as the dependency list it is.
+fn is_requirements_filename(lower: &str) -> bool {
+    lower.strip_suffix(".txt").is_some_and(|stem| {
+        stem == "requirements"
+            || stem.starts_with("requirements-")
+            || stem.ends_with("-requirements")
+    })
+}
+
+/// Whether a requirements roster is the project's runtime install
+/// list. Only the repository root's plain `requirements.txt` is: a
+/// qualified variant names the contributor toolchain it installs
+/// (`-dev`, `-docs`, `-test`), and one nested under `docs/`,
+/// `examples/` or `scripts/` is that subtree's install list rather
+/// than the project's. Everything else is the pip analogue of Cargo's
+/// `[dev-dependencies]` and npm's `devDependencies`, and gets their
+/// demotion — see [`crate::value::DEV_DEPENDENCY_ROSTER_SCALE`].
+fn is_runtime_requirements(file: &Path, ctx: &WalkCtx) -> bool {
+    file.file_name().and_then(|n| n.to_str()) == Some("requirements.txt")
+        && ctx.depth_from_root(file) == 1
 }
 
 /// File stems that never render regardless of extension — they
@@ -862,8 +890,15 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         // is whatever `.txt`/`.rst`/`.ini` happened to be in the tree.
         Class::SourceProse => (0.22, 0.30, 0.25),
     };
+    let dev_roster = if matches!(class, Class::Requirements) && !is_runtime_requirements(file, ctx)
+    {
+        crate::value::DEV_DEPENDENCY_ROSTER_SCALE
+    } else {
+        1.0
+    };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
         * small_build_file_factor(class, file, ctx)
+        * dev_roster
 }
 
 /// Conventional names for the file that says how a project is built
@@ -1698,6 +1733,13 @@ mod tests {
             ("configure.ac", Some(Class::BuildScript)),
             ("setup.cfg", Some(Class::PackageConfig)),
             ("requirements.txt", Some(Class::Requirements)),
+            ("requirements-dev.txt", Some(Class::Requirements)),
+            ("requirements-docs.txt", Some(Class::Requirements)),
+            ("dev-requirements.txt", Some(Class::Requirements)),
+            // Not a requirements roster: the qualifier has to attach to
+            // the word, not merely contain it. Falls to the `.txt`
+            // prose fallback, which `classify_plaintext` does not own.
+            ("requirementsfoo.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
             (".env.template", Some(Class::DotenvSample)),
@@ -2173,6 +2215,29 @@ CMD [\"node\", \"index.js\"]\n";
         let lines = head_lines(12, REQUIREMENTS_HEAD_LINE_CAP);
         assert_eq!(lines.full, vec![1, 2, 3, 4, 5, 6, 7, 8]);
         assert_eq!(lines.ellipses, vec![9]);
+    }
+
+    #[test]
+    fn plaintext_non_runtime_requirements_price_as_dev_rosters() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::create_dir(root.join("docs")).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let runtime = class_value(Class::Requirements, &root.join("requirements.txt"), &ctx);
+        for name in ["requirements-dev.txt", "dev-requirements.txt"] {
+            let dev = class_value(Class::Requirements, &root.join(name), &ctx);
+            assert!(
+                (dev / runtime - crate::value::DEV_DEPENDENCY_ROSTER_SCALE).abs() < 1e-9,
+                "{name} must carry the dev-roster demotion: {dev} vs {runtime}",
+            );
+        }
+        // A nested `requirements.txt` is that subtree's install list,
+        // not the project's — same demotion, before depth pricing.
+        let nested = root.join("docs").join("requirements.txt");
+        assert!(
+            class_value(Class::Requirements, &nested, &ctx)
+                < runtime * crate::value::DEV_DEPENDENCY_ROSTER_SCALE * 1.000_001,
+        );
     }
 
     #[test]
