@@ -50,56 +50,55 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | walker |  | 1514 | 11 | export at lib/error.js:25 |  |  | 0.531 |
 | ns | 1529 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.517 |
 | walker |  | 1530 | 16 | export at lib/error.js:4 |  |  | 0.517 |
-| walker |  | 1543 | 13 | imports in typings/esm.d.mts |  |  | 0.517 |
-| walker |  | 1612 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.518 |
-| walker |  | 1623 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.518 |
+| walker |  | 1599 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.518 |
+| walker |  | 1610 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.518 |
 | ns | 1662 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.494 |
-| walker |  | 1683 | 60 | export names surface in lib/argument.js |  |  | 0.495 |
-| walker |  | 1683 | 0 | export at lib/argument.js:143 |  |  | 0.495 |
+| walker |  | 1670 | 60 | export names surface in lib/argument.js |  |  | 0.495 |
+| walker |  | 1670 | 0 | export at lib/argument.js:143 |  |  | 0.495 |
 | ns | 1772 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.475 |
 | ns | 1856 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.462 |
-| walker |  | 1936 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.546 |
+| walker |  | 1923 | 253 | export member names #1 at lib/command.js:13 |  |  | 0.546 |
 | ns | 2003 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.526 |
-| walker |  | 2032 | 96 | export at lib/argument.js:3 |  |  | 0.528 |
-| walker |  | 2089 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.529 |
-| walker |  | 2100 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.529 |
-| walker |  | 2117 | 17 | export doc at lib/error.js:4 |  |  | 0.529 |
+| walker |  | 2019 | 96 | export at lib/argument.js:3 |  |  | 0.528 |
+| walker |  | 2076 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.529 |
+| walker |  | 2087 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.529 |
+| walker |  | 2104 | 17 | export doc at lib/error.js:4 |  |  | 0.529 |
 | ns | 2133 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.513 |
-| walker |  | 2169 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.513 |
-| walker |  | 2224 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.513 |
-| walker |  | 2244 | 20 | export doc at lib/error.js:25 |  |  | 0.513 |
-| walker |  | 2258 | 14 | imports in lib/argument.js |  |  | 0.513 |
-| walker |  | 2272 | 14 | imports in lib/option.js |  |  | 0.513 |
-| walker |  | 2283 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.513 |
+| walker |  | 2156 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.513 |
+| walker |  | 2211 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.513 |
+| walker |  | 2231 | 20 | export doc at lib/error.js:25 |  |  | 0.513 |
+| walker |  | 2245 | 14 | imports in lib/argument.js |  |  | 0.513 |
+| walker |  | 2259 | 14 | imports in lib/option.js |  |  | 0.513 |
+| walker |  | 2270 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.513 |
+| walker |  | 2287 | 17 | imports in lib/help.js |  |  | 0.513 |
 | ns | 2289 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.497 |
-| walker |  | 2300 | 17 | imports in lib/help.js |  |  | 0.497 |
-| walker |  | 2316 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.497 |
+| walker |  | 2303 | 16 | export body at lib/option.js:3 body 244 |  |  | 0.497 |
 | ns | 2363 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.488 |
-| walker |  | 2397 | 81 | imports in index.js |  |  | 0.516 |
-| walker |  | 2408 | 11 | export names surface in esm.mjs |  |  | 0.516 |
-| walker |  | 2419 | 11 | imports in esm.mjs |  |  | 0.517 |
+| walker |  | 2384 | 81 | imports in index.js |  |  | 0.516 |
+| walker |  | 2395 | 11 | export names surface in esm.mjs |  |  | 0.516 |
+| walker |  | 2406 | 11 | imports in esm.mjs |  |  | 0.517 |
 | ns | 2448 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.507 |
-| walker |  | 2516 | 97 | export at esm.mjs:4 |  |  | 0.555 |
+| walker |  | 2503 | 97 | export at esm.mjs:4 |  |  | 0.555 |
 | ns | 2600 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.535 |
-| walker |  | 2665 | 149 | package identity metadata in package.json |  |  | 0.539 |
+| walker |  | 2652 | 149 | package identity metadata in package.json |  |  | 0.539 |
 | ns | 2708 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.527 |
 | ns | 2760 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.529 |
 | ns | 2856 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.520 |
-| walker |  | 2947 | 282 | package entrypoints in package.json |  |  | 0.553 |
+| walker |  | 2934 | 282 | package entrypoints in package.json |  |  | 0.553 |
 | ns | 2999 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.556 |
 | ns | 3127 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.572 |
-| walker |  | 3204 | 257 | package scripts in package.json |  |  | 0.580 |
-| walker |  | 3216 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.582 |
+| walker |  | 3191 | 257 | package scripts in package.json |  |  | 0.580 |
+| walker |  | 3203 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.582 |
 | ns | 3358 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.576 |
 | ns | 3401 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.572 |
 | ns | 3481 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.564 |
 | ns | 3613 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.551 |
-| walker |  | 3652 | 436 | export member names at lib/help.js:12 |  |  | 0.602 |
-| walker |  | 3686 | 34 | export doc at lib/command.js:2752 |  |  | 0.602 |
-| walker |  | 3714 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.605 |
-| walker |  | 3714 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.605 |
+| walker |  | 3639 | 436 | export member names at lib/help.js:12 |  |  | 0.602 |
+| walker |  | 3673 | 34 | export doc at lib/command.js:2752 |  |  | 0.602 |
+| walker |  | 3701 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.605 |
+| walker |  | 3701 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.605 |
 | ns | 3809 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.622 |
-| walker |  | 3841 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.622 |
+| walker |  | 3828 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.622 |
 | ns | 3879 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.628 |
 | ns | 3895 |  | 16 | typings/ listing | 3.1 |  | 0.630 |
 | ns | 4017 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.622 |
@@ -108,157 +107,125 @@ Score(3000)=0.556 I=0.824 C=0.375 ns_rows≤3K=27/65 (reached=7 partial=6 missin
 | ns | 4417 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.595 |
 | ns | 4453 |  | 36 | docs/ listing | 3.6 |  | 0.600 |
 | ns | 4568 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.602 |
-| walker |  | 4655 | 814 | listing of 'tests' |  |  | 0.612 |
-| walker |  | 4683 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.612 |
+| walker |  | 4642 | 814 | listing of 'tests' |  |  | 0.612 |
+| walker |  | 4670 | 28 | listing of 'tests/fixtures-extensions' |  |  | 0.612 |
 | ns | 4733 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.601 |
-| walker |  | 4777 | 94 | listing of 'tests/fixtures' |  |  | 0.602 |
-| walker |  | 4779 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.602 |
-| walker |  | 4781 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.603 |
-| walker |  | 4863 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.620 |
-| walker |  | 4882 | 19 | export body at lib/option.js:3 body 121 |  |  | 0.620 |
-| walker |  | 4972 | 90 | Readme.md section #24 |  |  | 0.621 |
+| walker |  | 4764 | 94 | listing of 'tests/fixtures' |  |  | 0.602 |
+| walker |  | 4766 | 2 | listing of 'tests/fixtures/another-dir' |  |  | 0.602 |
+| walker |  | 4768 | 2 | listing of 'tests/fixtures/other-dir' |  |  | 0.603 |
+| walker |  | 4850 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.620 |
 | ns | 4996 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.604 |
-| walker |  | 5135 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.604 |
-| ns | 5245 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.592 |
-| ns | 5481 |  | 236 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.621 |
-| ns | 5612 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.614 |
-| ns | 5751 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.607 |
-| ns | 5872 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.601 |
-| walker |  | 5937 | 802 | Readme.md section #0 |  |  | 0.601 |
-| walker |  | 5956 | 19 | export body at lib/option.js:3 body 133 |  |  | 0.601 |
-| walker |  | 6009 | 53 | export doc at lib/argument.js:143 |  |  | 0.601 |
-| walker |  | 6028 | 19 | export body at lib/option.js:3 body 257 |  |  | 0.601 |
-| walker |  | 6100 | 72 | export doc at lib/help.js:740 |  |  | 0.601 |
-| walker |  | 6113 | 13 | export member at lib/option.js:3 member 11 |  |  | 0.602 |
-| walker |  | 6126 | 13 | export member at lib/option.js:3 member 47 |  |  | 0.604 |
-| walker |  | 6238 | 112 | export doc at lib/option.js:268 |  |  | 0.604 |
-| walker |  | 6606 | 368 | export body at lib/command.js:2752 body 2753 |  |  | 0.604 |
-| walker |  | 6619 | 13 | export member at lib/option.js:3 member 230 |  |  | 0.606 |
-| walker |  | 6633 | 14 | imports in examples/configure-output.js |  |  | 0.606 |
-| walker |  | 6645 | 12 | module item at examples/configure-output.js:4 |  |  | 0.606 |
-| walker |  | 6654 | 9 | module item at examples/configure-output.js:2 |  |  | 0.606 |
-| walker |  | 6663 | 9 | module statements at examples/configure-output.js:19 |  |  | 0.606 |
-| ns | 6686 |  | 814 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.657 |
-| ns | 6814 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.665 |
-| ns | 6844 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.667 |
-| walker |  | 6873 | 210 | docs/help-in-depth.md section #0 |  |  | 0.667 |
-| walker |  | 6898 | 25 | module statements at examples/configure-output.js:17 |  |  | 0.667 |
-| ns | 6904 |  | 60 | Help's five data properties | 4.1 |  | 0.664 |
-| ns | 7147 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.655 |
-| walker |  | 7471 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.657 |
-| walker |  | 7491 | 20 | export body at lib/option.js:3 body 66 |  |  | 0.657 |
-| ns | 7542 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.644 |
-| walker |  | 7714 | 223 | docs/options-in-depth.md section #0 |  |  | 0.644 |
-| ns | 7896 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.632 |
-| walker |  | 8004 | 290 | Readme.md section #3 |  |  | 0.633 |
-| walker |  | 8020 | 16 | imports in examples/arguments-custom-processing.js |  |  | 0.633 |
-| walker |  | 8033 | 13 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.633 |
-| walker |  | 8042 | 9 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.633 |
-| walker |  | 8051 | 9 | module statements at examples/arguments-custom-processing.js:39 |  |  | 0.633 |
-| ns | 8055 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.628 |
-| walker |  | 8065 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.628 |
-| walker |  | 8078 | 13 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.628 |
-| walker |  | 8094 | 16 | imports in examples/arguments-extra.js |  |  | 0.628 |
-| walker |  | 8105 | 11 | module item at examples/arguments-extra.js:6 |  |  | 0.628 |
-| walker |  | 8114 | 9 | module statements at examples/arguments-extra.js:27 |  |  | 0.628 |
-| walker |  | 8130 | 16 | imports in examples/custom-command-class.js |  |  | 0.628 |
-| walker |  | 8154 | 24 | module item at examples/custom-command-class.js:6 |  |  | 0.628 |
-| walker |  | 8163 | 9 | module statements at examples/custom-command-class.js:39 |  |  | 0.628 |
-| walker |  | 8175 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.628 |
-| walker |  | 8236 | 61 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.628 |
-| walker |  | 8252 | 16 | imports in examples/defaultCommand.js |  |  | 0.628 |
-| walker |  | 8263 | 11 | module item at examples/defaultCommand.js:4 |  |  | 0.628 |
-| walker |  | 8274 | 11 | module statements at examples/defaultCommand.js:30 |  |  | 0.621 |
-| ns | 8274 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.621 |
-| walker |  | 8290 | 16 | imports in examples/nestedCommands.js |  |  | 0.621 |
-| walker |  | 8302 | 12 | module item at examples/nestedCommands.js:21 |  |  | 0.621 |
-| walker |  | 8313 | 11 | module item at examples/nestedCommands.js:4 |  |  | 0.621 |
-| walker |  | 8324 | 11 | module statements at examples/nestedCommands.js:33 |  |  | 0.621 |
-| walker |  | 8335 | 11 | module statements at examples/nestedCommands.js:31 |  |  | 0.621 |
-| walker |  | 8349 | 14 | module item at examples/nestedCommands.js:11 |  |  | 0.621 |
-| walker |  | 8365 | 16 | imports in examples/options-boolean-or-value.js |  |  | 0.621 |
-| walker |  | 8376 | 11 | module item at examples/options-boolean-or-value.js:8 |  |  | 0.621 |
-| walker |  | 8387 | 11 | module statements at examples/options-boolean-or-value.js:12 |  |  | 0.621 |
-| walker |  | 8397 | 10 | module item at examples/options-boolean-or-value.js:14 |  |  | 0.621 |
-| walker |  | 8417 | 20 | module statements at examples/options-boolean-or-value.js:10 |  |  | 0.621 |
-| walker |  | 8433 | 16 | imports in examples/options-common.js |  |  | 0.621 |
-| walker |  | 8444 | 11 | module item at examples/options-common.js:7 |  |  | 0.621 |
-| walker |  | 8455 | 11 | module statements at examples/options-common.js:14 |  |  | 0.621 |
-| walker |  | 8465 | 10 | module item at examples/options-common.js:16 |  |  | 0.621 |
-| walker |  | 8478 | 13 | module statements at examples/options-common.js:17 |  |  | 0.621 |
-| ns | 8486 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.616 |
-| walker |  | 8489 | 11 | module statements at examples/options-common.js:18 |  |  | 0.616 |
-| walker |  | 8505 | 16 | module statements at examples/options-common.js:19 |  |  | 0.616 |
-| walker |  | 8526 | 21 | module statements at examples/options-common.js:20 |  |  | 0.616 |
-| walker |  | 8542 | 16 | imports in examples/options-custom-processing.js |  |  | 0.616 |
-| walker |  | 8558 | 16 | imports in examples/options-defaults.js |  |  | 0.616 |
-| walker |  | 8569 | 11 | module item at examples/options-defaults.js:7 |  |  | 0.616 |
-| walker |  | 8578 | 9 | module statements at examples/options-defaults.js:15 |  |  | 0.616 |
-| walker |  | 8595 | 17 | module statements at examples/options-defaults.js:17 |  |  | 0.616 |
-| walker |  | 8611 | 16 | imports in examples/options-negatable.js |  |  | 0.616 |
-| walker |  | 8622 | 11 | module item at examples/options-negatable.js:8 |  |  | 0.616 |
-| walker |  | 8631 | 9 | module statements at examples/options-negatable.js:15 |  |  | 0.616 |
-| walker |  | 8641 | 10 | module item at examples/options-negatable.js:17 |  |  | 0.616 |
-| walker |  | 8662 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.616 |
-| walker |  | 8687 | 25 | module statements at examples/options-negatable.js:21 |  |  | 0.616 |
-| walker |  | 8703 | 16 | imports in examples/options-required.js |  |  | 0.616 |
-| walker |  | 8714 | 11 | module item at examples/options-required.js:9 |  |  | 0.616 |
-| walker |  | 8723 | 9 | module statements at examples/options-required.js:13 |  |  | 0.616 |
-| walker |  | 8741 | 18 | module statements at examples/options-required.js:15 |  |  | 0.616 |
-| walker |  | 8761 | 20 | module statements at examples/options-required.js:11 |  |  | 0.616 |
-| ns | 8768 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.624 |
-| walker |  | 8777 | 16 | imports in examples/options-variadic.js |  |  | 0.624 |
-| walker |  | 8788 | 11 | module item at examples/options-variadic.js:6 |  |  | 0.624 |
-| walker |  | 8797 | 9 | module statements at examples/options-variadic.js:12 |  |  | 0.624 |
-| walker |  | 8810 | 13 | module statements at examples/options-variadic.js:14 |  |  | 0.624 |
-| walker |  | 8824 | 14 | module statements at examples/options-variadic.js:15 |  |  | 0.624 |
-| walker |  | 8840 | 16 | imports in examples/split.js |  |  | 0.624 |
-| walker |  | 8852 | 12 | module item at examples/split.js:9 |  |  | 0.624 |
-| walker |  | 8859 | 7 | module statements at examples/split.js:7 |  |  | 0.624 |
-| walker |  | 8874 | 15 | module item at examples/split.js:10 |  |  | 0.624 |
-| walker |  | 8891 | 17 | module statements at examples/split.js:11 |  |  | 0.624 |
-| walker |  | 8913 | 22 | module statements at examples/split.js:5 |  |  | 0.624 |
-| walker |  | 8929 | 16 | imports in examples/string-util.js |  |  | 0.624 |
-| walker |  | 8939 | 10 | module item at examples/string-util.js:2 |  |  | 0.624 |
-| walker |  | 8948 | 9 | module statements at examples/string-util.js:31 |  |  | 0.624 |
-| walker |  | 8977 | 29 | module item at examples/options-negatable.js:19 |  |  | 0.624 |
-| walker |  | 9006 | 29 | module statements at examples/nestedCommands.js:12 |  |  | 0.624 |
-| walker |  | 9035 | 29 | module statements at examples/nestedCommands.js:15 |  |  | 0.624 |
-| walker |  | 9055 | 20 | export body at lib/option.js:3 body 231 |  |  | 0.624 |
-| ns | 9098 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.615 |
-| ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.618 |
-| walker |  | 9304 | 249 | docs/terminology.md section #0 |  |  | 0.641 |
-| walker |  | 9322 | 18 | imports in examples/action-this.js |  |  | 0.641 |
-| walker |  | 9332 | 10 | module item at examples/action-this.js:6 |  |  | 0.641 |
-| walker |  | 9341 | 9 | module statements at examples/action-this.js:16 |  |  | 0.641 |
-| walker |  | 9359 | 18 | imports in examples/alias.js |  |  | 0.641 |
-| walker |  | 9369 | 10 | module item at examples/alias.js:6 |  |  | 0.641 |
-| walker |  | 9378 | 9 | module statements at examples/alias.js:28 |  |  | 0.641 |
-| walker |  | 9396 | 18 | imports in examples/argument.js |  |  | 0.641 |
-| walker |  | 9406 | 10 | module item at examples/argument.js:6 |  |  | 0.641 |
-| walker |  | 9415 | 9 | module statements at examples/argument.js:18 |  |  | 0.641 |
-| walker |  | 9433 | 18 | imports in examples/help-groups.js |  |  | 0.641 |
-| walker |  | 9445 | 12 | module item at examples/help-groups.js:5 |  |  | 0.641 |
-| walker |  | 9454 | 9 | module statements at examples/help-groups.js:70 |  |  | 0.641 |
-| walker |  | 9468 | 14 | module item at examples/help-groups.js:6 |  |  | 0.641 |
-| ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.645 |
-| walker |  | 9482 | 14 | module item at examples/help-groups.js:7 |  |  | 0.645 |
-| walker |  | 9497 | 15 | module statements at examples/help-groups.js:24 |  |  | 0.645 |
-| walker |  | 9512 | 15 | module statements at examples/help-groups.js:25 |  |  | 0.645 |
-| walker |  | 9528 | 16 | module statements at examples/help-groups.js:26 |  |  | 0.645 |
-| walker |  | 9548 | 20 | module statements at examples/help-groups.js:22 |  |  | 0.645 |
-| walker |  | 9570 | 22 | module statements at examples/help-groups.js:49 |  |  | 0.645 |
-| walker |  | 9588 | 18 | imports in examples/pass-through-options.js |  |  | 0.645 |
-| walker |  | 9598 | 10 | module item at examples/pass-through-options.js:4 |  |  | 0.645 |
-| walker |  | 9607 | 9 | module statements at examples/pass-through-options.js:16 |  |  | 0.645 |
-| walker |  | 9625 | 18 | imports in examples/positional-options.js |  |  | 0.645 |
-| walker |  | 9635 | 10 | module item at examples/positional-options.js:4 |  |  | 0.645 |
-| walker |  | 9644 | 9 | module statements at examples/positional-options.js:17 |  |  | 0.645 |
-| walker |  | 9661 | 17 | module statements at examples/positional-options.js:6 |  |  | 0.645 |
-| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.639 |
-| walker |  | 9679 | 18 | imports in examples/thank.js |  |  | 0.639 |
-| walker |  | 9689 | 10 | module item at examples/thank.js:6 |  |  | 0.639 |
-| walker |  | 9698 | 9 | module statements at examples/thank.js:20 |  |  | 0.639 |
-| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.644 |
-| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.640 |
-| walker |  | 9983 | 285 | docs/parsing-and-hooks.md section #0 |  |  | 0.666 |
+| walker |  | 5217 | 367 | export names surface in typings/index.d.ts |  |  | 0.639 |
+| walker |  | 5217 | 0 | export at typings/index.d.ts:210 |  |  | 0.639 |
+| walker |  | 5217 | 0 | export at typings/index.d.ts:376 |  |  | 0.639 |
+| ns | 5245 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.626 |
+| walker |  | 5468 | 251 | export member names #1 at typings/index.d.ts:210 |  |  | 0.626 |
+| walker |  | 5480 | 12 | export at typings/index.d.ts:31 |  |  | 0.626 |
+| ns | 5481 |  | 236 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.651 |
+| walker |  | 5495 | 15 | export at typings/index.d.ts:1100 |  |  | 0.651 |
+| ns | 5612 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.644 |
+| walker |  | 5742 | 247 | export member names #1 at typings/index.d.ts:376 |  |  | 0.651 |
+| ns | 5751 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.644 |
+| walker |  | 5763 | 21 | export at typings/index.d.ts:342 |  |  | 0.644 |
+| walker |  | 5787 | 24 | export at typings/index.d.ts:1104 |  |  | 0.644 |
+| walker |  | 5806 | 19 | export body at lib/option.js:3 body 121 |  |  | 0.644 |
+| walker |  | 5835 | 29 | export at typings/index.d.ts:345 |  |  | 0.645 |
+| ns | 5872 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.640 |
+| walker |  | 5925 | 90 | Readme.md section #24 |  |  | 0.640 |
+| walker |  | 6088 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.640 |
+| ns | 6686 |  | 814 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.683 |
+| ns | 6814 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.690 |
+| ns | 6844 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.692 |
+| walker |  | 6890 | 802 | Readme.md section #0 |  |  | 0.692 |
+| ns | 6904 |  | 60 | Help's five data properties | 4.1 |  | 0.689 |
+| walker |  | 6909 | 19 | export body at lib/option.js:3 body 133 |  |  | 0.689 |
+| walker |  | 6962 | 53 | export doc at lib/argument.js:143 |  |  | 0.689 |
+| walker |  | 7000 | 38 | export at typings/index.d.ts:349 |  |  | 0.691 |
+| walker |  | 7019 | 19 | export body at lib/option.js:3 body 257 |  |  | 0.691 |
+| walker |  | 7055 | 36 | export at typings/index.d.ts:370 |  |  | 0.693 |
+| walker |  | 7127 | 72 | export doc at lib/help.js:740 |  |  | 0.693 |
+| walker |  | 7140 | 13 | imports in typings/esm.d.mts |  |  | 0.693 |
+| ns | 7147 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.684 |
+| walker |  | 7153 | 13 | export member at lib/option.js:3 member 11 |  |  | 0.685 |
+| walker |  | 7206 | 53 | export at typings/index.d.ts:1094 |  |  | 0.690 |
+| walker |  | 7219 | 13 | export member at lib/option.js:3 member 47 |  |  | 0.692 |
+| walker |  | 7331 | 112 | export doc at lib/option.js:268 |  |  | 0.692 |
+| walker |  | 7394 | 63 | export at typings/index.d.ts:40 |  |  | 0.699 |
+| walker |  | 7453 | 59 | export at typings/index.d.ts:16 |  |  | 0.699 |
+| ns | 7542 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.685 |
+| walker |  | 7821 | 368 | export body at lib/command.js:2752 body 2753 |  |  | 0.686 |
+| walker |  | 7834 | 13 | export member at lib/option.js:3 member 230 |  |  | 0.687 |
+| walker |  | 7848 | 14 | imports in examples/configure-output.js |  |  | 0.687 |
+| walker |  | 7860 | 12 | module item at examples/configure-output.js:4 |  |  | 0.687 |
+| walker |  | 7869 | 9 | module item at examples/configure-output.js:2 |  |  | 0.687 |
+| walker |  | 7878 | 9 | module statements at examples/configure-output.js:19 |  |  | 0.687 |
+| ns | 7896 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.674 |
+| ns | 8055 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.669 |
+| walker |  | 8088 | 210 | docs/help-in-depth.md section #0 |  |  | 0.669 |
+| walker |  | 8113 | 25 | module statements at examples/configure-output.js:17 |  |  | 0.669 |
+| ns | 8274 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.662 |
+| ns | 8486 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.656 |
+| walker |  | 8686 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.658 |
+| walker |  | 8706 | 20 | export body at lib/option.js:3 body 66 |  |  | 0.658 |
+| ns | 8768 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.665 |
+| walker |  | 8929 | 223 | docs/options-in-depth.md section #0 |  |  | 0.665 |
+| ns | 9098 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.655 |
+| ns | 9214 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.657 |
+| walker |  | 9219 | 290 | Readme.md section #3 |  |  | 0.658 |
+| walker |  | 9235 | 16 | imports in examples/arguments-custom-processing.js |  |  | 0.658 |
+| walker |  | 9248 | 13 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.658 |
+| walker |  | 9257 | 9 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.658 |
+| walker |  | 9266 | 9 | module statements at examples/arguments-custom-processing.js:39 |  |  | 0.658 |
+| walker |  | 9280 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.658 |
+| walker |  | 9293 | 13 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.658 |
+| walker |  | 9309 | 16 | imports in examples/arguments-extra.js |  |  | 0.658 |
+| walker |  | 9320 | 11 | module item at examples/arguments-extra.js:6 |  |  | 0.658 |
+| walker |  | 9329 | 9 | module statements at examples/arguments-extra.js:27 |  |  | 0.658 |
+| walker |  | 9345 | 16 | imports in examples/custom-command-class.js |  |  | 0.658 |
+| walker |  | 9369 | 24 | module item at examples/custom-command-class.js:6 |  |  | 0.658 |
+| walker |  | 9378 | 9 | module statements at examples/custom-command-class.js:39 |  |  | 0.658 |
+| walker |  | 9390 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.658 |
+| walker |  | 9451 | 61 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.658 |
+| walker |  | 9467 | 16 | imports in examples/defaultCommand.js |  |  | 0.658 |
+| ns | 9475 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.661 |
+| walker |  | 9478 | 11 | module item at examples/defaultCommand.js:4 |  |  | 0.661 |
+| walker |  | 9489 | 11 | module statements at examples/defaultCommand.js:30 |  |  | 0.661 |
+| walker |  | 9505 | 16 | imports in examples/nestedCommands.js |  |  | 0.661 |
+| walker |  | 9517 | 12 | module item at examples/nestedCommands.js:21 |  |  | 0.661 |
+| walker |  | 9528 | 11 | module item at examples/nestedCommands.js:4 |  |  | 0.661 |
+| walker |  | 9539 | 11 | module statements at examples/nestedCommands.js:33 |  |  | 0.661 |
+| walker |  | 9550 | 11 | module statements at examples/nestedCommands.js:31 |  |  | 0.661 |
+| walker |  | 9564 | 14 | module item at examples/nestedCommands.js:11 |  |  | 0.661 |
+| walker |  | 9580 | 16 | imports in examples/options-boolean-or-value.js |  |  | 0.661 |
+| walker |  | 9591 | 11 | module item at examples/options-boolean-or-value.js:8 |  |  | 0.661 |
+| walker |  | 9602 | 11 | module statements at examples/options-boolean-or-value.js:12 |  |  | 0.661 |
+| walker |  | 9612 | 10 | module item at examples/options-boolean-or-value.js:14 |  |  | 0.661 |
+| walker |  | 9632 | 20 | module statements at examples/options-boolean-or-value.js:10 |  |  | 0.661 |
+| walker |  | 9648 | 16 | imports in examples/options-common.js |  |  | 0.661 |
+| walker |  | 9659 | 11 | module item at examples/options-common.js:7 |  |  | 0.661 |
+| walker |  | 9670 | 11 | module statements at examples/options-common.js:14 |  |  | 0.661 |
+| ns | 9677 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.655 |
+| walker |  | 9680 | 10 | module item at examples/options-common.js:16 |  |  | 0.655 |
+| walker |  | 9693 | 13 | module statements at examples/options-common.js:17 |  |  | 0.655 |
+| walker |  | 9704 | 11 | module statements at examples/options-common.js:18 |  |  | 0.655 |
+| walker |  | 9720 | 16 | module statements at examples/options-common.js:19 |  |  | 0.655 |
+| walker |  | 9741 | 21 | module statements at examples/options-common.js:20 |  |  | 0.655 |
+| walker |  | 9757 | 16 | imports in examples/options-custom-processing.js |  |  | 0.655 |
+| walker |  | 9773 | 16 | imports in examples/options-defaults.js |  |  | 0.655 |
+| walker |  | 9784 | 11 | module item at examples/options-defaults.js:7 |  |  | 0.655 |
+| walker |  | 9793 | 9 | module statements at examples/options-defaults.js:15 |  |  | 0.655 |
+| walker |  | 9810 | 17 | module statements at examples/options-defaults.js:17 |  |  | 0.655 |
+| walker |  | 9826 | 16 | imports in examples/options-negatable.js |  |  | 0.655 |
+| walker |  | 9837 | 11 | module item at examples/options-negatable.js:8 |  |  | 0.655 |
+| walker |  | 9846 | 9 | module statements at examples/options-negatable.js:15 |  |  | 0.655 |
+| ns | 9852 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.659 |
+| walker |  | 9856 | 10 | module item at examples/options-negatable.js:17 |  |  | 0.659 |
+| walker |  | 9877 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.659 |
+| walker |  | 9902 | 25 | module statements at examples/options-negatable.js:21 |  |  | 0.659 |
+| walker |  | 9918 | 16 | imports in examples/options-required.js |  |  | 0.659 |
+| walker |  | 9929 | 11 | module item at examples/options-required.js:9 |  |  | 0.659 |
+| walker |  | 9938 | 9 | module statements at examples/options-required.js:13 |  |  | 0.659 |
+| ns | 9944 |  | 92 | jest.config.js | 5.4 |  | 0.656 |
+| walker |  | 9956 | 18 | module statements at examples/options-required.js:15 |  |  | 0.656 |
+| walker |  | 9976 | 20 | module statements at examples/options-required.js:11 |  |  | 0.656 |
+| walker |  | 9992 | 16 | imports in examples/options-variadic.js |  |  | 0.656 |
