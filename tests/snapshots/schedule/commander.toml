@@ -1,7 +1,7 @@
 fixture = "commander"
 budget = 10000
-cumulative_tokens = 9943
-batch_count = 213
+cumulative_tokens = 9983
+batch_count = 195
 
 [[batches]]
 position = 1
@@ -2521,36 +2521,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 6 })'
-descriptor = "module item at examples/custom-command-class.js:6"
-cost_tokens = 26
-cum_tokens = 3867
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 67
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 814
-cum_tokens = 4681
+cum_tokens = 4655
 
 [batches.content]
 kind = "fs"
@@ -2560,11 +2534,11 @@ parent = "tests"
 entries = ["args.literal.test.js", "args.variadic.test.js", "argument.chain.test.js", "argument.choices.test.js", "argument.custom-processing.test.js", "argument.required.test.js", "argument.variadic.test.js", "command.action.test.js", "command.addCommand.test.js", "command.addHelpOption.test.js", "command.addHelpText.test.js", "command.alias.test.js", "command.allowExcessArguments.test.js", "command.allowUnknownOption.test.js", "command.argumentVariations.test.js", "command.asterisk.test.js", "command.chain.test.js", "command.commandHelp.test.js", "command.configureHelp.test.js", "command.configureOutput.test.js", "command.copySettings.test.js", "command.createArgument.test.js", "command.createHelp.test.js", "command.createOption.test.js", "command.default.test.js", "command.description.test.js", "command.error.test.js", "command.executableSubcommand.inspect.test.js", "command.executableSubcommand.lookup.test.js", "command.executableSubcommand.mock.test.js", "command.executableSubcommand.search.test.js", "command.executableSubcommand.signals.test.js", "command.executableSubcommand.test.js", "command.exitOverride.test.js", "command.help.test.js", "command.helpCommand.test.js", "command.helpOption.test.js", "command.hook.test.js", "command.name.test.js", "command.nested.test.js", "command.onCommand.test.js", "command.option-misuse.test.js", "command.parse.test.js", "command.parseOptions.test.js", "command.positionalOptions.test.js", "command.registerClash.test.js", "command.showHelpAfterError.test.js", "command.showSuggestionAfterError.test.js", "command.summary.test.js", "command.unknownCommand.test.js", "command.unknownOption.test.js", "command.usage.test.js", "commander.configureCommand.test.js", "createCommand.test.js", "deprecated.test.js", "esm-imports-test.mjs", "fixtures", "fixtures-extensions", "help.argumentDescription.test.js", "help.boxWrap.test.js", "help.commandTerm.test.js", "help.commandUsage.test.js", "help.longestArgumentTermLength.test.js", "help.longestCommandTermLength.test.js", "help.longestOptionTermLength.test.js", "help.minWidthToWrap.test.js", "help.optionDescription.test.js", "help.optionTerm.test.js", "help.padWidth.test.js", "help.preformatted.test.js", "help.showGlobalOptions.test.js", "help.sortCommands.test.js", "help.sortOptions.test.js", "help.stripAnsi.test.js", "help.style.test.js", "help.subcommandDescription.test.js", "help.suggestion.test.js", "help.visibleArguments.test.js", "help.visibleCommands.test.js", "help.visibleGlobalOptions.test.js", "help.visibleOptions.test.js", "helpGroup.test.js", "incrementNodeInspectorPort.test.js", "negatives.test.js", "option.bad-flags.test.js", "option.chain.test.js", "options.bool.combo.test.js", "options.bool.small.combined.test.js", "options.bool.test.js", "options.camelcase.test.js", "options.choices.test.js", "options.conflicts.test.js", "options.custom-processing.test.js", "options.default.test.js", "options.dual-options.test.js", "options.env.test.js", "options.flags.test.js", "options.getset.test.js", "options.implies.test.js", "options.mandatory.test.js", "options.optional.test.js", "options.opts.test.js", "options.optsWithGlobals.test.js", "options.preset.test.js", "options.registerClash.test.js", "options.required.test.js", "options.twice.test.js", "options.values.test.js", "options.variadic.test.js", "options.version.test.js", "program.test.js", "ts-imports.test.ts", "useColor.test.js"]
 
 [[batches]]
-position = 68
+position = 67
 key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
 descriptor = "listing of 'tests/fixtures-extensions'"
 cost_tokens = 28
-cum_tokens = 4709
+cum_tokens = 4683
 
 [batches.content]
 kind = "fs"
@@ -2574,11 +2548,11 @@ parent = "tests/fixtures-extensions"
 entries = ["pm-try-cjs.cjs", "pm-try-mjs.mjs", "pm-try-ts.ts", "pm.js"]
 
 [[batches]]
-position = 69
+position = 68
 key = 'Fs(DirListing { dir: "tests/fixtures" })'
 descriptor = "listing of 'tests/fixtures'"
 cost_tokens = 94
-cum_tokens = 4803
+cum_tokens = 4777
 
 [batches.content]
 kind = "fs"
@@ -2588,11 +2562,11 @@ parent = "tests/fixtures"
 entries = ["another-dir", "inspect-sub.js", "inspect.js", "other-dir", "pm", "pm-cache-clear.js", "pm-cache-validate.js", "pm-cache.js", "pm-default", "pm-echo.js", "pm-fail.js", "pm-install", "pm-listen", "pm-publish.js", "pm-search", "pm-silent", "pm-terminate.js", "pmlink", "pmlink-install"]
 
 [[batches]]
-position = 70
+position = 69
 key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
 descriptor = "listing of 'tests/fixtures/another-dir'"
 cost_tokens = 2
-cum_tokens = 4805
+cum_tokens = 4779
 
 [batches.content]
 kind = "fs"
@@ -2602,11 +2576,11 @@ parent = "tests/fixtures/another-dir"
 entries = ["pm"]
 
 [[batches]]
-position = 71
+position = 70
 key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
 descriptor = "listing of 'tests/fixtures/other-dir'"
 cost_tokens = 2
-cum_tokens = 4807
+cum_tokens = 4781
 
 [batches.content]
 kind = "fs"
@@ -2616,11 +2590,11 @@ parent = "tests/fixtures/other-dir"
 entries = ["pm"]
 
 [[batches]]
-position = 72
+position = 71
 key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 4, body_start_line: 12 })'
 descriptor = "export body at lib/error.js:4 body 12"
 cost_tokens = 82
-cum_tokens = 4889
+cum_tokens = 4863
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2608,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 121 })'
 descriptor = "export body at lib/option.js:3 body 121"
 cost_tokens = 19
-cum_tokens = 4908
+cum_tokens = 4882
 
 [batches.content]
 kind = "lines"
@@ -2652,11 +2626,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Markdown(Section { file: "Readme.md", section_index: 24, reference_shaped: false })'
 descriptor = "Readme.md section #24"
 cost_tokens = 90
-cum_tokens = 4998
+cum_tokens = 4972
 
 [batches.content]
 kind = "lines"
@@ -2670,11 +2644,11 @@ end = 964
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/不再推荐使用的功能.md" })'
 descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
 cost_tokens = 163
-cum_tokens = 5161
+cum_tokens = 5135
 
 [batches.content]
 kind = "lines"
@@ -2856,29 +2830,11 @@ end = 188
 kind = "ellipsis"
 
 [[batches]]
-position = 76
-key = 'Typescript(ModuleStatements { file: "examples/custom-command-class.js", start_line: 39 })'
-descriptor = "module statements at examples/custom-command-class.js:39"
-cost_tokens = 9
-cum_tokens = 5170
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
+position = 75
 key = 'Markdown(Section { file: "Readme.md", section_index: 0, reference_shaped: false })'
 descriptor = "Readme.md section #0"
 cost_tokens = 802
-cum_tokens = 5972
+cum_tokens = 5937
 
 [batches.content]
 kind = "lines"
@@ -2892,37 +2848,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 78
-key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 15 })'
-descriptor = "module item at examples/custom-command-class.js:15"
-cost_tokens = 12
-cum_tokens = 5984
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 79
+position = 76
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 133 })'
 descriptor = "export body at lib/option.js:3 body 133"
 cost_tokens = 19
-cum_tokens = 6003
+cum_tokens = 5956
 
 [batches.content]
 kind = "lines"
@@ -2936,11 +2866,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 80
+position = 77
 key = 'Typescript(ExportDoc { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export doc at lib/argument.js:143"
 cost_tokens = 53
-cum_tokens = 6056
+cum_tokens = 6009
 
 [batches.content]
 kind = "lines"
@@ -2962,99 +2892,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 81
-key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
-descriptor = "module item at examples/configure-output.js:4"
-cost_tokens = 14
-cum_tokens = 6070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
-descriptor = "module item at examples/configure-output.js:2"
-cost_tokens = 11
-cum_tokens = 6081
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Typescript(ModuleStatements { file: "examples/configure-output.js", start_line: 19 })'
-descriptor = "module statements at examples/configure-output.js:19"
-cost_tokens = 9
-cum_tokens = 6090
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 21 })'
-descriptor = "module item at examples/nestedCommands.js:21"
-cost_tokens = 14
-cum_tokens = 6104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
+position = 78
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 257 })'
 descriptor = "export body at lib/option.js:3 body 257"
 cost_tokens = 19
-cum_tokens = 6123
+cum_tokens = 6028
 
 [batches.content]
 kind = "lines"
@@ -3068,171 +2910,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 86
-key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 10 })'
-descriptor = "module item at examples/arguments-custom-processing.js:10"
-cost_tokens = 15
-cum_tokens = 6138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 87
-key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 8 })'
-descriptor = "module item at examples/arguments-custom-processing.js:8"
-cost_tokens = 11
-cum_tokens = 6149
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'Typescript(ModuleStatements { file: "examples/arguments-custom-processing.js", start_line: 39 })'
-descriptor = "module statements at examples/arguments-custom-processing.js:39"
-cost_tokens = 9
-cum_tokens = 6158
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 20 })'
-descriptor = "module item at examples/arguments-custom-processing.js:20"
-cost_tokens = 14
-cum_tokens = 6172
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 90
-key = 'Typescript(ModuleItemBody { file: "examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
-descriptor = "module item body at examples/arguments-custom-processing.js:20 body 21"
-cost_tokens = 13
-cum_tokens = 6185
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
-key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 4 })'
-descriptor = "module item at examples/nestedCommands.js:4"
-cost_tokens = 13
-cum_tokens = 6198
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
-key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 33 })'
-descriptor = "module statements at examples/nestedCommands.js:33"
-cost_tokens = 11
-cum_tokens = 6209
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 31 })'
-descriptor = "module statements at examples/nestedCommands.js:31"
-cost_tokens = 11
-cum_tokens = 6220
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
+position = 79
 key = 'Typescript(ExportDoc { file: "lib/help.js", start_line: 740 })'
 descriptor = "export doc at lib/help.js:740"
 cost_tokens = 72
-cum_tokens = 6292
+cum_tokens = 6100
 
 [batches.content]
 kind = "lines"
@@ -3246,11 +2928,11 @@ end = 738
 kind = "full"
 
 [[batches]]
-position = 95
+position = 80
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 11 })'
 descriptor = "export member at lib/option.js:3 member 11"
 cost_tokens = 13
-cum_tokens = 6305
+cum_tokens = 6113
 
 [batches.content]
 kind = "lines"
@@ -3272,1145 +2954,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 96
-key = 'Typescript(ModuleItem { file: "examples/action-this.js", start_line: 6 })'
-descriptor = "module item at examples/action-this.js:6"
-cost_tokens = 14
-cum_tokens = 6319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/action-this.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Typescript(ModuleStatements { file: "examples/action-this.js", start_line: 16 })'
-descriptor = "module statements at examples/action-this.js:16"
-cost_tokens = 9
-cum_tokens = 6328
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/action-this.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Typescript(ModuleItem { file: "examples/alias.js", start_line: 6 })'
-descriptor = "module item at examples/alias.js:6"
-cost_tokens = 14
-cum_tokens = 6342
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/alias.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Typescript(ModuleStatements { file: "examples/alias.js", start_line: 28 })'
-descriptor = "module statements at examples/alias.js:28"
-cost_tokens = 9
-cum_tokens = 6351
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/alias.js"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Typescript(ModuleItem { file: "examples/argument.js", start_line: 6 })'
-descriptor = "module item at examples/argument.js:6"
-cost_tokens = 14
-cum_tokens = 6365
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/argument.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Typescript(ModuleStatements { file: "examples/argument.js", start_line: 18 })'
-descriptor = "module statements at examples/argument.js:18"
-cost_tokens = 9
-cum_tokens = 6374
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/argument.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 5 })'
-descriptor = "module item at examples/help-groups.js:5"
-cost_tokens = 14
-cum_tokens = 6388
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 70 })'
-descriptor = "module statements at examples/help-groups.js:70"
-cost_tokens = 9
-cum_tokens = 6397
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 6 })'
-descriptor = "module item at examples/help-groups.js:6"
-cost_tokens = 14
-cum_tokens = 6411
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 7 })'
-descriptor = "module item at examples/help-groups.js:7"
-cost_tokens = 14
-cum_tokens = 6425
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Typescript(ModuleItem { file: "examples/hook.js", start_line: 4 })'
-descriptor = "module item at examples/hook.js:4"
-cost_tokens = 14
-cum_tokens = 6439
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/hook.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Typescript(ModuleItem { file: "examples/hook.js", start_line: 8 })'
-descriptor = "module item at examples/hook.js:8"
-cost_tokens = 14
-cum_tokens = 6453
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/hook.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 11 })'
-descriptor = "module item at examples/nestedCommands.js:11"
-cost_tokens = 14
-cum_tokens = 6467
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 14 })'
-descriptor = "module item at examples/options-boolean-or-value.js:14"
-cost_tokens = 14
-cum_tokens = 6481
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-boolean-or-value.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 8 })'
-descriptor = "module item at examples/options-boolean-or-value.js:8"
-cost_tokens = 13
-cum_tokens = 6494
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-boolean-or-value.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Typescript(ModuleStatements { file: "examples/options-boolean-or-value.js", start_line: 12 })'
-descriptor = "module statements at examples/options-boolean-or-value.js:12"
-cost_tokens = 9
-cum_tokens = 6503
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-boolean-or-value.js"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 16 })'
-descriptor = "module item at examples/options-common.js:16"
-cost_tokens = 14
-cum_tokens = 6517
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 7 })'
-descriptor = "module item at examples/options-common.js:7"
-cost_tokens = 13
-cum_tokens = 6530
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 14 })'
-descriptor = "module statements at examples/options-common.js:14"
-cost_tokens = 9
-cum_tokens = 6539
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 17 })'
-descriptor = "module statements at examples/options-common.js:17"
-cost_tokens = 13
-cum_tokens = 6552
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 18 })'
-descriptor = "module statements at examples/options-common.js:18"
-cost_tokens = 11
-cum_tokens = 6563
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Typescript(ModuleItem { file: "examples/options-conflicts.js", start_line: 3 })'
-descriptor = "module item at examples/options-conflicts.js:3"
-cost_tokens = 14
-cum_tokens = 6577
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-conflicts.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Typescript(ModuleStatements { file: "examples/options-conflicts.js", start_line: 75 })'
-descriptor = "module statements at examples/options-conflicts.js:75"
-cost_tokens = 9
-cum_tokens = 6586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-conflicts.js"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Typescript(ModuleItem { file: "examples/options-env.js", start_line: 3 })'
-descriptor = "module item at examples/options-env.js:3"
-cost_tokens = 14
-cum_tokens = 6600
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-env.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Typescript(ModuleStatements { file: "examples/options-env.js", start_line: 22 })'
-descriptor = "module statements at examples/options-env.js:22"
-cost_tokens = 9
-cum_tokens = 6609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-env.js"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Typescript(ModuleStatements { file: "examples/options-env.js", start_line: 23 })'
-descriptor = "module statements at examples/options-env.js:23"
-cost_tokens = 9
-cum_tokens = 6618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-env.js"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Typescript(ModuleItem { file: "examples/options-extra.js", start_line: 8 })'
-descriptor = "module item at examples/options-extra.js:8"
-cost_tokens = 14
-cum_tokens = 6632
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-extra.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
-key = 'Typescript(ModuleStatements { file: "examples/options-extra.js", start_line: 40 })'
-descriptor = "module statements at examples/options-extra.js:40"
-cost_tokens = 9
-cum_tokens = 6641
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-extra.js"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
-key = 'Typescript(ModuleStatements { file: "examples/options-extra.js", start_line: 42 })'
-descriptor = "module statements at examples/options-extra.js:42"
-cost_tokens = 13
-cum_tokens = 6654
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-extra.js"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Typescript(ModuleItem { file: "examples/options-implies.js", start_line: 3 })'
-descriptor = "module item at examples/options-implies.js:3"
-cost_tokens = 14
-cum_tokens = 6668
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-implies.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
-key = 'Typescript(ModuleStatements { file: "examples/options-implies.js", start_line: 25 })'
-descriptor = "module statements at examples/options-implies.js:25"
-cost_tokens = 9
-cum_tokens = 6677
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-implies.js"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Typescript(ModuleStatements { file: "examples/options-implies.js", start_line: 26 })'
-descriptor = "module statements at examples/options-implies.js:26"
-cost_tokens = 9
-cum_tokens = 6686
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-implies.js"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 17 })'
-descriptor = "module item at examples/options-negatable.js:17"
-cost_tokens = 14
-cum_tokens = 6700
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 8 })'
-descriptor = "module item at examples/options-negatable.js:8"
-cost_tokens = 13
-cum_tokens = 6713
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Typescript(ModuleStatements { file: "examples/options-negatable.js", start_line: 15 })'
-descriptor = "module statements at examples/options-negatable.js:15"
-cost_tokens = 7
-cum_tokens = 6720
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Typescript(ModuleItem { file: "examples/pass-through-options.js", start_line: 4 })'
-descriptor = "module item at examples/pass-through-options.js:4"
-cost_tokens = 14
-cum_tokens = 6734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/pass-through-options.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'Typescript(ModuleStatements { file: "examples/pass-through-options.js", start_line: 16 })'
-descriptor = "module statements at examples/pass-through-options.js:16"
-cost_tokens = 9
-cum_tokens = 6743
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/pass-through-options.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Typescript(ModuleItem { file: "examples/positional-options.js", start_line: 4 })'
-descriptor = "module item at examples/positional-options.js:4"
-cost_tokens = 14
-cum_tokens = 6757
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/positional-options.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Typescript(ModuleStatements { file: "examples/positional-options.js", start_line: 17 })'
-descriptor = "module statements at examples/positional-options.js:17"
-cost_tokens = 9
-cum_tokens = 6766
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/positional-options.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
-key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 9 })'
-descriptor = "module item at examples/split.js:9"
-cost_tokens = 14
-cum_tokens = 6780
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 7 })'
-descriptor = "module statements at examples/split.js:7"
-cost_tokens = 7
-cum_tokens = 6787
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Typescript(ModuleItem { file: "examples/string-util.js", start_line: 2 })'
-descriptor = "module item at examples/string-util.js:2"
-cost_tokens = 14
-cum_tokens = 6801
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/string-util.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'Typescript(ModuleStatements { file: "examples/string-util.js", start_line: 31 })'
-descriptor = "module statements at examples/string-util.js:31"
-cost_tokens = 9
-cum_tokens = 6810
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/string-util.js"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Typescript(ModuleItem { file: "examples/thank.js", start_line: 6 })'
-descriptor = "module item at examples/thank.js:6"
-cost_tokens = 14
-cum_tokens = 6824
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/thank.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
-key = 'Typescript(ModuleStatements { file: "examples/thank.js", start_line: 20 })'
-descriptor = "module statements at examples/thank.js:20"
-cost_tokens = 9
-cum_tokens = 6833
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/thank.js"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'Typescript(ModuleStatements { file: "examples/hook.js", start_line: 65 })'
-descriptor = "module statements at examples/hook.js:65"
-cost_tokens = 14
-cum_tokens = 6847
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/hook.js"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 142
-key = 'Typescript(ModuleItem { file: "examples/arguments-extra.js", start_line: 6 })'
-descriptor = "module item at examples/arguments-extra.js:6"
-cost_tokens = 15
-cum_tokens = 6862
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-extra.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 143
-key = 'Typescript(ModuleStatements { file: "examples/arguments-extra.js", start_line: 27 })'
-descriptor = "module statements at examples/arguments-extra.js:27"
-cost_tokens = 9
-cum_tokens = 6871
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-extra.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'Typescript(ModuleItem { file: "examples/defaultCommand.js", start_line: 4 })'
-descriptor = "module item at examples/defaultCommand.js:4"
-cost_tokens = 15
-cum_tokens = 6886
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/defaultCommand.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
-key = 'Typescript(ModuleStatements { file: "examples/defaultCommand.js", start_line: 30 })'
-descriptor = "module statements at examples/defaultCommand.js:30"
-cost_tokens = 11
-cum_tokens = 6897
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/defaultCommand.js"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'Typescript(ModuleItem { file: "examples/options-defaults.js", start_line: 7 })'
-descriptor = "module item at examples/options-defaults.js:7"
-cost_tokens = 15
-cum_tokens = 6912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-defaults.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
-key = 'Typescript(ModuleStatements { file: "examples/options-defaults.js", start_line: 15 })'
-descriptor = "module statements at examples/options-defaults.js:15"
-cost_tokens = 9
-cum_tokens = 6921
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-defaults.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
-key = 'Typescript(ModuleItem { file: "examples/options-required.js", start_line: 9 })'
-descriptor = "module item at examples/options-required.js:9"
-cost_tokens = 15
-cum_tokens = 6936
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-required.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
-key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 13 })'
-descriptor = "module statements at examples/options-required.js:13"
-cost_tokens = 9
-cum_tokens = 6945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-required.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Typescript(ModuleItem { file: "examples/options-variadic.js", start_line: 6 })'
-descriptor = "module item at examples/options-variadic.js:6"
-cost_tokens = 15
-cum_tokens = 6960
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-variadic.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 12 })'
-descriptor = "module statements at examples/options-variadic.js:12"
-cost_tokens = 9
-cum_tokens = 6969
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-variadic.js"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 14 })'
-descriptor = "module statements at examples/options-variadic.js:14"
-cost_tokens = 13
-cum_tokens = 6982
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-variadic.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 15 })'
-descriptor = "module statements at examples/options-variadic.js:15"
-cost_tokens = 14
-cum_tokens = 6996
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-variadic.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 10 })'
-descriptor = "module item at examples/split.js:10"
-cost_tokens = 15
-cum_tokens = 7011
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 24 })'
-descriptor = "module statements at examples/help-groups.js:24"
-cost_tokens = 15
-cum_tokens = 7026
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 25 })'
-descriptor = "module statements at examples/help-groups.js:25"
-cost_tokens = 15
-cum_tokens = 7041
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 26 })'
-descriptor = "module statements at examples/help-groups.js:26"
-cost_tokens = 16
-cum_tokens = 7057
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 19 })'
-descriptor = "module statements at examples/options-common.js:19"
-cost_tokens = 16
-cum_tokens = 7073
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
+position = 81
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 47 })'
 descriptor = "export member at lib/option.js:3 member 47"
 cost_tokens = 13
-cum_tokens = 7086
+cum_tokens = 6126
 
 [batches.content]
 kind = "lines"
@@ -4432,83 +2980,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 160
-key = 'Typescript(Imports { file: "examples/configure-output.js" })'
-descriptor = "imports in examples/configure-output.js"
-cost_tokens = 10
-cum_tokens = 7096
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'Typescript(ModuleStatements { file: "examples/options-defaults.js", start_line: 17 })'
-descriptor = "module statements at examples/options-defaults.js:17"
-cost_tokens = 17
-cum_tokens = 7113
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-defaults.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'Typescript(ModuleStatements { file: "examples/positional-options.js", start_line: 6 })'
-descriptor = "module statements at examples/positional-options.js:6"
-cost_tokens = 17
-cum_tokens = 7130
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/positional-options.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
-key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 11 })'
-descriptor = "module statements at examples/split.js:11"
-cost_tokens = 17
-cum_tokens = 7147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
+position = 82
 key = 'Typescript(ExportDoc { file: "lib/option.js", start_line: 268 })'
 descriptor = "export doc at lib/option.js:268"
 cost_tokens = 112
-cum_tokens = 7259
+cum_tokens = 6238
 
 [batches.content]
 kind = "lines"
@@ -4522,83 +2998,11 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 165
-key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 15 })'
-descriptor = "module statements at examples/options-required.js:15"
-cost_tokens = 18
-cum_tokens = 7277
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-required.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 166
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 22 })'
-descriptor = "module statements at examples/help-groups.js:22"
-cost_tokens = 20
-cum_tokens = 7297
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 167
-key = 'Typescript(ModuleStatements { file: "examples/options-boolean-or-value.js", start_line: 10 })'
-descriptor = "module statements at examples/options-boolean-or-value.js:10"
-cost_tokens = 20
-cum_tokens = 7317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-boolean-or-value.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 168
-key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 11 })'
-descriptor = "module statements at examples/options-required.js:11"
-cost_tokens = 20
-cum_tokens = 7337
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-required.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 169
+position = 83
 key = 'Typescript(ExportBody { file: "lib/command.js", start_line: 2752, body_start_line: 2753 })'
 descriptor = "export body at lib/command.js:2752 body 2753"
 cost_tokens = 368
-cum_tokens = 7705
+cum_tokens = 6606
 
 [batches.content]
 kind = "lines"
@@ -4612,263 +3016,11 @@ end = 2773
 kind = "full"
 
 [[batches]]
-position = 170
-key = 'Typescript(Imports { file: "examples/arguments-custom-processing.js" })'
-descriptor = "imports in examples/arguments-custom-processing.js"
-cost_tokens = 12
-cum_tokens = 7717
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-custom-processing.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'Typescript(Imports { file: "examples/arguments-extra.js" })'
-descriptor = "imports in examples/arguments-extra.js"
-cost_tokens = 12
-cum_tokens = 7729
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/arguments-extra.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Typescript(Imports { file: "examples/defaultCommand.js" })'
-descriptor = "imports in examples/defaultCommand.js"
-cost_tokens = 12
-cum_tokens = 7741
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/defaultCommand.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
-key = 'Typescript(Imports { file: "examples/nestedCommands.js" })'
-descriptor = "imports in examples/nestedCommands.js"
-cost_tokens = 12
-cum_tokens = 7753
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/nestedCommands.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
-key = 'Typescript(Imports { file: "examples/options-boolean-or-value.js" })'
-descriptor = "imports in examples/options-boolean-or-value.js"
-cost_tokens = 12
-cum_tokens = 7765
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-boolean-or-value.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 175
-key = 'Typescript(Imports { file: "examples/options-common.js" })'
-descriptor = "imports in examples/options-common.js"
-cost_tokens = 12
-cum_tokens = 7777
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 176
-key = 'Typescript(Imports { file: "examples/options-defaults.js" })'
-descriptor = "imports in examples/options-defaults.js"
-cost_tokens = 12
-cum_tokens = 7789
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-defaults.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
-key = 'Typescript(Imports { file: "examples/options-negatable.js" })'
-descriptor = "imports in examples/options-negatable.js"
-cost_tokens = 12
-cum_tokens = 7801
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
-key = 'Typescript(Imports { file: "examples/options-required.js" })'
-descriptor = "imports in examples/options-required.js"
-cost_tokens = 12
-cum_tokens = 7813
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-required.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 179
-key = 'Typescript(Imports { file: "examples/options-variadic.js" })'
-descriptor = "imports in examples/options-variadic.js"
-cost_tokens = 12
-cum_tokens = 7825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-variadic.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 180
-key = 'Typescript(Imports { file: "examples/string-util.js" })'
-descriptor = "imports in examples/string-util.js"
-cost_tokens = 12
-cum_tokens = 7837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/string-util.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 18 })'
-descriptor = "module item at examples/options-negatable.js:18"
-cost_tokens = 21
-cum_tokens = 7858
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 20 })'
-descriptor = "module statements at examples/options-common.js:20"
-cost_tokens = 21
-cum_tokens = 7879
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-common.js"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Typescript(ModuleItemBody { file: "examples/custom-command-class.js", start_line: 6, body_start_line: 8 })'
-descriptor = "module item body at examples/custom-command-class.js:6 body 8"
-cost_tokens = 61
-cum_tokens = 7940
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
+position = 84
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 230 })'
 descriptor = "export member at lib/option.js:3 member 230"
 cost_tokens = 13
-cum_tokens = 7953
+cum_tokens = 6619
 
 [batches.content]
 kind = "lines"
@@ -4890,161 +3042,17 @@ end = 231
 kind = "ellipsis"
 
 [[batches]]
-position = 185
-key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 49 })'
-descriptor = "module statements at examples/help-groups.js:49"
-cost_tokens = 22
-cum_tokens = 7975
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 5 })'
-descriptor = "module statements at examples/split.js:5"
-cost_tokens = 22
-cum_tokens = 7997
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Typescript(Imports { file: "examples/action-this.js" })'
-descriptor = "imports in examples/action-this.js"
+position = 85
+key = 'Typescript(Imports { file: "examples/configure-output.js" })'
+descriptor = "imports in examples/configure-output.js"
 cost_tokens = 14
-cum_tokens = 8011
+cum_tokens = 6633
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/action-this.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Typescript(Imports { file: "examples/alias.js" })'
-descriptor = "imports in examples/alias.js"
-cost_tokens = 14
-cum_tokens = 8025
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/alias.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Typescript(Imports { file: "examples/argument.js" })'
-descriptor = "imports in examples/argument.js"
-cost_tokens = 14
-cum_tokens = 8039
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/argument.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
-key = 'Typescript(Imports { file: "examples/custom-command-class.js" })'
-descriptor = "imports in examples/custom-command-class.js"
-cost_tokens = 14
-cum_tokens = 8053
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-command-class.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 191
-key = 'Typescript(Imports { file: "examples/pass-through-options.js" })'
-descriptor = "imports in examples/pass-through-options.js"
-cost_tokens = 14
-cum_tokens = 8067
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/pass-through-options.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 192
-key = 'Typescript(Imports { file: "examples/positional-options.js" })'
-descriptor = "imports in examples/positional-options.js"
-cost_tokens = 14
-cum_tokens = 8081
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/positional-options.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
-key = 'Typescript(Imports { file: "examples/split.js" })'
-descriptor = "imports in examples/split.js"
-cost_tokens = 14
-cum_tokens = 8095
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/split.js"
+path = "examples/configure-output.js"
 start = 1
 end = 1
 
@@ -5052,29 +3060,73 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 194
-key = 'Typescript(Imports { file: "examples/thank.js" })'
-descriptor = "imports in examples/thank.js"
-cost_tokens = 14
-cum_tokens = 8109
+position = 86
+key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
+descriptor = "module item at examples/configure-output.js:4"
+cost_tokens = 12
+cum_tokens = 6645
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/thank.js"
+path = "examples/configure-output.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/configure-output.js"
 start = 5
 end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
+descriptor = "module item at examples/configure-output.js:2"
+cost_tokens = 9
+cum_tokens = 6654
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/configure-output.js"
+start = 2
+end = 2
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 195
+position = 88
+key = 'Typescript(ModuleStatements { file: "examples/configure-output.js", start_line: 19 })'
+descriptor = "module statements at examples/configure-output.js:19"
+cost_tokens = 9
+cum_tokens = 6663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/configure-output.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
 key = 'Markdown(Section { file: "docs/help-in-depth.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/help-in-depth.md section #0"
 cost_tokens = 210
-cum_tokens = 8319
+cum_tokens = 6873
 
 [batches.content]
 kind = "lines"
@@ -5088,11 +3140,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 196
+position = 90
 key = 'Typescript(ModuleStatements { file: "examples/configure-output.js", start_line: 17 })'
 descriptor = "module statements at examples/configure-output.js:17"
 cost_tokens = 25
-cum_tokens = 8344
+cum_tokens = 6898
 
 [batches.content]
 kind = "lines"
@@ -5106,29 +3158,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 197
-key = 'Typescript(ModuleStatements { file: "examples/options-negatable.js", start_line: 21 })'
-descriptor = "module statements at examples/options-negatable.js:21"
-cost_tokens = 25
-cum_tokens = 8369
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 198
+position = 91
 key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 3, body_start_line: 14 })'
 descriptor = "export body at lib/argument.js:3 body 14"
 cost_tokens = 573
-cum_tokens = 8942
+cum_tokens = 7471
 
 [batches.content]
 kind = "lines"
@@ -5198,11 +3232,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 199
+position = 92
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 66 })'
 descriptor = "export body at lib/option.js:3 body 66"
 cost_tokens = 20
-cum_tokens = 8962
+cum_tokens = 7491
 
 [batches.content]
 kind = "lines"
@@ -5216,11 +3250,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 200
+position = 93
 key = 'Markdown(Section { file: "docs/options-in-depth.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/options-in-depth.md section #0"
 cost_tokens = 223
-cum_tokens = 9185
+cum_tokens = 7714
 
 [batches.content]
 kind = "lines"
@@ -5234,11 +3268,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 201
+position = 94
 key = 'Markdown(Section { file: "Readme.md", section_index: 3, reference_shaped: false })'
 descriptor = "Readme.md section #3"
 cost_tokens = 290
-cum_tokens = 9475
+cum_tokens = 8004
 
 [batches.content]
 kind = "lines"
@@ -5252,53 +3286,195 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 202
-key = 'Typescript(Imports { file: "examples/help-groups.js" })'
-descriptor = "imports in examples/help-groups.js"
+position = 95
+key = 'Typescript(Imports { file: "examples/arguments-custom-processing.js" })'
+descriptor = "imports in examples/arguments-custom-processing.js"
 cost_tokens = 16
-cum_tokens = 9491
+cum_tokens = 8020
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/help-groups.js"
-start = 1
-end = 1
+path = "examples/arguments-custom-processing.js"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 203
-key = 'Typescript(Imports { file: "examples/hook.js" })'
-descriptor = "imports in examples/hook.js"
-cost_tokens = 16
-cum_tokens = 9507
+position = 96
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 10 })'
+descriptor = "module item at examples/arguments-custom-processing.js:10"
+cost_tokens = 13
+cum_tokens = 8033
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/hook.js"
-start = 3
-end = 3
+path = "examples/arguments-custom-processing.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/arguments-custom-processing.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 97
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 8 })'
+descriptor = "module item at examples/arguments-custom-processing.js:8"
+cost_tokens = 9
+cum_tokens = 8042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-custom-processing.js"
+start = 8
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 204
-key = 'Typescript(Imports { file: "examples/options-conflicts.js" })'
-descriptor = "imports in examples/options-conflicts.js"
-cost_tokens = 16
-cum_tokens = 9523
+position = 98
+key = 'Typescript(ModuleStatements { file: "examples/arguments-custom-processing.js", start_line: 39 })'
+descriptor = "module statements at examples/arguments-custom-processing.js:39"
+cost_tokens = 9
+cum_tokens = 8051
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/options-conflicts.js"
+path = "examples/arguments-custom-processing.js"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 20 })'
+descriptor = "module item at examples/arguments-custom-processing.js:20"
+cost_tokens = 14
+cum_tokens = 8065
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-custom-processing.js"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/arguments-custom-processing.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 100
+key = 'Typescript(ModuleItemBody { file: "examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
+descriptor = "module item body at examples/arguments-custom-processing.js:20 body 21"
+cost_tokens = 13
+cum_tokens = 8078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-custom-processing.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Typescript(Imports { file: "examples/arguments-extra.js" })'
+descriptor = "imports in examples/arguments-extra.js"
+cost_tokens = 16
+cum_tokens = 8094
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-extra.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Typescript(ModuleItem { file: "examples/arguments-extra.js", start_line: 6 })'
+descriptor = "module item at examples/arguments-extra.js:6"
+cost_tokens = 11
+cum_tokens = 8105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-extra.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Typescript(ModuleStatements { file: "examples/arguments-extra.js", start_line: 27 })'
+descriptor = "module statements at examples/arguments-extra.js:27"
+cost_tokens = 9
+cum_tokens = 8114
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/arguments-extra.js"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Typescript(Imports { file: "examples/custom-command-class.js" })'
+descriptor = "imports in examples/custom-command-class.js"
+cost_tokens = 16
+cum_tokens = 8130
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
 start = 2
 end = 2
 
@@ -5306,11 +3482,503 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 205
+position = 105
+key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 6 })'
+descriptor = "module item at examples/custom-command-class.js:6"
+cost_tokens = 24
+cum_tokens = 8154
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 106
+key = 'Typescript(ModuleStatements { file: "examples/custom-command-class.js", start_line: 39 })'
+descriptor = "module statements at examples/custom-command-class.js:39"
+cost_tokens = 9
+cum_tokens = 8163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 15 })'
+descriptor = "module item at examples/custom-command-class.js:15"
+cost_tokens = 12
+cum_tokens = 8175
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
+key = 'Typescript(ModuleItemBody { file: "examples/custom-command-class.js", start_line: 6, body_start_line: 8 })'
+descriptor = "module item body at examples/custom-command-class.js:6 body 8"
+cost_tokens = 61
+cum_tokens = 8236
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/custom-command-class.js"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Typescript(Imports { file: "examples/defaultCommand.js" })'
+descriptor = "imports in examples/defaultCommand.js"
+cost_tokens = 16
+cum_tokens = 8252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/defaultCommand.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Typescript(ModuleItem { file: "examples/defaultCommand.js", start_line: 4 })'
+descriptor = "module item at examples/defaultCommand.js:4"
+cost_tokens = 11
+cum_tokens = 8263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/defaultCommand.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Typescript(ModuleStatements { file: "examples/defaultCommand.js", start_line: 30 })'
+descriptor = "module statements at examples/defaultCommand.js:30"
+cost_tokens = 11
+cum_tokens = 8274
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/defaultCommand.js"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Typescript(Imports { file: "examples/nestedCommands.js" })'
+descriptor = "imports in examples/nestedCommands.js"
+cost_tokens = 16
+cum_tokens = 8290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 21 })'
+descriptor = "module item at examples/nestedCommands.js:21"
+cost_tokens = 12
+cum_tokens = 8302
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 4 })'
+descriptor = "module item at examples/nestedCommands.js:4"
+cost_tokens = 11
+cum_tokens = 8313
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 33 })'
+descriptor = "module statements at examples/nestedCommands.js:33"
+cost_tokens = 11
+cum_tokens = 8324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 31 })'
+descriptor = "module statements at examples/nestedCommands.js:31"
+cost_tokens = 11
+cum_tokens = 8335
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 11 })'
+descriptor = "module item at examples/nestedCommands.js:11"
+cost_tokens = 14
+cum_tokens = 8349
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/nestedCommands.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Typescript(Imports { file: "examples/options-boolean-or-value.js" })'
+descriptor = "imports in examples/options-boolean-or-value.js"
+cost_tokens = 16
+cum_tokens = 8365
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-boolean-or-value.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 8 })'
+descriptor = "module item at examples/options-boolean-or-value.js:8"
+cost_tokens = 11
+cum_tokens = 8376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-boolean-or-value.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Typescript(ModuleStatements { file: "examples/options-boolean-or-value.js", start_line: 12 })'
+descriptor = "module statements at examples/options-boolean-or-value.js:12"
+cost_tokens = 11
+cum_tokens = 8387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-boolean-or-value.js"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 14 })'
+descriptor = "module item at examples/options-boolean-or-value.js:14"
+cost_tokens = 10
+cum_tokens = 8397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-boolean-or-value.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Typescript(ModuleStatements { file: "examples/options-boolean-or-value.js", start_line: 10 })'
+descriptor = "module statements at examples/options-boolean-or-value.js:10"
+cost_tokens = 20
+cum_tokens = 8417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-boolean-or-value.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Typescript(Imports { file: "examples/options-common.js" })'
+descriptor = "imports in examples/options-common.js"
+cost_tokens = 16
+cum_tokens = 8433
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 7 })'
+descriptor = "module item at examples/options-common.js:7"
+cost_tokens = 11
+cum_tokens = 8444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 14 })'
+descriptor = "module statements at examples/options-common.js:14"
+cost_tokens = 11
+cum_tokens = 8455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 16 })'
+descriptor = "module item at examples/options-common.js:16"
+cost_tokens = 10
+cum_tokens = 8465
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 17 })'
+descriptor = "module statements at examples/options-common.js:17"
+cost_tokens = 13
+cum_tokens = 8478
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 18 })'
+descriptor = "module statements at examples/options-common.js:18"
+cost_tokens = 11
+cum_tokens = 8489
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 19 })'
+descriptor = "module statements at examples/options-common.js:19"
+cost_tokens = 16
+cum_tokens = 8505
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Typescript(ModuleStatements { file: "examples/options-common.js", start_line: 20 })'
+descriptor = "module statements at examples/options-common.js:20"
+cost_tokens = 21
+cum_tokens = 8526
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-common.js"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
 key = 'Typescript(Imports { file: "examples/options-custom-processing.js" })'
 descriptor = "imports in examples/options-custom-processing.js"
 cost_tokens = 16
-cum_tokens = 9539
+cum_tokens = 8542
 
 [batches.content]
 kind = "lines"
@@ -5324,35 +3992,35 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 206
-key = 'Typescript(Imports { file: "examples/options-env.js" })'
-descriptor = "imports in examples/options-env.js"
+position = 132
+key = 'Typescript(Imports { file: "examples/options-defaults.js" })'
+descriptor = "imports in examples/options-defaults.js"
 cost_tokens = 16
-cum_tokens = 9555
+cum_tokens = 8558
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/options-env.js"
-start = 2
-end = 2
+path = "examples/options-defaults.js"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 207
-key = 'Typescript(Imports { file: "examples/options-extra.js" })'
-descriptor = "imports in examples/options-extra.js"
-cost_tokens = 16
-cum_tokens = 9571
+position = 133
+key = 'Typescript(ModuleItem { file: "examples/options-defaults.js", start_line: 7 })'
+descriptor = "module item at examples/options-defaults.js:7"
+cost_tokens = 11
+cum_tokens = 8569
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/options-extra.js"
+path = "examples/options-defaults.js"
 start = 7
 end = 7
 
@@ -5360,17 +4028,467 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 208
-key = 'Typescript(Imports { file: "examples/options-implies.js" })'
-descriptor = "imports in examples/options-implies.js"
-cost_tokens = 16
-cum_tokens = 9587
+position = 134
+key = 'Typescript(ModuleStatements { file: "examples/options-defaults.js", start_line: 15 })'
+descriptor = "module statements at examples/options-defaults.js:15"
+cost_tokens = 9
+cum_tokens = 8578
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "examples/options-implies.js"
+path = "examples/options-defaults.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Typescript(ModuleStatements { file: "examples/options-defaults.js", start_line: 17 })'
+descriptor = "module statements at examples/options-defaults.js:17"
+cost_tokens = 17
+cum_tokens = 8595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-defaults.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Typescript(Imports { file: "examples/options-negatable.js" })'
+descriptor = "imports in examples/options-negatable.js"
+cost_tokens = 16
+cum_tokens = 8611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 8 })'
+descriptor = "module item at examples/options-negatable.js:8"
+cost_tokens = 11
+cum_tokens = 8622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Typescript(ModuleStatements { file: "examples/options-negatable.js", start_line: 15 })'
+descriptor = "module statements at examples/options-negatable.js:15"
+cost_tokens = 9
+cum_tokens = 8631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 17 })'
+descriptor = "module item at examples/options-negatable.js:17"
+cost_tokens = 10
+cum_tokens = 8641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 18 })'
+descriptor = "module item at examples/options-negatable.js:18"
+cost_tokens = 21
+cum_tokens = 8662
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Typescript(ModuleStatements { file: "examples/options-negatable.js", start_line: 21 })'
+descriptor = "module statements at examples/options-negatable.js:21"
+cost_tokens = 25
+cum_tokens = 8687
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-negatable.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Typescript(Imports { file: "examples/options-required.js" })'
+descriptor = "imports in examples/options-required.js"
+cost_tokens = 16
+cum_tokens = 8703
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-required.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Typescript(ModuleItem { file: "examples/options-required.js", start_line: 9 })'
+descriptor = "module item at examples/options-required.js:9"
+cost_tokens = 11
+cum_tokens = 8714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-required.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 13 })'
+descriptor = "module statements at examples/options-required.js:13"
+cost_tokens = 9
+cum_tokens = 8723
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-required.js"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 15 })'
+descriptor = "module statements at examples/options-required.js:15"
+cost_tokens = 18
+cum_tokens = 8741
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-required.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Typescript(ModuleStatements { file: "examples/options-required.js", start_line: 11 })'
+descriptor = "module statements at examples/options-required.js:11"
+cost_tokens = 20
+cum_tokens = 8761
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-required.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Typescript(Imports { file: "examples/options-variadic.js" })'
+descriptor = "imports in examples/options-variadic.js"
+cost_tokens = 16
+cum_tokens = 8777
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-variadic.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Typescript(ModuleItem { file: "examples/options-variadic.js", start_line: 6 })'
+descriptor = "module item at examples/options-variadic.js:6"
+cost_tokens = 11
+cum_tokens = 8788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-variadic.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 12 })'
+descriptor = "module statements at examples/options-variadic.js:12"
+cost_tokens = 9
+cum_tokens = 8797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-variadic.js"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 14 })'
+descriptor = "module statements at examples/options-variadic.js:14"
+cost_tokens = 13
+cum_tokens = 8810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-variadic.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Typescript(ModuleStatements { file: "examples/options-variadic.js", start_line: 15 })'
+descriptor = "module statements at examples/options-variadic.js:15"
+cost_tokens = 14
+cum_tokens = 8824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/options-variadic.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Typescript(Imports { file: "examples/split.js" })'
+descriptor = "imports in examples/split.js"
+cost_tokens = 16
+cum_tokens = 8840
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 9 })'
+descriptor = "module item at examples/split.js:9"
+cost_tokens = 12
+cum_tokens = 8852
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 7 })'
+descriptor = "module statements at examples/split.js:7"
+cost_tokens = 7
+cum_tokens = 8859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 10 })'
+descriptor = "module item at examples/split.js:10"
+cost_tokens = 15
+cum_tokens = 8874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 11 })'
+descriptor = "module statements at examples/split.js:11"
+cost_tokens = 17
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Typescript(ModuleStatements { file: "examples/split.js", start_line: 5 })'
+descriptor = "module statements at examples/split.js:5"
+cost_tokens = 22
+cum_tokens = 8913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/split.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Typescript(Imports { file: "examples/string-util.js" })'
+descriptor = "imports in examples/string-util.js"
+cost_tokens = 16
+cum_tokens = 8929
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/string-util.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Typescript(ModuleItem { file: "examples/string-util.js", start_line: 2 })'
+descriptor = "module item at examples/string-util.js:2"
+cost_tokens = 10
+cum_tokens = 8939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/string-util.js"
 start = 2
 end = 2
 
@@ -5378,11 +4496,29 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 209
+position = 160
+key = 'Typescript(ModuleStatements { file: "examples/string-util.js", start_line: 31 })'
+descriptor = "module statements at examples/string-util.js:31"
+cost_tokens = 9
+cum_tokens = 8948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/string-util.js"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
 key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 19 })'
 descriptor = "module item at examples/options-negatable.js:19"
 cost_tokens = 29
-cum_tokens = 9616
+cum_tokens = 8977
 
 [batches.content]
 kind = "lines"
@@ -5396,11 +4532,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 210
+position = 162
 key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 12 })'
 descriptor = "module statements at examples/nestedCommands.js:12"
 cost_tokens = 29
-cum_tokens = 9645
+cum_tokens = 9006
 
 [batches.content]
 kind = "lines"
@@ -5414,11 +4550,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 211
+position = 163
 key = 'Typescript(ModuleStatements { file: "examples/nestedCommands.js", start_line: 15 })'
 descriptor = "module statements at examples/nestedCommands.js:15"
 cost_tokens = 29
-cum_tokens = 9674
+cum_tokens = 9035
 
 [batches.content]
 kind = "lines"
@@ -5432,11 +4568,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 212
+position = 164
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 231 })'
 descriptor = "export body at lib/option.js:3 body 231"
 cost_tokens = 20
-cum_tokens = 9694
+cum_tokens = 9055
 
 [batches.content]
 kind = "lines"
@@ -5450,11 +4586,11 @@ end = 232
 kind = "full"
 
 [[batches]]
-position = 213
+position = 165
 key = 'Markdown(Section { file: "docs/terminology.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/terminology.md section #0"
 cost_tokens = 249
-cum_tokens = 9943
+cum_tokens = 9304
 
 [batches.content]
 kind = "lines"
@@ -5463,6 +4599,546 @@ kind = "lines"
 path = "docs/terminology.md"
 start = 1
 end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Typescript(Imports { file: "examples/action-this.js" })'
+descriptor = "imports in examples/action-this.js"
+cost_tokens = 18
+cum_tokens = 9322
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/action-this.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Typescript(ModuleItem { file: "examples/action-this.js", start_line: 6 })'
+descriptor = "module item at examples/action-this.js:6"
+cost_tokens = 10
+cum_tokens = 9332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/action-this.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Typescript(ModuleStatements { file: "examples/action-this.js", start_line: 16 })'
+descriptor = "module statements at examples/action-this.js:16"
+cost_tokens = 9
+cum_tokens = 9341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/action-this.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Typescript(Imports { file: "examples/alias.js" })'
+descriptor = "imports in examples/alias.js"
+cost_tokens = 18
+cum_tokens = 9359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/alias.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Typescript(ModuleItem { file: "examples/alias.js", start_line: 6 })'
+descriptor = "module item at examples/alias.js:6"
+cost_tokens = 10
+cum_tokens = 9369
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/alias.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Typescript(ModuleStatements { file: "examples/alias.js", start_line: 28 })'
+descriptor = "module statements at examples/alias.js:28"
+cost_tokens = 9
+cum_tokens = 9378
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/alias.js"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Typescript(Imports { file: "examples/argument.js" })'
+descriptor = "imports in examples/argument.js"
+cost_tokens = 18
+cum_tokens = 9396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/argument.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Typescript(ModuleItem { file: "examples/argument.js", start_line: 6 })'
+descriptor = "module item at examples/argument.js:6"
+cost_tokens = 10
+cum_tokens = 9406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/argument.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Typescript(ModuleStatements { file: "examples/argument.js", start_line: 18 })'
+descriptor = "module statements at examples/argument.js:18"
+cost_tokens = 9
+cum_tokens = 9415
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/argument.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Typescript(Imports { file: "examples/help-groups.js" })'
+descriptor = "imports in examples/help-groups.js"
+cost_tokens = 18
+cum_tokens = 9433
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 5 })'
+descriptor = "module item at examples/help-groups.js:5"
+cost_tokens = 12
+cum_tokens = 9445
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 70 })'
+descriptor = "module statements at examples/help-groups.js:70"
+cost_tokens = 9
+cum_tokens = 9454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 6 })'
+descriptor = "module item at examples/help-groups.js:6"
+cost_tokens = 14
+cum_tokens = 9468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 7 })'
+descriptor = "module item at examples/help-groups.js:7"
+cost_tokens = 14
+cum_tokens = 9482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 24 })'
+descriptor = "module statements at examples/help-groups.js:24"
+cost_tokens = 15
+cum_tokens = 9497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 25 })'
+descriptor = "module statements at examples/help-groups.js:25"
+cost_tokens = 15
+cum_tokens = 9512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 26 })'
+descriptor = "module statements at examples/help-groups.js:26"
+cost_tokens = 16
+cum_tokens = 9528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 22 })'
+descriptor = "module statements at examples/help-groups.js:22"
+cost_tokens = 20
+cum_tokens = 9548
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Typescript(ModuleStatements { file: "examples/help-groups.js", start_line: 49 })'
+descriptor = "module statements at examples/help-groups.js:49"
+cost_tokens = 22
+cum_tokens = 9570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/help-groups.js"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Typescript(Imports { file: "examples/pass-through-options.js" })'
+descriptor = "imports in examples/pass-through-options.js"
+cost_tokens = 18
+cum_tokens = 9588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/pass-through-options.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Typescript(ModuleItem { file: "examples/pass-through-options.js", start_line: 4 })'
+descriptor = "module item at examples/pass-through-options.js:4"
+cost_tokens = 10
+cum_tokens = 9598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/pass-through-options.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Typescript(ModuleStatements { file: "examples/pass-through-options.js", start_line: 16 })'
+descriptor = "module statements at examples/pass-through-options.js:16"
+cost_tokens = 9
+cum_tokens = 9607
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/pass-through-options.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Typescript(Imports { file: "examples/positional-options.js" })'
+descriptor = "imports in examples/positional-options.js"
+cost_tokens = 18
+cum_tokens = 9625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/positional-options.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Typescript(ModuleItem { file: "examples/positional-options.js", start_line: 4 })'
+descriptor = "module item at examples/positional-options.js:4"
+cost_tokens = 10
+cum_tokens = 9635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/positional-options.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Typescript(ModuleStatements { file: "examples/positional-options.js", start_line: 17 })'
+descriptor = "module statements at examples/positional-options.js:17"
+cost_tokens = 9
+cum_tokens = 9644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/positional-options.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Typescript(ModuleStatements { file: "examples/positional-options.js", start_line: 6 })'
+descriptor = "module statements at examples/positional-options.js:6"
+cost_tokens = 17
+cum_tokens = 9661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/positional-options.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Typescript(Imports { file: "examples/thank.js" })'
+descriptor = "imports in examples/thank.js"
+cost_tokens = 18
+cum_tokens = 9679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/thank.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Typescript(ModuleItem { file: "examples/thank.js", start_line: 6 })'
+descriptor = "module item at examples/thank.js:6"
+cost_tokens = 10
+cum_tokens = 9689
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/thank.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Typescript(ModuleStatements { file: "examples/thank.js", start_line: 20 })'
+descriptor = "module statements at examples/thank.js:20"
+cost_tokens = 9
+cum_tokens = 9698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/thank.js"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Markdown(Section { file: "docs/parsing-and-hooks.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/parsing-and-hooks.md section #0"
+cost_tokens = 285
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/parsing-and-hooks.md"
+start = 1
+end = 23
 
 [batches.content.spans.render]
 kind = "full"
