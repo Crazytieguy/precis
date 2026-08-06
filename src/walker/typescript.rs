@@ -3144,7 +3144,10 @@ const ENTRY_SOURCE_EXTS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mj
 /// True when `file` is the source file behind its package's declared
 /// entry (`main` / `module` / `exports["."]`) — either named directly,
 /// or via the conventional generated-dir mapping (`./dist/node/index.js`
-/// → `src/node/index.ts`).
+/// → `src/node/index.ts`). Declaration files are never entry sources:
+/// the `types` condition under `exports["."]` names the package's type
+/// contract, not what the runtime loads, and the contract is priced by
+/// [`TypescriptState::declared_api_contract`] instead.
 fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
     let root = ctx.root();
     let pkg_dir = ctx
@@ -3216,7 +3219,10 @@ fn declared_package_entry_sources_from_targets(
                     // `append_extension`, not `with_extension`: a dotted
                     // stem like `foo.config` would have its `.config`
                     // treated as an extension and replaced (→ `foo.ts`).
-                    candidates.push(append_extension(&base, ext));
+                    let candidate = append_extension(&base, ext);
+                    if !is_declaration_file(&candidate) {
+                        candidates.push(candidate);
+                    }
                 }
             }
         }
@@ -5334,6 +5340,39 @@ export function old() {}
                 .reexport_targets
                 .contains(&core.canonicalize().unwrap())
         );
+    }
+
+    #[test]
+    fn walker_typescript_declaration_contract_never_seeds_the_surface_walk() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let typings = root.join("typings");
+        std::fs::create_dir(&typings).unwrap();
+        // The modern conditional-exports shape: the contract is named
+        // both by `types` and by the `types` condition under `.`.
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"types":"./typings/index.d.ts","main":"./index.js","exports":{".":{"require":{"types":"./typings/index.d.ts","default":"./index.js"},"default":"./index.js"}}}"#,
+        )
+        .unwrap();
+        std::fs::write(root.join("index.js"), "export const run = () => {};\n").unwrap();
+        let contract = typings.join("index.d.ts");
+        let plumbing = typings.join("internal.js");
+        std::fs::write(&contract, "export * from './internal.js';\n").unwrap();
+        std::fs::write(&plumbing, "export const helper = () => {};\n").unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let surface = compute_public_surface(&ctx);
+        assert!(
+            surface.files.contains(&contract.canonicalize().unwrap()),
+            "the declared contract is published surface wherever it sits"
+        );
+        let plumbing = plumbing.canonicalize().unwrap();
+        assert!(
+            !surface.files.contains(&plumbing),
+            "a declaration file is never a runtime entry seed — its imports are type plumbing"
+        );
+        assert!(!surface.reexport_targets.contains(&plumbing));
     }
 
     #[test]
