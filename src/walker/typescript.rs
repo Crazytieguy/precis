@@ -168,22 +168,34 @@ impl TypescriptState {
     }
 
     /// The package's declared API contract — the root `package.json`'s
-    /// `types` / `typings` target, when it is a root-level declaration
-    /// file that exists in the repo. Canonicalized. Root-level only:
-    /// nested targets (`source/index.d.ts`, `typings/index.d.ts`,
-    /// generated `dist/…`) are type plumbing next to real source, and
-    /// promoting them measured as a regression (see design-notes
-    /// "Entrypoint-named `.d.ts` promotion").
+    /// `types` / `typings` target, when it is a declaration file that
+    /// exists in the repo, at whatever depth the manifest names it.
+    /// Canonicalized. Generated targets (`dist/…`) name themselves out
+    /// of this set by not being checked in.
     pub(in crate::walker) fn declared_api_contract(&self, root: &Path) -> Option<&PathBuf> {
         self.declared_api_contract
             .get_or_init(|| {
                 let target = super::json::declared_types_target(root)?;
-                if !is_declaration_file(&target) || target.parent() != Some(root) {
+                if !is_declaration_file(&target) {
                     return None;
                 }
                 target.canonicalize().ok()
             })
             .as_ref()
+    }
+
+    /// The declared API contract when it also has to *seed* the public
+    /// surface walk. A contract sitting next to the package's sources
+    /// has an implementation sibling that is already an entrypoint, so
+    /// seeding it there only adds its own type imports — which are
+    /// plumbing, not published surface.
+    pub(in crate::walker) fn declared_api_contract_entrypoint(
+        &self,
+        root: &Path,
+    ) -> Option<&PathBuf> {
+        let canonical_root = root.canonicalize().ok()?;
+        self.declared_api_contract(root)
+            .filter(|contract| contract.parent() == Some(canonical_root.as_path()))
     }
 
     /// Walk up from `file` to the nearest dir under `root` that contains
@@ -401,8 +413,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         });
         // The declared API contract's roster shapes (names surface,
         // member-chunked decls and their catalogs) are exempt from the
-        // machinery damp: a root-level `.d.ts` the manifest's `types`
-        // field names is the package's public API surface, and its big
+        // machinery damp: the `.d.ts` the manifest's `types` field
+        // names is the package's public API surface, and its big
         // member catalogs are what NS authors anchor on. Small
         // non-roster exports keep the damp — exempting them measured as
         // a cost-ascending flood of type aliases that displaces
@@ -4648,7 +4660,7 @@ fn compute_public_surface(ctx: &WalkCtx) -> PublicSurface {
     // field) but its `.d.ts` extension escapes the stem match above.
     entrypoints.extend(
         ctx.typescript_state()
-            .declared_api_contract(ctx.root())
+            .declared_api_contract_entrypoint(ctx.root())
             .cloned(),
     );
     let mut surface = PublicSurface::default();
@@ -4659,6 +4671,13 @@ fn compute_public_surface(ctx: &WalkCtx) -> PublicSurface {
         if surface.files.insert(canonical) {
             frontier.push_back(ep);
         }
+    }
+    // The contract is published surface wherever it sits, but a nested
+    // one does not seed the walk (see
+    // `declared_api_contract_entrypoint`) — it joins the surface as a
+    // leaf.
+    if let Some(contract) = ctx.typescript_state().declared_api_contract(ctx.root()) {
+        surface.files.insert(contract.clone());
     }
     while let Some(file) = frontier.pop_front() {
         let Some((source, tree)) = parse_ts(ctx, &file) else {
