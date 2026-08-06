@@ -641,6 +641,26 @@ inventory-only monaco +0.213).
   fixture — whole-file promotion floods the early budget with the wrong
   exports; the axios `index.d.ts` mass needs per-export granularity, not
   a file-level flip.
+- **Declared API contract at any depth (2026-08-06).** Lifting the
+  root-level restriction on `types`/`typings` is only reachable in two
+  training fixtures (chalk, commander) — every other nested target names
+  a build artifact that isn't checked in — and chalk is the only fixture
+  whose score moves at any budget. Three measured forms:
+  *(a)* lifting it outright, so the contract also seeds the
+  public-surface walk, is a **regression** (−0.0011 @1000, −0.0001
+  @3000): a nested contract type-re-exports from its siblings, which
+  makes them re-export targets and lifts their `public_surface_factor`
+  0.5 → 1.0, so chalk buys vendor bodies (NS tier 5) instead of its own
+  module body. *(b)* Exempting the roster shapes without any surface
+  change is inert inside 3000 — the file then isn't in the public
+  surface at all and keeps the 0.5 damp. *(c)* Contract-is-surface but a
+  nested contract joins as a **leaf** (no frontier seed) is
+  Pareto-non-worse: `0 / 0 / 0 / 0 / +0.0010 / +0.0017 / +0.0007`.
+  The load-bearing finding: even at full value chalk's
+  `source/index.d.ts` roster enters only between 3000 and 4327, so the
+  type-machinery flag was **never** the binding constraint at 3000 — the
+  readme run-up is. Retire the "0.377 of chalk's A_3K behind one
+  boolean" framing.
 - **(old-key) Sibling-count devaluation**: uniform sibling damps regress
   in every tested form — demotion preserves order within the dir but
   lets manifests/README jump the dir's load-bearing primary. A working
