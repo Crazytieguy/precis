@@ -3308,3 +3308,73 @@ chose for the three rows whose examples it elides.
 Eligibility is runtime modules only (`is_runtime_module`: not a
 declaration file, not an all-type-only module) — a doc slice below a
 0.35-damped surface that never enters collects nothing.
+
+## Session 2026-08-06 close: 0.6353 → 0.6387, high budgets +0.0028–0.0047
+
+Grid (71 training fixtures), start → close: 1000 0.6165→0.6164 · 1442
+0.6284→0.6279 · 2080 0.6358→0.6360 · **3000 0.6353→0.6387** · 4327
+0.5984→0.6031 · 6240 0.5720→0.5765 · 9000 0.5700→0.5728. Validation
+(final unbiased read only): 0.5497 → 0.5471 (−0.0026, n=22; soft under
+cliff noise — recorded, not acted on). Full ledger in
+ignore/session-2026-08-06/ (plan.md, censuses, credit story, xlstm
+diagnosis, lane reports, audits, forward-queue-draft.md).
+
+**Seven ships**, each GPT-reviewed with findings fixed same-session:
+declared-API-contract-at-any-depth as leaf-not-seed (+ the
+exports["."].types seed-hole fix); export-default resolution in every
+file (+ every-shape synthesis fix); pip requirements dev parity (+
+split-dir/content-gate fix); flat-layout published-dirs tier 0.35
+(fix pass for TS-demotion + files-negation review findings pending);
+first-surface gating ladder generalized to sub-catalog ModuleItems
+(199 ungated file-cases closed, negative complexity); dev-workflow
+sections take the path damp (migrate +0.035, non-cliff); **additive
+documented-member doc slices** (TsKey::ExportMemberDoc, p-queue
++0.190 non-cliff, +0.0027 corpus — the session's largest win).
+
+**Chained-vs-sibling gating law (W5-TS).** When a declaration's
+surface is split only for affordability INTO A CHAIN, its per-member
+refinements gate on the LAST piece; when the pieces are siblings,
+they gate on the actual owner. Gating cheap refinements on an early
+chunk lets them outrank the later chunks of the same declaration
+(p-queue tail #2 slid 1816→3161 under the naive form). Python
+violates this today (decl trains gate on the owning chunk while
+MethodSigs correctly gates on the chain end) — see
+audit-law-transfer.md F1.
+
+**Mechanisms measured dead and CLOSED this session** (do not respend):
+Go chunked-gate carrier widening (census ceiling: 5 reachable dirs, 4
+inert, 1 regressive); Go names-roster re-chunking at decl granularity
+(the fat roster is one indivisible grouped const block; everything
+above spec-row ownership is cliff roulette); CHUNKED_NAMES_FALLOFF at
+3000 both directions (and it never reaches conserved-path chunks at
+all — the two allocation formulas share constants but not math); E6
+unclaimed/over-cap files (dead by ORACLE ceiling +0.0001/+0.0007);
+Rust two-sided roster pricing (thiserror 2998-cliff-bound);
+emit_private_nonclass widening in all forms ("public export surface"
+is not narrower than "referenced anywhere" in JS); ky type-only rank
+(p-queue is the symmetric cost case, no separating predicate).
+xlstm: **accepted divergence** (no dominant file at any threshold;
+NS demands a 1313-token concentrated purchase; vendored-CUDA
+frontier) — forward-queue entry retired.
+
+**Method keepers** (full statements in forward-queue-draft.md):
+oracle-ceiling probe FIRST for absent-class lanes; ratio-vs-frontier
+pool read before any "late gate" diagnosis (a gate at cum 2344 in a
+3000 window is not a gating problem); screen repricing lanes by
+UNSCHEDULED alone (absent mass is not in the pool); carrier-only
+sweeps before corpus grids when reach is enumerable (the frontier is
+a step function — sweep every budget); git stash is FORBIDDEN in
+parallel worktree lanes (shared refs/stash raced twice).
+
+**Open close-out debt for next session**: W5-CS branch 7c338c23
+(never-partition member catalogs, +0.0006 on the PRE-W5-TS frontier,
+commander cliff-adjacent — re-measure on the new frontier before
+merging; commander's underscore-member recall re-opens on the same
+trigger); W5-DF (C dominant-implementation-file) and W5-ML (markdown
+section-lede) lanes still in flight at close; W5-FL review fix pass
+(TS-file demotion is a real latent bug — merge when it lands); GPT
+review of the TS+MD+fix-pass diff pending; the standing post-ship
+knob re-sweep was NOT run this session — it is the first item of
+next session's debt alongside audit-unship-candidates.md (ranked №1:
+the dominant-file scheduler stack, ~330 LOC, carriers all
+frontier-packed).
