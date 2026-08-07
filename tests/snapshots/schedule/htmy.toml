@@ -751,10 +751,178 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Python(DeclNames { file: "htmy/html.py" })'
+descriptor = "python decl names surface in htmy/html.py"
+cost_tokens = 39
+cum_tokens = 1656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 831
+end = 831
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Python(Decl { file: "htmy/html.py", start_line: 13 })'
+descriptor = "python decl at htmy/html.py:13"
+cost_tokens = 0
+cum_tokens = 1656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(Decl { file: "htmy/html.py", start_line: 63 })'
+descriptor = "python decl at htmy/html.py:63"
+cost_tokens = 0
+cum_tokens = 1656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(Decl { file: "htmy/html.py", start_line: 79 })'
+descriptor = "python decl at htmy/html.py:79"
+cost_tokens = 0
+cum_tokens = 1656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(Decl { file: "htmy/html.py", start_line: 831 })'
+descriptor = "python decl at htmy/html.py:831"
+cost_tokens = 0
+cum_tokens = 1656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 831
+end = 831
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 13 })'
+descriptor = "python decl doc at htmy/html.py:13"
+cost_tokens = 10
+cum_tokens = 1666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 63 })'
+descriptor = "python decl doc at htmy/html.py:63"
+cost_tokens = 12
+cum_tokens = 1678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 79 })'
+descriptor = "python decl doc at htmy/html.py:79"
+cost_tokens = 12
+cum_tokens = 1690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 58
-cum_tokens = 1675
+cum_tokens = 1748
 
 [batches.content]
 kind = "fs"
@@ -764,11 +932,11 @@ parent = "tests"
 entries = ["__init__.py", "conftest.py", "data", "renderer", "test_formatter.py", "test_function_component.py", "test_i18n.py", "test_main_components.py", "test_md.py", "test_snippet.py", "utils.py"]
 
 [[batches]]
-position = 37
+position = 45
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 212
-cum_tokens = 1887
+cum_tokens = 1960
 
 [batches.content]
 kind = "lines"
@@ -1126,11 +1294,11 @@ end = 378
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 46
 key = 'Markdown(Section { file: "README.md", section_index: 14, keeps_default_concavity: false })'
 descriptor = "README.md section #14"
 cost_tokens = 11
-cum_tokens = 1898
+cum_tokens = 1971
 
 [batches.content]
 kind = "lines"
@@ -1144,11 +1312,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 39
+position = 47
 key = 'Markdown(Section { file: "README.md", section_index: 4, keeps_default_concavity: false })'
 descriptor = "README.md section #4"
 cost_tokens = 16
-cum_tokens = 1914
+cum_tokens = 1987
 
 [batches.content]
 kind = "lines"
@@ -1162,11 +1330,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 40
+position = 48
 key = 'Markdown(Section { file: "README.md", section_index: 7, keeps_default_concavity: false })'
 descriptor = "README.md section #7"
 cost_tokens = 16
-cum_tokens = 1930
+cum_tokens = 2003
 
 [batches.content]
 kind = "lines"
@@ -1180,11 +1348,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 41
+position = 49
 key = 'Markdown(Section { file: "README.md", section_index: 8, keeps_default_concavity: false })'
 descriptor = "README.md section #8"
 cost_tokens = 14
-cum_tokens = 1944
+cum_tokens = 2017
 
 [batches.content]
 kind = "lines"
@@ -1198,11 +1366,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 42
+position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 13, keeps_default_concavity: false })'
 descriptor = "README.md section #13"
 cost_tokens = 17
-cum_tokens = 1961
+cum_tokens = 2034
 
 [batches.content]
 kind = "lines"
@@ -1216,11 +1384,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 43
+position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 3, keeps_default_concavity: false })'
 descriptor = "README.md section #3"
 cost_tokens = 19
-cum_tokens = 1980
+cum_tokens = 2053
 
 [batches.content]
 kind = "lines"
@@ -1234,11 +1402,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 44
+position = 52
 key = 'Markdown(Section { file: "README.md", section_index: 9, keeps_default_concavity: false })'
 descriptor = "README.md section #9"
 cost_tokens = 21
-cum_tokens = 2001
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -1252,11 +1420,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 45
+position = 53
 key = 'Markdown(Section { file: "README.md", section_index: 12, keeps_default_concavity: false })'
 descriptor = "README.md section #12"
 cost_tokens = 21
-cum_tokens = 2022
+cum_tokens = 2095
 
 [batches.content]
 kind = "lines"
@@ -1270,11 +1438,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 46
+position = 54
 key = 'Markdown(HeadingsOutline { file: "docs/api/md.md" })'
 descriptor = "headings outline in docs/api/md.md"
 cost_tokens = 27
-cum_tokens = 2049
+cum_tokens = 2122
 
 [batches.content]
 kind = "lines"
@@ -1312,11 +1480,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 55
 key = 'Markdown(Section { file: "README.md", section_index: 5, keeps_default_concavity: false })'
 descriptor = "README.md section #5"
 cost_tokens = 22
-cum_tokens = 2071
+cum_tokens = 2144
 
 [batches.content]
 kind = "lines"
@@ -1330,11 +1498,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 48
+position = 56
 key = 'Fs(DirListing { dir: "docs/examples" })'
 descriptor = "listing of 'docs/examples'"
 cost_tokens = 33
-cum_tokens = 2104
+cum_tokens = 2177
 
 [batches.content]
 kind = "fs"
@@ -1344,11 +1512,11 @@ parent = "docs/examples"
 entries = ["fastapi-htmx-tailwind-daisyui.md", "index.md", "internationalization.md", "markdown.md", "snippet-slots-fastapi.md"]
 
 [[batches]]
-position = 49
+position = 57
 key = 'Markdown(Section { file: "README.md", section_index: 1, keeps_default_concavity: false })'
 descriptor = "README.md section #1"
 cost_tokens = 23
-cum_tokens = 2127
+cum_tokens = 2200
 
 [batches.content]
 kind = "lines"
@@ -1362,11 +1530,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 50
+position = 58
 key = 'Markdown(Section { file: "README.md", section_index: 2, keeps_default_concavity: false })'
 descriptor = "README.md section #2"
 cost_tokens = 21
-cum_tokens = 2148
+cum_tokens = 2221
 
 [batches.content]
 kind = "lines"
@@ -1380,11 +1548,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 51
+position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 52, keeps_default_concavity: false })'
 descriptor = "README.md section #52"
 cost_tokens = 33
-cum_tokens = 2181
+cum_tokens = 2254
 
 [batches.content]
 kind = "lines"
@@ -1398,11 +1566,11 @@ end = 379
 kind = "full"
 
 [[batches]]
-position = 52
+position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 11, keeps_default_concavity: false })'
 descriptor = "README.md section #11"
 cost_tokens = 24
-cum_tokens = 2205
+cum_tokens = 2278
 
 [batches.content]
 kind = "lines"
@@ -1416,11 +1584,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 53
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 6, keeps_default_concavity: false })'
 descriptor = "README.md section #6"
 cost_tokens = 25
-cum_tokens = 2230
+cum_tokens = 2303
 
 [batches.content]
 kind = "lines"
@@ -1434,11 +1602,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 54
+position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 41, keeps_default_concavity: false })'
 descriptor = "README.md section #41"
 cost_tokens = 16
-cum_tokens = 2246
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -1452,11 +1620,11 @@ end = 305
 kind = "full"
 
 [[batches]]
-position = 55
+position = 63
 key = 'Fs(DirListing { dir: "tests/renderer" })'
 descriptor = "listing of 'tests/renderer'"
 cost_tokens = 27
-cum_tokens = 2273
+cum_tokens = 2346
 
 [batches.content]
 kind = "fs"
@@ -1466,11 +1634,11 @@ parent = "tests/renderer"
 entries = ["test_default_renderer.py", "test_renderer_comparison.py", "test_renderer_in_context.py", "test_streaming_renderers.py"]
 
 [[batches]]
-position = 56
+position = 64
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "poe" })'
 descriptor = "tool.poe config in pyproject.toml"
 cost_tokens = 154
-cum_tokens = 2427
+cum_tokens = 2500
 
 [batches.content]
 kind = "lines"
@@ -1484,11 +1652,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 57
+position = 65
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy+pdm+pyright+pytest" })'
 descriptor = "tool.mypy+pdm+pyright+pytest config in pyproject.toml"
 cost_tokens = 156
-cum_tokens = 2583
+cum_tokens = 2656
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1670,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 58
+position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 10, keeps_default_concavity: false })'
 descriptor = "README.md section #10"
 cost_tokens = 31
-cum_tokens = 2614
+cum_tokens = 2687
 
 [batches.content]
 kind = "lines"
@@ -1515,174 +1683,6 @@ kind = "lines"
 path = "README.md"
 start = 27
 end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Python(DeclNames { file: "htmy/html.py" })'
-descriptor = "python decl names surface in htmy/html.py"
-cost_tokens = 39
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 831
-end = 831
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 60
-key = 'Python(Decl { file: "htmy/html.py", start_line: 13 })'
-descriptor = "python decl at htmy/html.py:13"
-cost_tokens = 0
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Python(Decl { file: "htmy/html.py", start_line: 63 })'
-descriptor = "python decl at htmy/html.py:63"
-cost_tokens = 0
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Python(Decl { file: "htmy/html.py", start_line: 79 })'
-descriptor = "python decl at htmy/html.py:79"
-cost_tokens = 0
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Python(Decl { file: "htmy/html.py", start_line: 831 })'
-descriptor = "python decl at htmy/html.py:831"
-cost_tokens = 0
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 831
-end = 831
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 13 })'
-descriptor = "python decl doc at htmy/html.py:13"
-cost_tokens = 10
-cum_tokens = 2663
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 63 })'
-descriptor = "python decl doc at htmy/html.py:63"
-cost_tokens = 12
-cum_tokens = 2675
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 79 })'
-descriptor = "python decl doc at htmy/html.py:79"
-cost_tokens = 12
-cum_tokens = 2687
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/html.py"
-start = 80
-end = 80
 
 [batches.content.spans.render]
 kind = "full"

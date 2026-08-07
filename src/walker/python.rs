@@ -49,7 +49,6 @@
 
 use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
-use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -57,8 +56,8 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
-    CATALOG_ROSTER_CONCAVITY_EXPONENT, DEFAULT_CONCAVITY_EXPONENT, ROSTER_MASS_FACTOR_CAP,
-    conserved_catalog_chunk_factors, depth_factor, mix_signals, reexport_import_chunk_factor,
+    DEFAULT_CONCAVITY_EXPONENT, ROSTER_MASS_FACTOR_CAP, depth_factor, mix_signals,
+    reexport_import_chunk_factor,
 };
 
 use super::import_chunks::{
@@ -66,10 +65,10 @@ use super::import_chunks::{
     groups_to_file_lines, node_line_count, push_import_group, should_chunk_import_groups,
 };
 use super::{
-    BodyPart, FileLines, WalkCtx, body_part_value_factor, budget_chunk_ranges, dedup_sorted,
-    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
-    first_child_of_kind, fs::files_with_extension, name_of, push_rows, signature_end_row,
-    single_file_lines_content, statement_block_parts,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
+    extend_span, file_depth_factor, file_lines_covered_by, first_child_of_kind,
+    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
+    statement_block_parts,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -84,22 +83,6 @@ const VISIBILITY_UNDERSCORE: f64 = 0.6;
 /// primary budget (better at 2080, worse at 3000).
 const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 
-/// Preserve the historically winning unified names surface until it is
-/// too large to remain purchasable in the early budget window. Oversize
-/// catalogs are split near the target, and a final chunk below half the
-/// target folds back into its predecessor rather than becoming a
-/// trailing crumb — the last chunk gates the whole per-decl train, so a
-/// 30-token crumb gate costs a purchase for nothing.
-///
-/// What the split delivers at ≤10K is the *head* chunk, not the tail:
-/// no `DeclNamesChunk` row is scheduled at any budget ≤10K in the
-/// corpus, so the live effect is that an oversize roster reaches the
-/// frontier as a cheaper head slice repriced by
-/// [`conserved_catalog_chunk_factors`]. That is not the same as inert:
-/// unifying every roster regardless of size measures −0.0007 at 3K
-/// (tomli −0.053), so the target is a live knob.
-const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
-const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 const DATA_MODEL_ROSTER_FACTOR: f64 = 1.30;
 
 /// A names-surface **entry unit** — the batch every other batch in the
@@ -320,17 +303,15 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .collect();
         let all_name_lines = collect_all_name_lines(&decls, &flat_methods);
 
-        // Keep the historically winning unified names surface unless its
-        // rendered cost exceeds the chunk target; continuations are
-        // chained so they do not become independently schedulable crumbs.
-        // Roster-mass pricing remains based on the complete catalog, and
-        // the catalog's value is a conserved total allocated across the
-        // chunks.
+        // The names surface is one batch however large it grows. It was
+        // once partitioned near a token target, but no continuation was
+        // ever scheduled at any budget ≤10K corpus-wide: the split's only
+        // live effect was to put a discounted head slice in front of the
+        // catalog, which the entry slice below now supplies directly and
+        // at full catalog value.
         let roster = names_roster(&decls, &source);
         let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
         let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
-        let names_chunk_ranges =
-            decl_names_chunk_ranges(file, ctx, &source, &roster_decls, &all_name_lines);
         let names_base_value =
             decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len());
         let group_lines = |group: &[usize]| {
@@ -342,25 +323,20 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 .map(|content| ctx.marginal_tokens(&content))
                 .unwrap_or(0)
         };
-        let mut names_groups: Vec<Vec<usize>> = names_chunk_ranges
-            .iter()
-            .map(|range| range.clone().collect())
-            .collect();
-        let mut chunk_factors: Vec<f64> = if names_groups.len() > 1 {
-            let costs: Vec<usize> = names_groups.iter().map(|group| group_cost(group)).collect();
-            conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT)
+        let mut names_groups: Vec<Vec<usize>> = if roster_decls.is_empty() {
+            Vec::new()
         } else {
-            vec![1.0; names_groups.len()]
+            vec![(0..roster_decls.len()).collect()]
         };
-        // The data-model promotion is a statement about the CHUNK the
-        // chunker built — whether that slice of the catalog is mostly
-        // model classes — so it is read once, before any carve. Deriving
-        // it from the carved groups instead would let the split itself
-        // move the multiplier: a promoted entry unit whose gate takes its
-        // classes leaves a remainder that loses the class majority and
-        // drops to 1.0, and an unpromoted unit can yield a class-only gate
-        // that gains 1.30 — either way the remainder stops keeping the
-        // factor it would have carried uncarved.
+        let mut slice_factors: Vec<f64> = vec![1.0; names_groups.len()];
+        // The data-model promotion is a statement about the whole
+        // catalog, so it is read once, before any carve. Deriving it from
+        // the carved groups instead would let the carve itself move the
+        // multiplier: a promoted roster whose gate takes its classes
+        // leaves a remainder that loses the class majority and drops to
+        // 1.0, and an unpromoted roster can yield a class-only gate that
+        // gains 1.30 — either way the remainder stops keeping the factor
+        // it would have carried uncarved.
         let mut model_factors: Vec<f64> = names_groups
             .iter()
             .map(|group| {
@@ -377,97 +353,70 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 }
             })
             .collect();
-        // Carve the entry unit's gate slice. Only the directory's spine
-        // module qualifies, and only once its entry unit is fat enough
-        // that the gate is a real discount on admission.
-        let mut carved = false;
+        // Carve the roster's gate slice. Only the directory's spine
+        // module qualifies, and only once its roster is fat enough that
+        // the gate is a real discount on admission.
         if is_spine
-            && let Some(entry_unit) = names_groups.first()
-            && group_cost(entry_unit) > PYTHON_ENTRY_SLICE_SPLIT_TOKENS
-            && let Some(gate) = entry_slice(entry_unit, &roster_decls, &source, group_cost)
+            && let Some(roster_group) = names_groups.first()
+            && group_cost(roster_group) > PYTHON_ENTRY_SLICE_SPLIT_TOKENS
+            && let Some(gate) = entry_slice(roster_group, &roster_decls, &source, group_cost)
         {
-            let remainder: Vec<usize> = entry_unit
+            let remainder: Vec<usize> = roster_group
                 .iter()
                 .copied()
                 .filter(|index| !gate.contains(index))
                 .collect();
             names_groups[0] = remainder;
             names_groups.insert(0, gate);
-            // The remainder keeps the factors it would have carried
-            // uncarved: re-indexing its value into the conserved
-            // allocation demotes the catalog the gate exists to make
-            // reachable, and measured worse across the grid. The gate is
-            // priced as a discounted view of that same unit, so it
-            // inherits the unit's model multiplier rather than earning or
-            // losing one on its own membership.
-            chunk_factors.insert(0, PYTHON_ENTRY_SLICE_VALUE_FACTOR * chunk_factors[0]);
+            // The remainder keeps the full catalog value it would have
+            // carried uncarved: re-indexing it demotes the catalog the
+            // gate exists to make reachable, and measured worse across the
+            // grid. The gate is priced as a discounted view of that same
+            // catalog, so it also inherits the model multiplier rather
+            // than earning or losing one on its own membership.
+            slice_factors.insert(0, PYTHON_ENTRY_SLICE_VALUE_FACTOR);
             model_factors.insert(0, model_factors[0]);
-            carved = true;
         }
-        let mut chunk_contents = Vec::with_capacity(names_groups.len());
-        for (chunk_index, group) in names_groups.iter().enumerate() {
-            if let Some(content) = single_file_lines_content(file, &source, group_lines(group)) {
-                chunk_contents.push((chunk_index, content, model_factors[chunk_index]));
-            }
-        }
-        let mut names_keys = Vec::with_capacity(chunk_contents.len());
-        // Each roster decl's depth train gates on the chunk that OWNS
-        // its name line, not the tail of the chunk chain: chunk values
-        // are conserved (head-heavy), so the tail chunk carries a
-        // fraction of the catalog's value at nearly the head's cost and
-        // can price past the schedule horizon — gating a decl's train on
-        // it would forfeit the file's depth whenever the tail roster
-        // loses its ratio race. Owning-chunk gating (Go's spelling) also
-        // keeps overlap ancestry local: a decl cannot become schedulable
-        // while a non-ancestor chunk still owns its name row.
+        // Each roster decl's depth train gates on the group that OWNS its
+        // name line. The gate and its remainder are disjoint siblings —
+        // neither descends from the other — so a decl must not be routed
+        // to whichever one is cheapest: gating on a non-ancestor would let
+        // it render while the group that owns its name row is unbought.
         let mut decl_gate_by_start_line: HashMap<usize, BatchKey> = HashMap::new();
-        for (chunk_index, content, model_factor) in chunk_contents {
-            let key = BatchKey::Python(if chunk_index == 0 {
+        let mut names_keys = Vec::with_capacity(names_groups.len());
+        for (slice_index, group) in names_groups.iter().enumerate() {
+            let Some(content) = single_file_lines_content(file, &source, group_lines(group)) else {
+                continue;
+            };
+            let key = BatchKey::Python(if slice_index == 0 {
                 PythonKey::DeclNames { file: file.clone() }
             } else {
                 PythonKey::DeclNamesChunk {
                     file: file.clone(),
-                    chunk_index,
+                    chunk_index: slice_index,
                 }
             });
-            // Continuations chain so they do not become independently
-            // schedulable crumbs. The carved remainder is the exception:
-            // it inherits the entry unit's ungated slot, leaving the gate
-            // a sibling rather than a toll in front of the complete
-            // roster. The two are disjoint by construction (the gate is
-            // closed over shared rows), so sibling status is
-            // overlap-safe.
-            let predecessor = if carved && chunk_index == 1 {
-                None
-            } else {
-                names_keys.last().cloned()
-            };
-            // Two top-level statements can share a row (`A = 1; B = 2`),
-            // and a chunker cut can put them in different chunks. Chunks
-            // are emitted in order and each chained continuation is a
-            // descendant of its predecessors, so resolving a shared row
-            // to the LAST claiming chunk gates both claimants on a batch
-            // that descends from every chunk rendering the row. (The
-            // gate/remainder pair, the one unchained seam, cannot share a
-            // row: the gate is closed over shared-row sets.)
-            for &index in &names_groups[chunk_index] {
+            for &index in group {
                 decl_gate_by_start_line.insert(roster_decls[index].start_line, key.clone());
             }
-            let chunk_factor = chunk_factors[chunk_index];
             out.push(Batch {
                 key: key.clone(),
-                predecessor,
+                // The gate is a discounted view of the remainder, not a
+                // toll in front of it, so the two are siblings and the
+                // remainder keeps the roster's own ungated slot.
+                predecessor: None,
                 content,
-                value: names_base_value * chunk_factor * model_factor,
+                value: names_base_value * slice_factors[slice_index] * model_factors[slice_index],
             });
             names_keys.push(key);
         }
-        // Fallback gate for decls outside the roster (their name lines
-        // appear in no chunk, so any chunk's ancestry is safe — the head
-        // keeps them reachable once the file has entered).
+        // Fallback gate for decls outside the roster: their name lines
+        // appear in no group, so either group's ancestry is safe — the
+        // cheapest one keeps them reachable once the file has entered.
         let names_gate = names_keys.first().cloned();
-        // The method-signature catalog spans classes across every chunk,
-        // so its only overlap-safe predecessor is the full chunk chain.
+        // The method-signature catalog spans classes across the whole
+        // roster, so it waits on the group holding the bulk of it rather
+        // than on a carved gate covering a handful of entry points.
         let names_chain_gate = names_keys.last().cloned();
 
         // Method-signature catalog — likewise one unified batch. Gated
@@ -1377,39 +1326,6 @@ fn is_generated(source: &str) -> bool {
         })
 }
 
-/// Source-roster-order ranges for a Python names surface: greedily cut
-/// once a range reaches the target, with a tail below half-target folded
-/// into the preceding range. A roster whose whole cost is under the
-/// target yields the single range `0..len` — i.e. the established
-/// unified surface, untouched.
-fn decl_names_chunk_ranges(
-    file: &Path,
-    ctx: &WalkCtx,
-    source: &str,
-    decls: &[DeclInfo],
-    all_name_lines: &HashSet<usize>,
-) -> Vec<Range<usize>> {
-    if decls.is_empty() {
-        return Vec::new();
-    }
-
-    let range_cost = |range: Range<usize>| {
-        let lines = collect_decl_names_from(&decls[range], all_name_lines);
-        single_file_lines_content(file, source, lines)
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-
-    budget_chunk_ranges(
-        decls.len(),
-        range_cost,
-        DECL_NAMES_CHUNK_TARGET_TOKENS,
-        DECL_NAMES_TINY_TAIL_TOKENS,
-        |_| true,
-        |_| true,
-    )
-}
-
 fn collect_methods_by_class<'a>(
     decls: &[DeclInfo<'a>],
     source: &str,
@@ -2142,8 +2058,11 @@ mod tests {
             .collect()
     }
 
+    /// However large the roster grows, it stays one batch at the full
+    /// catalog value — the entry-slice carve is the only thing that ever
+    /// splits it, and only on a directory's spine module.
     #[test]
-    fn python_decl_names_only_splits_oversize_surfaces() {
+    fn python_decl_names_stay_unified_however_large() {
         let dir = tempfile::tempdir().unwrap();
         let small_file = dir.path().join("small.py");
         std::fs::write(&small_file, "def one(): pass\ndef two(): pass\n").unwrap();
@@ -2167,56 +2086,34 @@ mod tests {
         std::fs::write(&large_file, &source).unwrap();
         std::fs::write(&twin_file, &source).unwrap();
         // Equal roster sizes, so the directory has no spine and no entry
-        // slice is carved — this asserts the chunker's own conserved
-        // allocation, which the gate deliberately does not respect.
+        // slice is carved: this file's roster is far past the old chunk
+        // target and must still arrive whole.
         let expanded = expand_source_files(&[large_file.clone(), twin_file], &ctx);
         let large: Vec<Batch<BatchKey>> = expanded
             .into_iter()
             .filter(|batch| names_batch_file(&batch.key) == Some(&large_file))
             .collect();
         let large_names = decl_name_batches(&large);
-        assert!(large_names.len() > 1, "expected an oversize split");
+        assert_eq!(large_names.len(), 1, "an uncarved roster is one batch");
         assert!(matches!(
             large_names[0].key,
             BatchKey::Python(PythonKey::DeclNames { .. })
         ));
-        for (chunk_index, pair) in large_names.windows(2).enumerate() {
-            assert_eq!(pair[1].predecessor.as_ref(), Some(&pair[0].key));
-            assert!(matches!(
-                pair[1].key,
-                BatchKey::Python(PythonKey::DeclNamesChunk {
-                    chunk_index: actual,
-                    ..
-                }) if actual == chunk_index + 1
-            ));
-            // Value density decreases along the chain (the conserved
-            // allocation tilts head-ward); absolute chunk values track
-            // chunk cost, so they need not decrease monotonically.
-            let density = |batch: &Batch<BatchKey>| {
-                batch.value / ctx.marginal_tokens(&batch.content).max(1) as f64
-            };
-            assert!(density(pair[1]) < density(pair[0]));
-        }
-        let total: f64 = large_names.iter().map(|batch| batch.value).sum();
         let unsplit =
             decl_names_value(&large_file, &ctx) * python_roster_mass_factor(&large_file, 48);
         assert!(
-            (total - unsplit).abs() < 1e-9,
-            "split catalog must conserve the unsplit value: {total} vs {unsplit}"
+            (large_names[0].value - unsplit).abs() < 1e-9,
+            "the unified catalog carries the whole catalog value: {} vs {unsplit}",
+            large_names[0].value
         );
 
-        let mut covered = HashSet::new();
-        for batch in large_names {
-            let BatchContent::Lines { spans } = &batch.content else {
-                panic!("decl names must emit line spans");
-            };
-            for (path, line, _) in crate::content::explode_spans(spans) {
-                assert!(
-                    covered.insert((path, line)),
-                    "names chunks must be disjoint"
-                );
-            }
-        }
+        let BatchContent::Lines { spans } = &large_names[0].content else {
+            panic!("decl names must emit line spans");
+        };
+        let covered: HashSet<_> = crate::content::explode_spans(spans)
+            .into_iter()
+            .map(|(path, line, _)| (path, line))
+            .collect();
         assert_eq!(covered.len(), 96, "48 signatures plus 48 ellipses");
     }
 
