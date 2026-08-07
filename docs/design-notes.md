@@ -3573,3 +3573,71 @@ fixture**, with zero baseline churn: no training fixture has either
 construct inside a head-split section's chunk-0 window today. It is a
 latent-hazard fix, and the hazard is the kind that only shows up as
 corrupt rendered output, never as a score.
+
+## Session 2026-08-06b, lane W5-CS re-measure: TS member rosters are never partitioned — 3000 0.6428 → 0.6434
+
+**Ship (marginal).** `member_names_catalog_chunks`, its three size
+constants, and `TsKey::ExportMemberNamesChunk` are gone. A
+declaration's member-name catalog is one `ExportMemberNames` batch at
+full roster value, whatever it costs.
+
+Grid (1000 / 1442 / 2080 / 3000 / 4327 / 6240 / 9000):
+`0.6289 / 0.6434 / 0.6463 / 0.6434 / 0.6069 / 0.5786 / 0.5741`
+(from `0.6289 / 0.6434 / 0.6479 / 0.6428 / 0.6067 / 0.5773 / 0.5730`).
+
+This is the deferred lever from 2026-08-06 lane W5-CS, re-derived
+against the merged W5-TS member-doc ladder. **The adaptation**: the
+doc-ladder rung that resolved a member's owning catalog *chunk* is
+deleted, not rewired — with an undivided roster there is exactly one
+batch rendering every member's signature row, so the row-ownership law
+the chunk rung existed to satisfy holds by construction, and the rung
+below it (`ExportMemberNames`) already returns the right owner. The
+`truncate_to_name` guard above it is untouched: a name-only catalog
+still refuses to own its members' doc slices.
+
+**Why the head-vs-tails argument is now visible in the report.** On
+commander the unified roster costs 703 tokens and enters at cum 2425,
+where it steps `Score(B=cum)` from 0.412 to 0.535 — one buy collecting
+partial credit against NS rows 2.1–2.10 at once. Under partitioning
+only chunk #1 (253 tokens, cum 1588) ever entered; chunks #2+ appear
+nowhere below 4262. The conserved allocation caps the head at 0.9 and
+leaves the tails 0.1 to share, so partitioning shrinks the one chunk
+that is ever bought and strands the rest.
+
+**The one bound this grazes.** B=2080 is −0.0016 against a −0.0015
+tolerance, and every point of it is commander (−0.114, the only mover
+at that budget). Mechanism, flagged: a unified roster is one
+indivisible buy, so at budgets between the old cheap head and the whole
+roster, nothing fits — variant strands 358 tokens at 2080 where the
+baseline squeaked three crumbs in at cum 2078, i.e. **2 tokens** inside
+the boundary. Both sides of that comparison are boundary artifacts of
+one grid point. chalk pays the same mechanism at 4327 (−0.043) and is
+repaid at 6240 (+0.053) and 9000 (+0.031). p-queue does not move at any
+budget: the W5-TS +0.190 is untouched, and its divergence report is
+byte-identical.
+
+**Queue item #9, answered read-only (do not re-derive).**
+
+- commander's catalog chunk #1 entered at cum **1588** after the W5-TS
+  repack, down from 1936 before it. The repack pulled it 348 tokens
+  earlier — which is what made the whole 703-token roster affordable
+  inside 3000 and turned last session's cliff-adjacent +0.043 into a
+  genuine +0.039 (last in-budget row now at cum 2774, 226 tokens of
+  headroom, not cliff-adjacent).
+- The catalog-shape lever ("NS wants ten chunks of arg-carrying first
+  lines") is **still dead, and for the reason recorded last session**,
+  re-verified directly: commander NS rows 2.1–2.10 render method spans
+  as `{ kind = "truncated", pattern = "^[^(]+" }` — byte-identical to
+  `MEMBER_NAME_TRUNCATE_PATTERN`. The `kind = "full"` spans mixed in
+  are exactly the *zero-argument* members (`_getCommandAndAncestors()`,
+  `createHelp()`), where full and paren-truncated agree. The NS strips
+  arguments on purpose; a signature-line catalog would diverge from the
+  key. `JS_CLASS_MEMBER_SPLIT_MAX = 40` remains the handoff to
+  `member_names_catalog_lines`' `+ 1` minimum, not a cliff.
+- What the report does show as live: the NS spends 1179 tokens on rows
+  2.1–2.10 (99 members) against the walker's 703. The gap is the 34
+  underscore-prefixed members `is_surfaced_member` drops. Last session
+  measured that negative at the headline *when combined with
+  unification* and noted "re-open only if the 3000 frontier moves" —
+  the frontier has now moved twice (W5-TS repack, then this lane), so
+  it is the standing candidate, but it was not built or measured here.

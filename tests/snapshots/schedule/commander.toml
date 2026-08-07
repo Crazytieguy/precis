@@ -1,7 +1,7 @@
 fixture = "commander"
 budget = 10000
-cumulative_tokens = 9888
-batch_count = 120
+cumulative_tokens = 9829
+batch_count = 110
 
 [[batches]]
 position = 1
@@ -781,6 +781,14 @@ end = 13
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 30
 key = 'Typescript(Export { file: "lib/command.js", start_line: 2752 })'
@@ -1127,10 +1135,370 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'Typescript(ExportMemberNamesChunk { file: "lib/command.js", start_line: 13, chunk_index: 0 })'
-descriptor = "export member names #1 at lib/command.js:13"
-cost_tokens = 253
-cum_tokens = 1588
+key = 'Typescript(Export { file: "lib/argument.js", start_line: 3 })'
+descriptor = "export at lib/argument.js:3"
+cost_tokens = 96
+cum_tokens = 1431
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
+key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 25, body_start_line: 31 })'
+descriptor = "export body at lib/error.js:25 body 31"
+cost_tokens = 57
+cum_tokens = 1488
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/error.js"
+start = 31
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 243 })'
+descriptor = "export member at lib/option.js:3 member 243"
+cost_tokens = 11
+cum_tokens = 1499
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 4 })'
+descriptor = "export doc at lib/error.js:4"
+cost_tokens = 17
+cum_tokens = 1516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/error.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Typescript(ExportBody { file: "lib/help.js", start_line: 740, body_start_line: 741 })'
+descriptor = "export body at lib/help.js:740 body 741"
+cost_tokens = 52
+cum_tokens = 1568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/help.js"
+start = 741
+end = 743
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
+descriptor = "export body at lib/argument.js:143 body 144"
+cost_tokens = 55
+cum_tokens = 1623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 144
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
+descriptor = "export doc at lib/error.js:25"
+cost_tokens = 20
+cum_tokens = 1643
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/error.js"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Typescript(Imports { file: "lib/argument.js" })'
+descriptor = "imports in lib/argument.js"
+cost_tokens = 14
+cum_tokens = 1657
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Typescript(Imports { file: "lib/option.js" })'
+descriptor = "imports in lib/option.js"
+cost_tokens = 14
+cum_tokens = 1671
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
+descriptor = "export member at lib/option.js:3 member 256"
+cost_tokens = 11
+cum_tokens = 1682
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 268, member_start_line: 272 })'
+descriptor = "export member doc at lib/option.js:268 member 272"
+cost_tokens = 23
+cum_tokens = 1705
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 269
+end = 271
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Typescript(Imports { file: "lib/help.js" })'
+descriptor = "imports in lib/help.js"
+cost_tokens = 17
+cum_tokens = 1722
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/help.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Typescript(ExportMemberNames { file: "lib/command.js", start_line: 13 })'
+descriptor = "export member names at lib/command.js:13"
+cost_tokens = 703
+cum_tokens = 2425
 
 [batches.content]
 kind = "lines"
@@ -1360,372 +1728,372 @@ end = 837
 kind = "truncated"
 pattern = "^[^(]+"
 
-[[batches]]
-position = 39
-key = 'Typescript(Export { file: "lib/argument.js", start_line: 3 })'
-descriptor = "export at lib/argument.js:3"
-cost_tokens = 96
-cum_tokens = 1684
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 3
-end = 3
+path = "lib/command.js"
+start = 848
+end = 848
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 13
-end = 13
+path = "lib/command.js"
+start = 861
+end = 861
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 48
-end = 48
+path = "lib/command.js"
+start = 875
+end = 875
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 56
-end = 56
+path = "lib/command.js"
+start = 905
+end = 905
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 73
-end = 73
+path = "lib/command.js"
+start = 925
+end = 925
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 86
-end = 86
+path = "lib/command.js"
+start = 940
+end = 940
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 98
-end = 98
+path = "lib/command.js"
+start = 953
+end = 953
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 119
-end = 119
+path = "lib/command.js"
+start = 971
+end = 971
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 129
-end = 129
+path = "lib/command.js"
+start = 983
+end = 983
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 14
-end = 14
+path = "lib/command.js"
+start = 1090
+end = 1090
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 49
-end = 49
+path = "lib/command.js"
+start = 1119
+end = 1119
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 57
-end = 57
+path = "lib/command.js"
+start = 1141
+end = 1141
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 74
-end = 74
+path = "lib/command.js"
+start = 1158
+end = 1158
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 87
-end = 87
+path = "lib/command.js"
+start = 1748
+end = 1748
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 99
-end = 99
+path = "lib/command.js"
+start = 1902
+end = 1902
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 120
-end = 120
+path = "lib/command.js"
+start = 1924
+end = 1924
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 130
-end = 130
+path = "lib/command.js"
+start = 1940
+end = 1940
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 40
-key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 25, body_start_line: 31 })'
-descriptor = "export body at lib/error.js:25 body 31"
-cost_tokens = 57
-cum_tokens = 1741
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/error.js"
-start = 31
-end = 34
+path = "lib/command.js"
+start = 2034
+end = 2034
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 243 })'
-descriptor = "export member at lib/option.js:3 member 243"
-cost_tokens = 11
-cum_tokens = 1752
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 243
-end = 243
+path = "lib/command.js"
+start = 2046
+end = 2046
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 244
-end = 244
+path = "lib/command.js"
+start = 2058
+end = 2058
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 42
-key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 4 })'
-descriptor = "export doc at lib/error.js:4"
-cost_tokens = 17
-cum_tokens = 1769
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/error.js"
-start = 1
-end = 3
+path = "lib/command.js"
+start = 2114
+end = 2114
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Typescript(ExportBody { file: "lib/help.js", start_line: 740, body_start_line: 741 })'
-descriptor = "export body at lib/help.js:740 body 741"
-cost_tokens = 52
-cum_tokens = 1821
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/help.js"
-start = 741
-end = 743
+path = "lib/command.js"
+start = 2162
+end = 2162
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
-descriptor = "export body at lib/argument.js:143 body 144"
-cost_tokens = 55
-cum_tokens = 1876
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 144
-end = 146
+path = "lib/command.js"
+start = 2195
+end = 2195
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
-key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
-descriptor = "export doc at lib/error.js:25"
-cost_tokens = 20
-cum_tokens = 1896
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/error.js"
-start = 22
-end = 24
+path = "lib/command.js"
+start = 2218
+end = 2218
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Typescript(Imports { file: "lib/argument.js" })'
-descriptor = "imports in lib/argument.js"
-cost_tokens = 14
-cum_tokens = 1910
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 1
-end = 1
+path = "lib/command.js"
+start = 2234
+end = 2234
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Typescript(Imports { file: "lib/option.js" })'
-descriptor = "imports in lib/option.js"
-cost_tokens = 14
-cum_tokens = 1924
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 1
-end = 1
+path = "lib/command.js"
+start = 2249
+end = 2249
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
-descriptor = "export member at lib/option.js:3 member 256"
-cost_tokens = 11
-cum_tokens = 1935
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 256
-end = 256
+path = "lib/command.js"
+start = 2289
+end = 2289
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 257
-end = 257
+path = "lib/command.js"
+start = 2304
+end = 2304
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 49
-key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 268, member_start_line: 272 })'
-descriptor = "export member doc at lib/option.js:268 member 272"
-cost_tokens = 23
-cum_tokens = 1958
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 269
-end = 271
+path = "lib/command.js"
+start = 2331
+end = 2331
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Typescript(Imports { file: "lib/help.js" })'
-descriptor = "imports in lib/help.js"
-cost_tokens = 17
-cum_tokens = 1975
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/help.js"
-start = 1
-end = 1
+path = "lib/command.js"
+start = 2344
+end = 2344
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2363
+end = 2363
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2382
+end = 2382
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2419
+end = 2419
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2437
+end = 2437
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2450
+end = 2450
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2505
+end = 2505
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2559
+end = 2559
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2607
+end = 2607
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2621
+end = 2621
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "lib/command.js"
+start = 2656
+end = 2656
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches]]
 position = 51
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 81
-cum_tokens = 2056
+cum_tokens = 2506
 
 [batches.content]
 kind = "lines"
@@ -1743,7 +2111,7 @@ position = 52
 key = 'Typescript(ExportNames { file: "esm.mjs" })'
 descriptor = "export names surface in esm.mjs"
 cost_tokens = 11
-cum_tokens = 2067
+cum_tokens = 2517
 
 [batches.content]
 kind = "lines"
@@ -1769,7 +2137,7 @@ position = 53
 key = 'Typescript(Imports { file: "esm.mjs" })'
 descriptor = "imports in esm.mjs"
 cost_tokens = 11
-cum_tokens = 2078
+cum_tokens = 2528
 
 [batches.content]
 kind = "lines"
@@ -1787,7 +2155,7 @@ position = 54
 key = 'Typescript(Export { file: "esm.mjs", start_line: 4 })'
 descriptor = "export at esm.mjs:4"
 cost_tokens = 97
-cum_tokens = 2175
+cum_tokens = 2625
 
 [batches.content]
 kind = "lines"
@@ -1805,7 +2173,7 @@ position = 55
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 149
-cum_tokens = 2324
+cum_tokens = 2774
 
 [batches.content]
 kind = "lines"
@@ -1831,7 +2199,7 @@ position = 56
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 282
-cum_tokens = 2606
+cum_tokens = 3056
 
 [batches.content]
 kind = "lines"
@@ -1865,7 +2233,7 @@ position = 57
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 257
-cum_tokens = 2863
+cum_tokens = 3313
 
 [batches.content]
 kind = "lines"
@@ -1883,7 +2251,7 @@ position = 58
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 244 })'
 descriptor = "export body at lib/option.js:3 body 244"
 cost_tokens = 16
-cum_tokens = 2879
+cum_tokens = 3329
 
 [batches.content]
 kind = "lines"
@@ -1901,7 +2269,7 @@ position = 59
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 48 })'
 descriptor = "export member doc at lib/argument.js:3 member 48"
 cost_tokens = 39
-cum_tokens = 2918
+cum_tokens = 3368
 
 [batches.content]
 kind = "lines"
@@ -1919,7 +2287,7 @@ position = 60
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 119 })'
 descriptor = "export member doc at lib/argument.js:3 member 119"
 cost_tokens = 39
-cum_tokens = 2957
+cum_tokens = 3407
 
 [batches.content]
 kind = "lines"
@@ -1937,7 +2305,7 @@ position = 61
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 129 })'
 descriptor = "export member doc at lib/argument.js:3 member 129"
 cost_tokens = 39
-cum_tokens = 2996
+cum_tokens = 3446
 
 [batches.content]
 kind = "lines"
@@ -1955,7 +2323,7 @@ position = 62
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 203 })'
 descriptor = "export member doc at lib/option.js:3 member 203"
 cost_tokens = 39
-cum_tokens = 3035
+cum_tokens = 3485
 
 [batches.content]
 kind = "lines"
@@ -1973,7 +2341,7 @@ position = 63
 key = 'Typescript(ExportMemberNames { file: "lib/help.js", start_line: 12 })'
 descriptor = "export member names at lib/help.js:12"
 cost_tokens = 436
-cum_tokens = 3471
+cum_tokens = 3921
 
 [batches.content]
 kind = "lines"
@@ -2352,7 +2720,7 @@ position = 64
 key = 'Typescript(ExportDoc { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export doc at lib/command.js:2752"
 cost_tokens = 34
-cum_tokens = 3505
+cum_tokens = 3955
 
 [batches.content]
 kind = "lines"
@@ -2370,7 +2738,7 @@ position = 65
 key = 'Typescript(ExportNames { file: "lib/suggestSimilar.js" })'
 descriptor = "export names surface in lib/suggestSimilar.js"
 cost_tokens = 28
-cum_tokens = 3533
+cum_tokens = 3983
 
 [batches.content]
 kind = "lines"
@@ -2404,7 +2772,7 @@ position = 66
 key = 'Typescript(Export { file: "lib/suggestSimilar.js", start_line: 56 })'
 descriptor = "export at lib/suggestSimilar.js:56"
 cost_tokens = 0
-cum_tokens = 3533
+cum_tokens = 3983
 
 [batches.content]
 kind = "lines"
@@ -2430,7 +2798,7 @@ position = 67
 key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/可变参数的选项.md" })'
 descriptor = "headings outline in docs/zh-CN/可变参数的选项.md"
 cost_tokens = 127
-cum_tokens = 3660
+cum_tokens = 4110
 
 [batches.content]
 kind = "lines"
@@ -2552,7 +2920,7 @@ position = 68
 key = 'Typescript(ExportMemberDoc { file: "lib/error.js", start_line: 25, member_start_line: 30 })'
 descriptor = "export member doc at lib/error.js:25 member 30"
 cost_tokens = 44
-cum_tokens = 3704
+cum_tokens = 4154
 
 [batches.content]
 kind = "lines"
@@ -2570,7 +2938,7 @@ position = 69
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 82 })'
 descriptor = "export member doc at lib/option.js:3 member 82"
 cost_tokens = 44
-cum_tokens = 3748
+cum_tokens = 4198
 
 [batches.content]
 kind = "lines"
@@ -2596,7 +2964,7 @@ position = 70
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 814
-cum_tokens = 4562
+cum_tokens = 5012
 
 [batches.content]
 kind = "fs"
@@ -2610,7 +2978,7 @@ position = 71
 key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
 descriptor = "listing of 'tests/fixtures-extensions'"
 cost_tokens = 28
-cum_tokens = 4590
+cum_tokens = 5040
 
 [batches.content]
 kind = "fs"
@@ -2624,7 +2992,7 @@ position = 72
 key = 'Fs(DirListing { dir: "tests/fixtures" })'
 descriptor = "listing of 'tests/fixtures'"
 cost_tokens = 94
-cum_tokens = 4684
+cum_tokens = 5134
 
 [batches.content]
 kind = "fs"
@@ -2638,7 +3006,7 @@ position = 73
 key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
 descriptor = "listing of 'tests/fixtures/another-dir'"
 cost_tokens = 2
-cum_tokens = 4686
+cum_tokens = 5136
 
 [batches.content]
 kind = "fs"
@@ -2652,7 +3020,7 @@ position = 74
 key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
 descriptor = "listing of 'tests/fixtures/other-dir'"
 cost_tokens = 2
-cum_tokens = 4688
+cum_tokens = 5138
 
 [batches.content]
 kind = "fs"
@@ -2666,7 +3034,7 @@ position = 75
 key = 'Typescript(ExportNames { file: "typings/index.d.ts" })'
 descriptor = "export names surface in typings/index.d.ts"
 cost_tokens = 367
-cum_tokens = 5055
+cum_tokens = 5505
 
 [batches.content]
 kind = "lines"
@@ -2940,7 +3308,7 @@ position = 76
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 210 })'
 descriptor = "export at typings/index.d.ts:210"
 cost_tokens = 0
-cum_tokens = 5055
+cum_tokens = 5505
 
 [batches.content]
 kind = "lines"
@@ -2953,12 +3321,20 @@ end = 210
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 77
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 376 })'
 descriptor = "export at typings/index.d.ts:376"
 cost_tokens = 0
-cum_tokens = 5055
+cum_tokens = 5505
 
 [batches.content]
 kind = "lines"
@@ -2971,12 +3347,46 @@ end = 376
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 377
+end = 377
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 78
-key = 'Typescript(ExportMemberNamesChunk { file: "typings/index.d.ts", start_line: 210, chunk_index: 0 })'
-descriptor = "export member names #1 at typings/index.d.ts:210"
-cost_tokens = 251
-cum_tokens = 5306
+key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 31 })'
+descriptor = "export at typings/index.d.ts:31"
+cost_tokens = 12
+cum_tokens = 5517
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Typescript(ExportMemberNames { file: "typings/index.d.ts", start_line: 210 })'
+descriptor = "export member names at typings/index.d.ts:210"
+cost_tokens = 479
+cum_tokens = 5996
 
 [batches.content]
 kind = "lines"
@@ -3188,38 +3598,210 @@ end = 266
 kind = "truncated"
 pattern = "^[^(]+"
 
-[[batches]]
-position = 79
-key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 31 })'
-descriptor = "export at typings/index.d.ts:31"
-cost_tokens = 12
-cum_tokens = 5318
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 269
+end = 269
 
-[batches.content]
-kind = "lines"
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
 path = "typings/index.d.ts"
-start = 31
-end = 31
+start = 272
+end = 272
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
 path = "typings/index.d.ts"
-start = 36
-end = 36
+start = 275
+end = 275
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 282
+end = 282
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 286
+end = 286
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 326
+end = 326
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 331
+end = 331
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches]]
 position = 80
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 1100 })'
 descriptor = "export at typings/index.d.ts:1100"
 cost_tokens = 15
-cum_tokens = 5333
+cum_tokens = 6011
 
 [batches.content]
 kind = "lines"
@@ -3234,10 +3816,348 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Typescript(ExportMemberNamesChunk { file: "typings/index.d.ts", start_line: 376, chunk_index: 0 })'
-descriptor = "export member names #1 at typings/index.d.ts:376"
-cost_tokens = 247
-cum_tokens = 5580
+key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 342 })'
+descriptor = "export at typings/index.d.ts:342"
+cost_tokens = 21
+cum_tokens = 6032
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 342
+end = 344
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 1104 })'
+descriptor = "export at typings/index.d.ts:1104"
+cost_tokens = 24
+cum_tokens = 6056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1104
+end = 1107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 65 })'
+descriptor = "export member doc at lib/option.js:3 member 65"
+cost_tokens = 51
+cum_tokens = 6107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 53
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 345 })'
+descriptor = "export at typings/index.d.ts:345"
+cost_tokens = 29
+cum_tokens = 6136
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 345
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Markdown(Section { file: "Readme.md", section_index: 29, keeps_default_concavity: false })'
+descriptor = "Readme.md section #29"
+cost_tokens = 90
+cum_tokens = 6226
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 956
+end = 964
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/不再推荐使用的功能.md" })'
+descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
+cost_tokens = 163
+cum_tokens = 6389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/zh-CN/不再推荐使用的功能.md"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 98 })'
+descriptor = "export member doc at lib/argument.js:3 member 98"
+cost_tokens = 58
+cum_tokens = 6447
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 91
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 181 })'
+descriptor = "export member doc at lib/option.js:3 member 181"
+cost_tokens = 58
+cum_tokens = 6505
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 174
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Markdown(Section { file: "Readme.md", section_index: 1, keeps_default_concavity: true })'
+descriptor = "Readme.md section #1"
+cost_tokens = 807
+cum_tokens = 7312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 8
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Typescript(ExportMemberNames { file: "typings/index.d.ts", start_line: 376 })'
+descriptor = "export member names at typings/index.d.ts:376"
+cost_tokens = 1009
+cum_tokens = 8321
 
 [batches.content]
 kind = "lines"
@@ -3458,350 +4378,651 @@ end = 542
 kind = "truncated"
 pattern = "^[^(]+"
 
-[[batches]]
-position = 82
-key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 342 })'
-descriptor = "export at typings/index.d.ts:342"
-cost_tokens = 21
-cum_tokens = 5601
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 553
+end = 553
 
-[batches.content]
-kind = "lines"
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
 path = "typings/index.d.ts"
-start = 342
-end = 344
+start = 558
+end = 558
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 1104 })'
-descriptor = "export at typings/index.d.ts:1104"
-cost_tokens = 24
-cum_tokens = 5625
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
 path = "typings/index.d.ts"
-start = 1104
-end = 1107
+start = 564
+end = 564
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 65 })'
-descriptor = "export member doc at lib/option.js:3 member 65"
-cost_tokens = 51
-cum_tokens = 5676
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 53
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
-key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 345 })'
-descriptor = "export at typings/index.d.ts:345"
-cost_tokens = 29
-cum_tokens = 5705
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
 path = "typings/index.d.ts"
-start = 345
-end = 348
+start = 570
+end = 570
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 86
-key = 'Markdown(Section { file: "Readme.md", section_index: 29, keeps_default_concavity: false })'
-descriptor = "Readme.md section #29"
-cost_tokens = 90
-cum_tokens = 5795
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "Readme.md"
-start = 956
-end = 964
+path = "typings/index.d.ts"
+start = 572
+end = 572
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
-key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/不再推荐使用的功能.md" })'
-descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
-cost_tokens = 163
-cum_tokens = 5958
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 1
-end = 1
+path = "typings/index.d.ts"
+start = 590
+end = 590
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 18
-end = 18
+path = "typings/index.d.ts"
+start = 592
+end = 592
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 30
-end = 30
+path = "typings/index.d.ts"
+start = 599
+end = 599
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 40
-end = 40
+path = "typings/index.d.ts"
+start = 604
+end = 604
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 61
-end = 61
+path = "typings/index.d.ts"
+start = 609
+end = 609
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 79
-end = 79
+path = "typings/index.d.ts"
+start = 626
+end = 626
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 104
-end = 104
+path = "typings/index.d.ts"
+start = 648
+end = 648
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 114
-end = 114
+path = "typings/index.d.ts"
+start = 653
+end = 653
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 134
-end = 134
+path = "typings/index.d.ts"
+start = 660
+end = 660
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 157
-end = 157
+path = "typings/index.d.ts"
+start = 673
+end = 673
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 187
-end = 187
+path = "typings/index.d.ts"
+start = 678
+end = 678
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 2
-end = 2
+path = "typings/index.d.ts"
+start = 685
+end = 685
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 19
-end = 19
+path = "typings/index.d.ts"
+start = 699
+end = 699
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 31
-end = 31
+path = "typings/index.d.ts"
+start = 706
+end = 706
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 41
-end = 41
+path = "typings/index.d.ts"
+start = 714
+end = 714
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 62
-end = 62
+path = "typings/index.d.ts"
+start = 715
+end = 715
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 80
-end = 80
+path = "typings/index.d.ts"
+start = 718
+end = 718
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 105
-end = 105
+path = "typings/index.d.ts"
+start = 723
+end = 723
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 115
-end = 115
+path = "typings/index.d.ts"
+start = 728
+end = 728
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 135
-end = 135
+path = "typings/index.d.ts"
+start = 733
+end = 733
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 158
-end = 158
+path = "typings/index.d.ts"
+start = 742
+end = 742
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "docs/zh-CN/不再推荐使用的功能.md"
-start = 188
-end = 188
+path = "typings/index.d.ts"
+start = 747
+end = 747
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 88
-key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 98 })'
-descriptor = "export member doc at lib/argument.js:3 member 98"
-cost_tokens = 58
-cum_tokens = 6016
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/argument.js"
-start = 91
-end = 96
+path = "typings/index.d.ts"
+start = 761
+end = 761
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 181 })'
-descriptor = "export member doc at lib/option.js:3 member 181"
-cost_tokens = 58
-cum_tokens = 6074
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "lib/option.js"
-start = 174
-end = 179
+path = "typings/index.d.ts"
+start = 768
+end = 768
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
-key = 'Markdown(Section { file: "Readme.md", section_index: 1, keeps_default_concavity: true })'
-descriptor = "Readme.md section #1"
-cost_tokens = 807
-cum_tokens = 6881
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches.content.spans]]
-path = "Readme.md"
-start = 8
-end = 59
+path = "typings/index.d.ts"
+start = 775
+end = 775
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 785
+end = 785
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 796
+end = 796
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 819
+end = 819
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 840
+end = 840
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 851
+end = 851
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 859
+end = 859
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 873
+end = 873
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 878
+end = 878
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 883
+end = 883
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 891
+end = 891
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 893
+end = 893
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 897
+end = 897
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 905
+end = 905
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 909
+end = 909
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 918
+end = 918
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 922
+end = 922
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 931
+end = 931
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 935
+end = 935
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 942
+end = 942
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 946
+end = 946
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 953
+end = 953
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 957
+end = 957
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 972
+end = 972
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 986
+end = 986
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 990
+end = 990
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 997
+end = 997
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1001
+end = 1001
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1015
+end = 1015
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1019
+end = 1019
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1033
+end = 1033
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1037
+end = 1037
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1045
+end = 1045
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1047
+end = 1047
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1052
+end = 1052
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1059
+end = 1059
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1065
+end = 1065
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1072
+end = 1072
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1074
+end = 1074
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1082
+end = 1082
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1083
+end = 1083
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "typings/index.d.ts"
+start = 1091
+end = 1091
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
 
 [[batches]]
 position = 91
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 217 })'
 descriptor = "export member doc at lib/option.js:3 member 217"
 cost_tokens = 61
-cum_tokens = 6942
+cum_tokens = 8382
 
 [batches.content]
 kind = "lines"
@@ -3819,7 +5040,7 @@ position = 92
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 86 })'
 descriptor = "export member doc at lib/argument.js:3 member 86"
 cost_tokens = 62
-cum_tokens = 7004
+cum_tokens = 8444
 
 [batches.content]
 kind = "lines"
@@ -3837,7 +5058,7 @@ position = 93
 key = 'Typescript(ExportDoc { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export doc at lib/argument.js:143"
 cost_tokens = 53
-cum_tokens = 7057
+cum_tokens = 8497
 
 [batches.content]
 kind = "lines"
@@ -3863,7 +5084,7 @@ position = 94
 key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 4, body_start_line: 12 })'
 descriptor = "export body at lib/error.js:4 body 12"
 cost_tokens = 82
-cum_tokens = 7139
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -3881,7 +5102,7 @@ position = 95
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 243 })'
 descriptor = "export member doc at lib/option.js:3 member 243"
 cost_tokens = 69
-cum_tokens = 7208
+cum_tokens = 8648
 
 [batches.content]
 kind = "lines"
@@ -3899,7 +5120,7 @@ position = 96
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 349 })'
 descriptor = "export at typings/index.d.ts:349"
 cost_tokens = 38
-cum_tokens = 7246
+cum_tokens = 8686
 
 [batches.content]
 kind = "lines"
@@ -3917,7 +5138,7 @@ position = 97
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 268, member_start_line: 297 })'
 descriptor = "export member doc at lib/option.js:268 member 297"
 cost_tokens = 75
-cum_tokens = 7321
+cum_tokens = 8761
 
 [batches.content]
 kind = "lines"
@@ -3935,7 +5156,7 @@ position = 98
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 73 })'
 descriptor = "export member doc at lib/argument.js:3 member 73"
 cost_tokens = 77
-cum_tokens = 7398
+cum_tokens = 8838
 
 [batches.content]
 kind = "lines"
@@ -3953,7 +5174,7 @@ position = 99
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
 descriptor = "export member doc at lib/option.js:3 member 256"
 cost_tokens = 78
-cum_tokens = 7476
+cum_tokens = 8916
 
 [batches.content]
 kind = "lines"
@@ -3971,7 +5192,7 @@ position = 100
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 370 })'
 descriptor = "export at typings/index.d.ts:370"
 cost_tokens = 36
-cum_tokens = 7512
+cum_tokens = 8952
 
 [batches.content]
 kind = "lines"
@@ -3989,7 +5210,7 @@ position = 101
 key = 'Typescript(ExportMemberDoc { file: "lib/error.js", start_line: 4, member_start_line: 11 })'
 descriptor = "export member doc at lib/error.js:4 member 11"
 cost_tokens = 84
-cum_tokens = 7596
+cum_tokens = 9036
 
 [batches.content]
 kind = "lines"
@@ -4007,7 +5228,7 @@ position = 102
 key = 'Typescript(ExportDoc { file: "lib/help.js", start_line: 740 })'
 descriptor = "export doc at lib/help.js:740"
 cost_tokens = 72
-cum_tokens = 7668
+cum_tokens = 9108
 
 [batches.content]
 kind = "lines"
@@ -4025,7 +5246,7 @@ position = 103
 key = 'Typescript(Imports { file: "typings/esm.d.mts" })'
 descriptor = "imports in typings/esm.d.mts"
 cost_tokens = 13
-cum_tokens = 7681
+cum_tokens = 9121
 
 [batches.content]
 kind = "lines"
@@ -4043,7 +5264,7 @@ position = 104
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 1094 })'
 descriptor = "export at typings/index.d.ts:1094"
 cost_tokens = 53
-cum_tokens = 7734
+cum_tokens = 9174
 
 [batches.content]
 kind = "lines"
@@ -4061,7 +5282,7 @@ position = 105
 key = 'Typescript(ExportMemberDoc { file: "lib/argument.js", start_line: 3, member_start_line: 13 })'
 descriptor = "export member doc at lib/argument.js:3 member 13"
 cost_tokens = 105
-cum_tokens = 7839
+cum_tokens = 9279
 
 [batches.content]
 kind = "lines"
@@ -4079,7 +5300,7 @@ position = 106
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 3, member_start_line: 120 })'
 descriptor = "export member doc at lib/option.js:3 member 120"
 cost_tokens = 111
-cum_tokens = 7950
+cum_tokens = 9390
 
 [batches.content]
 kind = "lines"
@@ -4097,7 +5318,7 @@ position = 107
 key = 'Typescript(ExportDoc { file: "lib/option.js", start_line: 268 })'
 descriptor = "export doc at lib/option.js:268"
 cost_tokens = 112
-cum_tokens = 8062
+cum_tokens = 9502
 
 [batches.content]
 kind = "lines"
@@ -4115,7 +5336,7 @@ position = 108
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 40 })'
 descriptor = "export at typings/index.d.ts:40"
 cost_tokens = 63
-cum_tokens = 8125
+cum_tokens = 9565
 
 [batches.content]
 kind = "lines"
@@ -4133,7 +5354,7 @@ position = 109
 key = 'Typescript(Export { file: "typings/index.d.ts", start_line: 16 })'
 descriptor = "export at typings/index.d.ts:16"
 cost_tokens = 59
-cum_tokens = 8184
+cum_tokens = 9624
 
 [batches.content]
 kind = "lines"
@@ -4159,7 +5380,7 @@ position = 110
 key = 'Markdown(Section { file: "Readme.md", section_index: 6, keeps_default_concavity: false })'
 descriptor = "Readme.md section #6"
 cost_tokens = 205
-cum_tokens = 8389
+cum_tokens = 9829
 
 [batches.content]
 kind = "lines"
@@ -4168,194 +5389,6 @@ kind = "lines"
 path = "Readme.md"
 start = 177
 end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Markdown(Section { file: "Readme.md", section_index: 7, keeps_default_concavity: true })'
-descriptor = "Readme.md section #7"
-cost_tokens = 206
-cum_tokens = 8595
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 190
-end = 203
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Typescript(ExportBody { file: "lib/command.js", start_line: 2752, body_start_line: 2753 })'
-descriptor = "export body at lib/command.js:2752 body 2753"
-cost_tokens = 368
-cum_tokens = 8963
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/command.js"
-start = 2753
-end = 2773
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Markdown(Section { file: "Readme.md", section_index: 15, keeps_default_concavity: false })'
-descriptor = "Readme.md section #15"
-cost_tokens = 195
-cum_tokens = 9158
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 523
-end = 531
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Markdown(Section { file: "Readme.md", section_index: 16, keeps_default_concavity: true })'
-descriptor = "Readme.md section #16"
-cost_tokens = 262
-cum_tokens = 9420
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 533
-end = 555
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Typescript(Imports { file: "examples/configure-output.js" })'
-descriptor = "imports in examples/configure-output.js"
-cost_tokens = 14
-cum_tokens = 9434
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
-descriptor = "module item at examples/configure-output.js:4"
-cost_tokens = 12
-cum_tokens = 9446
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 117
-key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
-descriptor = "module item at examples/configure-output.js:2"
-cost_tokens = 9
-cum_tokens = 9455
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Typescript(ModuleStatements { file: "examples/configure-output.js", start_line: 19 })'
-descriptor = "module statements at examples/configure-output.js:19"
-cost_tokens = 9
-cum_tokens = 9464
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/configure-output.js"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Markdown(Section { file: "Readme.md", section_index: 30, keeps_default_concavity: false })'
-descriptor = "Readme.md section #30"
-cost_tokens = 191
-cum_tokens = 9655
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 966
-end = 976
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Markdown(Section { file: "Readme.md", section_index: 31, keeps_default_concavity: true })'
-descriptor = "Readme.md section #31"
-cost_tokens = 233
-cum_tokens = 9888
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 978
-end = 993
 
 [batches.content.spans.render]
 kind = "full"
