@@ -153,6 +153,13 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
     })
 }
 
+/// Signal mix for a directory whose contents the walker did not
+/// positively classify — the plain "here is what is in this directory"
+/// tier every listing falls back to. Shared with the markdown walker,
+/// where a whole-file table of contents prices as the listing it
+/// duplicates rather than as an orientation doc.
+pub(super) const PLAIN_LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
+
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);
     let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
@@ -213,7 +220,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         // sharply outside it, so this sits at the low-churn end.
         (0.95, 0.5, 0.3)
     } else {
-        (0.95, 0.45, 0.25)
+        PLAIN_LISTING_SIGNALS
     };
     let depth = if source_inventory_dir && under_root_source_ancestor {
         // A flat partition under a root-adjacent `lib/`/`src/` is the

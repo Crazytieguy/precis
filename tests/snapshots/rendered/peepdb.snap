@@ -48,6 +48,7 @@ README.md
       48→peepdb save <connection_name> --db-type [mysql/postgres/mariadb/mongodb/mssql/firebase] --host <host> --user <user> --password <password> --database <database>
       49→```
     …
+      59→For improved security, consider using environment variables or a configuration file to store sensitive information like passwords.
       61→### 2. List Saved Connections
     …
       74→### 3. View Tables
@@ -95,34 +96,6 @@ docs/
            6→- can be built and published on [GitHub Pages];
            7→- can be built and previewed locally, and published on other platforms.
         …
-          23→## Replace the content of the template pages
-          24→
-          25→Update the following files to your own content:
-          26→
-          27→- `index.md` (your new home page)
-          28→- `README.md` (information for those who access your site repo on GitHub)
-          30→## Changing the version of the theme and/or Jekyll
-          31→
-          32→Simply edit the relevant line(s) in the `Gemfile`.
-          34→## Adding a plugin
-        …
-          55→## Publishing your site on GitHub Pages
-        …
-          76→## Building and previewing your site locally
-        …
-          88→## Publishing your built site on a different platform
-          89→
-          90→Just upload all the files in the directory `_site`.
-          92→## Customization
-        …
-          98→## Hosting your docs from an existing project repo
-        …
-         102→### Copy the template files
-        …
-         108→### Modify the GitHub Actions workflow
-        …
-         154→## Licensing and Attribution
-        …
     _config.yml …
     contributing.md …
     index.md
@@ -152,8 +125,7 @@ docs/
     usage.md
         …
            6→# 🛠️ Usage
-           7→
-           8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
+        …
           10→## Saving Database Connection Details
         …
           20→## Listing Saved Connections
@@ -205,6 +177,12 @@ peepdb/
           98→@click.argument('connection_name')
           99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
          100→def remove(connection_name):
+         101→    """
+         102→    Remove a specific saved connection.
+         103→
+         104→    Example:
+         105→    peepdb remove mydb
+         106→    """
         …
          113→@cli.command()
          114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
@@ -246,7 +224,27 @@ peepdb/
               19→    'MSSQLDatabase',
               20→    'OracleDatabase'
               21→]
-        base.py …
+        base.py
+            …
+               5→class BaseDatabase(ABC):
+               6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
+            …
+              17→    @abstractmethod
+              18→    def connect(self) -> None:
+              19→        pass
+              21→    @abstractmethod
+              22→    def disconnect(self) -> None:
+            …
+              25→    @abstractmethod
+              26→    def fetch_tables(self) -> List[str]:
+            …
+              29→    @abstractmethod
+              30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+            …
+              33→    def __enter__(self):
+            …
+              37→    def __exit__(self, exc_type, exc_val, exc_tb):
+            …
         firebase.py …
         mariadb.py …
         mongodb.py …

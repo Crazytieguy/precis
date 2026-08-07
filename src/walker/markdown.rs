@@ -148,6 +148,7 @@ const PRELUDE_MAX_BYTES: usize = 2_500;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md", ctx);
+    let sibling_md_count = md_files.len();
     let mut out = Vec::new();
 
     // RST README: emit a ReadmeHeadline batch (title + first
@@ -170,7 +171,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx),
+                value: readme_headline_value(
+                    &file,
+                    ctx,
+                    NavDensity {
+                        sibling_md_count,
+                        root_readme: true,
+                    },
+                ),
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
@@ -198,7 +206,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     if md_files.is_empty() {
         return out;
     }
-    let sibling_md_count = md_files.len();
     for file in md_files {
         let name = file
             .file_name()
@@ -234,6 +241,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let gates = derive_outline_gates(&file, &tree, &source);
         let (headline, outline_rows, mut outline_emits) = (gates.headline, gates.rows, gates.emits);
         let root_readme = is_readme(&file) && dir == ctx.root();
+        let nav = NavDensity {
+            sibling_md_count,
+            root_readme,
+        };
         let mut ranges = logical_sections(
             &file,
             &tree,
@@ -268,7 +279,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx),
+                value: readme_headline_value(&file, ctx, nav),
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
@@ -281,7 +292,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: MarkdownKey::Prelude { file: file.clone() }.into(),
                     predecessor: headline_emitted.clone(),
                     content,
-                    value: prelude_value(&file, ctx),
+                    value: prelude_value(&file, ctx, nav),
                 });
             }
         }
@@ -293,7 +304,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: key.clone().into(),
                 predecessor: headline_emitted.clone(),
                 content,
-                value: headings_outline_value(&file, ctx, sibling_md_count),
+                value: headings_outline_value(&file, ctx, nav),
             });
             outline_emitted = Some(BatchKey::Markdown(key));
         }
@@ -357,18 +368,28 @@ fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
 
 // --- value ---
 
+/// A whole-file table of contents is a navigation index whose entries
+/// are the filenames the parent directory listing already emitted, so it
+/// prices as the listing it duplicates rather than as an orientation
+/// doc. Measured alone this is worth +0.0009 at the 3K mean on the one
+/// corpus carrier; it is fully absorbed once
+/// [`NavDensity::factor`] frees the same window (see the lane note in
+/// `docs/design-notes.md`).
 fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.9, 0.8, 0.7, path_depth_factor(file, ctx))
+    let (cat, fu, ztu) = super::fs::PLAIN_LISTING_SIGNALS;
+    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
 }
 
-fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
+fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
+    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx)) * nav.factor(file)
 }
 
 /// `Prelude` prices as the README's index-0 section: it is the top of
 /// the README body, just above the first heading rather than below it.
-fn prelude_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx)) * PRELUDE_VALUE_FACTOR
+fn prelude_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
+    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
+        * PRELUDE_VALUE_FACTOR
+        * nav.factor(file)
 }
 
 /// Premium over the index-0 [`readme_section_value`] — same signal mix,
@@ -379,27 +400,54 @@ fn prelude_value(file: &Path, ctx: &WalkCtx) -> f64 {
 /// beyond that.
 const PRELUDE_VALUE_FACTOR: f64 = 1.3;
 
-fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
+fn headings_outline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
     mix_signals(
         0.7,
         0.55,
         0.4,
         super::file_depth_factor(file, ctx, is_orientation_doc(file)),
-    ) * dense_md_sibling_factor(file, sibling_md_count)
+    ) * nav.factor(file)
 }
 
-/// Saturate the per-file outline value in dirs with many .md siblings —
-/// the dir listing already names them. README/orientation docs exempt.
-fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
-    if is_readme(file) || is_orientation_doc(file) {
-        return 1.0;
-    }
-    const DENSE_THRESHOLD: usize = 6;
-    if sibling_md_count <= DENSE_THRESHOLD {
-        return 1.0;
-    }
-    ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
+/// How crowded the directory is that a markdown file's navigation
+/// batches (`HeadingsOutline` / `ReadmeHeadline` / `Prelude`) sit in,
+/// plus whether this file is the repo's root README.
+#[derive(Clone, Copy)]
+struct NavDensity {
+    sibling_md_count: usize,
+    root_readme: bool,
 }
+
+impl NavDensity {
+    /// Saturate a file's navigation value in dirs with many .md siblings
+    /// — the dir listing already names them.
+    ///
+    /// The root README and orientation docs are exempt. The root README's
+    /// exemption is load-bearing rather than cosmetic: its outline is the
+    /// hard predecessor of every root README section, so damping it
+    /// delays the whole README body, which is the largest credited
+    /// early-budget purchase on repos that have one. A README deeper in
+    /// the tree carries no such stream and is just one more page in a
+    /// docs directory the listing already enumerated.
+    fn factor(self, file: &Path) -> f64 {
+        if self.root_readme || is_orientation_doc(file) {
+            return 1.0;
+        }
+        if self.sibling_md_count <= DENSE_MD_SIBLINGS {
+            return 1.0;
+        }
+        ((DENSE_MD_SIBLINGS as f64) / (self.sibling_md_count as f64)).sqrt()
+    }
+}
+
+/// Markdown-file count above which a directory reads as a docs
+/// directory rather than as a couple of loose notes, so its listing
+/// stands in for the individual pages' navigation batches. Swept on the
+/// 3K corpus mean at 6 / 4 / 3 / 2 → +0.0000 / +0.0019 / +0.0031 /
+/// +0.0032; the response saturates between 3 and 2, and 3 is the
+/// gentlest setting on the flat part. No fixture moves down at any grid
+/// budget at any of these settings.
+const DENSE_MD_SIBLINGS: usize = 3;
 
 fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
@@ -5303,6 +5351,106 @@ mod tests {
             notes_has_section,
             "control file notes.md should still emit Section batches",
         );
+    }
+
+    /// The root README's `HeadingsOutline` is the hard predecessor of
+    /// every section in that file, so the dense-siblings damp must never
+    /// reach it however crowded the root directory is — damping it would
+    /// delay the whole README body, the largest credited early-budget
+    /// purchase on repos that have one. A README at depth carries no such
+    /// stream and does take the damp.
+    #[test]
+    fn markdown_dense_siblings_never_damp_the_root_readme() {
+        use std::fs;
+
+        let body = "# Project\n\nA tagline paragraph about the project.\n\n\
+                    Some further prelude prose worth a batch.\n\n\
+                    ## Install\n\nrun it.\n\n\
+                    ## Use\n\nuse it.\n\n\
+                    ## Configure\n\nconfigure it.\n";
+        let crowd = ["a.md", "b.md", "c.md", "d.md", "e.md", "f.md", "g.md"];
+
+        // Two roots differing only in how many .md siblings sit beside
+        // the README — sparse (under the threshold) and crowded.
+        let build = |extra: &[&str]| {
+            let dir = tempfile::tempdir().unwrap();
+            let root = dir.path().to_path_buf();
+            fs::write(root.join("README.md"), body).unwrap();
+            let docs = root.join("docs");
+            fs::create_dir(&docs).unwrap();
+            fs::write(docs.join("README.md"), body).unwrap();
+            for n in extra {
+                fs::write(root.join(n), body).unwrap();
+                fs::write(docs.join(n), body).unwrap();
+            }
+            let ctx = WalkCtx::new(root.clone());
+            let batches: Vec<_> = expand_in_dir(&root, &ctx)
+                .into_iter()
+                .chain(expand_in_dir(&docs, &ctx))
+                .collect();
+            // `dir` owns the temp tree; keep it alive past the walk.
+            (dir, root, batches)
+        };
+        let (_sparse_guard, sparse_root, sparse) = build(&[]);
+        let (_dense_guard, dense_root, dense) = build(&crowd);
+
+        // Every nav batch either walk emitted for `file`, keyed by kind.
+        // Gathered rather than looked up by key so the assertions cover
+        // whichever of the three this README shape produces.
+        let nav_values = |batches: &[Batch<BatchKey>], file: &Path| {
+            let mut found: Vec<(&'static str, f64)> = batches
+                .iter()
+                .filter_map(|b| {
+                    let kind = match &b.key {
+                        BatchKey::Markdown(MarkdownKey::HeadingsOutline { file: f })
+                            if f == file =>
+                        {
+                            "outline"
+                        }
+                        BatchKey::Markdown(MarkdownKey::ReadmeHeadline { file: f })
+                            if f == file =>
+                        {
+                            "headline"
+                        }
+                        BatchKey::Markdown(MarkdownKey::Prelude { file: f }) if f == file => {
+                            "prelude"
+                        }
+                        _ => return None,
+                    };
+                    Some((kind, b.value))
+                })
+                .collect();
+            found.sort_by_key(|(kind, _)| *kind);
+            found
+        };
+
+        let sparse_root_nav = nav_values(&sparse, &sparse_root.join("README.md"));
+        let dense_root_nav = nav_values(&dense, &dense_root.join("README.md"));
+        assert!(
+            sparse_root_nav.iter().any(|(k, _)| *k == "outline"),
+            "test shape must emit a root README outline to pin",
+        );
+        assert_eq!(
+            sparse_root_nav,
+            dense_root_nav,
+            "root README nav must price identically however many .md siblings the root \
+             holds (1 vs {})",
+            1 + crowd.len(),
+        );
+
+        // The damp is real, not vacuous: the same batches on a nested
+        // README do move once its directory is crowded.
+        let sparse_docs_nav = nav_values(&sparse, &sparse_root.join("docs/README.md"));
+        let dense_docs_nav = nav_values(&dense, &dense_root.join("docs/README.md"));
+        assert_eq!(sparse_docs_nav.len(), dense_docs_nav.len());
+        for ((kind, sparse_value), (_, dense_value)) in sparse_docs_nav.iter().zip(&dense_docs_nav)
+        {
+            assert!(
+                dense_value < sparse_value,
+                "nested README {kind} must take the dense-siblings damp \
+                 ({sparse_value} sparse vs {dense_value} crowded)",
+            );
+        }
     }
 
     /// cmdk shape: H1 with badge tail + 3 H2s. Headline truncates row

@@ -804,10 +804,338 @@ kind = "full"
 
 [[batches]]
 position = 46
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 22
+cum_tokens = 936
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "actions", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 47
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 25
+cum_tokens = 961
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = [".gitignore", "checks.yml", "codespell.yml", "promote.yml", "release.yml", "stale.yml"]
+
+[[batches]]
+position = 48
+key = 'Go(DeclNames { file: "pkg/model/job_context.go", chunk_index: 0 })'
+descriptor = "go decl names surface in pkg/model/job_context.go"
+cost_tokens = 13
+cum_tokens = 974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pkg/model/job_context.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pkg/model/job_context.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "pkg/container" })'
+descriptor = "listing of 'pkg/container'"
+cost_tokens = 160
+cum_tokens = 1134
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/container"
+entries = ["DOCKER_LICENSE", "container_types.go", "docker_auth.go", "docker_build.go", "docker_cli.go", "docker_cli_test.go", "docker_images.go", "docker_images_test.go", "docker_logger.go", "docker_network.go", "docker_pull.go", "docker_pull_test.go", "docker_run.go", "docker_run_test.go", "docker_socket.go", "docker_socket_test.go", "docker_stub.go", "docker_volume.go", "executions_environment.go", "host_environment.go", "host_environment_test.go", "linux_container_environment_extensions.go", "linux_container_environment_extensions_test.go", "parse_env_file.go", "testdata", "util.go", "util_openbsd_mips64.go", "util_plan9.go", "util_windows.go"]
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "pkg/container/testdata" })'
+descriptor = "listing of 'pkg/container/testdata'"
+cost_tokens = 38
+cum_tokens = 1172
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/container/testdata"
+entries = ["Dockerfile", "docker-pull-options", "scratch", "utf16.env", "utf16be.env", "utf8.env", "valid.env", "valid.label"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "pkg/container/testdata/docker-pull-options" })'
+descriptor = "listing of 'pkg/container/testdata/docker-pull-options'"
+cost_tokens = 3
+cum_tokens = 1175
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/container/testdata/docker-pull-options"
+entries = ["config.json"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "pkg/container/testdata/scratch" })'
+descriptor = "listing of 'pkg/container/testdata/scratch'"
+cost_tokens = 3
+cum_tokens = 1178
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/container/testdata/scratch"
+entries = ["test.txt"]
+
+[[batches]]
+position = 53
+key = 'Go(DeclNames { file: "pkg/container/executions_environment.go", chunk_index: 0 })'
+descriptor = "go decl names surface in pkg/container/executions_environment.go"
+cost_tokens = 14
+cum_tokens = 1192
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pkg/container/executions_environment.go"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pkg/container/executions_environment.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "pkg/model/testdata/invalid-job-name" })'
+descriptor = "listing of 'pkg/model/testdata/invalid-job-name'"
+cost_tokens = 23
+cum_tokens = 1215
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/model/testdata/invalid-job-name"
+entries = ["invalid-1.yml", "invalid-2.yml", "valid-1.yml", "valid-2.yml"]
+
+[[batches]]
+position = 55
+key = 'Go(DeclNames { file: "pkg/common/outbound_ip.go", chunk_index: 0 })'
+descriptor = "go decl names surface in pkg/common/outbound_ip.go"
+cost_tokens = 16
+cum_tokens = 1231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pkg/common/outbound_ip.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pkg/common/outbound_ip.go"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'Go(Decl { file: "pkg/common/outbound_ip.go", start_line: 13 })'
+descriptor = "go decl at pkg/common/outbound_ip.go:13"
+cost_tokens = 0
+cum_tokens = 1231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pkg/common/outbound_ip.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "pkg/runner" })'
+descriptor = "listing of 'pkg/runner'"
+cost_tokens = 188
+cum_tokens = 1419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/runner"
+entries = ["action.go", "action_cache.go", "action_cache_offline_mode.go", "action_cache_test.go", "action_composite.go", "action_test.go", "command.go", "command_test.go", "container_mock_test.go", "expression.go", "expression_test.go", "hashfiles", "job_executor.go", "job_executor_test.go", "local_repository_cache.go", "logger.go", "res", "reusable_workflow.go", "run_context.go", "run_context_test.go", "runner.go", "runner_test.go", "step.go", "step_action_local.go", "step_action_local_test.go", "step_action_remote.go", "step_action_remote_test.go", "step_docker.go", "step_docker_test.go", "step_factory.go", "step_factory_test.go", "step_run.go", "step_run_test.go", "step_test.go", "testdata"]
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "pkg/runner/hashfiles" })'
+descriptor = "listing of 'pkg/runner/hashfiles'"
+cost_tokens = 3
+cum_tokens = 1422
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/runner/hashfiles"
+entries = ["index.js"]
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "pkg/runner/res" })'
+descriptor = "listing of 'pkg/runner/res'"
+cost_tokens = 3
+cum_tokens = 1425
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/runner/res"
+entries = ["trampoline.js"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "pkg/runner/testdata" })'
+descriptor = "listing of 'pkg/runner/testdata'"
+cost_tokens = 829
+cum_tokens = 2254
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/runner/testdata"
+entries = [".github", "GITHUB_ENV-use-in-env-ctx", "GITHUB_STATE", "act-composite-env-test", "action-cache-v2-fetch-failure-is-job-error", "actions", "actions-environment-and-context-tests", "basic", "checkout", "commands", "composite-fail-with-output", "container-hostname", "defaults-run", "dir with spaces", "do-not-leak-step-env-in-composite", "docker-action-custom-path", "docker-action-host-env", "ensure-post-steps", "env-and-path", "environment-files", "environment-files-parser-bug", "environment-variables", "evalenv", "evalmatrix", "evalmatrix-merge-array", "evalmatrix-merge-map", "evalmatrixneeds", "evalmatrixneeds2", "fail", "if-env-act", "if-expressions", "input-from-cli", "inputs-via-env-context", "issue-104", "issue-1195", "issue-122", "issue-141", "issue-1595", "issue-597", "issue-598", "job-container", "job-container-invalid-credentials", "job-container-non-root", "job-needs-context-contains-result", "job-nil-step", "job-status-check", "local-action-docker-url", "local-action-dockerfile", "local-action-js", "local-action-via-composite-dockerfile", "local-remote-action-overrides", "localdockerimagetest_", "mask-values", "matrix", "matrix-exitcode", "matrix-include-exclude", "matrix-with-user-inclusions", "mysql-service-container-with-health-check", "networking", "nix-prepend-path", "no-panic-on-invalid-composite-action", "node", "non-existent-action", "outputs", "parallel", "path-handling", "post-step-failure-is-job-failure", "pull-request", "python", "remote-action-composite-action-ref", "remote-action-composite-js-pre-with-defaults", "remote-action-docker", "remote-action-docker-new-cache", "remote-action-js", "remote-action-js-node-user", "runs-on", "secrets", "services", "services-empty-image", "services-host-network", "services-with-container", "set-env-new-env-file-per-step", "set-env-step-env-override", "shells", "steps-context", "stepsummary", "uses-action-with-pre-and-post-step", "uses-and-run-in-one-step", "uses-composite", "uses-composite-check-for-input-collision", "uses-composite-check-for-input-in-if-uses", "uses-composite-check-for-input-shadowing", "uses-composite-with-error", "uses-composite-with-inputs", "uses-composite-with-pre-and-post-steps", "uses-docker-url", "uses-github-empty", "uses-github-full-sha", "uses-github-noref", "uses-github-path", "uses-github-root", "uses-github-short-sha", "uses-nested-composite", "uses-workflow", "uses-workflow-defaults", "windows-add-env", "windows-add-env-powershell-5", "windows-prepend-path", "windows-prepend-path-powershell-5", "windows-shell-cmd", "workdir", "workflow_call_inputs", "workflow_dispatch", "workflow_dispatch-scalar", "workflow_dispatch-scalar-composite-action", "workflow_dispatch_no_inputs_mapping"]
+
+[[batches]]
+position = 61
+key = 'Go(DeclNames { file: "cmd/dir.go", chunk_index: 0 })'
+descriptor = "go decl names surface in cmd/dir.go"
+cost_tokens = 34
+cum_tokens = 2288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'Go(Decl { file: "cmd/dir.go", start_line: 15 })'
+descriptor = "go decl at cmd/dir.go:15"
+cost_tokens = 0
+cum_tokens = 2288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Go(Decl { file: "cmd/dir.go", start_line: 10 })'
+descriptor = "go decl at cmd/dir.go:10"
+cost_tokens = 9
+cum_tokens = 2297
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/dir.go"
+start = 10
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
 key = 'Markdown(HeadingsOutline { file: "IMAGES.md" })'
 descriptor = "headings outline in IMAGES.md"
 cost_tokens = 65
-cum_tokens = 979
+cum_tokens = 2362
 
 [batches.content]
 kind = "lines"
@@ -859,334 +1187,6 @@ end = 28
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 22
-cum_tokens = 1001
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "actions", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 48
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 25
-cum_tokens = 1026
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = [".gitignore", "checks.yml", "codespell.yml", "promote.yml", "release.yml", "stale.yml"]
-
-[[batches]]
-position = 49
-key = 'Go(DeclNames { file: "pkg/model/job_context.go", chunk_index: 0 })'
-descriptor = "go decl names surface in pkg/model/job_context.go"
-cost_tokens = 13
-cum_tokens = 1039
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pkg/model/job_context.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pkg/model/job_context.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "pkg/container" })'
-descriptor = "listing of 'pkg/container'"
-cost_tokens = 160
-cum_tokens = 1199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/container"
-entries = ["DOCKER_LICENSE", "container_types.go", "docker_auth.go", "docker_build.go", "docker_cli.go", "docker_cli_test.go", "docker_images.go", "docker_images_test.go", "docker_logger.go", "docker_network.go", "docker_pull.go", "docker_pull_test.go", "docker_run.go", "docker_run_test.go", "docker_socket.go", "docker_socket_test.go", "docker_stub.go", "docker_volume.go", "executions_environment.go", "host_environment.go", "host_environment_test.go", "linux_container_environment_extensions.go", "linux_container_environment_extensions_test.go", "parse_env_file.go", "testdata", "util.go", "util_openbsd_mips64.go", "util_plan9.go", "util_windows.go"]
-
-[[batches]]
-position = 51
-key = 'Fs(DirListing { dir: "pkg/container/testdata" })'
-descriptor = "listing of 'pkg/container/testdata'"
-cost_tokens = 38
-cum_tokens = 1237
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/container/testdata"
-entries = ["Dockerfile", "docker-pull-options", "scratch", "utf16.env", "utf16be.env", "utf8.env", "valid.env", "valid.label"]
-
-[[batches]]
-position = 52
-key = 'Fs(DirListing { dir: "pkg/container/testdata/docker-pull-options" })'
-descriptor = "listing of 'pkg/container/testdata/docker-pull-options'"
-cost_tokens = 3
-cum_tokens = 1240
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/container/testdata/docker-pull-options"
-entries = ["config.json"]
-
-[[batches]]
-position = 53
-key = 'Fs(DirListing { dir: "pkg/container/testdata/scratch" })'
-descriptor = "listing of 'pkg/container/testdata/scratch'"
-cost_tokens = 3
-cum_tokens = 1243
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/container/testdata/scratch"
-entries = ["test.txt"]
-
-[[batches]]
-position = 54
-key = 'Go(DeclNames { file: "pkg/container/executions_environment.go", chunk_index: 0 })'
-descriptor = "go decl names surface in pkg/container/executions_environment.go"
-cost_tokens = 14
-cum_tokens = 1257
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pkg/container/executions_environment.go"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pkg/container/executions_environment.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "pkg/model/testdata/invalid-job-name" })'
-descriptor = "listing of 'pkg/model/testdata/invalid-job-name'"
-cost_tokens = 23
-cum_tokens = 1280
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/model/testdata/invalid-job-name"
-entries = ["invalid-1.yml", "invalid-2.yml", "valid-1.yml", "valid-2.yml"]
-
-[[batches]]
-position = 56
-key = 'Go(DeclNames { file: "pkg/common/outbound_ip.go", chunk_index: 0 })'
-descriptor = "go decl names surface in pkg/common/outbound_ip.go"
-cost_tokens = 16
-cum_tokens = 1296
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pkg/common/outbound_ip.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pkg/common/outbound_ip.go"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 57
-key = 'Go(Decl { file: "pkg/common/outbound_ip.go", start_line: 13 })'
-descriptor = "go decl at pkg/common/outbound_ip.go:13"
-cost_tokens = 0
-cum_tokens = 1296
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pkg/common/outbound_ip.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "pkg/runner" })'
-descriptor = "listing of 'pkg/runner'"
-cost_tokens = 188
-cum_tokens = 1484
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/runner"
-entries = ["action.go", "action_cache.go", "action_cache_offline_mode.go", "action_cache_test.go", "action_composite.go", "action_test.go", "command.go", "command_test.go", "container_mock_test.go", "expression.go", "expression_test.go", "hashfiles", "job_executor.go", "job_executor_test.go", "local_repository_cache.go", "logger.go", "res", "reusable_workflow.go", "run_context.go", "run_context_test.go", "runner.go", "runner_test.go", "step.go", "step_action_local.go", "step_action_local_test.go", "step_action_remote.go", "step_action_remote_test.go", "step_docker.go", "step_docker_test.go", "step_factory.go", "step_factory_test.go", "step_run.go", "step_run_test.go", "step_test.go", "testdata"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "pkg/runner/hashfiles" })'
-descriptor = "listing of 'pkg/runner/hashfiles'"
-cost_tokens = 3
-cum_tokens = 1487
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/runner/hashfiles"
-entries = ["index.js"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "pkg/runner/res" })'
-descriptor = "listing of 'pkg/runner/res'"
-cost_tokens = 3
-cum_tokens = 1490
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/runner/res"
-entries = ["trampoline.js"]
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "pkg/runner/testdata" })'
-descriptor = "listing of 'pkg/runner/testdata'"
-cost_tokens = 829
-cum_tokens = 2319
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/runner/testdata"
-entries = [".github", "GITHUB_ENV-use-in-env-ctx", "GITHUB_STATE", "act-composite-env-test", "action-cache-v2-fetch-failure-is-job-error", "actions", "actions-environment-and-context-tests", "basic", "checkout", "commands", "composite-fail-with-output", "container-hostname", "defaults-run", "dir with spaces", "do-not-leak-step-env-in-composite", "docker-action-custom-path", "docker-action-host-env", "ensure-post-steps", "env-and-path", "environment-files", "environment-files-parser-bug", "environment-variables", "evalenv", "evalmatrix", "evalmatrix-merge-array", "evalmatrix-merge-map", "evalmatrixneeds", "evalmatrixneeds2", "fail", "if-env-act", "if-expressions", "input-from-cli", "inputs-via-env-context", "issue-104", "issue-1195", "issue-122", "issue-141", "issue-1595", "issue-597", "issue-598", "job-container", "job-container-invalid-credentials", "job-container-non-root", "job-needs-context-contains-result", "job-nil-step", "job-status-check", "local-action-docker-url", "local-action-dockerfile", "local-action-js", "local-action-via-composite-dockerfile", "local-remote-action-overrides", "localdockerimagetest_", "mask-values", "matrix", "matrix-exitcode", "matrix-include-exclude", "matrix-with-user-inclusions", "mysql-service-container-with-health-check", "networking", "nix-prepend-path", "no-panic-on-invalid-composite-action", "node", "non-existent-action", "outputs", "parallel", "path-handling", "post-step-failure-is-job-failure", "pull-request", "python", "remote-action-composite-action-ref", "remote-action-composite-js-pre-with-defaults", "remote-action-docker", "remote-action-docker-new-cache", "remote-action-js", "remote-action-js-node-user", "runs-on", "secrets", "services", "services-empty-image", "services-host-network", "services-with-container", "set-env-new-env-file-per-step", "set-env-step-env-override", "shells", "steps-context", "stepsummary", "uses-action-with-pre-and-post-step", "uses-and-run-in-one-step", "uses-composite", "uses-composite-check-for-input-collision", "uses-composite-check-for-input-in-if-uses", "uses-composite-check-for-input-shadowing", "uses-composite-with-error", "uses-composite-with-inputs", "uses-composite-with-pre-and-post-steps", "uses-docker-url", "uses-github-empty", "uses-github-full-sha", "uses-github-noref", "uses-github-path", "uses-github-root", "uses-github-short-sha", "uses-nested-composite", "uses-workflow", "uses-workflow-defaults", "windows-add-env", "windows-add-env-powershell-5", "windows-prepend-path", "windows-prepend-path-powershell-5", "windows-shell-cmd", "workdir", "workflow_call_inputs", "workflow_dispatch", "workflow_dispatch-scalar", "workflow_dispatch-scalar-composite-action", "workflow_dispatch_no_inputs_mapping"]
-
-[[batches]]
-position = 62
-key = 'Go(DeclNames { file: "cmd/dir.go", chunk_index: 0 })'
-descriptor = "go decl names surface in cmd/dir.go"
-cost_tokens = 34
-cum_tokens = 2353
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 63
-key = 'Go(Decl { file: "cmd/dir.go", start_line: 15 })'
-descriptor = "go decl at cmd/dir.go:15"
-cost_tokens = 0
-cum_tokens = 2353
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Go(Decl { file: "cmd/dir.go", start_line: 10 })'
-descriptor = "go decl at cmd/dir.go:10"
-cost_tokens = 9
-cum_tokens = 2362
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/dir.go"
-start = 10
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 65

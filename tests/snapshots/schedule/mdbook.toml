@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 10000
-cumulative_tokens = 9982
-batch_count = 214
+cumulative_tokens = 9983
+batch_count = 217
 
 [[batches]]
 position = 1
@@ -4566,28 +4566,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 213
-key = 'Markdown(ReadmeHeadline { file: "guide/src/guide/README.md" })'
-descriptor = "README headline in guide/src/guide/README.md"
-cost_tokens = 72
-cum_tokens = 9778
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "guide/src/guide/README.md"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
 key = 'Rust(EntryItem { file: "examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs", start_line: 49 })'
 descriptor = "entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49"
 cost_tokens = 204
-cum_tokens = 9982
+cum_tokens = 9910
 
 [batches.content]
 kind = "lines"
@@ -4599,3 +4581,155 @@ end = 62
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 214
+key = 'Rust(PubItemNames { file: "src/cmd/clean.rs" })'
+descriptor = "pub-item names surface in src/cmd/clean.rs"
+cost_tokens = 73
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 215
+key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 11 })'
+descriptor = "pub item at src/cmd/clean.rs:11"
+cost_tokens = 0
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 216
+key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 19 })'
+descriptor = "pub item at src/cmd/clean.rs:19"
+cost_tokens = 0
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
+key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 38 })'
+descriptor = "pub item at src/cmd/clean.rs:38"
+cost_tokens = 0
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd/clean.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"

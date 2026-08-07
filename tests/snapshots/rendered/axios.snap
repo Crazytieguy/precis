@@ -30,11 +30,9 @@ CLAUDE.md …
 CODE_OF_CONDUCT.md …
 COLLABORATOR_GUIDE.md
        1→# Collaborator Guide
-       2→
-       3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
+    …
        5→## Code of Conduct
-       6→
-       7→You are expected to have read the [Code of Conduct](./CODE_OF_CONDUCT.md) and to help enforce it. This community should be friendly and welcoming.
+    …
        9→## Triage Issues
     …
       16→## Answer Questions
@@ -291,7 +289,9 @@ lib/
                5→- Browser polyfills
                6→- Managing cookies
                7→- Parsing HTTP headers
-        ZlibHeaderTransformStream.js …
+        ZlibHeaderTransformStream.js
+            …
+              29→export default ZlibHeaderTransformStream;
         bind.js …
         buildURL.js …
         callbackify.js
@@ -378,9 +378,19 @@ lib/
             index.js
                 …
                    5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
+                   7→const DIGIT = '0123456789';
                 …
                   27→export default {
-                …
+                  28→  isNode: true,
+                  29→  classes: {
+                  30→    URLSearchParams,
+                  31→    FormData,
+                  32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
+                  33→  },
+                  34→  ALPHABET,
+                  35→  generateString,
+                  36→  protocols: ['http', 'https', 'file', 'data'],
+                  37→};
     utils.js
         …
          872→export default {

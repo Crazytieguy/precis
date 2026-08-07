@@ -443,84 +443,10 @@ entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-proces
 
 [[batches]]
 position = 20
-key = 'Markdown(HeadingsOutline { file: "docs/help-in-depth.md" })'
-descriptor = "headings outline in docs/help-in-depth.md"
-cost_tokens = 42
-cum_tokens = 833
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/help-in-depth.md"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
 key = 'Typescript(ExportNames { file: "index.js" })'
 descriptor = "export names surface in index.js"
 cost_tokens = 158
-cum_tokens = 991
+cum_tokens = 949
 
 [batches.content]
 kind = "lines"
@@ -550,11 +476,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Typescript(Export { file: "index.js", start_line: 17 })'
 descriptor = "export at index.js:17"
 cost_tokens = 0
-cum_tokens = 991
+cum_tokens = 949
 
 [batches.content]
 kind = "lines"
@@ -568,11 +494,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Typescript(ExportDoc { file: "index.js", start_line: 17 })'
 descriptor = "export doc at index.js:17"
 cost_tokens = 17
-cum_tokens = 1008
+cum_tokens = 966
 
 [batches.content]
 kind = "lines"
@@ -586,11 +512,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Typescript(ExportNames { file: "lib/help.js" })'
 descriptor = "export names surface in lib/help.js"
 cost_tokens = 43
-cum_tokens = 1051
+cum_tokens = 1009
 
 [batches.content]
 kind = "lines"
@@ -636,11 +562,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Typescript(Export { file: "lib/help.js", start_line: 12 })'
 descriptor = "export at lib/help.js:12"
 cost_tokens = 0
-cum_tokens = 1051
+cum_tokens = 1009
 
 [batches.content]
 kind = "lines"
@@ -662,11 +588,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Typescript(Export { file: "lib/help.js", start_line: 740 })'
 descriptor = "export at lib/help.js:740"
 cost_tokens = 0
-cum_tokens = 1051
+cum_tokens = 1009
 
 [batches.content]
 kind = "lines"
@@ -688,11 +614,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 181 })'
 descriptor = "export member at lib/option.js:3 member 181"
 cost_tokens = 11
-cum_tokens = 1062
+cum_tokens = 1020
 
 [batches.content]
 kind = "lines"
@@ -714,11 +640,11 @@ end = 182
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Typescript(ExportNames { file: "lib/command.js" })'
 descriptor = "export names surface in lib/command.js"
 cost_tokens = 53
-cum_tokens = 1115
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -764,11 +690,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Typescript(Export { file: "lib/command.js", start_line: 13 })'
 descriptor = "export at lib/command.js:13"
 cost_tokens = 0
-cum_tokens = 1115
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -790,11 +716,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Typescript(Export { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export at lib/command.js:2752"
 cost_tokens = 0
-cum_tokens = 1115
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -816,11 +742,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Typescript(ExportNames { file: "lib/error.js" })'
 descriptor = "export names surface in lib/error.js"
 cost_tokens = 53
-cum_tokens = 1168
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -866,11 +792,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Typescript(Export { file: "lib/error.js", start_line: 25 })'
 descriptor = "export at lib/error.js:25"
 cost_tokens = 11
-cum_tokens = 1179
+cum_tokens = 1137
 
 [batches.content]
 kind = "lines"
@@ -900,11 +826,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Typescript(Export { file: "lib/error.js", start_line: 4 })'
 descriptor = "export at lib/error.js:4"
 cost_tokens = 16
-cum_tokens = 1195
+cum_tokens = 1153
 
 [batches.content]
 kind = "lines"
@@ -934,101 +860,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 34
-key = 'Markdown(HeadingsOutline { file: "docs/options-in-depth.md" })'
-descriptor = "headings outline in docs/options-in-depth.md"
-cost_tokens = 69
-cum_tokens = 1264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/options-in-depth.md"
-start = 192
-end = 192
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 35
+position = 33
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 217 })'
 descriptor = "export member at lib/option.js:3 member 217"
 cost_tokens = 11
-cum_tokens = 1275
+cum_tokens = 1164
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +886,11 @@ end = 218
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 34
 key = 'Typescript(ExportNames { file: "lib/argument.js" })'
 descriptor = "export names surface in lib/argument.js"
 cost_tokens = 60
-cum_tokens = 1335
+cum_tokens = 1224
 
 [batches.content]
 kind = "lines"
@@ -1108,11 +944,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 35
 key = 'Typescript(Export { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export at lib/argument.js:143"
 cost_tokens = 0
-cum_tokens = 1335
+cum_tokens = 1224
 
 [batches.content]
 kind = "lines"
@@ -1134,11 +970,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Typescript(Export { file: "lib/argument.js", start_line: 3 })'
 descriptor = "export at lib/argument.js:3"
 cost_tokens = 96
-cum_tokens = 1431
+cum_tokens = 1320
 
 [batches.content]
 kind = "lines"
@@ -1280,11 +1116,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 25, body_start_line: 31 })'
 descriptor = "export body at lib/error.js:25 body 31"
 cost_tokens = 57
-cum_tokens = 1488
+cum_tokens = 1377
 
 [batches.content]
 kind = "lines"
@@ -1298,11 +1134,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 243 })'
 descriptor = "export member at lib/option.js:3 member 243"
 cost_tokens = 11
-cum_tokens = 1499
+cum_tokens = 1388
 
 [batches.content]
 kind = "lines"
@@ -1324,11 +1160,11 @@ end = 244
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 4 })'
 descriptor = "export doc at lib/error.js:4"
 cost_tokens = 17
-cum_tokens = 1516
+cum_tokens = 1405
 
 [batches.content]
 kind = "lines"
@@ -1342,11 +1178,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Typescript(ExportBody { file: "lib/help.js", start_line: 740, body_start_line: 741 })'
 descriptor = "export body at lib/help.js:740 body 741"
 cost_tokens = 52
-cum_tokens = 1568
+cum_tokens = 1457
 
 [batches.content]
 kind = "lines"
@@ -1360,11 +1196,11 @@ end = 743
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
 descriptor = "export body at lib/argument.js:143 body 144"
 cost_tokens = 55
-cum_tokens = 1623
+cum_tokens = 1512
 
 [batches.content]
 kind = "lines"
@@ -1378,11 +1214,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
 descriptor = "export doc at lib/error.js:25"
 cost_tokens = 20
-cum_tokens = 1643
+cum_tokens = 1532
 
 [batches.content]
 kind = "lines"
@@ -1396,11 +1232,85 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
+key = 'Markdown(HeadingsOutline { file: "docs/help-in-depth.md" })'
+descriptor = "headings outline in docs/help-in-depth.md"
+cost_tokens = 42
+cum_tokens = 1574
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/help-in-depth.md"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 44
 key = 'Typescript(Imports { file: "lib/argument.js" })'
 descriptor = "imports in lib/argument.js"
 cost_tokens = 14
-cum_tokens = 1657
+cum_tokens = 1588
 
 [batches.content]
 kind = "lines"
@@ -1414,11 +1324,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Typescript(Imports { file: "lib/option.js" })'
 descriptor = "imports in lib/option.js"
 cost_tokens = 14
-cum_tokens = 1671
+cum_tokens = 1602
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +1342,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
 descriptor = "export member at lib/option.js:3 member 256"
 cost_tokens = 11
-cum_tokens = 1682
+cum_tokens = 1613
 
 [batches.content]
 kind = "lines"
@@ -1458,11 +1368,11 @@ end = 257
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Typescript(ExportMemberDoc { file: "lib/option.js", start_line: 268, member_start_line: 272 })'
 descriptor = "export member doc at lib/option.js:268 member 272"
 cost_tokens = 23
-cum_tokens = 1705
+cum_tokens = 1636
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1386,11 @@ end = 271
 kind = "full"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Typescript(Imports { file: "lib/help.js" })'
 descriptor = "imports in lib/help.js"
 cost_tokens = 17
-cum_tokens = 1722
+cum_tokens = 1653
 
 [batches.content]
 kind = "lines"
@@ -1494,11 +1404,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Typescript(ExportMemberNames { file: "lib/command.js", start_line: 13 })'
 descriptor = "export member names at lib/command.js:13"
 cost_tokens = 703
-cum_tokens = 2425
+cum_tokens = 2356
 
 [batches.content]
 kind = "lines"
@@ -2089,11 +1999,11 @@ kind = "truncated"
 pattern = "^[^(]+"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 81
-cum_tokens = 2506
+cum_tokens = 2437
 
 [batches.content]
 kind = "lines"
@@ -2107,11 +2017,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 52
+position = 51
 key = 'Typescript(ExportNames { file: "esm.mjs" })'
 descriptor = "export names surface in esm.mjs"
 cost_tokens = 11
-cum_tokens = 2517
+cum_tokens = 2448
 
 [batches.content]
 kind = "lines"
@@ -2133,11 +2043,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Typescript(Imports { file: "esm.mjs" })'
 descriptor = "imports in esm.mjs"
 cost_tokens = 11
-cum_tokens = 2528
+cum_tokens = 2459
 
 [batches.content]
 kind = "lines"
@@ -2151,11 +2061,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Typescript(Export { file: "esm.mjs", start_line: 4 })'
 descriptor = "export at esm.mjs:4"
 cost_tokens = 97
-cum_tokens = 2625
+cum_tokens = 2556
 
 [batches.content]
 kind = "lines"
@@ -2169,11 +2079,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 149
-cum_tokens = 2774
+cum_tokens = 2705
 
 [batches.content]
 kind = "lines"
@@ -2195,11 +2105,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 282
-cum_tokens = 3056
+cum_tokens = 2987
 
 [batches.content]
 kind = "lines"
@@ -2227,6 +2137,96 @@ end = 77
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 56
+key = 'Markdown(HeadingsOutline { file: "docs/options-in-depth.md" })'
+descriptor = "headings outline in docs/options-in-depth.md"
+cost_tokens = 69
+cum_tokens = 3056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/options-in-depth.md"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 57

@@ -171,60 +171,60 @@ Score(3000)=0.744 I=0.933 C=0.594 ns_rows≤3K=22/55 (reached=14 partial=0 missi
 | ns | 5558 |  | 405 | src/grid.config.js: the services and images layouts plus the export block | 3.12 | 3.11 | 0.635 |
 | walker |  | 5573 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.636 |
 | walker |  | 5692 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.636 |
-| walker |  | 5729 | 37 | headings outline in SECURITY.md |  |  | 0.636 |
-| walker |  | 5729 | 0 | SECURITY.md section #0 |  |  | 0.636 |
-| walker |  | 5756 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.636 |
-| walker |  | 5792 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.636 |
-| walker |  | 5819 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.636 |
-| walker |  | 5888 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.645 |
+| walker |  | 5719 | 27 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.636 |
+| walker |  | 5755 | 36 | export body at src/screen.js:18 body 121 |  |  | 0.636 |
+| walker |  | 5782 | 27 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.636 |
+| walker |  | 5851 | 69 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.636 |
+| walker |  | 5888 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.645 |
 | ns | 5888 |  | 330 | src/dockerUtil.js: complete method roster of the dockerode wrapper | 4.1 |  | 0.645 |
-| walker |  | 5925 | 37 | export body at src/screen.js:18 body 115 |  |  | 0.645 |
-| walker |  | 6109 | 184 | module item body at index.js:47 body 48 |  |  | 0.645 |
-| walker |  | 6126 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.650 |
+| walker |  | 6072 | 184 | module item body at index.js:47 body 48 |  |  | 0.645 |
+| walker |  | 6089 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.650 |
+| walker |  | 6155 | 66 | package identity in docs/package.json |  |  | 0.650 |
+| walker |  | 6162 | 7 | plaintext config .nvmrc |  |  | 0.650 |
 | ns | 6168 |  | 280 | src/dockerUtil.js: constructor — connection config and containerFilters parsing | 4.2 | 4.1 | 0.635 |
-| walker |  | 6192 | 66 | package identity in docs/package.json |  |  | 0.635 |
-| walker |  | 6199 | 7 | plaintext config .nvmrc |  |  | 0.635 |
-| walker |  | 6234 | 35 | imports in src/assetsLoader.js |  |  | 0.637 |
-| walker |  | 6247 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.637 |
-| walker |  | 6262 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.637 |
-| walker |  | 6278 | 16 | listing of 'docs/src/assets' |  |  | 0.637 |
-| walker |  | 6283 | 5 | listing of 'docs/src/assets/css' |  |  | 0.637 |
-| ns | 6318 |  | 150 | src/dockerUtil.js: getInfo() — the host fields surfaced to the status widgets | 4.3 | 4.1 | 0.630 |
-| walker |  | 6337 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.630 |
-| walker |  | 6354 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.635 |
-| walker |  | 6371 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.640 |
+| walker |  | 6197 | 35 | imports in src/assetsLoader.js |  |  | 0.637 |
+| walker |  | 6210 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.637 |
+| walker |  | 6225 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.637 |
+| walker |  | 6241 | 16 | listing of 'docs/src/assets' |  |  | 0.637 |
+| walker |  | 6246 | 5 | listing of 'docs/src/assets/css' |  |  | 0.637 |
+| walker |  | 6263 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.642 |
+| walker |  | 6300 | 37 | headings outline in SECURITY.md |  |  | 0.642 |
+| walker |  | 6300 | 0 | SECURITY.md section #0 |  |  | 0.642 |
+| walker |  | 6317 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.647 |
+| ns | 6318 |  | 150 | src/dockerUtil.js: getInfo() — the host fields surfaced to the status widgets | 4.3 | 4.1 | 0.640 |
 | ns | 6433 |  | 115 | src/dockerUtil.js: log streaming options for containers and services | 4.4 | 4.1 | 0.633 |
-| walker |  | 6557 | 186 | export body at src/baseWidget.js:4 body 5 |  |  | 0.634 |
+| walker |  | 6503 | 186 | export body at src/baseWidget.js:4 body 5 |  |  | 0.634 |
 | ns | 6660 |  | 227 | src/baseWidget.js — the mixin every widget and hook extends | 5.1 |  | 0.644 |
 | ns | 6892 |  | 232 | src/widgetsTemplates/base.hook.template.js — the hook base class | 5.2 |  | 0.631 |
+| walker |  | 7085 | 582 | README.md section #3 |  |  | 0.631 |
 | ns | 7125 |  | 233 | src/widgetsTemplates/list.widget.template.js: complete method roster | 5.3 |  | 0.626 |
-| walker |  | 7139 | 582 | README.md section #3 |  |  | 0.626 |
-| walker |  | 7374 | 235 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.643 |
+| walker |  | 7320 | 235 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.643 |
+| walker |  | 7383 | 63 | README headline in docs/README.md |  |  | 0.643 |
+| walker |  | 7401 | 18 | headings outline in docs/README.md |  |  | 0.643 |
 | ns | 7413 |  | 288 | src/widgetsTemplates/info.widget.template.js and logs.widget.template.js: method rosters | 5.4 |  | 0.646 |
-| walker |  | 7437 | 63 | README headline in docs/README.md |  |  | 0.646 |
-| walker |  | 7455 | 18 | headings outline in docs/README.md |  |  | 0.646 |
-| walker |  | 7480 | 25 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.646 |
-| walker |  | 7531 | 51 | export body at src/screen.js:18 body 108 |  |  | 0.646 |
+| walker |  | 7426 | 25 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.646 |
+| walker |  | 7477 | 51 | export body at src/screen.js:18 body 108 |  |  | 0.646 |
+| walker |  | 7504 | 27 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.646 |
+| walker |  | 7532 | 28 | imports in src/themes/theme.selector.js |  |  | 0.646 |
+| walker |  | 7548 | 16 | docs/README.md section #1 |  |  | 0.646 |
 | ns | 7574 |  | 161 | src/widgetsTemplates/help.widget.template.js: method roster around the help text | 5.5 |  | 0.645 |
-| walker |  | 7605 | 74 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.645 |
-| walker |  | 7605 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.645 |
-| walker |  | 7632 | 27 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.645 |
-| walker |  | 7660 | 28 | imports in src/themes/theme.selector.js |  |  | 0.645 |
-| walker |  | 7676 | 16 | docs/README.md section #1 |  |  | 0.645 |
-| walker |  | 7712 | 36 | headings outline in .github/PULL_REQUEST_TEMPLATE.md |  |  | 0.645 |
-| walker |  | 7712 | 0 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.645 |
-| walker |  | 7766 | 54 | export body at src/screen.js:18 body 80 |  |  | 0.645 |
-| walker |  | 7780 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 119 |  |  | 0.647 |
-| walker |  | 7811 | 31 | package dev/peer dependencies in package.json |  |  | 0.647 |
-| walker |  | 7852 | 41 | docs/README.md section #0 |  |  | 0.647 |
-| walker |  | 7888 | 36 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.649 |
+| walker |  | 7602 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.645 |
+| walker |  | 7638 | 36 | headings outline in .github/PULL_REQUEST_TEMPLATE.md |  |  | 0.645 |
+| walker |  | 7638 | 0 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.645 |
+| walker |  | 7692 | 54 | export body at src/screen.js:18 body 80 |  |  | 0.645 |
+| walker |  | 7706 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 119 |  |  | 0.647 |
+| walker |  | 7737 | 31 | package dev/peer dependencies in package.json |  |  | 0.647 |
+| walker |  | 7778 | 41 | docs/README.md section #0 |  |  | 0.647 |
+| walker |  | 7814 | 36 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.649 |
+| walker |  | 7850 | 36 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.649 |
+| walker |  | 7892 | 42 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.649 |
 | ns | 7923 |  | 349 | hooks/: complete method rosters of all four hooks | 6.1 |  | 0.633 |
-| walker |  | 7924 | 36 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.633 |
-| walker |  | 7966 | 42 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.633 |
-| ns | 8132 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.623 |
-| walker |  | 8160 | 194 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.638 |
-| walker |  | 8174 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.639 |
-| walker |  | 8190 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.639 |
+| walker |  | 8086 | 194 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.648 |
+| walker |  | 8100 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.649 |
+| walker |  | 8116 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.649 |
+| ns | 8132 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.639 |
+| walker |  | 8190 | 74 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.639 |
+| walker |  | 8190 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.639 |
 | walker |  | 8232 | 42 | export body at src/dockerUtil.js:5 body 188 |  |  | 0.639 |
 | walker |  | 8305 | 73 | export body at src/screen.js:18 body 72 |  |  | 0.641 |
 | walker |  | 8357 | 52 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.643 |

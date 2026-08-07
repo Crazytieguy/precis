@@ -57,30 +57,30 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 (reached=8 partial=0 missin
 | walker |  | 914 | 21 | go decl names surface in cmd/platforms.go |  |  | 0.659 |
 | walker |  | 914 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.659 |
 | ns | 934 |  | 115 | cmd.Execute: CLI entry | 2.1 |  | 0.626 |
-| walker |  | 979 | 65 | headings outline in IMAGES.md |  |  | 0.626 |
-| walker |  | 1001 | 22 | listing of '.github' |  |  | 0.626 |
-| walker |  | 1026 | 25 | listing of '.github/workflows' |  |  | 0.627 |
-| walker |  | 1039 | 13 | go decl names surface in pkg/model/job_context.go |  |  | 0.627 |
-| ns | 1146 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.597 |
-| walker |  | 1199 | 160 | listing of 'pkg/container' |  |  | 0.601 |
-| walker |  | 1237 | 38 | listing of 'pkg/container/testdata' |  |  | 0.601 |
-| walker |  | 1240 | 3 | listing of 'pkg/container/testdata/docker-pull-options' |  |  | 0.601 |
-| walker |  | 1243 | 3 | listing of 'pkg/container/testdata/scratch' |  |  | 0.601 |
-| walker |  | 1257 | 14 | go decl names surface in pkg/container/executions_environment.go |  |  | 0.601 |
-| walker |  | 1280 | 23 | listing of 'pkg/model/testdata/invalid-job-name' |  |  | 0.601 |
-| walker |  | 1296 | 16 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.601 |
-| walker |  | 1296 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.601 |
-| ns | 1447 |  | 301 | Command-local flags: names and shorthands | 2.3 |  | 0.536 |
-| walker |  | 1484 | 188 | listing of 'pkg/runner' |  |  | 0.681 |
-| walker |  | 1487 | 3 | listing of 'pkg/runner/hashfiles' |  |  | 0.681 |
-| walker |  | 1490 | 3 | listing of 'pkg/runner/res' |  |  | 0.681 |
+| walker |  | 936 | 22 | listing of '.github' |  |  | 0.626 |
+| walker |  | 961 | 25 | listing of '.github/workflows' |  |  | 0.627 |
+| walker |  | 974 | 13 | go decl names surface in pkg/model/job_context.go |  |  | 0.627 |
+| walker |  | 1134 | 160 | listing of 'pkg/container' |  |  | 0.630 |
+| ns | 1146 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.601 |
+| walker |  | 1172 | 38 | listing of 'pkg/container/testdata' |  |  | 0.601 |
+| walker |  | 1175 | 3 | listing of 'pkg/container/testdata/docker-pull-options' |  |  | 0.601 |
+| walker |  | 1178 | 3 | listing of 'pkg/container/testdata/scratch' |  |  | 0.601 |
+| walker |  | 1192 | 14 | go decl names surface in pkg/container/executions_environment.go |  |  | 0.601 |
+| walker |  | 1215 | 23 | listing of 'pkg/model/testdata/invalid-job-name' |  |  | 0.601 |
+| walker |  | 1231 | 16 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.601 |
+| walker |  | 1231 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.601 |
+| walker |  | 1419 | 188 | listing of 'pkg/runner' |  |  | 0.763 |
+| walker |  | 1422 | 3 | listing of 'pkg/runner/hashfiles' |  |  | 0.763 |
+| walker |  | 1425 | 3 | listing of 'pkg/runner/res' |  |  | 0.763 |
+| ns | 1447 |  | 301 | Command-local flags: names and shorthands | 2.3 |  | 0.681 |
 | ns | 1797 |  | 350 | Persistent flags: names and shorthands | 2.4 |  | 0.613 |
 | ns | 1943 |  | 146 | Input struct + path accessor roster | 2.5 |  | 0.594 |
 | ns | 2221 |  | 278 | Config-file discovery: .actrc locations | 2.6 |  | 0.563 |
-| walker |  | 2319 | 829 | listing of 'pkg/runner/testdata' |  |  | 0.563 |
-| walker |  | 2353 | 34 | go decl names surface in cmd/dir.go |  |  | 0.563 |
-| walker |  | 2353 | 0 | go decl at cmd/dir.go:15 |  |  | 0.563 |
-| walker |  | 2362 | 9 | go decl at cmd/dir.go:10 |  |  | 0.564 |
+| walker |  | 2254 | 829 | listing of 'pkg/runner/testdata' |  |  | 0.563 |
+| walker |  | 2288 | 34 | go decl names surface in cmd/dir.go |  |  | 0.563 |
+| walker |  | 2288 | 0 | go decl at cmd/dir.go:15 |  |  | 0.563 |
+| walker |  | 2297 | 9 | go decl at cmd/dir.go:10 |  |  | 0.564 |
+| walker |  | 2362 | 65 | headings outline in IMAGES.md |  |  | 0.564 |
 | walker |  | 2390 | 28 | README.md section #2 |  |  | 0.564 |
 | walker |  | 2395 | 5 | go package + imports in pkg/model/job_context.go |  |  | 0.564 |
 | walker |  | 2443 | 48 | go decl body at main.go:13 |  |  | 0.664 |
