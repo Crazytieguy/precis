@@ -77,16 +77,16 @@ Score(3000)=0.550 I=0.824 C=0.367 ns_rows≤3K=24/56 (reached=7 partial=2 missin
 | walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.516 |
 | walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.516 |
 | walker |  | 3319 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.516 |
-| walker |  | 3330 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.516 |
-| walker |  | 3342 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.516 |
 | ns | 3532 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.496 |
-| walker |  | 3676 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.496 |
+| walker |  | 3653 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.496 |
 | ns | 3851 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.465 |
-| walker |  | 3960 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.465 |
+| walker |  | 3937 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.465 |
 | ns | 4044 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.454 |
 | ns | 4190 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.449 |
+| walker |  | 4464 | 527 | listing of 'tests/ui' |  |  | 0.449 |
+| walker |  | 4475 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.449 |
 | ns | 4482 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.440 |
-| walker |  | 4487 | 527 | listing of 'tests/ui' |  |  | 0.440 |
+| walker |  | 4487 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.440 |
 | walker |  | 4538 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.440 |
 | walker |  | 4591 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.440 |
 | ns | 4651 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.432 |

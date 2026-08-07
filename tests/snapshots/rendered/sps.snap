@@ -99,7 +99,6 @@ sps-common/
               15→pub struct Config {
             …
              199→pub fn load_config() -> Result<Config> {
-             200→    Config::load()
             …
         dependency/
             definition.rs …
@@ -116,7 +115,14 @@ sps-common/
             requirement.rs …
             resolver.rs …
         error.rs …
-        formulary.rs …
+        formulary.rs
+            …
+              11→#[derive()]
+              12→pub struct Formulary {
+              13→    cache: Cache,
+              14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
+              15→}
+            …
         keg.rs
             …
               12→#[derive(Debug, Clone, PartialEq, Eq)]
@@ -230,27 +236,9 @@ sps-core/
                       20→    config: &Config,
                       21→    client: &reqwest::Client,
                       22→) -> Result<PathBuf> {
-                      23→    if has_bottle_for_current_platform(formula) {
-                      24→        exec::download_bottle(formula, config, client).await
-                      25→    } else {
-                      26→        Err(SpsError::Generic(format!(
-                      27→            "No bottle available for {} on this platform",
-                      28→            formula.name()
-                      29→        )))
-                      30→    }
                     …
                       33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
                       34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
-                      35→    let result = crate::install::bottle::exec::get_bottle_for_platform(formula);
-                      36→    debug!(
-                      37→        "has_bottle_for_current_platform check for '{}': {:?}",
-                      38→        formula.name(),
-                      39→        result.is_ok()
-                      40→    );
-                      41→    if let Err(e) = &result {
-                      42→        debug!("Reason for no bottle: {}", e);
-                      43→    }
-                      44→    result.is_ok()
                     …
                      159→pub fn get_formula_cellar_path(formula: &Formula, config: &Config) -> PathBuf {
                      160→    // Use Config method

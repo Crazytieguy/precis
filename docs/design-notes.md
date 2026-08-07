@@ -986,6 +986,29 @@ Measured-dead this session (don't re-test without new evidence):
   1 flat, adding ClassBody/StructFieldGroup −0.0022 (field rosters are
   surface-like). root.go entry treatment retried on the new frontier:
   still inert.
+- **Token-denominated train pressure — measured dead (2026-08-06)**:
+  denominating the free allowance and the damp in tokens under the root
+  instead of batch count (`1/(1 + K·max(0, tokens/UNIT − FREE))`), so a
+  train's free ration is a share of window rather than a count of
+  purchases. UNIT=110 → 3000 −0.0023, B=1000 −0.0023, 2080 −0.0033;
+  UNIT=75 the same shape. The premise held and did not pay: p-queue's
+  cheap doc slices ride free as predicted (headline unmoved at both
+  settings), but express — the fat-body carrier the reshape was aimed
+  at — *lost* 0.070 at 2080, and a 14-fixture carrier sweep reading
+  +0.0004 at 3000 mispredicted the corpus grid by 0.0027. Repricing
+  every train's ration at once is not a carrier-local reshape; screen
+  this family on the full grid or not at all.
+- **Redirect-target-aware pressure gate (2026-08-06)**: the gate now
+  counts a train as breadth worth redirecting to by its *unbought* pool
+  members — non-orientation trains until first purchase (as before),
+  orientation chains for as long as their sections stay unbought. This
+  retried the boundary recorded above as "measured harmful:
+  mitt/go-multierror" and the harm did NOT reproduce (mitt unmoved,
+  go-multierror +0.031 at 3000): the old kill was pressure applied with
+  nothing to redirect to, not pressure in small repos per se. Corpus
+  effect is nonetheless immaterial (+0.0001 at 3000, no budget down) —
+  go-multierror's README-late mass is nearly the entire reachable win,
+  offset by log −0.010 (dominant-file dive pressured through the tail).
 - **Ops-config class boost (oracle-gap driven)**: the NS-aware oracle
   buys more config/manifest batches ≤3K than the walker (382 vs 282;
   the only class where oracle > walker — from classifying

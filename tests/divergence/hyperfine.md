@@ -63,11 +63,11 @@ Score(3000)=0.695 I=0.900 C=0.537 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 1241 | 28 | pub-item names surface in src/error.rs |  |  | 0.460 |
 | walker |  | 1256 | 15 | pub-item doc lede at src/timer/mod.rs:42 |  |  | 0.460 |
 | walker |  | 1384 | 128 | pub item at src/export/mod.rs:28 |  |  | 0.462 |
-| walker |  | 1401 | 17 | pub-item doc lede at src/export/mod.rs:28 |  |  | 0.463 |
-| walker |  | 1569 | 168 | [package] in Cargo.toml |  |  | 0.753 |
-| walker |  | 1584 | 15 | pub-item doc lede at src/timer/mod.rs:83 |  |  | 0.753 |
-| walker |  | 1597 | 13 | pub-item doc lede at src/benchmark/mod.rs:32 |  |  | 0.753 |
-| walker |  | 1617 | 20 | listing of 'tests' |  |  | 0.769 |
+| walker |  | 1552 | 168 | [package] in Cargo.toml |  |  | 0.752 |
+| walker |  | 1567 | 15 | pub-item doc lede at src/timer/mod.rs:83 |  |  | 0.752 |
+| walker |  | 1580 | 13 | pub-item doc lede at src/benchmark/mod.rs:32 |  |  | 0.752 |
+| walker |  | 1600 | 20 | listing of 'tests' |  |  | 0.769 |
+| walker |  | 1617 | 17 | pub-item doc lede at src/export/mod.rs:28 |  |  | 0.769 |
 | walker |  | 1651 | 34 | pub-item names surface in src/command.rs |  |  | 0.769 |
 | walker |  | 1651 | 0 | pub item at src/command.rs:134 |  |  | 0.769 |
 | walker |  | 1672 | 21 | pub item at src/export/csv.rs:13 |  |  | 0.769 |

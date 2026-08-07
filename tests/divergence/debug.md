@@ -79,62 +79,62 @@ Score(3000)=0.625 I=0.828 C=0.472 ns_rows≤3K=21/54 (reached=11 partial=0 missi
 | walker |  | 3971 | 0 | export at src/browser.js:200 |  |  | 0.682 |
 | walker |  | 3971 | 0 | export at src/browser.js:219 |  |  | 0.682 |
 | ns | 3974 |  | 231 | README: browser build, `localStorage.debug`, and the Chromium Verbose caveat | 3.14 |  | 0.666 |
-| walker |  | 3985 | 14 | export body at src/common.js:7 body 117 |  |  | 0.666 |
-| walker |  | 3997 | 12 | export body at src/common.js:7 body 118 |  |  | 0.666 |
-| walker |  | 4011 | 14 | export body at src/common.js:7 body 193 |  |  | 0.666 |
-| walker |  | 4023 | 12 | export body at src/common.js:7 body 194 |  |  | 0.666 |
-| walker |  | 4035 | 12 | export body at src/common.js:7 body 195 |  |  | 0.666 |
-| walker |  | 4047 | 12 | export body at src/common.js:7 body 196 |  |  | 0.666 |
-| walker |  | 4061 | 14 | export body at src/common.js:7 body 224 |  |  | 0.666 |
 | ns | 4067 |  | 93 | README: setting `DEBUG` on Windows (CMD and PowerShell) | 3.15 |  | 0.655 |
-| walker |  | 4076 | 15 | export body at src/common.js:7 body 219 |  |  | 0.655 |
-| walker |  | 4093 | 17 | export body at src/common.js:7 body 141 |  |  | 0.655 |
-| walker |  | 4118 | 25 | export body at src/common.js:7 body 120 |  |  | 0.655 |
-| walker |  | 4149 | 31 | export body at src/common.js:7 body 142 |  |  | 0.655 |
-| ns | 4167 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.657 |
-| walker |  | 4247 | 98 | export at src/browser.js:12 |  |  | 0.659 |
-| walker |  | 4282 | 35 | export body at src/common.js:7 body 220 |  |  | 0.659 |
-| walker |  | 4320 | 38 | export body at src/common.js:7 body 284 |  |  | 0.659 |
-| walker |  | 4361 | 41 | export body at src/common.js:7 body 273 |  |  | 0.659 |
-| ns | 4362 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.670 |
-| walker |  | 4413 | 52 | export body at src/common.js:7 body 150 |  |  | 0.670 |
-| walker |  | 4471 | 58 | export body at src/common.js:7 body 169 |  |  | 0.670 |
-| ns | 4477 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.658 |
-| walker |  | 4537 | 66 | export body at src/common.js:7 body 234 |  |  | 0.658 |
-| walker |  | 4613 | 76 | export body at src/common.js:7 body 175 |  |  | 0.659 |
-| walker |  | 4701 | 88 | export body at src/common.js:7 body 8 |  |  | 0.676 |
-| walker |  | 4793 | 92 | export body at src/common.js:7 body 41 |  |  | 0.673 |
-| ns | 4793 |  | 316 | test.js: header plus every `describe`/`it` title | 4.2 |  | 0.673 |
-| ns | 4971 |  | 178 | test.node.js: the node-only suite and its sinon harness | 4.3 |  | 0.658 |
-| walker |  | 5059 | 266 | README.md section #12 |  |  | 0.684 |
-| ns | 5115 |  | 144 | karma.conf.js: frameworks and the browser test file set | 4.4 |  | 0.673 |
-| walker |  | 5165 | 106 | export body at src/browser.js:200 body 201 |  |  | 0.673 |
-| walker |  | 5191 | 26 | export doc at src/browser.js:7 |  |  | 0.682 |
-| ns | 5247 |  | 132 | .travis.yml in full — the CI matrix | 4.5 |  | 0.691 |
-| walker |  | 5300 | 109 | export body at src/common.js:7 body 42 |  |  | 0.692 |
-| walker |  | 5326 | 26 | imports in src/node.js |  |  | 0.692 |
-| walker |  | 5447 | 121 | export body at src/common.js:7 body 250 |  |  | 0.694 |
-| walker |  | 5483 | 36 | export doc at src/browser.js:149 |  |  | 0.694 |
-| ns | 5534 |  | 287 | karma.conf.js: launcher, preprocessors and run mode | 4.6 | 4.4 | 0.670 |
-| walker |  | 5684 | 201 | export names surface in src/node.js |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:12 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:27 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:155 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:167 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:193 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:203 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:220 |  |  | 0.692 |
-| walker |  | 5684 | 0 | export at src/node.js:231 |  |  | 0.692 |
-| walker |  | 5707 | 23 | export body at src/node.js:193 body 194 |  |  | 0.692 |
-| ns | 5733 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.696 |
-| walker |  | 5754 | 47 | export at src/node.js:18 |  |  | 0.700 |
-| walker |  | 5793 | 39 | export body at src/node.js:155 body 156 |  |  | 0.701 |
-| walker |  | 5808 | 15 | export doc at src/node.js:27 |  |  | 0.701 |
-| walker |  | 5897 | 89 | export body at src/node.js:203 body 204 |  |  | 0.701 |
-| walker |  | 5921 | 24 | export doc at src/node.js:12 |  |  | 0.710 |
-| walker |  | 5950 | 29 | export doc at src/node.js:155 |  |  | 0.710 |
-| ns | 5951 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.691 |
-| walker |  | 5982 | 32 | export doc at src/node.js:193 |  |  | 0.691 |
+| walker |  | 4069 | 98 | export at src/browser.js:12 |  |  | 0.657 |
+| ns | 4167 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.658 |
+| walker |  | 4335 | 266 | README.md section #12 |  |  | 0.689 |
+| ns | 4362 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.697 |
+| walker |  | 4441 | 106 | export body at src/browser.js:200 body 201 |  |  | 0.698 |
+| walker |  | 4467 | 26 | export doc at src/browser.js:7 |  |  | 0.708 |
+| ns | 4477 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.694 |
+| walker |  | 4493 | 26 | imports in src/node.js |  |  | 0.695 |
+| walker |  | 4529 | 36 | export doc at src/browser.js:149 |  |  | 0.695 |
+| walker |  | 4730 | 201 | export names surface in src/node.js |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:12 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:27 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:155 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:167 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:193 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:203 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:220 |  |  | 0.721 |
+| walker |  | 4730 | 0 | export at src/node.js:231 |  |  | 0.721 |
+| walker |  | 4744 | 14 | export body at src/common.js:7 body 117 |  |  | 0.721 |
+| walker |  | 4756 | 12 | export body at src/common.js:7 body 118 |  |  | 0.721 |
+| walker |  | 4770 | 14 | export body at src/common.js:7 body 193 |  |  | 0.721 |
+| walker |  | 4782 | 12 | export body at src/common.js:7 body 194 |  |  | 0.721 |
+| ns | 4793 |  | 316 | test.js: header plus every `describe`/`it` title | 4.2 |  | 0.700 |
+| walker |  | 4794 | 12 | export body at src/common.js:7 body 195 |  |  | 0.700 |
+| walker |  | 4806 | 12 | export body at src/common.js:7 body 196 |  |  | 0.700 |
+| walker |  | 4820 | 14 | export body at src/common.js:7 body 224 |  |  | 0.700 |
+| walker |  | 4835 | 15 | export body at src/common.js:7 body 219 |  |  | 0.700 |
+| walker |  | 4852 | 17 | export body at src/common.js:7 body 141 |  |  | 0.701 |
+| walker |  | 4875 | 23 | export body at src/node.js:193 body 194 |  |  | 0.701 |
+| walker |  | 4900 | 25 | export body at src/common.js:7 body 120 |  |  | 0.701 |
+| walker |  | 4931 | 31 | export body at src/common.js:7 body 142 |  |  | 0.701 |
+| walker |  | 4966 | 35 | export body at src/common.js:7 body 220 |  |  | 0.701 |
+| ns | 4971 |  | 178 | test.node.js: the node-only suite and its sinon harness | 4.3 |  | 0.685 |
+| walker |  | 5013 | 47 | export at src/node.js:18 |  |  | 0.690 |
+| walker |  | 5051 | 38 | export body at src/common.js:7 body 284 |  |  | 0.690 |
+| walker |  | 5090 | 39 | export body at src/node.js:155 body 156 |  |  | 0.690 |
+| ns | 5115 |  | 144 | karma.conf.js: frameworks and the browser test file set | 4.4 |  | 0.678 |
+| walker |  | 5131 | 41 | export body at src/common.js:7 body 273 |  |  | 0.679 |
+| walker |  | 5183 | 52 | export body at src/common.js:7 body 150 |  |  | 0.679 |
+| walker |  | 5241 | 58 | export body at src/common.js:7 body 169 |  |  | 0.679 |
+| ns | 5247 |  | 132 | .travis.yml in full — the CI matrix | 4.5 |  | 0.688 |
+| walker |  | 5256 | 15 | export doc at src/node.js:27 |  |  | 0.688 |
+| walker |  | 5322 | 66 | export body at src/common.js:7 body 234 |  |  | 0.688 |
+| walker |  | 5398 | 76 | export body at src/common.js:7 body 175 |  |  | 0.690 |
+| walker |  | 5486 | 88 | export body at src/common.js:7 body 8 |  |  | 0.704 |
+| ns | 5534 |  | 287 | karma.conf.js: launcher, preprocessors and run mode | 4.6 | 4.4 | 0.680 |
+| walker |  | 5575 | 89 | export body at src/node.js:203 body 204 |  |  | 0.681 |
+| walker |  | 5667 | 92 | export body at src/common.js:7 body 41 |  |  | 0.695 |
+| walker |  | 5691 | 24 | export doc at src/node.js:12 |  |  | 0.704 |
+| walker |  | 5720 | 29 | export doc at src/node.js:155 |  |  | 0.704 |
+| ns | 5733 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.707 |
+| walker |  | 5829 | 109 | export body at src/common.js:7 body 42 |  |  | 0.708 |
+| walker |  | 5861 | 32 | export doc at src/node.js:193 |  |  | 0.708 |
+| ns | 5951 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.690 |
+| walker |  | 5982 | 121 | export body at src/common.js:7 body 250 |  |  | 0.691 |
 | walker |  | 6019 | 37 | export doc at src/node.js:167 |  |  | 0.691 |
 | walker |  | 6057 | 38 | export doc at src/common.js:7 |  |  | 0.705 |
 | walker |  | 6101 | 44 | export doc at src/browser.js:200 |  |  | 0.705 |

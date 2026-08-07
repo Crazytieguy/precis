@@ -59,7 +59,15 @@ src/
     __private_api.rs …
     kv/
         error.rs …
-        key.rs …
+        key.rs
+            …
+               7→pub trait ToKey {
+               8→    /// Perform the conversion.
+               9→    fn to_key(&self) -> Key<'_>;
+              10→}
+            …
+              37→pub struct Key<'k> {
+            …
         mod.rs
                1→//! Structured logging.
                2→//!
@@ -158,9 +166,6 @@ src/
          648→    Trace,
          649→}
         …
-         796→/// The "payload" of a log message.
-         797→///
-        …
          841→#[derive(Clone, Debug)]
          842→pub struct Record<'a> {
          843→    metadata: Metadata<'a>,
@@ -177,9 +182,6 @@ src/
         1004→    record: Record<'a>,
         1005→}
         …
-        1119→/// Metadata about a log message.
-        1120→///
-        …
         1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
         1158→pub struct Metadata<'a> {
         1159→    level: Level,
@@ -191,7 +193,6 @@ src/
         1201→    metadata: Metadata<'a>,
         1202→}
         …
-        1248→/// A trait encapsulating the operations required of a logger.
         1249→pub trait Log: Sync + Send {
         1250→    /// Determines if a log message with the specified metadata would be
         1251→    /// logged.
@@ -227,7 +228,6 @@ src/
         …
         1350→#[cfg(target_has_atomic = "ptr")]
         1351→pub fn set_max_level(level: LevelFilter) {
-        1352→    MAX_LOG_LEVEL_FILTER.store(level as usize, Ordering::Relaxed);
         …
         1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
         …
@@ -235,11 +235,9 @@ src/
         …
         1419→#[cfg(all(feature = "std", target_has_atomic = "ptr"))]
         1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
-        1421→    set_logger_inner(|| Box::leak(logger))
         …
         1477→#[cfg(target_has_atomic = "ptr")]
         1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        1479→    set_logger_inner(|| logger)
         …
         1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
         …

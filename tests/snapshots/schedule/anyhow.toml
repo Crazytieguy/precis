@@ -773,10 +773,24 @@ entries = ["mod.rs"]
 
 [[batches]]
 position = 25
+key = 'Fs(DirListing { dir: "tests/drop" })'
+descriptor = "listing of 'tests/drop'"
+cost_tokens = 3
+cum_tokens = 1981
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/drop"
+entries = ["mod.rs"]
+
+[[batches]]
+position = 26
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
 descriptor = "pub-item doc lede at src/lib.rs:415"
 cost_tokens = 41
-cum_tokens = 2019
+cum_tokens = 2022
 
 [batches.content]
 kind = "lines"
@@ -790,11 +804,11 @@ end = 397
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
 descriptor = "pub-item doc lede at src/lib.rs:616"
 cost_tokens = 65
-cum_tokens = 2084
+cum_tokens = 2087
 
 [batches.content]
 kind = "lines"
@@ -808,11 +822,11 @@ end = 476
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 58 })'
 descriptor = "macro_export body at src/macros.rs:58"
 cost_tokens = 138
-cum_tokens = 2222
+cum_tokens = 2225
 
 [batches.content]
 kind = "lines"
@@ -826,11 +840,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 390 })'
 descriptor = "pub-item doc lede at src/lib.rs:390"
 cost_tokens = 174
-cum_tokens = 2396
+cum_tokens = 2399
 
 [batches.content]
 kind = "lines"
@@ -842,20 +856,6 @@ end = 300
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "tests/drop" })'
-descriptor = "listing of 'tests/drop'"
-cost_tokens = 3
-cum_tokens = 2399
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/drop"
-entries = ["mod.rs"]
 
 [[batches]]
 position = 30

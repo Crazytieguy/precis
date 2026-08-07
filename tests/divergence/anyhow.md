@@ -41,14 +41,14 @@ Score(3000)=0.703 I=0.901 C=0.548 ns_rows≤3K=20/63 (reached=11 partial=1 missi
 | ns | 1920 |  | 137 | Debug representations — `{:?}` and `{:#?}` | 2.5 | 2.4 | 0.715 |
 | walker |  | 1975 | 166 | impl method sigs in src/context.rs |  |  | 0.716 |
 | walker |  | 1978 | 3 | listing of 'tests/common' |  |  | 0.716 |
-| walker |  | 2019 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.716 |
+| walker |  | 1981 | 3 | listing of 'tests/drop' |  |  | 0.716 |
+| walker |  | 2022 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.716 |
 | ns | 2036 |  | 116 | Context trait doc — sealed, and outermost-first cause printing | 2.6 | 2.3 | 0.695 |
-| walker |  | 2084 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.701 |
+| walker |  | 2087 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.701 |
 | ns | 2217 |  | 181 | Context + downcasting — the guarantee, in both directions | 2.7 | 2.6 | 0.672 |
-| walker |  | 2222 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.674 |
+| walker |  | 2225 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.674 |
 | ns | 2365 |  | 148 | Result alias and Ok() helper semantics | 2.8 | 2.1 | 0.655 |
-| walker |  | 2396 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.710 |
-| walker |  | 2399 | 3 | listing of 'tests/drop' |  |  | 0.710 |
+| walker |  | 2399 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.710 |
 | ns | 2541 |  | 176 | no_std support contract | 2.9 |  | 0.691 |
 | ns | 2773 |  | 232 | Trait impls on Error — complete list | 2.10 | 2.2 | 0.666 |
 | walker |  | 2800 | 401 | crate attributes in src/lib.rs |  |  | 0.701 |
