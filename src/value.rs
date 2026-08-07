@@ -302,15 +302,7 @@ pub(crate) fn non_essential_factor_inner(
             // spelling gives those ecosystems' test suites the same
             // weight as their library source.
             let lowered = raw.to_ascii_lowercase();
-            // Dunder wrapping is a naming convention, not a role: the JS
-            // test tree is `__tests__`, its snapshots `__snapshots__`.
-            // Reading the role through the underscores keeps the classifier
-            // from giving the canonical JS test directory the weight of
-            // library source while `test/` — the same directory under
-            // another ecosystem's spelling — is demoted. Only the wrapping
-            // is stripped; a trimmed name still has to *be* one of the roles
-            // below, so `_internal` and `__pycache__` go on matching nothing.
-            let s = lowered.trim_matches('_');
+            let s = dir_role_name(&lowered);
             if (matches!(
                 s,
                 "tests"
@@ -470,6 +462,27 @@ fn is_declared_crate_module_dir(dir: &std::path::Path, root: &std::path::Path) -
         cur = d.parent();
     }
     false
+}
+
+/// A directory name read for its *role*, with convention wrapping stripped:
+/// `__tests__` reads as `tests`. Dunder wrapping is a naming convention —
+/// the JS/TS test tree, its `__snapshots__` and `__mocks__` siblings — not a
+/// role of its own.
+///
+/// **Every classifier that matches directory names by role goes through
+/// here.** There are two of them and they answer different questions (this
+/// module's non-essential tier; `walker::fs::is_test_dir_name`, which the C
+/// project-shape scan uses to keep a harness `main` from making a library
+/// look like a program). When only one read through the wrapping they
+/// disagreed about what a test directory is, and a C project with its
+/// harness in `__tests__/` was classified as a program.
+///
+/// Only the wrapping is stripped — a trimmed name still has to *be* a role
+/// name, so `_internal` and `__pycache__` go on matching nothing. Case
+/// folding stays with the caller: callers matching many role names against
+/// one directory fold once, and this borrows from that buffer.
+pub(crate) fn dir_role_name(lowercased_name: &str) -> &str {
+    lowercased_name.trim_matches('_')
 }
 
 /// Starter-template payload directory — the material a project scaffolder

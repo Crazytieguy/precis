@@ -760,10 +760,14 @@ fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
         .any(is_source_dir)
 }
 
-/// A `test`/`tests`/`spec`/`specs` directory name, case-insensitive.
+/// A `test`/`tests`/`spec`/`specs` directory name, case-insensitive and
+/// read through convention wrapping (`__tests__`) by
+/// [`crate::value::dir_role_name`] — the shared normalization the
+/// non-essential tier uses, so the two classifiers cannot disagree about
+/// what a test directory is.
 pub(crate) fn is_test_dir_name(name: &str) -> bool {
     matches!(
-        name.to_ascii_lowercase().as_str(),
+        crate::value::dir_role_name(&name.to_ascii_lowercase()),
         "test" | "tests" | "spec" | "specs"
     )
 }
