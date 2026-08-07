@@ -381,6 +381,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &src_lines,
             &exports.iter().map(|item| item.start_line).collect(),
             &reexported_local_names,
+            commonjs_published_local_name(&tree, &source),
         );
         // README-cited JS files (canonical example scripts referenced from
         // the root README) emit private statements as module items even
@@ -388,9 +389,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // example's content the NS author anchored on.
         let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
             && (is_tsx_file(file) || is_js_file(file));
+        let emits_item = |item: &ModuleItemInfo| {
+            emit_private_nonclass || matches!(item.kind, ItemKind::Class) || item.is_published
+        };
         let emitted_items: Vec<&ModuleItemInfo> = module_items
             .iter()
-            .filter(|item| emit_private_nonclass || matches!(item.kind, ItemKind::Class))
+            .filter(|item| emits_item(item))
             .collect();
         let emitted_item_start_lines: HashSet<usize> =
             emitted_items.iter().map(|item| item.start_line).collect();
@@ -768,6 +772,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         }
                     }
                 }
+                if let Some((roster, element_count)) = data_literal_roster(item.decl, item.kind)
+                    .filter(|(roster, _)| !file_lines_covered_by(roster, &export_surface_lines))
+                    && let Some(content) = single_file_lines_content(file, &source, roster)
+                {
+                    let key = TsKey::LiteralRoster {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    };
+                    out.push(Batch {
+                        key: key.clone().into(),
+                        predecessor: Some(body_parts_predecessor.clone()),
+                        content,
+                        value: literal_roster_value(file, item.kind, ctx, js_factor, element_count)
+                            * per_export_factor,
+                    });
+                    body_parts_predecessor = BatchKey::Typescript(key);
+                }
                 if split_js_class {
                     for member in &item.class_members {
                         let member_key = TsKey::ExportMember {
@@ -1011,7 +1032,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // tightens the ordering; the fallback covers a file whose
         // declarations *are* its first surface.
         for item in module_items.iter() {
-            if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
+            if !emits_item(item) {
                 continue;
             }
             let item_key = TsKey::ModuleItem {
@@ -1034,8 +1055,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 first_module_item_gate
                     .get_or_insert_with(|| BatchKey::Typescript(item_key.clone()));
             }
+            let mut item_predecessor = BatchKey::Typescript(item_key.clone());
+            if let Some((roster, element_count)) = &item.literal_roster
+                && let Some(content) = single_file_lines_content(file, &source, roster.clone())
+            {
+                let key = TsKey::LiteralRoster {
+                    file: file.clone(),
+                    start_line: item.start_line,
+                };
+                out.push(Batch {
+                    key: key.clone().into(),
+                    predecessor: Some(item_predecessor.clone()),
+                    content,
+                    value: literal_roster_value(file, item.kind, ctx, js_factor, *element_count)
+                        * per_export_factor,
+                });
+                item_predecessor = BatchKey::Typescript(key);
+            }
             if !item.body_parts.is_empty() {
-                let item_predecessor = BatchKey::Typescript(item_key);
                 let parts = disjoint_body_parts(item.body_parts.clone());
                 // Module-level class method bodies are sibling units (one
                 // per method), each independently relevant — unlike
@@ -1489,6 +1526,13 @@ struct ModuleItemInfo {
     kind: ItemKind,
     lines: FileLines,
     body_parts: Vec<BodyPart>,
+    /// Key roster of the data literal this declaration binds, with its
+    /// element count — see [`data_literal_roster`].
+    literal_roster: Option<(FileLines, usize)>,
+    /// This declaration is what the file's `module.exports` publishes —
+    /// see [`commonjs_published_local_name`]. It renders wherever the
+    /// file's own surface does, like a module-level `class`.
+    is_published: bool,
 }
 
 /// Top-level exports in a file. Walks `program` for `export_statement`
@@ -1706,6 +1750,7 @@ fn find_module_items(
     src_lines: &[&str],
     export_start_lines: &HashSet<usize>,
     reexported_local_names: &HashSet<String>,
+    published_local_name: Option<&str>,
 ) -> Vec<ModuleItemInfo> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1729,11 +1774,17 @@ fn find_module_items(
         }
         let lines = module_item_lines(kind, child, source);
         let body_parts = body_parts(child, kind, source, src_lines);
+        let literal_roster = data_literal_roster(child, kind)
+            .filter(|(roster, _)| !file_lines_covered_by(roster, &lines));
+        let is_published = published_local_name
+            .is_some_and(|published| local_decl_name(child, source) == Some(published));
         out.push(ModuleItemInfo {
             start_line,
             kind,
             lines,
             body_parts,
+            literal_roster,
+            is_published,
         });
     }
     out
@@ -2135,6 +2186,27 @@ fn expression_callee_name<'a>(expr: Node, source: &'a str) -> Option<&'a str> {
             .and_then(|callee| identifier_text(callee, source)),
         _ => None,
     }
+}
+
+/// Local name a top-level `module.exports = …` publishes as the file's
+/// whole value — `= X`, `= new X()`, `= makeX()`. That declaration is
+/// what the file exists to export, so it is not module-private however
+/// the assignment spells it. At most one per file, so recognizing it
+/// cannot flood a file's schedule the way a surface-set gate can.
+fn commonjs_published_local_name<'a>(tree: &Tree, source: &'a str) -> Option<&'a str> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter_map(|stmt| commonjs_assignment_sides(stmt, source))
+        .filter(|(left, _)| {
+            matches!(
+                commonjs_export_target(*left, source),
+                Some(CommonJsExportTarget::Namespace)
+            )
+        })
+        .find_map(|(_, right)| {
+            identifier_text(right, source).or_else(|| expression_callee_name(right, source))
+        })
 }
 
 /// Local identifier names on the RHS of top-level CommonJS export
@@ -3509,6 +3581,22 @@ fn export_member_names_value(
         * chunk_factor
 }
 
+/// The keys of a value a declaration binds are that value's members, so
+/// a complete key roster prices at the member-catalog tier rather than
+/// at the host declaration's own tier: an option name or a table key is
+/// not derivable from anything else in the file, which is the
+/// catastrophic-omission class. The host's reach still enters through
+/// `js_factor` and the depth factor.
+fn literal_roster_value(
+    file: &Path,
+    kind: ItemKind,
+    ctx: &WalkCtx,
+    js_factor: f64,
+    element_count: usize,
+) -> f64 {
+    export_member_names_value(file, kind, ctx, js_factor, element_count, 1.0)
+}
+
 /// Module-private classes carry per-method query value (constructors,
 /// member sigs) — lift cat so each surface can compete against
 /// peer-level orientation batches in the early budget.
@@ -4033,6 +4121,111 @@ fn decl_surface_lines(
         ),
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+}
+
+/// Minimum top-level elements before a data literal is worth a roster.
+/// Below it the literal is small enough that its own body batch is the
+/// cheap read.
+const DATA_LITERAL_ROSTER_MIN: usize = 4;
+
+/// The multi-line array/object literal `decl` binds, plus the row that
+/// binds it: either the declaration's own initializer, or the largest
+/// literal a statement in its body assigns to a name
+/// (`function Cli () { this.cliOpts = […] }` — a data table wearing a
+/// constructor's clothes). Nested callbacks are out of reach on purpose:
+/// only statements directly in the declaration's own body, or in one of
+/// its members' bodies, define the declaration's data surface.
+fn bound_data_literal<'a>(decl: Node<'a>, kind: ItemKind) -> Option<(Node<'a>, usize)> {
+    let literal = declared_data_literal(decl).or_else(|| body_assigned_data_literal(decl, kind))?;
+    (literal.end_position().row > literal.start_position().row)
+        .then(|| (literal, literal.start_position().row + 1))
+}
+
+/// Largest multi-line data literal assigned by a statement sitting
+/// directly in one of `decl`'s bodies.
+fn body_assigned_data_literal<'a>(decl: Node<'a>, kind: ItemKind) -> Option<Node<'a>> {
+    let bodies: Vec<Node<'a>> = match decl_fn_body(decl, kind) {
+        Some(body) => vec![body],
+        None => match decl.child_by_field_name("body") {
+            Some(class_body) => {
+                let mut member_cursor = class_body.walk();
+                class_body
+                    .children(&mut member_cursor)
+                    .filter_map(|member| member.child_by_field_name("body"))
+                    .collect()
+            }
+            None => Vec::new(),
+        },
+    };
+    bodies
+        .into_iter()
+        .flat_map(|body| {
+            let mut cursor = body.walk();
+            body.named_children(&mut cursor).collect::<Vec<_>>()
+        })
+        .filter_map(|statement| {
+            let assignment = statement
+                .named_child(0)
+                .filter(|expr| expr.kind() == "assignment_expression")?;
+            data_literal_node(assignment.child_by_field_name("right")?)
+        })
+        .max_by_key(|literal| literal.end_position().row - literal.start_position().row)
+}
+
+fn data_literal_node(node: Node) -> Option<Node> {
+    matches!(node.kind(), "array" | "object").then_some(node)
+}
+
+fn declared_data_literal(decl: Node) -> Option<Node> {
+    if let Some(literal) = data_literal_node(decl) {
+        return Some(literal);
+    }
+    let mut cursor = decl.walk();
+    let declarator = decl
+        .children(&mut cursor)
+        .find(|child| matches!(child.kind(), "variable_declarator" | "lexical_binding"))?;
+    data_literal_node(declarator.child_by_field_name("value")?)
+}
+
+/// One row per top-level element of `literal`. An element that is itself
+/// a multi-line object is named by its first property row: the row
+/// carrying its opening brace identifies nothing, while
+/// `{ name: 'socketPath', …` does.
+fn data_literal_element_rows(literal: Node) -> Vec<usize> {
+    let mut cursor = literal.walk();
+    literal
+        .named_children(&mut cursor)
+        .filter(|element| element.kind() != "comment")
+        .map(|element| {
+            let named = (element.kind() == "object"
+                && element.end_position().row > element.start_position().row)
+                .then(|| {
+                    let mut inner = element.walk();
+                    element
+                        .named_children(&mut inner)
+                        .find(|child| child.kind() != "comment")
+                })
+                .flatten()
+                .unwrap_or(element);
+            named.start_position().row + 1
+        })
+        .collect()
+}
+
+/// Key roster of the data literal `decl` binds: the binding row plus one
+/// row per top-level element, everything between elided. `None` unless
+/// the roster is a real abbreviation of the literal — a roster as long as
+/// the literal is the literal, and the literal already has a body batch.
+fn data_literal_roster(decl: Node, kind: ItemKind) -> Option<(FileLines, usize)> {
+    let (literal, binding_row) = bound_data_literal(decl, kind)?;
+    let literal_rows = literal.end_position().row - literal.start_position().row + 1;
+    let element_rows = data_literal_element_rows(literal);
+    if element_rows.len() < DATA_LITERAL_ROSTER_MIN || element_rows.len() * 2 > literal_rows {
+        return None;
+    }
+    let count = element_rows.len();
+    let rows = std::iter::once(binding_row).chain(element_rows).collect();
+    Some((FileLines::new(dedup_sorted(rows)), count))
 }
 
 /// Declaration surface truncated at its member body — the cheap
@@ -5382,6 +5575,94 @@ mod tests {
             &commonjs_reexports,
             &default_identifier_reexports,
         )
+    }
+
+    fn module_items_for(source: &str, tree: &Tree) -> Vec<ModuleItemInfo> {
+        let src_lines: Vec<&str> = source.lines().collect();
+        find_module_items(
+            tree,
+            source,
+            &src_lines,
+            &HashSet::new(),
+            &HashSet::new(),
+            commonjs_published_local_name(tree, source),
+        )
+    }
+
+    const PUBLISHED_CONSTRUCTOR_WITH_TABLE: &str = "\
+function Cli () {
+  this.cliOpts = [
+    {
+      name: 'socketPath',
+      alias: 's'
+    },
+    {
+      name: 'host',
+      alias: 'H'
+    },
+    {
+      name: 'port',
+      alias: 'P'
+    },
+    {
+      name: 'theme',
+      alias: 't'
+    }
+  ]
+}
+
+module.exports = new Cli()
+";
+
+    #[test]
+    fn walker_typescript_commonjs_published_constructor_is_not_module_private() {
+        let tree = parse(PUBLISHED_CONSTRUCTOR_WITH_TABLE);
+        let items = module_items_for(PUBLISHED_CONSTRUCTOR_WITH_TABLE, &tree);
+        let published = items.iter().find(|item| item.start_line == 1).unwrap();
+        assert!(
+            published.is_published,
+            "`module.exports = new Cli()` publishes the declaration it constructs"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_literal_roster_names_each_element_of_a_body_table() {
+        let tree = parse(PUBLISHED_CONSTRUCTOR_WITH_TABLE);
+        let items = module_items_for(PUBLISHED_CONSTRUCTOR_WITH_TABLE, &tree);
+        let (roster, element_count) = items
+            .iter()
+            .find(|item| item.start_line == 1)
+            .unwrap()
+            .literal_roster
+            .clone()
+            .expect("a constructor-bound table has a key roster");
+        assert_eq!(element_count, 4);
+        assert_eq!(
+            roster.full,
+            vec![2, 4, 8, 12, 16],
+            "the binding row plus each element's first property row — never its brace row"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_literal_roster_skips_a_literal_its_surface_renders() {
+        let source = "\
+const LEVELS = {
+  info: 0,
+  warn: 1,
+  error: 2,
+  fatal: 3,
+};
+
+module.exports = LEVELS;
+";
+        let tree = parse(source);
+        let items = module_items_for(source, &tree);
+        let published = items.iter().find(|item| item.start_line == 1).unwrap();
+        assert!(
+            published.literal_roster.is_none(),
+            "a const's surface already renders its whole literal; a roster would duplicate it"
+        );
     }
 
     /// Receiver names a member-defining statement resolves against, for

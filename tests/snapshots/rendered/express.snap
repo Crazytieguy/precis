@@ -92,7 +92,6 @@ Readme.md
      185→* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
      186→* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
      187→* [blakeembrey](https://github.com/blakeembrey) - **Blake Embrey**
-     188→* [sheplu](https://github.com/sheplu) - **Jean Burellier**
     …
      190→* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
      192→<details>
@@ -233,6 +232,7 @@ lib/
         …
           16→var accepts = require('accepts');
         …
+          30→var req = Object.create(http.IncomingMessage.prototype)
           32→/**
           33→ * Module exports.
           34→ * @public
