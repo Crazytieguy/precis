@@ -238,7 +238,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &file,
             &tree,
             &source,
-            outline_emits,
+            &outlined_rows(outline_emits, &outline_rows),
             gates.truncated,
             root_readme,
         );
@@ -250,7 +250,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // pre-existing suppression there.
         if gates.truncated && !ranges.iter().any(|r| r.roster_entries > 0) {
             outline_emits = false;
-            ranges = logical_sections(&file, &tree, &source, false, false, root_readme);
+            ranges = logical_sections(&file, &tree, &source, &BTreeSet::new(), false, root_readme);
         }
         if ranges.is_empty() && !markdown_has_heading(&tree) {
             ranges = headingless_fallback_ranges(&file, &source);
@@ -608,15 +608,35 @@ fn build_outline_content(
         for r in *start..=*end {
             full.push(r);
         }
+        // `end + 1` is either a row of this heading's own section (a
+        // later `Section` batch gates on the outline, so its `full` is a
+        // descendant upgrade) or the next heading's row, which the
+        // outline renders itself and so drops the marker. Fragile seam:
+        // the outline is a DESCENDANT of `ReadmeHeadline`, and a
+        // descendant `…` on an ancestor-rendered row silently demotes
+        // the paid row. Unreachable only because the decorative-title
+        // fallback ([`headline_spec`]) covers a contiguous run from the
+        // H1, and every heading it covers is dropped from `rows`.
+        // Widening that fallback past the first subsection arms this.
         ellipses.push(end + 1);
     }
     single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
 }
 
+/// Rows `HeadingsOutline` will render — empty when it is suppressed.
+/// The split paths read this to decide whether a heading row they would
+/// drop already has an owner.
+fn outlined_rows(outline_emits: bool, rows: &[(usize, usize)]) -> BTreeSet<usize> {
+    if !outline_emits {
+        return BTreeSet::new();
+    }
+    rows.iter().flat_map(|(s, e)| *s..=*e).collect()
+}
+
 /// Per-file derivation chain shared by `expand_in_dir` and the unit-test
-/// helpers, so "splits require the outline to preserve heading rows" is
-/// wired in exactly one place: headline spec (READMEs only) → outline
-/// rows → outline gate.
+/// helpers, so the one question every split path asks — "which heading
+/// rows does the outline own?" — is answered in exactly one place:
+/// headline spec (READMEs only) → outline rows → outline gate.
 /// Outline gates plus the mega-doc flag: `truncated` is true when the
 /// file's full H1-H3 heading set blew [`MAX_OUTLINE_HEADINGS`] and the
 /// emitted rows (if any) are the H1/H2 skeleton instead — i.e. the
@@ -2368,15 +2388,25 @@ fn is_env_var_token(token: &str) -> bool {
 /// Section ranges for batching. H2s that satisfy a split rule expand
 /// to an optional `Intro` plus per-child sub-ranges (bullet split,
 /// H3 split, or body-block split). Other top-level entries emit one
-/// `Whole`. Splits require the outline to preserve heading rows.
+/// `Whole`.
+///
+/// Splits drop the section's heading row — sub-ranges are built from
+/// body blocks, and headings are scaffolding to that walk. `outlined`
+/// is the set of rows `HeadingsOutline` will actually render, and it is
+/// the only place a dropped heading row can find an owner: a heading in
+/// neither the outline nor a section range is unrenderable at every
+/// budget, so the split paths keep any heading row `outlined` does not
+/// cover. Empty when the outline is suppressed, and — on the mega-doc
+/// H2-only skeleton — short of the file's full heading set.
 fn logical_sections(
     file: &Path,
     tree: &Tree,
     source: &str,
-    outline_will_emit: bool,
+    outlined: &BTreeSet<usize>,
     outline_truncated: bool,
     root_readme: bool,
 ) -> Vec<SectionRange> {
+    let outline_will_emit = !outlined.is_empty();
     let entries = top_level_entries(tree.root_node(), source);
     let split_eligible_file = !is_changelog_class(file);
     // Oversize head-split scope: the root README only. Its early
@@ -2475,8 +2505,8 @@ fn logical_sections(
                         push_intro(
                             &mut out,
                             *node,
-                            *start,
                             h3s[0],
+                            outlined.contains(start),
                             parent_idx,
                             synthetic_intro_present,
                             source,
@@ -2486,6 +2516,7 @@ fn logical_sections(
                         push_h3_child_or_body_blocks(
                             &mut out,
                             *h3,
+                            outlined,
                             parent_idx,
                             synthetic_intro_present,
                             source,
@@ -2496,6 +2527,7 @@ fn logical_sections(
                         && push_list_body_blocks(
                             &mut out,
                             *node,
+                            outlined.contains(start),
                             parent_idx,
                             synthetic_intro_present,
                             source,
@@ -3050,25 +3082,27 @@ fn push_whole_or_head_split(
 }
 
 /// Append an `Intro` range covering the H2 heading + prelude before
-/// `first_child` (the first H3 or the section's bullet list), but only
-/// when that prelude has substantive non-heading content. Skipping the
-/// heading-only case avoids a zero-cost duplicate batch — the H2
-/// heading is preserved by `HeadingsOutline` (gated on by the split
-/// rule's `outline_will_emit` requirement).
+/// `first_child` (the first H3 or the section's bullet list). A prelude
+/// with no substantive non-heading content is skipped as a zero-cost
+/// duplicate of the outline's own heading row — but only when the
+/// outline really renders that row (`heading_outlined`). It does not on
+/// the mega-doc H2-only skeleton, which keeps a prefix of the H2 set:
+/// for a late H2 this Intro is the heading row's only owner.
 fn push_intro<'a>(
     out: &mut Vec<SectionRange>,
     h2_section: Node<'a>,
-    h2_start: usize,
     first_child: Node<'a>,
+    heading_outlined: bool,
     parent_idx: usize,
     synthetic_intro_present: bool,
     source: &str,
 ) {
+    let h2_start = h2_section.start_position().row + 1;
     let intro_end = (first_child.start_position().row + 1).saturating_sub(1);
     if intro_end < h2_start {
         return;
     }
-    if !has_substantive_body(h2_section, h2_start, intro_end, source) {
+    if heading_outlined && !has_substantive_body(h2_section, h2_start, intro_end, source) {
         return;
     }
     // The H2 title carries the reference/usage match; the prelude
@@ -3096,6 +3130,7 @@ fn push_intro<'a>(
 fn push_h3_child_or_body_blocks(
     out: &mut Vec<SectionRange>,
     h3_section: Node<'_>,
+    outlined: &BTreeSet<usize>,
     parent_idx: usize,
     synthetic_intro_present: bool,
     source: &str,
@@ -3106,7 +3141,12 @@ fn push_h3_child_or_body_blocks(
     }
     let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
     if h3_bytes >= BODY_BLOCK_SPLIT_BYTES {
-        let ranges = body_block_ranges(h3_section, source);
+        let mut ranges = body_block_ranges(h3_section, source);
+        // The mega-doc skeleton names H2s only, so an H3 heading split
+        // into body blocks has no outline row to fall back on.
+        if !outlined.contains(&h3_start) {
+            keep_heading_row(&mut ranges, h3_start);
+        }
         if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
             return;
         }
@@ -3162,14 +3202,31 @@ fn push_body_block_ranges(
 fn push_list_body_blocks(
     out: &mut Vec<SectionRange>,
     section: Node<'_>,
+    heading_outlined: bool,
     parent_idx: usize,
     synthetic_intro_present: bool,
     source: &str,
 ) -> bool {
-    let Some(ranges) = list_only_body_block_ranges(section, source) else {
+    let Some(mut ranges) = list_only_body_block_ranges(section, source) else {
         return false;
     };
+    // Unlike the structural split, this one does not require the outline
+    // to emit at all — a single-heading list doc splits with no outline
+    // behind it, and then only the first item can carry the title.
+    if !heading_outlined {
+        keep_heading_row(&mut ranges, section.start_position().row + 1);
+    }
     push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present)
+}
+
+/// Extend the first block range back over the section's heading row, so
+/// a split section whose heading no outline renders still has exactly
+/// one owner for its own title. No-op on an empty range list (no split
+/// follows, and the un-split `Whole` already covers the heading).
+fn keep_heading_row(ranges: &mut [(usize, usize)], heading_start: usize) {
+    if let Some((start, _)) = ranges.first_mut() {
+        *start = heading_start.min(*start);
+    }
 }
 
 fn list_only_body_block_ranges(section: Node<'_>, source: &str) -> Option<Vec<(usize, usize)>> {
@@ -4616,7 +4673,7 @@ mod tests {
             &file,
             &tree,
             source,
-            gates.emits,
+            &outlined_rows(gates.emits, &gates.rows),
             gates.truncated,
             is_readme(&file),
         )
@@ -5351,7 +5408,16 @@ mod tests {
             src.push_str(&format!("    * `{name}.h` - {pad}\n"));
         }
         let tree = parse(&src);
-        let ranges = logical_sections(Path::new("/x/README.md"), &tree, &src, true, false, false);
+        let file = PathBuf::from("/x/README.md");
+        let gates = derive_outline_gates(&file, &tree, &src);
+        let ranges = logical_sections(
+            &file,
+            &tree,
+            &src,
+            &outlined_rows(gates.emits, &gates.rows),
+            gates.truncated,
+            false,
+        );
         let items: Vec<(usize, usize)> = ranges
             .iter()
             .filter(|r| matches!(r.kind, SectionKind::BodyBlock))
@@ -5435,5 +5501,83 @@ Details prose paragraph one.
             stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS,
             "tagline is short by char count despite exceeding byte threshold"
         );
+    }
+
+    /// A single-heading list doc splits into per-item body blocks with no
+    /// outline behind it (the outline needs two heading rows to emit), so
+    /// nothing else can carry the section's own title. Without an owner
+    /// that row is unrenderable at every budget, 1M included.
+    #[test]
+    fn markdown_list_split_without_an_outline_keeps_the_heading_row() {
+        let mut src = String::from("## Supported functions\n\n");
+        for i in 0..12 {
+            src.push_str(&format!(
+                "- `helper{i}(input)` — returns the transformed input for case {i}.\n"
+            ));
+        }
+        assert!(
+            src.len() >= H2_SPLIT_BYTES,
+            "shape must clear the body-block split gate"
+        );
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("guide.md"), &src).unwrap();
+
+        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None);
+        let rendered = scheduler.run().render();
+        assert!(
+            rendered.contains("helper0(input)"),
+            "expected the per-item split to render: {rendered}"
+        );
+        assert!(
+            rendered.contains("Supported functions"),
+            "section title has no owner at any budget: {rendered}"
+        );
+    }
+
+    /// The mega-doc fallback outline is an H2-only skeleton, so it can
+    /// never name an H3. An H3 large enough to split into body blocks is
+    /// then the only possible owner of its own heading row.
+    #[test]
+    fn markdown_h3_body_block_split_keeps_its_heading_row_under_truncation() {
+        let mut src =
+            String::from("# lo\n\nTagline.\n\n## Spec\n\nSupported helpers for slices:\n\n");
+        for i in 0..30 {
+            src.push_str(&format!("- [Helper{i}](#helper{i})\n"));
+        }
+        src.push('\n');
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            // Prose + fence, then a second prose block: two body blocks,
+            // with the H3 past `BODY_BLOCK_SPLIT_BYTES`.
+            let h3 = format!(
+                "\n### Helper{i}\n\nDoes thing {i} to every element of the input slice, \
+                 preserving the original order of the elements it keeps and \
+                 allocating exactly once.\n\n\
+                 ```go\nresult := lo.Helper{i}(input, predicate)\n```\n\n\
+                 Returns a new slice; the input is never mutated, the zero value \
+                 is returned when the input is empty, and a nil predicate panics \
+                 rather than silently matching everything.\n"
+            );
+            assert!(
+                h3.len() >= BODY_BLOCK_SPLIT_BYTES,
+                "each H3 must clear the body-block split gate"
+            );
+            src.push_str(&h3);
+        }
+        src.push_str("\n## License\n\nMIT.\n");
+        let ranges = sections("README.md", &src);
+        assert!(
+            ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
+            "expected the H3 body-block split; got {ranges:?}"
+        );
+        for (idx, line) in src.lines().enumerate() {
+            if !line.starts_with("### ") {
+                continue;
+            }
+            let row = idx + 1;
+            assert!(
+                ranges.iter().any(|r| r.start <= row && row <= r.end),
+                "H3 heading row {row} ({line}) has no owner; the skeleton outline names H2s only"
+            );
+        }
     }
 }
