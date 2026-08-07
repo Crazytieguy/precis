@@ -1,4 +1,4 @@
-Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missing=8)
+Score(3000)=0.721 I=0.874 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,124 +16,124 @@ Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missin
 | walker |  | 265 | 14 | listing of 'docs/tools' |  |  | 0.228 |
 | walker |  | 306 | 41 | listing of 'deps' |  |  | 0.290 |
 | ns | 342 |  | 97 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.313 |
-| walker |  | 395 | 89 | c header banner in neco.h |  |  | 0.313 |
-| walker |  | 445 | 50 | listing of 'examples' |  |  | 0.478 |
+| walker |  | 356 | 50 | listing of 'examples' |  |  | 0.478 |
 | ns | 467 |  | 125 | Complete tests/ listing | 1.6 |  | 0.390 |
-| walker |  | 570 | 125 | listing of 'tests' |  |  | 0.539 |
+| walker |  | 481 | 125 | listing of 'tests' |  |  | 0.539 |
 | ns | 599 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.501 |
 | ns | 868 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.455 |
-| walker |  | 997 | 427 | README headline in README.md |  |  | 0.679 |
+| walker |  | 908 | 427 | README headline in README.md |  |  | 0.679 |
 | ns | 1084 |  | 216 | Basic operations: every coroutine-lifecycle signature | 1.9 |  | 0.637 |
-| walker |  | 1230 | 233 | headings outline in README.md |  |  | 0.640 |
-| walker |  | 1274 | 44 | README.md section #0 |  |  | 0.640 |
-| walker |  | 1293 | 19 | README.md section #21 |  |  | 0.640 |
+| walker |  | 1141 | 233 | headings outline in README.md |  |  | 0.640 |
+| walker |  | 1185 | 44 | README.md section #0 |  |  | 0.640 |
+| walker |  | 1204 | 19 | README.md section #21 |  |  | 0.640 |
 | ns | 1346 |  | 262 | Neco error codes, part 1 | 1.10 |  | 0.606 |
 | ns | 1610 |  | 264 | Neco error codes, part 2, and the error functions | 1.11 | 1.10 | 0.579 |
-| walker |  | 1712 | 419 | c decl names surface in neco.h |  |  | 0.641 |
-| walker |  | 1712 | 0 | c decl at neco.h:35 |  |  | 0.641 |
-| walker |  | 1712 | 0 | c decl at neco.h:61 |  |  | 0.641 |
-| walker |  | 1775 | 63 | README.md section #2 |  |  | 0.734 |
-| walker |  | 1846 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.734 |
-| walker |  | 1861 | 15 | README.md section #16 |  |  | 0.734 |
-| walker |  | 1975 | 114 | c includes in neco.h |  |  | 0.734 |
+| walker |  | 1625 | 421 | c decl names surface in neco.h |  |  | 0.641 |
+| walker |  | 1625 | 0 | c decl at neco.h:35 |  |  | 0.641 |
+| walker |  | 1625 | 0 | c decl at neco.h:61 |  |  | 0.641 |
+| walker |  | 1688 | 63 | README.md section #2 |  |  | 0.734 |
+| walker |  | 1759 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.734 |
+| walker |  | 1774 | 15 | README.md section #16 |  |  | 0.734 |
+| walker |  | 1888 | 114 | c includes in neco.h |  |  | 0.734 |
+| walker |  | 1953 | 65 | README.md section #14 |  |  | 0.734 |
 | ns | 2034 |  | 424 | Channels: doc and complete signature set | 2.1 |  | 0.693 |
-| walker |  | 2040 | 65 | README.md section #14 |  |  | 0.693 |
-| walker |  | 2170 | 130 | README.md section #1 |  |  | 0.693 |
+| walker |  | 2083 | 130 | README.md section #1 |  |  | 0.693 |
 | ns | 2252 |  | 218 | Generators: complete signature set | 2.2 |  | 0.672 |
 | ns | 2381 |  | 129 | Time: the duration constants and neco_now() | 2.3 |  | 0.658 |
 | ns | 2560 |  | 179 | Mutexes: type, static initializer, and all eight operations | 2.4 |  | 0.640 |
-| walker |  | 2668 | 498 | c decl names surface #1 in neco.h |  |  | 0.720 |
-| walker |  | 2668 | 0 | c decl at neco.h:90 |  |  | 0.720 |
-| walker |  | 2668 | 0 | c decl at neco.h:113 |  |  | 0.720 |
+| walker |  | 2581 | 498 | c decl names surface #1 in neco.h |  |  | 0.720 |
+| walker |  | 2581 | 0 | c decl at neco.h:90 |  |  | 0.720 |
+| walker |  | 2581 | 0 | c decl at neco.h:113 |  |  | 0.720 |
+| walker |  | 2632 | 51 | c decl doc at neco.h:90 |  |  | 0.720 |
 | ns | 2708 |  | 148 | WaitGroups: type, initializer and five operations | 2.5 |  | 0.704 |
-| walker |  | 2719 | 51 | c decl doc at neco.h:90 |  |  | 0.704 |
-| walker |  | 2797 | 78 | c decl doc at neco.h:61 |  |  | 0.733 |
-| ns | 2850 |  | 142 | Condition variables: type, initializer and five operations | 2.6 |  | 0.718 |
-| walker |  | 2883 | 86 | c decl doc at neco.h:113 |  |  | 0.719 |
-| walker |  | 2957 | 74 | c decl doc at neco.h:35 |  |  | 0.720 |
-| walker |  | 3068 | 111 | docs/README.md section #1 |  |  | 0.721 |
-| walker |  | 3101 | 33 | README.md section #19 |  |  | 0.722 |
+| walker |  | 2710 | 78 | c decl doc at neco.h:61 |  |  | 0.733 |
+| walker |  | 2796 | 86 | c decl doc at neco.h:113 |  |  | 0.734 |
+| ns | 2850 |  | 142 | Condition variables: type, initializer and five operations | 2.6 |  | 0.719 |
+| walker |  | 2870 | 74 | c decl doc at neco.h:35 |  |  | 0.720 |
+| walker |  | 2981 | 111 | docs/README.md section #1 |  |  | 0.721 |
+| walker |  | 3014 | 33 | README.md section #19 |  |  | 0.722 |
 | ns | 3158 |  | 308 | Posix wrappers: the non-blocking fd operations | 2.7 |  | 0.698 |
 | ns | 3308 |  | 150 | File descriptor helpers: neco_setnonblock and neco_wait | 2.8 |  | 0.679 |
+| walker |  | 3331 | 317 | c decl names surface in neco.c |  |  | 0.679 |
+| walker |  | 3331 | 0 | c decl at neco.c:1312 |  |  | 0.679 |
+| walker |  | 3331 | 0 | c decl at neco.c:1313 |  |  | 0.679 |
+| walker |  | 3342 | 11 | c decl at neco.c:2029 |  |  | 0.679 |
+| walker |  | 3353 | 11 | c decl at neco.c:2065 |  |  | 0.679 |
+| walker |  | 3365 | 12 | c decl at neco.c:2056 |  |  | 0.679 |
+| walker |  | 3378 | 13 | c decl at neco.c:2051 |  |  | 0.679 |
+| walker |  | 3392 | 14 | c decl at neco.c:2074 |  |  | 0.679 |
 | ns | 3398 |  | 90 | Networking utilities: neco_serve and neco_dial | 2.9 |  | 0.673 |
-| walker |  | 3418 | 317 | c decl names surface in neco.c |  |  | 0.673 |
-| walker |  | 3418 | 0 | c decl at neco.c:1312 |  |  | 0.673 |
-| walker |  | 3418 | 0 | c decl at neco.c:1313 |  |  | 0.673 |
-| walker |  | 3429 | 11 | c decl at neco.c:2029 |  |  | 0.673 |
-| walker |  | 3440 | 11 | c decl at neco.c:2065 |  |  | 0.673 |
-| walker |  | 3452 | 12 | c decl at neco.c:2056 |  |  | 0.673 |
-| walker |  | 3465 | 13 | c decl at neco.c:2051 |  |  | 0.673 |
-| walker |  | 3479 | 14 | c decl at neco.c:2074 |  |  | 0.673 |
-| walker |  | 3493 | 14 | c decl at neco.c:2106 |  |  | 0.673 |
-| walker |  | 3507 | 14 | c decl at neco.c:2120 |  |  | 0.673 |
-| walker |  | 3524 | 17 | c decl at neco.c:1899 |  |  | 0.673 |
-| walker |  | 3539 | 15 | c decl at neco.c:2037 |  |  | 0.673 |
-| walker |  | 3554 | 15 | c decl at neco.c:2094 |  |  | 0.673 |
-| walker |  | 3570 | 16 | c decl at neco.c:1320 |  |  | 0.673 |
-| walker |  | 3589 | 19 | c decl at neco.c:1293 |  |  | 0.673 |
+| walker |  | 3406 | 14 | c decl at neco.c:2106 |  |  | 0.673 |
+| walker |  | 3420 | 14 | c decl at neco.c:2120 |  |  | 0.673 |
+| walker |  | 3437 | 17 | c decl at neco.c:1899 |  |  | 0.673 |
+| walker |  | 3452 | 15 | c decl at neco.c:2037 |  |  | 0.673 |
+| walker |  | 3467 | 15 | c decl at neco.c:2094 |  |  | 0.673 |
+| walker |  | 3483 | 16 | c decl at neco.c:1320 |  |  | 0.673 |
+| walker |  | 3502 | 19 | c decl at neco.c:1293 |  |  | 0.673 |
+| walker |  | 3522 | 20 | c decl at neco.c:1282 |  |  | 0.673 |
+| walker |  | 3548 | 26 | c decl at neco.c:1814 |  |  | 0.673 |
+| walker |  | 3577 | 29 | c decl at neco.c:1875 |  |  | 0.673 |
 | ns | 3606 |  | 208 | Cancelation: neco_cancel, the type/state constants, cleanup macros | 2.10 |  | 0.652 |
-| walker |  | 3609 | 20 | c decl at neco.c:1282 |  |  | 0.652 |
-| walker |  | 3635 | 26 | c decl at neco.c:1814 |  |  | 0.652 |
-| walker |  | 3664 | 29 | c decl at neco.c:1875 |  |  | 0.652 |
-| walker |  | 3694 | 30 | c decl at neco.c:1880 |  |  | 0.652 |
-| walker |  | 3754 | 60 | c decl at neco.c:1155 |  |  | 0.652 |
-| walker |  | 3847 | 93 | c decl at neco.c:1337 |  |  | 0.652 |
+| walker |  | 3607 | 30 | c decl at neco.c:1880 |  |  | 0.652 |
+| walker |  | 3667 | 60 | c decl at neco.c:1155 |  |  | 0.652 |
+| walker |  | 3760 | 93 | c decl at neco.c:1337 |  |  | 0.652 |
+| walker |  | 3861 | 101 | c decl at neco.c:1364 |  |  | 0.652 |
 | ns | 3865 |  | 259 | Streams and buffered I/O: the name of every entry point | 2.11 |  | 0.626 |
-| walker |  | 3948 | 101 | c decl at neco.c:1364 |  |  | 0.626 |
 | ns | 3990 |  | 125 | Random number generator: CSPRNG/PRNG attributes and three functions | 2.12 |  | 0.618 |
+| walker |  | 4010 | 149 | c decl at neco.c:1819 |  |  | 0.618 |
 | ns | 4066 |  | 76 | Signals: watch, wait, unwatch | 2.13 |  | 0.612 |
-| walker |  | 4097 | 149 | c decl at neco.c:1819 |  |  | 0.612 |
 | ns | 4109 |  | 43 | Background worker: neco_work | 2.14 |  | 0.610 |
-| walker |  | 4290 | 193 | c decl at neco.c:1124 |  |  | 0.610 |
+| walker |  | 4203 | 193 | c decl at neco.c:1124 |  |  | 0.610 |
 | ns | 4340 |  | 231 | neco_stats: every runtime counter, plus introspection | 2.15 |  | 0.591 |
 | ns | 4423 |  | 83 | Global environment: allocator and process-wide defaults | 2.16 |  | 0.587 |
-| walker |  | 4603 | 313 | c decl names surface #1 in neco.c |  |  | 0.587 |
-| walker |  | 4603 | 0 | c decl at neco.c:3105 |  |  | 0.587 |
-| walker |  | 4614 | 11 | c decl at neco.c:2154 |  |  | 0.587 |
-| walker |  | 4627 | 13 | c decl at neco.c:2135 |  |  | 0.587 |
-| walker |  | 4641 | 14 | c decl at neco.c:2125 |  |  | 0.587 |
-| walker |  | 4655 | 14 | c decl at neco.c:2130 |  |  | 0.587 |
-| walker |  | 4669 | 14 | c decl at neco.c:2145 |  |  | 0.587 |
+| walker |  | 4516 | 313 | c decl names surface #1 in neco.c |  |  | 0.587 |
+| walker |  | 4516 | 0 | c decl at neco.c:3105 |  |  | 0.587 |
+| walker |  | 4527 | 11 | c decl at neco.c:2154 |  |  | 0.587 |
+| walker |  | 4540 | 13 | c decl at neco.c:2135 |  |  | 0.587 |
+| walker |  | 4554 | 14 | c decl at neco.c:2125 |  |  | 0.587 |
+| walker |  | 4568 | 14 | c decl at neco.c:2130 |  |  | 0.587 |
+| walker |  | 4582 | 14 | c decl at neco.c:2145 |  |  | 0.587 |
+| walker |  | 4597 | 15 | c decl at neco.c:2160 |  |  | 0.587 |
+| walker |  | 4612 | 15 | c decl at neco.c:2607 |  |  | 0.587 |
+| walker |  | 4627 | 15 | c decl at neco.c:2616 |  |  | 0.587 |
+| walker |  | 4642 | 15 | c decl at neco.c:2926 |  |  | 0.587 |
+| walker |  | 4658 | 16 | c decl at neco.c:2459 |  |  | 0.587 |
 | ns | 4671 |  | 248 | The neco_main macro, expanded | 2.17 |  | 0.571 |
-| walker |  | 4684 | 15 | c decl at neco.c:2160 |  |  | 0.571 |
-| walker |  | 4699 | 15 | c decl at neco.c:2607 |  |  | 0.571 |
-| walker |  | 4714 | 15 | c decl at neco.c:2616 |  |  | 0.571 |
-| walker |  | 4729 | 15 | c decl at neco.c:2926 |  |  | 0.571 |
-| walker |  | 4745 | 16 | c decl at neco.c:2459 |  |  | 0.571 |
-| walker |  | 4765 | 20 | c decl at neco.c:2551 |  |  | 0.571 |
+| walker |  | 4678 | 20 | c decl at neco.c:2551 |  |  | 0.571 |
+| walker |  | 4698 | 20 | c decl at neco.c:2598 |  |  | 0.571 |
+| walker |  | 4720 | 22 | c decl at neco.c:2441 |  |  | 0.571 |
+| walker |  | 4750 | 30 | c decl at neco.c:2192 |  |  | 0.571 |
 | ns | 4779 |  | 108 | neco.h tail: private entry points and the EAI_SYSTEM shim | 2.18 |  | 0.562 |
-| walker |  | 4785 | 20 | c decl at neco.c:2598 |  |  | 0.562 |
-| walker |  | 4807 | 22 | c decl at neco.c:2441 |  |  | 0.562 |
-| walker |  | 4837 | 30 | c decl at neco.c:2192 |  |  | 0.562 |
-| walker |  | 4867 | 30 | c decl at neco.c:3121 |  |  | 0.562 |
-| walker |  | 4905 | 38 | c decl at neco.c:2285 |  |  | 0.562 |
-| walker |  | 4947 | 42 | c decl at neco.c:2261 |  |  | 0.562 |
+| walker |  | 4780 | 30 | c decl at neco.c:3121 |  |  | 0.562 |
+| walker |  | 4818 | 38 | c decl at neco.c:2285 |  |  | 0.562 |
+| walker |  | 4860 | 42 | c decl at neco.c:2261 |  |  | 0.562 |
+| walker |  | 4925 | 65 | c decl at neco.c:2165 |  |  | 0.562 |
 | ns | 4972 |  | 193 | Deadlines and cancelation, the governing rules | 3.1 |  | 0.552 |
-| walker |  | 5012 | 65 | c decl at neco.c:2165 |  |  | 0.552 |
-| walker |  | 5154 | 142 | c decl at neco.c:2247 |  |  | 0.552 |
+| walker |  | 5067 | 142 | c decl at neco.c:2247 |  |  | 0.552 |
+| walker |  | 5254 | 187 | c decl at neco.c:2267 |  |  | 0.552 |
 | ns | 5263 |  | 291 | Error semantics: which errors panic, which leak errno, and lasterr | 3.2 |  | 0.538 |
-| walker |  | 5341 | 187 | c decl at neco.c:2267 |  |  | 0.538 |
-| walker |  | 5466 | 125 | docs/API.md section #0 |  |  | 0.538 |
-| walker |  | 5479 | 13 | docs/API.md section #3 |  |  | 0.538 |
-| walker |  | 5491 | 12 | docs/API.md section #4 |  |  | 0.538 |
+| walker |  | 5379 | 125 | docs/API.md section #0 |  |  | 0.538 |
+| walker |  | 5392 | 13 | docs/API.md section #3 |  |  | 0.538 |
+| walker |  | 5404 | 12 | docs/API.md section #4 |  |  | 0.538 |
+| walker |  | 5417 | 13 | docs/API.md section #5 |  |  | 0.538 |
+| walker |  | 5430 | 13 | docs/API.md section #6 |  |  | 0.538 |
+| walker |  | 5443 | 13 | docs/API.md section #15 |  |  | 0.538 |
+| walker |  | 5454 | 11 | docs/API.md section #16 |  |  | 0.538 |
+| walker |  | 5467 | 13 | docs/API.md section #14 |  |  | 0.538 |
+| walker |  | 5480 | 13 | docs/API.md section #17 |  |  | 0.538 |
 | ns | 5497 |  | 234 | Async cancelation, and turning cancelation off | 3.3 |  | 0.528 |
-| walker |  | 5504 | 13 | docs/API.md section #5 |  |  | 0.528 |
-| walker |  | 5517 | 13 | docs/API.md section #6 |  |  | 0.528 |
-| walker |  | 5530 | 13 | docs/API.md section #15 |  |  | 0.528 |
-| walker |  | 5541 | 11 | docs/API.md section #16 |  |  | 0.528 |
-| walker |  | 5554 | 13 | docs/API.md section #14 |  |  | 0.528 |
-| walker |  | 5567 | 13 | docs/API.md section #17 |  |  | 0.528 |
 | ns | 5729 |  | 232 | Platform notes: what does not work on Windows and WebAssembly | 3.4 |  | 0.517 |
-| walker |  | 6085 | 518 | c decl names surface #2 in neco.h |  |  | 0.569 |
-| walker |  | 6085 | 0 | c decl at neco.h:135 |  |  | 0.569 |
-| walker |  | 6085 | 0 | c decl at neco.h:149 |  |  | 0.569 |
-| walker |  | 6085 | 0 | c decl at neco.h:169 |  |  | 0.569 |
-| walker |  | 6097 | 12 | c decl doc at neco.h:169 |  |  | 0.571 |
-| ns | 6119 |  | 390 | The scheduler, context switching, and the thread-local runtime | 3.5 |  | 0.556 |
-| walker |  | 6148 | 51 | c decl doc at neco.h:149 |  |  | 0.557 |
-| walker |  | 6162 | 14 | docs/API.md section #2 |  |  | 0.557 |
-| walker |  | 6176 | 14 | docs/API.md section #7 |  |  | 0.557 |
-| walker |  | 6190 | 14 | docs/API.md section #13 |  |  | 0.557 |
+| walker |  | 5998 | 518 | c decl names surface #2 in neco.h |  |  | 0.569 |
+| walker |  | 5998 | 0 | c decl at neco.h:135 |  |  | 0.569 |
+| walker |  | 5998 | 0 | c decl at neco.h:149 |  |  | 0.569 |
+| walker |  | 5998 | 0 | c decl at neco.h:169 |  |  | 0.569 |
+| walker |  | 6010 | 12 | c decl doc at neco.h:169 |  |  | 0.571 |
+| walker |  | 6061 | 51 | c decl doc at neco.h:149 |  |  | 0.572 |
+| walker |  | 6075 | 14 | docs/API.md section #2 |  |  | 0.572 |
+| walker |  | 6089 | 14 | docs/API.md section #7 |  |  | 0.572 |
+| walker |  | 6103 | 14 | docs/API.md section #13 |  |  | 0.572 |
+| ns | 6119 |  | 390 | The scheduler, context switching, and the thread-local runtime | 3.5 |  | 0.557 |
+| walker |  | 6190 | 87 | c header banner in neco.h |  |  | 0.557 |
 | walker |  | 6205 | 15 | docs/API.md section #12 |  |  | 0.557 |
 | walker |  | 6220 | 15 | docs/API.md section #18 |  |  | 0.557 |
 | walker |  | 6234 | 14 | docs/API.md section #19 |  |  | 0.564 |

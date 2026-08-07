@@ -780,7 +780,7 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 }
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, build_per_file_content, collect_blank_line_groups,
+    FileLines, WalkCtx, budget_chunk_ranges, collect_blank_line_groups,
     collect_doc_comments_above_filtered, comment_only_rows, dedup_sorted, extend_nonblank_rows,
     extend_span, file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows,
     signature_end_row, single_file_lines_content, trim_end_before_next_decl,
@@ -874,12 +874,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        if let Some(content) = build_per_file_content(file, ctx, parse_c, collect_header_banner) {
+        let banner = collect_header_banner(&tree, &source);
+        let banner_is_notice = banner_is_license_notice(&source, &banner);
+        if let Some(content) = single_file_lines_content(file, &source, banner) {
             out.push(Batch {
                 key: CKey::HeaderBanner { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: header_banner_value(file, ctx),
+                value: header_banner_value(file, ctx, banner_is_notice),
             });
         }
 
@@ -2225,11 +2227,84 @@ fn c_source_stem(file: &Path) -> Option<&str> {
     file.file_stem().and_then(|s| s.to_str())
 }
 
-fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn header_banner_value(file: &Path, ctx: &WalkCtx, license_notice: bool) -> f64 {
     // Headers' banner is often the canonical "what is this header"
-    // signal; .c file banners are usually license boilerplate.
-    let cat = if is_header_file(file) { 0.55 } else { 0.05 };
+    // signal; .c file banners are usually license boilerplate, and a
+    // header banner that reads as a license notice is the same
+    // boilerplate wearing the header's tier.
+    let cat = if is_header_file(file) && !license_notice {
+        0.55
+    } else {
+        0.05
+    };
     mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx))
+}
+
+/// Wording that only appears in a copyright / license notice, matched
+/// case-insensitively against a banner's prose.
+const LICENSE_NOTICE_MARKERS: &[&str] = &[
+    "copyright",
+    "licen",
+    "all rights reserved",
+    "permission is hereby granted",
+    "warrant",
+    "redistribut",
+    "free software foundation",
+    "applicable law",
+];
+
+/// True iff a file's top-of-file comment is a license notice rather than
+/// a description of the file: most of its prose sits in paragraphs that
+/// carry notice wording. Such a banner says nothing about the file it
+/// heads, so it prices as boilerplate no matter which kind of file that
+/// is. Notices are scored per paragraph, not per line, because the
+/// wording that identifies one (`Copyright`, `Licensed under`) appears
+/// on a single line of a block whose remaining lines — the grant, the
+/// disclaimer, the URL — are equally contentless.
+fn banner_is_license_notice(source: &str, banner: &FileLines) -> bool {
+    let source_lines: Vec<&str> = source.lines().collect();
+    let mut paragraphs: Vec<(usize, bool)> = Vec::new();
+    let mut previous_row = 0usize;
+    for row in &banner.full {
+        let stripped = source_lines
+            .get(row - 1)
+            .map(|text| strip_comment_markers(text))
+            .unwrap_or_default();
+        let continues = *row == previous_row + 1;
+        previous_row = *row;
+        if stripped.is_empty() {
+            previous_row = 0;
+            continue;
+        }
+        let lower = stripped.to_ascii_lowercase();
+        let is_notice = LICENSE_NOTICE_MARKERS.iter().any(|m| lower.contains(m));
+        match paragraphs.last_mut() {
+            Some((lines, notice)) if continues => {
+                *lines += 1;
+                *notice |= is_notice;
+            }
+            _ => paragraphs.push((1, is_notice)),
+        }
+    }
+    let prose: usize = paragraphs.iter().map(|(lines, _)| lines).sum();
+    let notice: usize = paragraphs
+        .iter()
+        .filter(|(_, notice)| *notice)
+        .map(|(lines, _)| lines)
+        .sum();
+    prose > 0 && notice * 2 >= prose
+}
+
+/// A comment line's prose, with the `//`, `/*`, `*` and `*/` decoration
+/// removed.
+fn strip_comment_markers(line: &str) -> &str {
+    let body = line.trim();
+    let body = body
+        .strip_prefix("/*")
+        .or_else(|| body.strip_prefix("//"))
+        .unwrap_or(body);
+    let body = body.strip_suffix("*/").unwrap_or(body);
+    body.trim_matches(|c: char| c == '*' || c == '/' || c.is_whitespace())
 }
 
 fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {

@@ -185,83 +185,130 @@ Score(3000)=0.547 I=0.707 C=0.423 ns_rows≤3K=17/48 (reached=4 partial=0 missin
 | walker |  | 6844 | 52 | c decl names surface in hw/mcu/dialog/da1469x/include/mcu/da1469x_hal.h |  |  | 0.420 |
 | walker |  | 6857 | 13 | c decl doc at src/typec/usbc.h:50 |  |  | 0.420 |
 | walker |  | 6863 | 6 | c decl doc at src/typec/tcd.h:82 |  |  | 0.420 |
+| walker |  | 6889 | 26 | c includes in src/typec/usbc.h |  |  | 0.420 |
 | ns | 6931 |  | 417 | src/osal/osal.h: the OSAL porting contract | 4.5 |  | 0.409 |
+| walker |  | 6996 | 107 | c decl at src/typec/pd_types.h:126 |  |  | 0.409 |
+| walker |  | 7008 | 12 | c decl names surface #1 in hw/mcu/dialog/da1469x/src/da1469x_clock.c |  |  | 0.409 |
 | ns | 7074 |  | 143 | hw/bsp/board_api.h: complete board porting API (names only) | 4.6 |  | 0.403 |
-| walker |  | 7221 | 358 | c header banner in src/tusb.h |  |  | 0.403 |
 | ns | 7336 |  | 262 | Endpoint API a class driver is allowed to call | 4.7 |  | 0.395 |
-| walker |  | 7579 | 358 | c header banner in src/tusb_option.h |  |  | 0.395 |
-| walker |  | 7605 | 26 | c includes in src/typec/usbc.h |  |  | 0.395 |
 | ns | 7641 |  | 305 | Complete file inventory of every USB class driver | 5.1 |  | 0.375 |
-| walker |  | 7712 | 107 | c decl at src/typec/pd_types.h:126 |  |  | 0.375 |
-| walker |  | 7724 | 12 | c decl names surface #1 in hw/mcu/dialog/da1469x/src/da1469x_clock.c |  |  | 0.375 |
 | ns | 7899 |  | 258 | src/device/usbd.c: the built-in device class-driver table | 5.2 |  | 0.370 |
+| walker |  | 7983 | 975 | c decl names surface in src/common/tusb_common.h |  |  | 0.370 |
+| walker |  | 7983 | 0 | c decl at src/common/tusb_common.h:37 |  |  | 0.370 |
 | ns | 8022 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.367 |
 | ns | 8360 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.360 |
+| walker |  | 8549 | 566 | listing of 'hw/bsp' |  |  | 0.360 |
+| walker |  | 8560 | 11 | listing of 'hw/bsp/pic32mz' |  |  | 0.360 |
+| walker |  | 8572 | 12 | listing of 'hw/bsp/espressif' |  |  | 0.360 |
 | ns | 8583 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.355 |
-| walker |  | 8699 | 975 | c decl names surface in src/common/tusb_common.h |  |  | 0.355 |
-| walker |  | 8699 | 0 | c decl at src/common/tusb_common.h:37 |  |  | 0.355 |
+| walker |  | 8588 | 16 | listing of 'hw/bsp/broadcom_32bit' |  |  | 0.355 |
+| walker |  | 8593 | 5 | listing of 'hw/bsp/broadcom_32bit/boards' |  |  | 0.355 |
+| walker |  | 8609 | 16 | listing of 'hw/bsp/broadcom_64bit' |  |  | 0.355 |
+| walker |  | 8625 | 16 | listing of 'hw/bsp/ft9xx' |  |  | 0.355 |
+| walker |  | 8631 | 6 | listing of 'hw/bsp/ft9xx/boards' |  |  | 0.355 |
+| walker |  | 8647 | 16 | listing of 'hw/bsp/hpmicro' |  |  | 0.355 |
+| walker |  | 8656 | 9 | listing of 'hw/bsp/hpmicro/boards' |  |  | 0.355 |
+| walker |  | 8672 | 16 | listing of 'hw/bsp/same7x' |  |  | 0.355 |
+| walker |  | 8682 | 10 | listing of 'hw/bsp/espressif/components' |  |  | 0.355 |
+| walker |  | 8687 | 5 | listing of 'hw/bsp/espressif/components/tinyusb_src' |  |  | 0.355 |
+| walker |  | 8707 | 20 | listing of 'hw/bsp/f1c100s' |  |  | 0.355 |
+| walker |  | 8714 | 7 | listing of 'hw/bsp/f1c100s/boards' |  |  | 0.355 |
+| walker |  | 8727 | 13 | listing of 'hw/bsp/broadcom_64bit/boards' |  |  | 0.355 |
+| walker |  | 8750 | 23 | listing of 'hw/bsp/cxd56' |  |  | 0.355 |
+| walker |  | 8755 | 5 | listing of 'hw/bsp/cxd56/boards' |  |  | 0.355 |
+| walker |  | 8761 | 6 | listing of 'hw/bsp/cxd56/FreeRTOSConfig' |  |  | 0.355 |
+| walker |  | 8784 | 23 | listing of 'hw/bsp/efm32' |  |  | 0.355 |
+| walker |  | 8790 | 6 | listing of 'hw/bsp/efm32/FreeRTOSConfig' |  |  | 0.355 |
 | ns | 8792 |  | 209 | src/common/tusb_types.h: packed USB descriptor structs and the setup packet | 6.2 |  | 0.351 |
+| walker |  | 8796 | 6 | listing of 'hw/bsp/efm32/boards' |  |  | 0.351 |
+| walker |  | 8819 | 23 | listing of 'hw/bsp/kinetis_k' |  |  | 0.351 |
+| walker |  | 8825 | 6 | listing of 'hw/bsp/kinetis_k/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 8848 | 23 | listing of 'hw/bsp/kinetis_k32l' |  |  | 0.351 |
+| walker |  | 8854 | 6 | listing of 'hw/bsp/kinetis_k32l/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 8877 | 23 | listing of 'hw/bsp/lpc11' |  |  | 0.351 |
+| walker |  | 8883 | 6 | listing of 'hw/bsp/lpc11/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 8906 | 23 | listing of 'hw/bsp/lpc13' |  |  | 0.351 |
+| walker |  | 8912 | 6 | listing of 'hw/bsp/lpc13/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 8920 | 8 | listing of 'hw/bsp/lpc13/boards' |  |  | 0.351 |
+| walker |  | 8943 | 23 | listing of 'hw/bsp/lpc15' |  |  | 0.351 |
+| walker |  | 8949 | 6 | listing of 'hw/bsp/lpc15/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 8957 | 8 | listing of 'hw/bsp/lpc15/boards' |  |  | 0.351 |
+| walker |  | 8980 | 23 | listing of 'hw/bsp/lpc17' |  |  | 0.351 |
+| walker |  | 8986 | 6 | listing of 'hw/bsp/lpc17/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 9009 | 23 | listing of 'hw/bsp/lpc18' |  |  | 0.351 |
+| walker |  | 9015 | 6 | listing of 'hw/bsp/lpc18/FreeRTOSConfig' |  |  | 0.351 |
+| walker |  | 9038 | 23 | listing of 'hw/bsp/lpc40' |  |  | 0.351 |
+| walker |  | 9044 | 6 | listing of 'hw/bsp/lpc40/FreeRTOSConfig' |  |  | 0.351 |
 | ns | 9047 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.344 |
+| walker |  | 9052 | 8 | listing of 'hw/bsp/lpc40/boards' |  |  | 0.344 |
+| walker |  | 9075 | 23 | listing of 'hw/bsp/lpc43' |  |  | 0.344 |
+| walker |  | 9081 | 6 | listing of 'hw/bsp/lpc43/FreeRTOSConfig' |  |  | 0.344 |
+| walker |  | 9104 | 23 | listing of 'hw/bsp/lpc51' |  |  | 0.344 |
+| walker |  | 9110 | 6 | listing of 'hw/bsp/lpc51/FreeRTOSConfig' |  |  | 0.344 |
+| walker |  | 9119 | 9 | listing of 'hw/bsp/lpc51/boards' |  |  | 0.344 |
+| walker |  | 9142 | 23 | listing of 'hw/bsp/lpc55' |  |  | 0.344 |
+| walker |  | 9148 | 6 | listing of 'hw/bsp/lpc55/FreeRTOSConfig' |  |  | 0.344 |
+| walker |  | 9171 | 23 | listing of 'hw/bsp/mm32' |  |  | 0.344 |
+| walker |  | 9177 | 6 | listing of 'hw/bsp/mm32/FreeRTOSConfig' |  |  | 0.344 |
+| walker |  | 9200 | 23 | listing of 'hw/bsp/msp430' |  |  | 0.344 |
+| walker |  | 9206 | 6 | listing of 'hw/bsp/msp430/FreeRTOSConfig' |  |  | 0.344 |
+| walker |  | 9216 | 10 | listing of 'hw/bsp/msp430/boards' |  |  | 0.344 |
 | ns | 9235 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.341 |
-| walker |  | 9265 | 566 | listing of 'hw/bsp' |  |  | 0.341 |
-| walker |  | 9276 | 11 | listing of 'hw/bsp/pic32mz' |  |  | 0.341 |
-| walker |  | 9288 | 12 | listing of 'hw/bsp/espressif' |  |  | 0.341 |
-| walker |  | 9304 | 16 | listing of 'hw/bsp/broadcom_32bit' |  |  | 0.341 |
-| walker |  | 9309 | 5 | listing of 'hw/bsp/broadcom_32bit/boards' |  |  | 0.341 |
-| walker |  | 9325 | 16 | listing of 'hw/bsp/broadcom_64bit' |  |  | 0.341 |
-| walker |  | 9341 | 16 | listing of 'hw/bsp/ft9xx' |  |  | 0.341 |
-| walker |  | 9347 | 6 | listing of 'hw/bsp/ft9xx/boards' |  |  | 0.341 |
-| walker |  | 9363 | 16 | listing of 'hw/bsp/hpmicro' |  |  | 0.341 |
-| walker |  | 9372 | 9 | listing of 'hw/bsp/hpmicro/boards' |  |  | 0.341 |
-| walker |  | 9388 | 16 | listing of 'hw/bsp/same7x' |  |  | 0.341 |
-| walker |  | 9398 | 10 | listing of 'hw/bsp/espressif/components' |  |  | 0.341 |
-| walker |  | 9403 | 5 | listing of 'hw/bsp/espressif/components/tinyusb_src' |  |  | 0.341 |
-| walker |  | 9423 | 20 | listing of 'hw/bsp/f1c100s' |  |  | 0.341 |
-| walker |  | 9430 | 7 | listing of 'hw/bsp/f1c100s/boards' |  |  | 0.341 |
-| walker |  | 9443 | 13 | listing of 'hw/bsp/broadcom_64bit/boards' |  |  | 0.341 |
-| walker |  | 9466 | 23 | listing of 'hw/bsp/cxd56' |  |  | 0.341 |
-| walker |  | 9471 | 5 | listing of 'hw/bsp/cxd56/boards' |  |  | 0.341 |
-| walker |  | 9477 | 6 | listing of 'hw/bsp/cxd56/FreeRTOSConfig' |  |  | 0.341 |
-| walker |  | 9500 | 23 | listing of 'hw/bsp/efm32' |  |  | 0.341 |
-| walker |  | 9506 | 6 | listing of 'hw/bsp/efm32/FreeRTOSConfig' |  |  | 0.341 |
-| walker |  | 9512 | 6 | listing of 'hw/bsp/efm32/boards' |  |  | 0.341 |
-| walker |  | 9535 | 23 | listing of 'hw/bsp/kinetis_k' |  |  | 0.341 |
-| walker |  | 9541 | 6 | listing of 'hw/bsp/kinetis_k/FreeRTOSConfig' |  |  | 0.341 |
-| walker |  | 9564 | 23 | listing of 'hw/bsp/kinetis_k32l' |  |  | 0.341 |
-| walker |  | 9570 | 6 | listing of 'hw/bsp/kinetis_k32l/FreeRTOSConfig' |  |  | 0.341 |
-| walker |  | 9593 | 23 | listing of 'hw/bsp/lpc11' |  |  | 0.341 |
-| walker |  | 9599 | 6 | listing of 'hw/bsp/lpc11/FreeRTOSConfig' |  |  | 0.341 |
-| walker |  | 9622 | 23 | listing of 'hw/bsp/lpc13' |  |  | 0.341 |
-| walker |  | 9628 | 6 | listing of 'hw/bsp/lpc13/FreeRTOSConfig' |  |  | 0.330 |
+| walker |  | 9239 | 23 | listing of 'hw/bsp/msp432e4' |  |  | 0.341 |
+| walker |  | 9245 | 6 | listing of 'hw/bsp/msp432e4/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9254 | 9 | listing of 'hw/bsp/msp432e4/boards' |  |  | 0.341 |
+| walker |  | 9277 | 23 | listing of 'hw/bsp/nuc100_120' |  |  | 0.341 |
+| walker |  | 9283 | 6 | listing of 'hw/bsp/nuc100_120/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9291 | 8 | listing of 'hw/bsp/nuc100_120/boards' |  |  | 0.341 |
+| walker |  | 9314 | 23 | listing of 'hw/bsp/nuc121_125' |  |  | 0.341 |
+| walker |  | 9320 | 6 | listing of 'hw/bsp/nuc121_125/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9343 | 23 | listing of 'hw/bsp/nuc126' |  |  | 0.341 |
+| walker |  | 9349 | 6 | listing of 'hw/bsp/nuc126/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9357 | 8 | listing of 'hw/bsp/nuc126/boards' |  |  | 0.341 |
+| walker |  | 9380 | 23 | listing of 'hw/bsp/nuc505' |  |  | 0.341 |
+| walker |  | 9386 | 6 | listing of 'hw/bsp/nuc505/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9394 | 8 | listing of 'hw/bsp/nuc505/boards' |  |  | 0.341 |
+| walker |  | 9417 | 23 | listing of 'hw/bsp/rw61x' |  |  | 0.341 |
+| walker |  | 9423 | 6 | listing of 'hw/bsp/rw61x/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9429 | 6 | listing of 'hw/bsp/rw61x/boards' |  |  | 0.341 |
+| walker |  | 9452 | 23 | listing of 'hw/bsp/rx' |  |  | 0.341 |
+| walker |  | 9458 | 6 | listing of 'hw/bsp/rx/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9471 | 13 | listing of 'hw/bsp/rx/boards' |  |  | 0.341 |
+| walker |  | 9494 | 23 | listing of 'hw/bsp/samd11' |  |  | 0.341 |
+| walker |  | 9500 | 6 | listing of 'hw/bsp/samd11/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9523 | 23 | listing of 'hw/bsp/samd2x_l2x' |  |  | 0.341 |
+| walker |  | 9529 | 6 | listing of 'hw/bsp/samd2x_l2x/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9552 | 23 | listing of 'hw/bsp/samd5x_e5x' |  |  | 0.341 |
+| walker |  | 9558 | 6 | listing of 'hw/bsp/samd5x_e5x/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9581 | 23 | listing of 'hw/bsp/tm4c' |  |  | 0.341 |
+| walker |  | 9587 | 6 | listing of 'hw/bsp/tm4c/FreeRTOSConfig' |  |  | 0.341 |
+| walker |  | 9610 | 23 | listing of 'hw/bsp/xmc4000' |  |  | 0.341 |
+| walker |  | 9616 | 6 | listing of 'hw/bsp/xmc4000/FreeRTOSConfig' |  |  | 0.341 |
 | ns | 9628 |  | 393 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.330 |
-| walker |  | 9636 | 8 | listing of 'hw/bsp/lpc13/boards' |  |  | 0.330 |
-| walker |  | 9659 | 23 | listing of 'hw/bsp/lpc15' |  |  | 0.330 |
-| walker |  | 9665 | 6 | listing of 'hw/bsp/lpc15/FreeRTOSConfig' |  |  | 0.330 |
-| walker |  | 9673 | 8 | listing of 'hw/bsp/lpc15/boards' |  |  | 0.330 |
-| walker |  | 9696 | 23 | listing of 'hw/bsp/lpc17' |  |  | 0.330 |
-| walker |  | 9702 | 6 | listing of 'hw/bsp/lpc17/FreeRTOSConfig' |  |  | 0.330 |
-| walker |  | 9725 | 23 | listing of 'hw/bsp/lpc18' |  |  | 0.330 |
-| walker |  | 9731 | 6 | listing of 'hw/bsp/lpc18/FreeRTOSConfig' |  |  | 0.330 |
-| walker |  | 9754 | 23 | listing of 'hw/bsp/lpc40' |  |  | 0.330 |
-| walker |  | 9760 | 6 | listing of 'hw/bsp/lpc40/FreeRTOSConfig' |  |  | 0.330 |
-| walker |  | 9768 | 8 | listing of 'hw/bsp/lpc40/boards' |  |  | 0.330 |
+| walker |  | 9630 | 14 | listing of 'hw/bsp/kinetis_k/boards' |  |  | 0.330 |
+| walker |  | 9655 | 25 | listing of 'hw/bsp/gd32vf103' |  |  | 0.330 |
+| walker |  | 9663 | 8 | listing of 'hw/bsp/gd32vf103/boards' |  |  | 0.330 |
+| walker |  | 9678 | 15 | listing of 'hw/bsp/lpc17/boards' |  |  | 0.330 |
+| walker |  | 9693 | 15 | listing of 'hw/bsp/lpc43/boards' |  |  | 0.330 |
+| walker |  | 9708 | 15 | listing of 'hw/bsp/same7x/boards' |  |  | 0.330 |
+| walker |  | 9735 | 27 | listing of 'hw/bsp/kinetis_kl' |  |  | 0.330 |
+| walker |  | 9741 | 6 | listing of 'hw/bsp/kinetis_kl/FreeRTOSConfig' |  |  | 0.330 |
+| walker |  | 9749 | 8 | listing of 'hw/bsp/kinetis_kl/boards' |  |  | 0.330 |
 | ns | 9771 |  | 143 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.336 |
+| walker |  | 9776 | 27 | listing of 'hw/bsp/lpc54' |  |  | 0.336 |
 | ns | 9779 |  | 8 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.338 |
-| walker |  | 9791 | 23 | listing of 'hw/bsp/lpc43' |  |  | 0.338 |
-| walker |  | 9797 | 6 | listing of 'hw/bsp/lpc43/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9820 | 23 | listing of 'hw/bsp/lpc51' |  |  | 0.338 |
-| walker |  | 9826 | 6 | listing of 'hw/bsp/lpc51/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9835 | 9 | listing of 'hw/bsp/lpc51/boards' |  |  | 0.338 |
-| walker |  | 9858 | 23 | listing of 'hw/bsp/lpc55' |  |  | 0.338 |
-| walker |  | 9864 | 6 | listing of 'hw/bsp/lpc55/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9887 | 23 | listing of 'hw/bsp/mm32' |  |  | 0.338 |
-| walker |  | 9893 | 6 | listing of 'hw/bsp/mm32/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9916 | 23 | listing of 'hw/bsp/msp430' |  |  | 0.338 |
-| walker |  | 9922 | 6 | listing of 'hw/bsp/msp430/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9932 | 10 | listing of 'hw/bsp/msp430/boards' |  |  | 0.338 |
-| walker |  | 9955 | 23 | listing of 'hw/bsp/msp432e4' |  |  | 0.338 |
-| walker |  | 9961 | 6 | listing of 'hw/bsp/msp432e4/FreeRTOSConfig' |  |  | 0.338 |
-| walker |  | 9970 | 9 | listing of 'hw/bsp/msp432e4/boards' |  |  | 0.338 |
+| walker |  | 9782 | 6 | listing of 'hw/bsp/lpc54/FreeRTOSConfig' |  |  | 0.338 |
+| walker |  | 9798 | 16 | listing of 'hw/bsp/lpc18/boards' |  |  | 0.338 |
+| walker |  | 9814 | 16 | listing of 'hw/bsp/samd11/boards' |  |  | 0.338 |
+| walker |  | 9843 | 29 | listing of 'hw/bsp/imxrt' |  |  | 0.338 |
+| walker |  | 9849 | 6 | listing of 'hw/bsp/imxrt/FreeRTOSConfig' |  |  | 0.338 |
+| walker |  | 9866 | 17 | listing of 'hw/bsp/nuc121_125/boards' |  |  | 0.338 |
+| walker |  | 9883 | 17 | listing of 'hw/bsp/pic32mz/boards' |  |  | 0.338 |
+| walker |  | 9900 | 17 | listing of 'hw/bsp/xmc4000/boards' |  |  | 0.338 |
+| walker |  | 9931 | 31 | listing of 'hw/bsp/maxim' |  |  | 0.338 |
+| walker |  | 9937 | 6 | listing of 'hw/bsp/maxim/FreeRTOSConfig' |  |  | 0.338 |
+| walker |  | 9969 | 32 | listing of 'hw/bsp/stm32wb' |  |  | 0.338 |
+| walker |  | 9975 | 6 | listing of 'hw/bsp/stm32wb/FreeRTOSConfig' |  |  | 0.338 |
 | ns | 9981 |  | 202 | Maintenance tooling and documentation sources | 7.5 |  | 0.368 |
-| walker |  | 9993 | 23 | listing of 'hw/bsp/nuc100_120' |  |  | 0.368 |
-| walker |  | 9999 | 6 | listing of 'hw/bsp/nuc100_120/FreeRTOSConfig' |  |  | 0.368 |
+| walker |  | 9984 | 9 | listing of 'hw/bsp/stm32wb/boards' |  |  | 0.368 |
+| walker |  | 9996 | 12 | listing of 'hw/bsp/broadcom_32bit/boards/raspberrypi_zero' |  |  | 0.368 |
