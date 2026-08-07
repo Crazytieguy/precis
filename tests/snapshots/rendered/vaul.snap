@@ -178,7 +178,7 @@ src/
          134→  onAnimationEnd?: (open: boolean) => void;
          135→  preventScrollRestoration?: boolean;
          136→  autoFocus?: boolean;
-         137→} & (WithFadeFromProps | WithoutFadeFromProps);
+        …
          139→export function Root({
          140→  open: openProp,
          141→  onOpenChange,
@@ -233,6 +233,7 @@ src/
         …
         1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
         …
+        1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
         1130→export function Portal(props: PortalProps) {
         …
         1137→export const Drawer = {

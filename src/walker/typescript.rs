@@ -1714,9 +1714,6 @@ fn find_module_items(
         let Some(kind) = decl_kind(child) else {
             continue;
         };
-        if is_private_props_type(child, kind, source) {
-            continue;
-        }
         if is_require_declaration(child, source) {
             continue;
         }
@@ -1737,13 +1734,6 @@ fn find_module_items(
         });
     }
     out
-}
-
-fn is_private_props_type(node: Node, kind: ItemKind, source: &str) -> bool {
-    if !matches!(kind, ItemKind::Interface | ItemKind::TypeAlias) {
-        return false;
-    }
-    name_of(node, source).is_some_and(|name| name.ends_with("Props"))
 }
 
 fn local_decl_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
@@ -4151,11 +4141,27 @@ fn oversized_export_class_chunks(
 fn member_surface_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
     match kind {
         ItemKind::Interface => decl.child_by_field_name("body"),
-        ItemKind::TypeAlias => decl
-            .child_by_field_name("value")
-            .filter(|value| value.kind() == "object_type"),
+        ItemKind::TypeAlias => decl.child_by_field_name("value").and_then(own_object_type),
         ItemKind::Class | ItemKind::Default if is_class_node(decl) => {
             decl.child_by_field_name("body")
+        }
+        _ => None,
+    }
+}
+
+/// The member block an alias declares in its own right. A mixin
+/// intersection (`Base & Other & { … }`) states the alias's own members
+/// in its trailing object literal — the earlier operands name types
+/// declared elsewhere and surface nothing here.
+fn own_object_type(value: Node<'_>) -> Option<Node<'_>> {
+    match value.kind() {
+        "object_type" => Some(value),
+        "intersection_type" => {
+            let mut cursor = value.walk();
+            value
+                .named_children(&mut cursor)
+                .filter(|operand| operand.kind() == "object_type")
+                .last()
         }
         _ => None,
     }
@@ -5801,6 +5807,48 @@ export function old() {}
         assert!(
             declared_package_entry_sources(&root).is_empty(),
             "absolute and parent-traversing manifest targets must be ignored"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_mixin_intersection_alias_surfaces_its_own_members() {
+        // `Base & Other & { … }` declares its members in the trailing
+        // object literal; the named operands are declared elsewhere.
+        let source = "\
+type Props = Children &
+  DivProps & {
+    label?: string
+    progress?: number
+  }
+";
+        let tree = parse(source);
+        let alias = tree.root_node().child(0).unwrap();
+        assert_eq!(
+            member_surface_spans(ItemKind::TypeAlias, alias, source),
+            vec![(3, 3), (4, 4)]
+        );
+    }
+
+    #[test]
+    fn walker_typescript_module_private_type_declarations_are_module_items() {
+        // Every module-private declaration is roster material; nothing
+        // about a declaration's *name* decides whether it exists.
+        let source = "\
+type ItemProps = { disabled?: boolean }
+type Store = { emit: () => void }
+export function run(): void {}
+";
+        let tree = parse(source);
+        let items = find_module_items(
+            &tree,
+            source,
+            &source.lines().collect::<Vec<_>>(),
+            &HashSet::from([3]),
+            &HashSet::new(),
+        );
+        assert_eq!(
+            items.iter().map(|item| item.start_line).collect::<Vec<_>>(),
+            vec![1, 2]
         );
     }
 

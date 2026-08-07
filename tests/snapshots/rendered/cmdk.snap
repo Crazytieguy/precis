@@ -116,25 +116,48 @@ cmdk/
     src/
         command-score.ts …
         index.tsx
-            …
+               1→'use client'
+               2→
+               3→import * as RadixDialog from '@radix-ui/react-dialog'
+               4→import * as React from 'react'
+               5→import { commandScore } from './command-score'
+               6→import { Primitive } from '@radix-ui/react-primitive'
+               7→import { useId } from '@radix-ui/react-id'
+               8→import { composeRefs } from '@radix-ui/react-compose-refs'
               10→type Children = { children?: React.ReactNode }
+              11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
+              12→
+              13→type LoadingProps = Children &
+            …
+              23→type EmptyProps = Children & DivProps & {}
+              24→type SeparatorProps = DivProps & {
+              25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
+              26→  alwaysRender?: boolean
+              27→}
+              28→type DialogProps = RadixDialog.DialogProps &
+            …
+              37→type ListProps = Children &
+              38→  DivProps & {
+              39→    /**
+              40→     * Accessible label for this List of suggestions. Not shown visibly.
+              41→     */
+              42→    label?: string
+              43→  }
+              44→type ItemProps = Children &
+            …
+              60→type GroupProps = Children &
+            …
+              69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
             …
               79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
+              80→type CommandProps = Children &
             …
              123→type Context = {
             …
              137→type State = {
-             138→  search: string
-             139→  value: string
-             140→  selectedItemId?: string
-             141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
-             142→}
+            …
              143→type Store = {
-             144→  subscribe: (callback: () => void) => () => void
-             145→  snapshot: () => State
-             146→  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
-             147→  emit: () => void
-             148→}
+            …
              149→type Group = {
              150→  id: string
              151→  forceMount?: boolean
@@ -189,15 +212,7 @@ cmdk/
              909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
             …
              930→const pkg = Object.assign(Command, {
-             931→  List,
-             932→  Item,
-             933→  Input,
-             934→  Group,
-             935→  Separator,
-             936→  Dialog,
-             937→  Empty,
-             938→  Loading,
-             939→})
+            …
              941→export { useCmdk as useCommandState }
              942→export { pkg as Command }
              943→export { defaultFilter }
@@ -226,11 +241,6 @@ cmdk/
             1004→function useCmdk<T = any>(selector: (state: State) => T): T {
             …
             1010→function useValue(
-            1011→  id: string,
-            1012→  ref: React.RefObject<HTMLElement>,
-            1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
-            1014→  aliases: string[] = [],
-            1015→) {
             …
             1046→const useScheduleLayoutEffect = () => {
             …
