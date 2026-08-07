@@ -3901,3 +3901,31 @@ them; what it adds is a *conditioned size shape* neither had tried:
   source/README byte ratio: carriers span 0.59 to 92 on that ratio with
   the danger fixtures interleaved. Do not respend a lane looking for
   that separator without a new class of signal.
+
+## Session 2026-08-06b close (evening wave): 0.6428 → 0.6497
+
+Final grid (549/549 green): 1000 0.6289→0.6311 · 1442 0.6434→0.6498 ·
+2080 0.6479→0.6478 · **3000 0.6428→0.6497 (+0.0069)** · 4327
+0.6067→0.6129 · 6240 0.5773→0.5842 · 9000 0.5730→0.5780. Validation:
+0.5505, byte-unchanged — no validation baseline was rewritten under
+the close regen, which is surprising against a +0.0069 training move;
+treat the next session's validation read as the meaningful one.
+
+13 ships (see the per-lane entries above and
+ignore/session-2026-08-06b/session-report.md), the departitioning
+story completing across three walkers, plus fidelity fixes from two
+read-only audits. Composition ran ABOVE additive (+0.0017 @3000 at
+the mid-session checkpoint) — the departition × README-stub-damp ×
+docs-nav-listing cluster interacts positively.
+
+Review loop: 6 GPT batches, real majors in 4; every finding fixed and
+merged same-session EXCEPT two Mediums carried to next session with
+fix shapes recorded in the forward queue (RM thin-source gate reads
+fallback-language repos as zero-source; MD2 SummaryWhole misses
+LISTING_TIER_SCALE).
+
+**Three hard gates stand before any further iteration work** (user
+directive, recorded in session memory): worktree CoW target pre-warm,
+stale-worktree disk cleanup, and a keep/redesign discussion of the
+diagnose_loss bin. Next-session source of truth:
+ignore/session-2026-08-06b/forward-queue.md.
