@@ -3567,7 +3567,7 @@ fn literal_roster_value(
     js_factor: f64,
     element_count: usize,
 ) -> f64 {
-    export_member_names_value(file, kind, ctx, js_factor, element_count, 1.0)
+    export_member_names_value(file, kind, ctx, js_factor, element_count)
 }
 
 /// Module-private classes carry per-method query value (constructors,
@@ -6105,6 +6105,7 @@ export function run(): void {}
             &source.lines().collect::<Vec<_>>(),
             &HashSet::from([3]),
             &HashSet::new(),
+            None,
         );
         assert_eq!(
             items.iter().map(|item| item.start_line).collect::<Vec<_>>(),
