@@ -874,6 +874,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
+        let mut banner_key = None;
         if let Some(content) = build_per_file_content(file, ctx, parse_c, collect_header_banner) {
             out.push(Batch {
                 key: CKey::HeaderBanner { file: file.clone() }.into(),
@@ -881,22 +882,28 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 content,
                 value: header_banner_value(file, ctx),
             });
+            banner_key = Some(BatchKey::C(CKey::HeaderBanner { file: file.clone() }));
         }
 
         // NS authors rank include blocks tier 4+; the walker's tiny
         // includes batches otherwise flood the early budget on header-
         // rich trees (tinyusb's ~40 class-header includes inside 3K).
-        // Gate them behind the file's first names-surface chunk — the
-        // include map is reference detail once the file's surface is
-        // on the table. Files with no decl surface keep an ungated
-        // batch: there the includes ARE the file's content.
+        // The include map is reference detail once the file's surface is
+        // on the table, so it gates on whichever surface the file
+        // publishes, cheapest last: the first names-surface chunk, else
+        // the header banner. A file that publishes no surface at all
+        // emits no includes batch rather than falling through to an
+        // ungated crumb — a bare include list renders a confident
+        // "examined, it's plumbing" for a file nothing else covers.
         let includes_lines = collect_includes(&tree, &source);
         let includes_content = single_file_lines_content(file, &source, includes_lines);
-        let push_includes = |out: &mut Vec<Batch<BatchKey>>, predecessor: Option<BatchKey>| {
-            if let Some(content) = includes_content.clone() {
+        let push_includes = |out: &mut Vec<Batch<BatchKey>>, gate: Option<BatchKey>| {
+            if let Some(predecessor) = gate
+                && let Some(content) = includes_content.clone()
+            {
                 out.push(Batch {
                     key: CKey::Includes { file: file.clone() }.into(),
-                    predecessor,
+                    predecessor: Some(predecessor),
                     content,
                     value: includes_value(file, ctx),
                 });
@@ -905,7 +912,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
         let mut decls = find_decls(&tree, &source, file, admits_internal_decls(file, ctx));
         if decls.is_empty() {
-            push_includes(&mut out, None);
+            push_includes(&mut out, banner_key);
             continue;
         }
         let configuration_surface = is_configuration_surface_header(file, &source, &tree, &decls);
@@ -983,7 +990,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         push_includes(
             &mut out,
-            names_chunk0_emitted.then(|| names_predecessors[0].clone()),
+            names_chunk0_emitted
+                .then(|| names_predecessors[0].clone())
+                .or(banner_key),
         );
         let mut configuration_surface_doc_index = 0;
         let mut configuration_surface_aggregate_group_index = 0;

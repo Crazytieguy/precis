@@ -411,16 +411,17 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             }
         }
         let mut names_keys = Vec::with_capacity(chunk_contents.len());
-        // Each roster decl's depth train gates on the chunk that OWNS
-        // its name line, not the tail of the chunk chain: chunk values
-        // are conserved (head-heavy), so the tail chunk carries a
-        // fraction of the catalog's value at nearly the head's cost and
-        // can price past the schedule horizon — gating a decl's train on
-        // it would forfeit the file's depth whenever the tail roster
-        // loses its ratio race. Owning-chunk gating (Go's spelling) also
-        // keeps overlap ancestry local: a decl cannot become schedulable
-        // while a non-ancestor chunk still owns its name row.
+        // Continuation chunks split one roster only for affordability, so
+        // the complete surface is the chain's tail: a roster decl's depth
+        // train gates on the LAST chunk of the chain its name row belongs
+        // to, the same law `MethodSigs` follows below. Gating on the chunk
+        // that merely OWNS the row lets a body render while later chunks
+        // of the same roster are still unbought.
         let mut decl_gate_by_start_line: HashMap<usize, BatchKey> = HashMap::new();
+        // The carved gate is the one chunk outside that chain (an
+        // unchained sibling), so the decls it owns keep gating on it: no
+        // batch descends from both the gate and the chain's tail.
+        let mut carved_gate_key: Option<BatchKey> = None;
         for (chunk_index, content, model_factor) in chunk_contents {
             let key = BatchKey::Python(if chunk_index == 0 {
                 PythonKey::DeclNames { file: file.clone() }
@@ -442,14 +443,14 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             } else {
                 names_keys.last().cloned()
             };
+            if carved && chunk_index == 0 {
+                carved_gate_key = Some(key.clone());
+            }
             // Two top-level statements can share a row (`A = 1; B = 2`),
-            // and a chunker cut can put them in different chunks. Chunks
-            // are emitted in order and each chained continuation is a
-            // descendant of its predecessors, so resolving a shared row
-            // to the LAST claiming chunk gates both claimants on a batch
-            // that descends from every chunk rendering the row. (The
-            // gate/remainder pair, the one unchained seam, cannot share a
-            // row: the gate is closed over shared-row sets.)
+            // and a chunker cut can put them in different chunks; the last
+            // claiming chunk wins, which decides only whether the row
+            // belongs to the gate or to the chain (the gate is closed over
+            // shared-row sets, so it never shares a row with the chain).
             for &index in &names_groups[chunk_index] {
                 decl_gate_by_start_line.insert(roster_decls[index].start_line, key.clone());
             }
@@ -469,6 +470,13 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // The method-signature catalog spans classes across every chunk,
         // so its only overlap-safe predecessor is the full chunk chain.
         let names_chain_gate = names_keys.last().cloned();
+        if let Some(chain_tail) = &names_chain_gate {
+            for gate in decl_gate_by_start_line.values_mut() {
+                if Some(&*gate) != carved_gate_key.as_ref() {
+                    *gate = chain_tail.clone();
+                }
+            }
+        }
 
         // Method-signature catalog — likewise one unified batch. Gated
         // on the names surface: the `Full+Ellipsis` pair can share the

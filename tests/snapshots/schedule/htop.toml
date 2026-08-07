@@ -1,7 +1,7 @@
 fixture = "htop"
 budget = 10000
-cumulative_tokens = 9799
-batch_count = 146
+cumulative_tokens = 9785
+batch_count = 145
 
 [[batches]]
 position = 1
@@ -1713,28 +1713,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 65
-key = 'C(Includes { file: "generic/Demangle.h" })'
-descriptor = "c includes in generic/Demangle.h"
-cost_tokens = 14
-cum_tokens = 4485
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "generic/Demangle.h"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
 key = 'C(Decl { file: "Meter.h", start_line: 25 })'
 descriptor = "c decl at Meter.h:25"
 cost_tokens = 91
-cum_tokens = 4576
+cum_tokens = 4562
 
 [batches.content]
 kind = "lines"
@@ -1748,11 +1730,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 67
+position = 66
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 150 })'
 descriptor = "c aggregate member group at Process.h:81 group 150"
 cost_tokens = 56
-cum_tokens = 4632
+cum_tokens = 4618
 
 [batches.content]
 kind = "lines"
@@ -1798,11 +1780,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'C(DeclNames { file: "LoadAverageMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in LoadAverageMeter.h"
 cost_tokens = 34
-cum_tokens = 4666
+cum_tokens = 4652
 
 [batches.content]
 kind = "lines"
@@ -1824,11 +1806,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 68
 key = 'C(DeclNames { file: "Panel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in Panel.h"
 cost_tokens = 565
-cum_tokens = 5231
+cum_tokens = 5217
 
 [batches.content]
 kind = "lines"
@@ -1882,11 +1864,11 @@ end = 88
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 69
 key = 'C(Decl { file: "Panel.h", start_line: 49 })'
 descriptor = "c decl at Panel.h:49"
 cost_tokens = 44
-cum_tokens = 5275
+cum_tokens = 5261
 
 [batches.content]
 kind = "lines"
@@ -1900,11 +1882,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'C(Decl { file: "Panel.h", start_line: 23 })'
 descriptor = "c decl at Panel.h:23"
 cost_tokens = 120
-cum_tokens = 5395
+cum_tokens = 5381
 
 [batches.content]
 kind = "lines"
@@ -1918,11 +1900,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 72
+position = 71
 key = 'C(Decl { file: "Process.h", start_line: 41 })'
 descriptor = "c decl at Process.h:41"
 cost_tokens = 130
-cum_tokens = 5525
+cum_tokens = 5511
 
 [batches.content]
 kind = "lines"
@@ -1936,11 +1918,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'C(AggregateMemberGroup { file: "Machine.h", start_line: 38, group_start_line: 46 })'
 descriptor = "c aggregate member group at Machine.h:38 group 46"
 cost_tokens = 59
-cum_tokens = 5584
+cum_tokens = 5570
 
 [batches.content]
 kind = "lines"
@@ -1954,11 +1936,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'C(Includes { file: "generic/openzfs_sysctl.h" })'
 descriptor = "c includes in generic/openzfs_sysctl.h"
 cost_tokens = 15
-cum_tokens = 5599
+cum_tokens = 5585
 
 [batches.content]
 kind = "lines"
@@ -1972,11 +1954,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'C(DeclNames { file: "UptimeMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in UptimeMeter.h"
 cost_tokens = 36
-cum_tokens = 5635
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1998,11 +1980,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 75
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 165 })'
 descriptor = "c aggregate member group at Process.h:81 group 165"
 cost_tokens = 61
-cum_tokens = 5696
+cum_tokens = 5682
 
 [batches.content]
 kind = "lines"
@@ -2048,11 +2030,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Markdown(ReadmeHeadline { file: "netbsd/README.md" })'
 descriptor = "README headline in netbsd/README.md"
 cost_tokens = 67
-cum_tokens = 5763
+cum_tokens = 5749
 
 [batches.content]
 kind = "lines"
@@ -2066,11 +2048,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 98 })'
 descriptor = "c aggregate member group at Process.h:81 group 98"
 cost_tokens = 65
-cum_tokens = 5828
+cum_tokens = 5814
 
 [batches.content]
 kind = "lines"
@@ -2116,11 +2098,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 79
+position = 78
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 113 })'
 descriptor = "c aggregate member group at Process.h:81 group 113"
 cost_tokens = 65
-cum_tokens = 5893
+cum_tokens = 5879
 
 [batches.content]
 kind = "lines"
@@ -2166,11 +2148,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'C(DeclNames { file: "RowField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in RowField.h"
 cost_tokens = 40
-cum_tokens = 5933
+cum_tokens = 5919
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +2190,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 80
 key = 'C(Decl { file: "RowField.h", start_line: 53 })'
 descriptor = "c decl at RowField.h:53"
 cost_tokens = 0
-cum_tokens = 5933
+cum_tokens = 5919
 
 [batches.content]
 kind = "lines"
@@ -2226,11 +2208,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'C(Decl { file: "RowField.h", start_line: 13 })'
 descriptor = "c decl at RowField.h:13"
 cost_tokens = 10
-cum_tokens = 5943
+cum_tokens = 5929
 
 [batches.content]
 kind = "lines"
@@ -2252,11 +2234,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'C(DeclNames { file: "CommandLine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in CommandLine.h"
 cost_tokens = 43
-cum_tokens = 5986
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -2294,11 +2276,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 83
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 135 })'
 descriptor = "c aggregate member group at Process.h:81 group 135"
 cost_tokens = 67
-cum_tokens = 6053
+cum_tokens = 6039
 
 [batches.content]
 kind = "lines"
@@ -2344,11 +2326,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Markdown(HeadingsOutline { file: "netbsd/README.md" })'
 descriptor = "headings outline in netbsd/README.md"
 cost_tokens = 32
-cum_tokens = 6085
+cum_tokens = 6071
 
 [batches.content]
 kind = "lines"
@@ -2386,11 +2368,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 85
 key = 'C(AggregateMemberGroup { file: "Machine.h", start_line: 38, group_start_line: 53 })'
 descriptor = "c aggregate member group at Machine.h:38 group 53"
 cost_tokens = 72
-cum_tokens = 6157
+cum_tokens = 6143
 
 [batches.content]
 kind = "lines"
@@ -2404,11 +2386,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'C(DeclNames { file: "htop.c", chunk_index: 0 })'
 descriptor = "c decl names surface in htop.c"
 cost_tokens = 34
-cum_tokens = 6191
+cum_tokens = 6177
 
 [batches.content]
 kind = "lines"
@@ -2430,11 +2412,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 87
 key = 'C(Decl { file: "htop.c", start_line: 16 })'
 descriptor = "c decl at htop.c:16"
 cost_tokens = 0
-cum_tokens = 6191
+cum_tokens = 6177
 
 [batches.content]
 kind = "lines"
@@ -2456,11 +2438,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 88
 key = 'C(Includes { file: "Hashtable.h" })'
 descriptor = "c includes in Hashtable.h"
 cost_tokens = 20
-cum_tokens = 6211
+cum_tokens = 6197
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2456,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'C(Includes { file: "generic/gettime.h" })'
 descriptor = "c includes in generic/gettime.h"
 cost_tokens = 20
-cum_tokens = 6231
+cum_tokens = 6217
 
 [batches.content]
 kind = "lines"
@@ -2492,11 +2474,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Plaintext(ManLede { file: "htop.1.in" })'
 descriptor = "man-page NAME + DESCRIPTION in htop.1.in"
 cost_tokens = 89
-cum_tokens = 6320
+cum_tokens = 6306
 
 [batches.content]
 kind = "lines"
@@ -2518,11 +2500,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'C(Decl { file: "Meter.h", start_line: 34 })'
 descriptor = "c decl at Meter.h:34"
 cost_tokens = 122
-cum_tokens = 6442
+cum_tokens = 6428
 
 [batches.content]
 kind = "lines"
@@ -2536,11 +2518,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Fs(DirListing { dir: "linux" })'
 descriptor = "listing of 'linux'"
 cost_tokens = 198
-cum_tokens = 6640
+cum_tokens = 6626
 
 [batches.content]
 kind = "fs"
@@ -2550,11 +2532,11 @@ parent = "linux"
 entries = ["CGroupUtils.c", "CGroupUtils.h", "Compat.c", "Compat.h", "GPU.c", "GPU.h", "HugePageMeter.c", "HugePageMeter.h", "IOPriority.h", "IOPriorityPanel.c", "IOPriorityPanel.h", "LibNl.c", "LibNl.h", "LibSensors.c", "LibSensors.h", "LinuxMachine.c", "LinuxMachine.h", "LinuxProcess.c", "LinuxProcess.h", "LinuxProcessTable.c", "LinuxProcessTable.h", "OpenRCMeter.c", "OpenRCMeter.h", "Platform.c", "Platform.h", "PressureStallMeter.c", "PressureStallMeter.h", "ProcessField.h", "SELinuxMeter.c", "SELinuxMeter.h", "SystemdMeter.c", "SystemdMeter.h", "ZramMeter.c", "ZramMeter.h", "ZramStats.h", "ZswapStats.h"]
 
 [[batches]]
-position = 94
+position = 93
 key = 'C(DeclNames { file: "SignalsPanel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in SignalsPanel.h"
 cost_tokens = 51
-cum_tokens = 6691
+cum_tokens = 6677
 
 [batches.content]
 kind = "lines"
@@ -2592,11 +2574,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 94
 key = 'C(Decl { file: "SignalsPanel.h", start_line: 17 })'
 descriptor = "c decl at SignalsPanel.h:17"
 cost_tokens = 24
-cum_tokens = 6715
+cum_tokens = 6701
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +2592,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'C(Decl { file: "zfs/ZfsArcStats.h", start_line: 10 })'
 descriptor = "c decl at zfs/ZfsArcStats.h:10"
 cost_tokens = 140
-cum_tokens = 6855
+cum_tokens = 6841
 
 [batches.content]
 kind = "lines"
@@ -2628,11 +2610,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'C(DeclNames { file: "DateTimeMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in DateTimeMeter.h"
 cost_tokens = 51
-cum_tokens = 6906
+cum_tokens = 6892
 
 [batches.content]
 kind = "lines"
@@ -2654,11 +2636,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 97
 key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 180 })'
 descriptor = "c aggregate member group at Process.h:81 group 180"
 cost_tokens = 83
-cum_tokens = 6989
+cum_tokens = 6975
 
 [batches.content]
 kind = "lines"
@@ -2720,11 +2702,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 99
+position = 98
 key = 'C(DeclNames { file: "generic/fdstat_sysctl.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in generic/fdstat_sysctl.c"
 cost_tokens = 18
-cum_tokens = 7007
+cum_tokens = 6993
 
 [batches.content]
 kind = "lines"
@@ -2746,11 +2728,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 99
 key = 'C(DeclNames { file: "Process.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in Process.h"
 cost_tokens = 550
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -2940,11 +2922,11 @@ end = 311
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 100
 key = 'C(Decl { file: "Process.h", start_line: 254 })'
 descriptor = "c decl at Process.h:254"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2948,11 @@ end = 255
 kind = "ellipsis"
 
 [[batches]]
-position = 102
+position = 101
 key = 'C(Decl { file: "Process.h", start_line: 258 })'
 descriptor = "c decl at Process.h:258"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -2992,11 +2974,11 @@ end = 259
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 102
 key = 'C(Decl { file: "Process.h", start_line: 262 })'
 descriptor = "c decl at Process.h:262"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3018,11 +3000,11 @@ end = 263
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 103
 key = 'C(Decl { file: "Process.h", start_line: 266 })'
 descriptor = "c decl at Process.h:266"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3044,11 +3026,11 @@ end = 267
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 104
 key = 'C(Decl { file: "Process.h", start_line: 270 })'
 descriptor = "c decl at Process.h:270"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3052,11 @@ end = 271
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 105
 key = 'C(Decl { file: "Process.h", start_line: 274 })'
 descriptor = "c decl at Process.h:274"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3096,11 +3078,11 @@ end = 275
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 106
 key = 'C(Decl { file: "Process.h", start_line: 278 })'
 descriptor = "c decl at Process.h:278"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3122,11 +3104,11 @@ end = 279
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 107
 key = 'C(Decl { file: "Process.h", start_line: 282 })'
 descriptor = "c decl at Process.h:282"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3130,11 @@ end = 283
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 108
 key = 'C(Decl { file: "Process.h", start_line: 286 })'
 descriptor = "c decl at Process.h:286"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3174,11 +3156,11 @@ end = 287
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 109
 key = 'C(Decl { file: "Process.h", start_line: 290 })'
 descriptor = "c decl at Process.h:290"
 cost_tokens = 0
-cum_tokens = 7557
+cum_tokens = 7543
 
 [batches.content]
 kind = "lines"
@@ -3200,11 +3182,11 @@ end = 291
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 110
 key = 'C(Decl { file: "Process.h", start_line: 244 })'
 descriptor = "c decl at Process.h:244"
 cost_tokens = 21
-cum_tokens = 7578
+cum_tokens = 7564
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3200,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'C(DeclBody { file: "Process.h", start_line: 254 })'
 descriptor = "c decl body at Process.h:254"
 cost_tokens = 12
-cum_tokens = 7590
+cum_tokens = 7576
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3218,11 @@ end = 255
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'C(DeclBody { file: "Process.h", start_line: 262 })'
 descriptor = "c decl body at Process.h:262"
 cost_tokens = 12
-cum_tokens = 7602
+cum_tokens = 7588
 
 [batches.content]
 kind = "lines"
@@ -3254,11 +3236,11 @@ end = 263
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'C(DeclBody { file: "Process.h", start_line: 270 })'
 descriptor = "c decl body at Process.h:270"
 cost_tokens = 12
-cum_tokens = 7614
+cum_tokens = 7600
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3254,11 @@ end = 271
 kind = "full"
 
 [[batches]]
-position = 115
+position = 114
 key = 'C(DeclBody { file: "Process.h", start_line: 282 })'
 descriptor = "c decl body at Process.h:282"
 cost_tokens = 12
-cum_tokens = 7626
+cum_tokens = 7612
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3272,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'C(DeclBody { file: "Process.h", start_line: 286 })'
 descriptor = "c decl body at Process.h:286"
 cost_tokens = 13
-cum_tokens = 7639
+cum_tokens = 7625
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3290,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'C(DeclBody { file: "Process.h", start_line: 258 })'
 descriptor = "c decl body at Process.h:258"
 cost_tokens = 14
-cum_tokens = 7653
+cum_tokens = 7639
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3308,11 @@ end = 259
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'C(DeclBody { file: "Process.h", start_line: 266 })'
 descriptor = "c decl body at Process.h:266"
 cost_tokens = 14
-cum_tokens = 7667
+cum_tokens = 7653
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3326,11 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'C(DeclBody { file: "Process.h", start_line: 274 })'
 descriptor = "c decl body at Process.h:274"
 cost_tokens = 14
-cum_tokens = 7681
+cum_tokens = 7667
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3344,11 @@ end = 275
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'C(Decl { file: "CommandLine.h", start_line: 11 })'
 descriptor = "c decl at CommandLine.h:11"
 cost_tokens = 33
-cum_tokens = 7714
+cum_tokens = 7700
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3362,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'C(DeclNames { file: "Meter.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in Meter.h"
 cost_tokens = 466
-cum_tokens = 8180
+cum_tokens = 8166
 
 [batches.content]
 kind = "lines"
@@ -3454,11 +3436,11 @@ end = 157
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 121
 key = 'C(Decl { file: "Meter.h", start_line: 144 })'
 descriptor = "c decl at Meter.h:144"
 cost_tokens = 0
-cum_tokens = 8180
+cum_tokens = 8166
 
 [batches.content]
 kind = "lines"
@@ -3472,11 +3454,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'C(Decl { file: "Meter.h", start_line: 106 })'
 descriptor = "c decl at Meter.h:106"
 cost_tokens = 25
-cum_tokens = 8205
+cum_tokens = 8191
 
 [batches.content]
 kind = "lines"
@@ -3490,11 +3472,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'C(Decl { file: "Meter.h", start_line: 131 })'
 descriptor = "c decl at Meter.h:131"
 cost_tokens = 46
-cum_tokens = 8251
+cum_tokens = 8237
 
 [batches.content]
 kind = "lines"
@@ -3508,11 +3490,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'C(Decl { file: "Meter.h", start_line: 112 })'
 descriptor = "c decl at Meter.h:112"
 cost_tokens = 156
-cum_tokens = 8407
+cum_tokens = 8393
 
 [batches.content]
 kind = "lines"
@@ -3526,11 +3508,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Plaintext(ManLede { file: "pcp-htop.5.in" })'
 descriptor = "man-page NAME + DESCRIPTION in pcp-htop.5.in"
 cost_tokens = 115
-cum_tokens = 8522
+cum_tokens = 8508
 
 [batches.content]
 kind = "lines"
@@ -3544,11 +3526,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'C(Decl { file: "BatteryMeter.h", start_line: 15 })'
 descriptor = "c decl at BatteryMeter.h:15"
 cost_tokens = 33
-cum_tokens = 8555
+cum_tokens = 8541
 
 [batches.content]
 kind = "lines"
@@ -3562,11 +3544,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'C(DeclNames { file: "Panel.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in Panel.h"
 cost_tokens = 645
-cum_tokens = 9200
+cum_tokens = 9186
 
 [batches.content]
 kind = "lines"
@@ -3604,11 +3586,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 128
 key = 'C(Decl { file: "Panel.h", start_line: 93 })'
 descriptor = "c decl at Panel.h:93"
 cost_tokens = 0
-cum_tokens = 9200
+cum_tokens = 9186
 
 [batches.content]
 kind = "lines"
@@ -3622,11 +3604,37 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'C(DeclNames { file: "generic/hostname.c", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/hostname.c"
 cost_tokens = 20
-cum_tokens = 9220
+cum_tokens = 9206
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "generic/hostname.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "generic/hostname.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'C(Decl { file: "generic/hostname.c", start_line: 15 })'
+descriptor = "c decl at generic/hostname.c:15"
+cost_tokens = 0
+cum_tokens = 9206
 
 [batches.content]
 kind = "lines"
@@ -3649,36 +3657,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 131
-key = 'C(Decl { file: "generic/hostname.c", start_line: 15 })'
-descriptor = "c decl at generic/hostname.c:15"
-cost_tokens = 0
-cum_tokens = 9220
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "generic/hostname.c"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "generic/hostname.c"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 132
 key = 'C(Includes { file: "generic/UnwindPtrace.h" })'
 descriptor = "c includes in generic/UnwindPtrace.h"
 cost_tokens = 28
-cum_tokens = 9248
+cum_tokens = 9234
 
 [batches.content]
 kind = "lines"
@@ -3692,11 +3674,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'C(DeclNames { file: "DiskIOMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in DiskIOMeter.h"
 cost_tokens = 69
-cum_tokens = 9317
+cum_tokens = 9303
 
 [batches.content]
 kind = "lines"
@@ -3734,11 +3716,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Markdown(HeadingsOutline { file: "docs/understanding-htop-versions.md" })'
 descriptor = "headings outline in docs/understanding-htop-versions.md"
 cost_tokens = 51
-cum_tokens = 9368
+cum_tokens = 9354
 
 [batches.content]
 kind = "lines"
@@ -3776,11 +3758,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 134
 key = 'C(AggregateMemberGroup { file: "Machine.h", start_line: 38, group_start_line: 39 })'
 descriptor = "c aggregate member group at Machine.h:38 group 39"
 cost_tokens = 98
-cum_tokens = 9466
+cum_tokens = 9452
 
 [batches.content]
 kind = "lines"
@@ -3794,11 +3776,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'C(DeclNames { file: "MeterMode.h", chunk_index: 0 })'
 descriptor = "c decl names surface in MeterMode.h"
 cost_tokens = 45
-cum_tokens = 9511
+cum_tokens = 9497
 
 [batches.content]
 kind = "lines"
@@ -3828,11 +3810,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 136
 key = 'C(DeclBody { file: "Process.h", start_line: 278 })'
 descriptor = "c decl body at Process.h:278"
 cost_tokens = 16
-cum_tokens = 9527
+cum_tokens = 9513
 
 [batches.content]
 kind = "lines"
@@ -3846,11 +3828,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 138
+position = 137
 key = 'C(Includes { file: "zfs/ZfsArcMeter.h" })'
 descriptor = "c includes in zfs/ZfsArcMeter.h"
 cost_tokens = 30
-cum_tokens = 9557
+cum_tokens = 9543
 
 [batches.content]
 kind = "lines"
@@ -3864,11 +3846,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'C(Includes { file: "zfs/ZfsCompressedArcMeter.h" })'
 descriptor = "c includes in zfs/ZfsCompressedArcMeter.h"
 cost_tokens = 30
-cum_tokens = 9587
+cum_tokens = 9573
 
 [batches.content]
 kind = "lines"
@@ -3882,11 +3864,37 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'C(DeclNames { file: "generic/fdstat_sysctl.c", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/fdstat_sysctl.c"
 cost_tokens = 22
-cum_tokens = 9609
+cum_tokens = 9595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "generic/fdstat_sysctl.c"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "generic/fdstat_sysctl.c"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 140
+key = 'C(Decl { file: "generic/fdstat_sysctl.c", start_line: 64 })'
+descriptor = "c decl at generic/fdstat_sysctl.c:64"
+cost_tokens = 0
+cum_tokens = 9595
 
 [batches.content]
 kind = "lines"
@@ -3909,36 +3917,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 141
-key = 'C(Decl { file: "generic/fdstat_sysctl.c", start_line: 64 })'
-descriptor = "c decl at generic/fdstat_sysctl.c:64"
-cost_tokens = 0
-cum_tokens = 9609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "generic/fdstat_sysctl.c"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "generic/fdstat_sysctl.c"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
 key = 'C(DeclNames { file: "linux/HugePageMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in linux/HugePageMeter.h"
 cost_tokens = 17
-cum_tokens = 9626
+cum_tokens = 9612
 
 [batches.content]
 kind = "lines"
@@ -3953,6 +3935,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "linux/HugePageMeter.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'C(DeclNames { file: "linux/SELinuxMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in linux/SELinuxMeter.h"
+cost_tokens = 17
+cum_tokens = 9629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "linux/SELinuxMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "linux/SELinuxMeter.h"
 start = 14
 end = 14
 
@@ -3961,36 +3969,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 143
-key = 'C(DeclNames { file: "linux/SELinuxMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in linux/SELinuxMeter.h"
-cost_tokens = 17
-cum_tokens = 9643
+key = 'C(DeclNames { file: "generic/uname.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in generic/uname.c"
+cost_tokens = 23
+cum_tokens = 9652
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "linux/SELinuxMeter.h"
-start = 13
-end = 13
+path = "generic/uname.c"
+start = 24
+end = 24
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "linux/SELinuxMeter.h"
-start = 14
-end = 14
+path = "generic/uname.c"
+start = 25
+end = 25
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 144
-key = 'C(DeclNames { file: "generic/uname.c", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in generic/uname.c"
-cost_tokens = 23
-cum_tokens = 9666
+key = 'C(Decl { file: "generic/uname.c", start_line: 24 })'
+descriptor = "c decl at generic/uname.c:24"
+cost_tokens = 0
+cum_tokens = 9652
 
 [batches.content]
 kind = "lines"
@@ -4013,36 +4021,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 145
-key = 'C(Decl { file: "generic/uname.c", start_line: 24 })'
-descriptor = "c decl at generic/uname.c:24"
-cost_tokens = 0
-cum_tokens = 9666
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "generic/uname.c"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "generic/uname.c"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 146
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 133
-cum_tokens = 9799
+cum_tokens = 9785
 
 [batches.content]
 kind = "lines"

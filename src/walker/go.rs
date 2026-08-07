@@ -335,6 +335,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // package's hello-world example — a canonical-usage demo)
         // ships as a separate gated batch so it is at least
         // purchasable rather than absent from the pool.
+        let mut doc_lede_key: Option<BatchKey> = None;
         if entry_factor > 1.0 || is_package_doc_file(file, &decls) {
             let (lede_lines, body_lines) = collect_package_doc_parts(&tree, &source);
             let lede_emitted =
@@ -345,6 +346,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         content,
                         value: GoRole::PackageDocLede.value(file, ctx, entry_factor, 1.0),
                     });
+                    doc_lede_key = Some(BatchKey::Go(GoKey::PackageDocLede { file: file.clone() }));
                     true
                 } else {
                     false
@@ -436,17 +438,21 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // cheapest batch any source file offers, so the first token ever
         // spent on a file buys `package X` + a list of dependencies —
         // which renders as a confident "examined, it's plumbing" where a
-        // bare filename honestly rendered "not covered". Gating behind
-        // the roster keeps imports purchasable (they really do carry the
-        // dependency surface) while making a declaration listing the
-        // file's first admitted content. Files with no declarations have
-        // no roster to gate on and stay ungated.
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_package_imports(&tree, &source))
+        // bare filename honestly rendered "not covered". So it gates on
+        // whichever surface the file actually publishes, cheapest last:
+        // the declaration roster, else the package-doc lede. A file that
+        // publishes no surface at all emits no imports batch rather than
+        // falling through to an ungated crumb.
+        let imports_gate = names_head_emitted
+            .then(|| BatchKey::Go(names_keys[0].clone()))
+            .or(doc_lede_key);
+        if let Some(predecessor) = imports_gate
+            && let Some(content) =
+                single_file_lines_content(file, &source, collect_package_imports(&tree, &source))
         {
             out.push(Batch {
                 key: GoKey::PackageImports { file: file.clone() }.into(),
-                predecessor: names_head_emitted.then(|| BatchKey::Go(names_keys[0].clone())),
+                predecessor: Some(predecessor),
                 content,
                 value: GoRole::PackageImports.value(file, ctx, entry_factor, 1.0),
             });
@@ -2290,24 +2296,25 @@ package foo
         assert_eq!(lede.full, vec![1, 2]);
     }
 
-    /// `PackageImports` predecessor for the sole `.go` file in a temp dir.
-    fn package_imports_predecessor(src: &str) -> Option<BatchKey> {
+    /// The `PackageImports` batch, if any, for a `.go` file in a temp dir.
+    fn package_imports_batch(stem: &str, src: &str) -> Option<Batch<BatchKey>> {
         let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("subject.go");
+        let path = dir.path().join(format!("{stem}.go"));
         std::fs::write(&path, src).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         expand_source_files(&[path], &ctx)
             .into_iter()
             .find(|b| matches!(b.key, BatchKey::Go(GoKey::PackageImports { .. })))
-            .expect("emits a PackageImports batch")
-            .predecessor
     }
 
     #[test]
     fn go_imports_gate_on_the_files_declaration_roster() {
-        let pred = package_imports_predecessor(
+        let pred = package_imports_batch(
+            "subject",
             "package foo\n\nimport \"strings\"\n\nfunc Foo(s string) string { return s }\n",
-        );
+        )
+        .expect("emits a PackageImports batch")
+        .predecessor;
         assert!(
             matches!(
                 pred,
@@ -2318,10 +2325,27 @@ package foo
     }
 
     #[test]
-    fn go_imports_stay_ungated_when_the_file_declares_nothing() {
-        // No roster exists to gate on, so gating would strand the batch.
-        let pred = package_imports_predecessor("package foo\n\nimport \"strings\"\n");
-        assert_eq!(pred, None);
+    fn go_imports_gate_on_the_doc_lede_when_the_file_declares_nothing() {
+        let pred = package_imports_batch(
+            "doc",
+            "// Package foo wires the thing together.\npackage foo\n\nimport \"strings\"\n",
+        )
+        .expect("emits a PackageImports batch")
+        .predecessor;
+        assert!(
+            matches!(pred, Some(BatchKey::Go(GoKey::PackageDocLede { .. }))),
+            "with no roster the lede is the file's published surface: {pred:?}"
+        );
+    }
+
+    #[test]
+    fn go_imports_are_absent_when_the_file_publishes_no_surface() {
+        // Nothing to refine: a bare import list would render "examined,
+        // it's plumbing" for a file the walker never actually opened.
+        assert!(
+            package_imports_batch("subject", "package foo\n\nimport \"strings\"\n").is_none(),
+            "a surface-less file should emit no imports crumb"
+        );
     }
 
     /// Twelve long declarations: enough rendered cost to clear the split
