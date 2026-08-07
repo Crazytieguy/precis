@@ -300,6 +300,18 @@ pub enum TsKey {
         /// Parent export line.
         start_line: usize,
     },
+    /// One source-order slice of a member-name catalog so large that
+    /// emitting it whole would exceed a plausible whole budget — a
+    /// machine-generated surface, never a hand-written one. Chained:
+    /// slice 0's predecessor is the `Export` header, slice k's is
+    /// slice k-1.
+    ExportMemberNamesChunk {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// Zero-based source-order slice index.
+        chunk_index: usize,
+    },
     /// Continuation chunk of one oversized exported class declaration.
     /// Predecessor: the matching `Export` head or previous tail chunk.
     ExportTail {
@@ -866,6 +878,7 @@ impl InnerKey for TsKey {
                 | TsKey::Export { .. }
                 | TsKey::ExportMemberNames { .. }
                 | TsKey::LiteralRoster { .. }
+                | TsKey::ExportMemberNamesChunk { .. }
                 | TsKey::ModuleItemNames { .. }
                 | TsKey::ModuleItem { .. }
                 | TsKey::ModuleStatements { .. }
@@ -892,6 +905,7 @@ impl InnerKey for TsKey {
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
             TsKey::ExportMemberNames { .. }
+            | TsKey::ExportMemberNamesChunk { .. }
             | TsKey::LiteralRoster { .. }
             | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
@@ -929,6 +943,15 @@ impl InnerKey for TsKey {
             ),
             TsKey::ExportMemberNames { file, start_line } => format!(
                 "export member names at {}:{start_line}",
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberNamesChunk {
+                file,
+                start_line,
+                chunk_index,
+            } => format!(
+                "export member names #{} at {}:{start_line}",
+                chunk_index + 1,
                 display_path(file, root)
             ),
             TsKey::ExportTail {
