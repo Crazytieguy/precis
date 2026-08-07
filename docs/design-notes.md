@@ -3641,3 +3641,42 @@ byte-identical.
   unification* and noted "re-open only if the 3000 frontier moves" —
   the frontier has now moved twice (W5-TS repack, then this lane), so
   it is the standing candidate, but it was not built or measured here.
+
+### Fix pass: the unified roster needs a hard affordability ceiling
+
+Adversarial review of the above found a High: the unified catalog is an
+**unbounded exact batch** in a stop-on-first-ill-fit scheduler.
+`run_with_report` breaks on the first top-ranked batch that does not
+fit, and `schedule_partial_seed` degrades only an FS listing on a
+still-empty schedule — so an exact batch larger than the budget strands
+every token behind it. A roster's cost scales with member count, which
+is unbounded in generated `.d.ts` / schema surfaces, making it the one
+batch class that can exceed any budget. Measured on a synthetic 4000-
+field interface at a 3000-token budget: **290 of 3000 tokens used**.
+Partitioning had been the accidental safeguard, and removing it left
+nothing in its place.
+
+`MEMBER_CATALOG_MAX_TOKENS = 1500` is now a hard ceiling. Above it the
+roster slices at member boundaries into a **chain** (slice 0 gates on
+the `Export` header, slice k on slice k−1), so the member-doc ladder
+keeps a single well-defined owner — the last slice — under the
+last-chunk gating law, exactly as the split export surface does. The
+sibling-ownership hazard 3f97450b fixed cannot recur here precisely
+because these slices chain rather than sit as siblings.
+
+The value treatment is a plain **cost-proportional share**, not the old
+conserved head-premium allocation. Ranking is `value / cost^k` with
+`k = 0.38`, so a slice given `V · c_i/C` scores `(c_i/C)^(1-k)` of the
+unsplit roster's ratio — strictly less for every proper slice. Slicing
+therefore cannot buy an earlier or cheaper way in than the whole roster
+would have been; it only makes the roster affordable at all. The old
+`conserved_catalog_chunk_factors` allocation would *not* have been safe
+here: with two equal slices it hands the head `min(0.5^0.38·1.3, 0.9)`
+= 0.9 at half the cost, a ratio **1.17×** the unsplit whole — which is
+exactly why the head used to jump the queue.
+
+1500 sits ~50% above the largest catalog in the corpus (1009 tokens),
+so the ceiling never fires on hand-written code: the grid is
+byte-identical on all seven budgets and `cargo t` passes with **zero**
+baseline regeneration. Guarded by
+`walker_typescript_unaffordable_member_catalog_does_not_abandon_the_budget`.

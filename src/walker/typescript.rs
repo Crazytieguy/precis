@@ -83,6 +83,21 @@ const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 /// this, the per-method `ExportMember` batches dominate the early
 /// budget on concavity without satisfying any catalog-shape NS row.
 const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
+/// Hard affordability ceiling on a member-name catalog, in rendered
+/// tokens. This is a safety valve, not a calibration knob: the
+/// scheduler stops on the first top-ranked batch that does not fit and
+/// only a seed listing degrades to a prefix, so an exact batch bigger
+/// than the whole budget strands every token behind it. A roster's
+/// cost is proportional to its member count, which is unbounded in
+/// machine-generated `.d.ts` and schema surfaces, so the roster is the
+/// one batch class that can exceed any budget.
+///
+/// 1500 sits ~50% above the largest catalog any fixture in the corpus
+/// produces (1009 tokens, a hand-written `.d.ts` roster) and well
+/// under the smallest budget precis is normally asked to fill, so it
+/// never fires on hand-written code and always leaves a slice that a
+/// real budget can buy.
+const MEMBER_CATALOG_MAX_TOKENS: usize = 1500;
 /// Rendered class surfaces above this cost are outside the early NS
 /// purchase envelope and split at member boundaries.
 const OVERSIZE_EXPORT_SPLIT_TOKENS: usize = 400;
@@ -666,6 +681,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // budget, and a sibling body batch could collide with
                 // the catalog's ellipsis markers (non-ancestor overlap).
                 let mut body_parts_predecessor = oversized_tail_predecessor;
+                // The batch that renders the members' signature rows —
+                // the roster itself, or its last slice when the roster
+                // breached the affordability ceiling.
+                let mut member_row_owner: Option<BatchKey> = None;
                 if let Some(member_catalog) = &member_names_catalog {
                     let content = member_names_catalog_content(
                         file,
@@ -674,24 +693,82 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         member_catalog.truncate_to_name,
                     );
                     if let Some(content) = content {
-                        let key = TsKey::ExportMemberNames {
-                            file: file.clone(),
-                            start_line: item.start_line,
-                        };
-                        out.push(Batch {
-                            key: key.clone().into(),
-                            predecessor: Some(export_predecessor.clone()),
-                            content,
-                            value: export_member_names_value(
-                                file,
-                                item.kind,
-                                ctx,
-                                js_factor,
-                                member_catalog.lines.full.len(),
-                            ) * contract_roster_factor(true),
-                        });
-                        body_parts_predecessor = BatchKey::Typescript(key);
+                        let member_count = member_catalog.lines.full.len();
+                        let roster_value = export_member_names_value(
+                            file,
+                            item.kind,
+                            ctx,
+                            js_factor,
+                            member_count,
+                        ) * contract_roster_factor(true);
+                        let whole_cost = ctx.marginal_tokens(&content);
+                        if whole_cost <= MEMBER_CATALOG_MAX_TOKENS {
+                            let key = TsKey::ExportMemberNames {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            };
+                            out.push(Batch {
+                                key: key.clone().into(),
+                                predecessor: Some(export_predecessor.clone()),
+                                content,
+                                value: roster_value,
+                            });
+                            member_row_owner = Some(BatchKey::Typescript(key));
+                        } else {
+                            let slices =
+                                member_names_catalog_cap_chunks(file, &source, member_catalog, ctx);
+                            let sliced: Vec<(BatchContent, usize)> = slices
+                                .iter()
+                                .filter_map(|lines| {
+                                    member_names_catalog_content(
+                                        file,
+                                        &source,
+                                        lines,
+                                        member_catalog.truncate_to_name,
+                                    )
+                                    .map(|content| {
+                                        let cost = ctx.marginal_tokens(&content);
+                                        (content, cost)
+                                    })
+                                })
+                                .collect();
+                            // Value is split by each slice's share of the
+                            // whole roster's cost. Ranking is
+                            // `value / cost^k` with `k < 1`, so a slice
+                            // scores `(c_i / C)^(1-k)` of the unsplit
+                            // roster's ratio — strictly less than it for
+                            // every proper slice. Slicing therefore never
+                            // buys the reader an earlier, cheaper way in
+                            // than the whole roster would have been; it
+                            // only makes the roster affordable at all.
+                            let total: usize = sliced.iter().map(|(_, cost)| *cost).sum();
+                            let emitted_any = !sliced.is_empty();
+                            let mut predecessor = export_predecessor.clone();
+                            for (chunk_index, (content, cost)) in sliced.into_iter().enumerate() {
+                                let key = TsKey::ExportMemberNamesChunk {
+                                    file: file.clone(),
+                                    start_line: item.start_line,
+                                    chunk_index,
+                                };
+                                let share = if total == 0 {
+                                    0.0
+                                } else {
+                                    cost as f64 / total as f64
+                                };
+                                out.push(Batch {
+                                    key: key.clone().into(),
+                                    predecessor: Some(predecessor),
+                                    content,
+                                    value: roster_value * share,
+                                });
+                                predecessor = BatchKey::Typescript(key);
+                            }
+                            member_row_owner = emitted_any.then_some(predecessor);
+                        }
                     }
+                }
+                if let Some(owner) = &member_row_owner {
+                    body_parts_predecessor = owner.clone();
                 }
                 if split_js_class {
                     for member in &item.class_members {
@@ -791,10 +868,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             return None;
                         }
                         if member_names_catalog.is_some() {
-                            return Some(BatchKey::Typescript(TsKey::ExportMemberNames {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                            }));
+                            // The roster, or — when it breached the
+                            // affordability ceiling — its last slice.
+                            // The slices are a chain, so the last one
+                            // being scheduled means every member's row
+                            // is rendered; this is the same last-chunk
+                            // gate the split export surface uses above.
+                            // `None` when the roster rendered nothing:
+                            // a member whose signature no batch renders
+                            // gets no doc batch.
+                            return member_row_owner.clone();
                         }
                         // The undivided export surface renders every
                         // member header itself.
@@ -4233,6 +4316,49 @@ fn member_names_catalog_content(
     }
 }
 
+/// Slice a catalog that breaches [`MEMBER_CATALOG_MAX_TOKENS`] at member
+/// boundaries in source order, so every member appears exactly once.
+/// Each slice costs at most the ceiling plus one member row — a member
+/// row is the atom, so this bounds the roster's cost by the source's
+/// longest single member line instead of by its member count, which is
+/// the property the scheduler needs.
+fn member_names_catalog_cap_chunks(
+    file: &Path,
+    source: &str,
+    catalog: &MemberNamesCatalog,
+    ctx: &WalkCtx,
+) -> Vec<FileLines> {
+    let lines_for = |range: std::ops::Range<usize>| {
+        let full = catalog.lines.full[range].to_vec();
+        let ellipses = catalog
+            .lines
+            .ellipses
+            .iter()
+            .copied()
+            .filter(|ellipsis| full.iter().any(|line| *ellipsis == line + 1))
+            .collect();
+        FileLines::new(full).with_ellipses(ellipses)
+    };
+    let cost = |range: std::ops::Range<usize>| {
+        member_names_catalog_content(file, source, &lines_for(range), catalog.truncate_to_name)
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    // `min_tail` 0 disables tail merging: merging is what would let a
+    // slice grow past the ceiling after the fact.
+    budget_chunk_ranges(
+        catalog.lines.full.len(),
+        cost,
+        MEMBER_CATALOG_MAX_TOKENS,
+        0,
+        |_| true,
+        |_| true,
+    )
+    .into_iter()
+    .map(lines_for)
+    .collect()
+}
+
 fn class_member_infos(class_decl: Node, src_lines: &[&str]) -> Vec<ClassMemberInfo> {
     if !is_class_node(class_decl) {
         return Vec::new();
@@ -5724,6 +5850,101 @@ export function old() {}
             }
         }
         assert_eq!(covered.len(), 80, "the roster must cover every member");
+    }
+
+    #[test]
+    fn walker_typescript_unaffordable_member_catalog_does_not_abandon_the_budget() {
+        // The scheduler stops on the first top-ranked batch that does
+        // not fit, and only a seed listing degrades to a prefix. An
+        // exact batch larger than the whole budget therefore strands
+        // every token behind it, so a machine-generated roster must not
+        // be allowed to become one.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut generated = String::from("export interface GeneratedSchema {\n");
+        for field in 0..4000 {
+            generated.push_str(&format!(
+                "  descriptive_generated_field_name_{field}: string;\n"
+            ));
+        }
+        generated.push_str("}\n");
+        std::fs::write(root.join("generated.ts"), generated).unwrap();
+        // Independent, cheap, lower-ranked content in its own file: it
+        // shares no predecessor with the roster, so the only thing that
+        // can keep it out of the schedule is the run being abandoned.
+        for module in 0..6 {
+            std::fs::write(
+                root.join(format!("helper_{module}.ts")),
+                format!(
+                    "/** Formats a {module}-style value for display. */\nexport function format_helper_{module}(value: string): string {{\n  return value;\n}}\n"
+                ),
+            )
+            .unwrap();
+        }
+
+        let budget = 3000;
+        let report = Scheduler::new(root.to_path_buf(), FsWalker, budget, None).run_with_report();
+        let rendered = report.tree.render();
+        let scheduled_helpers = (0..6)
+            .filter(|module| rendered.contains(&format!("format_helper_{module}")))
+            .count();
+        assert!(
+            scheduled_helpers > 0,
+            "independent helper content must still schedule behind an oversized roster"
+        );
+        let used = report.tree.total_tokens();
+        assert!(
+            used * 2 > budget,
+            "the run abandoned the budget: {used} of {budget} tokens used"
+        );
+
+        // The roster was sliced, the slices chain, and each one is
+        // bounded by the ceiling plus the single member row that
+        // crossed it.
+        let generated = root.join("generated.ts");
+        assert!(
+            !report.candidates.iter().any(|batch| matches!(
+                &batch.key,
+                BatchKey::Typescript(TsKey::ExportMemberNames { file, .. }) if *file == generated
+            )),
+            "an over-ceiling roster must not also be emitted whole"
+        );
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let mut slices: Vec<_> = report
+            .candidates
+            .iter()
+            .filter_map(|batch| match &batch.key {
+                BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
+                    file, chunk_index, ..
+                }) if *file == generated => Some((*chunk_index, batch)),
+                _ => None,
+            })
+            .collect();
+        slices.sort_by_key(|(chunk_index, _)| *chunk_index);
+        assert!(slices.len() > 1, "the roster must be sliced");
+        for (chunk_index, batch) in &slices {
+            let cost = ctx.marginal_tokens(&batch.content);
+            assert!(
+                cost <= MEMBER_CATALOG_MAX_TOKENS + 64,
+                "slice {chunk_index} costs {cost}, past the ceiling plus one member row"
+            );
+            let expected = match chunk_index.checked_sub(1) {
+                Some(previous) => BatchKey::Typescript(TsKey::ExportMemberNamesChunk {
+                    file: generated.clone(),
+                    start_line: 1,
+                    chunk_index: previous,
+                }),
+                None => BatchKey::Typescript(TsKey::Export {
+                    file: generated.clone(),
+                    start_line: 1,
+                }),
+            };
+            assert_eq!(
+                batch.predecessor.as_ref(),
+                Some(&expected),
+                "slice {chunk_index} must chain onto its predecessor"
+            );
+        }
     }
 
     /// A documented class big enough to split its surface into chunks:
