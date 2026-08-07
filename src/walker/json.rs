@@ -498,9 +498,13 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
 /// ancestor — npm scaffold template content.
 fn is_scaffold_template_path(file: &Path) -> bool {
     file.ancestors().any(|anc| {
-        anc.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-            n == "templates" || n.starts_with("template-") || n.starts_with("cra-template-")
-        })
+        anc.file_name()
+            .and_then(|n| n.to_str())
+            // A bare `templates/` joins the prefixed forms here and only
+            // here: this predicate fires on a manifest, and a directory
+            // that both is named `templates` and ships its own
+            // `package.json` is scaffold payload, not a view layer.
+            .is_some_and(|n| n == "templates" || crate::value::is_scaffold_template_dir_name(n))
     })
 }
 
