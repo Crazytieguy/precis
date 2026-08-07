@@ -673,46 +673,10 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Python(Imports { file: "src/click/_utils.py" })'
-descriptor = "python imports in src/click/_utils.py"
-cost_tokens = 34
-cum_tokens = 2998
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/click/_utils.py"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Python(Imports { file: "src/click/globals.py" })'
-descriptor = "python imports in src/click/globals.py"
-cost_tokens = 36
-cum_tokens = 3034
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/click/globals.py"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
 key = 'Python(DeclNames { file: "src/click/_compat.py" })'
 descriptor = "python decl names surface in src/click/_compat.py"
 cost_tokens = 73
-cum_tokens = 3107
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -782,11 +746,11 @@ end = 324
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Python(Decl { file: "src/click/_compat.py", start_line: 40 })'
 descriptor = "python decl at src/click/_compat.py:40"
 cost_tokens = 0
-cum_tokens = 3107
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -800,11 +764,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Python(Decl { file: "src/click/_compat.py", start_line: 48 })'
 descriptor = "python decl at src/click/_compat.py:48"
 cost_tokens = 0
-cum_tokens = 3107
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -818,11 +782,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Python(Decl { file: "src/click/_compat.py", start_line: 316 })'
 descriptor = "python decl at src/click/_compat.py:316"
 cost_tokens = 0
-cum_tokens = 3107
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -836,11 +800,11 @@ end = 316
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Python(Decl { file: "src/click/_compat.py", start_line: 323 })'
 descriptor = "python decl at src/click/_compat.py:323"
 cost_tokens = 0
-cum_tokens = 3107
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -854,11 +818,11 @@ end = 323
 kind = "full"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Python(DeclDoc { file: "src/click/_compat.py", start_line: 40 })'
 descriptor = "python decl doc at src/click/_compat.py:40"
 cost_tokens = 14
-cum_tokens = 3121
+cum_tokens = 3051
 
 [batches.content]
 kind = "lines"
@@ -872,11 +836,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Python(DeclDoc { file: "src/click/_compat.py", start_line: 48 })'
 descriptor = "python decl doc at src/click/_compat.py:48"
 cost_tokens = 15
-cum_tokens = 3136
+cum_tokens = 3066
 
 [batches.content]
 kind = "lines"
@@ -890,11 +854,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 46
+position = 44
 key = 'Python(DeclBody { file: "src/click/_compat.py", start_line: 40, body_start_line: 42 })'
 descriptor = "python decl body at src/click/_compat.py:40 body 42"
 cost_tokens = 38
-cum_tokens = 3174
+cum_tokens = 3104
 
 [batches.content]
 kind = "lines"
@@ -903,6 +867,42 @@ kind = "lines"
 path = "src/click/_compat.py"
 start = 42
 end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Python(Imports { file: "src/click/_utils.py" })'
+descriptor = "python imports in src/click/_utils.py"
+cost_tokens = 34
+cum_tokens = 3138
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/click/_utils.py"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Python(Imports { file: "src/click/globals.py" })'
+descriptor = "python imports in src/click/globals.py"
+cost_tokens = 36
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/click/globals.py"
+start = 1
+end = 4
 
 [batches.content.spans.render]
 kind = "full"

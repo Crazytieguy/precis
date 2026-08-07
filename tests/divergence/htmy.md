@@ -48,41 +48,41 @@ Score(3000)=0.803 I=0.933 C=0.691 ns_rows≤3K=19/49 (reached=11 partial=1 missi
 | ns | 1428 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.729 |
 | ns | 1616 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.710 |
 | walker |  | 1617 | 226 | python imports #8 in htmy/__init__.py |  |  | 0.805 |
-| walker |  | 1675 | 58 | listing of 'tests' |  |  | 0.810 |
+| walker |  | 1656 | 39 | python decl names surface in htmy/html.py |  |  | 0.805 |
+| walker |  | 1656 | 0 | python decl at htmy/html.py:13 |  |  | 0.805 |
+| walker |  | 1656 | 0 | python decl at htmy/html.py:63 |  |  | 0.805 |
+| walker |  | 1656 | 0 | python decl at htmy/html.py:79 |  |  | 0.805 |
+| walker |  | 1656 | 0 | python decl at htmy/html.py:831 |  |  | 0.805 |
+| walker |  | 1666 | 10 | python decl doc at htmy/html.py:13 |  |  | 0.805 |
+| walker |  | 1678 | 12 | python decl doc at htmy/html.py:63 |  |  | 0.805 |
+| walker |  | 1690 | 12 | python decl doc at htmy/html.py:79 |  |  | 0.805 |
+| walker |  | 1748 | 58 | listing of 'tests' |  |  | 0.810 |
 | ns | 1762 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.783 |
-| walker |  | 1887 | 212 | headings outline in README.md |  |  | 0.784 |
-| walker |  | 1898 | 11 | README.md section #14 |  |  | 0.784 |
-| ns | 1904 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.767 |
-| walker |  | 1914 | 16 | README.md section #4 |  |  | 0.769 |
-| walker |  | 1930 | 16 | README.md section #7 |  |  | 0.770 |
-| walker |  | 1944 | 14 | README.md section #8 |  |  | 0.772 |
-| walker |  | 1961 | 17 | README.md section #13 |  |  | 0.776 |
-| walker |  | 1980 | 19 | README.md section #3 |  |  | 0.781 |
-| walker |  | 2001 | 21 | README.md section #9 |  |  | 0.787 |
-| walker |  | 2022 | 21 | README.md section #12 |  |  | 0.795 |
-| walker |  | 2044 | 22 | README.md section #5 |  |  | 0.801 |
-| walker |  | 2077 | 33 | listing of 'docs/examples' |  |  | 0.801 |
-| walker |  | 2100 | 23 | README.md section #1 |  |  | 0.810 |
-| walker |  | 2121 | 21 | README.md section #2 |  |  | 0.821 |
-| walker |  | 2154 | 33 | README.md section #52 |  |  | 0.821 |
-| ns | 2174 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.796 |
-| walker |  | 2178 | 24 | README.md section #11 |  |  | 0.808 |
-| walker |  | 2203 | 25 | README.md section #6 |  |  | 0.825 |
-| walker |  | 2219 | 16 | README.md section #41 |  |  | 0.825 |
-| walker |  | 2246 | 27 | listing of 'tests/renderer' |  |  | 0.827 |
+| ns | 1904 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.765 |
+| walker |  | 1960 | 212 | headings outline in README.md |  |  | 0.767 |
+| walker |  | 1971 | 11 | README.md section #14 |  |  | 0.767 |
+| walker |  | 1987 | 16 | README.md section #4 |  |  | 0.769 |
+| walker |  | 2003 | 16 | README.md section #7 |  |  | 0.770 |
+| walker |  | 2017 | 14 | README.md section #8 |  |  | 0.772 |
+| walker |  | 2034 | 17 | README.md section #13 |  |  | 0.776 |
+| walker |  | 2053 | 19 | README.md section #3 |  |  | 0.781 |
+| walker |  | 2074 | 21 | README.md section #9 |  |  | 0.787 |
+| walker |  | 2095 | 21 | README.md section #12 |  |  | 0.795 |
+| walker |  | 2117 | 22 | README.md section #5 |  |  | 0.802 |
+| walker |  | 2150 | 33 | listing of 'docs/examples' |  |  | 0.802 |
+| walker |  | 2173 | 23 | README.md section #1 |  |  | 0.810 |
+| ns | 2174 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.786 |
+| walker |  | 2194 | 21 | README.md section #2 |  |  | 0.796 |
+| walker |  | 2227 | 33 | README.md section #52 |  |  | 0.796 |
+| walker |  | 2251 | 24 | README.md section #11 |  |  | 0.808 |
+| walker |  | 2276 | 25 | README.md section #6 |  |  | 0.825 |
+| walker |  | 2292 | 16 | README.md section #41 |  |  | 0.825 |
+| walker |  | 2319 | 27 | listing of 'tests/renderer' |  |  | 0.828 |
 | ns | 2334 |  | 160 | README "XSS prevention": escaping by default, and the two exceptions | 2.6 |  | 0.801 |
-| walker |  | 2400 | 154 | tool.poe config in pyproject.toml |  |  | 0.807 |
+| walker |  | 2473 | 154 | tool.poe config in pyproject.toml |  |  | 0.807 |
 | ns | 2538 |  | 204 | `pyproject.toml` project block: runtime deps, Python floor, optional `lxml` | 3.1 |  | 0.811 |
-| walker |  | 2556 | 156 | tool.mypy+pdm+pyright+pytest config in pyproject.toml |  |  | 0.815 |
-| walker |  | 2587 | 31 | README.md section #10 |  |  | 0.827 |
-| walker |  | 2626 | 39 | python decl names surface in htmy/html.py |  |  | 0.827 |
-| walker |  | 2626 | 0 | python decl at htmy/html.py:13 |  |  | 0.827 |
-| walker |  | 2626 | 0 | python decl at htmy/html.py:63 |  |  | 0.827 |
-| walker |  | 2626 | 0 | python decl at htmy/html.py:79 |  |  | 0.827 |
-| walker |  | 2626 | 0 | python decl at htmy/html.py:831 |  |  | 0.827 |
-| walker |  | 2636 | 10 | python decl doc at htmy/html.py:13 |  |  | 0.827 |
-| walker |  | 2648 | 12 | python decl doc at htmy/html.py:63 |  |  | 0.827 |
-| walker |  | 2660 | 12 | python decl doc at htmy/html.py:79 |  |  | 0.827 |
+| walker |  | 2629 | 156 | tool.mypy+pdm+pyright+pytest config in pyproject.toml |  |  | 0.816 |
+| walker |  | 2660 | 31 | README.md section #10 |  |  | 0.827 |
 | ns | 2692 |  | 154 | `[tool.poe.tasks]`: the project's canonical commands | 3.2 |  | 0.835 |
 | walker |  | 2706 | 46 | README.md section #46 |  |  | 0.835 |
 | walker |  | 2778 | 72 | README.md section #16 |  |  | 0.835 |

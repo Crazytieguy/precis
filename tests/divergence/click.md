@@ -58,16 +58,16 @@ Score(3000)=0.813 I=0.944 C=0.700 ns_rows≤3K=20/58 (reached=12 partial=0 missi
 | ns | 2788 |  | 271 | Context constructor: the invocation-settings surface | 3.5 |  | 0.772 |
 | walker |  | 2964 | 220 | README.md section #1 |  |  | 0.832 |
 | ns | 2969 |  | 181 | Command.main: the process entry point | 3.6 |  | 0.813 |
-| walker |  | 2998 | 34 | python imports in src/click/_utils.py |  |  | 0.813 |
-| walker |  | 3034 | 36 | python imports in src/click/globals.py |  |  | 0.813 |
-| walker |  | 3107 | 73 | python decl names surface in src/click/_compat.py |  |  | 0.813 |
-| walker |  | 3107 | 0 | python decl at src/click/_compat.py:40 |  |  | 0.813 |
-| walker |  | 3107 | 0 | python decl at src/click/_compat.py:48 |  |  | 0.813 |
-| walker |  | 3107 | 0 | python decl at src/click/_compat.py:316 |  |  | 0.813 |
-| walker |  | 3107 | 0 | python decl at src/click/_compat.py:323 |  |  | 0.813 |
-| walker |  | 3121 | 14 | python decl doc at src/click/_compat.py:40 |  |  | 0.813 |
-| walker |  | 3136 | 15 | python decl doc at src/click/_compat.py:48 |  |  | 0.813 |
-| walker |  | 3174 | 38 | python decl body at src/click/_compat.py:40 body 42 |  |  | 0.813 |
+| walker |  | 3037 | 73 | python decl names surface in src/click/_compat.py |  |  | 0.813 |
+| walker |  | 3037 | 0 | python decl at src/click/_compat.py:40 |  |  | 0.813 |
+| walker |  | 3037 | 0 | python decl at src/click/_compat.py:48 |  |  | 0.813 |
+| walker |  | 3037 | 0 | python decl at src/click/_compat.py:316 |  |  | 0.813 |
+| walker |  | 3037 | 0 | python decl at src/click/_compat.py:323 |  |  | 0.813 |
+| walker |  | 3051 | 14 | python decl doc at src/click/_compat.py:40 |  |  | 0.813 |
+| walker |  | 3066 | 15 | python decl doc at src/click/_compat.py:48 |  |  | 0.813 |
+| walker |  | 3104 | 38 | python decl body at src/click/_compat.py:40 body 42 |  |  | 0.813 |
+| walker |  | 3138 | 34 | python imports in src/click/_utils.py |  |  | 0.813 |
+| walker |  | 3174 | 36 | python imports in src/click/globals.py |  |  | 0.813 |
 | ns | 3256 |  | 287 | Command method roster (core.py 1009-1511) | 3.7 | 3.6 | 0.779 |
 | walker |  | 3271 | 97 | python decl names surface in src/click/testing.py |  |  | 0.779 |
 | walker |  | 3271 | 0 | python decl at src/click/testing.py:26 |  |  | 0.779 |
