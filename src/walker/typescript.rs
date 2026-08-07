@@ -774,22 +774,45 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 if let Some(owner) = &member_row_owner {
                     body_parts_predecessor = owner.clone();
                 }
-                if let Some((roster, element_count)) = data_literal_roster(item.decl, item.kind)
-                    .filter(|(roster, _)| !file_lines_covered_by(roster, &export_surface_lines))
-                    && let Some(content) = single_file_lines_content(file, &source, roster)
-                {
-                    let key = TsKey::LiteralRoster {
-                        file: file.clone(),
-                        start_line: item.start_line,
-                    };
-                    out.push(Batch {
-                        key: key.clone().into(),
-                        predecessor: Some(body_parts_predecessor.clone()),
-                        content,
-                        value: literal_roster_value(file, item.kind, ctx, js_factor, element_count)
-                            * per_export_factor,
+                // The roster renders rows the literal's own body slice
+                // renders too, so the two have to sit on one ancestor
+                // chain. A split class gives every member its own branch
+                // (`Export → ExportMember → ExportBody`), so a roster
+                // drawn from inside one member's body joins *that*
+                // branch; hanging it off the class export would put it
+                // beside the owning member with the same rows on both.
+                let literal_roster = data_literal_roster(item.decl, item.kind)
+                    .filter(|(roster, _)| !file_lines_covered_by(roster, &export_surface_lines));
+                let roster_member_start_line = literal_roster
+                    .as_ref()
+                    .filter(|_| split_js_class)
+                    .and_then(|(roster, _)| {
+                        class_member_rendering_rows(&item.class_members, roster)
                     });
-                    body_parts_predecessor = BatchKey::Typescript(key);
+                let literal_roster_batch = |predecessor: &BatchKey| -> Option<Batch<BatchKey>> {
+                    let (roster, element_count) = literal_roster.as_ref()?;
+                    Some(Batch {
+                        key: TsKey::LiteralRoster {
+                            file: file.clone(),
+                            start_line: item.start_line,
+                        }
+                        .into(),
+                        predecessor: Some(predecessor.clone()),
+                        content: single_file_lines_content(file, &source, roster.clone())?,
+                        value: literal_roster_value(
+                            file,
+                            item.kind,
+                            ctx,
+                            js_factor,
+                            *element_count,
+                        ) * per_export_factor,
+                    })
+                };
+                if !split_js_class
+                    && let Some(batch) = literal_roster_batch(&body_parts_predecessor)
+                {
+                    body_parts_predecessor = batch.key.clone();
+                    out.push(batch);
                 }
                 if split_js_class {
                     for member in &item.class_members {
@@ -809,7 +832,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                     * per_export_factor,
                             });
                         }
-                        let member_predecessor = BatchKey::Typescript(member_key);
+                        let mut member_predecessor = BatchKey::Typescript(member_key);
+                        if roster_member_start_line == Some(member.start_line)
+                            && let Some(batch) = literal_roster_batch(&member_predecessor)
+                        {
+                            member_predecessor = batch.key.clone();
+                            out.push(batch);
+                        }
                         let mut emit_ctx = ExportBodyEmitCtx {
                             file,
                             source: &source,
@@ -4199,6 +4228,29 @@ fn data_literal_roster(decl: Node, kind: ItemKind) -> Option<(FileLines, usize)>
     let count = element_rows.len();
     let rows = std::iter::once(binding_row).chain(element_rows).collect();
     Some((FileLines::new(dedup_sorted(rows)), count))
+}
+
+/// Start line of the class member whose own surface or body already
+/// renders one of `roster`'s rows — the branch a roster drawn from
+/// inside a split class has to join. `None` when no member claims a row,
+/// which leaves the roster with no branch to join and so unemitted:
+/// a roster that cannot be placed under its owner is dropped rather
+/// than parked beside it.
+fn class_member_rendering_rows(members: &[ClassMemberInfo], roster: &FileLines) -> Option<usize> {
+    members
+        .iter()
+        .find(|member| {
+            let renders = |line: &usize| {
+                member.lines.full.contains(line)
+                    || member.lines.ellipses.contains(line)
+                    || member
+                        .body_parts
+                        .iter()
+                        .any(|part| part.lines.contains(line))
+            };
+            roster.full.iter().any(renders)
+        })
+        .map(|member| member.start_line)
 }
 
 /// Declaration surface truncated at its member body — the cheap
