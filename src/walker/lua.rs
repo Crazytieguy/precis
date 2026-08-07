@@ -82,7 +82,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // unified on the post-refreeze keys: unified wins).
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
-        let names_lines = collect_decl_names_from_with_global_starts(&decls, &all_starts);
+        let names_lines = collect_decl_names_from_with_global_starts(&decls, &source, &all_starts);
         let mut names_gate: Option<BatchKey> = None;
         if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
             let key = BatchKey::Lua(LuaKey::DeclNames { file: file.clone() });
@@ -334,16 +334,35 @@ fn module_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.80, 0.55, 0.75, path_depth_factor(file, ctx))
 }
 
+/// The roster's body-elision marker for one decl: the row below its
+/// name row, but only when the decl's own node reaches that far.
+///
+/// A one-line decl (`function M.version() return "1.0" end`) owns
+/// nothing past its own row, so the row below belongs to whatever
+/// follows — a blank, the next decl's doc comment, a `return M`. A
+/// marker there claims elided content the roster does not stand for,
+/// and once a sibling batch renders those statement rows it is a
+/// non-ancestor overlap the marker can win. Same contract as Python's
+/// `elision_row_within` and the Rust walker's `collect_item_name_lines`.
+fn elision_row_within(node: Node, source: &str, start_line: usize) -> Option<usize> {
+    let marker = start_line + 1;
+    // `start_line` is 1-based; tree-sitter rows are 0-based.
+    (marker <= node_end_row_trimmed(node, source) + 1).then_some(marker)
+}
+
 fn collect_decl_names_from_with_global_starts(
     decls: &[(Node, DeclInfo)],
+    source: &str,
     all_starts: &std::collections::HashSet<usize>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for (_, info) in decls {
+    for (node, info) in decls {
         full.push(info.start_line);
-        if !all_starts.contains(&(info.start_line + 1)) {
-            ellipses.push(info.start_line + 1);
+        if let Some(marker) = elision_row_within(*node, source, info.start_line)
+            && !all_starts.contains(&marker)
+        {
+            ellipses.push(marker);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
@@ -541,6 +560,40 @@ end
         let src_lines: Vec<&str> = source.lines().collect();
         let body = collect_decl_body(decls[0].0, &src_lines);
         assert_eq!(body.full, vec![2], "body rows: {:?}", body.full);
+    }
+
+    /// The roster's `…` stands for a decl's elided body. A one-line
+    /// decl has no body below its own row, so the row after it belongs
+    /// to whatever follows — the roster must not claim it.
+    #[test]
+    fn lua_decl_names_roster_skips_one_line_decl_elision_marker() {
+        let src = "\
+local M = {}
+
+function M.version() return \"1.0\" end
+
+function M.run(x)
+  return x + 1
+end
+
+return M
+";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree);
+        let all_starts: std::collections::HashSet<usize> =
+            decls.iter().map(|(_, i)| i.start_line).collect();
+        let names = collect_decl_names_from_with_global_starts(&decls, &source, &all_starts);
+        assert_eq!(names.full, vec![3, 5], "roster name rows: {:?}", names.full);
+        assert!(
+            !names.ellipses.contains(&4),
+            "one-line decl marked row 4, which its node does not cover: {:?}",
+            names.ellipses
+        );
+        assert!(
+            names.ellipses.contains(&6),
+            "multi-row decl must still mark its first body row: {:?}",
+            names.ellipses
+        );
     }
 
     #[test]

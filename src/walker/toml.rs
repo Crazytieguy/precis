@@ -670,6 +670,16 @@ fn python_identity_non_lede_rows(source: &str, sections: &[Section]) -> HashSet<
 
 /// The PEP 621 / Poetry lede: the keys that name, version and describe the
 /// package, in their single-line scalar form.
+///
+/// Row-ownership invariant: this line predicate is the only thing keeping
+/// `Identity` and `Dependencies` from claiming the same row — `Identity`
+/// takes the lede rows out of `[project]`, `Dependencies` takes the
+/// dependency-array rows, and the two stay disjoint only because no row of
+/// a dependency array can satisfy this test (the array's own `dependencies
+/// = [` opener keys on a name that is not in the list below, and its
+/// element rows are quoted strings whose `split_once('=')` key retains a
+/// quote). Adding a key here — or relaxing the scalar-value test — must be
+/// checked against that: peer batches sharing a row is a scheduler panic.
 fn is_lede_pair_line(line: &str) -> bool {
     let Some((key, value)) = line.trim_start().split_once('=') else {
         return false;
