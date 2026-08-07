@@ -153,72 +153,71 @@ Score(3000)=0.720 I=0.871 C=0.596 ns_rows≤3K=17/53 (reached=8 partial=1 missin
 | walker |  | 6898 | 12 | c decl body at neco.c:3197 |  |  | 0.533 |
 | walker |  | 6913 | 15 | c decl body at neco.c:3179 |  |  | 0.533 |
 | walker |  | 6977 | 64 | c decl body at neco.c:3161 |  |  | 0.533 |
-| walker |  | 6993 | 16 | docs/API.md section #1 |  |  | 0.533 |
-| walker |  | 7009 | 16 | docs/API.md section #10 |  |  | 0.533 |
+| walker |  | 6993 | 16 | docs/API.md section #10 |  |  | 0.533 |
 | ns | 7011 |  | 132 | Section map of Neco's own implementation | 4.3 |  | 0.528 |
-| walker |  | 7210 | 201 | README.md section #3 |  |  | 0.528 |
-| walker |  | 7227 | 17 | docs/API.md section #8 |  |  | 0.528 |
-| walker |  | 7242 | 15 | docs/API.md section #9 |  |  | 0.528 |
-| walker |  | 7296 | 54 | docs/API.md section #43 |  |  | 0.517 |
+| walker |  | 7194 | 201 | README.md section #3 |  |  | 0.528 |
+| walker |  | 7211 | 17 | docs/API.md section #8 |  |  | 0.528 |
+| walker |  | 7226 | 15 | docs/API.md section #9 |  |  | 0.528 |
+| walker |  | 7280 | 54 | docs/API.md section #43 |  |  | 0.528 |
 | ns | 7296 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.517 |
-| walker |  | 7348 | 52 | docs/API.md section #44 |  |  | 0.517 |
-| walker |  | 7396 | 48 | README.md section #17 |  |  | 0.522 |
-| walker |  | 7414 | 18 | docs/API.md section #11 |  |  | 0.522 |
+| walker |  | 7332 | 52 | docs/API.md section #44 |  |  | 0.517 |
+| walker |  | 7380 | 48 | README.md section #17 |  |  | 0.522 |
+| walker |  | 7398 | 18 | docs/API.md section #11 |  |  | 0.522 |
+| walker |  | 7578 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.522 |
 | ns | 7589 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.511 |
-| walker |  | 7594 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.511 |
 | ns | 7773 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.504 |
 | ns | 7981 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.498 |
-| walker |  | 8091 | 497 | c decl names surface #3 in neco.h |  |  | 0.538 |
-| walker |  | 8091 | 0 | c decl at neco.h:188 |  |  | 0.538 |
-| walker |  | 8091 | 0 | c decl at neco.h:191 |  |  | 0.538 |
-| walker |  | 8107 | 16 | c decl at neco.h:231 |  |  | 0.541 |
-| walker |  | 8124 | 17 | c decl at neco.h:177 |  |  | 0.543 |
-| walker |  | 8148 | 24 | c decl at neco.h:179 |  |  | 0.546 |
-| walker |  | 8164 | 16 | c decl doc at neco.h:188 |  |  | 0.549 |
-| walker |  | 8179 | 15 | c decl doc at neco.h:191 |  |  | 0.552 |
-| walker |  | 8231 | 52 | README.md section #18 |  |  | 0.559 |
+| walker |  | 8075 | 497 | c decl names surface #3 in neco.h |  |  | 0.538 |
+| walker |  | 8075 | 0 | c decl at neco.h:188 |  |  | 0.538 |
+| walker |  | 8075 | 0 | c decl at neco.h:191 |  |  | 0.538 |
+| walker |  | 8091 | 16 | c decl at neco.h:231 |  |  | 0.541 |
+| walker |  | 8108 | 17 | c decl at neco.h:177 |  |  | 0.543 |
+| walker |  | 8132 | 24 | c decl at neco.h:179 |  |  | 0.546 |
+| walker |  | 8148 | 16 | c decl doc at neco.h:188 |  |  | 0.549 |
+| walker |  | 8163 | 15 | c decl doc at neco.h:191 |  |  | 0.552 |
+| walker |  | 8215 | 52 | README.md section #18 |  |  | 0.559 |
 | ns | 8262 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.549 |
+| walker |  | 8324 | 109 | docs/assets/API_head.md section #0 |  |  | 0.549 |
 | ns | 8336 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.545 |
-| walker |  | 8340 | 109 | docs/assets/API_head.md section #0 |  |  | 0.545 |
-| walker |  | 8353 | 13 | docs/assets/API_head.md section #3 |  |  | 0.545 |
-| walker |  | 8365 | 12 | docs/assets/API_head.md section #4 |  |  | 0.545 |
-| walker |  | 8378 | 13 | docs/assets/API_head.md section #5 |  |  | 0.545 |
-| walker |  | 8391 | 13 | docs/assets/API_head.md section #6 |  |  | 0.545 |
-| walker |  | 8404 | 13 | docs/assets/API_head.md section #15 |  |  | 0.545 |
-| walker |  | 8415 | 11 | docs/assets/API_head.md section #16 |  |  | 0.545 |
-| walker |  | 8428 | 13 | docs/assets/API_head.md section #14 |  |  | 0.545 |
-| walker |  | 8441 | 13 | docs/assets/API_head.md section #17 |  |  | 0.545 |
-| walker |  | 8513 | 72 | docs/API.md section #45 |  |  | 0.545 |
-| walker |  | 8527 | 14 | docs/assets/API_head.md section #2 |  |  | 0.545 |
-| walker |  | 8541 | 14 | docs/assets/API_head.md section #1 |  |  | 0.545 |
-| walker |  | 8555 | 14 | docs/assets/API_head.md section #7 |  |  | 0.545 |
-| walker |  | 8569 | 14 | docs/assets/API_head.md section #13 |  |  | 0.545 |
-| walker |  | 8583 | 14 | docs/assets/API_head.md section #19 |  |  | 0.545 |
-| walker |  | 8596 | 13 | docs/assets/API_head.md section #18 |  |  | 0.545 |
+| walker |  | 8337 | 13 | docs/assets/API_head.md section #3 |  |  | 0.545 |
+| walker |  | 8349 | 12 | docs/assets/API_head.md section #4 |  |  | 0.545 |
+| walker |  | 8362 | 13 | docs/assets/API_head.md section #5 |  |  | 0.545 |
+| walker |  | 8375 | 13 | docs/assets/API_head.md section #6 |  |  | 0.545 |
+| walker |  | 8388 | 13 | docs/assets/API_head.md section #15 |  |  | 0.545 |
+| walker |  | 8399 | 11 | docs/assets/API_head.md section #16 |  |  | 0.545 |
+| walker |  | 8412 | 13 | docs/assets/API_head.md section #14 |  |  | 0.545 |
+| walker |  | 8425 | 13 | docs/assets/API_head.md section #17 |  |  | 0.545 |
+| walker |  | 8497 | 72 | docs/API.md section #45 |  |  | 0.545 |
+| walker |  | 8511 | 14 | docs/assets/API_head.md section #2 |  |  | 0.545 |
+| walker |  | 8525 | 14 | docs/assets/API_head.md section #1 |  |  | 0.545 |
+| walker |  | 8539 | 14 | docs/assets/API_head.md section #7 |  |  | 0.545 |
+| walker |  | 8553 | 14 | docs/assets/API_head.md section #13 |  |  | 0.545 |
+| walker |  | 8567 | 14 | docs/assets/API_head.md section #19 |  |  | 0.545 |
+| walker |  | 8580 | 13 | docs/assets/API_head.md section #18 |  |  | 0.545 |
 | ns | 8599 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.535 |
 | ns | 8796 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.527 |
-| walker |  | 9049 | 453 | c decl names surface #4 in neco.h |  |  | 0.556 |
+| walker |  | 9033 | 453 | c decl names surface #4 in neco.h |  |  | 0.556 |
 | ns | 9095 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.543 |
-| walker |  | 9221 | 172 | c decl at neco.h:287 |  |  | 0.563 |
+| walker |  | 9205 | 172 | c decl at neco.h:287 |  |  | 0.563 |
 | ns | 9399 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.553 |
 | ns | 9567 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.547 |
-| walker |  | 9595 | 374 | c decl names surface #3 in neco.c |  |  | 0.547 |
-| walker |  | 9595 | 0 | c decl at neco.c:3420 |  |  | 0.547 |
-| walker |  | 9595 | 0 | c decl at neco.c:3560 |  |  | 0.547 |
-| walker |  | 9595 | 0 | c decl at neco.c:3719 |  |  | 0.547 |
-| walker |  | 9601 | 6 | c decl at neco.c:3570 |  |  | 0.547 |
-| walker |  | 9612 | 11 | c decl at neco.c:3323 |  |  | 0.547 |
-| walker |  | 9629 | 17 | c decl at neco.c:3274 |  |  | 0.547 |
+| walker |  | 9579 | 374 | c decl names surface #3 in neco.c |  |  | 0.547 |
+| walker |  | 9579 | 0 | c decl at neco.c:3420 |  |  | 0.547 |
+| walker |  | 9579 | 0 | c decl at neco.c:3560 |  |  | 0.547 |
+| walker |  | 9579 | 0 | c decl at neco.c:3719 |  |  | 0.547 |
+| walker |  | 9585 | 6 | c decl at neco.c:3570 |  |  | 0.547 |
+| walker |  | 9596 | 11 | c decl at neco.c:3323 |  |  | 0.547 |
+| walker |  | 9613 | 17 | c decl at neco.c:3274 |  |  | 0.547 |
+| walker |  | 9639 | 26 | c decl at neco.c:3269 |  |  | 0.547 |
 | ns | 9650 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.545 |
-| walker |  | 9655 | 26 | c decl at neco.c:3269 |  |  | 0.545 |
-| walker |  | 9685 | 30 | c decl at neco.c:3487 |  |  | 0.545 |
-| walker |  | 9715 | 30 | c decl at neco.c:3522 |  |  | 0.545 |
-| walker |  | 9743 | 28 | c decl at neco.c:3492 |  |  | 0.545 |
-| walker |  | 9782 | 39 | c decl at neco.c:3256 |  |  | 0.545 |
-| walker |  | 9825 | 43 | c decl at neco.c:3248 |  |  | 0.545 |
+| walker |  | 9669 | 30 | c decl at neco.c:3487 |  |  | 0.545 |
+| walker |  | 9699 | 30 | c decl at neco.c:3522 |  |  | 0.545 |
+| walker |  | 9727 | 28 | c decl at neco.c:3492 |  |  | 0.545 |
+| walker |  | 9766 | 39 | c decl at neco.c:3256 |  |  | 0.545 |
+| walker |  | 9809 | 43 | c decl at neco.c:3248 |  |  | 0.545 |
 | ns | 9831 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.539 |
-| walker |  | 9884 | 59 | c decl at neco.c:3453 |  |  | 0.539 |
+| walker |  | 9868 | 59 | c decl at neco.c:3453 |  |  | 0.539 |
 | ns | 9943 |  | 112 | CI | 6.6 |  | 0.545 |
+| walker |  | 9973 | 105 | c decl at neco.c:3466 |  |  | 0.545 |
+| walker |  | 9983 | 10 | c decl body at neco.c:3420 |  |  | 0.545 |
 | ns | 9988 |  | 45 | License | 6.7 |  | 0.546 |
-| walker |  | 9989 | 105 | c decl at neco.c:3466 |  |  | 0.546 |
-| walker |  | 9999 | 10 | c decl body at neco.c:3420 |  |  | 0.546 |
