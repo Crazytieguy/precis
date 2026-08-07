@@ -45,64 +45,64 @@ Score(3000)=0.699 I=0.783 C=0.624 ns_rows≤3K=21/56 (reached=6 partial=0 missin
 | ns | 945 |  | 193 | CONTRIBUTING 'Source Code Structure' — the monaco-editor-core boundary | 1.8 |  | 0.644 |
 | walker |  | 1088 | 335 | listing of 'src/features' |  |  | 0.677 |
 | ns | 1115 |  | 170 | README Concepts: Models and URIs | 1.9 | 1.7 | 0.668 |
-| walker |  | 1124 | 36 | headings outline in MAINTAINING.md |  |  | 0.668 |
-| walker |  | 1172 | 48 | package identity in monaco-lsp-client/package.json |  |  | 0.668 |
-| walker |  | 1183 | 11 | listing of 'src/deprecated/language/css' |  |  | 0.668 |
-| walker |  | 1194 | 11 | listing of 'src/deprecated/language/html' |  |  | 0.668 |
-| walker |  | 1205 | 11 | listing of 'src/deprecated/language/json' |  |  | 0.668 |
-| walker |  | 1216 | 11 | listing of 'src/deprecated/language/typescript' |  |  | 0.668 |
+| walker |  | 1136 | 48 | package identity in monaco-lsp-client/package.json |  |  | 0.668 |
+| walker |  | 1147 | 11 | listing of 'src/deprecated/language/css' |  |  | 0.668 |
+| walker |  | 1158 | 11 | listing of 'src/deprecated/language/html' |  |  | 0.668 |
+| walker |  | 1169 | 11 | listing of 'src/deprecated/language/json' |  |  | 0.668 |
+| walker |  | 1180 | 11 | listing of 'src/deprecated/language/typescript' |  |  | 0.668 |
 | ns | 1277 |  | 162 | README Concepts: Editors, Providers, Disposables | 1.10 | 1.7 | 0.655 |
 | ns | 1356 |  | 79 | Listings of every src/ subtree except the two huge uniform ones | 2.1 |  | 0.700 |
 | ns | 1462 |  | 106 | Uniform shape of a feature shim (hover, gpu) and the one that is not uniform (find) | 2.2 |  | 0.683 |
-| walker |  | 1601 | 385 | listing of 'src/languages/definitions' |  |  | 0.709 |
-| walker |  | 1615 | 14 | listing of 'test' |  |  | 0.709 |
-| walker |  | 1677 | 62 | package identity in webpack-plugin/package.json |  |  | 0.710 |
-| walker |  | 1793 | 116 | listing of 'samples' |  |  | 0.711 |
-| walker |  | 1796 | 3 | listing of 'samples/nwjs-amd' |  |  | 0.711 |
+| walker |  | 1565 | 385 | listing of 'src/languages/definitions' |  |  | 0.709 |
+| walker |  | 1579 | 14 | listing of 'test' |  |  | 0.709 |
+| walker |  | 1641 | 62 | package identity in webpack-plugin/package.json |  |  | 0.710 |
+| walker |  | 1757 | 116 | listing of 'samples' |  |  | 0.711 |
+| walker |  | 1760 | 3 | listing of 'samples/nwjs-amd' |  |  | 0.711 |
+| walker |  | 1763 | 3 | listing of 'samples/nwjs-amd-v2' |  |  | 0.711 |
+| walker |  | 1784 | 21 | listing of 'samples/browser-esm-parcel' |  |  | 0.711 |
+| walker |  | 1791 | 7 | listing of 'samples/browser-esm-parcel/src' |  |  | 0.711 |
 | ns | 1797 |  | 335 | Complete listing of src/features/ — all 65 editor-feature shim directories | 2.3 |  | 0.779 |
-| walker |  | 1799 | 3 | listing of 'samples/nwjs-amd-v2' |  |  | 0.779 |
-| walker |  | 1820 | 21 | listing of 'samples/browser-esm-parcel' |  |  | 0.779 |
-| walker |  | 1827 | 7 | listing of 'samples/browser-esm-parcel/src' |  |  | 0.779 |
+| walker |  | 1806 | 15 | package identity in samples/browser-esm-parcel/package.json |  |  | 0.779 |
+| walker |  | 1828 | 22 | listing of 'samples/browser-esm-webpack-typescript' |  |  | 0.779 |
+| walker |  | 1835 | 7 | listing of 'samples/browser-esm-webpack-typescript/src' |  |  | 0.779 |
 | ns | 1841 |  | 44 | src/features/register.all.ts head, elided middle, tail | 2.4 |  | 0.767 |
-| walker |  | 1842 | 15 | package identity in samples/browser-esm-parcel/package.json |  |  | 0.767 |
-| walker |  | 1864 | 22 | listing of 'samples/browser-esm-webpack-typescript' |  |  | 0.767 |
-| walker |  | 1871 | 7 | listing of 'samples/browser-esm-webpack-typescript/src' |  |  | 0.767 |
-| walker |  | 1895 | 24 | listing of 'samples/browser-esm-esbuild' |  |  | 0.767 |
-| walker |  | 1910 | 15 | package identity in samples/browser-esm-esbuild/package.json |  |  | 0.767 |
-| walker |  | 1935 | 25 | listing of 'samples/browser-esm-webpack' |  |  | 0.767 |
-| walker |  | 1952 | 17 | package identity in samples/browser-esm-webpack/package.json |  |  | 0.767 |
-| walker |  | 1977 | 25 | listing of 'samples/browser-esm-webpack-monaco-plugin' |  |  | 0.767 |
-| walker |  | 2002 | 25 | listing of 'samples/electron-esm-webpack' |  |  | 0.767 |
-| walker |  | 2019 | 17 | package identity in samples/electron-esm-webpack/package.json |  |  | 0.767 |
-| walker |  | 2046 | 27 | listing of 'samples/browser-esm-webpack-typescript-react' |  |  | 0.767 |
-| walker |  | 2066 | 20 | package identity in samples/browser-esm-webpack-monaco-plugin/package.json |  |  | 0.767 |
-| walker |  | 2086 | 20 | package identity in samples/browser-esm-webpack-typescript/package.json |  |  | 0.767 |
-| walker |  | 2106 | 20 | package identity in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.767 |
-| walker |  | 2122 | 16 | listing of 'samples/browser-esm-webpack-typescript-react/src' |  |  | 0.767 |
-| walker |  | 2126 | 4 | listing of 'samples/browser-esm-webpack-typescript-react/src/components' |  |  | 0.767 |
-| walker |  | 2157 | 31 | README headline in samples/README.md |  |  | 0.767 |
-| walker |  | 2188 | 31 | listing of 'samples/browser-esm-vite-react' |  |  | 0.767 |
-| walker |  | 2207 | 19 | package identity in samples/browser-esm-vite-react/package.json |  |  | 0.767 |
+| walker |  | 1859 | 24 | listing of 'samples/browser-esm-esbuild' |  |  | 0.767 |
+| walker |  | 1874 | 15 | package identity in samples/browser-esm-esbuild/package.json |  |  | 0.767 |
+| walker |  | 1899 | 25 | listing of 'samples/browser-esm-webpack' |  |  | 0.767 |
+| walker |  | 1916 | 17 | package identity in samples/browser-esm-webpack/package.json |  |  | 0.767 |
+| walker |  | 1941 | 25 | listing of 'samples/browser-esm-webpack-monaco-plugin' |  |  | 0.767 |
+| walker |  | 1966 | 25 | listing of 'samples/electron-esm-webpack' |  |  | 0.767 |
+| walker |  | 1983 | 17 | package identity in samples/electron-esm-webpack/package.json |  |  | 0.767 |
+| walker |  | 2010 | 27 | listing of 'samples/browser-esm-webpack-typescript-react' |  |  | 0.767 |
+| walker |  | 2030 | 20 | package identity in samples/browser-esm-webpack-monaco-plugin/package.json |  |  | 0.767 |
+| walker |  | 2050 | 20 | package identity in samples/browser-esm-webpack-typescript/package.json |  |  | 0.767 |
+| walker |  | 2070 | 20 | package identity in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.767 |
+| walker |  | 2086 | 16 | listing of 'samples/browser-esm-webpack-typescript-react/src' |  |  | 0.767 |
+| walker |  | 2090 | 4 | listing of 'samples/browser-esm-webpack-typescript-react/src/components' |  |  | 0.767 |
+| walker |  | 2121 | 31 | README headline in samples/README.md |  |  | 0.767 |
+| walker |  | 2152 | 31 | listing of 'samples/browser-esm-vite-react' |  |  | 0.767 |
+| walker |  | 2171 | 19 | package identity in samples/browser-esm-vite-react/package.json |  |  | 0.767 |
+| walker |  | 2202 | 31 | listing of 'samples/browser-esm-webpack-small' |  |  | 0.767 |
+| walker |  | 2220 | 18 | package identity in samples/browser-esm-webpack-small/package.json |  |  | 0.767 |
 | ns | 2226 |  | 385 | Complete listing of src/languages/definitions/ — all 84 Monarch languages plus _.contribution.ts, register.all.ts and test/ | 2.5 |  | 0.795 |
-| walker |  | 2238 | 31 | listing of 'samples/browser-esm-webpack-small' |  |  | 0.790 |
 | ns | 2238 |  | 12 | One language definition directory, listed in full (rust) | 2.6 |  | 0.790 |
-| walker |  | 2256 | 18 | package identity in samples/browser-esm-webpack-small/package.json |  |  | 0.790 |
-| walker |  | 2275 | 19 | listing of 'samples/browser-esm-vite-react/src' |  |  | 0.790 |
-| walker |  | 2284 | 9 | listing of 'samples/browser-esm-vite-react/src/components' |  |  | 0.790 |
-| walker |  | 2319 | 35 | listing of 'samples/browser-esm-vite' |  |  | 0.790 |
+| walker |  | 2239 | 19 | listing of 'samples/browser-esm-vite-react/src' |  |  | 0.790 |
+| walker |  | 2248 | 9 | listing of 'samples/browser-esm-vite-react/src/components' |  |  | 0.790 |
+| walker |  | 2283 | 35 | listing of 'samples/browser-esm-vite' |  |  | 0.790 |
+| walker |  | 2301 | 18 | package identity in samples/browser-esm-vite/package.json |  |  | 0.790 |
 | ns | 2322 |  | 84 | rust/register.ts registerLanguage call | 2.7 | 2.6 | 0.777 |
-| walker |  | 2337 | 18 | package identity in samples/browser-esm-vite/package.json |  |  | 0.777 |
-| walker |  | 2408 | 71 | package identity in samples/package.json |  |  | 0.777 |
-| walker |  | 2420 | 12 | package entrypoints in samples/package.json |  |  | 0.777 |
-| walker |  | 2475 | 55 | README headline in monaco-lsp-client/README.md |  |  | 0.777 |
-| walker |  | 2531 | 56 | README headline in webpack-plugin/README.md |  |  | 0.777 |
-| walker |  | 2541 | 10 | package identity metadata in monaco-lsp-client/package.json |  |  | 0.777 |
-| walker |  | 2562 | 21 | listing of '.github' |  |  | 0.777 |
-| walker |  | 2569 | 7 | listing of '.github/workflows' |  |  | 0.777 |
-| ns | 2604 |  | 282 | _.contribution.ts: ILang/ILangImpl and registerLanguage() | 2.8 |  | 0.740 |
-| walker |  | 2606 | 37 | listing of 'monaco-lsp-client/src/adapters' |  |  | 0.741 |
+| walker |  | 2372 | 71 | package identity in samples/package.json |  |  | 0.777 |
+| walker |  | 2384 | 12 | package entrypoints in samples/package.json |  |  | 0.777 |
+| walker |  | 2439 | 55 | README headline in monaco-lsp-client/README.md |  |  | 0.777 |
+| walker |  | 2495 | 56 | README headline in webpack-plugin/README.md |  |  | 0.777 |
+| walker |  | 2505 | 10 | package identity metadata in monaco-lsp-client/package.json |  |  | 0.777 |
+| walker |  | 2526 | 21 | listing of '.github' |  |  | 0.777 |
+| walker |  | 2533 | 7 | listing of '.github/workflows' |  |  | 0.777 |
+| walker |  | 2570 | 37 | listing of 'monaco-lsp-client/src/adapters' |  |  | 0.778 |
+| ns | 2604 |  | 282 | _.contribution.ts: ILang/ILangImpl and registerLanguage() | 2.8 |  | 0.741 |
+| walker |  | 2743 | 173 | listing of 'monaco-lsp-client/src/adapters/languageFeatures' |  |  | 0.725 |
 | ns | 2743 |  | 139 | _.contribution.ts: LazyLanguageLoader and loadLanguage() | 2.9 |  | 0.725 |
-| walker |  | 2779 | 173 | listing of 'monaco-lsp-client/src/adapters/languageFeatures' |  |  | 0.725 |
+| walker |  | 2779 | 36 | headings outline in MAINTAINING.md |  |  | 0.725 |
 | walker |  | 2818 | 39 | package scripts in samples/package.json |  |  | 0.725 |
 | walker |  | 2828 | 10 | package identity metadata in samples/package.json |  |  | 0.725 |
 | ns | 2832 |  | 89 | Grammar file shape: rust.ts conf + language exports | 2.10 |  | 0.715 |

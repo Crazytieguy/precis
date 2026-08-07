@@ -15,60 +15,60 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 (reached=7 partial=0 missin
 | walker |  | 474 | 72 | listing of 'questions' |  |  | 0.000 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.000 |
 | walker |  | 571 | 97 | listing of 'imgs' |  |  | 0.000 |
-| walker |  | 616 | 45 | README headline in questions/README.md |  |  | 0.000 |
 | ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.000 |
-| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.000 |
-| walker |  | 763 | 147 | README headline in README.md |  |  | 0.160 |
-| walker |  | 844 | 81 | README prelude in README.md |  |  | 0.160 |
-| walker |  | 868 | 24 | listing of '.github' |  |  | 0.160 |
-| walker |  | 897 | 29 | listing of '.github/workflows' |  |  | 0.160 |
-| walker |  | 918 | 21 | listing of 'benchmarks' |  |  | 0.160 |
+| walker |  | 718 | 147 | README headline in README.md |  |  | 0.152 |
+| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.160 |
+| walker |  | 799 | 81 | README prelude in README.md |  |  | 0.160 |
+| walker |  | 823 | 24 | listing of '.github' |  |  | 0.160 |
+| walker |  | 852 | 29 | listing of '.github/workflows' |  |  | 0.160 |
+| walker |  | 873 | 21 | listing of 'benchmarks' |  |  | 0.160 |
 | ns | 960 |  | 202 | Repository root listing (complete) | 1.8 |  | 0.470 |
-| walker |  | 1009 | 91 | headings outline in README.md |  |  | 0.568 |
-| walker |  | 1031 | 22 | README.md section #0 |  |  | 0.577 |
-| walker |  | 1114 | 83 | [dependencies] in pyproject.toml |  |  | 0.599 |
-| walker |  | 1156 | 42 | listing of 'tools' |  |  | 0.600 |
-| walker |  | 1292 | 136 | listing of 'docs/source' |  |  | 0.604 |
-| walker |  | 1301 | 9 | listing of 'docs/source/appendix' |  |  | 0.604 |
+| walker |  | 964 | 91 | headings outline in README.md |  |  | 0.568 |
+| walker |  | 986 | 22 | README.md section #0 |  |  | 0.577 |
+| walker |  | 1069 | 83 | [dependencies] in pyproject.toml |  |  | 0.599 |
+| walker |  | 1111 | 42 | listing of 'tools' |  |  | 0.600 |
+| walker |  | 1247 | 136 | listing of 'docs/source' |  |  | 0.604 |
+| walker |  | 1256 | 9 | listing of 'docs/source/appendix' |  |  | 0.604 |
 | ns | 1321 |  | 361 | rich/ package module roster (complete) | 1.9 |  | 0.430 |
-| ns | 1433 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.418 |
-| walker |  | 1466 | 165 | listing of 'examples' |  |  | 0.421 |
+| walker |  | 1421 | 165 | listing of 'examples' |  |  | 0.434 |
+| ns | 1433 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.421 |
 | ns | 1738 |  | 305 | rich.* top-level function signatures: print_json, inspect | 2.2 |  | 0.390 |
-| walker |  | 1827 | 361 | listing of 'rich' |  |  | 0.630 |
-| walker |  | 1932 | 105 | python imports in rich/__init__.py |  |  | 0.685 |
-| walker |  | 1958 | 26 | python decl names surface in rich/__main__.py |  |  | 0.685 |
-| walker |  | 1958 | 0 | python decl at rich/__main__.py:18 |  |  | 0.685 |
-| walker |  | 1958 | 0 | python decl at rich/__main__.py:39 |  |  | 0.685 |
-| walker |  | 1980 | 22 | python method sigs in rich/__main__.py |  |  | 0.685 |
-| walker |  | 1997 | 17 | python decl doc at rich/__main__.py:39 |  |  | 0.685 |
-| walker |  | 2023 | 26 | python method at rich/__main__.py:19 |  |  | 0.685 |
+| walker |  | 1782 | 361 | listing of 'rich' |  |  | 0.630 |
+| walker |  | 1887 | 105 | python imports in rich/__init__.py |  |  | 0.685 |
+| walker |  | 1913 | 26 | python decl names surface in rich/__main__.py |  |  | 0.685 |
+| walker |  | 1913 | 0 | python decl at rich/__main__.py:18 |  |  | 0.685 |
+| walker |  | 1913 | 0 | python decl at rich/__main__.py:39 |  |  | 0.685 |
+| walker |  | 1935 | 22 | python method sigs in rich/__main__.py |  |  | 0.685 |
+| walker |  | 1952 | 17 | python decl doc at rich/__main__.py:39 |  |  | 0.685 |
+| walker |  | 1978 | 26 | python method at rich/__main__.py:19 |  |  | 0.685 |
+| walker |  | 2004 | 26 | python method at rich/__main__.py:33 |  |  | 0.685 |
 | ns | 2028 |  | 290 | The console protocol: RichCast, ConsoleRenderable, RenderableType, RenderResult | 2.3 |  | 0.641 |
-| walker |  | 2049 | 26 | python method at rich/__main__.py:33 |  |  | 0.641 |
-| walker |  | 2248 | 199 | listing of 'rich/_unicode_data' |  |  | 0.643 |
+| walker |  | 2203 | 199 | listing of 'rich/_unicode_data' |  |  | 0.643 |
+| walker |  | 2290 | 87 | python imports in rich/_unicode_data/__init__.py |  |  | 0.610 |
 | ns | 2290 |  | 262 | console.py module-level symbol roster | 2.4 |  | 0.610 |
-| walker |  | 2335 | 87 | python imports in rich/_unicode_data/__init__.py |  |  | 0.610 |
-| walker |  | 2401 | 66 | python decl names surface in rich/_unicode_data/__init__.py |  |  | 0.610 |
-| walker |  | 2401 | 0 | python decl at rich/_unicode_data/__init__.py:31 |  |  | 0.610 |
-| walker |  | 2420 | 19 | python decl at rich/_unicode_data/__init__.py:58 |  |  | 0.610 |
-| walker |  | 2500 | 80 | python decl names surface in rich/__init__.py |  |  | 0.613 |
-| walker |  | 2500 | 0 | python decl at rich/__init__.py:23 |  |  | 0.613 |
-| walker |  | 2500 | 0 | python decl at rich/__init__.py:39 |  |  | 0.613 |
-| ns | 2534 |  | 244 | Console method roster — rendering and output (lines 1092–1652) | 2.5 |  | 0.586 |
-| walker |  | 2567 | 67 | python decl at rich/__init__.py:53 |  |  | 0.604 |
-| walker |  | 2619 | 52 | python decl at rich/_unicode_data/__init__.py:20 |  |  | 0.604 |
-| walker |  | 2700 | 81 | [package] in pyproject.toml |  |  | 0.639 |
-| ns | 2744 |  | 210 | Console method roster — JSON, screen updates, exceptions, logging, export (1758–2606) | 2.6 |  | 0.618 |
-| walker |  | 2751 | 51 | package metadata in pyproject.toml |  |  | 0.674 |
-| walker |  | 2763 | 12 | python method body at rich/__main__.py:33 body 36 |  |  | 0.674 |
-| walker |  | 2774 | 11 | python imports in rich/_extension.py |  |  | 0.674 |
-| walker |  | 2785 | 11 | python imports in rich/_pick.py |  |  | 0.674 |
-| walker |  | 2796 | 11 | python imports in rich/abc.py |  |  | 0.674 |
-| walker |  | 2855 | 59 | python decl doc at rich/_unicode_data/__init__.py:58 |  |  | 0.674 |
-| walker |  | 2867 | 12 | python imports in rich/_palettes.py |  |  | 0.674 |
-| walker |  | 2879 | 12 | python imports in rich/region.py |  |  | 0.674 |
-| walker |  | 2949 | 70 | python decl doc at rich/__init__.py:23 |  |  | 0.674 |
-| walker |  | 2963 | 14 | python imports in rich/_stack.py |  |  | 0.674 |
-| walker |  | 2977 | 14 | python imports in rich/color_triplet.py |  |  | 0.674 |
+| walker |  | 2356 | 66 | python decl names surface in rich/_unicode_data/__init__.py |  |  | 0.610 |
+| walker |  | 2356 | 0 | python decl at rich/_unicode_data/__init__.py:31 |  |  | 0.610 |
+| walker |  | 2375 | 19 | python decl at rich/_unicode_data/__init__.py:58 |  |  | 0.610 |
+| walker |  | 2455 | 80 | python decl names surface in rich/__init__.py |  |  | 0.613 |
+| walker |  | 2455 | 0 | python decl at rich/__init__.py:23 |  |  | 0.613 |
+| walker |  | 2455 | 0 | python decl at rich/__init__.py:39 |  |  | 0.613 |
+| walker |  | 2522 | 67 | python decl at rich/__init__.py:53 |  |  | 0.632 |
+| ns | 2534 |  | 244 | Console method roster — rendering and output (lines 1092–1652) | 2.5 |  | 0.604 |
+| walker |  | 2574 | 52 | python decl at rich/_unicode_data/__init__.py:20 |  |  | 0.604 |
+| walker |  | 2655 | 81 | [package] in pyproject.toml |  |  | 0.639 |
+| walker |  | 2706 | 51 | package metadata in pyproject.toml |  |  | 0.697 |
+| walker |  | 2718 | 12 | python method body at rich/__main__.py:33 body 36 |  |  | 0.697 |
+| walker |  | 2729 | 11 | python imports in rich/_extension.py |  |  | 0.697 |
+| walker |  | 2740 | 11 | python imports in rich/_pick.py |  |  | 0.697 |
+| ns | 2744 |  | 210 | Console method roster — JSON, screen updates, exceptions, logging, export (1758–2606) | 2.6 |  | 0.674 |
+| walker |  | 2751 | 11 | python imports in rich/abc.py |  |  | 0.674 |
+| walker |  | 2810 | 59 | python decl doc at rich/_unicode_data/__init__.py:58 |  |  | 0.674 |
+| walker |  | 2822 | 12 | python imports in rich/_palettes.py |  |  | 0.674 |
+| walker |  | 2834 | 12 | python imports in rich/region.py |  |  | 0.674 |
+| walker |  | 2904 | 70 | python decl doc at rich/__init__.py:23 |  |  | 0.674 |
+| walker |  | 2918 | 14 | python imports in rich/_stack.py |  |  | 0.674 |
+| walker |  | 2932 | 14 | python imports in rich/color_triplet.py |  |  | 0.674 |
+| walker |  | 2977 | 45 | README headline in questions/README.md |  |  | 0.674 |
 | walker |  | 2993 | 16 | python imports in rich/_loop.py |  |  | 0.674 |
 | walker |  | 3076 | 83 | python decl doc at rich/__init__.py:39 |  |  | 0.674 |
 | walker |  | 3086 | 10 | python decl names surface in rich/abc.py |  |  | 0.674 |

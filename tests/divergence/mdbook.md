@@ -274,8 +274,11 @@ Score(3000)=0.522 I=0.710 C=0.384 ns_rows≤3K=25/63 (reached=5 partial=4 missin
 | walker |  | 9580 | 188 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10 |  |  | 0.519 |
 | walker |  | 9706 | 126 | mod/use plumbing in crates/mdbook-html/src/theme/mod.rs |  |  | 0.522 |
 | ns | 9734 |  | 334 | `BookTest` harness API | 9.3 | 9.1 | 0.514 |
-| walker |  | 9778 | 72 | README headline in guide/src/guide/README.md |  |  | 0.514 |
 | ns | 9885 |  | 151 | Contributor workflow: CONTRIBUTING section map | 9.4 |  | 0.509 |
+| walker |  | 9910 | 204 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49 |  |  | 0.509 |
 | ns | 9949 |  | 64 | CI and repository automation listing | 9.6 |  | 0.511 |
-| walker |  | 9982 | 204 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49 |  |  | 0.511 |
-| ns | 9988 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.511 |
+| walker |  | 9983 | 73 | pub-item names surface in src/cmd/clean.rs |  |  | 0.514 |
+| walker |  | 9983 | 0 | pub item at src/cmd/clean.rs:11 |  |  | 0.514 |
+| walker |  | 9983 | 0 | pub item at src/cmd/clean.rs:19 |  |  | 0.514 |
+| walker |  | 9983 | 0 | pub item at src/cmd/clean.rs:38 |  |  | 0.514 |
+| ns | 9988 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.513 |

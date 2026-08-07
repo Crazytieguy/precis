@@ -118,19 +118,19 @@ Score(3000)=0.548 I=0.871 C=0.345 ns_rows≤3K=18/52 (reached=6 partial=0 missin
 | walker |  | 2873 | 68 | headings outline in README.md |  |  | 0.428 |
 | ns | 2945 |  | 262 | The `Relation` trait and the three relation wrapper types | 2.11 |  | 0.409 |
 | walker |  | 2947 | 74 | README.md section #0 |  |  | 0.548 |
-| walker |  | 2985 | 38 | README headline in docs/roadmap/README.md |  |  | 0.548 |
-| walker |  | 3102 | 117 | entry item at examples/user-has-one-profile/src/main.rs:14 |  |  | 0.549 |
+| walker |  | 3064 | 117 | entry item at examples/user-has-one-profile/src/main.rs:14 |  |  | 0.549 |
 | ns | 3144 |  | 199 | Result streaming: `Cursor<M>` and `Page<M>` | 2.12 |  | 0.537 |
-| walker |  | 3221 | 119 | entry item at examples/composite-key/src/main.rs:2 |  |  | 0.537 |
-| walker |  | 3351 | 130 | entry item at examples/hello-toasty/src/main.rs:19 |  |  | 0.538 |
+| walker |  | 3183 | 119 | entry item at examples/composite-key/src/main.rs:2 |  |  | 0.537 |
+| walker |  | 3313 | 130 | entry item at examples/hello-toasty/src/main.rs:19 |  |  | 0.538 |
 | ns | 3379 |  | 235 | Write-side builders: `CreateMany` and `Association` linking | 2.13 |  | 0.528 |
-| walker |  | 3481 | 130 | entry item at examples/hello-toasty/src/main.rs:2 |  |  | 0.531 |
+| walker |  | 3443 | 130 | entry item at examples/hello-toasty/src/main.rs:2 |  |  | 0.531 |
+| walker |  | 3492 | 49 | listing of 'crates/toasty-driver-integration-suite/src' |  |  | 0.531 |
 | ns | 3512 |  | 133 | examples/ tree, all four examples (complete) | 3.1 |  | 0.510 |
-| walker |  | 3530 | 49 | listing of 'crates/toasty-driver-integration-suite/src' |  |  | 0.510 |
-| walker |  | 3569 | 39 | headings outline in docs/CONTEXT.md |  |  | 0.510 |
-| walker |  | 3762 | 193 | listing of 'crates/toasty-driver-integration-suite/src/tests' |  |  | 0.512 |
+| walker |  | 3531 | 39 | headings outline in docs/CONTEXT.md |  |  | 0.510 |
+| walker |  | 3724 | 193 | listing of 'crates/toasty-driver-integration-suite/src/tests' |  |  | 0.512 |
 | ns | 3779 |  | 267 | Canonical model definitions (examples/hello-toasty/src/main.rs:1-31) | 3.2 |  | 0.554 |
-| walker |  | 3905 | 143 | entry item at examples/composite-key/src/main.rs:18 |  |  | 0.555 |
+| walker |  | 3867 | 143 | entry item at examples/composite-key/src/main.rs:18 |  |  | 0.555 |
+| walker |  | 3905 | 38 | README headline in docs/roadmap/README.md |  |  | 0.555 |
 | ns | 3931 |  | 152 | Opening a database: builder, connection URL, push_schema | 3.3 |  | 0.543 |
 | ns | 4153 |  | 222 | CRUD and relation walkthrough (hello-toasty main body) | 3.4 |  | 0.532 |
 | walker |  | 4260 | 355 | [package] in Cargo.toml |  |  | 0.532 |
