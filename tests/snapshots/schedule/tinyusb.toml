@@ -1,6 +1,6 @@
 fixture = "tinyusb"
 budget = 10000
-cumulative_tokens = 9996
+cumulative_tokens = 9992
 batch_count = 262
 
 [[batches]]
@@ -3385,28 +3385,10 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'C(Includes { file: "src/tusb.c" })'
-descriptor = "c includes in src/tusb.c"
-cost_tokens = 16
-cum_tokens = 6792
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tusb.c"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
 key = 'C(DeclNames { file: "hw/mcu/dialog/da1469x/include/mcu/da1469x_hal.h", chunk_index: 0 })'
 descriptor = "c decl names surface in hw/mcu/dialog/da1469x/include/mcu/da1469x_hal.h"
 cost_tokens = 52
-cum_tokens = 6844
+cum_tokens = 6828
 
 [batches.content]
 kind = "lines"
@@ -3460,11 +3442,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 148
 key = 'C(DeclDoc { file: "src/typec/usbc.h", start_line: 50 })'
 descriptor = "c decl doc at src/typec/usbc.h:50"
 cost_tokens = 13
-cum_tokens = 6857
+cum_tokens = 6841
 
 [batches.content]
 kind = "lines"
@@ -3478,11 +3460,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'C(DeclDoc { file: "src/typec/tcd.h", start_line: 82 })'
 descriptor = "c decl doc at src/typec/tcd.h:82"
 cost_tokens = 6
-cum_tokens = 6863
+cum_tokens = 6847
 
 [batches.content]
 kind = "lines"
@@ -3496,11 +3478,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'C(Includes { file: "src/typec/usbc.h" })'
 descriptor = "c includes in src/typec/usbc.h"
 cost_tokens = 26
-cum_tokens = 6889
+cum_tokens = 6873
 
 [batches.content]
 kind = "lines"
@@ -3514,11 +3496,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 126 })'
 descriptor = "c decl at src/typec/pd_types.h:126"
 cost_tokens = 107
-cum_tokens = 6996
+cum_tokens = 6980
 
 [batches.content]
 kind = "lines"
@@ -3532,11 +3514,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'C(DeclNames { file: "hw/mcu/dialog/da1469x/src/da1469x_clock.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in hw/mcu/dialog/da1469x/src/da1469x_clock.c"
 cost_tokens = 12
-cum_tokens = 7008
+cum_tokens = 6992
 
 [batches.content]
 kind = "lines"
@@ -3558,11 +3540,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 154
+position = 153
 key = 'C(DeclNames { file: "src/common/tusb_common.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/common/tusb_common.h"
 cost_tokens = 975
-cum_tokens = 7983
+cum_tokens = 7967
 
 [batches.content]
 kind = "lines"
@@ -3584,11 +3566,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 154
 key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 37 })'
 descriptor = "c decl at src/common/tusb_common.h:37"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 7967
 
 [batches.content]
 kind = "lines"
@@ -3602,11 +3584,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'Fs(DirListing { dir: "hw/bsp" })'
 descriptor = "listing of 'hw/bsp'"
 cost_tokens = 566
-cum_tokens = 8549
+cum_tokens = 8533
 
 [batches.content]
 kind = "fs"
@@ -3616,11 +3598,11 @@ parent = "hw/bsp"
 entries = ["BoardPresets.json", "ansi_escape.h", "at32f402_405", "at32f403a_407", "at32f413", "at32f415", "at32f423", "at32f425", "at32f435_437", "at32f45x", "board.c", "board_api.h", "broadcom_32bit", "broadcom_64bit", "ch32f20x", "ch32v10x", "ch32v20x", "ch32v30x", "cxd56", "da1469x", "efm32", "espressif", "f1c100s", "family_rules.mk", "family_support.cmake", "family_support.mk", "fomu", "ft9xx", "gd32vf103", "hpmicro", "imxrt", "kinetis_k", "kinetis_k32l", "kinetis_kl", "lpc11", "lpc13", "lpc15", "lpc17", "lpc18", "lpc40", "lpc43", "lpc51", "lpc54", "lpc55", "maxim", "mcx", "mm32", "msp430", "msp432e4", "nrf", "nuc100_120", "nuc121_125", "nuc126", "nuc505", "pic32mz", "ra", "rp2040", "rw61x", "rx", "samd11", "samd2x_l2x", "samd5x_e5x", "same7x", "samg", "stm32c0", "stm32f0", "stm32f1", "stm32f2", "stm32f3", "stm32f4", "stm32f7", "stm32g0", "stm32g4", "stm32h5", "stm32h7", "stm32h7rs", "stm32l0", "stm32l4", "stm32n6", "stm32u0", "stm32u5", "stm32wb", "stm32wba", "tm4c", "xmc4000", "zephyr_board_aliases.cmake"]
 
 [[batches]]
-position = 157
+position = 156
 key = 'Fs(DirListing { dir: "hw/bsp/pic32mz" })'
 descriptor = "listing of 'hw/bsp/pic32mz'"
 cost_tokens = 11
-cum_tokens = 8560
+cum_tokens = 8544
 
 [batches.content]
 kind = "fs"
@@ -3630,11 +3612,11 @@ parent = "hw/bsp/pic32mz"
 entries = ["boards", "family.c", "family.mk"]
 
 [[batches]]
-position = 158
+position = 157
 key = 'Fs(DirListing { dir: "hw/bsp/espressif" })'
 descriptor = "listing of 'hw/bsp/espressif'"
 cost_tokens = 12
-cum_tokens = 8572
+cum_tokens = 8556
 
 [batches.content]
 kind = "fs"
@@ -3644,11 +3626,11 @@ parent = "hw/bsp/espressif"
 entries = ["boards", "components", "family.cmake"]
 
 [[batches]]
-position = 159
+position = 158
 key = 'Fs(DirListing { dir: "hw/bsp/broadcom_32bit" })'
 descriptor = "listing of 'hw/bsp/broadcom_32bit'"
 cost_tokens = 16
-cum_tokens = 8588
+cum_tokens = 8572
 
 [batches.content]
 kind = "fs"
@@ -3658,11 +3640,11 @@ parent = "hw/bsp/broadcom_32bit"
 entries = ["boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 160
+position = 159
 key = 'Fs(DirListing { dir: "hw/bsp/broadcom_32bit/boards" })'
 descriptor = "listing of 'hw/bsp/broadcom_32bit/boards'"
 cost_tokens = 5
-cum_tokens = 8593
+cum_tokens = 8577
 
 [batches.content]
 kind = "fs"
@@ -3672,11 +3654,11 @@ parent = "hw/bsp/broadcom_32bit/boards"
 entries = ["raspberrypi_zero"]
 
 [[batches]]
-position = 161
+position = 160
 key = 'Fs(DirListing { dir: "hw/bsp/broadcom_64bit" })'
 descriptor = "listing of 'hw/bsp/broadcom_64bit'"
 cost_tokens = 16
-cum_tokens = 8609
+cum_tokens = 8593
 
 [batches.content]
 kind = "fs"
@@ -3686,11 +3668,11 @@ parent = "hw/bsp/broadcom_64bit"
 entries = ["boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 162
+position = 161
 key = 'Fs(DirListing { dir: "hw/bsp/ft9xx" })'
 descriptor = "listing of 'hw/bsp/ft9xx'"
 cost_tokens = 16
-cum_tokens = 8625
+cum_tokens = 8609
 
 [batches.content]
 kind = "fs"
@@ -3700,11 +3682,11 @@ parent = "hw/bsp/ft9xx"
 entries = ["boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 163
+position = 162
 key = 'Fs(DirListing { dir: "hw/bsp/ft9xx/boards" })'
 descriptor = "listing of 'hw/bsp/ft9xx/boards'"
 cost_tokens = 6
-cum_tokens = 8631
+cum_tokens = 8615
 
 [batches.content]
 kind = "fs"
@@ -3714,11 +3696,11 @@ parent = "hw/bsp/ft9xx/boards"
 entries = ["mm900evxb"]
 
 [[batches]]
-position = 164
+position = 163
 key = 'Fs(DirListing { dir: "hw/bsp/hpmicro" })'
 descriptor = "listing of 'hw/bsp/hpmicro'"
 cost_tokens = 16
-cum_tokens = 8647
+cum_tokens = 8631
 
 [batches.content]
 kind = "fs"
@@ -3728,11 +3710,11 @@ parent = "hw/bsp/hpmicro"
 entries = ["boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 165
+position = 164
 key = 'Fs(DirListing { dir: "hw/bsp/hpmicro/boards" })'
 descriptor = "listing of 'hw/bsp/hpmicro/boards'"
 cost_tokens = 9
-cum_tokens = 8656
+cum_tokens = 8640
 
 [batches.content]
 kind = "fs"
@@ -3742,11 +3724,11 @@ parent = "hw/bsp/hpmicro/boards"
 entries = ["hpm6750evk2"]
 
 [[batches]]
-position = 166
+position = 165
 key = 'Fs(DirListing { dir: "hw/bsp/same7x" })'
 descriptor = "listing of 'hw/bsp/same7x'"
 cost_tokens = 16
-cum_tokens = 8672
+cum_tokens = 8656
 
 [batches.content]
 kind = "fs"
@@ -3756,11 +3738,11 @@ parent = "hw/bsp/same7x"
 entries = ["boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 167
+position = 166
 key = 'Fs(DirListing { dir: "hw/bsp/espressif/components" })'
 descriptor = "listing of 'hw/bsp/espressif/components'"
 cost_tokens = 10
-cum_tokens = 8682
+cum_tokens = 8666
 
 [batches.content]
 kind = "fs"
@@ -3770,11 +3752,11 @@ parent = "hw/bsp/espressif/components"
 entries = ["led_strip", "tinyusb_src"]
 
 [[batches]]
-position = 168
+position = 167
 key = 'Fs(DirListing { dir: "hw/bsp/espressif/components/tinyusb_src" })'
 descriptor = "listing of 'hw/bsp/espressif/components/tinyusb_src'"
 cost_tokens = 5
-cum_tokens = 8687
+cum_tokens = 8671
 
 [batches.content]
 kind = "fs"
@@ -3784,11 +3766,11 @@ parent = "hw/bsp/espressif/components/tinyusb_src"
 entries = ["CMakeLists.txt"]
 
 [[batches]]
-position = 169
+position = 168
 key = 'Fs(DirListing { dir: "hw/bsp/f1c100s" })'
 descriptor = "listing of 'hw/bsp/f1c100s'"
 cost_tokens = 20
-cum_tokens = 8707
+cum_tokens = 8691
 
 [batches.content]
 kind = "fs"
@@ -3798,11 +3780,11 @@ parent = "hw/bsp/f1c100s"
 entries = ["README.md", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 170
+position = 169
 key = 'Fs(DirListing { dir: "hw/bsp/f1c100s/boards" })'
 descriptor = "listing of 'hw/bsp/f1c100s/boards'"
 cost_tokens = 7
-cum_tokens = 8714
+cum_tokens = 8698
 
 [batches.content]
 kind = "fs"
@@ -3812,11 +3794,11 @@ parent = "hw/bsp/f1c100s/boards"
 entries = ["f1c100s"]
 
 [[batches]]
-position = 171
+position = 170
 key = 'Fs(DirListing { dir: "hw/bsp/broadcom_64bit/boards" })'
 descriptor = "listing of 'hw/bsp/broadcom_64bit/boards'"
 cost_tokens = 13
-cum_tokens = 8727
+cum_tokens = 8711
 
 [batches.content]
 kind = "fs"
@@ -3826,11 +3808,11 @@ parent = "hw/bsp/broadcom_64bit/boards"
 entries = ["raspberrypi_cm4", "raspberrypi_zero2"]
 
 [[batches]]
-position = 172
+position = 171
 key = 'Fs(DirListing { dir: "hw/bsp/cxd56" })'
 descriptor = "listing of 'hw/bsp/cxd56'"
 cost_tokens = 23
-cum_tokens = 8750
+cum_tokens = 8734
 
 [batches.content]
 kind = "fs"
@@ -3840,11 +3822,11 @@ parent = "hw/bsp/cxd56"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 173
+position = 172
 key = 'Fs(DirListing { dir: "hw/bsp/cxd56/boards" })'
 descriptor = "listing of 'hw/bsp/cxd56/boards'"
 cost_tokens = 5
-cum_tokens = 8755
+cum_tokens = 8739
 
 [batches.content]
 kind = "fs"
@@ -3854,11 +3836,11 @@ parent = "hw/bsp/cxd56/boards"
 entries = ["spresense"]
 
 [[batches]]
-position = 174
+position = 173
 key = 'Fs(DirListing { dir: "hw/bsp/cxd56/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/cxd56/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8761
+cum_tokens = 8745
 
 [batches.content]
 kind = "fs"
@@ -3868,11 +3850,11 @@ parent = "hw/bsp/cxd56/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 175
+position = 174
 key = 'Fs(DirListing { dir: "hw/bsp/efm32" })'
 descriptor = "listing of 'hw/bsp/efm32'"
 cost_tokens = 23
-cum_tokens = 8784
+cum_tokens = 8768
 
 [batches.content]
 kind = "fs"
@@ -3882,11 +3864,11 @@ parent = "hw/bsp/efm32"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 176
+position = 175
 key = 'Fs(DirListing { dir: "hw/bsp/efm32/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/efm32/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8790
+cum_tokens = 8774
 
 [batches.content]
 kind = "fs"
@@ -3896,11 +3878,11 @@ parent = "hw/bsp/efm32/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 177
+position = 176
 key = 'Fs(DirListing { dir: "hw/bsp/efm32/boards" })'
 descriptor = "listing of 'hw/bsp/efm32/boards'"
 cost_tokens = 6
-cum_tokens = 8796
+cum_tokens = 8780
 
 [batches.content]
 kind = "fs"
@@ -3910,11 +3892,11 @@ parent = "hw/bsp/efm32/boards"
 entries = ["sltb009a"]
 
 [[batches]]
-position = 178
+position = 177
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_k" })'
 descriptor = "listing of 'hw/bsp/kinetis_k'"
 cost_tokens = 23
-cum_tokens = 8819
+cum_tokens = 8803
 
 [batches.content]
 kind = "fs"
@@ -3924,11 +3906,11 @@ parent = "hw/bsp/kinetis_k"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 179
+position = 178
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_k/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/kinetis_k/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8825
+cum_tokens = 8809
 
 [batches.content]
 kind = "fs"
@@ -3938,11 +3920,11 @@ parent = "hw/bsp/kinetis_k/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 180
+position = 179
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_k32l" })'
 descriptor = "listing of 'hw/bsp/kinetis_k32l'"
 cost_tokens = 23
-cum_tokens = 8848
+cum_tokens = 8832
 
 [batches.content]
 kind = "fs"
@@ -3952,11 +3934,11 @@ parent = "hw/bsp/kinetis_k32l"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 181
+position = 180
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_k32l/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/kinetis_k32l/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8854
+cum_tokens = 8838
 
 [batches.content]
 kind = "fs"
@@ -3966,11 +3948,11 @@ parent = "hw/bsp/kinetis_k32l/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 182
+position = 181
 key = 'Fs(DirListing { dir: "hw/bsp/lpc11" })'
 descriptor = "listing of 'hw/bsp/lpc11'"
 cost_tokens = 23
-cum_tokens = 8877
+cum_tokens = 8861
 
 [batches.content]
 kind = "fs"
@@ -3980,11 +3962,11 @@ parent = "hw/bsp/lpc11"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 183
+position = 182
 key = 'Fs(DirListing { dir: "hw/bsp/lpc11/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc11/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8883
+cum_tokens = 8867
 
 [batches.content]
 kind = "fs"
@@ -3994,11 +3976,11 @@ parent = "hw/bsp/lpc11/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 184
+position = 183
 key = 'Fs(DirListing { dir: "hw/bsp/lpc13" })'
 descriptor = "listing of 'hw/bsp/lpc13'"
 cost_tokens = 23
-cum_tokens = 8906
+cum_tokens = 8890
 
 [batches.content]
 kind = "fs"
@@ -4008,11 +3990,11 @@ parent = "hw/bsp/lpc13"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 185
+position = 184
 key = 'Fs(DirListing { dir: "hw/bsp/lpc13/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc13/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8912
+cum_tokens = 8896
 
 [batches.content]
 kind = "fs"
@@ -4022,11 +4004,11 @@ parent = "hw/bsp/lpc13/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 186
+position = 185
 key = 'Fs(DirListing { dir: "hw/bsp/lpc13/boards" })'
 descriptor = "listing of 'hw/bsp/lpc13/boards'"
 cost_tokens = 8
-cum_tokens = 8920
+cum_tokens = 8904
 
 [batches.content]
 kind = "fs"
@@ -4036,11 +4018,11 @@ parent = "hw/bsp/lpc13/boards"
 entries = ["lpcxpresso1347"]
 
 [[batches]]
-position = 187
+position = 186
 key = 'Fs(DirListing { dir: "hw/bsp/lpc15" })'
 descriptor = "listing of 'hw/bsp/lpc15'"
 cost_tokens = 23
-cum_tokens = 8943
+cum_tokens = 8927
 
 [batches.content]
 kind = "fs"
@@ -4050,11 +4032,11 @@ parent = "hw/bsp/lpc15"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 188
+position = 187
 key = 'Fs(DirListing { dir: "hw/bsp/lpc15/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc15/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8949
+cum_tokens = 8933
 
 [batches.content]
 kind = "fs"
@@ -4064,11 +4046,11 @@ parent = "hw/bsp/lpc15/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 189
+position = 188
 key = 'Fs(DirListing { dir: "hw/bsp/lpc15/boards" })'
 descriptor = "listing of 'hw/bsp/lpc15/boards'"
 cost_tokens = 8
-cum_tokens = 8957
+cum_tokens = 8941
 
 [batches.content]
 kind = "fs"
@@ -4078,11 +4060,11 @@ parent = "hw/bsp/lpc15/boards"
 entries = ["lpcxpresso1549"]
 
 [[batches]]
-position = 190
+position = 189
 key = 'Fs(DirListing { dir: "hw/bsp/lpc17" })'
 descriptor = "listing of 'hw/bsp/lpc17'"
 cost_tokens = 23
-cum_tokens = 8980
+cum_tokens = 8964
 
 [batches.content]
 kind = "fs"
@@ -4092,11 +4074,11 @@ parent = "hw/bsp/lpc17"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 191
+position = 190
 key = 'Fs(DirListing { dir: "hw/bsp/lpc17/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc17/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 8986
+cum_tokens = 8970
 
 [batches.content]
 kind = "fs"
@@ -4106,11 +4088,11 @@ parent = "hw/bsp/lpc17/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 192
+position = 191
 key = 'Fs(DirListing { dir: "hw/bsp/lpc18" })'
 descriptor = "listing of 'hw/bsp/lpc18'"
 cost_tokens = 23
-cum_tokens = 9009
+cum_tokens = 8993
 
 [batches.content]
 kind = "fs"
@@ -4120,11 +4102,11 @@ parent = "hw/bsp/lpc18"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 193
+position = 192
 key = 'Fs(DirListing { dir: "hw/bsp/lpc18/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc18/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9015
+cum_tokens = 8999
 
 [batches.content]
 kind = "fs"
@@ -4134,11 +4116,11 @@ parent = "hw/bsp/lpc18/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 194
+position = 193
 key = 'Fs(DirListing { dir: "hw/bsp/lpc40" })'
 descriptor = "listing of 'hw/bsp/lpc40'"
 cost_tokens = 23
-cum_tokens = 9038
+cum_tokens = 9022
 
 [batches.content]
 kind = "fs"
@@ -4148,11 +4130,11 @@ parent = "hw/bsp/lpc40"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 195
+position = 194
 key = 'Fs(DirListing { dir: "hw/bsp/lpc40/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc40/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9044
+cum_tokens = 9028
 
 [batches.content]
 kind = "fs"
@@ -4162,11 +4144,11 @@ parent = "hw/bsp/lpc40/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 196
+position = 195
 key = 'Fs(DirListing { dir: "hw/bsp/lpc40/boards" })'
 descriptor = "listing of 'hw/bsp/lpc40/boards'"
 cost_tokens = 8
-cum_tokens = 9052
+cum_tokens = 9036
 
 [batches.content]
 kind = "fs"
@@ -4176,11 +4158,11 @@ parent = "hw/bsp/lpc40/boards"
 entries = ["ea4088_quickstart"]
 
 [[batches]]
-position = 197
+position = 196
 key = 'Fs(DirListing { dir: "hw/bsp/lpc43" })'
 descriptor = "listing of 'hw/bsp/lpc43'"
 cost_tokens = 23
-cum_tokens = 9075
+cum_tokens = 9059
 
 [batches.content]
 kind = "fs"
@@ -4190,11 +4172,11 @@ parent = "hw/bsp/lpc43"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 198
+position = 197
 key = 'Fs(DirListing { dir: "hw/bsp/lpc43/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc43/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9081
+cum_tokens = 9065
 
 [batches.content]
 kind = "fs"
@@ -4204,11 +4186,11 @@ parent = "hw/bsp/lpc43/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 199
+position = 198
 key = 'Fs(DirListing { dir: "hw/bsp/lpc51" })'
 descriptor = "listing of 'hw/bsp/lpc51'"
 cost_tokens = 23
-cum_tokens = 9104
+cum_tokens = 9088
 
 [batches.content]
 kind = "fs"
@@ -4218,11 +4200,11 @@ parent = "hw/bsp/lpc51"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 200
+position = 199
 key = 'Fs(DirListing { dir: "hw/bsp/lpc51/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc51/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9110
+cum_tokens = 9094
 
 [batches.content]
 kind = "fs"
@@ -4232,11 +4214,11 @@ parent = "hw/bsp/lpc51/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 201
+position = 200
 key = 'Fs(DirListing { dir: "hw/bsp/lpc51/boards" })'
 descriptor = "listing of 'hw/bsp/lpc51/boards'"
 cost_tokens = 9
-cum_tokens = 9119
+cum_tokens = 9103
 
 [batches.content]
 kind = "fs"
@@ -4246,11 +4228,11 @@ parent = "hw/bsp/lpc51/boards"
 entries = ["lpcxpresso51u68"]
 
 [[batches]]
-position = 202
+position = 201
 key = 'Fs(DirListing { dir: "hw/bsp/lpc55" })'
 descriptor = "listing of 'hw/bsp/lpc55'"
 cost_tokens = 23
-cum_tokens = 9142
+cum_tokens = 9126
 
 [batches.content]
 kind = "fs"
@@ -4260,11 +4242,11 @@ parent = "hw/bsp/lpc55"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 203
+position = 202
 key = 'Fs(DirListing { dir: "hw/bsp/lpc55/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc55/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9148
+cum_tokens = 9132
 
 [batches.content]
 kind = "fs"
@@ -4274,11 +4256,11 @@ parent = "hw/bsp/lpc55/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 204
+position = 203
 key = 'Fs(DirListing { dir: "hw/bsp/mm32" })'
 descriptor = "listing of 'hw/bsp/mm32'"
 cost_tokens = 23
-cum_tokens = 9171
+cum_tokens = 9155
 
 [batches.content]
 kind = "fs"
@@ -4288,11 +4270,11 @@ parent = "hw/bsp/mm32"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 205
+position = 204
 key = 'Fs(DirListing { dir: "hw/bsp/mm32/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/mm32/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9177
+cum_tokens = 9161
 
 [batches.content]
 kind = "fs"
@@ -4302,11 +4284,11 @@ parent = "hw/bsp/mm32/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 206
+position = 205
 key = 'Fs(DirListing { dir: "hw/bsp/msp430" })'
 descriptor = "listing of 'hw/bsp/msp430'"
 cost_tokens = 23
-cum_tokens = 9200
+cum_tokens = 9184
 
 [batches.content]
 kind = "fs"
@@ -4316,11 +4298,11 @@ parent = "hw/bsp/msp430"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 207
+position = 206
 key = 'Fs(DirListing { dir: "hw/bsp/msp430/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/msp430/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9206
+cum_tokens = 9190
 
 [batches.content]
 kind = "fs"
@@ -4330,11 +4312,11 @@ parent = "hw/bsp/msp430/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 208
+position = 207
 key = 'Fs(DirListing { dir: "hw/bsp/msp430/boards" })'
 descriptor = "listing of 'hw/bsp/msp430/boards'"
 cost_tokens = 10
-cum_tokens = 9216
+cum_tokens = 9200
 
 [batches.content]
 kind = "fs"
@@ -4344,11 +4326,11 @@ parent = "hw/bsp/msp430/boards"
 entries = ["msp_exp430f5529lp"]
 
 [[batches]]
-position = 209
+position = 208
 key = 'Fs(DirListing { dir: "hw/bsp/msp432e4" })'
 descriptor = "listing of 'hw/bsp/msp432e4'"
 cost_tokens = 23
-cum_tokens = 9239
+cum_tokens = 9223
 
 [batches.content]
 kind = "fs"
@@ -4358,11 +4340,11 @@ parent = "hw/bsp/msp432e4"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 210
+position = 209
 key = 'Fs(DirListing { dir: "hw/bsp/msp432e4/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/msp432e4/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9245
+cum_tokens = 9229
 
 [batches.content]
 kind = "fs"
@@ -4372,11 +4354,11 @@ parent = "hw/bsp/msp432e4/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 211
+position = 210
 key = 'Fs(DirListing { dir: "hw/bsp/msp432e4/boards" })'
 descriptor = "listing of 'hw/bsp/msp432e4/boards'"
 cost_tokens = 9
-cum_tokens = 9254
+cum_tokens = 9238
 
 [batches.content]
 kind = "fs"
@@ -4386,11 +4368,11 @@ parent = "hw/bsp/msp432e4/boards"
 entries = ["msp_exp432e401y"]
 
 [[batches]]
-position = 212
+position = 211
 key = 'Fs(DirListing { dir: "hw/bsp/nuc100_120" })'
 descriptor = "listing of 'hw/bsp/nuc100_120'"
 cost_tokens = 23
-cum_tokens = 9277
+cum_tokens = 9261
 
 [batches.content]
 kind = "fs"
@@ -4400,11 +4382,11 @@ parent = "hw/bsp/nuc100_120"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 213
+position = 212
 key = 'Fs(DirListing { dir: "hw/bsp/nuc100_120/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/nuc100_120/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9283
+cum_tokens = 9267
 
 [batches.content]
 kind = "fs"
@@ -4414,11 +4396,11 @@ parent = "hw/bsp/nuc100_120/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 214
+position = 213
 key = 'Fs(DirListing { dir: "hw/bsp/nuc100_120/boards" })'
 descriptor = "listing of 'hw/bsp/nuc100_120/boards'"
 cost_tokens = 8
-cum_tokens = 9291
+cum_tokens = 9275
 
 [batches.content]
 kind = "fs"
@@ -4428,11 +4410,11 @@ parent = "hw/bsp/nuc100_120/boards"
 entries = ["nutiny_sdk_nuc120"]
 
 [[batches]]
-position = 215
+position = 214
 key = 'Fs(DirListing { dir: "hw/bsp/nuc121_125" })'
 descriptor = "listing of 'hw/bsp/nuc121_125'"
 cost_tokens = 23
-cum_tokens = 9314
+cum_tokens = 9298
 
 [batches.content]
 kind = "fs"
@@ -4442,11 +4424,11 @@ parent = "hw/bsp/nuc121_125"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 216
+position = 215
 key = 'Fs(DirListing { dir: "hw/bsp/nuc121_125/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/nuc121_125/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9320
+cum_tokens = 9304
 
 [batches.content]
 kind = "fs"
@@ -4456,11 +4438,11 @@ parent = "hw/bsp/nuc121_125/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 217
+position = 216
 key = 'Fs(DirListing { dir: "hw/bsp/nuc126" })'
 descriptor = "listing of 'hw/bsp/nuc126'"
 cost_tokens = 23
-cum_tokens = 9343
+cum_tokens = 9327
 
 [batches.content]
 kind = "fs"
@@ -4470,11 +4452,11 @@ parent = "hw/bsp/nuc126"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 218
+position = 217
 key = 'Fs(DirListing { dir: "hw/bsp/nuc126/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/nuc126/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9349
+cum_tokens = 9333
 
 [batches.content]
 kind = "fs"
@@ -4484,11 +4466,11 @@ parent = "hw/bsp/nuc126/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 219
+position = 218
 key = 'Fs(DirListing { dir: "hw/bsp/nuc126/boards" })'
 descriptor = "listing of 'hw/bsp/nuc126/boards'"
 cost_tokens = 8
-cum_tokens = 9357
+cum_tokens = 9341
 
 [batches.content]
 kind = "fs"
@@ -4498,11 +4480,11 @@ parent = "hw/bsp/nuc126/boards"
 entries = ["nutiny_nuc126v"]
 
 [[batches]]
-position = 220
+position = 219
 key = 'Fs(DirListing { dir: "hw/bsp/nuc505" })'
 descriptor = "listing of 'hw/bsp/nuc505'"
 cost_tokens = 23
-cum_tokens = 9380
+cum_tokens = 9364
 
 [batches.content]
 kind = "fs"
@@ -4512,11 +4494,11 @@ parent = "hw/bsp/nuc505"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 221
+position = 220
 key = 'Fs(DirListing { dir: "hw/bsp/nuc505/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/nuc505/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9386
+cum_tokens = 9370
 
 [batches.content]
 kind = "fs"
@@ -4526,11 +4508,11 @@ parent = "hw/bsp/nuc505/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 222
+position = 221
 key = 'Fs(DirListing { dir: "hw/bsp/nuc505/boards" })'
 descriptor = "listing of 'hw/bsp/nuc505/boards'"
 cost_tokens = 8
-cum_tokens = 9394
+cum_tokens = 9378
 
 [batches.content]
 kind = "fs"
@@ -4540,11 +4522,11 @@ parent = "hw/bsp/nuc505/boards"
 entries = ["nutiny_sdk_nuc505"]
 
 [[batches]]
-position = 223
+position = 222
 key = 'Fs(DirListing { dir: "hw/bsp/rw61x" })'
 descriptor = "listing of 'hw/bsp/rw61x'"
 cost_tokens = 23
-cum_tokens = 9417
+cum_tokens = 9401
 
 [batches.content]
 kind = "fs"
@@ -4554,11 +4536,11 @@ parent = "hw/bsp/rw61x"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 224
+position = 223
 key = 'Fs(DirListing { dir: "hw/bsp/rw61x/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/rw61x/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9423
+cum_tokens = 9407
 
 [batches.content]
 kind = "fs"
@@ -4568,11 +4550,11 @@ parent = "hw/bsp/rw61x/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 225
+position = 224
 key = 'Fs(DirListing { dir: "hw/bsp/rw61x/boards" })'
 descriptor = "listing of 'hw/bsp/rw61x/boards'"
 cost_tokens = 6
-cum_tokens = 9429
+cum_tokens = 9413
 
 [batches.content]
 kind = "fs"
@@ -4582,11 +4564,11 @@ parent = "hw/bsp/rw61x/boards"
 entries = ["frdm_rw612"]
 
 [[batches]]
-position = 226
+position = 225
 key = 'Fs(DirListing { dir: "hw/bsp/rx" })'
 descriptor = "listing of 'hw/bsp/rx'"
 cost_tokens = 23
-cum_tokens = 9452
+cum_tokens = 9436
 
 [batches.content]
 kind = "fs"
@@ -4596,11 +4578,11 @@ parent = "hw/bsp/rx"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 227
+position = 226
 key = 'Fs(DirListing { dir: "hw/bsp/rx/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/rx/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9458
+cum_tokens = 9442
 
 [batches.content]
 kind = "fs"
@@ -4610,11 +4592,11 @@ parent = "hw/bsp/rx/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 228
+position = 227
 key = 'Fs(DirListing { dir: "hw/bsp/rx/boards" })'
 descriptor = "listing of 'hw/bsp/rx/boards'"
 cost_tokens = 13
-cum_tokens = 9471
+cum_tokens = 9455
 
 [batches.content]
 kind = "fs"
@@ -4624,11 +4606,11 @@ parent = "hw/bsp/rx/boards"
 entries = ["gr_citrus", "rx65n_target"]
 
 [[batches]]
-position = 229
+position = 228
 key = 'Fs(DirListing { dir: "hw/bsp/samd11" })'
 descriptor = "listing of 'hw/bsp/samd11'"
 cost_tokens = 23
-cum_tokens = 9494
+cum_tokens = 9478
 
 [batches.content]
 kind = "fs"
@@ -4638,11 +4620,11 @@ parent = "hw/bsp/samd11"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 230
+position = 229
 key = 'Fs(DirListing { dir: "hw/bsp/samd11/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/samd11/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9500
+cum_tokens = 9484
 
 [batches.content]
 kind = "fs"
@@ -4652,11 +4634,11 @@ parent = "hw/bsp/samd11/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 231
+position = 230
 key = 'Fs(DirListing { dir: "hw/bsp/samd2x_l2x" })'
 descriptor = "listing of 'hw/bsp/samd2x_l2x'"
 cost_tokens = 23
-cum_tokens = 9523
+cum_tokens = 9507
 
 [batches.content]
 kind = "fs"
@@ -4666,11 +4648,11 @@ parent = "hw/bsp/samd2x_l2x"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 232
+position = 231
 key = 'Fs(DirListing { dir: "hw/bsp/samd2x_l2x/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/samd2x_l2x/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9529
+cum_tokens = 9513
 
 [batches.content]
 kind = "fs"
@@ -4680,11 +4662,11 @@ parent = "hw/bsp/samd2x_l2x/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 233
+position = 232
 key = 'Fs(DirListing { dir: "hw/bsp/samd5x_e5x" })'
 descriptor = "listing of 'hw/bsp/samd5x_e5x'"
 cost_tokens = 23
-cum_tokens = 9552
+cum_tokens = 9536
 
 [batches.content]
 kind = "fs"
@@ -4694,11 +4676,11 @@ parent = "hw/bsp/samd5x_e5x"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 234
+position = 233
 key = 'Fs(DirListing { dir: "hw/bsp/samd5x_e5x/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/samd5x_e5x/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9558
+cum_tokens = 9542
 
 [batches.content]
 kind = "fs"
@@ -4708,11 +4690,11 @@ parent = "hw/bsp/samd5x_e5x/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 235
+position = 234
 key = 'Fs(DirListing { dir: "hw/bsp/tm4c" })'
 descriptor = "listing of 'hw/bsp/tm4c'"
 cost_tokens = 23
-cum_tokens = 9581
+cum_tokens = 9565
 
 [batches.content]
 kind = "fs"
@@ -4722,11 +4704,11 @@ parent = "hw/bsp/tm4c"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 236
+position = 235
 key = 'Fs(DirListing { dir: "hw/bsp/tm4c/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/tm4c/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9587
+cum_tokens = 9571
 
 [batches.content]
 kind = "fs"
@@ -4736,11 +4718,11 @@ parent = "hw/bsp/tm4c/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 237
+position = 236
 key = 'Fs(DirListing { dir: "hw/bsp/xmc4000" })'
 descriptor = "listing of 'hw/bsp/xmc4000'"
 cost_tokens = 23
-cum_tokens = 9610
+cum_tokens = 9594
 
 [batches.content]
 kind = "fs"
@@ -4750,11 +4732,11 @@ parent = "hw/bsp/xmc4000"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 238
+position = 237
 key = 'Fs(DirListing { dir: "hw/bsp/xmc4000/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/xmc4000/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9616
+cum_tokens = 9600
 
 [batches.content]
 kind = "fs"
@@ -4764,11 +4746,11 @@ parent = "hw/bsp/xmc4000/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 239
+position = 238
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_k/boards" })'
 descriptor = "listing of 'hw/bsp/kinetis_k/boards'"
 cost_tokens = 14
-cum_tokens = 9630
+cum_tokens = 9614
 
 [batches.content]
 kind = "fs"
@@ -4778,11 +4760,11 @@ parent = "hw/bsp/kinetis_k/boards"
 entries = ["frdm_k64f", "teensy_35"]
 
 [[batches]]
-position = 240
+position = 239
 key = 'Fs(DirListing { dir: "hw/bsp/gd32vf103" })'
 descriptor = "listing of 'hw/bsp/gd32vf103'"
 cost_tokens = 25
-cum_tokens = 9655
+cum_tokens = 9639
 
 [batches.content]
 kind = "fs"
@@ -4792,11 +4774,11 @@ parent = "hw/bsp/gd32vf103"
 entries = ["boards", "family.c", "family.cmake", "family.mk", "system_gd32vf103.c"]
 
 [[batches]]
-position = 241
+position = 240
 key = 'Fs(DirListing { dir: "hw/bsp/gd32vf103/boards" })'
 descriptor = "listing of 'hw/bsp/gd32vf103/boards'"
 cost_tokens = 8
-cum_tokens = 9663
+cum_tokens = 9647
 
 [batches.content]
 kind = "fs"
@@ -4806,11 +4788,11 @@ parent = "hw/bsp/gd32vf103/boards"
 entries = ["sipeed_longan_nano"]
 
 [[batches]]
-position = 242
+position = 241
 key = 'Fs(DirListing { dir: "hw/bsp/lpc17/boards" })'
 descriptor = "listing of 'hw/bsp/lpc17/boards'"
 cost_tokens = 15
-cum_tokens = 9678
+cum_tokens = 9662
 
 [batches.content]
 kind = "fs"
@@ -4820,11 +4802,11 @@ parent = "hw/bsp/lpc17/boards"
 entries = ["lpcxpresso1769", "mbed1768"]
 
 [[batches]]
-position = 243
+position = 242
 key = 'Fs(DirListing { dir: "hw/bsp/lpc43/boards" })'
 descriptor = "listing of 'hw/bsp/lpc43/boards'"
 cost_tokens = 15
-cum_tokens = 9693
+cum_tokens = 9677
 
 [batches.content]
 kind = "fs"
@@ -4834,11 +4816,11 @@ parent = "hw/bsp/lpc43/boards"
 entries = ["ea4357", "lpcxpresso43s67"]
 
 [[batches]]
-position = 244
+position = 243
 key = 'Fs(DirListing { dir: "hw/bsp/same7x/boards" })'
 descriptor = "listing of 'hw/bsp/same7x/boards'"
 cost_tokens = 15
-cum_tokens = 9708
+cum_tokens = 9692
 
 [batches.content]
 kind = "fs"
@@ -4848,11 +4830,11 @@ parent = "hw/bsp/same7x/boards"
 entries = ["same70_qmtech", "same70_xplained"]
 
 [[batches]]
-position = 245
+position = 244
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_kl" })'
 descriptor = "listing of 'hw/bsp/kinetis_kl'"
 cost_tokens = 27
-cum_tokens = 9735
+cum_tokens = 9719
 
 [batches.content]
 kind = "fs"
@@ -4862,11 +4844,11 @@ parent = "hw/bsp/kinetis_kl"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk", "gcc"]
 
 [[batches]]
-position = 246
+position = 245
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_kl/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/kinetis_kl/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9741
+cum_tokens = 9725
 
 [batches.content]
 kind = "fs"
@@ -4876,11 +4858,11 @@ parent = "hw/bsp/kinetis_kl/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 247
+position = 246
 key = 'Fs(DirListing { dir: "hw/bsp/kinetis_kl/boards" })'
 descriptor = "listing of 'hw/bsp/kinetis_kl/boards'"
 cost_tokens = 8
-cum_tokens = 9749
+cum_tokens = 9733
 
 [batches.content]
 kind = "fs"
@@ -4890,11 +4872,11 @@ parent = "hw/bsp/kinetis_kl/boards"
 entries = ["frdm_kl25z"]
 
 [[batches]]
-position = 248
+position = 247
 key = 'Fs(DirListing { dir: "hw/bsp/lpc54" })'
 descriptor = "listing of 'hw/bsp/lpc54'"
 cost_tokens = 27
-cum_tokens = 9776
+cum_tokens = 9760
 
 [batches.content]
 kind = "fs"
@@ -4904,11 +4886,11 @@ parent = "hw/bsp/lpc54"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk", "iar"]
 
 [[batches]]
-position = 249
+position = 248
 key = 'Fs(DirListing { dir: "hw/bsp/lpc54/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/lpc54/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9782
+cum_tokens = 9766
 
 [batches.content]
 kind = "fs"
@@ -4918,11 +4900,11 @@ parent = "hw/bsp/lpc54/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 250
+position = 249
 key = 'Fs(DirListing { dir: "hw/bsp/lpc18/boards" })'
 descriptor = "listing of 'hw/bsp/lpc18/boards'"
 cost_tokens = 16
-cum_tokens = 9798
+cum_tokens = 9782
 
 [batches.content]
 kind = "fs"
@@ -4932,11 +4914,11 @@ parent = "hw/bsp/lpc18/boards"
 entries = ["lpcxpresso18s37", "mcb1800"]
 
 [[batches]]
-position = 251
+position = 250
 key = 'Fs(DirListing { dir: "hw/bsp/samd11/boards" })'
 descriptor = "listing of 'hw/bsp/samd11/boards'"
 cost_tokens = 16
-cum_tokens = 9814
+cum_tokens = 9798
 
 [batches.content]
 kind = "fs"
@@ -4946,11 +4928,11 @@ parent = "hw/bsp/samd11/boards"
 entries = ["cynthion_d11", "samd11_xplained"]
 
 [[batches]]
-position = 252
+position = 251
 key = 'Fs(DirListing { dir: "hw/bsp/imxrt" })'
 descriptor = "listing of 'hw/bsp/imxrt'"
 cost_tokens = 29
-cum_tokens = 9843
+cum_tokens = 9827
 
 [batches.content]
 kind = "fs"
@@ -4960,11 +4942,11 @@ parent = "hw/bsp/imxrt"
 entries = ["FreeRTOSConfig", "boards", "debug.jlinkscript", "family.c", "family.cmake", "family.mk"]
 
 [[batches]]
-position = 253
+position = 252
 key = 'Fs(DirListing { dir: "hw/bsp/imxrt/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/imxrt/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9849
+cum_tokens = 9833
 
 [batches.content]
 kind = "fs"
@@ -4974,11 +4956,11 @@ parent = "hw/bsp/imxrt/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 254
+position = 253
 key = 'Fs(DirListing { dir: "hw/bsp/nuc121_125/boards" })'
 descriptor = "listing of 'hw/bsp/nuc121_125/boards'"
 cost_tokens = 17
-cum_tokens = 9866
+cum_tokens = 9850
 
 [batches.content]
 kind = "fs"
@@ -4988,11 +4970,11 @@ parent = "hw/bsp/nuc121_125/boards"
 entries = ["nutiny_sdk_nuc121", "nutiny_sdk_nuc125"]
 
 [[batches]]
-position = 255
+position = 254
 key = 'Fs(DirListing { dir: "hw/bsp/pic32mz/boards" })'
 descriptor = "listing of 'hw/bsp/pic32mz/boards'"
 cost_tokens = 17
-cum_tokens = 9883
+cum_tokens = 9867
 
 [batches.content]
 kind = "fs"
@@ -5002,11 +4984,11 @@ parent = "hw/bsp/pic32mz/boards"
 entries = ["olimex_emz64", "olimex_hmz144"]
 
 [[batches]]
-position = 256
+position = 255
 key = 'Fs(DirListing { dir: "hw/bsp/xmc4000/boards" })'
 descriptor = "listing of 'hw/bsp/xmc4000/boards'"
 cost_tokens = 17
-cum_tokens = 9900
+cum_tokens = 9884
 
 [batches.content]
 kind = "fs"
@@ -5016,11 +4998,11 @@ parent = "hw/bsp/xmc4000/boards"
 entries = ["xmc4500_relax", "xmc4700_relax"]
 
 [[batches]]
-position = 257
+position = 256
 key = 'Fs(DirListing { dir: "hw/bsp/maxim" })'
 descriptor = "listing of 'hw/bsp/maxim'"
 cost_tokens = 31
-cum_tokens = 9931
+cum_tokens = 9915
 
 [batches.content]
 kind = "fs"
@@ -5030,11 +5012,11 @@ parent = "hw/bsp/maxim"
 entries = ["FreeRTOSConfig", "README.md", "boards", "family.c", "family.cmake", "family.mk", "linker"]
 
 [[batches]]
-position = 258
+position = 257
 key = 'Fs(DirListing { dir: "hw/bsp/maxim/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/maxim/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9937
+cum_tokens = 9921
 
 [batches.content]
 kind = "fs"
@@ -5044,11 +5026,11 @@ parent = "hw/bsp/maxim/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 259
+position = 258
 key = 'Fs(DirListing { dir: "hw/bsp/stm32wb" })'
 descriptor = "listing of 'hw/bsp/stm32wb'"
 cost_tokens = 32
-cum_tokens = 9969
+cum_tokens = 9953
 
 [batches.content]
 kind = "fs"
@@ -5058,11 +5040,11 @@ parent = "hw/bsp/stm32wb"
 entries = ["FreeRTOSConfig", "boards", "family.c", "family.cmake", "family.mk", "stm32wbxx_hal_conf.h"]
 
 [[batches]]
-position = 260
+position = 259
 key = 'Fs(DirListing { dir: "hw/bsp/stm32wb/FreeRTOSConfig" })'
 descriptor = "listing of 'hw/bsp/stm32wb/FreeRTOSConfig'"
 cost_tokens = 6
-cum_tokens = 9975
+cum_tokens = 9959
 
 [batches.content]
 kind = "fs"
@@ -5072,11 +5054,11 @@ parent = "hw/bsp/stm32wb/FreeRTOSConfig"
 entries = ["FreeRTOSConfig.h"]
 
 [[batches]]
-position = 261
+position = 260
 key = 'Fs(DirListing { dir: "hw/bsp/stm32wb/boards" })'
 descriptor = "listing of 'hw/bsp/stm32wb/boards'"
 cost_tokens = 9
-cum_tokens = 9984
+cum_tokens = 9968
 
 [batches.content]
 kind = "fs"
@@ -5086,15 +5068,29 @@ parent = "hw/bsp/stm32wb/boards"
 entries = ["stm32wb55nucleo"]
 
 [[batches]]
-position = 262
+position = 261
 key = 'Fs(DirListing { dir: "hw/bsp/broadcom_32bit/boards/raspberrypi_zero" })'
 descriptor = "listing of 'hw/bsp/broadcom_32bit/boards/raspberrypi_zero'"
 cost_tokens = 12
-cum_tokens = 9996
+cum_tokens = 9980
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
 parent = "hw/bsp/broadcom_32bit/boards/raspberrypi_zero"
+entries = ["board.cmake", "board.h", "board.mk"]
+
+[[batches]]
+position = 262
+key = 'Fs(DirListing { dir: "hw/bsp/broadcom_64bit/boards/raspberrypi_cm4" })'
+descriptor = "listing of 'hw/bsp/broadcom_64bit/boards/raspberrypi_cm4'"
+cost_tokens = 12
+cum_tokens = 9992
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hw/bsp/broadcom_64bit/boards/raspberrypi_cm4"
 entries = ["board.cmake", "board.h", "board.mk"]
