@@ -2131,8 +2131,23 @@ fn body_fu_factor(file: &Path) -> f64 {
     if is_header_file(file) { 1.0 } else { 0.55 }
 }
 
+/// Deepest level at which a header still reads as the project's public
+/// include surface: the repo root, or directly inside one of its
+/// top-level directories (`src/`, `include/`). A consumer writes
+/// `#include "<project>.h"` against that level; anything nested below it
+/// is internal structure the project chose, and pays its real depth.
+const PUBLIC_SURFACE_HEADER_MAX_DEPTH: usize = 2;
+
+/// True iff `file` is a header on the project's public include surface.
+/// Only such headers earn the entrypoint depth pin — being a header is a
+/// *classification*, not a promotion, so a vendored or deeply nested
+/// header tree must not price as if it sat at the repo root.
+fn is_public_surface_header(file: &Path, ctx: &WalkCtx) -> bool {
+    is_header_file(file) && ctx.depth_from_root(file) <= PUBLIC_SURFACE_HEADER_MAX_DEPTH
+}
+
 fn c_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_header_file(file))
+    file_depth_factor(file, ctx, is_public_surface_header(file, ctx))
         * secondary_root_pair_factor(file, ctx)
         * stdlib_shim_factor(file, ctx)
         * explicit_visibility_factor(file, ctx)
