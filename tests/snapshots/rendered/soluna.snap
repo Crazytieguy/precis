@@ -183,6 +183,8 @@ src/
         …
     ime_state.h
         …
+           4→#include <stdbool.h>
+           5→#include <stdint.h>
            7→struct soluna_ime_rect_state {
            8→    float x;
            9→    float y;
@@ -202,6 +204,13 @@ src/
         …
            4→#include <stdint.h>
            6→struct log_info {
+           7→	char tag[64];
+           8→	uint32_t log_level;
+           9→	uint32_t log_item;
+          10→	uint32_t line_nr;
+          11→	char message[256];
+          12→	const char *filename;	
+          13→};
         …
     lsha1.c …
     luabuffer.h
@@ -244,18 +253,7 @@ src/
     platform/
         linux/
             soluna_linux_ime.c …
-            soluna_linux_ime.h
-                …
-                   4→#include <stdbool.h>
-                   6→bool soluna_linux_ensure_im(void);
-                   7→void soluna_linux_on_rect_cleared(void);
-                   8→void soluna_linux_update_spot(void);
-                   9→void soluna_linux_focus_in(void);
-                  10→void soluna_linux_focus_out(void);
-                  11→void soluna_linux_shutdown_ime(void);
-                  12→bool soluna_linux_should_skip_event(const sapp_event *ev);
-                  13→void soluna_linux_handle_event(const sapp_event *ev);
-                …
+            soluna_linux_ime.h …
         macos/
             soluna_macos_ime.h …
             soluna_macos_ime.m …
@@ -265,13 +263,7 @@ src/
             soluna_wasm_ime.h …
         windows/
             soluna_windows_ime.c …
-            soluna_windows_ime.h
-                …
-                   4→void soluna_win32_install_wndproc(void);
-                   5→void soluna_win32_apply_ime_rect(void);
-                   6→void soluna_win32_set_ime_font(const char *font_name, float height_px);
-                   7→void soluna_win32_reset_ime_font(void);
-                …
+            soluna_windows_ime.h …
     render.c …
     render_bindings.c …
     render_bindings.h
@@ -328,6 +320,8 @@ src/
     spritemgr.c …
     spritemgr.h
         …
+           4→#include <stdint.h>
+           5→#include <assert.h>
            7→#define INVALID_TEXTUREID 0xffff
            8→
            9→struct sprite_rect {
@@ -343,6 +337,8 @@ src/
     srbuffer.c …
     srbuffer.h
         …
+           4→#include <stdint.h>
+           5→#include <stdlib.h>
            7→struct sr_mat {
            8→	float v[4];
            9→};

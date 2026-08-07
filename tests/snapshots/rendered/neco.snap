@@ -121,7 +121,13 @@ docs/
     API.md …
     README.md
            1→# Neco Documentation
-        …
+           3→## [API.md](API.md)
+           4→
+           5→The Neco library API reference. This document includes information about each
+           6→type and function and is generated from the [neco.h](../neco.h) and [neco.c](../neco.c)
+           7→source files using a [doxygen](https://www.doxygen.nl) syntax.
+           8→
+           9→To manually generate the document, run the `docs/tools/build-api.sh`.
     TECHNICAL.md …
     assets/
         API_foot.md …
@@ -158,13 +164,6 @@ examples/
     signals.c …
 neco.c …
 neco.h
-       1→// https://github.com/tidwall/neco
-       2→//
-       3→// Copyright 2024 Joshua J Baker. All rights reserved.
-       4→// Use of this source code is governed by an MIT-style
-       5→// license that can be found in the LICENSE file.
-       6→//
-       7→// Neco -- Coroutine library for C
     …
       12→#include <stdbool.h>
       13→#include <stdint.h>
