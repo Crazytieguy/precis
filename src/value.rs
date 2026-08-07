@@ -105,8 +105,8 @@ const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
 
 /// Per-chunk multiplier for a chunked names-surface batch, used by the
-/// C and Go walkers behind their own size gates. The Python and
-/// TypeScript catalog splitters allocate a conserved total instead via
+/// C and Go walkers behind their own size gates. Surfaces that still
+/// split allocate a conserved total instead, via
 /// [`conserved_catalog_chunk_factors`].
 pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
@@ -118,7 +118,7 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
 
 /// Concavity exponent shared by the catalog-roster batch keys (Python
 /// `ImportChunk` / `DeclNames` / `DeclNamesChunk`, TS
-/// `ExportMemberNames*` / `ModuleItemNames`) and the head-parity allocation in
+/// `ExportMemberNames` / `ModuleItemNames`) and the head-parity allocation in
 /// [`conserved_catalog_chunk_factors`] — the allocation is only
 /// ratio-neutral if it uses the exponent the scheduler ranks with.
 ///

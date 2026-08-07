@@ -538,14 +538,16 @@ pub enum PythonKey {
     /// Chunked `Imports` for large `__init__.py` re-export walls.
     ImportChunk { file: PathBuf, chunk_index: usize },
     /// Names surface for top-level class/def/non-dunder consts — one
-    /// unified catalog per file unless the rendered surface exceeds the
-    /// Python walker's oversize threshold. For an oversize catalog this
-    /// remains the first chunk, preserving the established key/value.
+    /// unified catalog per file however large it grows. On a directory's
+    /// spine module this is the entry slice carved off the catalog's
+    /// head: a discounted view of the roster that makes the file cheap to
+    /// enter.
     DeclNames { file: PathBuf },
-    /// Continuation of an oversize top-level names surface. Chained after
-    /// `DeclNames` (and then the preceding continuation) so the catalog
-    /// retains source-roster order without creating independently
-    /// schedulable crumbs.
+    /// The rest of a spine module's names surface, once `DeclNames` has
+    /// taken its entry slice. The two are disjoint siblings, neither
+    /// gated on the other, so this is independently schedulable and
+    /// carries the whole catalog's value. `chunk_index` is always 1 —
+    /// it survives from the chunk chain this replaced.
     DeclNamesChunk { file: PathBuf, chunk_index: usize },
     /// One top-level item — header + up to 2 docstring-summary rows
     /// for class/def, or assignment line(s) for const.

@@ -417,7 +417,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // The method-signature catalog spans classes across the whole
         // roster, so it waits on the group holding the bulk of it rather
         // than on a carved gate covering a handful of entry points.
-        let names_chain_gate = names_keys.last().cloned();
+        let method_sigs_predecessor = names_keys.last().cloned();
 
         // Method-signature catalog — likewise one unified batch. Gated
         // on the names surface: the `Full+Ellipsis` pair can share the
@@ -444,7 +444,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 let key = BatchKey::Python(PythonKey::MethodSigs { file: file.clone() });
                 out.push(Batch {
                     key: key.clone(),
-                    predecessor: names_chain_gate.clone(),
+                    predecessor: method_sigs_predecessor.clone(),
                     content,
                     value: method_sigs_value(file, ctx)
                         * python_roster_mass_factor(file, flat_methods.len()),
