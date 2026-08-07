@@ -3573,3 +3573,84 @@ fixture**, with zero baseline churn: no training fixture has either
 construct inside a head-split section's chunk-0 window today. It is a
 latent-hazard fix, and the hazard is the kind that only shows up as
 corrupt rendered output, never as a score.
+
+## Workspace primary-member window (2026-08-06b, lane WS): 0.6428 → 0.6437
+
+Entered on the read that in a monorepo the member the repository is *about*
+never gets window priority over sibling scaffold members (vite's ≤3K band is
+~1200 tokens of `create-vite/template-*` listings while
+`packages/vite/src/node/index.ts` waits at 0.354 unsched). Two variants of
+that mechanism were built and both measured negative; what shipped is a
+different cut of the same band.
+
+**The sibling-workspace-member axis is DEAD — do not respend it.** Built as
+`WalkCtx::is_sibling_workspace_member_path` +
+`workspace::enclosing_member_manifest` (nearest *member* ancestor, so a
+non-member manifest on the way up does not stop the walk), applied as a 0.7
+damp to `dir_listing_value`, language-general over Cargo members and
+npm/pnpm members, inert when no primary member resolves.
+
+- V1, damping the whole sibling subtree including the member's own listing:
+  17-fixture carrier subset −0.0095 at 3000. vite **+0.058**, toasty +0.167
+  at B=1000, but cmdk **−0.112**, d2ts −0.046, sps −0.032, mdbook −0.025.
+- V2, exempting the member's own listing: cmdk restored (+0.004), and
+  **vite's entire gain vanished** (+0.001); still −0.0049 on the subset,
+  with mdbook/sps unchanged from V1.
+
+The V1↔V2 delta is the finding: **the vite gain was gating, not pricing.**
+Deferring `listing of 'packages/create-vite'` defers *discovery* of the 50
+listings behind it, because a directory's contents are only expanded once
+its listing is scheduled. A 0.7 price shift on listings already discovered
+moves nothing — 20-token listings win the ratio race anyway. And the loss is
+the same lever misfiring: cmdk NS 1.4 is literally "Listings of all three
+packages", so a sibling member's own listing is NS-credited repo-map
+orientation. Ordinary sibling members' interiors are NS-wanted too
+(mdbook/sps lose their sub-crates' `src/` maps). Only vite's
+scaffold-template collection was filler, so the separating feature is the
+directory's **scaffold/test role**, not which member owns it.
+
+What shipped, both in the non-essential directory-role classifier
+(`value::non_essential_factor_inner`):
+
+- **`template-<x>` / `cra-template-<x>` are scaffolder payload**
+  (`is_scaffold_template_dir_name`) — the material a `create-*` package
+  copies into a new project, N near-identical starter projects rather than
+  the scaffolder's own surface. **The prefixed spellings only.** A bare
+  `templates/` is the view layer in every server framework in the corpus
+  (Django, Flask, Jinja, Helm) and demoting it would demote those projects'
+  actual output; `tinyusb/src/portable/template` is likewise real driver
+  source. The bare spelling keeps its meaning in the JSON walker's
+  `is_scaffold_template_path`, which is manifest-gated — a `templates/` dir
+  that ships its own `package.json` really is scaffold.
+- **Dunder wrapping is read through** (`lowered.trim_matches('_')`): the
+  canonical JS/TS test tree is `__tests__`, and the classifier could not see
+  it, so JS test dirs were priced as library source while `test/` — the same
+  directory under another ecosystem's spelling — was demoted. Only the
+  wrapping is stripped; the trimmed name still has to *be* a role name, so
+  `_internal` and `__pycache__` match nothing.
+
+**The two only pay together, and that is the reusable lesson.** The dunder
+fix alone is *exactly flat* at 3000 (0.6428, byte-identical baselines
+everywhere) and worth +0.0004/+0.0012 at 4327/9000; the scaffold demotion
+alone is +0.0005 at 3000; stacked they are **+0.0009 at 3000** and +0.0004
+more at 9000 than the sum of the parts. Freeing tokens at a frontier only
+pays when the next thing in line is not more filler — at vite the
+`__tests__` tokens were being re-spent on the very create-vite scaffold the
+other rule removes. Corpus grid
+`0.6289 | 0.6434 | 0.6479 | 0.6437 | 0.6072 | 0.5773 | 0.5744`, nothing down
+at any budget. vite is the only fixture whose baseline moves at all: 0.447 →
+0.506, and it is cliff-adjacent (last in-budget row at cum 2996), so the
+single-fixture headline is worth less than the flat-or-up 7-budget row.
+
+Residual, unclaimed: the remaining monorepo mass in the shortlist entry
+(toasty 0.441 unsched, enclosed 0.27, audiobookshelf 0.19) is untouched.
+toasty responds strongly to the sibling damp at *low* budgets only (+0.167
+at B=1000, flat at 3000) — the same damp costs mdbook/sps more than toasty
+gains, so a Rust-side re-cut would need a signal that separates a driver /
+example crate from a genuine sibling library. enclosed and audiobookshelf
+never entered the mechanism at all: `find_primary_workspace_member` matches
+on name, and `@enclosed/root` + `@enclosed/lib` share no name with the repo,
+while audiobookshelf is not a workspace. A JS analogue of Cargo's dependency
+centrality would elect enclosed's hub, but on inspection that hub is
+`@enclosed/crypto`, not the `packages/lib` the loss sits in — so centrality
+is not obviously the missing signal either.

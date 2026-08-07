@@ -302,7 +302,15 @@ pub(crate) fn non_essential_factor_inner(
             // spelling gives those ecosystems' test suites the same
             // weight as their library source.
             let lowered = raw.to_ascii_lowercase();
-            let s = lowered.as_str();
+            // Dunder wrapping is a naming convention, not a role: the JS
+            // test tree is `__tests__`, its snapshots `__snapshots__`.
+            // Reading the role through the underscores keeps the classifier
+            // from giving the canonical JS test directory the weight of
+            // library source while `test/` — the same directory under
+            // another ecosystem's spelling — is demoted. Only the wrapping
+            // is stripped; a trimmed name still has to *be* one of the roles
+            // below, so `_internal` and `__pycache__` go on matching nothing.
+            let s = lowered.trim_matches('_');
             if (matches!(
                 s,
                 "tests"
@@ -330,6 +338,7 @@ pub(crate) fn non_essential_factor_inner(
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
+                || is_scaffold_template_dir_name(s)
                 || is_proc_macro_crate_dir_name(s))
                 && !is_declared_crate_module_dir(&prefix, root)
             {
@@ -461,6 +470,19 @@ fn is_declared_crate_module_dir(dir: &std::path::Path, root: &std::path::Path) -
         cur = d.parent();
     }
     false
+}
+
+/// Starter-template payload directory — the material a project scaffolder
+/// copies into a new project (`template-react`, `cra-template-typescript`,
+/// as emitted by `create-*` packages). What the scaffolder *is* lives in
+/// its own source; the payloads are N near-identical starter projects.
+///
+/// The prefixed forms only. A bare `templates/` is the view layer in every
+/// server framework in the corpus (Django, Flask, Jinja, Helm charts) —
+/// demoting that would demote those projects' actual output.
+pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    lower.starts_with("template-") || lower.starts_with("cra-template-")
 }
 
 /// Rust proc-macro helper-crate convention (`<name>-macros` etc.).
@@ -801,6 +823,26 @@ mod tests {
             ),
             (1.0, "README.md README.rst Readme.md"),
             (0.2, "docs/README.zh-CN.md"),
+            // Scaffolder payloads: the prefixed spellings only. A bare
+            // `templates/` is the view layer in Django / Flask / Jinja /
+            // Helm trees and keeps full weight.
+            (
+                0.2,
+                "packages/create-x/template-react/src/main.tsx \
+                 packages/create-x/cra-template-typescript/index.js \
+                 packages/create-x/Template-Vue/vite.config.ts",
+            ),
+            (
+                1.0,
+                "app/templates/base.html src/template/driver.c pkg/x/templates/deploy.yaml",
+            ),
+            // Dunder wrapping is read through: the JS test tree lands in
+            // the same tier as `test/`. Wrapping alone demotes nothing.
+            (
+                0.2,
+                "src/node/__tests__/serve.ts src/node/__tests__/__snapshots__/x.snap",
+            ),
+            (1.0, "src/__internal__/queue.ts src/pkg/__pycache__/x.pyc"),
         ];
         let root = Path::new("/repo");
         for (expected, paths) in cases {
