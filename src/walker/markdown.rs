@@ -3234,7 +3234,26 @@ fn push_h3_child_or_body_blocks(
     source: &str,
 ) {
     let (h3_start, h3_end) = node_row_range(h3_section, source);
+    let heading_outlined = outlined.contains(&h3_start);
     if !has_substantive_body(h3_section, h3_start, h3_end, source) {
+        // An H3 with nothing under its title (an undocumented entry in
+        // a generated API index) is left to the outline, which renders
+        // that row already — an H3Child here would be a zero-cost
+        // duplicate. The mega-doc skeleton names H2s only, though, so
+        // under truncation this batch is the row's only possible owner.
+        if heading_outlined {
+            return;
+        }
+        if let Some(heading) = first_heading_child(h3_section) {
+            push_h3_child(
+                out,
+                h3_section,
+                node_end_row_trimmed(heading, source) + 1,
+                parent_idx,
+                synthetic_intro_present,
+                source,
+            );
+        }
         return;
     }
     let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
@@ -3242,13 +3261,31 @@ fn push_h3_child_or_body_blocks(
         let mut ranges = body_block_ranges(h3_section, source);
         // The mega-doc skeleton names H2s only, so an H3 heading split
         // into body blocks has no outline row to fall back on.
-        if !outlined.contains(&h3_start) {
+        if !heading_outlined {
             keep_heading_row(&mut ranges, h3_start);
         }
         if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
             return;
         }
     }
+    push_h3_child(
+        out,
+        h3_section,
+        h3_end,
+        parent_idx,
+        synthetic_intro_present,
+        source,
+    );
+}
+
+fn push_h3_child(
+    out: &mut Vec<SectionRange>,
+    h3_section: Node<'_>,
+    end: usize,
+    parent_idx: usize,
+    synthetic_intro_present: bool,
+    source: &str,
+) {
     // The H3's OWN title carries the reference/usage match (e.g.
     // `### Colors`, `### Default preset`). Same gates as the H2 path:
     // compact body + structural reference content.
@@ -3256,8 +3293,8 @@ fn push_h3_child_or_body_blocks(
         && reference_usage_body_ok(h3_section)
         && reference_usage_has_structure(h3_section, source);
     out.push(SectionRange {
-        start: h3_start,
-        end: h3_end,
+        start: h3_section.start_position().row + 1,
+        end,
         kind: SectionKind::H3Child,
         parent_index: parent_idx,
         synthetic_intro_present,
@@ -5777,5 +5814,47 @@ Details prose paragraph one.
                 "H3 heading row {row} ({line}) has no owner; the skeleton outline names H2s only"
             );
         }
+    }
+
+    /// Same skeleton, one path over: an H3 with nothing under its title
+    /// is normally left to the outline, but the H2-only skeleton never
+    /// names an H3 — so the bare heading needs a batch of its own.
+    #[test]
+    fn markdown_empty_h3_keeps_its_heading_row_under_truncation() {
+        // The link index is what keeps the mega-doc fallback alive past
+        // `expand_in_dir`'s roster check, so the skeleton outline (and
+        // the split it gates) survives to reach the H3 children.
+        let mut src =
+            String::from("# lo\n\nTagline.\n\n## Spec\n\nSupported helpers for slices:\n\n");
+        for i in 0..30 {
+            src.push_str(&format!("- [Helper{i}](#helper{i})\n"));
+        }
+        src.push('\n');
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            // Every H3 documented but one: the bare entry is the shape a
+            // generated index produces for an unannotated symbol.
+            if i == 3 {
+                src.push_str("\n### Undocumented\n");
+                continue;
+            }
+            src.push_str(&format!(
+                "\n### Helper{i}\n\nDoes thing {i} to every element of the input slice, \
+                 preserving the original order of the elements it keeps.\n"
+            ));
+        }
+        src.push_str("\n## License\n\nMIT.\n");
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("README.md"), &src).unwrap();
+
+        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None);
+        let rendered = scheduler.run().render();
+        assert!(
+            rendered.contains("### Helper0"),
+            "expected the H3 split to render documented children: {rendered}"
+        );
+        assert!(
+            rendered.contains("### Undocumented"),
+            "empty H3's heading row has no owner at any budget: {rendered}"
+        );
     }
 }
