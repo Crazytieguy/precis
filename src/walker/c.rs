@@ -2249,12 +2249,13 @@ fn header_banner_value(file: &Path, ctx: &WalkCtx, license_notice: bool) -> f64 
     mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx))
 }
 
-/// Wording that only appears in a copyright / license notice, matched
-/// case-insensitively against a banner's prose.
-const LICENSE_NOTICE_MARKERS: &[&str] = &[
-    "copyright",
+/// Grant, disclaimer and license-identifier wording — the body of a
+/// license, which never appears outside one. A line of it condemns the
+/// whole paragraph: the surrounding lines are the rest of the same
+/// legal sentence.
+const LICENSE_GRANT_MARKERS: &[&str] = &[
     "licen",
-    "all rights reserved",
+    "spdx",
     "permission is hereby granted",
     "warrant",
     "redistribut",
@@ -2262,17 +2263,24 @@ const LICENSE_NOTICE_MARKERS: &[&str] = &[
     "applicable law",
 ];
 
+/// Attribution wording. It marks its own line and no more: a copyright
+/// line is one line of credit that authors routinely put at the top of
+/// a paragraph that then describes the file.
+const ATTRIBUTION_MARKERS: &[&str] = &["copyright", "all rights reserved"];
+
 /// True iff a file's top-of-file comment is a license notice rather than
-/// a description of the file: most of its prose sits in paragraphs that
-/// carry notice wording. Such a banner says nothing about the file it
-/// heads, so it prices as boilerplate no matter which kind of file that
-/// is. Notices are scored per paragraph, not per line, because the
-/// wording that identifies one (`Copyright`, `Licensed under`) appears
-/// on a single line of a block whose remaining lines — the grant, the
-/// disclaimer, the URL — are equally contentless.
+/// a description of the file: most of its prose is notice text. Such a
+/// banner says nothing about the file it heads, so it prices as
+/// boilerplate no matter which kind of file that is.
+///
+/// Grant wording is scored per paragraph — `Licensed under …` identifies
+/// a block whose remaining lines (the conditions, the disclaimer, the
+/// URL) are equally contentless — while attribution is scored per line,
+/// because propagating it would let one `Copyright (c) …` line above a
+/// paragraph of real API prose demote the description with it.
 fn banner_is_license_notice(source: &str, banner: &FileLines) -> bool {
     let source_lines: Vec<&str> = source.lines().collect();
-    let mut paragraphs: Vec<(usize, bool)> = Vec::new();
+    let mut paragraphs: Vec<BannerParagraph> = Vec::new();
     let mut previous_row = 0usize;
     for row in &banner.full {
         let stripped = source_lines
@@ -2286,22 +2294,42 @@ fn banner_is_license_notice(source: &str, banner: &FileLines) -> bool {
             continue;
         }
         let lower = stripped.to_ascii_lowercase();
-        let is_notice = LICENSE_NOTICE_MARKERS.iter().any(|m| lower.contains(m));
-        match paragraphs.last_mut() {
-            Some((lines, notice)) if continues => {
-                *lines += 1;
-                *notice |= is_notice;
+        let grant = LICENSE_GRANT_MARKERS.iter().any(|m| lower.contains(m));
+        let attribution = ATTRIBUTION_MARKERS.iter().any(|m| lower.contains(m));
+        let paragraph = match paragraphs.last_mut() {
+            Some(open) if continues => open,
+            _ => {
+                paragraphs.push(BannerParagraph::default());
+                paragraphs.last_mut().expect("just pushed")
             }
-            _ => paragraphs.push((1, is_notice)),
-        }
+        };
+        paragraph.lines += 1;
+        paragraph.grant |= grant;
+        paragraph.attribution_lines += usize::from(attribution);
     }
-    let prose: usize = paragraphs.iter().map(|(lines, _)| lines).sum();
+    let prose: usize = paragraphs.iter().map(|p| p.lines).sum();
     let notice: usize = paragraphs
         .iter()
-        .filter(|(_, notice)| *notice)
-        .map(|(lines, _)| lines)
+        .map(|p| {
+            if p.grant {
+                p.lines
+            } else {
+                p.attribution_lines
+            }
+        })
         .sum();
     prose > 0 && notice * 2 >= prose
+}
+
+/// A run of consecutive prose lines in a banner, tallied by
+/// [`banner_is_license_notice`].
+#[derive(Default)]
+struct BannerParagraph {
+    lines: usize,
+    /// Any line carried grant wording — the whole run is notice text.
+    grant: bool,
+    /// Lines that carried attribution wording and nothing stronger.
+    attribution_lines: usize,
 }
 
 /// A comment line's prose, with the `//`, `/*`, `*` and `*/` decoration
@@ -2762,6 +2790,51 @@ mod tests {
             .expect("load c grammar");
         let tree = parser.parse(source, None).expect("parse");
         (source.to_string(), tree)
+    }
+
+    fn banner_reads_as_license_notice(src: &str) -> bool {
+        let (source, tree) = parse(src);
+        let banner = collect_header_banner(&tree, &source);
+        banner_is_license_notice(&source, &banner)
+    }
+
+    #[test]
+    fn c_attribution_line_does_not_demote_the_description_it_heads() {
+        // A copyright line above a paragraph of real interface prose is
+        // credit, not a license. Demoting the banner on that alone also
+        // starves the include map, which gates on the banner in a
+        // declaration-less header.
+        let notice = banner_reads_as_license_notice(
+            "/* Copyright (c) 2024 Example Corp\n\
+             * usbh.h groups the host stack's public entry points:\n\
+             * enumeration, transfer submission, and the descriptor\n\
+             * helpers every class driver calls into. Include this\n\
+             * header rather than the per-class ones.\n\
+             */\n\
+             \n\
+             void usbh_init(void);\n",
+        );
+        assert!(!notice, "attribution must not condemn its whole paragraph");
+    }
+
+    #[test]
+    fn c_grant_and_disclaimer_banner_reads_as_a_license_notice() {
+        let notice = banner_reads_as_license_notice(
+            "/* Copyright (c) 2024 Example Corp\n\
+             * All rights reserved.\n\
+             *\n\
+             * Permission is hereby granted, free of charge, to any\n\
+             * person obtaining a copy of this software and associated\n\
+             * documentation files, to deal in the Software without\n\
+             * restriction.\n\
+             *\n\
+             * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF\n\
+             * ANY KIND, EXPRESS OR IMPLIED.\n\
+             */\n\
+             \n\
+             void sds_init(void);\n",
+        );
+        assert!(notice, "a grant plus a disclaimer is a license notice");
     }
 
     #[test]
