@@ -69,6 +69,12 @@ const MIN_MODEL_FIELDS: usize = 18;
 /// midpoint into a head `Decl` + a `DeclTail`, so the high-value
 /// identity / relation fields at the top schedule ahead of the
 /// archival-default fields that trail a wide model.
+///
+/// The split is an affordability carve of one declaration, not a value
+/// judgement on its halves: both hold the same model's fields, and half
+/// a model's field list is a misleading answer to "what fields does X
+/// have". So the tail carries the head's value and orders behind it
+/// only through the scheduler's cost term.
 const MODEL_SPLIT_MIN_ROWS: usize = 32;
 
 /// Kind of a top-level Prisma declaration.
@@ -209,10 +215,7 @@ fn push_decl_batches(
         }
         .into(),
         predecessor: Some(head_key),
-        // Tail (archival-default / preference fields) is lower-value
-        // than the head (identity + relations) — mirror the late-decl
-        // decay one notch further.
-        value: value * LATE_DECL_VALUE_FACTOR,
+        value,
         content: tail_content,
     });
 }
