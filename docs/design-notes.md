@@ -3688,3 +3688,32 @@ headline moved by 0.005 in any of them.
   does not exist in that case, so the decl is not bypassing a cheaper
   way in — it IS the file's first admitted content, and nothing else
   renders its rows.
+
+## TS module-private type declarations (2026-08-06, lane E1): 0.6428 → 0.6432
+
+Two removals, both in `src/walker/typescript.rs`, all seven budgets up.
+
+- **`is_private_props_type` deleted.** `find_module_items` skipped every
+  module-private `interface` / `type` whose **name ended in `Props`**, so
+  those declarations produced no batch at any budget — absent from the
+  module-item roster and from the schedule entirely. It dated to
+  2026-04-28, before both NS re-freezes, so its original measurement was
+  void. Nothing about a declaration's *name* decides whether it exists;
+  a module-private type is roster material like every other private
+  declaration.
+- **Mixin intersections are object-type aliases.** `member_surface_body`
+  accepted a `TypeAlias` value only when it was literally an
+  `object_type`, so the pervasive React/props shape
+  `type X = Base & Other & { … }` surfaced zero members to the member
+  catalog and to `ExportMemberDoc`. `own_object_type` now takes the
+  trailing `object_type` operand of an `intersection_type` — the operands
+  before it name types declared elsewhere and surface nothing here.
+
+**The E1 forward-queue item (a) — "extend the member-doc batch to
+exported interfaces and object-type aliases" — was already true when it
+was queued.** `documented_member_nodes` / `is_surfaced_member` have
+handled `Interface | TypeAlias` since the W5-TS ship; a 20-member
+`export interface` in a runtime `.tsx` emits 20 doc batches gated on
+`ExportMemberNames` today. The queued carrier's real blocker was the
+name-suffix exclusion above, one level out (module items, not exports).
+
