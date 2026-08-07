@@ -2726,6 +2726,16 @@ the running log; probe crate and ranking traces under `probe/` and
   form left overlap ancestry ranking-dependent — a probe lane's
   reordering panicked on beets — so owning-chunk is also a contract
   repair, not just a preference.
+  **Superseded 2026-08-06b (90f3b838):** owning-chunk gating was the
+  W5-TS chained-vs-sibling violation, and re-measuring it on the current
+  corpus no longer reproduces the win — chain-tail gating is grid-flat
+  (0.6428 @3000, no budget down >0.0002) with tomli +0.001, the sole
+  mover in either direction. Decl trains gate on the chain's tail again;
+  the carved entry-slice gate is a sibling of the chain (nothing descends
+  from both), so the decls whose rows IT renders keep gating on it, which
+  is what kept the head-chunk form's ancestry hazard out. The value
+  argument above (head-heavy conserved chunks) is real but no longer
+  buys anything measurable.
 - **Dependency-roster saturation** (+0.0004; chronos +0.024 — the
   corpus-worst fixture finally moved; posting +0.005, express −0.002,
   bimodal config trio provably flat): value saturates at 200 measured
@@ -3351,10 +3361,11 @@ surface is split only for affordability INTO A CHAIN, its per-member
 refinements gate on the LAST piece; when the pieces are siblings,
 they gate on the actual owner. Gating cheap refinements on an early
 chunk lets them outrank the later chunks of the same declaration
-(p-queue tail #2 slid 1816→3161 under the naive form). Python
-violates this today (decl trains gate on the owning chunk while
-MethodSigs correctly gates on the chain end) — see
-audit-law-transfer.md F1.
+(p-queue tail #2 slid 1816→3161 under the naive form). Python was
+brought into conformance on 2026-08-06b (see the Python-roster-gating
+entry above): decl trains gate on the chain's tail, and the carved
+entry-slice gate — the one chunk that is a sibling, not a chain link —
+keeps owning the decls whose rows it renders.
 
 **Mechanisms measured dead and CLOSED this session** (do not respend):
 Go chunked-gate carrier widening (census ceiling: 5 reachable dirs, 4
@@ -3573,3 +3584,39 @@ fixture**, with zero baseline churn: no training fixture has either
 construct inside a head-split section's chunk-0 window today. It is a
 latent-hazard fix, and the hazard is the kind that only shows up as
 corrupt rendered output, never as a score.
+
+## Law-transfer fidelity fixes (lane LAW, 2026-08-06b) — SHIPPED, grid-flat
+
+Three cross-walker law violations from the read-only law-transfer audit,
+each committed and measured in isolation. All three are fidelity fixes:
+the true 7-budget grid is 0.6289 / 0.6434 / 0.6479 / **0.6428** / 0.6066
+/ 0.5773 / 0.5728 before and after all three, and NO fixture's Score(3000)
+headline moved by 0.005 in any of them.
+
+- **Python decl trains gate on the roster chain's tail** (90f3b838) —
+  the W5-TS chained-vs-sibling law; see the superseded note on the
+  2026-08-01 "Python roster gating" entry for why the earlier
+  owning-chunk form is gone.
+- **The rust macro roster pays the shared location prior** (3d4f158d) —
+  `macro_names_value` called `value::depth_factor` on the raw directory
+  depth, the one rust value fn skipping `rust_depth_factor`, so a macros
+  dir under tests/ or examples/ (or in a secondary workspace crate) was
+  priced as fully essential. `entry_item_value` /
+  `entry_item_body_value` still call `depth_factor` directly — that
+  bypass is documented-intentional, leave it. Tail-only reordering in
+  mdbook and toasty.
+- **Go and C import lists take the whole gating ladder** (9d8a954d) —
+  both walkers gated the cheap imports/includes batch on the decl
+  roster but fell through to an UNGATED batch when the file had no
+  declarations, which is exactly the "examined, it's plumbing" render
+  the gate exists to prevent. Now: roster, else the file's doc lede
+  (go `PackageDocLede`) / header banner (c `HeaderBanner`), else NO
+  batch. Movers: act, bareiron, htop, lo, mcphost, soluna, all
+  headline-flat — decl-less `doc.go` files and header-only translation
+  units are mostly far out of budget (the W5-MI population lesson).
+- **Lua checked, NOT changed.** `lua.rs` decl batches take an `Option`
+  roster predecessor, so a file whose roster batch never materialized
+  emits its decls as ungated roots. That is lawful: the roster batch
+  does not exist in that case, so the decl is not bypassing a cheaper
+  way in — it IS the file's first admitted content, and nothing else
+  renders its rows.
