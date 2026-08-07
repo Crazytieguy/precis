@@ -1,4 +1,4 @@
-Score(3000)=0.853 I=0.938 C=0.777 ns_rows≤3K=24/60 (reached=17 partial=3 missing=4)
+Score(3000)=0.839 I=0.936 C=0.752 ns_rows≤3K=24/60 (reached=17 partial=2 missing=5)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -105,20 +105,20 @@ Score(3000)=0.853 I=0.938 C=0.777 ns_rows≤3K=24/60 (reached=17 partial=3 missi
 | walker |  | 2577 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.826 |
 | walker |  | 2577 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.826 |
 | walker |  | 2586 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.827 |
-| walker |  | 2612 | 26 | go decl body at xxhash.go:45 |  |  | 0.838 |
-| ns | 2615 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.812 |
-| walker |  | 2633 | 21 | go decl body at xxhash.go:214 |  |  | 0.813 |
-| walker |  | 2664 | 31 | go decl body at xxhash_unsafe.go:38 |  |  | 0.813 |
-| walker |  | 2736 | 72 | go decl body at xxhash.go:59 |  |  | 0.812 |
+| ns | 2615 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.801 |
+| walker |  | 2617 | 31 | go decl body at xxhash_unsafe.go:38 |  |  | 0.801 |
+| walker |  | 2659 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.818 |
+| walker |  | 2685 | 26 | go decl body at xxhash.go:45 |  |  | 0.829 |
 | ns | 2736 |  | 121 | `xxhash_unsafe.go`: the actual unsafe string-to-slice conversion | 3.3 | 2.4 | 0.812 |
-| walker |  | 2773 | 37 | go decl body at xxhash.go:222 |  |  | 0.821 |
-| walker |  | 2812 | 39 | go decl body at xxhash.go:208 |  |  | 0.822 |
-| walker |  | 2853 | 41 | go decl body at xxhash.go:229 |  |  | 0.837 |
-| walker |  | 2895 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.853 |
-| walker |  | 3003 | 108 | go decl body at xxhash.go:113 |  |  | 0.856 |
-| ns | 3009 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.813 |
-| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.792 |
-| walker |  | 3139 | 136 | README.md section #1 |  |  | 0.793 |
+| walker |  | 2821 | 136 | README.md section #1 |  |  | 0.813 |
+| walker |  | 2842 | 21 | go decl body at xxhash.go:214 |  |  | 0.813 |
+| walker |  | 2914 | 72 | go decl body at xxhash.go:59 |  |  | 0.829 |
+| walker |  | 2951 | 37 | go decl body at xxhash.go:222 |  |  | 0.838 |
+| walker |  | 2990 | 39 | go decl body at xxhash.go:208 |  |  | 0.839 |
+| ns | 3009 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.797 |
+| walker |  | 3031 | 41 | go decl body at xxhash.go:229 |  |  | 0.811 |
+| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.790 |
+| walker |  | 3139 | 108 | go decl body at xxhash.go:113 |  |  | 0.793 |
 | walker |  | 3202 | 63 | go decl names surface in xxhash_other.go |  |  | 0.800 |
 | walker |  | 3202 | 0 | go decl at xxhash_other.go:7 |  |  | 0.800 |
 | walker |  | 3202 | 0 | go decl at xxhash_other.go:64 |  |  | 0.800 |

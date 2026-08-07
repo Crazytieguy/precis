@@ -656,9 +656,10 @@ pub trait WalkerKey:
     }
 
     /// True for orientation content (README/manifest surfaces). A train
-    /// rooted here is excluded from the scheduler's
-    /// substantial-unopened count, so it never by itself turns breadth
-    /// pressure on for the rest of the pool.
+    /// rooted here counts as a scheduler redirect target by its
+    /// *unbought* members rather than by being unentered — orientation
+    /// chains are read a section at a time, so entering one does not
+    /// spend the breadth it still holds.
     fn is_orientation(&self) -> bool {
         false
     }

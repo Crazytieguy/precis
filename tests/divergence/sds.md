@@ -89,56 +89,56 @@ Score(3000)=0.763 I=0.889 C=0.655 ns_rows≤3K=21/54 (reached=13 partial=3 missi
 | walker |  | 3914 | 17 | c decl body at sds.c:160 |  |  | 0.728 |
 | walker |  | 3931 | 17 | c decl body at sds.c:413 |  |  | 0.728 |
 | walker |  | 3948 | 17 | c decl body at sds.c:440 |  |  | 0.728 |
-| walker |  | 3967 | 19 | c decl body at sds.c:307 |  |  | 0.728 |
-| walker |  | 3986 | 19 | c decl body at sds.c:421 |  |  | 0.728 |
 | ns | 4007 |  | 216 | sdsHdrSize() and sdsReqType() — the type-selection policy | 4.4 | 4.1 | 0.700 |
-| walker |  | 4069 | 83 | c includes in sds.c |  |  | 0.722 |
-| walker |  | 4089 | 20 | c decl doc at sds.c:154 |  |  | 0.722 |
-| walker |  | 4116 | 27 | c decl body at sds.c:184 |  |  | 0.722 |
-| walker |  | 4143 | 27 | c decl body at sds.c:193 |  |  | 0.722 |
-| walker |  | 4164 | 21 | c decl doc at sds.c:494 |  |  | 0.722 |
-| walker |  | 4186 | 22 | c decl doc at sds.c:534 |  |  | 0.722 |
-| walker |  | 4209 | 23 | c decl doc at sds.c:165 |  |  | 0.722 |
+| walker |  | 4031 | 83 | c includes in sds.c |  |  | 0.722 |
+| walker |  | 4050 | 19 | c decl body at sds.c:307 |  |  | 0.722 |
+| walker |  | 4069 | 19 | c decl body at sds.c:421 |  |  | 0.722 |
 | ns | 4216 |  | 209 | sdsnewlen() doc comment — NULL vs SDS_NOINIT init, and the always-null-terminated guarantee | 4.5 |  | 0.706 |
-| walker |  | 4241 | 32 | c decl body at sds.c:165 |  |  | 0.707 |
-| walker |  | 4273 | 32 | c decl body at sds.c:300 |  |  | 0.707 |
-| walker |  | 4310 | 37 | c decl body at sds.c:154 |  |  | 0.707 |
-| walker |  | 4344 | 34 | c decl doc at sds.c:307 |  |  | 0.708 |
-| walker |  | 4380 | 36 | c decl doc at sds.c:149 |  |  | 0.708 |
-| walker |  | 4427 | 47 | c decl body at sds.c:526 |  |  | 0.708 |
-| walker |  | 4468 | 41 | c decl doc at sds.c:440 |  |  | 0.708 |
-| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.680 |
-| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.653 |
-| walker |  | 4908 | 440 | c decl names surface #1 in sds.c |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:591 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:616 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:725 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:756 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:783 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:790 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:807 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:835 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:885 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:898 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:925 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:932 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:973 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:1092 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:1108 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:1120 |  |  | 0.693 |
-| walker |  | 4908 | 0 | c decl at sds.c:1136 |  |  | 0.693 |
-| walker |  | 4928 | 20 | c decl doc at sds.c:1120 |  |  | 0.693 |
-| walker |  | 4949 | 21 | c decl doc at sds.c:783 |  |  | 0.693 |
-| walker |  | 4970 | 21 | c decl doc at sds.c:790 |  |  | 0.693 |
-| walker |  | 4996 | 26 | c decl doc at sds.c:885 |  |  | 0.693 |
-| walker |  | 5035 | 39 | c decl body at sds.c:885 |  |  | 0.693 |
-| walker |  | 5068 | 33 | c decl doc at sds.c:925 |  |  | 0.693 |
-| walker |  | 5102 | 34 | c decl doc at sds.c:932 |  |  | 0.693 |
-| walker |  | 5150 | 48 | c decl body at sds.c:783 |  |  | 0.693 |
-| walker |  | 5198 | 48 | c decl body at sds.c:790 |  |  | 0.693 |
-| walker |  | 5247 | 49 | c decl body at sds.c:925 |  |  | 0.693 |
+| walker |  | 4509 | 440 | c decl names surface #1 in sds.c |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:591 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:616 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:725 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:756 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:783 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:790 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:807 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:835 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:885 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:898 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:925 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:932 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:973 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:1092 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:1108 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:1120 |  |  | 0.748 |
+| walker |  | 4509 | 0 | c decl at sds.c:1136 |  |  | 0.748 |
+| walker |  | 4529 | 20 | c decl doc at sds.c:154 |  |  | 0.748 |
+| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.718 |
+| walker |  | 4549 | 20 | c decl doc at sds.c:1120 |  |  | 0.718 |
+| walker |  | 4576 | 27 | c decl body at sds.c:184 |  |  | 0.718 |
+| walker |  | 4603 | 27 | c decl body at sds.c:193 |  |  | 0.719 |
+| walker |  | 4624 | 21 | c decl doc at sds.c:494 |  |  | 0.719 |
+| walker |  | 4645 | 21 | c decl doc at sds.c:783 |  |  | 0.719 |
+| walker |  | 4666 | 21 | c decl doc at sds.c:790 |  |  | 0.719 |
+| walker |  | 4688 | 22 | c decl doc at sds.c:534 |  |  | 0.719 |
+| walker |  | 4711 | 23 | c decl doc at sds.c:165 |  |  | 0.719 |
+| walker |  | 4743 | 32 | c decl body at sds.c:165 |  |  | 0.719 |
+| walker |  | 4775 | 32 | c decl body at sds.c:300 |  |  | 0.719 |
+| walker |  | 4801 | 26 | c decl doc at sds.c:885 |  |  | 0.719 |
+| walker |  | 4838 | 37 | c decl body at sds.c:154 |  |  | 0.720 |
+| walker |  | 4877 | 39 | c decl body at sds.c:885 |  |  | 0.720 |
+| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.692 |
+| walker |  | 4910 | 33 | c decl doc at sds.c:925 |  |  | 0.692 |
+| walker |  | 4944 | 34 | c decl doc at sds.c:307 |  |  | 0.692 |
+| walker |  | 4978 | 34 | c decl doc at sds.c:932 |  |  | 0.692 |
+| walker |  | 5014 | 36 | c decl doc at sds.c:149 |  |  | 0.693 |
+| walker |  | 5061 | 47 | c decl body at sds.c:526 |  |  | 0.693 |
+| walker |  | 5109 | 48 | c decl body at sds.c:783 |  |  | 0.693 |
+| walker |  | 5157 | 48 | c decl body at sds.c:790 |  |  | 0.693 |
+| walker |  | 5206 | 49 | c decl body at sds.c:925 |  |  | 0.693 |
+| walker |  | 5244 | 38 | c decl doc at sds.c:1108 |  |  | 0.693 |
 | ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.668 |
-| walker |  | 5285 | 38 | c decl doc at sds.c:1108 |  |  | 0.668 |
+| walker |  | 5285 | 41 | c decl doc at sds.c:440 |  |  | 0.668 |
 | walker |  | 5327 | 42 | c decl doc at sds.c:427 |  |  | 0.668 |
 | ns | 5486 |  | 233 | sdsempty/sdsnew/sdsdup/sdsfree bodies, with sdsfree's NULL contract | 4.9 | 4.1 | 0.671 |
 | walker |  | 5492 | 165 | c decl body at sds.h:87 |  |  | 0.695 |

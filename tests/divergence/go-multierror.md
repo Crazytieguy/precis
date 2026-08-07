@@ -1,4 +1,4 @@
-Score(3000)=0.535 I=0.569 C=0.502 ns_rows≤3K=21/56 (reached=11 partial=1 missing=9)
+Score(3000)=0.566 I=0.573 C=0.560 ns_rows≤3K=21/56 (reached=12 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -61,64 +61,64 @@ Score(3000)=0.535 I=0.569 C=0.502 ns_rows≤3K=21/56 (reached=11 partial=1 missi
 | walker |  | 1232 | 9 | go decl doc at multierror.go:102 |  |  | 0.603 |
 | walker |  | 1272 | 40 | go package + imports in multierror.go |  |  | 0.604 |
 | walker |  | 1308 | 36 | go decl doc at multierror.go:13 |  |  | 0.637 |
-| walker |  | 1319 | 11 | go decl body at multierror.go:102 |  |  | 0.637 |
-| walker |  | 1335 | 16 | go decl doc at multierror.go:122 |  |  | 0.637 |
-| walker |  | 1353 | 18 | go decl doc at multierror.go:117 |  |  | 0.637 |
+| walker |  | 1324 | 16 | go decl doc at multierror.go:122 |  |  | 0.637 |
+| walker |  | 1342 | 18 | go decl doc at multierror.go:117 |  |  | 0.637 |
 | ns | 1359 |  | 290 | README: stdlib compatibility, install, and the go 1.13 requirement | 2.3 |  | 0.585 |
-| walker |  | 1366 | 13 | go decl body at multierror.go:117 |  |  | 0.585 |
-| walker |  | 1379 | 13 | go decl body at multierror.go:122 |  |  | 0.585 |
-| walker |  | 1410 | 31 | go decl body at multierror.go:53 |  |  | 0.586 |
-| walker |  | 1439 | 29 | go decl doc at group.go:10 |  |  | 0.586 |
-| walker |  | 1457 | 18 | go decl body at sort.go:21 |  |  | 0.586 |
-| walker |  | 1490 | 33 | go decl doc at format.go:13 |  |  | 0.586 |
-| walker |  | 1518 | 28 | go decl doc at flatten.go:8 |  |  | 0.587 |
-| walker |  | 1539 | 21 | go package + imports in group.go |  |  | 0.587 |
-| ns | 1579 |  | 220 | README: the canonical accumulate-with-Append recipe | 2.4 |  | 0.538 |
-| walker |  | 1611 | 72 | go decl doc at multierror.go:31 |  |  | 0.539 |
-| walker |  | 1645 | 34 | go decl doc at multierror.go:108 |  |  | 0.540 |
-| walker |  | 1666 | 21 | go decl body at sort.go:16 |  |  | 0.540 |
-| walker |  | 1696 | 30 | go decl doc at group.go:36 |  |  | 0.541 |
-| walker |  | 1730 | 34 | go decl doc at format.go:17 |  |  | 0.542 |
+| walker |  | 1371 | 29 | go decl doc at group.go:10 |  |  | 0.585 |
+| walker |  | 1404 | 33 | go decl doc at format.go:13 |  |  | 0.586 |
+| walker |  | 1432 | 28 | go decl doc at flatten.go:8 |  |  | 0.586 |
+| walker |  | 1453 | 21 | go package + imports in group.go |  |  | 0.586 |
+| walker |  | 1525 | 72 | go decl doc at multierror.go:31 |  |  | 0.587 |
+| walker |  | 1559 | 34 | go decl doc at multierror.go:108 |  |  | 0.588 |
+| ns | 1579 |  | 220 | README: the canonical accumulate-with-Append recipe | 2.4 |  | 0.539 |
+| walker |  | 1589 | 30 | go decl doc at group.go:36 |  |  | 0.540 |
+| walker |  | 1623 | 34 | go decl doc at format.go:17 |  |  | 0.541 |
+| walker |  | 1641 | 18 | go decl body at sort.go:21 |  |  | 0.541 |
+| walker |  | 1674 | 33 | go package + imports in prefix.go |  |  | 0.541 |
 | ns | 1769 |  | 190 | `ErrorOrNil` and `WrappedErrors` doc comments | 2.5 | 1.7 | 0.523 |
-| walker |  | 1780 | 50 | go decl body at multierror.go:18 |  |  | 0.525 |
-| walker |  | 1813 | 33 | go package + imports in prefix.go |  |  | 0.525 |
-| walker |  | 1931 | 118 | go decl doc at multierror.go:53 |  |  | 0.562 |
-| ns | 1944 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.540 |
-| walker |  | 1993 | 62 | go decl body at multierror.go:31 |  |  | 0.542 |
-| walker |  | 2031 | 38 | go package + imports in format.go |  |  | 0.543 |
-| ns | 2062 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.530 |
-| walker |  | 2081 | 50 | go decl doc at group.go:20 |  |  | 0.533 |
-| walker |  | 2117 | 36 | go decl body at group.go:36 |  |  | 0.533 |
-| walker |  | 2155 | 38 | go decl body at sort.go:7 |  |  | 0.534 |
-| ns | 2173 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.543 |
-| walker |  | 2195 | 40 | go decl body at multierror.go:108 |  |  | 0.544 |
-| walker |  | 2370 | 175 | go decl doc at multierror.go:71 |  |  | 0.581 |
-| ns | 2382 |  | 209 | format.go semantics: the formatter hook and the default output strings | 2.9 | 1.6 | 0.558 |
-| walker |  | 2456 | 86 | go decl doc at prefix.go:16 |  |  | 0.581 |
-| ns | 2507 |  | 125 | README: customizing the message via `ErrorFormat` | 2.10 |  | 0.557 |
-| walker |  | 2578 | 122 | go decl doc at append.go:14 |  |  | 0.583 |
+| walker |  | 1792 | 118 | go decl doc at multierror.go:53 |  |  | 0.560 |
+| walker |  | 1830 | 38 | go package + imports in format.go |  |  | 0.561 |
+| walker |  | 1880 | 50 | go decl doc at group.go:20 |  |  | 0.564 |
+| walker |  | 1901 | 21 | go decl body at sort.go:16 |  |  | 0.564 |
+| ns | 1944 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.541 |
+| ns | 2062 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.528 |
+| walker |  | 2076 | 175 | go decl doc at multierror.go:71 |  |  | 0.566 |
+| walker |  | 2162 | 86 | go decl doc at prefix.go:16 |  |  | 0.592 |
+| ns | 2173 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.598 |
+| walker |  | 2284 | 122 | go decl doc at append.go:14 |  |  | 0.626 |
+| ns | 2382 |  | 209 | format.go semantics: the formatter hook and the default output strings | 2.9 | 1.6 | 0.600 |
+| walker |  | 2461 | 177 | go decl doc at multierror.go:99 |  |  | 0.603 |
+| walker |  | 2497 | 36 | go decl body at group.go:36 |  |  | 0.604 |
+| ns | 2507 |  | 125 | README: customizing the message via `ErrorFormat` | 2.10 |  | 0.580 |
+| walker |  | 2508 | 11 | go decl body at multierror.go:102 |  |  | 0.580 |
+| walker |  | 2546 | 38 | go decl body at sort.go:7 |  |  | 0.581 |
+| walker |  | 2645 | 99 | go decl body at flatten.go:8 |  |  | 0.582 |
+| walker |  | 2658 | 13 | go decl body at multierror.go:117 |  |  | 0.582 |
+| walker |  | 2671 | 13 | go decl body at multierror.go:122 |  |  | 0.582 |
 | ns | 2686 |  | 179 | README: getting at the individual errors | 2.11 |  | 0.561 |
-| walker |  | 2755 | 177 | go decl doc at multierror.go:99 |  |  | 0.565 |
-| walker |  | 2909 | 154 | go decl body at multierror.go:71 |  |  | 0.568 |
-| ns | 2989 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.535 |
-| walker |  | 3008 | 99 | go decl body at flatten.go:8 |  |  | 0.536 |
-| walker |  | 3109 | 101 | go decl body at group.go:20 |  |  | 0.538 |
-| ns | 3124 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.524 |
-| walker |  | 3251 | 142 | go decl body at format.go:17 |  |  | 0.558 |
-| ns | 3301 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.566 |
-| walker |  | 3332 | 81 | go decl body at flatten.go:20 |  |  | 0.569 |
-| ns | 3484 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.545 |
-| walker |  | 3582 | 250 | README.md section #5 |  |  | 0.592 |
-| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.574 |
-| walker |  | 3881 | 299 | README.md section #6 |  |  | 0.623 |
-| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.588 |
-| walker |  | 4257 | 376 | README.md section #1 |  |  | 0.656 |
-| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.623 |
-| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.626 |
-| walker |  | 4598 | 341 | README.md section #2 |  |  | 0.677 |
-| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.678 |
-| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.675 |
-| walker |  | 4837 | 239 | README.md section #3 |  |  | 0.810 |
+| walker |  | 2813 | 142 | go decl body at format.go:17 |  |  | 0.598 |
+| walker |  | 2844 | 31 | go decl body at multierror.go:53 |  |  | 0.599 |
+| walker |  | 2925 | 81 | go decl body at flatten.go:20 |  |  | 0.601 |
+| ns | 2989 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.566 |
+| ns | 3124 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.551 |
+| walker |  | 3175 | 250 | README.md section #5 |  |  | 0.601 |
+| ns | 3301 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.607 |
+| walker |  | 3474 | 299 | README.md section #6 |  |  | 0.659 |
+| ns | 3484 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.632 |
+| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.612 |
+| walker |  | 3850 | 376 | README.md section #1 |  |  | 0.684 |
+| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.645 |
+| walker |  | 4191 | 341 | README.md section #2 |  |  | 0.701 |
+| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.667 |
+| walker |  | 4430 | 239 | README.md section #3 |  |  | 0.805 |
+| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.780 |
+| walker |  | 4480 | 50 | go decl body at multierror.go:18 |  |  | 0.789 |
+| walker |  | 4542 | 62 | go decl body at multierror.go:31 |  |  | 0.807 |
+| walker |  | 4582 | 40 | go decl body at multierror.go:108 |  |  | 0.808 |
+| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.790 |
+| walker |  | 4736 | 154 | go decl body at multierror.go:71 |  |  | 0.812 |
+| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.807 |
+| walker |  | 4837 | 101 | go decl body at group.go:20 |  |  | 0.810 |
 | ns | 4938 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.810 |
 | walker |  | 5035 | 198 | go decl body at prefix.go:16 |  |  | 0.813 |
 | ns | 5136 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.816 |

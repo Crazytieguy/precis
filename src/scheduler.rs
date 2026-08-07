@@ -101,14 +101,17 @@ pub struct Scheduler<W: Walker> {
     /// chains materialize in emission order, so absorb-time resolution
     /// is complete for all but pathological cross-expansion chains).
     train_member_counts: HashMap<BatchId, usize>,
-    /// Unopened substantial trains (>= TRAIN_SUBSTANTIAL_MEMBERS pool
-    /// members, no non-zero-cost schedule yet, non-orientation root) —
-    /// breadth pressure is pointless (and measured harmful:
-    /// mitt/go-multierror) when there is nothing to redirect the
-    /// budget to. Maintained incrementally: absorb adds a root when
-    /// its member count crosses the threshold; the first non-zero-cost
-    /// schedule under a root removes it.
-    substantial_unopened: HashSet<BatchId>,
+    /// Trains still holding >= TRAIN_SUBSTANTIAL_MEMBERS unbought pool
+    /// members — breadth pressure is pointless when there is nothing to
+    /// redirect the budget to. A non-orientation train counts until its
+    /// first non-zero-cost schedule (entering it commits the window to
+    /// it); an orientation chain counts as long as that many of its
+    /// members are still unbought, since a README whose section chain
+    /// is mostly unread is breadth to redirect to even once its
+    /// headline is paid. Maintained incrementally by
+    /// [`Self::refresh_redirect_target`] at every member-count and
+    /// schedule change.
+    redirect_targets: HashSet<BatchId>,
     /// Dependents absorbed before their predecessor key materialized —
     /// their subtree counts sit under a pseudo-root until the missing
     /// key arrives, then merge (predecessor keys are symbolic, so
@@ -134,11 +137,11 @@ const TRAIN_PRESSURE_K: f64 = 0.15;
 /// Scheduled batches a train may accumulate before pressure applies —
 /// normal decl -> doc -> body depth is wanted; 20-batch dives are not.
 const TRAIN_PRESSURE_FREE: usize = 4;
-/// Pool members for a train to count as substantial breadth.
+/// Unbought pool members for a train to count as substantial breadth.
 const TRAIN_SUBSTANTIAL_MEMBERS: usize = 3;
-/// Minimum unopened substantial trains for pressure to apply at all —
-/// in a small repo whose primary train IS the content, demoting its
-/// follow-ups just buys worse batches.
+/// Minimum redirect targets for pressure to apply at all — in a repo
+/// whose primary train IS the content, demoting its follow-ups just
+/// buys worse batches.
 const BREADTH_MIN_TRAINS: usize = 2;
 
 /// Ranking premium for content drawn from the tree's dominant source
@@ -186,7 +189,7 @@ impl<W: Walker> Scheduler<W> {
             train_root_memo: HashMap::new(),
             scheduled_per_root: HashMap::new(),
             train_member_counts: HashMap::new(),
-            substantial_unopened: HashSet::new(),
+            redirect_targets: HashSet::new(),
             pending_reparent: HashMap::new(),
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
@@ -297,6 +300,8 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
+        self.entries.push(batch);
+
         // Non-memoized root walk for the member count (the ranking-time
         // memo must only be written once chains are guaranteed
         // complete). A missing predecessor key parks the count under
@@ -304,7 +309,7 @@ impl<W: Walker> Scheduler<W> {
         // reparenting when the key materializes.
         let mut root = id;
         let mut cur = self.entries.len(); // guard against cycles
-        let mut probe = &batch.predecessor;
+        let mut probe = &self.entries[id.index()].predecessor;
         while let Some(pred_key) = probe {
             let Some(&pred_id) = self.key_to_id.get(pred_key) else {
                 self.pending_reparent
@@ -322,8 +327,6 @@ impl<W: Walker> Scheduler<W> {
         }
         self.bump_train_members(root, 1);
 
-        self.entries.push(batch);
-
         // The new key may be the missing predecessor of earlier
         // pseudo-roots: merge their parked subtree counts into this
         // batch's own (possibly still pseudo) root.
@@ -334,31 +337,39 @@ impl<W: Walker> Scheduler<W> {
                     continue;
                 }
                 let parked = self.train_member_counts.remove(&pseudo).unwrap_or(0);
-                self.substantial_unopened.remove(&pseudo);
+                self.redirect_targets.remove(&pseudo);
                 if let Some(opened) = self.scheduled_per_root.remove(&pseudo) {
                     *self.scheduled_per_root.entry(root).or_insert(0) += opened;
-                    self.substantial_unopened.remove(&root);
                 }
                 self.bump_train_members(root, parked);
             }
         }
     }
 
-    /// Add `n` members to `root`'s train, promoting it into the
-    /// substantial-unopened set when it crosses the threshold.
+    /// Add `n` members to `root`'s train and re-evaluate whether it is
+    /// still breadth worth redirecting to.
     fn bump_train_members(&mut self, root: BatchId, n: usize) {
-        if n == 0 {
-            return;
+        if n > 0 {
+            *self.train_member_counts.entry(root).or_insert(0) += n;
         }
-        let members = self.train_member_counts.entry(root).or_insert(0);
-        let before = *members;
-        *members += n;
-        if before < TRAIN_SUBSTANTIAL_MEMBERS
-            && *members >= TRAIN_SUBSTANTIAL_MEMBERS
-            && !self.scheduled_per_root.contains_key(&root)
-            && !self.entries[root.index()].key.is_orientation()
-        {
-            self.substantial_unopened.insert(root);
+        self.refresh_redirect_target(root);
+    }
+
+    /// Recompute `root`'s membership in [`Self::redirect_targets`].
+    fn refresh_redirect_target(&mut self, root: BatchId) {
+        let members = self.train_member_counts.get(&root).copied().unwrap_or(0);
+        let scheduled = self.scheduled_per_root.get(&root).copied().unwrap_or(0);
+        let unbought = if self.entries[root.index()].key.is_orientation() {
+            members.saturating_sub(scheduled)
+        } else if scheduled == 0 {
+            members
+        } else {
+            0
+        };
+        if unbought >= TRAIN_SUBSTANTIAL_MEMBERS {
+            self.redirect_targets.insert(root);
+        } else {
+            self.redirect_targets.remove(&root);
         }
     }
 
@@ -632,7 +643,7 @@ impl<W: Walker> Scheduler<W> {
         if cost.tokens > 0 {
             let root = self.train_root(id);
             *self.scheduled_per_root.entry(root).or_insert(0) += 1;
-            self.substantial_unopened.remove(&root);
+            self.refresh_redirect_target(root);
         }
 
         // Drop the scheduled batch's cached cost, plus every cached
@@ -719,7 +730,7 @@ impl<W: Walker> Scheduler<W> {
     /// depth follow-up batches (doc/body/member refinements) — surface
     /// batches always rank at their raw ratio.
     fn train_pressure(&mut self, id: BatchId) -> f64 {
-        if self.substantial_unopened.len() < BREADTH_MIN_TRAINS {
+        if self.redirect_targets.len() < BREADTH_MIN_TRAINS {
             return 1.0;
         }
         if !self.entries[id.index()].key.is_depth_follow_up() {
