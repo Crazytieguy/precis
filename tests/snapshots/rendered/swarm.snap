@@ -101,17 +101,9 @@ README.md
      321→## Streaming
     …
      336→# Evaluations
-     337→
-     338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
+    …
      340→# Utils
-     341→
-     342→Use the `run_demo_loop` to test out your swarm! This will run a REPL on your command line. Supports streaming.
-     343→
-     344→```python
-     345→from swarm.repl import run_demo_loop
-     346→...
-     347→run_demo_loop(agent, stream=True)
-     348→```
+    …
      350→# Core Contributors
     …
 SECURITY.md …
@@ -330,7 +322,11 @@ swarm/
     repl/
         __init__.py
                1→from .repl import run_demo_loop
-        repl.py …
+        repl.py
+               1→import json
+               2→
+               3→from swarm import Swarm
+            …
     types.py
         …
           11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
@@ -369,6 +365,17 @@ swarm/
           21→def merge_chunk(final_response: dict, delta: dict) -> None:
         …
           31→def function_to_json(func) -> dict:
+          32→    """
+          33→    Converts a Python function into a JSON-serializable dictionary
+          34→    that describes the function's signature, including its name,
+          35→    description, and parameters.
+          36→
+          37→    Args:
+          38→        func: The function to be converted.
+          39→
+          40→    Returns:
+          41→        A dictionary representing the function's signature in JSON format.
+          42→    """
         …
 tests/
     __init__.py

@@ -146,6 +146,8 @@ pub struct WalkCtx {
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// Nested SQL files named exactly by a root README/build file.
     sql_cited_paths: OnceCell<HashSet<PathBuf>>,
+    /// The tree's hand-authored essential source, walked once.
+    essential_source: OnceCell<EssentialSource>,
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
     dominant_source_file: OnceCell<Option<PathBuf>>,
@@ -170,6 +172,7 @@ impl WalkCtx {
             python_state: python::PythonState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
+            essential_source: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
         }
     }
@@ -270,8 +273,21 @@ impl WalkCtx {
     /// the common case.
     pub fn dominant_source_file(&self) -> Option<&Path> {
         self.dominant_source_file
-            .get_or_init(|| find_dominant_source_file(&self.root, &self.dir_filter))
+            .get_or_init(|| find_dominant_source_file(self.essential_source()))
             .as_deref()
+    }
+
+    /// Hand-authored essential source bytes across the whole tree — the
+    /// same universe [`dominant_source_file`](Self::dominant_source_file)
+    /// measures shares of. A repository-scale signal: how much source
+    /// there is for the orientation documents to compete against.
+    pub fn essential_source_bytes(&self) -> u64 {
+        self.essential_source().per_language.values().sum()
+    }
+
+    fn essential_source(&self) -> &EssentialSource {
+        self.essential_source
+            .get_or_init(|| enumerate_essential_source(&self.root, &self.dir_filter))
     }
 
     /// True when `path` is an auto-injected agent doc (AGENTS.md /
@@ -398,23 +414,16 @@ const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
 /// reader is meant to read more of.
 const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
 
-/// Select a hand-authored source file that carries at least
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. The largest qualifying file
-/// is the default; a materially denser public surface may replace it.
-/// Non-essential subtrees (tests, examples, vendored, tooling) are
-/// excluded from both the numerator and the denominator so a big test file can neither win nor
-/// dilute the share.
-///
-/// Enumeration mirrors the walkers' own rules rather than inventing a
-/// second traversal policy: gitignore exclusion via `filter`, the
-/// heavy-directory blocklist via [`crate::fs_util::should_skip_dir`]
-/// (the only thing bounding a walk of a non-repository tree, where the
-/// filter is inert by design), and non-following file types so a
-/// symlink is neither descended into nor weighed as source — the same
-/// containment answer typed source discovery gives. The
-/// generated/vendored [`MASS_SHARE_EXCLUDED_DIRS`] narrowing applies on
-/// top of that shared universe.
-fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
+/// The tree's essential source files, as one walk: byte mass per
+/// language family, plus the per-file candidate list (files under
+/// [`MASS_SHARE_MAX_FILE_BYTES`]). Enumeration rules are documented on
+/// [`find_dominant_source_file`], the original caller.
+struct EssentialSource {
+    per_language: HashMap<&'static str, u64>,
+    candidates: Vec<(PathBuf, u64, &'static str)>,
+}
+
+fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSource {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
     let mut stack = vec![root.to_path_buf()];
@@ -455,6 +464,30 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
             }
         }
     }
+    EssentialSource {
+        per_language,
+        candidates,
+    }
+}
+
+/// Select a hand-authored source file that carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. The largest qualifying file
+/// is the default; a materially denser public surface may replace it.
+/// Non-essential subtrees (tests, examples, vendored, tooling) are
+/// excluded from both the numerator and the denominator so a big test file can neither win nor
+/// dilute the share.
+///
+/// Enumeration mirrors the walkers' own rules rather than inventing a
+/// second traversal policy: gitignore exclusion via `filter`, the
+/// heavy-directory blocklist via [`crate::fs_util::should_skip_dir`]
+/// (the only thing bounding a walk of a non-repository tree, where the
+/// filter is inert by design), and non-following file types so a
+/// symlink is neither descended into nor weighed as source — the same
+/// containment answer typed source discovery gives. The
+/// generated/vendored [`MASS_SHARE_EXCLUDED_DIRS`] narrowing applies on
+/// top of that shared universe.
+fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
+    let mut candidates = source.candidates.clone();
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
     // but it is not what the repo is about. Ranked over a sorted vector
@@ -462,7 +495,11 @@ fn find_dominant_source_file(root: &Path, filter: &DirFilter) -> Option<PathBuf>
     // yields no primary at all: "the language this repo is written in"
     // has no answer there, and answering it by hasher seeding would make
     // the output differ between processes on identical input.
-    let mut by_mass: Vec<(&'static str, u64)> = per_language.into_iter().collect();
+    let mut by_mass: Vec<(&'static str, u64)> = source
+        .per_language
+        .iter()
+        .map(|(&language, &bytes)| (language, bytes))
+        .collect();
     by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
     let (primary, primary_bytes) = *by_mass.first()?;
     if by_mass
@@ -1257,6 +1294,10 @@ mod tests {
             .collect()
     }
 
+    fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
+        find_dominant_source_file(&enumerate_essential_source(root, &DirFilter::new(root)))
+    }
+
     #[test]
     fn walker_mod_dominant_file_prefers_public_surface_density() {
         let tmp = tempfile::tempdir().unwrap();
@@ -1264,7 +1305,7 @@ mod tests {
         std::fs::write(root.join("machinery.rs"), "fn hidden() {}\n".repeat(180)).unwrap();
         std::fs::write(root.join("api.rs"), "pub fn visible() {}\n".repeat(120)).unwrap();
 
-        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        let found = dominant_source_file_of(root);
         assert_eq!(found.as_deref(), Some(root.join("api.rs").as_path()));
     }
 
@@ -1286,7 +1327,7 @@ mod tests {
         )
         .unwrap();
 
-        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        let found = dominant_source_file_of(root);
         assert_eq!(
             found.as_deref(),
             Some(root.join("implementation.js").as_path())
@@ -1409,7 +1450,7 @@ module.exports = app;
         .unwrap();
         std::fs::write(root.join("src/core.js"), "y = 2\n".repeat(100)).unwrap();
 
-        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        let found = dominant_source_file_of(root);
         assert_eq!(found.as_deref(), Some(root.join("src/core.js").as_path()));
     }
 
@@ -1426,14 +1467,14 @@ module.exports = app;
         std::os::unix::fs::symlink("core.py", root.join("alias.py")).unwrap();
         std::fs::write(root.join("helper.py"), "z = 3\n".repeat(60)).unwrap();
 
-        let found = find_dominant_source_file(root, &DirFilter::new(root));
+        let found = dominant_source_file_of(root);
         assert_eq!(found.as_deref(), Some(root.join("core.py").as_path()));
 
         // Removing the real file leaves only the link plus a peer; the
         // link must not stand in for the mass it points at.
         std::fs::remove_file(root.join("core.py")).unwrap();
         assert_eq!(
-            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            dominant_source_file_of(root).as_deref(),
             Some(root.join("helper.py").as_path())
         );
     }
@@ -1447,12 +1488,12 @@ module.exports = app;
         let root = tmp.path();
         std::fs::write(root.join("core.py"), "y = 2\n".repeat(100)).unwrap();
         std::fs::write(root.join("core.go"), "y = 2\n".repeat(100)).unwrap();
-        assert_eq!(find_dominant_source_file(root, &DirFilter::new(root)), None);
+        assert_eq!(dominant_source_file_of(root), None);
 
         // One byte of lead is enough to make the question answerable.
         std::fs::write(root.join("core.py"), "y = 2\n".repeat(100) + "z").unwrap();
         assert_eq!(
-            find_dominant_source_file(root, &DirFilter::new(root)).as_deref(),
+            dominant_source_file_of(root).as_deref(),
             Some(root.join("core.py").as_path())
         );
     }

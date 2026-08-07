@@ -1,4 +1,4 @@
-Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missing=4)
+Score(3000)=0.782 I=0.928 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missing=4)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,49 +30,49 @@ Score(3000)=0.779 I=0.920 C=0.659 ns_rows≤3K=21/55 (reached=16 partial=1 missi
 | walker |  | 1035 | 46 | export doc at src/index.ts:46 |  |  | 0.764 |
 | ns | 1111 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.773 |
 | walker |  | 1179 | 144 | headings outline in README.md |  |  | 0.827 |
-| walker |  | 1210 | 31 | README.md section #18 |  |  | 0.827 |
-| walker |  | 1248 | 38 | README.md section #15 |  |  | 0.827 |
-| walker |  | 1261 | 13 | README.md section #8 |  |  | 0.827 |
-| ns | 1333 |  | 222 | README Usage code block | 2.3 |  | 0.739 |
-| walker |  | 1344 | 83 | README.md section #1 |  |  | 0.739 |
-| walker |  | 1459 | 115 | package identity metadata in package.json |  |  | 0.741 |
-| ns | 1534 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.686 |
-| ns | 1639 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.654 |
-| walker |  | 1671 | 212 | package entrypoints in package.json |  |  | 0.742 |
-| walker |  | 1690 | 19 | README.md section #13 |  |  | 0.742 |
-| ns | 1914 |  | 275 | README Install section body | 2.6 |  | 0.685 |
-| walker |  | 1923 | 233 | package scripts in package.json |  |  | 0.693 |
-| walker |  | 1940 | 17 | README.md section #7 |  |  | 0.693 |
+| walker |  | 1294 | 115 | package identity metadata in package.json |  |  | 0.830 |
+| ns | 1333 |  | 222 | README Usage code block | 2.3 |  | 0.741 |
+| walker |  | 1506 | 212 | package entrypoints in package.json |  |  | 0.841 |
+| ns | 1534 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.777 |
+| ns | 1639 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.742 |
+| walker |  | 1739 | 233 | package scripts in package.json |  |  | 0.751 |
+| ns | 1914 |  | 275 | README Install section body | 2.6 |  | 0.693 |
 | ns | 2008 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.669 |
 | ns | 2209 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.642 |
 | ns | 2449 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.613 |
-| ns | 2586 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.598 |
-| ns | 2800 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.568 |
-| walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.777 |
-| walker |  | 2983 | 145 | README.md section #5 |  |  | 0.779 |
-| walker |  | 3013 | 30 | README.md section #12 |  |  | 0.779 |
-| ns | 3035 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.785 |
-| walker |  | 3162 | 149 | json config tsconfig.json |  |  | 0.789 |
+| ns | 2586 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.597 |
+| walker |  | 2637 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.767 |
+| walker |  | 2786 | 149 | json config tsconfig.json |  |  | 0.770 |
+| ns | 2800 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.781 |
+| walker |  | 2931 | 145 | README.md section #5 |  |  | 0.782 |
+| walker |  | 3014 | 83 | README.md section #1 |  |  | 0.782 |
+| ns | 3035 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.788 |
 | ns | 3184 |  | 149 | tsconfig.json in full | 4.2 |  | 0.795 |
-| walker |  | 3195 | 33 | README.md section #10 |  |  | 0.795 |
 | ns | 3285 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.776 |
-| walker |  | 3306 | 111 | README.md section #4 |  |  | 0.777 |
-| walker |  | 3341 | 35 | README.md section #6 |  |  | 0.777 |
-| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.787 |
-| walker |  | 3621 | 280 | README.md section #2 |  |  | 0.838 |
-| ns | 3659 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.841 |
-| walker |  | 3676 | 55 | README.md section #16 |  |  | 0.841 |
-| ns | 3737 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.832 |
-| walker |  | 3775 | 99 | README.md section #14 |  |  | 0.833 |
-| walker |  | 3891 | 116 | README.md section #11 |  |  | 0.834 |
-| walker |  | 4011 | 120 | README.md section #9 |  |  | 0.835 |
-| ns | 4154 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.801 |
-| ns | 4356 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.776 |
-| ns | 4541 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.755 |
-| walker |  | 4544 | 533 | README.md section #3 |  |  | 0.855 |
-| walker |  | 4664 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.856 |
+| walker |  | 3294 | 280 | README.md section #2 |  |  | 0.830 |
+| ns | 3502 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.836 |
+| ns | 3659 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.839 |
+| ns | 3737 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.830 |
+| walker |  | 3827 | 533 | README.md section #3 |  |  | 0.941 |
+| walker |  | 3938 | 111 | README.md section #4 |  |  | 0.942 |
+| walker |  | 3976 | 38 | README.md section #15 |  |  | 0.942 |
+| walker |  | 4007 | 31 | README.md section #18 |  |  | 0.942 |
+| walker |  | 4127 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.943 |
+| ns | 4154 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.905 |
+| walker |  | 4249 | 122 | README.md section #9 |  |  | 0.906 |
+| ns | 4356 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.877 |
+| walker |  | 4367 | 118 | README.md section #11 |  |  | 0.878 |
+| walker |  | 4468 | 101 | README.md section #14 |  |  | 0.878 |
+| walker |  | 4499 | 31 | README.md section #10 |  |  | 0.878 |
+| ns | 4541 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.854 |
+| walker |  | 4691 | 192 | README.md section #17 |  |  | 0.856 |
+| walker |  | 4723 | 32 | README.md section #12 |  |  | 0.856 |
 | ns | 4737 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.835 |
-| walker |  | 4856 | 192 | README.md section #17 |  |  | 0.836 |
+| walker |  | 4738 | 15 | README.md section #13 |  |  | 0.835 |
+| walker |  | 4793 | 55 | README.md section #16 |  |  | 0.835 |
+| walker |  | 4804 | 11 | README.md section #8 |  |  | 0.836 |
+| walker |  | 4821 | 17 | README.md section #7 |  |  | 0.836 |
+| walker |  | 4856 | 35 | README.md section #6 |  |  | 0.836 |
 | walker |  | 4875 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.836 |
 | walker |  | 4891 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.836 |
 | walker |  | 4919 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.836 |
