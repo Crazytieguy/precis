@@ -3398,6 +3398,28 @@ typedef int x;
         assert!(scan.builds_a_program(root));
     }
 
+    /// The harness exclusion reads a directory's role through its
+    /// convention wrapping, so the dunder spelling of a test tree is
+    /// excluded from the scan exactly like the bare one. Without that, a
+    /// mixed project whose harness lives in `__tests__/` is classified as a
+    /// program on the strength of its harness `main`, and the program
+    /// classification admits project-wide internal statics that displace
+    /// the public surface.
+    #[test]
+    fn c_builds_a_program_ignores_dunder_wrapped_test_dirs() {
+        let main_def = "int main(int argc, char **argv) { return 0; }\n";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("lib.c"), "int x;\n".repeat(10)).unwrap();
+        std::fs::create_dir(root.join("__tests__")).unwrap();
+        std::fs::write(root.join("__tests__/harness.c"), main_def).unwrap();
+        let scan = scan_c_project(root, &DirFilter::unfiltered(root)).unwrap();
+        assert!(
+            !scan.builds_a_program(root),
+            "`__tests__` is a test directory under another ecosystem's spelling"
+        );
+    }
+
     fn aggregate_group_count(filename: &str, src: &str) -> usize {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
