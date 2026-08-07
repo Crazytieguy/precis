@@ -180,77 +180,94 @@ Score(3000)=0.704 I=0.909 C=0.545 ns_rows≤3K=16/48 (reached=10 partial=0 missi
 | walker |  | 5689 | 76 | README.md section #33 |  |  | 0.636 |
 | ns | 5698 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.608 |
 | walker |  | 5762 | 73 | README.md section #57 |  |  | 0.608 |
-| walker |  | 5807 | 45 | export body at ranges/intersects.js:4 body 5 |  |  | 0.608 |
-| walker |  | 5919 | 112 | README.md section #9 |  |  | 0.608 |
+| walker |  | 5783 | 21 | module item at functions/compare-loose.js:4 |  |  | 0.608 |
+| walker |  | 5805 | 22 | module item at functions/major.js:4 |  |  | 0.608 |
+| walker |  | 5827 | 22 | module item at functions/minor.js:4 |  |  | 0.608 |
+| walker |  | 5849 | 22 | module item at functions/patch.js:4 |  |  | 0.608 |
+| walker |  | 5894 | 45 | export body at ranges/intersects.js:4 body 5 |  |  | 0.608 |
+| walker |  | 5917 | 23 | module item at functions/rcompare.js:4 |  |  | 0.608 |
 | ns | 5960 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.589 |
-| walker |  | 5971 | 52 | export body at functions/compare-build.js:4 body 5 |  |  | 0.589 |
-| walker |  | 6059 | 88 | export at internal/constants.js:28 |  |  | 0.592 |
-| walker |  | 6114 | 55 | export body at functions/satisfies.js:4 body 5 |  |  | 0.592 |
-| walker |  | 6247 | 133 | README.md section #50 |  |  | 0.592 |
-| ns | 6266 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.573 |
-| walker |  | 6268 | 21 | imports in ranges/gtr.js |  |  | 0.573 |
-| walker |  | 6290 | 22 | imports in functions/clean.js |  |  | 0.573 |
-| walker |  | 6312 | 22 | imports in functions/prerelease.js |  |  | 0.573 |
-| walker |  | 6334 | 22 | imports in functions/valid.js |  |  | 0.573 |
-| walker |  | 6357 | 23 | imports in functions/diff.js |  |  | 0.573 |
+| walker |  | 6029 | 112 | README.md section #9 |  |  | 0.589 |
+| walker |  | 6054 | 25 | module item at ranges/gtr.js:5 |  |  | 0.589 |
+| walker |  | 6079 | 25 | module item at ranges/ltr.js:5 |  |  | 0.589 |
+| walker |  | 6131 | 52 | export body at functions/compare-build.js:4 body 5 |  |  | 0.589 |
+| walker |  | 6157 | 26 | module item at functions/eq.js:4 |  |  | 0.589 |
+| walker |  | 6183 | 26 | module item at functions/gt.js:4 |  |  | 0.589 |
+| walker |  | 6209 | 26 | module item at functions/lt.js:4 |  |  | 0.589 |
+| walker |  | 6235 | 26 | module item at functions/neq.js:4 |  |  | 0.589 |
+| ns | 6266 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.570 |
+| walker |  | 6323 | 88 | export at internal/constants.js:28 |  |  | 0.573 |
+| walker |  | 6350 | 27 | module item at functions/gte.js:4 |  |  | 0.573 |
 | ns | 6363 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.565 |
-| walker |  | 6436 | 79 | export body at ranges/valid.js:4 body 5 |  |  | 0.565 |
-| walker |  | 6591 | 155 | README.md section #44 |  |  | 0.565 |
+| walker |  | 6377 | 27 | module item at functions/lte.js:4 |  |  | 0.565 |
+| walker |  | 6432 | 55 | export body at functions/satisfies.js:4 body 5 |  |  | 0.565 |
+| walker |  | 6461 | 29 | module item at functions/sort.js:4 |  |  | 0.565 |
+| walker |  | 6491 | 30 | module item at functions/rsort.js:4 |  |  | 0.565 |
+| walker |  | 6510 | 19 | imports in ranges/gtr.js |  |  | 0.565 |
 | ns | 6597 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.555 |
-| walker |  | 6615 | 24 | imports in functions/compare-loose.js |  |  | 0.555 |
-| walker |  | 6639 | 24 | imports in functions/eq.js |  |  | 0.555 |
-| walker |  | 6663 | 24 | imports in functions/gt.js |  |  | 0.555 |
-| walker |  | 6687 | 24 | imports in functions/gte.js |  |  | 0.555 |
-| walker |  | 6711 | 24 | imports in functions/lt.js |  |  | 0.555 |
-| walker |  | 6735 | 24 | imports in functions/lte.js |  |  | 0.555 |
-| walker |  | 6759 | 24 | imports in functions/neq.js |  |  | 0.555 |
+| walker |  | 6643 | 133 | README.md section #50 |  |  | 0.555 |
+| walker |  | 6678 | 35 | module item at functions/compare.js:4 |  |  | 0.555 |
+| walker |  | 6700 | 22 | imports in functions/clean.js |  |  | 0.555 |
+| walker |  | 6722 | 22 | imports in functions/compare-loose.js |  |  | 0.555 |
+| walker |  | 6744 | 22 | imports in functions/eq.js |  |  | 0.555 |
 | ns | 6765 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.549 |
-| walker |  | 6783 | 24 | imports in functions/rcompare.js |  |  | 0.549 |
-| walker |  | 6807 | 24 | imports in functions/satisfies.js |  |  | 0.549 |
-| walker |  | 6831 | 24 | imports in ranges/intersects.js |  |  | 0.549 |
-| walker |  | 6855 | 24 | imports in ranges/ltr.js |  |  | 0.549 |
-| walker |  | 6879 | 24 | imports in ranges/valid.js |  |  | 0.549 |
-| walker |  | 6903 | 24 | export names surface in internal/lrucache.js |  |  | 0.550 |
-| walker |  | 6929 | 26 | imports in functions/compare-build.js |  |  | 0.550 |
-| walker |  | 6955 | 26 | imports in functions/inc.js |  |  | 0.550 |
-| walker |  | 6981 | 26 | imports in functions/parse.js |  |  | 0.550 |
-| walker |  | 7007 | 26 | imports in functions/rsort.js |  |  | 0.550 |
-| walker |  | 7033 | 26 | imports in functions/sort.js |  |  | 0.550 |
-| walker |  | 7059 | 26 | imports in ranges/to-comparators.js |  |  | 0.550 |
-| walker |  | 7084 | 25 | export names surface in internal/parse-options.js |  |  | 0.550 |
-| walker |  | 7084 | 0 | export at internal/parse-options.js:6 |  |  | 0.550 |
-| walker |  | 7254 | 170 | README.md section #46 |  |  | 0.560 |
-| walker |  | 7439 | 185 | README.md section #7 |  |  | 0.560 |
-| ns | 7440 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.536 |
-| walker |  | 7467 | 28 | imports in functions/compare.js |  |  | 0.536 |
-| walker |  | 7495 | 28 | imports in functions/major.js |  |  | 0.536 |
-| walker |  | 7523 | 28 | imports in functions/minor.js |  |  | 0.536 |
-| walker |  | 7551 | 28 | imports in functions/patch.js |  |  | 0.536 |
-| walker |  | 7648 | 97 | export body at functions/parse.js:4 body 5 |  |  | 0.536 |
+| walker |  | 6766 | 22 | imports in functions/gt.js |  |  | 0.549 |
+| walker |  | 6788 | 22 | imports in functions/gte.js |  |  | 0.549 |
+| walker |  | 6810 | 22 | imports in functions/lt.js |  |  | 0.549 |
+| walker |  | 6832 | 22 | imports in functions/lte.js |  |  | 0.549 |
+| walker |  | 6854 | 22 | imports in functions/neq.js |  |  | 0.549 |
+| walker |  | 6876 | 22 | imports in functions/prerelease.js |  |  | 0.549 |
+| walker |  | 6898 | 22 | imports in functions/rcompare.js |  |  | 0.549 |
+| walker |  | 6920 | 22 | imports in functions/valid.js |  |  | 0.549 |
+| walker |  | 6943 | 23 | imports in functions/diff.js |  |  | 0.549 |
+| walker |  | 7022 | 79 | export body at ranges/valid.js:4 body 5 |  |  | 0.549 |
+| walker |  | 7177 | 155 | README.md section #44 |  |  | 0.549 |
+| walker |  | 7201 | 24 | imports in functions/rsort.js |  |  | 0.549 |
+| walker |  | 7225 | 24 | imports in functions/satisfies.js |  |  | 0.549 |
+| walker |  | 7249 | 24 | imports in functions/sort.js |  |  | 0.549 |
+| walker |  | 7273 | 24 | imports in ranges/intersects.js |  |  | 0.549 |
+| walker |  | 7297 | 24 | imports in ranges/ltr.js |  |  | 0.549 |
+| walker |  | 7321 | 24 | imports in ranges/valid.js |  |  | 0.549 |
+| walker |  | 7345 | 24 | export names surface in internal/lrucache.js |  |  | 0.550 |
+| walker |  | 7371 | 26 | imports in functions/compare-build.js |  |  | 0.550 |
+| walker |  | 7397 | 26 | imports in functions/compare.js |  |  | 0.550 |
+| walker |  | 7423 | 26 | imports in functions/inc.js |  |  | 0.550 |
+| ns | 7440 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.526 |
+| walker |  | 7449 | 26 | imports in functions/major.js |  |  | 0.526 |
+| walker |  | 7475 | 26 | imports in functions/minor.js |  |  | 0.526 |
+| walker |  | 7501 | 26 | imports in functions/parse.js |  |  | 0.526 |
+| walker |  | 7527 | 26 | imports in functions/patch.js |  |  | 0.526 |
+| walker |  | 7553 | 26 | imports in ranges/to-comparators.js |  |  | 0.526 |
+| walker |  | 7578 | 25 | export names surface in internal/parse-options.js |  |  | 0.526 |
+| walker |  | 7578 | 0 | export at internal/parse-options.js:6 |  |  | 0.526 |
+| walker |  | 7748 | 170 | README.md section #46 |  |  | 0.536 |
 | ns | 7759 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.519 |
+| walker |  | 7933 | 185 | README.md section #7 |  |  | 0.519 |
 | ns | 7935 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.513 |
-| walker |  | 8246 | 598 | README.md section #5 |  |  | 0.539 |
-| ns | 8272 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.527 |
-| walker |  | 8275 | 29 | export names surface in internal/identifiers.js |  |  | 0.527 |
-| walker |  | 8275 | 0 | export at internal/identifiers.js:4 |  |  | 0.527 |
-| walker |  | 8295 | 20 | export at internal/identifiers.js:26 |  |  | 0.528 |
-| ns | 8418 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.519 |
-| walker |  | 8645 | 350 | json config release-please-config.json |  |  | 0.519 |
-| ns | 8648 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.510 |
-| walker |  | 8797 | 152 | README.md section #56 |  |  | 0.510 |
-| walker |  | 8843 | 46 | export at internal/lrucache.js:3 |  |  | 0.516 |
-| walker |  | 8880 | 37 | imports in ranges/simplify.js |  |  | 0.516 |
-| ns | 8890 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.512 |
-| walker |  | 9102 | 222 | README.md section #54 |  |  | 0.512 |
-| ns | 9137 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.505 |
-| walker |  | 9141 | 39 | imports in ranges/max-satisfying.js |  |  | 0.505 |
-| walker |  | 9180 | 39 | imports in ranges/min-satisfying.js |  |  | 0.505 |
-| ns | 9260 |  | 123 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.521 |
-| walker |  | 9316 | 136 | export body at functions/inc.js:5 body 6 |  |  | 0.521 |
-| walker |  | 9357 | 41 | imports in ranges/outside.js |  |  | 0.521 |
-| walker |  | 9398 | 41 | imports in ranges/subset.js |  |  | 0.521 |
+| walker |  | 8030 | 97 | export body at functions/parse.js:4 body 5 |  |  | 0.513 |
+| ns | 8272 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.502 |
+| ns | 8418 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.493 |
+| walker |  | 8628 | 598 | README.md section #5 |  |  | 0.518 |
+| ns | 8648 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.508 |
+| walker |  | 8657 | 29 | export names surface in internal/identifiers.js |  |  | 0.509 |
+| walker |  | 8657 | 0 | export at internal/identifiers.js:4 |  |  | 0.509 |
+| walker |  | 8677 | 20 | export at internal/identifiers.js:26 |  |  | 0.510 |
+| walker |  | 8729 | 52 | module item at ranges/to-comparators.js:6 |  |  | 0.510 |
+| ns | 8890 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.505 |
+| walker |  | 9079 | 350 | json config release-please-config.json |  |  | 0.505 |
+| ns | 9137 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.498 |
+| walker |  | 9231 | 152 | README.md section #56 |  |  | 0.498 |
+| ns | 9260 |  | 123 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.515 |
+| walker |  | 9277 | 46 | export at internal/lrucache.js:3 |  |  | 0.521 |
+| walker |  | 9314 | 37 | imports in ranges/simplify.js |  |  | 0.521 |
 | ns | 9410 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.518 |
+| walker |  | 9536 | 222 | README.md section #54 |  |  | 0.518 |
+| walker |  | 9575 | 39 | imports in ranges/max-satisfying.js |  |  | 0.518 |
+| walker |  | 9614 | 39 | imports in ranges/min-satisfying.js |  |  | 0.518 |
 | ns | 9625 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.518 |
 | ns | 9734 |  | 109 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.530 |
+| walker |  | 9750 | 136 | export body at functions/inc.js:5 body 6 |  |  | 0.530 |
+| walker |  | 9791 | 41 | imports in ranges/outside.js |  |  | 0.530 |
 | ns | 9824 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.530 |
+| walker |  | 9832 | 41 | imports in ranges/subset.js |  |  | 0.530 |
 | ns | 9963 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.525 |

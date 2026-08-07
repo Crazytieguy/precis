@@ -140,56 +140,56 @@ Score(3000)=0.704 I=0.904 C=0.548 ns_rows≤3K=19/52 (reached=9 partial=2 missin
 | walker |  | 5894 | 256 | readme.md section #47 |  |  | 0.537 |
 | walker |  | 5909 | 15 | imports in source/utils/timeout.ts |  |  | 0.537 |
 | walker |  | 6004 | 95 | readme.md section #26 |  |  | 0.537 |
-| walker |  | 6020 | 16 | imports in source/utils/delay.ts |  |  | 0.537 |
 | ns | 6056 |  | 236 | `test/helpers/`: every exported test helper | 3.6 |  | 0.527 |
-| ns | 6367 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.521 |
-| walker |  | 6380 | 360 | readme.md section #2 |  |  | 0.536 |
-| ns | 6463 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.534 |
-| walker |  | 6490 | 110 | readme.md section #9 |  |  | 0.535 |
-| walker |  | 6579 | 89 | export names surface in source/utils/body.ts |  |  | 0.541 |
-| walker |  | 6579 | 0 | export at source/utils/body.ts:5 |  |  | 0.541 |
-| walker |  | 6579 | 0 | export at source/utils/body.ts:90 |  |  | 0.541 |
-| walker |  | 6579 | 0 | export at source/utils/body.ts:119 |  |  | 0.541 |
-| walker |  | 6754 | 175 | export doc at source/utils/type-guards.ts:49 |  |  | 0.541 |
-| ns | 6755 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.555 |
-| walker |  | 6870 | 116 | readme.md section #5 |  |  | 0.556 |
-| ns | 6972 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.547 |
-| walker |  | 6987 | 117 | readme.md section #20 |  |  | 0.547 |
-| walker |  | 7169 | 182 | export doc at source/utils/type-guards.ts:71 |  |  | 0.547 |
-| ns | 7175 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.539 |
-| walker |  | 7403 | 234 | readme.md section #48 |  |  | 0.545 |
-| walker |  | 7562 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.545 |
-| ns | 7607 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.531 |
-| walker |  | 7778 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.531 |
-| walker |  | 7998 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.531 |
-| ns | 8019 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.517 |
-| walker |  | 8165 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.517 |
-| ns | 8228 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.511 |
-| walker |  | 8284 | 119 | export names surface in source/utils/merge.ts |  |  | 0.517 |
-| walker |  | 8284 | 0 | export at source/utils/merge.ts:6 |  |  | 0.517 |
-| walker |  | 8284 | 0 | export at source/utils/merge.ts:16 |  |  | 0.517 |
-| walker |  | 8284 | 0 | export at source/utils/merge.ts:86 |  |  | 0.517 |
-| walker |  | 8378 | 94 | export at source/utils/merge.ts:38 |  |  | 0.518 |
-| ns | 8405 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.512 |
-| walker |  | 8462 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.513 |
-| walker |  | 8544 | 82 | export at source/types/retry.ts:3 |  |  | 0.514 |
-| ns | 8560 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.509 |
-| walker |  | 8700 | 156 | readme.md section #17 |  |  | 0.509 |
-| ns | 8733 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.510 |
-| walker |  | 8867 | 167 | readme.md section #4 |  |  | 0.512 |
-| walker |  | 8899 | 32 | imports in source/utils/body.ts |  |  | 0.512 |
-| ns | 9007 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.504 |
-| walker |  | 9069 | 170 | readme.md section #29 |  |  | 0.504 |
-| ns | 9132 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.510 |
-| walker |  | 9240 | 171 | readme.md section #16 |  |  | 0.510 |
-| ns | 9289 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.514 |
-| ns | 9377 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.513 |
-| walker |  | 9413 | 173 | readme.md section #30 |  |  | 0.513 |
-| ns | 9480 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.518 |
-| ns | 9506 |  | 26 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.522 |
-| walker |  | 9591 | 178 | export body at source/errors/NonError.ts:6 body 11 |  |  | 0.522 |
-| ns | 9700 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.534 |
-| walker |  | 9734 | 143 | readme.md section #43 |  |  | 0.534 |
-| walker |  | 9791 | 57 | export doc at source/errors/NonError.ts:6 |  |  | 0.534 |
-| walker |  | 9830 | 39 | imports in source/utils/options.ts |  |  | 0.534 |
-| ns | 9968 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.526 |
+| walker |  | 6175 | 171 | literal roster at source/core/Ky.ts:33 |  |  | 0.539 |
+| walker |  | 6191 | 16 | imports in source/utils/delay.ts |  |  | 0.539 |
+| ns | 6367 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.533 |
+| ns | 6463 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.531 |
+| walker |  | 6551 | 360 | readme.md section #2 |  |  | 0.546 |
+| walker |  | 6661 | 110 | readme.md section #9 |  |  | 0.547 |
+| walker |  | 6750 | 89 | export names surface in source/utils/body.ts |  |  | 0.552 |
+| walker |  | 6750 | 0 | export at source/utils/body.ts:5 |  |  | 0.552 |
+| walker |  | 6750 | 0 | export at source/utils/body.ts:90 |  |  | 0.552 |
+| walker |  | 6750 | 0 | export at source/utils/body.ts:119 |  |  | 0.552 |
+| ns | 6755 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.566 |
+| walker |  | 6925 | 175 | export doc at source/utils/type-guards.ts:49 |  |  | 0.566 |
+| ns | 6972 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.557 |
+| walker |  | 7041 | 116 | readme.md section #5 |  |  | 0.557 |
+| walker |  | 7158 | 117 | readme.md section #20 |  |  | 0.557 |
+| ns | 7175 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.550 |
+| walker |  | 7340 | 182 | export doc at source/utils/type-guards.ts:71 |  |  | 0.550 |
+| walker |  | 7574 | 234 | readme.md section #48 |  |  | 0.555 |
+| ns | 7607 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.541 |
+| walker |  | 7733 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.541 |
+| walker |  | 7949 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.541 |
+| ns | 8019 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.527 |
+| walker |  | 8169 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.527 |
+| ns | 8228 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.521 |
+| walker |  | 8336 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.521 |
+| ns | 8405 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.515 |
+| walker |  | 8455 | 119 | export names surface in source/utils/merge.ts |  |  | 0.521 |
+| walker |  | 8455 | 0 | export at source/utils/merge.ts:6 |  |  | 0.521 |
+| walker |  | 8455 | 0 | export at source/utils/merge.ts:16 |  |  | 0.521 |
+| walker |  | 8455 | 0 | export at source/utils/merge.ts:86 |  |  | 0.521 |
+| walker |  | 8549 | 94 | export at source/utils/merge.ts:38 |  |  | 0.522 |
+| ns | 8560 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.516 |
+| walker |  | 8633 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.517 |
+| walker |  | 8715 | 82 | export at source/types/retry.ts:3 |  |  | 0.518 |
+| ns | 8733 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.519 |
+| walker |  | 8871 | 156 | readme.md section #17 |  |  | 0.519 |
+| ns | 9007 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.511 |
+| walker |  | 9038 | 167 | readme.md section #4 |  |  | 0.514 |
+| walker |  | 9070 | 32 | imports in source/utils/body.ts |  |  | 0.514 |
+| ns | 9132 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.518 |
+| walker |  | 9240 | 170 | readme.md section #29 |  |  | 0.518 |
+| ns | 9289 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.523 |
+| ns | 9377 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.522 |
+| walker |  | 9411 | 171 | readme.md section #16 |  |  | 0.522 |
+| ns | 9480 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.526 |
+| ns | 9506 |  | 26 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.530 |
+| walker |  | 9584 | 173 | readme.md section #30 |  |  | 0.530 |
+| ns | 9700 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.541 |
+| walker |  | 9762 | 178 | export body at source/errors/NonError.ts:6 body 11 |  |  | 0.542 |
+| walker |  | 9905 | 143 | readme.md section #43 |  |  | 0.542 |
+| walker |  | 9962 | 57 | export doc at source/errors/NonError.ts:6 |  |  | 0.542 |
+| ns | 9968 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.534 |

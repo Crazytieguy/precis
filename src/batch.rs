@@ -317,6 +317,12 @@ pub enum TsKey {
         /// Disambiguates sibling body slices.
         body_start_line: usize,
     },
+    /// Key roster of a multi-line data literal a declaration binds —
+    /// one line per top-level element, the rest elided. Predecessor:
+    /// the declaration's own surface (`Export` / `ModuleItem`), and in
+    /// turn the predecessor of that declaration's body slices, so the
+    /// cheap "which keys exist" read always precedes the full literal.
+    LiteralRoster { file: PathBuf, start_line: usize },
     /// Unified first-line catalog of a private-emitting entrypoint's
     /// module items — one roster instead of a per-item train.
     /// Predecessor of each `ModuleItem`.
@@ -859,6 +865,7 @@ impl InnerKey for TsKey {
                 | TsKey::ReexportTail { .. }
                 | TsKey::Export { .. }
                 | TsKey::ExportMemberNames { .. }
+                | TsKey::LiteralRoster { .. }
                 | TsKey::ModuleItemNames { .. }
                 | TsKey::ModuleItem { .. }
                 | TsKey::ModuleStatements { .. }
@@ -884,9 +891,9 @@ impl InnerKey for TsKey {
             // Roster tier for the unified member catalog — measured:
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
-            TsKey::ExportMemberNames { .. } | TsKey::ModuleItemNames { .. } => {
-                crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT
-            }
+            TsKey::ExportMemberNames { .. }
+            | TsKey::LiteralRoster { .. }
+            | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -938,6 +945,9 @@ impl InnerKey for TsKey {
                 start_line,
                 body_start_line,
             } => describe_at_body("export body", file, *start_line, *body_start_line, root),
+            TsKey::LiteralRoster { file, start_line } => {
+                describe_at("literal roster", file, *start_line, root)
+            }
             TsKey::ModuleItemNames { file } => describe_in("module item names surface", file, root),
             TsKey::ModuleItem { file, start_line } => {
                 describe_at("module item", file, *start_line, root)

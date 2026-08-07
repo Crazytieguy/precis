@@ -1,7 +1,7 @@
 fixture = "semver"
 budget = 10000
-cumulative_tokens = 9398
-batch_count = 204
+cumulative_tokens = 9832
+batch_count = 221
 
 [[batches]]
 position = 1
@@ -3707,10 +3707,82 @@ kind = "full"
 
 [[batches]]
 position = 150
+key = 'Typescript(ModuleItem { file: "functions/compare-loose.js", start_line: 4 })'
+descriptor = "module item at functions/compare-loose.js:4"
+cost_tokens = 21
+cum_tokens = 5783
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/compare-loose.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Typescript(ModuleItem { file: "functions/major.js", start_line: 4 })'
+descriptor = "module item at functions/major.js:4"
+cost_tokens = 22
+cum_tokens = 5805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/major.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Typescript(ModuleItem { file: "functions/minor.js", start_line: 4 })'
+descriptor = "module item at functions/minor.js:4"
+cost_tokens = 22
+cum_tokens = 5827
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/minor.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Typescript(ModuleItem { file: "functions/patch.js", start_line: 4 })'
+descriptor = "module item at functions/patch.js:4"
+cost_tokens = 22
+cum_tokens = 5849
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/patch.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
 key = 'Typescript(ExportBody { file: "ranges/intersects.js", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at ranges/intersects.js:4 body 5"
 cost_tokens = 45
-cum_tokens = 5807
+cum_tokens = 5894
 
 [batches.content]
 kind = "lines"
@@ -3724,11 +3796,29 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 151
+position = 155
+key = 'Typescript(ModuleItem { file: "functions/rcompare.js", start_line: 4 })'
+descriptor = "module item at functions/rcompare.js:4"
+cost_tokens = 23
+cum_tokens = 5917
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/rcompare.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
 key = 'Markdown(Section { file: "README.md", section_index: 9, keeps_default_concavity: false })'
 descriptor = "README.md section #9"
 cost_tokens = 112
-cum_tokens = 5919
+cum_tokens = 6029
 
 [batches.content]
 kind = "lines"
@@ -3742,11 +3832,47 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 152
+position = 157
+key = 'Typescript(ModuleItem { file: "ranges/gtr.js", start_line: 5 })'
+descriptor = "module item at ranges/gtr.js:5"
+cost_tokens = 25
+cum_tokens = 6054
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ranges/gtr.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Typescript(ModuleItem { file: "ranges/ltr.js", start_line: 5 })'
+descriptor = "module item at ranges/ltr.js:5"
+cost_tokens = 25
+cum_tokens = 6079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ranges/ltr.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
 key = 'Typescript(ExportBody { file: "functions/compare-build.js", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at functions/compare-build.js:4 body 5"
 cost_tokens = 52
-cum_tokens = 5971
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3760,11 +3886,83 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 153
+position = 160
+key = 'Typescript(ModuleItem { file: "functions/eq.js", start_line: 4 })'
+descriptor = "module item at functions/eq.js:4"
+cost_tokens = 26
+cum_tokens = 6157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/eq.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Typescript(ModuleItem { file: "functions/gt.js", start_line: 4 })'
+descriptor = "module item at functions/gt.js:4"
+cost_tokens = 26
+cum_tokens = 6183
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/gt.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Typescript(ModuleItem { file: "functions/lt.js", start_line: 4 })'
+descriptor = "module item at functions/lt.js:4"
+cost_tokens = 26
+cum_tokens = 6209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/lt.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Typescript(ModuleItem { file: "functions/neq.js", start_line: 4 })'
+descriptor = "module item at functions/neq.js:4"
+cost_tokens = 26
+cum_tokens = 6235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/neq.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
 key = 'Typescript(Export { file: "internal/constants.js", start_line: 28 })'
 descriptor = "export at internal/constants.js:28"
 cost_tokens = 88
-cum_tokens = 6059
+cum_tokens = 6323
 
 [batches.content]
 kind = "lines"
@@ -3778,11 +3976,47 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 154
+position = 165
+key = 'Typescript(ModuleItem { file: "functions/gte.js", start_line: 4 })'
+descriptor = "module item at functions/gte.js:4"
+cost_tokens = 27
+cum_tokens = 6350
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/gte.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Typescript(ModuleItem { file: "functions/lte.js", start_line: 4 })'
+descriptor = "module item at functions/lte.js:4"
+cost_tokens = 27
+cum_tokens = 6377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/lte.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
 key = 'Typescript(ExportBody { file: "functions/satisfies.js", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at functions/satisfies.js:4 body 5"
 cost_tokens = 55
-cum_tokens = 6114
+cum_tokens = 6432
 
 [batches.content]
 kind = "lines"
@@ -3796,29 +4030,47 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 155
-key = 'Markdown(Section { file: "README.md", section_index: 50, keeps_default_concavity: false })'
-descriptor = "README.md section #50"
-cost_tokens = 133
-cum_tokens = 6247
+position = 168
+key = 'Typescript(ModuleItem { file: "functions/sort.js", start_line: 4 })'
+descriptor = "module item at functions/sort.js:4"
+cost_tokens = 29
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 548
-end = 552
+path = "functions/sort.js"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 156
+position = 169
+key = 'Typescript(ModuleItem { file: "functions/rsort.js", start_line: 4 })'
+descriptor = "module item at functions/rsort.js:4"
+cost_tokens = 30
+cum_tokens = 6491
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/rsort.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
 key = 'Typescript(Imports { file: "ranges/gtr.js" })'
 descriptor = "imports in ranges/gtr.js"
-cost_tokens = 21
-cum_tokens = 6268
+cost_tokens = 19
+cum_tokens = 6510
 
 [batches.content]
 kind = "lines"
@@ -3840,11 +4092,47 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 157
+position = 171
+key = 'Markdown(Section { file: "README.md", section_index: 50, keeps_default_concavity: false })'
+descriptor = "README.md section #50"
+cost_tokens = 133
+cum_tokens = 6643
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 548
+end = 552
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Typescript(ModuleItem { file: "functions/compare.js", start_line: 4 })'
+descriptor = "module item at functions/compare.js:4"
+cost_tokens = 35
+cum_tokens = 6678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/compare.js"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
 key = 'Typescript(Imports { file: "functions/clean.js" })'
 descriptor = "imports in functions/clean.js"
 cost_tokens = 22
-cum_tokens = 6290
+cum_tokens = 6700
 
 [batches.content]
 kind = "lines"
@@ -3858,101 +4146,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 158
-key = 'Typescript(Imports { file: "functions/prerelease.js" })'
-descriptor = "imports in functions/prerelease.js"
-cost_tokens = 22
-cum_tokens = 6312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/prerelease.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Typescript(Imports { file: "functions/valid.js" })'
-descriptor = "imports in functions/valid.js"
-cost_tokens = 22
-cum_tokens = 6334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/valid.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Typescript(Imports { file: "functions/diff.js" })'
-descriptor = "imports in functions/diff.js"
-cost_tokens = 23
-cum_tokens = 6357
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/diff.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'Typescript(ExportBody { file: "ranges/valid.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at ranges/valid.js:4 body 5"
-cost_tokens = 79
-cum_tokens = 6436
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ranges/valid.js"
-start = 5
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'Markdown(Section { file: "README.md", section_index: 44, keeps_default_concavity: false })'
-descriptor = "README.md section #44"
-cost_tokens = 155
-cum_tokens = 6591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 509
-end = 516
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
+position = 174
 key = 'Typescript(Imports { file: "functions/compare-loose.js" })'
 descriptor = "imports in functions/compare-loose.js"
-cost_tokens = 24
-cum_tokens = 6615
+cost_tokens = 22
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -3966,11 +4164,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 164
+position = 175
 key = 'Typescript(Imports { file: "functions/eq.js" })'
 descriptor = "imports in functions/eq.js"
-cost_tokens = 24
-cum_tokens = 6639
+cost_tokens = 22
+cum_tokens = 6744
 
 [batches.content]
 kind = "lines"
@@ -3984,11 +4182,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 165
+position = 176
 key = 'Typescript(Imports { file: "functions/gt.js" })'
 descriptor = "imports in functions/gt.js"
-cost_tokens = 24
-cum_tokens = 6663
+cost_tokens = 22
+cum_tokens = 6766
 
 [batches.content]
 kind = "lines"
@@ -4002,11 +4200,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 166
+position = 177
 key = 'Typescript(Imports { file: "functions/gte.js" })'
 descriptor = "imports in functions/gte.js"
-cost_tokens = 24
-cum_tokens = 6687
+cost_tokens = 22
+cum_tokens = 6788
 
 [batches.content]
 kind = "lines"
@@ -4020,11 +4218,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 167
+position = 178
 key = 'Typescript(Imports { file: "functions/lt.js" })'
 descriptor = "imports in functions/lt.js"
-cost_tokens = 24
-cum_tokens = 6711
+cost_tokens = 22
+cum_tokens = 6810
 
 [batches.content]
 kind = "lines"
@@ -4038,11 +4236,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 168
+position = 179
 key = 'Typescript(Imports { file: "functions/lte.js" })'
 descriptor = "imports in functions/lte.js"
-cost_tokens = 24
-cum_tokens = 6735
+cost_tokens = 22
+cum_tokens = 6832
 
 [batches.content]
 kind = "lines"
@@ -4056,11 +4254,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 169
+position = 180
 key = 'Typescript(Imports { file: "functions/neq.js" })'
 descriptor = "imports in functions/neq.js"
-cost_tokens = 24
-cum_tokens = 6759
+cost_tokens = 22
+cum_tokens = 6854
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4272,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 170
+position = 181
+key = 'Typescript(Imports { file: "functions/prerelease.js" })'
+descriptor = "imports in functions/prerelease.js"
+cost_tokens = 22
+cum_tokens = 6876
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/prerelease.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
 key = 'Typescript(Imports { file: "functions/rcompare.js" })'
 descriptor = "imports in functions/rcompare.js"
-cost_tokens = 24
-cum_tokens = 6783
+cost_tokens = 22
+cum_tokens = 6898
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4308,101 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 171
+position = 183
+key = 'Typescript(Imports { file: "functions/valid.js" })'
+descriptor = "imports in functions/valid.js"
+cost_tokens = 22
+cum_tokens = 6920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/valid.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Typescript(Imports { file: "functions/diff.js" })'
+descriptor = "imports in functions/diff.js"
+cost_tokens = 23
+cum_tokens = 6943
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/diff.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Typescript(ExportBody { file: "ranges/valid.js", start_line: 4, body_start_line: 5 })'
+descriptor = "export body at ranges/valid.js:4 body 5"
+cost_tokens = 79
+cum_tokens = 7022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ranges/valid.js"
+start = 5
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Markdown(Section { file: "README.md", section_index: 44, keeps_default_concavity: false })'
+descriptor = "README.md section #44"
+cost_tokens = 155
+cum_tokens = 7177
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 509
+end = 516
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Typescript(Imports { file: "functions/rsort.js" })'
+descriptor = "imports in functions/rsort.js"
+cost_tokens = 24
+cum_tokens = 7201
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/rsort.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
 key = 'Typescript(Imports { file: "functions/satisfies.js" })'
 descriptor = "imports in functions/satisfies.js"
 cost_tokens = 24
-cum_tokens = 6807
+cum_tokens = 7225
 
 [batches.content]
 kind = "lines"
@@ -4110,11 +4416,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 172
+position = 189
+key = 'Typescript(Imports { file: "functions/sort.js" })'
+descriptor = "imports in functions/sort.js"
+cost_tokens = 24
+cum_tokens = 7249
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/sort.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
 key = 'Typescript(Imports { file: "ranges/intersects.js" })'
 descriptor = "imports in ranges/intersects.js"
 cost_tokens = 24
-cum_tokens = 6831
+cum_tokens = 7273
 
 [batches.content]
 kind = "lines"
@@ -4128,11 +4452,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 173
+position = 191
 key = 'Typescript(Imports { file: "ranges/ltr.js" })'
 descriptor = "imports in ranges/ltr.js"
 cost_tokens = 24
-cum_tokens = 6855
+cum_tokens = 7297
 
 [batches.content]
 kind = "lines"
@@ -4146,11 +4470,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 174
+position = 192
 key = 'Typescript(Imports { file: "ranges/valid.js" })'
 descriptor = "imports in ranges/valid.js"
 cost_tokens = 24
-cum_tokens = 6879
+cum_tokens = 7321
 
 [batches.content]
 kind = "lines"
@@ -4164,11 +4488,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 175
+position = 193
 key = 'Typescript(ExportNames { file: "internal/lrucache.js" })'
 descriptor = "export names surface in internal/lrucache.js"
 cost_tokens = 24
-cum_tokens = 6903
+cum_tokens = 7345
 
 [batches.content]
 kind = "lines"
@@ -4198,11 +4522,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 176
+position = 194
 key = 'Typescript(Imports { file: "functions/compare-build.js" })'
 descriptor = "imports in functions/compare-build.js"
 cost_tokens = 26
-cum_tokens = 6929
+cum_tokens = 7371
 
 [batches.content]
 kind = "lines"
@@ -4216,11 +4540,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 177
+position = 195
+key = 'Typescript(Imports { file: "functions/compare.js" })'
+descriptor = "imports in functions/compare.js"
+cost_tokens = 26
+cum_tokens = 7397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/compare.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
 key = 'Typescript(Imports { file: "functions/inc.js" })'
 descriptor = "imports in functions/inc.js"
 cost_tokens = 26
-cum_tokens = 6955
+cum_tokens = 7423
 
 [batches.content]
 kind = "lines"
@@ -4234,11 +4576,47 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 178
+position = 197
+key = 'Typescript(Imports { file: "functions/major.js" })'
+descriptor = "imports in functions/major.js"
+cost_tokens = 26
+cum_tokens = 7449
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/major.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'Typescript(Imports { file: "functions/minor.js" })'
+descriptor = "imports in functions/minor.js"
+cost_tokens = 26
+cum_tokens = 7475
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "functions/minor.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
 key = 'Typescript(Imports { file: "functions/parse.js" })'
 descriptor = "imports in functions/parse.js"
 cost_tokens = 26
-cum_tokens = 6981
+cum_tokens = 7501
 
 [batches.content]
 kind = "lines"
@@ -4252,17 +4630,17 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 179
-key = 'Typescript(Imports { file: "functions/rsort.js" })'
-descriptor = "imports in functions/rsort.js"
+position = 200
+key = 'Typescript(Imports { file: "functions/patch.js" })'
+descriptor = "imports in functions/patch.js"
 cost_tokens = 26
-cum_tokens = 7007
+cum_tokens = 7527
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "functions/rsort.js"
+path = "functions/patch.js"
 start = 1
 end = 3
 
@@ -4270,29 +4648,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 180
-key = 'Typescript(Imports { file: "functions/sort.js" })'
-descriptor = "imports in functions/sort.js"
-cost_tokens = 26
-cum_tokens = 7033
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/sort.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
+position = 201
 key = 'Typescript(Imports { file: "ranges/to-comparators.js" })'
 descriptor = "imports in ranges/to-comparators.js"
 cost_tokens = 26
-cum_tokens = 7059
+cum_tokens = 7553
 
 [batches.content]
 kind = "lines"
@@ -4306,11 +4666,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 182
+position = 202
 key = 'Typescript(ExportNames { file: "internal/parse-options.js" })'
 descriptor = "export names surface in internal/parse-options.js"
 cost_tokens = 25
-cum_tokens = 7084
+cum_tokens = 7578
 
 [batches.content]
 kind = "lines"
@@ -4340,11 +4700,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 183
+position = 203
 key = 'Typescript(Export { file: "internal/parse-options.js", start_line: 6 })'
 descriptor = "export at internal/parse-options.js:6"
 cost_tokens = 0
-cum_tokens = 7084
+cum_tokens = 7578
 
 [batches.content]
 kind = "lines"
@@ -4366,11 +4726,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 184
+position = 204
 key = 'Markdown(Section { file: "README.md", section_index: 46, keeps_default_concavity: false })'
 descriptor = "README.md section #46"
 cost_tokens = 170
-cum_tokens = 7254
+cum_tokens = 7748
 
 [batches.content]
 kind = "lines"
@@ -4384,11 +4744,11 @@ end = 526
 kind = "full"
 
 [[batches]]
-position = 185
+position = 205
 key = 'Markdown(Section { file: "README.md", section_index: 7, keeps_default_concavity: false })'
 descriptor = "README.md section #7"
 cost_tokens = 185
-cum_tokens = 7439
+cum_tokens = 7933
 
 [batches.content]
 kind = "lines"
@@ -4402,83 +4762,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 186
-key = 'Typescript(Imports { file: "functions/compare.js" })'
-descriptor = "imports in functions/compare.js"
-cost_tokens = 28
-cum_tokens = 7467
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/compare.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Typescript(Imports { file: "functions/major.js" })'
-descriptor = "imports in functions/major.js"
-cost_tokens = 28
-cum_tokens = 7495
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/major.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Typescript(Imports { file: "functions/minor.js" })'
-descriptor = "imports in functions/minor.js"
-cost_tokens = 28
-cum_tokens = 7523
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/minor.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Typescript(Imports { file: "functions/patch.js" })'
-descriptor = "imports in functions/patch.js"
-cost_tokens = 28
-cum_tokens = 7551
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "functions/patch.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
+position = 206
 key = 'Typescript(ExportBody { file: "functions/parse.js", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at functions/parse.js:4 body 5"
 cost_tokens = 97
-cum_tokens = 7648
+cum_tokens = 8030
 
 [batches.content]
 kind = "lines"
@@ -4492,11 +4780,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 191
+position = 207
 key = 'Markdown(Section { file: "README.md", section_index: 5, keeps_default_concavity: false })'
 descriptor = "README.md section #5"
 cost_tokens = 598
-cum_tokens = 8246
+cum_tokens = 8628
 
 [batches.content]
 kind = "lines"
@@ -4510,11 +4798,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 192
+position = 208
 key = 'Typescript(ExportNames { file: "internal/identifiers.js" })'
 descriptor = "export names surface in internal/identifiers.js"
 cost_tokens = 29
-cum_tokens = 8275
+cum_tokens = 8657
 
 [batches.content]
 kind = "lines"
@@ -4552,11 +4840,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 209
 key = 'Typescript(Export { file: "internal/identifiers.js", start_line: 4 })'
 descriptor = "export at internal/identifiers.js:4"
 cost_tokens = 0
-cum_tokens = 8275
+cum_tokens = 8657
 
 [batches.content]
 kind = "lines"
@@ -4578,11 +4866,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 194
+position = 210
 key = 'Typescript(Export { file: "internal/identifiers.js", start_line: 26 })'
 descriptor = "export at internal/identifiers.js:26"
 cost_tokens = 20
-cum_tokens = 8295
+cum_tokens = 8677
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +4884,29 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 195
+position = 211
+key = 'Typescript(ModuleItem { file: "ranges/to-comparators.js", start_line: 6 })'
+descriptor = "module item at ranges/to-comparators.js:6"
+cost_tokens = 52
+cum_tokens = 8729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ranges/to-comparators.js"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
 key = 'Json(Whole { file: "release-please-config.json" })'
 descriptor = "json config release-please-config.json"
 cost_tokens = 350
-cum_tokens = 8645
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4920,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 196
+position = 213
 key = 'Markdown(Section { file: "README.md", section_index: 56, keeps_default_concavity: false })'
 descriptor = "README.md section #56"
 cost_tokens = 152
-cum_tokens = 8797
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4938,11 @@ end = 598
 kind = "full"
 
 [[batches]]
-position = 197
+position = 214
 key = 'Typescript(Export { file: "internal/lrucache.js", start_line: 3 })'
 descriptor = "export at internal/lrucache.js:3"
 cost_tokens = 46
-cum_tokens = 8843
+cum_tokens = 9277
 
 [batches.content]
 kind = "lines"
@@ -4706,11 +5012,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 215
 key = 'Typescript(Imports { file: "ranges/simplify.js" })'
 descriptor = "imports in ranges/simplify.js"
 cost_tokens = 37
-cum_tokens = 8880
+cum_tokens = 9314
 
 [batches.content]
 kind = "lines"
@@ -4732,11 +5038,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 199
+position = 216
 key = 'Markdown(Section { file: "README.md", section_index: 54, keeps_default_concavity: false })'
 descriptor = "README.md section #54"
 cost_tokens = 222
-cum_tokens = 9102
+cum_tokens = 9536
 
 [batches.content]
 kind = "lines"
@@ -4750,11 +5056,11 @@ end = 574
 kind = "full"
 
 [[batches]]
-position = 200
+position = 217
 key = 'Typescript(Imports { file: "ranges/max-satisfying.js" })'
 descriptor = "imports in ranges/max-satisfying.js"
 cost_tokens = 39
-cum_tokens = 9141
+cum_tokens = 9575
 
 [batches.content]
 kind = "lines"
@@ -4768,11 +5074,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 201
+position = 218
 key = 'Typescript(Imports { file: "ranges/min-satisfying.js" })'
 descriptor = "imports in ranges/min-satisfying.js"
 cost_tokens = 39
-cum_tokens = 9180
+cum_tokens = 9614
 
 [batches.content]
 kind = "lines"
@@ -4786,11 +5092,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 202
+position = 219
 key = 'Typescript(ExportBody { file: "functions/inc.js", start_line: 5, body_start_line: 6 })'
 descriptor = "export body at functions/inc.js:5 body 6"
 cost_tokens = 136
-cum_tokens = 9316
+cum_tokens = 9750
 
 [batches.content]
 kind = "lines"
@@ -4804,11 +5110,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 203
+position = 220
 key = 'Typescript(Imports { file: "ranges/outside.js" })'
 descriptor = "imports in ranges/outside.js"
 cost_tokens = 41
-cum_tokens = 9357
+cum_tokens = 9791
 
 [batches.content]
 kind = "lines"
@@ -4822,11 +5128,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 204
+position = 221
 key = 'Typescript(Imports { file: "ranges/subset.js" })'
 descriptor = "imports in ranges/subset.js"
 cost_tokens = 41
-cum_tokens = 9398
+cum_tokens = 9832
 
 [batches.content]
 kind = "lines"
