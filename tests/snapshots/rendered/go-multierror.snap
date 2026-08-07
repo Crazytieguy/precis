@@ -89,14 +89,6 @@ flatten.go
       17→	return flatErr
     …
       20→func flatten(err error, flatErr *Error) {
-      21→	switch err := err.(type) {
-      22→	case *Error:
-      23→		for _, e := range err.Errors {
-      24→			flatten(e, flatErr)
-      25→		}
-      26→	default:
-      27→		flatErr.Errors = append(flatErr.Errors, err)
-      28→	}
     …
 flatten_test.go …
 format.go

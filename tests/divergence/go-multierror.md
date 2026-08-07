@@ -1,4 +1,4 @@
-Score(3000)=0.566 I=0.573 C=0.560 ns_rows≤3K=21/56 (reached=12 partial=1 missing=8)
+Score(3000)=0.564 I=0.568 C=0.560 ns_rows≤3K=21/56 (reached=12 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -98,43 +98,43 @@ Score(3000)=0.566 I=0.573 C=0.560 ns_rows≤3K=21/56 (reached=12 partial=1 missi
 | ns | 2686 |  | 179 | README: getting at the individual errors | 2.11 |  | 0.561 |
 | walker |  | 2813 | 142 | go decl body at format.go:17 |  |  | 0.598 |
 | walker |  | 2844 | 31 | go decl body at multierror.go:53 |  |  | 0.599 |
-| walker |  | 2925 | 81 | go decl body at flatten.go:20 |  |  | 0.601 |
-| ns | 2989 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.566 |
-| ns | 3124 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.551 |
-| walker |  | 3175 | 250 | README.md section #5 |  |  | 0.601 |
-| ns | 3301 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.607 |
-| walker |  | 3474 | 299 | README.md section #6 |  |  | 0.659 |
-| ns | 3484 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.632 |
-| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.612 |
-| walker |  | 3850 | 376 | README.md section #1 |  |  | 0.684 |
-| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.645 |
-| walker |  | 4191 | 341 | README.md section #2 |  |  | 0.701 |
-| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.667 |
-| walker |  | 4430 | 239 | README.md section #3 |  |  | 0.805 |
-| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.780 |
-| walker |  | 4480 | 50 | go decl body at multierror.go:18 |  |  | 0.789 |
-| walker |  | 4542 | 62 | go decl body at multierror.go:31 |  |  | 0.807 |
-| walker |  | 4582 | 40 | go decl body at multierror.go:108 |  |  | 0.808 |
-| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.790 |
-| walker |  | 4736 | 154 | go decl body at multierror.go:71 |  |  | 0.812 |
-| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.807 |
-| walker |  | 4837 | 101 | go decl body at group.go:20 |  |  | 0.810 |
-| ns | 4938 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.810 |
-| walker |  | 5035 | 198 | go decl body at prefix.go:16 |  |  | 0.813 |
-| ns | 5136 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.816 |
-| ns | 5310 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.817 |
-| walker |  | 5342 | 307 | README.md section #4 |  |  | 0.841 |
+| ns | 2989 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.564 |
+| ns | 3124 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.549 |
+| walker |  | 3151 | 307 | README.md section #4 |  |  | 0.566 |
+| walker |  | 3232 | 81 | go decl body at flatten.go:20 |  |  | 0.569 |
+| ns | 3301 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.576 |
+| ns | 3484 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.552 |
+| walker |  | 3608 | 376 | README.md section #1 |  |  | 0.600 |
+| ns | 3644 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.608 |
+| walker |  | 3949 | 341 | README.md section #2 |  |  | 0.618 |
+| ns | 3973 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.630 |
+| walker |  | 4147 | 198 | go decl body at prefix.go:16 |  |  | 0.634 |
+| ns | 4293 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.602 |
+| walker |  | 4386 | 239 | README.md section #3 |  |  | 0.751 |
+| ns | 4463 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.728 |
+| ns | 4620 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.712 |
+| walker |  | 4636 | 250 | README.md section #5 |  |  | 0.751 |
+| walker |  | 4686 | 50 | go decl body at multierror.go:18 |  |  | 0.760 |
+| walker |  | 4748 | 62 | go decl body at multierror.go:31 |  |  | 0.778 |
+| ns | 4752 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.767 |
+| walker |  | 4788 | 40 | go decl body at multierror.go:108 |  |  | 0.776 |
+| ns | 4938 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.778 |
+| walker |  | 5087 | 299 | README.md section #6 |  |  | 0.818 |
+| ns | 5136 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.821 |
+| walker |  | 5241 | 154 | go decl body at multierror.go:71 |  |  | 0.839 |
+| ns | 5310 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.822 |
+| walker |  | 5342 | 101 | go decl body at group.go:20 |  |  | 0.841 |
 | ns | 5400 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.838 |
 | ns | 5476 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.839 |
 | ns | 5519 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.836 |
-| walker |  | 5662 | 320 | go decl body at append.go:14 |  |  | 0.874 |
-| walker |  | 5718 | 56 | headings outline in CHANGELOG.md |  |  | 0.874 |
-| walker |  | 5718 | 0 | CHANGELOG.md section #0 |  |  | 0.874 |
-| walker |  | 5752 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.874 |
-| ns | 5824 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.851 |
-| ns | 6010 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.843 |
-| ns | 6245 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.820 |
-| walker |  | 6305 | 553 | README.md section #7 |  |  | 0.880 |
+| ns | 5824 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.814 |
+| walker |  | 5895 | 553 | README.md section #7 |  |  | 0.877 |
+| ns | 6010 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.869 |
+| walker |  | 6215 | 320 | go decl body at append.go:14 |  |  | 0.905 |
+| ns | 6245 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.880 |
+| walker |  | 6271 | 56 | headings outline in CHANGELOG.md |  |  | 0.880 |
+| walker |  | 6271 | 0 | CHANGELOG.md section #0 |  |  | 0.880 |
+| walker |  | 6305 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.880 |
 | walker |  | 6322 | 17 | go test names surface in group_test.go |  |  | 0.880 |
 | walker |  | 6524 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.882 |
 | walker |  | 6548 | 24 | .github/pull_request_template.md section #0 |  |  | 0.882 |
