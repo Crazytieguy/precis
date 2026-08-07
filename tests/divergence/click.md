@@ -74,29 +74,29 @@ Score(3000)=0.754 I=0.892 C=0.638 ns_rows≤3K=20/58 (reached=10 partial=0 missi
 | walker |  | 3483 | 220 | README.md section #1 |  |  | 0.765 |
 | walker |  | 3519 | 36 | headings outline in docs/faqs.md |  |  | 0.765 |
 | walker |  | 3555 | 36 | docs/faqs.md section #0 |  |  | 0.765 |
-| walker |  | 3594 | 39 | headings outline in docs/parameters.md |  |  | 0.765 |
 | ns | 3621 |  | 177 | Group constructor: chain, result_callback and the rest | 3.9 |  | 0.748 |
-| walker |  | 3641 | 47 | docs/parameters.md section #0 |  |  | 0.748 |
-| walker |  | 3681 | 40 | headings outline in docs/virtualenv.md |  |  | 0.748 |
-| walker |  | 3681 | 0 | docs/virtualenv.md section #0 |  |  | 0.748 |
-| walker |  | 3805 | 124 | docs/extending-click.md section #0 |  |  | 0.748 |
-| walker |  | 3847 | 42 | headings outline in docs/option-decorators.md |  |  | 0.748 |
-| walker |  | 3878 | 31 | docs/option-decorators.md section #3 |  |  | 0.748 |
+| walker |  | 3628 | 73 | python decl names surface in src/click/_compat.py |  |  | 0.748 |
+| walker |  | 3628 | 0 | python decl at src/click/_compat.py:40 |  |  | 0.748 |
+| walker |  | 3628 | 0 | python decl at src/click/_compat.py:48 |  |  | 0.748 |
+| walker |  | 3628 | 0 | python decl at src/click/_compat.py:316 |  |  | 0.748 |
+| walker |  | 3628 | 0 | python decl at src/click/_compat.py:323 |  |  | 0.748 |
+| walker |  | 3642 | 14 | python decl doc at src/click/_compat.py:40 |  |  | 0.748 |
+| walker |  | 3657 | 15 | python decl doc at src/click/_compat.py:48 |  |  | 0.748 |
+| walker |  | 3695 | 38 | python decl body at src/click/_compat.py:40 body 42 |  |  | 0.748 |
+| walker |  | 3734 | 39 | headings outline in docs/parameters.md |  |  | 0.748 |
+| walker |  | 3781 | 47 | docs/parameters.md section #0 |  |  | 0.748 |
+| walker |  | 3821 | 40 | headings outline in docs/virtualenv.md |  |  | 0.748 |
+| walker |  | 3821 | 0 | docs/virtualenv.md section #0 |  |  | 0.748 |
 | ns | 3881 |  | 260 | Group and CommandCollection method rosters | 3.10 |  | 0.723 |
-| walker |  | 3968 | 90 | docs/option-decorators.md section #0 |  |  | 0.723 |
-| walker |  | 4002 | 34 | python imports in src/click/_utils.py |  |  | 0.723 |
-| walker |  | 4047 | 45 | headings outline in docs/handling-files.md |  |  | 0.723 |
-| walker |  | 4124 | 77 | docs/handling-files.md section #0 |  |  | 0.723 |
-| walker |  | 4160 | 36 | python imports in src/click/globals.py |  |  | 0.723 |
+| walker |  | 3945 | 124 | docs/extending-click.md section #0 |  |  | 0.723 |
+| walker |  | 3987 | 42 | headings outline in docs/option-decorators.md |  |  | 0.723 |
+| walker |  | 4018 | 31 | docs/option-decorators.md section #3 |  |  | 0.723 |
+| walker |  | 4108 | 90 | docs/option-decorators.md section #0 |  |  | 0.723 |
+| walker |  | 4142 | 34 | python imports in src/click/_utils.py |  |  | 0.723 |
+| walker |  | 4187 | 45 | headings outline in docs/handling-files.md |  |  | 0.723 |
 | ns | 4222 |  | 341 | Context method roster (core.py 460-884) | 3.11 |  | 0.690 |
-| walker |  | 4233 | 73 | python decl names surface in src/click/_compat.py |  |  | 0.690 |
-| walker |  | 4233 | 0 | python decl at src/click/_compat.py:40 |  |  | 0.690 |
-| walker |  | 4233 | 0 | python decl at src/click/_compat.py:48 |  |  | 0.690 |
-| walker |  | 4233 | 0 | python decl at src/click/_compat.py:316 |  |  | 0.690 |
-| walker |  | 4233 | 0 | python decl at src/click/_compat.py:323 |  |  | 0.690 |
-| walker |  | 4247 | 14 | python decl doc at src/click/_compat.py:40 |  |  | 0.690 |
-| walker |  | 4262 | 15 | python decl doc at src/click/_compat.py:48 |  |  | 0.690 |
-| walker |  | 4300 | 38 | python decl body at src/click/_compat.py:40 body 42 |  |  | 0.690 |
+| walker |  | 4264 | 77 | docs/handling-files.md section #0 |  |  | 0.690 |
+| walker |  | 4300 | 36 | python imports in src/click/globals.py |  |  | 0.690 |
 | ns | 4331 |  | 109 | CommandCollection: composing several groups | 3.12 | 3.1 | 0.684 |
 | walker |  | 4397 | 97 | python decl names surface in src/click/testing.py |  |  | 0.684 |
 | walker |  | 4397 | 0 | python decl at src/click/testing.py:26 |  |  | 0.684 |
