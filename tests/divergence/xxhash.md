@@ -89,17 +89,17 @@ Score(3000)=0.853 I=0.938 C=0.777 ns_rows≤3K=24/60 (reached=17 partial=3 missi
 | walker |  | 1840 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.676 |
 | walker |  | 1840 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.676 |
 | walker |  | 1840 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.676 |
-| walker |  | 1957 | 117 | plaintext config testall.sh |  |  | 0.677 |
-| walker |  | 2001 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.688 |
-| ns | 2021 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.675 |
-| walker |  | 2042 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.688 |
-| walker |  | 2076 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.703 |
-| ns | 2144 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.712 |
-| walker |  | 2189 | 113 | go module file xxhashbench/go.mod |  |  | 0.713 |
-| ns | 2216 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.716 |
-| walker |  | 2242 | 53 | go decl doc at xxhash.go:23 |  |  | 0.740 |
-| ns | 2435 |  | 219 | Roster: `round`, `mergeRound`, and the complete `rol*` rotate family | 2.12 |  | 0.746 |
-| walker |  | 2487 | 245 | README.md section #0 |  |  | 0.842 |
+| ns | 2021 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.664 |
+| walker |  | 2085 | 245 | README.md section #0 |  |  | 0.770 |
+| ns | 2144 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.777 |
+| walker |  | 2202 | 117 | plaintext config testall.sh |  |  | 0.779 |
+| ns | 2216 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.781 |
+| walker |  | 2246 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.790 |
+| walker |  | 2287 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.801 |
+| walker |  | 2321 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.815 |
+| walker |  | 2434 | 113 | go module file xxhashbench/go.mod |  |  | 0.816 |
+| ns | 2435 |  | 219 | Roster: `round`, `mergeRound`, and the complete `rol*` rotate family | 2.12 |  | 0.820 |
+| walker |  | 2487 | 53 | go decl doc at xxhash.go:23 |  |  | 0.842 |
 | ns | 2510 |  | 75 | `ResetWithSeed` body: how a seed becomes the four lanes | 3.1 | 2.7 | 0.826 |
 | walker |  | 2577 | 90 | go decl names surface in dynamic/plugin.go |  |  | 0.826 |
 | walker |  | 2577 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.826 |
@@ -117,33 +117,33 @@ Score(3000)=0.853 I=0.938 C=0.777 ns_rows≤3K=24/60 (reached=17 partial=3 missi
 | walker |  | 2895 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.853 |
 | walker |  | 3003 | 108 | go decl body at xxhash.go:113 |  |  | 0.856 |
 | ns | 3009 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.813 |
-| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.792 |
-| walker |  | 3139 | 136 | README.md section #1 |  |  | 0.793 |
-| walker |  | 3202 | 63 | go decl names surface in xxhash_other.go |  |  | 0.800 |
-| walker |  | 3202 | 0 | go decl at xxhash_other.go:7 |  |  | 0.800 |
-| walker |  | 3202 | 0 | go decl at xxhash_other.go:64 |  |  | 0.800 |
-| walker |  | 3212 | 10 | go package + imports in xxhash_other.go |  |  | 0.803 |
-| walker |  | 3232 | 20 | go decl doc at xxhash_other.go:7 |  |  | 0.810 |
-| ns | 3327 |  | 209 | `Sum64` body, part 1: merging the four lanes (and the <32-byte shortcut) | 3.6 | 2.8 | 0.783 |
-| walker |  | 3377 | 145 | go decl body at xxhash.go:176 |  |  | 0.785 |
-| walker |  | 3461 | 84 | go decl body at xxhash_unsafe.go:45 |  |  | 0.800 |
-| walker |  | 3524 | 63 | go package + imports in xxhsum/xxhsum.go |  |  | 0.801 |
-| walker |  | 3589 | 65 | go package + imports in dynamic/plugin.go |  |  | 0.801 |
-| ns | 3592 |  | 265 | `Sum64` body, part 2: 8/4/1-byte tail loops and the final avalanche | 3.7 | 2.8 | 0.766 |
-| walker |  | 3640 | 51 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.766 |
+| walker |  | 3066 | 63 | go decl names surface in xxhash_other.go |  |  | 0.821 |
+| walker |  | 3066 | 0 | go decl at xxhash_other.go:7 |  |  | 0.821 |
+| walker |  | 3066 | 0 | go decl at xxhash_other.go:64 |  |  | 0.821 |
+| walker |  | 3076 | 10 | go package + imports in xxhash_other.go |  |  | 0.823 |
+| walker |  | 3096 | 20 | go decl doc at xxhash_other.go:7 |  |  | 0.830 |
+| ns | 3118 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.809 |
+| walker |  | 3241 | 145 | go decl body at xxhash.go:176 |  |  | 0.811 |
+| walker |  | 3325 | 84 | go decl body at xxhash_unsafe.go:45 |  |  | 0.826 |
+| ns | 3327 |  | 209 | `Sum64` body, part 1: merging the four lanes (and the <32-byte shortcut) | 3.6 | 2.8 | 0.799 |
+| walker |  | 3388 | 63 | go package + imports in xxhsum/xxhsum.go |  |  | 0.800 |
+| walker |  | 3453 | 65 | go package + imports in dynamic/plugin.go |  |  | 0.800 |
+| walker |  | 3504 | 51 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.800 |
+| ns | 3592 |  | 265 | `Sum64` body, part 2: 8/4/1-byte tail loops and the final avalanche | 3.7 | 2.8 | 0.765 |
 | ns | 3703 |  | 111 | `Sum` body: big-endian append of the 64-bit digest | 3.8 | 2.8 | 0.770 |
-| walker |  | 3844 | 204 | go decl body at xxhash.go:190 |  |  | 0.773 |
-| ns | 3851 |  | 148 | `MarshalBinary` body: the serialized state layout | 3.9 | 2.10 | 0.776 |
-| walker |  | 3900 | 56 | go decl body at dynamic/plugin.go:19 |  |  | 0.777 |
-| walker |  | 4047 | 147 | README.md section #3 |  |  | 0.777 |
+| walker |  | 3708 | 204 | go decl body at xxhash.go:190 |  |  | 0.772 |
+| walker |  | 3764 | 56 | go decl body at dynamic/plugin.go:19 |  |  | 0.773 |
+| walker |  | 3839 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.774 |
+| ns | 3851 |  | 148 | `MarshalBinary` body: the serialized state layout | 3.9 | 2.10 | 0.777 |
+| walker |  | 3975 | 136 | README.md section #1 |  |  | 0.778 |
 | ns | 4058 |  | 207 | `UnmarshalBinary` body: validation and both error strings | 3.10 | 2.10 | 0.782 |
-| walker |  | 4122 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.782 |
 | ns | 4149 |  | 91 | `appendUint64` / `consumeUint64` bodies | 3.11 | 2.11 | 0.781 |
-| ns | 4366 |  | 217 | `xxhash_other.go`: the pure-Go `writeBlocks` body | 3.12 | 2.3 | 0.766 |
-| walker |  | 4506 | 384 | go decl body at xxhash.go:75 |  |  | 0.826 |
-| ns | 4653 |  | 287 | `xxhash_other.go` `Sum64` body, part 1: why it is not `New/Write/Sum64`, and the block loop | 3.13 | 2.3 | 0.800 |
-| ns | 4783 |  | 130 | `xxhash_other.go` `Sum64`, part 2: lane merge, the small-input `prime5` branch, length mix | 3.14 | 2.3 | 0.788 |
-| walker |  | 4817 | 311 | README.md section #2 |  |  | 0.789 |
+| walker |  | 4286 | 311 | README.md section #2 |  |  | 0.783 |
+| ns | 4366 |  | 217 | `xxhash_other.go`: the pure-Go `writeBlocks` body | 3.12 | 2.3 | 0.768 |
+| walker |  | 4433 | 147 | README.md section #3 |  |  | 0.768 |
+| ns | 4653 |  | 287 | `xxhash_other.go` `Sum64` body, part 1: why it is not `New/Write/Sum64`, and the block loop | 3.13 | 2.3 | 0.744 |
+| ns | 4783 |  | 130 | `xxhash_other.go` `Sum64`, part 2: lane merge, the small-input `prime5` branch, length mix | 3.14 | 2.3 | 0.732 |
+| walker |  | 4817 | 384 | go decl body at xxhash.go:75 |  |  | 0.789 |
 | ns | 5048 |  | 265 | `xxhash_other.go` `Sum64`, part 3: tail loops and avalanche | 3.15 | 2.3 | 0.765 |
 | walker |  | 5288 | 471 | go decl body at xxhash.go:129 |  |  | 0.825 |
 | ns | 5392 |  | 344 | `xxhash_unsafe.go`: the inliner-cost design commentary | 3.16 | 2.4 | 0.801 |

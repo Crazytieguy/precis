@@ -68,7 +68,8 @@ package.json
        3→	"version": "5.6.2",
        4→	"description": "Terminal string styling done right",
        5→	"license": "MIT",
-    …
+       6→	"repository": "chalk/chalk",
+       7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
        8→	"type": "module",
        9→	"main": "./source/index.js",
       10→	"exports": "./source/index.js",
@@ -92,6 +93,28 @@ package.json
       28→		"source",
       29→		"!source/index.test-d.ts"
       30→	],
+      31→	"keywords": [
+      32→		"color",
+      33→		"colour",
+      34→		"colors",
+      35→		"terminal",
+      36→		"console",
+      37→		"cli",
+      38→		"string",
+      39→		"ansi",
+      40→		"style",
+      41→		"styles",
+      42→		"tty",
+      43→		"formatting",
+      44→		"rgb",
+      45→		"256",
+      46→		"shell",
+      47→		"xterm",
+      48→		"log",
+      49→		"logging",
+      50→		"command-line",
+      51→		"text"
+      52→	],
     …
       65→	"xo": {
       66→		"rules": {
@@ -123,22 +146,14 @@ readme.md
       23→## Highlights
     …
       36→## Install
-      37→
-      38→```sh
-      39→npm install chalk
-      40→```
-      41→
-      42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
+    …
       44→## Usage
     …
      112→## API
      113→
      114→### chalk.`<style>[.<style>...](string, [string...])`
-     116→Example: `chalk.red.bold.underline('Hello', 'world');`
     …
-     120→Multiple arguments will be separated by space.
      122→### chalk.level
-     124→Specifies the level of color support.
     …
      143→### supportsColor
     …
@@ -149,14 +164,6 @@ readme.md
      171→## Styles
      172→
      173→### Modifiers
-     175→- `reset` - Reset the current style.
-     176→- `bold` - Make the text bold.
-     177→- `dim` - Make the text have lower opacity.
-     178→- `italic` - Make the text italic. *(Not widely supported)*
-     179→- `underline` - Put a horizontal line below the text. *(Not widely supported)*
-     180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
-     181→- `inverse` - Invert background and foreground colors.
-     182→- `hidden` - Print the text but make it invisible.
     …
      186→### Colors
     …
@@ -165,24 +172,19 @@ readme.md
      224→## 256 and Truecolor color support
     …
      246→## Browser support
-     247→
-     248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
+    …
      250→## Windows
-     251→
-     252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
+    …
      254→## FAQ
      255→
      256→### Why not switch to a smaller coloring package?
     …
-     268→*\- [Sindre](https://github.com/sindresorhus)*
      270→### But the smaller coloring package has benchmarks showing it is faster
     …
      274→## Related
     …
      294→## Maintainers
-     295→
-     296→- [Sindre Sorhus](https://github.com/sindresorhus)
-     297→- [Josh Junon](https://github.com/qix-)
+    …
 source/
     index.d.ts …
     index.js

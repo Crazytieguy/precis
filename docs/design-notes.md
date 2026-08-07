@@ -3573,3 +3573,44 @@ fixture**, with zero baseline churn: no training fixture has either
 construct inside a head-split section's chunk-0 window today. It is a
 latent-hazard fix, and the hazard is the kind that only shows up as
 corrupt rendered output, never as a score.
+
+## Thin-source README orientation (lane RM, 2026-08-06): 0.6428 → 0.6430
+
+`WalkCtx::essential_source_bytes` — the total of the same hand-authored
+source universe `dominant_source_file` measures shares of — is now a
+repository-scale signal. Below `THIN_SOURCE_BYTES` a root README's
+section values are scaled by `(tokens/200)^0.5`: substantive sections
+rank as the repository's primary orientation, heading-sized stubs do
+not. Grid 1000/1442/2080/3000/4327/6240/9000: 0.6288 · 0.6442 · 0.6490
+· **0.6430** · 0.6072 · 0.5779 · 0.5727 (−0.0001/+0.0008/+0.0011/
+**+0.0002**/+0.0005/+0.0006/−0.0003). Six fixtures move at all; the one
+3000 mover ≥0.005 is chalk +0.013, last in-budget row at cum 2813
+(187 tokens of slack — not a cliff shuffle).
+
+The two prior README-late verdicts stand and this does not overturn
+them; what it adds is a *conditioned size shape* neither had tried:
+
+- **The oracle probe is what found the shape.** `--oracle-schedules` on
+  the carriers: mitt's oracle buys exactly the two biggest README
+  sections (533 + 280 tokens) and none of the seven 13–38-token stubs
+  the walker actually buys inside 3K; go-multierror's oracle spends
+  2058 of 3000 on six whole sections. The bucket is not "README loses
+  to source" — it is "the walker buys README stubs where the oracle
+  buys README substance". Run this probe before pricing a prose class.
+- **The damp half is the whole 3000 gain.** Boost-only (`.max(1.0)`)
+  lands exactly on the baseline at 3000; it pays at 1442/2080/4327/
+  6240/9000 instead. The level axis really is at its optimum
+  (2026-07-29) — only the *shape* was free.
+- **A flat thin-source premium is still dead** (1.35× on the same gate:
+  −0.026 on the carrier subset, mitt −0.209). More README earlier is
+  displacement, exactly as the 2026-07-29 entry says.
+- **Document-order chaining reproduces its 2026-07-29 result** on the
+  new frontier almost sign-for-sign (−0.019 on the carrier subset;
+  sqlite-vec −0.111, krep −0.094, json-server −0.067 against p-queue
+  +0.030, chalk +0.013). Its missing gate is still missing: **root-README
+  H2 count does not separate top-down from addressable-reference
+  READMEs** — the biggest loser (sqlite-vec) has 4 H2s, the winners
+  chalk and p-queue have 12 and 10. Nor does source mass or the
+  source/README byte ratio: carriers span 0.59 to 92 on that ratio with
+  the danger fixtures interleaved. Do not respend a lane looking for
+  that separator without a new class of signal.

@@ -39,11 +39,11 @@ Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 (reached=12 partial=5 missi
 | walker |  | 805 | 0 | lua decl at middleclass.lua:172 |  |  | 0.773 |
 | walker |  | 805 | 0 | lua decl at middleclass.lua:178 |  |  | 0.773 |
 | walker |  | 805 | 0 | lua decl at middleclass.lua:186 |  |  | 0.773 |
-| walker |  | 819 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.774 |
-| walker |  | 833 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.774 |
-| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.682 |
-| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.637 |
-| walker |  | 1149 | 316 | README.md section #0 |  |  | 0.651 |
+| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.681 |
+| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.636 |
+| walker |  | 1121 | 316 | README.md section #0 |  |  | 0.651 |
+| walker |  | 1135 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.651 |
+| walker |  | 1149 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.651 |
 | ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.622 |
 | walker |  | 1199 | 50 | lua decl body at middleclass.lua:139 |  |  | 0.635 |
 | walker |  | 1249 | 50 | lua decl body at middleclass.lua:172 |  |  | 0.653 |
