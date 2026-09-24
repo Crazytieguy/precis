@@ -106,6 +106,12 @@ improve the walker across the distribution of real-world codebases —
 fixtures are samples of that distribution, not targets in themselves.
 Prefer an accepted divergence to a fixture-specific heuristic.
 
+In a worktree (e.g. a parallel lane), run `bash scripts/lane-setup.sh`
+from the worktree root before the first build. It refuses to run in
+the main checkout, links `tests/fixtures`, and seeds `target/` with a
+copy-on-write clone of the main checkout's, so only the precis crate
+recompiles.
+
 ## 3. Regenerate baselines
 
 ```bash
