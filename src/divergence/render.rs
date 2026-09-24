@@ -5,7 +5,7 @@ use super::*;
 
 pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     let mut out = String::new();
-    writeln!(out, "{}", scores.headline()).unwrap();
+    writeln!(out, "{} {}", scores.headline(), scores.grid()).unwrap();
     format_schedule_table(&mut out, ctx);
     out
 }

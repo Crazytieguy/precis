@@ -61,7 +61,8 @@
 //!
 //! `grid(…)` is `Score(B)` at every [`BUDGETS`] entry, in order —
 //! `scripts/grid-means.sh` averages it across the training reports
-//! into the corpus grid.
+//! into the corpus grid. Validation baselines carry the headline
+//! without it.
 //!
 //! `N` is NS rows (batches) with `exp_t ≤ 3000`, `T` is total NS rows.
 //! `reached / partial / missing` are gated to those N rows and banded
@@ -171,18 +172,12 @@ impl Scores {
         self.vector[PRIMARY_BUDGET_INDEX].score == 0.0 && self.reached == 0 && self.partial == 0
     }
 
-    /// First line of any divergence report; full contents of a
-    /// validation-tier baseline.
+    /// Full contents of a validation-tier baseline; a training report's
+    /// first line appends [`Self::grid`].
     pub fn headline(&self) -> String {
         let primary = &self.vector[PRIMARY_BUDGET_INDEX];
-        let budgets: Vec<String> = BUDGETS.iter().map(usize::to_string).collect();
-        let grid: Vec<String> = self
-            .vector
-            .iter()
-            .map(|s| format!("{:.3}", s.score))
-            .collect();
         format!(
-            "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={}) grid({})={}",
+            "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={})",
             primary.score,
             primary.importance,
             primary.coverage,
@@ -191,9 +186,20 @@ impl Scores {
             self.reached,
             self.partial,
             self.missing,
-            budgets.join("/"),
-            grid.join("/"),
         )
+    }
+
+    /// `grid(1000/…/9000)=…/…` — Score at every [`BUDGETS`] entry.
+    /// Training reports only: validation stays at the single primary
+    /// score so the held-out set leaks as little signal as possible.
+    pub fn grid(&self) -> String {
+        let budgets: Vec<String> = BUDGETS.iter().map(usize::to_string).collect();
+        let scores: Vec<String> = self
+            .vector
+            .iter()
+            .map(|s| format!("{:.3}", s.score))
+            .collect();
+        format!("grid({})={}", budgets.join("/"), scores.join("/"))
     }
 }
 
