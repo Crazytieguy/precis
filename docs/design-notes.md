@@ -3406,11 +3406,12 @@ xlstm: **accepted divergence** (no dominant file at any threshold;
 NS demands a 1313-token concentrated purchase; vendored-CUDA
 frontier) — forward-queue entry retired.
 
-**Method keepers** (full statements in forward-queue-draft.md):
-oracle-ceiling probe FIRST for absent-class lanes; ratio-vs-frontier
+**Method keepers** (full statements in forward-queue-draft.md;
+the oracle-ceiling probe and unscheduled-bucket screening that stood
+here are retired with diagnose_loss — see the 2026-09-23 entry):
+ratio-vs-frontier
 pool read before any "late gate" diagnosis (a gate at cum 2344 in a
-3000 window is not a gating problem); screen repricing lanes by
-UNSCHEDULED alone (absent mass is not in the pool); carrier-only
+3000 window is not a gating problem); carrier-only
 sweeps before corpus grids when reach is enumerable (the frontier is
 a step function — sweep every budget); git stash is FORBIDDEN in
 parallel worktree lanes (shared refs/stash raced twice).
@@ -3931,3 +3932,38 @@ directive, recorded in session memory): worktree CoW target pre-warm,
 stale-worktree disk cleanup, and a keep/redesign discussion of the
 diagnose_loss bin. Next-session source of truth:
 ignore/session-2026-08-06b/forward-queue.md.
+
+## diagnose_loss removed; the grid moves into the reports (2026-09-23)
+
+The three 2026-08-06b hard gates are closed. Lane worktrees are seeded
+by `bash scripts/lane-setup.sh` (APFS copy-on-write clone of the main
+`target/`; only the precis crate recompiles, provided the main
+`target/` was built by the current rustc), stale worktrees and lane
+branches are pruned, and `.cargo/config.toml` builds with two jobs.
+
+`diagnose_loss` (loss buckets, NS-aware greedy oracle, `--budgets`) is
+deleted, by user decision. It was added without user sign-off, and
+two of its three outputs were a problem:
+
+- **The oracle and buckets steered iteration without being vetted.**
+  The oracle is a greedy lower bound, yet "dead by ceiling" verdicts
+  closed levers on it, and its purchase lists handed lanes the
+  NS-optimal buy order to imitate. Treat every oracle- or
+  bucket-derived conclusion in the entries above as unvetted; a lever
+  closed on oracle evidence alone is not settled.
+- **It was the most expensive measurement in the loop.** Pool
+  expansion plus the oracle ran on every `--budgets` call (10.4s vs
+  0.9s for the harness on mcphost), the grid re-rendered schedules
+  the harness already renders, and it forced a second (release) build
+  profile in every lane.
+
+The grid — the part that was a plain measurement — already existed in
+the harness: `Scores.vector` is all seven budgets from one 10K
+schedule, and only the headline dropped six of them. The report
+headline now ends `grid(1000/…/9000)=…/…`, and
+`bash scripts/grid-means.sh` averages it over `tests/divergence/`. A
+lane's per-variant measurement is `UPDATE_BASELINES=1 cargo t
+fixture_baselines` then `bash scripts/grid-means.sh`; per-fixture grid
+movement is visible directly in `git diff tests/divergence/`.
+Baseline at removal: 0.6311 / 0.6498 / 0.6478 / **0.6498** / 0.6129 /
+0.5842 / 0.5780.

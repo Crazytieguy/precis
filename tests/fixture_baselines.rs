@@ -17,8 +17,9 @@
 //! - **Divergence report** — `tests/divergence/<fixture>.md`, one per
 //!   training fixture with a frozen NS (`tests/north-stars/<fixture>.toml`).
 //!   Survey across fixtures with `head -1 tests/divergence/*.md` (each
-//!   report's first line is the `Score(3000)=… I=… C=… ns_rows≤3K=…`
-//!   headline).
+//!   report's first line is the `Score(3000)=… I=… C=… ns_rows≤3K=…
+//!   grid(…)=…` headline); `bash scripts/grid-means.sh` prints the
+//!   corpus mean at every grid budget.
 //!
 //! - **Validation score** — `tests/validation/<fixture>.md`, one per
 //!   validation fixture. Contains *only* the `Score(3000)=…` headline

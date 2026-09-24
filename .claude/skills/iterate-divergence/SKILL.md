@@ -121,6 +121,10 @@ UPDATE_BASELINES=1 cargo t fixture_baselines
 Regenerates every per-fixture report in one pass. For read-only
 spot-checks of a single fixture: `cargo t fixture_baselines_<name>`.
 
+Each report's headline ends with `grid(…)=…`, the fixture's Score at
+every budget. `bash scripts/grid-means.sh` prints the corpus mean at
+each budget; compare it against the same output on the base commit.
+
 ## 4. Read the diff across the whole corpus
 
 ```bash

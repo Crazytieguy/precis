@@ -57,7 +57,11 @@
 //!
 //! Each report's first line:
 //! `Score(3000)=X.XXX I=X.XXX C=X.XXX ns_rows≤3K=N/T (reached=R
-//! partial=P missing=M)`.
+//! partial=P missing=M) grid(1000/1442/…/9000)=X.XXX/…/X.XXX`.
+//!
+//! `grid(…)` is `Score(B)` at every [`BUDGETS`] entry, in order —
+//! `scripts/grid-means.sh` averages it across the training reports
+//! into the corpus grid.
 //!
 //! `N` is NS rows (batches) with `exp_t ≤ 3000`, `T` is total NS rows.
 //! `reached / partial / missing` are gated to those N rows and banded
@@ -110,7 +114,6 @@ use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
 use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
 
-pub mod diagnose;
 mod render;
 use render::format_report;
 
@@ -172,8 +175,14 @@ impl Scores {
     /// validation-tier baseline.
     pub fn headline(&self) -> String {
         let primary = &self.vector[PRIMARY_BUDGET_INDEX];
+        let budgets: Vec<String> = BUDGETS.iter().map(usize::to_string).collect();
+        let grid: Vec<String> = self
+            .vector
+            .iter()
+            .map(|s| format!("{:.3}", s.score))
+            .collect();
         format!(
-            "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={})",
+            "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={}) grid({})={}",
             primary.score,
             primary.importance,
             primary.coverage,
@@ -182,6 +191,8 @@ impl Scores {
             self.reached,
             self.partial,
             self.missing,
+            budgets.join("/"),
+            grid.join("/"),
         )
     }
 }

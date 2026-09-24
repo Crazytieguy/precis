@@ -1,4 +1,4 @@
-Score(3000)=0.661 I=0.700 C=0.624 ns_rows≤3K=16/47 (reached=8 partial=0 missing=8)
+Score(3000)=0.661 I=0.700 C=0.624 ns_rows≤3K=16/47 (reached=8 partial=0 missing=8) grid(1000/1442/2080/3000/4327/6240/9000)=0.814/0.787/0.755/0.661/0.574/0.557/0.498
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
