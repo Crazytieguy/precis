@@ -413,7 +413,7 @@ fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
 /// doc. Measured alone this is worth +0.0009 at the 3K mean on the one
 /// corpus carrier; it is fully absorbed once
 /// [`NavDensity::factor`] frees the same window (see the lane note in
-/// `docs/design-notes.md`).
+/// `git show a90ee9b6:docs/design-notes.md`).
 fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let (cat, fu, ztu) = super::fs::PLAIN_LISTING_SIGNALS;
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
@@ -899,7 +899,7 @@ fn build_section_content(
     // their marginal cost goes to 0 and `ratio(value, 0) = ∞`.
     // (`headline` is `Some` only for READMEs.) Rows the headline
     // stepped *over* are dropped with them: admitting that chrome
-    // measured −0.0033 corpus mean (design-notes).
+    // measured −0.0033 corpus mean.
     let effective_start = if section_index == 0
         && let Some(max_row) = headline.and_then(|spec| spec.covered_rows.iter().next_back())
     {

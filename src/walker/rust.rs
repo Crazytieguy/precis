@@ -1162,7 +1162,8 @@ const PRIMARY_MEMBER_MIN_IN_DEGREE: usize = 2;
 /// it earns a partial lift out of the secondary damp rather than the full
 /// undamped slot a name match gets. Measured: the full 1.0 lift buys no more
 /// early budget than this one and displaces seven times more already-
-/// scheduled content out of the high-budget tail (docs/design-notes.md).
+/// scheduled content out of the high-budget tail
+/// (`git show a90ee9b6:docs/design-notes.md`).
 const CENTRALITY_PRIMARY_MEMBER_FACTOR: f64 = 0.85;
 
 fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {

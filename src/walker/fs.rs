@@ -298,7 +298,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
 /// against the v2 answer key (zero point 0.6074), worth +0.0046 at
 /// Score(3000) in combination with the roster-mass-neutralization
 /// removal. Measured point grids are recorded in
-/// `docs/design-notes.md` ("Post-refreeze re-sweep curves").
+/// `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep curves").
 const LISTING_TIER_SCALE: f64 = 1.13;
 
 /// Min child-directory count for a parent to count as a "catalog" whose
@@ -603,8 +603,8 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
 /// budgets and gives back some of the 3000–6240 gain, and by 35 the
 /// promotion is inert on the corpus. This value is therefore a
 /// position on that curve, not an optimum — 20 keeps the 3000–6240
-/// gain whole. `docs/design-notes.md` records the full grid and what
-/// 25 buys if the early budgets are ever weighted higher.
+/// gain whole. `git show a90ee9b6:docs/design-notes.md` records the full
+/// grid and what 25 buys if the early budgets are ever weighted higher.
 const MODULE_SOURCE_ROOT_MIN_ENTRIES: usize = 20;
 
 /// Manifest filenames that mark a directory as a package root — the

@@ -382,7 +382,7 @@ pub(in crate::walker) fn first_child_of_kind<'a>(
 
 /// Minimum share of the tree's essential source bytes for the largest
 /// source file to count as the repository's spine. Swept full-corpus;
-/// see `docs/design-notes.md` ("Dominant source file").
+/// see `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 
 /// Directories holding code that nobody wrote by hand: build outputs,

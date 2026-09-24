@@ -10,8 +10,8 @@
 //! helper and compute its value however. The weights were re-swept on
 //! the full corpus on 2026-07-28 against the v2 answer key (zero point
 //! 0.6074) and left unchanged; the measured point grids are recorded in
-//! `docs/design-notes.md` ("Post-refreeze re-sweep curves"). Don't
-//! re-sweep without a new answer key.
+//! `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep
+//! curves"). Don't re-sweep without a new answer key.
 
 /// Mix three signal axes — catastrophic-omission,
 /// follow-up minimization, zero-tool-call understanding — into a scalar
@@ -128,7 +128,7 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
 /// scheduler starts overpaying for them. Set by a full-corpus sweep on
 /// 2026-07-28 against the v2 answer key (zero point 0.6074), worth
 /// +0.0027 at Score(3000). Measured point grid is recorded in
-/// `docs/design-notes.md` ("Post-refreeze re-sweep curves").
+/// `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep curves").
 pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.38;
 
 /// Head premium over ratio parity (`share_0^k`) inside the conserved

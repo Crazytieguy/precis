@@ -192,9 +192,9 @@ perspectives.
 
 - Spawn an Agent for independent brainstorming on the walker /
   value design space.
-- Delegate ideation or analysis to a GPT model via the
-  `model-router:gpt-5.6-sol(high)` agent type, or get a critique of a
-  shipped change from `model-router:adversarial-code-reviewer`.
+- Delegate ideation or analysis to a GPT model via one of the
+  `model-router:` agent types, or get a critique of a shipped change
+  from `model-router:adversarial-code-reviewer`.
 
 ## Things to *not* do
 

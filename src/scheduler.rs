@@ -152,7 +152,7 @@ const BREADTH_MIN_TRAINS: usize = 2;
 /// having already been entered on its own merits, so the premium
 /// escalates depth rather than pulling one file in front of the
 /// repository's orientation. Swept full-corpus; see
-/// `docs/design-notes.md` ("Dominant source file").
+/// `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
 impl<W: Walker> Scheduler<W> {
