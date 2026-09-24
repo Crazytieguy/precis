@@ -3415,11 +3415,13 @@ sweeps before corpus grids when reach is enumerable (the frontier is
 a step function — sweep every budget); git stash is FORBIDDEN in
 parallel worktree lanes (shared refs/stash raced twice).
 
-**Open close-out debt for next session**: W5-CS branch 7c338c23
+**Open close-out debt for next session**: W5-CS
 (never-partition member catalogs, +0.0006 on the PRE-W5-TS frontier,
-commander cliff-adjacent — re-measure on the new frontier before
-merging; commander's underscore-member recall re-opens on the same
-trigger); W5-DF (C dominant-implementation-file) and W5-ML (markdown
+commander cliff-adjacent; commander's underscore-member recall re-opens
+on the same trigger) — branch dropped 2026-09-23, kept as tag
+`archive/w5-cs`: it conflicts in 12 hunks with the W5-TS doc-slice
+ladder, which routes member docs per chunk, so reviving it is a port
+plus a fresh grid, not a merge; W5-DF (C dominant-implementation-file) and W5-ML (markdown
 section-lede) lanes still in flight at close; W5-FL review fix pass
 (TS-file demotion is a real latent bug — merge when it lands); GPT
 review of the TS+MD+fix-pass diff pending; the standing post-ship
