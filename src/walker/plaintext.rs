@@ -323,6 +323,20 @@ fn classify_source_text(name: &str) -> Option<Class> {
         .then_some(Class::FlatText)
 }
 
+/// Build-tool wrapper scripts, written by `gradle wrapper` and
+/// `mvn wrapper:wrapper` and the same in every project that has one.
+const GENERATED_WRAPPER_SCRIPTS: &[&str] = &["gradlew", "mvnw"];
+
+/// Whether `file` starts with `#!`: an extensionless script (`bin/deploy`,
+/// a tool shipped as one executable) names its language on its first line
+/// rather than in its name.
+fn opens_with_shebang(file: &Path) -> bool {
+    let mut head = [0; 2];
+    std::fs::File::open(file).is_ok_and(|mut opened| {
+        std::io::Read::read_exact(&mut opened, &mut head).is_ok() && &head == b"#!"
+    })
+}
+
 /// A license text (`LICENSE`, `COPYING.txt`, `MIT-LICENSE.txt`,
 /// `LICENSE-APACHE`, `LICENSE.md`). No walker renders one: the listing names
 /// the file and the manifest's `license` field names the license, and the
@@ -695,11 +709,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         // Parsed languages belong to the code engine; a second slice
         // would overlap its spans.
         let owned_elsewhere = super::code::Language::from_path(&file).is_some();
-        let Some(class) = named.or_else(|| {
-            (!owned_elsewhere)
-                .then(|| classify_source_text(name))
-                .flatten()
-        }) else {
+        let Some(class) = named
+            .or_else(|| {
+                (!owned_elsewhere)
+                    .then(|| classify_source_text(name))
+                    .flatten()
+            })
+            .or_else(|| {
+                (!name.contains('.')
+                    && !GENERATED_WRAPPER_SCRIPTS.contains(&name.as_str())
+                    && opens_with_shebang(&file))
+                .then_some(Class::FlatText)
+            })
+        else {
             continue;
         };
         if matches!(class, Class::LanguageSource | Class::FlatText) {
@@ -1270,6 +1292,33 @@ mod tests {
             vec![BatchKey::from(PlaintextKey::DeclSurface {
                 file: root.join("App.kt")
             })]
+        );
+    }
+
+    /// An extensionless file is a script when it opens with a shebang, and
+    /// left to the listing otherwise or when a build tool generated it.
+    #[test]
+    fn plaintext_fallback_claims_extensionless_shebang_scripts() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("deploy"), "#!/bin/sh\nset -e\nmake release\n").unwrap();
+        std::fs::write(root.join("gradlew"), "#!/bin/sh\nexec java \"$@\"\n").unwrap();
+        std::fs::write(root.join("AUTHORS"), "Ada\nGrace\n").unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let keys: Vec<_> = expand_in_dir(root, &ctx)
+            .into_iter()
+            .map(|batch| batch.key)
+            .collect();
+        assert_eq!(
+            keys,
+            vec![
+                BatchKey::from(PlaintextKey::DeclSurface {
+                    file: root.join("deploy")
+                }),
+                BatchKey::from(PlaintextKey::Whole {
+                    file: root.join("deploy")
+                }),
+            ]
         );
     }
 

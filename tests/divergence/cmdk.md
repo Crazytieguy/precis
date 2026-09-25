@@ -118,22 +118,24 @@ Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 8754 | 43 | Json::Identity { file: website/package.json } |  |  | 0.513 |
 | walker |  | 8833 | 79 | Json::Scripts { file: website/package.json } |  |  | 0.513 |
 | walker |  | 8848 | 15 | Plaintext::DeclSurface { file: website/public/robots.txt } |  |  | 0.513 |
+| walker |  | 8881 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.513 |
+| walker |  | 8887 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.513 |
 | ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.507 |
 | ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.502 |
-| walker |  | 9265 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.521 |
-| walker |  | 9464 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.522 |
-| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.512 |
-| walker |  | 9486 | 22 | Code::CodeKey { rung: Names, file: test/pages/dialog.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9508 | 22 | Code::CodeKey { rung: Names, file: test/pages/group.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9530 | 22 | Code::CodeKey { rung: Names, file: test/pages/huge.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9552 | 22 | Code::CodeKey { rung: Names, file: test/pages/item-advanced.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9574 | 22 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9596 | 22 | Code::CodeKey { rung: Names, file: test/pages/keybinds.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9618 | 22 | Code::CodeKey { rung: Names, file: test/pages/numeric.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9640 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9662 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9304 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.521 |
+| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.511 |
+| walker |  | 9503 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.512 |
+| walker |  | 9525 | 22 | Code::CodeKey { rung: Names, file: test/pages/dialog.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9547 | 22 | Code::CodeKey { rung: Names, file: test/pages/group.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9569 | 22 | Code::CodeKey { rung: Names, file: test/pages/huge.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9591 | 22 | Code::CodeKey { rung: Names, file: test/pages/item-advanced.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9613 | 22 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9635 | 22 | Code::CodeKey { rung: Names, file: test/pages/keybinds.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9657 | 22 | Code::CodeKey { rung: Names, file: test/pages/numeric.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9679 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9701 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
 | ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.502 |
 | ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.495 |
-| walker |  | 9915 | 253 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 1, line: 729 } |  |  | 0.517 |
+| walker |  | 9954 | 253 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 1, line: 729 } |  |  | 0.517 |
 | ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.526 |
-| walker |  | 9991 | 76 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.526 |
+| walker |  | 9991 | 37 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.526 |
