@@ -9,9 +9,10 @@
 use std::cell::OnceCell;
 use std::collections::{BTreeSet, HashMap};
 use std::ops::Range;
+use std::panic::AssertUnwindSafe;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex, mpsc};
 
 use tree_sitter::{Language, Node, Tree};
 
@@ -211,41 +212,74 @@ impl WalkCtx {
     }
 
     /// [`Self::parse_tree`] for each of `files`, handing each parse to
-    /// `visit` with its index. Files parse one per core at a time, and a
-    /// group's trees are visited and dropped before the next group
-    /// starts, so memory holds a few trees rather than a directory's.
+    /// `visit` in index order. Files parse on one worker per core, and a
+    /// file starts parsing only while the sources of the parses not yet
+    /// visited total at most [`PARSE_BYTE_CAP`] (or none are pending), so
+    /// the trees alive at once stay within what one capped file costs.
     pub fn parse_each(
         &self,
         files: &[(&Path, Language)],
         mut visit: impl FnMut(usize, Arc<Source>, Tree),
     ) {
-        let group_size = std::thread::available_parallelism().map_or(1, usize::from);
-        for (group_index, group) in files.chunks(group_size).enumerate() {
-            let sources: Vec<Option<Arc<Source>>> = group
-                .iter()
-                .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
-                .collect();
-            let trees: Vec<Option<Tree>> = std::thread::scope(|scope| {
-                let handles: Vec<_> = group
-                    .iter()
-                    .zip(&sources)
-                    .map(|((_, language), source)| {
-                        scope.spawn(move || {
-                            parser_for(language).parse(source.as_ref()?.as_bytes(), None)
-                        })
-                    })
-                    .collect();
-                handles
-                    .into_iter()
-                    .map(|handle| handle.join().expect("parse worker panicked"))
-                    .collect()
-            });
-            for (offset, (source, tree)) in sources.into_iter().zip(trees).enumerate() {
-                if let (Some(source), Some(tree)) = (source, tree) {
-                    visit(group_index * group_size + offset, source, tree);
-                }
+        let sources: Vec<Option<Arc<Source>>> = files
+            .iter()
+            .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
+            .collect();
+        let source_len = |index: usize| sources[index].as_ref().map_or(0, |source| source.len());
+        let workers = std::thread::available_parallelism()
+            .map_or(1, usize::from)
+            .min(files.len());
+        let (job_sender, job_receiver) = mpsc::channel::<usize>();
+        let job_receiver = Mutex::new(job_receiver);
+        let (parsed_sender, parsed_receiver) = mpsc::channel();
+        std::thread::scope(|scope| {
+            for _ in 0..workers {
+                let parsed_sender = parsed_sender.clone();
+                let (job_receiver, sources) = (&job_receiver, &sources);
+                scope.spawn(move || {
+                    while let Ok(index) = job_receiver.lock().expect("parse job queue").recv() {
+                        let parsed = std::panic::catch_unwind(AssertUnwindSafe(|| {
+                            let source = sources[index].as_ref()?;
+                            parser_for(&files[index].1).parse(source.as_bytes(), None)
+                        }));
+                        if parsed_sender.send((index, parsed)).is_err() {
+                            return;
+                        }
+                    }
+                });
             }
-        }
+            drop(parsed_sender);
+            let mut next_job = 0;
+            let mut pending_bytes = 0;
+            let mut parsed_out_of_order = HashMap::new();
+            for (index, source) in sources.iter().enumerate() {
+                while next_job < files.len()
+                    && (pending_bytes == 0
+                        || pending_bytes + source_len(next_job) <= PARSE_BYTE_CAP)
+                {
+                    pending_bytes += source_len(next_job);
+                    job_sender
+                        .send(next_job)
+                        .expect("parse workers outlive the jobs");
+                    next_job += 1;
+                }
+                let parsed = loop {
+                    if let Some(parsed) = parsed_out_of_order.remove(&index) {
+                        break parsed;
+                    }
+                    let (parsed_index, parsed) = parsed_receiver
+                        .recv()
+                        .expect("parse workers outlive the jobs");
+                    parsed_out_of_order.insert(parsed_index, parsed);
+                };
+                let tree = parsed.unwrap_or_else(|panic| std::panic::resume_unwind(panic));
+                if let (Some(source), Some(tree)) = (source, tree) {
+                    visit(index, source.clone(), tree);
+                }
+                pending_bytes -= source_len(index);
+            }
+            drop(job_sender);
+        });
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.

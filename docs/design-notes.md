@@ -203,8 +203,8 @@ must not undo:
 ## Threads
 
 - **Only parsing is parallel.** `WalkCtx::parse_each` parses a
-  directory's files on scoped threads, one group per core at a time;
-  everything that decides output runs on the main thread in walk order,
+  directory's files on one scoped worker per core and hands the trees
+  back in file order; everything that decides output runs on the main thread in walk order,
   so output is independent of thread timing only while a parse stays a
   pure function of the file.
 - **Tokenizing on workers doesn't pay:** the same lines cost about
@@ -221,10 +221,11 @@ corpus, which none of these bounds touch.
 
 - **Parse trees live only while their directory expands.** A tree is
   several times its source's size and nothing reads one after its
-  file's batches are built, so none is cached; parsing a directory one
-  group per core at a time keeps a directory's trees from all being
-  alive at once. Source text stays cached: rendering and cost probes
-  read it.
+  file's batches are built, so none is cached. A file starts parsing
+  only while the not-yet-visited parses' sources total at most
+  `PARSE_BYTE_CAP` (one file always may), so the trees alive at once are
+  bounded by bytes on any core count, not by a directory's size. Source
+  text stays cached: rendering and cost probes read it.
 - **Nothing over 8 MiB is parsed** (`PARSE_BYTE_CAP`): such a file yields
   no batches, like a generated or minified one. The sweep's largest
   hand-written single-file library is `miniaudio.h` at 4.1 MB; a 25.9 MB
