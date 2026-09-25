@@ -1,4 +1,4 @@
-Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.835/0.766/0.761/0.627/0.577/0.559/0.590
+Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.567/0.659/0.767/0.627/0.577/0.559/0.590
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -8,62 +8,62 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 72 |  | 72 | README identity: name, one-line description, pitch | 1.1 |  | 0.000 |
 | walker |  | 79 | 19 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 105 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.473 |
-| walker |  | 146 | 67 | listing of 'htmy' |  |  | 0.557 |
-| walker |  | 163 | 17 | python module doc htmy/__init__.py |  |  | 0.557 |
-| walker |  | 177 | 14 | listing of 'htmy/md' |  |  | 0.583 |
-| walker |  | 199 | 22 | listing of 'htmy/renderer' |  |  | 0.634 |
-| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.636 |
-| walker |  | 211 | 12 | python names htmy/error_boundary.py |  |  | 0.636 |
-| walker |  | 224 | 13 | python names htmy/etree.py |  |  | 0.636 |
-| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.567 |
-| walker |  | 470 | 246 | python names htmy/__init__.py |  |  | 0.606 |
-| ns | 504 |  | 155 | README key features, second half | 1.5 | 1.4 | 0.551 |
-| walker |  | 558 | 88 | python names htmy/md/__init__.py |  |  | 0.551 |
-| walker |  | 579 | 21 | python names htmy/snippet.py |  |  | 0.551 |
-| walker |  | 590 | 11 | python names htmy/renderer/baseline.py |  |  | 0.551 |
-| walker |  | 612 | 22 | python names htmy/io.py |  |  | 0.551 |
-| ns | 648 |  | 144 | `htmy/__init__.py` exports, part 1: version + everything from `core` | 1.6 |  | 0.561 |
-| walker |  | 715 | 103 | python names htmy/renderer/__init__.py |  |  | 0.563 |
-| walker |  | 727 | 12 | python names htmy/renderer/context.py |  |  | 0.563 |
-| walker |  | 769 | 42 | listing of 'docs/api' |  |  | 0.563 |
-| walker |  | 781 | 12 | listing of 'docs/api/renderer' |  |  | 0.563 |
-| ns | 786 |  | 138 | `htmy/__init__.py` exports, part 2: `ErrorBoundary`, `component`, renderers, `Snippet`/`Slots`, tags | 1.7 | 1.6 | 0.563 |
-| walker |  | 801 | 20 | python decl htmy/renderer/context.py:6 |  |  | 0.563 |
-| walker |  | 809 | 8 | python decl htmy/renderer/context.py:11 |  |  | 0.563 |
-| walker |  | 958 | 149 | README headline in README.md |  |  | 0.835 |
-| walker |  | 980 | 22 | listing of 'examples' |  |  | 0.835 |
-| walker |  | 1006 | 26 | python names htmy/md/core.py |  |  | 0.835 |
-| ns | 1014 |  | 228 | `htmy/__init__.py` exports, part 3: the sixteen re-exported type names | 1.8 | 1.7 | 0.744 |
-| walker |  | 1103 | 97 | [dependencies] in pyproject.toml |  |  | 0.746 |
-| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.693 |
-| walker |  | 1345 | 242 | python names htmy/__init__.py #1 |  |  | 0.813 |
-| walker |  | 1421 | 76 | python names htmy/tag.py |  |  | 0.813 |
-| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.766 |
-| walker |  | 1478 | 57 | python decl htmy/tag.py:84 |  |  | 0.766 |
-| walker |  | 1539 | 61 | python decl htmy/tag.py:56 |  |  | 0.766 |
-| ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.747 |
-| walker |  | 1615 | 76 | python decl htmy/error_boundary.py:15 |  |  | 0.747 |
-| walker |  | 1692 | 77 | python decl htmy/tag.py:73 |  |  | 0.748 |
-| walker |  | 1748 | 56 | headings outline in docs/components-guide.md |  |  | 0.748 |
-| walker |  | 1748 | 0 | docs/components-guide.md section #0 |  |  | 0.748 |
-| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.723 |
-| walker |  | 1763 | 15 | python doc htmy/io.py:11 |  |  | 0.723 |
-| walker |  | 1822 | 59 | headings outline in docs/function-components.md |  |  | 0.723 |
-| walker |  | 1830 | 8 | python body htmy/tag.py:66 |  |  | 0.723 |
-| ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.707 |
-| walker |  | 1966 | 136 | python names htmy/__init__.py #2 |  |  | 0.761 |
-| walker |  | 2070 | 104 | python names htmy/core.py |  |  | 0.761 |
-| walker |  | 2076 | 6 | python decl htmy/core.py:157 |  |  | 0.761 |
-| walker |  | 2082 | 6 | python decl htmy/core.py:163 |  |  | 0.761 |
-| walker |  | 2108 | 26 | python decl htmy/core.py:146 |  |  | 0.761 |
-| walker |  | 2114 | 6 | python decl htmy/core.py:151 |  |  | 0.762 |
-| walker |  | 2151 | 37 | python decl htmy/core.py:175 |  |  | 0.762 |
-| ns | 2170 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.739 |
-| walker |  | 2211 | 60 | python decl htmy/core.py:19 |  |  | 0.739 |
-| walker |  | 2272 | 61 | python decl htmy/core.py:38 |  |  | 0.740 |
-| ns | 2330 |  | 160 | README "XSS prevention": escaping by default, and the two exceptions | 2.6 |  | 0.716 |
-| walker |  | 2341 | 69 | [package] in pyproject.toml |  |  | 0.719 |
-| walker |  | 2370 | 29 | package metadata in pyproject.toml |  |  | 0.721 |
+| walker |  | 152 | 73 | [package] in pyproject.toml |  |  | 0.476 |
+| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.272 |
+| walker |  | 219 | 67 | listing of 'htmy' |  |  | 0.439 |
+| walker |  | 236 | 17 | python module doc htmy/__init__.py |  |  | 0.439 |
+| walker |  | 250 | 14 | listing of 'htmy/md' |  |  | 0.505 |
+| walker |  | 272 | 22 | listing of 'htmy/renderer' |  |  | 0.639 |
+| walker |  | 284 | 12 | python names htmy/error_boundary.py |  |  | 0.639 |
+| walker |  | 297 | 13 | python names htmy/etree.py |  |  | 0.639 |
+| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.570 |
+| ns | 504 |  | 155 | README key features, second half | 1.5 | 1.4 | 0.518 |
+| walker |  | 543 | 246 | python names htmy/__init__.py |  |  | 0.552 |
+| walker |  | 631 | 88 | python names htmy/md/__init__.py |  |  | 0.552 |
+| ns | 648 |  | 144 | `htmy/__init__.py` exports, part 1: version + everything from `core` | 1.6 |  | 0.562 |
+| walker |  | 652 | 21 | python names htmy/snippet.py |  |  | 0.562 |
+| walker |  | 663 | 11 | python names htmy/renderer/baseline.py |  |  | 0.562 |
+| walker |  | 685 | 22 | python names htmy/io.py |  |  | 0.562 |
+| ns | 786 |  | 138 | `htmy/__init__.py` exports, part 2: `ErrorBoundary`, `component`, renderers, `Snippet`/`Slots`, tags | 1.7 | 1.6 | 0.562 |
+| walker |  | 788 | 103 | python names htmy/renderer/__init__.py |  |  | 0.565 |
+| walker |  | 800 | 12 | python names htmy/renderer/context.py |  |  | 0.565 |
+| walker |  | 842 | 42 | listing of 'docs/api' |  |  | 0.565 |
+| walker |  | 854 | 12 | listing of 'docs/api/renderer' |  |  | 0.565 |
+| walker |  | 874 | 20 | python decl htmy/renderer/context.py:6 |  |  | 0.565 |
+| walker |  | 882 | 8 | python decl htmy/renderer/context.py:11 |  |  | 0.565 |
+| walker |  | 911 | 29 | package metadata in pyproject.toml |  |  | 0.567 |
+| ns | 1014 |  | 228 | `htmy/__init__.py` exports, part 3: the sixteen re-exported type names | 1.8 | 1.7 | 0.506 |
+| walker |  | 1060 | 149 | README headline in README.md |  |  | 0.747 |
+| walker |  | 1082 | 22 | listing of 'examples' |  |  | 0.747 |
+| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.694 |
+| walker |  | 1175 | 93 | [dependencies] in pyproject.toml |  |  | 0.699 |
+| walker |  | 1201 | 26 | python names htmy/md/core.py |  |  | 0.699 |
+| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.659 |
+| walker |  | 1443 | 242 | python names htmy/__init__.py #1 |  |  | 0.772 |
+| walker |  | 1519 | 76 | python names htmy/tag.py |  |  | 0.772 |
+| walker |  | 1576 | 57 | python decl htmy/tag.py:84 |  |  | 0.772 |
+| ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.753 |
+| walker |  | 1637 | 61 | python decl htmy/tag.py:56 |  |  | 0.753 |
+| walker |  | 1713 | 76 | python decl htmy/error_boundary.py:15 |  |  | 0.754 |
+| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.729 |
+| walker |  | 1790 | 77 | python decl htmy/tag.py:73 |  |  | 0.729 |
+| walker |  | 1846 | 56 | headings outline in docs/components-guide.md |  |  | 0.729 |
+| walker |  | 1846 | 0 | docs/components-guide.md section #0 |  |  | 0.729 |
+| walker |  | 1861 | 15 | python doc htmy/io.py:11 |  |  | 0.729 |
+| ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.713 |
+| walker |  | 1920 | 59 | headings outline in docs/function-components.md |  |  | 0.713 |
+| walker |  | 1928 | 8 | python body htmy/tag.py:66 |  |  | 0.713 |
+| walker |  | 2064 | 136 | python names htmy/__init__.py #2 |  |  | 0.767 |
+| walker |  | 2168 | 104 | python names htmy/core.py |  |  | 0.768 |
+| ns | 2170 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.744 |
+| walker |  | 2174 | 6 | python decl htmy/core.py:157 |  |  | 0.744 |
+| walker |  | 2180 | 6 | python decl htmy/core.py:163 |  |  | 0.744 |
+| walker |  | 2206 | 26 | python decl htmy/core.py:146 |  |  | 0.745 |
+| walker |  | 2212 | 6 | python decl htmy/core.py:151 |  |  | 0.745 |
+| walker |  | 2249 | 37 | python decl htmy/core.py:175 |  |  | 0.745 |
+| walker |  | 2309 | 60 | python decl htmy/core.py:19 |  |  | 0.745 |
+| ns | 2330 |  | 160 | README "XSS prevention": escaping by default, and the two exceptions | 2.6 |  | 0.721 |
+| walker |  | 2370 | 61 | python decl htmy/core.py:38 |  |  | 0.721 |
 | walker |  | 2425 | 55 | python decl htmy/error_boundary.py:25 |  |  | 0.721 |
 | walker |  | 2438 | 13 | listing of 'examples/internationalization' |  |  | 0.721 |
 | walker |  | 2452 | 14 | listing of 'examples/markdown_customization' |  |  | 0.721 |

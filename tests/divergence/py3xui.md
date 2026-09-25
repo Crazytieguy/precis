@@ -1,4 +1,4 @@
-Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.567/0.543/0.502/0.591/0.567/0.614/0.643
+Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.649/0.620/0.502/0.591/0.567/0.614/0.643
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,59 +20,59 @@ Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 361 | 68 | python names py3xui/api/__init__.py |  |  | 0.595 |
 | ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.533 |
 | walker |  | 407 | 46 | listing of 'py3xui/async_api' |  |  | 0.556 |
-| walker |  | 477 | 70 | python names py3xui/inbound/__init__.py |  |  | 0.564 |
-| walker |  | 556 | 79 | python names py3xui/async_api/__init__.py |  |  | 0.572 |
-| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.454 |
-| walker |  | 638 | 82 | python names py3xui/__init__.py |  |  | 0.527 |
-| walker |  | 649 | 11 | python names py3xui/api/api.py |  |  | 0.527 |
-| walker |  | 661 | 12 | python names py3xui/async_api/async_api.py |  |  | 0.527 |
-| walker |  | 674 | 13 | python names py3xui/async_api/async_api_base.py |  |  | 0.527 |
-| walker |  | 686 | 12 | listing of '.vscode' |  |  | 0.527 |
-| walker |  | 700 | 14 | python names py3xui/api/api_client.py |  |  | 0.527 |
-| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.494 |
-| walker |  | 714 | 14 | python names py3xui/api/api_database.py |  |  | 0.494 |
-| walker |  | 728 | 14 | python names py3xui/api/api_server.py |  |  | 0.494 |
-| walker |  | 742 | 14 | python decl py3xui/api/api_database.py:7 |  |  | 0.495 |
-| walker |  | 757 | 15 | python names py3xui/api/api_inbound.py |  |  | 0.495 |
-| walker |  | 772 | 15 | python names py3xui/inbound/bases.py |  |  | 0.495 |
-| walker |  | 783 | 11 | python decl py3xui/inbound/bases.py:9 |  |  | 0.495 |
-| ns | 795 |  | 86 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.541 |
-| walker |  | 844 | 61 | [dependencies] in pyproject.toml |  |  | 0.541 |
-| walker |  | 861 | 17 | python names py3xui/async_api/async_api_client.py |  |  | 0.541 |
-| ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.565 |
-| walker |  | 878 | 17 | python names py3xui/async_api/async_api_database.py |  |  | 0.565 |
-| walker |  | 893 | 15 | python decl py3xui/async_api/async_api_database.py:7 |  |  | 0.566 |
-| walker |  | 910 | 17 | python names py3xui/async_api/async_api_inbound.py |  |  | 0.566 |
-| walker |  | 927 | 17 | python names py3xui/async_api/async_api_server.py |  |  | 0.566 |
-| walker |  | 945 | 18 | listing of '.github' |  |  | 0.566 |
-| walker |  | 968 | 23 | listing of '.github/workflows' |  |  | 0.567 |
-| walker |  | 999 | 31 | README headline in py3xui/utils/README.md |  |  | 0.567 |
-| ns | 1016 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.575 |
-| walker |  | 1021 | 22 | python names py3xui/api/api_base.py |  |  | 0.575 |
-| walker |  | 1044 | 23 | python names py3xui/client/client.py |  |  | 0.575 |
-| walker |  | 1059 | 15 | py3xui/utils/README.md section #0 |  |  | 0.575 |
-| walker |  | 1083 | 24 | python names py3xui/inbound/settings.py |  |  | 0.575 |
-| walker |  | 1119 | 36 | README headline in py3xui/server/README.md |  |  | 0.575 |
-| walker |  | 1144 | 25 | python names py3xui/inbound/inbound.py |  |  | 0.575 |
-| ns | 1157 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.582 |
-| walker |  | 1181 | 37 | README headline in py3xui/client/README.md |  |  | 0.582 |
-| walker |  | 1207 | 26 | python names py3xui/inbound/stream_settings.py |  |  | 0.582 |
-| walker |  | 1235 | 28 | python names py3xui/inbound/sniffing.py |  |  | 0.582 |
-| walker |  | 1282 | 47 | README headline in py3xui/inbound/README.md |  |  | 0.582 |
-| walker |  | 1309 | 27 | listing of 'tests' |  |  | 0.583 |
-| walker |  | 1330 | 21 | headings outline in py3xui/client/README.md |  |  | 0.583 |
-| ns | 1342 |  | 185 | Canonical usage: env-var credentials, Api.from_env() and AsyncApi.from_env() | 2.1 |  | 0.543 |
-| walker |  | 1343 | 13 | py3xui/client/README.md section #0 |  |  | 0.543 |
-| walker |  | 1392 | 49 | README headline in py3xui/api/README.md |  |  | 0.543 |
-| walker |  | 1427 | 35 | python decl py3xui/inbound/settings.py:17 |  |  | 0.543 |
-| ns | 1459 |  | 117 | class Api and its full constructor signature | 2.2 |  | 0.516 |
-| walker |  | 1464 | 37 | python decl py3xui/inbound/settings.py:9 |  |  | 0.517 |
-| walker |  | 1523 | 59 | README headline in py3xui/async_api/README.md |  |  | 0.517 |
-| ns | 1665 |  | 206 | Api constructor body: the four sub-API attributes it wires up | 2.3 | 2.2 | 0.483 |
-| ns | 1840 |  | 175 | class AsyncApi: identical constructor, Async* sub-APIs | 2.4 |  | 0.457 |
-| walker |  | 1871 | 348 | python names demo.py |  |  | 0.457 |
-| walker |  | 1940 | 69 | [package] in pyproject.toml |  |  | 0.522 |
-| walker |  | 1995 | 55 | package metadata in pyproject.toml |  |  | 0.522 |
+| walker |  | 478 | 71 | [package] in pyproject.toml |  |  | 0.665 |
+| walker |  | 548 | 70 | python names py3xui/inbound/__init__.py |  |  | 0.673 |
+| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.534 |
+| walker |  | 627 | 79 | python names py3xui/async_api/__init__.py |  |  | 0.540 |
+| walker |  | 709 | 82 | python names py3xui/__init__.py |  |  | 0.577 |
+| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.577 |
+| walker |  | 720 | 11 | python names py3xui/api/api.py |  |  | 0.577 |
+| walker |  | 732 | 12 | python names py3xui/async_api/async_api.py |  |  | 0.577 |
+| walker |  | 745 | 13 | python names py3xui/async_api/async_api_base.py |  |  | 0.577 |
+| walker |  | 757 | 12 | listing of '.vscode' |  |  | 0.578 |
+| walker |  | 771 | 14 | python names py3xui/api/api_client.py |  |  | 0.578 |
+| walker |  | 785 | 14 | python names py3xui/api/api_database.py |  |  | 0.578 |
+| ns | 795 |  | 86 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.624 |
+| walker |  | 799 | 14 | python names py3xui/api/api_server.py |  |  | 0.624 |
+| walker |  | 813 | 14 | python decl py3xui/api/api_database.py:7 |  |  | 0.624 |
+| walker |  | 828 | 15 | python names py3xui/api/api_inbound.py |  |  | 0.624 |
+| walker |  | 843 | 15 | python names py3xui/inbound/bases.py |  |  | 0.624 |
+| walker |  | 854 | 11 | python decl py3xui/inbound/bases.py:9 |  |  | 0.624 |
+| ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.648 |
+| walker |  | 913 | 59 | [dependencies] in pyproject.toml |  |  | 0.648 |
+| walker |  | 930 | 17 | python names py3xui/async_api/async_api_client.py |  |  | 0.648 |
+| walker |  | 947 | 17 | python names py3xui/async_api/async_api_database.py |  |  | 0.649 |
+| walker |  | 962 | 15 | python decl py3xui/async_api/async_api_database.py:7 |  |  | 0.649 |
+| walker |  | 979 | 17 | python names py3xui/async_api/async_api_inbound.py |  |  | 0.649 |
+| walker |  | 996 | 17 | python names py3xui/async_api/async_api_server.py |  |  | 0.649 |
+| walker |  | 1014 | 18 | listing of '.github' |  |  | 0.649 |
+| ns | 1016 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.657 |
+| walker |  | 1037 | 23 | listing of '.github/workflows' |  |  | 0.658 |
+| walker |  | 1068 | 31 | README headline in py3xui/utils/README.md |  |  | 0.658 |
+| walker |  | 1090 | 22 | python names py3xui/api/api_base.py |  |  | 0.658 |
+| walker |  | 1113 | 23 | python names py3xui/client/client.py |  |  | 0.658 |
+| walker |  | 1128 | 15 | py3xui/utils/README.md section #0 |  |  | 0.658 |
+| walker |  | 1152 | 24 | python names py3xui/inbound/settings.py |  |  | 0.658 |
+| ns | 1157 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.664 |
+| walker |  | 1188 | 36 | README headline in py3xui/server/README.md |  |  | 0.664 |
+| walker |  | 1213 | 25 | python names py3xui/inbound/inbound.py |  |  | 0.665 |
+| walker |  | 1250 | 37 | README headline in py3xui/client/README.md |  |  | 0.665 |
+| walker |  | 1276 | 26 | python names py3xui/inbound/stream_settings.py |  |  | 0.665 |
+| walker |  | 1304 | 28 | python names py3xui/inbound/sniffing.py |  |  | 0.665 |
+| ns | 1342 |  | 185 | Canonical usage: env-var credentials, Api.from_env() and AsyncApi.from_env() | 2.1 |  | 0.619 |
+| walker |  | 1351 | 47 | README headline in py3xui/inbound/README.md |  |  | 0.619 |
+| walker |  | 1378 | 27 | listing of 'tests' |  |  | 0.620 |
+| walker |  | 1399 | 21 | headings outline in py3xui/client/README.md |  |  | 0.620 |
+| walker |  | 1412 | 13 | py3xui/client/README.md section #0 |  |  | 0.620 |
+| ns | 1459 |  | 117 | class Api and its full constructor signature | 2.2 |  | 0.589 |
+| walker |  | 1461 | 49 | README headline in py3xui/api/README.md |  |  | 0.589 |
+| walker |  | 1496 | 35 | python decl py3xui/inbound/settings.py:17 |  |  | 0.589 |
+| walker |  | 1533 | 37 | python decl py3xui/inbound/settings.py:9 |  |  | 0.590 |
+| walker |  | 1588 | 55 | package metadata in pyproject.toml |  |  | 0.590 |
+| walker |  | 1647 | 59 | README headline in py3xui/async_api/README.md |  |  | 0.590 |
+| ns | 1665 |  | 206 | Api constructor body: the four sub-API attributes it wires up | 2.3 | 2.2 | 0.552 |
+| ns | 1840 |  | 175 | class AsyncApi: identical constructor, Async* sub-APIs | 2.4 |  | 0.522 |
+| walker |  | 1995 | 348 | python names demo.py |  |  | 0.522 |
 | walker |  | 2049 | 54 | python decl py3xui/api/api_server.py:7 |  |  | 0.523 |
 | ns | 2063 |  | 223 | ClientApi methods 1-5 with the panel endpoint each one calls | 2.5 |  | 0.502 |
 | walker |  | 2106 | 57 | python decl py3xui/async_api/async_api_server.py:8 |  |  | 0.502 |

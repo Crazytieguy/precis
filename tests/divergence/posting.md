@@ -1,4 +1,4 @@
-Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.725/0.699/0.621/0.592/0.564/0.600
+Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.740/0.734/0.708/0.621/0.592/0.564/0.600
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,94 +9,94 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 94 | 40 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 98 | 4 | listing of 'docs/overrides' |  |  | 0.000 |
 | walker |  | 102 | 4 | listing of 'docs/stylesheets' |  |  | 0.000 |
-| walker |  | 110 | 8 | listing of '.github' |  |  | 0.000 |
-| walker |  | 122 | 12 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 139 |  | 48 | Repository root listing | 1.2 |  | 0.539 |
-| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.414 |
-| walker |  | 341 | 219 | plaintext config Makefile |  |  | 0.416 |
-| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.368 |
-| walker |  | 432 | 91 | README headline in README.md |  |  | 0.683 |
-| walker |  | 458 | 26 | [features] / entry-point scripts in pyproject.toml |  |  | 0.683 |
-| walker |  | 500 | 42 | headings outline in README.md |  |  | 0.683 |
-| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.467 |
-| walker |  | 556 | 56 | listing of 'docs/guide' |  |  | 0.474 |
-| ns | 604 |  | 103 | Widget package and importer package listings | 1.6 |  | 0.407 |
-| walker |  | 714 | 158 | listing of 'src/posting' |  |  | 0.711 |
-| walker |  | 730 | 16 | python module doc src/posting/__main__.py |  |  | 0.711 |
-| walker |  | 744 | 14 | listing of 'src/posting/importing' |  |  | 0.714 |
-| ns | 750 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.656 |
-| walker |  | 754 | 10 | python names src/posting/exit_codes.py |  |  | 0.656 |
-| walker |  | 766 | 12 | python names src/posting/help_data.py |  |  | 0.656 |
-| walker |  | 778 | 12 | python names src/posting/version.py |  |  | 0.656 |
-| walker |  | 792 | 14 | python names src/posting/messages.py |  |  | 0.656 |
-| walker |  | 807 | 15 | python names src/posting/_start_time.py |  |  | 0.656 |
-| walker |  | 896 | 89 | listing of 'src/posting/widgets' |  |  | 0.788 |
-| walker |  | 926 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.789 |
-| ns | 936 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.724 |
-| walker |  | 994 | 68 | listing of 'src/posting/widgets/request' |  |  | 0.733 |
-| walker |  | 1004 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.735 |
-| walker |  | 1019 | 15 | python decl src/posting/messages.py:6 |  |  | 0.735 |
-| ns | 1044 |  | 108 | UI sub-package listings: request, response, collection | 1.9 |  | 0.758 |
-| ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.774 |
-| walker |  | 1156 | 137 | python names src/posting/__main__.py |  |  | 0.775 |
-| walker |  | 1168 | 12 | python decl src/posting/__main__.py:177 |  |  | 0.775 |
-| walker |  | 1190 | 22 | python decl src/posting/__main__.py:45 |  |  | 0.776 |
-| walker |  | 1222 | 32 | python decl src/posting/__main__.py:76 |  |  | 0.776 |
-| walker |  | 1266 | 44 | python decl src/posting/__main__.py:194 |  |  | 0.776 |
-| ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.723 |
-| walker |  | 1278 | 12 | python doc src/posting/__main__.py:177 |  |  | 0.723 |
-| walker |  | 1407 | 129 | python decl src/posting/__main__.py:50 |  |  | 0.725 |
-| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.723 |
-| walker |  | 1539 | 132 | python decl src/posting/__main__.py:96 |  |  | 0.727 |
-| walker |  | 1556 | 17 | python names src/posting/suggesters.py |  |  | 0.727 |
-| walker |  | 1573 | 17 | python names src/posting/user_host.py |  |  | 0.727 |
-| walker |  | 1591 | 18 | python names src/posting/auth.py |  |  | 0.727 |
-| walker |  | 1611 | 20 | python names src/posting/jump_overlay.py |  |  | 0.727 |
-| walker |  | 1623 | 12 | python names src/posting/importing/curl.py |  |  | 0.727 |
-| walker |  | 1636 | 13 | python names src/posting/widgets/input.py |  |  | 0.727 |
-| walker |  | 1651 | 15 | python names src/posting/widgets/variable_input.py |  |  | 0.727 |
-| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.740 |
-| walker |  | 1877 | 226 | python names src/posting/__init__.py |  |  | 0.740 |
-| walker |  | 1893 | 16 | python names src/posting/widgets/tabbed_content.py |  |  | 0.740 |
-| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.716 |
-| walker |  | 1909 | 16 | python names src/posting/widgets/variable_autocomplete.py |  |  | 0.716 |
-| walker |  | 1938 | 29 | python names src/posting/types.py |  |  | 0.716 |
-| walker |  | 1955 | 17 | python names src/posting/widgets/confirmation.py |  |  | 0.716 |
-| walker |  | 1973 | 18 | python names src/posting/widgets/datatable.py |  |  | 0.716 |
-| walker |  | 2004 | 31 | python names src/posting/request_headers.py |  |  | 0.716 |
-| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.699 |
-| walker |  | 2090 | 86 | listing of 'docs/assets' |  |  | 0.699 |
-| walker |  | 2109 | 19 | python names src/posting/widgets/center_middle.py |  |  | 0.699 |
-| walker |  | 2121 | 12 | python doc src/posting/__main__.py:45 |  |  | 0.703 |
-| walker |  | 2155 | 34 | python names src/posting/xresources.py |  |  | 0.703 |
-| walker |  | 2192 | 37 | python names src/posting/jumper.py |  |  | 0.703 |
-| walker |  | 2211 | 19 | python decl src/posting/jumper.py:9 |  |  | 0.703 |
-| walker |  | 2225 | 14 | python names src/posting/widgets/response/cookies_table.py |  |  | 0.703 |
-| walker |  | 2240 | 15 | python names src/posting/widgets/request/request_metadata.py |  |  | 0.703 |
-| walker |  | 2255 | 15 | python names src/posting/widgets/request/request_options.py |  |  | 0.703 |
-| walker |  | 2271 | 16 | python names src/posting/widgets/request/method_selection.py |  |  | 0.703 |
-| walker |  | 2314 | 43 | python names src/posting/commands.py |  |  | 0.703 |
-| walker |  | 2357 | 43 | python decl src/posting/request_headers.py:4 |  |  | 0.704 |
-| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.668 |
-| walker |  | 2374 | 17 | python names src/posting/widgets/response/response_body.py |  |  | 0.668 |
-| walker |  | 2391 | 17 | python names src/posting/widgets/response/response_headers.py |  |  | 0.668 |
-| walker |  | 2404 | 13 | python decl src/posting/widgets/response/response_headers.py:4 |  |  | 0.668 |
-| walker |  | 2432 | 28 | python names src/posting/widgets/key_value.py |  |  | 0.668 |
-| walker |  | 2478 | 46 | python decl src/posting/auth.py:6 |  |  | 0.668 |
-| walker |  | 2527 | 49 | python names src/posting/yaml.py |  |  | 0.668 |
-| ns | 2534 |  | 175 | The `.posting.yaml` on-disk request format | 3.2 |  | 0.638 |
-| walker |  | 2556 | 29 | python names src/posting/widgets/rich_log.py |  |  | 0.638 |
-| walker |  | 2607 | 51 | python decl src/posting/jumper.py:26 |  |  | 0.638 |
-| walker |  | 2648 | 41 | README.md section #2 |  |  | 0.638 |
-| walker |  | 2664 | 16 | python doc src/posting/__main__.py:96 |  |  | 0.644 |
-| walker |  | 2721 | 57 | python names src/posting/app.py |  |  | 0.644 |
-| walker |  | 2736 | 15 | python decl src/posting/app.py:93 |  |  | 0.644 |
-| ns | 2774 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.622 |
-| walker |  | 2793 | 57 | python names src/posting/save_request.py |  |  | 0.622 |
-| walker |  | 2849 | 56 | python decl src/posting/jumper.py:16 |  |  | 0.622 |
-| walker |  | 2884 | 35 | python names src/posting/widgets/tree.py |  |  | 0.622 |
-| ns | 2934 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.613 |
-| walker |  | 2957 | 73 | [package] in pyproject.toml |  |  | 0.621 |
+| walker |  | 177 | 75 | [package] in pyproject.toml |  |  | 0.542 |
+| walker |  | 185 | 8 | listing of '.github' |  |  | 0.542 |
+| walker |  | 197 | 12 | listing of '.github/workflows' |  |  | 0.542 |
+| walker |  | 221 | 24 | [features] / entry-point scripts in pyproject.toml |  |  | 0.545 |
+| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.419 |
+| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.370 |
+| walker |  | 440 | 219 | plaintext config Makefile |  |  | 0.372 |
+| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.254 |
+| walker |  | 531 | 91 | README headline in README.md |  |  | 0.468 |
+| walker |  | 573 | 42 | headings outline in README.md |  |  | 0.468 |
+| ns | 604 |  | 103 | Widget package and importer package listings | 1.6 |  | 0.403 |
+| walker |  | 629 | 56 | listing of 'docs/guide' |  |  | 0.409 |
+| ns | 750 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.401 |
+| walker |  | 787 | 158 | listing of 'src/posting' |  |  | 0.671 |
+| walker |  | 803 | 16 | python module doc src/posting/__main__.py |  |  | 0.671 |
+| walker |  | 817 | 14 | listing of 'src/posting/importing' |  |  | 0.674 |
+| walker |  | 827 | 10 | python names src/posting/exit_codes.py |  |  | 0.674 |
+| walker |  | 839 | 12 | python names src/posting/help_data.py |  |  | 0.674 |
+| walker |  | 851 | 12 | python names src/posting/version.py |  |  | 0.674 |
+| walker |  | 865 | 14 | python names src/posting/messages.py |  |  | 0.674 |
+| walker |  | 880 | 15 | python names src/posting/_start_time.py |  |  | 0.674 |
+| ns | 936 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.618 |
+| walker |  | 969 | 89 | listing of 'src/posting/widgets' |  |  | 0.739 |
+| walker |  | 999 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.740 |
+| ns | 1044 |  | 108 | UI sub-package listings: request, response, collection | 1.9 |  | 0.682 |
+| walker |  | 1067 | 68 | listing of 'src/posting/widgets/request' |  |  | 0.754 |
+| walker |  | 1077 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.771 |
+| walker |  | 1092 | 15 | python decl src/posting/messages.py:6 |  |  | 0.771 |
+| ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.785 |
+| walker |  | 1229 | 137 | python names src/posting/__main__.py |  |  | 0.786 |
+| walker |  | 1241 | 12 | python decl src/posting/__main__.py:177 |  |  | 0.786 |
+| walker |  | 1263 | 22 | python decl src/posting/__main__.py:45 |  |  | 0.787 |
+| ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.733 |
+| walker |  | 1295 | 32 | python decl src/posting/__main__.py:76 |  |  | 0.733 |
+| walker |  | 1339 | 44 | python decl src/posting/__main__.py:194 |  |  | 0.733 |
+| walker |  | 1351 | 12 | python doc src/posting/__main__.py:177 |  |  | 0.734 |
+| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.731 |
+| walker |  | 1480 | 129 | python decl src/posting/__main__.py:50 |  |  | 0.733 |
+| walker |  | 1612 | 132 | python decl src/posting/__main__.py:96 |  |  | 0.737 |
+| walker |  | 1629 | 17 | python names src/posting/suggesters.py |  |  | 0.737 |
+| walker |  | 1646 | 17 | python names src/posting/user_host.py |  |  | 0.737 |
+| walker |  | 1664 | 18 | python names src/posting/auth.py |  |  | 0.737 |
+| walker |  | 1684 | 20 | python names src/posting/jump_overlay.py |  |  | 0.737 |
+| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.749 |
+| walker |  | 1696 | 12 | python names src/posting/importing/curl.py |  |  | 0.749 |
+| walker |  | 1709 | 13 | python names src/posting/widgets/input.py |  |  | 0.749 |
+| walker |  | 1724 | 15 | python names src/posting/widgets/variable_input.py |  |  | 0.749 |
+| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.725 |
+| walker |  | 1950 | 226 | python names src/posting/__init__.py |  |  | 0.725 |
+| walker |  | 1966 | 16 | python names src/posting/widgets/tabbed_content.py |  |  | 0.725 |
+| walker |  | 1982 | 16 | python names src/posting/widgets/variable_autocomplete.py |  |  | 0.725 |
+| walker |  | 2011 | 29 | python names src/posting/types.py |  |  | 0.725 |
+| walker |  | 2028 | 17 | python names src/posting/widgets/confirmation.py |  |  | 0.725 |
+| walker |  | 2046 | 18 | python names src/posting/widgets/datatable.py |  |  | 0.725 |
+| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.708 |
+| walker |  | 2077 | 31 | python names src/posting/request_headers.py |  |  | 0.708 |
+| walker |  | 2163 | 86 | listing of 'docs/assets' |  |  | 0.708 |
+| walker |  | 2182 | 19 | python names src/posting/widgets/center_middle.py |  |  | 0.708 |
+| walker |  | 2194 | 12 | python doc src/posting/__main__.py:45 |  |  | 0.712 |
+| walker |  | 2228 | 34 | python names src/posting/xresources.py |  |  | 0.712 |
+| walker |  | 2265 | 37 | python names src/posting/jumper.py |  |  | 0.712 |
+| walker |  | 2284 | 19 | python decl src/posting/jumper.py:9 |  |  | 0.712 |
+| walker |  | 2298 | 14 | python names src/posting/widgets/response/cookies_table.py |  |  | 0.712 |
+| walker |  | 2313 | 15 | python names src/posting/widgets/request/request_metadata.py |  |  | 0.712 |
+| walker |  | 2328 | 15 | python names src/posting/widgets/request/request_options.py |  |  | 0.712 |
+| walker |  | 2344 | 16 | python names src/posting/widgets/request/method_selection.py |  |  | 0.712 |
+| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.676 |
+| walker |  | 2387 | 43 | python names src/posting/commands.py |  |  | 0.676 |
+| walker |  | 2430 | 43 | python decl src/posting/request_headers.py:4 |  |  | 0.676 |
+| walker |  | 2447 | 17 | python names src/posting/widgets/response/response_body.py |  |  | 0.676 |
+| walker |  | 2464 | 17 | python names src/posting/widgets/response/response_headers.py |  |  | 0.676 |
+| walker |  | 2477 | 13 | python decl src/posting/widgets/response/response_headers.py:4 |  |  | 0.676 |
+| walker |  | 2505 | 28 | python names src/posting/widgets/key_value.py |  |  | 0.676 |
+| ns | 2534 |  | 175 | The `.posting.yaml` on-disk request format | 3.2 |  | 0.646 |
+| walker |  | 2551 | 46 | python decl src/posting/auth.py:6 |  |  | 0.646 |
+| walker |  | 2600 | 49 | python names src/posting/yaml.py |  |  | 0.646 |
+| walker |  | 2629 | 29 | python names src/posting/widgets/rich_log.py |  |  | 0.646 |
+| walker |  | 2680 | 51 | python decl src/posting/jumper.py:26 |  |  | 0.646 |
+| walker |  | 2721 | 41 | README.md section #2 |  |  | 0.646 |
+| walker |  | 2737 | 16 | python doc src/posting/__main__.py:96 |  |  | 0.652 |
+| ns | 2774 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.630 |
+| walker |  | 2794 | 57 | python names src/posting/app.py |  |  | 0.630 |
+| walker |  | 2809 | 15 | python decl src/posting/app.py:93 |  |  | 0.630 |
+| walker |  | 2866 | 57 | python names src/posting/save_request.py |  |  | 0.630 |
+| walker |  | 2922 | 56 | python decl src/posting/jumper.py:16 |  |  | 0.630 |
+| ns | 2934 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.620 |
+| walker |  | 2957 | 35 | python names src/posting/widgets/tree.py |  |  | 0.621 |
 | walker |  | 3018 | 61 | python names src/posting/tuple_to_multidict.py |  |  | 0.621 |
 | walker |  | 3028 | 10 | python doc src/posting/app.py:93 |  |  | 0.621 |
 | walker |  | 3038 | 10 | python doc src/posting/app.py:108 |  |  | 0.621 |

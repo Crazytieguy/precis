@@ -7,28 +7,28 @@ Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 38 | 4 | listing of 'src' |  |  | 1.000 |
 | walker |  | 79 | 41 | listing of 'docs' |  |  | 1.000 |
 | ns | 140 |  | 106 | README identity paragraph | 1.2 |  | 0.771 |
-| walker |  | 153 | 74 | listing of 'src/typeguard' |  |  | 0.816 |
-| ns | 218 |  | 78 | Package module roster: src/typeguard/ | 1.3 |  | 0.867 |
+| walker |  | 153 | 74 | [package] in pyproject.toml |  |  | 0.772 |
+| ns | 218 |  | 78 | Package module roster: src/typeguard/ | 1.3 |  | 0.510 |
+| walker |  | 227 | 74 | listing of 'src/typeguard' |  |  | 0.868 |
 | ns | 313 |  | 95 | README: the two principal checking modes | 1.4 |  | 0.746 |
-| walker |  | 380 | 227 | python names src/typeguard/__init__.py |  |  | 0.766 |
-| walker |  | 393 | 13 | python names src/typeguard/_memo.py |  |  | 0.766 |
-| ns | 419 |  | 106 | README: what instrumentation actually covers | 1.5 | 1.4 | 0.698 |
-| walker |  | 448 | 55 | [dependencies] in pyproject.toml |  |  | 0.699 |
-| walker |  | 475 | 27 | listing of '.github' |  |  | 0.699 |
-| walker |  | 483 | 8 | listing of '.github/workflows' |  |  | 0.699 |
-| ns | 552 |  | 133 | README: the two instrumentation entry points | 1.6 |  | 0.609 |
-| walker |  | 710 | 227 | python names src/typeguard/__init__.py #1 |  |  | 0.622 |
-| walker |  | 746 | 36 | python names src/typeguard/_pytest_plugin.py |  |  | 0.622 |
-| ns | 748 |  | 196 | Public exports of typeguard/__init__.py, first half | 1.7 |  | 0.675 |
-| walker |  | 784 | 38 | python decl src/typeguard/_memo.py:8 |  |  | 0.675 |
-| walker |  | 853 | 69 | python body src/typeguard/__init__.py:37 |  |  | 0.677 |
-| walker |  | 906 | 53 | python names src/typeguard/_exceptions.py |  |  | 0.677 |
-| walker |  | 923 | 17 | python decl src/typeguard/_exceptions.py:12 |  |  | 0.678 |
-| walker |  | 940 | 17 | python decl src/typeguard/_exceptions.py:19 |  |  | 0.678 |
-| ns | 954 |  | 206 | Public exports of typeguard/__init__.py, second half | 1.8 | 1.7 | 0.708 |
-| walker |  | 993 | 53 | python decl src/typeguard/_exceptions.py:26 |  |  | 0.708 |
-| walker |  | 1063 | 70 | [package] in pyproject.toml |  |  | 0.708 |
-| walker |  | 1098 | 35 | package metadata in pyproject.toml |  |  | 0.709 |
+| ns | 419 |  | 106 | README: what instrumentation actually covers | 1.5 | 1.4 | 0.680 |
+| walker |  | 454 | 227 | python names src/typeguard/__init__.py |  |  | 0.699 |
+| walker |  | 467 | 13 | python names src/typeguard/_memo.py |  |  | 0.699 |
+| walker |  | 518 | 51 | [dependencies] in pyproject.toml |  |  | 0.699 |
+| ns | 552 |  | 133 | README: the two instrumentation entry points | 1.6 |  | 0.608 |
+| walker |  | 553 | 35 | package metadata in pyproject.toml |  |  | 0.609 |
+| walker |  | 580 | 27 | listing of '.github' |  |  | 0.609 |
+| walker |  | 588 | 8 | listing of '.github/workflows' |  |  | 0.609 |
+| ns | 748 |  | 196 | Public exports of typeguard/__init__.py, first half | 1.7 |  | 0.661 |
+| walker |  | 815 | 227 | python names src/typeguard/__init__.py #1 |  |  | 0.675 |
+| walker |  | 851 | 36 | python names src/typeguard/_pytest_plugin.py |  |  | 0.675 |
+| walker |  | 889 | 38 | python decl src/typeguard/_memo.py:8 |  |  | 0.676 |
+| ns | 954 |  | 206 | Public exports of typeguard/__init__.py, second half | 1.8 | 1.7 | 0.705 |
+| walker |  | 958 | 69 | python body src/typeguard/__init__.py:37 |  |  | 0.708 |
+| walker |  | 1011 | 53 | python names src/typeguard/_exceptions.py |  |  | 0.708 |
+| walker |  | 1028 | 17 | python decl src/typeguard/_exceptions.py:12 |  |  | 0.708 |
+| walker |  | 1045 | 17 | python decl src/typeguard/_exceptions.py:19 |  |  | 0.709 |
+| walker |  | 1098 | 53 | python decl src/typeguard/_exceptions.py:26 |  |  | 0.709 |
 | ns | 1109 |  | 155 | Docs and test tree listings | 1.9 |  | 0.608 |
 | walker |  | 1167 | 69 | python names src/typeguard/_config.py |  |  | 0.608 |
 | walker |  | 1195 | 28 | python decl src/typeguard/_config.py:14 |  |  | 0.608 |

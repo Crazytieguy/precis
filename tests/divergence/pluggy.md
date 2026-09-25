@@ -1,4 +1,4 @@
-Score(3000)=0.643 I=0.776 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.467/0.610/0.625/0.643/0.584/0.545/0.500
+Score(3000)=0.643 I=0.776 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.467/0.598/0.625/0.643/0.584/0.545/0.500
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,28 +12,28 @@ Score(3000)=0.643 I=0.776 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 158 | 3 | listing of 'docs/_static' |  |  | 0.000 |
 | walker |  | 162 | 4 | listing of 'docs/_static/img' |  |  | 0.000 |
 | ns | 203 |  | 96 | Complete repository root listing | 1.3 |  | 0.445 |
-| walker |  | 205 | 43 | listing of 'downstream' |  |  | 0.445 |
-| walker |  | 250 | 45 | listing of 'src/pluggy' |  |  | 0.723 |
-| walker |  | 263 | 13 | listing of '.github' |  |  | 0.723 |
-| walker |  | 267 | 4 | listing of '.github/workflows' |  |  | 0.723 |
-| walker |  | 281 | 14 | listing of 'scripts' |  |  | 0.723 |
+| walker |  | 215 | 53 | [package] in pyproject.toml |  |  | 0.445 |
+| walker |  | 258 | 43 | listing of 'downstream' |  |  | 0.445 |
+| walker |  | 303 | 45 | listing of 'src/pluggy' |  |  | 0.723 |
+| walker |  | 316 | 13 | listing of '.github' |  |  | 0.723 |
+| walker |  | 320 | 4 | listing of '.github/workflows' |  |  | 0.723 |
+| walker |  | 334 | 14 | listing of 'scripts' |  |  | 0.723 |
 | ns | 355 |  | 152 | The complete public API name list (`__all__` of src/pluggy/__init__.py) | 1.4 |  | 0.577 |
-| walker |  | 400 | 119 | README headline in README.rst |  |  | 0.729 |
+| walker |  | 453 | 119 | README headline in README.rst |  |  | 0.729 |
 | ns | 521 |  | 166 | Public name to private module map (the re-export block) | 1.5 | 1.4 | 0.637 |
 | ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.571 |
 | ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.523 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.490 |
-| walker |  | 946 | 546 | README.rst section #0 |  |  | 0.490 |
-| walker |  | 972 | 26 | downstream/README.md section #0 |  |  | 0.490 |
 | ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.467 |
+| walker |  | 999 | 546 | README.rst section #0 |  |  | 0.467 |
+| walker |  | 1025 | 26 | downstream/README.md section #0 |  |  | 0.467 |
 | ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.415 |
-| walker |  | 1316 | 344 | python names src/pluggy/__init__.py |  |  | 0.598 |
-| walker |  | 1349 | 33 | python names src/pluggy/_warnings.py |  |  | 0.598 |
-| walker |  | 1364 | 15 | python decl src/pluggy/_warnings.py:4 |  |  | 0.598 |
-| walker |  | 1382 | 18 | python decl src/pluggy/_warnings.py:10 |  |  | 0.598 |
-| walker |  | 1397 | 15 | listing of 'docs/examples' |  |  | 0.603 |
-| walker |  | 1405 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.610 |
-| walker |  | 1458 | 53 | [package] in pyproject.toml |  |  | 0.610 |
+| walker |  | 1369 | 344 | python names src/pluggy/__init__.py |  |  | 0.598 |
+| walker |  | 1402 | 33 | python names src/pluggy/_warnings.py |  |  | 0.598 |
+| walker |  | 1417 | 15 | python decl src/pluggy/_warnings.py:4 |  |  | 0.598 |
+| walker |  | 1435 | 18 | python decl src/pluggy/_warnings.py:10 |  |  | 0.598 |
+| walker |  | 1450 | 15 | listing of 'docs/examples' |  |  | 0.603 |
+| walker |  | 1458 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.610 |
 | walker |  | 1524 | 66 | python body src/pluggy/__init__.py:32 |  |  | 0.652 |
 | ns | 1528 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.606 |
 | walker |  | 1604 | 80 | package metadata in pyproject.toml |  |  | 0.606 |

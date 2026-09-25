@@ -1,147 +1,147 @@
-Score(3000)=0.333 I=0.398 C=0.279 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.506/0.514/0.366/0.333/0.311/0.312/0.347
+Score(3000)=0.342 I=0.406 C=0.289 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.519/0.528/0.377/0.342/0.318/0.312/0.347
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | listing of '.' |  |  | 0.000 |
 | ns | 94 |  | 94 | README identity lede | 1.1 |  | 0.000 |
 | walker |  | 102 | 19 | listing of 'extra' |  |  | 0.000 |
-| walker |  | 171 | 69 | listing of 'beets' |  |  | 0.000 |
-| ns | 177 |  | 83 | Repository root listing (complete) | 1.2 |  | 0.612 |
-| walker |  | 180 | 9 | listing of 'beets/ui' |  |  | 0.612 |
-| walker |  | 198 | 18 | listing of 'beets/autotag' |  |  | 0.614 |
-| walker |  | 216 | 18 | python module doc beets/autotag/__init__.py |  |  | 0.614 |
-| walker |  | 238 | 22 | listing of 'beets/importer' |  |  | 0.621 |
-| ns | 246 |  | 69 | beets/ core package listing (complete) | 1.3 |  | 0.619 |
-| walker |  | 276 | 38 | python module doc beets/importer/__init__.py |  |  | 0.619 |
-| walker |  | 316 | 40 | python module doc beets/__init__.py |  |  | 0.619 |
-| ns | 344 |  | 98 | Shipped packages, Python floor, `beet` console entry point | 1.4 |  | 0.549 |
-| walker |  | 357 | 41 | python module doc beets/__main__.py |  |  | 0.549 |
-| walker |  | 385 | 28 | listing of 'beets/dbcore' |  |  | 0.565 |
-| walker |  | 420 | 35 | python module doc beets/dbcore/__init__.py |  |  | 0.565 |
-| ns | 442 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 1.5 |  | 0.515 |
-| walker |  | 450 | 30 | listing of 'beets/library' |  |  | 0.604 |
-| walker |  | 514 | 64 | python module doc beets/ui/__init__.py |  |  | 0.604 |
-| ns | 542 |  | 100 | Project metadata header (poetry, version, license, URLs) | 1.6 |  | 0.567 |
-| walker |  | 586 | 72 | python names beets/__init__.py |  |  | 0.567 |
-| walker |  | 612 | 26 | python decl beets/__init__.py:35 |  |  | 0.567 |
-| walker |  | 622 | 10 | python doc beets/__init__.py:26 |  |  | 0.567 |
-| ns | 690 |  | 148 | README capability bullets, part 1 (plugin framing + metadata sources) | 1.7 |  | 0.536 |
-| walker |  | 880 | 258 | python names beets/ui/__init__.py |  |  | 0.536 |
-| ns | 885 |  | 195 | README capability bullets, part 2 (files, art, web, MPD) | 1.8 |  | 0.497 |
-| walker |  | 907 | 27 | python decl beets/ui/__init__.py:65 |  |  | 0.497 |
-| walker |  | 974 | 67 | listing of 'beets/ui/commands' |  |  | 0.506 |
-| walker |  | 988 | 14 | listing of 'beets/ui/commands/import_' |  |  | 0.506 |
-| walker |  | 1008 | 20 | python module doc beets/ui/commands/import_/__init__.py |  |  | 0.506 |
-| walker |  | 1041 | 33 | python module doc beets/ui/commands/__init__.py |  |  | 0.506 |
-| ns | 1051 |  | 166 | UI, util and test-helper subpackage listings | 1.9 |  | 0.451 |
-| walker |  | 1118 | 77 | listing of 'docs' |  |  | 0.454 |
-| walker |  | 1122 | 4 | listing of 'docs/_templates' |  |  | 0.454 |
-| walker |  | 1126 | 4 | listing of 'docs/extensions' |  |  | 0.454 |
-| walker |  | 1140 | 14 | listing of 'docs/_static' |  |  | 0.454 |
-| walker |  | 1162 | 22 | listing of 'docs/api' |  |  | 0.454 |
-| walker |  | 1188 | 26 | listing of 'docs/guides' |  |  | 0.454 |
-| walker |  | 1214 | 26 | listing of 'docs/reference' |  |  | 0.454 |
-| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.426 |
-| walker |  | 1242 | 28 | listing of 'docs/dev' |  |  | 0.426 |
-| walker |  | 1317 | 75 | listing of 'beets/util' |  |  | 0.512 |
-| walker |  | 1331 | 14 | python module doc beets/util/__init__.py |  |  | 0.512 |
-| walker |  | 1345 | 14 | python names beets/library/library.py |  |  | 0.512 |
-| walker |  | 1366 | 21 | listing of 'docs/_templates/autosummary' |  |  | 0.512 |
-| walker |  | 1395 | 29 | [features] / entry-point scripts in pyproject.toml |  |  | 0.514 |
-| ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.458 |
-| walker |  | 1606 | 211 | python names beets/ui/commands/__init__.py |  |  | 0.458 |
-| walker |  | 1616 | 10 | python doc beets/ui/commands/__init__.py:36 |  |  | 0.458 |
-| walker |  | 1723 | 107 | python decl beets/ui/commands/__init__.py:50 |  |  | 0.461 |
-| walker |  | 1747 | 24 | listing of 'docs/dev/plugins' |  |  | 0.461 |
-| ns | 1828 |  | 383 | beetsplug/ bundled plugin listing (complete, 81 entries) | 1.12 |  | 0.378 |
-| walker |  | 1899 | 152 | python names beets/importer/__init__.py |  |  | 0.380 |
-| ns | 2006 |  | 178 | beets.library public export block (complete) | 2.1 |  | 0.366 |
-| ns | 2183 |  | 177 | The `beet` subcommand roster (default_commands) | 2.2 |  | 0.371 |
-| walker |  | 2218 | 319 | python names beets/util/__init__.py |  |  | 0.372 |
-| walker |  | 2252 | 34 | python decl beets/util/__init__.py:130 |  |  | 0.372 |
-| walker |  | 2348 | 96 | python decl beets/util/__init__.py:74 |  |  | 0.372 |
-| walker |  | 2358 | 10 | python body beets/util/__init__.py:115 |  |  | 0.372 |
-| ns | 2373 |  | 190 | Library class: models and schema migrations | 2.3 |  | 0.363 |
-| ns | 2528 |  | 155 | Library method roster (complete) | 2.4 | 2.3 | 0.356 |
-| walker |  | 2530 | 172 | python names beets/ui/commands/import_/__init__.py |  |  | 0.356 |
-| walker |  | 2556 | 26 | python decl beets/ui/commands/import_/__init__.py:160 |  |  | 0.356 |
-| walker |  | 2574 | 18 | python doc beets/ui/commands/import_/__init__.py:34 |  |  | 0.356 |
-| walker |  | 2594 | 20 | python names beets/library/fields.py |  |  | 0.356 |
-| walker |  | 2614 | 20 | python names beets/util/hidden.py |  |  | 0.356 |
-| walker |  | 2642 | 28 | python body beets/ui/__init__.py:111 |  |  | 0.356 |
-| walker |  | 2832 | 190 | python names beets/autotag/__init__.py |  |  | 0.356 |
-| walker |  | 2864 | 32 | python doc beets/ui/commands/import_/__init__.py:49 |  |  | 0.356 |
-| walker |  | 2897 | 33 | python doc beets/ui/commands/import_/__init__.py:14 |  |  | 0.356 |
-| ns | 2952 |  | 424 | models.py class headers: LibModel, FormattedItemMapping, Album, Item | 2.5 |  | 0.333 |
-| walker |  | 3108 | 211 | python names beets/library/__init__.py |  |  | 0.364 |
-| ns | 3125 |  | 173 | beets.dbcore public export block + package docstring | 2.6 |  | 0.355 |
-| walker |  | 3175 | 67 | python decl beets/library/__init__.py:8 |  |  | 0.355 |
-| walker |  | 3194 | 19 | python body beets/library/__init__.py:15 |  |  | 0.355 |
-| walker |  | 3209 | 15 | python names beets/ui/commands/help.py |  |  | 0.355 |
-| walker |  | 3235 | 26 | python names beets/util/m3u.py |  |  | 0.355 |
-| walker |  | 3242 | 7 | python decl beets/util/m3u.py:22 |  |  | 0.355 |
-| walker |  | 3279 | 37 | python doc beets/ui/__init__.py:71 |  |  | 0.355 |
-| ns | 3298 |  | 173 | config_default.yaml: library, directory, plugins, ignore rules | 3.1 |  | 0.346 |
-| walker |  | 3306 | 27 | python names beets/importer/state.py |  |  | 0.346 |
-| walker |  | 3346 | 40 | python doc beets/__init__.py:35 |  |  | 0.346 |
-| walker |  | 3631 | 285 | python names beets/ui/__init__.py #1 |  |  | 0.346 |
-| walker |  | 3638 | 7 | python decl beets/ui/__init__.py:459 |  |  | 0.346 |
-| ns | 3687 |  | 389 | config_default.yaml: the complete `import:` option block | 3.2 |  | 0.328 |
-| walker |  | 3702 | 64 | python decl beets/ui/__init__.py:207 |  |  | 0.328 |
-| walker |  | 3774 | 72 | python decl beets/ui/__init__.py:466 |  |  | 0.328 |
-| walker |  | 3800 | 26 | python decl beets/ui/__init__.py:807 |  |  | 0.328 |
-| ns | 3866 |  | 179 | config_default.yaml: tagging defaults, `paths:` templates, threading | 3.4 |  | 0.321 |
-| walker |  | 3898 | 98 | python decl beets/ui/__init__.py:676 |  |  | 0.321 |
-| walker |  | 4003 | 105 | python decl beets/ui/__init__.py:637 |  |  | 0.321 |
-| walker |  | 4011 | 8 | python decl beets/ui/__init__.py:664 |  |  | 0.321 |
-| walker |  | 4021 | 10 | python decl beets/ui/__init__.py:668 |  |  | 0.321 |
-| walker |  | 4134 | 113 | python decl beets/ui/__init__.py:498 |  |  | 0.321 |
-| ns | 4171 |  | 305 | Path-template function roster: DefaultTemplateFunctions (complete) | 3.5 |  | 0.314 |
-| ns | 4291 |  | 120 | config_default.yaml: display formats and default sorts | 3.6 |  | 0.311 |
-| walker |  | 4405 | 271 | python names beets/dbcore/__init__.py |  |  | 0.337 |
-| walker |  | 4428 | 23 | python body beets/util/__init__.py:136 |  |  | 0.337 |
-| walker |  | 4462 | 34 | python names beets/util/config.py |  |  | 0.337 |
-| walker |  | 4477 | 15 | python decl beets/util/config.py:78 |  |  | 0.337 |
-| walker |  | 4502 | 25 | python decl beets/util/config.py:9 |  |  | 0.337 |
-| walker |  | 4523 | 21 | python names beets/ui/commands/utils.py |  |  | 0.337 |
-| walker |  | 4563 | 40 | python names beets/library/exceptions.py |  |  | 0.337 |
-| walker |  | 4576 | 13 | python decl beets/library/exceptions.py:27 |  |  | 0.337 |
-| walker |  | 4589 | 13 | python decl beets/library/exceptions.py:34 |  |  | 0.337 |
-| walker |  | 4619 | 30 | python decl beets/library/exceptions.py:4 |  |  | 0.337 |
-| walker |  | 4658 | 39 | listing of '.github' |  |  | 0.337 |
-| ns | 4673 |  | 382 | config_default.yaml: autotagger thresholds and distance weights | 3.7 |  | 0.324 |
-| walker |  | 4689 | 31 | listing of '.github/workflows' |  |  | 0.324 |
-| walker |  | 4770 | 81 | python names beets/context.py |  |  | 0.324 |
-| walker |  | 4778 | 8 | python decl beets/context.py:18 |  |  | 0.324 |
-| walker |  | 4790 | 12 | python body beets/context.py:8 |  |  | 0.324 |
-| walker |  | 4801 | 11 | python doc beets/context.py:8 |  |  | 0.324 |
-| walker |  | 4813 | 12 | python body beets/context.py:13 |  |  | 0.318 |
-| ns | 4813 |  | 140 | config_default.yaml: terminal UI, colour names, import layout | 3.8 |  | 0.318 |
-| walker |  | 4870 | 57 | python body beets/__init__.py:26 |  |  | 0.318 |
-| walker |  | 4885 | 15 | listing of 'beets/test' |  |  | 0.327 |
-| walker |  | 4926 | 41 | listing of 'docs/dev/plugins/other' |  |  | 0.327 |
-| walker |  | 4954 | 28 | python decl beets/ui/commands/help.py:6 |  |  | 0.327 |
-| walker |  | 4965 | 11 | python doc beets/context.py:13 |  |  | 0.327 |
-| ns | 4986 |  | 173 | Album method roster (complete, names only) | 4.1 | 2.5 | 0.322 |
-| walker |  | 5234 | 269 | python names beets/plugins.py |  |  | 0.322 |
-| walker |  | 5251 | 17 | python decl beets/plugins.py:116 |  |  | 0.322 |
-| walker |  | 5279 | 28 | python decl beets/plugins.py:127 |  |  | 0.322 |
-| ns | 5290 |  | 304 | Item method roster (complete, names only) | 4.3 | 2.5 | 0.314 |
-| walker |  | 5331 | 52 | python decl beets/plugins.py:147 |  |  | 0.314 |
-| walker |  | 5340 | 9 | python body beets/plugins.py:500 |  |  | 0.314 |
-| ns | 5458 |  | 168 | Item search fields and MediaFile-backed field sets | 4.4 | 2.5 | 0.310 |
-| walker |  | 5593 | 253 | python names beets/util/__init__.py #1 |  |  | 0.310 |
-| walker |  | 5618 | 25 | python decl beets/util/__init__.py:169 |  |  | 0.310 |
-| ns | 5629 |  | 171 | LibModel shared-method roster (complete after `_fields`) | 4.5 | 2.5 | 0.306 |
-| walker |  | 5647 | 29 | python decl beets/util/__init__.py:405 |  |  | 0.306 |
-| walker |  | 5698 | 51 | python decl beets/util/__init__.py:309 |  |  | 0.306 |
-| walker |  | 5764 | 66 | python decl beets/util/__init__.py:158 |  |  | 0.306 |
-| ns | 5787 |  | 158 | beets.importer public exports + package docstring | 5.1 |  | 0.312 |
-| walker |  | 5834 | 70 | python decl beets/util/__init__.py:208 |  |  | 0.312 |
-| walker |  | 5901 | 67 | python decl beets/ui/__init__.py:534 |  |  | 0.312 |
-| walker |  | 5954 | 53 | python names beets/util/units.py |  |  | 0.312 |
-| walker |  | 6009 | 55 | python names beets/util/lyrics.py |  |  | 0.312 |
-| walker |  | 6078 | 69 | [package] in pyproject.toml |  |  | 0.319 |
+| walker |  | 173 | 71 | [package] in pyproject.toml |  |  | 0.000 |
+| ns | 177 |  | 83 | Repository root listing (complete) | 1.2 |  | 0.539 |
+| walker |  | 242 | 69 | listing of 'beets' |  |  | 0.620 |
+| ns | 246 |  | 69 | beets/ core package listing (complete) | 1.3 |  | 0.618 |
+| walker |  | 251 | 9 | listing of 'beets/ui' |  |  | 0.618 |
+| walker |  | 269 | 18 | listing of 'beets/autotag' |  |  | 0.620 |
+| walker |  | 287 | 18 | python module doc beets/autotag/__init__.py |  |  | 0.620 |
+| walker |  | 309 | 22 | listing of 'beets/importer' |  |  | 0.626 |
+| ns | 344 |  | 98 | Shipped packages, Python floor, `beet` console entry point | 1.4 |  | 0.556 |
+| walker |  | 347 | 38 | python module doc beets/importer/__init__.py |  |  | 0.556 |
+| walker |  | 387 | 40 | python module doc beets/__init__.py |  |  | 0.556 |
+| walker |  | 428 | 41 | python module doc beets/__main__.py |  |  | 0.556 |
+| ns | 442 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 1.5 |  | 0.470 |
+| walker |  | 456 | 28 | listing of 'beets/dbcore' |  |  | 0.521 |
+| walker |  | 491 | 35 | python module doc beets/dbcore/__init__.py |  |  | 0.522 |
+| walker |  | 521 | 30 | listing of 'beets/library' |  |  | 0.610 |
+| ns | 542 |  | 100 | Project metadata header (poetry, version, license, URLs) | 1.6 |  | 0.592 |
+| walker |  | 585 | 64 | python module doc beets/ui/__init__.py |  |  | 0.592 |
+| walker |  | 657 | 72 | python names beets/__init__.py |  |  | 0.592 |
+| walker |  | 683 | 26 | python decl beets/__init__.py:35 |  |  | 0.592 |
+| ns | 690 |  | 148 | README capability bullets, part 1 (plugin framing + metadata sources) | 1.7 |  | 0.559 |
+| walker |  | 693 | 10 | python doc beets/__init__.py:26 |  |  | 0.559 |
+| ns | 885 |  | 195 | README capability bullets, part 2 (files, art, web, MPD) | 1.8 |  | 0.519 |
+| walker |  | 951 | 258 | python names beets/ui/__init__.py |  |  | 0.519 |
+| walker |  | 978 | 27 | python decl beets/ui/__init__.py:65 |  |  | 0.519 |
+| walker |  | 1045 | 67 | listing of 'beets/ui/commands' |  |  | 0.528 |
+| ns | 1051 |  | 166 | UI, util and test-helper subpackage listings | 1.9 |  | 0.468 |
+| walker |  | 1059 | 14 | listing of 'beets/ui/commands/import_' |  |  | 0.468 |
+| walker |  | 1079 | 20 | python module doc beets/ui/commands/import_/__init__.py |  |  | 0.468 |
+| walker |  | 1112 | 33 | python module doc beets/ui/commands/__init__.py |  |  | 0.468 |
+| walker |  | 1189 | 77 | listing of 'docs' |  |  | 0.472 |
+| walker |  | 1193 | 4 | listing of 'docs/_templates' |  |  | 0.472 |
+| walker |  | 1197 | 4 | listing of 'docs/extensions' |  |  | 0.472 |
+| walker |  | 1211 | 14 | listing of 'docs/_static' |  |  | 0.472 |
+| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.443 |
+| walker |  | 1233 | 22 | listing of 'docs/api' |  |  | 0.443 |
+| walker |  | 1259 | 26 | listing of 'docs/guides' |  |  | 0.443 |
+| walker |  | 1285 | 26 | listing of 'docs/reference' |  |  | 0.443 |
+| walker |  | 1313 | 28 | listing of 'docs/dev' |  |  | 0.443 |
+| walker |  | 1388 | 75 | listing of 'beets/util' |  |  | 0.528 |
+| walker |  | 1402 | 14 | python module doc beets/util/__init__.py |  |  | 0.528 |
+| walker |  | 1416 | 14 | python names beets/library/library.py |  |  | 0.528 |
+| walker |  | 1443 | 27 | [features] / entry-point scripts in pyproject.toml |  |  | 0.530 |
+| ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.472 |
+| walker |  | 1464 | 21 | listing of 'docs/_templates/autosummary' |  |  | 0.472 |
+| walker |  | 1675 | 211 | python names beets/ui/commands/__init__.py |  |  | 0.472 |
+| walker |  | 1685 | 10 | python doc beets/ui/commands/__init__.py:36 |  |  | 0.472 |
+| walker |  | 1792 | 107 | python decl beets/ui/commands/__init__.py:50 |  |  | 0.475 |
+| walker |  | 1816 | 24 | listing of 'docs/dev/plugins' |  |  | 0.475 |
+| ns | 1828 |  | 383 | beetsplug/ bundled plugin listing (complete, 81 entries) | 1.12 |  | 0.389 |
+| walker |  | 1968 | 152 | python names beets/importer/__init__.py |  |  | 0.391 |
+| ns | 2006 |  | 178 | beets.library public export block (complete) | 2.1 |  | 0.377 |
+| ns | 2183 |  | 177 | The `beet` subcommand roster (default_commands) | 2.2 |  | 0.382 |
+| walker |  | 2287 | 319 | python names beets/util/__init__.py |  |  | 0.382 |
+| walker |  | 2321 | 34 | python decl beets/util/__init__.py:130 |  |  | 0.382 |
+| ns | 2373 |  | 190 | Library class: models and schema migrations | 2.3 |  | 0.373 |
+| walker |  | 2417 | 96 | python decl beets/util/__init__.py:74 |  |  | 0.373 |
+| walker |  | 2427 | 10 | python body beets/util/__init__.py:115 |  |  | 0.373 |
+| ns | 2528 |  | 155 | Library method roster (complete) | 2.4 | 2.3 | 0.366 |
+| walker |  | 2599 | 172 | python names beets/ui/commands/import_/__init__.py |  |  | 0.366 |
+| walker |  | 2625 | 26 | python decl beets/ui/commands/import_/__init__.py:160 |  |  | 0.366 |
+| walker |  | 2643 | 18 | python doc beets/ui/commands/import_/__init__.py:34 |  |  | 0.366 |
+| walker |  | 2663 | 20 | python names beets/library/fields.py |  |  | 0.366 |
+| walker |  | 2683 | 20 | python names beets/util/hidden.py |  |  | 0.366 |
+| walker |  | 2711 | 28 | python body beets/ui/__init__.py:111 |  |  | 0.366 |
+| walker |  | 2901 | 190 | python names beets/autotag/__init__.py |  |  | 0.366 |
+| walker |  | 2933 | 32 | python doc beets/ui/commands/import_/__init__.py:49 |  |  | 0.366 |
+| ns | 2952 |  | 424 | models.py class headers: LibModel, FormattedItemMapping, Album, Item | 2.5 |  | 0.342 |
+| walker |  | 2966 | 33 | python doc beets/ui/commands/import_/__init__.py:14 |  |  | 0.342 |
+| ns | 3125 |  | 173 | beets.dbcore public export block + package docstring | 2.6 |  | 0.334 |
+| walker |  | 3177 | 211 | python names beets/library/__init__.py |  |  | 0.364 |
+| walker |  | 3244 | 67 | python decl beets/library/__init__.py:8 |  |  | 0.364 |
+| walker |  | 3263 | 19 | python body beets/library/__init__.py:15 |  |  | 0.364 |
+| walker |  | 3278 | 15 | python names beets/ui/commands/help.py |  |  | 0.364 |
+| ns | 3298 |  | 173 | config_default.yaml: library, directory, plugins, ignore rules | 3.1 |  | 0.354 |
+| walker |  | 3304 | 26 | python names beets/util/m3u.py |  |  | 0.354 |
+| walker |  | 3311 | 7 | python decl beets/util/m3u.py:22 |  |  | 0.354 |
+| walker |  | 3348 | 37 | python doc beets/ui/__init__.py:71 |  |  | 0.354 |
+| walker |  | 3375 | 27 | python names beets/importer/state.py |  |  | 0.354 |
+| walker |  | 3415 | 40 | python doc beets/__init__.py:35 |  |  | 0.354 |
+| ns | 3687 |  | 389 | config_default.yaml: the complete `import:` option block | 3.2 |  | 0.336 |
+| walker |  | 3700 | 285 | python names beets/ui/__init__.py #1 |  |  | 0.336 |
+| walker |  | 3707 | 7 | python decl beets/ui/__init__.py:459 |  |  | 0.336 |
+| walker |  | 3771 | 64 | python decl beets/ui/__init__.py:207 |  |  | 0.336 |
+| walker |  | 3843 | 72 | python decl beets/ui/__init__.py:466 |  |  | 0.336 |
+| ns | 3866 |  | 179 | config_default.yaml: tagging defaults, `paths:` templates, threading | 3.4 |  | 0.329 |
+| walker |  | 3869 | 26 | python decl beets/ui/__init__.py:807 |  |  | 0.329 |
+| walker |  | 3967 | 98 | python decl beets/ui/__init__.py:676 |  |  | 0.329 |
+| walker |  | 4072 | 105 | python decl beets/ui/__init__.py:637 |  |  | 0.329 |
+| walker |  | 4080 | 8 | python decl beets/ui/__init__.py:664 |  |  | 0.329 |
+| walker |  | 4090 | 10 | python decl beets/ui/__init__.py:668 |  |  | 0.329 |
+| ns | 4171 |  | 305 | Path-template function roster: DefaultTemplateFunctions (complete) | 3.5 |  | 0.322 |
+| walker |  | 4203 | 113 | python decl beets/ui/__init__.py:498 |  |  | 0.322 |
+| ns | 4291 |  | 120 | config_default.yaml: display formats and default sorts | 3.6 |  | 0.318 |
+| walker |  | 4474 | 271 | python names beets/dbcore/__init__.py |  |  | 0.344 |
+| walker |  | 4497 | 23 | python body beets/util/__init__.py:136 |  |  | 0.344 |
+| walker |  | 4531 | 34 | python names beets/util/config.py |  |  | 0.344 |
+| walker |  | 4546 | 15 | python decl beets/util/config.py:78 |  |  | 0.344 |
+| walker |  | 4571 | 25 | python decl beets/util/config.py:9 |  |  | 0.344 |
+| walker |  | 4592 | 21 | python names beets/ui/commands/utils.py |  |  | 0.344 |
+| walker |  | 4632 | 40 | python names beets/library/exceptions.py |  |  | 0.344 |
+| walker |  | 4645 | 13 | python decl beets/library/exceptions.py:27 |  |  | 0.344 |
+| walker |  | 4658 | 13 | python decl beets/library/exceptions.py:34 |  |  | 0.344 |
+| ns | 4673 |  | 382 | config_default.yaml: autotagger thresholds and distance weights | 3.7 |  | 0.331 |
+| walker |  | 4688 | 30 | python decl beets/library/exceptions.py:4 |  |  | 0.331 |
+| walker |  | 4727 | 39 | listing of '.github' |  |  | 0.331 |
+| walker |  | 4758 | 31 | listing of '.github/workflows' |  |  | 0.331 |
+| ns | 4813 |  | 140 | config_default.yaml: terminal UI, colour names, import layout | 3.8 |  | 0.325 |
+| walker |  | 4839 | 81 | python names beets/context.py |  |  | 0.325 |
+| walker |  | 4847 | 8 | python decl beets/context.py:18 |  |  | 0.325 |
+| walker |  | 4859 | 12 | python body beets/context.py:8 |  |  | 0.325 |
+| walker |  | 4870 | 11 | python doc beets/context.py:8 |  |  | 0.325 |
+| walker |  | 4882 | 12 | python body beets/context.py:13 |  |  | 0.325 |
+| walker |  | 4939 | 57 | python body beets/__init__.py:26 |  |  | 0.325 |
+| walker |  | 4954 | 15 | listing of 'beets/test' |  |  | 0.334 |
+| ns | 4986 |  | 173 | Album method roster (complete, names only) | 4.1 | 2.5 | 0.329 |
+| walker |  | 4995 | 41 | listing of 'docs/dev/plugins/other' |  |  | 0.329 |
+| walker |  | 5023 | 28 | python decl beets/ui/commands/help.py:6 |  |  | 0.329 |
+| walker |  | 5034 | 11 | python doc beets/context.py:13 |  |  | 0.329 |
+| ns | 5290 |  | 304 | Item method roster (complete, names only) | 4.3 | 2.5 | 0.321 |
+| walker |  | 5303 | 269 | python names beets/plugins.py |  |  | 0.321 |
+| walker |  | 5320 | 17 | python decl beets/plugins.py:116 |  |  | 0.321 |
+| walker |  | 5348 | 28 | python decl beets/plugins.py:127 |  |  | 0.321 |
+| walker |  | 5400 | 52 | python decl beets/plugins.py:147 |  |  | 0.321 |
+| walker |  | 5409 | 9 | python body beets/plugins.py:500 |  |  | 0.321 |
+| ns | 5458 |  | 168 | Item search fields and MediaFile-backed field sets | 4.4 | 2.5 | 0.317 |
+| ns | 5629 |  | 171 | LibModel shared-method roster (complete after `_fields`) | 4.5 | 2.5 | 0.312 |
+| walker |  | 5662 | 253 | python names beets/util/__init__.py #1 |  |  | 0.312 |
+| walker |  | 5687 | 25 | python decl beets/util/__init__.py:169 |  |  | 0.312 |
+| walker |  | 5716 | 29 | python decl beets/util/__init__.py:405 |  |  | 0.312 |
+| walker |  | 5767 | 51 | python decl beets/util/__init__.py:309 |  |  | 0.312 |
+| ns | 5787 |  | 158 | beets.importer public exports + package docstring | 5.1 |  | 0.319 |
+| walker |  | 5833 | 66 | python decl beets/util/__init__.py:158 |  |  | 0.319 |
+| walker |  | 5903 | 70 | python decl beets/util/__init__.py:208 |  |  | 0.319 |
+| walker |  | 5970 | 67 | python decl beets/ui/__init__.py:534 |  |  | 0.319 |
+| walker |  | 6023 | 53 | python names beets/util/units.py |  |  | 0.319 |
+| walker |  | 6078 | 55 | python names beets/util/lyrics.py |  |  | 0.319 |
 | walker |  | 6133 | 55 | python decl beets/util/config.py:29 |  |  | 0.319 |
 | ns | 6147 |  | 360 | importer/stages.py: complete stage-function roster with section banners | 5.2 |  | 0.312 |
 | walker |  | 6211 | 78 | python body beets/ui/commands/__init__.py:36 |  |  | 0.312 |

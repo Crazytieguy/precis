@@ -1,4 +1,4 @@
-Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.498/0.650/0.689/0.615/0.626/0.594/0.560
+Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.650/0.689/0.615/0.626/0.594/0.560
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,38 +15,38 @@ Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 173 |  | 81 | README lede paragraph — scope and supported databases | 1.3 | 1.1 | 0.569 |
 | walker |  | 213 | 45 | listing of 'peepdb/db' |  |  | 0.659 |
 | ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.662 |
-| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.619 |
-| walker |  | 298 | 85 | README headline in README.md |  |  | 0.647 |
-| walker |  | 312 | 14 | python names peepdb/db/base.py |  |  | 0.647 |
-| walker |  | 326 | 14 | python names peepdb/db/oracle.py |  |  | 0.647 |
-| walker |  | 340 | 14 | python names peepdb/db/sqlite.py |  |  | 0.647 |
-| walker |  | 355 | 15 | python names peepdb/db/mariadb.py |  |  | 0.647 |
-| walker |  | 370 | 15 | python names peepdb/db/mongodb.py |  |  | 0.647 |
-| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.577 |
-| walker |  | 385 | 15 | python names peepdb/db/mssql.py |  |  | 0.577 |
-| walker |  | 400 | 15 | python names peepdb/db/mysql.py |  |  | 0.577 |
-| walker |  | 415 | 15 | python names peepdb/db/postgresql.py |  |  | 0.578 |
-| walker |  | 444 | 29 | [features] / entry-point scripts in project.toml |  |  | 0.580 |
-| ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.510 |
-| walker |  | 659 | 215 | python names peepdb/db/__init__.py |  |  | 0.621 |
-| ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.569 |
-| walker |  | 690 | 31 | python names peepdb/db/firebase.py |  |  | 0.569 |
-| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.512 |
-| walker |  | 882 | 192 | [dependencies] in project.toml |  |  | 0.512 |
-| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.497 |
-| walker |  | 935 | 53 | python decl peepdb/db/oracle.py:7 |  |  | 0.498 |
-| walker |  | 989 | 54 | python decl peepdb/db/mongodb.py:8 |  |  | 0.498 |
-| ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.486 |
-| walker |  | 1100 | 111 | python names peepdb/cli.py |  |  | 0.538 |
-| walker |  | 1108 | 8 | python decl peepdb/cli.py:86 |  |  | 0.538 |
-| walker |  | 1119 | 11 | python decl peepdb/cli.py:16 |  |  | 0.538 |
-| walker |  | 1136 | 17 | python decl peepdb/cli.py:25 |  |  | 0.539 |
-| walker |  | 1167 | 31 | python decl peepdb/cli.py:113 |  |  | 0.540 |
-| walker |  | 1208 | 41 | python decl peepdb/cli.py:97 |  |  | 0.544 |
-| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.507 |
-| walker |  | 1215 | 7 | python body peepdb/cli.py:181 |  |  | 0.507 |
-| walker |  | 1289 | 74 | [package] in project.toml |  |  | 0.686 |
-| walker |  | 1345 | 56 | package metadata in project.toml |  |  | 0.687 |
+| walker |  | 289 | 76 | [package] in project.toml |  |  | 0.838 |
+| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.783 |
+| walker |  | 374 | 85 | README headline in README.md |  |  | 0.944 |
+| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.842 |
+| walker |  | 388 | 14 | python names peepdb/db/base.py |  |  | 0.842 |
+| walker |  | 402 | 14 | python names peepdb/db/oracle.py |  |  | 0.842 |
+| walker |  | 416 | 14 | python names peepdb/db/sqlite.py |  |  | 0.842 |
+| walker |  | 443 | 27 | [features] / entry-point scripts in project.toml |  |  | 0.844 |
+| walker |  | 458 | 15 | python names peepdb/db/mariadb.py |  |  | 0.844 |
+| walker |  | 473 | 15 | python names peepdb/db/mongodb.py |  |  | 0.844 |
+| walker |  | 488 | 15 | python names peepdb/db/mssql.py |  |  | 0.844 |
+| ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.742 |
+| walker |  | 503 | 15 | python names peepdb/db/mysql.py |  |  | 0.742 |
+| walker |  | 518 | 15 | python names peepdb/db/postgresql.py |  |  | 0.743 |
+| ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.680 |
+| walker |  | 733 | 215 | python names peepdb/db/__init__.py |  |  | 0.800 |
+| walker |  | 764 | 31 | python names peepdb/db/firebase.py |  |  | 0.800 |
+| walker |  | 820 | 56 | package metadata in project.toml |  |  | 0.800 |
+| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.719 |
+| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.696 |
+| walker |  | 1012 | 192 | [dependencies] in project.toml |  |  | 0.697 |
+| ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.673 |
+| walker |  | 1065 | 53 | python decl peepdb/db/oracle.py:7 |  |  | 0.673 |
+| walker |  | 1119 | 54 | python decl peepdb/db/mongodb.py:8 |  |  | 0.674 |
+| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.628 |
+| walker |  | 1230 | 111 | python names peepdb/cli.py |  |  | 0.683 |
+| walker |  | 1238 | 8 | python decl peepdb/cli.py:86 |  |  | 0.683 |
+| walker |  | 1249 | 11 | python decl peepdb/cli.py:16 |  |  | 0.683 |
+| walker |  | 1266 | 17 | python decl peepdb/cli.py:25 |  |  | 0.683 |
+| walker |  | 1297 | 31 | python decl peepdb/cli.py:113 |  |  | 0.684 |
+| walker |  | 1338 | 41 | python decl peepdb/cli.py:97 |  |  | 0.687 |
+| walker |  | 1345 | 7 | python body peepdb/cli.py:181 |  |  | 0.687 |
 | ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.650 |
 | walker |  | 1463 | 118 | python names peepdb/core.py |  |  | 0.677 |
 | walker |  | 1572 | 109 | python decl peepdb/core.py:56 |  |  | 0.680 |

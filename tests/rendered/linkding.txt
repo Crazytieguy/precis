@@ -115,22 +115,13 @@ bookmarks/
     21→    return {"app_version": utils.app_version}
   feeds.py
     …
-    14→@dataclass
     15→class FeedContext:
-    16→    request: HttpRequest
-    17→    feed_token: FeedToken | None
-    18→    query_set: QuerySet[Bookmark]
+    …
     21→def sanitize(text: str):
     …
     31→class BaseBookmarksFeed(Feed):
     …
     73→class AllBookmarksFeed(BaseBookmarksFeed):
-    74→    title = "All bookmarks"
-    75→    description = "All bookmarks"
-    76→
-    77→    def get_query_set(self, feed_token: FeedToken, search: BookmarkSearch):
-    …
-    80→    def link(self, context: FeedContext):
     …
     84→class UnreadBookmarksFeed(BaseBookmarksFeed):
     …
@@ -497,6 +488,13 @@ package-lock.json
 package.json
 postcss.config.js
 pyproject.toml
+  1→[project]
+  2→name = "linkding"
+  3→version = "1.45.0"
+  4→description = "Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker."
+  5→readme = "README.md"
+  6→requires-python = ">=3.13"
+  …
 pytest.ini
 rollup.config.mjs
 scripts/

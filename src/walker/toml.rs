@@ -37,8 +37,6 @@ use super::{
     single_file_lines_content,
 };
 
-const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
-
 type Section = (String, usize, usize);
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -66,14 +64,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         .collect();
         let identity_key: BatchKey = TomlKey::Identity { file: file.clone() }.into();
         let identity = rows_content(&file, &source, identity_rows).map(|content| {
-            let has_python_identity = sections
-                .iter()
-                .any(|(name, _, _)| is_pyproject_identity_table(name));
+            let scale = if ctx.is_workspace_member(&file) {
+                WORKSPACE_MEMBER_IDENTITY_FACTOR
+            } else {
+                1.0
+            };
             out.push(Batch {
                 key: identity_key.clone(),
                 predecessor: None,
                 content,
-                value: identity_value(&file, ctx, has_python_identity),
+                value: manifest_identity_value(scale, depth),
             });
             identity_key
         });
@@ -386,19 +386,6 @@ fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usi
             pair.table == "project" && pair.value_is_array && is_pep621_dependency_key(&pair.key)
         })
         .flat_map(|pair| pair.start..=pair.end)
-}
-
-/// `has_python_identity`: the TOML has a `[project]` or `[tool.poetry]`
-/// table, whatever its filename.
-fn identity_value(file: &Path, ctx: &WalkCtx, has_python_identity: bool) -> f64 {
-    let scale = if has_python_identity {
-        PYPROJECT_LEDE_IDENTITY_FACTOR
-    } else if ctx.is_workspace_member(file) {
-        WORKSPACE_MEMBER_IDENTITY_FACTOR
-    } else {
-        1.0
-    };
-    manifest_identity_value(scale, path_depth_factor(file, ctx))
 }
 
 fn is_pyproject_identity_table(name: &str) -> bool {

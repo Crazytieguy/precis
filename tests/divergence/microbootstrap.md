@@ -6,49 +6,49 @@ Score(3000)=0.552 I=0.824 C=0.369 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 33 | 33 | listing of '.' |  |  | 0.000 |
 | walker |  | 36 | 3 | listing of '.github' |  |  | 0.000 |
 | walker |  | 45 | 9 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 102 | 57 | listing of 'microbootstrap' |  |  | 0.000 |
-| walker |  | 120 | 18 | listing of 'microbootstrap/middlewares' |  |  | 0.000 |
+| walker |  | 117 | 72 | [package] in pyproject.toml |  |  | 0.000 |
 | ns | 126 |  | 96 | The complete list of built-in instruments | 1.2 |  | 0.000 |
-| walker |  | 143 | 23 | listing of 'microbootstrap/config' |  |  | 0.000 |
-| walker |  | 170 | 27 | listing of 'microbootstrap/bootstrappers' |  |  | 0.000 |
-| walker |  | 182 | 12 | python names microbootstrap/console_writer.py |  |  | 0.000 |
+| walker |  | 174 | 57 | listing of 'microbootstrap' |  |  | 0.000 |
 | ns | 191 |  | 65 | The four bootstrap targets: fastapi, litestar, faststream, or no framework | 1.3 |  | 0.000 |
-| walker |  | 195 | 13 | python names microbootstrap/instruments_setupper.py |  |  | 0.000 |
-| ns | 224 |  | 33 | Repository root listing (complete) | 1.4 |  | 0.315 |
-| walker |  | 267 | 72 | listing of 'microbootstrap/instruments' |  |  | 0.383 |
-| walker |  | 279 | 12 | python names microbootstrap/instruments/instrument_box.py |  |  | 0.383 |
-| walker |  | 292 | 13 | python names microbootstrap/config/fastapi.py |  |  | 0.383 |
-| walker |  | 305 | 13 | python names microbootstrap/config/faststream.py |  |  | 0.383 |
-| walker |  | 320 | 15 | python names microbootstrap/config/litestar.py |  |  | 0.383 |
-| walker |  | 349 | 29 | python names microbootstrap/granian_server.py |  |  | 0.383 |
+| walker |  | 192 | 18 | listing of 'microbootstrap/middlewares' |  |  | 0.000 |
+| walker |  | 215 | 23 | listing of 'microbootstrap/config' |  |  | 0.000 |
+| ns | 224 |  | 33 | Repository root listing (complete) | 1.4 |  | 0.294 |
+| walker |  | 242 | 27 | listing of 'microbootstrap/bootstrappers' |  |  | 0.315 |
+| walker |  | 254 | 12 | python names microbootstrap/console_writer.py |  |  | 0.315 |
+| walker |  | 267 | 13 | python names microbootstrap/instruments_setupper.py |  |  | 0.315 |
+| walker |  | 339 | 72 | listing of 'microbootstrap/instruments' |  |  | 0.383 |
+| walker |  | 351 | 12 | python names microbootstrap/instruments/instrument_box.py |  |  | 0.383 |
 | ns | 353 |  | 129 | `microbootstrap/` and `microbootstrap/instruments/` listings (complete) | 1.5 |  | 0.455 |
-| walker |  | 365 | 16 | python names microbootstrap/middlewares/fastapi.py |  |  | 0.455 |
-| walker |  | 382 | 17 | python names microbootstrap/middlewares/litestar.py |  |  | 0.455 |
-| walker |  | 400 | 18 | listing of 'examples' |  |  | 0.470 |
-| ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.480 |
-| walker |  | 445 | 45 | python names microbootstrap/exceptions.py |  |  | 0.480 |
-| walker |  | 470 | 25 | python decl microbootstrap/middlewares/litestar.py:14 |  |  | 0.480 |
+| walker |  | 364 | 13 | python names microbootstrap/config/fastapi.py |  |  | 0.455 |
+| walker |  | 377 | 13 | python names microbootstrap/config/faststream.py |  |  | 0.455 |
+| walker |  | 392 | 15 | python names microbootstrap/config/litestar.py |  |  | 0.455 |
+| walker |  | 421 | 29 | python names microbootstrap/granian_server.py |  |  | 0.455 |
+| walker |  | 437 | 16 | python names microbootstrap/middlewares/fastapi.py |  |  | 0.455 |
+| ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.438 |
+| walker |  | 454 | 17 | python names microbootstrap/middlewares/litestar.py |  |  | 0.438 |
+| walker |  | 472 | 18 | listing of 'examples' |  |  | 0.480 |
+| walker |  | 517 | 45 | python names microbootstrap/exceptions.py |  |  | 0.480 |
+| walker |  | 542 | 25 | python decl microbootstrap/middlewares/litestar.py:14 |  |  | 0.481 |
 | ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.411 |
-| walker |  | 697 | 227 | python names microbootstrap/__init__.py |  |  | 0.411 |
-| walker |  | 723 | 26 | python decl microbootstrap/middlewares/fastapi.py:12 |  |  | 0.411 |
-| walker |  | 775 | 52 | python decl microbootstrap/granian_server.py:27 |  |  | 0.411 |
-| walker |  | 784 | 9 | python doc microbootstrap/exceptions.py:1 |  |  | 0.412 |
-| walker |  | 814 | 30 | python names microbootstrap/instruments/cors_instrument.py |  |  | 0.412 |
-| ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.360 |
-| walker |  | 844 | 30 | python names microbootstrap/instruments/swagger_instrument.py |  |  | 0.360 |
-| walker |  | 915 | 71 | declaration surface of Justfile |  |  | 0.360 |
-| walker |  | 948 | 33 | python names microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.360 |
+| walker |  | 769 | 227 | python names microbootstrap/__init__.py |  |  | 0.411 |
+| walker |  | 795 | 26 | python decl microbootstrap/middlewares/fastapi.py:12 |  |  | 0.411 |
+| ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.359 |
+| walker |  | 847 | 52 | python decl microbootstrap/granian_server.py:27 |  |  | 0.360 |
+| walker |  | 856 | 9 | python doc microbootstrap/exceptions.py:1 |  |  | 0.360 |
+| walker |  | 886 | 30 | python names microbootstrap/instruments/cors_instrument.py |  |  | 0.360 |
+| walker |  | 916 | 30 | python names microbootstrap/instruments/swagger_instrument.py |  |  | 0.360 |
+| walker |  | 987 | 71 | declaration surface of Justfile |  |  | 0.360 |
+| walker |  | 1020 | 33 | python names microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.360 |
 | ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.316 |
-| walker |  | 1207 | 259 | README headline in README.md |  |  | 0.415 |
-| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.399 |
-| walker |  | 1286 | 79 | python decl microbootstrap/granian_server.py:16 |  |  | 0.399 |
-| walker |  | 1302 | 16 | python doc microbootstrap/exceptions.py:5 |  |  | 0.399 |
-| walker |  | 1355 | 53 | python names microbootstrap/instruments/health_checks_instrument.py |  |  | 0.399 |
-| walker |  | 1387 | 32 | python decl microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.400 |
-| walker |  | 1404 | 17 | python doc microbootstrap/exceptions.py:9 |  |  | 0.400 |
-| walker |  | 1451 | 47 | listing of 'tests' |  |  | 0.400 |
+| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.303 |
+| walker |  | 1279 | 259 | README headline in README.md |  |  | 0.399 |
+| walker |  | 1358 | 79 | python decl microbootstrap/granian_server.py:16 |  |  | 0.399 |
+| walker |  | 1374 | 16 | python doc microbootstrap/exceptions.py:5 |  |  | 0.399 |
+| walker |  | 1427 | 53 | python names microbootstrap/instruments/health_checks_instrument.py |  |  | 0.400 |
+| walker |  | 1459 | 32 | python decl microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.400 |
+| walker |  | 1476 | 17 | python doc microbootstrap/exceptions.py:9 |  |  | 0.400 |
 | ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.367 |
-| walker |  | 1523 | 72 | [package] in pyproject.toml |  |  | 0.367 |
+| walker |  | 1523 | 47 | listing of 'tests' |  |  | 0.367 |
 | walker |  | 1632 | 109 | python decl microbootstrap/console_writer.py:10 |  |  | 0.367 |
 | walker |  | 1682 | 50 | python decl microbootstrap/console_writer.py:22 |  |  | 0.367 |
 | ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.328 |

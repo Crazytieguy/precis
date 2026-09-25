@@ -1,4 +1,4 @@
-Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.521/0.585/0.498/0.408/0.396/0.393/0.412
+Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.521/0.586/0.498/0.408/0.396/0.393/0.412
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -28,77 +28,77 @@ Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 | walker |  | 508 | 28 | listing of 'experiments/data/formal_language/tasks' |  |  | 0.698 |
 | walker |  | 522 | 14 | python names experiments/metrics.py |  |  | 0.698 |
 | ns | 528 |  | 182 | `xlstm/__init__.py` in full — version plus the entire public export block | 1.5 |  | 0.629 |
-| walker |  | 555 | 33 | listing of 'notebooks/xlstm' |  |  | 0.635 |
-| walker |  | 667 | 112 | python names xlstm/blocks/slstm/src/vanilla/__init__.py |  |  | 0.635 |
-| walker |  | 704 | 37 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:11 |  |  | 0.635 |
+| walker |  | 607 | 85 | [package] in pyproject.toml |  |  | 0.629 |
+| walker |  | 640 | 33 | listing of 'notebooks/xlstm' |  |  | 0.635 |
 | ns | 712 |  | 184 | Every README heading (H1/H2/H3), line-located | 1.6 | 1.1 | 0.556 |
-| walker |  | 718 | 14 | python names xlstm/xlstm_large/from_pretrained.py |  |  | 0.556 |
-| walker |  | 821 | 103 | README headline in README.md |  |  | 0.568 |
-| walker |  | 852 | 31 | python names xlstm/utils.py |  |  | 0.568 |
-| walker |  | 883 | 31 | python names xlstm/xlstm_block_stack.py |  |  | 0.568 |
+| walker |  | 752 | 112 | python names xlstm/blocks/slstm/src/vanilla/__init__.py |  |  | 0.556 |
+| walker |  | 789 | 37 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:11 |  |  | 0.556 |
+| walker |  | 803 | 14 | python names xlstm/xlstm_large/from_pretrained.py |  |  | 0.556 |
+| walker |  | 906 | 103 | README headline in README.md |  |  | 0.568 |
+| walker |  | 937 | 31 | python names xlstm/utils.py |  |  | 0.568 |
+| walker |  | 968 | 31 | python names xlstm/xlstm_block_stack.py |  |  | 0.521 |
 | ns | 968 |  | 256 | README 75-85: the 7B code is `xlstm/xlstm_large`, standalone on `mlstm_kernels` | 1.7 | 1.6 | 0.521 |
-| walker |  | 1043 | 160 | python names xlstm/__init__.py |  |  | 0.585 |
-| walker |  | 1083 | 40 | python names experiments/lr_scheduler.py |  |  | 0.585 |
+| walker |  | 1128 | 160 | python names xlstm/__init__.py |  |  | 0.585 |
 | ns | 1139 |  | 171 | Complete listings of `tests/`, `experiments/` and the `experiments/data/` tree | 1.8 |  | 0.564 |
-| walker |  | 1257 | 174 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:77 |  |  | 0.564 |
-| ns | 1278 |  | 139 | Complete listings of `xlstm/blocks/mlstm/`, `xlstm/blocks/slstm/`, `notebooks/`, `res/`, `.github/workflows/` | 1.9 |  | 0.585 |
-| walker |  | 1433 | 176 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:17 |  |  | 0.585 |
-| walker |  | 1479 | 46 | python names xlstm/xlstm_lm_model.py |  |  | 0.586 |
-| walker |  | 1532 | 53 | python decl experiments/lr_scheduler.py:9 |  |  | 0.586 |
-| walker |  | 1541 | 9 | python decl experiments/lr_scheduler.py:13 |  |  | 0.586 |
+| walker |  | 1168 | 40 | python names experiments/lr_scheduler.py |  |  | 0.564 |
+| ns | 1278 |  | 139 | Complete listings of `xlstm/blocks/mlstm/`, `xlstm/blocks/slstm/`, `notebooks/`, `res/`, `.github/workflows/` | 1.9 |  | 0.586 |
+| walker |  | 1342 | 174 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:77 |  |  | 0.586 |
+| walker |  | 1518 | 176 | python decl xlstm/blocks/slstm/src/vanilla/__init__.py:17 |  |  | 0.586 |
 | ns | 1548 |  | 270 | README quickstart: instantiate `xLSTMLargeConfig` + `xLSTMLarge` and run a forward pass | 2.1 |  | 0.539 |
-| walker |  | 1550 | 9 | python decl experiments/lr_scheduler.py:18 |  |  | 0.539 |
-| walker |  | 1579 | 29 | python names xlstm/blocks/xlstm_block.py |  |  | 0.539 |
-| walker |  | 1608 | 29 | python names xlstm/components/linear_headwise.py |  |  | 0.539 |
-| walker |  | 1637 | 29 | python names xlstm/components/ln.py |  |  | 0.540 |
-| walker |  | 1660 | 23 | python decl xlstm/components/ln.py:51 |  |  | 0.540 |
+| walker |  | 1564 | 46 | python names xlstm/xlstm_lm_model.py |  |  | 0.539 |
+| walker |  | 1617 | 53 | python decl experiments/lr_scheduler.py:9 |  |  | 0.539 |
+| walker |  | 1626 | 9 | python decl experiments/lr_scheduler.py:13 |  |  | 0.539 |
+| walker |  | 1635 | 9 | python decl experiments/lr_scheduler.py:18 |  |  | 0.539 |
+| walker |  | 1664 | 29 | python names xlstm/blocks/xlstm_block.py |  |  | 0.540 |
 | ns | 1667 |  | 119 | Every top-level class in `xlstm/xlstm_large/model.py`, name + line | 2.2 |  | 0.522 |
-| walker |  | 1671 | 11 | python names experiments/data/formal_language/tasks/parity.py |  |  | 0.522 |
-| walker |  | 1729 | 58 | python decl xlstm/xlstm_lm_model.py:14 |  |  | 0.522 |
-| walker |  | 1741 | 12 | python names experiments/data/formal_language/tasks/even_pairs.py |  |  | 0.522 |
-| walker |  | 1806 | 65 | python names experiments/main.py |  |  | 0.522 |
-| walker |  | 1823 | 17 | python decl experiments/main.py:21 |  |  | 0.522 |
+| walker |  | 1693 | 29 | python names xlstm/components/linear_headwise.py |  |  | 0.522 |
+| walker |  | 1722 | 29 | python names xlstm/components/ln.py |  |  | 0.522 |
+| walker |  | 1745 | 23 | python decl xlstm/components/ln.py:51 |  |  | 0.522 |
+| walker |  | 1756 | 11 | python names experiments/data/formal_language/tasks/parity.py |  |  | 0.522 |
+| walker |  | 1814 | 58 | python decl xlstm/xlstm_lm_model.py:14 |  |  | 0.522 |
+| walker |  | 1826 | 12 | python names experiments/data/formal_language/tasks/even_pairs.py |  |  | 0.522 |
 | ns | 1842 |  | 175 | `xLSTMLargeConfig` part 1/4 — the four required fields and the norm/bias toggles | 2.3 | 2.2 | 0.497 |
-| walker |  | 1867 | 44 | python decl experiments/main.py:25 |  |  | 0.497 |
-| walker |  | 1942 | 75 | python decl experiments/lr_scheduler.py:24 |  |  | 0.497 |
-| walker |  | 1950 | 8 | python decl experiments/lr_scheduler.py:33 |  |  | 0.497 |
-| walker |  | 1992 | 42 | python names xlstm/components/util.py |  |  | 0.498 |
-| walker |  | 2034 | 42 | python names xlstm/xlstm_large/utils.py |  |  | 0.498 |
-| walker |  | 2062 | 28 | python decl xlstm/xlstm_large/utils.py:10 |  |  | 0.498 |
-| walker |  | 2105 | 43 | python names xlstm/components/conv.py |  |  | 0.498 |
-| walker |  | 2134 | 29 | python names xlstm/blocks/mlstm/cell.py |  |  | 0.499 |
+| walker |  | 1891 | 65 | python names experiments/main.py |  |  | 0.497 |
+| walker |  | 1908 | 17 | python decl experiments/main.py:21 |  |  | 0.497 |
+| walker |  | 1952 | 44 | python decl experiments/main.py:25 |  |  | 0.497 |
+| walker |  | 2027 | 75 | python decl experiments/lr_scheduler.py:24 |  |  | 0.497 |
+| walker |  | 2035 | 8 | python decl experiments/lr_scheduler.py:33 |  |  | 0.497 |
+| walker |  | 2077 | 42 | python names xlstm/components/util.py |  |  | 0.498 |
+| walker |  | 2119 | 42 | python names xlstm/xlstm_large/utils.py |  |  | 0.498 |
+| walker |  | 2147 | 28 | python decl xlstm/xlstm_large/utils.py:10 |  |  | 0.498 |
+| walker |  | 2190 | 43 | python names xlstm/components/conv.py |  |  | 0.499 |
 | ns | 2215 |  | 373 | `xLSTMLargeConfig` part 2/4 — qk/v dim factors and kernel selection (`chunkwise_kernel`, `sequence_kernel`, `step_kernel`, `mode`) | 2.4 | 2.3 | 0.460 |
-| walker |  | 2323 | 189 | [dependencies] in pyproject.toml |  |  | 0.460 |
-| walker |  | 2354 | 31 | python names xlstm/blocks/mlstm/block.py |  |  | 0.460 |
-| walker |  | 2385 | 31 | python names xlstm/blocks/slstm/block.py |  |  | 0.460 |
-| walker |  | 2439 | 54 | python names experiments/data/utils.py |  |  | 0.460 |
+| walker |  | 2219 | 29 | python names xlstm/blocks/mlstm/cell.py |  |  | 0.460 |
+| walker |  | 2406 | 187 | [dependencies] in pyproject.toml |  |  | 0.460 |
+| walker |  | 2437 | 31 | python names xlstm/blocks/mlstm/block.py |  |  | 0.460 |
 | ns | 2458 |  | 243 | `xLSTMLargeConfig` part 3/4 — chunking, state return, and kernel dtypes | 2.5 | 2.4 | 0.439 |
-| walker |  | 2487 | 48 | python decl experiments/data/utils.py:55 |  |  | 0.439 |
-| walker |  | 2493 | 6 | python decl experiments/data/utils.py:57 |  |  | 0.439 |
-| walker |  | 2501 | 8 | python decl experiments/data/utils.py:77 |  |  | 0.439 |
-| walker |  | 2509 | 8 | python decl experiments/data/utils.py:85 |  |  | 0.439 |
-| walker |  | 2612 | 103 | python decl experiments/metrics.py:9 |  |  | 0.439 |
-| walker |  | 2621 | 9 | python body experiments/metrics.py:22 |  |  | 0.439 |
-| walker |  | 2636 | 15 | python names xlstm/blocks/slstm/src/vanilla/lstm.py |  |  | 0.439 |
-| walker |  | 2651 | 15 | python names xlstm/blocks/slstm/src/vanilla/slstm.py |  |  | 0.439 |
+| walker |  | 2468 | 31 | python names xlstm/blocks/slstm/block.py |  |  | 0.439 |
+| walker |  | 2522 | 54 | python names experiments/data/utils.py |  |  | 0.439 |
+| walker |  | 2570 | 48 | python decl experiments/data/utils.py:55 |  |  | 0.439 |
+| walker |  | 2576 | 6 | python decl experiments/data/utils.py:57 |  |  | 0.439 |
+| walker |  | 2584 | 8 | python decl experiments/data/utils.py:77 |  |  | 0.439 |
+| walker |  | 2592 | 8 | python decl experiments/data/utils.py:85 |  |  | 0.439 |
+| walker |  | 2695 | 103 | python decl experiments/metrics.py:9 |  |  | 0.439 |
 | ns | 2698 |  | 240 | `xLSTMLargeConfig` part 4/4 — feedforward sizing, soft caps, `weight_mode` | 2.6 | 2.5 | 0.423 |
-| walker |  | 2761 | 110 | python decl xlstm/xlstm_block_stack.py:77 |  |  | 0.423 |
-| walker |  | 2817 | 56 | python decl xlstm/xlstm_block_stack.py:126 |  |  | 0.423 |
-| walker |  | 2853 | 36 | python names xlstm/blocks/mlstm/layer.py |  |  | 0.424 |
-| walker |  | 2889 | 36 | python names xlstm/blocks/slstm/layer.py |  |  | 0.424 |
-| ns | 2891 |  | 193 | `xlstm/xlstm_large/model.py` header: the hard `mlstm_kernels` dependency and the state type aliases | 2.7 |  | 0.408 |
-| walker |  | 2912 | 23 | python names experiments/data/formal_language/tasks/cycle_navigation.py |  |  | 0.408 |
-| walker |  | 2971 | 59 | python decl xlstm/components/ln.py:8 |  |  | 0.408 |
-| walker |  | 2979 | 8 | python decl xlstm/components/ln.py:27 |  |  | 0.408 |
+| walker |  | 2704 | 9 | python body experiments/metrics.py:22 |  |  | 0.423 |
+| walker |  | 2719 | 15 | python names xlstm/blocks/slstm/src/vanilla/lstm.py |  |  | 0.423 |
+| walker |  | 2734 | 15 | python names xlstm/blocks/slstm/src/vanilla/slstm.py |  |  | 0.423 |
+| walker |  | 2844 | 110 | python decl xlstm/xlstm_block_stack.py:77 |  |  | 0.423 |
+| ns | 2891 |  | 193 | `xlstm/xlstm_large/model.py` header: the hard `mlstm_kernels` dependency and the state type aliases | 2.7 |  | 0.407 |
+| walker |  | 2900 | 56 | python decl xlstm/xlstm_block_stack.py:126 |  |  | 0.407 |
+| walker |  | 2936 | 36 | python names xlstm/blocks/mlstm/layer.py |  |  | 0.408 |
+| walker |  | 2972 | 36 | python names xlstm/blocks/slstm/layer.py |  |  | 0.408 |
+| walker |  | 2995 | 23 | python names experiments/data/formal_language/tasks/cycle_navigation.py |  |  | 0.408 |
 | ns | 3038 |  | 147 | `xLSTMLarge.__init__` — embedding, backbone, lm_head | 2.8 | 2.2 | 0.397 |
-| walker |  | 3099 | 120 | python decl xlstm/xlstm_lm_model.py:22 |  |  | 0.397 |
-| walker |  | 3158 | 59 | python decl xlstm/xlstm_lm_model.py:56 |  |  | 0.397 |
+| walker |  | 3054 | 59 | python decl xlstm/components/ln.py:8 |  |  | 0.397 |
+| walker |  | 3062 | 8 | python decl xlstm/components/ln.py:27 |  |  | 0.397 |
+| walker |  | 3182 | 120 | python decl xlstm/xlstm_lm_model.py:22 |  |  | 0.398 |
+| walker |  | 3241 | 59 | python decl xlstm/xlstm_lm_model.py:56 |  |  | 0.398 |
 | ns | 3269 |  | 231 | `xLSTMLarge.forward` — signature, shape assert, `soft_cap`, and the conditional state return | 2.9 | 2.8 | 0.382 |
-| walker |  | 3344 | 186 | headings outline in README.md |  |  | 0.426 |
-| walker |  | 3407 | 63 | python decl xlstm/components/conv.py:24 |  |  | 0.426 |
-| ns | 3417 |  | 148 | `xLSTMLarge.generate` — signature and delegation to `generate_tokens` | 2.10 | 2.8 | 0.414 |
-| walker |  | 3530 | 123 | python decl xlstm/utils.py:11 |  |  | 0.414 |
-| walker |  | 3613 | 83 | [package] in pyproject.toml |  |  | 0.415 |
+| ns | 3417 |  | 148 | `xLSTMLarge.generate` — signature and delegation to `generate_tokens` | 2.10 | 2.8 | 0.371 |
+| walker |  | 3427 | 186 | headings outline in README.md |  |  | 0.415 |
+| walker |  | 3490 | 63 | python decl xlstm/components/conv.py:24 |  |  | 0.415 |
+| walker |  | 3613 | 123 | python decl xlstm/utils.py:11 |  |  | 0.415 |
 | ns | 3633 |  | 216 | `xLSTMLargeBlockStack.__init__` — the `mLSTMBlock` list and the `add_out_norm` switch | 2.11 | 2.2 | 0.399 |
 | walker |  | 3651 | 38 | python decl xlstm/blocks/slstm/block.py:29 |  |  | 0.399 |
 | walker |  | 3691 | 40 | python names xlstm/blocks/mlstm/backends.py |  |  | 0.400 |

@@ -120,63 +120,64 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 5530 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.331 |
 | walker |  | 5680 | 338 | README.md section #7 |  |  | 0.331 |
 | walker |  | 5754 | 74 | ARCHITECTURE.md section #15 |  |  | 0.331 |
-| walker |  | 5785 | 31 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.331 |
-| walker |  | 5796 | 11 | ts names site/.vitepress/theme/index.ts |  |  | 0.331 |
 | ns | 5816 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.321 |
+| walker |  | 5821 | 67 | [package] in tests/pyproject.toml |  |  | 0.321 |
+| walker |  | 5852 | 31 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.321 |
+| walker |  | 5863 | 11 | ts names site/.vitepress/theme/index.ts |  |  | 0.321 |
 | ns | 5995 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.314 |
-| walker |  | 6009 | 213 | c names sqlite-vec.c #2 |  |  | 0.315 |
-| walker |  | 6021 | 12 | c decl sqlite-vec.c:481 |  |  | 0.315 |
+| walker |  | 6076 | 213 | c names sqlite-vec.c #2 |  |  | 0.315 |
+| walker |  | 6088 | 12 | c decl sqlite-vec.c:481 |  |  | 0.315 |
 | ns | 6096 |  | 101 | Registered virtual table modules | 3.2 |  | 0.312 |
 | ns | 6205 |  | 109 | vec_debug build string | 3.3 |  | 0.309 |
 | ns | 6439 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.302 |
 | ns | 6530 |  | 91 | Vector element types | 3.5 |  | 0.316 |
 | ns | 6805 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.331 |
-| walker |  | 6842 | 821 | c decl sqlite-vec.c:501 |  |  | 0.331 |
+| walker |  | 6909 | 821 | c decl sqlite-vec.c:501 |  |  | 0.331 |
 | ns | 6981 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.325 |
 | ns | 7189 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.320 |
 | ns | 7329 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.316 |
 | ns | 7395 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.315 |
 | ns | 7623 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.308 |
-| walker |  | 7678 | 836 | c decl sqlite-vec.c:567 |  |  | 0.308 |
-| walker |  | 7716 | 38 | python names tests/skip.test-correctness.py |  |  | 0.308 |
-| walker |  | 7757 | 41 | [package] in benchmarks/micro/Cargo.toml |  |  | 0.308 |
+| walker |  | 7745 | 836 | c decl sqlite-vec.c:567 |  |  | 0.308 |
+| walker |  | 7783 | 38 | python names tests/skip.test-correctness.py |  |  | 0.308 |
 | ns | 7801 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.303 |
+| walker |  | 7824 | 41 | [package] in benchmarks/micro/Cargo.toml |  |  | 0.303 |
 | ns | 7992 |  | 191 | Compile-time options | 4.3 |  | 0.301 |
 | ns | 8136 |  | 144 | Public header template | 4.4 |  | 0.297 |
 | ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.293 |
 | ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.318 |
 | ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.333 |
-| walker |  | 8665 | 908 | README.md section #3 |  |  | 0.333 |
 | ns | 8667 |  | 12 | CI workflows | 4.8 |  | 0.336 |
-| walker |  | 8705 | 40 | listing of 'tests/__snapshots__' |  |  | 0.336 |
-| walker |  | 8749 | 44 | ts decl site/project.data.ts:12 |  |  | 0.336 |
-| walker |  | 8799 | 50 | rust names tests/unittest.rs |  |  | 0.336 |
+| walker |  | 8732 | 908 | README.md section #3 |  |  | 0.336 |
+| walker |  | 8772 | 40 | listing of 'tests/__snapshots__' |  |  | 0.336 |
 | ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.368 |
-| walker |  | 8845 | 46 | listing of 'site/public' |  |  | 0.368 |
+| walker |  | 8816 | 44 | ts decl site/project.data.ts:12 |  |  | 0.368 |
+| walker |  | 8866 | 50 | rust names tests/unittest.rs |  |  | 0.368 |
 | ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.366 |
-| walker |  | 8956 | 111 | ARCHITECTURE.md section #13 |  |  | 0.366 |
-| walker |  | 9011 | 55 | python names tests/test-knn-distance-constraints.py |  |  | 0.366 |
-| walker |  | 9038 | 27 | python decl tests/test-knn-distance-constraints.py:42 |  |  | 0.366 |
-| walker |  | 9077 | 39 | rust body benchmarks/micro/src/lib.rs:8 |  |  | 0.366 |
-| walker |  | 9107 | 30 | python names tests/correctness/build.py |  |  | 0.366 |
-| walker |  | 9166 | 59 | python names tests/test-general.py |  |  | 0.366 |
-| ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.358 |
-| walker |  | 9217 | 51 | python decl tests/test-general.py:6 |  |  | 0.358 |
-| walker |  | 9222 | 5 | python body tests/test-knn-distance-constraints.py:43 |  |  | 0.358 |
+| walker |  | 8912 | 46 | listing of 'site/public' |  |  | 0.366 |
+| walker |  | 9023 | 111 | ARCHITECTURE.md section #13 |  |  | 0.366 |
+| walker |  | 9078 | 55 | python names tests/test-knn-distance-constraints.py |  |  | 0.366 |
+| walker |  | 9105 | 27 | python decl tests/test-knn-distance-constraints.py:42 |  |  | 0.366 |
+| walker |  | 9144 | 39 | rust body benchmarks/micro/src/lib.rs:8 |  |  | 0.366 |
+| walker |  | 9174 | 30 | python names tests/correctness/build.py |  |  | 0.366 |
+| ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.357 |
+| walker |  | 9233 | 59 | python names tests/test-general.py |  |  | 0.358 |
 | ns | 9280 |  | 80 | examples/ listing (complete) | 5.4 |  | 0.374 |
-| walker |  | 9346 | 124 | ARCHITECTURE.md section #10 |  |  | 0.374 |
+| walker |  | 9284 | 51 | python decl tests/test-general.py:6 |  |  | 0.374 |
+| walker |  | 9289 | 5 | python body tests/test-knn-distance-constraints.py:43 |  |  | 0.374 |
+| walker |  | 9413 | 124 | ARCHITECTURE.md section #10 |  |  | 0.374 |
 | ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.369 |
-| walker |  | 9470 | 124 | ARCHITECTURE.md section #9 |  |  | 0.369 |
 | ns | 9501 |  | 50 | bindings/ listings (complete) | 5.6 |  | 0.379 |
-| walker |  | 9532 | 62 | python names tests/fuzz.py |  |  | 0.379 |
-| walker |  | 9570 | 38 | python decl tests/fuzz.py:13 |  |  | 0.379 |
-| walker |  | 9578 | 8 | python body tests/fuzz.py:23 |  |  | 0.379 |
+| walker |  | 9537 | 124 | ARCHITECTURE.md section #9 |  |  | 0.379 |
+| walker |  | 9599 | 62 | python names tests/fuzz.py |  |  | 0.379 |
+| walker |  | 9637 | 38 | python decl tests/fuzz.py:13 |  |  | 0.379 |
 | ns | 9640 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.405 |
-| walker |  | 9815 | 237 | c names sqlite-vec.c #3 |  |  | 0.412 |
-| ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.406 |
-| walker |  | 9857 | 42 | c decl sqlite-vec.c:598 |  |  | 0.406 |
-| walker |  | 9883 | 26 | c decl sqlite-vec.c:811 |  |  | 0.406 |
-| walker |  | 9910 | 27 | c decl sqlite-vec.c:687 |  |  | 0.406 |
-| walker |  | 9916 | 6 | plaintext config tests/.gitignore |  |  | 0.406 |
-| walker |  | 9922 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
+| walker |  | 9645 | 8 | python body tests/fuzz.py:23 |  |  | 0.405 |
+| ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.399 |
+| walker |  | 9882 | 237 | c names sqlite-vec.c #3 |  |  | 0.406 |
+| walker |  | 9924 | 42 | c decl sqlite-vec.c:598 |  |  | 0.406 |
+| walker |  | 9950 | 26 | c decl sqlite-vec.c:811 |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
+| walker |  | 9977 | 27 | c decl sqlite-vec.c:687 |  |  | 0.403 |
+| walker |  | 9983 | 6 | plaintext config tests/.gitignore |  |  | 0.403 |
+| walker |  | 9989 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.403 |

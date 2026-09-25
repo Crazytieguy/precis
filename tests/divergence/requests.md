@@ -1,4 +1,4 @@
-Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.635/0.618/0.576/0.579/0.625/0.599
+Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.639/0.618/0.576/0.579/0.625/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -7,33 +7,33 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 77 | 3 | listing of 'src' |  |  | 0.000 |
 | walker |  | 111 | 34 | listing of 'ext' |  |  | 0.000 |
 | ns | 121 |  | 74 | Repository root listing (complete) | 1.2 |  | 0.671 |
-| walker |  | 165 | 54 | listing of 'docs' |  |  | 0.680 |
-| walker |  | 169 | 4 | listing of 'docs/_templates' |  |  | 0.680 |
-| walker |  | 178 | 9 | listing of 'docs/_static' |  |  | 0.680 |
-| walker |  | 188 | 10 | listing of 'docs/dev' |  |  | 0.683 |
-| walker |  | 202 | 14 | listing of 'docs/_themes' |  |  | 0.683 |
-| ns | 216 |  | 95 | `src/requests/` module roster (complete) | 1.3 |  | 0.463 |
-| walker |  | 223 | 21 | listing of 'docs/user' |  |  | 0.467 |
-| walker |  | 261 | 38 | listing of 'docs/community' |  |  | 0.478 |
-| ns | 319 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.378 |
-| walker |  | 353 | 92 | listing of 'src/requests' |  |  | 0.607 |
-| ns | 466 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.540 |
+| walker |  | 169 | 58 | [package] in pyproject.toml |  |  | 0.672 |
+| ns | 216 |  | 95 | `src/requests/` module roster (complete) | 1.3 |  | 0.456 |
+| walker |  | 223 | 54 | listing of 'docs' |  |  | 0.462 |
+| walker |  | 227 | 4 | listing of 'docs/_templates' |  |  | 0.462 |
+| walker |  | 236 | 9 | listing of 'docs/_static' |  |  | 0.462 |
+| walker |  | 246 | 10 | listing of 'docs/dev' |  |  | 0.464 |
+| walker |  | 260 | 14 | listing of 'docs/_themes' |  |  | 0.464 |
+| walker |  | 281 | 21 | listing of 'docs/user' |  |  | 0.468 |
+| walker |  | 319 | 38 | listing of 'docs/community' |  |  | 0.379 |
+| ns | 319 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.379 |
+| walker |  | 411 | 92 | listing of 'src/requests' |  |  | 0.607 |
+| ns | 466 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.541 |
 | ns | 584 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.507 |
-| ns | 682 |  | 98 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.449 |
-| walker |  | 709 | 356 | plaintext config Makefile |  |  | 0.456 |
-| ns | 762 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.477 |
-| walker |  | 884 | 175 | README headline in README.md |  |  | 0.619 |
-| ns | 885 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.660 |
-| walker |  | 924 | 40 | headings outline in README.md |  |  | 0.691 |
-| ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.627 |
-| walker |  | 1234 | 310 | python names src/requests/__init__.py |  |  | 0.635 |
-| walker |  | 1281 | 47 | python decl src/requests/__init__.py:60 |  |  | 0.635 |
-| walker |  | 1317 | 36 | python names src/requests/help.py |  |  | 0.635 |
-| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.641 |
-| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.627 |
-| walker |  | 1667 | 350 | python module doc src/requests/__init__.py |  |  | 0.627 |
-| walker |  | 1812 | 145 | [dependencies] in pyproject.toml |  |  | 0.630 |
-| walker |  | 1866 | 54 | [package] in pyproject.toml |  |  | 0.640 |
+| ns | 682 |  | 98 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.450 |
+| ns | 762 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.431 |
+| walker |  | 767 | 356 | plaintext config Makefile |  |  | 0.477 |
+| ns | 885 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.523 |
+| walker |  | 942 | 175 | README headline in README.md |  |  | 0.660 |
+| walker |  | 982 | 40 | headings outline in README.md |  |  | 0.692 |
+| ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.630 |
+| walker |  | 1292 | 310 | python names src/requests/__init__.py |  |  | 0.639 |
+| walker |  | 1339 | 47 | python decl src/requests/__init__.py:60 |  |  | 0.639 |
+| walker |  | 1375 | 36 | python names src/requests/help.py |  |  | 0.639 |
+| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.644 |
+| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.630 |
+| walker |  | 1725 | 350 | python module doc src/requests/__init__.py |  |  | 0.630 |
+| walker |  | 1866 | 141 | [dependencies] in pyproject.toml |  |  | 0.640 |
 | ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.599 |
 | walker |  | 1909 | 43 | listing of '.github' |  |  | 0.612 |
 | walker |  | 1950 | 41 | listing of '.github/workflows' |  |  | 0.646 |

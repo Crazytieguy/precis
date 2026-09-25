@@ -1,4 +1,4 @@
-Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.702/0.830/0.778/0.668/0.599/0.541/0.520
+Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.605/0.768/0.778/0.668/0.599/0.541/0.520
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -6,35 +6,35 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 53 | 3 | listing of 'src' |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what Click is | 1.1 |  | 0.000 |
 | walker |  | 84 | 31 | [dependencies] in pyproject.toml |  |  | 0.000 |
-| walker |  | 165 | 81 | README headline in README.md |  |  | 1.000 |
-| ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.583 |
-| walker |  | 195 | 30 | headings outline in README.md |  |  | 0.583 |
-| walker |  | 206 | 11 | listing of '.devcontainer' |  |  | 0.583 |
-| walker |  | 219 | 13 | listing of '.github' |  |  | 0.583 |
-| walker |  | 242 | 23 | listing of '.github/workflows' |  |  | 0.584 |
+| walker |  | 162 | 78 | [package] in pyproject.toml |  |  | 0.000 |
+| ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.000 |
+| walker |  | 243 | 81 | README headline in README.md |  |  | 0.584 |
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
-| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
-| walker |  | 330 | 88 | listing of 'src/click' |  |  | 0.810 |
-| walker |  | 405 | 75 | python module doc src/click/__init__.py |  |  | 0.810 |
-| ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.693 |
-| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.662 |
-| walker |  | 653 | 248 | python names src/click/__init__.py |  |  | 0.671 |
-| walker |  | 669 | 16 | python names src/click/_textwrap.py |  |  | 0.671 |
-| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.531 |
-| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.483 |
-| walker |  | 861 | 192 | listing of 'docs' |  |  | 0.500 |
-| walker |  | 876 | 15 | listing of 'docs/_static' |  |  | 0.503 |
-| walker |  | 975 | 99 | README.md section #0 |  |  | 0.615 |
-| ns | 983 |  | 207 | Documentation listing: docs/ | 1.9 |  | 0.702 |
-| walker |  | 1011 | 36 | listing of 'examples' |  |  | 0.734 |
-| walker |  | 1244 | 233 | python names src/click/__init__.py #1 |  |  | 0.740 |
-| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.757 |
-| walker |  | 1297 | 53 | python decl src/click/_textwrap.py:8 |  |  | 0.757 |
-| walker |  | 1306 | 9 | python decl src/click/_textwrap.py:27 |  |  | 0.757 |
-| walker |  | 1433 | 127 | listing of 'tests' |  |  | 0.826 |
-| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.830 |
-| walker |  | 1511 | 78 | [package] in pyproject.toml |  |  | 0.831 |
-| walker |  | 1549 | 38 | package metadata in pyproject.toml |  |  | 0.832 |
+| walker |  | 273 | 30 | headings outline in README.md |  |  | 0.355 |
+| walker |  | 284 | 11 | listing of '.devcontainer' |  |  | 0.355 |
+| walker |  | 297 | 13 | listing of '.github' |  |  | 0.355 |
+| walker |  | 320 | 23 | listing of '.github/workflows' |  |  | 0.528 |
+| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.528 |
+| walker |  | 408 | 88 | listing of 'src/click' |  |  | 0.811 |
+| ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |
+| walker |  | 483 | 75 | python module doc src/click/__init__.py |  |  | 0.694 |
+| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.663 |
+| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.524 |
+| walker |  | 731 | 248 | python names src/click/__init__.py |  |  | 0.532 |
+| walker |  | 747 | 16 | python names src/click/_textwrap.py |  |  | 0.532 |
+| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.484 |
+| walker |  | 785 | 38 | package metadata in pyproject.toml |  |  | 0.484 |
+| walker |  | 977 | 192 | listing of 'docs' |  |  | 0.502 |
+| ns | 983 |  | 207 | Documentation listing: docs/ | 1.9 |  | 0.580 |
+| walker |  | 992 | 15 | listing of 'docs/_static' |  |  | 0.605 |
+| walker |  | 1091 | 99 | README.md section #0 |  |  | 0.703 |
+| walker |  | 1127 | 36 | listing of 'examples' |  |  | 0.736 |
+| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.745 |
+| walker |  | 1360 | 233 | python names src/click/__init__.py #1 |  |  | 0.759 |
+| walker |  | 1413 | 53 | python decl src/click/_textwrap.py:8 |  |  | 0.759 |
+| walker |  | 1422 | 9 | python decl src/click/_textwrap.py:27 |  |  | 0.759 |
+| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.768 |
+| walker |  | 1549 | 127 | listing of 'tests' |  |  | 0.832 |
 | ns | 1629 |  | 189 | Public API surface, part 3: terminal UI exports | 2.3 |  | 0.801 |
 | walker |  | 1788 | 239 | python names src/click/__init__.py #2 |  |  | 0.841 |
 | ns | 1899 |  | 270 | Public API surface, part 4: parameter types and utilities | 2.4 |  | 0.800 |

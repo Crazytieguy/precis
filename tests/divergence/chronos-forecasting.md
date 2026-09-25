@@ -9,30 +9,30 @@ Score(3000)=0.375 I=0.560 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 78 | 3 | listing of 'ci' |  |  | 0.371 |
 | ns | 104 |  | 50 | Complete root directory listing | 1.2 |  | 0.761 |
 | walker |  | 105 | 27 | listing of 'notebooks' |  |  | 0.762 |
-| walker |  | 112 | 7 | listing of '.github' |  |  | 0.762 |
-| walker |  | 129 | 17 | listing of '.github/workflows' |  |  | 0.763 |
-| ns | 170 |  | 66 | The three model families, one sentence each | 1.3 |  | 0.688 |
-| walker |  | 176 | 47 | listing of 'src/chronos' |  |  | 0.722 |
-| walker |  | 206 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.775 |
-| ns | 251 |  | 81 | Complete listing of the package source tree | 1.4 |  | 0.766 |
-| walker |  | 314 | 108 | python names src/chronos/chronos2/__init__.py |  |  | 0.769 |
-| walker |  | 329 | 15 | python module doc src/chronos/__about__.py |  |  | 0.769 |
-| walker |  | 345 | 16 | listing of 'scripts' |  |  | 0.769 |
+| ns | 170 |  | 66 | The three model families, one sentence each | 1.3 |  | 0.687 |
+| walker |  | 173 | 68 | [package] in pyproject.toml |  |  | 0.687 |
+| walker |  | 180 | 7 | listing of '.github' |  |  | 0.687 |
+| walker |  | 197 | 17 | listing of '.github/workflows' |  |  | 0.688 |
+| walker |  | 244 | 47 | listing of 'src/chronos' |  |  | 0.723 |
+| ns | 251 |  | 81 | Complete listing of the package source tree | 1.4 |  | 0.579 |
+| walker |  | 274 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.767 |
+| walker |  | 382 | 108 | python names src/chronos/chronos2/__init__.py |  |  | 0.770 |
+| walker |  | 397 | 15 | python module doc src/chronos/__about__.py |  |  | 0.770 |
 | ns | 407 |  | 156 | `chronos` package public exports with their defining modules | 1.5 |  | 0.632 |
-| ns | 468 |  | 61 | Minimal forecasting example: import and load a pipeline | 1.6 |  | 0.610 |
+| walker |  | 413 | 16 | listing of 'scripts' |  |  | 0.632 |
+| ns | 468 |  | 61 | Minimal forecasting example: import and load a pipeline | 1.6 |  | 0.611 |
 | ns | 611 |  | 143 | README `predict_df` call with every keyword argument annotated | 1.7 |  | 0.556 |
-| walker |  | 641 | 296 | python names src/chronos/__init__.py |  |  | 0.702 |
-| walker |  | 740 | 99 | headings outline in README.md |  |  | 0.702 |
-| walker |  | 760 | 20 | README.md section #14 |  |  | 0.702 |
-| walker |  | 802 | 42 | python names src/chronos/base.py |  |  | 0.703 |
-| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.628 |
-| walker |  | 824 | 22 | python decl src/chronos/base.py:27 |  |  | 0.629 |
-| walker |  | 863 | 39 | python decl src/chronos/base.py:32 |  |  | 0.629 |
-| walker |  | 907 | 44 | python names src/chronos/df_utils.py |  |  | 0.629 |
-| walker |  | 957 | 50 | python names src/chronos/utils.py |  |  | 0.630 |
-| walker |  | 1004 | 47 | python decl src/chronos/utils.py:135 |  |  | 0.630 |
+| walker |  | 709 | 296 | python names src/chronos/__init__.py |  |  | 0.702 |
+| walker |  | 808 | 99 | headings outline in README.md |  |  | 0.702 |
+| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.627 |
+| walker |  | 828 | 20 | README.md section #14 |  |  | 0.628 |
+| walker |  | 870 | 42 | python names src/chronos/base.py |  |  | 0.628 |
+| walker |  | 892 | 22 | python decl src/chronos/base.py:27 |  |  | 0.630 |
+| walker |  | 931 | 39 | python decl src/chronos/base.py:32 |  |  | 0.630 |
+| walker |  | 975 | 44 | python names src/chronos/df_utils.py |  |  | 0.630 |
+| walker |  | 1025 | 50 | python names src/chronos/utils.py |  |  | 0.630 |
 | ns | 1039 |  | 230 | `BaseChronosPipeline` complete member roster + `ForecastType` | 2.1 |  | 0.560 |
-| walker |  | 1072 | 68 | [package] in pyproject.toml |  |  | 0.561 |
+| walker |  | 1072 | 47 | python decl src/chronos/utils.py:135 |  |  | 0.561 |
 | walker |  | 1105 | 33 | python names src/chronos/chronos2/config.py |  |  | 0.561 |
 | walker |  | 1159 | 54 | python decl src/chronos/utils.py:22 |  |  | 0.562 |
 | walker |  | 1189 | 30 | README.md section #13 |  |  | 0.562 |

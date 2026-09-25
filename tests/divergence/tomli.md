@@ -14,21 +14,21 @@ Score(3000)=0.416 I=0.754 C=0.230 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 175 | 37 | python names src/tomli/__init__.py |  |  | 0.689 |
 | walker |  | 183 | 8 | listing of 'fuzzer' |  |  | 0.690 |
 | walker |  | 192 | 9 | listing of 'profiler' |  |  | 0.690 |
-| walker |  | 209 | 17 | listing of 'scripts' |  |  | 0.691 |
-| walker |  | 267 | 58 | headings outline in tomllib.md |  |  | 0.691 |
-| ns | 270 |  | 98 | README intro lede: a TOML parser, TOML v1.1.0 as of 2.4.0 | 1.4 |  | 0.646 |
-| walker |  | 287 | 20 | listing of 'benchmark' |  |  | 0.649 |
-| ns | 300 |  | 30 | Source package listing: src/ and src/tomli/ | 1.5 |  | 0.651 |
-| walker |  | 321 | 34 | python names src/tomli/_types.py |  |  | 0.655 |
-| walker |  | 351 | 30 | listing of 'tests' |  |  | 0.657 |
-| ns | 408 |  | 108 | README: the tomllib stdlib relationship | 1.6 |  | 0.596 |
-| ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.563 |
-| ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.498 |
-| ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.481 |
-| walker |  | 744 | 393 | README headline in README.md |  |  | 0.680 |
-| ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.655 |
-| walker |  | 849 | 105 | [package] in pyproject.toml |  |  | 0.656 |
-| walker |  | 909 | 60 | package metadata in pyproject.toml |  |  | 0.657 |
+| ns | 270 |  | 98 | README intro lede: a TOML parser, TOML v1.1.0 as of 2.4.0 | 1.4 |  | 0.644 |
+| walker |  | 297 | 105 | [package] in pyproject.toml |  |  | 0.646 |
+| ns | 300 |  | 30 | Source package listing: src/ and src/tomli/ | 1.5 |  | 0.648 |
+| walker |  | 314 | 17 | listing of 'scripts' |  |  | 0.649 |
+| walker |  | 372 | 58 | headings outline in tomllib.md |  |  | 0.650 |
+| walker |  | 392 | 20 | listing of 'benchmark' |  |  | 0.653 |
+| ns | 408 |  | 108 | README: the tomllib stdlib relationship | 1.6 |  | 0.592 |
+| walker |  | 426 | 34 | python names src/tomli/_types.py |  |  | 0.596 |
+| walker |  | 456 | 30 | listing of 'tests' |  |  | 0.598 |
+| ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.564 |
+| walker |  | 516 | 60 | package metadata in pyproject.toml |  |  | 0.566 |
+| ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.501 |
+| ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.483 |
+| ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.465 |
+| walker |  | 909 | 393 | README headline in README.md |  |  | 0.657 |
 | ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.575 |
 | walker |  | 1150 | 241 | python names src/tomli/_parser.py |  |  | 0.577 |
 | ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.500 |

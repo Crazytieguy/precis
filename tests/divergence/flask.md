@@ -1,60 +1,60 @@
-Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.771/0.637/0.715/0.676/0.569/0.509/0.534
+Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.664/0.778/0.676/0.569/0.509/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | listing of '.' |  |  | 0.000 |
 | walker |  | 53 | 3 | listing of 'src' |  |  | 0.000 |
 | walker |  | 62 | 9 | listing of 'examples' |  |  | 0.000 |
-| walker |  | 73 | 11 | listing of '.devcontainer' |  |  | 0.000 |
-| walker |  | 86 | 13 | listing of '.github' |  |  | 0.000 |
 | ns | 97 |  | 97 | README title + what Flask is (README.md:3, 5-9) | 1.1 |  | 0.000 |
-| walker |  | 109 | 23 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 136 | 27 | [features] / entry-point scripts in pyproject.toml |  |  | 0.000 |
-| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.488 |
-| walker |  | 238 | 102 | README headline in README.md |  |  | 1.000 |
-| walker |  | 268 | 30 | headings outline in README.md |  |  | 1.000 |
-| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.592 |
-| walker |  | 361 | 93 | listing of 'src/flask' |  |  | 0.836 |
-| walker |  | 375 | 14 | listing of 'src/flask/json' |  |  | 0.903 |
-| walker |  | 392 | 17 | listing of 'src/flask/sansio' |  |  | 1.000 |
-| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.914 |
-| ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.782 |
-| walker |  | 632 | 240 | python names src/flask/__init__.py |  |  | 0.797 |
-| walker |  | 647 | 15 | python names src/flask/blueprints.py |  |  | 0.797 |
-| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.813 |
-| walker |  | 796 | 149 | python names src/flask/json/__init__.py |  |  | 0.813 |
-| walker |  | 821 | 25 | python body src/flask/json/__init__.py:138 |  |  | 0.813 |
-| walker |  | 845 | 24 | python names src/flask/wrappers.py |  |  | 0.813 |
-| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.771 |
-| walker |  | 1021 | 176 | listing of 'docs' |  |  | 0.775 |
-| walker |  | 1048 | 27 | listing of 'docs/_static' |  |  | 0.775 |
-| walker |  | 1112 | 64 | listing of 'docs/deploying' |  |  | 0.775 |
-| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.707 |
-| walker |  | 1190 | 78 | listing of 'docs/tutorial' |  |  | 0.707 |
-| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.637 |
-| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.621 |
-| walker |  | 1530 | 340 | python names src/flask/__init__.py #1 |  |  | 0.750 |
-| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.733 |
-| walker |  | 1573 | 43 | python body src/flask/json/__init__.py:77 |  |  | 0.733 |
-| walker |  | 1616 | 43 | python body src/flask/json/__init__.py:108 |  |  | 0.733 |
-| ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.707 |
-| ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.684 |
-| walker |  | 1763 | 147 | [dependencies] in pyproject.toml |  |  | 0.707 |
-| walker |  | 1819 | 56 | python body src/flask/json/__init__.py:13 |  |  | 0.707 |
-| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.677 |
-| walker |  | 1941 | 122 | README.md section #0 |  |  | 0.715 |
-| walker |  | 2086 | 145 | listing of 'docs/patterns' |  |  | 0.715 |
-| ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.680 |
-| walker |  | 2142 | 56 | python names src/flask/config.py |  |  | 0.681 |
-| walker |  | 2203 | 61 | python names src/flask/views.py |  |  | 0.681 |
-| walker |  | 2235 | 32 | python decl src/flask/views.py:11 |  |  | 0.681 |
-| walker |  | 2283 | 48 | python decl src/flask/views.py:138 |  |  | 0.681 |
-| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.663 |
-| walker |  | 2428 | 145 | listing of 'tests' |  |  | 0.665 |
-| walker |  | 2488 | 60 | python body src/flask/json/__init__.py:47 |  |  | 0.665 |
-| ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.639 |
-| walker |  | 2571 | 83 | [package] in pyproject.toml |  |  | 0.673 |
-| walker |  | 2609 | 38 | package metadata in pyproject.toml |  |  | 0.693 |
+| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.484 |
+| walker |  | 149 | 87 | [package] in pyproject.toml |  |  | 0.488 |
+| walker |  | 160 | 11 | listing of '.devcontainer' |  |  | 0.489 |
+| walker |  | 185 | 25 | [features] / entry-point scripts in pyproject.toml |  |  | 0.489 |
+| walker |  | 198 | 13 | listing of '.github' |  |  | 0.490 |
+| walker |  | 221 | 23 | listing of '.github/workflows' |  |  | 0.492 |
+| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.291 |
+| walker |  | 323 | 102 | README headline in README.md |  |  | 0.594 |
+| walker |  | 353 | 30 | headings outline in README.md |  |  | 0.594 |
+| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.542 |
+| walker |  | 446 | 93 | listing of 'src/flask' |  |  | 0.765 |
+| walker |  | 460 | 14 | listing of 'src/flask/json' |  |  | 0.826 |
+| walker |  | 477 | 17 | listing of 'src/flask/sansio' |  |  | 0.916 |
+| ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.784 |
+| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.716 |
+| walker |  | 717 | 240 | python names src/flask/__init__.py |  |  | 0.814 |
+| walker |  | 732 | 15 | python names src/flask/blueprints.py |  |  | 0.815 |
+| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.773 |
+| walker |  | 881 | 149 | python names src/flask/json/__init__.py |  |  | 0.773 |
+| walker |  | 906 | 25 | python body src/flask/json/__init__.py:138 |  |  | 0.773 |
+| walker |  | 930 | 24 | python names src/flask/wrappers.py |  |  | 0.773 |
+| walker |  | 1106 | 176 | listing of 'docs' |  |  | 0.776 |
+| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.709 |
+| walker |  | 1133 | 27 | listing of 'docs/_static' |  |  | 0.709 |
+| walker |  | 1197 | 64 | listing of 'docs/deploying' |  |  | 0.709 |
+| walker |  | 1235 | 38 | package metadata in pyproject.toml |  |  | 0.711 |
+| walker |  | 1313 | 78 | listing of 'docs/tutorial' |  |  | 0.711 |
+| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.664 |
+| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.647 |
+| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.633 |
+| ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.611 |
+| walker |  | 1653 | 340 | python names src/flask/__init__.py #1 |  |  | 0.730 |
+| walker |  | 1696 | 43 | python body src/flask/json/__init__.py:77 |  |  | 0.730 |
+| walker |  | 1739 | 43 | python body src/flask/json/__init__.py:108 |  |  | 0.730 |
+| ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.706 |
+| walker |  | 1884 | 145 | [dependencies] in pyproject.toml |  |  | 0.774 |
+| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.740 |
+| walker |  | 1940 | 56 | python body src/flask/json/__init__.py:13 |  |  | 0.740 |
+| walker |  | 2062 | 122 | README.md section #0 |  |  | 0.778 |
+| ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.740 |
+| walker |  | 2207 | 145 | listing of 'docs/patterns' |  |  | 0.740 |
+| walker |  | 2263 | 56 | python names src/flask/config.py |  |  | 0.740 |
+| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.716 |
+| walker |  | 2324 | 61 | python names src/flask/views.py |  |  | 0.720 |
+| walker |  | 2356 | 32 | python decl src/flask/views.py:11 |  |  | 0.720 |
+| walker |  | 2404 | 48 | python decl src/flask/views.py:138 |  |  | 0.720 |
+| ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.691 |
+| walker |  | 2549 | 145 | listing of 'tests' |  |  | 0.693 |
+| walker |  | 2609 | 60 | python body src/flask/json/__init__.py:47 |  |  | 0.693 |
 | ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.672 |
 | walker |  | 2675 | 66 | python decl src/flask/blueprints.py:18 |  |  | 0.673 |
 | walker |  | 2718 | 43 | python names src/flask/json/provider.py |  |  | 0.674 |
