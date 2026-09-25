@@ -209,26 +209,19 @@ impl<W: Walker> Scheduler<W> {
 
     /// Run the scheduler and return the tree plus the scheduled-batches log.
     pub fn run_with_report(mut self) -> RunReport<W::Key> {
-        crate::time_span!("run_with_report");
-        {
-            crate::time_span!("walker_seed");
-            for batch in self.walker.seed(&self.ctx) {
-                self.absorb(batch);
-            }
+        for batch in self.walker.seed(&self.ctx) {
+            self.absorb(batch);
         }
 
         // Prefix-monotone scheduling — stop on the first top-ranked
         // batch that doesn't fit (no fallback to smaller batches),
         // except at round 0 where stopping yields nothing at all.
-        {
-            crate::time_span!("scheduler_loop");
-            while let Some((id, cost)) = self.best_exact() {
-                if !self.fits(cost) {
-                    self.schedule_partial_seed(id);
-                    break;
-                }
-                self.schedule(id, cost);
+        while let Some((id, cost)) = self.best_exact() {
+            if !self.fits(cost) {
+                self.schedule_partial_seed(id);
+                break;
             }
+            self.schedule(id, cost);
         }
 
         if cfg!(debug_assertions) {
@@ -423,8 +416,6 @@ impl<W: Walker> Scheduler<W> {
 
     /// Top-ranked eligible batch + its cost.
     fn best_exact(&mut self) -> Option<(BatchId, Cost)> {
-        crate::time_counter!(best_exact);
-
         let eligible: Vec<BatchId> = self.eligible.iter().copied().collect();
         if eligible.is_empty() {
             return None;
@@ -432,7 +423,6 @@ impl<W: Walker> Scheduler<W> {
 
         let pool = self.select_contender_pool(&eligible);
 
-        crate::time_counter!(best_exact_rank_pass);
         let mut best: Option<(f64, BatchId, Cost)> = None;
         for &id in &pool {
             if !self.cost_cache.contains_key(&id) {
@@ -468,14 +458,11 @@ impl<W: Walker> Scheduler<W> {
             return eligible.to_vec();
         }
 
-        {
-            crate::time_counter!(best_exact_cost_pass);
-            for &id in eligible {
-                if !self.approx_cost_cache.contains_key(&id) {
-                    let content = &self.entries[id.index()].content;
-                    let tokens = self.tree.marginal_cost_approx(content);
-                    self.approx_cost_cache.insert(id, tokens);
-                }
+        for &id in eligible {
+            if !self.approx_cost_cache.contains_key(&id) {
+                let content = &self.entries[id.index()].content;
+                let tokens = self.tree.marginal_cost_approx(content);
+                self.approx_cost_cache.insert(id, tokens);
             }
         }
 
@@ -524,11 +511,9 @@ impl<W: Walker> Scheduler<W> {
     fn apply_and_record(&mut self, id: BatchId, cost: Cost) -> BatchContent {
         let ancestors = self.ancestors_of(id);
         let entry_content = self.entries[id.index()].content.clone();
-        let conflicts = {
-            crate::time_counter!(schedule_apply);
-            self.tree
-                .apply(&entry_content, id, |i| ancestors.contains(&i))
-        };
+        let conflicts = self
+            .tree
+            .apply(&entry_content, id, |i| ancestors.contains(&i));
         if cfg!(debug_assertions) && !conflicts.is_empty() {
             let current_key = &self.entries[id.index()].key;
             let conflict_details = conflicts
@@ -686,11 +671,7 @@ impl<W: Walker> Scheduler<W> {
 
         // Walker learns about the new scheduled key; emit successors.
         let key = self.entries[id.index()].key.clone();
-        let successors = {
-            crate::time_counter!(schedule_expand);
-            self.walker.expand(&key, &self.ctx)
-        };
-        for batch in successors {
+        for batch in self.walker.expand(&key, &self.ctx) {
             self.absorb(batch);
         }
     }

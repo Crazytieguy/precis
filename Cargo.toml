@@ -12,13 +12,6 @@ keywords = ["codebase", "summarizer", "tree-sitter", "cli", "tokens"]
 categories = ["command-line-utilities", "development-tools"]
 include = ["/src", "/README.md"]
 
-[features]
-# Opt-in `Instant`-based timing instrumentation. Enabling adds per-phase
-# spans (stderr on Drop) and accumulated counters dumped at end of
-# `render()`. Without this feature the macros expand to nothing, so
-# release builds are byte-identical to today's.
-timing = []
-
 [dependencies]
 anyhow = "1"
 clap = { version = "4", features = ["derive"] }

@@ -29,18 +29,12 @@ thread_local! {
 
 /// Token count under o200k_base (ordinary encoding).
 pub fn count(text: &str) -> usize {
-    #[cfg(feature = "timing")]
-    let _start = std::time::Instant::now();
     CACHE.with(|c| {
         if let Some(&v) = c.borrow().get(text) {
-            #[cfg(feature = "timing")]
-            crate::timing::record(|c| &mut c.tokenizer, _start.elapsed(), Some(true));
             return v;
         }
         let v = bpe().encode_ordinary(text).len();
         c.borrow_mut().insert(text.to_string(), v);
-        #[cfg(feature = "timing")]
-        crate::timing::record(|c| &mut c.tokenizer, _start.elapsed(), Some(false));
         v
     })
 }

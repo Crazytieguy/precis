@@ -95,11 +95,7 @@ impl SourceCache {
 
     /// Read `path`, caching. Returns `None` on I/O error.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
-        #[cfg(feature = "timing")]
-        let _start = std::time::Instant::now();
         if let Some(cached) = self.0.borrow().get(path) {
-            #[cfg(feature = "timing")]
-            crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(true));
             return Some(cached.clone());
         }
         let text = std::fs::read_to_string(path).ok()?;
@@ -107,8 +103,6 @@ impl SourceCache {
         self.0
             .borrow_mut()
             .insert(path.to_path_buf(), source.clone());
-        #[cfg(feature = "timing")]
-        crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(false));
         Some(source)
     }
 
@@ -224,16 +218,7 @@ impl RenderedTree {
     /// Marginal cost of applying `content` — exact tokens.
     pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
         let mut total = Cost::default();
-        self.visit_atom_costs(
-            content,
-            |text| {
-                let t = tokenizer::count(text);
-                #[cfg(feature = "timing")]
-                crate::timing::record_render_row(text.len(), t);
-                t
-            },
-            |c| total = total + c,
-        );
+        self.visit_atom_costs(content, tokenizer::count, |c| total = total + c);
         total
     }
 

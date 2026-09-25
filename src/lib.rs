@@ -11,32 +11,9 @@ pub mod ns_loader;
 pub mod ns_simulate;
 pub mod render;
 pub mod scheduler;
-#[cfg(feature = "timing")]
-pub mod timing;
 pub mod tokenizer;
 pub mod value;
 pub mod walker;
-
-// Zero-cost without the `timing` feature: both macros expand to nothing.
-// One `time_span!` or `time_counter!` per `{}` block — a second invocation
-// in the same block just adds a second guard; both live to the end of the
-// block, so the first span/counter silently keeps accruing through the
-// second phase. Nest into a child block to time two adjacent phases.
-macro_rules! time_span {
-    ($name:literal) => {
-        #[cfg(feature = "timing")]
-        let _timing_phase_timer = $crate::timing::PhaseTimer::new($name);
-    };
-}
-
-macro_rules! time_counter {
-    ($slot:ident) => {
-        #[cfg(feature = "timing")]
-        let _timing_counter_guard = $crate::timing::CounterGuard::new(|c| &mut c.$slot);
-    };
-}
-
-pub(crate) use {time_counter, time_span};
 
 pub use batch::{Batch, BatchKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
@@ -53,21 +30,13 @@ pub fn render(
     token_budget: usize,
     byte_budget: Option<usize>,
 ) -> Result<String> {
-    time_span!("render_total");
     let path = paths
         .first()
         .ok_or_else(|| anyhow!("no path provided"))?
         .as_ref();
     let root = canonicalize_dir(path)?;
     let scheduler = Scheduler::new(root, FsWalker, token_budget, byte_budget);
-    let tree = scheduler.run();
-    let out = {
-        time_span!("final_render");
-        tree.render()
-    };
-    #[cfg(feature = "timing")]
-    timing::dump_and_reset();
-    Ok(out)
+    Ok(scheduler.run().render())
 }
 
 /// Replay a previously-produced [`Schedule`] against a fresh tree at
