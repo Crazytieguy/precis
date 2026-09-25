@@ -201,6 +201,12 @@ database/
     pgx_test.go
     v5/
       README.md
+        1→# pgx
+        …
+        28→## Upgrading from v1
+        …
+        36→## Multi-statement mode
+        …
       pgx.go
       pgx_test.go
   postgres/
@@ -248,6 +254,12 @@ database/
       1→# Google Cloud Spanner
       2→
       3→## Usage
+      …
+      33→## DDL with comments
+      …
+      38→## Multiple statements
+      …
+      42→## Testing
       …
     examples/
     spanner.go
@@ -303,11 +315,6 @@ dktesting/
   dktesting.go
   example_test.go
 docker-deploy.sh
-  1→#!/bin/bash
-  2→
-  3→echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && \
-  4→docker build --build-arg VERSION="$TRAVIS_TAG" . -t migrate/migrate -t migrate/migrate:"$TRAVIS_TAG" && \
-  5→docker push migrate/migrate:"$TRAVIS_TAG" && docker push migrate/migrate
 go.mod
   1→module github.com/golang-migrate/migrate/v4
   2→
@@ -424,6 +431,10 @@ source/
       bindata.go
   godoc_vfs/
     vfs.go
+      1→// Package godoc_vfs contains a driver that reads migrations from a virtual file
+      2→// system.
+      3→//
+      …
     vfs_example_test.go
     vfs_test.go
   google_cloud_storage/

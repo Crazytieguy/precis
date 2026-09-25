@@ -135,41 +135,21 @@ go.mod
   …
 go.sum
 install.sh
-  1→#!/bin/sh
+  …
   2→set -e
   3→
   4→# Tock Installer Script
-  5→#
+  …
   6→# Usage:
-  7→#   curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
-  8→#
-  9→# or with sudo if required:
-  10→#   curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sudo sh
-  11→
+  …
   12→OWNER="kriuchkov"
   13→REPO="tock"
   14→BINARY="tock"
   15→FORMAT="tar.gz"
   16→BINDIR="/usr/local/bin"
-  17→
-  18→# Detect OS
+  …
   19→OS=$(uname -s)
   20→case "$OS" in
-  21→    Linux)
-  22→        OS_TYPE="Linux"
-  23→        ;;
-  24→    Darwin)
-  25→        OS_TYPE="Darwin"
-  26→        ;;
-  27→    *)
-  28→        echo "Unsupported OS: $OS"
-  29→        exit 1
-  30→        ;;
-  31→esac
-  32→
-  33→# Detect Architecture
-  34→ARCH=$(uname -m)
-  35→case "$ARCH" in
   …
 internal/
   adapters/
@@ -284,5 +264,30 @@ internal/
       generator.go
   timeutil/
     timeutil.go
+      …
+      11→type TimeFormat int
+      13→const (
+      14→	Format24Hour TimeFormat = iota // default
+      15→	Format12Hour
+      16→)
+      …
+      19→type Formatter struct {
+      20→	format TimeFormat
+      21→}
+      …
+      25→func NewFormatter(formatStr string) *Formatter {
+      …
+      34→func (f *Formatter) Format() TimeFormat {
+      …
+      39→func (f *Formatter) GetDisplayFormat() string {
+      …
+      47→func (f *Formatter) GetDisplayFormatWithDate() string {
+      …
+      56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
+      …
+      103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
+      …
+      158→func FormatDuration(d time.Duration, format string) string {
+      …
     timeutil_test.go
 tock.yaml.example

@@ -99,9 +99,8 @@ pub(crate) enum Class {
     /// format config, version pins, `pnpm-workspace.yaml`, and hook /
     /// docs-site YAML.
     Tooling,
-    /// Compact build/deploy entrypoints and plumbing (`Makefile`,
-    /// `Taskfile`, `Dockerfile`, compose files, `configure.ac`, shell
-    /// scripts in build-script locations).
+    /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
+    /// `Dockerfile`, compose files).
     Build,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
@@ -143,7 +142,6 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "Dockerfile" | "Containerfile" => {
             return Some(Class::Build);
         }
-        ".gitmodules" | "configure.ac" => return Some(Class::Build),
         _ => {}
     }
     if is_docker_compose_name(&lower) {
@@ -151,12 +149,6 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     }
     if crate::value::is_dotenv_sample_filename(name) {
         return Some(Class::DotenvSample);
-    }
-    if let Some(stem) = lower.strip_suffix(".sh") {
-        if is_credential_stem(stem) {
-            return None;
-        }
-        return Some(Class::Build);
     }
     None
 }
@@ -695,10 +687,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let file = dir.join(name);
-        // A `.sh` outside a build-script location falls through to the
-        // fallback rather than out of the output.
-        let named = classify_plaintext(name)
-            .filter(|_| !name.ends_with(".sh") || is_build_script_location(dir, ctx));
+        let named = classify_plaintext(name);
         // Root `README.rst` belongs to the markdown walker and parsed
         // languages to the code engine; a second slice of either would
         // overlap their spans.
@@ -751,7 +740,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     tier * path_depth_factor(file, ctx) * small_build_file_factor(class, file, ctx)
 }
 
-/// Mild promotion for a root `Makefile` / `Taskfile` / `build.sh`. A
+/// Mild promotion for a root `Makefile` / `Taskfile`. A
 /// compact one is the answer to "how do I build and run this", which
 /// NS authors buy in the first screenful — ahead of most of the source
 /// it builds — while the class's own preset prices it as one config
@@ -761,30 +750,20 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 /// component's build step rather than the project's.
 ///
 /// Narrow on purpose: deploy / CI / linter config describes the
-/// contributor's toolchain rather than the project, and the sibling
-/// `release.sh` / `test.sh` scripts are not the build surface.
+/// contributor's toolchain rather than the project.
 fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let name = file
         .file_name()
         .and_then(|name| name.to_str())
         .unwrap_or_default();
     if class == Class::Build
-        && matches!(
-            name,
-            "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "build.sh"
-        )
+        && matches!(name, "Makefile" | "Taskfile.yaml" | "Taskfile.yml")
         && ctx.depth_from_root(file) == 1
     {
         SMALL_BUILD_FILE_PROMOTION
     } else {
         1.0
     }
-}
-
-/// Build scripts count at the repository root or in a `scripts/`
-/// directory; anywhere else they fall to the fallback.
-fn is_build_script_location(dir: &Path, ctx: &WalkCtx) -> bool {
-    dir == ctx.root() || dir.file_name().is_some_and(|name| name == "scripts")
 }
 
 /// The first `head_line_cap` rows — the whole file when it fits, so a
@@ -1002,10 +981,6 @@ mod tests {
             ("config.yaml", None),
             (".travis.yml", Some(Class::Tooling)),
             (".pre-commit-config.yaml", Some(Class::Tooling)),
-            ("testall.sh", Some(Class::Build)),
-            ("build.sh", Some(Class::Build)),
-            (".gitmodules", Some(Class::Build)),
-            ("configure.ac", Some(Class::Build)),
             ("requirements-dev.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
@@ -1042,36 +1017,27 @@ mod tests {
         }
     }
 
-    /// The root build-file promotion fires on the build classes only,
-    /// and each of its three gates (name, depth, size) can veto it.
+    /// The root build-file promotion fires on the build class only, and
+    /// each of its gates (name, depth) can veto it.
     #[test]
     fn plaintext_small_build_file_factor_gates() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        std::fs::create_dir_all(root.join("packages/api/scripts")).unwrap();
+        std::fs::create_dir_all(root.join("packages/api")).unwrap();
         let short = "all:\n\tcc -o app main.c\n";
-        for path in [
-            "Makefile",
-            "build.sh",
-            "release.sh",
-            ".gitmodules",
-            "packages/api/scripts/build.sh",
-        ] {
+        for path in ["Makefile", "Dockerfile", "packages/api/Makefile"] {
             std::fs::write(root.join(path), short).unwrap();
         }
         let ctx = WalkCtx::new(root.to_path_buf());
 
         let factor = |path: &str, class| small_build_file_factor(class, &root.join(path), &ctx);
         assert_eq!(factor("Makefile", Class::Build), SMALL_BUILD_FILE_PROMOTION);
-        assert_eq!(factor("build.sh", Class::Build), SMALL_BUILD_FILE_PROMOTION);
-        // Name gate: build siblings that are not the build surface.
-        assert_eq!(factor("release.sh", Class::Build), 1.0);
-        assert_eq!(factor(".gitmodules", Class::Build), 1.0);
-        // Depth gate: a nested `scripts/` dir still classifies as
-        // Build, but is one component's build step.
-        assert_eq!(factor("packages/api/scripts/build.sh", Class::Build), 1.0);
+        // Name gate: deploy config is not the build surface.
+        assert_eq!(factor("Dockerfile", Class::Build), 1.0);
+        // Depth gate: a nested Makefile is one component's build step.
+        assert_eq!(factor("packages/api/Makefile", Class::Build), 1.0);
         // Class gate: the fallback tiers never receive the promotion.
-        assert_eq!(factor("build.sh", Class::FlatText), 1.0);
+        assert_eq!(factor("Makefile", Class::FlatText), 1.0);
     }
 
     #[test]

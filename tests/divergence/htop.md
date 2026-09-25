@@ -26,20 +26,21 @@ Score(3000)=0.576 I=0.650 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 1070 | 55 | Fs::DirListing { dir: darwin } |  |  | 0.785 |
 | walker |  | 1125 | 55 | Fs::DirListing { dir: netbsd } |  |  | 0.787 |
 | walker |  | 1182 | 57 | Fs::DirListing { dir: dragonflybsd } |  |  | 0.789 |
-| walker |  | 1205 | 23 | Plaintext::Whole { file: autogen.sh } |  |  | 0.789 |
-| walker |  | 1291 | 86 | Fs::DirListing { dir: generic } |  |  | 0.791 |
-| walker |  | 1304 | 13 | Fs::DirListing { dir: .github } |  |  | 0.791 |
-| walker |  | 1329 | 25 | Fs::DirListing { dir: .github/workflows } |  |  | 0.792 |
+| walker |  | 1268 | 86 | Fs::DirListing { dir: generic } |  |  | 0.791 |
+| walker |  | 1281 | 13 | Fs::DirListing { dir: .github } |  |  | 0.791 |
+| walker |  | 1306 | 25 | Fs::DirListing { dir: .github/workflows } |  |  | 0.792 |
 | ns | 1342 |  | 276 | --help text, part 2: --no-meters through -V, plus the platform hook and footer | 1.11 | 1.10 | 0.763 |
-| walker |  | 1447 | 118 | Fs::DirListing { dir: pcp } |  |  | 0.764 |
-| walker |  | 1479 | 32 | Fs::DirListing { dir: pcp/meters } |  |  | 0.765 |
-| walker |  | 1516 | 37 | Fs::DirListing { dir: pcp/columns } |  |  | 0.766 |
-| walker |  | 1554 | 38 | Fs::DirListing { dir: pcp/screens } |  |  | 0.768 |
-| walker |  | 1571 | 17 | Fs::DirListing { dir: scripts } |  |  | 0.768 |
+| walker |  | 1424 | 118 | Fs::DirListing { dir: pcp } |  |  | 0.764 |
+| walker |  | 1456 | 32 | Fs::DirListing { dir: pcp/meters } |  |  | 0.765 |
+| walker |  | 1493 | 37 | Fs::DirListing { dir: pcp/columns } |  |  | 0.766 |
+| walker |  | 1531 | 38 | Fs::DirListing { dir: pcp/screens } |  |  | 0.768 |
+| walker |  | 1548 | 17 | Fs::DirListing { dir: scripts } |  |  | 0.768 |
 | ns | 1575 |  | 233 | Object.h: the vtable idiom in full (ObjectClass, Object, Arg) | 2.1 |  | 0.722 |
-| walker |  | 1770 | 199 | Fs::DirListing { dir: linux } |  |  | 0.726 |
+| walker |  | 1747 | 199 | Fs::DirListing { dir: linux } |  |  | 0.726 |
+| walker |  | 1798 | 51 | Markdown::HeadingsOutline { file: docs/understanding-htop-versions.md } |  |  | 0.726 |
 | ns | 1810 |  | 235 | Row.h: the Row struct - every field of the base display row | 2.2 |  | 0.691 |
-| walker |  | 1821 | 51 | Markdown::HeadingsOutline { file: docs/understanding-htop-versions.md } |  |  | 0.691 |
+| walker |  | 1815 | 17 | Plaintext::DeclSurface { file: autogen.sh } |  |  | 0.691 |
+| walker |  | 1821 | 6 | Plaintext::Whole { file: autogen.sh } |  |  | 0.691 |
 | walker |  | 1873 | 52 | Markdown::HeadingsOutline { file: netbsd/README.md } |  |  | 0.691 |
 | walker |  | 2015 | 142 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.691 |
 | walker |  | 2047 | 32 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.691 |

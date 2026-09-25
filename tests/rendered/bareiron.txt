@@ -38,51 +38,6 @@ README.md
   48→## Contribution
   …
 build.sh
-  1→#!/usr/bin/env bash
-  2→
-  3→# Check for registries before attempting to compile, prevents confusion
-  4→if [ ! -f "include/registries.h" ]; then
-  5→  echo "Error: 'include/registries.h' is missing."
-  6→  echo "Please follow the 'Compilation' section of the README to generate it."
-  7→  exit 1
-  8→fi
-  9→
-  10→# Figure out executable suffix (for MSYS compilation)
-  11→case "$OSTYPE" in
-  12→  msys*|cygwin*|win32*) exe=".exe" ;;
-  13→  *) exe="" ;;
-  14→esac
-  15→
-  16→# mingw64-specific linker options
-  17→windows_linker=""
-  18→unameOut="$(uname -s)"
-  19→case "$unameOut" in
-  20→  MINGW64_NT*)
-  21→    windows_linker="-static -lws2_32 -pthread"
-  22→    ;;
-  23→esac
-  24→
-  25→# Default compiler
-  26→compiler="gcc"
-  27→
-  28→# Handle arguments for windows 9x build
-  29→for arg in "$@"; do
-  30→  case $arg in
-  31→    --9x)
-  32→      if [[ "$unameOut" == MINGW64_NT* ]]; then
-  33→        compiler="/opt/bin/i686-w64-mingw32-gcc"
-  34→        windows_linker="$windows_linker -Wl,--subsystem,console:4"
-  35→      else
-  36→        echo "Error: Compiling for Windows 9x is only supported when running under the MinGW64 shell."
-  37→        exit 1
-  38→      fi
-  39→      ;;
-  40→  esac
-  41→done
-  42→
-  43→rm -f "bareiron$exe"
-  44→$compiler src/*.c -O2 -Iinclude -o "bareiron$exe" $windows_linker
-  45→"./bareiron$exe"
 build_registries.js
 extract_registries.sh
 include/
@@ -182,6 +137,18 @@ include/
     196→} BlockChange;
     …
     200→typedef struct {
+    201→  uint8_t uuid[16];
+    202→  char name[16];
+    203→  int client_fd;
+    204→  short x;
+    205→  uint8_t y;
+    206→  short z;
+    207→  short visited_x[VISITED_HISTORY];
+    208→  short visited_z[VISITED_HISTORY];
+    209→  #ifdef SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT
+    210→    uint16_t packets_since_update;
+    211→  #endif
+    212→  int8_t yaw;
     …
     238→} PlayerData;
     239→
@@ -192,7 +159,10 @@ include/
     244→  // as a timer for deleting and deallocating the mob
     245→  uint8_t y;
     246→  short z;
-    …
+    247→  // Lower 5 bits: health
+    248→  // Middle 1 bit: sheep sheared, unused for other mobs
+    249→  // Upper 2 bits: panic timer
+    250→  uint8_t data;
     251→} MobData;
     …
     255→union EntityDataValue {
@@ -236,7 +206,33 @@ include/
     …
   structures.h
   tools.h
+    …
+    8→static inline int mod_abs (int a, int b) {
+    9→  return ((a % b) + b) % b;
+    …
+    11→static inline int div_floor (int a, int b) {
+    12→  return a % b < 0 ? (a - b) / b : a / b;
+    …
+    15→extern uint64_t total_bytes_received;
+    16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
+    17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
+    18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
+    19→
+    20→ssize_t writeByte (int client_fd, uint8_t byte);
+    21→ssize_t writeUint16 (int client_fd, uint16_t num);
+    22→ssize_t writeUint32 (int client_fd, uint32_t num);
+    23→ssize_t writeUint64 (int client_fd, uint64_t num);
+    …
   varnum.h
+    …
+    6→#define SEGMENT_BITS 0x7F
+    7→#define CONTINUE_BIT 0x80
+    8→#define VARNUM_ERROR 0xFFFFFFFF
+    9→
+    10→int32_t readVarInt (int client_fd);
+    11→int sizeVarInt (uint32_t value);
+    12→void writeVarInt (int client_fd, uint32_t value);
+    …
   worldgen.h
 src/
   CMakeLists.txt
