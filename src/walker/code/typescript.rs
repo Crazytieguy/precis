@@ -34,10 +34,6 @@ pub(super) const LANGUAGE: Language = Language {
 
 const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];
 
-/// JSDoc tags that mark a leading comment as the file's own doc rather
-/// than the next declaration's.
-const MODULE_DOC_TAGS: &[&str] = &["@module", "@packageDocumentation", "@file", "@fileoverview"];
-
 /// The TypeScript grammar for `.ts` / `.mts` / `.cts`; the TSX grammar,
 /// which also parses JSX, for everything else.
 fn grammar(path: &Path) -> tree_sitter::Language {
@@ -68,17 +64,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         .map(|&statement| (statement, scan.classify(file, statement)))
         .collect();
 
-    let module_doc = module_doc(file, &statements, entrypoint);
-    let module_doc_rows: HashSet<usize> = module_doc
-        .iter()
-        .flat_map(|item| item.rows.iter().copied())
-        .collect();
     let lists_unexported = entrypoint || is_declaration_file(&file.path);
 
-    let mut model = FileModel {
-        module_doc,
-        ..FileModel::default()
-    };
+    let mut model = FileModel::default();
     for (statement, top_level) in classified {
         let node = match top_level {
             TopLevel::Reexport => {
@@ -103,7 +91,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
         let mut decl = declaration_parts(file, statement, node);
-        decl.doc = doc_items(file, statement, &module_doc_rows);
+        decl.doc = doc_items(file, statement);
         model.decls.push(decl);
     }
     model
@@ -792,7 +780,7 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
                 let member_name_row = name_row_of_member(child).unwrap_or(span.start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
                 let mut member = callable(file, span, member_name_row, block);
-                member.doc = doc_items(file, anchor, &HashSet::new());
+                member.doc = doc_items(file, anchor);
                 body.push(Item::new(member.name_rows.iter().copied()));
                 members.push(member);
             } else {
@@ -843,8 +831,7 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
 /// The `/** … */` blocks directly above `node`, one item per paragraph.
 /// JSDoc is often separated from what it documents by one blank row
 /// (`/** … */`, blank, `function f`), so one blank row still attaches.
-/// A block in `module_doc_rows` is the file's doc and ends the walk.
-fn doc_items(file: &SourceFile, node: Node, module_doc_rows: &HashSet<usize>) -> Vec<Item> {
+fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
     let mut blocks = Vec::new();
     let mut next_start = node.start_position().row + 1;
     let mut previous = node.prev_sibling();
@@ -854,8 +841,7 @@ fn doc_items(file: &SourceFile, node: Node, module_doc_rows: &HashSet<usize>) ->
             && file.text(comment).starts_with("/**")
             && span.end < next_start
             && next_start - span.end <= 2
-            && file.starts_own_row(comment)
-            && !module_doc_rows.contains(&span.start);
+            && file.starts_own_row(comment);
         if !is_attached_jsdoc {
             break;
         }
@@ -891,33 +877,6 @@ fn jsdoc_paragraphs(file: &SourceFile, comment: Node) -> Vec<Item> {
         paragraphs.push(Item::new(paragraph));
     }
     paragraphs
-}
-
-/// The file's leading `/** … */` block (after a shebang and plain
-/// comments) when it documents the file: it carries a file-level tag, or
-/// it opens an entrypoint and a blank row separates it from what follows.
-fn module_doc(file: &SourceFile, statements: &[Node], entrypoint: bool) -> Vec<Item> {
-    let lede = statements
-        .iter()
-        .find(|statement| {
-            !(statement.kind() == "hash_bang_line"
-                || statement.kind() == "comment" && !file.text(**statement).starts_with("/**"))
-        })
-        .filter(|statement| statement.kind() == "comment");
-    let Some(&lede) = lede else {
-        return Vec::new();
-    };
-    let text = file.text(lede);
-    let tagged = MODULE_DOC_TAGS.iter().any(|tag| {
-        text.match_indices(tag)
-            .any(|(at, _)| !text[at + tag.len()..].starts_with(|c: char| c.is_ascii_alphanumeric()))
-    });
-    let blank_after = file.line(Span::of(file, lede).end + 1).trim().is_empty();
-    if tagged || (entrypoint && blank_after) {
-        jsdoc_paragraphs(file, lede)
-    } else {
-        Vec::new()
-    }
 }
 
 #[cfg(test)]
@@ -1383,30 +1342,6 @@ declare namespace Greeter {
                 "Whole name [6] head [6, 9] doc [] body [[7], [8]]",
             ]
         );
-    }
-
-    #[test]
-    fn code_typescript_module_doc_needs_a_tag_or_an_entrypoint_gap() {
-        let separated = "#!/usr/bin/env node\n/** The CLI. */\n\nexport function run() {}\n";
-        assert_eq!(
-            rows(&extract_source("index.js", separated).module_doc),
-            [vec![2]]
-        );
-        assert!(
-            extract_source("src/deep/run.js", separated)
-                .module_doc
-                .is_empty()
-        );
-
-        let attached = "/** Runs. */\nexport function run() {}\n";
-        let model = extract_source("index.js", attached);
-        assert!(model.module_doc.is_empty());
-        assert_eq!(rows(&model.decls[0].doc), [vec![1]]);
-
-        let tagged = "/**\n * @module run\n */\nexport function run() {}\n";
-        let model = extract_source("src/deep/run.js", tagged);
-        assert_eq!(rows(&model.module_doc), [vec![1, 2, 3]]);
-        assert!(model.decls[0].doc.is_empty());
     }
 
     #[test]

@@ -156,10 +156,6 @@ lib/
   parser.js
   parser.test.js
   path.js
-    1→/**
-    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/paths.html#PathDataBNF.
-    3→ */
-    …
   path.test.js
   stringifier.js
   style.js
@@ -238,10 +234,6 @@ package.json
   …
 plugins/
   _collections.js
-    1→/**
-    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/intro.html#Definitions.
-    3→ */
-    …
   _path.js
   _transforms.js
   addAttributesToSVGElement.js
@@ -331,6 +323,13 @@ plugins/
   removeMetadata.js
   removeNonInheritableGroupAttrs.js
   removeOffCanvasPaths.js
+    …
+    6→export const name = 'removeOffCanvasPaths';
+    7→export const description =
+    8→  'removes elements that are drawn outside of the viewBox';
+    …
+    17→export const fn = () => {
+    …
   removeRasterImages.js
   removeScripts.js
   removeStyleElement.js
@@ -344,6 +343,12 @@ plugins/
   removeXMLProcInst.js
   removeXlink.js
   reusePaths.js
+    …
+    4→export const name = 'reusePaths';
+    5→export const description =
+    …
+    18→export const fn = (root) => {
+    …
   sortAttrs.js
   sortDefsChildren.js
 rollup.config.js

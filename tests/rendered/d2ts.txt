@@ -184,10 +184,7 @@ packages/
       functions.ts
       group-by.ts
       index.ts
-        1→/**
-        2→ * D2QL is a SQL-like query language for D2TS.
-        3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
-        4→ */
+        …
         6→export * from './schema.js'
         7→export * from './types.js'
         8→export { compileQuery } from './compiler.js'
@@ -296,11 +293,31 @@ packages/
         database.ts
         index.ts
         operators/
+          buffer.ts
+          consolidate.ts
+          count.ts
+          distinct.ts
+          filterBy.ts
+          groupBy.ts
+          index.ts
+          join.ts
+          orderBy.ts
+          reduce.ts
+          topK.ts
+          topKWithFractionalIndex.ts
         version-index.ts
       types.ts
       utils.ts
       version-index.ts
     tests/
+      electric.test.ts
+      graph.test.ts
+      multiset.test.ts
+      operators/
+      operators-sqlite/
+      order.test.ts
+      utils.test.ts
+      version-index.test.ts
     tsconfig.json
     vitest.config.js
   d2ts-benchmark/
