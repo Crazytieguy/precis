@@ -459,9 +459,8 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     let Ok(canonical_root) = root.canonicalize() else {
         return HashSet::new();
     };
-    let pnpm = match read_pnpm_workspaces(root) {
-        PnpmWorkspaces::Negated => return HashSet::new(),
-        PnpmWorkspaces::Entries(v) => v,
+    let Some(pnpm) = read_pnpm_workspaces(root) else {
+        return HashSet::new();
     };
     let mut out = HashSet::new();
     for entry in npm_workspaces_entries(root).into_iter().chain(pnpm) {
@@ -544,15 +543,6 @@ fn collect_string_array(array: Node, source: &str) -> Vec<String> {
         .collect()
 }
 
-/// Outcome of reading `pnpm-workspace.yaml`. Distinguishes "no negation,
-/// here are the entries" from "negation present, opt the repo out of
-/// damping" so [`collect_workspace_members`] can short-circuit before
-/// it would otherwise union pnpm's positive globs with `package.json#workspaces`.
-enum PnpmWorkspaces {
-    Entries(Vec<String>),
-    Negated,
-}
-
 /// Read the top-level `packages:` list from `<root>/pnpm-workspace.yaml`.
 /// Hand-rolled scanner — the file is a 2–10-line YAML list and pulling
 /// in a YAML dependency for one field is overkill. Assumes a single
@@ -560,63 +550,42 @@ enum PnpmWorkspaces {
 /// nested `packages:` would be ignored or, if mis-indented enough to
 /// look top-level, would re-trigger the block scan.
 ///
-/// Returns [`PnpmWorkspaces::Negated`] on any `!`-prefixed entry —
-/// half-supported negation parsing is unsafe across the npm/pnpm
-/// union, so the caller treats this as a repo-wide opt-out.
-fn read_pnpm_workspaces(root: &Path) -> PnpmWorkspaces {
-    let path = root.join("pnpm-workspace.yaml");
-    let Ok(text) = std::fs::read_to_string(&path) else {
-        return PnpmWorkspaces::Entries(Vec::new());
+/// `None` on any `!`-prefixed entry — half-supported negation parsing is
+/// unsafe across the npm/pnpm union, so the caller treats this as a
+/// repo-wide opt-out.
+fn read_pnpm_workspaces(root: &Path) -> Option<Vec<String>> {
+    let Ok(text) = std::fs::read_to_string(root.join("pnpm-workspace.yaml")) else {
+        return Some(Vec::new());
     };
     let mut entries = Vec::new();
     let mut in_packages_block = false;
     for raw_line in text.lines() {
-        let line = strip_yaml_comment(raw_line);
+        // A `#` inside a quoted scalar isn't a comment, but workspace
+        // entries are paths/globs without one.
+        let line = raw_line.split_once('#').map_or(raw_line, |(head, _)| head);
         let trimmed = line.trim_end();
         if trimmed.is_empty() {
             continue;
         }
-        let indented = trimmed.starts_with(char::is_whitespace);
-        if !indented {
-            in_packages_block = trimmed.trim_start().starts_with("packages:");
+        if !trimmed.starts_with(char::is_whitespace) {
+            in_packages_block = trimmed.starts_with("packages:");
             continue;
         }
         if !in_packages_block {
             continue;
         }
-        let item = trimmed.trim_start();
-        let Some(rest) = item.strip_prefix('-') else {
+        let Some(rest) = trimmed.trim_start().strip_prefix('-') else {
             continue;
         };
-        let value = unquote_yaml_scalar(rest.trim());
-        if value.is_empty() {
-            continue;
-        }
+        let value = rest.trim().trim_matches(['"', '\'']);
         if value.starts_with('!') {
-            return PnpmWorkspaces::Negated;
+            return None;
         }
-        entries.push(value);
-    }
-    PnpmWorkspaces::Entries(entries)
-}
-
-fn strip_yaml_comment(line: &str) -> &str {
-    // Honest cap: a `#` inside a quoted scalar isn't a comment, but
-    // pnpm-workspace.yaml entries are paths/globs without `#` and we
-    // don't try to parse arbitrary YAML.
-    line.split_once('#').map(|(head, _)| head).unwrap_or(line)
-}
-
-fn unquote_yaml_scalar(raw: &str) -> String {
-    let bytes = raw.as_bytes();
-    if bytes.len() >= 2 {
-        let first = bytes[0];
-        let last = bytes[bytes.len() - 1];
-        if (first == b'"' && last == b'"') || (first == b'\'' && last == b'\'') {
-            return raw[1..raw.len() - 1].to_string();
+        if !value.is_empty() {
+            entries.push(value.to_string());
         }
     }
-    raw.to_string()
+    Some(entries)
 }
 
 #[cfg(test)]
