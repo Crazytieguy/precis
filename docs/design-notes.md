@@ -91,22 +91,6 @@ Chunking the root listing in the walker instead would move scheduling
 at every budget to fix a failure that only exists below the root
 listing's own cost.
 
-## NS-rank vs walker-rank
-
-`Score(3000)` evaluates only NS rows whose **NS** cumulative tokens fall
-within 3000 (`A_3K`). Pushing content earlier in the walker's schedule
-does not lift the score if the matching NS row is ranked past 3K. When
-the metric's view of a budget doesn't match what walker work is
-feasible there, either pick walker work that matches it, or accept the
-gap and surface the content at larger budgets. Don't bump `value` to
-force a batch into a budget tier where it earns no `A_B` credit — it
-just displaces walker batches that do.
-
-A flat `Score(3000)` does not show a change is safe at other budgets —
-read the `grid(…)` in the report headlines (`scripts/grid-means.sh`),
-not a last-full-row `Score(B=cum)` proxy, which is unreliable near the
-budget cliffs.
-
 ## Auto-injected docs don't belong in precis output
 
 Files the host harness already loads into the model's context —
@@ -117,11 +101,8 @@ scheduled by precis. Their paths stay discoverable via fs listings, but
 the prose-body batches (`MarkdownKey::Prelude`, `MarkdownKey::Section`)
 are walker-side suppressed. Residual
 structural batches (`HeadingsOutline`, `ReadmeHeadline`) carry a 0.1×
-value discount.
-
-User framing (verbatim): "precis isn't meant to guarantee that all
-content is reachable, it's meant to provide a value-per-token
-summary that lets follow up tool calls do the rest."
+value discount. precis is a value-per-token summary for follow-up tool
+calls to build on, not a guarantee that all content is reachable.
 
 If an NS surfaces these files' content as primary atoms, that's an
 NS-author error to flag — don't move the goalpost by un-suppressing the
@@ -129,10 +110,8 @@ walker.
 
 Peripheral admin markdown (`is_peripheral_doc`: changelogs, contributing
 guides, security policies, migration guides, …) gets the same body
-suppression. Unlike the auto-injected case this rests on measurement,
-not policy: suppressing them (dd69d57e) left every Score(3000)
-unchanged, and their bodies had been split into large candidate sets
-(express's `History.md` alone into ~2500) that the schedule never bought.
+suppression, on measurement rather than policy: the schedule never
+bought those bodies.
 
 ## Gitignored content doesn't belong in precis output either
 
@@ -222,10 +201,6 @@ language.**
   walkers only map their tables/keys onto those kinds. Development and
   peer rosters are not emitted. A workspace's primary member is the one
   member directory named after the repository, for Cargo and JS alike.
-- Files no parser claims go through the plaintext walker: named classes
-  (build entrypoints incl. compose files, dotenv samples, tooling config
-  incl. CI YAML, …) render whole or as a head slice at one of four value
-  tiers; everything else falls to the column-0 declaration surface.
 
 ## Output notation and the plugin cap
 
@@ -233,8 +208,7 @@ language.**
   re-prices the NS too, and the corpus Score curve falls above 3000
   tokens, so a format that fits more content per token scores roughly
   as if the budget had grown: putting source rows at column 0 (about
-  14% fewer tokens) measured −0.027 at 3000 while showing more. Open:
-  whether to take that trade.
+  14% fewer tokens) measured −0.027 at 3000 while showing more.
 - **o200k charges for leading spaces only in steps:** a run of two or
   more spaces before a digit costs two tokens whatever its length, and
   ` …\n` costs the same one token as `\n`. Indent width is therefore a
@@ -310,15 +284,6 @@ must not undo:
 - **Per-row Score column can't decompose I × C**, and small walker
   tweaks cascade decimal noise through every later row. Revisit if
   iteration shows the single column loses signal.
-- **Prefix-stop tail effects.** A rank shift can strand a big batch at
-  the budget tail where it no longer fits; `Score(3000)` is blind to
-  this — check the high budgets of the grid.
-- **The plugin can show less than `Score(3000)` measures.** Under
-  `CLAUDE_PLUGIN_ROOT`, `precis .` is capped at `plugin_char_budget()`
-  (about 9,330 UTF-16 units after `--help` and the hook wrapper), and
-  31 of the 71 training fixtures' 3000-token outputs (`tests/rendered/`)
-  exceed it (measured 2026-09-25), so on those the auto-injected
-  summary is a shorter prefix than the primary budget scores.
 - **Min-tokens lower bound.** A cheap lower-bound cost estimator on
   `BatchContent` would let the scheduler prune obviously-too-big batches
   without touching the render tree. Line count alone misses

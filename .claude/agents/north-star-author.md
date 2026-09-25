@@ -1,6 +1,6 @@
 ---
 name: north-star-author
-description: "Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Use when adding a new fixture or regenerating an existing NS (typically invoked via the `add-fixture` skill). Emits TOML matching the schema at src/north_star.rs + src/content.rs; self-iterates against `cargo run --example validate_ns` until clean — no caller follow-up needed. Spawn prompt provides only: fixture root, output path, and fixture revision pin (free-form text, no structured format). Long-running (~15–30 min); typically run in parallel and in the background."
+description: "Drafts a North Star for a code-repository fixture (the ideal precis rendering as a ranked list of batches), iterating against `cargo run --example validate_ns` until clean. Spawn with the fixture root, output path and revision pin; usually via the `add-fixture` skill, in the background (15–30 min)."
 tools: Read, Glob, Grep, Bash, Write
 ---
 
@@ -84,22 +84,18 @@ shows the line number for every source line it includes. When you
 write a "locations" batch what you're ranking is the *presence* of
 the names/headings — the line numbers come for free.
 
-Disciplines that past NS audits found violated in frozen NSes
-(a "complete" root listing missing a real file; a source roster that
-never listed the repo's colocated `*_test.go` files anywhere):
+Closure disciplines:
 
 - **Class-closure audit.** For every listing/roster batch, re-check
   the actual directory or symbol set against your entries before
   moving on — a hedge batch with a silent omission is worse than no
   hedge, because it certifies the wrong class.
-- **Symbol-level closure, not just filesystem closure.** A five-draft
-  audit found `entries="all"` listings essentially perfect while
-  symbol rosters carried silent holes in 5 of 5 drafts (a method
-  roster missing `Execute()`, a "complete" flag roster missing
-  `--help`, split structs dropping tail fields unhedged). For every
-  roster/split batch claiming lines X–Y of a file, mechanically diff
-  your span-start set against a grep-derived symbol/field/item list
-  restricted to X–Y before moving on.
+- **Symbol-level closure, not just filesystem closure.** Symbol
+  rosters are where silent holes hide (a missing method, a missing
+  flag, a split struct dropping its tail fields). For every roster or
+  split batch claiming lines X–Y of a file, mechanically diff your
+  span-start set against a grep-derived symbol/field/item list
+  restricted to X–Y.
 - **Prose–span consistency.** Every symbol or noun a descriptor or
   justification names must be literally visible in that batch's
   rendered lines, and every content class the top-level summary
@@ -109,11 +105,9 @@ never listed the repo's colocated `*_test.go` files anywhere):
   class/list/function body and give each an ellipsis span or an
   extension. Zero rendered ellipses across a whole draft is a red
   flag, not a style choice.
-- **Hedge in rendered content, not in justification prose.** A
-  justification saying "the remaining toggles continue to line 117"
-  never reaches the consuming agent. If elided content needs
-  signaling, spend an ellipsis span (or head+ellipsis+tail shape) —
-  rendered output is the only channel the agent sees.
+- **Hedge in rendered content, not in justification prose.**
+  Justifications never reach the consuming agent; if elided content
+  needs signaling, spend an ellipsis span.
 
 ## Ranking discipline: budget, growth, and threshold
 
@@ -214,10 +208,7 @@ boundaries are a judgment call per fixture.
 ### Ordering is hand-owned — no mechanical reordering
 
 The batch array's order is the ranking and must be authored, not
-computed. A past draft "fixed" growth-envelope violations with a
-greedy reordering pass; the result ranked Makefile lint targets above
-the repo's identity and left justifications claiming positions their
-batches no longer held. Rules:
+computed. Rules:
 
 - Fix envelope violations only by **splitting or demoting** batches —
   never by a reordering pass. After any move, re-read the affected

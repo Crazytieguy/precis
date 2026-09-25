@@ -47,6 +47,12 @@ may not have delivered. Walker rows holding Score near 1.0 followed by
 an NS row that drops it sharply mean the walker spent that budget on
 content the NS ranks later.
 
+`Score(B)` credits only NS rows within `B` of the NS's own cumulative
+tokens, so pulling content earlier in the walker lifts it only if the NS
+ranks that content within the budget. Don't raise a batch's `value` to
+force it into a budget where it earns no credit; it displaces batches
+that do.
+
 The `predecessor` column names an NS row's dependency (a refinement, or
 a prerequisite concept). The metric doesn't penalize delivering a
 dependent before its predecessor, but that is still a valid target.
@@ -61,7 +67,8 @@ had rendered by a row, run
 
 ## 2. Make a general change
 
-In `src/walker/<lang>.rs` or `src/value.rs`. The rule must hold wherever
+In `src/walker/` (parsed languages live in `src/walker/code/`) or
+`src/value.rs`. The rule must hold wherever
 its condition holds in real codebases, and you must be able to state it
 without naming fixtures; the evidence can still be one fixture. Prefer
 accepting a divergence to adding a fixture-specific heuristic.
