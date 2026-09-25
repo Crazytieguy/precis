@@ -22,7 +22,6 @@ use tree_sitter::Node;
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
 use crate::walker::WalkCtx;
-use crate::walker::markdown::{fence_closes, fence_marker};
 
 pub(super) const LANGUAGE: Language = Language {
     extensions: &["rs"],
@@ -463,59 +462,20 @@ fn rustdoc_content(line: &str) -> &str {
     trimmed.strip_prefix(' ').unwrap_or(trimmed)
 }
 
-/// Splits sorted doc rows into paragraph items at blank doc rows outside
-/// code fences. A blank row stays with the paragraph above it, and a
-/// paragraph followed directly by a fence keeps the fence (the prose
-/// introduces it). Doctest-hidden `# …` rows inside Rust fences are left
-/// out, as rustdoc leaves them out of the rendered docs.
+/// Splits sorted doc rows into paragraph items at blank doc rows; a
+/// blank row stays with the paragraph above it.
 fn rustdoc_paragraphs(rows: &[usize], file: &SourceFile) -> Vec<Item> {
-    let mut items = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    let mut after_blank = false;
-    let mut open_fence: Option<((char, usize), bool)> = None;
+    let mut items: Vec<Item> = Vec::new();
+    let mut after_blank = true;
     for &row in rows {
-        let content = rustdoc_content(file.line(row)).trim_start();
-        if let Some((marker, hides)) = open_fence {
-            if fence_closes(content, marker) {
-                open_fence = None;
-            } else if hides && (content == "#" || content.starts_with("# ")) {
-                continue;
-            }
-            current.push(row);
-            continue;
+        let blank = rustdoc_content(file.line(row)).trim().is_empty();
+        match items.last_mut() {
+            Some(item) if blank || !after_blank => item.rows.push(row),
+            _ => items.push(Item::new([row])),
         }
-        if content.is_empty() {
-            after_blank = true;
-            current.push(row);
-            continue;
-        }
-        let opens = fence_marker(content);
-        if after_blank && opens.is_none() && !current.is_empty() {
-            items.push(Item::new(std::mem::take(&mut current)));
-        }
-        after_blank = false;
-        if let Some(marker) = opens {
-            open_fence = Some((marker, is_rust_fence(&content[marker.1..])));
-        }
-        current.push(row);
-    }
-    if !current.is_empty() {
-        items.push(Item::new(current));
+        after_blank = blank;
     }
     items
-}
-
-/// Rustdoc tests an unlabeled fence and one labeled with a Rust attribute.
-fn is_rust_fence(info: &str) -> bool {
-    let label = info
-        .trim()
-        .split([',', ' ', '\t'])
-        .next()
-        .unwrap_or_default();
-    label.is_empty()
-        || label == "rust"
-        || label.starts_with("edition")
-        || matches!(label, "no_run" | "ignore" | "compile_fail" | "should_panic")
 }
 
 #[cfg(test)]
@@ -549,7 +509,7 @@ mod tests {
     }
 
     #[test]
-    fn rust_extract_module_doc_drops_hidden_doctest_lines() {
+    fn rust_extract_module_doc_skips_plain_comments_and_splits_paragraphs() {
         let source = "\
 // Copyright header, not documentation.
 
@@ -580,29 +540,8 @@ pub fn f() {}
                 vec![5, 6, 7],
                 vec![8, 9, 10],
                 vec![11, 12],
-                vec![13, 14, 16, 17]
+                vec![13, 14, 15, 16, 17]
             ]
-        );
-    }
-
-    #[test]
-    fn rust_extract_doc_paragraph_keeps_the_fence_it_introduces() {
-        let source = "\
-/// Parses input.
-///
-/// For example:
-///
-/// ```text
-/// a
-///
-/// b
-/// ```
-pub fn parse() {}
-";
-        let (_, model) = extract_source("a.rs", source);
-        assert_eq!(
-            rows(&model.decls[0].doc),
-            vec![vec![1, 2], vec![3, 4, 5, 6, 7, 8, 9]]
         );
     }
 

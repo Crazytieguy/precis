@@ -219,8 +219,9 @@ Score(3000)=0.614 I=0.846 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 9570 | 99 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 2, sub: 0, line: 27 } |  |  | 0.538 |
 | ns | 9570 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.538 |
 | ns | 9658 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.535 |
+| walker |  | 9673 | 103 | Code::CodeKey { rung: Body, file: src/fmt.rs, decl: 2, sub: 0, line: 7 } |  |  | 0.535 |
 | ns | 9740 |  | 82 | tests/ui file listing | 8.2 | 8.1 | 0.542 |
-| walker |  | 9771 | 201 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |
 | ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.538 |
-| walker |  | 9874 | 103 | Code::CodeKey { rung: Body, file: src/fmt.rs, decl: 2, sub: 0, line: 7 } |  |  | 0.538 |
-| ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.532 |
+| walker |  | 9931 | 258 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.553 |
+| walker |  | 9964 | 33 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 48, sub: 0, line: 951 } |  |  | 0.555 |
+| ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.549 |
