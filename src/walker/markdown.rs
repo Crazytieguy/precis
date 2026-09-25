@@ -1105,6 +1105,8 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
         "paragraph" => is_decorative_paragraph(block, source),
+        // `[label]: url` definitions render nothing on their own.
+        "link_reference_definition" => true,
         "html_block" => is_decorative_html_block(block, source),
         "block_quote" => is_admin_block_quote(block, source),
         _ => false,
