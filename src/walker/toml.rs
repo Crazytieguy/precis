@@ -42,12 +42,8 @@ const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 type Section = (String, usize, usize);
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let toml_files = files_with_extension(dir, "toml", ctx);
-    if toml_files.is_empty() {
-        return Vec::new();
-    }
     let mut out = Vec::new();
-    for file in toml_files {
+    for file in files_with_extension(dir, "toml", ctx) {
         let Some((source, tree)) = parse_toml(ctx, &file) else {
             continue;
         };
@@ -59,79 +55,70 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         } else {
             Vec::new()
         };
+        let depth = path_depth_factor(&file, ctx);
         let identity_residue = python_identity_non_lede_rows(&source, &sections);
-        let mut identity: Option<BatchKey> = None;
-        if let Some(content) = build_section_content(
-            &file,
-            &source,
-            &sections,
-            |n| {
-                matches!(n, "package" | "workspace" | "workspace.package")
-                    || (python_project_manifest && matches!(n, "project" | "tool.poetry"))
-            },
-            &identity_residue,
-        ) {
-            identity = Some(TomlKey::Identity { file: file.clone() }.into());
+        let identity_rows: Vec<usize> = section_rows(&sections, |n| {
+            matches!(n, "package" | "workspace" | "workspace.package")
+                || (python_project_manifest && is_pyproject_identity_table(n))
+        })
+        .into_iter()
+        .filter(|row| !identity_residue.contains(row))
+        .collect();
+        let identity_key: BatchKey = TomlKey::Identity { file: file.clone() }.into();
+        let identity = rows_content(&file, &source, identity_rows).map(|content| {
+            let has_python_identity = sections
+                .iter()
+                .any(|(name, _, _)| is_pyproject_identity_table(name));
             out.push(Batch {
-                key: TomlKey::Identity { file: file.clone() }.into(),
+                key: identity_key.clone(),
                 predecessor: None,
                 content,
-                value: identity_value(
-                    &file,
-                    ctx,
-                    sections
-                        .iter()
-                        .any(|(name, _, _)| is_pyproject_identity_table(name)),
-                ),
+                value: identity_value(&file, ctx, has_python_identity),
             });
-            if let Some(content) =
-                build_package_metadata_content(&file, &source, &pairs, &identity_residue)
-            {
-                out.push(Batch {
-                    key: TomlKey::PackageMetadata { file: file.clone() }.into(),
-                    predecessor: Some(TomlKey::Identity { file: file.clone() }.into()),
-                    content,
-                    value: manifest_appendix_value(path_depth_factor(&file, ctx)),
-                });
-            }
+            identity_key
+        });
+        if let Some(identity) = &identity
+            && let Some(content) = rows_content(
+                &file,
+                &source,
+                package_metadata_rows(&pairs, &identity_residue),
+            )
+        {
+            out.push(Batch {
+                key: TomlKey::PackageMetadata { file: file.clone() }.into(),
+                predecessor: Some(identity.clone()),
+                content,
+                value: manifest_appendix_value(depth),
+            });
         }
-        if let Some(content) = build_section_content(
-            &file,
-            &source,
-            &sections,
-            |n| is_scripts_section(n) && python_project_manifest,
-            &HashSet::new(),
-        ) {
+        let scripts_rows = section_rows(&sections, |n| {
+            python_project_manifest && is_scripts_section(n)
+        });
+        if let Some(content) = rows_content(&file, &source, scripts_rows) {
             out.push(Batch {
                 key: TomlKey::Scripts { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: manifest_operational_value(path_depth_factor(&file, ctx)),
+                value: manifest_operational_value(depth),
             });
         }
-        if let Some(content) = build_section_content(
-            &file,
-            &source,
-            &sections,
-            |n| n == "features",
-            &HashSet::new(),
-        ) {
+        if let Some(content) =
+            rows_content(&file, &source, section_rows(&sections, |n| n == "features"))
+        {
             out.push(Batch {
                 key: TomlKey::Features { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: manifest_operational_value(path_depth_factor(&file, ctx)),
+                value: manifest_operational_value(depth),
             });
         }
-        if let Some(content) =
-            build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
-        {
-            let tier = dependency_roster_value(
-                file.parent() == Some(ctx.root()),
-                path_depth_factor(&file, ctx),
-            );
-            let value =
-                tier * dependency_table_mass_factor(lines_content_tokens(&source, &content));
+        let mut dependency_rows = section_rows(&sections, is_ordinary_dependency_section);
+        if python_project_manifest {
+            dependency_rows.extend(pep621_dependency_array_rows(&pairs));
+        }
+        if let Some(content) = rows_content(&file, &source, dependency_rows) {
+            let value = dependency_roster_value(file.parent() == Some(ctx.root()), depth)
+                * dependency_table_mass_factor(lines_content_tokens(&source, &content));
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
@@ -145,81 +132,48 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // yet. The load-bearing sections (scripts, features, dependency
         // rosters) stay ungated — they answer what the project is on their
         // own, and gating them costs more than it buys.
-        if let Some(content) =
-            build_config_content(&file, &source, &sections, python_project_manifest)
+        if is_manifest_toml(&sections, python_project_manifest)
+            && let Some(content) =
+                rows_content(&file, &source, section_rows(&sections, is_config_section))
         {
             out.push(Batch {
                 key: TomlKey::Config { file: file.clone() }.into(),
-                predecessor: identity.clone(),
+                predecessor: identity,
                 content,
-                value: manifest_appendix_value(path_depth_factor(&file, ctx)),
+                value: manifest_appendix_value(depth),
             });
         }
     }
     out
 }
 
-/// Dependency content for Cargo (table-based) and pyproject (array
-/// under `[project]`).
-fn build_dependencies_content(
+/// Every row of the sections whose name satisfies `name_match`.
+fn section_rows(sections: &[Section], name_match: impl Fn(&str) -> bool) -> Vec<usize> {
+    sections
+        .iter()
+        .filter(|(name, _, _)| name_match(name))
+        .flat_map(|(_, start, end)| *start..=*end)
+        .collect()
+}
+
+fn rows_content(
     file: &Path,
     source: &Source,
-    pairs: &[TablePair],
-    sections: &[Section],
-    python_project_manifest: bool,
+    rows: Vec<usize>,
 ) -> Option<crate::content::BatchContent> {
-    let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start, end) in sections {
-        if is_ordinary_dependency_section(name) {
-            line_numbers.extend(*start..=*end);
-        }
-    }
-    if python_project_manifest {
-        line_numbers.extend(pep621_dependency_array_rows(pairs));
-    }
-    if line_numbers.is_empty() {
+    if rows.is_empty() {
         return None;
     }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(rows)))
 }
 
 /// The identity-table residue, minus the dependency arrays the dependency
 /// batch owns — no two peer batches may claim the same row.
-fn build_package_metadata_content(
-    file: &Path,
-    source: &Source,
-    pairs: &[TablePair],
-    identity_residue: &HashSet<usize>,
-) -> Option<crate::content::BatchContent> {
+fn package_metadata_rows(pairs: &[TablePair], identity_residue: &HashSet<usize>) -> Vec<usize> {
     let dropped: HashSet<usize> = pep621_dependency_array_rows(pairs)
         .chain(packaging_mechanics_rows(pairs))
         .collect();
-    let line_numbers = dedup_sorted(identity_residue.difference(&dropped).copied().collect());
-    if line_numbers.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, FileLines::new(line_numbers))
-}
-
-fn build_config_content(
-    file: &Path,
-    source: &Source,
-    sections: &[Section],
-    python_project_manifest: bool,
-) -> Option<crate::content::BatchContent> {
-    if !is_manifest_toml(sections, python_project_manifest) {
-        return None;
-    }
-    let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start, end) in sections {
-        if is_config_section(name) {
-            line_numbers.extend(*start..=*end);
-        }
-    }
-    if line_numbers.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
+    identity_residue.difference(&dropped).copied().collect()
 }
 
 /// One `key = value` pair written directly under a top-level `[table]`, with
@@ -285,26 +239,6 @@ fn pair_value_node(pair: Node) -> Option<Node> {
         }
     }
     None
-}
-
-fn build_section_content(
-    file: &Path,
-    source: &Source,
-    sections: &[Section],
-    name_match: impl Fn(&str) -> bool,
-    skipped_rows: &HashSet<usize>,
-) -> Option<crate::content::BatchContent> {
-    let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start_line, end_line) in sections {
-        if name_match(name) {
-            line_numbers
-                .extend((*start_line..=*end_line).filter(|row| !skipped_rows.contains(row)));
-        }
-    }
-    if line_numbers.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
 /// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table —
