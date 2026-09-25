@@ -3,19 +3,6 @@
   devcontainer.json
 .dockerignore
 .env.sample
-  1→# Docker container name
-  2→LD_CONTAINER_NAME=linkding
-  3→# Port on the host system that the application should be published on
-  4→LD_HOST_PORT=9090
-  5→# Directory on the host system that should be mounted as data dir into the Docker container
-  6→LD_HOST_DATA_DIR=./data
-  7→
-  8→# Can be used to run linkding under a context path, for example: linkding/
-  9→# Must end with a slash `/`
-  10→LD_CONTEXT_PATH=
-  11→# Username of the initial superuser to create, leave empty to not create one
-  12→LD_SUPERUSER_NAME=
-  …
 .gitattributes
 .github/
   workflows/

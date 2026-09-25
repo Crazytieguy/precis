@@ -96,138 +96,138 @@ Score(3000)=0.572 I=0.823 C=0.397 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2070 | 38 | Markdown::HeadingsOutline { file: packages/lib/README.md } |  |  | 0.570 |
 | walker |  | 2122 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.570 |
 | walker |  | 2145 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.570 |
-| walker |  | 2180 | 35 | Plaintext::Whole { file: packages/app-client/.env.example } |  |  | 0.570 |
-| walker |  | 2205 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.571 |
+| walker |  | 2170 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.571 |
 | ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.553 |
-| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.523 |
-| walker |  | 2403 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.524 |
-| walker |  | 2509 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.572 |
-| walker |  | 2530 | 21 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.572 |
-| walker |  | 2569 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.573 |
-| walker |  | 2583 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.573 |
-| walker |  | 2597 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.574 |
+| walker |  | 2368 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.553 |
+| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.524 |
+| walker |  | 2474 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 2495 | 21 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 2534 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.573 |
+| walker |  | 2548 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.573 |
+| walker |  | 2562 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.574 |
 | ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.532 |
 | ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.514 |
-| walker |  | 2936 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.572 |
-| walker |  | 2969 | 33 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.572 |
-| walker |  | 3013 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.572 |
-| walker |  | 3049 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.573 |
+| walker |  | 2901 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.572 |
+| walker |  | 2934 | 33 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 2978 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.572 |
+| walker |  | 3014 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.573 |
 | ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.549 |
-| walker |  | 3136 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.550 |
-| walker |  | 3192 | 56 | Markdown::ReadmeHeadline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
-| walker |  | 3214 | 22 | Markdown::HeadingsOutline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
-| walker |  | 3252 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.551 |
+| walker |  | 3101 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.550 |
+| walker |  | 3157 | 56 | Markdown::ReadmeHeadline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
+| walker |  | 3179 | 22 | Markdown::HeadingsOutline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
+| walker |  | 3217 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.551 |
+| walker |  | 3372 | 155 | Json::IdentityMeta { file: package.json } |  |  | 0.551 |
 | ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.524 |
-| walker |  | 3407 | 155 | Json::IdentityMeta { file: package.json } |  |  | 0.524 |
-| walker |  | 3449 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.525 |
-| walker |  | 3457 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.525 |
-| walker |  | 3500 | 43 | Markdown::HeadingsOutline { file: packages/docs/src/index.md } |  |  | 0.525 |
-| walker |  | 3563 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.527 |
-| walker |  | 3582 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.528 |
+| walker |  | 3414 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.525 |
+| walker |  | 3422 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.525 |
+| walker |  | 3465 | 43 | Markdown::HeadingsOutline { file: packages/docs/src/index.md } |  |  | 0.525 |
+| walker |  | 3528 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.527 |
+| walker |  | 3547 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.528 |
 | ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.519 |
-| walker |  | 3630 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.519 |
-| walker |  | 3745 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.519 |
-| ns | 3780 |  | 196 | Complete file roster of packages/crypto | 2.10 |  | 0.561 |
-| walker |  | 3797 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.562 |
-| walker |  | 3834 | 37 | Markdown::HeadingsOutline { file: packages/docs/src/resources/i18n.md } |  |  | 0.562 |
-| walker |  | 3934 | 100 | Markdown::HeadingsOutline { file: packages/cli/README.md } |  |  | 0.562 |
-| walker |  | 3960 | 26 | Markdown::Section { file: packages/crypto/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.562 |
+| walker |  | 3595 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.519 |
+| walker |  | 3710 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.519 |
+| walker |  | 3762 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.520 |
+| ns | 3780 |  | 196 | Complete file roster of packages/crypto | 2.10 |  | 0.562 |
+| walker |  | 3799 | 37 | Markdown::HeadingsOutline { file: packages/docs/src/resources/i18n.md } |  |  | 0.562 |
+| walker |  | 3899 | 100 | Markdown::HeadingsOutline { file: packages/cli/README.md } |  |  | 0.562 |
+| walker |  | 3925 | 26 | Markdown::Section { file: packages/crypto/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.562 |
 | ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.544 |
-| walker |  | 4075 | 115 | Markdown::HeadingsOutline { file: packages/app-client/README.md } |  |  | 0.544 |
-| walker |  | 4075 | 0 | Markdown::Section { file: packages/app-client/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.544 |
-| walker |  | 4152 | 77 | Markdown::Section { file: packages/app-client/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.544 |
-| walker |  | 4178 | 26 | Markdown::Section { file: packages/cli/README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.544 |
-| walker |  | 4211 | 33 | Markdown::Section { file: packages/crypto/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.544 |
-| walker |  | 4241 | 30 | Markdown::Section { file: packages/app-client/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.544 |
-| walker |  | 4267 | 26 | Markdown::Section { file: packages/lib/README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4040 | 115 | Markdown::HeadingsOutline { file: packages/app-client/README.md } |  |  | 0.544 |
+| walker |  | 4040 | 0 | Markdown::Section { file: packages/app-client/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4117 | 77 | Markdown::Section { file: packages/app-client/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4143 | 26 | Markdown::Section { file: packages/cli/README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4176 | 33 | Markdown::Section { file: packages/crypto/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4206 | 30 | Markdown::Section { file: packages/app-client/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4232 | 26 | Markdown::Section { file: packages/lib/README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 4283 | 51 | Markdown::HeadingsOutline { file: packages/docs/src/integrations/npm-package.md } |  |  | 0.544 |
 | ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.527 |
-| walker |  | 4318 | 51 | Markdown::HeadingsOutline { file: packages/docs/src/integrations/npm-package.md } |  |  | 0.527 |
-| walker |  | 4351 | 33 | Markdown::Section { file: packages/cli/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.527 |
+| walker |  | 4316 | 33 | Markdown::Section { file: packages/cli/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.527 |
 | ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.518 |
 | ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.510 |
-| walker |  | 4870 | 519 | Plaintext::Whole { file: Dockerfile } |  |  | 0.511 |
+| walker |  | 4835 | 519 | Plaintext::Whole { file: Dockerfile } |  |  | 0.511 |
+| walker |  | 4868 | 33 | Markdown::Section { file: packages/lib/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.511 |
 | ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.552 |
-| walker |  | 4903 | 33 | Markdown::Section { file: packages/lib/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.552 |
-| walker |  | 4963 | 60 | Json::Whole { file: renovate.json } |  |  | 0.552 |
-| walker |  | 4993 | 30 | Markdown::HeadingsOutline { file: packages/docs/src/self-hosting/troubleshooting.md } |  |  | 0.552 |
-| walker |  | 5108 | 115 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.552 |
+| walker |  | 4928 | 60 | Json::Whole { file: renovate.json } |  |  | 0.552 |
+| walker |  | 4958 | 30 | Markdown::HeadingsOutline { file: packages/docs/src/self-hosting/troubleshooting.md } |  |  | 0.552 |
+| walker |  | 5073 | 115 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.552 |
 | ns | 5133 |  | 256 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.585 |
-| walker |  | 5269 | 161 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.618 |
-| walker |  | 5294 | 25 | Markdown::Section { file: packages/docs/src/resources/i18n.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.618 |
+| walker |  | 5234 | 161 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.618 |
+| walker |  | 5259 | 25 | Markdown::Section { file: packages/docs/src/resources/i18n.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.618 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.602 |
-| walker |  | 5401 | 107 | Markdown::HeadingsOutline { file: packages/docs/src/resources/brand-kit.md } |  |  | 0.602 |
-| walker |  | 5416 | 15 | Plaintext::DeclSurface { file: packages/docs/src/public/robots.txt } |  |  | 0.602 |
-| walker |  | 5505 | 89 | Plaintext::DeclSurface { file: packages/docs/src/components/credential-inputs.vue } |  |  | 0.602 |
-| walker |  | 5573 | 68 | Json::Identity { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
-| walker |  | 5590 | 17 | Json::Runtime { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
-| walker |  | 5619 | 29 | Json::Scripts { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
-| walker |  | 5692 | 73 | Json::IdentityMeta { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
-| walker |  | 5786 | 94 | Plaintext::DeclSurface { file: packages/docs/src/components/toggle.vue } |  |  | 0.602 |
+| walker |  | 5366 | 107 | Markdown::HeadingsOutline { file: packages/docs/src/resources/brand-kit.md } |  |  | 0.602 |
+| walker |  | 5381 | 15 | Plaintext::DeclSurface { file: packages/docs/src/public/robots.txt } |  |  | 0.602 |
+| walker |  | 5470 | 89 | Plaintext::DeclSurface { file: packages/docs/src/components/credential-inputs.vue } |  |  | 0.602 |
+| walker |  | 5538 | 68 | Json::Identity { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
+| walker |  | 5555 | 17 | Json::Runtime { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
+| walker |  | 5584 | 29 | Json::Scripts { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
+| walker |  | 5657 | 73 | Json::IdentityMeta { file: packages/deploy-cloudflare/package.json } |  |  | 0.602 |
+| walker |  | 5751 | 94 | Plaintext::DeclSurface { file: packages/docs/src/components/toggle.vue } |  |  | 0.602 |
+| walker |  | 5840 | 89 | Markdown::Section { file: packages/crypto/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.602 |
+| walker |  | 5854 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.602 |
 | ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.581 |
-| walker |  | 5875 | 89 | Markdown::Section { file: packages/crypto/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.581 |
-| walker |  | 5889 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.581 |
-| walker |  | 5899 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
-| walker |  | 6062 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.602 |
+| walker |  | 5864 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| walker |  | 6027 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.602 |
 | ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.590 |
-| walker |  | 6255 | 193 | Markdown::HeadingsOutline { file: packages/docs/src/how-it-works.md } |  |  | 0.590 |
+| walker |  | 6220 | 193 | Markdown::HeadingsOutline { file: packages/docs/src/how-it-works.md } |  |  | 0.590 |
 | ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.577 |
-| walker |  | 6332 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.577 |
-| walker |  | 6383 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.577 |
-| walker |  | 6454 | 71 | Json::IdentityMeta { file: packages/app-client/package.json } |  |  | 0.577 |
+| walker |  | 6297 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.577 |
+| walker |  | 6348 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.577 |
+| walker |  | 6419 | 71 | Json::IdentityMeta { file: packages/app-client/package.json } |  |  | 0.577 |
 | ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.570 |
-| walker |  | 6654 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.570 |
-| walker |  | 6731 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.570 |
+| walker |  | 6619 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.570 |
+| walker |  | 6696 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.570 |
+| walker |  | 6747 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.570 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.559 |
-| walker |  | 6782 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.559 |
-| walker |  | 6853 | 71 | Json::IdentityMeta { file: packages/app-server/package.json } |  |  | 0.559 |
-| walker |  | 6930 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.559 |
-| walker |  | 6944 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.559 |
-| walker |  | 6961 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.559 |
+| walker |  | 6818 | 71 | Json::IdentityMeta { file: packages/app-server/package.json } |  |  | 0.559 |
+| walker |  | 6895 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.559 |
+| walker |  | 6909 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.559 |
+| walker |  | 6926 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.559 |
+| walker |  | 6959 | 33 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.559 |
 | ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.553 |
-| walker |  | 6994 | 33 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.553 |
-| walker |  | 7079 | 85 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.553 |
-| walker |  | 7159 | 80 | Json::IdentityMeta { file: packages/docs/package.json } |  |  | 0.553 |
+| walker |  | 7044 | 85 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.553 |
+| walker |  | 7124 | 80 | Json::IdentityMeta { file: packages/docs/package.json } |  |  | 0.553 |
 | ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.547 |
-| walker |  | 7238 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.547 |
-| walker |  | 7289 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.547 |
-| walker |  | 7322 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.547 |
-| walker |  | 7395 | 73 | Json::IdentityMeta { file: packages/crypto/package.json } |  |  | 0.547 |
+| walker |  | 7203 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.547 |
+| walker |  | 7254 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.547 |
+| walker |  | 7287 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.547 |
+| walker |  | 7360 | 73 | Json::IdentityMeta { file: packages/crypto/package.json } |  |  | 0.547 |
 | ns | 7406 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.538 |
-| walker |  | 7544 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.538 |
+| walker |  | 7509 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.538 |
 | ns | 7575 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.530 |
-| walker |  | 7623 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.530 |
-| walker |  | 7674 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.530 |
+| walker |  | 7588 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.530 |
+| walker |  | 7639 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.530 |
 | ns | 7705 |  | 130 | Complete file roster of packages/cli | 4.2 |  | 0.548 |
-| walker |  | 7747 | 73 | Json::IdentityMeta { file: packages/lib/package.json } |  |  | 0.548 |
-| walker |  | 7869 | 122 | Json::Entry { file: packages/lib/package.json } |  |  | 0.548 |
+| walker |  | 7712 | 73 | Json::IdentityMeta { file: packages/lib/package.json } |  |  | 0.548 |
+| walker |  | 7834 | 122 | Json::Entry { file: packages/lib/package.json } |  |  | 0.548 |
 | ns | 7969 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.539 |
-| walker |  | 8018 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.539 |
-| walker |  | 8130 | 112 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.539 |
-| walker |  | 8210 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.539 |
+| walker |  | 7983 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.539 |
+| walker |  | 8095 | 112 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.539 |
+| walker |  | 8175 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.539 |
+| walker |  | 8226 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.539 |
 | ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.530 |
-| walker |  | 8261 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.530 |
-| walker |  | 8345 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.530 |
-| walker |  | 8416 | 71 | Json::IdentityMeta { file: packages/cli/package.json } |  |  | 0.530 |
+| walker |  | 8310 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.530 |
+| walker |  | 8381 | 71 | Json::IdentityMeta { file: packages/cli/package.json } |  |  | 0.530 |
 | ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.562 |
-| walker |  | 8567 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.562 |
-| walker |  | 8709 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.562 |
+| walker |  | 8532 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.562 |
+| walker |  | 8674 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.562 |
 | ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.581 |
-| walker |  | 8795 | 86 | Markdown::Section { file: packages/lib/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.581 |
+| walker |  | 8760 | 86 | Markdown::Section { file: packages/lib/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.581 |
 | ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.571 |
-| walker |  | 9041 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.584 |
-| walker |  | 9099 | 58 | Markdown::HeadingsOutline { file: packages/docs/src/self-hosting/configuration.md } |  |  | 0.584 |
-| walker |  | 9159 | 60 | Markdown::Section { file: packages/docs/src/how-it-works.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.584 |
+| walker |  | 9006 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.584 |
+| walker |  | 9064 | 58 | Markdown::HeadingsOutline { file: packages/docs/src/self-hosting/configuration.md } |  |  | 0.584 |
+| walker |  | 9124 | 60 | Markdown::Section { file: packages/docs/src/how-it-works.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.584 |
 | ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.580 |
 | ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.588 |
-| walker |  | 9440 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.589 |
-| walker |  | 9475 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.589 |
-| walker |  | 9507 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 9405 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.589 |
+| walker |  | 9440 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.589 |
+| walker |  | 9472 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.593 |
-| walker |  | 9658 | 151 | Code::CodeKey { rung: Decl, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.593 |
-| walker |  | 9700 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.593 |
-| walker |  | 9717 | 17 | Code::CodeKey { rung: Names, file: packages/app-client/src/routes.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
+| walker |  | 9623 | 151 | Code::CodeKey { rung: Decl, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.593 |
+| walker |  | 9665 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.593 |
+| walker |  | 9682 | 17 | Code::CodeKey { rung: Names, file: packages/app-client/src/routes.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
 | ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.597 |
+| walker |  | 9908 | 226 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.597 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.608 |
-| walker |  | 9943 | 226 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.608 |
-| walker |  | 9954 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 9991 | 37 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.usecases.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.608 |
+| walker |  | 9919 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
+| walker |  | 9956 | 37 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.usecases.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.608 |
+| walker |  | 9967 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/configuration.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |

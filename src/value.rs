@@ -177,10 +177,9 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     if is_auto_injected_doc_file(path, root) {
         return 0.1;
     }
-    // Dot-prefixed dirs at any depth are tooling / CI / admin /
-    // docs-site plumbing. Exceptions: `.github/workflows/...` (CI
-    // config, paging-relevant) and the auto-injected skill subtrees
-    // already handled above.
+    // Dot-prefixed entries at any depth are tooling / CI / admin /
+    // docs-site plumbing, except `.github/workflows/...` (CI config) and
+    // the auto-injected skill subtrees already handled above.
     let mut comps = target.components();
     if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
         if first.eq_ignore_ascii_case(".github") {
@@ -188,18 +187,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
-            // The workflows exemption is for what CI says about the
-            // project — how it builds, packages and releases. A
-            // workflow named for the test suite says only that the
-            // test suite runs, which the test tree already said, so it
-            // rejoins the tier that tree is on.
-            if names_the_test_suite(target) {
-                return 0.2;
-            }
-        } else if first.starts_with('.') && first != "." && !is_dotenv_sample_filename(first) {
-            // Dotenv samples are user-facing config documentation,
-            // not tooling plumbing — exempt from the dot-prefix damp
-            // (cf. the `.github/workflows` exception above).
+        } else if first.starts_with('.') && first != "." {
             return 0.2;
         } else if is_vendor_dir_name(first) {
             // Depth-1-only: a project that vendors *as part of* its
@@ -222,7 +210,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         if component
             .as_os_str()
             .to_str()
-            .is_some_and(|s| s.starts_with('.') && s != "." && !is_dotenv_sample_filename(s))
+            .is_some_and(|s| s.starts_with('.') && s != ".")
         {
             return 0.2;
         }
@@ -259,7 +247,6 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "tools"
         ) || s.starts_with("test_")
             || s.starts_with("tests_")
-            || s.starts_with("guide-helper")
             || is_scaffold_template_dir_name(s)
         {
             return 0.2;
@@ -298,15 +285,6 @@ fn is_colocated_test_filename(name: &str) -> bool {
         || lower.ends_with("_test.tsx")
         || lower.ends_with("_test.py")
         || (lower.starts_with("test_") && lower.ends_with(".py"))
-}
-
-/// True iff `target`'s file stem is exactly `test` / `tests` — the file
-/// is named for the test suite and nothing else.
-fn names_the_test_suite(target: &std::path::Path) -> bool {
-    target
-        .file_stem()
-        .and_then(|stem| stem.to_str())
-        .is_some_and(|stem| stem.eq_ignore_ascii_case("test") || stem.eq_ignore_ascii_case("tests"))
 }
 
 /// Checked-in dotenv sample/template filenames. These are config-key
