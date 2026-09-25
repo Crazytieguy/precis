@@ -43,7 +43,8 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
 }
 
 /// What `require` returns: the top-level `return`, and a
-/// `setmetatable(…)` call that makes the module callable.
+/// `setmetatable(…)` call that makes the module callable, one item per
+/// row so a long export table chunks like any roster.
 fn module_exports(file: &SourceFile) -> Vec<Item> {
     let root = file.tree.root_node();
     let mut cursor = root.walk();
@@ -54,7 +55,7 @@ fn module_exports(file: &SourceFile) -> Vec<Item> {
                 || (child.kind() == "function_call"
                     && file.text(*child).starts_with("setmetatable"))
         })
-        .map(|child| Item::new(file.node_rows(child)))
+        .flat_map(|child| file.node_rows(child).map(|row| Item::new([row])))
         .collect()
 }
 
@@ -277,7 +278,7 @@ return M
             .iter()
             .map(|item| item.rows.clone())
             .collect();
-        assert_eq!(exports, [vec![3, 4, 5], vec![7]]);
+        assert_eq!(exports, [vec![3], vec![4], vec![5], vec![7]]);
 
         let returns_function = extract_source(
             "\
