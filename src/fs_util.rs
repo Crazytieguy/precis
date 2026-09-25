@@ -188,7 +188,7 @@ impl DirFilter {
     /// The root is exempt: a caller may legitimately point precis at a
     /// link, and that link is then the walk's whole scope rather than an
     /// escape from it.
-    fn is_linked_subdirectory(&self, dir: &Path) -> bool {
+    pub fn is_linked_subdirectory(&self, dir: &Path) -> bool {
         dir != self.root
             && dir != self.canonical_root
             && std::fs::symlink_metadata(dir).is_ok_and(|meta| meta.file_type().is_symlink())

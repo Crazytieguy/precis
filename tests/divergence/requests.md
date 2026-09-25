@@ -159,117 +159,118 @@ Score(3000)=0.684 I=0.796 C=0.587 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 6544 | 0 | python decl at src/requests/compat.py:37 |  |  | 0.584 |
 | walker |  | 6556 | 12 | python decl doc at src/requests/compat.py:37 |  |  | 0.584 |
 | walker |  | 6612 | 56 | python method doc at src/requests/sessions.py:309 |  |  | 0.584 |
-| walker |  | 6709 | 97 | python method at src/requests/adapters.py:128 |  |  | 0.600 |
+| walker |  | 6618 | 6 | listing of 'tests/certs/valid' |  |  | 0.584 |
+| walker |  | 6715 | 97 | python method at src/requests/adapters.py:128 |  |  | 0.600 |
 | ns | 6739 |  | 199 | Environment-driven settings: the `merge_environment_settings` core | 4.3 | 2.6 | 0.591 |
-| walker |  | 6806 | 97 | python method at src/requests/adapters.py:634 |  |  | 0.608 |
-| walker |  | 6831 | 25 | python imports in tests/__init__.py |  |  | 0.608 |
+| walker |  | 6812 | 97 | python method at src/requests/adapters.py:634 |  |  | 0.608 |
+| walker |  | 6837 | 25 | python imports in tests/__init__.py |  |  | 0.608 |
 | ns | 6846 |  | 107 | `utils.py` module-level constants | 5.1 |  | 0.604 |
 | ns | 6994 |  | 148 | `utils.py` function roster 1/3: proxies shim, lengths, netrc, encoders | 5.2 |  | 0.599 |
-| walker |  | 7087 | 256 | README.md section #3 |  |  | 0.599 |
-| walker |  | 7137 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.599 |
-| walker |  | 7137 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.599 |
+| walker |  | 7093 | 256 | README.md section #3 |  |  | 0.599 |
+| walker |  | 7143 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.599 |
+| walker |  | 7143 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.599 |
 | ns | 7161 |  | 167 | `utils.py` function roster 2/3: cookies, encoding detection, URI quoting, CIDR | 5.3 | 5.2 | 0.591 |
-| walker |  | 7283 | 146 | python decl names surface in src/requests/models.py |  |  | 0.596 |
-| walker |  | 7283 | 0 | python decl at src/requests/models.py:109 |  |  | 0.596 |
-| walker |  | 7283 | 0 | python decl at src/requests/models.py:255 |  |  | 0.596 |
-| walker |  | 7283 | 0 | python decl at src/requests/models.py:283 |  |  | 0.596 |
-| walker |  | 7283 | 0 | python decl at src/requests/models.py:376 |  |  | 0.596 |
-| walker |  | 7283 | 0 | python decl at src/requests/models.py:730 |  |  | 0.596 |
-| walker |  | 7301 | 18 | python decl doc at src/requests/models.py:283 |  |  | 0.596 |
-| walker |  | 7340 | 39 | python decl doc at src/requests/models.py:730 |  |  | 0.596 |
+| walker |  | 7289 | 146 | python decl names surface in src/requests/models.py |  |  | 0.596 |
+| walker |  | 7289 | 0 | python decl at src/requests/models.py:109 |  |  | 0.596 |
+| walker |  | 7289 | 0 | python decl at src/requests/models.py:255 |  |  | 0.596 |
+| walker |  | 7289 | 0 | python decl at src/requests/models.py:283 |  |  | 0.596 |
+| walker |  | 7289 | 0 | python decl at src/requests/models.py:376 |  |  | 0.596 |
+| walker |  | 7289 | 0 | python decl at src/requests/models.py:730 |  |  | 0.596 |
+| walker |  | 7307 | 18 | python decl doc at src/requests/models.py:283 |  |  | 0.596 |
 | ns | 7341 |  | 180 | `utils.py` function roster 3/3: proxy resolution, default headers, header validation | 5.4 | 5.3 | 0.588 |
-| walker |  | 7351 | 11 | python class body at src/requests/models.py:109 |  |  | 0.588 |
+| walker |  | 7346 | 39 | python decl doc at src/requests/models.py:730 |  |  | 0.588 |
+| walker |  | 7357 | 11 | python class body at src/requests/models.py:109 |  |  | 0.588 |
 | ns | 7602 |  | 261 | `structures.py`: `CaseInsensitiveDict` and `LookupDict` in full shape | 5.5 |  | 0.578 |
-| walker |  | 7610 | 259 | python class body at src/requests/models.py:730 |  |  | 0.611 |
+| walker |  | 7616 | 259 | python class body at src/requests/models.py:730 |  |  | 0.611 |
 | ns | 7712 |  | 110 | `status_codes.py`: how `requests.codes` is built | 5.6 |  | 0.607 |
-| walker |  | 7733 | 123 | python class body at src/requests/models.py:283 |  |  | 0.618 |
-| walker |  | 7832 | 99 | python class body at src/requests/models.py:376 |  |  | 0.620 |
-| walker |  | 7906 | 74 | python decl at src/requests/models.py:96 |  |  | 0.630 |
-| walker |  | 7923 | 17 | python class body at src/requests/models.py:255 |  |  | 0.630 |
+| walker |  | 7739 | 123 | python class body at src/requests/models.py:283 |  |  | 0.618 |
+| walker |  | 7838 | 99 | python class body at src/requests/models.py:376 |  |  | 0.620 |
+| walker |  | 7912 | 74 | python decl at src/requests/models.py:96 |  |  | 0.630 |
+| walker |  | 7929 | 17 | python class body at src/requests/models.py:255 |  |  | 0.630 |
 | ns | 7954 |  | 242 | The five small modules: hooks, `_internal_utils`, compat, certs, packages | 5.7 |  | 0.621 |
 | ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.614 |
 | ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.602 |
-| walker |  | 8624 | 701 | python method sigs in src/requests/models.py |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:271 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:355 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:358 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:451 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:454 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:465 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:563 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:652 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:720 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:763 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:810 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:813 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:824 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:832 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:835 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:845 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:855 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:1087 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:1140 |  |  | 0.640 |
-| walker |  | 8624 | 0 | python method at src/requests/models.py:1169 |  |  | 0.640 |
-| walker |  | 8630 | 6 | python method at src/requests/models.py:112 |  |  | 0.640 |
-| walker |  | 8638 | 8 | python method at src/requests/models.py:859 |  |  | 0.641 |
-| walker |  | 8646 | 8 | python method at src/requests/models.py:874 |  |  | 0.642 |
-| walker |  | 8654 | 8 | python method at src/requests/models.py:881 |  |  | 0.644 |
-| walker |  | 8662 | 8 | python method at src/requests/models.py:889 |  |  | 0.645 |
-| walker |  | 8670 | 8 | python method at src/requests/models.py:894 |  |  | 0.646 |
-| walker |  | 8679 | 9 | python method at src/requests/models.py:1030 |  |  | 0.647 |
-| walker |  | 8688 | 9 | python method at src/requests/models.py:1049 |  |  | 0.649 |
-| walker |  | 8697 | 9 | python method at src/requests/models.py:1122 |  |  | 0.650 |
-| walker |  | 8711 | 14 | python method at src/requests/models.py:405 |  |  | 0.650 |
-| walker |  | 8719 | 8 | python method at src/requests/models.py:471 |  |  | 0.652 |
-| walker |  | 8731 | 12 | python method doc at src/requests/models.py:720 |  |  | 0.652 |
-| walker |  | 8744 | 13 | python method doc at src/requests/models.py:112 |  |  | 0.652 |
+| walker |  | 8630 | 701 | python method sigs in src/requests/models.py |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:271 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:355 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:358 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:451 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:454 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:465 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:563 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:652 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:720 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:763 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:810 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:813 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:824 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:832 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:835 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:845 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:855 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:1087 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:1140 |  |  | 0.640 |
+| walker |  | 8630 | 0 | python method at src/requests/models.py:1169 |  |  | 0.640 |
+| walker |  | 8636 | 6 | python method at src/requests/models.py:112 |  |  | 0.640 |
+| walker |  | 8644 | 8 | python method at src/requests/models.py:859 |  |  | 0.641 |
+| walker |  | 8652 | 8 | python method at src/requests/models.py:874 |  |  | 0.642 |
+| walker |  | 8660 | 8 | python method at src/requests/models.py:881 |  |  | 0.644 |
+| walker |  | 8668 | 8 | python method at src/requests/models.py:889 |  |  | 0.645 |
+| walker |  | 8676 | 8 | python method at src/requests/models.py:894 |  |  | 0.646 |
+| walker |  | 8685 | 9 | python method at src/requests/models.py:1030 |  |  | 0.647 |
+| walker |  | 8694 | 9 | python method at src/requests/models.py:1049 |  |  | 0.649 |
+| walker |  | 8703 | 9 | python method at src/requests/models.py:1122 |  |  | 0.650 |
+| walker |  | 8717 | 14 | python method at src/requests/models.py:405 |  |  | 0.650 |
+| walker |  | 8725 | 8 | python method at src/requests/models.py:471 |  |  | 0.652 |
+| walker |  | 8737 | 12 | python method doc at src/requests/models.py:720 |  |  | 0.652 |
+| walker |  | 8750 | 13 | python method doc at src/requests/models.py:112 |  |  | 0.652 |
 | ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.639 |
-| walker |  | 8757 | 13 | python method doc at src/requests/models.py:465 |  |  | 0.639 |
-| walker |  | 8770 | 13 | python method doc at src/requests/models.py:563 |  |  | 0.639 |
-| walker |  | 8799 | 29 | python method at src/requests/models.py:816 |  |  | 0.639 |
-| walker |  | 8814 | 15 | python method doc at src/requests/models.py:1030 |  |  | 0.639 |
-| walker |  | 8847 | 33 | python method at src/requests/models.py:697 |  |  | 0.639 |
-| walker |  | 8863 | 16 | python method doc at src/requests/models.py:855 |  |  | 0.639 |
-| walker |  | 8880 | 17 | python method doc at src/requests/models.py:652 |  |  | 0.639 |
-| walker |  | 8916 | 36 | python method at src/requests/models.py:258 |  |  | 0.639 |
-| walker |  | 8928 | 12 | python method doc at src/requests/models.py:258 |  |  | 0.639 |
+| walker |  | 8763 | 13 | python method doc at src/requests/models.py:465 |  |  | 0.639 |
+| walker |  | 8776 | 13 | python method doc at src/requests/models.py:563 |  |  | 0.639 |
+| walker |  | 8805 | 29 | python method at src/requests/models.py:816 |  |  | 0.639 |
+| walker |  | 8820 | 15 | python method doc at src/requests/models.py:1030 |  |  | 0.639 |
+| walker |  | 8853 | 33 | python method at src/requests/models.py:697 |  |  | 0.639 |
+| walker |  | 8869 | 16 | python method doc at src/requests/models.py:855 |  |  | 0.639 |
+| walker |  | 8886 | 17 | python method doc at src/requests/models.py:652 |  |  | 0.639 |
+| walker |  | 8922 | 36 | python method at src/requests/models.py:258 |  |  | 0.639 |
+| walker |  | 8934 | 12 | python method doc at src/requests/models.py:258 |  |  | 0.639 |
 | ns | 8955 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.631 |
-| walker |  | 8964 | 36 | python method at src/requests/models.py:912 |  |  | 0.631 |
-| walker |  | 8982 | 18 | python method doc at src/requests/models.py:881 |  |  | 0.631 |
-| walker |  | 9000 | 18 | python method doc at src/requests/models.py:1140 |  |  | 0.631 |
-| walker |  | 9019 | 19 | python method doc at src/requests/models.py:1122 |  |  | 0.631 |
+| walker |  | 8970 | 36 | python method at src/requests/models.py:912 |  |  | 0.631 |
+| walker |  | 8988 | 18 | python method doc at src/requests/models.py:881 |  |  | 0.631 |
+| walker |  | 9006 | 18 | python method doc at src/requests/models.py:1140 |  |  | 0.631 |
+| walker |  | 9025 | 19 | python method doc at src/requests/models.py:1122 |  |  | 0.631 |
 | ns | 9043 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.634 |
-| walker |  | 9058 | 39 | python method at src/requests/models.py:574 |  |  | 0.634 |
-| walker |  | 9072 | 14 | python method doc at src/requests/models.py:574 |  |  | 0.634 |
-| walker |  | 9112 | 40 | python method at src/requests/models.py:481 |  |  | 0.634 |
-| walker |  | 9125 | 13 | python method doc at src/requests/models.py:481 |  |  | 0.634 |
-| walker |  | 9166 | 41 | python method at src/requests/models.py:668 |  |  | 0.634 |
-| walker |  | 9180 | 14 | python method doc at src/requests/models.py:668 |  |  | 0.634 |
-| walker |  | 9202 | 22 | python method doc at src/requests/models.py:894 |  |  | 0.634 |
-| walker |  | 9226 | 24 | python method doc at src/requests/models.py:358 |  |  | 0.634 |
-| walker |  | 9250 | 24 | python method doc at src/requests/models.py:889 |  |  | 0.634 |
-| walker |  | 9306 | 56 | python method at src/requests/models.py:908 |  |  | 0.634 |
-| walker |  | 9306 | 0 | python method body at src/requests/models.py:908 body 911 |  |  | 0.634 |
+| walker |  | 9064 | 39 | python method at src/requests/models.py:574 |  |  | 0.634 |
+| walker |  | 9078 | 14 | python method doc at src/requests/models.py:574 |  |  | 0.634 |
+| walker |  | 9118 | 40 | python method at src/requests/models.py:481 |  |  | 0.634 |
+| walker |  | 9131 | 13 | python method doc at src/requests/models.py:481 |  |  | 0.634 |
+| walker |  | 9172 | 41 | python method at src/requests/models.py:668 |  |  | 0.634 |
+| walker |  | 9186 | 14 | python method doc at src/requests/models.py:668 |  |  | 0.634 |
+| walker |  | 9208 | 22 | python method doc at src/requests/models.py:894 |  |  | 0.634 |
+| walker |  | 9232 | 24 | python method doc at src/requests/models.py:358 |  |  | 0.634 |
+| walker |  | 9256 | 24 | python method doc at src/requests/models.py:889 |  |  | 0.634 |
+| walker |  | 9312 | 56 | python method at src/requests/models.py:908 |  |  | 0.634 |
+| walker |  | 9312 | 0 | python method body at src/requests/models.py:908 body 911 |  |  | 0.634 |
 | ns | 9326 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.626 |
-| walker |  | 9363 | 57 | python method at src/requests/models.py:904 |  |  | 0.626 |
-| walker |  | 9363 | 0 | python method body at src/requests/models.py:904 body 907 |  |  | 0.626 |
-| walker |  | 9424 | 61 | python method at src/requests/models.py:990 |  |  | 0.626 |
-| walker |  | 9459 | 35 | python method doc at src/requests/models.py:271 |  |  | 0.626 |
+| walker |  | 9369 | 57 | python method at src/requests/models.py:904 |  |  | 0.626 |
+| walker |  | 9369 | 0 | python method body at src/requests/models.py:904 body 907 |  |  | 0.626 |
+| walker |  | 9430 | 61 | python method at src/requests/models.py:990 |  |  | 0.626 |
+| walker |  | 9465 | 35 | python method doc at src/requests/models.py:271 |  |  | 0.626 |
 | ns | 9481 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.621 |
-| walker |  | 9505 | 46 | python method doc at src/requests/models.py:874 |  |  | 0.621 |
+| walker |  | 9511 | 46 | python method doc at src/requests/models.py:874 |  |  | 0.621 |
 | ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.617 |
-| walker |  | 9587 | 82 | python method at src/requests/models.py:975 |  |  | 0.617 |
-| walker |  | 9587 | 0 | python method body at src/requests/models.py:975 body 981 |  |  | 0.617 |
-| walker |  | 9671 | 84 | python method at src/requests/models.py:982 |  |  | 0.617 |
-| walker |  | 9671 | 0 | python method body at src/requests/models.py:982 body 989 |  |  | 0.617 |
-| walker |  | 9707 | 36 | python method at src/requests/models.py:133 |  |  | 0.617 |
-| walker |  | 9707 | 0 | python method body at src/requests/models.py:133 body 135 |  |  | 0.617 |
-| walker |  | 9741 | 34 | python method at src/requests/models.py:137 |  |  | 0.617 |
-| walker |  | 9741 | 0 | python method body at src/requests/models.py:137 body 139 |  |  | 0.617 |
+| walker |  | 9593 | 82 | python method at src/requests/models.py:975 |  |  | 0.617 |
+| walker |  | 9593 | 0 | python method body at src/requests/models.py:975 body 981 |  |  | 0.617 |
+| walker |  | 9677 | 84 | python method at src/requests/models.py:982 |  |  | 0.617 |
+| walker |  | 9677 | 0 | python method body at src/requests/models.py:982 body 989 |  |  | 0.617 |
+| walker |  | 9713 | 36 | python method at src/requests/models.py:133 |  |  | 0.617 |
+| walker |  | 9713 | 0 | python method body at src/requests/models.py:133 body 135 |  |  | 0.617 |
+| walker |  | 9747 | 34 | python method at src/requests/models.py:137 |  |  | 0.617 |
+| walker |  | 9747 | 0 | python method body at src/requests/models.py:137 body 139 |  |  | 0.617 |
 | ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.611 |
-| walker |  | 9782 | 41 | python method at src/requests/models.py:147 |  |  | 0.611 |
-| walker |  | 9782 | 0 | python method body at src/requests/models.py:147 body 149 |  |  | 0.611 |
-| walker |  | 9823 | 41 | python method at src/requests/models.py:151 |  |  | 0.611 |
-| walker |  | 9866 | 43 | python method at src/requests/models.py:183 |  |  | 0.611 |
+| walker |  | 9788 | 41 | python method at src/requests/models.py:147 |  |  | 0.611 |
+| walker |  | 9788 | 0 | python method body at src/requests/models.py:147 body 149 |  |  | 0.611 |
+| walker |  | 9829 | 41 | python method at src/requests/models.py:151 |  |  | 0.611 |
+| walker |  | 9872 | 43 | python method at src/requests/models.py:183 |  |  | 0.611 |
 | ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.605 |
 | ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.603 |

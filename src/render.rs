@@ -291,12 +291,15 @@ impl RenderedTree {
     }
 
     /// Whether `path` is known to hold nothing on disk: a directory with no
-    /// entries through the walk's ignore rules, or a zero-byte file.
+    /// entries through the walk's ignore rules, or a zero-byte file. A
+    /// linked directory lists nothing because it is never listed through,
+    /// not because it is empty.
     fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
         // Directories answer from the entry-count memo — a second bool
         // memo over the same key would be `count == 0` restated.
         if matches!(kind, EntryKind::Directory) {
-            return self.dir_entry_count(path) == 0;
+            return self.dir_entry_count(path) == 0
+                && !self.dir_filter.is_linked_subdirectory(path);
         }
         if let Some(&known) = self.file_empty.borrow().get(path) {
             return known;
@@ -871,7 +874,7 @@ mod tests {
     ///
     /// `listed/` and `shown.rs` end up rendering content; `pruned/` and
     /// `hidden.rs` hold content that stays hidden; `empty/` and
-    /// `zero.rs` hold nothing at all.
+    /// `zero.rs` hold nothing at all; `linked/` points at `listed/`.
     fn disk_fixture() -> tempfile::TempDir {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
@@ -884,6 +887,7 @@ mod tests {
         std::fs::write(root.join("zero.rs"), "").unwrap();
         std::fs::write(root.join("hidden.rs"), "fn hidden() {}\n").unwrap();
         std::fs::write(root.join("shown.rs"), "fn shown() {}\n").unwrap();
+        std::os::unix::fs::symlink("listed", root.join("linked")).unwrap();
         temp
     }
 
@@ -899,6 +903,7 @@ mod tests {
     const DISK_FIXTURE_ROOT_ENTRIES: &[&str] = &[
         "empty",
         "hidden.rs",
+        "linked",
         "listed",
         "pruned",
         "shown.rs",
@@ -932,6 +937,7 @@ mod tests {
         assert!(out.contains("empty/ (empty)\n"), "output:\n{out}");
         assert!(out.contains("zero.rs (empty)\n"), "output:\n{out}");
         assert!(out.contains("listed/\n"), "output:\n{out}");
+        assert!(out.contains("linked/\n"), "output:\n{out}");
         assert!(out.contains("shown.rs\n"), "output:\n{out}");
     }
 
