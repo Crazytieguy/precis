@@ -169,6 +169,13 @@ must not undo:
   handle's factory; Rust badge-paragraph skipping, rustdoc fence-aware
   paragraphs, hiding impls of hidden types; C decoration-row paragraph
   splits.
+- **Front doors and program flow are extraction decisions.** A file
+  named after its project (a TS package's `lib/<package>.js`, a C
+  repository's `<repo>.h`) is an entrypoint: the depth pin only; front-door
+  file weights on top measured flat or negative (2026-09-25). A
+  program's `main`, and the file's other functions when `main` only
+  delegates, are `Whole` declarations, so their bodies price at the
+  `Decl` tier.
 
 ## Threads
 
