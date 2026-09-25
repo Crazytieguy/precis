@@ -19,10 +19,13 @@
 //! other walkers leave unshown ([`named_file_rest`]).
 
 use std::collections::HashSet;
+use std::io::Read;
 use std::path::Path;
+use std::sync::Arc;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::fs_util::list_dir;
+use crate::render::Source;
 
 use super::{
     WalkCtx, gated_read_source, gated_whole_file_content, path_depth_factor,
@@ -839,7 +842,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 /// rather than its name alone.
 pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch> {
     let file = ctx.dir_filter().named_file()?;
-    let source = ctx.read_source(file)?;
+    let source = named_file_head(file, ctx)?;
     if has_nul_byte(&source) {
         return None;
     }
@@ -870,6 +873,39 @@ pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch>
         content: single_file_lines_content(file, &source, rows)?,
         value: 0.0,
     })
+}
+
+/// The named file's source as far as [`named_file_rest`] can reach into
+/// it: whole when a walker has already read it or it fits within
+/// [`SOURCE_TEXT_BYTE_GATE`], else only its head, so a multi-gigabyte
+/// log is never read whole. The head runs a few bytes past the gate, the
+/// longest UTF-8 character, so the line the gate cuts stays too long to
+/// select and still tells the renderer that more of the file follows.
+fn named_file_head(file: &Path, ctx: &WalkCtx) -> Option<Arc<Source>> {
+    if let Some(source) = ctx.source_cache().cached(file) {
+        return Some(source);
+    }
+    let mut head = Vec::new();
+    std::fs::File::open(file)
+        .ok()?
+        .take((SOURCE_TEXT_BYTE_GATE + 4) as u64)
+        .read_to_end(&mut head)
+        .ok()?;
+    if head.len() > SOURCE_TEXT_BYTE_GATE {
+        let last_line_start = head
+            .iter()
+            .rposition(|&byte| byte == b'\n')
+            .map_or(0, |i| i + 1);
+        match std::str::from_utf8(&head[last_line_start..]) {
+            Err(error) if error.error_len().is_some() => return None,
+            Err(error) => head.truncate(last_line_start + error.valid_up_to()),
+            Ok(_) => {}
+        }
+    }
+    let text = String::from_utf8(head).ok()?;
+    ctx.source_cache()
+        .insert(file.to_path_buf(), Arc::from(text));
+    ctx.source_cache().cached(file)
 }
 
 /// Two tiers. The ops surface (how the project is built, deployed and

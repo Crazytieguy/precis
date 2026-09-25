@@ -93,8 +93,8 @@ impl SourceCache {
 
     /// Read `path`, caching. Returns `None` on I/O error.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
-        if let Some(cached) = self.0.borrow().get(path) {
-            return Some(cached.clone());
+        if let Some(cached) = self.cached(path) {
+            return Some(cached);
         }
         let text = std::fs::read_to_string(path).ok()?;
         let source = Arc::new(Source::new(Arc::from(text)));
@@ -102,6 +102,11 @@ impl SourceCache {
             .borrow_mut()
             .insert(path.to_path_buf(), source.clone());
         Some(source)
+    }
+
+    /// `path`'s source if it has already been read, without reading it.
+    pub fn cached(&self, path: &Path) -> Option<Arc<Source>> {
+        self.0.borrow().get(path).cloned()
     }
 
     /// Insert a pre-loaded source. Idempotent.
