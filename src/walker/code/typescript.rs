@@ -4,9 +4,9 @@
 //! locals an `export { … }` clause, `export default X` or `export = X`
 //! names, and CommonJS `module.exports` / `exports.x` targets. Every
 //! top-level declaration of a `.d.ts` file is API (ambient declarations
-//! are implicitly exported). Other top-level declarations are listed in
-//! entrypoint files and hidden elsewhere. `export … from` and the statements that export a
-//! name without declaring it are re-exports, listed on the roster.
+//! are implicitly exported); other unexported declarations are hidden.
+//! `export … from` and the statements that export a name without
+//! declaring it are re-exports, listed on the roster.
 //!
 //! Classes are containers: methods (and arrow-function fields) are
 //! members, other fields are body items, and `#name` / `private` /
@@ -52,11 +52,10 @@ fn grammar(path: &Path) -> tree_sitter::Language {
     }
 }
 
-fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut cursor = root.walk();
     let statements: Vec<Node> = root.children(&mut cursor).collect();
-    let entrypoint = is_entrypoint(&file.path, ctx);
 
     let mut scan = ExportScan::default();
     let classified: Vec<(Node, TopLevel)> = statements
@@ -64,7 +63,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         .map(|&statement| (statement, scan.classify(file, statement)))
         .collect();
 
-    let lists_unexported = entrypoint || is_declaration_file(&file.path);
+    let lists_unexported = is_declaration_file(&file.path);
 
     let mut model = FileModel::default();
     for (statement, top_level) in classified {
@@ -1104,11 +1103,11 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_unexported_declarations_are_listed_only_in_entrypoints() {
+    fn code_typescript_unexported_declarations_are_hidden() {
         let source = "import x from 'x';\nconst helper = 1;\nexport const api = 2;\n";
         let listed = |relative| extract_source(relative, source).decls.len();
         assert_eq!(listed("src/other.ts"), 1);
-        assert_eq!(listed("src/index.ts"), 2);
+        assert_eq!(listed("src/index.ts"), 1);
         let script = extract_source(
             "scripts/build.js",
             "const fs = require('fs');\nfunction main() {}\nmain();\n",

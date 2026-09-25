@@ -14,8 +14,7 @@ package.json
   3→	"version": "9.2.0",
   4→	"description": "Promise queue with concurrency control",
   5→	"license": "MIT",
-  6→	"repository": "sindresorhus/p-queue",
-  7→	"funding": "https://github.com/sponsors/sindresorhus",
+  …
   8→	"type": "module",
   9→	"exports": {
   10→		"types": "./dist/index.d.ts",
@@ -35,28 +34,7 @@ package.json
   24→		"dist"
   25→	],
   26→	"types": "dist/index.d.ts",
-  27→	"keywords": [
-  28→		"promise",
-  29→		"queue",
-  30→		"enqueue",
-  31→		"limit",
-  32→		"limited",
-  33→		"concurrency",
-  34→		"throttle",
-  35→		"throat",
-  36→		"rate",
-  37→		"batch",
-  38→		"ratelimit",
-  39→		"priority",
-  40→		"priorityqueue",
-  41→		"fifo",
-  42→		"job",
-  43→		"task",
-  44→		"async",
-  45→		"await",
-  46→		"promises",
-  47→		"bluebird"
-  48→	],
+  …
   49→	"dependencies": {
   50→		"eventemitter3": "^5.0.4",
   51→		"p-timeout": "^7.0.0"
@@ -100,12 +78,7 @@ readme.md
   36→
   37→---
   39→## Install
-  40→
-  41→```sh
-  42→npm install p-queue
-  43→```
-  44→
-  45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
+  …
   47→## Usage
   …
   68→## API
@@ -133,10 +106,6 @@ readme.md
 source/
   index.ts
     …
-    7→type Task<TaskResultType> =
-    8→	| ((options: TaskOptions) => PromiseLike<TaskResultType>)
-    9→	| ((options: TaskOptions) => TaskResultType);
-    11→type EventName = 'active' | 'idle' | 'empty' | 'add' | 'next' | 'completed' | 'error' | 'pendingZero' | 'rateLimit' | 'rateLimitCleared';
     13→/**
     14→Promise queue with concurrency control.
     15→*/
@@ -161,6 +130,7 @@ source/
     85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
     …
     382→	get concurrency(): number {
+    383→		return this.#concurrency;
     …
     386→	set concurrency(newConcurrency: number) {
     …
@@ -208,6 +178,13 @@ source/
     651→	*/
     652→	async onEmpty(): Promise<void> {
     …
+    661→	/**
+    662→	@returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
+    663→
+    664→	If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
+    665→
+    666→	Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
+    667→	*/
     668→	async onSizeLessThan(limit: number): Promise<void> {
     …
     677→	/**
@@ -217,6 +194,11 @@ source/
     681→	*/
     682→	async onIdle(): Promise<void> {
     …
+    691→	/**
+    692→	The difference with `.onIdle` is that `.onPendingZero` only waits for currently running tasks to finish, ignoring queued tasks.
+    693→
+    694→	@returns A promise that settles when all currently running tasks have completed; `queue.pending === 0`.
+    695→	*/
     696→	async onPendingZero(): Promise<void> {
     …
     704→	/**

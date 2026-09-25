@@ -217,9 +217,7 @@ src/
     989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
     990→  preventCycle?: boolean;
     991→};
-    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
-    994→const DOUBLE_TAP_TIMEOUT = 120;
-    995→
+    …
     996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
     997→  { preventCycle = false, children, ...rest },
     998→  ref,
@@ -227,8 +225,6 @@ src/
     …
     1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
     …
-    1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-    1129→
     1130→export function Portal(props: PortalProps) {
     …
     1137→export const Drawer = {

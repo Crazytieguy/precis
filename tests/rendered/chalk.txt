@@ -186,23 +186,87 @@ readme.md
   297→- [Josh Junon](https://github.com/qix-)
 source/
   index.d.ts
+    …
+    12→export interface Options {
+    13→	/**
+    14→	Specify the color support for Chalk.
+    15→
+    16→	By default, color support is automatically detected based on the environment.
+    17→
+    18→	Levels:
+    19→	- `0` - All colors disabled.
+    20→	- `1` - Basic 16 colors support.
+    21→	- `2` - ANSI 256 colors support.
+    22→	- `3` - Truecolor 16 million colors support.
+    23→	*/
+    24→	readonly level?: ColorSupportLevel;
+    25→}
+    27→/**
+    28→Return a new Chalk instance.
+    29→*/
+    30→export const Chalk: new (options?: Options) => ChalkInstance; // eslint-disable-line @typescript-eslint/naming-convention
+    31→
+    32→export interface ChalkInstance {
+    …
+    242→declare const chalk: ChalkInstance;
+    243→
+    244→export const supportsColor: ColorInfo;
+    245→
+    246→export const chalkStderr: typeof chalk;
+    247→export const supportsColorStderr: typeof supportsColor;
+    248→
+    249→export {
+    250→	ModifierName, ForegroundColorName, BackgroundColorName, ColorName,
+    251→	modifierNames, foregroundColorNames, backgroundColorNames, colorNames,
+    252→// } from '#ansi-styles';
+    253→} from './vendor/ansi-styles/index.js';
+    254→
+    255→export {
+    256→	ColorInfo,
+    257→	ColorSupport,
+    258→	ColorSupportLevel,
+    259→// } from '#supports-color';
+    260→} from './vendor/supports-color/index.js';
+    …
+    263→/**
+    264→@deprecated Use `ModifierName` instead.
+    265→
+    266→Basic modifier names.
+    267→*/
+    268→export type Modifiers = ModifierName;
+    …
+    277→export type ForegroundColor = ForegroundColorName;
+    …
+    286→export type BackgroundColor = BackgroundColorName;
+    …
+    295→export type Color = ColorName;
+    297→/**
+    298→@deprecated Use `modifierNames` instead.
+    299→
+    300→Basic modifier names.
+    301→*/
+    302→export const modifiers: readonly Modifiers[];
+    304→/**
+    305→@deprecated Use `foregroundColorNames` instead.
+    306→
+    307→Basic foreground color names.
+    308→*/
+    309→export const foregroundColors: readonly ForegroundColor[];
+    311→/**
+    312→@deprecated Use `backgroundColorNames` instead.
+    313→
+    314→Basic background color names.
+    315→*/
+    316→export const backgroundColors: readonly BackgroundColor[];
+    318→/**
+    319→@deprecated Use `colorNames` instead.
+    320→
+    321→Basic color names. The combination of foreground and background color names.
+    322→*/
+    323→export const colors: readonly Color[];
+    324→
+    325→export default chalk;
   index.js
-    …
-    8→const {stdout: stdoutColor, stderr: stderrColor} = supportsColor;
-    9→
-    10→const GENERATOR = Symbol('GENERATOR');
-    11→const STYLER = Symbol('STYLER');
-    12→const IS_EMPTY = Symbol('IS_EMPTY');
-    …
-    15→const levelMapping = [
-    16→	'ansi',
-    17→	'ansi',
-    18→	'ansi256',
-    19→	'ansi16m',
-    20→];
-    22→const styles = Object.create(null);
-    23→
-    24→const applyOptions = (object, options = {}) => {
     …
     34→export class Chalk {
     35→	constructor(options) {
@@ -210,38 +274,6 @@ source/
     37→		return chalkFactory(options);
     …
     39→}
-    41→const chalkFactory = options => {
-    42→	const chalk = (...strings) => strings.join(' ');
-    43→	applyOptions(chalk, options);
-    44→
-    45→	Object.setPrototypeOf(chalk, createChalk.prototype);
-    46→
-    47→	return chalk;
-    …
-    50→function createChalk(options) {
-    51→	return chalkFactory(options);
-    …
-    74→const getModelAnsi = (model, level, type, ...arguments_) => {
-    …
-    94→const usedModels = ['rgb', 'hex', 'ansi256'];
-    …
-    119→const proto = Object.defineProperties(() => {}, {
-    120→	...styles,
-    121→	level: {
-    122→		enumerable: true,
-    123→		get() {
-    124→			return this[GENERATOR].level;
-    125→		},
-    126→		set(level) {
-    127→			this[GENERATOR].level = level;
-    128→		},
-    129→	},
-    130→});
-    132→const createStyler = (open, close, parent) => {
-    …
-    152→const createBuilder = (self, _styler, _isEmpty) => {
-    …
-    168→const applyStyle = (self, string) => {
     …
     204→const chalk = createChalk();
     205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
