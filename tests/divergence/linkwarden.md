@@ -1,4 +1,4 @@
-Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.646/0.585/0.590/0.649
+Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.646/0.573/0.590/0.649
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -141,12 +141,12 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 4185 | 10 | README.md section #19 |  |  | 0.572 |
 | walker |  | 4227 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.573 |
 | walker |  | 4278 | 51 | ts names packages/router/dashboardData.tsx |  |  | 0.573 |
-| walker |  | 4305 | 27 | Prisma decl at packages/prisma/schema.prisma:5 |  |  | 0.585 |
-| walker |  | 4356 | 51 | ts decl packages/lib/formatStats.ts:4 |  |  | 0.585 |
-| ns | 4359 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.570 |
-| walker |  | 4369 | 13 | README.md section #23 |  |  | 0.570 |
-| walker |  | 4382 | 13 | README.md section #24 |  |  | 0.572 |
-| walker |  | 4478 | 96 | package runtime metadata in package.json |  |  | 0.572 |
+| ns | 4359 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.557 |
+| walker |  | 4374 | 96 | package runtime metadata in package.json |  |  | 0.557 |
+| walker |  | 4401 | 27 | Prisma decl at packages/prisma/schema.prisma:5 |  |  | 0.570 |
+| walker |  | 4452 | 51 | ts decl packages/lib/formatStats.ts:4 |  |  | 0.570 |
+| walker |  | 4465 | 13 | README.md section #23 |  |  | 0.570 |
+| walker |  | 4478 | 13 | README.md section #24 |  |  | 0.572 |
 | walker |  | 4557 | 79 | listing of 'apps/web/public' |  |  | 0.572 |
 | walker |  | 4567 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.572 |
 | ns | 4568 |  | 209 | apps/web/lib: the server helper layer and its client/shared siblings | 3.7 |  | 0.547 |

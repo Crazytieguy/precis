@@ -156,19 +156,19 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     collect(
         JsonKey::Entry { file: f.clone() },
-        entry_value(file, ctx),
+        operational_value(file, ctx),
         is_entry_key,
         false,
     );
     collect(
         JsonKey::Runtime { file: f.clone() },
-        runtime_value(file, ctx),
+        operational_value(file, ctx),
         is_runtime_key,
         false,
     );
     collect(
         JsonKey::Scripts { file: f.clone() },
-        scripts_value(file, ctx),
+        operational_value(file, ctx),
         is_scripts_key,
         false,
     );
@@ -382,30 +382,12 @@ fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.4 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx)) * s
 }
 
-fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Lowered against ts-pattern + cmdk + d2ts divergence evidence:
-    // the `exports` / `main` / `module` / `types` keys were arriving
-    // ahead of README sections the NS values, but rarely match an NS
-    // anchor themselves (cmdk NS 1.4 / 1.8 anchor on Dependencies +
-    // Scripts, not Entry). A missed Entry block is not a
-    // catastrophic-omission risk — `precis` users can re-read the
-    // file at trivial cost.
+/// Entrypoints, scripts and runtime constraints: how the package ships and
+/// runs. Priced below identity and the repository's dependency roster —
+/// the keys rarely match an answer-key anchor themselves, and a reader can
+/// re-read the manifest at trivial cost.
+fn operational_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.55, 0.45, manifest_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
-}
-
-fn runtime_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.53, 0.55, 0.48, path_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
-}
-
-fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Same calibration story as `entry_value`. Build / test / lint
-    // commands describe the package's workflow rather than its public
-    // surface, so they don't earn a top-rank slot — but cmdk NS 1.8
-    // (Root scripts) does pin Scripts as tier-1, so we don't drop the
-    // weight as far as Entry.
-    mix_signals(0.5, 0.6, 0.45, manifest_depth_factor(file, ctx))
         * secondary_package_json_factor(file)
 }
 

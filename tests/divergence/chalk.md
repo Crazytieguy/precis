@@ -1,4 +1,4 @@
-Score(3000)=0.666 I=0.887 C=0.500 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.674/0.750/0.721/0.666/0.605/0.558/0.521
+Score(3000)=0.666 I=0.887 C=0.500 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.721/0.666/0.605/0.558/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -21,16 +21,16 @@ Score(3000)=0.666 I=0.887 C=0.500 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 361 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.767 |
 | walker |  | 430 | 74 | headings outline in code-of-conduct.md |  |  | 0.767 |
 | walker |  | 430 | 0 | code-of-conduct.md section #0 |  |  | 0.767 |
-| walker |  | 457 | 27 | listing of 'test' |  |  | 0.778 |
-| ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.662 |
-| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.608 |
-| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.658 |
-| walker |  | 939 | 482 | ts names source/index.js |  |  | 0.674 |
-| walker |  | 952 | 13 | ts decl source/index.js:34 |  |  | 0.674 |
-| walker |  | 961 | 9 | ts body source/index.js:50 |  |  | 0.674 |
-| walker |  | 999 | 38 | ts decl source/index.js:15 |  |  | 0.674 |
-| ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.580 |
-| walker |  | 1048 | 49 | package scripts in package.json |  |  | 0.594 |
+| walker |  | 479 | 49 | package scripts in package.json |  |  | 0.770 |
+| walker |  | 506 | 27 | listing of 'test' |  |  | 0.781 |
+| ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.684 |
+| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.628 |
+| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.674 |
+| walker |  | 988 | 482 | ts names source/index.js |  |  | 0.690 |
+| walker |  | 1001 | 13 | ts decl source/index.js:34 |  |  | 0.690 |
+| walker |  | 1010 | 9 | ts body source/index.js:50 |  |  | 0.690 |
+| ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.594 |
+| walker |  | 1048 | 38 | ts decl source/index.js:15 |  |  | 0.594 |
 | walker |  | 1074 | 26 | ts body source/index.js:35 |  |  | 0.594 |
 | walker |  | 1167 | 93 | ts decl source/index.js:119 |  |  | 0.596 |
 | ns | 1244 |  | 214 | Runtime export surface of `source/index.js` | 2.1 |  | 0.646 |

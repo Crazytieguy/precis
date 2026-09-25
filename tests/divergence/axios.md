@@ -253,5 +253,3 @@ Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 9877 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.394 |
 | walker |  | 9931 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.394 |
 | ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.411 |
-| walker |  | 9944 | 13 | ts names lib/platform/node/classes/URLSearchParams.js |  |  | 0.411 |
-| walker |  | 9979 | 35 | ts names lib/helpers/formDataToStream.js |  |  | 0.413 |

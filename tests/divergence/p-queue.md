@@ -45,8 +45,8 @@ Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 1527 | 23 | ts doc source/index.ts:609 |  |  | 0.665 |
 | walker |  | 1559 | 32 | ts doc source/index.ts:443 |  |  | 0.666 |
 | ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.658 |
-| walker |  | 1673 | 114 | ts decl source/queue.ts:3 |  |  | 0.713 |
-| walker |  | 1777 | 104 | package scripts in package.json |  |  | 0.714 |
+| walker |  | 1663 | 104 | package scripts in package.json |  |  | 0.658 |
+| walker |  | 1777 | 114 | ts decl source/queue.ts:3 |  |  | 0.714 |
 | ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.689 |
 | ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.672 |
 | walker |  | 1907 | 130 | ts decl source/options.ts:97 |  |  | 0.672 |

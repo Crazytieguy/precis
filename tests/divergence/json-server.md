@@ -21,9 +21,9 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 313 | 24 | ts names src/matches-where.ts |  |  | 0.476 |
 | walker |  | 327 | 14 | ts names src/adapters/observer.ts |  |  | 0.476 |
 | ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.508 |
-| walker |  | 363 | 36 | ts names src/app.ts |  |  | 0.509 |
-| walker |  | 386 | 23 | ts decl src/app.ts:18 |  |  | 0.510 |
-| walker |  | 420 | 34 | package runtime metadata in package.json |  |  | 0.513 |
+| walker |  | 361 | 34 | package runtime metadata in package.json |  |  | 0.512 |
+| walker |  | 397 | 36 | ts names src/app.ts |  |  | 0.512 |
+| walker |  | 420 | 23 | ts decl src/app.ts:18 |  |  | 0.513 |
 | walker |  | 463 | 43 | ts names src/paginate.ts |  |  | 0.514 |
 | ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.411 |
 | walker |  | 518 | 55 | ts names src/where-operators.ts |  |  | 0.412 |

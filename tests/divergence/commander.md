@@ -58,12 +58,12 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 1949 | 149 | package identity metadata in package.json |  |  | 0.498 |
 | ns | 1998 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.479 |
 | ns | 2128 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.465 |
-| walker |  | 2231 | 282 | package entrypoints in package.json |  |  | 0.503 |
-| ns | 2284 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.487 |
-| walker |  | 2300 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.488 |
-| ns | 2358 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.479 |
-| ns | 2443 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.470 |
-| walker |  | 2557 | 257 | package scripts in package.json |  |  | 0.478 |
+| walker |  | 2208 | 259 | package scripts in package.json |  |  | 0.470 |
+| ns | 2284 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.455 |
+| ns | 2358 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.447 |
+| ns | 2443 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.438 |
+| walker |  | 2488 | 280 | package entrypoints in package.json |  |  | 0.478 |
+| walker |  | 2557 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.478 |
 | ns | 2595 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.461 |
 | walker |  | 2609 | 52 | ts body lib/help.js:740 |  |  | 0.461 |
 | walker |  | 2628 | 19 | ts body lib/argument.js:86 |  |  | 0.461 |

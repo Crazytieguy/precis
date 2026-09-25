@@ -1,4 +1,4 @@
-Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.586/0.570/0.578
+Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.586/0.553/0.578
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -130,14 +130,14 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 5984 | 28 | ts body lib/svgo/tools.js:250 |  |  | 0.536 |
 | walker |  | 6033 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.536 |
 | walker |  | 6096 | 63 | ts doc lib/style.js:253 |  |  | 0.536 |
-| walker |  | 6126 | 30 | README.md section #5 |  |  | 0.536 |
 | ns | 6127 |  | 232 | Config and Output type bodies | 4.1 |  | 0.553 |
-| walker |  | 6194 | 68 | ts doc lib/svgo.js:81 |  |  | 0.570 |
-| walker |  | 6266 | 72 | ts doc lib/svgo-node.js:83 |  |  | 0.570 |
-| walker |  | 6315 | 49 | ts doc lib/xast.js:50 |  |  | 0.570 |
-| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.587 |
-| ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.597 |
-| walker |  | 6696 | 381 | package scripts in package.json |  |  | 0.598 |
+| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.571 |
+| walker |  | 6477 | 381 | package scripts in package.json |  |  | 0.571 |
+| walker |  | 6507 | 30 | README.md section #5 |  |  | 0.571 |
+| walker |  | 6575 | 68 | ts doc lib/svgo.js:81 |  |  | 0.587 |
+| walker |  | 6647 | 72 | ts doc lib/svgo-node.js:83 |  |  | 0.587 |
+| ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.598 |
+| walker |  | 6696 | 49 | ts doc lib/xast.js:50 |  |  | 0.598 |
 | walker |  | 6770 | 74 | ts doc lib/parser.js:80 |  |  | 0.598 |
 | ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.591 |
 | walker |  | 6899 | 129 | README.md section #2 |  |  | 0.591 |

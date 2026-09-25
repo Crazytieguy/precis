@@ -51,9 +51,9 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 1452 | 107 | package entrypoints in package.json |  |  | 0.746 |
 | walker |  | 1647 | 195 | package runtime dependencies in package.json |  |  | 0.800 |
 | walker |  | 1660 | 13 | listing of 'docs/src/pages' |  |  | 0.801 |
-| walker |  | 1679 | 19 | ts names src/baseWidget.js |  |  | 0.801 |
 | ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.739 |
-| walker |  | 1799 | 120 | package scripts in package.json |  |  | 0.768 |
+| walker |  | 1780 | 120 | package scripts in package.json |  |  | 0.768 |
+| walker |  | 1799 | 19 | ts names src/baseWidget.js |  |  | 0.768 |
 | walker |  | 1821 | 22 | ts names src/assetsLoader.js |  |  | 0.768 |
 | ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.745 |
 | walker |  | 1993 | 172 | ts decl src/screen.js:18 |  |  | 0.748 |

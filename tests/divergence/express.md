@@ -50,31 +50,31 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 2250 | 23 | ts body lib/response.js:875 |  |  | 0.656 |
 | walker |  | 2276 | 26 | ts doc lib/response.js:42 |  |  | 0.656 |
 | ns | 2369 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.663 |
-| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.647 |
-| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.622 |
-| walker |  | 2652 | 376 | listing of 'test' |  |  | 0.628 |
-| walker |  | 2664 | 12 | listing of 'test/support' |  |  | 0.628 |
-| walker |  | 2840 | 176 | package scripts in package.json |  |  | 0.666 |
-| walker |  | 2858 | 18 | ts doc lib/application.js:40 |  |  | 0.666 |
-| walker |  | 2897 | 39 | ts doc lib/utils.js:29 |  |  | 0.666 |
-| walker |  | 2923 | 26 | ts body lib/request.js:140 |  |  | 0.666 |
+| walker |  | 2452 | 176 | package scripts in package.json |  |  | 0.703 |
+| walker |  | 2470 | 18 | ts doc lib/application.js:40 |  |  | 0.703 |
+| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.687 |
+| walker |  | 2497 | 27 | ts doc lib/application.js:90 |  |  | 0.687 |
+| walker |  | 2523 | 26 | ts body lib/request.js:140 |  |  | 0.687 |
+| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.659 |
+| walker |  | 2899 | 376 | listing of 'test' |  |  | 0.666 |
+| walker |  | 2911 | 12 | listing of 'test/support' |  |  | 0.666 |
+| walker |  | 2950 | 39 | ts doc lib/utils.js:29 |  |  | 0.666 |
 | ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.624 |
-| walker |  | 2965 | 42 | ts doc lib/express.js:36 |  |  | 0.624 |
-| walker |  | 3010 | 45 | ts body lib/utils.js:61 |  |  | 0.624 |
-| walker |  | 3058 | 48 | ts doc lib/view.js:104 |  |  | 0.624 |
-| walker |  | 3116 | 58 | ts doc lib/view.js:133 |  |  | 0.624 |
+| walker |  | 2992 | 42 | ts doc lib/express.js:36 |  |  | 0.624 |
+| walker |  | 3037 | 45 | ts body lib/utils.js:61 |  |  | 0.624 |
+| walker |  | 3085 | 48 | ts doc lib/view.js:104 |  |  | 0.624 |
 | ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.599 |
-| walker |  | 3176 | 60 | ts doc lib/view.js:169 |  |  | 0.599 |
-| walker |  | 3239 | 63 | ts doc lib/utils.js:162 |  |  | 0.599 |
-| walker |  | 3325 | 86 | listing of 'test/acceptance' |  |  | 0.600 |
-| walker |  | 3348 | 23 | Readme.md section #19 |  |  | 0.600 |
+| walker |  | 3143 | 58 | ts doc lib/view.js:133 |  |  | 0.599 |
+| walker |  | 3203 | 60 | ts doc lib/view.js:169 |  |  | 0.599 |
+| walker |  | 3266 | 63 | ts doc lib/utils.js:162 |  |  | 0.599 |
+| walker |  | 3352 | 86 | listing of 'test/acceptance' |  |  | 0.600 |
 | ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.574 |
-| walker |  | 3371 | 23 | Readme.md section #30 |  |  | 0.574 |
-| walker |  | 3395 | 24 | Readme.md section #12 |  |  | 0.574 |
-| walker |  | 3419 | 24 | Readme.md section #32 |  |  | 0.574 |
-| walker |  | 3444 | 25 | Readme.md section #18 |  |  | 0.574 |
-| walker |  | 3526 | 82 | Readme.md section #7 |  |  | 0.574 |
-| walker |  | 3553 | 27 | ts doc lib/application.js:90 |  |  | 0.574 |
+| walker |  | 3375 | 23 | Readme.md section #19 |  |  | 0.574 |
+| walker |  | 3398 | 23 | Readme.md section #30 |  |  | 0.574 |
+| walker |  | 3422 | 24 | Readme.md section #12 |  |  | 0.574 |
+| walker |  | 3446 | 24 | Readme.md section #32 |  |  | 0.574 |
+| walker |  | 3471 | 25 | Readme.md section #18 |  |  | 0.574 |
+| walker |  | 3553 | 82 | Readme.md section #7 |  |  | 0.574 |
 | ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
 | walker |  | 3579 | 26 | Readme.md section #23 |  |  | 0.556 |
 | walker |  | 3604 | 25 | Readme.md section #24 |  |  | 0.556 |

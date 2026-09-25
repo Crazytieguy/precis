@@ -123,6 +123,10 @@ lib/
     …
     59→app.init = function init() {
     …
+    85→/**
+    86→ * Initialize application configuration.
+    87→ * @private
+    88→ */
     90→app.defaultConfiguration = function defaultConfiguration() {
     …
     152→app.handle = function handle(req, res, callback) {

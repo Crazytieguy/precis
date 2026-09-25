@@ -21,8 +21,8 @@ Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 416 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.937 |
 | walker |  | 423 | 31 | listing of 'docs/reference' |  |  | 0.939 |
 | walker |  | 450 | 27 | ts names src/error.ts |  |  | 0.939 |
-| walker |  | 501 | 51 | listing of 'docs/guides' |  |  | 0.942 |
-| walker |  | 535 | 34 | package runtime metadata in package.json |  |  | 0.942 |
+| walker |  | 484 | 34 | package runtime metadata in package.json |  |  | 0.940 |
+| walker |  | 535 | 51 | listing of 'docs/guides' |  |  | 0.942 |
 | ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.779 |
 | walker |  | 717 | 182 | README headline in Readme.md |  |  | 0.784 |
 | walker |  | 783 | 66 | README prelude in Readme.md |  |  | 0.799 |
@@ -100,29 +100,29 @@ Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 4427 |  | 129 | run() stage 1: coercion, then the struct's own validator | 4.2 | 4.1 | 0.566 |
 | walker |  | 4657 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.566 |
 | ns | 4759 |  | 332 | run() stage 2: recursive descent over entries | 4.3 | 4.1 | 0.540 |
-| walker |  | 4877 | 220 | ts names src/structs/utilities.ts |  |  | 0.564 |
-| ns | 4882 |  | 123 | run() stage 3: refiners and the success yield | 4.4 | 4.1 | 0.554 |
-| walker |  | 4910 | 33 | ts decl src/structs/utilities.ts:106 |  |  | 0.554 |
-| walker |  | 4947 | 37 | ts decl src/structs/utilities.ts:197 |  |  | 0.554 |
-| walker |  | 4985 | 38 | ts decl src/structs/utilities.ts:80 |  |  | 0.554 |
-| walker |  | 5028 | 43 | ts decl src/structs/utilities.ts:221 |  |  | 0.554 |
-| ns | 5054 |  | 172 | validate() body: how one failure becomes a StructError | 4.5 | 2.1 | 0.540 |
-| walker |  | 5072 | 44 | ts decl src/structs/utilities.ts:171 |  |  | 0.540 |
-| walker |  | 5117 | 45 | ts decl src/structs/utilities.ts:17 |  |  | 0.540 |
-| walker |  | 5219 | 102 | ts decl src/structs/utilities.ts:21 |  |  | 0.540 |
-| ns | 5265 |  | 211 | Struct constructor: defaults and failure wrapping | 4.6 | 1.6 | 0.523 |
-| walker |  | 5369 | 150 | ts decl src/structs/utilities.ts:30 |  |  | 0.523 |
-| ns | 5456 |  | 191 | StructError constructor: message, cause and failure caching | 4.7 | 2.7 | 0.513 |
-| walker |  | 5552 | 183 | listing of 'test/typings' |  |  | 0.517 |
-| walker |  | 5596 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.545 |
-| ns | 5596 |  | 140 | Complete docs/ tree listing | 5.1 |  | 0.545 |
-| ns | 5649 |  | 53 | Complete test/ and test/api/ listings | 5.2 |  | 0.555 |
-| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.586 |
-| walker |  | 5778 | 182 | ts decl src/structs/utilities.ts:44 |  |  | 0.586 |
-| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.593 |
-| ns | 5906 |  | 77 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.584 |
-| ns | 6089 |  | 183 | The 45 type-level test files | 5.6 |  | 0.609 |
-| walker |  | 6104 | 326 | package scripts in package.json |  |  | 0.610 |
+| ns | 4882 |  | 123 | run() stage 3: refiners and the success yield | 4.4 | 4.1 | 0.530 |
+| walker |  | 4983 | 326 | package scripts in package.json |  |  | 0.531 |
+| ns | 5054 |  | 172 | validate() body: how one failure becomes a StructError | 4.5 | 2.1 | 0.518 |
+| walker |  | 5203 | 220 | ts names src/structs/utilities.ts |  |  | 0.541 |
+| walker |  | 5236 | 33 | ts decl src/structs/utilities.ts:106 |  |  | 0.541 |
+| ns | 5265 |  | 211 | Struct constructor: defaults and failure wrapping | 4.6 | 1.6 | 0.524 |
+| walker |  | 5273 | 37 | ts decl src/structs/utilities.ts:197 |  |  | 0.524 |
+| walker |  | 5311 | 38 | ts decl src/structs/utilities.ts:80 |  |  | 0.524 |
+| walker |  | 5354 | 43 | ts decl src/structs/utilities.ts:221 |  |  | 0.524 |
+| walker |  | 5398 | 44 | ts decl src/structs/utilities.ts:171 |  |  | 0.524 |
+| walker |  | 5443 | 45 | ts decl src/structs/utilities.ts:17 |  |  | 0.524 |
+| ns | 5456 |  | 191 | StructError constructor: message, cause and failure caching | 4.7 | 2.7 | 0.514 |
+| walker |  | 5545 | 102 | ts decl src/structs/utilities.ts:21 |  |  | 0.514 |
+| ns | 5596 |  | 140 | Complete docs/ tree listing | 5.1 |  | 0.541 |
+| ns | 5649 |  | 53 | Complete test/ and test/api/ listings | 5.2 |  | 0.552 |
+| walker |  | 5695 | 150 | ts decl src/structs/utilities.ts:30 |  |  | 0.552 |
+| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.582 |
+| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.589 |
+| walker |  | 5878 | 183 | listing of 'test/typings' |  |  | 0.593 |
+| ns | 5906 |  | 77 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.585 |
+| walker |  | 5922 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.585 |
+| ns | 6089 |  | 183 | The 45 type-level test files | 5.6 |  | 0.610 |
+| walker |  | 6104 | 182 | ts decl src/structs/utilities.ts:44 |  |  | 0.610 |
 | walker |  | 6144 | 40 | headings outline in docs/reference/errors.md |  |  | 0.610 |
 | ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.611 |
 | ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.614 |

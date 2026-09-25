@@ -1,4 +1,4 @@
-Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.423/0.481/0.537/0.513/0.537/0.559
+Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.423/0.499/0.537/0.513/0.537/0.559
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -88,18 +88,18 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1796 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.416 |
 | walker |  | 1818 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.417 |
 | walker |  | 1833 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.417 |
-| walker |  | 1849 | 16 | ts names packages/cli/src/config/config.command.ts |  |  | 0.417 |
-| walker |  | 1872 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.417 |
-| walker |  | 1895 | 23 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.418 |
-| walker |  | 1918 | 23 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.418 |
-| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.453 |
-| walker |  | 2024 | 106 | YAML config at docker-compose.yml |  |  | 0.481 |
-| walker |  | 2088 | 64 | listing of 'packages/app-client/public' |  |  | 0.481 |
-| walker |  | 2112 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.501 |
-| walker |  | 2129 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.501 |
-| walker |  | 2146 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.501 |
-| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.485 |
-| walker |  | 2224 | 78 | package scripts in package.json |  |  | 0.528 |
+| walker |  | 1911 | 78 | package scripts in package.json |  |  | 0.477 |
+| walker |  | 1927 | 16 | ts names packages/cli/src/config/config.command.ts |  |  | 0.477 |
+| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.498 |
+| walker |  | 1950 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.498 |
+| walker |  | 1973 | 23 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.499 |
+| walker |  | 1996 | 23 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.499 |
+| walker |  | 2102 | 106 | YAML config at docker-compose.yml |  |  | 0.526 |
+| walker |  | 2166 | 64 | listing of 'packages/app-client/public' |  |  | 0.526 |
+| walker |  | 2190 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.545 |
+| walker |  | 2207 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.545 |
+| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.528 |
+| walker |  | 2224 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.528 |
 | walker |  | 2250 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.562 |
 | walker |  | 2265 | 15 | listing of 'packages/lib/src/crypto/serialization/cbor-array' |  |  | 0.577 |
 | walker |  | 2336 | 71 | README headline in packages/crypto/README.md |  |  | 0.577 |

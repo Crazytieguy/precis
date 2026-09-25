@@ -1,4 +1,4 @@
-Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.466/0.746/0.600/0.461/0.380/0.333/0.479
+Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.466/0.745/0.600/0.461/0.379/0.333/0.479
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,149 +26,149 @@ Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | walker |  | 778 | 18 | listing of 'packages/vite/misc' |  |  | 0.509 |
 | walker |  | 792 | 14 | ts names packages/vite/rollupLicensePlugin.ts |  |  | 0.509 |
 | walker |  | 809 | 17 | listing of 'packages/vite/src/client' |  |  | 0.510 |
-| walker |  | 821 | 12 | listing of 'packages/vite/src/module-runner/sourcemap' |  |  | 0.510 |
+| walker |  | 849 | 40 | package runtime metadata in packages/vite/package.json |  |  | 0.510 |
 | ns | 859 |  | 223 | Root pnpm scripts: lint, typecheck and the test entry points | 1.9 |  | 0.459 |
-| walker |  | 956 | 135 | listing of 'packages/vite/src/node' |  |  | 0.466 |
-| walker |  | 1105 | 149 | listing of 'packages/vite/src/node/plugins' |  |  | 0.473 |
-| ns | 1118 |  | 259 | Root pnpm scripts: debug, docs, build, release | 1.10 | 1.9 | 0.435 |
+| walker |  | 861 | 12 | listing of 'packages/vite/src/module-runner/sourcemap' |  |  | 0.459 |
+| walker |  | 996 | 135 | listing of 'packages/vite/src/node' |  |  | 0.466 |
+| ns | 1118 |  | 259 | Root pnpm scripts: debug, docs, build, release | 1.10 | 1.9 | 0.429 |
+| walker |  | 1145 | 149 | listing of 'packages/vite/src/node/plugins' |  |  | 0.435 |
 | ns | 1225 |  | 107 | vite package manifest: name, version, description, bin | 1.11 |  | 0.429 |
-| walker |  | 1290 | 185 | README headline in README.md |  |  | 0.745 |
-| walker |  | 1326 | 36 | headings outline in README.md |  |  | 0.745 |
-| walker |  | 1338 | 12 | README.md section #3 |  |  | 0.745 |
-| walker |  | 1357 | 19 | README.md section #2 |  |  | 0.745 |
-| walker |  | 1375 | 18 | ts names packages/vite/misc/false.d.ts |  |  | 0.745 |
-| walker |  | 1393 | 18 | ts names packages/vite/misc/true.d.ts |  |  | 0.745 |
-| walker |  | 1437 | 44 | listing of 'packages/vite/types' |  |  | 0.746 |
-| walker |  | 1467 | 30 | listing of 'scripts' |  |  | 0.746 |
+| walker |  | 1330 | 185 | README headline in README.md |  |  | 0.745 |
+| walker |  | 1366 | 36 | headings outline in README.md |  |  | 0.745 |
+| walker |  | 1378 | 12 | README.md section #3 |  |  | 0.745 |
+| walker |  | 1397 | 19 | README.md section #2 |  |  | 0.745 |
+| walker |  | 1415 | 18 | ts names packages/vite/misc/false.d.ts |  |  | 0.745 |
+| walker |  | 1433 | 18 | ts names packages/vite/misc/true.d.ts |  |  | 0.745 |
+| walker |  | 1477 | 44 | listing of 'packages/vite/types' |  |  | 0.746 |
 | ns | 1485 |  | 260 | vite package exports and internal import aliases | 1.12 | 1.11 | 0.660 |
-| walker |  | 1526 | 59 | package runtime metadata in package.json |  |  | 0.684 |
-| walker |  | 1539 | 13 | ts names packages/vite/src/module-runner/runner.ts |  |  | 0.684 |
-| walker |  | 1553 | 14 | ts names packages/vite/src/node/cli.ts |  |  | 0.684 |
+| walker |  | 1507 | 30 | listing of 'scripts' |  |  | 0.660 |
+| walker |  | 1566 | 59 | package runtime metadata in package.json |  |  | 0.684 |
+| walker |  | 1579 | 13 | ts names packages/vite/src/module-runner/runner.ts |  |  | 0.684 |
+| walker |  | 1593 | 14 | ts names packages/vite/src/node/cli.ts |  |  | 0.684 |
 | ns | 1640 |  | 155 | src/node/index.ts: primary API factories | 2.1 |  | 0.642 |
-| walker |  | 1643 | 90 | ts decl packages/plugin-legacy/src/index.ts:43 |  |  | 0.642 |
+| walker |  | 1683 | 90 | ts decl packages/plugin-legacy/src/index.ts:43 |  |  | 0.642 |
 | ns | 1853 |  | 213 | vite CLI: the complete command roster | 2.2 |  | 0.600 |
-| walker |  | 1986 | 343 | ts names packages/plugin-legacy/src/index.ts #1 |  |  | 0.600 |
-| walker |  | 2020 | 34 | ts decl packages/plugin-legacy/src/index.ts:128 |  |  | 0.600 |
-| walker |  | 2034 | 14 | ts decl packages/plugin-legacy/src/index.ts:146 |  |  | 0.600 |
-| walker |  | 2083 | 49 | ts decl packages/plugin-legacy/src/index.ts:794 |  |  | 0.600 |
+| walker |  | 2026 | 343 | ts names packages/plugin-legacy/src/index.ts #1 |  |  | 0.600 |
+| walker |  | 2060 | 34 | ts decl packages/plugin-legacy/src/index.ts:128 |  |  | 0.600 |
+| walker |  | 2074 | 14 | ts decl packages/plugin-legacy/src/index.ts:146 |  |  | 0.600 |
 | ns | 2118 |  | 265 | src/node/index.ts: transform helpers and environment factories | 2.3 | 2.1 | 0.555 |
-| walker |  | 2149 | 66 | ts decl packages/plugin-legacy/src/index.ts:1057 |  |  | 0.555 |
-| walker |  | 2170 | 21 | ts decl packages/plugin-legacy/src/index.ts:999 |  |  | 0.555 |
-| walker |  | 2198 | 28 | ts decl packages/plugin-legacy/src/index.ts:940 |  |  | 0.555 |
-| walker |  | 2232 | 34 | ts decl packages/plugin-legacy/src/index.ts:143 |  |  | 0.555 |
+| walker |  | 2123 | 49 | ts decl packages/plugin-legacy/src/index.ts:794 |  |  | 0.555 |
+| walker |  | 2189 | 66 | ts decl packages/plugin-legacy/src/index.ts:1057 |  |  | 0.555 |
+| walker |  | 2210 | 21 | ts decl packages/plugin-legacy/src/index.ts:999 |  |  | 0.555 |
+| walker |  | 2238 | 28 | ts decl packages/plugin-legacy/src/index.ts:940 |  |  | 0.555 |
 | ns | 2242 |  | 124 | src/node/index.ts: SSR/module-runner exports | 2.4 | 2.3 | 0.541 |
-| walker |  | 2298 | 66 | ts decl packages/plugin-legacy/src/index.ts:132 |  |  | 0.541 |
-| walker |  | 2314 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.541 |
-| walker |  | 2329 | 15 | ts names packages/vite/src/node/assetSource.ts |  |  | 0.541 |
-| walker |  | 2463 | 134 | package runtime dependencies in packages/vite/package.json |  |  | 0.541 |
-| walker |  | 2504 | 41 | listing of '.github' |  |  | 0.541 |
+| walker |  | 2272 | 34 | ts decl packages/plugin-legacy/src/index.ts:143 |  |  | 0.541 |
+| walker |  | 2338 | 66 | ts decl packages/plugin-legacy/src/index.ts:132 |  |  | 0.541 |
+| walker |  | 2354 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.541 |
+| walker |  | 2369 | 15 | ts names packages/vite/src/node/assetSource.ts |  |  | 0.541 |
+| walker |  | 2503 | 134 | package runtime dependencies in packages/vite/package.json |  |  | 0.541 |
+| walker |  | 2544 | 41 | listing of '.github' |  |  | 0.541 |
 | ns | 2571 |  | 329 | src/node/index.ts: constants, utils and remaining value exports | 2.5 | 2.4 | 0.494 |
-| walker |  | 2583 | 79 | listing of '.github/workflows' |  |  | 0.495 |
-| walker |  | 2647 | 64 | listing of 'docs' |  |  | 0.496 |
-| walker |  | 2684 | 37 | listing of 'packages/vite/types/internal' |  |  | 0.496 |
-| walker |  | 2807 | 123 | listing of 'packages/create-vite' |  |  | 0.498 |
-| walker |  | 2811 | 4 | listing of 'packages/create-vite/src' |  |  | 0.498 |
+| walker |  | 2623 | 79 | listing of '.github/workflows' |  |  | 0.495 |
+| walker |  | 2687 | 64 | listing of 'docs' |  |  | 0.496 |
+| walker |  | 2724 | 37 | listing of 'packages/vite/types/internal' |  |  | 0.496 |
+| walker |  | 2847 | 123 | listing of 'packages/create-vite' |  |  | 0.498 |
+| walker |  | 2851 | 4 | listing of 'packages/create-vite/src' |  |  | 0.498 |
 | ns | 2859 |  | 288 | index.ts type re-exports: config, server, build and plugin-option types | 2.6 | 2.5 | 0.461 |
-| walker |  | 3062 | 251 | ts names packages/create-vite/src/index.ts |  |  | 0.461 |
-| walker |  | 3078 | 16 | ts decl packages/create-vite/src/index.ts:392 |  |  | 0.461 |
-| walker |  | 3102 | 24 | ts decl packages/create-vite/src/index.ts:387 |  |  | 0.461 |
-| walker |  | 3143 | 41 | ts decl packages/create-vite/src/index.ts:64 |  |  | 0.461 |
-| walker |  | 3196 | 53 | ts decl packages/create-vite/src/index.ts:70 |  |  | 0.461 |
-| walker |  | 3242 | 46 | README headline in packages/create-vite/README.md |  |  | 0.461 |
+| walker |  | 3102 | 251 | ts names packages/create-vite/src/index.ts |  |  | 0.461 |
+| walker |  | 3118 | 16 | ts decl packages/create-vite/src/index.ts:392 |  |  | 0.461 |
+| walker |  | 3142 | 24 | ts decl packages/create-vite/src/index.ts:387 |  |  | 0.461 |
+| walker |  | 3183 | 41 | ts decl packages/create-vite/src/index.ts:64 |  |  | 0.461 |
+| walker |  | 3236 | 53 | ts decl packages/create-vite/src/index.ts:70 |  |  | 0.461 |
+| walker |  | 3282 | 46 | README headline in packages/create-vite/README.md |  |  | 0.461 |
 | ns | 3307 |  | 448 | index.ts type re-exports: server internals, HMR payloads, vendored types | 2.7 | 2.6 | 0.429 |
-| walker |  | 3554 | 312 | ts names packages/create-vite/src/index.ts #1 |  |  | 0.429 |
 | ns | 3569 |  | 262 | Plugin interface: every Vite-specific hook and flag (names only) | 2.8 |  | 0.412 |
-| walker |  | 3575 | 21 | ts decl packages/create-vite/src/index.ts:759 |  |  | 0.412 |
-| walker |  | 3663 | 88 | ts decl packages/create-vite/src/index.ts:11 |  |  | 0.412 |
-| walker |  | 3687 | 24 | headings outline in packages/create-vite/README.md |  |  | 0.412 |
-| walker |  | 3704 | 17 | ts names packages/vite/src/module-runner/esmEvaluator.ts |  |  | 0.412 |
-| walker |  | 3721 | 17 | ts names packages/vite/src/module-runner/hmrHandler.ts |  |  | 0.412 |
-| walker |  | 3738 | 17 | ts names packages/vite/types/internal/lightningcssOptions.d.ts |  |  | 0.412 |
-| walker |  | 3854 | 116 | ts decl packages/create-vite/src/index.ts:25 |  |  | 0.412 |
-| walker |  | 3902 | 48 | ts decl packages/vite/rollupLicensePlugin.ts:7 |  |  | 0.412 |
-| walker |  | 3924 | 22 | listing of 'packages/vite/src/node/__tests_dts__' |  |  | 0.412 |
+| walker |  | 3594 | 312 | ts names packages/create-vite/src/index.ts #1 |  |  | 0.412 |
+| walker |  | 3615 | 21 | ts decl packages/create-vite/src/index.ts:759 |  |  | 0.412 |
+| walker |  | 3703 | 88 | ts decl packages/create-vite/src/index.ts:11 |  |  | 0.412 |
+| walker |  | 3727 | 24 | headings outline in packages/create-vite/README.md |  |  | 0.412 |
+| walker |  | 3744 | 17 | ts names packages/vite/src/module-runner/esmEvaluator.ts |  |  | 0.412 |
+| walker |  | 3761 | 17 | ts names packages/vite/src/module-runner/hmrHandler.ts |  |  | 0.412 |
+| walker |  | 3778 | 17 | ts names packages/vite/types/internal/lightningcssOptions.d.ts |  |  | 0.412 |
+| walker |  | 3894 | 116 | ts decl packages/create-vite/src/index.ts:25 |  |  | 0.412 |
 | ns | 3931 |  | 362 | ViteDevServer: every member (names only) | 2.9 |  | 0.388 |
-| walker |  | 3953 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.388 |
-| walker |  | 4085 | 132 | ts decl packages/plugin-legacy/src/index.ts:840 |  |  | 0.388 |
+| walker |  | 3942 | 48 | ts decl packages/vite/rollupLicensePlugin.ts:7 |  |  | 0.388 |
+| walker |  | 3964 | 22 | listing of 'packages/vite/src/node/__tests_dts__' |  |  | 0.388 |
+| walker |  | 3993 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.388 |
 | ns | 4111 |  | 180 | UserConfig keys: project, sources and transform options | 3.1 |  | 0.379 |
-| walker |  | 4118 | 33 | ts names packages/vite/types/hot.d.ts |  |  | 0.379 |
-| walker |  | 4135 | 17 | ts decl packages/vite/types/hot.d.ts:3 |  |  | 0.379 |
-| walker |  | 4219 | 84 | README headline in packages/plugin-legacy/README.md |  |  | 0.379 |
-| walker |  | 4234 | 15 | listing of 'docs/_data' |  |  | 0.379 |
-| walker |  | 4258 | 24 | listing of 'packages/create-vite/template-preact' |  |  | 0.379 |
-| walker |  | 4308 | 50 | listing of 'packages/vite/src/types' |  |  | 0.380 |
-| walker |  | 4327 | 19 | package identity in packages/vite/src/types/package.json |  |  | 0.380 |
-| walker |  | 4339 | 12 | ts names packages/vite/src/types/connect.d.ts |  |  | 0.380 |
-| walker |  | 4354 | 15 | ts names packages/vite/src/types/dynamicImportVars.d.ts |  |  | 0.380 |
-| walker |  | 4370 | 16 | ts names packages/vite/src/types/commonjs.d.ts |  |  | 0.380 |
+| walker |  | 4125 | 132 | ts decl packages/plugin-legacy/src/index.ts:840 |  |  | 0.379 |
+| walker |  | 4158 | 33 | ts names packages/vite/types/hot.d.ts |  |  | 0.379 |
+| walker |  | 4175 | 17 | ts decl packages/vite/types/hot.d.ts:3 |  |  | 0.379 |
+| walker |  | 4259 | 84 | README headline in packages/plugin-legacy/README.md |  |  | 0.379 |
+| walker |  | 4274 | 15 | listing of 'docs/_data' |  |  | 0.379 |
+| walker |  | 4298 | 24 | listing of 'packages/create-vite/template-preact' |  |  | 0.379 |
+| walker |  | 4348 | 50 | listing of 'packages/vite/src/types' |  |  | 0.380 |
+| walker |  | 4367 | 19 | package identity in packages/vite/src/types/package.json |  |  | 0.380 |
+| walker |  | 4379 | 12 | ts names packages/vite/src/types/connect.d.ts |  |  | 0.380 |
+| walker |  | 4394 | 15 | ts names packages/vite/src/types/dynamicImportVars.d.ts |  |  | 0.380 |
 | ns | 4401 |  | 290 | UserConfig keys: server, build, env, worker and the rest | 3.2 | 3.1 | 0.366 |
-| walker |  | 4560 | 190 | README.md section #0 |  |  | 0.384 |
-| ns | 4571 |  | 170 | Per-environment options (SharedEnvironmentOptions / EnvironmentOptions) | 3.3 |  | 0.376 |
-| walker |  | 4615 | 55 | listing of 'packages/vite/src/shared' |  |  | 0.377 |
-| walker |  | 4627 | 12 | ts names packages/vite/src/shared/builtin.ts |  |  | 0.377 |
-| walker |  | 4642 | 15 | ts names packages/vite/src/shared/hmrHandler.ts |  |  | 0.377 |
-| walker |  | 4667 | 25 | ts names packages/vite/src/node/environment.ts |  |  | 0.377 |
-| walker |  | 4692 | 25 | ts names packages/vite/src/node/internalIndex.ts |  |  | 0.377 |
+| walker |  | 4410 | 16 | ts names packages/vite/src/types/commonjs.d.ts |  |  | 0.366 |
+| ns | 4571 |  | 170 | Per-environment options (SharedEnvironmentOptions / EnvironmentOptions) | 3.3 |  | 0.358 |
+| walker |  | 4600 | 190 | README.md section #0 |  |  | 0.376 |
+| walker |  | 4655 | 55 | listing of 'packages/vite/src/shared' |  |  | 0.377 |
+| walker |  | 4667 | 12 | ts names packages/vite/src/shared/builtin.ts |  |  | 0.377 |
+| walker |  | 4682 | 15 | ts names packages/vite/src/shared/hmrHandler.ts |  |  | 0.377 |
+| walker |  | 4707 | 25 | ts names packages/vite/src/node/environment.ts |  |  | 0.372 |
 | ns | 4707 |  | 136 | CommonServerOptions: the host/port/https/proxy/cors keys | 3.4 |  | 0.372 |
-| walker |  | 4709 | 17 | ts names packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts |  |  | 0.372 |
-| walker |  | 4726 | 17 | ts names packages/vite/src/node/plugins/forwardConsole.ts |  |  | 0.372 |
-| walker |  | 4743 | 17 | ts names packages/vite/src/node/plugins/prepareOutDir.ts |  |  | 0.372 |
-| walker |  | 4767 | 24 | ts decl packages/vite/src/node/assetSource.ts:111 |  |  | 0.372 |
-| walker |  | 4795 | 28 | listing of 'packages/create-vite/template-qwik' |  |  | 0.372 |
-| walker |  | 4823 | 28 | listing of 'packages/create-vite/template-solid' |  |  | 0.372 |
-| walker |  | 4840 | 17 | ts decl packages/vite/src/node/plugins/forwardConsole.ts:11 |  |  | 0.372 |
-| walker |  | 4858 | 18 | ts names packages/vite/src/node/plugins/wasm.ts |  |  | 0.372 |
-| walker |  | 4885 | 27 | ts names packages/vite/src/node/publicDir.ts |  |  | 0.372 |
-| walker |  | 4910 | 25 | ts decl packages/vite/src/node/publicDir.ts:13 |  |  | 0.372 |
-| walker |  | 4936 | 26 | ts decl packages/vite/src/module-runner/hmrHandler.ts:7 |  |  | 0.372 |
+| walker |  | 4732 | 25 | ts names packages/vite/src/node/internalIndex.ts |  |  | 0.372 |
+| walker |  | 4749 | 17 | ts names packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts |  |  | 0.372 |
+| walker |  | 4766 | 17 | ts names packages/vite/src/node/plugins/forwardConsole.ts |  |  | 0.372 |
+| walker |  | 4783 | 17 | ts names packages/vite/src/node/plugins/prepareOutDir.ts |  |  | 0.372 |
+| walker |  | 4807 | 24 | ts decl packages/vite/src/node/assetSource.ts:111 |  |  | 0.372 |
+| walker |  | 4835 | 28 | listing of 'packages/create-vite/template-qwik' |  |  | 0.372 |
+| walker |  | 4863 | 28 | listing of 'packages/create-vite/template-solid' |  |  | 0.372 |
+| walker |  | 4880 | 17 | ts decl packages/vite/src/node/plugins/forwardConsole.ts:11 |  |  | 0.372 |
+| walker |  | 4898 | 18 | ts names packages/vite/src/node/plugins/wasm.ts |  |  | 0.372 |
+| walker |  | 4925 | 27 | ts names packages/vite/src/node/publicDir.ts |  |  | 0.372 |
 | ns | 4944 |  | 237 | ServerOptions and FileSystemServeOptions keys | 3.5 |  | 0.362 |
-| walker |  | 4955 | 19 | listing of 'docs/.vitepress' |  |  | 0.362 |
-| walker |  | 4974 | 19 | listing of 'packages/create-vite/template-preact/src' |  |  | 0.362 |
-| walker |  | 4993 | 19 | listing of 'packages/create-vite/template-qwik/src' |  |  | 0.362 |
-| walker |  | 5012 | 19 | listing of 'packages/create-vite/template-solid/src' |  |  | 0.362 |
-| walker |  | 5040 | 28 | ts names packages/vite/src/module-runner/createImportMeta.ts |  |  | 0.362 |
-| walker |  | 5060 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:14 |  |  | 0.362 |
-| walker |  | 5080 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:41 |  |  | 0.362 |
-| walker |  | 5107 | 27 | ts decl packages/vite/src/node/cli.ts:68 |  |  | 0.362 |
-| walker |  | 5135 | 28 | ts decl packages/vite/src/shared/builtin.ts:1 |  |  | 0.362 |
-| walker |  | 5155 | 20 | ts names packages/vite/src/node/optimizer/pluginConverter.ts |  |  | 0.362 |
+| walker |  | 4950 | 25 | ts decl packages/vite/src/node/publicDir.ts:13 |  |  | 0.362 |
+| walker |  | 4976 | 26 | ts decl packages/vite/src/module-runner/hmrHandler.ts:7 |  |  | 0.362 |
+| walker |  | 4995 | 19 | listing of 'docs/.vitepress' |  |  | 0.362 |
+| walker |  | 5014 | 19 | listing of 'packages/create-vite/template-preact/src' |  |  | 0.362 |
+| walker |  | 5033 | 19 | listing of 'packages/create-vite/template-qwik/src' |  |  | 0.362 |
+| walker |  | 5052 | 19 | listing of 'packages/create-vite/template-solid/src' |  |  | 0.362 |
+| walker |  | 5080 | 28 | ts names packages/vite/src/module-runner/createImportMeta.ts |  |  | 0.362 |
+| walker |  | 5100 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:14 |  |  | 0.362 |
+| walker |  | 5120 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:41 |  |  | 0.362 |
+| walker |  | 5147 | 27 | ts decl packages/vite/src/node/cli.ts:68 |  |  | 0.362 |
+| walker |  | 5175 | 28 | ts decl packages/vite/src/shared/builtin.ts:1 |  |  | 0.362 |
 | ns | 5180 |  | 236 | BuildEnvironmentOptions keys: output, assets, CSS, minification | 3.6 |  | 0.355 |
-| walker |  | 5188 | 33 | listing of 'packages/create-vite/template-react' |  |  | 0.355 |
-| walker |  | 5207 | 19 | listing of 'packages/create-vite/template-react/src' |  |  | 0.355 |
-| walker |  | 5240 | 33 | listing of 'packages/create-vite/template-vue' |  |  | 0.355 |
-| walker |  | 5258 | 18 | listing of 'packages/create-vite/template-vue/src' |  |  | 0.355 |
-| walker |  | 5287 | 29 | ts decl packages/vite/src/node/environment.ts:20 |  |  | 0.355 |
-| walker |  | 5316 | 29 | ts decl packages/vite/src/node/publicDir.ts:36 |  |  | 0.355 |
-| walker |  | 5337 | 21 | listing of 'docs/.vitepress/theme' |  |  | 0.355 |
-| walker |  | 5358 | 21 | ts names packages/vite/src/node/plugins/reporter.ts |  |  | 0.355 |
-| walker |  | 5389 | 31 | ts names packages/vite/src/node/nodeResolve.ts |  |  | 0.355 |
-| walker |  | 5413 | 24 | ts decl packages/vite/src/node/nodeResolve.ts:6 |  |  | 0.355 |
-| walker |  | 5433 | 20 | ts decl packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts:13 |  |  | 0.355 |
+| walker |  | 5195 | 20 | ts names packages/vite/src/node/optimizer/pluginConverter.ts |  |  | 0.355 |
+| walker |  | 5228 | 33 | listing of 'packages/create-vite/template-react' |  |  | 0.355 |
+| walker |  | 5247 | 19 | listing of 'packages/create-vite/template-react/src' |  |  | 0.355 |
+| walker |  | 5280 | 33 | listing of 'packages/create-vite/template-vue' |  |  | 0.355 |
+| walker |  | 5298 | 18 | listing of 'packages/create-vite/template-vue/src' |  |  | 0.355 |
+| walker |  | 5327 | 29 | ts decl packages/vite/src/node/environment.ts:20 |  |  | 0.355 |
+| walker |  | 5356 | 29 | ts decl packages/vite/src/node/publicDir.ts:36 |  |  | 0.355 |
+| walker |  | 5377 | 21 | listing of 'docs/.vitepress/theme' |  |  | 0.355 |
+| walker |  | 5398 | 21 | ts names packages/vite/src/node/plugins/reporter.ts |  |  | 0.355 |
+| walker |  | 5429 | 31 | ts names packages/vite/src/node/nodeResolve.ts |  |  | 0.355 |
 | ns | 5437 |  | 257 | BuildEnvironmentOptions keys: bundler passthrough, lib, ssr, reporting | 3.7 | 3.6 | 0.347 |
-| walker |  | 5483 | 50 | ts names packages/vite/types/metadata.d.ts |  |  | 0.347 |
-| walker |  | 5508 | 25 | ts decl packages/vite/types/metadata.d.ts:1 |  |  | 0.347 |
+| walker |  | 5453 | 24 | ts decl packages/vite/src/node/nodeResolve.ts:6 |  |  | 0.347 |
+| walker |  | 5473 | 20 | ts decl packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts:13 |  |  | 0.347 |
+| walker |  | 5523 | 50 | ts names packages/vite/types/metadata.d.ts |  |  | 0.347 |
 | ns | 5530 |  | 93 | ExperimentalOptions and FutureOptions | 3.8 |  | 0.344 |
-| walker |  | 5552 | 44 | ts decl packages/vite/types/metadata.d.ts:6 |  |  | 0.344 |
-| walker |  | 5601 | 49 | listing of 'packages/vite/src/node/ssr' |  |  | 0.344 |
-| walker |  | 5612 | 11 | listing of 'packages/vite/src/node/ssr/runtime' |  |  | 0.344 |
-| walker |  | 5627 | 15 | ts names packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.344 |
-| walker |  | 5643 | 16 | ts names packages/vite/src/node/ssr/ssrModuleLoader.ts |  |  | 0.344 |
-| walker |  | 5660 | 17 | ts names packages/vite/src/node/ssr/ssrManifestPlugin.ts |  |  | 0.344 |
-| walker |  | 5692 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.344 |
-| walker |  | 5725 | 33 | ts decl packages/vite/src/shared/hmrHandler.ts:4 |  |  | 0.344 |
-| walker |  | 5760 | 35 | ts names packages/vite/src/module-runner/hmrLogger.ts |  |  | 0.344 |
-| walker |  | 5781 | 21 | ts decl packages/vite/src/module-runner/hmrLogger.ts:5 |  |  | 0.344 |
+| walker |  | 5548 | 25 | ts decl packages/vite/types/metadata.d.ts:1 |  |  | 0.344 |
+| walker |  | 5592 | 44 | ts decl packages/vite/types/metadata.d.ts:6 |  |  | 0.344 |
+| walker |  | 5641 | 49 | listing of 'packages/vite/src/node/ssr' |  |  | 0.344 |
+| walker |  | 5652 | 11 | listing of 'packages/vite/src/node/ssr/runtime' |  |  | 0.344 |
+| walker |  | 5667 | 15 | ts names packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.344 |
+| walker |  | 5683 | 16 | ts names packages/vite/src/node/ssr/ssrModuleLoader.ts |  |  | 0.344 |
+| walker |  | 5700 | 17 | ts names packages/vite/src/node/ssr/ssrManifestPlugin.ts |  |  | 0.344 |
+| walker |  | 5732 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.344 |
+| walker |  | 5765 | 33 | ts decl packages/vite/src/shared/hmrHandler.ts:4 |  |  | 0.344 |
+| walker |  | 5800 | 35 | ts names packages/vite/src/module-runner/hmrLogger.ts |  |  | 0.344 |
 | ns | 5804 |  | 274 | CLI global options (all five commands) | 3.9 | 2.2 | 0.338 |
-| walker |  | 5805 | 24 | ts names packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.338 |
-| walker |  | 5828 | 23 | ts decl packages/vite/src/node/optimizer/pluginConverter.ts:31 |  |  | 0.338 |
-| walker |  | 5887 | 59 | ts names packages/vite/types/importMeta.d.ts |  |  | 0.338 |
-| walker |  | 5903 | 16 | ts decl packages/vite/types/importMeta.d.ts:7 |  |  | 0.338 |
-| walker |  | 5923 | 20 | ts decl packages/vite/types/importMeta.d.ts:11 |  |  | 0.338 |
-| walker |  | 5972 | 49 | ts decl packages/vite/types/importMeta.d.ts:14 |  |  | 0.338 |
+| walker |  | 5821 | 21 | ts decl packages/vite/src/module-runner/hmrLogger.ts:5 |  |  | 0.338 |
+| walker |  | 5845 | 24 | ts names packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.338 |
+| walker |  | 5868 | 23 | ts decl packages/vite/src/node/optimizer/pluginConverter.ts:31 |  |  | 0.338 |
+| walker |  | 5927 | 59 | ts names packages/vite/types/importMeta.d.ts |  |  | 0.338 |
+| walker |  | 5943 | 16 | ts decl packages/vite/types/importMeta.d.ts:7 |  |  | 0.338 |
+| walker |  | 5963 | 20 | ts decl packages/vite/types/importMeta.d.ts:11 |  |  | 0.338 |
 | ns | 5995 |  | 191 | CLI dev-server flags | 3.10 | 2.2 | 0.333 |
-| walker |  | 6013 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.333 |
-| walker |  | 6034 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.333 |
-| walker |  | 6074 | 40 | package runtime metadata in packages/vite/package.json |  |  | 0.333 |
+| walker |  | 6012 | 49 | ts decl packages/vite/types/importMeta.d.ts:14 |  |  | 0.333 |
+| walker |  | 6053 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.333 |
+| walker |  | 6074 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.333 |
 | walker |  | 6100 | 26 | ts names packages/vite/src/module-runner/sourcemap/decoder.ts |  |  | 0.333 |
 | walker |  | 6126 | 26 | ts names packages/vite/src/module-runner/sourcemap/interceptor.ts |  |  | 0.333 |
 | walker |  | 6152 | 26 | ts names packages/vite/src/node/ssr/fetchModule.ts |  |  | 0.333 |

@@ -14,9 +14,9 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 254 | 61 | package identity in package.json |  |  | 0.945 |
 | ns | 307 |  | 125 | package.json `bin` + `files`: CLI entry point and published surface | 1.3 |  | 0.756 |
 | walker |  | 310 | 56 | listing of 'ranges' |  |  | 0.768 |
+| walker |  | 340 | 30 | package runtime metadata in package.json |  |  | 0.768 |
 | ns | 356 |  | 49 | Complete listings of classes/, internal/ and bin/ | 1.4 |  | 0.786 |
-| walker |  | 415 | 105 | listing of 'functions' |  |  | 0.820 |
-| walker |  | 445 | 30 | package runtime metadata in package.json |  |  | 0.820 |
+| walker |  | 445 | 105 | listing of 'functions' |  |  | 0.820 |
 | walker |  | 459 | 14 | ts names preload.js |  |  | 0.820 |
 | ns | 461 |  | 105 | Complete listing of functions/ (24 version-level modules) | 1.5 |  | 0.834 |
 | walker |  | 487 | 28 | listing of '.github' |  |  | 0.834 |
@@ -36,9 +36,9 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 1309 | 17 | listing of 'test/classes' |  |  | 0.831 |
 | walker |  | 1444 | 135 | package entrypoints in package.json |  |  | 0.951 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
-| walker |  | 1729 | 285 | README.md section #2 |  |  | 0.903 |
-| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
-| walker |  | 1873 | 144 | package scripts in package.json |  |  | 0.835 |
+| walker |  | 1588 | 144 | package scripts in package.json |  |  | 0.901 |
+| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.832 |
+| walker |  | 1873 | 285 | README.md section #2 |  |  | 0.835 |
 | walker |  | 1900 | 27 | listing of 'test/internal' |  |  | 0.835 |
 | walker |  | 1903 | 3 | listing of 'tap-snapshots/test' |  |  | 0.835 |
 | walker |  | 1924 | 21 | README.md section #21 |  |  | 0.835 |

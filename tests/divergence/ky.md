@@ -39,8 +39,8 @@ Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 1133 | 410 | ts names source/index.ts |  |  | 0.842 |
 | walker |  | 1199 | 66 | listing of 'test' |  |  | 0.848 |
 | ns | 1221 |  | 98 | Complete `test/` tree, including helpers | 1.11 |  | 0.817 |
-| walker |  | 1304 | 105 | package entrypoints in package.json |  |  | 0.863 |
-| walker |  | 1405 | 101 | package scripts in package.json |  |  | 0.864 |
+| walker |  | 1302 | 103 | package scripts in package.json |  |  | 0.817 |
+| walker |  | 1405 | 103 | package entrypoints in package.json |  |  | 0.864 |
 | ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.802 |
 | walker |  | 1467 | 62 | ts decl source/errors/HTTPError.ts:5 |  |  | 0.802 |
 | walker |  | 1536 | 69 | ts decl source/errors/ForceRetryError.ts:8 |  |  | 0.803 |
