@@ -180,13 +180,8 @@ pub enum JsonKey {
 /// render-time displacement of richer walker batches.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
-    /// Whole-file render, or a head slice of a longer file. For dotenv
-    /// samples the rest follows under [`PlaintextKey::DotenvChunk`].
+    /// Whole-file render, or a head slice of a longer file.
     Whole { file: PathBuf },
-    /// Source-ordered chunk of a long dotenv sample's optional-settings
-    /// tail. Chunks form a predecessor chain after [`PlaintextKey::Whole`]
-    /// so later config groups cannot render before earlier ones.
-    DotenvChunk { file: PathBuf, chunk_index: usize },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
@@ -481,13 +476,6 @@ impl InnerKey for PlaintextKey {
         match self {
             PlaintextKey::Whole { file } => {
                 format!("plaintext config {}", display_path(file, root))
-            }
-            PlaintextKey::DotenvChunk { file, chunk_index } => {
-                format!(
-                    "plaintext dotenv tail chunk #{} of {}",
-                    chunk_index + 1,
-                    display_path(file, root),
-                )
             }
             PlaintextKey::ManLede { file } => {
                 format!(

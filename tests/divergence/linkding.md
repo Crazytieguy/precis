@@ -142,118 +142,117 @@ Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 4422 | 38 | python decl bookmarks/management/commands/generate_secret_key.py:10 |  |  | 0.513 |
 | ns | 4438 |  | 197 | Model signal side effects (profile creation, file cleanup) | 2.11 | 2.1 | 0.500 |
 | walker |  | 4586 | 164 | plaintext config .env.sample |  |  | 0.500 |
+| walker |  | 4626 | 40 | python decl bookmarks/management/commands/create_initial_superuser.py:10 |  |  | 0.500 |
+| walker |  | 4666 | 40 | python decl bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.500 |
 | ns | 4694 |  | 256 | urls.py — root and bookmark page routes | 3.1 |  | 0.491 |
-| walker |  | 4741 | 155 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.491 |
-| walker |  | 4781 | 40 | python decl bookmarks/management/commands/create_initial_superuser.py:10 |  |  | 0.491 |
-| walker |  | 4821 | 40 | python decl bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.491 |
-| walker |  | 4894 | 73 | python names bookmarks/settings/dev.py |  |  | 0.491 |
-| walker |  | 4913 | 19 | python decl bookmarks/settings/dev.py:18 |  |  | 0.491 |
+| walker |  | 4739 | 73 | python names bookmarks/settings/dev.py |  |  | 0.491 |
+| walker |  | 4758 | 19 | python decl bookmarks/settings/dev.py:18 |  |  | 0.491 |
+| walker |  | 4898 | 140 | python decl bookmarks/feeds.py:31 |  |  | 0.491 |
 | ns | 4970 |  | 276 | urls.py — asset, bundle and tag routes | 3.2 | 3.1 | 0.482 |
-| walker |  | 5053 | 140 | python decl bookmarks/feeds.py:31 |  |  | 0.482 |
+| walker |  | 5046 | 148 | python names bookmarks/utils.py |  |  | 0.482 |
+| walker |  | 5070 | 24 | python decl bookmarks/utils.py:63 |  |  | 0.482 |
+| walker |  | 5094 | 24 | python decl bookmarks/utils.py:83 |  |  | 0.482 |
+| walker |  | 5127 | 33 | python decl bookmarks/utils.py:36 |  |  | 0.482 |
 | ns | 5188 |  | 218 | urls.py — settings and toast routes | 3.3 | 3.2 | 0.474 |
-| walker |  | 5201 | 148 | python names bookmarks/utils.py |  |  | 0.474 |
-| walker |  | 5225 | 24 | python decl bookmarks/utils.py:63 |  |  | 0.474 |
-| walker |  | 5249 | 24 | python decl bookmarks/utils.py:83 |  |  | 0.474 |
-| walker |  | 5282 | 33 | python decl bookmarks/utils.py:36 |  |  | 0.474 |
-| walker |  | 5362 | 80 | python decl bookmarks/utils.py:25 |  |  | 0.474 |
-| walker |  | 5386 | 24 | python decl bookmarks/utils.py:43 |  |  | 0.474 |
+| walker |  | 5207 | 80 | python decl bookmarks/utils.py:25 |  |  | 0.474 |
+| walker |  | 5231 | 24 | python decl bookmarks/utils.py:43 |  |  | 0.474 |
+| walker |  | 5426 | 195 | python names bookmarks/admin.py |  |  | 0.474 |
+| walker |  | 5455 | 29 | python decl bookmarks/admin.py:318 |  |  | 0.474 |
+| walker |  | 5490 | 35 | python decl bookmarks/admin.py:297 |  |  | 0.474 |
 | ns | 5519 |  | 331 | urls.py — API mounts, feeds and utility endpoints | 3.4 | 3.3 | 0.465 |
-| walker |  | 5581 | 195 | python names bookmarks/admin.py |  |  | 0.465 |
-| walker |  | 5610 | 29 | python decl bookmarks/admin.py:318 |  |  | 0.465 |
-| walker |  | 5645 | 35 | python decl bookmarks/admin.py:297 |  |  | 0.465 |
-| walker |  | 5682 | 37 | python decl bookmarks/admin.py:312 |  |  | 0.465 |
-| walker |  | 5730 | 48 | python decl bookmarks/admin.py:306 |  |  | 0.465 |
-| walker |  | 5782 | 52 | python decl bookmarks/admin.py:29 |  |  | 0.465 |
-| walker |  | 5790 | 8 | python decl bookmarks/admin.py:34 |  |  | 0.465 |
+| walker |  | 5527 | 37 | python decl bookmarks/admin.py:312 |  |  | 0.465 |
+| walker |  | 5575 | 48 | python decl bookmarks/admin.py:306 |  |  | 0.465 |
+| walker |  | 5627 | 52 | python decl bookmarks/admin.py:29 |  |  | 0.465 |
+| walker |  | 5635 | 8 | python decl bookmarks/admin.py:34 |  |  | 0.465 |
+| walker |  | 5689 | 54 | python decl bookmarks/admin.py:289 |  |  | 0.465 |
+| walker |  | 5749 | 60 | python decl bookmarks/admin.py:77 |  |  | 0.465 |
 | ns | 5795 |  | 276 | urls.py — conditional routes: live reload, auth, admin, OIDC, context path | 3.5 | 3.4 | 0.454 |
-| walker |  | 5844 | 54 | python decl bookmarks/admin.py:289 |  |  | 0.454 |
-| walker |  | 5904 | 60 | python decl bookmarks/admin.py:77 |  |  | 0.454 |
-| walker |  | 5973 | 69 | python decl bookmarks/admin.py:324 |  |  | 0.454 |
-| walker |  | 6052 | 79 | python decl bookmarks/admin.py:215 |  |  | 0.454 |
+| walker |  | 5818 | 69 | python decl bookmarks/admin.py:324 |  |  | 0.454 |
+| walker |  | 5897 | 79 | python decl bookmarks/admin.py:215 |  |  | 0.454 |
+| walker |  | 5908 | 11 | python decl bookmarks/admin.py:216 |  |  | 0.454 |
+| walker |  | 6048 | 140 | python decl bookmarks/admin.py:272 |  |  | 0.454 |
 | ns | 6056 |  | 261 | views/bookmarks.py function roster (complete) | 3.6 |  | 0.442 |
-| walker |  | 6063 | 11 | python decl bookmarks/admin.py:216 |  |  | 0.442 |
-| walker |  | 6203 | 140 | python decl bookmarks/admin.py:272 |  |  | 0.442 |
+| walker |  | 6198 | 150 | python decl bookmarks/admin.py:228 |  |  | 0.442 |
 | ns | 6328 |  | 272 | views/contexts.py class roster (complete) | 3.7 |  | 0.431 |
-| walker |  | 6353 | 150 | python decl bookmarks/admin.py:228 |  |  | 0.431 |
-| ns | 6570 |  | 242 | views/settings.py + views/tags.py + views/bundles.py function rosters (complete) | 3.8 |  | 0.422 |
-| walker |  | 6619 | 266 | python names bookmarks/models.py |  |  | 0.452 |
-| walker |  | 6632 | 13 | python decl bookmarks/models.py:116 |  |  | 0.452 |
-| walker |  | 6645 | 13 | python decl bookmarks/models.py:472 |  |  | 0.453 |
-| walker |  | 6658 | 13 | python decl bookmarks/models.py:478 |  |  | 0.454 |
-| walker |  | 6672 | 14 | python decl bookmarks/models.py:172 |  |  | 0.456 |
-| walker |  | 6726 | 54 | python decl bookmarks/models.py:483 |  |  | 0.457 |
-| ns | 6741 |  | 171 | views/access.py — the complete authorization helper set | 3.9 |  | 0.454 |
-| walker |  | 6787 | 61 | python decl bookmarks/models.py:21 |  |  | 0.455 |
-| walker |  | 6794 | 7 | python body bookmarks/models.py:478 |  |  | 0.456 |
-| walker |  | 6923 | 129 | python decl bookmarks/models.py:490 |  |  | 0.458 |
-| walker |  | 6931 | 8 | python decl bookmarks/models.py:508 |  |  | 0.458 |
-| ns | 7007 |  | 266 | Remaining view modules: turbo, assets, auth, root, health, manifest, opensearch, custom_css, toasts, reload | 3.10 |  | 0.458 |
-| walker |  | 7073 | 142 | python decl bookmarks/models.py:516 |  |  | 0.463 |
-| walker |  | 7081 | 8 | python decl bookmarks/models.py:531 |  |  | 0.463 |
+| walker |  | 6464 | 266 | python names bookmarks/models.py |  |  | 0.461 |
+| walker |  | 6477 | 13 | python decl bookmarks/models.py:116 |  |  | 0.462 |
+| walker |  | 6490 | 13 | python decl bookmarks/models.py:472 |  |  | 0.463 |
+| walker |  | 6503 | 13 | python decl bookmarks/models.py:478 |  |  | 0.464 |
+| walker |  | 6517 | 14 | python decl bookmarks/models.py:172 |  |  | 0.465 |
+| ns | 6570 |  | 242 | views/settings.py + views/tags.py + views/bundles.py function rosters (complete) | 3.8 |  | 0.456 |
+| walker |  | 6571 | 54 | python decl bookmarks/models.py:483 |  |  | 0.457 |
+| walker |  | 6632 | 61 | python decl bookmarks/models.py:21 |  |  | 0.458 |
+| walker |  | 6639 | 7 | python body bookmarks/models.py:478 |  |  | 0.459 |
+| ns | 6741 |  | 171 | views/access.py — the complete authorization helper set | 3.9 |  | 0.456 |
+| walker |  | 6768 | 129 | python decl bookmarks/models.py:490 |  |  | 0.458 |
+| walker |  | 6776 | 8 | python decl bookmarks/models.py:508 |  |  | 0.458 |
+| walker |  | 6918 | 142 | python decl bookmarks/models.py:516 |  |  | 0.463 |
+| walker |  | 6926 | 8 | python decl bookmarks/models.py:531 |  |  | 0.463 |
+| walker |  | 6975 | 49 | python decl bookmarks/management/commands/import_netscape.py:7 |  |  | 0.463 |
+| ns | 7007 |  | 266 | Remaining view modules: turbo, assets, auth, root, health, manifest, opensearch, custom_css, toasts, reload | 3.10 |  | 0.463 |
 | ns | 7095 |  | 88 | forms.py class roster (complete) | 3.11 |  | 0.470 |
-| walker |  | 7130 | 49 | python decl bookmarks/management/commands/import_netscape.py:7 |  |  | 0.470 |
-| ns | 7309 |  | 214 | Request-scoped plumbing: typed HttpRequest + LinkdingMiddleware | 3.12 |  | 0.465 |
-| ns | 7329 |  | 20 | bookmarks/templatetags/ listing (complete) | 3.13 |  | 0.468 |
-| walker |  | 7379 | 249 | python names bookmarks/queries.py |  |  | 0.469 |
-| walker |  | 7407 | 28 | python decl bookmarks/queries.py:41 |  |  | 0.469 |
-| walker |  | 7435 | 28 | python decl bookmarks/queries.py:308 |  |  | 0.469 |
-| walker |  | 7463 | 28 | python decl bookmarks/queries.py:318 |  |  | 0.469 |
-| walker |  | 7492 | 29 | python decl bookmarks/queries.py:341 |  |  | 0.469 |
-| walker |  | 7526 | 34 | python decl bookmarks/queries.py:368 |  |  | 0.469 |
+| walker |  | 7224 | 249 | python names bookmarks/queries.py |  |  | 0.471 |
+| walker |  | 7252 | 28 | python decl bookmarks/queries.py:41 |  |  | 0.471 |
+| walker |  | 7280 | 28 | python decl bookmarks/queries.py:308 |  |  | 0.471 |
+| walker |  | 7308 | 28 | python decl bookmarks/queries.py:318 |  |  | 0.471 |
+| ns | 7309 |  | 214 | Request-scoped plumbing: typed HttpRequest + LinkdingMiddleware | 3.12 |  | 0.466 |
+| ns | 7329 |  | 20 | bookmarks/templatetags/ listing (complete) | 3.13 |  | 0.469 |
+| walker |  | 7337 | 29 | python decl bookmarks/queries.py:341 |  |  | 0.469 |
+| walker |  | 7371 | 34 | python decl bookmarks/queries.py:368 |  |  | 0.469 |
+| walker |  | 7409 | 38 | python decl bookmarks/queries.py:33 |  |  | 0.469 |
+| walker |  | 7459 | 50 | python decl bookmarks/queries.py:47 |  |  | 0.469 |
+| walker |  | 7509 | 50 | python decl bookmarks/queries.py:328 |  |  | 0.469 |
+| walker |  | 7539 | 30 | python decl bookmarks/queries.py:122 |  |  | 0.469 |
 | ns | 7563 |  | 234 | api/routes.py — viewsets and router registrations (complete) | 4.1 |  | 0.459 |
-| walker |  | 7564 | 38 | python decl bookmarks/queries.py:33 |  |  | 0.459 |
-| walker |  | 7614 | 50 | python decl bookmarks/queries.py:47 |  |  | 0.459 |
-| walker |  | 7664 | 50 | python decl bookmarks/queries.py:328 |  |  | 0.459 |
-| walker |  | 7694 | 30 | python decl bookmarks/queries.py:122 |  |  | 0.459 |
-| walker |  | 7724 | 30 | python decl bookmarks/queries.py:139 |  |  | 0.459 |
-| walker |  | 7764 | 40 | python decl bookmarks/queries.py:227 |  |  | 0.459 |
+| walker |  | 7569 | 30 | python decl bookmarks/queries.py:139 |  |  | 0.459 |
+| walker |  | 7609 | 40 | python decl bookmarks/queries.py:227 |  |  | 0.459 |
+| walker |  | 7695 | 86 | python decl bookmarks/settings/dev.py:25 |  |  | 0.459 |
+| walker |  | 7746 | 51 | python decl bookmarks/management/commands/backup.py:7 |  |  | 0.459 |
 | ns | 7779 |  | 216 | BookmarkViewSet — every custom action and override | 4.2 | 4.1 | 0.454 |
-| walker |  | 7850 | 86 | python decl bookmarks/settings/dev.py:25 |  |  | 0.454 |
-| walker |  | 7901 | 51 | python decl bookmarks/management/commands/backup.py:7 |  |  | 0.454 |
 | ns | 7928 |  | 149 | Asset, user and bundle viewset actions | 4.3 | 4.1 | 0.450 |
-| ns | 8017 |  | 89 | api/serializers.py class roster (complete) | 4.4 |  | 0.447 |
-| walker |  | 8136 | 235 | python names bookmarks/services/tasks.py |  |  | 0.446 |
+| walker |  | 7981 | 235 | python names bookmarks/services/tasks.py |  |  | 0.451 |
+| walker |  | 7988 | 7 | python decl bookmarks/services/tasks.py:76 |  |  | 0.451 |
+| walker |  | 7995 | 7 | python decl bookmarks/services/tasks.py:102 |  |  | 0.451 |
+| walker |  | 8002 | 7 | python decl bookmarks/services/tasks.py:109 |  |  | 0.451 |
+| walker |  | 8009 | 7 | python decl bookmarks/services/tasks.py:133 |  |  | 0.451 |
+| ns | 8017 |  | 89 | api/serializers.py class roster (complete) | 4.4 |  | 0.448 |
+| walker |  | 8105 | 96 | python names bookmarks/services/preview_image_loader.py |  |  | 0.448 |
 | ns | 8136 |  | 119 | API token authentication + docs/api.md section map | 4.5 |  | 0.446 |
-| walker |  | 8143 | 7 | python decl bookmarks/services/tasks.py:76 |  |  | 0.446 |
-| walker |  | 8150 | 7 | python decl bookmarks/services/tasks.py:102 |  |  | 0.446 |
-| walker |  | 8157 | 7 | python decl bookmarks/services/tasks.py:109 |  |  | 0.446 |
-| walker |  | 8164 | 7 | python decl bookmarks/services/tasks.py:133 |  |  | 0.446 |
-| walker |  | 8260 | 96 | python names bookmarks/services/preview_image_loader.py |  |  | 0.446 |
-| walker |  | 8314 | 54 | python decl bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.446 |
-| ns | 8365 |  | 229 | services/bookmarks.py function roster (complete) | 5.1 |  | 0.440 |
-| walker |  | 8411 | 97 | python names bookmarks/views/turbo.py |  |  | 0.452 |
-| walker |  | 8469 | 58 | python decl bookmarks/views/turbo.py:29 |  |  | 0.452 |
-| walker |  | 8527 | 58 | python decl bookmarks/views/turbo.py:42 |  |  | 0.452 |
-| walker |  | 8542 | 15 | python body bookmarks/views/turbo.py:12 |  |  | 0.452 |
-| walker |  | 8558 | 16 | python doc bookmarks/views/turbo.py:55 |  |  | 0.452 |
+| walker |  | 8159 | 54 | python decl bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.446 |
+| walker |  | 8256 | 97 | python names bookmarks/views/turbo.py |  |  | 0.458 |
+| walker |  | 8314 | 58 | python decl bookmarks/views/turbo.py:29 |  |  | 0.458 |
+| ns | 8365 |  | 229 | services/bookmarks.py function roster (complete) | 5.1 |  | 0.452 |
+| walker |  | 8372 | 58 | python decl bookmarks/views/turbo.py:42 |  |  | 0.452 |
+| walker |  | 8387 | 15 | python body bookmarks/views/turbo.py:12 |  |  | 0.452 |
+| walker |  | 8403 | 16 | python doc bookmarks/views/turbo.py:55 |  |  | 0.452 |
 | ns | 8566 |  | 201 | queries.py function roster (complete) | 5.2 |  | 0.463 |
-| walker |  | 8760 | 202 | [dependencies] in pyproject.toml |  |  | 0.474 |
+| walker |  | 8605 | 202 | [dependencies] in pyproject.toml |  |  | 0.474 |
+| walker |  | 8707 | 102 | python names bookmarks/templatetags/pagination.py |  |  | 0.474 |
+| walker |  | 8728 | 21 | python decl bookmarks/templatetags/pagination.py:12 |  |  | 0.474 |
 | ns | 8816 |  | 250 | services/search_query_parser.py symbol roster (complete) | 5.3 |  | 0.467 |
-| walker |  | 8862 | 102 | python names bookmarks/templatetags/pagination.py |  |  | 0.467 |
-| walker |  | 8883 | 21 | python decl bookmarks/templatetags/pagination.py:12 |  |  | 0.467 |
-| walker |  | 8987 | 104 | python names bookmarks/services/exporter.py |  |  | 0.467 |
-| walker |  | 8997 | 10 | python body bookmarks/services/exporter.py:25 |  |  | 0.467 |
-| walker |  | 9007 | 10 | python body bookmarks/services/exporter.py:52 |  |  | 0.467 |
-| walker |  | 9108 | 101 | python decl bookmarks/services/parser.py:8 |  |  | 0.467 |
-| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.462 |
-| walker |  | 9220 | 112 | python names bookmarks/views/bundles.py |  |  | 0.466 |
-| walker |  | 9228 | 8 | python decl bookmarks/views/bundles.py:15 |  |  | 0.466 |
-| walker |  | 9236 | 8 | python decl bookmarks/views/bundles.py:22 |  |  | 0.466 |
-| walker |  | 9244 | 8 | python decl bookmarks/views/bundles.py:78 |  |  | 0.466 |
-| walker |  | 9252 | 8 | python decl bookmarks/views/bundles.py:83 |  |  | 0.466 |
-| walker |  | 9260 | 8 | python decl bookmarks/views/bundles.py:90 |  |  | 0.466 |
-| walker |  | 9277 | 17 | README.md section #11 |  |  | 0.466 |
-| walker |  | 9294 | 17 | README.md section #20 |  |  | 0.466 |
-| walker |  | 9407 | 113 | python names bookmarks/api/serializers.py |  |  | 0.474 |
-| walker |  | 9416 | 9 | python decl bookmarks/api/serializers.py:20 |  |  | 0.474 |
-| walker |  | 9429 | 13 | python decl bookmarks/api/serializers.py:24 |  |  | 0.474 |
+| walker |  | 8832 | 104 | python names bookmarks/services/exporter.py |  |  | 0.467 |
+| walker |  | 8842 | 10 | python body bookmarks/services/exporter.py:25 |  |  | 0.467 |
+| walker |  | 8852 | 10 | python body bookmarks/services/exporter.py:52 |  |  | 0.467 |
+| walker |  | 8953 | 101 | python decl bookmarks/services/parser.py:8 |  |  | 0.467 |
+| walker |  | 9065 | 112 | python names bookmarks/views/bundles.py |  |  | 0.471 |
+| walker |  | 9073 | 8 | python decl bookmarks/views/bundles.py:15 |  |  | 0.471 |
+| walker |  | 9081 | 8 | python decl bookmarks/views/bundles.py:22 |  |  | 0.471 |
+| walker |  | 9089 | 8 | python decl bookmarks/views/bundles.py:78 |  |  | 0.471 |
+| walker |  | 9097 | 8 | python decl bookmarks/views/bundles.py:83 |  |  | 0.471 |
+| walker |  | 9105 | 8 | python decl bookmarks/views/bundles.py:90 |  |  | 0.471 |
+| walker |  | 9122 | 17 | README.md section #11 |  |  | 0.471 |
+| walker |  | 9139 | 17 | README.md section #20 |  |  | 0.471 |
+| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.466 |
+| walker |  | 9252 | 113 | python names bookmarks/api/serializers.py |  |  | 0.474 |
+| walker |  | 9261 | 9 | python decl bookmarks/api/serializers.py:20 |  |  | 0.474 |
+| walker |  | 9274 | 13 | python decl bookmarks/api/serializers.py:24 |  |  | 0.474 |
+| walker |  | 9287 | 13 | python decl bookmarks/api/serializers.py:32 |  |  | 0.474 |
+| walker |  | 9351 | 64 | python decl bookmarks/api/serializers.py:196 |  |  | 0.474 |
 | ns | 9438 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.469 |
-| walker |  | 9442 | 13 | python decl bookmarks/api/serializers.py:32 |  |  | 0.469 |
-| walker |  | 9506 | 64 | python decl bookmarks/api/serializers.py:196 |  |  | 0.469 |
-| walker |  | 9605 | 99 | python decl bookmarks/api/serializers.py:181 |  |  | 0.469 |
-| walker |  | 9718 | 113 | python names bookmarks/services/auto_tagging.py |  |  | 0.469 |
-| walker |  | 9735 | 17 | python body bookmarks/utils.py:21 |  |  | 0.469 |
+| walker |  | 9450 | 99 | python decl bookmarks/api/serializers.py:181 |  |  | 0.469 |
+| walker |  | 9563 | 113 | python names bookmarks/services/auto_tagging.py |  |  | 0.469 |
+| walker |  | 9580 | 17 | python body bookmarks/utils.py:21 |  |  | 0.469 |
+| walker |  | 9648 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.469 |
 | ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.463 |
-| walker |  | 9803 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.463 |
 | ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.475 |
 | ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.485 |

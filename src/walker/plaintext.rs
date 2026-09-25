@@ -33,18 +33,14 @@
 //! a file over the cap is head-sampled rather than dropped, so
 //! "slightly too long" never means "renders as nothing".
 
-use std::ops::Range;
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
-use crate::render::Source;
-use crate::value::{
-    DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals, roster_mass_factor,
-};
+use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, dedup_sorted, fs::list_dir, gated_read_source,
-    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, fs::list_dir, gated_read_source, gated_whole_file_content,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// Line cap on a `Whole` plaintext batch.
@@ -93,19 +89,6 @@ const SMALL_BUILD_FILE_MAX_DEPTH: usize = 1;
 /// are NextAuth + database; linkding's are container/host/superuser).
 const DOTENV_MANDATORY_HEAD_LINES: usize = 12;
 
-/// Target marginal cost for source-ordered dotenv tail chunks. Cuts
-/// prefer blank/comment-group boundaries; an individually oversized
-/// group can also split between adjacent dotenv entries.
-const DOTENV_TAIL_CHUNK_TARGET_TOKENS: usize = 150;
-
-/// Avoid a tiny final dotenv chunk when it can fold into its predecessor.
-const DOTENV_TAIL_CHUNK_MIN_TOKENS: usize = 100;
-
-/// Optional dotenv keys are deploy-facing contract, not an ordinary
-/// names catalog. Apply one modest ops premium to the conserved train;
-/// this is aggregate, never repeated per chunk.
-const DOTENV_TAIL_OPS_FACTOR: f64 = 1.25;
-
 /// Selection budget for a [`Class::SourceText`] declaration surface,
 /// per line class. Imports and comments are damped so a 40-import
 /// Java file or a 15-line license banner cannot consume the whole
@@ -149,8 +132,8 @@ const SOURCE_TEXT_GENERATED_SCAN_LINES: usize = 8;
 /// misnamed `.txt` (or a UTF-8-decodable data blob) does.
 const SOURCE_TEXT_NUL_SCAN_BYTES: usize = 8192;
 
-/// Pre-flight byte gate for dotenv samples — generous (they're
-/// head-sampled, not rendered whole) but bounded.
+/// Pre-flight byte gate for dotenv samples — generous (only the head
+/// renders) but bounded.
 const DOTENV_BYTE_GATE: usize = 64 * 1024;
 
 /// Plaintext file class — drives the (filename → signal preset) table.
@@ -760,16 +743,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             continue;
         }
-        if matches!(class, Class::DotenvSample) {
-            push_dotenv_batches(&file, class, ctx, &mut out);
-            continue;
-        }
         // Head-sampled, not gated: a file one line over the cap used
         // to render as nothing at all, which is strictly worse than
         // the same file's first `PLAINTEXT_LINE_CAP` lines.
         let content = match class {
             Class::Requirements => {
                 head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, REQUIREMENTS_HEAD_LINE_CAP)
+            }
+            Class::DotenvSample => {
+                head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
             }
             // Build entrypoints get headroom over the generic cap:
             // real app Dockerfiles / Makefiles routinely run 60–100
@@ -918,156 +900,6 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
                 .file_name()
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name == "scripts"))
-}
-
-/// Source ranges for dotenv tail groups. A group begins after a blank
-/// separator or at the start of a comment block; consecutive comment
-/// rows stay attached, as do the config rows documented by that block.
-/// Returned ranges are zero-based and end-exclusive over `lines`.
-fn dotenv_tail_groups(lines: &[&str], head_end: usize) -> Vec<Range<usize>> {
-    if head_end >= lines.len() {
-        return Vec::new();
-    }
-    let mut starts = vec![head_end];
-    for index in head_end + 1..lines.len() {
-        let current = lines[index].trim();
-        if current.is_empty() {
-            continue;
-        }
-        let previous = lines[index - 1].trim();
-        let starts_comment_block = current.starts_with('#') && !previous.starts_with('#');
-        if previous.is_empty() || starts_comment_block {
-            starts.push(index);
-        }
-    }
-    starts.dedup();
-    starts
-        .iter()
-        .enumerate()
-        .map(|(index, &start)| start..starts.get(index + 1).copied().unwrap_or(lines.len()))
-        .collect()
-}
-
-fn is_dotenv_entry_line(line: &str) -> bool {
-    let line = line.trim();
-    !line.is_empty() && !line.starts_with('#') && line.contains('=')
-}
-
-/// Partition the dotenv tail into source-ordered, comment-group-aligned
-/// chunks. Each non-final chunk carries an ellipsis on the next chunk's
-/// first row; scheduling that descendant replaces the marker with full
-/// content, so every purchased prefix remains visibly incomplete.
-fn dotenv_tail_chunks(
-    file: &Path,
-    source: &Source,
-    head_end: usize,
-    ctx: &WalkCtx,
-) -> Vec<FileLines> {
-    let lines: Vec<&str> = source.lines().collect();
-    let groups = dotenv_tail_groups(&lines, head_end);
-    let tail_len = lines.len().saturating_sub(head_end);
-    let lines_for = |range: Range<usize>| {
-        let start = head_end + range.start;
-        let end = head_end + range.end;
-        let mut chunk = FileLines::new((start + 1..=end).collect());
-        if end < lines.len() {
-            chunk = chunk.with_ellipses(vec![end + 1]);
-        }
-        chunk
-    };
-    let cost = |range: Range<usize>| {
-        single_file_lines_content(file, source, lines_for(range))
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-    budget_chunk_ranges(
-        tail_len,
-        cost,
-        DOTENV_TAIL_CHUNK_TARGET_TOKENS,
-        DOTENV_TAIL_CHUNK_MIN_TOKENS,
-        |end| {
-            let source_end = head_end + end;
-            let group_boundary = groups.iter().any(|group| group.end == source_end);
-            if group_boundary {
-                return true;
-            }
-            // A very large comment group (for example, a long roster
-            // under one header) still needs a purchasable shape. Fall
-            // back to a cut between adjacent dotenv assignments; never
-            // strand a comment or blank separator from what follows.
-            is_dotenv_entry_line(lines[source_end - 1]) && is_dotenv_entry_line(lines[source_end])
-        },
-        |range| cost(range) <= DOTENV_TAIL_CHUNK_TARGET_TOKENS + 50,
-    )
-    .into_iter()
-    .map(lines_for)
-    .collect()
-}
-
-/// Dotenv samples ship as a cheap mandatory-settings head plus chained,
-/// independently purchasable optional-setting chunks. A capped roster-
-/// mass factor recognizes that a hundreds-entry config surface carries
-/// more value than a tiny sample; that one aggregate allocation is then
-/// conserved across the chunks rather than multiplied per chunk.
-fn push_dotenv_batches(file: &Path, class: Class, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let Some(source) = gated_read_source(file, ctx, DOTENV_BYTE_GATE) else {
-        return;
-    };
-    let line_count = source.lines().count();
-    if line_count == 0 {
-        return;
-    }
-    let head_end = DOTENV_MANDATORY_HEAD_LINES.min(line_count);
-    let mut head = FileLines::new((1..=head_end).collect());
-    if head_end < line_count {
-        head = head.with_ellipses(vec![head_end + 1]);
-    }
-    let head_key = PlaintextKey::Whole {
-        file: file.to_path_buf(),
-    };
-    let head_value = class_value(class, file, ctx);
-    let Some(head_content) = single_file_lines_content(file, &source, head) else {
-        return;
-    };
-    out.push(Batch {
-        key: head_key.clone().into(),
-        predecessor: None,
-        content: head_content,
-        value: head_value,
-    });
-    let chunks = dotenv_tail_chunks(file, &source, head_end, ctx);
-    if chunks.is_empty() {
-        return;
-    }
-    let chunk_contents: Vec<_> = chunks
-        .into_iter()
-        .filter_map(|lines| single_file_lines_content(file, &source, lines))
-        .collect();
-    let chunk_costs: Vec<_> = chunk_contents
-        .iter()
-        .map(|content| ctx.marginal_tokens(content))
-        .collect();
-    let factors = conserved_catalog_chunk_factors(&chunk_costs, DEFAULT_CONCAVITY_EXPONENT);
-    let tail_entries = source
-        .lines()
-        .skip(head_end)
-        .filter(|line| is_dotenv_entry_line(line))
-        .count();
-    let tail_factor = roster_mass_factor(tail_entries) * DOTENV_TAIL_OPS_FACTOR;
-    let mut predecessor = BatchKey::Plaintext(head_key);
-    for (chunk_index, (content, factor)) in chunk_contents.into_iter().zip(factors).enumerate() {
-        let key = PlaintextKey::DotenvChunk {
-            file: file.to_path_buf(),
-            chunk_index,
-        };
-        out.push(Batch {
-            key: key.clone().into(),
-            predecessor: Some(predecessor),
-            content,
-            value: head_value * tail_factor * factor,
-        });
-        predecessor = BatchKey::Plaintext(key);
-    }
 }
 
 /// Whole file when it fits `head_line_cap`, else the head rows with a
@@ -1645,108 +1477,6 @@ mod tests {
             !rendered.contains(&format!("line {PLAINTEXT_LINE_CAP}")),
             "rendered past the cap: {rendered}"
         );
-    }
-
-    #[test]
-    fn plaintext_dotenv_groups_cut_before_comment_blocks() {
-        let lines = [
-            "HEAD=1",
-            "",
-            "# Group A",
-            "A=1",
-            "B=2",
-            "# Group B without a blank separator",
-            "C=3",
-            "",
-            "# Group C",
-            "D=4",
-        ];
-        assert_eq!(dotenv_tail_groups(&lines, 2), vec![2..5, 5..8, 8..10]);
-        assert!(is_dotenv_entry_line("FOO=bar"));
-        assert!(!is_dotenv_entry_line("# Example: FOO=bar"));
-    }
-
-    #[test]
-    fn plaintext_dotenv_chunks_chain_and_conserve_tail_value() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let file = root.join(".env.sample");
-        let mut source = String::new();
-        for index in 0..DOTENV_MANDATORY_HEAD_LINES {
-            source.push_str(&format!("MANDATORY_{index:02}=value_{index:02}\n"));
-        }
-        for group in 0..16 {
-            source.push_str(&format!("# Optional group {group:02}\n"));
-            for setting in 0..6 {
-                source.push_str(&format!(
-                    "OPTIONAL_{group:02}_{setting:02}=value_{group:02}_{setting:02}\n"
-                ));
-            }
-            source.push('\n');
-        }
-        std::fs::write(&file, &source).unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        let head = batches
-            .iter()
-            .find(|batch| {
-                matches!(
-                    &batch.key,
-                    BatchKey::Plaintext(PlaintextKey::Whole { file: batch_file })
-                        if batch_file == &file
-                )
-            })
-            .expect("dotenv head batch");
-        let chunks: Vec<_> = batches
-            .iter()
-            .filter(|batch| {
-                matches!(
-                    &batch.key,
-                    BatchKey::Plaintext(PlaintextKey::DotenvChunk { file: batch_file, .. })
-                        if batch_file == &file
-                )
-            })
-            .collect();
-        assert!(
-            chunks.len() > 2,
-            "expected several dotenv chunks: {chunks:?}"
-        );
-
-        let total_tail_value: f64 = chunks.iter().map(|batch| batch.value).sum();
-        let tail_entries = source
-            .lines()
-            .skip(DOTENV_MANDATORY_HEAD_LINES)
-            .filter(|line| is_dotenv_entry_line(line))
-            .count();
-        assert!(
-            (total_tail_value
-                - head.value * roster_mass_factor(tail_entries) * DOTENV_TAIL_OPS_FACTOR)
-                .abs()
-                < 1e-9,
-            "tail allocation must be conserved: head={}, tail={total_tail_value}",
-            head.value,
-        );
-        let mut expected_predecessor = head.key.clone();
-        for (chunk_index, batch) in chunks.iter().enumerate() {
-            assert_eq!(batch.predecessor.as_ref(), Some(&expected_predecessor));
-            expected_predecessor = BatchKey::Plaintext(PlaintextKey::DotenvChunk {
-                file: file.clone(),
-                chunk_index,
-            });
-            assert_eq!(batch.key, expected_predecessor);
-        }
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
-        let report = scheduler.run_with_report();
-        let rendered = report.tree.render();
-        for line in source.lines().filter(|line| !line.is_empty()) {
-            assert_eq!(
-                rendered.matches(line).count(),
-                1,
-                "source line {line:?} should render exactly once:\n{rendered}",
-            );
-        }
     }
 
     #[test]
