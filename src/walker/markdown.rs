@@ -22,7 +22,6 @@
 
 use std::collections::BTreeSet;
 use std::path::Path;
-use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
@@ -160,11 +159,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let suppress_body =
             crate::value::is_auto_injected_doc_file(&file, ctx.root()) || is_peripheral_doc(&file);
 
-        let Some((source, tree)) = parse_md(ctx, &file) else {
+        let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
             continue;
         };
-        let gates = derive_outline_gates(&file, &tree, &source);
-        let (headline, outline_rows, outline_emits) = (gates.headline, gates.rows, gates.emits);
+        let headline = readme_headline_spec(&file, &tree, &source);
+        let outline_rows = outline_rows(&tree, &source, headline.as_ref());
+        let outline_emits = !outline_rows.is_empty();
         let root_readme = is_readme(&file) && dir == ctx.root();
         let nav = NavDensity {
             sibling_md_count,
@@ -198,8 +198,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             }
         }
         let mut outline_emitted: Option<BatchKey> = None;
-        if outline_emits && let Some(content) = build_outline_content(&file, &source, &outline_rows)
-        {
+        if let Some(content) = build_outline_content(&file, &source, &outline_rows) {
             let key = MarkdownKey::HeadingsOutline { file: file.clone() };
             out.push(Batch {
                 key: key.clone().into(),
@@ -356,12 +355,6 @@ fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
     value
 }
 
-// --- parser ---
-
-fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
-    ctx.parse_tree(path, &tree_sitter_md::LANGUAGE.into())
-}
-
 /// Parse `text` with the inline grammar — surfaces named `image` /
 /// `inline_link` / `html_tag` children that the block grammar leaves
 /// as opaque bytes.
@@ -415,35 +408,16 @@ fn build_outline_content(
     single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
 }
 
-/// Per-file derivation chain shared by `expand_in_dir` and the unit-test
-/// helpers: headline spec (READMEs only) → outline rows → outline gate.
-struct OutlineGates {
-    headline: Option<HeadlineSpec>,
-    rows: Vec<(usize, usize)>,
-    emits: bool,
-}
-
-fn derive_outline_gates(file: &Path, tree: &Tree, source: &str) -> OutlineGates {
-    let headline = is_readme(file)
+fn readme_headline_spec(file: &Path, tree: &Tree, source: &str) -> Option<HeadlineSpec> {
+    is_readme(file)
         .then(|| headline_spec(tree, source))
-        .flatten();
-    let rows = collectable_outline_rows(tree, source, headline.as_ref());
-    let emits = (2..=MAX_OUTLINE_HEADINGS).contains(&rows.len());
-    OutlineGates {
-        headline,
-        rows,
-        emits,
-    }
+        .flatten()
 }
 
 /// Heading row ranges for `HeadingsOutline` — levels 1–3, with any
-/// headline-covered headings dropped (`headline` is `Some` only for
-/// READMEs; the caller derives it once per file).
-fn collectable_outline_rows(
-    tree: &Tree,
-    source: &str,
-    headline: Option<&HeadlineSpec>,
-) -> Vec<(usize, usize)> {
+/// headline-covered headings dropped — or none when there are fewer than
+/// two or more than [`MAX_OUTLINE_HEADINGS`] of them.
+fn outline_rows(tree: &Tree, source: &str, headline: Option<&HeadlineSpec>) -> Vec<(usize, usize)> {
     let mut nodes = Vec::new();
     collect_heading_nodes(tree.root_node(), &mut nodes);
     let mut out = Vec::new();
@@ -463,6 +437,9 @@ fn collectable_outline_rows(
             continue;
         }
         out.push((start_row, end_row));
+    }
+    if !(2..=MAX_OUTLINE_HEADINGS).contains(&out.len()) {
+        out.clear();
     }
     out
 }
@@ -864,7 +841,7 @@ fn is_decorative_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "image" => true,
         "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link" => {
-            let Some(link_text) = first_child_of_kind(node, "link_text", false) else {
+            let Some(link_text) = first_child_of_kind(node, "link_text") else {
                 return false;
             };
             link_text_is_image_only_direct(link_text, source)
@@ -904,7 +881,7 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
 /// or skippable, at least one is decorative, and no plain text sits
 /// between or around them. Plain-text paragraphs return `false`.
 fn is_decorative_paragraph(para: Node, source: &str) -> bool {
-    let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
+    let Some(inline_block) = first_child_of_kind(para, "inline") else {
         return false;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
@@ -973,7 +950,7 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
 /// punctuation (`•`, `·`, `|`, `/`, `,`, dashes) — multi-language
 /// READMEs' `[English](url) • [中文](url) • ...`.
 fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
-    let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
+    let Some(inline_block) = first_child_of_kind(para, "inline") else {
         return false;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
@@ -1149,7 +1126,7 @@ fn logical_sections(
                     SectionRange::new(*start, *end, h2_idx),
                 );
             }
-            TopLevelEntry::H2Section { node, start, end } => {
+            TopLevelEntry::Section { node, start, end } => {
                 // README H2 that is either a code-dominant canonical
                 // usage demo, or titled in the reference/usage
                 // vocabulary with a non-trivial but compact body (so
@@ -1435,9 +1412,8 @@ fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], hea
 /// One entry in the un-split top-level section list. `SyntheticIntro`
 /// is the row range carved out by H1-unwrap to preserve the H1 heading
 /// and the prelude before the first H2 (a virtual section inside the
-/// H1's node). `H2Section` carries the tree-sitter node so
-/// [`direct_h3_children`] and source-byte length can be derived without
-/// re-walking from the root.
+/// H1's node). `Section` is any other top-level section (usually an
+/// H2) and carries its tree-sitter node.
 #[derive(Debug, Clone, Copy)]
 enum TopLevelEntry<'a> {
     SyntheticIntro {
@@ -1446,7 +1422,7 @@ enum TopLevelEntry<'a> {
         start: usize,
         end: usize,
     },
-    H2Section {
+    Section {
         node: Node<'a>,
         start: usize,
         end: usize,
@@ -1478,7 +1454,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
                 });
             }
             for h2 in h2s {
-                out.push(TopLevelEntry::H2Section {
+                out.push(TopLevelEntry::Section {
                     node: h2,
                     start: h2.start_position().row + 1,
                     end: node_end_row_trimmed(h2, source) + 1,
@@ -1488,7 +1464,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
         }
     }
     top.into_iter()
-        .map(|s| TopLevelEntry::H2Section {
+        .map(|s| TopLevelEntry::Section {
             node: s,
             start: s.start_position().row + 1,
             end: node_end_row_trimmed(s, source) + 1,
@@ -1662,7 +1638,7 @@ fn section_is_code_dominant(section: Node<'_>, source: &str) -> bool {
 /// child is found.
 fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
-    let inline = first_child_of_kind(heading, "inline", false)?;
+    let inline = first_child_of_kind(heading, "inline")?;
     Some(title_core(&source[inline.start_byte()..inline.end_byte()]))
 }
 
@@ -2363,9 +2339,10 @@ mod tests {
 
     // --- HeadingsOutline tests ---
 
-    fn outline_rows(file: &str, source: &str) -> Vec<(usize, usize)> {
+    fn outline_rows_of(file: &str, source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        derive_outline_gates(&PathBuf::from(file), &tree, source).rows
+        let headline = readme_headline_spec(Path::new(file), &tree, source);
+        outline_rows(&tree, source, headline.as_ref())
     }
 
     /// README with H1 + 4 H2s. Outline collects only the H2 rows; the
@@ -2391,7 +2368,7 @@ mod tests {
                    ## License\n\
                    \n\
                    prose\n";
-        let rows = outline_rows("README.md", src);
+        let rows = outline_rows_of("README.md", src);
         let starts: Vec<usize> = rows.iter().map(|(s, _)| *s).collect();
         assert_eq!(
             starts,
@@ -2417,7 +2394,7 @@ mod tests {
                    --------------\n\
                    \n\
                    body\n";
-        let rows = outline_rows("README.md", src);
+        let rows = outline_rows_of("README.md", src);
         assert_eq!(
             rows,
             vec![(5, 6), (10, 11)],
@@ -2437,7 +2414,7 @@ mod tests {
                    #### Subsubsection B\n\
                    \n\
                    body B\n";
-        let rows = outline_rows("docs/page.md", src);
+        let rows = outline_rows_of("docs/page.md", src);
         assert!(
             rows.is_empty(),
             "outline must not include H4+; got {rows:?}"
@@ -2448,9 +2425,8 @@ mod tests {
 
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
-        let file = PathBuf::from(file);
-        let gates = derive_outline_gates(&file, &tree, source);
-        logical_sections(&file, &tree, source, gates.emits)
+        let outline_emits = !outline_rows_of(file, source).is_empty();
+        logical_sections(Path::new(file), &tree, source, outline_emits)
     }
 
     #[test]

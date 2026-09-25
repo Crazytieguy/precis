@@ -9,10 +9,9 @@
 //! generated files are skipped. The full `package.json` key→batch mapping
 //! lives in the `is_*_key` predicates below.
 
-use std::cell::{OnceCell, RefCell};
-use std::collections::{HashMap, HashSet};
+use std::cell::OnceCell;
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
@@ -47,10 +46,6 @@ const WHOLE_BYTE_GATE: usize = WHOLE_LINE_CAP * 200;
 pub struct JsonState {
     membership: WorkspaceMembership,
     primary_member: OnceCell<Option<PathBuf>>,
-    /// Per-file answers for [`Self::is_primary_workspace_member`] — the
-    /// question is asked once per priced section and each miss costs a
-    /// `canonicalize` syscall chain.
-    primary_member_files: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl JsonState {
@@ -61,7 +56,8 @@ impl JsonState {
     }
 
     /// `true` iff `file` is the primary workspace member — see
-    /// [`member_named_after_root`].
+    /// [`member_named_after_root`]. That member is the only one in a
+    /// directory of its name, so the name and membership identify it.
     pub fn is_primary_workspace_member(&self, file: &Path, root: &Path) -> bool {
         let primary = self.primary_member.get_or_init(|| {
             member_named_after_root(
@@ -69,17 +65,12 @@ impl JsonState {
                 self.membership.members(|| collect_workspace_members(root)),
             )
         });
-        let Some(primary) = primary else {
-            return false;
-        };
-        if let Some(&cached) = self.primary_member_files.borrow().get(file) {
-            return cached;
+        fn dir_name(path: &Path) -> Option<&std::ffi::OsStr> {
+            path.parent().and_then(Path::file_name)
         }
-        let is_primary = file.canonicalize().is_ok_and(|file| file == *primary);
-        self.primary_member_files
-            .borrow_mut()
-            .insert(file.to_path_buf(), is_primary);
-        is_primary
+        primary.as_deref().is_some_and(|primary| {
+            dir_name(file) == dir_name(primary) && self.is_workspace_member(file, root)
+        })
     }
 }
 
@@ -131,7 +122,7 @@ fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch> {
 /// ancestry. The `devDependencies` / `peerDependencies` rosters are left
 /// for an explicit read.
 fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
-    let Some((source, tree)) = parse_json(ctx, file) else {
+    let Some((source, tree)) = ctx.parse_tree(file, &tree_sitter_json::LANGUAGE.into()) else {
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
@@ -361,16 +352,12 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
     1.0
 }
 
-// --- parser + AST helpers ---
-
-fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
-    ctx.parse_tree(path, &tree_sitter_json::LANGUAGE.into())
-}
+// --- AST helpers ---
 
 /// `(unquoted_key, start_1based, end_1based)` for each top-level pair.
 fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
-    let Some(object) = first_child_of_kind(root, "object", false) else {
+    let Some(object) = first_child_of_kind(root, "object") else {
         return Vec::new();
     };
     let mut cur = object.walk();
@@ -379,7 +366,7 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
         if child.kind() != "pair" {
             continue;
         }
-        let Some(key_node) = first_child_of_kind(child, "string", false) else {
+        let Some(key_node) = first_child_of_kind(child, "string") else {
             continue;
         };
         let key = unquote_string(key_node, source);
@@ -450,7 +437,7 @@ fn npm_workspaces_entries(root: &Path) -> Vec<String> {
     let Some((text, tree)) = parse_manifest(root) else {
         return Vec::new();
     };
-    let Some(object) = first_child_of_kind(tree.root_node(), "object", false) else {
+    let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
         return Vec::new();
     };
     let Some(workspaces_value) = object_field_value(object, "workspaces", &text) else {
@@ -478,7 +465,7 @@ fn object_field_value<'a>(object: Node<'a>, name: &str, source: &str) -> Option<
         if child.kind() != "pair" {
             continue;
         }
-        let key_node = first_child_of_kind(child, "string", false)?;
+        let key_node = first_child_of_kind(child, "string")?;
         if unquote_string(key_node, source) != name {
             continue;
         }

@@ -21,7 +21,6 @@
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
@@ -43,7 +42,8 @@ type Section = (String, usize, usize);
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for file in files_with_extension(dir, "toml", ctx) {
-        let Some((source, tree)) = parse_toml(ctx, &file) else {
+        let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_toml_ng::LANGUAGE.into())
+        else {
             continue;
         };
         let sections = collect_sections(&tree, &source);
@@ -404,46 +404,33 @@ fn is_pyproject_identity_table(name: &str) -> bool {
     matches!(name, "project" | "tool.poetry")
 }
 
-// --- parser ---
-
-fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
-    ctx.parse_tree(path, &tree_sitter_toml_ng::LANGUAGE.into())
-}
-
 // --- section collection ---
 
 /// `(header_name, start_1based, end_1based)` for every top-level
 /// `table` or `[[array-of-tables]]`. End is the row before the next
 /// table/array block or EOF.
-fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
+fn collect_sections(tree: &Tree, source: &str) -> Vec<Section> {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut raw: Vec<(String, usize)> = Vec::new();
-    for child in root.children(&mut cursor) {
-        let name = match child.kind() {
-            "table" | "table_array_element" => {
-                let Some(name) = extract_table_name(child, source) else {
-                    continue;
-                };
-                name
-            }
-            _ => continue,
-        };
-        raw.push((name, child.start_position().row));
-    }
+    let headers: Vec<(String, usize)> = root
+        .children(&mut cursor)
+        .filter(|child| matches!(child.kind(), "table" | "table_array_element"))
+        .filter_map(|child| {
+            Some((
+                extract_table_name(child, source)?,
+                child.start_position().row,
+            ))
+        })
+        .collect();
     let total_rows = source.lines().count();
-    let mut out = Vec::new();
-    for i in 0..raw.len() {
-        let name = raw[i].0.clone();
-        let start = raw[i].1 + 1;
-        let end = if i + 1 < raw.len() {
-            raw[i + 1].1
-        } else {
-            total_rows
-        };
-        out.push((name, start, end));
-    }
-    out
+    headers
+        .iter()
+        .enumerate()
+        .map(|(i, (name, row))| {
+            let end = headers.get(i + 1).map_or(total_rows, |(_, next)| *next);
+            (name.clone(), row + 1, end)
+        })
+        .collect()
 }
 
 fn extract_table_name(node: Node, source: &str) -> Option<String> {

@@ -302,14 +302,10 @@ impl WalkCtx {
     }
 }
 
-pub(in crate::walker) fn first_child_of_kind<'a>(
-    node: Node<'a>,
-    kind: &str,
-    named_only: bool,
-) -> Option<Node<'a>> {
+pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
     let mut cursor = node.walk();
     node.children(&mut cursor)
-        .find(|child| (!named_only || child.is_named()) && child.kind() == kind)
+        .find(|child| child.kind() == kind)
 }
 
 /// Minimum share of the tree's essential source bytes for the largest
