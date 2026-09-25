@@ -49,9 +49,6 @@ const PLAINTEXT_LINE_CAP: usize = 60;
 /// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
-/// Head rows retained from long `requirements.txt` files.
-const REQUIREMENTS_HEAD_LINE_CAP: usize = 8;
-
 /// Line cap on `Makefile` / `Dockerfile` whole batches.
 const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
 
@@ -133,17 +130,13 @@ pub(crate) enum Class {
     BuildEntrypoint,
     /// Compact build/test plumbing scripts and manifests.
     BuildScript,
-    /// Legacy Python packaging metadata (`setup.cfg`).
-    PackageConfig,
-    /// Python requirements freeze/list files, sampled when long.
-    Requirements,
+    /// Project reference files: `setup.cfg`, `requirements.txt`, `TODO`.
+    ProjectNotes,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
     /// One-line version stamp.
     Version,
-    /// Plain-text backlog.
-    Todo,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
     SourceText,
@@ -198,14 +191,14 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
             return Some(Class::BuildEntrypoint);
         }
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
-        "setup.cfg" => return Some(Class::PackageConfig),
+        "setup.cfg" => return Some(Class::ProjectNotes),
         _ => {}
     }
     if is_docker_compose_name(&lower) {
         return Some(Class::BuildEntrypoint);
     }
-    if lower == "requirements.txt" {
-        return Some(Class::Requirements);
+    if lower == "requirements.txt" || lower == "todo" {
+        return Some(Class::ProjectNotes);
     }
     if crate::value::is_dotenv_sample_filename(name) {
         return Some(Class::DotenvSample);
@@ -224,9 +217,6 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     // the `[project].version` scalar (linkding).
     if lower == "version" || lower == "version.txt" {
         return Some(Class::Version);
-    }
-    if lower == "todo" {
-        return Some(Class::Todo);
     }
     None
 }
@@ -755,9 +745,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // to render as nothing at all, which is strictly worse than
         // the same file's first `PLAINTEXT_LINE_CAP` lines.
         let content = match class {
-            Class::Requirements => {
-                head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, REQUIREMENTS_HEAD_LINE_CAP)
-            }
             Class::DotenvSample => {
                 head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
             }
@@ -803,7 +790,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         | Class::DotenvSample
         | Class::Version
         | Class::SourceText => (0.60, 0.50, 0.55),
-        Class::Requirements | Class::Todo | Class::PackageConfig => (0.40, 0.50, 0.40),
+        Class::ProjectNotes => (0.40, 0.50, 0.40),
         Class::Tooling | Class::SourceProse => (0.30, 0.35, 0.30),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
@@ -1098,9 +1085,9 @@ mod tests {
             ("build.sh", Some(Class::BuildScript)),
             (".gitmodules", Some(Class::BuildScript)),
             ("configure.ac", Some(Class::BuildScript)),
-            ("setup.cfg", Some(Class::PackageConfig)),
-            ("requirements.txt", Some(Class::Requirements)),
-            ("Requirements.txt", Some(Class::Requirements)),
+            ("setup.cfg", Some(Class::ProjectNotes)),
+            ("requirements.txt", Some(Class::ProjectNotes)),
+            ("Requirements.txt", Some(Class::ProjectNotes)),
             ("requirements-dev.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
@@ -1114,7 +1101,7 @@ mod tests {
             ("version", Some(Class::Version)),
             ("version.txt", Some(Class::Version)),
             ("VERSION.txt", Some(Class::Version)),
-            ("TODO", Some(Class::Todo)),
+            ("TODO", Some(Class::ProjectNotes)),
             // Owned by other walkers.
             ("LICENSE.md", None),
             (".eslintrc.json", None),
@@ -1315,13 +1302,6 @@ mod tests {
             !rendered.contains(&format!("line {PLAINTEXT_LINE_CAP}")),
             "rendered past the cap: {rendered}"
         );
-    }
-
-    #[test]
-    fn plaintext_requirements_samples_head_not_url_lines() {
-        let lines = head_lines(12, REQUIREMENTS_HEAD_LINE_CAP);
-        assert_eq!(lines.full, vec![1, 2, 3, 4, 5, 6, 7, 8]);
-        assert_eq!(lines.ellipses, vec![9]);
     }
 
     #[test]

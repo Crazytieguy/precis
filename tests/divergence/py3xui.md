@@ -135,71 +135,71 @@ Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | ns | 5088 |  | 167 | class Inbound: traffic counters, expiry, client_stats and model_config | 3.5 | 3.4 | 0.546 |
 | walker |  | 5127 | 100 | headings outline in py3xui/server/README.md |  |  | 0.546 |
 | walker |  | 5140 | 13 | py3xui/server/README.md section #0 |  |  | 0.546 |
-| walker |  | 5205 | 65 | plaintext config dev/requirements.txt |  |  | 0.546 |
-| walker |  | 5300 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
+| walker |  | 5235 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
 | ns | 5301 |  | 213 | InboundFields: the complete inbound JSON key mapping | 3.6 |  | 0.552 |
-| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.547 |
-| walker |  | 5395 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.560 |
-| walker |  | 5576 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.592 |
-| walker |  | 5592 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
+| walker |  | 5330 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.566 |
+| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.560 |
+| walker |  | 5511 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.591 |
+| walker |  | 5527 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
 | ns | 5681 |  | 306 | Inbound.to_json body: which fields are sent, and the nested-JSON-string encoding | 3.8 | 3.7 | 0.577 |
-| walker |  | 5807 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
+| walker |  | 5742 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
 | ns | 5829 |  | 148 | Inbound.validate_stream_settings: the dict / JSON-string / empty-string union | 3.9 |  | 0.576 |
-| walker |  | 5950 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
+| walker |  | 5885 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
 | ns | 6066 |  | 237 | Settings and Sniffing models with their field-name constants | 3.10 |  | 0.588 |
-| walker |  | 6175 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
+| walker |  | 6110 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
 | ns | 6205 |  | 139 | StreamSettingsFields: every transport-settings JSON key | 3.11 |  | 0.614 |
-| ns | 6335 |  | 130 | class StreamSettings: every field, protocol dicts truncated to their names | 3.12 | 3.11 | 0.606 |
-| walker |  | 6402 | 227 | python decl py3xui/client/client.py:7 |  |  | 0.639 |
-| walker |  | 6418 | 16 | python doc py3xui/client/client.py:7 |  |  | 0.646 |
+| ns | 6335 |  | 130 | class StreamSettings: every field, protocol dicts truncated to their names | 3.12 | 3.11 | 0.605 |
+| walker |  | 6337 | 227 | python decl py3xui/client/client.py:7 |  |  | 0.639 |
+| walker |  | 6353 | 16 | python doc py3xui/client/client.py:7 |  |  | 0.646 |
 | ns | 6478 |  | 143 | JsonStringModel: the base class that parses JSON-string fields | 3.13 |  | 0.641 |
-| walker |  | 6569 | 151 | headings outline in py3xui/inbound/README.md |  |  | 0.641 |
-| walker |  | 6608 | 39 | python body py3xui/utils/env.py:33 |  |  | 0.641 |
-| walker |  | 6647 | 39 | python body py3xui/utils/env.py:49 |  |  | 0.641 |
-| walker |  | 6686 | 39 | python body py3xui/utils/env.py:65 |  |  | 0.641 |
+| walker |  | 6504 | 151 | headings outline in py3xui/inbound/README.md |  |  | 0.641 |
+| walker |  | 6543 | 39 | python body py3xui/utils/env.py:33 |  |  | 0.641 |
+| walker |  | 6582 | 39 | python body py3xui/utils/env.py:49 |  |  | 0.641 |
+| walker |  | 6621 | 39 | python body py3xui/utils/env.py:65 |  |  | 0.641 |
+| walker |  | 6799 | 178 | python body demo.py:70 |  |  | 0.641 |
 | ns | 6831 |  | 353 | class Server: complete field declarations for the status payload | 3.14 |  | 0.626 |
-| walker |  | 6864 | 178 | python body demo.py:70 |  |  | 0.626 |
-| walker |  | 7027 | 163 | headings outline in py3xui/async_api/README.md |  |  | 0.626 |
-| ns | 7050 |  | 219 | The six nested server sub-models, class lines plus fields | 3.15 | 3.14 | 0.636 |
-| walker |  | 7072 | 45 | README.md section #7 |  |  | 0.637 |
+| walker |  | 6962 | 163 | headings outline in py3xui/async_api/README.md |  |  | 0.626 |
+| walker |  | 7007 | 45 | README.md section #7 |  |  | 0.626 |
+| ns | 7050 |  | 219 | The six nested server sub-models, class lines plus fields | 3.15 | 3.14 | 0.637 |
+| walker |  | 7161 | 154 | README.md section #1 |  |  | 0.638 |
 | ns | 7161 |  | 111 | class RealityKeyPair | 3.16 |  | 0.638 |
 | ns | 7187 |  | 26 | Location of ServerFields, the server-status alias table | 3.17 | 3.14 | 0.636 |
-| walker |  | 7226 | 154 | README.md section #1 |  |  | 0.636 |
-| walker |  | 7289 | 63 | py3xui/server/README.md section #1 |  |  | 0.636 |
+| walker |  | 7284 | 123 | plaintext config dev/requirements.txt |  |  | 0.637 |
 | ns | 7303 |  | 116 | ApiFields response-envelope constants and class BaseApi | 4.1 |  | 0.641 |
-| walker |  | 7353 | 64 | py3xui/client/README.md section #1 |  |  | 0.641 |
-| ns | 7536 |  | 233 | BaseApi.__init__: the private state every sub-API carries | 4.2 | 4.1 | 0.629 |
-| walker |  | 7685 | 332 | python decl py3xui/inbound/stream_settings.py:25 |  |  | 0.644 |
-| ns | 7809 |  | 273 | BaseApi: every member, signatures only | 4.3 | 4.1 | 0.632 |
+| walker |  | 7347 | 63 | py3xui/server/README.md section #1 |  |  | 0.641 |
+| walker |  | 7411 | 64 | py3xui/client/README.md section #1 |  |  | 0.641 |
+| ns | 7536 |  | 233 | BaseApi.__init__: the private state every sub-API carries | 4.2 | 4.1 | 0.630 |
+| walker |  | 7743 | 332 | python decl py3xui/inbound/stream_settings.py:25 |  |  | 0.644 |
+| ns | 7809 |  | 273 | BaseApi: every member, signatures only | 4.3 | 4.1 | 0.633 |
 | ns | 8024 |  | 215 | How the TLS `verify` argument is chosen, per request | 4.4 | 4.3 | 0.623 |
-| walker |  | 8025 | 340 | python decl py3xui/server/server.py:125 |  |  | 0.647 |
+| walker |  | 8083 | 340 | python decl py3xui/server/server.py:125 |  |  | 0.648 |
 | ns | 8248 |  | 224 | The retry loop: which errors retry, the backoff, and what is raised at the end | 4.5 | 4.4 | 0.637 |
-| walker |  | 8366 | 341 | python decl py3xui/inbound/inbound.py:38 |  |  | 0.671 |
-| walker |  | 8402 | 36 | python decl py3xui/inbound/inbound.py:88 |  |  | 0.672 |
+| walker |  | 8424 | 341 | python decl py3xui/inbound/inbound.py:38 |  |  | 0.671 |
+| walker |  | 8460 | 36 | python decl py3xui/inbound/inbound.py:88 |  |  | 0.672 |
 | ns | 8467 |  | 219 | BaseApi.login: the POST that mints the session cookie | 4.6 | 4.3 | 0.662 |
-| walker |  | 8559 | 157 | README.md section #12 |  |  | 0.662 |
+| walker |  | 8617 | 157 | README.md section #12 |  |  | 0.662 |
 | ns | 8675 |  | 208 | Cookie discovery, cookie dict, and the login-required guards | 4.7 | 4.6 | 0.654 |
-| walker |  | 8908 | 349 | python decl py3xui/server/server.py:7 |  |  | 0.654 |
 | ns | 8924 |  | 249 | AsyncBaseApi: where the async transport actually differs | 4.8 | 4.5 | 0.643 |
-| ns | 9075 |  | 151 | Async error handling: different exception types, different terminal error | 4.9 | 4.8 | 0.637 |
+| walker |  | 8966 | 349 | python decl py3xui/server/server.py:7 |  |  | 0.643 |
+| ns | 9075 |  | 151 | Async error handling: different exception types, different terminal error | 4.9 | 4.8 | 0.638 |
 | ns | 9230 |  | 155 | Every remaining directory in the repository, listed in full | 5.1 |  | 0.638 |
-| walker |  | 9265 | 357 | python decl py3xui/api/api_base.py:28 |  |  | 0.656 |
-| walker |  | 9273 | 8 | python decl py3xui/api/api_base.py:80 |  |  | 0.656 |
-| walker |  | 9281 | 8 | python decl py3xui/api/api_base.py:88 |  |  | 0.656 |
-| walker |  | 9289 | 8 | python decl py3xui/api/api_base.py:96 |  |  | 0.656 |
-| walker |  | 9297 | 8 | python decl py3xui/api/api_base.py:104 |  |  | 0.656 |
-| walker |  | 9305 | 8 | python decl py3xui/api/api_base.py:112 |  |  | 0.656 |
-| walker |  | 9313 | 8 | python decl py3xui/api/api_base.py:120 |  |  | 0.656 |
-| walker |  | 9321 | 8 | python decl py3xui/api/api_base.py:136 |  |  | 0.656 |
-| walker |  | 9329 | 8 | python decl py3xui/api/api_base.py:152 |  |  | 0.656 |
-| walker |  | 9337 | 8 | python decl py3xui/api/api_base.py:210 |  |  | 0.656 |
-| walker |  | 9346 | 9 | python decl py3xui/api/api_base.py:144 |  |  | 0.656 |
-| walker |  | 9356 | 10 | python decl py3xui/api/api_base.py:160 |  |  | 0.656 |
-| walker |  | 9367 | 11 | python decl py3xui/api/api_base.py:128 |  |  | 0.656 |
+| walker |  | 9323 | 357 | python decl py3xui/api/api_base.py:28 |  |  | 0.657 |
+| walker |  | 9331 | 8 | python decl py3xui/api/api_base.py:80 |  |  | 0.657 |
+| walker |  | 9339 | 8 | python decl py3xui/api/api_base.py:88 |  |  | 0.657 |
+| walker |  | 9347 | 8 | python decl py3xui/api/api_base.py:96 |  |  | 0.657 |
+| walker |  | 9355 | 8 | python decl py3xui/api/api_base.py:104 |  |  | 0.657 |
+| walker |  | 9363 | 8 | python decl py3xui/api/api_base.py:112 |  |  | 0.657 |
+| walker |  | 9371 | 8 | python decl py3xui/api/api_base.py:120 |  |  | 0.657 |
+| walker |  | 9379 | 8 | python decl py3xui/api/api_base.py:136 |  |  | 0.657 |
+| walker |  | 9387 | 8 | python decl py3xui/api/api_base.py:152 |  |  | 0.657 |
+| walker |  | 9395 | 8 | python decl py3xui/api/api_base.py:210 |  |  | 0.657 |
 | ns | 9403 |  | 173 | tests/test_api.py: how the suite is wired | 5.2 |  | 0.648 |
-| walker |  | 9462 | 95 | python decl py3xui/api/api_base.py:61 |  |  | 0.651 |
-| walker |  | 9500 | 38 | python decl py3xui/api/api_base.py:313 |  |  | 0.651 |
-| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.638 |
-| walker |  | 9741 | 241 | py3xui/inbound/README.md section #0 |  |  | 0.638 |
-| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.631 |
-| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.629 |
+| walker |  | 9404 | 9 | python decl py3xui/api/api_base.py:144 |  |  | 0.648 |
+| walker |  | 9414 | 10 | python decl py3xui/api/api_base.py:160 |  |  | 0.648 |
+| walker |  | 9425 | 11 | python decl py3xui/api/api_base.py:128 |  |  | 0.648 |
+| walker |  | 9520 | 95 | python decl py3xui/api/api_base.py:61 |  |  | 0.651 |
+| walker |  | 9558 | 38 | python decl py3xui/api/api_base.py:313 |  |  | 0.651 |
+| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.639 |
+| walker |  | 9799 | 241 | py3xui/inbound/README.md section #0 |  |  | 0.639 |
+| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.636 |
+| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.634 |
