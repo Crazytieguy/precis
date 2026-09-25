@@ -13,7 +13,6 @@
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
 //!   `from … import …`.
 
-use std::collections::HashSet;
 use std::path::Path;
 
 use tree_sitter::Node;
@@ -45,7 +44,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             if is_entrypoint(&file.path, ctx) {
                 model
                     .module_doc
-                    .extend(paragraphs(file, file.node_rows(node), &HashSet::new()));
+                    .extend(paragraphs(file, file.node_rows(node)));
             }
             continue;
         }
@@ -149,20 +148,20 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
     let head_end = colon_row(inner).max(name_row);
     let head: Vec<usize> = (unit.start_position().row + 1..=head_end).collect();
     let mut statements = suite_statements(inner);
-    let mut excluded: HashSet<usize> = head.iter().copied().collect();
+    let mut after_row = head_end;
     let mut doc = Vec::new();
     if let Some(index) = statements
         .iter()
         .position(|node| node.kind() != "comment")
         .filter(|&index| is_docstring(statements[index]))
     {
-        let docstring = statements.remove(index);
-        doc = paragraphs(file, file.node_rows(docstring), &excluded);
-        excluded.extend(file.node_rows(docstring));
+        let rows = file.node_rows(statements.remove(index));
+        after_row = *rows.end();
+        doc = paragraphs(file, rows.filter(|&row| row > head_end));
     }
     let (body, members) = match shape {
-        Shape::Callable => (statement_items(file, &statements, &excluded), Vec::new()),
-        Shape::Whole => class_body(file, &statements, &excluded),
+        Shape::Callable => (file.node_items(statements, after_row), Vec::new()),
+        Shape::Whole => class_body(file, &statements, after_row),
     };
     Some(DeclInfo {
         name_rows: vec![name_row],
@@ -214,35 +213,6 @@ fn suite_statements(inner: Node) -> Vec<Node> {
     statements
 }
 
-/// One [`Item`] per statement, each carrying the comments directly above
-/// it; a comment starting on a row an earlier item already holds (a
-/// trailing `# …`) joins that item, as do comments after the last
-/// statement. Rows in `excluded` are left out.
-fn statement_items(file: &SourceFile, statements: &[Node], excluded: &HashSet<usize>) -> Vec<Item> {
-    let mut items: Vec<Item> = Vec::new();
-    let mut claimed = excluded.clone();
-    let mut pending: Vec<usize> = Vec::new();
-    for node in statements {
-        let rows = file.node_rows(*node);
-        if node.kind() == "comment" && claimed.contains(rows.start()) {
-            if let Some(last) = items.last_mut() {
-                last.rows.extend(rows.filter(|row| claimed.insert(*row)));
-            }
-            continue;
-        }
-        pending.extend(rows.filter(|row| claimed.insert(*row)));
-        if node.kind() != "comment" && !pending.is_empty() {
-            items.push(Item::new(pending.drain(..)));
-        }
-    }
-    match items.last_mut() {
-        Some(last) => last.rows.append(&mut pending),
-        None if !pending.is_empty() => items.push(Item::new(pending)),
-        None => {}
-    }
-    items
-}
-
 /// A class suite (after its docstring): methods become members, listed in
 /// the body by their name row; every other statement (fields, nested
 /// classes, `if` blocks) is a body [`Item`] with the comments directly
@@ -250,7 +220,7 @@ fn statement_items(file: &SourceFile, statements: &[Node], excluded: &HashSet<us
 fn class_body(
     file: &SourceFile,
     statements: &[Node],
-    excluded: &HashSet<usize>,
+    after_row: usize,
 ) -> (Vec<Item>, Vec<DeclInfo>) {
     let mut body = Vec::new();
     let mut members = Vec::new();
@@ -267,28 +237,22 @@ fn class_body(
             }) {
                 run.pop();
             }
-            body.extend(statement_items(file, &run, excluded));
-            run.clear();
+            body.extend(file.node_items(run.drain(..), after_row));
             body.push(Item::new(member.name_rows.iter().copied()));
             members.push(member);
         } else {
             run.push(*node);
         }
     }
-    body.extend(statement_items(file, &run, excluded));
+    body.extend(file.node_items(run, after_row));
     (body, members)
 }
 
-/// A docstring's `rows` split into paragraphs, without `excluded` rows.
-/// A paragraph holding only a closing `"""` / `'''` joins the one
-/// before it.
-fn paragraphs(
-    file: &SourceFile,
-    rows: impl IntoIterator<Item = usize>,
-    excluded: &HashSet<usize>,
-) -> Vec<Item> {
+/// A docstring's `rows` split into paragraphs. A paragraph holding only
+/// a closing `"""` / `'''` joins the one before it.
+fn paragraphs(file: &SourceFile, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
     let mut items: Vec<Item> = Vec::new();
-    for item in file.paragraphs(rows.into_iter().filter(|row| !excluded.contains(row))) {
+    for item in file.paragraphs(rows) {
         let closing_only = item
             .rows
             .iter()
@@ -393,7 +357,7 @@ def greet(
         assert_eq!(decl.name_rows, vec![3]);
         assert_eq!(decl.head, vec![1, 2, 3, 4, 5]);
         assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
-        assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12, 13]]);
+        assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12], vec![13]]);
         assert!(decl.members.is_empty());
     }
 

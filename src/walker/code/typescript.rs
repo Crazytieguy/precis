@@ -717,7 +717,11 @@ fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>)
             let head_end = (block.start_position().row + 1)
                 .max(first.start_position().row)
                 .max(name_row);
-            (head_end, entry_items(file, block, head_end))
+            let mut cursor = block.walk();
+            (
+                head_end,
+                file.node_items(block.named_children(&mut cursor), head_end),
+            )
         }
         _ => (span.end, Vec::new()),
     };
@@ -746,7 +750,8 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
         };
     };
     let open_row = block.start_position().row + 1;
-    let body = entry_items(file, block, open_row);
+    let mut cursor = block.walk();
+    let body = file.node_items(block.named_children(&mut cursor), open_row);
     let last_body_row = body
         .iter()
         .flat_map(|item| item.rows.iter().copied())
@@ -764,41 +769,6 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
         shape: Shape::Whole,
         members: Vec::new(),
     }
-}
-
-/// One item per named child of `block` (statements, fields, entries),
-/// each with the comments directly above it, keeping only rows past
-/// `after_row` and past the previous item. A comment ending the block is
-/// an item of its own.
-fn entry_items(file: &SourceFile, block: Node, after_row: usize) -> Vec<Item> {
-    let mut items = Vec::new();
-    let mut last_row = after_row;
-    let mut comments: Option<Span> = None;
-    let mut cursor = block.walk();
-    for child in block.named_children(&mut cursor) {
-        let span = Span::of(file, child);
-        if child.kind() == "comment" {
-            if span.start > last_row {
-                comments = Some(Span {
-                    start: comments.map_or(span.start, |comments| comments.start),
-                    end: span.end,
-                });
-            }
-            continue;
-        }
-        let start = comments
-            .take()
-            .map_or(span.start, |comments| comments.start)
-            .max(last_row + 1);
-        if start <= span.end {
-            items.push(Item::new(start..=span.end));
-            last_row = span.end;
-        }
-    }
-    if let Some(comments) = comments {
-        items.push(Item::new(comments.start..=comments.end));
-    }
-    items
 }
 
 /// A class as a container: the header and closing row as head, each

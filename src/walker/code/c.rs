@@ -227,7 +227,13 @@ fn callable_parts(node: Node, file: &SourceFile) -> (Vec<usize>, Vec<Item>) {
             body.named_children(&mut cursor)
                 .any(|child| child.kind() != "comment")
         })
-        .map(|body| child_items(body, file, body.start_position().row + 1))
+        .map(|body| {
+            let mut cursor = body.walk();
+            file.node_items(
+                body.named_children(&mut cursor),
+                body.start_position().row + 1,
+            )
+        })
         .unwrap_or_default();
     let head_end = body.first().map_or(*rows.end(), |first| first.rows[0] - 1);
     ((*rows.start()..=head_end).collect(), body)
@@ -244,7 +250,8 @@ fn whole_parts(node: Node, file: &SourceFile) -> (Vec<usize>, Vec<Item>) {
     };
     let open_row = body_node.start_position().row + 1;
     let close_row = body_node.end_position().row + 1;
-    let body = child_items(body_node, file, open_row);
+    let mut cursor = body_node.walk();
+    let body = file.node_items(body_node.named_children(&mut cursor), open_row);
     let claimed_through = body
         .last()
         .and_then(|item| item.rows.last().copied())
@@ -291,29 +298,6 @@ fn declarator_is_function(node: Node) -> bool {
             .is_some_and(declarator_is_function),
         _ => false,
     }
-}
-
-/// One item per named child of `container` (a statement, field,
-/// enumerator or directive), with the comments above it, holding only
-/// rows past `after_row` and past every earlier item: a child starting on
-/// a row an earlier one already holds keeps only its later rows.
-fn child_items(container: Node, file: &SourceFile, after_row: usize) -> Vec<Item> {
-    let mut items = Vec::new();
-    let mut pending = Vec::new();
-    let mut claimed_through = after_row;
-    let mut cursor = container.walk();
-    for child in container.named_children(&mut cursor) {
-        let rows = file.node_rows(child);
-        pending.extend((*rows.start()).max(claimed_through + 1)..=*rows.end());
-        claimed_through = claimed_through.max(*rows.end());
-        if child.kind() != "comment" && !pending.is_empty() {
-            items.push(Item::new(std::mem::take(&mut pending)));
-        }
-    }
-    if !pending.is_empty() {
-        items.push(Item::new(pending));
-    }
-    items
 }
 
 /// Comment rows split into paragraphs: at blank rows, and after a row with

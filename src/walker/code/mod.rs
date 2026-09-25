@@ -145,10 +145,10 @@ impl SourceFile {
     }
 
     /// One [`Item`] per node of `nodes` (statements, fields, specs), in
-    /// order, keeping only rows past `after_row`. A comment joins the
-    /// item after it (a leading comment), or the item before it when it
-    /// starts on that item's last row (a trailing comment); comments
-    /// after the last item form their own.
+    /// order, holding only rows past `after_row` and past every earlier
+    /// node. A comment joins the item after it (a leading comment), or
+    /// the item before it when it starts on that item's last row (a
+    /// trailing comment); comments after the last item form their own.
     pub(crate) fn node_items<'tree>(
         &self,
         nodes: impl IntoIterator<Item = Node<'tree>>,
@@ -156,24 +156,23 @@ impl SourceFile {
     ) -> Vec<Item> {
         let mut items: Vec<Item> = Vec::new();
         let mut pending = Vec::new();
+        let mut claimed_through = after_row;
         for node in nodes {
-            let rows: Vec<usize> = self
-                .node_rows(node)
-                .filter(|&row| row > after_row)
-                .collect();
-            let Some(&first) = rows.first() else {
+            let rows = self.node_rows(node);
+            let (start, end) = (*rows.start(), *rows.end());
+            let new_rows = start.max(claimed_through + 1)..=end;
+            let trails_last_item = start == claimed_through && pending.is_empty();
+            claimed_through = claimed_through.max(end);
+            if new_rows.is_empty() {
                 continue;
-            };
+            }
             if !node.kind().contains("comment") {
-                pending.extend(rows);
+                pending.extend(new_rows);
                 items.push(Item::new(std::mem::take(&mut pending)));
-            } else if pending.is_empty()
-                && let Some(last) = items.last_mut()
-                && last.rows.last() == Some(&first)
-            {
-                last.rows.extend(&rows[1..]);
+            } else if trails_last_item && let Some(last) = items.last_mut() {
+                last.rows.extend(new_rows);
             } else {
-                pending.extend(rows);
+                pending.extend(new_rows);
             }
         }
         if !pending.is_empty() {
