@@ -10,10 +10,7 @@
 //!   unions / enums, global variables and macros are `Whole`, with one
 //!   body [`Item`] per field or enumerator.
 //! - A non-`inline` `static` in a header is hidden.
-//! - A declaration's doc is the comment run directly above it, never
-//!   reaching into the file's leading comment run (the banner). The
-//!   banner, in C most often a license or authorship notice, is not
-//!   modeled.
+//! - A declaration's doc is the comment run directly above it.
 
 use std::ops::RangeInclusive;
 use std::path::Path;
@@ -39,7 +36,6 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let source = &*file.source;
     let in_header = is_header(&file.path);
-    let banner_end_row = banner_end_row(root, file);
     let guard_name = header_guard_name(root, source);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
@@ -47,13 +43,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         if node.kind().starts_with('#') {
             directives.extend(gate_directive(node, file));
         } else {
-            decls.extend(declaration(
-                node,
-                file,
-                in_header,
-                guard_name,
-                banner_end_row,
-            ));
+            decls.extend(declaration(node, file, in_header, guard_name));
         }
     });
     attach_directives(&mut decls, &directives);
@@ -89,7 +79,6 @@ fn declaration(
     file: &SourceFile,
     in_header: bool,
     guard_name: Option<&str>,
-    banner_end_row: usize,
 ) -> Option<DeclInfo> {
     let source = &*file.source;
     let shape = match node.kind() {
@@ -117,7 +106,7 @@ fn declaration(
         Shape::Callable => callable_parts(node, file),
         Shape::Whole => whole_parts(node, file),
     };
-    let doc_rows = file.comment_rows_above(node, banner_end_row);
+    let doc_rows = file.comment_rows_above(node);
     Some(DeclInfo {
         name_rows,
         head,
@@ -308,23 +297,6 @@ fn declarator_is_function(node: Node) -> bool {
             .is_some_and(declarator_is_function),
         _ => false,
     }
-}
-
-/// Last row of the file's leading run of comments, up to the first other
-/// node, or 0 without one. A comment sharing its last row with that node
-/// stays out.
-fn banner_end_row(root: Node, file: &SourceFile) -> usize {
-    let mut cursor = root.walk();
-    let mut comments = Vec::new();
-    for child in root.children(&mut cursor) {
-        let rows = file.node_rows(child);
-        if child.kind() != "comment" {
-            comments.retain(|comment: &RangeInclusive<usize>| comment.end() < rows.start());
-            break;
-        }
-        comments.push(rows);
-    }
-    comments.last().map_or(0, |comment| *comment.end())
 }
 
 /// Visit each "effective top-level" item: descends through the file's
@@ -763,14 +735,10 @@ enum color { RED } paint(void);
     }
 
     #[test]
-    fn c_banner_is_not_the_first_decls_doc() {
+    fn c_doc_is_the_comment_run_directly_above() {
         let source = "\
-/*
- * sds.h - dynamic strings
- *
- * Copyright (c) 2006 Salvatore Sanfilippo
- */
-/* brief */
+/* sds.h - dynamic strings */
+
 typedef char *sds;
 
 /* Create a new string.
@@ -786,8 +754,8 @@ int next;
             panic!("{:?}", model.decls);
         };
         assert!(sds.doc.is_empty());
-        assert_eq!(rows(&sdsnew.doc), vec![vec![9, 10, 11]]);
-        assert_eq!(trailing.head, vec![13]);
+        assert_eq!(rows(&sdsnew.doc), vec![vec![5, 6, 7]]);
+        assert_eq!(trailing.head, vec![9]);
         assert!(next.doc.is_empty());
     }
 

@@ -122,9 +122,8 @@ impl SourceFile {
 
     /// Rows of the comments directly above `node`: a run of `comment`
     /// siblings, each on its own rows and ending at most one row above
-    /// the next, stopping at the first one that starts at or before
-    /// `after_row`.
-    pub(crate) fn comment_rows_above(&self, node: Node, after_row: usize) -> Vec<usize> {
+    /// the next.
+    pub(crate) fn comment_rows_above(&self, node: Node) -> Vec<usize> {
         let mut rows = Vec::new();
         let mut next_start = node.start_position().row;
         let mut previous = node.prev_sibling();
@@ -132,7 +131,6 @@ impl SourceFile {
             if comment.kind() != "comment"
                 || next_start.saturating_sub(comment.end_position().row) > 1
                 || !self.starts_own_row(comment)
-                || comment.start_position().row < after_row
             {
                 break;
             }

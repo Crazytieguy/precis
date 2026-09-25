@@ -168,7 +168,7 @@ fn callable(node: Node, file: &SourceFile) -> DeclInfo {
     DeclInfo {
         name_rows: vec![start],
         head: (start..=head_end).collect(),
-        doc: file.paragraphs(file.comment_rows_above(node, 0)),
+        doc: file.paragraphs(file.comment_rows_above(node)),
         body,
         shape: Shape::Callable,
         members: Vec::new(),

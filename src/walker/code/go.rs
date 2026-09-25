@@ -61,7 +61,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
 }
 
 fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
-    file.paragraphs(file.comment_rows_above(node, 0))
+    file.paragraphs(file.comment_rows_above(node))
 }
 
 /// A declaration whose head is every row of `node` outside the span of
