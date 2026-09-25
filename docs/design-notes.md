@@ -229,12 +229,15 @@ corpus, which none of these bounds touch.
   no batches, like a generated or minified one. The sweep's largest
   hand-written single-file library is `miniaudio.h` at 4.1 MB; a 25.9 MB
   generated `parser.c` cost 900 MB and seconds.
-- **Whole-tree probes read at most 20k entries per run**
-  (`PROBE_ENTRY_CAP`): the spine survey and the source-inventory counts
+- **Whole-tree probes read at most 20k entries each**
+  (`PROBE_ENTRY_CAP`): the spine survey and the source-inventory probes
   look below what the summary shows, and on a tree with little source
   (a home directory, `~/projects`) nothing else bounded them; a non-git
-  `~/projects` took 49 s. The spine survey also stops as soon as it has
-  seen more source than a spine could hold its share of, which is
+  `~/projects` took 49 s. The budget is per probe rather than per run so
+  a directory's inventory answer depends only on that directory, not on
+  what was probed before it; an answer the budget cut short is not cached.
+  The spine survey skips non-essential directories and stops as soon as
+  it has seen more source than a spine could hold its share of, which is
   exact. `hides_everything_in` is deliberately uncapped: its recursion
   only descends through directories with nothing visible, and a capped
   answer lists every such directory as `(empty)` rows.

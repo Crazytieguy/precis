@@ -5,7 +5,7 @@
 //! per-language file enumeration).
 
 use std::{
-    cell::{Cell, RefCell},
+    cell::RefCell,
     collections::{BTreeMap, HashMap},
     path::{Path, PathBuf},
 };
@@ -250,23 +250,34 @@ fn has_module_sibling_file(dir: &Path) -> bool {
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
-    /// Entries the source probes have read, against [`PROBE_ENTRY_CAP`].
-    inventory_entries_read: Cell<usize>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
-    /// Whether `dir` holds a source file at any depth, cached per
-    /// directory.
+    /// Whether `dir` holds a source file at any depth, reading at most
+    /// [`PROBE_ENTRY_CAP`] entries.
     pub(in crate::walker) fn holds_source(&self, dir: &Path, filter: &DirFilter) -> bool {
+        let mut entry_budget = PROBE_ENTRY_CAP;
+        self.budgeted_holds_source(dir, filter, &mut entry_budget)
+            .unwrap_or(false)
+    }
+
+    /// `None` when the budget ran out first. Only final answers are
+    /// cached: one cut short depends on what the probe read first.
+    fn budgeted_holds_source(
+        &self,
+        dir: &Path,
+        filter: &DirFilter,
+        entry_budget: &mut usize,
+    ) -> Option<bool> {
         if let Some(&holds) = self.holds_source.borrow().get(dir) {
-            return holds;
+            return Some(holds);
         }
-        let holds = holds_source_uncached(self, dir, filter);
+        let holds = holds_source_uncached(self, dir, filter, entry_budget)?;
         self.holds_source
             .borrow_mut()
             .insert(dir.to_path_buf(), holds);
-        holds
+        Some(holds)
     }
 
     /// Count of immediate subdirectories of `dir`, cached per parent:
@@ -306,30 +317,38 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     components.next().is_some() && (is_source_dir(&top) || is_go_pkg_wrapper(&top))
 }
 
-fn holds_source_uncached(state: &FsState, dir: &Path, filter: &DirFilter) -> bool {
+fn holds_source_uncached(
+    state: &FsState,
+    dir: &Path,
+    filter: &DirFilter,
+    entry_budget: &mut usize,
+) -> Option<bool> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
-        return false;
+        return Some(false);
     };
-    let within_cap = |_: &std::fs::DirEntry| {
-        let entries_read = state.inventory_entries_read.get();
-        state.inventory_entries_read.set(entries_read + 1);
-        entries_read < PROBE_ENTRY_CAP
-    };
-    read_dir.flatten().take_while(within_cap).any(|entry| {
+    for entry in read_dir.flatten() {
+        if *entry_budget == 0 {
+            return None;
+        }
+        *entry_budget -= 1;
         let Ok(file_type) = entry.file_type() else {
-            return false;
+            continue;
         };
         let path = entry.path();
         if filter.excludes(&path, file_type.is_dir()) {
-            return false;
+            continue;
         }
-        if file_type.is_dir() {
+        let holds = if file_type.is_dir() {
             !crate::fs_util::should_skip_dir(&entry.file_name().to_string_lossy())
-                && state.holds_source(&path, filter)
+                && state.budgeted_holds_source(&path, filter, entry_budget)?
         } else {
             file_type.is_file() && is_source_inventory_file(&path)
+        };
+        if holds {
+            return Some(true);
         }
-    })
+    }
+    Some(false)
 }
 
 /// A directory is a source directory because of what its files *are*,
