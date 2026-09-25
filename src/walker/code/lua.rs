@@ -166,45 +166,40 @@ const IDENTITY_META_KEYS: [&str; 7] = [
     "_COPYRIGHT",
 ];
 
-/// Rows of a top-of-file module identity table: a
-/// `local M = { _VERSION = …, _DESCRIPTION = … }` metadata block. The
-/// table opener plus its leading single-line `_KEY = …` fields, stopping
-/// before a long-string field (`[[`) or the table close, so a multi-line
-/// `_LICENSE = [[ … ]]` body is excluded. Empty unless the table holds
-/// at least one metadata key.
+/// Rows of a top-of-file module identity table
+/// (`local M = { _VERSION = …, _DESCRIPTION = … }`): the assignment's
+/// first row and the table's leading one-row `_KEY = …` fields, so a
+/// multi-line `_LICENSE = [[ … ]]` body is excluded. Empty unless one of
+/// those fields is a metadata key.
 fn module_identity_rows(file: &SourceFile) -> Vec<usize> {
-    let lines = file.line_count();
-    let Some(opener) = (1..=lines).find(|&row| {
-        let text = file.line(row).trim_start();
-        !text.is_empty() && !text.starts_with("--")
-    }) else {
+    let root = file.tree.root_node();
+    let mut cursor = root.walk();
+    let Some((statement, table)) = root
+        .named_children(&mut cursor)
+        .find(|node| node.kind() != "comment")
+        .filter(|node| matches!(node.kind(), "variable_declaration" | "assignment_statement"))
+        .and_then(|statement| Some((statement, rhs_of_kind(statement, "table_constructor")?)))
+    else {
         return Vec::new();
     };
-    // Must open a table assignment: `local NAME = {` or `NAME = {`.
-    let text = file.line(opener).trim_start();
-    let assignee = text.strip_prefix("local ").unwrap_or(text);
-    let opens_table = text.contains('{')
-        && assignee.split('=').next().is_some_and(|name| {
-            let name = name.trim();
-            !name.is_empty()
-                && name
-                    .chars()
-                    .all(|c| c.is_alphanumeric() || c == '_' || c == '.')
-        });
-    if !opens_table {
-        return Vec::new();
+    let mut rows = vec![*file.node_rows(statement).start()];
+    let mut has_meta_key = false;
+    let mut cursor = table.walk();
+    for field in table.named_children(&mut cursor) {
+        let field_rows = file.node_rows(field);
+        let Some(key) = field
+            .child_by_field_name("name")
+            .map(|name| file.text(name))
+        else {
+            break;
+        };
+        if !key.starts_with('_') || field_rows.start() != field_rows.end() {
+            break;
+        }
+        has_meta_key |= IDENTITY_META_KEYS.contains(&key);
+        rows.push(*field_rows.start());
     }
-    let mut out = vec![opener];
-    out.extend((opener + 1..=lines).take_while(|&row| {
-        let text = file.line(row).trim();
-        !text.contains("[[") && !text.starts_with('}') && text.starts_with('_')
-    }));
-    let has_meta_key = out.iter().any(|&row| {
-        IDENTITY_META_KEYS
-            .iter()
-            .any(|key| file.line(row).contains(key))
-    });
-    if has_meta_key { out } else { Vec::new() }
+    if has_meta_key { rows } else { Vec::new() }
 }
 
 #[cfg(test)]
