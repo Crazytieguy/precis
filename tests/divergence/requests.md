@@ -39,7 +39,7 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 1950 | 41 | listing of '.github/workflows' |  |  | 0.646 |
 | walker |  | 2000 | 50 | python names src/requests/status_codes.py |  |  | 0.646 |
 | ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.618 |
-| walker |  | 2147 | 147 | README.md section #0 |  |  | 0.618 |
+| walker |  | 2147 | 147 | README.md section #1 |  |  | 0.618 |
 | walker |  | 2161 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.635 |
 | walker |  | 2218 | 57 | python names src/requests/hooks.py |  |  | 0.635 |
 | walker |  | 2271 | 53 | python decl src/requests/hooks.py:32 |  |  | 0.635 |
@@ -48,7 +48,7 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 2359 | 31 | python decl src/requests/sessions.py:76 |  |  | 0.598 |
 | walker |  | 2367 | 8 | python body src/requests/sessions.py:908 |  |  | 0.598 |
 | walker |  | 2420 | 53 | python decl src/requests/sessions.py:108 |  |  | 0.598 |
-| walker |  | 2483 | 63 | README.md section #1 |  |  | 0.598 |
+| walker |  | 2483 | 63 | README.md section #2 |  |  | 0.598 |
 | walker |  | 2556 | 73 | python names src/requests/structures.py |  |  | 0.598 |
 | walker |  | 2569 | 13 | python doc src/requests/help.py:69 |  |  | 0.598 |
 | walker |  | 2583 | 14 | python doc src/requests/help.py:128 |  |  | 0.598 |

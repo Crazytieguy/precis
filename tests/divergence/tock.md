@@ -51,7 +51,7 @@ Score(3000)=0.676 I=0.862 C=0.530 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 1077 | 17 | go names internal/adapters/cli/start.go |  |  | 0.802 |
 | walker |  | 1094 | 17 | go names internal/adapters/cli/stop.go |  |  | 0.802 |
 | walker |  | 1126 | 32 | go names internal/adapters/cli/continue.go |  |  | 0.802 |
-| walker |  | 1151 | 25 | README.md section #24 |  |  | 0.803 |
+| walker |  | 1151 | 25 | README.md section #26 |  |  | 0.803 |
 | ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.765 |
 | walker |  | 1186 | 35 | go names internal/core/ports/ports.go |  |  | 0.767 |
 | walker |  | 1197 | 11 | go decl internal/adapters/cli/continue.go:15 |  |  | 0.767 |
@@ -153,7 +153,7 @@ Score(3000)=0.676 I=0.862 C=0.530 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 6876 |  | 239 | notes repository: sidecar file layout and YAML front matter | 5.5 |  | 0.503 |
 | walker |  | 6889 | 170 | go names internal/adapters/cli/watch.go |  |  | 0.503 |
 | walker |  | 6911 | 22 | go decl internal/adapters/cli/watch.go:90 |  |  | 0.503 |
-| walker |  | 7001 | 90 | README.md section #23 |  |  | 0.504 |
+| walker |  | 7001 | 90 | README.md section #25 |  |  | 0.504 |
 | ns | 7047 |  | 171 | timewarrior repository: interval shape and data layout | 5.6 |  | 0.495 |
 | walker |  | 7172 | 171 | go decl internal/adapters/cli/theme.go:22 |  |  | 0.495 |
 | ns | 7233 |  | 186 | timewarrior repository function roster (names only) | 5.7 |  | 0.488 |

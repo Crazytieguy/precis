@@ -211,7 +211,7 @@ Score(3000)=0.698 I=0.857 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 8195 | 78 | ts decl packages/d2mini/src/operators/filterBy.ts:14 |  |  | 0.588 |
 | walker |  | 8273 | 78 | ts decl packages/d2ts/src/operators/filterBy.ts:14 |  |  | 0.588 |
 | walker |  | 8291 | 18 | ts names packages/d2ts-benchmark/src/graph.ts |  |  | 0.588 |
-| walker |  | 8321 | 30 | packages/d2ql/README.md section #4 |  |  | 0.588 |
+| walker |  | 8321 | 30 | packages/d2ql/README.md section #5 |  |  | 0.588 |
 | walker |  | 8405 | 84 | ts names packages/d2mini/src/operators/orderBy.ts |  |  | 0.588 |
 | ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.576 |
 | walker |  | 8447 | 42 | ts decl packages/d2mini/src/operators/orderBy.ts:9 |  |  | 0.576 |

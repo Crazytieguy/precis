@@ -54,9 +54,60 @@ README.md
   53→
   54→You can find the library on `window.mitt`.
   56→## Usage
-  …
+  57→
+  58→```js
+  59→import mitt from 'mitt'
+  60→
+  61→const emitter = mitt()
+  62→
+  63→// listen to an event
+  64→emitter.on('foo', e => console.log('foo', e) )
+  65→
+  66→// listen to all events
+  67→emitter.on('*', (type, e) => console.log(type, e) )
+  68→
+  69→// fire an event
+  70→emitter.emit('foo', { a: 'b' })
+  71→
+  72→// clearing all events
+  73→emitter.all.clear()
+  74→
+  75→// working with handler references:
+  76→function onFoo() {}
+  77→emitter.on('foo', onFoo)   // listen
+  78→emitter.off('foo', onFoo)  // unlisten
+  79→```
+  80→
   81→### Typescript
-  …
+  83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
+  84→
+  85→```ts
+  86→import mitt from 'mitt';
+  87→
+  88→type Events = {
+  89→  foo: string;
+  90→  bar?: number;
+  91→};
+  92→
+  93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
+  94→
+  95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
+  96→
+  97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+  98→```
+  99→
+  100→Alternatively, you can use the provided `Emitter` type:
+  101→
+  102→```ts
+  103→import mitt, { Emitter } from 'mitt';
+  104→
+  105→type Events = {
+  106→  foo: string;
+  107→  bar?: number;
+  108→};
+  109→
+  110→const emitter: Emitter<Events> = mitt<Events>();
+  111→```
   113→## Examples & Demos
   114→
   115→<a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
@@ -178,80 +229,6 @@ src/
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
-    49→	type GenericEventHandler =
-    50→		| Handler<Events[keyof Events]>
-    51→		| WildcardHandler<Events>;
-    52→	all = all || new Map();
-    53→
-    54→	return {
-    55→		/**
-    56→		 * A Map of event names to registered handler functions.
-    57→		 */
-    58→		all,
-    59→
-    60→		/**
-    61→		 * Register an event handler for the given type.
-    62→		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
-    63→		 * @param {Function} handler Function to call in response to given event
-    64→		 * @memberOf mitt
-    65→		 */
-    66→		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
-    67→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-    68→			if (handlers) {
-    69→				handlers.push(handler);
-    70→			} else {
-    71→				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
-    72→			}
-    73→		},
-    74→
-    75→		/**
-    76→		 * Remove an event handler for the given type.
-    77→		 * If `handler` is omitted, all handlers of the given type are removed.
-    78→		 * @param {string|symbol} type Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
-    79→		 * @param {Function} [handler] Handler function to remove
-    80→		 * @memberOf mitt
-    81→		 */
-    82→		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
-    83→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-    84→			if (handlers) {
-    85→				if (handler) {
-    86→					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
-    87→				} else {
-    88→					all!.set(type, []);
-    89→				}
-    90→			}
-    91→		},
-    92→
-    93→		/**
-    94→		 * Invoke all handlers for the given type.
-    95→		 * If present, `'*'` handlers are invoked after type-matched handlers.
-    96→		 *
-    97→		 * Note: Manually firing '*' handlers is not supported.
-    98→		 *
-    99→		 * @param {string|symbol} type The event type to invoke
-    100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
-    101→		 * @memberOf mitt
-    102→		 */
-    103→		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-    104→			let handlers = all!.get(type);
-    105→			if (handlers) {
-    106→				(handlers as EventHandlerList<Events[keyof Events]>)
-    107→					.slice()
-    108→					.map((handler) => {
-    109→						handler(evt!);
-    110→					});
-    111→			}
-    112→
-    113→			handlers = all!.get('*');
-    114→			if (handlers) {
-    115→				(handlers as WildCardEventHandlerList<Events>)
-    116→					.slice()
-    117→					.map((handler) => {
-    118→						handler(type, evt!);
-    119→					});
-    120→			}
-    121→		}
-    122→	};
     …
 test/
   index_test.ts

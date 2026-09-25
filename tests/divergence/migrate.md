@@ -150,7 +150,7 @@ Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 3804 | 15 | go doc cli/version.go:4 |  |  | 0.512 |
 | ns | 3892 |  | 94 | database package constants, sentinel errors and the registry map | 3.5 |  | 0.505 |
 | walker |  | 3941 | 137 | headings outline in README.md |  |  | 0.533 |
-| walker |  | 3959 | 18 | README.md section #6 |  |  | 0.533 |
+| walker |  | 3959 | 18 | README.md section #7 |  |  | 0.533 |
 | walker |  | 4084 | 125 | README.md section #0 |  |  | 0.565 |
 | ns | 4219 |  | 327 | "How to implement a database driver" — the 7-step checklist | 3.6 |  | 0.549 |
 | walker |  | 4271 | 187 | README.md section #4 |  |  | 0.549 |
@@ -252,7 +252,7 @@ Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 9182 | 15 | go decl source/pkger/pkger.go:20 |  |  | 0.494 |
 | ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.489 |
 | walker |  | 9303 | 121 | go names migrate.go #3 |  |  | 0.499 |
-| walker |  | 9350 | 47 | README.md section #9 |  |  | 0.499 |
+| walker |  | 9350 | 47 | README.md section #10 |  |  | 0.499 |
 | walker |  | 9375 | 25 | go doc source/migration.go:36 |  |  | 0.502 |
 | walker |  | 9388 | 13 | go doc internal/cli/log.go:33 |  |  | 0.502 |
 | ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.496 |

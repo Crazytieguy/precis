@@ -100,7 +100,7 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 4656 | 32 | c decl src/jv_dtoa.h:6 |  |  | 0.558 |
 | ns | 4813 |  | 402 | jv.h: comparison, invalid-with-message, constructors, numbers, arrays | 4.3 |  | 0.533 |
 | walker |  | 5002 | 346 | plaintext config Dockerfile |  |  | 0.533 |
-| walker |  | 5085 | 83 | README.md section #3 |  |  | 0.533 |
+| walker |  | 5085 | 83 | README.md section #4 |  |  | 0.533 |
 | ns | 5142 |  | 329 | jv.h: the string API | 4.4 |  | 0.520 |
 | walker |  | 5302 | 217 | c names src/jq.h #1 |  |  | 0.543 |
 | walker |  | 5317 | 15 | declaration surface of docs/public/robots.txt |  |  | 0.543 |
@@ -109,7 +109,7 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 5653 | 336 | c names src/parser.h #1 |  |  | 0.526 |
 | walker |  | 5738 | 85 | c decl src/parser.h:178 |  |  | 0.526 |
 | ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.513 |
-| walker |  | 5823 | 85 | README.md section #4 |  |  | 0.513 |
+| walker |  | 5823 | 85 | README.md section #5 |  |  | 0.513 |
 | walker |  | 5941 | 118 | c names src/parser.h #2 |  |  | 0.513 |
 | walker |  | 5946 | 5 | c decl src/parser.h:205 |  |  | 0.513 |
 | walker |  | 5953 | 7 | c decl src/parser.h:191 |  |  | 0.513 |

@@ -114,7 +114,7 @@ Score(3000)=0.639 I=0.821 C=0.497 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 8147 |  | 276 | Type struct, first half + the pointer/array duality comment | 4.11 |  | 0.586 |
 | walker |  | 8284 | 306 | c decl chibicc.h:228 #1 |  |  | 0.623 |
 | ns | 8310 |  | 163 | Type struct, second half (array, VLA, struct, function members) | 4.12 | 4.11 | 0.629 |
-| walker |  | 8383 | 99 | README.md section #10 |  |  | 0.629 |
+| walker |  | 8383 | 99 | README.md section #11 |  |  | 0.629 |
 | ns | 8435 |  | 125 | Member struct (struct/union members incl. bitfields) | 4.13 | 4.12 | 0.634 |
 | ns | 8524 |  | 89 | HashEntry / HashMap structs | 4.14 | 2.9 | 0.629 |
 | walker |  | 8606 | 223 | c names include/stdatomic.h #1 |  |  | 0.629 |

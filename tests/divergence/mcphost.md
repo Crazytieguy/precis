@@ -112,8 +112,8 @@ Score(3000)=0.659 I=0.850 C=0.511 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 3993 | 231 | go names internal/ui/cli.go |  |  | 0.596 |
 | walker |  | 4005 | 12 | go body internal/ui/cli.go:65 |  |  | 0.596 |
 | walker |  | 4019 | 14 | go body internal/ui/cli.go:152 |  |  | 0.596 |
-| walker |  | 4067 | 48 | README.md section #6 |  |  | 0.596 |
-| walker |  | 4107 | 40 | README.md section #32 |  |  | 0.597 |
+| walker |  | 4067 | 48 | README.md section #7 |  |  | 0.596 |
+| walker |  | 4107 | 40 | README.md section #33 |  |  | 0.597 |
 | walker |  | 4119 | 12 | go doc internal/models/models_data.go:18 |  |  | 0.597 |
 | ns | 4141 |  | 203 | Substitution engine: the two regexes plus every symbol in substitution.go | 3.6 |  | 0.586 |
 | ns | 4295 |  | 154 | Remaining top-level symbols of internal/config/config.go and all of merger.go (locations) | 3.7 |  | 0.575 |

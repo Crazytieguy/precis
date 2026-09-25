@@ -83,12 +83,12 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 2543 | 65 | headings outline in IMAGES.md |  |  | 0.533 |
 | walker |  | 2591 | 48 | go body main.go:13 |  |  | 0.628 |
 | walker |  | 2629 | 38 | go names pkg/container/docker_network.go |  |  | 0.628 |
-| walker |  | 2657 | 28 | README.md section #2 |  |  | 0.628 |
+| walker |  | 2657 | 28 | README.md section #3 |  |  | 0.628 |
 | walker |  | 2697 | 40 | go names pkg/artifactcache/model.go |  |  | 0.628 |
 | walker |  | 2739 | 42 | go names pkg/common/file.go |  |  | 0.628 |
 | walker |  | 2781 | 42 | go names pkg/container/docker_volume.go |  |  | 0.628 |
 | walker |  | 2824 | 43 | go names pkg/common/cartesian.go |  |  | 0.628 |
-| walker |  | 2852 | 28 | README.md section #3 |  |  | 0.628 |
+| walker |  | 2852 | 28 | README.md section #4 |  |  | 0.628 |
 | ns | 2869 |  | 347 | pkg/model: complete type roster | 3.1 |  | 0.589 |
 | walker |  | 2895 | 43 | go decl pkg/artifactcache/model.go:3 |  |  | 0.589 |
 | walker |  | 2942 | 47 | go names pkg/model/anchors.go |  |  | 0.589 |
@@ -153,7 +153,7 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 5119 | 16 | go doc pkg/common/line_writer.go:9 |  |  | 0.470 |
 | ns | 5176 |  | 110 | Runner interface and New() | 4.3 | 4.2 | 0.463 |
 | walker |  | 5213 | 94 | go decl pkg/model/job_context.go:3 |  |  | 0.463 |
-| walker |  | 5504 | 291 | README.md section #0 |  |  | 0.463 |
+| walker |  | 5504 | 291 | README.md section #1 |  |  | 0.463 |
 | ns | 5564 |  | 388 | runner.Config: fields (first half, rest elided) | 4.4 | 4.2 | 0.451 |
 | walker |  | 5607 | 103 | go names pkg/lookpath/lp_windows.go |  |  | 0.451 |
 | walker |  | 5711 | 104 | go names pkg/container/container_types.go |  |  | 0.451 |

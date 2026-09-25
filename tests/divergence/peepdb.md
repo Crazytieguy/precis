@@ -1,4 +1,4 @@
-Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.573
+Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.569
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -175,20 +175,16 @@ Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 8728 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.586 |
 | ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.573 |
 | walker |  | 8828 | 100 | docs/usage.md section #1 |  |  | 0.573 |
-| walker |  | 8842 | 14 | python body peepdb/db/base.py:33 |  |  | 0.577 |
-| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.573 |
-| walker |  | 9065 | 223 | docs/README.md section #3 |  |  | 0.573 |
-| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.567 |
-| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.565 |
-| walker |  | 9173 | 108 | python body peepdb/config.py:49 |  |  | 0.573 |
-| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.568 |
-| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.570 |
-| walker |  | 9600 | 427 | python body peepdb/core.py:27 |  |  | 0.599 |
-| walker |  | 9714 | 114 | docs/usage.md section #6 |  |  | 0.599 |
-| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.592 |
-| walker |  | 9757 | 43 | python doc peepdb/cli.py:113 |  |  | 0.592 |
-| walker |  | 9773 | 16 | python names peepdb/tests/test_mongodb_uri.py |  |  | 0.592 |
-| walker |  | 9789 | 16 | python names peepdb/tests/test_sqlite.py |  |  | 0.592 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.592 |
-| walker |  | 9917 | 128 | docs/installation.md section #3 |  |  | 0.592 |
-| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.589 |
+| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.569 |
+| walker |  | 8985 | 157 | docs/README.md section #8 |  |  | 0.569 |
+| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.563 |
+| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.561 |
+| walker |  | 9292 | 307 | docs/README.md section #9 |  |  | 0.561 |
+| walker |  | 9306 | 14 | python body peepdb/db/base.py:33 |  |  | 0.565 |
+| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.561 |
+| walker |  | 9529 | 223 | docs/README.md section #3 |  |  | 0.561 |
+| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.563 |
+| walker |  | 9637 | 108 | python body peepdb/config.py:49 |  |  | 0.570 |
+| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.563 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.563 |
+| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.561 |

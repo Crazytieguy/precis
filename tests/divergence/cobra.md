@@ -100,7 +100,7 @@ Score(3000)=0.572 I=0.768 C=0.426 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 4186 | 15 | go body zsh_completions.go:25 |  |  | 0.483 |
 | walker |  | 4201 | 15 | go body zsh_completions.go:36 |  |  | 0.483 |
 | walker |  | 4219 | 18 | go doc args.go:127 |  |  | 0.483 |
-| walker |  | 4247 | 28 | README.md section #5 |  |  | 0.483 |
+| walker |  | 4247 | 28 | README.md section #6 |  |  | 0.483 |
 | ns | 4458 |  | 325 | CI: the four jobs and the platform / Go-version matrix | 4.5 |  | 0.464 |
 | walker |  | 4501 | 254 | go names shell_completions.go |  |  | 0.465 |
 | walker |  | 4514 | 13 | go body shell_completions.go:24 |  |  | 0.465 |

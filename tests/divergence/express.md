@@ -27,7 +27,7 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 1113 | 420 | README headline in Readme.md |  |  | 0.723 |
 | ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.631 |
 | walker |  | 1241 | 128 | headings outline in Readme.md |  |  | 0.631 |
-| walker |  | 1328 | 87 | Readme.md section #2 |  |  | 0.631 |
+| walker |  | 1328 | 87 | Readme.md section #3 |  |  | 0.631 |
 | walker |  | 1352 | 24 | ts body lib/request.js:171 |  |  | 0.631 |
 | walker |  | 1378 | 26 | ts doc lib/request.js:30 |  |  | 0.631 |
 | walker |  | 1403 | 25 | ts body lib/request.js:127 |  |  | 0.631 |
@@ -79,17 +79,17 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 4245 | 57 | ts doc lib/response.js:696 |  |  | 0.532 |
 | walker |  | 4309 | 64 | ts doc lib/utils.js:130 |  |  | 0.532 |
 | ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.519 |
-| walker |  | 4440 | 131 | Readme.md section #3 |  |  | 0.519 |
+| walker |  | 4440 | 131 | Readme.md section #4 |  |  | 0.519 |
 | ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.509 |
-| walker |  | 4564 | 124 | Readme.md section #5 |  |  | 0.509 |
+| walker |  | 4564 | 124 | Readme.md section #6 |  |  | 0.509 |
 | walker |  | 4595 | 31 | ts body lib/application.js:399 |  |  | 0.509 |
 | walker |  | 4724 | 129 | ts doc lib/view.js:52 |  |  | 0.509 |
 | ns | 4735 |  | 257 | app.handle() — the per-request dispatch entry point | 4.1 | 2.8 | 0.492 |
 | walker |  | 4783 | 59 | ts body lib/response.js:321 |  |  | 0.492 |
 | walker |  | 4848 | 65 | ts doc lib/utils.js:61 |  |  | 0.492 |
-| walker |  | 4994 | 146 | Readme.md section #6 |  |  | 0.492 |
+| walker |  | 4994 | 146 | Readme.md section #7 |  |  | 0.492 |
 | ns | 5006 |  | 271 | app.use() — argument/path disambiguation | 4.2 | 2.8 | 0.476 |
-| walker |  | 5236 | 242 | Readme.md section #1 |  |  | 0.476 |
+| walker |  | 5236 | 242 | Readme.md section #2 |  |  | 0.476 |
 | ns | 5275 |  | 269 | app.use() — the sub-app mounting branch | 4.3 | 4.2 | 0.463 |
 | walker |  | 5296 | 60 | ts body lib/response.js:604 |  |  | 0.463 |
 | walker |  | 5359 | 63 | ts doc lib/request.js:140 |  |  | 0.463 |
@@ -98,8 +98,8 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 5641 | 217 | ts body lib/express.js:36 |  |  | 0.483 |
 | walker |  | 5707 | 66 | ts doc lib/response.js:604 |  |  | 0.483 |
 | ns | 5771 |  | 181 | View.prototype.lookup() — view file resolution | 4.5 | 2.5 | 0.473 |
-| walker |  | 5952 | 245 | Readme.md section #4 |  |  | 0.473 |
-| walker |  | 6165 | 213 | Readme.md section #7 |  |  | 0.473 |
+| walker |  | 5952 | 245 | Readme.md section #5 |  |  | 0.473 |
+| walker |  | 6165 | 213 | Readme.md section #8 |  |  | 0.473 |
 | ns | 6222 |  | 451 | res.send() response finalization | 4.6 | 4.4 | 0.454 |
 | walker |  | 6334 | 169 | ts body lib/view.js:169 |  |  | 0.454 |
 | walker |  | 6403 | 69 | ts doc lib/utils.js:194 |  |  | 0.454 |
@@ -115,14 +115,14 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 6988 | 72 | ts doc lib/utils.js:40 |  |  | 0.561 |
 | ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.555 |
 | ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.550 |
-| walker |  | 7316 | 328 | Readme.md section #8 |  |  | 0.550 |
+| walker |  | 7316 | 328 | Readme.md section #9 |  |  | 0.550 |
 | ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.542 |
-| walker |  | 7499 | 183 | Readme.md section #9 |  |  | 0.542 |
+| walker |  | 7499 | 183 | Readme.md section #10 |  |  | 0.542 |
 | ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.538 |
 | walker |  | 7578 | 79 | ts body lib/response.js:709 |  |  | 0.538 |
 | ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.532 |
 | ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.527 |
-| walker |  | 7918 | 340 | Readme.md section #12 |  |  | 0.527 |
+| walker |  | 7918 | 340 | Readme.md section #13 |  |  | 0.527 |
 | walker |  | 7989 | 71 | ts doc lib/application.js:59 |  |  | 0.527 |
 | walker |  | 8061 | 72 | ts doc lib/utils.js:51 |  |  | 0.527 |
 | ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.541 |

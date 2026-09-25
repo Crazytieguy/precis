@@ -42,22 +42,14 @@ use super::{
 /// oversize outline would block the whole file.
 const MAX_OUTLINE_HEADINGS: usize = 30;
 
-/// Token threshold above which an otherwise-unsplit section is
-/// emitted as a head chunk plus predecessor-chained tail chunks.
-/// NSes are authored to a growth envelope
+/// Per-chunk token target for the oversize head-split; a section at or
+/// above it is split. NSes are authored to a growth envelope
 /// (`cost ≤ 100 + 0.3·cumulative`, see `src/ns_simulate.rs`), so an
-/// early-rankable batch is ~100–400 tokens; a prose lump beyond that
-/// structurally cannot win the early purchase race no matter its
-/// value. The head can; the tails follow through the existing
-/// predecessor/train machinery. Measured in tokens (not bytes) —
-/// code-heavy sections tokenize markedly denser per byte than prose,
-/// so a byte gate mis-sizes exactly the fence-rich sections this
-/// split targets.
-const OVERSIZE_SECTION_SPLIT_TOKENS: usize = 500;
-
-/// Greedy per-chunk token target for the oversize head-split — inside
-/// the NS early-batch envelope, low enough that a fence-heavy chunk
-/// pair doesn't overshoot it before the first cut candidate.
+/// early-rankable batch is ~100–400 tokens; a lump beyond that cannot
+/// win the early purchase race no matter its value. Low enough that a
+/// fence-heavy chunk pair doesn't overshoot it before the first cut
+/// candidate; measured in tokens because code tokenizes denser per
+/// byte than prose.
 const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 
 /// Token target for the *first* chunk of a head-split section — the
@@ -1380,7 +1372,7 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 }
 
 /// Emit `head` as-is, or — when its row range exceeds
-/// [`OVERSIZE_SECTION_SPLIT_TOKENS`] and splits at natural boundaries —
+/// [`OVERSIZE_CHUNK_TARGET_TOKENS`] and splits at natural boundaries —
 /// shrink `head` to the first chunk (keeping its value flags; the head
 /// includes the section heading, so no outline is required to preserve
 /// it) and follow it with predecessor-chained tail chunks priced like
@@ -1390,7 +1382,7 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], head: SectionRange) {
     let (start, end) = (head.start, head.end);
     let tokens: usize = (start..=end).map(|r| row_tokens(src_lines, r)).sum();
-    if tokens < OVERSIZE_SECTION_SPLIT_TOKENS {
+    if tokens < OVERSIZE_CHUNK_TARGET_TOKENS {
         out.push(head);
         return;
     }
