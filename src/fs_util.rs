@@ -439,6 +439,10 @@ fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {
 /// structure (`CLAUDE.md -> AGENTS.md`, `README -> README.md`), so it
 /// keeps its row.
 ///
+/// A FIFO, socket or device is not repository content, and opening one
+/// to read it can block forever, so only directories and regular files
+/// surface.
+///
 /// Costs one `canonicalize` per link and nothing per ordinary entry.
 fn resolved_kind(
     child: &Path,
@@ -446,12 +450,14 @@ fn resolved_kind(
     canonical_root: &Path,
 ) -> Option<EntryKind> {
     if !file_type.is_symlink() {
-        return Some(entry_kind(file_type.is_dir()));
+        return (file_type.is_dir() || file_type.is_file()).then(|| entry_kind(file_type.is_dir()));
     }
     let target = child.canonicalize().ok()?;
-    target
-        .starts_with(canonical_root)
-        .then(|| entry_kind(target.is_dir()))
+    if !target.starts_with(canonical_root) {
+        return None;
+    }
+    let target_type = std::fs::metadata(&target).ok()?.file_type();
+    (target_type.is_dir() || target_type.is_file()).then(|| entry_kind(target_type.is_dir()))
 }
 
 fn entry_kind(is_dir: bool) -> EntryKind {
@@ -811,6 +817,23 @@ mod tests {
         let via_link = root.join("selfloop");
         let filter = DirFilter::without_global_excludes(&via_link);
         assert!(!list_dir(&via_link, &filter).is_empty());
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn fs_util_list_dir_drops_a_fifo_and_a_link_to_one() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        std::fs::write(root.join("deploy"), "#!/bin/sh\n").unwrap();
+        let status = Command::new("mkfifo")
+            .arg(root.join("events"))
+            .status()
+            .unwrap();
+        assert!(status.success());
+        std::os::unix::fs::symlink("events", root.join("events-link")).unwrap();
+
+        let filter = DirFilter::without_global_excludes(root);
+        assert_eq!(names_in(root, &filter), ["deploy"]);
     }
 
     /// A linked worktree carries a `.git` pointer file, and keeps
