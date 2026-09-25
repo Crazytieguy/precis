@@ -1,4 +1,4 @@
-Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.746/0.700/0.638/0.577/0.547/0.597
+Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.586/0.700/0.638/0.577/0.547/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -7,50 +7,50 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 95 |  | 95 | Package identity: name, version, description, entry point, bin name | 1.1 |  | 0.000 |
 | walker |  | 105 | 24 | listing of 'hooks' |  |  | 0.000 |
 | walker |  | 109 | 4 | listing of '.vscode' |  |  | 0.000 |
-| walker |  | 114 | 5 | listing of '.devcontainer' |  |  | 0.000 |
-| walker |  | 153 | 39 | listing of 'src' |  |  | 0.000 |
-| walker |  | 162 | 9 | listing of 'src/themes' |  |  | 0.000 |
-| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.561 |
-| walker |  | 193 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.576 |
-| walker |  | 230 | 37 | listing of 'widgets' |  |  | 0.626 |
-| walker |  | 242 | 12 | ts names lib/modes.js |  |  | 0.626 |
-| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.624 |
-| walker |  | 296 | 54 | ts names index.js |  |  | 0.625 |
-| walker |  | 315 | 19 | listing of 'widgets/images' |  |  | 0.627 |
+| walker |  | 119 | 10 | ts names lib/node.version.js |  |  | 0.000 |
+| walker |  | 124 | 5 | listing of '.devcontainer' |  |  | 0.000 |
+| walker |  | 163 | 39 | listing of 'src' |  |  | 0.000 |
+| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.560 |
+| walker |  | 172 | 9 | listing of 'src/themes' |  |  | 0.561 |
+| walker |  | 203 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.577 |
+| walker |  | 240 | 37 | listing of 'widgets' |  |  | 0.626 |
+| walker |  | 252 | 12 | ts names lib/modes.js |  |  | 0.626 |
+| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.625 |
+| walker |  | 306 | 54 | ts names index.js |  |  | 0.625 |
+| walker |  | 325 | 19 | listing of 'widgets/images' |  |  | 0.627 |
 | ns | 371 |  | 95 | Complete listings of the per-mode widget directories: widgets/containers, widgets/images, widgets/services | 1.4 |  | 0.541 |
-| walker |  | 381 | 66 | package identity in package.json |  |  | 0.705 |
-| walker |  | 401 | 20 | ts names src/dockerUtil.js |  |  | 0.706 |
+| walker |  | 391 | 66 | package identity in package.json |  |  | 0.706 |
+| walker |  | 408 | 17 | ts decl lib/node.version.js:1 |  |  | 0.706 |
 | ns | 411 |  | 40 | Complete listings of src/widgetsTemplates and src/themes | 1.5 |  | 0.712 |
-| walker |  | 421 | 20 | ts names src/screen.js |  |  | 0.712 |
-| walker |  | 452 | 31 | listing of 'widgets/services' |  |  | 0.741 |
-| walker |  | 497 | 45 | listing of 'widgets/containers' |  |  | 0.828 |
-| walker |  | 530 | 33 | ts decl lib/modes.js:3 |  |  | 0.829 |
+| walker |  | 428 | 20 | ts names src/dockerUtil.js |  |  | 0.712 |
+| walker |  | 448 | 20 | ts names src/screen.js |  |  | 0.712 |
+| walker |  | 479 | 31 | listing of 'widgets/services' |  |  | 0.742 |
+| walker |  | 524 | 45 | listing of 'widgets/containers' |  |  | 0.829 |
 | ns | 533 |  | 122 | npm scripts block | 1.6 |  | 0.785 |
-| walker |  | 564 | 34 | package runtime metadata in package.json |  |  | 0.786 |
-| walker |  | 583 | 19 | listing of '.github' |  |  | 0.787 |
-| walker |  | 603 | 20 | listing of '.github/workflows' |  |  | 0.787 |
-| ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.734 |
-| walker |  | 743 | 140 | README headline in README.md |  |  | 0.735 |
-| ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.687 |
-| walker |  | 766 | 23 | README prelude in README.md |  |  | 0.687 |
-| walker |  | 830 | 64 | ts names src/cli.js |  |  | 0.688 |
-| ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.648 |
-| walker |  | 933 | 103 | headings outline in README.md |  |  | 0.708 |
-| walker |  | 955 | 22 | README.md section #0 |  |  | 0.709 |
-| walker |  | 965 | 10 | ts names lib/node.version.js |  |  | 0.709 |
-| walker |  | 975 | 10 | ts names src/enum.js |  |  | 0.709 |
-| walker |  | 988 | 13 | ts body src/cli.js:93 |  |  | 0.710 |
-| ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.657 |
-| walker |  | 1097 | 109 | plaintext config dockerRunScript.sh |  |  | 0.657 |
+| walker |  | 557 | 33 | ts decl lib/modes.js:3 |  |  | 0.787 |
+| walker |  | 591 | 34 | package runtime metadata in package.json |  |  | 0.788 |
+| walker |  | 610 | 19 | listing of '.github' |  |  | 0.788 |
+| walker |  | 630 | 20 | listing of '.github/workflows' |  |  | 0.735 |
+| ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.735 |
+| ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.683 |
+| walker |  | 770 | 140 | README headline in README.md |  |  | 0.688 |
+| walker |  | 793 | 23 | README prelude in README.md |  |  | 0.688 |
+| walker |  | 857 | 64 | ts names src/cli.js |  |  | 0.689 |
+| ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.649 |
+| walker |  | 960 | 103 | headings outline in README.md |  |  | 0.709 |
+| walker |  | 982 | 22 | README.md section #0 |  |  | 0.710 |
+| walker |  | 992 | 10 | ts names src/enum.js |  |  | 0.710 |
+| walker |  | 1005 | 13 | ts body src/cli.js:93 |  |  | 0.710 |
+| ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.658 |
+| walker |  | 1114 | 109 | plaintext config dockerRunScript.sh |  |  | 0.658 |
 | ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.610 |
-| walker |  | 1267 | 170 | plaintext config Dockerfile |  |  | 0.614 |
-| walker |  | 1319 | 52 | listing of 'docs' |  |  | 0.615 |
-| walker |  | 1328 | 9 | listing of 'docs/src' |  |  | 0.615 |
+| walker |  | 1284 | 170 | plaintext config Dockerfile |  |  | 0.615 |
+| walker |  | 1336 | 52 | listing of 'docs' |  |  | 0.615 |
+| walker |  | 1345 | 9 | listing of 'docs/src' |  |  | 0.616 |
 | ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.586 |
-| walker |  | 1435 | 107 | package entrypoints in package.json |  |  | 0.746 |
-| walker |  | 1630 | 195 | package runtime dependencies in package.json |  |  | 0.800 |
-| walker |  | 1643 | 13 | listing of 'docs/src/pages' |  |  | 0.800 |
-| walker |  | 1660 | 17 | ts decl lib/node.version.js:1 |  |  | 0.801 |
+| walker |  | 1452 | 107 | package entrypoints in package.json |  |  | 0.746 |
+| walker |  | 1647 | 195 | package runtime dependencies in package.json |  |  | 0.800 |
+| walker |  | 1660 | 13 | listing of 'docs/src/pages' |  |  | 0.801 |
 | walker |  | 1679 | 19 | ts names src/baseWidget.js |  |  | 0.801 |
 | ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.739 |
 | walker |  | 1799 | 120 | package scripts in package.json |  |  | 0.768 |

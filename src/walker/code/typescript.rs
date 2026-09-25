@@ -255,7 +255,16 @@ fn declaration_twins(path: &Path) -> impl Iterator<Item = PathBuf> {
     let stem = is_declaration_file(path).then(|| path.with_extension("").with_extension(""));
     EXTENSIONS
         .iter()
-        .filter_map(move |extension| Some(stem.as_ref()?.with_extension(extension)))
+        .filter_map(move |extension| Some(append_extension(stem.as_ref()?, extension)))
+}
+
+/// `base` with `.extension` appended: `Path::with_extension` would
+/// replace the `.service` of `foo.service`.
+fn append_extension(base: &Path, extension: &str) -> PathBuf {
+    let mut path = base.as_os_str().to_owned();
+    path.push(".");
+    path.push(extension);
+    PathBuf::from(path)
 }
 
 fn package_surface(package_dir: &Path, ctx: &WalkCtx) -> HashSet<PathBuf> {
@@ -336,25 +345,32 @@ fn resolve_relative_module(from: &Path, specifier: &str) -> Option<PathBuf> {
             _ => {}
         }
     }
-    let stem = base.with_extension("");
+    let stem = if has_source_extension(&base) {
+        base.with_extension("")
+    } else {
+        base.clone()
+    };
     let candidates = std::iter::once(base.clone())
         .chain(
             EXTENSIONS
                 .iter()
-                .map(|extension| stem.with_extension(extension)),
+                .map(|extension| append_extension(&stem, extension)),
         )
         .chain(
             EXTENSIONS
                 .iter()
                 .map(|extension| base.join("index").with_extension(extension)),
         );
-    candidates.into_iter().find(|candidate| {
-        candidate.is_file()
-            && EXTENSIONS.iter().any(|extension| {
-                candidate
-                    .extension()
-                    .is_some_and(|own| own.eq_ignore_ascii_case(extension))
-            })
+    candidates
+        .into_iter()
+        .find(|candidate| candidate.is_file() && has_source_extension(candidate))
+}
+
+fn has_source_extension(path: &Path) -> bool {
+    path.extension().is_some_and(|own| {
+        EXTENSIONS
+            .iter()
+            .any(|extension| own.eq_ignore_ascii_case(extension))
     })
 }
 
@@ -1791,13 +1807,18 @@ export const c = 3;
             ("package.json", "{}"),
             (
                 "src/index.ts",
-                "export * from './api.js';\nexport {x} from './lib';\n",
+                "export * from './api.js';\nexport {x} from './lib';\n\
+                 export * from './foo.service';\nexport * from './bar.model.js';\n",
             ),
             (
                 "src/api.ts",
                 "export const api = require('../helpers/util');\n",
             ),
             ("src/api.d.ts", ""),
+            ("src/foo.service.ts", ""),
+            ("src/foo.ts", ""),
+            ("src/bar.model.ts", ""),
+            ("src/bar.model.d.ts", ""),
             ("src/lib/index.ts", ""),
             ("helpers/util.js", ""),
             ("src/internal.ts", ""),
@@ -1821,6 +1842,6 @@ export const c = 3;
                     .is_public_surface(&dir.path().join(relative), &ctx)
             })
             .collect();
-        assert_eq!(off_surface, ["src/internal.ts"]);
+        assert_eq!(off_surface, ["src/foo.ts", "src/internal.ts"]);
     }
 }
