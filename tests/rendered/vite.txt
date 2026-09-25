@@ -74,6 +74,16 @@ docs/
 eslint.config.js
 netlify.toml
 package.json
+  …
+  2→  "name": "@vitejs/vite-monorepo",
+  3→  "private": true,
+  4→  "type": "module",
+  5→  "engines": {
+  6→    "node": "^20.19.0 || >=22.12.0"
+  7→  },
+  …
+  93→  "packageManager": "pnpm@10.33.4",
+  …
 packages/
   create-vite/
     CHANGELOG.md
@@ -84,39 +94,6 @@ packages/
     package.json
     src/
       index.ts
-        …
-        11→const {
-        …
-        25→const argv = mri<{
-        …
-        36→const cwd = process.cwd()
-        …
-        39→const helpMessage = `\
-        …
-        63→type ColorFunc = (str: string) => string
-        64→type Framework = {
-        …
-        70→type FrameworkVariant = {
-        …
-        78→const FRAMEWORKS: Framework[] = [
-        …
-        387→const TEMPLATES = FRAMEWORKS.map((f) => f.variants.map((v) => v.name)).reduce(
-        …
-        392→const renameFiles: Record<string, string | undefined> = {
-        393→  _gitignore: '.gitignore',
-        394→}
-        396→const defaultTargetDir = 'vite-project'
-        397→
-        398→function run([command, ...args]: string[], options?: SpawnOptions) {
-        …
-        411→function install(root: string, agent: string) {
-        …
-        425→function start(root: string, agent: string) {
-        …
-        437→async function init() {
-        …
-        702→function formatTargetDir(targetDir: string) {
-        …
     template-lit/
     template-lit-ts/
     template-preact/

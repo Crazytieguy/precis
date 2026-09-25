@@ -79,6 +79,21 @@ examples/
   join.ts
   min_max.ts
 package.json
+  …
+  2→  "name": "d2ts-monorepo",
+  3→  "private": true,
+  4→  "license": "Apache-2.0",
+  5→  "scripts": {
+  6→    "build": "pnpm -r build",
+  7→    "test": "pnpm -r test",
+  8→    "lint": "pnpm -r lint",
+  9→    "typecheck": "pnpm -r typecheck",
+  10→    "bench": "pnpm --filter d2ts-benchmark bench",
+  11→    "changeset": "changeset",
+  12→    "version": "changeset version",
+  13→    "release": "changeset publish"
+  14→  },
+  …
 packages/
   d2mini/
     CHANGELOG.md
@@ -109,24 +124,10 @@ packages/
         4→export * from './types.js'
       indexes.ts
       multiset.ts
-        …
-        8→export type MultiSetArray<T> = [T, number][]
-        9→export type KeyedData<T> = [key: string, value: T]
-        …
-        14→export class MultiSet<T> {
-        …
       operators/
         concat.ts
         consolidate.ts
         count.ts
-          …
-          9→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
-          10→  constructor(
-          …
-          25→}
-          …
-          30→export function count<
-          …
         debug.ts
           …
           12→export class DebugOperator<T> extends UnaryOperator<T> {
@@ -288,26 +289,12 @@ packages/
         5→export * from './operators/index.js'
         6→export * from './types.js'
       multiset.ts
-        …
-        3→export type MultiSetArray<T> = [T, number][]
-        4→export type KeyedData<T> = [key: string, value: T]
-        …
-        9→export class MultiSet<T> {
-        …
       operators/
         base.ts
         buffer.ts
         concat.ts
         consolidate.ts
         count.ts
-          …
-          10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
-          11→  constructor(
-          …
-          27→}
-          …
-          32→export function count<
-          …
         debug.ts
           …
           18→export class DebugOperator<T> extends UnaryOperator<T> {

@@ -127,15 +127,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
-    // `*-monorepo` shells are pure orchestration; damp so per-member
-    // packages and primary-language anchors win the budget.
-    let shell_factor = if file.parent() == Some(ctx.root())
-        && package_json_name_ends_with(&tree, &source, "-monorepo")
-    {
-        0.2
-    } else {
-        1.0
-    };
     let manifest_role = package_json_role(&pairs);
     let scripts_deps_factor = manifest_role.scripts_deps_factor();
     // A paired inline lint + coverage policy is part of the test workflow.
@@ -162,7 +153,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
             } else {
                 1.0
             };
-            sections.push((key, content, value * shell_factor * grade));
+            sections.push((key, content, value * grade));
         };
     let f = file.to_path_buf();
     collect(
@@ -308,13 +299,6 @@ fn package_json_role(pairs: &[(String, usize, usize, bool)]) -> PackageJsonRole 
         return PackageJsonRole::AppOrCli;
     }
     PackageJsonRole::ImplicitEntryPackage
-}
-
-/// True iff the manifest's top-level `"name"` ends with `suffix`.
-fn package_json_name_ends_with(tree: &Tree, source: &str, suffix: &str) -> bool {
-    first_child_of_kind(tree.root_node(), "object", false)
-        .and_then(|o| object_field_value(o, "name", source))
-        .is_some_and(|v| v.kind() == "string" && unquote_string(v, source).ends_with(suffix))
 }
 
 fn section_content(
