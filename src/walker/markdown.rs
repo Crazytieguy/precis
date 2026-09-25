@@ -1181,42 +1181,37 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
     false
 }
 
-/// A "navigation paragraph" is a paragraph whose substantive content is
-/// nothing but cross-reference links separated by separator punctuation
-/// (`•`, `·`, `|`, `/`, `,`, dashes). Common in multi-language READMEs
-/// (`[English](url) • [中文](url) • ...`) and in tagline-rich docs that
-/// list related projects. The links carry no orientation value at the
-/// budget where the headline lives — treat as decorative so the
-/// headline walker doesn't burn its prelude on them.
-fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
+/// Link count of a paragraph whose substantive content is nothing but
+/// links separated by separator punctuation (`•`, `·`, `|`, `/`, `,`,
+/// dashes, brackets); 0 for any other paragraph. With three or more
+/// links it is a navigation row — multi-language READMEs'
+/// `[English](url) • [中文](url) • ...` — and with fewer, a pointer
+/// (`[[play](url)]`) that belongs to the block before it.
+fn link_only_paragraph_links(para: Node, source: &str) -> usize {
     let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
-        return false;
+        return 0;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
     let Some(tree) = parse_inline(inline_text) else {
-        return false;
+        return 0;
     };
-    let root = tree.root_node();
-    let named = named_decorative_candidates(root, inline_text);
-    if named.len() < 3 {
-        return false;
-    }
-    if !named.iter().all(|n| {
-        matches!(
-            n.kind(),
-            "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link"
-        )
-    }) {
-        return false;
-    }
+    let named = named_decorative_candidates(tree.root_node(), inline_text);
     let mut cursor = 0usize;
     for n in &named {
-        if !is_separator_gap(&inline_text[cursor..n.start_byte()]) {
-            return false;
+        if !matches!(
+            n.kind(),
+            "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link"
+        ) || !is_separator_gap(&inline_text[cursor..n.start_byte()])
+        {
+            return 0;
         }
         cursor = n.end_byte();
     }
-    is_separator_gap(&inline_text[cursor..])
+    if is_separator_gap(&inline_text[cursor..]) {
+        named.len()
+    } else {
+        0
+    }
 }
 
 fn is_separator_gap(s: &str) -> bool {
@@ -1224,7 +1219,17 @@ fn is_separator_gap(s: &str) -> bool {
         c.is_whitespace()
             || matches!(
                 c,
-                '\u{2022}' | '\u{00B7}' | '|' | '/' | '\\' | ',' | '-' | '\u{2014}' | '\u{2013}'
+                '\u{2022}'
+                    | '\u{00B7}'
+                    | '|'
+                    | '/'
+                    | '\\'
+                    | ','
+                    | '-'
+                    | '\u{2014}'
+                    | '\u{2013}'
+                    | '['
+                    | ']'
             )
     })
 }
@@ -1936,6 +1941,12 @@ fn body_block_ranges(section: Node<'_>, source: &str) -> Vec<(usize, usize)> {
                 out.extend(substantive_item_ranges(child, source));
                 i += 1;
             }
+            "paragraph" if link_only_paragraph_links(child, source) > 0 && !out.is_empty() => {
+                if let Some(last) = out.last_mut() {
+                    last.1 = node_row_range(child, source).1;
+                }
+                i += 1;
+            }
             _ => {
                 if let Some(range) = nonblank_node_row_range(child, &src_lines, source) {
                     out.push(range);
@@ -2484,7 +2495,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) ->
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
-        || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
+        || (block.kind() == "paragraph" && link_only_paragraph_links(block, source) >= 3)
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -3314,6 +3325,29 @@ mod tests {
         assert!(
             kinds.contains(&SectionKind::H3Child),
             "single-block H3 child must remain whole; got {ranges:?}"
+        );
+    }
+
+    /// A link-only pointer paragraph (`[[play](url)]`) belongs to the
+    /// example before it, not to a body block of its own.
+    #[test]
+    fn markdown_link_only_paragraph_joins_previous_body_block() {
+        let filler = "Additional prose keeps this sub-section large enough for \
+                      body-block splitting while still representing ordinary \
+                      markdown documentation text.\n"
+            .repeat(3);
+        let src = "# Title\n\nTagline.\n\n## Parts\n\n### One\n\n".to_owned()
+            + &filler
+            + "\n```go\nx := one()\n```\n\n[[play](https://go.dev/play/p/x)]\n\n"
+            + &filler
+            + "\n### Two\n\nSingle compact paragraph.\n";
+        let play_row = src.lines().position(|l| l.starts_with("[[play]")).unwrap() + 1;
+        let ranges = sections("README.md", &src);
+        assert!(
+            ranges.iter().any(|r| r.kind == SectionKind::BodyBlock
+                && r.start < play_row
+                && r.end == play_row),
+            "play link must extend the example's block; got {ranges:?}"
         );
     }
 
