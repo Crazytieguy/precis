@@ -291,11 +291,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if !is_source_inventory_dir(parent, ctx) {
         return false;
     }
-    list_dir(parent, ctx.dir_filter())
-        .values()
-        .filter(|kind| matches!(kind, EntryKind::Directory))
-        .count()
-        >= CATALOG_PARENT_MIN_CHILD_DIRS
+    ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
@@ -425,6 +421,7 @@ fn module_sibling_child_dir_count(
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
+    child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
@@ -439,6 +436,23 @@ impl FsState {
         }
         let count = source_inventory_count_uncached(self, dir, target, filter);
         self.source_inventory_counts
+            .borrow_mut()
+            .insert(dir.to_path_buf(), count);
+        count
+    }
+
+    /// Count of immediate subdirectories of `dir`, cached per parent:
+    /// `parent_is_high_fanout_catalog` asks about the same parent once
+    /// per child, so recounting would be O(N²) in the parent's entries.
+    pub(in crate::walker) fn child_dir_count(&self, dir: &Path, filter: &DirFilter) -> usize {
+        if let Some(count) = self.child_dir_counts.borrow().get(dir).copied() {
+            return count;
+        }
+        let count = list_dir(dir, filter)
+            .values()
+            .filter(|kind| matches!(kind, EntryKind::Directory))
+            .count();
+        self.child_dir_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count
