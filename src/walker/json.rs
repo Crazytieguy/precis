@@ -20,6 +20,7 @@ use crate::content::BatchContent;
 use crate::render::Source;
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
+use super::code::chunk::chunk_ranges;
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
     member_named_after_root,
@@ -187,6 +188,14 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
         } else {
             identity.clone()
         };
+        if matches!(key, JsonKey::Scripts { .. })
+            && !overlap_chain
+            && let Some(chunks) = scripts_chunks(file, &source, &tree)
+        {
+            push_chained_chunks(out, file, chunks, predecessor, value);
+            previous = Some(emitted);
+            continue;
+        }
         out.push(Batch {
             key: emitted.clone(),
             predecessor,
@@ -194,6 +203,78 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             value,
         });
         previous = Some(emitted);
+    }
+}
+
+/// A long `scripts` block's rows in source-order chunks (see
+/// [`chunk_ranges`]): the `"scripts": {` row leads the first chunk and the
+/// closing brace ends the last. `None` when it stays one batch.
+fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<BatchContent>> {
+    let object = first_child_of_kind(tree.root_node(), "object")?;
+    let scripts = object_field_value(object, "scripts", source)?;
+    let mut cursor = scripts.walk();
+    let entries: Vec<(usize, usize)> = scripts
+        .children(&mut cursor)
+        .filter(|child| child.kind() == "pair")
+        .map(|pair| (pair.start_position().row + 1, pair.end_position().row + 1))
+        .collect();
+    let lines: Vec<&str> = source.lines().collect();
+    let costs: Vec<usize> = entries
+        .iter()
+        .map(|&(start, end)| {
+            (start..=end)
+                .map(|row| crate::tokenizer::count(lines[row - 1]))
+                .sum()
+        })
+        .collect();
+    let ranges = chunk_ranges(&costs);
+    if ranges.len() < 2 {
+        return None;
+    }
+    let key_row = scripts.parent()?.start_position().row + 1;
+    let last = ranges.len() - 1;
+    ranges
+        .into_iter()
+        .enumerate()
+        .map(|(index, range)| {
+            let mut rows: Vec<usize> = entries[range]
+                .iter()
+                .flat_map(|&(start, end)| start..=end)
+                .collect();
+            if index == 0 {
+                rows.insert(0, key_row);
+            }
+            if index == last {
+                rows.push(scripts.end_position().row + 1);
+            }
+            rows.dedup();
+            single_file_lines_content(file, source, rows)
+        })
+        .collect()
+}
+
+/// Emit `chunks` as `Scripts` then `ScriptsTail`s, each gated on the one
+/// before, all at the unsplit block's value.
+fn push_chained_chunks(
+    out: &mut Vec<Batch>,
+    file: &Path,
+    chunks: Vec<BatchContent>,
+    mut predecessor: Option<BatchKey>,
+    value: f64,
+) {
+    for (chunk, content) in chunks.into_iter().enumerate() {
+        let file = file.to_path_buf();
+        let key = BatchKey::Json(if chunk == 0 {
+            JsonKey::Scripts { file }
+        } else {
+            JsonKey::ScriptsTail { file, chunk }
+        });
+        out.push(Batch {
+            key: key.clone(),
+            predecessor: predecessor.replace(key),
+            content,
+            value,
+        });
     }
 }
 
@@ -547,6 +628,44 @@ mod tests {
                 root.join("settings.code-workspace"),
             ])
         );
+    }
+
+    /// A long `scripts` block delivers as a source-order chain of chunks
+    /// behind the identity block; a short one stays one batch.
+    #[test]
+    fn walker_json_long_scripts_block_chains_chunks() {
+        let scripts_keys = |script_count: usize| {
+            let dir = tempfile::tempdir().unwrap();
+            let scripts: Vec<String> = (0..script_count)
+                .map(|i| format!("    \"task-{i}\": \"node scripts/run-task.js --step {i}\""))
+                .collect();
+            let body = format!(
+                "{{\n  \"name\": \"x\",\n  \"scripts\": {{\n{}\n  }}\n}}\n",
+                scripts.join(",\n")
+            );
+            write_pkg(dir.path(), &body);
+            let ctx = WalkCtx::new(dir.path().to_path_buf());
+            expand_in_dir(dir.path(), &ctx)
+                .into_iter()
+                .filter(|batch| {
+                    matches!(
+                        batch.key,
+                        BatchKey::Json(JsonKey::Scripts { .. } | JsonKey::ScriptsTail { .. })
+                    )
+                })
+                .map(|batch| (batch.key, batch.predecessor))
+                .collect::<Vec<_>>()
+        };
+        assert_eq!(scripts_keys(3).len(), 1);
+        let chunks = scripts_keys(40);
+        assert!(chunks.len() > 1);
+        assert!(matches!(
+            chunks[0].1,
+            Some(BatchKey::Json(JsonKey::Identity { .. }))
+        ));
+        for pair in chunks.windows(2) {
+            assert_eq!(pair[1].1.as_ref(), Some(&pair[0].0));
+        }
     }
 
     #[cfg(unix)]

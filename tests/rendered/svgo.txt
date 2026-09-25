@@ -136,29 +136,7 @@ docs/
     removeDimensions.mdx
     removeDoctype.mdx
     removeEditorsNSData.mdx
-    removeElementsByAttr.mdx
-    removeEmptyAttrs.mdx
-    removeEmptyContainers.mdx
-    removeEmptyText.mdx
-    removeHiddenElems.mdx
-    removeMetadata.mdx
-    removeNonInheritableGroupAttrs.mdx
-    removeOffCanvasPaths.mdx
-    removeRasterImages.mdx
-    removeScripts.mdx
-    removeStyleElement.mdx
-    removeTitle.mdx
-    removeUnknownsAndDefaults.mdx
-    removeUnusedNS.mdx
-    removeUselessDefs.mdx
-    removeUselessStrokeAndFill.mdx
-    removeViewBox.mdx
-    removeXMLNS.mdx
-    removeXMLProcInst.mdx
-    removeXlink.mdx
-    reusePaths.mdx
-    sortAttrs.mdx
-    sortDefsChildren.mdx
+    …
   05-plugins-api.mdx
   06-migrations/
     01-migration-from-v3-to-v4.mdx
@@ -244,6 +222,23 @@ package.json
   74→  "engines": {
   75→    "node": ">=16"
   76→  },
+  77→  "scripts": {
+  78→    "build": "node scripts/sync-version.js && yarn build:bundles && yarn build:types",
+  79→    "build:bundles": "yarn clean:build && rollup -c",
+  80→    "build:types": "yarn clean:types && tsc && tsc -p tsconfig.build.json",
+  81→    "lint": "eslint . && prettier --check .",
+  82→    "lint:fix": "eslint --fix . && prettier --write .",
+  83→    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage",
+  84→    "test:bundles": "yarn build:bundles && node ./test/svgo.cjs && node ./test/browser.js",
+  85→    "test:types": "yarn build:types && tsc && tsd",
+  86→    "test:regression": "node ./test/regression/extract.js && node ./test/regression/optimize.js && cross-env NO_DIFF=1 node ./test/regression/compare.js",
+  87→    "qa": "yarn lint && yarn test:types && yarn test && yarn test:bundles && yarn test:regression",
+  88→    "clean": "yarn clean:build && yarn clean:types",
+  89→    "clean:build": "rimraf dist",
+  90→    "clean:types": "rimraf types",
+  91→    "spellcheck": "cspell -u .",
+  92→    "prepublishOnly": "yarn clean && yarn build"
+  93→  },
   …
   104→  "dependencies": {
   105→    "commander": "^11.1.0",
@@ -287,36 +282,12 @@ plugins/
   moveGroupAttrsToElems.js
   prefixIds.js
   preset-default.js
-    …
-    37→const presetDefault = createPreset({
-    38→  name: 'preset-default',
-    39→  plugins: [
-    40→    removeDoctype,
-    41→    removeXMLProcInst,
-    42→    removeComments,
-    43→    removeDeprecatedAttrs,
-    44→    removeMetadata,
-    45→    removeEditorsNSData,
-    46→    cleanupAttrs,
-    47→    mergeStyles,
-    48→    inlineStyles,
-    49→    minifyStyles,
-    50→    cleanupIds,
-    51→    removeUselessDefs,
-    …
-    77→export default presetDefault;
   removeAttributesBySelector.js
   removeAttrs.js
   removeComments.js
   removeDeprecatedAttrs.js
   removeDesc.js
   removeDimensions.js
-    1→export const name = 'removeDimensions';
-    2→export const description =
-    3→  'removes width and height in presence of viewBox (opposite to removeViewBox)';
-    …
-    17→export const fn = () => {
-    …
   removeDoctype.js
   removeEditorsNSData.js
   removeElementsByAttr.js

@@ -6,7 +6,7 @@
 //! ownership and value, and a language module never builds a batch.
 
 mod c;
-mod chunk;
+pub(in crate::walker) mod chunk;
 mod emit;
 mod go;
 mod ledger;

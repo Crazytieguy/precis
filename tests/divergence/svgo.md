@@ -1,4 +1,4 @@
-Score(3000)=0.650 I=0.852 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.633/0.697/0.650/0.583/0.569/0.615
+Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.633/0.694/0.649/0.583/0.569/0.615
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -42,37 +42,38 @@ Score(3000)=0.650 I=0.852 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.537 |
 | walker |  | 1639 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.768 |
 | ns | 1669 |  | 199 | optimize() body, part 1: multipass loop and plugin resolution | 1.10 | 1.4 | 0.732 |
-| walker |  | 1696 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.732 |
-| walker |  | 1725 | 29 | Fs::DirListing { dir: test/coa } |  |  | 0.732 |
+| walker |  | 1794 | 155 | Json::Scripts { file: package.json } |  |  | 0.732 |
+| walker |  | 1851 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.732 |
 | ns | 1873 |  | 204 | optimize() body, part 2: overrides, invoke, stringify, datauri | 1.11 | 1.10 | 0.693 |
-| walker |  | 1930 | 205 | Json::Dependencies { file: package.json } |  |  | 0.694 |
-| walker |  | 1965 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.695 |
-| walker |  | 1972 | 7 | Code::CodeKey { rung: Names, file: lib/types.js, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
-| walker |  | 2199 | 227 | Json::Entry { file: package.json } |  |  | 0.699 |
-| walker |  | 2328 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.699 |
-| walker |  | 2377 | 49 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.699 |
-| walker |  | 2380 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.699 |
-| walker |  | 2384 | 4 | Fs::DirListing { dir: test/fixtures/config-loader/one/two } |  |  | 0.699 |
-| walker |  | 2391 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/cjs } |  |  | 0.699 |
-| walker |  | 2398 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/mjs } |  |  | 0.699 |
-| ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.638 |
+| walker |  | 1880 | 29 | Fs::DirListing { dir: test/coa } |  |  | 0.693 |
+| walker |  | 2085 | 205 | Json::Dependencies { file: package.json } |  |  | 0.694 |
+| walker |  | 2120 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.695 |
+| walker |  | 2127 | 7 | Code::CodeKey { rung: Names, file: lib/types.js, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
+| walker |  | 2353 | 226 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.696 |
+| ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.635 |
+| walker |  | 2580 | 227 | Json::Entry { file: package.json } |  |  | 0.639 |
 | ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.658 |
-| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.648 |
-| walker |  | 2786 | 388 | Fs::DirListing { dir: docs/04-plugins } |  |  | 0.648 |
-| walker |  | 2821 | 35 | Code::CodeKey { rung: Names, file: plugins/removeDimensions.js, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
-| walker |  | 2845 | 24 | Code::CodeKey { rung: Decl, file: plugins/removeDimensions.js, decl: 2, sub: 0, line: 2 } |  |  | 0.648 |
-| walker |  | 2869 | 24 | Code::CodeKey { rung: Names, file: plugins/preset-default.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
-| ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.601 |
-| walker |  | 3210 | 341 | Code::CodeKey { rung: Decl, file: plugins/preset-default.js, decl: 1, sub: 0, line: 37 } |  |  | 0.687 |
-| walker |  | 3249 | 39 | Code::CodeKey { rung: Names, file: plugins/removeOffCanvasPaths.js, decl: 0, sub: 0, line: 0 } |  |  | 0.687 |
-| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.675 |
-| walker |  | 3267 | 18 | Code::CodeKey { rung: Decl, file: plugins/removeOffCanvasPaths.js, decl: 2, sub: 0, line: 7 } |  |  | 0.676 |
-| walker |  | 3306 | 39 | Code::CodeKey { rung: Names, file: plugins/reusePaths.js, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 3361 | 55 | Code::CodeKey { rung: Decl, file: plugins/reusePaths.js, decl: 2, sub: 0, line: 5 } |  |  | 0.676 |
-| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.654 |
-| walker |  | 3479 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.654 |
+| walker |  | 2709 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.658 |
+| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.649 |
+| walker |  | 2758 | 49 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.649 |
+| walker |  | 2761 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.649 |
+| walker |  | 2765 | 4 | Fs::DirListing { dir: test/fixtures/config-loader/one/two } |  |  | 0.649 |
+| walker |  | 2772 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/cjs } |  |  | 0.649 |
+| walker |  | 2779 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/mjs } |  |  | 0.649 |
+| ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.602 |
+| walker |  | 3167 | 388 | Fs::DirListing { dir: docs/04-plugins } |  |  | 0.602 |
+| walker |  | 3202 | 35 | Code::CodeKey { rung: Names, file: plugins/removeDimensions.js, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| walker |  | 3226 | 24 | Code::CodeKey { rung: Decl, file: plugins/removeDimensions.js, decl: 2, sub: 0, line: 2 } |  |  | 0.602 |
+| walker |  | 3250 | 24 | Code::CodeKey { rung: Names, file: plugins/preset-default.js, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.592 |
+| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.573 |
+| walker |  | 3591 | 341 | Code::CodeKey { rung: Decl, file: plugins/preset-default.js, decl: 1, sub: 0, line: 37 } |  |  | 0.654 |
+| walker |  | 3630 | 39 | Code::CodeKey { rung: Names, file: plugins/removeOffCanvasPaths.js, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
+| walker |  | 3648 | 18 | Code::CodeKey { rung: Decl, file: plugins/removeOffCanvasPaths.js, decl: 2, sub: 0, line: 7 } |  |  | 0.654 |
 | ns | 3669 |  | 221 | createPreset -- how a preset validates and forwards overrides | 2.4 |  | 0.634 |
-| walker |  | 3860 | 381 | Json::Scripts { file: package.json } |  |  | 0.635 |
+| walker |  | 3687 | 39 | Code::CodeKey { rung: Names, file: plugins/reusePaths.js, decl: 0, sub: 0, line: 0 } |  |  | 0.634 |
+| walker |  | 3742 | 55 | Code::CodeKey { rung: Decl, file: plugins/reusePaths.js, decl: 2, sub: 0, line: 5 } |  |  | 0.635 |
+| walker |  | 3860 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.635 |
 | walker |  | 3900 | 40 | Code::CodeKey { rung: Names, file: plugins/cleanupEnableBackground.js, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |
 | walker |  | 3915 | 15 | Code::CodeKey { rung: Decl, file: plugins/cleanupEnableBackground.js, decl: 2, sub: 0, line: 5 } |  |  | 0.635 |
 | walker |  | 3955 | 40 | Code::CodeKey { rung: Names, file: plugins/moveGroupAttrsToElems.js, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |

@@ -31,7 +31,7 @@ pub(super) fn item_cost(item: &Item, file: &SourceFile) -> usize {
 /// Consecutive ranges of item indices, one per chunk, never splitting an
 /// item: one range when the part costs at most [`SPLIT_AT`], otherwise cut
 /// at [`TARGET`] / [`MIN_TAIL`]. Empty for an empty part.
-pub(super) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
+pub(in crate::walker) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
     let mut prefix = Vec::with_capacity(item_costs.len() + 1);
     prefix.push(0);
     for cost in item_costs {
