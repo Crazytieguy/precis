@@ -19,7 +19,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
-use crate::value::{dependency_table_mass_factor, depth_factor, mix_signals};
+use crate::value::{dependency_table_mass_factor, mix_signals};
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
@@ -460,15 +460,7 @@ fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
         // These explicitly admitted sidecars are otherwise the only copy of
         // workspace topology or non-JSON data/config. Their strict size cap
         // keeps this identity-like admission value away from generated data.
-        let depth = if lower.ends_with(".json5") {
-            // Small JSON5 files are commonly the data/config payload inside
-            // a fixtures/examples directory; applying that directory's
-            // generic source-code damp would make admission ineffective.
-            depth_factor(ctx.depth_from_root(file))
-        } else {
-            path_depth_factor(file, ctx)
-        };
-        mix_signals(1.0, 0.7, 0.85, depth)
+        mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
     } else {
         let is_root_tsconfig = lower == "tsconfig.json";
         let cat = if is_root_tsconfig { 0.55 } else { 0.3 };
