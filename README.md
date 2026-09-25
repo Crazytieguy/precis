@@ -112,7 +112,7 @@ tsconfig.json
 
 The file tree shows everything that exists; the README's lede and headings say what the package is and how its docs are organized; and `package.json` identifies the package and its entry points. At larger budgets `src/index.ts` follows with its exported types and signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
-A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
+A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory with more than 120 entries may list only its first 40, subdirectories first, before that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
 
 ## Installation
 
@@ -185,6 +185,8 @@ precis . --char-budget 9000        # also cap the output's length
 
 The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; when run from the plugin's hook (`CLAUDE_PLUGIN_ROOT` set), precis derives a default so the injected context stays within Claude Code's 10,000-unit limit.
 
+Given a single file, precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole. A binary file prints only its name.
+
 When the path is the root of a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. In any tree, `target`, `node_modules`, `dist`, `build`, `.next` and `__pycache__` directories are listed but never expanded. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are treated like any other file.
 
 ## Supported languages
@@ -193,6 +195,6 @@ When the path is the root of a git repository, `precis` honours `.gitignore` (in
 - **README** — the root README in Markdown, reStructuredText, AsciiDoc or plain text (`README.md`, `README.rst`, `README.adoc`, an extensionless `README`, …): its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
 - **Build and ops files** — Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples, runtime version pins (`.nvmrc`, `.python-version`, `.tool-versions`) and `pnpm-workspace.yaml`.
-- **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short.
+- **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Zig, Solidity, Verilog, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short. In a repository written mostly in one of these languages, its declaration lines rank like parsed declarations. Shell scripts, including extensionless ones that start with a shebang, show their opening lines.
 
 Other files, such as CI workflows and other YAML, ignore lists, editor and lint config, licenses and XML, appear in the directory tree by name only.
