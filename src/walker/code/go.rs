@@ -2,8 +2,6 @@
 //! and `var` declarations are `Whole`, and a grouped `( … )` declaration
 //! lists one roster row per spec. The module doc is the package comment.
 
-use std::path::Path;
-
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
@@ -14,7 +12,7 @@ pub(super) const LANGUAGE: Language = Language {
     extensions: &["go"],
     grammar: |_| tree_sitter_go::LANGUAGE.into(),
     extract,
-    is_entrypoint: Some(is_entrypoint),
+    is_entrypoint: None,
     file_weight: None,
 };
 
@@ -35,30 +33,6 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         model.decls.extend(decl);
     }
     model
-}
-
-/// A root-level file named after its package (`cobra/cobra.go`).
-fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
-    if ctx.depth_from_root(path) > 1 {
-        return false;
-    }
-    let Some(stem) = path.file_stem().and_then(|stem| stem.to_str()) else {
-        return false;
-    };
-    ctx.parse_tree(path, &(LANGUAGE.grammar)(path))
-        .is_some_and(|(source, tree)| package_name(tree.root_node(), &source) == Some(stem))
-}
-
-fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
-    let mut cursor = root.walk();
-    let clause = root
-        .named_children(&mut cursor)
-        .find(|child| child.kind() == "package_clause")?;
-    let mut inner = clause.walk();
-    let name = clause
-        .named_children(&mut inner)
-        .find(|child| child.kind() == "package_identifier")?;
-    Some(&source[name.byte_range()])
 }
 
 fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
