@@ -234,25 +234,39 @@ Score(3000)=0.624 I=0.819 C=0.475 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 8914 | 104 | Code::CodeKey { rung: Names, file: bookmarks/services/exporter.py, decl: 0, sub: 0, line: 0 } |  |  | 0.482 |
 | walker |  | 8924 | 10 | Code::CodeKey { rung: Body, file: bookmarks/services/exporter.py, decl: 4, sub: 0, line: 25 } |  |  | 0.482 |
 | walker |  | 8934 | 10 | Code::CodeKey { rung: Body, file: bookmarks/services/exporter.py, decl: 6, sub: 0, line: 52 } |  |  | 0.482 |
-| walker |  | 9035 | 101 | Code::CodeKey { rung: Decl, file: bookmarks/services/parser.py, decl: 1, sub: 0, line: 8 } |  |  | 0.482 |
-| walker |  | 9147 | 112 | Code::CodeKey { rung: Names, file: bookmarks/views/bundles.py, decl: 0, sub: 0, line: 0 } |  |  | 0.486 |
-| walker |  | 9155 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/views/bundles.py, decl: 1, sub: 0, line: 15 } |  |  | 0.486 |
-| walker |  | 9163 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/views/bundles.py, decl: 2, sub: 0, line: 22 } |  |  | 0.486 |
-| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.481 |
-| walker |  | 9171 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/views/bundles.py, decl: 4, sub: 0, line: 78 } |  |  | 0.481 |
-| walker |  | 9179 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/views/bundles.py, decl: 5, sub: 0, line: 83 } |  |  | 0.481 |
-| walker |  | 9187 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/views/bundles.py, decl: 6, sub: 0, line: 90 } |  |  | 0.481 |
-| walker |  | 9300 | 113 | Code::CodeKey { rung: Names, file: bookmarks/api/serializers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| walker |  | 9309 | 9 | Code::CodeKey { rung: Decl, file: bookmarks/api/serializers.py, decl: 1, sub: 0, line: 20 } |  |  | 0.489 |
-| walker |  | 9322 | 13 | Code::CodeKey { rung: Decl, file: bookmarks/api/serializers.py, decl: 2, sub: 0, line: 24 } |  |  | 0.489 |
-| walker |  | 9335 | 13 | Code::CodeKey { rung: Decl, file: bookmarks/api/serializers.py, decl: 4, sub: 0, line: 32 } |  |  | 0.489 |
-| walker |  | 9399 | 64 | Code::CodeKey { rung: Decl, file: bookmarks/api/serializers.py, decl: 16, sub: 0, line: 196 } |  |  | 0.489 |
-| ns | 9438 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.483 |
-| walker |  | 9498 | 99 | Code::CodeKey { rung: Decl, file: bookmarks/api/serializers.py, decl: 15, sub: 0, line: 181 } |  |  | 0.483 |
-| walker |  | 9611 | 113 | Code::CodeKey { rung: Names, file: bookmarks/services/auto_tagging.py, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
-| walker |  | 9628 | 17 | Code::CodeKey { rung: Body, file: bookmarks/utils.py, decl: 1, sub: 0, line: 21 } |  |  | 0.483 |
-| walker |  | 9675 | 47 | Plaintext::DeclSurface { file: pytest.ini } |  |  | 0.486 |
-| walker |  | 9743 | 68 | Code::CodeKey { rung: Decl, file: bookmarks/management/commands/full_backup.py, decl: 1, sub: 0, line: 9 } |  |  | 0.486 |
-| ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.479 |
-| ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.490 |
-| ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.500 |
+| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.477 |
+| ns | 9438 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.471 |
+| walker |  | 9548 | 614 | Fs::DirListing { dir: bookmarks/migrations } |  |  | 0.471 |
+| walker |  | 9563 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0001_initial.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9578 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0002_auto_20190629_2303.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9593 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0003_auto_20200913_0656.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9608 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0004_auto_20200926_1028.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9623 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0005_auto_20210103_1212.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9638 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0006_bookmark_is_archived.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9653 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0008_userprofile_bookmark_date_display.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9668 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0009_bookmark_web_archive_snapshot_url.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9683 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0010_userprofile_bookmark_link_target.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9698 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0011_userprofile_web_archive_integration.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9713 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0012_toast.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9728 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0015_feedtoken.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9743 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0016_bookmark_shared.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9758 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0017_userprofile_enable_sharing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9773 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0018_bookmark_favicon_file.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 9788 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0019_userprofile_enable_favicons.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.465 |
+| walker |  | 9803 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0020_userprofile_tag_search.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9818 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0021_userprofile_display_url.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9833 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0022_bookmark_notes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9848 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0023_userprofile_permanent_notes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9863 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0024_userprofile_enable_public_sharing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9878 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0025_userprofile_search_preferences.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 9893 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0026_userprofile_custom_css.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.477 |
+| walker |  | 9908 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0027_userprofile_bookmark_description_display_and_more.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9923 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0028_userprofile_display_archive_bookmark_action_and_more.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9938 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0030_bookmarkasset.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9953 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0031_userprofile_enable_automatic_html_snapshots.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9968 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0033_userprofile_default_mark_unread.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9983 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0034_bookmark_preview_image_file_and_more.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.487 |
+| walker |  | 9998 | 15 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0035_userprofile_tag_grouping.py, decl: 0, sub: 0, line: 0 } |  |  | 0.487 |

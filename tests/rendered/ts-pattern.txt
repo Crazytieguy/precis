@@ -57,7 +57,56 @@ benchmarks/
 docs/
   roadmap.md
   v3-to-v4-migration-guide.md
+    1→# TS-Pattern v3 to v4 Migration Guide
+    2→
+    3→## Breaking changes
+    4→
+    5→### Imports
+    …
+    91→### list patterns
+    …
+    111→### NaN
+    …
+    122→## New features
+    …
+    126→### Arrays and unary tuples
+    …
+    157→### Optional object properties
+    …
+    197→### Union & intersection patterns
+    …
+    265→### Select with sub pattern
+    …
+    296→### Infer the matching types from a pattern
+    …
+    334→### New type specific wildcards
+    …
   v4-to-v5-migration-guide.md
+    1→# TS-Pattern v4 to v5 Migration Guide
+    2→
+    3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+    5→# Breaking changes
+    6→
+    7→## TypeScript v5
+    …
+    11→## `.with` is now evaluated eagerly
+    …
+    42→## Matching on Map and Sets
+    …
+    63→# New features
+    64→
+    65→## chainable methods
+    …
+    71→### P.number methods
+    …
+    100→### P.string methods
+    …
+    122→### Global methods
+    …
+    156→## Variadic tuple patterns
+    …
+    214→## `.returnType`
+    …
 examples/
   gif-fetcher/
     package.json
@@ -191,44 +240,6 @@ src/
     35→  return new MatchExpression(value, unmatched) as any;
     …
   patterns.ts
-    1→/**
-    2→ * The `P` module contains patterns for primitive types, wildcards and
-    3→ * other pattern-matching utilities.
-    4→ *
-    5→ * @module
-    6→ */
-    …
-    48→export type {
-    49→  /**
-    50→   * `Pattern<T>` is the type of all patterns
-    51→   * that can match a value of type `T`.
-    52→   */
-    53→  Pattern,
-    54→
-    55→  /**
-    56→   * `unstable_Fn` can be used to created a
-    57→   * a Matchable instance – a custom type that
-    58→   * can be used as a pattern.
-    59→   *
-    60→   * @experimental This feature is unstable.
-    61→   */
-    62→  Fn as unstable_Fn,
-    63→};
-    64→
-    65→export { matcher };
-    …
-    81→export type unstable_Matchable<
-    …
-    100→export type unstable_Matcher<
-    …
-    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
-    …
-    131→export type narrow<input, pattern> = ExtractPreciseValue<
-    …
-    187→export function optional<
-    …
-    241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
-    …
   types/
     BuildMany.ts
     DeepExclude.ts

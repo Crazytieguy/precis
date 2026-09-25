@@ -117,137 +117,137 @@ Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 4006 | 15 | Code::CodeKey { rung: Names, file: lib/env/data.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
 | walker |  | 4021 | 15 | Code::CodeKey { rung: Names, file: lib/helpers/resolveConfig.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
 | walker |  | 4036 | 15 | Code::CodeKey { rung: Names, file: lib/helpers/spread.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4052 | 16 | Code::CodeKey { rung: Names, file: lib/cancel/isCancel.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4068 | 16 | Code::CodeKey { rung: Names, file: lib/core/dispatchRequest.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4084 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/cookies.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4100 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/isURLSameOrigin.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4116 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/parseHeaders.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4132 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/parseProtocol.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4149 | 17 | Code::CodeKey { rung: Names, file: lib/helpers/isAbsoluteURL.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 4166 | 17 | Code::CodeKey { rung: Names, file: lib/helpers/isAxiosError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| ns | 4166 |  | 369 | AxiosRequestConfig keys, part 1 of 3 (url … maxRate) | 3.4 |  | 0.473 |
-| walker |  | 4184 | 18 | Code::CodeKey { rung: Names, file: lib/helpers/bind.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4202 | 18 | Code::CodeKey { rung: Names, file: lib/helpers/shouldBypassProxy.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4213 | 11 | Code::CodeKey { rung: Names, file: lib/platform/browser/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4248 | 35 | Fs::DirListing { dir: tests/smoke/deno/tests } |  |  | 0.473 |
-| walker |  | 4267 | 19 | Code::CodeKey { rung: Names, file: lib/core/Axios.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4286 | 19 | Code::CodeKey { rung: Names, file: lib/core/settle.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4305 | 19 | Code::CodeKey { rung: Names, file: lib/core/transformData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
-| walker |  | 4324 | 19 | Code::CodeKey { rung: Names, file: lib/helpers/estimateDataURLDecodedBytes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4112 | 76 | Markdown::Section { file: MIGRATION_GUIDE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.490 |
+| walker |  | 4128 | 16 | Code::CodeKey { rung: Names, file: lib/cancel/isCancel.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
+| walker |  | 4144 | 16 | Code::CodeKey { rung: Names, file: lib/core/dispatchRequest.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
+| walker |  | 4160 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/cookies.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
+| ns | 4166 |  | 369 | AxiosRequestConfig keys, part 1 of 3 (url … maxRate) | 3.4 |  | 0.472 |
+| walker |  | 4176 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/isURLSameOrigin.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4192 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/parseHeaders.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4208 | 16 | Code::CodeKey { rung: Names, file: lib/helpers/parseProtocol.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4225 | 17 | Code::CodeKey { rung: Names, file: lib/helpers/isAbsoluteURL.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4242 | 17 | Code::CodeKey { rung: Names, file: lib/helpers/isAxiosError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4260 | 18 | Code::CodeKey { rung: Names, file: lib/helpers/bind.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4278 | 18 | Code::CodeKey { rung: Names, file: lib/helpers/shouldBypassProxy.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4289 | 11 | Code::CodeKey { rung: Names, file: lib/platform/browser/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4324 | 35 | Fs::DirListing { dir: tests/smoke/deno/tests } |  |  | 0.473 |
+| walker |  | 4343 | 19 | Code::CodeKey { rung: Names, file: lib/core/Axios.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4362 | 19 | Code::CodeKey { rung: Names, file: lib/core/settle.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4381 | 19 | Code::CodeKey { rung: Names, file: lib/core/transformData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 4400 | 19 | Code::CodeKey { rung: Names, file: lib/helpers/estimateDataURLDecodedBytes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
 | ns | 4437 |  | 271 | AxiosRequestConfig keys, part 2 of 3 (beforeRedirect … env) | 3.5 | 3.4 | 0.460 |
-| walker |  | 4615 | 291 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.460 |
-| walker |  | 4634 | 19 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 59, sub: 0, line: 154 } |  |  | 0.460 |
 | ns | 4639 |  | 202 | AxiosRequestConfig keys, part 3 of 3 (formSerializer … redact) | 3.6 | 3.5 | 0.452 |
-| walker |  | 4655 | 21 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 60, sub: 0, line: 158 } |  |  | 0.452 |
-| walker |  | 4681 | 26 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 74, sub: 0, line: 319 } |  |  | 0.452 |
-| walker |  | 4707 | 26 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 75, sub: 0, line: 323 } |  |  | 0.452 |
-| walker |  | 4735 | 28 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 57, sub: 0, line: 141 } |  |  | 0.452 |
-| walker |  | 4765 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 67, sub: 0, line: 274 } |  |  | 0.452 |
-| walker |  | 4806 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 61, sub: 0, line: 163 } |  |  | 0.452 |
-| walker |  | 4851 | 45 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 72, sub: 0, line: 309 } |  |  | 0.452 |
-| walker |  | 4898 | 47 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 70, sub: 0, line: 293 } |  |  | 0.452 |
+| walker |  | 4691 | 291 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.452 |
+| walker |  | 4710 | 19 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 59, sub: 0, line: 154 } |  |  | 0.452 |
+| walker |  | 4731 | 21 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 60, sub: 0, line: 158 } |  |  | 0.452 |
+| walker |  | 4757 | 26 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 74, sub: 0, line: 319 } |  |  | 0.452 |
+| walker |  | 4783 | 26 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 75, sub: 0, line: 323 } |  |  | 0.452 |
+| walker |  | 4811 | 28 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 57, sub: 0, line: 141 } |  |  | 0.452 |
+| walker |  | 4841 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 67, sub: 0, line: 274 } |  |  | 0.452 |
+| walker |  | 4882 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 61, sub: 0, line: 163 } |  |  | 0.452 |
+| walker |  | 4927 | 45 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 72, sub: 0, line: 309 } |  |  | 0.452 |
 | ns | 4942 |  | 303 | Config validation inside _request | 3.7 | 2.8 | 0.437 |
-| walker |  | 4947 | 49 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 68, sub: 0, line: 279 } |  |  | 0.437 |
-| walker |  | 5005 | 58 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 58, sub: 0, line: 145 } |  |  | 0.437 |
-| walker |  | 5068 | 63 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 65, sub: 0, line: 251 } |  |  | 0.437 |
+| walker |  | 4974 | 47 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 70, sub: 0, line: 293 } |  |  | 0.437 |
+| walker |  | 5023 | 49 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 68, sub: 0, line: 279 } |  |  | 0.437 |
+| walker |  | 5081 | 58 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 58, sub: 0, line: 145 } |  |  | 0.437 |
 | ns | 5084 |  | 142 | mergeConfig: the five merge strategies | 3.8 |  | 0.434 |
-| walker |  | 5135 | 67 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 69, sub: 0, line: 286 } |  |  | 0.434 |
-| walker |  | 5209 | 74 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 71, sub: 0, line: 299 } |  |  | 0.434 |
-| walker |  | 5308 | 99 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 63, sub: 0, line: 236 } |  |  | 0.434 |
-| walker |  | 5430 | 122 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 66, sub: 0, line: 260 } |  |  | 0.434 |
-| walker |  | 5449 | 19 | Code::CodeKey { rung: Decl, file: lib/platform/index.js, decl: 1, sub: 0, line: 4 } |  |  | 0.434 |
-| walker |  | 5469 | 20 | Code::CodeKey { rung: Names, file: lib/core/mergeConfig.js, decl: 0, sub: 0, line: 0 } |  |  | 0.434 |
-| walker |  | 5489 | 20 | Code::CodeKey { rung: Names, file: lib/defaults/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.434 |
-| walker |  | 5509 | 20 | Code::CodeKey { rung: Names, file: lib/helpers/combineURLs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.434 |
+| walker |  | 5144 | 63 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 65, sub: 0, line: 251 } |  |  | 0.434 |
+| walker |  | 5211 | 67 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 69, sub: 0, line: 286 } |  |  | 0.434 |
+| walker |  | 5285 | 74 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 71, sub: 0, line: 299 } |  |  | 0.434 |
+| walker |  | 5384 | 99 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 63, sub: 0, line: 236 } |  |  | 0.434 |
+| walker |  | 5506 | 122 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 66, sub: 0, line: 260 } |  |  | 0.434 |
 | ns | 5520 |  | 436 | mergeConfig: the per-key strategy table | 3.9 |  | 0.419 |
-| walker |  | 5529 | 20 | Code::CodeKey { rung: Names, file: lib/helpers/deprecatedMethod.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
-| walker |  | 5621 | 92 | Code::CodeKey { rung: Names, file: gulpfile.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
-| walker |  | 5638 | 17 | Code::CodeKey { rung: Decl, file: gulpfile.js, decl: 1, sub: 0, line: 12 } |  |  | 0.419 |
+| walker |  | 5525 | 19 | Code::CodeKey { rung: Decl, file: lib/platform/index.js, decl: 1, sub: 0, line: 4 } |  |  | 0.419 |
+| walker |  | 5545 | 20 | Code::CodeKey { rung: Names, file: lib/core/mergeConfig.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 5565 | 20 | Code::CodeKey { rung: Names, file: lib/defaults/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 5585 | 20 | Code::CodeKey { rung: Names, file: lib/helpers/combineURLs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 5605 | 20 | Code::CodeKey { rung: Names, file: lib/helpers/deprecatedMethod.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 5697 | 92 | Code::CodeKey { rung: Names, file: gulpfile.js, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 5714 | 17 | Code::CodeKey { rung: Decl, file: gulpfile.js, decl: 1, sub: 0, line: 12 } |  |  | 0.419 |
 | ns | 5750 |  | 230 | mergeConfig: prototype-pollution-safe application | 3.10 | 3.8 | 0.414 |
-| walker |  | 5839 | 201 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.414 |
-| walker |  | 5870 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 61, sub: 0, line: 190 } |  |  | 0.414 |
-| walker |  | 5910 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 62, sub: 0, line: 194 } |  |  | 0.414 |
-| walker |  | 5950 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 63, sub: 0, line: 199 } |  |  | 0.414 |
-| walker |  | 5990 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 64, sub: 0, line: 204 } |  |  | 0.414 |
+| walker |  | 5915 | 201 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.414 |
+| walker |  | 5946 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 61, sub: 0, line: 190 } |  |  | 0.414 |
+| walker |  | 5986 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 62, sub: 0, line: 194 } |  |  | 0.414 |
 | ns | 6011 |  | 261 | Defaults-side config types | 3.11 |  | 0.405 |
-| walker |  | 6030 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 65, sub: 0, line: 209 } |  |  | 0.405 |
-| walker |  | 6070 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 66, sub: 0, line: 214 } |  |  | 0.405 |
+| walker |  | 6026 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 63, sub: 0, line: 199 } |  |  | 0.405 |
+| walker |  | 6066 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 64, sub: 0, line: 204 } |  |  | 0.405 |
+| walker |  | 6106 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 65, sub: 0, line: 209 } |  |  | 0.405 |
 | ns | 6107 |  | 96 | AxiosResponse shape | 4.1 |  | 0.402 |
-| walker |  | 6110 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 67, sub: 0, line: 219 } |  |  | 0.402 |
-| walker |  | 6150 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 68, sub: 0, line: 224 } |  |  | 0.402 |
+| walker |  | 6146 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 66, sub: 0, line: 214 } |  |  | 0.402 |
 | ns | 6172 |  | 65 | AxiosError: class surface | 4.2 |  | 0.399 |
-| walker |  | 6188 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.399 |
-| walker |  | 6219 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.399 |
-| walker |  | 6240 | 21 | Code::CodeKey { rung: Names, file: lib/cancel/CancelToken.js, decl: 0, sub: 0, line: 0 } |  |  | 0.399 |
-| walker |  | 6261 | 21 | Code::CodeKey { rung: Names, file: lib/core/AxiosHeaders.js, decl: 0, sub: 0, line: 0 } |  |  | 0.399 |
+| walker |  | 6186 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 67, sub: 0, line: 219 } |  |  | 0.399 |
+| walker |  | 6226 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 68, sub: 0, line: 224 } |  |  | 0.399 |
+| walker |  | 6264 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.399 |
 | ns | 6274 |  | 102 | AxiosError instance fields | 4.3 | 4.2 | 0.396 |
-| walker |  | 6282 | 21 | Code::CodeKey { rung: Names, file: lib/helpers/toURLEncodedForm.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 6304 | 22 | Code::CodeKey { rung: Names, file: lib/helpers/HttpStatusCode.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 6326 | 22 | Code::CodeKey { rung: Names, file: lib/helpers/fromDataURI.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 6349 | 23 | Code::CodeKey { rung: Names, file: lib/core/AxiosError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 6372 | 23 | Code::CodeKey { rung: Names, file: lib/core/InterceptorManager.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 6395 | 23 | Code::CodeKey { rung: Names, file: lib/helpers/throttle.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6295 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.396 |
+| walker |  | 6316 | 21 | Code::CodeKey { rung: Names, file: lib/cancel/CancelToken.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6337 | 21 | Code::CodeKey { rung: Names, file: lib/core/AxiosHeaders.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6358 | 21 | Code::CodeKey { rung: Names, file: lib/helpers/toURLEncodedForm.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6380 | 22 | Code::CodeKey { rung: Names, file: lib/helpers/HttpStatusCode.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6402 | 22 | Code::CodeKey { rung: Names, file: lib/helpers/fromDataURI.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| walker |  | 6425 | 23 | Code::CodeKey { rung: Names, file: lib/core/AxiosError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
 | ns | 6444 |  | 170 | Error-code constant roster | 4.4 |  | 0.391 |
-| walker |  | 6630 | 235 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 0, line: 231 } |  |  | 0.391 |
+| walker |  | 6448 | 23 | Code::CodeKey { rung: Names, file: lib/core/InterceptorManager.js, decl: 0, sub: 0, line: 0 } |  |  | 0.391 |
+| walker |  | 6471 | 23 | Code::CodeKey { rung: Names, file: lib/helpers/throttle.js, decl: 0, sub: 0, line: 0 } |  |  | 0.391 |
 | ns | 6632 |  | 188 | AxiosHeaders: complete method surface | 4.5 |  | 0.381 |
+| walker |  | 6706 | 235 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 0, line: 231 } |  |  | 0.381 |
 | ns | 6714 |  | 82 | AxiosHeaders: generated accessors and frozen prototype | 4.6 | 4.5 | 0.378 |
 | ns | 6793 |  | 79 | CancelToken: complete member roster | 4.7 |  | 0.374 |
-| walker |  | 6865 | 235 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 0, line: 170 } |  |  | 0.374 |
-| walker |  | 6890 | 25 | Code::CodeKey { rung: Names, file: lib/core/buildFullPath.js, decl: 0, sub: 0, line: 0 } |  |  | 0.375 |
 | ns | 6904 |  | 111 | CanceledError and isCancel | 4.8 |  | 0.372 |
-| walker |  | 6963 | 73 | Markdown::HeadingsOutline { file: ECOSYSTEM.md } |  |  | 0.372 |
+| walker |  | 6941 | 235 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 0, line: 170 } |  |  | 0.372 |
+| walker |  | 6966 | 25 | Code::CodeKey { rung: Names, file: lib/core/buildFullPath.js, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
 | ns | 6983 |  | 79 | Adapter resolution: knownAdapters and getAdapter | 5.1 |  | 0.370 |
-| walker |  | 6999 | 36 | Markdown::Section { file: ECOSYSTEM.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.370 |
-| walker |  | 7025 | 26 | Code::CodeKey { rung: Names, file: lib/cancel/CanceledError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.370 |
-| walker |  | 7045 | 20 | Code::CodeKey { rung: Decl, file: lib/cancel/CanceledError.js, decl: 1, sub: 0, line: 5 } |  |  | 0.370 |
-| walker |  | 7071 | 26 | Code::CodeKey { rung: Names, file: lib/helpers/AxiosTransformStream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.370 |
-| walker |  | 7097 | 26 | Code::CodeKey { rung: Names, file: lib/helpers/speedometer.js, decl: 0, sub: 0, line: 0 } |  |  | 0.370 |
+| walker |  | 7039 | 73 | Markdown::HeadingsOutline { file: ECOSYSTEM.md } |  |  | 0.370 |
+| walker |  | 7075 | 36 | Markdown::Section { file: ECOSYSTEM.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.370 |
+| walker |  | 7101 | 26 | Code::CodeKey { rung: Names, file: lib/cancel/CanceledError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.370 |
+| walker |  | 7121 | 20 | Code::CodeKey { rung: Decl, file: lib/cancel/CanceledError.js, decl: 1, sub: 0, line: 5 } |  |  | 0.370 |
+| walker |  | 7147 | 26 | Code::CodeKey { rung: Names, file: lib/helpers/AxiosTransformStream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.370 |
 | ns | 7148 |  | 165 | The three adapter entry points and their support gates | 5.2 |  | 0.366 |
-| walker |  | 7176 | 79 | Markdown::HeadingsOutline { file: COLLABORATOR_GUIDE.md } |  |  | 0.366 |
-| walker |  | 7245 | 69 | Markdown::Section { file: COLLABORATOR_GUIDE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.366 |
-| walker |  | 7285 | 40 | Markdown::Section { file: COLLABORATOR_GUIDE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.366 |
-| walker |  | 7313 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/callbackify.js, decl: 0, sub: 0, line: 0 } |  |  | 0.366 |
+| walker |  | 7173 | 26 | Code::CodeKey { rung: Names, file: lib/helpers/speedometer.js, decl: 0, sub: 0, line: 0 } |  |  | 0.366 |
+| walker |  | 7252 | 79 | Markdown::HeadingsOutline { file: COLLABORATOR_GUIDE.md } |  |  | 0.366 |
 | ns | 7316 |  | 168 | Navigation map for the 1312-line Node adapter | 5.3 | 5.2 | 0.363 |
-| walker |  | 7341 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/composeSignals.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
-| walker |  | 7369 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/formDataToJSON.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
-| walker |  | 7397 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/readBlob.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
+| walker |  | 7321 | 69 | Markdown::Section { file: COLLABORATOR_GUIDE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.363 |
+| walker |  | 7361 | 40 | Markdown::Section { file: COLLABORATOR_GUIDE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.363 |
+| walker |  | 7389 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/callbackify.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
+| walker |  | 7417 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/composeSignals.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
+| walker |  | 7445 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/formDataToJSON.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
+| walker |  | 7473 | 28 | Code::CodeKey { rung: Names, file: lib/helpers/readBlob.js, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
 | ns | 7573 |  | 257 | Platform selection: node and browser variants | 5.4 |  | 0.357 |
 | ns | 7634 |  | 61 | Environment capability flags | 5.5 |  | 0.355 |
-| walker |  | 7647 | 250 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 0, line: 42 } |  |  | 0.355 |
-| walker |  | 7678 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 19, sub: 0, line: 65 } |  |  | 0.355 |
-| walker |  | 7722 | 44 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 11, sub: 0, line: 47 } |  |  | 0.355 |
-| walker |  | 7751 | 29 | Code::CodeKey { rung: Names, file: lib/adapters/http.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
-| walker |  | 7780 | 29 | Code::CodeKey { rung: Names, file: lib/helpers/AxiosURLSearchParams.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
-| walker |  | 7791 | 11 | Code::CodeKey { rung: Names, file: lib/platform/node/classes/FormData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
-| walker |  | 8060 | 269 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.355 |
+| walker |  | 7723 | 250 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 0, line: 42 } |  |  | 0.355 |
+| walker |  | 7754 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 19, sub: 0, line: 65 } |  |  | 0.355 |
+| walker |  | 7798 | 44 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 11, sub: 0, line: 47 } |  |  | 0.355 |
+| walker |  | 7827 | 29 | Code::CodeKey { rung: Names, file: lib/adapters/http.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
+| walker |  | 7856 | 29 | Code::CodeKey { rung: Names, file: lib/helpers/AxiosURLSearchParams.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
+| walker |  | 7867 | 11 | Code::CodeKey { rung: Names, file: lib/platform/node/classes/FormData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
 | ns | 8065 |  | 431 | Conditional exports map and browser file aliasing | 5.6 | 1.6 | 0.346 |
-| walker |  | 8074 | 14 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 89, sub: 0, line: 457 } |  |  | 0.346 |
-| walker |  | 8096 | 22 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 85, sub: 0, line: 359 } |  |  | 0.346 |
-| walker |  | 8120 | 24 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 76, sub: 0, line: 327 } |  |  | 0.346 |
-| walker |  | 8217 | 97 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 80, sub: 0, line: 338 } |  |  | 0.346 |
-| walker |  | 8366 | 149 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 90, sub: 0, line: 461 } |  |  | 0.357 |
-| walker |  | 8396 | 30 | Code::CodeKey { rung: Names, file: lib/helpers/ZlibHeaderTransformStream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
-| walker |  | 8426 | 30 | Code::CodeKey { rung: Names, file: lib/helpers/toFormData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
+| walker |  | 8136 | 269 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.346 |
+| walker |  | 8150 | 14 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 89, sub: 0, line: 457 } |  |  | 0.346 |
+| walker |  | 8172 | 22 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 85, sub: 0, line: 359 } |  |  | 0.346 |
+| walker |  | 8196 | 24 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 76, sub: 0, line: 327 } |  |  | 0.346 |
+| walker |  | 8293 | 97 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 80, sub: 0, line: 338 } |  |  | 0.346 |
+| walker |  | 8442 | 149 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 90, sub: 0, line: 461 } |  |  | 0.357 |
+| walker |  | 8472 | 30 | Code::CodeKey { rung: Names, file: lib/helpers/ZlibHeaderTransformStream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
+| walker |  | 8502 | 30 | Code::CodeKey { rung: Names, file: lib/helpers/toFormData.js, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
 | ns | 8600 |  | 535 | utils.js: the complete exported utility set | 6.1 |  | 0.342 |
-| walker |  | 8670 | 244 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.342 |
-| walker |  | 8700 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 17, sub: 0, line: 46 } |  |  | 0.342 |
-| walker |  | 8741 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 9, sub: 0, line: 28 } |  |  | 0.342 |
+| walker |  | 8746 | 244 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.342 |
+| walker |  | 8776 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 17, sub: 0, line: 46 } |  |  | 0.342 |
+| walker |  | 8817 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 9, sub: 0, line: 28 } |  |  | 0.342 |
 | ns | 8842 |  | 242 | Helper signatures: URL, params and form-data | 6.2 |  | 0.348 |
-| walker |  | 9044 | 303 | Markdown::Section { file: lib/adapters/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.348 |
-| walker |  | 9149 | 105 | Fs::DirListing { dir: tests/unit } |  |  | 0.349 |
-| walker |  | 9182 | 33 | Fs::DirListing { dir: tests/unit/adapters } |  |  | 0.349 |
-| walker |  | 9218 | 36 | Fs::DirListing { dir: tests/unit/core } |  |  | 0.349 |
-| walker |  | 9222 | 4 | Fs::DirListing { dir: docs/data } |  |  | 0.349 |
-| walker |  | 9226 | 4 | Fs::DirListing { dir: examples/all } |  |  | 0.349 |
-| walker |  | 9230 | 4 | Fs::DirListing { dir: examples/amd } |  |  | 0.349 |
-| walker |  | 9234 | 4 | Fs::DirListing { dir: examples/transform-response } |  |  | 0.349 |
+| walker |  | 9120 | 303 | Markdown::Section { file: lib/adapters/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.348 |
+| walker |  | 9225 | 105 | Fs::DirListing { dir: tests/unit } |  |  | 0.349 |
 | ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.349 |
-| walker |  | 9293 | 59 | Fs::DirListing { dir: tests/unit/utils } |  |  | 0.349 |
-| walker |  | 9325 | 32 | Code::CodeKey { rung: Names, file: lib/helpers/buildURL.js, decl: 0, sub: 0, line: 0 } |  |  | 0.353 |
-| walker |  | 9548 | 223 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 87, sub: 0, line: 366 } |  |  | 0.368 |
-| ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.360 |
-| walker |  | 9685 | 137 | Fs::DirListing { dir: docs/es/pages/advanced } |  |  | 0.360 |
+| walker |  | 9258 | 33 | Fs::DirListing { dir: tests/unit/adapters } |  |  | 0.349 |
+| walker |  | 9294 | 36 | Fs::DirListing { dir: tests/unit/core } |  |  | 0.349 |
+| walker |  | 9298 | 4 | Fs::DirListing { dir: docs/data } |  |  | 0.349 |
+| walker |  | 9302 | 4 | Fs::DirListing { dir: examples/all } |  |  | 0.349 |
+| walker |  | 9306 | 4 | Fs::DirListing { dir: examples/amd } |  |  | 0.349 |
+| walker |  | 9310 | 4 | Fs::DirListing { dir: examples/transform-response } |  |  | 0.349 |
+| walker |  | 9369 | 59 | Fs::DirListing { dir: tests/unit/utils } |  |  | 0.349 |
+| walker |  | 9401 | 32 | Code::CodeKey { rung: Names, file: lib/helpers/buildURL.js, decl: 0, sub: 0, line: 0 } |  |  | 0.353 |
+| ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.346 |
+| walker |  | 9624 | 223 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 87, sub: 0, line: 366 } |  |  | 0.360 |
+| walker |  | 9761 | 137 | Fs::DirListing { dir: docs/es/pages/advanced } |  |  | 0.360 |
 | ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.359 |
-| walker |  | 9822 | 137 | Fs::DirListing { dir: docs/fr/pages/advanced } |  |  | 0.359 |
+| walker |  | 9898 | 137 | Fs::DirListing { dir: docs/fr/pages/advanced } |  |  | 0.359 |
 | ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.378 |
-| walker |  | 9959 | 137 | Fs::DirListing { dir: docs/pages/advanced } |  |  | 0.411 |

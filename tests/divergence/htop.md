@@ -1,4 +1,4 @@
-Score(3000)=0.567 I=0.631 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.814/0.760/0.652/0.567/0.517/0.429/0.418
+Score(3000)=0.567 I=0.631 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.814/0.758/0.652/0.567/0.517/0.429/0.418
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -10,57 +10,57 @@ Score(3000)=0.567 I=0.631 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | ns | 561 |  | 168 | Root roster: setup panels and info screens | 1.6 |  | 0.000 |
 | ns | 670 |  | 109 | Root roster: utility and infrastructure modules | 1.7 |  | 0.000 |
 | walker |  | 713 | 713 | Fs::DirListing { dir: . } |  |  | 0.829 |
-| walker |  | 729 | 16 | Code::CodeKey { rung: Names, file: TasksMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
-| walker |  | 753 | 24 | Fs::DirListing { dir: docs } |  |  | 0.829 |
-| walker |  | 757 | 4 | Fs::DirListing { dir: docs/images } |  |  | 0.829 |
+| walker |  | 721 | 8 | Fs::DirListing { dir: m4 } |  |  | 0.829 |
+| walker |  | 733 | 12 | Fs::DirListing { dir: iwyu } |  |  | 0.829 |
+| walker |  | 749 | 16 | Code::CodeKey { rung: Names, file: TasksMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
 | ns | 772 |  | 102 | Root roster: build, docs, packaging and meta files | 1.8 |  | 0.820 |
-| walker |  | 774 | 17 | Code::CodeKey { rung: Names, file: FileDescriptorMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
-| walker |  | 791 | 17 | Code::CodeKey { rung: Names, file: HostnameMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
-| walker |  | 808 | 17 | Code::CodeKey { rung: Names, file: MemorySwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
-| walker |  | 825 | 17 | Code::CodeKey { rung: Names, file: SysArchMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
-| ns | 844 |  | 72 | README: scrolling/system-info behaviour and the ncurses requirement | 1.9 |  | 0.812 |
-| walker |  | 850 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.812 |
-| walker |  | 887 | 37 | Fs::DirListing { dir: zfs } |  |  | 0.812 |
-| walker |  | 932 | 45 | Fs::DirListing { dir: solaris } |  |  | 0.813 |
-| walker |  | 977 | 45 | Fs::DirListing { dir: unsupported } |  |  | 0.814 |
-| walker |  | 1011 | 34 | Code::CodeKey { rung: Names, file: LoadAverageMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
-| walker |  | 1026 | 15 | Code::CodeKey { rung: Names, file: solaris/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
+| walker |  | 773 | 24 | Fs::DirListing { dir: docs } |  |  | 0.820 |
+| walker |  | 777 | 4 | Fs::DirListing { dir: docs/images } |  |  | 0.820 |
+| walker |  | 794 | 17 | Code::CodeKey { rung: Names, file: FileDescriptorMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
+| walker |  | 811 | 17 | Code::CodeKey { rung: Names, file: HostnameMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
+| walker |  | 828 | 17 | Code::CodeKey { rung: Names, file: MemorySwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
+| ns | 844 |  | 72 | README: scrolling/system-info behaviour and the ncurses requirement | 1.9 |  | 0.813 |
+| walker |  | 845 | 17 | Code::CodeKey { rung: Names, file: SysArchMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.813 |
+| walker |  | 870 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.813 |
+| walker |  | 907 | 37 | Fs::DirListing { dir: zfs } |  |  | 0.813 |
+| walker |  | 952 | 45 | Fs::DirListing { dir: solaris } |  |  | 0.813 |
+| walker |  | 997 | 45 | Fs::DirListing { dir: unsupported } |  |  | 0.814 |
+| walker |  | 1031 | 34 | Code::CodeKey { rung: Names, file: LoadAverageMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
+| walker |  | 1046 | 15 | Code::CodeKey { rung: Names, file: solaris/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
 | ns | 1066 |  | 222 | --help text, part 1: -C/-d/-F/--no-function-bar/-h/-H/-M and where it is printed | 1.10 |  | 0.782 |
-| walker |  | 1077 | 51 | Fs::DirListing { dir: freebsd } |  |  | 0.782 |
-| walker |  | 1092 | 15 | Code::CodeKey { rung: Names, file: freebsd/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.782 |
-| walker |  | 1143 | 51 | Fs::DirListing { dir: openbsd } |  |  | 0.783 |
-| walker |  | 1179 | 36 | Code::CodeKey { rung: Names, file: UptimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.783 |
-| walker |  | 1234 | 55 | Fs::DirListing { dir: darwin } |  |  | 0.785 |
-| walker |  | 1249 | 15 | Code::CodeKey { rung: Names, file: darwin/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.785 |
-| walker |  | 1304 | 55 | Fs::DirListing { dir: netbsd } |  |  | 0.787 |
+| walker |  | 1097 | 51 | Fs::DirListing { dir: freebsd } |  |  | 0.783 |
+| walker |  | 1112 | 15 | Code::CodeKey { rung: Names, file: freebsd/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.783 |
+| walker |  | 1163 | 51 | Fs::DirListing { dir: openbsd } |  |  | 0.783 |
+| walker |  | 1199 | 36 | Code::CodeKey { rung: Names, file: UptimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.783 |
+| walker |  | 1254 | 55 | Fs::DirListing { dir: darwin } |  |  | 0.785 |
+| walker |  | 1269 | 15 | Code::CodeKey { rung: Names, file: darwin/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.785 |
+| walker |  | 1324 | 55 | Fs::DirListing { dir: netbsd } |  |  | 0.787 |
 | ns | 1342 |  | 276 | --help text, part 2: --no-meters through -V, plus the platform hook and footer | 1.11 | 1.10 | 0.758 |
-| walker |  | 1343 | 39 | Code::CodeKey { rung: Names, file: SwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
-| walker |  | 1382 | 39 | Code::CodeKey { rung: Names, file: XUtils.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
-| walker |  | 1439 | 57 | Fs::DirListing { dir: dragonflybsd } |  |  | 0.760 |
-| walker |  | 1454 | 15 | Code::CodeKey { rung: Names, file: dragonflybsd/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
-| walker |  | 1462 | 8 | Fs::DirListing { dir: m4 } |  |  | 0.760 |
-| walker |  | 1503 | 41 | Code::CodeKey { rung: Names, file: MemoryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
-| walker |  | 1546 | 43 | Code::CodeKey { rung: Names, file: BatteryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
-| walker |  | 1570 | 24 | Code::CodeKey { rung: Decl, file: BatteryMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.760 |
+| walker |  | 1363 | 39 | Code::CodeKey { rung: Names, file: SwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| walker |  | 1402 | 39 | Code::CodeKey { rung: Names, file: XUtils.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| walker |  | 1459 | 57 | Fs::DirListing { dir: dragonflybsd } |  |  | 0.760 |
+| walker |  | 1474 | 15 | Code::CodeKey { rung: Names, file: dragonflybsd/ProcessField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
+| walker |  | 1515 | 41 | Code::CodeKey { rung: Names, file: MemoryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
+| walker |  | 1558 | 43 | Code::CodeKey { rung: Names, file: BatteryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
 | ns | 1575 |  | 233 | Object.h: the vtable idiom in full (ObjectClass, Object, Arg) | 2.1 |  | 0.714 |
-| walker |  | 1615 | 45 | Code::CodeKey { rung: Names, file: MeterMode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
-| walker |  | 1660 | 45 | Code::CodeKey { rung: Names, file: NetworkIOMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
-| walker |  | 1683 | 23 | Plaintext::Whole { file: autogen.sh } |  |  | 0.714 |
-| walker |  | 1727 | 44 | Code::CodeKey { rung: Decl, file: NetworkIOMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.714 |
-| walker |  | 1777 | 50 | Code::CodeKey { rung: Names, file: RowField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
+| walker |  | 1582 | 24 | Code::CodeKey { rung: Decl, file: BatteryMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.714 |
+| walker |  | 1627 | 45 | Code::CodeKey { rung: Names, file: MeterMode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
+| walker |  | 1672 | 45 | Code::CodeKey { rung: Names, file: NetworkIOMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
+| walker |  | 1695 | 23 | Plaintext::Whole { file: autogen.sh } |  |  | 0.714 |
+| walker |  | 1739 | 44 | Code::CodeKey { rung: Decl, file: NetworkIOMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.714 |
+| walker |  | 1789 | 50 | Code::CodeKey { rung: Names, file: RowField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
 | ns | 1810 |  | 235 | Row.h: the Row struct - every field of the base display row | 2.2 |  | 0.679 |
-| walker |  | 1828 | 51 | Code::CodeKey { rung: Names, file: DateTimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 1852 | 24 | Code::CodeKey { rung: Names, file: darwin/DarwinMachine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 1876 | 24 | Code::CodeKey { rung: Names, file: unsupported/UnsupportedMachine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 1933 | 57 | Code::CodeKey { rung: Names, file: CommandLine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 1957 | 24 | Code::CodeKey { rung: Decl, file: CommandLine.h, decl: 1, sub: 0, line: 11 } |  |  | 0.679 |
-| walker |  | 2017 | 60 | Code::CodeKey { rung: Names, file: ColorsPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 2037 | 20 | Code::CodeKey { rung: Decl, file: ColorsPanel.h, decl: 1, sub: 0, line: 14 } |  |  | 0.679 |
+| walker |  | 1840 | 51 | Code::CodeKey { rung: Names, file: DateTimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 1864 | 24 | Code::CodeKey { rung: Names, file: darwin/DarwinMachine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 1888 | 24 | Code::CodeKey { rung: Names, file: unsupported/UnsupportedMachine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 1945 | 57 | Code::CodeKey { rung: Names, file: CommandLine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 1969 | 24 | Code::CodeKey { rung: Decl, file: CommandLine.h, decl: 1, sub: 0, line: 11 } |  |  | 0.679 |
+| walker |  | 2029 | 60 | Code::CodeKey { rung: Names, file: ColorsPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 2049 | 20 | Code::CodeKey { rung: Decl, file: ColorsPanel.h, decl: 1, sub: 0, line: 14 } |  |  | 0.679 |
 | ns | 2071 |  | 261 | Row.h: RowClass vtable - the six behaviours a row type overrides | 2.3 |  | 0.652 |
-| walker |  | 2123 | 86 | Fs::DirListing { dir: generic } |  |  | 0.653 |
-| walker |  | 2142 | 19 | Code::CodeKey { rung: Names, file: generic/hostname.h, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
-| walker |  | 2165 | 23 | Code::CodeKey { rung: Names, file: generic/fdstat_sysctl.h, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
-| walker |  | 2177 | 12 | Fs::DirListing { dir: iwyu } |  |  | 0.654 |
+| walker |  | 2135 | 86 | Fs::DirListing { dir: generic } |  |  | 0.654 |
+| walker |  | 2154 | 19 | Code::CodeKey { rung: Names, file: generic/hostname.h, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
+| walker |  | 2177 | 23 | Code::CodeKey { rung: Names, file: generic/fdstat_sysctl.h, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
 | walker |  | 2203 | 26 | Code::CodeKey { rung: Names, file: darwin/DarwinProcessTable.h, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
 | walker |  | 2226 | 23 | Code::CodeKey { rung: Decl, file: darwin/DarwinProcessTable.h, decl: 1, sub: 0, line: 16 } |  |  | 0.654 |
 | walker |  | 2252 | 26 | Code::CodeKey { rung: Names, file: solaris/SolarisProcessTable.h, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |

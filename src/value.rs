@@ -229,9 +229,7 @@ pub(crate) fn non_essential_factor_inner(
             // not tooling plumbing — exempt from the dot-prefix damp
             // (cf. the `.github/workflows` exception above).
             return 0.2;
-        } else if is_root_level_vendor_dir_name(first)
-            || is_root_level_build_tooling_dir_name(first)
-        {
+        } else if is_root_level_vendor_dir_name(first) {
             // Depth-1-only: a project that vendors *as part of* its
             // own `source/` (chalk) keeps full weight on its vendored
             // modules.
@@ -257,13 +255,12 @@ pub(crate) fn non_essential_factor_inner(
             return 0.2;
         }
     }
-    // Peripheral admin / release / translation markdown (anywhere in
-    // the tree). NS authors universally treat these as "appendix"
+    // Peripheral admin / release markdown (anywhere in the tree). NS authors universally treat these as "appendix"
     // content; the walker should not let CHANGELOG, CONTRIBUTING, etc.
     // crowd the primary-source schedule. (A README-promotion exemption
     // for root-level upgrade guides was measured dead on the
     // post-refreeze keys and removed 2026-07-06.)
-    if is_peripheral_doc(target) || is_localized_readme(target) {
+    if is_peripheral_doc(target) {
         return 0.2;
     }
     if !skip_dir_classifier {
@@ -303,7 +300,6 @@ pub(crate) fn non_essential_factor_inner(
                     | "scripts"
                     | "tools"
                     | "e2e"
-                    | "migrations"
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
@@ -314,23 +310,39 @@ pub(crate) fn non_essential_factor_inner(
             }
         }
     }
-    if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-        let ext = path.extension().and_then(|e| e.to_str());
-        // Python under a `docs/` subtree is Sphinx config / site
-        // builders / schema validators. (`docs/examples/*.py` survives
-        // because the `examples` dir classifier ran first.)
-        if ext == Some("py")
-            && target
-                .components()
-                .any(|c| c.as_os_str().to_str().is_some_and(|s| s == "docs"))
-        {
-            return 0.3;
-        }
-        if is_colocated_test_filename(name) {
-            return 0.2;
-        }
+    // Python under a `docs/` subtree is Sphinx config / site builders /
+    // schema validators. (`docs/examples/*.py` survives because the
+    // `examples` dir classifier ran first.)
+    if path.extension().is_some_and(|ext| ext == "py")
+        && target
+            .components()
+            .any(|c| c.as_os_str().to_str().is_some_and(|s| s == "docs"))
+    {
+        return 0.3;
+    }
+    if path
+        .file_name()
+        .and_then(|name| name.to_str())
+        .is_some_and(is_colocated_test_filename)
+    {
+        return 0.2;
     }
     1.0
+}
+
+/// Filename carrying the co-located unit-test convention (`foo.test.js`,
+/// `foo.spec.ts`, `foo_test.go`, `test_foo.py`).
+fn is_colocated_test_filename(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    lower.contains(".test.")
+        || lower.contains(".test-d.")
+        || lower.contains(".spec.")
+        || lower.ends_with("_test.go")
+        || lower.ends_with("_test.ts")
+        || lower.ends_with("_test.js")
+        || lower.ends_with("_test.tsx")
+        || lower.ends_with("_test.py")
+        || (lower.starts_with("test_") && lower.ends_with(".py"))
 }
 
 /// True iff `target`'s file stem is exactly `test` / `tests` — the file
@@ -353,23 +365,6 @@ pub(crate) fn is_dotenv_sample_filename(name: &str) -> bool {
     )
 }
 
-/// Filename carrying the co-located unit-test convention (`foo.test.js`,
-/// `foo.spec.ts`, `foo_test.go`, `test_foo.py`). Shared by the
-/// non-essential demotion here and the fs walker's spec-catalog gate —
-/// the two must agree on what counts as a co-located test.
-pub(crate) fn is_colocated_test_filename(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    lower.contains(".test.")
-        || lower.contains(".test-d.")
-        || lower.contains(".spec.")
-        || lower.ends_with("_test.go")
-        || lower.ends_with("_test.ts")
-        || lower.ends_with("_test.js")
-        || lower.ends_with("_test.tsx")
-        || lower.ends_with("_test.py")
-        || (lower.starts_with("test_") && lower.ends_with(".py"))
-}
-
 /// Detect a depth-1 docs-site sub-app — directory named like a docs
 /// site that ships its own `package.json` (Docusaurus, VitePress, …).
 /// Distinguishes a separate publishing app from inline user docs.
@@ -389,18 +384,6 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
     matches!(
         lower.as_str(),
         "deps" | "vendor" | "third_party" | "third-party" | "external" | "3rd" | "sig"
-    )
-}
-
-/// Root-level vendored build-tooling dirs — autotools macro stashes and
-/// linter/tool config trees (htop's `m4/`, `iwyu/`). Their listings are
-/// tiny, so at full weight they win the ratio race over wide source
-/// dirs and read as prominent; nothing an NS anchors on lives there.
-fn is_root_level_build_tooling_dir_name(s: &str) -> bool {
-    let lower = s.to_ascii_lowercase();
-    matches!(
-        lower.as_str(),
-        "m4" | "iwyu" | "build-aux" | "autom4te.cache" | "gnulib"
     )
 }
 
@@ -490,7 +473,7 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
 }
 
 /// True for admin/release markdown — CHANGELOG / CONTRIBUTING /
-/// SECURITY / NOTICE / RELEASING / migration-guide stems / etc. —
+/// SECURITY / NOTICE / RELEASING / etc. —
 /// anywhere in the tree (monorepo per-package copies inherit the
 /// same admin-doc semantics).
 pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
@@ -524,55 +507,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     {
         return true;
     }
-    // Migration / upgrade / deprecation docs are content describing
-    // historical API changes — necessary at version-bump time but rarely
-    // load-bearing for orienting on the current API. NS authors
-    // universally treat these as tier-2 reference at best. Matched as
-    // substrings so `v3-to-v4-migration-guide.md`, `migrate-from-foo.md`,
-    // `deprecated.md`, `deprecation-policy.rst`, `UPGRADE_GUIDE_V2.md`
-    // are all caught.
-    let lower = stem.to_ascii_lowercase();
-    if lower.contains("migration")
-        || lower.contains("migrate")
-        || lower.contains("deprecated")
-        || lower.contains("upgrade")
-    {
-        return true;
-    }
     false
-}
-
-/// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
-/// anywhere in the tree, where `<locale>` is shaped like an
-/// ISO-639-style code (2-3 lowercase ASCII letters, optional `-`/`_`
-/// region suffix). A small blocklist rules out non-locale suffixes
-/// sharing that shape (`README.api.md` / `README.dev.md` /
-/// `README.old.md`); a whitelist of ISO codes could never keep up with
-/// the ones in the wild.
-fn is_localized_readme(target: &std::path::Path) -> bool {
-    let Some(name) = target.file_name().and_then(|n| n.to_str()) else {
-        return false;
-    };
-    let lower = name.to_ascii_lowercase();
-    let Some(stem) = lower
-        .strip_suffix(".md")
-        .or_else(|| lower.strip_suffix(".rst"))
-    else {
-        return false;
-    };
-    let Some(locale) = stem
-        .strip_prefix("readme.")
-        .or_else(|| stem.strip_prefix("readme_"))
-    else {
-        return false;
-    };
-    let lang = locale.split(['-', '_']).next().unwrap_or_default();
-    (2..=3).contains(&lang.len())
-        && lang.bytes().all(|b| b.is_ascii_lowercase())
-        && !matches!(
-            lang,
-            "api" | "dev" | "old" | "new" | "min" | "tmp" | "bak" | "pre"
-        )
 }
 
 /// Default cost-side concavity for the scheduling ratio — gentle so
@@ -668,7 +603,7 @@ mod tests {
                 0.2,
                 "CHANGELOG.md changelog.rst HISTORY.md RELEASE_NOTES.md RELEASING.md \
                  CONTRIBUTING.md SECURITY.md NOTICE.md AUTHORS.md CODE_OF_CONDUCT.md \
-                 NEWS.md news.rst FAQ.md UPGRADE_GUIDE_V2.md upgrade-guide.md",
+                 NEWS.md news.rst FAQ.md",
             ),
             // Monorepo per-package CHANGELOGs etc. inherit admin-doc semantics.
             (
@@ -704,21 +639,6 @@ mod tests {
                 1.0,
                 "contribute/contribute.md contribute/build.sh contribute/conf/demo.json",
             ),
-            // Localized READMEs: `[a-z]{2,3}(-[A-Z]{2,4})?` locale suffix
-            // demotes; non-locale suffixes (`api`, `dev`, `old`, `template`)
-            // and bare READMEs keep full weight. Subdir applies too.
-            (
-                0.2,
-                "README.zh-CN.md Readme_zh-CN.md README.ja.md README.pt_BR.rst \
-                 README.fr.md README.en-US.md README.cn.md README.kr.md README.fa.md \
-                 README.de-ch.md README.pt-pt.md README.es-mx.md",
-            ),
-            (
-                1.0,
-                "README.api.md README.dev.md README.old.md README_template.md",
-            ),
-            (1.0, "README.md README.rst Readme.md"),
-            (0.2, "docs/README.zh-CN.md"),
             // Scaffolder payloads: the prefixed spellings only. A bare
             // `templates/` is the view layer in Django / Flask / Jinja /
             // Helm trees and keeps full weight.
