@@ -313,89 +313,6 @@ package.json
   80→  },
   …
 tests/
-  args.literal.test.js
-  args.variadic.test.js
-  argument.chain.test.js
-  argument.choices.test.js
-  argument.custom-processing.test.js
-  argument.required.test.js
-  argument.variadic.test.js
-  command.action.test.js
-  command.addCommand.test.js
-  command.addHelpOption.test.js
-  command.addHelpText.test.js
-  command.alias.test.js
-  command.allowExcessArguments.test.js
-  command.allowUnknownOption.test.js
-  command.argumentVariations.test.js
-  command.asterisk.test.js
-  command.chain.test.js
-  command.commandHelp.test.js
-  command.configureHelp.test.js
-  command.configureOutput.test.js
-  command.copySettings.test.js
-  command.createArgument.test.js
-  command.createHelp.test.js
-  command.createOption.test.js
-  command.default.test.js
-  command.description.test.js
-  command.error.test.js
-  command.executableSubcommand.inspect.test.js
-  command.executableSubcommand.lookup.test.js
-  command.executableSubcommand.mock.test.js
-  command.executableSubcommand.search.test.js
-  command.executableSubcommand.signals.test.js
-  command.executableSubcommand.test.js
-  command.exitOverride.test.js
-  command.help.test.js
-  command.helpCommand.test.js
-  command.helpOption.test.js
-  command.hook.test.js
-  command.name.test.js
-  command.nested.test.js
-  command.onCommand.test.js
-  command.option-misuse.test.js
-  command.parse.test.js
-  command.parseOptions.test.js
-  command.positionalOptions.test.js
-  command.registerClash.test.js
-  command.showHelpAfterError.test.js
-  command.showSuggestionAfterError.test.js
-  command.summary.test.js
-  command.unknownCommand.test.js
-  command.unknownOption.test.js
-  command.usage.test.js
-  commander.configureCommand.test.js
-  createCommand.test.js
-  deprecated.test.js
-  esm-imports-test.mjs
-  fixtures/
-  fixtures-extensions/
-  help.argumentDescription.test.js
-  help.boxWrap.test.js
-  help.commandTerm.test.js
-  help.commandUsage.test.js
-  help.longestArgumentTermLength.test.js
-  help.longestCommandTermLength.test.js
-  help.longestOptionTermLength.test.js
-  help.minWidthToWrap.test.js
-  help.optionDescription.test.js
-  help.optionTerm.test.js
-  help.padWidth.test.js
-  help.preformatted.test.js
-  help.showGlobalOptions.test.js
-  help.sortCommands.test.js
-  help.sortOptions.test.js
-  help.stripAnsi.test.js
-  help.style.test.js
-  help.subcommandDescription.test.js
-  help.suggestion.test.js
-  help.visibleArguments.test.js
-  help.visibleCommands.test.js
-  help.visibleGlobalOptions.test.js
-  help.visibleOptions.test.js
-  helpGroup.test.js
-  …
 tsconfig.js.json
 tsconfig.json
 tsconfig.ts.json
@@ -404,4 +321,66 @@ typings/
     …
     3→export * from './index.js';
   index.d.ts
+    …
+    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
+    13→  | LiteralType
+    14→  | (BaseType & Record<never, never>);
+    16→export class CommanderError extends Error {
+    …
+    31→export class InvalidArgumentError extends CommanderError {
+    …
+    36→  constructor(message: string);
+    37→}
+    38→export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
+    39→
+    40→export interface ErrorOptions {
+    …
+    48→export class Argument {
+    …
+    95→export class Option {
+    …
+    210→export class Help {
+    …
+    340→export type HelpConfiguration = Partial<Help>;
+    341→
+    342→export interface ParseOptions {
+    343→  from: 'node' | 'electron' | 'user';
+    344→}
+    345→export interface HelpContext {
+    346→  // optional parameter for .help() and .outputHelp()
+    347→  error: boolean;
+    348→}
+    349→export interface AddHelpTextContext {
+    350→  // passed to text function used with .addHelpText()
+    351→  error: boolean;
+    352→  command: Command;
+    353→}
+    354→export interface OutputConfiguration {
+    …
+    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+    …
+    370→export type OptionValueSource =
+    371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+    372→  | undefined;
+    374→export type OptionValues = Record<string, any>;
+    375→
+    376→export class Command {
+    …
+    1094→export interface CommandOptions {
+    1095→  hidden?: boolean;
+    1096→  isDefault?: boolean;
+    …
+    1100→export interface ExecutableCommandOptions extends CommandOptions {
+    1101→  executableFile?: string;
+    1102→}
+    1104→export interface ParseOptionsResult {
+    1105→  operands: string[];
+    1106→  unknown: string[];
+    1107→}
+    1109→export function createCommand(name?: string): Command;
+    1110→export function createOption(flags: string, description?: string): Option;
+    1111→export function createArgument(name: string, description?: string): Argument;
+    1112→
+    1113→export const program: Command;
   index.test-d.ts

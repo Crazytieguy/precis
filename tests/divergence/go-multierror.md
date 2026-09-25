@@ -7,12 +7,12 @@ Score(3000)=0.514 I=0.549 C=0.481 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 83 |  | 29 | go.mod: module path and language version | 1.2 |  | 0.000 |
 | walker |  | 109 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.562 |
 | walker |  | 109 | 0 | GoMod::File { file: go.mod } |  |  | 0.562 |
-| walker |  | 123 | 14 | Fs::DirListing { dir: .github } |  |  | 0.563 |
-| walker |  | 135 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.563 |
-| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.645 |
-| ns | 240 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.586 |
-| walker |  | 242 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.605 |
-| walker |  | 291 | 49 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.607 |
+| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.644 |
+| walker |  | 216 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.665 |
+| ns | 240 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.604 |
+| walker |  | 265 | 49 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.606 |
+| walker |  | 279 | 14 | Fs::DirListing { dir: .github } |  |  | 0.606 |
+| walker |  | 291 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.607 |
 | ns | 315 |  | 75 | The `Error` type: doc comment and both fields | 1.5 |  | 0.551 |
 | ns | 467 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.445 |
 | ns | 606 |  | 139 | Every method on `Error`, across multierror.go and sort.go | 1.7 |  | 0.385 |

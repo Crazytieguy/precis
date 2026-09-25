@@ -157,6 +157,16 @@ packages/
         15→  () => {
         16→    const initialColorMode = 'system';
         17→    const colorModeStorageKey = 'enclosed_color_mode';
+        18→    const localStorageManager = createLocalStorageManager(colorModeStorageKey);
+        19→
+        20→    return (
+        21→      <Router
+        22→        children={getRoutes()}
+        23→        root={props => (
+        24→          <Suspense>
+        25→            <I18nProvider>
+        26→              <NoteContextProvider>
+        27→                <ColorModeScript storageType={localStorageManager.type} storageKey={colorModeStorageKey} initialColorMode={initialColorMode} />
         …
       locales/
       modules/
@@ -181,18 +191,6 @@ packages/
           i18n.models.ts
           i18n.provider.tsx
         notes/
-          components/
-            file-uploader.tsx
-            note-password-field.tsx
-          notes.constants.ts
-          notes.context.tsx
-          notes.models.test.ts
-          notes.models.ts
-          notes.services.ts
-          notes.usecases.ts
-          pages/
-            create-note.page.tsx
-            view-note.page.tsx
         shared/
           files/
             convert.ts
@@ -200,10 +198,6 @@ packages/
           hooks/
             hooks.ts
           http/
-            http-client.models.test.ts
-            http-client.models.ts
-            http-client.ts
-            http-errors.ts
           style/
             cn.ts
           utils/
@@ -230,11 +224,6 @@ packages/
         app/
           auth/
           config/
-            config.models.ts
-            config.routes.ts
-            config.test-utils.ts
-            config.ts
-            config.types.ts
           middlewares/
           server.ts
           server.types.ts

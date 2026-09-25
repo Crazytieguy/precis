@@ -9,13 +9,13 @@ Score(3000)=0.701 I=0.892 C=0.551 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 62 | 15 | Fs::DirListing { dir: docs } |  |  | 0.000 |
 | walker |  | 70 | 8 | Fs::DirListing { dir: config/themes } |  |  | 0.000 |
 | ns | 79 |  | 35 | Complete repository root listing | 1.2 |  | 0.697 |
-| walker |  | 108 | 38 | Fs::DirListing { dir: src } |  |  | 0.785 |
-| ns | 117 |  | 38 | Complete src/ listing — the module roster | 1.3 |  | 0.754 |
-| walker |  | 124 | 16 | Fs::DirListing { dir: src/config } |  |  | 0.756 |
-| walker |  | 159 | 35 | Fs::DirListing { dir: src/ui } |  |  | 0.785 |
-| walker |  | 202 | 43 | Fs::DirListing { dir: src/parse } |  |  | 0.848 |
-| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.802 |
-| walker |  | 246 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 114 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 117 |  | 38 | Complete src/ listing — the module roster | 1.3 |  | 0.727 |
+| walker |  | 152 | 38 | Fs::DirListing { dir: src } |  |  | 1.000 |
+| walker |  | 168 | 16 | Fs::DirListing { dir: src/config } |  |  | 1.000 |
+| walker |  | 203 | 35 | Fs::DirListing { dir: src/ui } |  |  | 1.000 |
+| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.783 |
+| walker |  | 246 | 43 | Fs::DirListing { dir: src/parse } |  |  | 1.000 |
 | walker |  | 254 | 8 | Fs::DirListing { dir: .github } |  |  | 1.000 |
 | ns | 268 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.967 |
 | walker |  | 270 | 16 | Fs::DirListing { dir: .github/workflows } |  |  | 0.967 |

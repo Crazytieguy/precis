@@ -40,11 +40,11 @@ Score(3000)=0.647 I=0.890 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 797 | 64 | Fs::DirListing { dir: src/osal } |  |  | 0.553 |
 | walker |  | 806 | 9 | Fs::DirListing { dir: .circleci } |  |  | 0.553 |
 | walker |  | 816 | 10 | Fs::DirListing { dir: test } |  |  | 0.553 |
-| walker |  | 821 | 5 | Fs::DirListing { dir: .claude/commands } |  |  | 0.553 |
-| walker |  | 858 | 37 | Fs::DirListing { dir: docs/reference } |  |  | 0.554 |
-| ns | 879 |  | 150 | Architecture doc: layer/component overview | 1.6 |  | 0.529 |
-| walker |  | 948 | 90 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.791 |
-| walker |  | 983 | 35 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.791 |
+| ns | 879 |  | 150 | Architecture doc: layer/component overview | 1.6 |  | 0.527 |
+| walker |  | 906 | 90 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.791 |
+| walker |  | 941 | 35 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.791 |
+| walker |  | 946 | 5 | Fs::DirListing { dir: .claude/commands } |  |  | 0.791 |
+| walker |  | 983 | 37 | Fs::DirListing { dir: docs/reference } |  |  | 0.791 |
 | walker |  | 997 | 14 | Fs::DirListing { dir: hw/mcu/nordic/nrf5x } |  |  | 0.791 |
 | walker |  | 1000 | 3 | Fs::DirListing { dir: hw/mcu/nordic/nrf5x/s140_nrf52_6.1.1_API } |  |  | 0.791 |
 | walker |  | 1007 | 7 | Fs::DirListing { dir: .claude/skills } |  |  | 0.791 |
@@ -61,10 +61,10 @@ Score(3000)=0.647 I=0.890 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 1169 | 5 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/hal } |  |  | 0.802 |
 | walker |  | 1180 | 11 | Fs::DirListing { dir: hw/mcu/sony/cxd56/tools } |  |  | 0.802 |
 | walker |  | 1188 | 8 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk/bsp } |  |  | 0.802 |
-| walker |  | 1222 | 34 | Fs::DirListing { dir: examples } |  |  | 0.802 |
 | ns | 1237 |  | 227 | README host-stack and Power-Delivery capability lists | 1.8 |  | 0.749 |
 | ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.715 |
-| walker |  | 1461 | 239 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: true } |  |  | 0.715 |
+| walker |  | 1427 | 239 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: true } |  |  | 0.715 |
+| walker |  | 1461 | 34 | Fs::DirListing { dir: examples } |  |  | 0.715 |
 | walker |  | 1478 | 17 | Fs::DirListing { dir: examples/typec } |  |  | 0.715 |
 | walker |  | 1496 | 18 | Fs::DirListing { dir: test/unit-test } |  |  | 0.715 |
 | walker |  | 1513 | 17 | Fs::DirListing { dir: test/unit-test/test } |  |  | 0.716 |
@@ -72,10 +72,10 @@ Score(3000)=0.647 I=0.890 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 1527 | 8 | Fs::DirListing { dir: test/unit-test/test/device } |  |  | 0.716 |
 | walker |  | 1533 | 6 | Fs::DirListing { dir: test/unit-test/test/device/usbd } |  |  | 0.716 |
 | walker |  | 1540 | 7 | Fs::DirListing { dir: test/unit-test/test/device/msc } |  |  | 0.716 |
-| walker |  | 1561 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.716 |
 | ns | 1579 |  | 246 | src/tusb.h: the stack-wide entry points | 2.1 |  | 0.677 |
 | ns | 1791 |  | 212 | src/device/usbd.h: complete roster of the tud_* application API (names only) | 2.2 |  | 0.639 |
-| walker |  | 1947 | 386 | Markdown::Section { file: README.rst, section_index: 2, keeps_default_concavity: true } |  |  | 0.770 |
+| walker |  | 1926 | 386 | Markdown::Section { file: README.rst, section_index: 2, keeps_default_concavity: true } |  |  | 0.770 |
+| walker |  | 1947 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.770 |
 | ns | 1952 |  | 161 | src/device/usbd.h: complete roster of tud_*_cb application callbacks | 2.3 |  | 0.743 |
 | walker |  | 1979 | 32 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/src } |  |  | 0.743 |
 | walker |  | 2003 | 24 | Fs::DirListing { dir: examples/typec/power_delivery } |  |  | 0.743 |
@@ -93,17 +93,17 @@ Score(3000)=0.647 I=0.890 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 2318 |  | 186 | src/host/usbh.h: per-device query API and endpoint/transfer API rosters | 2.5 |  | 0.690 |
 | walker |  | 2339 | 36 | Fs::DirListing { dir: test/hil } |  |  | 0.690 |
 | walker |  | 2412 | 73 | Markdown::Section { file: README.rst, section_index: 6, keeps_default_concavity: false } |  |  | 0.695 |
-| walker |  | 2467 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.697 |
-| walker |  | 2478 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.697 |
-| walker |  | 2491 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.697 |
-| walker |  | 2512 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.697 |
-| walker |  | 2528 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.697 |
-| walker |  | 2549 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.697 |
-| ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.669 |
-| walker |  | 2565 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.669 |
-| walker |  | 2590 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.669 |
-| walker |  | 2594 | 4 | Fs::DirListing { dir: test/fuzz/device/net/src/arch } |  |  | 0.669 |
-| walker |  | 2671 | 77 | Markdown::Section { file: README.rst, section_index: 12, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 2489 | 77 | Markdown::Section { file: README.rst, section_index: 12, keeps_default_concavity: false } |  |  | 0.718 |
+| walker |  | 2544 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.720 |
+| walker |  | 2555 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.720 |
+| ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.691 |
+| walker |  | 2568 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.691 |
+| walker |  | 2589 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.691 |
+| walker |  | 2605 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.691 |
+| walker |  | 2626 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.691 |
+| walker |  | 2642 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.691 |
+| walker |  | 2667 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.691 |
+| walker |  | 2671 | 4 | Fs::DirListing { dir: test/fuzz/device/net/src/arch } |  |  | 0.691 |
 | walker |  | 2736 | 65 | Fs::DirListing { dir: examples/host } |  |  | 0.692 |
 | walker |  | 2764 | 28 | Fs::DirListing { dir: examples/host/bare_api } |  |  | 0.692 |
 | walker |  | 2774 | 10 | Fs::DirListing { dir: examples/host/bare_api/src } |  |  | 0.692 |

@@ -12,10 +12,10 @@ Score(3000)=0.548 I=0.622 C=0.482 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 269 | 15 | Fs::DirListing { dir: ginS } |  |  | 0.000 |
 | walker |  | 284 | 15 | Fs::DirListing { dir: testdata } |  |  | 0.000 |
 | walker |  | 292 | 8 | Fs::DirListing { dir: testdata/certificate } |  |  | 0.000 |
-| walker |  | 301 | 9 | Fs::DirListing { dir: internal/fs } |  |  | 0.000 |
-| walker |  | 310 | 9 | Fs::DirListing { dir: testdata/protoexample } |  |  | 0.000 |
-| ns | 324 |  | 138 | doc.go: the canonical hello-world call site | 1.3 | 1.1 | 0.000 |
-| walker |  | 341 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.089 |
+| walker |  | 323 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.164 |
+| ns | 324 |  | 138 | doc.go: the canonical hello-world call site | 1.3 | 1.1 | 0.088 |
+| walker |  | 332 | 9 | Fs::DirListing { dir: internal/fs } |  |  | 0.088 |
+| walker |  | 341 | 9 | Fs::DirListing { dir: testdata/protoexample } |  |  | 0.089 |
 | walker |  | 351 | 10 | Fs::DirListing { dir: testdata/template } |  |  | 0.089 |
 | walker |  | 362 | 11 | Fs::DirListing { dir: internal/bytesconv } |  |  | 0.090 |
 | walker |  | 366 | 4 | Fs::DirListing { dir: examples } |  |  | 0.090 |

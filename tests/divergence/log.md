@@ -15,8 +15,8 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.566 |
 | walker |  | 160 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.891 |
 | walker |  | 168 | 8 | Fs::DirListing { dir: tests } |  |  | 0.935 |
-| walker |  | 177 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 1.000 |
-| walker |  | 187 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
+| walker |  | 178 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.935 |
+| walker |  | 187 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 1.000 |
 | walker |  | 215 | 28 | Code::CodeKey { rung: ModuleDoc, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
 | ns | 223 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.934 |
 | walker |  | 271 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.934 |

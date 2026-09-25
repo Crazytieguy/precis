@@ -1,14 +1,14 @@
-Score(3000)=0.595 I=0.834 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.562/0.489/0.598/0.595/0.546/0.625/0.627
+Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.562/0.508/0.595/0.592/0.546/0.625/0.627
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 57 | 57 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 64 |  | 64 | What Enclosed is: README title, tagline, opening sentence | 1.1 |  | 0.000 |
 | walker |  | 82 | 25 | Fs::DirListing { dir: packages } |  |  | 0.000 |
-| walker |  | 99 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.000 |
-| walker |  | 118 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.000 |
 | ns | 141 |  | 77 | README introduction: the zero-knowledge guarantee and note options | 1.2 |  | 0.000 |
-| walker |  | 182 | 64 | Json::Identity { file: package.json } |  |  | 0.000 |
+| walker |  | 146 | 64 | Json::Identity { file: package.json } |  |  | 0.000 |
+| walker |  | 163 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.000 |
+| walker |  | 182 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.000 |
 | walker |  | 205 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.000 |
 | ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.547 |
 | walker |  | 231 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.548 |
@@ -17,13 +17,13 @@ Score(3000)=0.595 I=0.834 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 278 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.553 |
 | walker |  | 307 | 29 | Fs::DirListing { dir: packages/cli } |  |  | 0.553 |
 | walker |  | 312 | 5 | Fs::DirListing { dir: packages/cli/bin } |  |  | 0.553 |
-| walker |  | 333 | 21 | Fs::DirListing { dir: packages/app-server/src } |  |  | 0.554 |
-| walker |  | 354 | 21 | Fs::DirListing { dir: packages/cli/src } |  |  | 0.555 |
-| walker |  | 364 | 10 | Fs::DirListing { dir: packages/cli/src/shared } |  |  | 0.556 |
-| walker |  | 375 | 11 | Fs::DirListing { dir: packages/cli/src/files } |  |  | 0.557 |
-| ns | 385 |  | 162 | README 'Project Structure': role of each workspace package | 1.4 |  | 0.484 |
-| walker |  | 387 | 12 | Fs::DirListing { dir: packages/cli/src/view-note } |  |  | 0.485 |
-| walker |  | 497 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.764 |
+| ns | 385 |  | 162 | README 'Project Structure': role of each workspace package | 1.4 |  | 0.482 |
+| walker |  | 422 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.761 |
+| walker |  | 443 | 21 | Fs::DirListing { dir: packages/app-server/src } |  |  | 0.762 |
+| walker |  | 464 | 21 | Fs::DirListing { dir: packages/cli/src } |  |  | 0.762 |
+| walker |  | 474 | 10 | Fs::DirListing { dir: packages/cli/src/shared } |  |  | 0.763 |
+| walker |  | 485 | 11 | Fs::DirListing { dir: packages/cli/src/files } |  |  | 0.763 |
+| walker |  | 497 | 12 | Fs::DirListing { dir: packages/cli/src/view-note } |  |  | 0.764 |
 | walker |  | 512 | 15 | Fs::DirListing { dir: packages/app-server/src/modules } |  |  | 0.764 |
 | walker |  | 543 | 31 | Fs::DirListing { dir: packages/docs/src } |  |  | 0.765 |
 | ns | 546 |  | 161 | pnpm-workspace.yaml in full: workspace glob and dependency catalog | 1.5 |  | 0.638 |
@@ -39,16 +39,16 @@ Score(3000)=0.595 I=0.834 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 727 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.567 |
 | walker |  | 731 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.567 |
 | walker |  | 742 | 11 | Fs::DirListing { dir: packages/app-client/e2e-tests } |  |  | 0.567 |
-| walker |  | 755 | 13 | Fs::DirListing { dir: packages/app-server/src/modules/storage } |  |  | 0.567 |
-| walker |  | 764 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/errors } |  |  | 0.567 |
-| walker |  | 773 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/validation } |  |  | 0.567 |
-| walker |  | 794 | 21 | Fs::DirListing { dir: packages/cli/src/config } |  |  | 0.568 |
-| walker |  | 815 | 21 | Fs::DirListing { dir: packages/cli/src/create-note } |  |  | 0.569 |
-| walker |  | 836 | 21 | Fs::DirListing { dir: packages/crypto/src/node } |  |  | 0.569 |
-| walker |  | 857 | 21 | Fs::DirListing { dir: packages/crypto/src/web } |  |  | 0.570 |
-| walker |  | 878 | 21 | Fs::DirListing { dir: packages/lib/src/api } |  |  | 0.572 |
-| ns | 890 |  | 164 | README feature list, first half | 1.7 |  | 0.530 |
-| walker |  | 929 | 51 | Json::Runtime { file: package.json } |  |  | 0.559 |
+| walker |  | 793 | 51 | Json::Runtime { file: package.json } |  |  | 0.598 |
+| walker |  | 806 | 13 | Fs::DirListing { dir: packages/app-server/src/modules/storage } |  |  | 0.598 |
+| walker |  | 815 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/errors } |  |  | 0.598 |
+| walker |  | 824 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/validation } |  |  | 0.598 |
+| walker |  | 845 | 21 | Fs::DirListing { dir: packages/cli/src/config } |  |  | 0.599 |
+| walker |  | 866 | 21 | Fs::DirListing { dir: packages/cli/src/create-note } |  |  | 0.600 |
+| walker |  | 887 | 21 | Fs::DirListing { dir: packages/crypto/src/node } |  |  | 0.600 |
+| ns | 890 |  | 164 | README feature list, first half | 1.7 |  | 0.556 |
+| walker |  | 908 | 21 | Fs::DirListing { dir: packages/crypto/src/web } |  |  | 0.557 |
+| walker |  | 929 | 21 | Fs::DirListing { dir: packages/lib/src/api } |  |  | 0.559 |
 | walker |  | 940 | 11 | Fs::DirListing { dir: packages/docs/.vitepress } |  |  | 0.559 |
 | walker |  | 965 | 25 | Fs::DirListing { dir: packages/lib/src/crypto } |  |  | 0.562 |
 | walker |  | 977 | 12 | Fs::DirListing { dir: packages/app-client/src/scripts } |  |  | 0.562 |
@@ -72,45 +72,45 @@ Score(3000)=0.595 I=0.834 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1246 | 16 | Fs::DirListing { dir: packages/app-client/src/modules/config } |  |  | 0.464 |
 | walker |  | 1264 | 18 | Fs::DirListing { dir: packages/app-client/src/modules/auth } |  |  | 0.464 |
 | walker |  | 1270 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/auth/pages } |  |  | 0.464 |
-| walker |  | 1301 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.465 |
-| walker |  | 1323 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.466 |
-| walker |  | 1328 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.466 |
-| walker |  | 1350 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.466 |
-| walker |  | 1365 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.467 |
-| ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.425 |
-| walker |  | 1443 | 78 | Json::Scripts { file: package.json } |  |  | 0.498 |
-| walker |  | 1466 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.498 |
-| walker |  | 1489 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.499 |
-| walker |  | 1512 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.499 |
-| walker |  | 1576 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.499 |
-| walker |  | 1600 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.501 |
-| walker |  | 1706 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.544 |
+| walker |  | 1348 | 78 | Json::Scripts { file: package.json } |  |  | 0.544 |
+| walker |  | 1379 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.545 |
+| ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.496 |
+| walker |  | 1485 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.538 |
+| walker |  | 1507 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.539 |
+| walker |  | 1512 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.539 |
+| walker |  | 1534 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.540 |
+| walker |  | 1549 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.540 |
+| walker |  | 1572 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.540 |
+| walker |  | 1595 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.541 |
+| walker |  | 1618 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.542 |
+| walker |  | 1682 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.542 |
+| walker |  | 1706 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.544 |
 | walker |  | 1732 | 26 | Fs::DirListing { dir: packages/lib/src/crypto/serialization } |  |  | 0.547 |
 | walker |  | 1747 | 15 | Fs::DirListing { dir: packages/lib/src/crypto/serialization/cbor-array } |  |  | 0.549 |
 | ns | 1758 |  | 359 | packages/lib/src/index.ts in full — the definitive @enclosed/lib export surface | 2.1 |  | 0.480 |
-| walker |  | 1767 | 20 | Fs::DirListing { dir: packages/app-server/src/scripts } |  |  | 0.480 |
-| walker |  | 1817 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.482 |
-| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.571 |
-| walker |  | 1991 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 2043 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.598 |
-| walker |  | 2066 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.598 |
-| walker |  | 2076 | 10 | Code::CodeKey { rung: Names, file: packages/app-client/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 2101 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.599 |
-| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.580 |
-| walker |  | 2299 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.580 |
-| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.549 |
-| walker |  | 2405 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.598 |
-| walker |  | 2426 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.598 |
-| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.554 |
-| walker |  | 2765 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.613 |
-| walker |  | 2787 | 22 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
-| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.593 |
-| walker |  | 2878 | 91 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.593 |
-| walker |  | 2917 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.594 |
-| walker |  | 2931 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.595 |
-| walker |  | 2945 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.595 |
-| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.569 |
-| walker |  | 3268 | 323 | Code::CodeKey { rung: Decl, file: packages/app-client/src/index.tsx, decl: 1, sub: 0, line: 14 } |  |  | 0.569 |
+| walker |  | 1921 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
+| walker |  | 1941 | 20 | Fs::DirListing { dir: packages/app-server/src/scripts } |  |  | 0.519 |
+| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.595 |
+| walker |  | 1951 | 10 | Code::CodeKey { rung: Names, file: packages/app-client/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 2149 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.595 |
+| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.576 |
+| walker |  | 2255 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.628 |
+| walker |  | 2276 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.628 |
+| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.595 |
+| walker |  | 2615 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.658 |
+| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.610 |
+| walker |  | 2665 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.612 |
+| walker |  | 2687 | 22 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 2778 | 91 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.613 |
+| walker |  | 2830 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.613 |
+| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.592 |
+| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.567 |
+| walker |  | 3153 | 323 | Code::CodeKey { rung: Decl, file: packages/app-client/src/index.tsx, decl: 1, sub: 0, line: 14 } |  |  | 0.567 |
+| walker |  | 3176 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.567 |
+| walker |  | 3201 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.568 |
+| walker |  | 3240 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.569 |
+| walker |  | 3254 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.569 |
+| walker |  | 3268 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.569 |
 | walker |  | 3312 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.569 |
 | walker |  | 3348 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.571 |
 | ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.543 |
@@ -141,36 +141,36 @@ Score(3000)=0.595 I=0.834 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 5072 | 29 | Json::Scripts { file: packages/deploy-cloudflare/package.json } |  |  | 0.653 |
 | ns | 5133 |  | 256 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.679 |
 | walker |  | 5166 | 94 | Plaintext::DeclSurface { file: packages/docs/src/components/toggle.vue } |  |  | 0.679 |
-| walker |  | 5180 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.679 |
-| walker |  | 5190 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 5267 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.679 |
-| walker |  | 5318 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.679 |
+| walker |  | 5176 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 5253 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.679 |
+| walker |  | 5304 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.679 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.661 |
-| walker |  | 5518 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.661 |
-| walker |  | 5595 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.661 |
-| walker |  | 5646 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.661 |
-| walker |  | 5723 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.661 |
-| walker |  | 5737 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.661 |
-| walker |  | 5754 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.661 |
-| walker |  | 5841 | 87 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.661 |
+| walker |  | 5504 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.661 |
+| walker |  | 5581 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.661 |
+| walker |  | 5632 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.661 |
+| walker |  | 5709 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.661 |
+| walker |  | 5723 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.661 |
+| walker |  | 5740 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.661 |
+| walker |  | 5827 | 87 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.661 |
+| walker |  | 5858 | 31 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.638 |
 | ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.638 |
-| walker |  | 5872 | 31 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.638 |
-| walker |  | 5951 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.638 |
-| walker |  | 6002 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.638 |
-| walker |  | 6035 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.638 |
+| walker |  | 5937 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.638 |
+| walker |  | 5988 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.638 |
+| walker |  | 6021 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.638 |
 | ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.625 |
-| walker |  | 6184 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.625 |
-| walker |  | 6263 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.625 |
+| walker |  | 6170 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.625 |
+| walker |  | 6249 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.625 |
 | ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.611 |
-| walker |  | 6314 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.611 |
-| walker |  | 6438 | 124 | Json::Entry { file: packages/lib/package.json } |  |  | 0.611 |
+| walker |  | 6300 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.611 |
+| walker |  | 6424 | 124 | Json::Entry { file: packages/lib/package.json } |  |  | 0.611 |
 | ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.604 |
-| walker |  | 6587 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.604 |
-| walker |  | 6667 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.604 |
-| walker |  | 6718 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.604 |
+| walker |  | 6573 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.604 |
+| walker |  | 6653 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.604 |
+| walker |  | 6704 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.604 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.592 |
-| walker |  | 6802 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.592 |
-| walker |  | 6953 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.592 |
+| walker |  | 6788 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.592 |
+| walker |  | 6939 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.592 |
+| walker |  | 6953 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.592 |
 | ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.586 |
 | ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.579 |
 | walker |  | 7234 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.580 |

@@ -26,10 +26,10 @@ Score(3000)=0.548 I=0.760 C=0.395 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 441 | 11 | Fs::DirListing { dir: docs/examples/eggsample-spam } |  |  | 0.733 |
 | walker |  | 461 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.740 |
 | ns | 521 |  | 166 | Public name to private module map (the re-export block) | 1.5 | 1.4 | 0.646 |
-| walker |  | 523 | 62 | Fs::DirListing { dir: testing } |  |  | 0.664 |
-| ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.706 |
-| ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.648 |
-| walker |  | 867 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.865 |
+| ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.579 |
+| walker |  | 805 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.831 |
+| ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.761 |
+| walker |  | 867 | 62 | Fs::DirListing { dir: testing } |  |  | 0.865 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.864 |
 | ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.825 |
 | walker |  | 1038 | 171 | Markdown::Section { file: README.rst, section_index: 4, keeps_default_concavity: false } |  |  | 0.825 |

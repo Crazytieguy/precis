@@ -6,10 +6,6 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
-    1_bug_report.yaml
-    2_feature_request.yaml
-    3_other.md
-    config.yml
   commands.json
   publish-failure-issue-template.md
   workflows/
@@ -85,6 +81,17 @@ monaco-lsp-client/
   README.md
   generator/
     index.ts
+      …
+      7→class LineWriter {
+      …
+      73→interface MetaModel {
+      …
+      82→interface MetaData {
+      …
+      86→interface Request {
+      …
+      101→interface Notification {
+      …
   package-lock.json
   package.json
     …
@@ -510,11 +517,6 @@ src/
       typescript/
         languageFeatures.ts
         lib/
-          editor.worker.d.ts
-          lib.index.ts
-          lib.ts
-          typescriptServices.d.ts
-          …
         register.ts
         ts.worker.ts
         tsMode.ts

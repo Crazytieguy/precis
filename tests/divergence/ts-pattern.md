@@ -1,4 +1,4 @@
-Score(3000)=0.673 I=0.803 C=0.564 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.658/0.789/0.770/0.673/0.603/0.547/0.531
+Score(3000)=0.673 I=0.803 C=0.564 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.658/0.835/0.770/0.673/0.603/0.547/0.531
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -21,20 +21,20 @@ Score(3000)=0.673 I=0.803 C=0.564 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 524 | 109 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.688 |
 | walker |  | 534 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.689 |
 | walker |  | 560 | 26 | Fs::DirListing { dir: benchmarks } |  |  | 0.693 |
-| walker |  | 575 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.698 |
-| walker |  | 590 | 15 | Fs::DirListing { dir: examples/one-file-demo } |  |  | 0.702 |
-| ns | 639 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.671 |
-| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.615 |
-| walker |  | 919 | 329 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.624 |
+| ns | 639 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.663 |
+| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.607 |
+| walker |  | 889 | 329 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.616 |
+| walker |  | 904 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.620 |
+| walker |  | 919 | 15 | Fs::DirListing { dir: examples/one-file-demo } |  |  | 0.624 |
 | ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.643 |
 | walker |  | 1180 | 261 | Markdown::Prelude { file: README.md } |  |  | 0.760 |
-| walker |  | 1203 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.768 |
-| walker |  | 1213 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
+| walker |  | 1190 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
+| walker |  | 1213 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.768 |
 | ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.771 |
-| walker |  | 1511 | 298 | Fs::DirListing { dir: tests } |  |  | 0.802 |
-| walker |  | 1519 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.805 |
-| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.810 |
-| walker |  | 1576 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.859 |
+| walker |  | 1270 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.825 |
+| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.664 |
+| walker |  | 1568 | 298 | Fs::DirListing { dir: tests } |  |  | 0.845 |
+| walker |  | 1576 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.859 |
 | ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.807 |
 | walker |  | 1849 | 273 | Json::Scripts { file: package.json } |  |  | 0.808 |
 | ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.771 |
@@ -85,15 +85,15 @@ Score(3000)=0.673 I=0.803 C=0.564 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 4590 | 30 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 39, sub: 0, line: 1271 } |  |  | 0.618 |
 | walker |  | 4608 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
 | walker |  | 4625 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.619 |
-| walker |  | 4629 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.623 |
-| ns | 4658 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.607 |
-| walker |  | 4687 | 58 | Code::CodeKey { rung: Names, file: src/is-matching.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 4714 | 27 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.610 |
-| walker |  | 4747 | 33 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 3, sub: 0, line: 53 } |  |  | 0.610 |
-| walker |  | 4786 | 39 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 2, sub: 0, line: 48 } |  |  | 0.614 |
-| walker |  | 4806 | 20 | Code::CodeKey { rung: Names, file: src/match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
-| walker |  | 4826 | 20 | Code::CodeKey { rung: Decl, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.616 |
-| walker |  | 4842 | 16 | Code::CodeKey { rung: Body, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.617 |
+| ns | 4658 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.603 |
+| walker |  | 4683 | 58 | Code::CodeKey { rung: Names, file: src/is-matching.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
+| walker |  | 4710 | 27 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.606 |
+| walker |  | 4743 | 33 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 3, sub: 0, line: 53 } |  |  | 0.606 |
+| walker |  | 4782 | 39 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 2, sub: 0, line: 48 } |  |  | 0.610 |
+| walker |  | 4802 | 20 | Code::CodeKey { rung: Names, file: src/match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 4822 | 20 | Code::CodeKey { rung: Decl, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.612 |
+| walker |  | 4838 | 16 | Code::CodeKey { rung: Body, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.613 |
+| walker |  | 4842 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.617 |
 | ns | 4864 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.602 |
 | ns | 4981 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.592 |
 | walker |  | 5072 | 230 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.594 |

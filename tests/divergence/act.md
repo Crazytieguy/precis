@@ -45,19 +45,19 @@ Score(3000)=0.583 I=0.870 C=0.391 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 1004 | 6 | Fs::DirListing { dir: pkg/model/testdata/empty-workflow } |  |  | 0.589 |
 | walker |  | 1011 | 7 | Fs::DirListing { dir: pkg/model/testdata/nested } |  |  | 0.589 |
 | walker |  | 1017 | 6 | Fs::DirListing { dir: pkg/model/testdata/nested/workflows } |  |  | 0.589 |
-| walker |  | 1040 | 23 | Fs::DirListing { dir: pkg/exprparser/testdata } |  |  | 0.589 |
-| walker |  | 1047 | 7 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3 } |  |  | 0.589 |
-| walker |  | 1052 | 5 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3/nested } |  |  | 0.589 |
-| walker |  | 1070 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 1035 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 1058 | 23 | Fs::DirListing { dir: pkg/exprparser/testdata } |  |  | 0.589 |
+| walker |  | 1065 | 7 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3 } |  |  | 0.589 |
+| walker |  | 1070 | 5 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3/nested } |  |  | 0.589 |
 | walker |  | 1090 | 20 | Fs::DirListing { dir: .github } |  |  | 0.590 |
 | walker |  | 1116 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.591 |
 | ns | 1131 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.563 |
-| walker |  | 1153 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.563 |
-| walker |  | 1157 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.563 |
-| walker |  | 1161 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.563 |
-| walker |  | 1346 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.727 |
-| walker |  | 1401 | 55 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.727 |
-| walker |  | 1429 | 28 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.727 |
+| walker |  | 1301 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.727 |
+| walker |  | 1356 | 55 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.727 |
+| walker |  | 1384 | 28 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.727 |
+| walker |  | 1421 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.727 |
+| walker |  | 1425 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.727 |
+| walker |  | 1429 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.727 |
 | ns | 1432 |  | 301 | Command-local flags: names and shorthands | 2.3 |  | 0.649 |
 | walker |  | 1453 | 24 | Fs::DirListing { dir: pkg/model/testdata/invalid-job-name } |  |  | 0.649 |
 | ns | 1782 |  | 350 | Persistent flags: names and shorthands | 2.4 |  | 0.583 |

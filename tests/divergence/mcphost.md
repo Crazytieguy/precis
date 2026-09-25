@@ -1,4 +1,4 @@
-Score(3000)=0.787 I=0.910 C=0.681 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.938/0.942/0.864/0.787/0.650/0.553/0.547
+Score(3000)=0.787 I=0.910 C=0.681 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.934/0.942/0.864/0.787/0.650/0.553/0.547
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,9 +15,9 @@ Score(3000)=0.787 I=0.910 C=0.681 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 136 | 8 | Fs::DirListing { dir: internal/session } |  |  | 0.697 |
 | walker |  | 148 | 12 | Fs::DirListing { dir: internal/agent } |  |  | 0.697 |
 | walker |  | 161 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.698 |
-| walker |  | 197 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.734 |
-| ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.645 |
-| walker |  | 250 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.660 |
+| ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.540 |
+| walker |  | 214 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.553 |
+| walker |  | 250 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.660 |
 | ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.662 |
 | walker |  | 267 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.663 |
 | walker |  | 273 | 6 | Fs::DirListing { dir: examples } |  |  | 0.665 |
@@ -36,19 +36,19 @@ Score(3000)=0.787 I=0.910 C=0.681 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 513 | 4 | Fs::DirListing { dir: sdk/examples/scripting } |  |  | 0.880 |
 | ns | 534 |  | 107 | README feature list, first half | 1.7 | 1.6 | 0.818 |
 | walker |  | 558 | 45 | Fs::DirListing { dir: internal/config } |  |  | 0.828 |
-| walker |  | 644 | 86 | Fs::DirListing { dir: internal/ui } |  |  | 0.828 |
-| ns | 648 |  | 114 | README feature list, second half | 1.8 |  | 0.784 |
-| walker |  | 649 | 5 | Fs::DirListing { dir: internal/ui/progress } |  |  | 0.784 |
-| ns | 781 |  | 133 | Complete listings for the config / agent / tools / models packages | 1.9 |  | 0.781 |
-| walker |  | 878 | 229 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.879 |
+| ns | 648 |  | 114 | README feature list, second half | 1.8 |  | 0.777 |
+| ns | 781 |  | 133 | Complete listings for the config / agent / tools / models packages | 1.9 |  | 0.764 |
+| walker |  | 787 | 229 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.864 |
+| walker |  | 873 | 86 | Fs::DirListing { dir: internal/ui } |  |  | 0.879 |
+| walker |  | 878 | 5 | Fs::DirListing { dir: internal/ui/progress } |  |  | 0.879 |
 | walker |  | 895 | 17 | Fs::DirListing { dir: examples/hooks } |  |  | 0.879 |
 | walker |  | 943 | 48 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.880 |
 | walker |  | 969 | 26 | Fs::DirListing { dir: internal/tools } |  |  | 0.928 |
+| walker |  | 996 | 27 | Code::CodeKey { rung: Names, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.928 |
 | ns | 999 |  | 218 | Complete listings for the builtin / hooks / session / auth / tokens / ui packages | 1.10 |  | 0.934 |
-| walker |  | 1002 | 33 | Fs::DirListing { dir: examples/scripts } |  |  | 0.939 |
-| walker |  | 1029 | 27 | Code::CodeKey { rung: Names, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.939 |
-| ns | 1089 |  | 90 | Complete listings for examples/, contribute/ and .github/ | 1.11 |  | 0.935 |
-| walker |  | 1159 | 130 | Code::CodeKey { rung: Decl, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.941 |
+| ns | 1089 |  | 90 | Complete listings for examples/, contribute/ and .github/ | 1.11 |  | 0.899 |
+| walker |  | 1126 | 130 | Code::CodeKey { rung: Decl, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.905 |
+| walker |  | 1159 | 33 | Fs::DirListing { dir: examples/scripts } |  |  | 0.941 |
 | walker |  | 1217 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.943 |
 | ns | 1243 |  | 154 | main.go entry point | 2.1 |  | 0.940 |
 | walker |  | 1320 | 103 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.942 |

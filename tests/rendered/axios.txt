@@ -223,10 +223,16 @@ index.d.cts
   173→  };
   174→  getUri(config?: axios.AxiosRequestConfig): string;
   175→  request<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
+  176→    config: axios.AxiosRequestConfig<D>
+  177→  ): Promise<R>;
   178→  get<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
+  179→    url: string,
+  180→    config?: axios.AxiosRequestConfig<D>
+  181→  ): Promise<R>;
   182→  delete<T = any, R = axios.AxiosResponse<T>, D = any>(
+  183→    url: string,
+  184→    config?: axios.AxiosRequestConfig<D>
+  185→  ): Promise<R>;
   …
   229→}
   231→declare enum HttpStatusCode {
@@ -398,16 +404,6 @@ tests/
       package-lock.json
       package.json
       tests/
-        fixture-cleanup.module.test.cjs
-        helpers/
-          cjs-typing.ts
-          fixture.cjs
-          run-command.cjs
-          ts-require-default.ts
-          ts-require.ts
-        ts-require-default.module.test.cjs
-        ts-require.module.test.cjs
-        typings.module.test.cjs
     esm/
       package-lock.json
       package.json
@@ -437,11 +433,6 @@ tests/
       deno.json
       deno.lock
       tests/
-        cancel.smoke.test.ts
-        error.smoke.test.ts
-        fetch.smoke.test.ts
-        headers.smoke.test.ts
-        import.smoke.test.ts
     esm/
       package-lock.json
       package.json

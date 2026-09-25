@@ -1,4 +1,4 @@
-Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.576/0.636/0.576/0.438/0.344/0.367/0.430
+Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.635/0.576/0.438/0.344/0.367/0.430
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,10 +12,10 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 119 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 148 |  | 88 | README capability bullets | 1.2 |  | 0.000 |
 | walker |  | 179 | 60 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.655 |
-| walker |  | 206 | 27 | Fs::DirListing { dir: bindings/rust } |  |  | 0.655 |
-| walker |  | 210 | 4 | Fs::DirListing { dir: bindings/rust/src } |  |  | 0.655 |
-| ns | 222 |  | 74 | Repository root listing (complete) | 1.3 |  | 0.837 |
-| walker |  | 235 | 25 | Plaintext::Whole { file: Makefile } |  |  | 0.837 |
+| walker |  | 204 | 25 | Plaintext::Whole { file: Makefile } |  |  | 0.655 |
+| ns | 222 |  | 74 | Repository root listing (complete) | 1.3 |  | 0.836 |
+| walker |  | 231 | 27 | Fs::DirListing { dir: bindings/rust } |  |  | 0.837 |
+| walker |  | 235 | 4 | Fs::DirListing { dir: bindings/rust/src } |  |  | 0.837 |
 | ns | 320 |  | 98 | sqlite-vec.c region map | 1.4 |  | 0.745 |
 | walker |  | 339 | 104 | Toml::Identity { file: sqlite-dist.toml } |  |  | 0.745 |
 | walker |  | 377 | 38 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.745 |
@@ -31,24 +31,24 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 669 | 8 | Fs::DirListing { dir: site/getting-started } |  |  | 0.656 |
 | walker |  | 679 | 10 | Fs::DirListing { dir: site/features } |  |  | 0.656 |
 | walker |  | 696 | 17 | Fs::DirListing { dir: site/.vitepress/theme } |  |  | 0.656 |
-| walker |  | 776 | 80 | Fs::DirListing { dir: examples } |  |  | 0.658 |
-| walker |  | 800 | 24 | Fs::DirListing { dir: benchmarks/micro } |  |  | 0.658 |
-| walker |  | 804 | 4 | Fs::DirListing { dir: benchmarks/micro/src } |  |  | 0.658 |
-| walker |  | 810 | 6 | Fs::DirListing { dir: benchmarks/micro/benches } |  |  | 0.658 |
-| ns | 874 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.614 |
-| walker |  | 954 | 144 | Fs::DirListing { dir: tests } |  |  | 0.617 |
-| walker |  | 965 | 11 | Fs::DirListing { dir: tests/correctness } |  |  | 0.617 |
-| walker |  | 978 | 13 | Fs::DirListing { dir: tests/minimum } |  |  | 0.576 |
-| ns | 978 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.576 |
-| walker |  | 1002 | 24 | Fs::DirListing { dir: tests/afbd } |  |  | 0.576 |
-| ns | 1194 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.518 |
-| ns | 1434 |  | 240 | vec0Module: write-side slots and the unimplemented ones | 2.2 | 2.1 | 0.471 |
-| walker |  | 1525 | 523 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.636 |
+| ns | 874 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.612 |
+| ns | 978 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.571 |
+| ns | 1194 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.514 |
+| walker |  | 1219 | 523 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.694 |
+| walker |  | 1299 | 80 | Fs::DirListing { dir: examples } |  |  | 0.696 |
+| walker |  | 1323 | 24 | Fs::DirListing { dir: benchmarks/micro } |  |  | 0.696 |
+| walker |  | 1327 | 4 | Fs::DirListing { dir: benchmarks/micro/src } |  |  | 0.696 |
+| walker |  | 1333 | 6 | Fs::DirListing { dir: benchmarks/micro/benches } |  |  | 0.696 |
+| ns | 1434 |  | 240 | vec0Module: write-side slots and the unimplemented ones | 2.2 | 2.1 | 0.633 |
+| walker |  | 1477 | 144 | Fs::DirListing { dir: tests } |  |  | 0.636 |
+| walker |  | 1488 | 11 | Fs::DirListing { dir: tests/correctness } |  |  | 0.636 |
+| walker |  | 1501 | 13 | Fs::DirListing { dir: tests/minimum } |  |  | 0.636 |
+| walker |  | 1525 | 24 | Fs::DirListing { dir: tests/afbd } |  |  | 0.636 |
 | walker |  | 1556 | 31 | Fs::DirListing { dir: benchmarks/exhaustive-memory } |  |  | 0.636 |
-| walker |  | 1604 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.636 |
 | ns | 1629 |  | 195 | vec0 hard limits and column-index constants | 2.3 |  | 0.595 |
-| walker |  | 1653 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.597 |
-| walker |  | 1809 | 156 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.597 |
+| walker |  | 1712 | 156 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.595 |
+| walker |  | 1760 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.595 |
+| walker |  | 1809 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.597 |
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.576 |
 | walker |  | 1860 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.576 |
 | walker |  | 1996 | 136 | Code::CodeKey { rung: Names, file: tmp-static.py, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
@@ -61,15 +61,15 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 2574 | 271 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.467 |
 | walker |  | 2584 | 10 | Code::CodeKey { rung: Names, file: bindings/rust/build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
 | walker |  | 2589 | 5 | Fs::DirListing { dir: tests/fuzz/corpus } |  |  | 0.467 |
-| walker |  | 2601 | 12 | Fs::DirListing { dir: benchmarks/profiling } |  |  | 0.467 |
-| walker |  | 2821 | 220 | Plaintext::Whole { file: bindings/rust/Makefile } |  |  | 0.467 |
-| walker |  | 2836 | 15 | Fs::DirListing { dir: tests/leak-fixtures } |  |  | 0.467 |
+| walker |  | 2809 | 220 | Plaintext::Whole { file: bindings/rust/Makefile } |  |  | 0.467 |
+| walker |  | 2821 | 12 | Fs::DirListing { dir: benchmarks/profiling } |  |  | 0.467 |
+| walker |  | 2860 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
 | ns | 2873 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.438 |
-| walker |  | 2875 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
-| walker |  | 2892 | 17 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
-| walker |  | 2911 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
-| walker |  | 2933 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
-| walker |  | 2955 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
+| walker |  | 2877 | 17 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
+| walker |  | 2896 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
+| walker |  | 2918 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
+| walker |  | 2940 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
+| walker |  | 2955 | 15 | Fs::DirListing { dir: tests/leak-fixtures } |  |  | 0.438 |
 | ns | 3045 |  | 172 | Partition key operator encoding | 2.10 |  | 0.424 |
 | walker |  | 3145 | 190 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 0, line: 0 } |  |  | 0.424 |
 | walker |  | 3171 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 3, sub: 0, line: 70 } |  |  | 0.424 |

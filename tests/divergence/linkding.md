@@ -1,4 +1,4 @@
-Score(3000)=0.665 I=0.850 C=0.521 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.865/0.829/0.725/0.665/0.630/0.543/0.490
+Score(3000)=0.708 I=0.866 C=0.578 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.726/0.829/0.725/0.708/0.630/0.543/0.490
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,36 +16,36 @@ Score(3000)=0.665 I=0.850 C=0.521 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 348 | 86 | Toml::Identity { file: pyproject.toml } |  |  | 0.649 |
 | ns | 348 |  | 121 | bookmarks/ app package listing (complete) | 1.4 |  | 0.649 |
 | ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.605 |
-| walker |  | 469 | 121 | Fs::DirListing { dir: bookmarks } |  |  | 0.894 |
-| walker |  | 472 | 3 | Fs::DirListing { dir: bookmarks/management } |  |  | 0.894 |
-| walker |  | 490 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.894 |
-| walker |  | 510 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.895 |
-| walker |  | 530 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.895 |
-| walker |  | 552 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.898 |
-| walker |  | 579 | 27 | Fs::DirListing { dir: bookmarks/templates } |  |  | 0.898 |
-| ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.856 |
-| walker |  | 584 | 5 | Fs::DirListing { dir: bookmarks/templates/admin } |  |  | 0.856 |
-| walker |  | 600 | 16 | Fs::DirListing { dir: bookmarks/templates/registration } |  |  | 0.856 |
-| walker |  | 676 | 76 | Fs::DirListing { dir: bookmarks/views } |  |  | 0.878 |
-| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.878 |
-| walker |  | 759 | 83 | Fs::DirListing { dir: bookmarks/services } |  |  | 0.893 |
-| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.891 |
-| walker |  | 779 | 20 | Fs::DirListing { dir: bookmarks/templates/bundles } |  |  | 0.891 |
-| walker |  | 799 | 20 | Fs::DirListing { dir: bookmarks/templates/tags } |  |  | 0.891 |
-| walker |  | 826 | 27 | Fs::DirListing { dir: bookmarks/frontend/utils } |  |  | 0.891 |
-| walker |  | 853 | 27 | Fs::DirListing { dir: bookmarks/templates/settings } |  |  | 0.891 |
-| ns | 937 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.819 |
-| ns | 1154 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.749 |
-| walker |  | 1214 | 361 | Plaintext::Whole { file: Makefile } |  |  | 0.881 |
-| walker |  | 1283 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
-| walker |  | 1293 | 10 | Plaintext::DeclSurface { file: version.txt } |  |  | 0.881 |
+| ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.577 |
+| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.501 |
+| walker |  | 709 | 361 | Plaintext::Whole { file: Makefile } |  |  | 0.516 |
+| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.470 |
+| walker |  | 830 | 121 | Fs::DirListing { dir: bookmarks } |  |  | 0.692 |
+| walker |  | 833 | 3 | Fs::DirListing { dir: bookmarks/management } |  |  | 0.692 |
+| walker |  | 851 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.692 |
+| walker |  | 871 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.697 |
+| walker |  | 891 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.697 |
+| walker |  | 913 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.699 |
+| ns | 937 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.693 |
+| walker |  | 940 | 27 | Fs::DirListing { dir: bookmarks/templates } |  |  | 0.693 |
+| walker |  | 945 | 5 | Fs::DirListing { dir: bookmarks/templates/admin } |  |  | 0.693 |
+| walker |  | 961 | 16 | Fs::DirListing { dir: bookmarks/templates/registration } |  |  | 0.693 |
+| walker |  | 1037 | 76 | Fs::DirListing { dir: bookmarks/views } |  |  | 0.799 |
+| walker |  | 1120 | 83 | Fs::DirListing { dir: bookmarks/services } |  |  | 0.881 |
+| walker |  | 1140 | 20 | Fs::DirListing { dir: bookmarks/templates/bundles } |  |  | 0.881 |
+| ns | 1154 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.881 |
+| walker |  | 1160 | 20 | Fs::DirListing { dir: bookmarks/templates/tags } |  |  | 0.881 |
+| walker |  | 1187 | 27 | Fs::DirListing { dir: bookmarks/frontend/utils } |  |  | 0.881 |
+| walker |  | 1214 | 27 | Fs::DirListing { dir: bookmarks/templates/settings } |  |  | 0.881 |
+| walker |  | 1224 | 10 | Plaintext::DeclSurface { file: version.txt } |  |  | 0.881 |
+| walker |  | 1293 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
 | walker |  | 1334 | 41 | Fs::DirListing { dir: bookmarks/templates/shared } |  |  | 0.881 |
-| walker |  | 1380 | 46 | Fs::DirListing { dir: bookmarks/management/commands } |  |  | 0.882 |
+| walker |  | 1431 | 97 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.881 |
 | ns | 1438 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.829 |
-| ns | 1460 |  | 22 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.831 |
-| walker |  | 1472 | 92 | Fs::DirListing { dir: bookmarks/static } |  |  | 0.831 |
-| walker |  | 1477 | 5 | Fs::DirListing { dir: bookmarks/static/vendor } |  |  | 0.831 |
-| walker |  | 1574 | 97 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.831 |
+| ns | 1460 |  | 22 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.830 |
+| walker |  | 1477 | 46 | Fs::DirListing { dir: bookmarks/management/commands } |  |  | 0.831 |
+| walker |  | 1569 | 92 | Fs::DirListing { dir: bookmarks/static } |  |  | 0.831 |
+| walker |  | 1574 | 5 | Fs::DirListing { dir: bookmarks/static/vendor } |  |  | 0.831 |
 | ns | 1602 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.800 |
 | walker |  | 1609 | 35 | Fs::DirListing { dir: docs } |  |  | 0.801 |
 | walker |  | 1669 | 60 | Fs::DirListing { dir: bookmarks/frontend/components } |  |  | 0.803 |
@@ -53,24 +53,24 @@ Score(3000)=0.665 I=0.850 C=0.521 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 1693 | 7 | Fs::DirListing { dir: docs/src/content } |  |  | 0.803 |
 | walker |  | 1702 | 9 | Fs::DirListing { dir: docs/src/components } |  |  | 0.803 |
 | ns | 1710 |  | 108 | docs/ site and its content pages (complete) | 1.14 |  | 0.757 |
-| walker |  | 1771 | 69 | Fs::DirListing { dir: bookmarks/templates/bookmarks } |  |  | 0.757 |
-| walker |  | 1788 | 17 | Fs::DirListing { dir: bookmarks/templates/bookmarks/details } |  |  | 0.757 |
+| walker |  | 1829 | 127 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.757 |
 | ns | 1885 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.724 |
-| walker |  | 1915 | 127 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.724 |
+| walker |  | 1898 | 69 | Fs::DirListing { dir: bookmarks/templates/bookmarks } |  |  | 0.724 |
+| walker |  | 1915 | 17 | Fs::DirListing { dir: bookmarks/templates/bookmarks/details } |  |  | 0.724 |
 | walker |  | 1965 | 50 | Fs::DirListing { dir: scripts } |  |  | 0.725 |
-| walker |  | 2052 | 87 | Fs::DirListing { dir: bookmarks/styles/theme } |  |  | 0.725 |
-| walker |  | 2176 | 124 | Json::Scripts { file: package.json } |  |  | 0.725 |
+| walker |  | 2089 | 124 | Json::Scripts { file: package.json } |  |  | 0.725 |
+| walker |  | 2176 | 87 | Fs::DirListing { dir: bookmarks/styles/theme } |  |  | 0.725 |
 | walker |  | 2187 | 11 | Code::CodeKey { rung: Names, file: manage.py, decl: 0, sub: 0, line: 0 } |  |  | 0.725 |
 | ns | 2296 |  | 411 | Bookmark model fields (complete) | 2.2 | 2.1 | 0.679 |
 | ns | 2439 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.654 |
 | walker |  | 2547 | 360 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.697 |
-| ns | 2823 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.665 |
-| ns | 3026 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.638 |
-| walker |  | 3161 | 614 | Fs::DirListing { dir: bookmarks/migrations } |  |  | 0.638 |
-| ns | 3271 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.615 |
-| walker |  | 3359 | 198 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.655 |
+| walker |  | 2745 | 198 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.742 |
+| ns | 2823 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.708 |
+| walker |  | 2953 | 208 | Json::Dependencies { file: package.json } |  |  | 0.708 |
+| ns | 3026 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.679 |
+| ns | 3271 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.655 |
 | ns | 3465 |  | 194 | Tag model + tag-string parsing rules | 2.7 | 2.1 | 0.638 |
-| walker |  | 3567 | 208 | Json::Dependencies { file: package.json } |  |  | 0.638 |
+| walker |  | 3567 | 614 | Fs::DirListing { dir: bookmarks/migrations } |  |  | 0.638 |
 | walker |  | 3674 | 107 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.638 |
 | walker |  | 3721 | 47 | Plaintext::DeclSurface { file: pytest.ini } |  |  | 0.642 |
 | ns | 3741 |  | 276 | BookmarkAsset — snapshot/upload model | 2.8 | 2.1 | 0.623 |

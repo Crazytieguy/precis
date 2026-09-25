@@ -1,4 +1,4 @@
-Score(3000)=0.724 I=0.896 C=0.585 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.708/0.773/0.808/0.724/0.656/0.622/0.666
+Score(3000)=0.724 I=0.896 C=0.585 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.708/0.712/0.808/0.724/0.656/0.622/0.666
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,9 +32,9 @@ Score(3000)=0.724 I=0.896 C=0.585 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1138 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.733 |
 | ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.752 |
 | walker |  | 1330 | 192 | Toml::Dependencies { file: project.toml } |  |  | 0.752 |
-| walker |  | 1372 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.816 |
-| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.773 |
-| walker |  | 1498 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.773 |
+| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.712 |
+| walker |  | 1456 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.712 |
+| walker |  | 1498 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.773 |
 | walker |  | 1509 | 11 | Code::CodeKey { rung: Names, file: peepdb/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.778 |
 | walker |  | 1514 | 5 | Code::CodeKey { rung: Decl, file: peepdb/exceptions.py, decl: 1, sub: 0, line: 1 } |  |  | 0.782 |
 | ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.759 |

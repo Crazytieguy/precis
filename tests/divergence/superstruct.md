@@ -10,10 +10,10 @@ Score(3000)=0.514 I=0.790 C=0.334 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 131 | 8 | Fs::DirListing { dir: docs/resources } |  |  | 0.000 |
 | ns | 134 |  | 65 | Complete root directory listing | 1.2 |  | 0.616 |
 | walker |  | 135 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.616 |
-| walker |  | 143 | 8 | Fs::DirListing { dir: .github } |  |  | 0.616 |
-| walker |  | 147 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.616 |
 | ns | 171 |  | 37 | Complete src/ and src/structs/ listings | 1.3 |  | 0.613 |
-| walker |  | 229 | 82 | Json::Identity { file: package.json } |  |  | 0.959 |
+| walker |  | 217 | 82 | Json::Identity { file: package.json } |  |  | 0.959 |
+| walker |  | 225 | 8 | Fs::DirListing { dir: .github } |  |  | 0.959 |
+| walker |  | 229 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.959 |
 | ns | 250 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.865 |
 | walker |  | 258 | 29 | Fs::DirListing { dir: docs/images } |  |  | 0.866 |
 | walker |  | 289 | 31 | Fs::DirListing { dir: docs/reference } |  |  | 0.868 |

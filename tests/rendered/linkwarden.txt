@@ -34,6 +34,10 @@ README.md
   29→
   30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
   …
+  41→## Features
+  …
+  68→## Get Our Official Mobile App
+  …
 apps/
   mobile/
     .easignore
@@ -80,26 +84,6 @@ apps/
         splash-icon.png
     babel.config.js
     components/
-      ActionSheets/
-        AddLinkSheet.tsx
-        EditLinkSheet.tsx
-        NewCollectionSheet.tsx
-        Sheets.tsx
-        SupportSheet.tsx
-      CollectionListing.tsx
-      DashboardItem.tsx
-      DashboardSection.tsx
-      ElementNotSupported.tsx
-      Formats/
-        ImageFormat.tsx
-        PdfFormat.tsx
-        ReadableFormat.tsx
-        WebpageFormat.tsx
-      HapticTab.tsx
-      LinkListing.tsx
-      Links.tsx
-      TagListing.tsx
-      ui/
     eas.json
     lib/
       cache.ts
@@ -131,13 +115,6 @@ apps/
       data/
         user.ts
       fixtures/
-        base/
-          dashboard-page.ts
-          modal.ts
-          page.ts
-        index.ts
-        login-page.ts
-        registration-page.ts
       index.ts
       tests/
         global/
@@ -146,15 +123,6 @@ apps/
         public/
           login.spec.ts
     hooks/
-      useArchivalTags.ts
-      useCollectivePermissions.ts
-      useDetectPageBottom.tsx
-      useInitialData.tsx
-      useMediaQuery.tsx
-      useOnScreen.tsx
-      usePermissions.tsx
-      useSort.tsx
-      useWindowDimensions.tsx
     layouts/
       AdminLayout.tsx
       AuthRedirect.tsx
@@ -367,6 +335,20 @@ packages/
       34→  unverifiedNewEmail      String?
       35→  image                   String?
       36→  password                String?
+      37→  locale                  String                @default("en")
+      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
+      39→  parentSubscriptionId    Int?
+      40→  accounts                Account[]
+      41→  collections             Collection[]
+      42→  tags                    Tag[]
+      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
+      44→  createdLinks            Link[]                @relation("CreatedLinks")
+      45→  createdCollections      Collection[]          @relation("CreatedCollections")
+      46→  highlights              Highlight[]
+      47→  collectionsJoined       UsersAndCollections[]
+      48→  collectionOrder         Int[]                 @default([])
+      49→  whitelistedUsers        WhitelistedUser[]
+      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark

@@ -5,11 +5,11 @@ Score(3000)=0.722 I=0.881 C=0.591 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 26 | 26 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 30 | 4 | Fs::DirListing { dir: assets } |  |  | 0.000 |
 | ns | 33 |  | 33 | Project name and one-line description | 1.1 |  | 0.000 |
-| walker |  | 62 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.000 |
-| walker |  | 68 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.000 |
-| walker |  | 76 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.000 |
-| ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.000 |
-| walker |  | 109 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.577 |
+| walker |  | 63 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.537 |
+| walker |  | 95 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.577 |
+| walker |  | 101 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.577 |
+| walker |  | 109 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.577 |
 | ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.730 |
 | walker |  | 133 | 24 | Fs::DirListing { dir: nanovllm/engine } |  |  | 0.738 |
 | ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.759 |

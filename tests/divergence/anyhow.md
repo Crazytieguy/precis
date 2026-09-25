@@ -1,14 +1,14 @@
-Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.895/0.801/0.695/0.609/0.576/0.497/0.551
+Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.801/0.695/0.609/0.576/0.497/0.551
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 34 | 34 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 83 | 49 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 85 |  | 85 | Crate identity — name, version, description | 1.1 |  | 0.000 |
-| walker |  | 91 | 8 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 95 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 119 |  | 34 | Repository root listing | 1.2 |  | 0.523 |
-| walker |  | 162 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.527 |
+| walker |  | 150 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.527 |
+| walker |  | 158 | 8 | Fs::DirListing { dir: .github } |  |  | 0.527 |
+| walker |  | 162 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.527 |
 | ns | 168 |  | 49 | src/ module inventory | 1.3 |  | 0.548 |
 | walker |  | 189 | 27 | Toml::Operational { file: Cargo.toml } |  |  | 0.549 |
 | walker |  | 233 | 44 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.558 |
@@ -20,31 +20,31 @@ Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 507 |  | 90 | tests/ inventory | 1.7 |  | 0.693 |
 | walker |  | 582 | 110 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.703 |
 | ns | 645 |  | 138 | Cargo features — std default, optional backtrace | 1.8 |  | 0.723 |
-| walker |  | 672 | 90 | Fs::DirListing { dir: tests } |  |  | 0.894 |
-| walker |  | 676 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.894 |
-| walker |  | 680 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.894 |
-| walker |  | 694 | 14 | Fs::DirListing { dir: tests/crate } |  |  | 0.894 |
-| ns | 793 |  | 148 | README lede, install snippet, and section map | 1.9 |  | 0.884 |
-| walker |  | 919 | 225 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.891 |
-| walker |  | 937 | 18 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.892 |
-| walker |  | 963 | 26 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 3, sub: 0, line: 389 } |  |  | 0.895 |
-| walker |  | 1008 | 45 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 1, sub: 0, line: 278 } |  |  | 0.895 |
-| ns | 1009 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.801 |
-| walker |  | 1057 | 49 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 4, sub: 0, line: 413 } |  |  | 0.806 |
-| walker |  | 1113 | 56 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 6, sub: 0, line: 616 } |  |  | 0.806 |
-| walker |  | 1136 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.807 |
-| walker |  | 1170 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.808 |
-| walker |  | 1182 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.809 |
+| ns | 793 |  | 148 | README lede, install snippet, and section map | 1.9 |  | 0.737 |
+| walker |  | 807 | 225 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.743 |
+| walker |  | 825 | 18 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.744 |
+| walker |  | 851 | 26 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 3, sub: 0, line: 389 } |  |  | 0.746 |
+| walker |  | 896 | 45 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 1, sub: 0, line: 278 } |  |  | 0.746 |
+| walker |  | 945 | 49 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 4, sub: 0, line: 413 } |  |  | 0.751 |
+| walker |  | 1001 | 56 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 6, sub: 0, line: 616 } |  |  | 0.751 |
+| ns | 1009 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.680 |
+| walker |  | 1024 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.681 |
+| walker |  | 1058 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.682 |
+| walker |  | 1070 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.683 |
+| walker |  | 1160 | 90 | Fs::DirListing { dir: tests } |  |  | 0.809 |
+| walker |  | 1164 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.809 |
+| walker |  | 1168 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.809 |
+| walker |  | 1182 | 14 | Fs::DirListing { dir: tests/crate } |  |  | 0.809 |
 | ns | 1244 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.797 |
 | walker |  | 1251 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
 | walker |  | 1281 | 30 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.799 |
-| walker |  | 1363 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.801 |
-| walker |  | 1399 | 36 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.801 |
-| ns | 1452 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.747 |
-| walker |  | 1565 | 166 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 1, sub: 0, line: 56 } |  |  | 0.750 |
-| ns | 1612 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.757 |
-| ns | 1778 |  | 166 | Display representations — `{}` and `{:#}`, with sample output | 2.4 | 1.4 | 0.735 |
-| walker |  | 1817 | 252 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.741 |
+| walker |  | 1317 | 36 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.799 |
+| ns | 1452 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.746 |
+| walker |  | 1483 | 166 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 1, sub: 0, line: 56 } |  |  | 0.748 |
+| ns | 1612 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.756 |
+| walker |  | 1735 | 252 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.761 |
+| ns | 1778 |  | 166 | Display representations — `{}` and `{:#}`, with sample output | 2.4 | 1.4 | 0.739 |
+| walker |  | 1817 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.741 |
 | ns | 1915 |  | 137 | Debug representations — `{:?}` and `{:#?}` | 2.5 | 2.4 | 0.715 |
 | walker |  | 1954 | 137 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.715 |
 | ns | 2031 |  | 116 | Context trait doc — sealed, and outermost-first cause printing | 2.6 | 2.3 | 0.695 |

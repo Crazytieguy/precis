@@ -1,4 +1,4 @@
-Score(3000)=0.488 I=0.767 C=0.310 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.694/0.625/0.518/0.488/0.504/0.632/0.655
+Score(3000)=0.487 I=0.764 C=0.310 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.694/0.625/0.518/0.487/0.493/0.632/0.655
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,19 +12,19 @@ Score(3000)=0.488 I=0.767 C=0.310 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.356 |
 | walker |  | 257 | 77 | Json::Identity { file: package.json } |  |  | 0.481 |
 | ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.421 |
-| walker |  | 282 | 25 | Fs::DirListing { dir: docs/zh-CN } |  |  | 0.421 |
-| ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.377 |
-| walker |  | 347 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.554 |
+| walker |  | 322 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.619 |
+| ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.554 |
+| walker |  | 347 | 25 | Fs::DirListing { dir: docs/zh-CN } |  |  | 0.554 |
 | walker |  | 377 | 30 | Json::Runtime { file: package.json } |  |  | 0.605 |
 | walker |  | 412 | 35 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.605 |
 | walker |  | 432 | 20 | Fs::DirListing { dir: .github } |  |  | 0.606 |
 | ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.495 |
 | walker |  | 442 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.495 |
-| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.408 |
-| walker |  | 679 | 237 | Fs::DirListing { dir: examples } |  |  | 0.578 |
-| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.578 |
-| walker |  | 690 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
-| walker |  | 787 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.659 |
+| walker |  | 453 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.495 |
+| walker |  | 550 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.508 |
+| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.551 |
+| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.651 |
+| walker |  | 787 | 237 | Fs::DirListing { dir: examples } |  |  | 0.659 |
 | ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.588 |
 | walker |  | 945 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.688 |
 | walker |  | 1206 | 261 | Json::Scripts { file: package.json } |  |  | 0.695 |
@@ -65,52 +65,52 @@ Score(3000)=0.488 I=0.767 C=0.310 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | ns | 2595 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.453 |
 | ns | 2703 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.443 |
 | ns | 2755 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.446 |
-| ns | 2851 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.469 |
-| ns | 2994 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.483 |
-| ns | 3122 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.502 |
-| walker |  | 3202 | 813 | Fs::DirListing { dir: tests } |  |  | 0.511 |
-| walker |  | 3231 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.511 |
-| walker |  | 3324 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.513 |
-| walker |  | 3327 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.513 |
-| walker |  | 3330 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.513 |
-| ns | 3353 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.501 |
-| ns | 3396 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.500 |
-| ns | 3476 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.492 |
-| ns | 3608 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.482 |
-| walker |  | 3718 | 388 | Code::CodeKey { rung: Names, file: typings/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.485 |
-| walker |  | 3733 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 4, sub: 0, line: 31 } |  |  | 0.485 |
-| walker |  | 3748 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 171, sub: 0, line: 1100 } |  |  | 0.485 |
-| walker |  | 3769 | 21 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 72, sub: 0, line: 342 } |  |  | 0.485 |
-| walker |  | 3792 | 23 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.485 |
-| ns | 3804 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.470 |
-| walker |  | 3816 | 24 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 172, sub: 0, line: 1104 } |  |  | 0.470 |
-| walker |  | 3845 | 29 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 73, sub: 0, line: 345 } |  |  | 0.470 |
-| ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.469 |
-| walker |  | 3881 | 36 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 78, sub: 0, line: 370 } |  |  | 0.470 |
-| ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.474 |
-| walker |  | 3919 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 74, sub: 0, line: 349 } |  |  | 0.474 |
-| walker |  | 3972 | 53 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 170, sub: 0, line: 1094 } |  |  | 0.475 |
-| ns | 4013 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.487 |
-| walker |  | 4034 | 62 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.487 |
-| walker |  | 4097 | 63 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 6, sub: 0, line: 40 } |  |  | 0.487 |
-| walker |  | 4228 | 131 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 75, sub: 0, line: 354 } |  |  | 0.488 |
-| ns | 4258 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.508 |
-| ns | 4322 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.504 |
-| ns | 4413 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.498 |
-| walker |  | 4423 | 195 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 7, sub: 0, line: 48 } |  |  | 0.498 |
-| walker |  | 4443 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 9, sub: 0, line: 67 } |  |  | 0.498 |
-| ns | 4449 |  | 36 | docs/ listing | 3.6 |  | 0.506 |
-| walker |  | 4463 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 13, sub: 0, line: 87 } |  |  | 0.506 |
-| walker |  | 4483 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 14, sub: 0, line: 92 } |  |  | 0.506 |
-| ns | 4564 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.499 |
-| ns | 4729 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.490 |
-| walker |  | 4934 | 451 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 15, sub: 0, line: 95 } |  |  | 0.490 |
-| walker |  | 4954 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 26, sub: 0, line: 189 } |  |  | 0.490 |
-| walker |  | 4975 | 21 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 4, sub: 0, line: 56 } |  |  | 0.490 |
-| ns | 4992 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.477 |
-| walker |  | 4996 | 21 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 11, sub: 0, line: 165 } |  |  | 0.477 |
-| walker |  | 5017 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 24, sub: 0, line: 179 } |  |  | 0.477 |
-| walker |  | 5039 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 28, sub: 0, line: 200 } |  |  | 0.477 |
+| walker |  | 2777 | 388 | Code::CodeKey { rung: Names, file: typings/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 2792 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 4, sub: 0, line: 31 } |  |  | 0.449 |
+| walker |  | 2807 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 171, sub: 0, line: 1100 } |  |  | 0.449 |
+| walker |  | 2828 | 21 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 72, sub: 0, line: 342 } |  |  | 0.449 |
+| walker |  | 2851 | 23 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.472 |
+| ns | 2851 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.472 |
+| walker |  | 2875 | 24 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 172, sub: 0, line: 1104 } |  |  | 0.472 |
+| walker |  | 2904 | 29 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 73, sub: 0, line: 345 } |  |  | 0.472 |
+| walker |  | 2940 | 36 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 78, sub: 0, line: 370 } |  |  | 0.473 |
+| walker |  | 2978 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 74, sub: 0, line: 349 } |  |  | 0.473 |
+| ns | 2994 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.486 |
+| walker |  | 3031 | 53 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 170, sub: 0, line: 1094 } |  |  | 0.487 |
+| walker |  | 3093 | 62 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.487 |
+| ns | 3122 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.506 |
+| walker |  | 3156 | 63 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 6, sub: 0, line: 40 } |  |  | 0.507 |
+| walker |  | 3287 | 131 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 75, sub: 0, line: 354 } |  |  | 0.508 |
+| ns | 3353 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.496 |
+| ns | 3396 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.495 |
+| ns | 3476 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.488 |
+| walker |  | 3482 | 195 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 7, sub: 0, line: 48 } |  |  | 0.488 |
+| walker |  | 3502 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 9, sub: 0, line: 67 } |  |  | 0.488 |
+| walker |  | 3522 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 13, sub: 0, line: 87 } |  |  | 0.488 |
+| walker |  | 3542 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 14, sub: 0, line: 92 } |  |  | 0.488 |
+| ns | 3608 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.477 |
+| ns | 3804 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.463 |
+| ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.462 |
+| ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.466 |
+| walker |  | 3993 | 451 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 15, sub: 0, line: 95 } |  |  | 0.466 |
+| walker |  | 4013 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 26, sub: 0, line: 189 } |  |  | 0.478 |
+| ns | 4013 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.478 |
+| walker |  | 4034 | 21 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 4, sub: 0, line: 56 } |  |  | 0.478 |
+| walker |  | 4055 | 21 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 11, sub: 0, line: 165 } |  |  | 0.478 |
+| walker |  | 4076 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 24, sub: 0, line: 179 } |  |  | 0.478 |
+| walker |  | 4098 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 28, sub: 0, line: 200 } |  |  | 0.478 |
+| ns | 4258 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.497 |
+| ns | 4322 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.493 |
+| ns | 4413 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.488 |
+| ns | 4449 |  | 36 | docs/ listing | 3.6 |  | 0.495 |
+| ns | 4564 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.489 |
+| ns | 4729 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.480 |
+| walker |  | 4911 | 813 | Fs::DirListing { dir: tests } |  |  | 0.489 |
+| walker |  | 4940 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.489 |
+| ns | 4992 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.476 |
+| walker |  | 5033 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.477 |
+| walker |  | 5036 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.477 |
+| walker |  | 5039 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.477 |
 | walker |  | 5062 | 23 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 19, sub: 0, line: 272 } |  |  | 0.477 |
 | ns | 5241 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.467 |
 | walker |  | 5280 | 218 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.494 |

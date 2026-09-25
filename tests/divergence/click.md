@@ -9,11 +9,11 @@ Score(3000)=0.812 I=0.943 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.000 |
 | walker |  | 216 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.584 |
 | walker |  | 246 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.584 |
-| walker |  | 257 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.584 |
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
+| walker |  | 273 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.355 |
+| walker |  | 284 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.355 |
 | ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
-| walker |  | 345 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
-| walker |  | 372 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.810 |
+| walker |  | 372 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
 | walker |  | 385 | 13 | Fs::DirListing { dir: .github } |  |  | 0.810 |
 | walker |  | 408 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.811 |
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |

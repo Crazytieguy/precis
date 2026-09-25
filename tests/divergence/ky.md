@@ -20,19 +20,19 @@ Score(3000)=0.713 I=0.906 C=0.561 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 415 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.649 |
 | walker |  | 514 | 229 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.892 |
 | ns | 535 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.893 |
-| walker |  | 580 | 66 | Fs::DirListing { dir: test } |  |  | 0.900 |
-| ns | 669 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.818 |
-| walker |  | 683 | 103 | Json::Scripts { file: package.json } |  |  | 0.818 |
-| ns | 751 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.774 |
-| walker |  | 786 | 103 | Json::Entry { file: package.json } |  |  | 0.782 |
+| walker |  | 617 | 103 | Json::Scripts { file: package.json } |  |  | 0.894 |
+| ns | 669 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.811 |
+| walker |  | 720 | 103 | Json::Entry { file: package.json } |  |  | 0.821 |
+| ns | 751 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.776 |
+| walker |  | 786 | 66 | Fs::DirListing { dir: test } |  |  | 0.782 |
 | ns | 873 |  | 122 | package.json module contract: type, exports, main, engines | 1.9 | 1.4 | 0.797 |
 | ns | 1123 |  | 250 | source/index.ts: the complete public type-export block | 1.10 | 1.7 | 0.691 |
 | walker |  | 1196 | 410 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.901 |
 | walker |  | 1208 | 12 | Code::CodeKey { rung: Names, file: source/core/Ky.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.901 |
 | ns | 1221 |  | 98 | Complete `test/` tree, including helpers | 1.11 |  | 0.863 |
 | walker |  | 1258 | 50 | Code::CodeKey { rung: Decl, file: source/core/Ky.ts, decl: 1, sub: 0, line: 33 } |  |  | 0.863 |
-| walker |  | 1290 | 32 | Fs::DirListing { dir: test/helpers } |  |  | 0.907 |
-| walker |  | 1304 | 14 | Code::CodeKey { rung: Names, file: source/types/ky.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.907 |
+| walker |  | 1272 | 14 | Code::CodeKey { rung: Names, file: source/types/ky.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.864 |
+| walker |  | 1304 | 32 | Fs::DirListing { dir: test/helpers } |  |  | 0.907 |
 | ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.841 |
 | walker |  | 1644 | 340 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.961 |
 | walker |  | 1660 | 16 | Markdown::Section { file: readme.md, section_index: 38, keeps_default_concavity: false } |  |  | 0.961 |

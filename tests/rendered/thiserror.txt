@@ -129,6 +129,53 @@ impl/
   LICENSE-MIT
   src/
     ast.rs
+      …
+      10→pub enum Input<'a> {
+      11→    Struct(Struct<'a>),
+      12→    Enum(Enum<'a>),
+      13→}
+      15→pub struct Struct<'a> {
+      16→    pub attrs: Attrs<'a>,
+      17→    pub ident: Ident,
+      18→    pub generics: &'a Generics,
+      19→    pub fields: Vec<Field<'a>>,
+      20→}
+      22→pub struct Enum<'a> {
+      23→    pub attrs: Attrs<'a>,
+      24→    pub ident: Ident,
+      25→    pub generics: &'a Generics,
+      26→    pub variants: Vec<Variant<'a>>,
+      27→}
+      29→pub struct Variant<'a> {
+      30→    pub original: &'a syn::Variant,
+      31→    pub attrs: Attrs<'a>,
+      32→    pub ident: Ident,
+      33→    pub fields: Vec<Field<'a>>,
+      34→}
+      36→pub struct Field<'a> {
+      37→    pub original: &'a syn::Field,
+      38→    pub attrs: Attrs<'a>,
+      39→    pub member: MemberUnraw,
+      40→    pub ty: &'a Type,
+      …
+      44→#[derive(Copy, Clone)]
+      45→pub enum ContainerKind {
+      46→    Struct,
+      47→    TupleStruct,
+      48→    UnitStruct,
+      49→    StructVariant,
+      50→    TupleVariant,
+      51→    UnitVariant,
+      52→}
+      54→impl<'a> Input<'a> {
+      55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+      …
+      65→}
+      …
+      174→impl Display for ContainerKind {
+      175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+      …
+      185→}
     attr.rs
     expand.rs
     fallback.rs
@@ -157,6 +204,10 @@ impl/
       47→
       48→impl ToTokens for private {
       49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+      50→        tokens.append(Ident::new(
+      51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+      52→            Span::call_site(),
+      53→        ));
       …
       55→}
     prop.rs
@@ -207,6 +258,7 @@ src/
     18→    type Target = &'a T;
     19→
     20→    fn as_display(&'a self) -> Self::Target {
+    21→        *self
     …
     23→}
     25→#[cfg(feature = "std")]
@@ -274,75 +326,3 @@ tests/
   test_source.rs
   test_transparent.rs
   ui/
-    bad-field-attr.rs
-    bad-field-attr.stderr
-    concat-display.rs
-    concat-display.stderr
-    display-underscore.rs
-    display-underscore.stderr
-    duplicate-enum-source.rs
-    duplicate-enum-source.stderr
-    duplicate-fmt.rs
-    duplicate-fmt.stderr
-    duplicate-struct-source.rs
-    duplicate-struct-source.stderr
-    duplicate-transparent.rs
-    duplicate-transparent.stderr
-    expression-fallback.rs
-    expression-fallback.stderr
-    fallback-impl-with-display.rs
-    fallback-impl-with-display.stderr
-    from-backtrace-backtrace.rs
-    from-backtrace-backtrace.stderr
-    from-not-source.rs
-    from-not-source.stderr
-    invalid-input-impl-anyway.rs
-    invalid-input-impl-anyway.stderr
-    lifetime.rs
-    lifetime.stderr
-    missing-display.rs
-    missing-display.stderr
-    missing-fmt.rs
-    missing-fmt.stderr
-    no-display.rs
-    no-display.stderr
-    numbered-positional-tuple.rs
-    numbered-positional-tuple.stderr
-    raw-identifier.rs
-    raw-identifier.stderr
-    same-from-type.rs
-    same-from-type.stderr
-    source-enum-not-error.rs
-    source-enum-not-error.stderr
-    source-enum-unnamed-field-not-error.rs
-    source-enum-unnamed-field-not-error.stderr
-    source-struct-not-error.rs
-    source-struct-not-error.stderr
-    source-struct-unnamed-field-not-error.rs
-    source-struct-unnamed-field-not-error.stderr
-    struct-with-fmt.rs
-    struct-with-fmt.stderr
-    transparent-display.rs
-    transparent-display.stderr
-    transparent-enum-many.rs
-    transparent-enum-many.stderr
-    transparent-enum-not-error.rs
-    transparent-enum-not-error.stderr
-    transparent-enum-source.rs
-    transparent-enum-source.stderr
-    transparent-enum-unnamed-field-not-error.rs
-    transparent-enum-unnamed-field-not-error.stderr
-    transparent-struct-many.rs
-    transparent-struct-many.stderr
-    transparent-struct-not-error.rs
-    transparent-struct-not-error.stderr
-    transparent-struct-source.rs
-    transparent-struct-source.stderr
-    transparent-struct-unnamed-field-not-error.rs
-    transparent-struct-unnamed-field-not-error.stderr
-    unconditional-recursion.rs
-    unconditional-recursion.stderr
-    unexpected-field-fmt.rs
-    unexpected-field-fmt.stderr
-    unexpected-struct-source.rs
-    …

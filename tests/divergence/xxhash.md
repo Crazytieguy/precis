@@ -8,10 +8,10 @@ Score(3000)=0.727 I=0.823 C=0.642 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | walker |  | 110 | 14 | Fs::DirListing { dir: dynamic } |  |  | 0.000 |
 | ns | 113 |  | 66 | README title + positioning sentence | 1.2 |  | 0.000 |
 | walker |  | 125 | 15 | Fs::DirListing { dir: xxhashbench } |  |  | 0.000 |
-| walker |  | 128 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 132 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| walker |  | 163 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| walker |  | 163 | 0 | GoMod::File { file: go.mod } |  |  | 0.000 |
+| walker |  | 156 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
+| walker |  | 156 | 0 | GoMod::File { file: go.mod } |  |  | 0.000 |
+| walker |  | 159 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
+| walker |  | 163 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 198 |  | 85 | Complete root directory listing | 1.3 |  | 0.531 |
 | walker |  | 202 | 39 | Code::CodeKey { rung: ModuleDoc, file: xxhash.go, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
 | walker |  | 237 | 35 | GoMod::Identity { file: xxhashbench/go.mod } |  |  | 0.763 |

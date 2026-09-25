@@ -1,4 +1,4 @@
-Score(3000)=0.702 I=0.918 C=0.537 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.914/0.808/0.789/0.702/0.621/0.557/0.545
+Score(3000)=0.705 I=0.918 C=0.541 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.943/0.808/0.789/0.705/0.621/0.557/0.545
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -13,32 +13,32 @@ Score(3000)=0.702 I=0.918 C=0.537 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 190 | 39 | Fs::DirListing { dir: src } |  |  | 0.610 |
 | walker |  | 199 | 9 | Fs::DirListing { dir: src/themes } |  |  | 0.612 |
 | walker |  | 230 | 31 | Fs::DirListing { dir: src/widgetsTemplates } |  |  | 0.626 |
-| walker |  | 249 | 19 | Fs::DirListing { dir: widgets/images } |  |  | 0.627 |
-| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.626 |
-| walker |  | 315 | 66 | Json::Identity { file: package.json } |  |  | 0.817 |
+| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.624 |
+| walker |  | 296 | 66 | Json::Identity { file: package.json } |  |  | 0.816 |
+| walker |  | 315 | 19 | Fs::DirListing { dir: widgets/images } |  |  | 0.817 |
 | walker |  | 346 | 31 | Fs::DirListing { dir: widgets/services } |  |  | 0.824 |
 | ns | 371 |  | 95 | Complete listings of the per-mode widget directories: widgets/containers, widgets/images, widgets/services | 1.4 |  | 0.738 |
-| walker |  | 391 | 45 | Fs::DirListing { dir: widgets/containers } |  |  | 0.833 |
-| ns | 411 |  | 40 | Complete listings of src/widgetsTemplates and src/themes | 1.5 |  | 0.827 |
-| walker |  | 425 | 34 | Json::Runtime { file: package.json } |  |  | 0.828 |
-| walker |  | 444 | 19 | Fs::DirListing { dir: .github } |  |  | 0.829 |
-| walker |  | 464 | 20 | Fs::DirListing { dir: .github/workflows } |  |  | 0.829 |
+| walker |  | 380 | 34 | Json::Runtime { file: package.json } |  |  | 0.739 |
+| ns | 411 |  | 40 | Complete listings of src/widgetsTemplates and src/themes | 1.5 |  | 0.742 |
+| walker |  | 425 | 45 | Fs::DirListing { dir: widgets/containers } |  |  | 0.828 |
 | ns | 533 |  | 122 | npm scripts block | 1.6 |  | 0.785 |
-| walker |  | 627 | 163 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.786 |
+| walker |  | 588 | 163 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.786 |
+| walker |  | 607 | 19 | Fs::DirListing { dir: .github } |  |  | 0.786 |
+| walker |  | 627 | 20 | Fs::DirListing { dir: .github/workflows } |  |  | 0.786 |
 | ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.733 |
 | walker |  | 730 | 103 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.744 |
 | walker |  | 752 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.745 |
 | ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.749 |
 | walker |  | 859 | 107 | Json::Entry { file: package.json } |  |  | 0.958 |
 | ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.903 |
-| walker |  | 911 | 52 | Fs::DirListing { dir: docs } |  |  | 0.903 |
-| walker |  | 920 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.903 |
-| walker |  | 933 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.904 |
-| walker |  | 1053 | 120 | Json::Scripts { file: package.json } |  |  | 0.874 |
+| walker |  | 979 | 120 | Json::Scripts { file: package.json } |  |  | 0.943 |
+| walker |  | 1031 | 52 | Fs::DirListing { dir: docs } |  |  | 0.943 |
+| walker |  | 1040 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.944 |
+| walker |  | 1053 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.874 |
 | ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.874 |
-| walker |  | 1078 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.875 |
-| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.808 |
-| walker |  | 1248 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.812 |
+| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.807 |
+| walker |  | 1223 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.811 |
+| walker |  | 1248 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.812 |
 | walker |  | 1370 | 122 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.825 |
 | walker |  | 1392 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 3, sub: 0, line: 18 } |  |  | 0.833 |
 | walker |  | 1414 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 4, sub: 0, line: 23 } |  |  | 0.803 |
@@ -72,22 +72,22 @@ Score(3000)=0.702 I=0.918 C=0.537 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 2696 | 23 | Code::CodeKey { rung: Names, file: hooks/services.hook.js, decl: 0, sub: 0, line: 0 } |  |  | 0.730 |
 | ns | 2724 |  | 99 | README: running and building the docker image | 2.9 |  | 0.718 |
 | walker |  | 2760 | 64 | Code::CodeKey { rung: Decl, file: hooks/services.hook.js, decl: 1, sub: 0, line: 5 } |  |  | 0.719 |
-| walker |  | 2765 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.719 |
-| walker |  | 2780 | 15 | Code::CodeKey { rung: Body, file: src/assetsLoader.js, decl: 4, sub: 0, line: 39 } |  |  | 0.719 |
-| walker |  | 2804 | 24 | Code::CodeKey { rung: Names, file: hooks/shell.hook.js, decl: 0, sub: 0, line: 0 } |  |  | 0.719 |
-| walker |  | 2844 | 40 | Code::CodeKey { rung: Decl, file: hooks/shell.hook.js, decl: 1, sub: 0, line: 8 } |  |  | 0.720 |
-| walker |  | 2856 | 12 | Code::CodeKey { rung: Names, file: lib/modes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
+| walker |  | 2775 | 15 | Code::CodeKey { rung: Body, file: src/assetsLoader.js, decl: 4, sub: 0, line: 39 } |  |  | 0.719 |
+| walker |  | 2799 | 24 | Code::CodeKey { rung: Names, file: hooks/shell.hook.js, decl: 0, sub: 0, line: 0 } |  |  | 0.719 |
+| walker |  | 2839 | 40 | Code::CodeKey { rung: Decl, file: hooks/shell.hook.js, decl: 1, sub: 0, line: 8 } |  |  | 0.720 |
+| walker |  | 2851 | 12 | Code::CodeKey { rung: Names, file: lib/modes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
 | ns | 2876 |  | 152 | .github/workflows/main.yml: the lint job | 2.10 |  | 0.696 |
-| walker |  | 2889 | 33 | Code::CodeKey { rung: Decl, file: lib/modes.js, decl: 1, sub: 0, line: 3 } |  |  | 0.697 |
-| walker |  | 2914 | 25 | Code::CodeKey { rung: Names, file: widgets/help.widget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
-| walker |  | 2928 | 14 | Code::CodeKey { rung: Decl, file: widgets/help.widget.js, decl: 1, sub: 0, line: 5 } |  |  | 0.697 |
-| walker |  | 2939 | 11 | Code::CodeKey { rung: Body, file: widgets/help.widget.js, decl: 2, sub: 0, line: 6 } |  |  | 0.697 |
-| walker |  | 3003 | 64 | Code::CodeKey { rung: Names, file: src/cli.js, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
-| walker |  | 3016 | 13 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.709 |
-| walker |  | 3042 | 26 | Code::CodeKey { rung: Names, file: widgets/actionsMenu.widget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
+| walker |  | 2884 | 33 | Code::CodeKey { rung: Decl, file: lib/modes.js, decl: 1, sub: 0, line: 3 } |  |  | 0.697 |
+| walker |  | 2909 | 25 | Code::CodeKey { rung: Names, file: widgets/help.widget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
+| walker |  | 2923 | 14 | Code::CodeKey { rung: Decl, file: widgets/help.widget.js, decl: 1, sub: 0, line: 5 } |  |  | 0.697 |
+| walker |  | 2934 | 11 | Code::CodeKey { rung: Body, file: widgets/help.widget.js, decl: 2, sub: 0, line: 6 } |  |  | 0.697 |
+| walker |  | 2998 | 64 | Code::CodeKey { rung: Names, file: src/cli.js, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
+| walker |  | 3011 | 13 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.709 |
+| walker |  | 3037 | 26 | Code::CodeKey { rung: Names, file: widgets/actionsMenu.widget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
 | ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.689 |
-| walker |  | 3148 | 106 | Code::CodeKey { rung: Decl, file: widgets/actionsMenu.widget.js, decl: 1, sub: 0, line: 5 } |  |  | 0.689 |
-| walker |  | 3156 | 8 | Code::CodeKey { rung: Body, file: widgets/actionsMenu.widget.js, decl: 9, sub: 0, line: 148 } |  |  | 0.689 |
+| walker |  | 3143 | 106 | Code::CodeKey { rung: Decl, file: widgets/actionsMenu.widget.js, decl: 1, sub: 0, line: 5 } |  |  | 0.689 |
+| walker |  | 3151 | 8 | Code::CodeKey { rung: Body, file: widgets/actionsMenu.widget.js, decl: 9, sub: 0, line: 148 } |  |  | 0.689 |
+| walker |  | 3156 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.689 |
 | ns | 3170 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.691 |
 | walker |  | 3184 | 28 | Code::CodeKey { rung: Names, file: widgets/actionStatus.widget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
 | walker |  | 3254 | 70 | Code::CodeKey { rung: Decl, file: widgets/actionStatus.widget.js, decl: 1, sub: 0, line: 6 } |  |  | 0.691 |
@@ -235,20 +235,20 @@ Score(3000)=0.702 I=0.918 C=0.537 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 8583 |  | 101 | src/enum.js in full — the ContainerState vocabulary | 7.1 |  | 0.552 |
 | walker |  | 8660 | 431 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.552 |
 | walker |  | 8806 | 146 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.552 |
-| walker |  | 8819 | 13 | Fs::DirListing { dir: docs/src/assets } |  |  | 0.552 |
-| walker |  | 8825 | 6 | Fs::DirListing { dir: docs/src/assets/css } |  |  | 0.552 |
-| walker |  | 8851 | 26 | Code::CodeKey { rung: Body, file: widgets/images/imageList.widget.js, decl: 2, sub: 0, line: 6 } |  |  | 0.552 |
+| walker |  | 8832 | 26 | Code::CodeKey { rung: Body, file: widgets/images/imageList.widget.js, decl: 2, sub: 0, line: 6 } |  |  | 0.552 |
 | ns | 8893 |  | 310 | src/themes/theme.selector.js in full and the dark/light style keys | 7.2 |  | 0.544 |
-| walker |  | 8928 | 77 | Code::CodeKey { rung: Body, file: widgets/actionStatus.widget.js, decl: 2, sub: 0, line: 7 } |  |  | 0.544 |
-| walker |  | 8955 | 27 | Code::CodeKey { rung: Body, file: widgets/containers/containerList.widget.js, decl: 13, sub: 0, line: 169 } |  |  | 0.544 |
-| walker |  | 8992 | 37 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 9, sub: 0, line: 114 } |  |  | 0.545 |
-| walker |  | 9034 | 42 | Code::CodeKey { rung: Doc, file: widgets/containers/containerList.widget.js, decl: 13, sub: 0, line: 169 } |  |  | 0.545 |
-| walker |  | 9076 | 42 | Code::CodeKey { rung: Doc, file: widgets/images/imageList.widget.js, decl: 9, sub: 0, line: 119 } |  |  | 0.545 |
-| walker |  | 9118 | 42 | Code::CodeKey { rung: Doc, file: widgets/services/servicesList.widget.js, decl: 10, sub: 0, line: 87 } |  |  | 0.545 |
-| walker |  | 9138 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 10, sub: 0, line: 138 } |  |  | 0.545 |
-| walker |  | 9158 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 9, sub: 0, line: 115 } |  |  | 0.548 |
+| walker |  | 8909 | 77 | Code::CodeKey { rung: Body, file: widgets/actionStatus.widget.js, decl: 2, sub: 0, line: 7 } |  |  | 0.544 |
+| walker |  | 8936 | 27 | Code::CodeKey { rung: Body, file: widgets/containers/containerList.widget.js, decl: 13, sub: 0, line: 169 } |  |  | 0.544 |
+| walker |  | 8973 | 37 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 9, sub: 0, line: 114 } |  |  | 0.545 |
+| walker |  | 9015 | 42 | Code::CodeKey { rung: Doc, file: widgets/containers/containerList.widget.js, decl: 13, sub: 0, line: 169 } |  |  | 0.545 |
+| walker |  | 9057 | 42 | Code::CodeKey { rung: Doc, file: widgets/images/imageList.widget.js, decl: 9, sub: 0, line: 119 } |  |  | 0.545 |
+| walker |  | 9099 | 42 | Code::CodeKey { rung: Doc, file: widgets/services/servicesList.widget.js, decl: 10, sub: 0, line: 87 } |  |  | 0.545 |
+| walker |  | 9119 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 10, sub: 0, line: 138 } |  |  | 0.545 |
+| walker |  | 9139 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 9, sub: 0, line: 115 } |  |  | 0.548 |
 | ns | 9179 |  | 286 | widgets/containers/containerList.widget.js: complete method roster | 7.3 |  | 0.549 |
-| walker |  | 9203 | 45 | Code::CodeKey { rung: Body, file: widgets/containers/containerSortList.widget.js, decl: 5, sub: 0, line: 47 } |  |  | 0.549 |
+| walker |  | 9184 | 45 | Code::CodeKey { rung: Body, file: widgets/containers/containerSortList.widget.js, decl: 5, sub: 0, line: 47 } |  |  | 0.549 |
+| walker |  | 9197 | 13 | Fs::DirListing { dir: docs/src/assets } |  |  | 0.549 |
+| walker |  | 9203 | 6 | Fs::DirListing { dir: docs/src/assets/css } |  |  | 0.549 |
 | walker |  | 9219 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 10, sub: 0, line: 139 } |  |  | 0.549 |
 | walker |  | 9313 | 94 | Code::CodeKey { rung: Body, file: hooks/containers.hook.js, decl: 4, sub: 0, line: 70 } |  |  | 0.549 |
 | walker |  | 9407 | 94 | Code::CodeKey { rung: Body, file: hooks/services.hook.js, decl: 4, sub: 0, line: 61 } |  |  | 0.549 |

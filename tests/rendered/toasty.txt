@@ -230,6 +230,7 @@ crates/
         …
         28→    pub fn with_config(db: Db, config: Config) -> Self {
         …
+        32→    /// Get a reference to the configuration
         33→    pub fn config(&self) -> &Config {
         …
         38→    pub async fn parse_and_run(&self) -> Result<()> {
@@ -381,26 +382,6 @@ crates/
         verify.rs
       schema.rs
       stmt/
-        assignments.rs
-        association.rs
-        condition.rs
-        cte.rs
-        cx.rs
-        delete.rs
-        direction.rs
-        entry.rs
-        entry_mut.rs
-        entry_path.rs
-        eval.rs
-        expr.rs
-        expr_and.rs
-        expr_any.rs
-        expr_arg.rs
-        expr_begins_with.rs
-        expr_binary_op.rs
-        expr_cast.rs
-        expr_concat.rs
-        …
       stmt.rs
     tests/
       stmt_infer.rs
@@ -456,6 +437,24 @@ crates/
     Cargo.toml
     src/
       lib.rs
+        1→mod statement_cache;
+        2→mod r#type;
+        3→mod value;
+        …
+        24→pub struct PostgreSQL {
+        …
+        29→impl PostgreSQL {
+        …
+        80→impl Driver for PostgreSQL {
+        …
+        178→pub struct Connection {
+        …
+        183→impl Connection {
+        …
+        258→impl From<Client> for Connection {
+        …
+        268→impl toasty_core::driver::Connection for Connection {
+        …
       statement_cache.rs
       type.rs
       value.rs
@@ -540,15 +539,6 @@ examples/
     src/
       main.rs
   todo-with-cli/
-    .gitignore
-    Cargo.toml
-    Toasty.toml
-    src/
-      bin/
-        app.rs
-        cli.rs
-      lib.rs
-    toasty/
   user-has-one-profile/
     Cargo.toml
     src/

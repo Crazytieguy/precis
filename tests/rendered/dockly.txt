@@ -2,7 +2,6 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
-    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -273,6 +272,7 @@ src/
     …
     93→Cli.prototype.cliParse = function () {
     …
+    97→module.exports = new Cli()
   dockerUtil.js
     …
     5→class Util {

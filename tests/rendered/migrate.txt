@@ -312,6 +312,14 @@ migration.go
   37→	// BufferSize defaults to DefaultBufferSize
   38→	BufferSize uint
   39→
+  40→	// bufferWriter holds an io.WriteCloser and pipes to BufferBody.
+  41→	// It's an *Closer for flow control.
+  42→	bufferWriter io.WriteCloser
+  43→
+  44→	// Scheduled is the time when the migration was scheduled/ queued.
+  45→	Scheduled time.Time
+  46→
+  47→	// StartedBuffering is the time when buffering of the migration source started.
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {
@@ -401,17 +409,6 @@ source/
       no-migrations/
         some-file (empty)
       sql/
-        1_foobar.down.sql
-        1_foobar.up.sql
-        3_foobar.up.sql
-        4_foobar.down.sql
-        4_foobar.up.sql
-        5_foobar.down.sql
-        7_foobar.down.sql
-        7_foobar.up.sql
-        other-files-are-ignored (empty)
-        subdirs-are-ignored/
-          some-file (empty)
   iofs/
     README.md
     doc.go

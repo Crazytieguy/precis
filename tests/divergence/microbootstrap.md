@@ -17,9 +17,9 @@ Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 314 | 27 | Fs::DirListing { dir: microbootstrap/bootstrappers } |  |  | 0.315 |
 | ns | 353 |  | 129 | `microbootstrap/` and `microbootstrap/instruments/` listings (complete) | 1.5 |  | 0.267 |
 | walker |  | 386 | 72 | Fs::DirListing { dir: microbootstrap/instruments } |  |  | 0.455 |
-| walker |  | 404 | 18 | Fs::DirListing { dir: examples } |  |  | 0.470 |
-| ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.480 |
-| walker |  | 444 | 40 | Json::Dependencies { file: package.json } |  |  | 0.480 |
+| walker |  | 426 | 40 | Json::Dependencies { file: package.json } |  |  | 0.455 |
+| ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.438 |
+| walker |  | 444 | 18 | Fs::DirListing { dir: examples } |  |  | 0.480 |
 | ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.410 |
 | walker |  | 703 | 259 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.541 |
 | walker |  | 786 | 83 | Json::Scripts { file: package.json } |  |  | 0.541 |
@@ -51,12 +51,12 @@ Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 3105 | 251 | Code::CodeKey { rung: Decl, file: microbootstrap/settings.py, decl: 4, sub: 0, line: 29 } |  |  | 0.792 |
 | walker |  | 3117 | 12 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 6, sub: 0, line: 60 } |  |  | 0.799 |
 | walker |  | 3129 | 12 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 7, sub: 0, line: 75 } |  |  | 0.805 |
-| walker |  | 3193 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.806 |
-| ns | 3198 |  | 159 | `Instrument` abstract methods and default hook implementations (bodies) | 3.4 | 3.1 | 0.775 |
-| walker |  | 3205 | 12 | Code::CodeKey { rung: Names, file: microbootstrap/console_writer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
-| walker |  | 3314 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 1, sub: 0, line: 10 } |  |  | 0.775 |
-| ns | 3319 |  | 121 | `Instrument.configure_instrument` and `write_status` (bodies) | 3.5 | 3.1 | 0.757 |
-| walker |  | 3364 | 50 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 3, sub: 0, line: 22 } |  |  | 0.757 |
+| walker |  | 3141 | 12 | Code::CodeKey { rung: Names, file: microbootstrap/console_writer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.805 |
+| ns | 3198 |  | 159 | `Instrument` abstract methods and default hook implementations (bodies) | 3.4 | 3.1 | 0.773 |
+| walker |  | 3250 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 1, sub: 0, line: 10 } |  |  | 0.773 |
+| walker |  | 3300 | 50 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 3, sub: 0, line: 22 } |  |  | 0.773 |
+| ns | 3319 |  | 121 | `Instrument.configure_instrument` and `write_status` (bodies) | 3.5 | 3.1 | 0.756 |
+| walker |  | 3364 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.757 |
 | walker |  | 3377 | 13 | Code::CodeKey { rung: Names, file: microbootstrap/instruments_setupper.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
 | walker |  | 3540 | 163 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments_setupper.py, decl: 1, sub: 0, line: 19 } |  |  | 0.757 |
 | walker |  | 3572 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments_setupper.py, decl: 4, sub: 0, line: 32 } |  |  | 0.757 |

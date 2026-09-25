@@ -108,6 +108,16 @@ README.md
   85→As a command-line utility:
   86→
   87→```
+  88→$ semver -h
+  89→
+  90→A JavaScript implementation of the https://semver.org/ specification
+  91→Copyright Isaac Z. Schlueter
+  92→
+  93→Usage: semver [options] <version> [<version> [...]]
+  94→Prints valid versions sorted by SemVer precedence
+  95→
+  96→Options:
+  97→-r --range <range>
   …
   139→## Versions
   …
@@ -334,30 +344,6 @@ test/
     semver.js
   fixtures/
   functions/
-    clean.js
-    cmp.js
-    coerce.js
-    compare-build.js
-    compare-loose.js
-    compare.js
-    diff.js
-    eq.js
-    gt.js
-    gte.js
-    inc.js
-    lt.js
-    lte.js
-    major.js
-    minor.js
-    neq.js
-    parse.js
-    patch.js
-    prerelease.js
-    rcompare.js
-    rsort.js
-    satisfies.js
-    sort.js
-    valid.js
   index.js
   integration/
     whitespace.js

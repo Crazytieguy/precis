@@ -1,4 +1,4 @@
-Score(3000)=0.713 I=0.933 C=0.545 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.789/0.958/0.801/0.713/0.762/0.696/0.646
+Score(3000)=0.713 I=0.933 C=0.545 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.789/0.949/0.801/0.713/0.762/0.696/0.646
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -13,11 +13,11 @@ Score(3000)=0.713 I=0.933 C=0.545 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 192 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.551 |
 | ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.470 |
 | walker |  | 227 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.481 |
-| walker |  | 235 | 8 | Fs::DirListing { dir: .github } |  |  | 0.482 |
-| walker |  | 240 | 5 | Fs::DirListing { dir: .github/workflows } |  |  | 0.482 |
-| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.523 |
-| walker |  | 309 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.523 |
-| walker |  | 329 | 20 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.523 |
+| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.521 |
+| walker |  | 296 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.521 |
+| walker |  | 316 | 20 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.521 |
+| walker |  | 324 | 8 | Fs::DirListing { dir: .github } |  |  | 0.522 |
+| walker |  | 329 | 5 | Fs::DirListing { dir: .github/workflows } |  |  | 0.523 |
 | walker |  | 342 | 13 | Code::CodeKey { rung: ModuleDoc, file: src/util/units.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
 | ns | 343 |  | 82 | README feature list, first five bullets (rest elided) | 1.5 |  | 0.473 |
 | ns | 409 |  | 66 | README feature list, remaining bullets | 1.6 | 1.5 | 0.449 |
@@ -38,9 +38,9 @@ Score(3000)=0.713 I=0.933 C=0.545 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 1235 |  | 137 | src/cli.rs: get_cli_arguments() and the build_command() clap header | 2.1 |  | 0.753 |
 | walker |  | 1294 | 243 | Code::CodeKey { rung: Decl, file: src/main.rs, decl: 1, sub: 0, line: 29 } |  |  | 0.855 |
 | walker |  | 1350 | 56 | Fs::DirListing { dir: scripts } |  |  | 0.912 |
-| walker |  | 1377 | 27 | Fs::DirListing { dir: src/benchmark } |  |  | 0.958 |
-| walker |  | 1389 | 12 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.958 |
-| walker |  | 1443 | 54 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.958 |
+| walker |  | 1362 | 12 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.912 |
+| walker |  | 1416 | 54 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.912 |
+| walker |  | 1443 | 27 | Fs::DirListing { dir: src/benchmark } |  |  | 0.958 |
 | walker |  | 1525 | 82 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.958 |
 | ns | 1672 |  | 437 | Complete option roster: every Arg::new(...) in src/cli.rs | 2.2 | 2.1 | 0.861 |
 | walker |  | 1764 | 239 | Code::CodeKey { rung: Names, file: src/options.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.862 |

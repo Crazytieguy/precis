@@ -14,8 +14,8 @@ Score(3000)=0.689 I=0.891 C=0.532 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.562 |
 | walker |  | 222 | 40 | Fs::DirListing { dir: py3xui/api } |  |  | 0.571 |
 | ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.589 |
-| walker |  | 268 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.614 |
-| walker |  | 339 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.738 |
+| walker |  | 293 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.715 |
+| walker |  | 339 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.738 |
 | walker |  | 351 | 12 | Fs::DirListing { dir: .vscode } |  |  | 0.738 |
 | walker |  | 369 | 18 | Fs::DirListing { dir: .github } |  |  | 0.738 |
 | ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.662 |
@@ -23,9 +23,9 @@ Score(3000)=0.689 I=0.891 C=0.532 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 580 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.705 |
 | ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.559 |
 | walker |  | 639 | 59 | Markdown::Prelude { file: README.md } |  |  | 0.705 |
-| walker |  | 666 | 27 | Fs::DirListing { dir: tests } |  |  | 0.705 |
-| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.662 |
-| walker |  | 725 | 59 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.662 |
+| walker |  | 698 | 59 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.705 |
+| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.661 |
+| walker |  | 725 | 27 | Fs::DirListing { dir: tests } |  |  | 0.662 |
 | walker |  | 739 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.662 |
 | ns | 795 |  | 86 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.718 |
 | ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.746 |

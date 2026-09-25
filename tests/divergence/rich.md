@@ -8,11 +8,11 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 203 | 12 | Fs::DirListing { dir: assets } |  |  | 0.000 |
 | walker |  | 222 | 19 | Fs::DirListing { dir: docs } |  |  | 0.000 |
 | walker |  | 231 | 9 | Fs::DirListing { dir: docs/images } |  |  | 0.000 |
-| walker |  | 239 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.000 |
 | ns | 263 |  | 134 | pyproject identity block | 1.3 |  | 0.000 |
 | ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.000 |
-| walker |  | 393 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.000 |
-| walker |  | 476 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.200 |
+| walker |  | 385 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.000 |
+| walker |  | 468 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.200 |
+| walker |  | 476 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.200 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.158 |
 | walker |  | 549 | 73 | Fs::DirListing { dir: questions } |  |  | 0.159 |
 | walker |  | 647 | 98 | Fs::DirListing { dir: imgs } |  |  | 0.159 |
@@ -56,11 +56,11 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 2952 | 127 | Code::CodeKey { rung: Names, file: rich/_unicode_data/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
 | walker |  | 2959 | 7 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.691 |
 | walker |  | 3011 | 52 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 1, sub: 0, line: 20 } |  |  | 0.691 |
+| walker |  | 3106 | 95 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.691 |
 | ns | 3126 |  | 391 | Console method roster — construction, context management, properties (617–1084) | 2.7 |  | 0.649 |
-| walker |  | 3193 | 182 | Fs::DirListing { dir: docs/source/reference } |  |  | 0.652 |
-| walker |  | 3288 | 95 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.652 |
-| walker |  | 3484 | 196 | Code::CodeKey { rung: Names, file: rich/console.py, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
-| walker |  | 3489 | 5 | Code::CodeKey { rung: Decl, file: rich/console.py, decl: 7, sub: 0, line: 73 } |  |  | 0.656 |
+| walker |  | 3302 | 196 | Code::CodeKey { rung: Names, file: rich/console.py, decl: 0, sub: 0, line: 0 } |  |  | 0.652 |
+| walker |  | 3307 | 5 | Code::CodeKey { rung: Decl, file: rich/console.py, decl: 7, sub: 0, line: 73 } |  |  | 0.652 |
+| walker |  | 3489 | 182 | Fs::DirListing { dir: docs/source/reference } |  |  | 0.656 |
 | walker |  | 3571 | 82 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.656 |
 | ns | 3573 |  | 447 | Console.__init__ full keyword surface | 2.8 | 2.7 | 0.619 |
 | walker |  | 3658 | 87 | Markdown::Section { file: README.md, section_index: 16, keeps_default_concavity: false } |  |  | 0.619 |

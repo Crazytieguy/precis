@@ -13,13 +13,13 @@ Score(3000)=0.786 I=0.909 C=0.679 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 123 | 16 | Fs::DirListing { dir: docs/tools/doxygen-md } |  |  | 0.000 |
 | ns | 149 |  | 28 | Complete root listing | 1.3 |  | 0.361 |
 | walker |  | 165 | 42 | Fs::DirListing { dir: deps } |  |  | 0.382 |
-| walker |  | 216 | 51 | Fs::DirListing { dir: examples } |  |  | 0.461 |
-| ns | 242 |  | 93 | examples/ and deps/ listings | 1.4 |  | 0.525 |
-| ns | 337 |  | 95 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.533 |
-| walker |  | 342 | 126 | Fs::DirListing { dir: tests } |  |  | 0.584 |
-| ns | 463 |  | 126 | Complete tests/ listing | 1.6 |  | 0.582 |
-| ns | 595 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.541 |
-| walker |  | 769 | 427 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.793 |
+| ns | 242 |  | 93 | examples/ and deps/ listings | 1.4 |  | 0.305 |
+| ns | 337 |  | 95 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.368 |
+| ns | 463 |  | 126 | Complete tests/ listing | 1.6 |  | 0.301 |
+| walker |  | 592 | 427 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.532 |
+| ns | 595 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.494 |
+| walker |  | 643 | 51 | Fs::DirListing { dir: examples } |  |  | 0.630 |
+| walker |  | 769 | 126 | Fs::DirListing { dir: tests } |  |  | 0.793 |
 | ns | 864 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.721 |
 | walker |  | 1002 | 233 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.723 |
 | walker |  | 1046 | 44 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: true } |  |  | 0.723 |

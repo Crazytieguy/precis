@@ -94,9 +94,9 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
 }
 
 /// Value of a directory listing before its location prior —
-/// classification moves the prior, not this base. Set by a full-corpus
-/// sweep; see `git show a90ee9b6:docs/design-notes.md`.
-const LISTING_VALUE: f64 = 1300.63;
+/// classification moves the prior, not this base. Set by a full-grid
+/// sweep (2026-09-25).
+const LISTING_VALUE: f64 = 1230.0;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);

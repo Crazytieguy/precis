@@ -40,19 +40,19 @@ Score(3000)=0.661 I=0.799 C=0.546 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 955 | 26 | Fs::DirListing { dir: docs/reference } |  |  | 0.593 |
 | walker |  | 983 | 28 | Fs::DirListing { dir: docs/dev } |  |  | 0.593 |
 | walker |  | 1010 | 27 | Toml::Operational { file: pyproject.toml } |  |  | 0.596 |
-| walker |  | 1031 | 21 | Fs::DirListing { dir: docs/_templates/autosummary } |  |  | 0.596 |
 | ns | 1051 |  | 166 | UI, util and test-helper subpackage listings | 1.9 |  | 0.606 |
-| walker |  | 1095 | 64 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 1074 | 64 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 1095 | 21 | Fs::DirListing { dir: docs/_templates/autosummary } |  |  | 0.606 |
 | walker |  | 1119 | 24 | Fs::DirListing { dir: docs/dev/plugins } |  |  | 0.606 |
-| walker |  | 1134 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.629 |
-| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.590 |
-| walker |  | 1339 | 205 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.757 |
+| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.568 |
+| walker |  | 1324 | 205 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.732 |
+| walker |  | 1339 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.757 |
 | walker |  | 1378 | 39 | Fs::DirListing { dir: .github } |  |  | 0.757 |
 | walker |  | 1409 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.757 |
 | walker |  | 1423 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.757 |
 | ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.671 |
-| walker |  | 1464 | 41 | Fs::DirListing { dir: docs/dev/plugins/other } |  |  | 0.671 |
-| walker |  | 1735 | 271 | Code::CodeKey { rung: Names, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
+| walker |  | 1694 | 271 | Code::CodeKey { rung: Names, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
+| walker |  | 1735 | 41 | Fs::DirListing { dir: docs/dev/plugins/other } |  |  | 0.674 |
 | ns | 1828 |  | 383 | beetsplug/ bundled plugin listing (complete, 81 entries) | 1.12 |  | 0.553 |
 | walker |  | 1887 | 152 | Code::CodeKey { rung: Names, file: beets/importer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
 | ns | 2006 |  | 178 | beets.library public export block (complete) | 2.1 |  | 0.535 |
@@ -64,10 +64,10 @@ Score(3000)=0.661 I=0.799 C=0.546 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 2323 | 16 | Fs::DirListing { dir: beetsplug/metasync } |  |  | 0.700 |
 | walker |  | 2327 | 4 | Fs::DirListing { dir: beetsplug/web/templates } |  |  | 0.700 |
 | walker |  | 2346 | 19 | Fs::DirListing { dir: beetsplug/tidal } |  |  | 0.700 |
-| walker |  | 2369 | 23 | Fs::DirListing { dir: beetsplug/lastgenre } |  |  | 0.700 |
+| walker |  | 2362 | 16 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/web/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
 | ns | 2373 |  | 190 | Library class: models and schema migrations | 2.3 |  | 0.684 |
-| walker |  | 2385 | 16 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/web/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
-| walker |  | 2402 | 17 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/metasync/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 2379 | 17 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/metasync/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 2402 | 23 | Fs::DirListing { dir: beetsplug/lastgenre } |  |  | 0.684 |
 | walker |  | 2432 | 30 | Fs::DirListing { dir: beetsplug/_utils } |  |  | 0.684 |
 | walker |  | 2471 | 39 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/discogs/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
 | ns | 2528 |  | 155 | Library method roster (complete) | 2.4 | 2.3 | 0.671 |

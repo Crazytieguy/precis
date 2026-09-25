@@ -72,6 +72,8 @@ README.md
   445→
   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
   447→
+  448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+  449→
   …
   456→## History
   457→
@@ -295,8 +297,5 @@ website/
     index.tsx
   public/
   styles/
-    cmdk/
-    globals.scss
-    index.module.scss
   tsconfig.json
   vercel.json

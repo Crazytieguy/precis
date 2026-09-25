@@ -1,4 +1,4 @@
-Score(3000)=0.829 I=0.935 C=0.734 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.858/0.851/0.846/0.829/0.755/0.597/0.507
+Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.858/0.851/0.846/0.836/0.755/0.597/0.507
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,14 +58,14 @@ Score(3000)=0.829 I=0.935 C=0.734 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2654 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.834 |
 | ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.844 |
 | walker |  | 2834 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.852 |
-| walker |  | 2847 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.852 |
 | ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.810 |
-| walker |  | 3095 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.858 |
+| walker |  | 3082 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.858 |
 | ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.822 |
-| walker |  | 3391 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.822 |
+| walker |  | 3378 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.822 |
 | ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.797 |
 | ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.776 |
-| walker |  | 3635 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.776 |
+| walker |  | 3622 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.776 |
+| walker |  | 3635 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.776 |
 | walker |  | 3661 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
 | ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.760 |
 | ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.755 |
@@ -91,9 +91,9 @@ Score(3000)=0.829 I=0.935 C=0.734 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.530 |
 | walker |  | 7359 | 326 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.530 |
 | walker |  | 7378 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.531 |
-| walker |  | 7422 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.531 |
 | ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.522 |
-| walker |  | 7664 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.522 |
+| walker |  | 7620 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.522 |
+| walker |  | 7664 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.522 |
 | walker |  | 7730 | 66 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 899 } |  |  | 0.522 |
 | ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.516 |
 | walker |  | 7858 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.517 |

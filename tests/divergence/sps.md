@@ -12,9 +12,9 @@ Score(3000)=0.691 I=0.840 C=0.568 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 109 | 12 | Fs::DirListing { dir: sps/src/pipeline } |  |  | 0.000 |
 | ns | 128 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.516 |
 | walker |  | 149 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.567 |
-| walker |  | 170 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.570 |
-| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.488 |
-| walker |  | 247 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.521 |
+| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.486 |
+| walker |  | 226 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.519 |
+| walker |  | 247 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.521 |
 | walker |  | 255 | 8 | Fs::DirListing { dir: .github } |  |  | 0.521 |
 | walker |  | 259 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.521 |
 | walker |  | 284 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.525 |
@@ -32,9 +32,9 @@ Score(3000)=0.691 I=0.840 C=0.568 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 458 | 16 | Fs::DirListing { dir: sps-common/src/dependency } |  |  | 0.525 |
 | walker |  | 483 | 25 | Fs::DirListing { dir: sps-common/src/model } |  |  | 0.541 |
 | ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.511 |
+| walker |  | 501 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
 | ns | 560 |  | 70 | Binary crate source tree (sps/src, cli/, pipeline/) | 1.7 |  | 0.565 |
-| walker |  | 598 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.584 |
-| walker |  | 616 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
+| walker |  | 616 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.584 |
 | walker |  | 633 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/info.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
 | walker |  | 650 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/update.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
 | ns | 657 |  | 97 | sps-common and sps-net source trees | 1.8 |  | 0.610 |

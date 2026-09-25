@@ -12,10 +12,10 @@ Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 713 | 713 | Fs::DirListing { dir: . } |  |  | 0.829 |
 | walker |  | 721 | 8 | Fs::DirListing { dir: m4 } |  |  | 0.829 |
 | walker |  | 733 | 12 | Fs::DirListing { dir: iwyu } |  |  | 0.829 |
-| walker |  | 757 | 24 | Fs::DirListing { dir: docs } |  |  | 0.830 |
-| walker |  | 761 | 4 | Fs::DirListing { dir: docs/images } |  |  | 0.830 |
+| walker |  | 758 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.829 |
 | ns | 772 |  | 102 | Root roster: build, docs, packaging and meta files | 1.8 |  | 0.820 |
-| walker |  | 786 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.820 |
+| walker |  | 782 | 24 | Fs::DirListing { dir: docs } |  |  | 0.820 |
+| walker |  | 786 | 4 | Fs::DirListing { dir: docs/images } |  |  | 0.820 |
 | walker |  | 823 | 37 | Fs::DirListing { dir: zfs } |  |  | 0.820 |
 | ns | 844 |  | 72 | README: scrolling/system-info behaviour and the ncurses requirement | 1.9 |  | 0.813 |
 | walker |  | 868 | 45 | Fs::DirListing { dir: solaris } |  |  | 0.813 |

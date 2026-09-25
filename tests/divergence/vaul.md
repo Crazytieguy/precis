@@ -9,15 +9,15 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 86 |  | 86 | Package identity: name, version, description, entry points | 1.1 |  | 0.000 |
 | walker |  | 131 | 58 | Json::Identity { file: package.json } |  |  | 0.460 |
 | ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.677 |
-| walker |  | 202 | 71 | Fs::DirListing { dir: src } |  |  | 0.746 |
-| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.737 |
-| walker |  | 223 | 21 | Json::Runtime { file: package.json } |  |  | 0.737 |
-| walker |  | 286 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.743 |
+| walker |  | 152 | 21 | Json::Runtime { file: package.json } |  |  | 0.677 |
+| walker |  | 215 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.684 |
+| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.511 |
+| walker |  | 286 | 71 | Fs::DirListing { dir: src } |  |  | 0.743 |
 | walker |  | 320 | 34 | Json::Dependencies { file: package.json } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
-| walker |  | 372 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
-| walker |  | 375 | 3 | Fs::DirListing { dir: test/src } |  |  | 0.622 |
-| walker |  | 398 | 23 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.622 |
+| walker |  | 343 | 23 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.620 |
+| walker |  | 395 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
+| walker |  | 398 | 3 | Fs::DirListing { dir: test/src } |  |  | 0.622 |
 | ns | 402 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.618 |
 | walker |  | 535 | 137 | Json::Scripts { file: package.json } |  |  | 0.629 |
 | ns | 588 |  | 186 | Every top-level export declaration in src/index.tsx (names only) | 1.6 |  | 0.552 |
@@ -75,11 +75,11 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 4330 | 58 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
 | walker |  | 4427 | 97 | Code::CodeKey { rung: Names, file: src/use-prevent-scroll.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
 | walker |  | 4452 | 25 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.830 |
-| walker |  | 4461 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.830 |
 | ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.806 |
-| walker |  | 4634 | 173 | Code::CodeKey { rung: Names, file: src/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
-| walker |  | 4655 | 21 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 90 } |  |  | 0.820 |
-| walker |  | 4684 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.820 |
+| walker |  | 4625 | 173 | Code::CodeKey { rung: Names, file: src/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
+| walker |  | 4646 | 21 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 90 } |  |  | 0.820 |
+| walker |  | 4675 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.820 |
+| walker |  | 4684 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.820 |
 | walker |  | 4719 | 35 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.820 |
 | walker |  | 4756 | 37 | Code::CodeKey { rung: Doc, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.820 |
 | ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.809 |
