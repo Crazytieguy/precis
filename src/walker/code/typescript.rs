@@ -558,7 +558,9 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
             whole(file, span, vec![name_row], node.child_by_field_name("body"))
         }
         "type_alias_declaration" => {
-            let object = node.child_by_field_name("value").and_then(own_object_type);
+            let object = node
+                .child_by_field_name("value")
+                .filter(|value| value.kind() == "object_type");
             whole(file, span, vec![name_row], object)
         }
         // `declare global { … }`
@@ -579,22 +581,6 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
             }
         },
         _ => value_declaration(file, span, span.start, node),
-    }
-}
-
-/// The member block an alias declares itself: `{ … }`, or the last
-/// object literal of an intersection (`Base & { … }`).
-fn own_object_type(value: Node) -> Option<Node> {
-    match value.kind() {
-        "object_type" => Some(value),
-        "intersection_type" => {
-            let mut cursor = value.walk();
-            value
-                .named_children(&mut cursor)
-                .filter(|operand| operand.kind() == "object_type")
-                .last()
-        }
-        _ => None,
     }
 }
 
@@ -1052,8 +1038,8 @@ export type Picked = {
                 "Whole name [6] head [6] doc [] body []",
                 "Whole name [7] head [7, 10] doc [] body [[8], [9]]",
                 "Whole name [11] head [11] doc [] body []",
-                "Whole name [12] head [12, 14] doc [] body [[13]]",
-                "Whole name [15] head [15, 17, 18, 19, 20] doc [] body [[16]]",
+                "Whole name [12] head [12, 13, 14] doc [] body []",
+                "Whole name [15] head [15, 16, 17, 18, 19, 20] doc [] body []",
             ]
         );
     }
