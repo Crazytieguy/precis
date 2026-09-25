@@ -149,8 +149,7 @@ fn is_config_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
         return false;
     };
-    let stem = name.split('.').next().unwrap_or_default();
-    name.starts_with('.') || name.contains(".config.") || stem.ends_with("rc")
+    name.starts_with('.') || name.contains(".config.")
 }
 
 #[derive(Default)]
@@ -1560,7 +1559,13 @@ export const c = 3;
     fn code_typescript_config_weighs_less() {
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let weight = |relative: &str| file_weight(&Path::new("/repo").join(relative), &ctx);
-        for primary in ["index.js", "lib/router.js", "server/app.ts"] {
+        for primary in [
+            "index.js",
+            "lib/router.js",
+            "server/app.ts",
+            "src/irc.js",
+            "arc.ts",
+        ] {
             assert_eq!(weight(primary), 1.0, "{primary}");
         }
         for config in [
