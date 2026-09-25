@@ -98,13 +98,6 @@ docs/
   handling-files.md
   index.rst
   license.md
-    1→# BSD-3-Clause License
-    2→
-    3→```{literalinclude} ../LICENSE.txt
-    4→---
-    5→language: text
-    6→---
-    7→```
   option-decorators.md
   options.md
   parameter-types.md
@@ -313,10 +306,14 @@ src/
       295→    def get_default_prog_name(self, cli: Command) -> str:
       …
       302→    def make_env(
+      303→        self, overrides: cabc.Mapping[str, str | None] | None = None
+      304→    ) -> cabc.Mapping[str, str | None]:
       …
       312→    def isolation(
       …
       525→    def invoke(
+      …
+      639→    def isolated_filesystem(
       …
     types.py
     utils.py

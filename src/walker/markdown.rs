@@ -139,6 +139,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             .map(|file| (file.as_path(), tree_sitter_md::LANGUAGE.into())),
     );
     for file in md_files {
+        if file
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(super::plaintext::is_license_file_name)
+        {
+            continue;
+        }
         // Auto-injected agent docs (AGENTS.md / CLAUDE.md / skill
         // files) are loaded into the model's context by the harness,
         // so emitting their bodies is pure waste; peripheral admin docs

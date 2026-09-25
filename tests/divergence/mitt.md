@@ -75,11 +75,10 @@ Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.779 |
 | walker |  | 5323 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.780 |
 | ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.758 |
-| walker |  | 5632 | 309 | Plaintext::Whole { file: LICENSE } |  |  | 0.758 |
 | ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.741 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.729 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.707 |
-| walker |  | 6132 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.711 |
+| walker |  | 5823 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.745 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.733 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.711 |
 | ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.696 |
 | ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.678 |
 | ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.668 |

@@ -1,4 +1,4 @@
-Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.732/0.653
+Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.733/0.654
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -98,52 +98,52 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 5446 | 77 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 7, sub: 0, line: 94 } |  |  | 0.789 |
 | walker |  | 5531 | 85 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 4, sub: 0, line: 59 } |  |  | 0.789 |
 | ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.772 |
+| walker |  | 5618 | 87 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.772 |
 | ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.754 |
-| walker |  | 5778 | 247 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.754 |
-| walker |  | 5865 | 87 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.754 |
-| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.744 |
-| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.732 |
-| walker |  | 6012 | 147 | Code::CodeKey { rung: Doc, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.747 |
-| walker |  | 6082 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.747 |
-| walker |  | 6119 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
-| ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.731 |
-| walker |  | 6230 | 111 | Json::Whole { file: tsconfig.json } |  |  | 0.732 |
-| walker |  | 6341 | 111 | Json::Whole { file: turbo.json } |  |  | 0.733 |
-| walker |  | 6424 | 83 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.733 |
-| walker |  | 6540 | 116 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.733 |
+| walker |  | 5765 | 147 | Code::CodeKey { rung: Doc, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.769 |
+| walker |  | 5835 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.769 |
+| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.758 |
+| walker |  | 5872 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
+| walker |  | 5983 | 111 | Json::Whole { file: tsconfig.json } |  |  | 0.759 |
+| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.747 |
+| walker |  | 6094 | 111 | Json::Whole { file: turbo.json } |  |  | 0.748 |
+| walker |  | 6177 | 83 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.748 |
+| ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.733 |
+| walker |  | 6293 | 116 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.733 |
+| walker |  | 6550 | 257 | Code::CodeKey { rung: Body, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 39 } |  |  | 0.733 |
 | ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.708 |
-| walker |  | 6797 | 257 | Code::CodeKey { rung: Body, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 39 } |  |  | 0.708 |
+| walker |  | 6737 | 187 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.708 |
 | ns | 6813 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.691 |
-| walker |  | 6984 | 187 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.691 |
-| ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.679 |
-| walker |  | 7279 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 10, sub: 0, line: 1098 } |  |  | 0.680 |
+| walker |  | 7032 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 10, sub: 0, line: 1098 } |  |  | 0.692 |
+| ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.680 |
+| walker |  | 7178 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.680 |
 | ns | 7355 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.664 |
-| walker |  | 7425 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.664 |
+| walker |  | 7458 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.664 |
 | ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.654 |
-| walker |  | 7705 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.654 |
-| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.644 |
-| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.651 |
-| walker |  | 8022 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.656 |
+| walker |  | 7775 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.659 |
+| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.649 |
+| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.656 |
 | ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.652 |
 | ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.646 |
 | ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.641 |
-| ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.649 |
-| ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.654 |
-| ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.658 |
-| walker |  | 8687 | 665 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.662 |
-| walker |  | 8861 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.662 |
-| walker |  | 8896 | 35 | Markdown::HeadingsOutline { file: test/README.md } |  |  | 0.662 |
+| walker |  | 8440 | 665 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.645 |
+| ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.654 |
+| ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.658 |
+| walker |  | 8614 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.658 |
+| ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.662 |
+| walker |  | 8649 | 35 | Markdown::HeadingsOutline { file: test/README.md } |  |  | 0.662 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.653 |
-| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.644 |
-| walker |  | 9207 | 311 | Plaintext::Whole { file: .github/workflows/playwright.yml } |  |  | 0.645 |
+| walker |  | 8960 | 311 | Plaintext::Whole { file: .github/workflows/playwright.yml } |  |  | 0.654 |
+| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.645 |
+| walker |  | 9191 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.645 |
 | ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.641 |
 | ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.647 |
-| walker |  | 9438 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.647 |
 | ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.643 |
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.648 |
-| ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.651 |
-| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.651 |
-| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.655 |
-| walker |  | 9954 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.660 |
+| walker |  | 9707 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.652 |
+| ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.655 |
+| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.656 |
+| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.660 |
+| walker |  | 9975 | 268 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.660 |
 | ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.656 |
-| walker |  | 9998 | 44 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.656 |
+| walker |  | 9996 | 21 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.656 |

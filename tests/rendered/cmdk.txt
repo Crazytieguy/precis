@@ -23,27 +23,6 @@ ARCHITECTURE.md
   97→
   98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 LICENSE.md
-  1→MIT License
-  2→
-  3→Copyright (c) 2022 Paco Coursey
-  4→
-  5→Permission is hereby granted, free of charge, to any person obtaining a copy
-  6→of this software and associated documentation files (the "Software"), to deal
-  7→in the Software without restriction, including without limitation the rights
-  8→to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  9→copies of the Software, and to permit persons to whom the Software is
-  10→furnished to do so, subject to the following conditions:
-  11→
-  12→The above copyright notice and this permission notice shall be included in all
-  13→copies or substantial portions of the Software.
-  14→
-  15→THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  16→IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  17→FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  18→AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  19→LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  20→OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  21→SOFTWARE.
 README.md
   …
   5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
@@ -91,9 +70,15 @@ README.md
   426→### Drop in stylesheets
   …
   430→## FAQ
+  431→
+  432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
+  433→
   …
   456→## History
-  …
+  457→
+  458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
+  459→
+  460→[use-descendants](https://github.com/pacocoursey/use-descendants) was extracted from the 2019 version.
   462→## Testing
   463→
   464→First, install dependencies and Playwright browsers:
@@ -202,6 +187,10 @@ cmdk/
       897→ * Automatically renders when there are no results for the search query.
       898→ */
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+      900→  const render = useCmdk((state) => state.filtered.count === 0)
+      901→
+      902→  if (!render) return null
+      903→  return <Primitive.div ref={forwardedRef} {...props} cmdk-empty="" role="presentation" />
       …
       906→/**
       907→ * You should conditionally render this with `progress` while loading asynchronous items.
@@ -310,5 +299,8 @@ website/
     index.tsx
   public/
   styles/
+    cmdk/
+    globals.scss
+    index.module.scss
   tsconfig.json
   vercel.json

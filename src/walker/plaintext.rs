@@ -2,7 +2,7 @@
 //! for. Two jobs:
 //!
 //! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
-//!    samples, contributor tooling config, project notes and licenses,
+//!    samples, contributor tooling config and project notes,
 //!    each rendered whole or as a head slice at one of four value tiers.
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
@@ -95,8 +95,6 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
-    /// LICENSE / LICENSE-MIT / COPYING / NOTICE etc.
-    License,
     /// Contributor-toolchain config: ignore lists, editor / lint /
     /// format config, version pins, `pnpm-workspace.yaml`, CI workflows
     /// and hook / docs-site YAML.
@@ -125,23 +123,7 @@ pub(crate) enum Class {
 /// Classify a file by name. `None` for files the walker doesn't own
 /// (other walkers' formats, out-of-scope variants, credential names).
 pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
-    // Licenses match case-insensitively; dotfiles case-sensitively.
-    // The list is exhaustive on purpose — `LICENSE-*` would catch
-    // `LICENSE-HEADER` etc.
     let lower = name.to_ascii_lowercase();
-    if matches!(
-        lower.as_str(),
-        "license"
-            | "license-mit"
-            | "license-apache"
-            | "license.txt"
-            | "copying"
-            | "copying.txt"
-            | "notice"
-            | "notice.txt"
-    ) {
-        return Some(Class::License);
-    }
     match name {
         ".gitignore"
         | ".dockerignore"
@@ -372,6 +354,22 @@ fn classify_source_text(name: &str) -> Option<Class> {
     SOURCE_TEXT_FLAT_EXTENSIONS
         .contains(&ext)
         .then_some(Class::FlatText)
+}
+
+/// A license text (`LICENSE`, `COPYING.txt`, `MIT-LICENSE.txt`,
+/// `LICENSE.md`). No walker renders one: the listing names the file and
+/// the manifest's `license` field names the license, and the text says
+/// nothing about the code. `*-header` is the one common non-license
+/// `license` name: the boilerplate a project prepends to its sources.
+pub(crate) fn is_license_file_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    let stem = match lower.rsplit_once('.') {
+        None => lower.as_str(),
+        Some((stem, "txt" | "md" | "rst")) => stem,
+        Some(_) => return false,
+    };
+    (stem.contains("license") || stem.contains("licence") || stem == "copying" || stem == "notice")
+        && !stem.contains("header")
 }
 
 /// Line classes inside a declaration surface. The three get separate
@@ -705,6 +703,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
             continue;
         }
+        if is_license_file_name(name) {
+            continue;
+        }
         let file = dir.join(name);
         // A `.sh` outside a build-script location falls through to the
         // fallback rather than out of the output.
@@ -756,11 +757,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 /// versioned) and an unparsed language's declaration surface sit at the
 /// top — the latter still below every parsed walker's roster, so it
 /// loses to any walker that understands the file. Project notes and
-/// rosters sit mid, contributor tooling and unclassified prose / flat
-/// config low, and license text at the floor.
+/// rosters sit mid, and contributor tooling and unclassified prose /
+/// flat config low.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
-        Class::License => 108.0,
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::ProjectNotes => 660.0,
         Class::Tooling | Class::FlatText => 488.0,
@@ -941,7 +941,7 @@ mod tests {
         assert_eq!(classify_source_text("pnpm-lock.yaml"), None);
         assert_eq!(classify_source_text("secrets.sh"), None);
         assert_eq!(classify_source_text("credentials.txt"), None);
-        // `.md`/`.rst` legal texts stay with the markdown walker.
+        // `.md` files stay with the markdown walker.
         assert_eq!(classify_source_text("LICENSE.md"), None);
         // Formats an owning walker already claims stay with it.
         for owned in [
@@ -995,14 +995,6 @@ mod tests {
         // refuse — owned by other walkers, out of scope, or
         // credential-bearing.
         let cases: &[(&str, Option<Class>)] = &[
-            // License names — case-insensitive.
-            ("LICENSE", Some(Class::License)),
-            ("license", Some(Class::License)),
-            ("LICENSE-MIT", Some(Class::License)),
-            ("LICENSE-APACHE", Some(Class::License)),
-            ("LICENSE.txt", Some(Class::License)),
-            ("COPYING", Some(Class::License)),
-            ("NOTICE", Some(Class::License)),
             // Dotfiles by class.
             (".gitignore", Some(Class::Tooling)),
             (".dockerignore", Some(Class::Tooling)),
@@ -1157,11 +1149,32 @@ mod tests {
         assert!(expand_in_dir(root, &ctx).is_empty());
     }
 
+    #[test]
+    fn plaintext_license_file_names() {
+        for name in [
+            "LICENSE",
+            "license",
+            "LICENSE-MIT",
+            "LICENSE.txt",
+            "LICENSE.md",
+            "COPYING",
+            "NOTICE",
+            "MIT-LICENSE.txt",
+            "LICENSE-THIRD-PARTY.txt",
+        ] {
+            assert!(is_license_file_name(name), "{name}");
+        }
+        for name in ["license-header.txt", "license.go", "licenses.json"] {
+            assert!(!is_license_file_name(name), "{name}");
+        }
+    }
+
     /// Drive the full `FsWalker` + scheduler against a real
     /// directory (an in-memory `SourceCache`
     /// preload bypasses `read_dir` and never exercises the discovery
     /// path). Asserts the plaintext content lands in the rendered
-    /// output and that the scheduler logs a `Plaintext::Whole` batch.
+    /// output and that the scheduler logs a `Plaintext::Whole` batch,
+    /// and that a license text renders only as its listing entry.
     #[test]
     fn plaintext_real_dir_renders_seeded_files() {
         let dir = tempfile::tempdir().unwrap();
@@ -1178,14 +1191,14 @@ mod tests {
         let rendered = report.tree.render();
 
         assert!(
-            rendered.contains("MIT License"),
-            "rendered output is missing the LICENSE body:\n{rendered}",
+            !rendered.contains("MIT License"),
+            "rendered output carries the LICENSE body:\n{rendered}",
         );
         assert!(
             rendered.contains("target/"),
             "rendered output is missing the .gitignore body:\n{rendered}",
         );
-        assert_has_plaintext_whole(&report, "LICENSE");
+        assert_no_plaintext_whole(&report, "LICENSE");
         assert_has_plaintext_whole(&report, ".gitignore");
     }
 
@@ -1228,25 +1241,6 @@ mod tests {
         assert!(!rendered.contains('…'), "{rendered}");
     }
 
-    /// A LICENSE that exceeds `PLAINTEXT_BYTE_GATE` is dropped at
-    /// `expand` time via the FS-metadata gate.
-    #[test]
-    fn plaintext_oversized_license_skipped() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        // Each line is ~250 bytes; 60 lines pushes byte count past
-        // PLAINTEXT_BYTE_GATE without needing an actually huge file.
-        let long_line = "x".repeat(250);
-        let body: String = std::iter::repeat_n(long_line.as_str(), 60)
-            .collect::<Vec<_>>()
-            .join("\n");
-        std::fs::write(root.join("LICENSE"), body).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
-        let report = scheduler.run_with_report();
-        assert_no_plaintext_whole(&report, "LICENSE");
-    }
-
     /// A file whose byte count slips under the gate but whose line
     /// count exceeds `PLAINTEXT_LINE_CAP` renders its first
     /// `PLAINTEXT_LINE_CAP` lines. The cap bounds what is *rendered*,
@@ -1259,11 +1253,11 @@ mod tests {
         let body: String = (0..(PLAINTEXT_LINE_CAP + 5))
             .map(|i| format!("line {i}\n"))
             .collect();
-        std::fs::write(root.join("LICENSE"), body).unwrap();
+        std::fs::write(root.join("requirements.txt"), body).unwrap();
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_has_plaintext_whole(&report, "LICENSE");
+        assert_has_plaintext_whole(&report, "requirements.txt");
         let rendered = report.tree.render();
         assert!(rendered.contains("line 0"), "{rendered}");
         assert!(
