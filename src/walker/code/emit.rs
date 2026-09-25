@@ -24,7 +24,7 @@ use crate::walker::{WalkCtx, file_depth_factor};
 
 /// Every batch of one file.
 pub(super) fn emit_file(
-    language: Language,
+    language: &Language,
     file: &SourceFile,
     model: FileModel,
     ctx: &WalkCtx,
@@ -51,9 +51,10 @@ pub(super) fn emit_file(
 /// Location prior shared by every batch of the file: depth (pinned to 1
 /// for an entry file), non-essential discount and the language's file
 /// weight.
-fn file_prior(language: Language, path: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(path, ctx, language.is_entrypoint(path, ctx))
-        * language.file_weight(path, ctx)
+fn file_prior(language: &Language, path: &Path, ctx: &WalkCtx) -> f64 {
+    let is_entrypoint = language.is_entrypoint.is_some_and(|test| test(path, ctx));
+    file_depth_factor(path, ctx, is_entrypoint)
+        * language.file_weight.map_or(1.0, |weight| weight(path, ctx))
 }
 
 struct Emitter<'a> {
@@ -361,7 +362,7 @@ mod tests {
         let source: String = (1..=lines).map(|row| format!("x{row} = {row}\n")).collect();
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::Lua, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &super::super::lua::LANGUAGE, &ctx).unwrap();
         run(&file)
     }
 

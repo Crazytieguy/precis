@@ -20,11 +20,17 @@ use std::path::{Path, PathBuf};
 
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::WalkCtx;
 
-pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"],
+    grammar,
+    extract,
+    is_entrypoint: Some(is_entrypoint),
+    file_weight: Some(file_weight),
+};
 
 const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];
 
@@ -34,7 +40,7 @@ const MODULE_DOC_TAGS: &[&str] = &["@module", "@packageDocumentation", "@file", 
 
 /// The TypeScript grammar for `.ts` / `.mts` / `.cts`; the TSX grammar,
 /// which also parses JSX, for everything else.
-pub(super) fn grammar(path: &Path) -> tree_sitter::Language {
+fn grammar(path: &Path) -> tree_sitter::Language {
     let is_typescript = path
         .extension()
         .and_then(|extension| extension.to_str())
@@ -50,7 +56,7 @@ pub(super) fn grammar(path: &Path) -> tree_sitter::Language {
     }
 }
 
-pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut cursor = root.walk();
     let statements: Vec<Node> = root.children(&mut cursor).collect();
@@ -113,7 +119,7 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 /// `index` / `main` / `mod` / `esm` sources within one directory of
 /// their package root (the nearest `package.json` directory, else the
 /// walk root): `index.ts`, `src/index.ts`, `lib/main.js`.
-pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let Some((stem, extension)) = path
         .file_name()
         .and_then(|name| name.to_str())
@@ -122,7 +128,8 @@ pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
         return false;
     };
     let named_entrypoint = ENTRYPOINT_STEMS.contains(&stem)
-        && EXTENSIONS
+        && LANGUAGE
+            .extensions
             .iter()
             .any(|candidate| extension.eq_ignore_ascii_case(candidate));
     let Some(dir) = path.parent().filter(|_| named_entrypoint) else {
@@ -135,7 +142,7 @@ pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
 
 /// Tooling config (`vite.config.ts`, `.eslintrc.js`) is not the
 /// project's code.
-pub(super) fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
+fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
     if is_config_file(path) {
         CONFIG_FILE_WEIGHT
     } else {
@@ -1000,7 +1007,6 @@ fn module_doc(file: &SourceFile, statements: &[Node], entrypoint: bool) -> Vec<I
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::walker::code::Language;
 
     /// Writes `files` under a fresh root and extracts `target`.
     fn extract_in(files: &[(&str, &str)], target: &str) -> FileModel {
@@ -1011,7 +1017,7 @@ mod tests {
             std::fs::write(path, content).unwrap();
         }
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&dir.path().join(target), Language::TypeScript, &ctx).unwrap();
+        let file = SourceFile::parse(&dir.path().join(target), &LANGUAGE, &ctx).unwrap();
         extract(&file, &ctx)
     }
 

@@ -6,17 +6,19 @@ use std::path::Path;
 
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::{WalkCtx, collect_doc_comments_above};
 
-pub(super) const EXTENSIONS: &[&str] = &["go"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["go"],
+    grammar: |_| tree_sitter_go::LANGUAGE.into(),
+    extract,
+    is_entrypoint: Some(is_entrypoint),
+    file_weight: None,
+};
 
-pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
-    tree_sitter_go::LANGUAGE.into()
-}
-
-pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut model = FileModel::default();
     let mut cursor = root.walk();
@@ -36,19 +38,15 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
 }
 
 /// A root-level file named after its package (`cobra/cobra.go`).
-pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     if ctx.depth_from_root(path) > 1 {
         return false;
     }
     let Some(stem) = path.file_stem().and_then(|stem| stem.to_str()) else {
         return false;
     };
-    ctx.parse_tree(path, &grammar(path))
+    ctx.parse_tree(path, &(LANGUAGE.grammar)(path))
         .is_some_and(|(source, tree)| package_name(tree.root_node(), &source) == Some(stem))
-}
-
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
 }
 
 fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
@@ -183,14 +181,13 @@ fn is_spec(node: &Node) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::walker::code::Language;
 
     fn extract_source(source: &str) -> FileModel {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("a.go");
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::Go, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
         extract(&file, &ctx)
     }
 

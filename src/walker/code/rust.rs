@@ -21,18 +21,20 @@ use std::path::Path;
 
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::WalkCtx;
 use crate::walker::markdown::{fence_closes, fence_marker};
 
-pub(super) const EXTENSIONS: &[&str] = &["rs"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["rs"],
+    grammar: |_| tree_sitter_rust::LANGUAGE.into(),
+    extract,
+    is_entrypoint: Some(is_entrypoint),
+    file_weight: None,
+};
 
-pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
-    tree_sitter_rust::LANGUAGE.into()
-}
-
-pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut model = FileModel {
         module_doc: module_doc(file, root),
@@ -89,14 +91,10 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     model
 }
 
-pub(super) fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
+fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
     path.file_name()
         .and_then(|name| name.to_str())
         .is_some_and(|name| matches!(name, "lib.rs" | "main.rs"))
-}
-
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
 }
 
 /// What the outer attributes and doc comments above an item say about it.
@@ -567,7 +565,6 @@ fn is_decorative_line(content: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::Language;
     use super::*;
 
     fn extract_source(file_name: &str, source: &str) -> (SourceFile, FileModel) {
@@ -575,7 +572,7 @@ mod tests {
         let path = dir.path().join(file_name);
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::Rust, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
         let model = extract(&file, &ctx);
         assert_contract(&model);
         (file, model)

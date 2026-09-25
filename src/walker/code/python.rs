@@ -18,17 +18,19 @@ use std::path::Path;
 
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::WalkCtx;
 
-pub(super) const EXTENSIONS: &[&str] = &["py"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["py"],
+    grammar: |_| tree_sitter_python::LANGUAGE.into(),
+    extract,
+    is_entrypoint: Some(is_entrypoint),
+    file_weight: None,
+};
 
-pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
-    tree_sitter_python::LANGUAGE.into()
-}
-
-pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
     let is_package_init = file_name(&file.path) == Some("__init__.py");
     let root = file.tree.root_node();
@@ -72,12 +74,8 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     model
 }
 
-pub(super) fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
+fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
     matches!(file_name(path), Some("__init__.py" | "__main__.py"))
-}
-
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
 }
 
 fn file_name(path: &Path) -> Option<&str> {
@@ -321,7 +319,6 @@ fn paragraphs(
 mod tests {
     use std::path::PathBuf;
 
-    use super::super::Language;
     use super::*;
 
     fn extract_source(relative_path: &str, source: &str) -> FileModel {
@@ -330,7 +327,7 @@ mod tests {
         std::fs::create_dir_all(path.parent().unwrap()).unwrap();
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::Python, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
         extract(&file, &ctx)
     }
 

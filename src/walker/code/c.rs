@@ -20,22 +20,24 @@ use std::path::Path;
 
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::{WalkCtx, collect_doc_comments_above_filtered};
 
-pub(super) const EXTENSIONS: &[&str] = &["c", "h"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["c", "h"],
+    grammar: |_| tree_sitter_c::LANGUAGE.into(),
+    extract,
+    is_entrypoint: None,
+    file_weight: Some(file_weight),
+};
 
 /// Every batch of a `.c` file, relative to a header. The ratio of the old
 /// C walker's `.c` to `.h` values for declarations (0.57) and rosters
 /// (0.60).
 const IMPLEMENTATION_FILE_WEIGHT: f64 = 0.6;
 
-pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
-    tree_sitter_c::LANGUAGE.into()
-}
-
-pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let source = &*file.source;
     let in_header = is_header(&file.path);
@@ -58,11 +60,7 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     }
 }
 
-pub(super) fn is_entrypoint(_path: &Path, _ctx: &WalkCtx) -> bool {
-    false
-}
-
-pub(super) fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
+fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
     if is_header(path) {
         1.0
     } else {
@@ -604,7 +602,6 @@ fn has_storage_class(node: Node, source: &str, keyword: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::Language;
     use super::*;
 
     fn model(file_name: &str, source: &str) -> FileModel {
@@ -612,7 +609,7 @@ mod tests {
         let path = dir.path().join(file_name);
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::C, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
         extract(&file, &ctx)
     }
 

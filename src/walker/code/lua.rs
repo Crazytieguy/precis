@@ -10,21 +10,21 @@
 //!
 //! The module doc is a top-of-file identity table (`_VERSION`, …).
 
-use std::path::Path;
-
 use tree_sitter::Node;
 
-use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape};
+use super::{Language, SourceFile};
 use crate::walker::{WalkCtx, collect_doc_comments_above};
 
-pub(super) const EXTENSIONS: &[&str] = &["lua"];
+pub(super) const LANGUAGE: Language = Language {
+    extensions: &["lua"],
+    grammar: |_| tree_sitter_lua::LANGUAGE.into(),
+    extract,
+    is_entrypoint: None,
+    file_weight: None,
+};
 
-pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
-    tree_sitter_lua::LANGUAGE.into()
-}
-
-pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let identity = module_identity_rows(file);
     FileModel {
         module_doc: if identity.is_empty() {
@@ -38,14 +38,6 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             .map(|node| decl_info(node, file))
             .collect(),
     }
-}
-
-pub(super) fn is_entrypoint(_path: &Path, _ctx: &WalkCtx) -> bool {
-    false
-}
-
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
 }
 
 /// Top-level fn-like declarations. Tables-as-classes
@@ -218,14 +210,13 @@ fn module_identity_rows(file: &SourceFile) -> Vec<usize> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::walker::code::Language;
 
     fn extract_source(source: &str) -> FileModel {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("a.lua");
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, Language::Lua, &ctx).unwrap();
+        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
         extract(&file, &ctx)
     }
 
