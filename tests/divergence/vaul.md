@@ -1,4 +1,4 @@
-Score(3000)=0.766 I=0.902 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.766/0.798/0.725/0.655
+Score(3000)=0.766 I=0.902 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.766/0.788/0.725/0.655
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -65,46 +65,46 @@ Score(3000)=0.766 I=0.902 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.809 |
 | walker |  | 3431 | 97 | ts names src/use-prevent-scroll.ts |  |  | 0.810 |
 | ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.783 |
-| walker |  | 3636 | 205 | ts decl src/index.tsx:50 #4 |  |  | 0.833 |
-| walker |  | 3748 | 112 | ts names src/browser.ts |  |  | 0.847 |
-| walker |  | 3760 | 12 | ts body src/browser.ts:10 |  |  | 0.847 |
-| walker |  | 3773 | 13 | ts body src/browser.ts:14 |  |  | 0.847 |
-| walker |  | 3788 | 15 | ts body src/browser.ts:30 |  |  | 0.847 |
-| ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.824 |
-| walker |  | 3912 | 124 | ts decl src/use-position-fixed.ts:15 |  |  | 0.811 |
-| ns | 3912 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.811 |
-| walker |  | 3921 | 9 | listing of 'test/public' |  |  | 0.811 |
+| walker |  | 3678 | 247 | LICENSE.md section #0 |  |  | 0.783 |
+| ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.762 |
+| walker |  | 3883 | 205 | ts decl src/index.tsx:50 #4 |  |  | 0.810 |
+| ns | 3912 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.797 |
+| walker |  | 3995 | 112 | ts names src/browser.ts |  |  | 0.811 |
+| walker |  | 4007 | 12 | ts body src/browser.ts:10 |  |  | 0.811 |
+| walker |  | 4020 | 13 | ts body src/browser.ts:14 |  |  | 0.811 |
 | ns | 4022 |  | 110 | useSnapPoints: entry point and its complete return surface | 3.8 |  | 0.793 |
-| walker |  | 4065 | 144 | ts names src/constants.ts |  |  | 0.817 |
-| walker |  | 4105 | 40 | ts decl src/constants.ts:1 |  |  | 0.826 |
-| walker |  | 4128 | 23 | ts body src/browser.ts:18 |  |  | 0.826 |
-| walker |  | 4153 | 25 | ts body src/use-composed-refs.ts:23 |  |  | 0.826 |
-| walker |  | 4213 | 60 | ts body src/index.tsx:1130 |  |  | 0.826 |
-| ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.797 |
-| walker |  | 4324 | 111 | json config tsconfig.json |  |  | 0.798 |
-| walker |  | 4435 | 111 | json config turbo.json |  |  | 0.799 |
-| ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.776 |
-| walker |  | 4608 | 173 | ts names src/helpers.ts |  |  | 0.790 |
-| walker |  | 4629 | 21 | ts body src/helpers.ts:90 |  |  | 0.790 |
-| walker |  | 4658 | 29 | ts doc src/helpers.ts:108 |  |  | 0.790 |
-| walker |  | 4693 | 35 | ts body src/use-composed-refs.ts:31 |  |  | 0.790 |
-| walker |  | 4730 | 37 | ts doc src/use-composed-refs.ts:23 |  |  | 0.790 |
-| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.780 |
-| walker |  | 4768 | 38 | ts doc src/use-composed-refs.ts:31 |  |  | 0.780 |
-| walker |  | 4795 | 27 | ts body src/browser.ts:34 |  |  | 0.780 |
+| walker |  | 4035 | 15 | ts body src/browser.ts:30 |  |  | 0.793 |
+| walker |  | 4159 | 124 | ts decl src/use-position-fixed.ts:15 |  |  | 0.793 |
+| walker |  | 4168 | 9 | listing of 'test/public' |  |  | 0.793 |
+| ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.765 |
+| walker |  | 4312 | 144 | ts names src/constants.ts |  |  | 0.788 |
+| walker |  | 4352 | 40 | ts decl src/constants.ts:1 |  |  | 0.797 |
+| walker |  | 4375 | 23 | ts body src/browser.ts:18 |  |  | 0.797 |
+| walker |  | 4400 | 25 | ts body src/use-composed-refs.ts:23 |  |  | 0.797 |
+| walker |  | 4460 | 60 | ts body src/index.tsx:1130 |  |  | 0.797 |
+| ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.774 |
+| walker |  | 4571 | 111 | json config tsconfig.json |  |  | 0.775 |
+| walker |  | 4682 | 111 | json config turbo.json |  |  | 0.776 |
+| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.766 |
+| walker |  | 4855 | 173 | ts names src/helpers.ts |  |  | 0.780 |
+| walker |  | 4876 | 21 | ts body src/helpers.ts:90 |  |  | 0.780 |
+| walker |  | 4905 | 29 | ts doc src/helpers.ts:108 |  |  | 0.780 |
 | ns | 4907 |  | 149 | use-prevent-scroll.ts module-private declarations | 3.12 | 3.11 | 0.769 |
-| walker |  | 5044 | 249 | ts decl src/use-snap-points.ts:7 |  |  | 0.805 |
-| walker |  | 5085 | 41 | ts body src/use-prevent-scroll.ts:29 |  |  | 0.805 |
-| ns | 5125 |  | 218 | use-controllable-state.ts — the controlled/uncontrolled prop machinery | 3.13 |  | 0.793 |
+| walker |  | 4940 | 35 | ts body src/use-composed-refs.ts:31 |  |  | 0.769 |
+| walker |  | 4977 | 37 | ts doc src/use-composed-refs.ts:23 |  |  | 0.769 |
+| walker |  | 5015 | 38 | ts doc src/use-composed-refs.ts:31 |  |  | 0.769 |
+| walker |  | 5042 | 27 | ts body src/browser.ts:34 |  |  | 0.769 |
+| ns | 5125 |  | 218 | use-controllable-state.ts — the controlled/uncontrolled prop machinery | 3.13 |  | 0.758 |
+| walker |  | 5291 | 249 | ts decl src/use-snap-points.ts:7 |  |  | 0.793 |
 | ns | 5319 |  | 194 | useScaleBackground and use-composed-refs — the two smallest modules | 3.14 |  | 0.785 |
-| walker |  | 5412 | 327 | ts decl src/context.ts:37 |  |  | 0.786 |
-| walker |  | 5425 | 13 | ts names test/tests/constants.ts |  |  | 0.786 |
-| walker |  | 5483 | 58 | ts doc src/use-prevent-scroll.ts:68 |  |  | 0.786 |
-| walker |  | 5542 | 59 | ts body src/context.ts:69 |  |  | 0.780 |
-| ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.780 |
-| walker |  | 5604 | 62 | ts body src/use-prevent-scroll.ts:294 |  |  | 0.780 |
-| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.762 |
-| walker |  | 5851 | 247 | LICENSE.md section #0 |  |  | 0.762 |
+| walker |  | 5332 | 41 | ts body src/use-prevent-scroll.ts:29 |  |  | 0.785 |
+| ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.767 |
+| walker |  | 5659 | 327 | ts decl src/context.ts:37 |  |  | 0.769 |
+| walker |  | 5672 | 13 | ts names test/tests/constants.ts |  |  | 0.769 |
+| walker |  | 5730 | 58 | ts doc src/use-prevent-scroll.ts:68 |  |  | 0.769 |
+| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.751 |
+| walker |  | 5789 | 59 | ts body src/context.ts:69 |  |  | 0.762 |
+| walker |  | 5851 | 62 | ts body src/use-prevent-scroll.ts:294 |  |  | 0.762 |
 | ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.752 |
 | ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.740 |
 | walker |  | 6131 | 280 | declaration surface of src/style.css |  |  | 0.740 |

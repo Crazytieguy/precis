@@ -30,33 +30,33 @@ Score(3000)=0.679 I=0.858 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 1352 | 74 | c doc neco.h:35 |  |  | 0.668 |
 | walker |  | 1415 | 63 | README.md section #2 |  |  | 0.765 |
 | walker |  | 1486 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.765 |
+| walker |  | 1518 | 32 | docs/assets/API_foot.md section #0 |  |  | 0.765 |
 | ns | 1606 |  | 264 | Neco error codes, part 2, and the error functions | 1.11 | 1.10 | 0.731 |
-| walker |  | 1616 | 130 | README.md section #1 |  |  | 0.731 |
-| walker |  | 1819 | 203 | c names neco.h #1 |  |  | 0.733 |
-| walker |  | 1897 | 78 | c doc neco.h:61 |  |  | 0.736 |
-| walker |  | 2008 | 111 | docs/README.md section #1 |  |  | 0.737 |
-| ns | 2030 |  | 424 | Channels: doc and complete signature set | 2.1 |  | 0.715 |
-| walker |  | 2133 | 125 | docs/API.md section #0 |  |  | 0.715 |
+| walker |  | 1648 | 130 | README.md section #1 |  |  | 0.731 |
+| walker |  | 1851 | 203 | c names neco.h #1 |  |  | 0.733 |
+| walker |  | 1929 | 78 | c doc neco.h:61 |  |  | 0.736 |
+| ns | 2030 |  | 424 | Channels: doc and complete signature set | 2.1 |  | 0.714 |
+| walker |  | 2040 | 111 | docs/README.md section #1 |  |  | 0.715 |
+| walker |  | 2165 | 125 | docs/API.md section #0 |  |  | 0.715 |
 | ns | 2248 |  | 218 | Generators: complete signature set | 2.2 |  | 0.693 |
-| walker |  | 2347 | 214 | c names neco.h #2 |  |  | 0.743 |
-| ns | 2377 |  | 129 | Time: the duration constants and neco_now() | 2.3 |  | 0.728 |
-| walker |  | 2398 | 51 | c doc neco.h:90 |  |  | 0.729 |
+| ns | 2377 |  | 129 | Time: the duration constants and neco_now() | 2.3 |  | 0.679 |
+| walker |  | 2379 | 214 | c names neco.h #2 |  |  | 0.728 |
+| walker |  | 2430 | 51 | c doc neco.h:90 |  |  | 0.729 |
 | ns | 2556 |  | 179 | Mutexes: type, static initializer, and all eight operations | 2.4 |  | 0.708 |
-| walker |  | 2574 | 176 | README.md section #4 |  |  | 0.708 |
+| walker |  | 2606 | 176 | README.md section #4 |  |  | 0.708 |
 | ns | 2704 |  | 148 | WaitGroups: type, initializer and five operations | 2.5 |  | 0.693 |
-| walker |  | 2775 | 201 | README.md section #3 |  |  | 0.693 |
-| walker |  | 2829 | 54 | docs/API.md section #28 |  |  | 0.693 |
+| walker |  | 2807 | 201 | README.md section #3 |  |  | 0.693 |
 | ns | 2846 |  | 142 | Condition variables: type, initializer and five operations | 2.6 |  | 0.679 |
-| walker |  | 2881 | 52 | docs/API.md section #29 |  |  | 0.679 |
-| walker |  | 3061 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.679 |
+| walker |  | 2861 | 54 | docs/API.md section #28 |  |  | 0.679 |
+| walker |  | 2913 | 52 | docs/API.md section #29 |  |  | 0.679 |
+| walker |  | 3093 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.679 |
 | ns | 3154 |  | 308 | Posix wrappers: the non-blocking fd operations | 2.7 |  | 0.657 |
-| walker |  | 3253 | 192 | c names neco.h #3 |  |  | 0.686 |
+| walker |  | 3285 | 192 | c names neco.h #3 |  |  | 0.686 |
 | ns | 3304 |  | 150 | File descriptor helpers: neco_setnonblock and neco_wait | 2.8 |  | 0.666 |
-| walker |  | 3339 | 86 | c doc neco.h:113 |  |  | 0.668 |
+| walker |  | 3371 | 86 | c doc neco.h:113 |  |  | 0.668 |
 | ns | 3394 |  | 90 | Networking utilities: neco_serve and neco_dial | 2.9 |  | 0.661 |
-| walker |  | 3448 | 109 | docs/assets/API_head.md section #0 |  |  | 0.661 |
-| walker |  | 3520 | 72 | docs/API.md section #30 |  |  | 0.661 |
-| walker |  | 3552 | 32 | docs/assets/API_foot.md section #0 |  |  | 0.661 |
+| walker |  | 3480 | 109 | docs/assets/API_head.md section #0 |  |  | 0.661 |
+| walker |  | 3552 | 72 | docs/API.md section #30 |  |  | 0.661 |
 | ns | 3602 |  | 208 | Cancelation: neco_cancel, the type/state constants, cleanup macros | 2.10 |  | 0.641 |
 | walker |  | 3633 | 81 | docs/API.md section #106 |  |  | 0.641 |
 | walker |  | 3857 | 224 | README.md section #14 |  |  | 0.643 |

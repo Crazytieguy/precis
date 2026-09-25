@@ -257,5 +257,6 @@ Score(3000)=0.624 I=0.860 C=0.453 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 9837 | 6 | c doc src/font_manager.h:31 |  |  | 0.499 |
 | walker |  | 9900 | 63 | c doc src/font_manager.h:22 |  |  | 0.499 |
 | ns | 9926 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.509 |
-| walker |  | 9943 | 43 | lua doc docs/callback.lua:45 |  |  | 0.509 |
-| walker |  | 9958 | 15 | lua body src/service/render.lua:454 |  |  | 0.509 |
+| walker |  | 9930 | 30 | web/content/playframe.md section #0 |  |  | 0.509 |
+| walker |  | 9973 | 43 | lua doc docs/callback.lua:45 |  |  | 0.509 |
+| walker |  | 9988 | 15 | lua body src/service/render.lua:454 |  |  | 0.509 |

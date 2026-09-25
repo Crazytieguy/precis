@@ -45,9 +45,6 @@ const MAX_OUTLINE_HEADINGS: usize = 30;
 /// Source-byte cap on the outline's heading content (~400 tokens).
 const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
-/// Value multiplier for headingless non-README bodies (`BodyBlock`).
-const CHILD_SIGNAL_SCALE: f64 = 0.60;
-
 /// Token threshold above which an otherwise-unsplit section is
 /// emitted as a head chunk plus predecessor-chained tail chunks.
 /// NSes are authored to a growth envelope
@@ -78,8 +75,7 @@ const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 /// here and lost both carriers.
 const LEDE_TARGET_TOKENS: usize = 140;
 
-/// Tail-chunk value factor relative to the parent section. Above the
-/// generic `CHILD_SIGNAL_SCALE`: a tail is the direct
+/// Tail-chunk value factor relative to the parent section: a tail is the direct
 /// continuation of content whose head just won purchase, and the NS
 /// ranks the continuation right behind it — pricing tails as fan-out
 /// noise strands them past the window their head opened. (Tails still
@@ -192,7 +188,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         } else {
             let ranges = logical_sections(&file, &tree, &source, outline_emits);
             if ranges.is_empty() && headed_sections(tree.root_node()).next().is_none() {
-                headingless_fallback_ranges(&file, &source)
+                headingless_fallback_ranges(&source)
             } else {
                 ranges
             }
@@ -405,7 +401,6 @@ fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
     }
     match range.kind {
         SectionKind::Whole => parent,
-        SectionKind::BodyBlock => parent * CHILD_SIGNAL_SCALE,
         SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
         SectionKind::LedeBody => parent,
     }
@@ -540,7 +535,7 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
     }
 }
 
-fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
+fn headingless_fallback_ranges(source: &str) -> Vec<SectionRange> {
     let src_lines: Vec<&str> = source.lines().collect();
     let Some(start) = src_lines.iter().position(|line| !line.trim().is_empty()) else {
         return Vec::new();
@@ -553,20 +548,7 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
     push_whole_or_head_split(
         &mut out,
         &src_lines,
-        // A headingless README is still the project's orientation lede.
-        // Other headingless Markdown (licenses, generated fragments,
-        // footer snippets) remains reachable without competing at the
-        // same value as a named section.
-        SectionRange::new(
-            start + 1,
-            end + 1,
-            if is_readme(file) {
-                SectionKind::Whole
-            } else {
-                SectionKind::BodyBlock
-            },
-            0,
-        ),
+        SectionRange::new(start + 1, end + 1, SectionKind::Whole, 0),
     );
     out
 }
@@ -1264,8 +1246,6 @@ impl SectionRange {
 enum SectionKind {
     /// Un-split H2 (or synthetic H1-unwrap intro).
     Whole,
-    /// A headingless non-README file's body.
-    BodyBlock,
     /// Predecessor-chained tail chunk of an oversize head-split.
     OversizeTail,
     /// The section body directly behind a carved lede — the rest of
@@ -2240,16 +2220,6 @@ mod tests {
         let rendered = scheduler.run().render();
         assert!(rendered.contains("just two lines of prose"), "{rendered}");
         assert!(rendered.contains("second line here"), "{rendered}");
-    }
-
-    #[test]
-    fn markdown_headingless_non_readme_uses_body_value() {
-        let ranges = headingless_fallback_ranges(
-            &PathBuf::from("LICENSE.md"),
-            "license prose without a heading\n",
-        );
-        assert_eq!(ranges.len(), 1);
-        assert_eq!(ranges[0].kind, SectionKind::BodyBlock);
     }
 
     #[test]

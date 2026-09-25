@@ -160,36 +160,37 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.622 |
 | walker |  | 8122 | 54 | ts decl src/utils.ts:67 |  |  | 0.622 |
 | ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.617 |
-| walker |  | 8224 | 102 | ts decl src/utils.ts:130 |  |  | 0.624 |
-| walker |  | 8287 | 63 | docs/reference/coercions.md section #0 |  |  | 0.624 |
-| walker |  | 8366 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.624 |
-| walker |  | 8396 | 30 | docs/reference/utilities.md section #0 |  |  | 0.624 |
-| walker |  | 8407 | 11 | ts body src/struct.ts:83 |  |  | 0.624 |
-| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.630 |
-| walker |  | 8532 | 125 | docs/summary.md section #0 |  |  | 0.630 |
-| walker |  | 8614 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.631 |
-| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.627 |
-| walker |  | 8667 | 53 | docs/reference/refinements.md section #0 |  |  | 0.627 |
-| walker |  | 8744 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.627 |
-| walker |  | 8768 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.627 |
-| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.625 |
-| walker |  | 8791 | 23 | ts doc src/struct.ts:175 |  |  | 0.625 |
-| walker |  | 8901 | 110 | json config jsr.json |  |  | 0.625 |
+| walker |  | 8379 | 257 | License.md section #0 |  |  | 0.617 |
+| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.623 |
+| walker |  | 8481 | 102 | ts decl src/utils.ts:130 |  |  | 0.630 |
+| walker |  | 8544 | 63 | docs/reference/coercions.md section #0 |  |  | 0.630 |
+| walker |  | 8623 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.630 |
+| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.626 |
+| walker |  | 8653 | 30 | docs/reference/utilities.md section #0 |  |  | 0.626 |
+| walker |  | 8664 | 11 | ts body src/struct.ts:83 |  |  | 0.626 |
+| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.623 |
+| walker |  | 8789 | 125 | docs/summary.md section #0 |  |  | 0.623 |
+| walker |  | 8871 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.624 |
+| walker |  | 8924 | 53 | docs/reference/refinements.md section #0 |  |  | 0.624 |
 | ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.618 |
-| walker |  | 9107 | 206 | Readme.md section #6 |  |  | 0.618 |
-| walker |  | 9133 | 26 | package identity in examples/package.json |  |  | 0.618 |
-| walker |  | 9156 | 23 | ts doc src/struct.ts:243 |  |  | 0.618 |
+| walker |  | 9001 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.618 |
+| walker |  | 9025 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.618 |
+| walker |  | 9048 | 23 | ts doc src/struct.ts:175 |  |  | 0.618 |
+| walker |  | 9158 | 110 | json config jsr.json |  |  | 0.618 |
 | ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.611 |
-| walker |  | 9264 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.611 |
+| walker |  | 9364 | 206 | Readme.md section #6 |  |  | 0.611 |
 | ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.605 |
-| walker |  | 9375 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.605 |
-| walker |  | 9457 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.606 |
-| walker |  | 9476 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.607 |
-| walker |  | 9502 | 26 | ts doc src/structs/refinements.ts:33 |  |  | 0.607 |
-| walker |  | 9519 | 17 | ts body src/utils.ts:16 |  |  | 0.607 |
-| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.613 |
-| ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.610 |
-| walker |  | 9652 | 133 | docs/guides/06-using-typescript.md section #0 |  |  | 0.610 |
-| walker |  | 9677 | 25 | ts doc src/struct.ts:259 |  |  | 0.610 |
-| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.606 |
+| walker |  | 9390 | 26 | package identity in examples/package.json |  |  | 0.605 |
+| walker |  | 9413 | 23 | ts doc src/struct.ts:243 |  |  | 0.605 |
+| walker |  | 9521 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.611 |
+| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.611 |
+| ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.608 |
+| walker |  | 9632 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.608 |
+| walker |  | 9714 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.609 |
+| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.604 |
+| walker |  | 9733 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.605 |
+| walker |  | 9759 | 26 | ts doc src/structs/refinements.ts:33 |  |  | 0.606 |
+| walker |  | 9776 | 17 | ts body src/utils.ts:16 |  |  | 0.606 |
 | ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.603 |
+| walker |  | 9909 | 133 | docs/guides/06-using-typescript.md section #0 |  |  | 0.603 |
+| walker |  | 9934 | 25 | ts doc src/struct.ts:259 |  |  | 0.603 |
