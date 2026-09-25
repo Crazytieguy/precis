@@ -8,12 +8,12 @@ Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 127 | 12 | listing of 'docker' |  |  | 0.000 |
 | walker |  | 138 | 11 | python names manage.py |  |  | 0.000 |
 | walker |  | 141 | 3 | listing of '.github' |  |  | 0.000 |
-| walker |  | 151 | 10 | plaintext config version.txt |  |  | 0.000 |
-| walker |  | 164 | 13 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 169 | 5 | listing of '.devcontainer' |  |  | 0.000 |
-| walker |  | 213 | 44 | listing of 'assets' |  |  | 0.000 |
+| walker |  | 154 | 13 | listing of '.github/workflows' |  |  | 0.000 |
+| walker |  | 159 | 5 | listing of '.devcontainer' |  |  | 0.000 |
+| walker |  | 203 | 44 | listing of 'assets' |  |  | 0.000 |
 | ns | 227 |  | 115 | Repository root listing (complete) | 1.3 |  | 0.714 |
-| walker |  | 267 | 54 | README headline in README.md |  |  | 0.945 |
+| walker |  | 257 | 54 | README headline in README.md |  |  | 0.945 |
+| walker |  | 267 | 10 | plaintext config version.txt |  |  | 0.945 |
 | ns | 348 |  | 121 | bookmarks/ app package listing (complete) | 1.4 |  | 0.647 |
 | walker |  | 388 | 121 | listing of 'bookmarks' |  |  | 0.957 |
 | walker |  | 391 | 3 | listing of 'bookmarks/management' |  |  | 0.957 |

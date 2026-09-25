@@ -8,18 +8,18 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 88 | 5 | listing of 'bindings/go' |  |  | 0.000 |
 | walker |  | 93 | 5 | listing of 'bindings/python' |  |  | 0.000 |
 | walker |  | 101 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.000 |
-| walker |  | 114 | 13 | plaintext config VERSION |  |  | 0.000 |
-| walker |  | 120 | 6 | listing of '.github' |  |  | 0.000 |
-| walker |  | 132 | 12 | listing of '.github/workflows' |  |  | 0.000 |
+| walker |  | 107 | 6 | listing of '.github' |  |  | 0.000 |
+| walker |  | 119 | 12 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 148 |  | 88 | README capability bullets | 1.2 |  | 0.000 |
-| walker |  | 192 | 60 | README headline in README.md |  |  | 0.655 |
-| walker |  | 219 | 27 | listing of 'bindings/rust' |  |  | 0.655 |
+| walker |  | 179 | 60 | README headline in README.md |  |  | 0.655 |
+| walker |  | 206 | 27 | listing of 'bindings/rust' |  |  | 0.655 |
+| walker |  | 210 | 4 | listing of 'bindings/rust/src' |  |  | 0.655 |
+| walker |  | 220 | 10 | rust names bindings/rust/build.rs |  |  | 0.655 |
 | ns | 222 |  | 74 | Repository root listing (complete) | 1.3 |  | 0.837 |
-| walker |  | 223 | 4 | listing of 'bindings/rust/src' |  |  | 0.837 |
-| walker |  | 233 | 10 | rust names bindings/rust/build.rs |  |  | 0.837 |
 | ns | 320 |  | 98 | sqlite-vec.c region map | 1.4 |  | 0.745 |
-| walker |  | 337 | 104 | [package] in sqlite-dist.toml |  |  | 0.745 |
-| walker |  | 375 | 38 | headings outline in README.md |  |  | 0.745 |
+| walker |  | 324 | 104 | [package] in sqlite-dist.toml |  |  | 0.745 |
+| walker |  | 362 | 38 | headings outline in README.md |  |  | 0.745 |
+| walker |  | 375 | 13 | plaintext config VERSION |  |  | 0.745 |
 | walker |  | 388 | 13 | listing of 'scripts' |  |  | 0.745 |
 | walker |  | 436 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.748 |
 | walker |  | 457 | 21 | listing of 'benchmarks' |  |  | 0.748 |

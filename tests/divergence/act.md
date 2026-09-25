@@ -6,32 +6,32 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 127 | 127 | listing of '.' |  |  | 0.000 |
 | ns | 135 |  | 86 | main.go: process entry point | 1.2 |  | 0.000 |
 | walker |  | 152 | 25 | go names main.go |  |  | 0.106 |
-| walker |  | 162 | 10 | plaintext config VERSION |  |  | 0.106 |
 | ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.068 |
-| walker |  | 203 | 41 | listing of 'pkg' |  |  | 0.445 |
-| walker |  | 219 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.445 |
+| walker |  | 193 | 41 | listing of 'pkg' |  |  | 0.445 |
+| walker |  | 209 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.445 |
 | ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.352 |
-| walker |  | 241 | 22 | listing of 'pkg/exprparser' |  |  | 0.352 |
-| walker |  | 250 | 9 | listing of 'pkg/gh' |  |  | 0.352 |
-| walker |  | 274 | 24 | listing of 'pkg/artifacts' |  |  | 0.353 |
-| walker |  | 299 | 25 | listing of 'pkg/artifactcache' |  |  | 0.354 |
-| walker |  | 302 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.354 |
-| walker |  | 315 | 13 | listing of 'pkg/filecollector' |  |  | 0.354 |
-| walker |  | 319 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.354 |
+| walker |  | 231 | 22 | listing of 'pkg/exprparser' |  |  | 0.352 |
+| walker |  | 240 | 9 | listing of 'pkg/gh' |  |  | 0.352 |
+| walker |  | 264 | 24 | listing of 'pkg/artifacts' |  |  | 0.353 |
+| walker |  | 289 | 25 | listing of 'pkg/artifactcache' |  |  | 0.354 |
+| walker |  | 292 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.354 |
+| walker |  | 305 | 13 | listing of 'pkg/filecollector' |  |  | 0.354 |
+| walker |  | 309 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.354 |
+| walker |  | 342 | 33 | listing of 'pkg/lookpath' |  |  | 0.355 |
 | ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.449 |
-| walker |  | 352 | 33 | listing of 'pkg/lookpath' |  |  | 0.449 |
-| walker |  | 384 | 32 | go module identity in go.mod |  |  | 0.454 |
-| walker |  | 403 | 19 | listing of 'pkg/schema' |  |  | 0.456 |
-| ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.413 |
-| walker |  | 413 | 10 | go doc main.go:11 |  |  | 0.437 |
-| walker |  | 459 | 46 | listing of 'cmd' |  |  | 0.540 |
-| walker |  | 478 | 19 | listing of 'cmd/testdata' |  |  | 0.540 |
-| walker |  | 486 | 8 | listing of '.vscode' |  |  | 0.540 |
-| walker |  | 547 | 61 | README headline in README.md |  |  | 0.724 |
-| walker |  | 565 | 18 | go names cmd/graph.go |  |  | 0.724 |
-| walker |  | 583 | 18 | go names cmd/list.go |  |  | 0.724 |
-| ns | 591 |  | 186 | pkg/runner/: complete file list | 1.7 |  | 0.582 |
-| walker |  | 639 | 56 | listing of 'pkg/model' |  |  | 0.654 |
+| walker |  | 374 | 32 | go module identity in go.mod |  |  | 0.453 |
+| walker |  | 393 | 19 | listing of 'pkg/schema' |  |  | 0.454 |
+| walker |  | 403 | 10 | go doc main.go:11 |  |  | 0.481 |
+| ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.436 |
+| walker |  | 449 | 46 | listing of 'cmd' |  |  | 0.538 |
+| walker |  | 468 | 19 | listing of 'cmd/testdata' |  |  | 0.538 |
+| walker |  | 476 | 8 | listing of '.vscode' |  |  | 0.538 |
+| walker |  | 537 | 61 | README headline in README.md |  |  | 0.723 |
+| walker |  | 555 | 18 | go names cmd/graph.go |  |  | 0.723 |
+| walker |  | 573 | 18 | go names cmd/list.go |  |  | 0.723 |
+| ns | 591 |  | 186 | pkg/runner/: complete file list | 1.7 |  | 0.581 |
+| walker |  | 629 | 56 | listing of 'pkg/model' |  |  | 0.653 |
+| walker |  | 639 | 10 | plaintext config VERSION |  |  | 0.654 |
 | walker |  | 660 | 21 | go names cmd/platforms.go |  |  | 0.654 |
 | walker |  | 678 | 18 | listing of 'pkg/artifacts/testdata' |  |  | 0.654 |
 | walker |  | 682 | 4 | listing of 'pkg/artifacts/testdata/GHSL-2023-004' |  |  | 0.654 |

@@ -130,13 +130,12 @@ pub(crate) enum Class {
     BuildEntrypoint,
     /// Compact build/test plumbing scripts and manifests.
     BuildScript,
-    /// Project reference files: `setup.cfg`, `requirements.txt`, `TODO`.
+    /// Project reference files: `setup.cfg`, `requirements.txt`, `TODO`,
+    /// `VERSION`.
     ProjectNotes,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
-    /// One-line version stamp.
-    Version,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
     SourceText,
@@ -197,7 +196,12 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     if is_docker_compose_name(&lower) {
         return Some(Class::BuildEntrypoint);
     }
-    if lower == "requirements.txt" || lower == "todo" {
+    // Exact names, case-insensitive: exact equality (no stem matching)
+    // is what keeps `version.h` and similar source headers out.
+    if matches!(
+        lower.as_str(),
+        "requirements.txt" | "todo" | "version" | "version.txt"
+    ) {
         return Some(Class::ProjectNotes);
     }
     if crate::value::is_dotenv_sample_filename(name) {
@@ -208,15 +212,6 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
             return None;
         }
         return Some(Class::BuildScript);
-    }
-    // Orientation stamps matched case-insensitively by exact name —
-    // exact equality (no stem matching) is what keeps `version.h` and
-    // similar source headers out. `version.txt` is the de-facto
-    // Python-project variant when a project ships its canonical version
-    // stamp as a sibling of `pyproject.toml` rather than baking it into
-    // the `[project].version` scalar (linkding).
-    if lower == "version" || lower == "version.txt" {
-        return Some(Class::Version);
     }
     None
 }
@@ -782,11 +777,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
         Class::License => 108.0,
-        Class::BuildEntrypoint
-        | Class::BuildScript
-        | Class::DotenvSample
-        | Class::Version
-        | Class::SourceText => 905.0,
+        Class::BuildEntrypoint | Class::BuildScript | Class::DotenvSample | Class::SourceText => {
+            905.0
+        }
         Class::ProjectNotes => 660.0,
         Class::Tooling | Class::SourceProse => 488.0,
     };
@@ -1062,10 +1055,10 @@ mod tests {
             // stem). `VERSION` is a one-line version stamp common in
             // C-shaped projects; `TODO` is a plain backlog file. The
             // `version.txt` variant is Python convention.
-            ("VERSION", Some(Class::Version)),
-            ("version", Some(Class::Version)),
-            ("version.txt", Some(Class::Version)),
-            ("VERSION.txt", Some(Class::Version)),
+            ("VERSION", Some(Class::ProjectNotes)),
+            ("version", Some(Class::ProjectNotes)),
+            ("version.txt", Some(Class::ProjectNotes)),
+            ("VERSION.txt", Some(Class::ProjectNotes)),
             ("TODO", Some(Class::ProjectNotes)),
             // Owned by other walkers.
             ("LICENSE.md", None),
