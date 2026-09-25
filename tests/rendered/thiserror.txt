@@ -151,54 +151,6 @@ impl/
   LICENSE-MIT
   src/
     ast.rs
-      …
-      10→pub enum Input<'a> {
-      11→    Struct(Struct<'a>),
-      12→    Enum(Enum<'a>),
-      13→}
-      15→pub struct Struct<'a> {
-      16→    pub attrs: Attrs<'a>,
-      17→    pub ident: Ident,
-      18→    pub generics: &'a Generics,
-      19→    pub fields: Vec<Field<'a>>,
-      20→}
-      22→pub struct Enum<'a> {
-      23→    pub attrs: Attrs<'a>,
-      24→    pub ident: Ident,
-      25→    pub generics: &'a Generics,
-      26→    pub variants: Vec<Variant<'a>>,
-      27→}
-      29→pub struct Variant<'a> {
-      30→    pub original: &'a syn::Variant,
-      31→    pub attrs: Attrs<'a>,
-      32→    pub ident: Ident,
-      33→    pub fields: Vec<Field<'a>>,
-      34→}
-      36→pub struct Field<'a> {
-      37→    pub original: &'a syn::Field,
-      38→    pub attrs: Attrs<'a>,
-      39→    pub member: MemberUnraw,
-      40→    pub ty: &'a Type,
-      41→    pub contains_generic: bool,
-      42→}
-      44→#[derive(Copy, Clone)]
-      45→pub enum ContainerKind {
-      46→    Struct,
-      47→    TupleStruct,
-      48→    UnitStruct,
-      49→    StructVariant,
-      50→    TupleVariant,
-      51→    UnitVariant,
-      52→}
-      54→impl<'a> Input<'a> {
-      55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-      …
-      65→}
-      …
-      174→impl Display for ContainerKind {
-      175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-      …
-      185→}
     attr.rs
     expand.rs
     fallback.rs
@@ -240,7 +192,77 @@ impl/
 rust-toolchain.toml
 src/
   aserror.rs
+    …
+    9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
+    10→    #[inline]
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    12→        self
+    …
+    14→}
+    16→impl<'a> AsDynError<'a> for dyn Error + 'a {
+    17→    #[inline]
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    19→        self
+    …
+    21→}
+    23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a {
+    24→    #[inline]
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    26→        self
+    …
+    28→}
+    30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a {
+    31→    #[inline]
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    33→        self
+    …
+    35→}
+    37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a {
+    38→    #[inline]
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    …
+    42→}
+    …
+    46→impl<T: Error> Sealed for T {}
+    47→impl Sealed for dyn Error + '_ {}
+    48→impl Sealed for dyn Error + Send + '_ {}
+    49→impl Sealed for dyn Error + Send + Sync + '_ {}
+    50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ {}
   display.rs
+    …
+    14→impl<'a, T> AsDisplay<'a> for &T
+    15→where
+    16→    T: Display + ?Sized + 'a,
+    17→{
+    18→    type Target = &'a T;
+    19→
+    20→    fn as_display(&'a self) -> Self::Target {
+    21→        *self
+    …
+    23→}
+    25→#[cfg(feature = "std")]
+    26→impl<'a> AsDisplay<'a> for Path {
+    27→    type Target = path::Display<'a>;
+    29→    #[inline]
+    30→    fn as_display(&'a self) -> Self::Target {
+    31→        self.display()
+    …
+    33→}
+    35→#[cfg(feature = "std")]
+    36→impl<'a> AsDisplay<'a> for PathBuf {
+    37→    type Target = path::Display<'a>;
+    39→    #[inline]
+    40→    fn as_display(&'a self) -> Self::Target {
+    41→        self.display()
+    …
+    43→}
+    …
+    47→impl<T: Display + ?Sized> Sealed for &T {}
+    48→#[cfg(feature = "std")]
+    49→impl Sealed for Path {}
+    50→#[cfg(feature = "std")]
+    51→impl Sealed for PathBuf {}
+    …
   lib.rs
     …
     281→mod aserror;
@@ -255,6 +277,18 @@ src/
     …
   private.rs
   provide.rs
+    …
+    8→impl<T> ThiserrorProvide for T
+    9→where
+    10→    T: Error + ?Sized,
+    11→{
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    14→        self.provide(request);
+    …
+    16→}
+    …
+    20→impl<T: Error + ?Sized> Sealed for T {}
   var.rs
 tests/
   compiletest.rs
@@ -273,77 +307,3 @@ tests/
   test_source.rs
   test_transparent.rs
   ui/
-    bad-field-attr.rs
-    bad-field-attr.stderr
-    concat-display.rs
-    concat-display.stderr
-    display-underscore.rs
-    display-underscore.stderr
-    duplicate-enum-source.rs
-    duplicate-enum-source.stderr
-    duplicate-fmt.rs
-    duplicate-fmt.stderr
-    duplicate-struct-source.rs
-    duplicate-struct-source.stderr
-    duplicate-transparent.rs
-    duplicate-transparent.stderr
-    expression-fallback.rs
-    expression-fallback.stderr
-    fallback-impl-with-display.rs
-    fallback-impl-with-display.stderr
-    from-backtrace-backtrace.rs
-    from-backtrace-backtrace.stderr
-    from-not-source.rs
-    from-not-source.stderr
-    invalid-input-impl-anyway.rs
-    invalid-input-impl-anyway.stderr
-    lifetime.rs
-    lifetime.stderr
-    missing-display.rs
-    missing-display.stderr
-    missing-fmt.rs
-    missing-fmt.stderr
-    no-display.rs
-    no-display.stderr
-    numbered-positional-tuple.rs
-    numbered-positional-tuple.stderr
-    raw-identifier.rs
-    raw-identifier.stderr
-    same-from-type.rs
-    same-from-type.stderr
-    source-enum-not-error.rs
-    source-enum-not-error.stderr
-    source-enum-unnamed-field-not-error.rs
-    source-enum-unnamed-field-not-error.stderr
-    source-struct-not-error.rs
-    source-struct-not-error.stderr
-    source-struct-unnamed-field-not-error.rs
-    source-struct-unnamed-field-not-error.stderr
-    struct-with-fmt.rs
-    struct-with-fmt.stderr
-    transparent-display.rs
-    transparent-display.stderr
-    transparent-enum-many.rs
-    transparent-enum-many.stderr
-    transparent-enum-not-error.rs
-    transparent-enum-not-error.stderr
-    transparent-enum-source.rs
-    transparent-enum-source.stderr
-    transparent-enum-unnamed-field-not-error.rs
-    transparent-enum-unnamed-field-not-error.stderr
-    transparent-struct-many.rs
-    transparent-struct-many.stderr
-    transparent-struct-not-error.rs
-    transparent-struct-not-error.stderr
-    transparent-struct-source.rs
-    transparent-struct-source.stderr
-    transparent-struct-unnamed-field-not-error.rs
-    transparent-struct-unnamed-field-not-error.stderr
-    unconditional-recursion.rs
-    unconditional-recursion.stderr
-    unexpected-field-fmt.rs
-    unexpected-field-fmt.stderr
-    unexpected-struct-source.rs
-    unexpected-struct-source.stderr
-    union.rs
-    union.stderr

@@ -11,10 +11,9 @@
 //!   `impl` are `Whole` containers whose members are their functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
 //!   items, and an inherent-impl function without a visibility modifier.
-//!   An inherent impl with no admitted function is hidden, and so is an
-//!   impl whose self type or trait this file declares only hidden.
+//!   An inherent impl with no admitted function is hidden.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::path::Path;
 
 use tree_sitter::Node;
@@ -37,7 +36,6 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         module_doc: module_doc(file, root),
         ..FileModel::default()
     };
-    let hidden_types = hidden_type_names(file, root);
     let mut cursor = root.walk();
     for node in root.named_children(&mut cursor) {
         if matches!(
@@ -61,9 +59,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                     model.reexports.push(Item::new(rows));
                 }
             }
-            "impl_item" => model
-                .decls
-                .extend(impl_container(node, leading, file, &hidden_types)),
+            "impl_item" => model.decls.extend(impl_container(node, leading, file)),
             "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
             "function_item" => model.decls.push(callable(node, leading, file)),
             "macro_definition" => {
@@ -313,22 +309,7 @@ fn container(
 
 /// A trait impl admits every function; an inherent impl only those with
 /// a visibility modifier (`pub`, `pub(…)`), and is hidden without one.
-/// Either is hidden when this file declares its self type or trait only
-/// hidden.
-fn impl_container(
-    node: Node,
-    leading: Leading,
-    file: &SourceFile,
-    hidden_types: &HashMap<String, bool>,
-) -> Option<DeclInfo> {
-    let declared_hidden = ["type", "trait"].into_iter().any(|field| {
-        node.child_by_field_name(field)
-            .and_then(|named| hidden_types.get(base_type_name(named, file)))
-            == Some(&true)
-    });
-    if declared_hidden {
-        return None;
-    }
+fn impl_container(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInfo> {
     let is_trait_impl = node.child_by_field_name("trait").is_some();
     let admit = |child: Node| is_trait_impl || visibility_modifier(child, file).is_some();
     if !is_trait_impl {
@@ -342,40 +323,6 @@ fn impl_container(
         }
     }
     Some(container(node, leading, file, admit))
-}
-
-/// `Foo` for `Foo`, `Foo<T>` and `module::Foo<T>`.
-fn base_type_name<'a>(self_type: Node, file: &'a SourceFile) -> &'a str {
-    let text = file.text(self_type);
-    let without_generics = text.split('<').next().unwrap_or(text);
-    without_generics
-        .rsplit("::")
-        .next()
-        .unwrap_or(without_generics)
-        .trim()
-}
-
-/// Top-level type and trait names → whether every declaration of the name
-/// is hidden (e.g. one under `#[cfg(test)]` and one under
-/// `#[cfg(not(test))]` is not).
-fn hidden_type_names(file: &SourceFile, root: Node) -> HashMap<String, bool> {
-    let mut declared: HashMap<String, bool> = HashMap::new();
-    let mut cursor = root.walk();
-    for node in root.named_children(&mut cursor) {
-        if !matches!(
-            node.kind(),
-            "struct_item" | "enum_item" | "union_item" | "type_item" | "trait_item"
-        ) {
-            continue;
-        }
-        let Some(name) = node.child_by_field_name("name") else {
-            continue;
-        };
-        let hidden = Leading::above(node, file).hidden;
-        let entry = declared.entry(file.text(name).to_string()).or_insert(true);
-        *entry &= hidden;
-    }
-    declared
 }
 
 /// The row of the delimiter opening a `macro_rules!` body.
@@ -666,7 +613,7 @@ pub(crate) trait Internal {
     }
 
     #[test]
-    fn rust_extract_impl_members_follow_modifiers_and_self_type() {
+    fn rust_extract_impl_members_follow_modifiers() {
         let source = "\
 pub struct Engine;
 struct Helper;
@@ -705,32 +652,10 @@ impl Sealed for Engine {}
             })
             .collect();
         assert_eq!(impls, vec![(3, vec![4, 5]), (8, vec![9]), (13, vec![14])]);
-        assert_eq!(model.decls.len(), 5);
+        assert_eq!(model.decls.len(), 6);
         let display = &model.decls[3];
         assert_eq!(sorted(display.head.clone()), vec![8, 12]);
         assert_eq!(rows(&display.body), vec![vec![9]]);
-    }
-
-    #[test]
-    fn rust_extract_impl_of_a_type_with_a_test_substitute_stays_visible() {
-        for (first, second) in [("not(test)", "test"), ("test", "not(test)")] {
-            let source = format!(
-                "\
-#[cfg({first})]
-pub struct Client;
-#[cfg({second})]
-pub struct Client;
-impl Client {{
-    pub fn connect(&self) {{}}
-}}
-"
-            );
-            let (_, model) = extract_source("a.rs", &source);
-            assert!(
-                model.decls.iter().any(|decl| !decl.members.is_empty()),
-                "impl Client admitted"
-            );
-        }
     }
 
     #[test]

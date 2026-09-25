@@ -151,38 +151,27 @@ src/
   ensure.rs
   error.rs
   fmt.rs
+    …
+    6→impl ErrorImpl {
+    7→    pub(crate) unsafe fn display(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
+    …
+    20→    pub(crate) unsafe fn debug(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
+    …
+    67→}
+    69→struct Indented<'a, D> {
+    70→    inner: &'a mut D,
+    71→    number: Option<usize>,
+    72→    started: bool,
+    73→}
+    75→impl<T> Write for Indented<'_, T>
+    76→where
+    77→    T: Write,
+    78→{
+    79→    fn write_str(&mut self, s: &str) -> fmt::Result {
+    …
+    101→}
+    …
   kind.rs
-    …
-    55→pub struct Adhoc;
-    …
-    67→impl Adhoc {
-    68→    #[cold]
-    69→    pub fn new<M>(self, message: M) -> Error
-    70→    where
-    71→        M: Display + Debug + Send + Sync + 'static,
-    72→    {
-    …
-    75→}
-    77→pub struct Trait;
-    …
-    89→impl Trait {
-    90→    #[cold]
-    91→    pub fn new<E>(self, error: E) -> Error
-    92→    where
-    93→        E: Into<Error>,
-    94→    {
-    95→        error.into()
-    …
-    97→}
-    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    100→pub struct Boxed;
-    …
-    114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    115→impl Boxed {
-    116→    #[cold]
-    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
-    …
-    121→}
   lib.rs
     …
     251→#[macro_use]
