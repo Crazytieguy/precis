@@ -14,10 +14,10 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
   - Source lines are unpadded `N→` rows nested under their file.
   - A `…` row marks hidden source in a file, or hidden entries in a directory.
   - `(empty)` marks entries that are genuinely empty. An entry with nothing under it wasn't expanded.
-- Dotfiles such as `.github/` and `.gitignore` are listed and summarized. v0.1 hid every hidden entry.
+- Dotfiles such as `.github/` and `.gitignore` are listed. v0.1 hid every hidden entry.
 - `.gitignore` rules apply when the path is the root of a git repository. They are no longer inherited from an enclosing repository.
 - YAML and other JSON/TOML files are no longer summarized by their top-level keys. Manifests, small root JSON configs, compose files and Taskfiles are covered instead. Other YAML files appear in the tree only.
-- `.mdx` files get a head slice instead of a Markdown outline.
+- Only the root `README.md` or `README.rst` is summarized. Other Markdown, `.mdx` and reST documents appear in the tree by name; pass a `.md` or `.rst` file as the path to summarize it.
 - Rust 1.88 or newer is required to build from source.
 
 ### Highlights
