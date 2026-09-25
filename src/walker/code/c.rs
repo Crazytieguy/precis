@@ -111,7 +111,7 @@ fn decl_info(
     Some(DeclInfo {
         name_rows,
         head,
-        doc: comment_paragraphs(file, doc_rows),
+        doc: file.paragraphs(doc_rows),
         body,
         shape,
         members: Vec::new(),
@@ -298,52 +298,6 @@ fn declarator_is_function(node: Node) -> bool {
             .is_some_and(declarator_is_function),
         _ => false,
     }
-}
-
-/// Comment rows split into paragraphs: at blank rows, and after a row with
-/// no prose (` *`, `//`) that follows prose. Every non-blank row lands in
-/// an item, so no decoration row is left between two paragraphs.
-fn comment_paragraphs(file: &SourceFile, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
-    let mut items: Vec<Item> = Vec::new();
-    let mut current = Vec::new();
-    let mut has_prose = false;
-    let mut close = |current: &mut Vec<usize>, has_prose: &mut bool| {
-        if current.is_empty() {
-            return;
-        }
-        match items.last_mut() {
-            Some(previous) if !*has_prose => previous.rows.append(current),
-            _ => items.push(Item::new(std::mem::take(current))),
-        }
-        *has_prose = false;
-    };
-    for row in rows {
-        let text = file.line(row);
-        if text.trim().is_empty() {
-            close(&mut current, &mut has_prose);
-            continue;
-        }
-        current.push(row);
-        if !strip_comment_markers(text).is_empty() {
-            has_prose = true;
-        } else if has_prose {
-            close(&mut current, &mut has_prose);
-        }
-    }
-    close(&mut current, &mut has_prose);
-    items
-}
-
-/// A comment line's prose, with the `//`, `/*`, `*` and `*/` decoration
-/// removed.
-fn strip_comment_markers(line: &str) -> &str {
-    let body = line.trim();
-    let body = body
-        .strip_prefix("/*")
-        .or_else(|| body.strip_prefix("//"))
-        .unwrap_or(body);
-    let body = body.strip_suffix("*/").unwrap_or(body);
-    body.trim_matches(|c: char| c == '*' || c == '/' || c.is_whitespace())
 }
 
 /// Last row of the file's leading run of comments, up to the first other
@@ -822,7 +776,7 @@ int next;
             panic!("{:?}", model.decls);
         };
         assert!(sds.doc.is_empty());
-        assert_eq!(rows(&sdsnew.doc), vec![vec![9, 10], vec![11]]);
+        assert_eq!(rows(&sdsnew.doc), vec![vec![9, 10, 11]]);
         assert_eq!(trailing.head, vec![13]);
         assert!(next.doc.is_empty());
     }
