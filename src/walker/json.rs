@@ -26,6 +26,7 @@ use crate::value::{
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
+    member_named_after_root,
 };
 use super::{
     FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
@@ -59,11 +60,11 @@ impl JsonState {
             .is_member(file, || collect_workspace_members(root))
     }
 
-    /// `true` iff `file` is the unique publishable member whose package
-    /// name matches the repository name (or the root package name).
+    /// `true` iff `file` is the primary workspace member — see
+    /// [`member_named_after_root`].
     pub fn is_primary_workspace_member(&self, file: &Path, root: &Path) -> bool {
         let primary = self.primary_member.get_or_init(|| {
-            find_primary_workspace_member(
+            member_named_after_root(
                 root,
                 self.membership.members(|| collect_workspace_members(root)),
             )
@@ -477,55 +478,6 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
-/// Pick the single workspace member whose package name matches either the
-/// repository directory name or the root package name. Scoped package names
-/// also match by their final component (`@scope/d2ts` ↔ `d2ts`). If a member
-/// manifest cannot be read or more than one member matches, fail closed.
-fn find_primary_workspace_member(root: &Path, members: &HashSet<PathBuf>) -> Option<PathBuf> {
-    let mut target_names = HashSet::new();
-    if let Some(repo_name) = root.file_name().and_then(|name| name.to_str()) {
-        insert_package_name_aliases(&mut target_names, repo_name);
-    }
-    if let Some(root_name) = manifest_package_name(root) {
-        insert_package_name_aliases(&mut target_names, &root_name);
-    }
-    if target_names.is_empty() {
-        return None;
-    }
-
-    let mut matched = None;
-    for member in members {
-        let member_dir = member.parent()?;
-        let member_name = manifest_package_name(member_dir)?;
-        let is_match = package_name_aliases(&member_name)
-            .into_iter()
-            .any(|name| target_names.contains(name));
-        if !is_match {
-            continue;
-        }
-        if matched.is_some() {
-            return None;
-        }
-        matched = Some(member.clone());
-    }
-    matched
-}
-
-fn manifest_package_name(dir: &Path) -> Option<String> {
-    let (source, tree) = parse_manifest(dir)?;
-    let object = first_child_of_kind(tree.root_node(), "object", false)?;
-    let value = object_field_value(object, "name", &source)?;
-    (value.kind() == "string").then(|| unquote_string(value, &source))
-}
-
-fn package_name_aliases(name: &str) -> [&str; 2] {
-    [name, name.rsplit_once('/').map_or(name, |(_, leaf)| leaf)]
-}
-
-fn insert_package_name_aliases(names: &mut HashSet<String>, name: &str) {
-    names.extend(package_name_aliases(name).into_iter().map(str::to_owned));
-}
-
 /// Parse `<dir>/package.json` into its source text + tree. The caller
 /// re-derives the root object node (tree-sitter nodes borrow the tree,
 /// so it can't be returned from here). The one manifest-parse prologue —
@@ -827,61 +779,24 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_primary_member_matches_repo_name_through_scope() {
+    fn walker_json_primary_member_is_named_after_the_repository() {
         let outer = tempfile::tempdir().unwrap();
         let root = outer.path().join("primary-package");
         fs::create_dir(&root).unwrap();
         write_pkg(
             &root,
-            r#"{"name":"workspace-shell","workspaces":["packages/*"]}"#,
+            r#"{"name":"workspace-shell","workspaces":["packages/*", "apps/*"]}"#,
         );
         seed_members(&root, &["packages/primary-package", "packages/satellite"]);
-        write_pkg(
-            &root.join("packages/primary-package"),
-            r#"{"name":"@scope/primary-package"}"#,
-        );
-
         let members = collect_workspace_members(&root);
-        let primary = find_primary_workspace_member(&root, &members).unwrap();
-        assert_eq!(primary, member_path(&root, "packages/primary-package"));
-    }
-
-    #[test]
-    fn walker_json_primary_member_can_match_root_package_name() {
-        let root = tempfile::tempdir().unwrap();
-        write_pkg(
-            root.path(),
-            r#"{"name":"published-package","workspaces":["packages/*"]}"#,
-        );
-        seed_members(root.path(), &["packages/published", "packages/satellite"]);
-        write_pkg(
-            &root.path().join("packages/published"),
-            r#"{"name":"published-package"}"#,
+        assert_eq!(
+            member_named_after_root(&root, &members),
+            Some(member_path(&root, "packages/primary-package"))
         );
 
-        let members = collect_workspace_members(root.path());
-        let primary = find_primary_workspace_member(root.path(), &members).unwrap();
-        assert_eq!(primary, member_path(root.path(), "packages/published"));
-    }
-
-    #[test]
-    fn walker_json_primary_member_fails_closed_on_ambiguity() {
-        let outer = tempfile::tempdir().unwrap();
-        let root = outer.path().join("primary-package");
-        fs::create_dir(&root).unwrap();
-        write_pkg(
-            &root,
-            r#"{"name":"workspace-shell","workspaces":["packages/*"]}"#,
-        );
-        seed_members(&root, &["packages/a", "packages/b"]);
-        write_pkg(&root.join("packages/a"), r#"{"name":"primary-package"}"#);
-        write_pkg(
-            &root.join("packages/b"),
-            r#"{"name":"@scope/primary-package"}"#,
-        );
-
+        seed_members(&root, &["apps/primary-package"]);
         let members = collect_workspace_members(&root);
-        assert_eq!(find_primary_workspace_member(&root, &members), None);
+        assert_eq!(member_named_after_root(&root, &members), None);
     }
 
     #[test]

@@ -97,3 +97,17 @@ pub(super) fn canonical_member(
         .starts_with(canonical_root)
         .then_some(canonical_manifest)
 }
+
+/// The one member manifest whose directory shares the repository's
+/// basename — the member whose source surface carries the repository.
+/// `None` when no member or more than one does: iteration order over the
+/// member set is not stable across runs, and a primary chosen by hash
+/// order would price a different subtree each time.
+pub(super) fn member_named_after_root(root: &Path, members: &HashSet<PathBuf>) -> Option<PathBuf> {
+    let base = root.file_name()?;
+    let mut matches = members
+        .iter()
+        .filter(|member| member.parent().and_then(Path::file_name) == Some(base));
+    let first = matches.next()?;
+    matches.next().is_none().then(|| first.clone())
+}
