@@ -94,28 +94,6 @@ README.md
   211→## Comparison to anyhow
   …
 build/
-  probe.rs
-    …
-    11→struct MyError(Thing);
-    12→struct Thing;
-    13→
-    14→impl Debug for MyError {
-    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    16→        unimplemented!()
-    …
-    18→}
-    20→impl Display for MyError {
-    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    22→        unimplemented!()
-    …
-    24→}
-    26→impl Error for MyError {
-    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-    28→        request.provide_ref(&self.0);
-    …
-    30→}
-    …
-    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
   …
   10→const PRIVATE: &str = "\
@@ -341,4 +319,30 @@ tests/
     source-struct-not-error.rs
     source-struct-not-error.stderr
     source-struct-unnamed-field-not-error.rs
+    source-struct-unnamed-field-not-error.stderr
+    struct-with-fmt.rs
+    struct-with-fmt.stderr
+    transparent-display.rs
+    transparent-display.stderr
+    transparent-enum-many.rs
+    transparent-enum-many.stderr
+    transparent-enum-not-error.rs
+    transparent-enum-not-error.stderr
+    transparent-enum-source.rs
+    transparent-enum-source.stderr
+    transparent-enum-unnamed-field-not-error.rs
+    transparent-enum-unnamed-field-not-error.stderr
+    transparent-struct-many.rs
+    transparent-struct-many.stderr
+    transparent-struct-not-error.rs
+    transparent-struct-not-error.stderr
+    transparent-struct-source.rs
+    transparent-struct-source.stderr
+    transparent-struct-unnamed-field-not-error.rs
+    transparent-struct-unnamed-field-not-error.stderr
+    unconditional-recursion.rs
+    unconditional-recursion.stderr
+    unexpected-field-fmt.rs
+    unexpected-field-fmt.stderr
+    unexpected-struct-source.rs
     …

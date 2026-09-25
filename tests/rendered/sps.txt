@@ -188,6 +188,12 @@ sps/
       15→pub mod search;
       16→pub mod status;
       17→pub mod uninstall;
+      18→pub mod update;
+      19→pub mod upgrade;
+      …
+      23→pub use crate::cli::init::InitArgs;
+      …
+      35→pub struct CliArgs {
       …
     main.rs
       …
@@ -249,17 +255,6 @@ sps-core/
   Cargo.toml
   src/
     build/
-      compile/
-        cargo.rs
-        cmake.rs
-        go.rs
-        make.rs
-        meson.rs
-        mod.rs
-        perl.rs
-        python.rs
-      env.rs
-      mod.rs
     check/
       installed.rs
       mod.rs
