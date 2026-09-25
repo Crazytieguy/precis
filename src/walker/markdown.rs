@@ -222,7 +222,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             Vec::new()
         } else {
             let ranges = logical_sections(&file, &tree, &source, outline_emits, root_readme);
-            if ranges.is_empty() && !markdown_has_heading(&tree) {
+            if ranges.is_empty() && headed_sections(tree.root_node()).next().is_none() {
                 headingless_fallback_ranges(&file, &source)
             } else {
                 ranges
@@ -555,9 +555,6 @@ fn collectable_outline_rows(
     source: &str,
     headline: Option<&HeadlineSpec>,
 ) -> Vec<(usize, usize)> {
-    let headline_covered: BTreeSet<usize> = headline
-        .map(|s| s.covered_rows.iter().copied().collect())
-        .unwrap_or_default();
     let mut nodes = Vec::new();
     collect_heading_nodes(tree.root_node(), &mut nodes);
     let mut out = Vec::new();
@@ -568,7 +565,12 @@ fn collectable_outline_rows(
         }
         let start_row = node.start_position().row + 1;
         let end_row = node_end_row_trimmed(node, source) + 1;
-        if (start_row..=end_row).any(|r| headline_covered.contains(&r)) {
+        if headline.is_some_and(|spec| {
+            spec.covered_rows
+                .range(start_row..=end_row)
+                .next()
+                .is_some()
+        }) {
             continue;
         }
         out.push((start_row, end_row));
@@ -576,21 +578,17 @@ fn collectable_outline_rows(
     out
 }
 
+/// Section headings in document order — tree-sitter-md nests every
+/// section's heading as a direct child of its `section` node.
 fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         if matches!(child.kind(), "atx_heading" | "setext_heading") {
             out.push(child);
-        } else {
+        } else if child.kind() == "section" {
             collect_heading_nodes(child, out);
         }
     }
-}
-
-fn markdown_has_heading(tree: &Tree) -> bool {
-    let mut nodes = Vec::new();
-    collect_heading_nodes(tree.root_node(), &mut nodes);
-    !nodes.is_empty()
 }
 
 fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
