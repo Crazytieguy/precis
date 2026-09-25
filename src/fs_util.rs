@@ -89,6 +89,8 @@ pub struct DirFilter {
     /// Memo for [`list_dir`]: every walker and every scheduler cost
     /// probe lists the same directories again.
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
+    /// Memo for [`lists_nothing`] on directories not listed in full.
+    emptiness: RefCell<HashMap<PathBuf, bool>>,
     /// Set for a single-file walk: the one entry under `root` the filter
     /// admits. See [`DirFilter::single_file`].
     only_file: Option<PathBuf>,
@@ -194,6 +196,7 @@ impl DirFilter {
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
             repo: None,
             listings: RefCell::new(HashMap::new()),
+            emptiness: RefCell::new(HashMap::new()),
             only_file: None,
         }
     }
@@ -488,6 +491,30 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKin
     listing
 }
 
+/// Whether [`list_dir`] lists nothing for `path`, reading only as far
+/// as the first entry it would list. Asking this of every child of a
+/// listed directory is what renders an empty child as `(empty)`, and a
+/// full listing of each would read two levels below every listing.
+pub fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
+    if let Some(listing) = filter.listings.borrow().get(path) {
+        return listing.is_empty();
+    }
+    if let Some(&known) = filter.emptiness.borrow().get(path) {
+        return known;
+    }
+    let empty = filter.is_linked_subdirectory(path)
+        || std::fs::read_dir(path).map_or(true, |entries| {
+            !entries
+                .flatten()
+                .any(|entry| listed_entry(path, &entry, filter).is_some())
+        });
+    filter
+        .emptiness
+        .borrow_mut()
+        .insert(path.to_path_buf(), empty);
+    empty
+}
+
 fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
     if filter.is_linked_subdirectory(path) {
         return BTreeMap::new();
@@ -497,27 +524,34 @@ fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
     };
     read_dir
         .flatten()
-        .filter_map(|e| {
-            let name_os = e.file_name();
-            let name = name_os.to_string_lossy().into_owned();
-            if is_internal_entry(&name) {
-                return None;
-            }
-            let child = path.join(&name_os);
-            let kind = resolved_kind(&child, &e.file_type().ok()?, &filter.canonical_root)?;
-            let is_dir = matches!(kind, EntryKind::Directory);
-            if filter.excludes(&child, is_dir) {
-                return None;
-            }
-            // A directory that hides its whole contents is ignored
-            // content itself, not a directory that happens to be
-            // empty — see `hides_everything_in`.
-            if is_dir && filter.hides_everything_in(&child) {
-                return None;
-            }
-            Some((name, kind))
-        })
+        .filter_map(|entry| listed_entry(path, &entry, filter))
         .collect()
+}
+
+/// The row `entry` of directory `path` lists as, if any.
+fn listed_entry(
+    path: &Path,
+    entry: &std::fs::DirEntry,
+    filter: &DirFilter,
+) -> Option<(String, EntryKind)> {
+    let name_os = entry.file_name();
+    let name = name_os.to_string_lossy().into_owned();
+    if is_internal_entry(&name) {
+        return None;
+    }
+    let child = path.join(&name_os);
+    let kind = resolved_kind(&child, &entry.file_type().ok()?, &filter.canonical_root)?;
+    let is_dir = matches!(kind, EntryKind::Directory);
+    if filter.excludes(&child, is_dir) {
+        return None;
+    }
+    // A directory that hides its whole contents is ignored content
+    // itself, not a directory that happens to be empty — see
+    // `hides_everything_in`.
+    if is_dir && filter.hides_everything_in(&child) {
+        return None;
+    }
+    Some((name, kind))
 }
 
 #[cfg(test)]

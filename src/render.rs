@@ -19,7 +19,7 @@ use crate::batch::BatchId;
 use crate::content::{
     BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, with_truncate_regex,
 };
-use crate::fs_util::{DirFilter, EntryKind, list_dir};
+use crate::fs_util::{DirFilter, EntryKind, list_dir, lists_nothing};
 use crate::tokenizer;
 
 const INDENT_UNIT: &str = "  ";
@@ -305,7 +305,7 @@ impl RenderedTree {
     /// not because it is empty.
     fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
         if matches!(kind, EntryKind::Directory) {
-            return self.dir_entry_count(path) == 0
+            return lists_nothing(path, &self.dir_filter)
                 && !self.dir_filter.is_linked_subdirectory(path);
         }
         if let Some(&known) = self.file_empty.borrow().get(path) {
