@@ -74,8 +74,6 @@ fn is_header(path: &Path) -> bool {
         .is_some_and(|extension| extension.eq_ignore_ascii_case("h"))
 }
 
-// --- declarations ---------------------------------------------------------
-
 fn decl_info(
     node: Node,
     file: &SourceFile,
@@ -381,8 +379,6 @@ fn banner_end_row(root: Node, file: &SourceFile) -> usize {
     comments.last().map_or(0, |comment| *comment.end())
 }
 
-// --- effective top level --------------------------------------------------
-
 /// Visit each "effective top-level" item: descends through the file's
 /// header guard, through `extern "C" { … }` linkage specs and through
 /// declaration-only `#if` / `#ifdef` blocks.
@@ -542,34 +538,25 @@ fn header_guard_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
     Some(&source[name.byte_range()])
 }
 
-/// True iff `ifdef` is `#ifndef X` followed (blank rows and comments
-/// aside, within 8 rows) by `#define X`.
+/// True iff `ifdef` is `#ifndef X` whose first child (comments aside)
+/// is `#define X`.
 fn is_header_guard(ifdef: Node, source: &str) -> bool {
-    let mut lines = source[ifdef.byte_range()].lines();
-    let Some(name) = lines
-        .next()
-        .unwrap_or("")
-        .trim_start()
-        .strip_prefix('#')
-        .map(str::trim_start)
-        .and_then(|rest| rest.strip_prefix("ifndef"))
-        .and_then(|rest| rest.split_whitespace().next())
-    else {
+    let Some(name) = ifdef.child_by_field_name("name") else {
         return false;
     };
-    for line in lines.take(8) {
-        let trimmed = line.trim_start();
-        if trimmed.is_empty() || trimmed.starts_with("//") || trimmed.starts_with("/*") {
-            continue;
-        }
-        return trimmed
-            .strip_prefix('#')
-            .map(str::trim_start)
-            .and_then(|rest| rest.strip_prefix("define"))
-            .and_then(|rest| rest.split_whitespace().next())
-            == Some(name);
+    if ifdef.child(0).is_none_or(|token| token.kind() != "#ifndef") {
+        return false;
     }
-    false
+    let mut cursor = ifdef.walk();
+    let first = ifdef
+        .named_children(&mut cursor)
+        .find(|child| *child != name && child.kind() != "comment");
+    first.is_some_and(|define| {
+        define.kind() == "preproc_def"
+            && define
+                .child_by_field_name("name")
+                .is_some_and(|defined| source[defined.byte_range()] == source[name.byte_range()])
+    })
 }
 
 /// True iff a valueless `#define X` is header-guard envelope rather than
