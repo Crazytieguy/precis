@@ -163,6 +163,7 @@ docs/
       channel.md
       find.md
       intersect.md
+      map.md
       …
     mutable/
       _category_.json
@@ -173,15 +174,14 @@ docs/
   docusaurus.config.ts
   package-lock.json
   package.json
-  plugins/
-    helpers-pages/
-      components/
-        HelperCard.tsx
-        HelperList.tsx
-        HelperTOC.tsx
-        helper-components.css
-        highlightPrototypeGenerics.ts
-      index.ts
+  plugins/helpers-pages/
+    components/
+      HelperCard.tsx
+      HelperList.tsx
+      HelperTOC.tsx
+      helper-components.css
+      highlightPrototypeGenerics.ts
+    index.ts
   scripts/
   sidebars.ts
   src/
@@ -195,10 +195,8 @@ docs/
       index.tsx
     prism-include-languages.js
     theme/
-      CodeBlock/
-        Buttons/
-          CopyButton/
-            index.tsx
+      CodeBlock/Buttons/CopyButton/
+        index.tsx
       ColorModeToggle/
         index.tsx
       DocSidebar/
@@ -214,32 +212,31 @@ docs/
   tsconfig.json
 errors.go
 errors_test.go
-exp/
-  simd/
-    BENCHMARK.md
-    README.md
-    cpu_amd64.go
-    cpu_amd64_test.go
-    go.mod
-      1→module github.com/samber/lo/exp/simd
-      2→
-      3→go 1.26.0
-      …
-    go.sum
-    intersect_avx512.go
-    intersect_avx512_test.go
-    intersect_bench_test.go
-    math.go
-    math_avx.go
-    math_avx2.go
-    math_avx2_test.go
-    math_avx512.go
-    math_avx512_test.go
-    math_avx_test.go
-    math_bench_test.go
-    simd.go
-    simd_test.go
-    unsafe.go
+exp/simd/
+  BENCHMARK.md
+  README.md
+  cpu_amd64.go
+  cpu_amd64_test.go
+  go.mod
+    1→module github.com/samber/lo/exp/simd
+    2→
+    3→go 1.26.0
+    …
+  go.sum
+  intersect_avx512.go
+  intersect_avx512_test.go
+  intersect_bench_test.go
+  math.go
+  math_avx.go
+  math_avx2.go
+  math_avx2_test.go
+  math_avx512.go
+  math_avx512_test.go
+  math_avx_test.go
+  math_bench_test.go
+  simd.go
+  simd_test.go
+  unsafe.go
 find.go
 find_test.go
 func.go

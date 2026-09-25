@@ -74,23 +74,42 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec
     out
 }
 
+/// Listing of `dir`, run on through every directory that holds only one
+/// subdirectory (`src/main/java/org/acme/`): such a listing names one
+/// path segment, so it is bought and keyed with the first listing below
+/// it that names more, at the lower of the two listings' values.
 fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
-    let children = list_dir(&dir, ctx.dir_filter());
+    let mut dir = dir;
+    let mut children = list_dir(&dir, ctx.dir_filter());
     if children.is_empty() {
         return None;
     }
-    let value = dir_listing_value(&dir, &children, ctx);
-    let paths: Vec<PathBuf> = children.keys().map(PathBuf::from).collect();
+    let head_value = dir_listing_value(&dir, &children, ctx);
+    let mut groups = Vec::new();
+    loop {
+        groups.push(FsGroup {
+            parent: dir.clone(),
+            entries: FsEntries::Listed(children.keys().map(PathBuf::from).collect()),
+        });
+        let Some((name, EntryKind::Directory)) = children.iter().next() else {
+            break;
+        };
+        let only_child = dir.join(name);
+        let grandchildren = list_dir(&only_child, ctx.dir_filter());
+        if children.len() > 1
+            || grandchildren.is_empty()
+            || !should_recurse_dir(&only_child, ctx.root())
+        {
+            break;
+        }
+        dir = only_child;
+        children = grandchildren;
+    }
     Some(Batch {
-        key: FsKey::DirListing { dir: dir.clone() }.into(),
+        value: head_value.min(dir_listing_value(&dir, &children, ctx)),
+        key: FsKey::DirListing { dir }.into(),
         predecessor: None,
-        content: BatchContent::Fs {
-            groups: vec![FsGroup {
-                parent: dir,
-                entries: FsEntries::Listed(paths),
-            }],
-        },
-        value,
+        content: BatchContent::Fs { groups },
     })
 }
 

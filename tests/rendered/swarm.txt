@@ -25,6 +25,7 @@ README.md
   24→## Usage
   25→
   26→```python
+  27→from swarm import Swarm, Agent
   …
   60→## Table of Contents
   …
@@ -108,13 +109,12 @@ examples/
       __init__.py (empty)
       agents.py
       tools.py
-    data/
-      routines/
-        baggage/
-          policies.py
-        flight_modification/
-          policies.py
-        prompts.py
+    data/routines/
+      baggage/
+        policies.py
+      flight_modification/
+        policies.py
+      prompts.py
     evals/
       eval_cases/
       eval_results/
@@ -129,9 +129,7 @@ examples/
     function_calling.py
     simple_loop_no_helpers.py
   customer_service/
-    logs/
   customer_service_lite/
-    logs/
   customer_service_streaming/
     .gitignore
     configs/

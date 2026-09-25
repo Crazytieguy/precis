@@ -39,6 +39,12 @@ README.md
   …
   87→## Like what we're doing? Give us a Star ⭐
   …
+  91→## We're building our Community 🌐
+  …
+  101→## Suggestions
+  …
+  105→## Roadmap
+  …
 apps/
   mobile/
     .easignore
@@ -149,9 +155,8 @@ apps/
         user-administration.tsx
       api/
         v1/
-        v2/
-          dashboard/
-            index.ts
+        v2/dashboard/
+          index.ts
       auth/
         reset-password.tsx
         verify-email.tsx
@@ -171,10 +176,9 @@ apps/
       preserved/
         [id].tsx
       public/
-        collections/
-          [id]/
-            index.tsx
-            rss.tsx
+        collections/[id]/
+          index.tsx
+          rss.tsx
         links/
           [id].tsx
         preserved/
@@ -200,10 +204,6 @@ apps/
     postcss.config.js
     public/
     scripts/
-      migration/
-        migrateToV2.js
-        v2.6.1/
-          index.js
     store/
       links.ts
       localSettings.ts

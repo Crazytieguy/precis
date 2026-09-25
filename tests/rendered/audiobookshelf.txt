@@ -107,7 +107,6 @@ client/
       component.js
     tests/
       components/
-        cards/
       utils/
         ElapsedPrettyExtended.cy.js
   cypress.config.js
@@ -135,11 +134,10 @@ client/
     …
   pages/
     account.vue
-    audiobook/
-      _id/
-        chapters.vue
-        edit.vue
-        manage.vue
+    audiobook/_id/
+      chapters.vue
+      edit.vue
+      manage.vue
     author/
       _id.vue
     batch/
@@ -171,23 +169,21 @@ client/
         index.vue
     config.vue
     index.vue
-    item/
-      _id/
-        index.vue
-    library/
-      _library/
-        bookshelf/
-          _id.vue
-        index.vue
-        narrators.vue
-        podcast/
-          download-queue.vue
-          latest.vue
-          search.vue
+    item/_id/
+      index.vue
+    library/_library/
+      bookshelf/
+        _id.vue
+      index.vue
+      narrators.vue
+      podcast/
+        download-queue.vue
+        latest.vue
         search.vue
-        series/
-          _id.vue
-        stats.vue
+      search.vue
+      series/
+        _id.vue
+      stats.vue
     login.vue
     oops.vue
     playlist/
@@ -241,10 +237,9 @@ client/
         libarchive.js
         libarchive.wasm
       worker-bundle.js
-    libs/
-      marked/
-        LICENSE
-        index.js
+    libs/marked/
+      LICENSE
+      index.js
     robots.txt
     textures/
       wood_default.jpg
@@ -395,7 +390,10 @@ server/
       mkdirs/
       move/
       path-exists/
+        index.js
       remove/
+        index.js
+        rimraf.js
       util/
     fusejs/
       index.js
@@ -642,4 +640,3 @@ server/
     zipHelpers.js
 tailwind.config.js (empty)
 test/
-  server/

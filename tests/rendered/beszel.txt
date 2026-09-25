@@ -122,9 +122,8 @@ agent/
       scsi.json
       sda.json
     system_info.json
-  tools/
-    fetchsmartctl/
-      main.go
+  tools/fetchsmartctl/
+    main.go
   update.go
   utils/
     utils.go
@@ -299,12 +298,11 @@ internal/
       4→	"version": "0.18.7",
       5→	"type": "module",
       …
-    public/
-      static/
-        InterVariable.woff2
-        icon.png
-        icon.svg
-        manifest.json
+    public/static/
+      InterVariable.woff2
+      icon.png
+      icon.svg
+      manifest.json
     src/
       components/
       index.css
@@ -397,20 +395,18 @@ supplemental/
       docker-compose.yml
   guides/
     systemd.md
-  kubernetes/
-    beszel-hub/
-      charts/
-        .helmignore
-        Chart.yaml
-        templates/
-          NOTES.txt
-          _helpers.tpl
-          deployment.yaml
-          ingress.yaml
-          service.yaml
-          tests/
-          volume-claim.yaml
-        values.yaml
+  kubernetes/beszel-hub/charts/
+    .helmignore
+    Chart.yaml
+    templates/
+      NOTES.txt
+      _helpers.tpl
+      deployment.yaml
+      ingress.yaml
+      service.yaml
+      tests/
+      volume-claim.yaml
+    values.yaml
   licenses/
     LibreHardwareMonitor/
       LICENSE

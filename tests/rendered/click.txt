@@ -132,191 +132,190 @@ pyproject.toml
   18→    "colorama; platform_system == 'Windows'",
   19→]
   …
-src/
-  click/
-    __init__.py
-      1→"""
-      2→Click is a simple Python module inspired by the stdlib optparse to make
-      3→writing command line scripts fun. Unlike other modules, it's based
-      4→around a simple API that does not come with too much magic and is
-      5→composable.
-      6→"""
-      …
-      10→from .core import Argument as Argument
-      11→from .core import Command as Command
-      12→from .core import CommandCollection as CommandCollection
-      13→from .core import Context as Context
-      14→from .core import Group as Group
-      15→from .core import Option as Option
-      16→from .core import Parameter as Parameter
-      17→from .core import ParameterSource as ParameterSource
-      18→from .decorators import argument as argument
-      19→from .decorators import command as command
-      20→from .decorators import confirmation_option as confirmation_option
-      21→from .decorators import group as group
-      22→from .decorators import help_option as help_option
-      23→from .decorators import make_pass_decorator as make_pass_decorator
-      24→from .decorators import option as option
-      25→from .decorators import pass_context as pass_context
-      26→from .decorators import pass_obj as pass_obj
-      27→from .decorators import password_option as password_option
-      28→from .decorators import version_option as version_option
-      29→from .exceptions import Abort as Abort
-      30→from .exceptions import BadArgumentUsage as BadArgumentUsage
-      31→from .exceptions import BadOptionUsage as BadOptionUsage
-      32→from .exceptions import BadParameter as BadParameter
-      33→from .exceptions import ClickException as ClickException
-      34→from .exceptions import FileError as FileError
-      35→from .exceptions import MissingParameter as MissingParameter
-      36→from .exceptions import NoSuchCommand as NoSuchCommand
-      37→from .exceptions import NoSuchOption as NoSuchOption
-      38→from .exceptions import UsageError as UsageError
-      39→from .formatting import HelpFormatter as HelpFormatter
-      40→from .formatting import wrap_text as wrap_text
-      41→from .globals import get_current_context as get_current_context
-      42→from .termui import clear as clear
-      43→from .termui import confirm as confirm
-      44→from .termui import echo_via_pager as echo_via_pager
-      45→from .termui import edit as edit
-      46→from .termui import get_pager_file as get_pager_file
-      47→from .termui import getchar as getchar
-      48→from .termui import launch as launch
-      49→from .termui import pause as pause
-      50→from .termui import progressbar as progressbar
-      51→from .termui import prompt as prompt
-      52→from .termui import secho as secho
-      53→from .termui import style as style
-      54→from .termui import unstyle as unstyle
-      55→from .types import BOOL as BOOL
-      56→from .types import Choice as Choice
-      57→from .types import DateTime as DateTime
-      58→from .types import File as File
-      59→from .types import FLOAT as FLOAT
-      60→from .types import FloatRange as FloatRange
-      61→from .types import INT as INT
-      62→from .types import IntRange as IntRange
-      63→from .types import ParamType as ParamType
-      64→from .types import Path as Path
-      65→from .types import STRING as STRING
-      66→from .types import Tuple as Tuple
-      67→from .types import UNPROCESSED as UNPROCESSED
-      68→from .types import UUID as UUID
-      69→from .utils import echo as echo
-      70→from .utils import format_filename as format_filename
-      71→from .utils import get_app_dir as get_app_dir
-      72→from .utils import get_binary_stream as get_binary_stream
-      73→from .utils import get_text_stream as get_text_stream
-      74→from .utils import open_file as open_file
-      75→
-      76→
-      77→def __getattr__(name: str) -> object:
-      …
-    _compat.py
-    _termui_impl.py
-    _textwrap.py
-    _utils.py
-    _winconsole.py
-    core.py
-    decorators.py
-    exceptions.py
-      …
-      19→def _join_param_hints(param_hint: cabc.Sequence[str] | str | None) -> str | None:
-      …
-      26→def _format_possibilities(possibilities: list[str]) -> str:
-      …
-      35→class ClickException(Exception):
-      …
-      65→class UsageError(ClickException):
-      …
-      74→    exit_code = 2
-      75→
-      76→    def __init__(self, message: str, ctx: Context | None = None) -> None:
-      …
-      81→    def show(self, file: t.IO[t.Any] | None = None) -> None:
-      …
-      108→class BadParameter(UsageError):
-      …
-      126→    def __init__(
-      127→        self,
-      128→        message: str,
-      129→        ctx: Context | None = None,
-      130→        param: Parameter | None = None,
-      131→        param_hint: cabc.Sequence[str] | str | None = None,
-      132→    ) -> None:
-      …
-      137→    def format_message(self) -> str:
-      …
-      150→class MissingParameter(BadParameter):
-      …
-      162→    def __init__(
-      163→        self,
-      164→        message: str | None = None,
-      165→        ctx: Context | None = None,
-      …
-      173→    def format_message(self) -> str:
-      …
-      213→    def __str__(self) -> str:
-      …
-      221→class NoSuchOption(UsageError):
-      …
-      227→    def __init__(
-      228→        self,
-      229→        option_name: str,
-      230→        message: str | None = None,
-      231→        possibilities: cabc.Iterable[str] | None = None,
-      232→        ctx: Context | None = None,
-      233→    ) -> None:
-      …
-      245→    def format_message(self) -> str:
-      …
-      251→class NoSuchCommand(UsageError):
-      …
-      254→    def __init__(
-      255→        self,
-      256→        command_name: str,
-      257→        message: str | None = None,
-      258→        possibilities: cabc.Iterable[str] | None = None,
-      259→        ctx: Context | None = None,
-      260→    ) -> None:
-      …
-      272→    def format_message(self) -> str:
-      …
-      278→class BadOptionUsage(UsageError):
-      …
-      288→    def __init__(
-      289→        self, option_name: str, message: str, ctx: Context | None = None
-      290→    ) -> None:
-      …
-      295→class BadArgumentUsage(UsageError):
-      …
-      304→class NoArgsIsHelpError(UsageError):
-      305→    def __init__(self, ctx: Context) -> None:
-      …
-      309→    def show(self, file: t.IO[t.Any] | None = None) -> None:
-      …
-      313→class FileError(ClickException):
-      …
-      316→    def __init__(self, filename: str, hint: str | None = None) -> None:
-      …
-      324→    def format_message(self) -> str:
-      …
-      330→class Abort(RuntimeError):
-      …
-      334→class Exit(RuntimeError):
-      …
-      341→    __slots__ = ("exit_code",)
-      342→
-      343→    def __init__(self, code: int = 0) -> None:
-      …
-    formatting.py
-    globals.py
-    parser.py
-    py.typed (empty)
-    shell_completion.py
-    termui.py
-    testing.py
-    types.py
-    utils.py
+src/click/
+  __init__.py
+    1→"""
+    2→Click is a simple Python module inspired by the stdlib optparse to make
+    3→writing command line scripts fun. Unlike other modules, it's based
+    4→around a simple API that does not come with too much magic and is
+    5→composable.
+    6→"""
+    …
+    10→from .core import Argument as Argument
+    11→from .core import Command as Command
+    12→from .core import CommandCollection as CommandCollection
+    13→from .core import Context as Context
+    14→from .core import Group as Group
+    15→from .core import Option as Option
+    16→from .core import Parameter as Parameter
+    17→from .core import ParameterSource as ParameterSource
+    18→from .decorators import argument as argument
+    19→from .decorators import command as command
+    20→from .decorators import confirmation_option as confirmation_option
+    21→from .decorators import group as group
+    22→from .decorators import help_option as help_option
+    23→from .decorators import make_pass_decorator as make_pass_decorator
+    24→from .decorators import option as option
+    25→from .decorators import pass_context as pass_context
+    26→from .decorators import pass_obj as pass_obj
+    27→from .decorators import password_option as password_option
+    28→from .decorators import version_option as version_option
+    29→from .exceptions import Abort as Abort
+    30→from .exceptions import BadArgumentUsage as BadArgumentUsage
+    31→from .exceptions import BadOptionUsage as BadOptionUsage
+    32→from .exceptions import BadParameter as BadParameter
+    33→from .exceptions import ClickException as ClickException
+    34→from .exceptions import FileError as FileError
+    35→from .exceptions import MissingParameter as MissingParameter
+    36→from .exceptions import NoSuchCommand as NoSuchCommand
+    37→from .exceptions import NoSuchOption as NoSuchOption
+    38→from .exceptions import UsageError as UsageError
+    39→from .formatting import HelpFormatter as HelpFormatter
+    40→from .formatting import wrap_text as wrap_text
+    41→from .globals import get_current_context as get_current_context
+    42→from .termui import clear as clear
+    43→from .termui import confirm as confirm
+    44→from .termui import echo_via_pager as echo_via_pager
+    45→from .termui import edit as edit
+    46→from .termui import get_pager_file as get_pager_file
+    47→from .termui import getchar as getchar
+    48→from .termui import launch as launch
+    49→from .termui import pause as pause
+    50→from .termui import progressbar as progressbar
+    51→from .termui import prompt as prompt
+    52→from .termui import secho as secho
+    53→from .termui import style as style
+    54→from .termui import unstyle as unstyle
+    55→from .types import BOOL as BOOL
+    56→from .types import Choice as Choice
+    57→from .types import DateTime as DateTime
+    58→from .types import File as File
+    59→from .types import FLOAT as FLOAT
+    60→from .types import FloatRange as FloatRange
+    61→from .types import INT as INT
+    62→from .types import IntRange as IntRange
+    63→from .types import ParamType as ParamType
+    64→from .types import Path as Path
+    65→from .types import STRING as STRING
+    66→from .types import Tuple as Tuple
+    67→from .types import UNPROCESSED as UNPROCESSED
+    68→from .types import UUID as UUID
+    69→from .utils import echo as echo
+    70→from .utils import format_filename as format_filename
+    71→from .utils import get_app_dir as get_app_dir
+    72→from .utils import get_binary_stream as get_binary_stream
+    73→from .utils import get_text_stream as get_text_stream
+    74→from .utils import open_file as open_file
+    75→
+    76→
+    77→def __getattr__(name: str) -> object:
+    …
+  _compat.py
+  _termui_impl.py
+  _textwrap.py
+  _utils.py
+  _winconsole.py
+  core.py
+  decorators.py
+  exceptions.py
+    …
+    19→def _join_param_hints(param_hint: cabc.Sequence[str] | str | None) -> str | None:
+    …
+    26→def _format_possibilities(possibilities: list[str]) -> str:
+    …
+    35→class ClickException(Exception):
+    …
+    65→class UsageError(ClickException):
+    …
+    74→    exit_code = 2
+    75→
+    76→    def __init__(self, message: str, ctx: Context | None = None) -> None:
+    …
+    81→    def show(self, file: t.IO[t.Any] | None = None) -> None:
+    …
+    108→class BadParameter(UsageError):
+    …
+    126→    def __init__(
+    127→        self,
+    128→        message: str,
+    129→        ctx: Context | None = None,
+    130→        param: Parameter | None = None,
+    131→        param_hint: cabc.Sequence[str] | str | None = None,
+    132→    ) -> None:
+    …
+    137→    def format_message(self) -> str:
+    …
+    150→class MissingParameter(BadParameter):
+    …
+    162→    def __init__(
+    163→        self,
+    164→        message: str | None = None,
+    165→        ctx: Context | None = None,
+    …
+    173→    def format_message(self) -> str:
+    …
+    213→    def __str__(self) -> str:
+    …
+    221→class NoSuchOption(UsageError):
+    …
+    227→    def __init__(
+    228→        self,
+    229→        option_name: str,
+    230→        message: str | None = None,
+    231→        possibilities: cabc.Iterable[str] | None = None,
+    232→        ctx: Context | None = None,
+    233→    ) -> None:
+    …
+    245→    def format_message(self) -> str:
+    …
+    251→class NoSuchCommand(UsageError):
+    …
+    254→    def __init__(
+    255→        self,
+    256→        command_name: str,
+    257→        message: str | None = None,
+    258→        possibilities: cabc.Iterable[str] | None = None,
+    259→        ctx: Context | None = None,
+    260→    ) -> None:
+    …
+    272→    def format_message(self) -> str:
+    …
+    278→class BadOptionUsage(UsageError):
+    …
+    288→    def __init__(
+    289→        self, option_name: str, message: str, ctx: Context | None = None
+    290→    ) -> None:
+    …
+    295→class BadArgumentUsage(UsageError):
+    …
+    304→class NoArgsIsHelpError(UsageError):
+    305→    def __init__(self, ctx: Context) -> None:
+    …
+    309→    def show(self, file: t.IO[t.Any] | None = None) -> None:
+    …
+    313→class FileError(ClickException):
+    …
+    316→    def __init__(self, filename: str, hint: str | None = None) -> None:
+    …
+    324→    def format_message(self) -> str:
+    …
+    330→class Abort(RuntimeError):
+    …
+    334→class Exit(RuntimeError):
+    …
+    341→    __slots__ = ("exit_code",)
+    342→
+    343→    def __init__(self, code: int = 0) -> None:
+    …
+  formatting.py
+  globals.py
+  parser.py
+  py.typed (empty)
+  shell_completion.py
+  termui.py
+  testing.py
+  types.py
+  utils.py
 tests/
   conftest.py
   test_arguments.py

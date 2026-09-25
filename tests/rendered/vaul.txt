@@ -1,7 +1,6 @@
 .eslintrc.js
-.github/
-  workflows/
-    playwright.yml
+.github/workflows/
+  playwright.yml
 .gitignore
 .prettierrc.js
 .vscode/
@@ -244,6 +243,12 @@ src/
   use-composed-refs.ts
   use-controllable-state.ts
   use-position-fixed.ts
+    …
+    15→export function usePositionFixed({
+    16→  isOpen,
+    17→  modal,
+    18→  nested,
+    …
   use-prevent-scroll.ts
   use-scale-background.ts
   use-snap-points.ts
@@ -256,28 +261,19 @@ test/
   postcss.config.js
   public/
   src/
-    app/
-      controlled/
-      default-open/
-      different-directions/
-      globals.css
-      initial-snap/
-      layout.tsx
-      nested-drawers/
-      non-dismissible/
-      open-another-drawer/
-      page.tsx
-      parent-container/
-      scrollable-page/
-      scrollable-with-inputs/
-      with-handle/
-      with-modal-false/
-      with-redirect/
-      with-scaled-background/
-      with-snap-points/
-      without-scaled-background/
   tailwind.config.ts
   tests/
+    base.spec.ts
+    constants.ts
+    controlled.spec.ts
+    helpers.ts
+    initial-snap.spec.ts
+    nested.spec.ts
+    non-dismissible.spec.ts
+    with-handle.spec.ts
+    with-redirect.spec.ts
+    with-scaled-background.spec.ts
+    without-scaled-background.spec.ts
   tsconfig.json
 tsconfig.json
 turbo.json

@@ -89,12 +89,11 @@ cli/
   README.md
   main.go
   version.go
-cmd/
-  migrate/
-    README.md
-    examples/
-    main.go
-    version.go
+cmd/migrate/
+  README.md
+  examples/
+  main.go
+  version.go
 database/
   cassandra/
     README.md
@@ -320,6 +319,7 @@ migration.go
   45→	Scheduled time.Time
   46→
   47→	// StartedBuffering is the time when buffering of the migration source started.
+  48→	StartedBuffering time.Time
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {
@@ -375,8 +375,6 @@ source/
   go_bindata/
     README.md
     examples/
-      migrations/
-        bindata.go
     go-bindata.go
     go-bindata_test.go
     testdata/
@@ -415,16 +413,15 @@ source/
     example_test.go
     iofs.go
     iofs_test.go
-    testdata/
-      migrations/
-        1_foobar.down.sql
-        1_foobar.up.sql
-        3_foobar.up.sql
-        4_foobar.down.sql
-        4_foobar.up.sql
-        5_foobar.down.sql
-        7_foobar.down.sql
-        7_foobar.up.sql
+    testdata/migrations/
+      1_foobar.down.sql
+      1_foobar.up.sql
+      3_foobar.up.sql
+      4_foobar.down.sql
+      4_foobar.up.sql
+      5_foobar.down.sql
+      7_foobar.down.sql
+      7_foobar.up.sql
   migration.go
   migration_test.go
   parse.go

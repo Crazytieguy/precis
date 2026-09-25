@@ -4,11 +4,10 @@
 .dockerignore
 .env.sample
 .gitattributes
-.github/
-  workflows/
-    build-test.yaml
-    build.yaml
-    main.yaml
+.github/workflows/
+  build-test.yaml
+  build.yaml
+  main.yaml
 .gitignore
 CHANGELOG.md
 LICENSE.txt
@@ -149,16 +148,15 @@ bookmarks/
       position-controller.js
       search-history.js
       tag-cache.js
-  management/
-    commands/
-      backup.py
-      create_initial_superuser.py
-      enable_wal.py
-      ensure_superuser.py
-      full_backup.py
-      generate_secret_key.py
-      import_netscape.py
-      migrate_tasks.py
+  management/commands/
+    backup.py
+    create_initial_superuser.py
+    enable_wal.py
+    ensure_superuser.py
+    full_backup.py
+    generate_secret_key.py
+    import_netscape.py
+    migrate_tasks.py
   middlewares.py
   migrations/
     0001_initial.py

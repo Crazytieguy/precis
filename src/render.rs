@@ -24,6 +24,9 @@ use crate::tokenizer;
 
 const INDENT_UNIT: &str = "  ";
 
+/// Directory entries by parent, for listings a cost probe adds to the tree.
+type Listings = HashMap<PathBuf, BTreeMap<String, EntryKind>>;
+
 /// A source file's text with its line index, built once per file so
 /// line lookups by number don't rescan the text.
 #[derive(Debug)]
@@ -298,12 +301,6 @@ impl RenderedTree {
 
     // ---- internal ----
 
-    fn depth_from_root(&self, path: &Path) -> usize {
-        path.strip_prefix(&self.root)
-            .map(|p| p.components().count())
-            .unwrap_or(0)
-    }
-
     /// Whether `path` is known to hold nothing on disk: a directory with no
     /// entries through the walk's ignore rules, or a zero-byte file. A
     /// linked directory lists nothing because it is never listed through,
@@ -335,6 +332,7 @@ impl RenderedTree {
         F: FnMut(Cost),
         T: Fn(&str) -> usize,
     {
+        let mut added = Listings::new();
         for group in groups {
             let FsEntries::Listed(paths) = &group.entries else {
                 debug_assert!(
@@ -345,18 +343,8 @@ impl RenderedTree {
                 continue;
             };
             let parent = &group.parent;
-            let indent_depth = self.depth_from_root(parent);
-            let already_listed = match self.nodes.get(parent) {
-                Some(TreeNode::Dir { children }) => Some(children),
-                _ => None,
-            };
+            let already_listed = self.tree_children(parent);
             let probed = list_dir(parent, &self.dir_filter);
-            // Signed per-group accounting: new entry rows plus the change
-            // in the trailing partial-listing marker.
-            let mut d_tokens: isize = 0;
-            let mut d_chars: isize = 0;
-            let listed_before = already_listed.map_or(0, |c| c.len());
-            let mut new_rows = 0usize;
             for p in paths {
                 let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
                     continue;
@@ -365,26 +353,136 @@ impl RenderedTree {
                     continue;
                 }
                 let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
-                let child = parent.join(name);
-                let empty = self.entry_empty(&child, kind);
-                let row = format_entry_row(name, kind, indent_depth, empty);
-                d_tokens += tokens(&row) as isize;
-                d_chars += char_units(&row) as isize;
-                new_rows += 1;
+                added
+                    .entry(parent.clone())
+                    .or_default()
+                    .insert(name.to_string(), kind);
+            }
+        }
+        let none = Listings::new();
+        // A new entry can extend an existing chain row instead of adding
+        // a row of its own, so the delta is taken over whole rows: every
+        // row holding a listed parent or a new entry, before and after.
+        let mut rows_before = BTreeSet::new();
+        let mut rows_after = BTreeSet::new();
+        let mut d_tokens: isize = 0;
+        let mut d_chars: isize = 0;
+        let mut charge = |row: &str, sign: isize| {
+            d_tokens += sign * tokens(row) as isize;
+            d_chars += sign * char_units(row) as isize;
+        };
+        for (parent, names) in &added {
+            rows_before.extend(self.row_head(parent, &none));
+            rows_after.extend(self.row_head(parent, &added));
+            for name in names.keys() {
+                rows_after.extend(self.row_head(&parent.join(name), &added));
             }
             let shown = self.dir_entry_count(parent);
-            let partial_delta = isize::from(listing_partial(listed_before + new_rows, shown))
-                - isize::from(listing_partial(listed_before, shown));
-            if partial_delta != 0 {
-                let row = format_marker_row(indent_depth);
-                d_tokens += partial_delta * tokens(&row) as isize;
-                d_chars += partial_delta * char_units(&row) as isize;
+            let listed_before = self.tree_children(parent).map_or(0, BTreeMap::len);
+            if listing_partial(listed_before, shown) {
+                charge(&format_marker_row(self.child_indent(parent, &none)), -1);
             }
-            visit(Cost {
-                tokens: d_tokens.max(0) as usize,
-                chars: d_chars.max(0) as usize,
-            });
+            if listing_partial(listed_before + names.len(), shown) {
+                charge(&format_marker_row(self.child_indent(parent, &added)), 1);
+            }
         }
+        for head in &rows_before {
+            charge(&self.chain_row(head, &none), -1);
+        }
+        for head in &rows_after {
+            charge(&self.chain_row(head, &added), 1);
+        }
+        visit(Cost {
+            tokens: d_tokens.max(0) as usize,
+            chars: d_chars.max(0) as usize,
+        });
+    }
+
+    fn tree_children(&self, dir: &Path) -> Option<&BTreeMap<String, EntryKind>> {
+        match self.nodes.get(dir) {
+            Some(TreeNode::Dir { children }) => Some(children),
+            _ => None,
+        }
+    }
+
+    /// Kind of `path` if it is listed in the tree or in `added`.
+    fn listed_kind(&self, path: &Path, added: &Listings) -> Option<EntryKind> {
+        let parent = path.parent()?;
+        let name = path.file_name()?.to_str()?;
+        self.tree_children(parent)
+            .and_then(|c| c.get(name))
+            .or_else(|| added.get(parent).and_then(|c| c.get(name)))
+            .copied()
+    }
+
+    /// The child `dir`'s row runs on into: its only entry on disk, when
+    /// that entry is a listed directory. The root has no row to extend.
+    fn chained_child(&self, dir: &Path, added: &Listings) -> Option<String> {
+        if dir == self.root {
+            return None;
+        }
+        let shown = list_dir(dir, &self.dir_filter);
+        let (name, EntryKind::Directory) = shown.iter().next()? else {
+            return None;
+        };
+        (shown.len() == 1 && self.listed_kind(&dir.join(name), added).is_some())
+            .then(|| name.clone())
+    }
+
+    /// Indent of the rows listing `dir`'s entries: one step per row on
+    /// the way down from the root.
+    fn child_indent(&self, dir: &Path, added: &Listings) -> usize {
+        let Ok(relative) = dir.strip_prefix(&self.root) else {
+            return 0;
+        };
+        let mut indent = 0;
+        let mut current = self.root.clone();
+        for component in relative.components() {
+            let chained = self
+                .chained_child(&current, added)
+                .is_some_and(|name| component.as_os_str() == name.as_str());
+            indent += usize::from(!chained);
+            current.push(component);
+        }
+        indent
+    }
+
+    /// First entry of the row `path` renders on, if it renders on one.
+    fn row_head(&self, path: &Path, added: &Listings) -> Option<PathBuf> {
+        self.listed_kind(path, added)?;
+        let mut head = path.to_path_buf();
+        while let Some(parent) = head.parent()
+            && let Some(name) = self.chained_child(parent, added)
+            && head.file_name().is_some_and(|n| n == name.as_str())
+        {
+            head.pop();
+        }
+        Some(head)
+    }
+
+    fn chain_row(&self, head: &Path, added: &Listings) -> String {
+        let kind = self.listed_kind(head, added).unwrap_or(EntryKind::File);
+        let indent = head
+            .parent()
+            .map_or(0, |parent| self.child_indent(parent, added));
+        let (names, tail) = self.chain_from(head, kind, added);
+        format_entry_row(&names, kind, indent, self.entry_empty(&tail, kind))
+    }
+
+    /// Names on the row headed by `head`, and the entry that ends it.
+    fn chain_from(&self, head: &Path, kind: EntryKind, added: &Listings) -> (Vec<String>, PathBuf) {
+        let mut names = vec![
+            head.file_name()
+                .map_or_else(String::new, |n| n.to_string_lossy().into_owned()),
+        ];
+        let mut tail = head.to_path_buf();
+        if matches!(kind, EntryKind::Directory) {
+            while let Some(name) = self.chained_child(&tail, added) {
+                tail.push(&name);
+                names.push(name);
+            }
+        }
+        (names, tail)
     }
 
     fn visit_span_atom_costs<F, T>(&self, spans: &[Span], tokens: &T, visit: &mut F)
@@ -405,7 +503,9 @@ impl RenderedTree {
 
         for (path, file_spans) in by_path {
             let source = self.source_cache.get(path);
-            let indent_depth = self.depth_from_root(path);
+            let indent_depth = path
+                .parent()
+                .map_or(0, |parent| self.child_indent(parent, &Listings::new()) + 1);
             let existing = match self.nodes.get(path) {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
@@ -541,21 +641,18 @@ impl RenderedTree {
         let Some(TreeNode::Dir { children }) = self.nodes.get(path) else {
             return;
         };
+        let none = Listings::new();
         for (name, kind) in children {
-            let child = path.join(name);
+            let (names, tail) = self.chain_from(&path.join(name), *kind, &none);
             out.push_str(&format_entry_row(
-                name,
+                &names,
                 *kind,
                 indent_depth,
-                self.entry_empty(&child, *kind),
+                self.entry_empty(&tail, *kind),
             ));
             match kind {
-                EntryKind::Directory => {
-                    self.render_dir(&path.join(name), indent_depth + 1, out);
-                }
-                EntryKind::File => {
-                    self.render_file(&path.join(name), indent_depth + 1, out);
-                }
+                EntryKind::Directory => self.render_dir(&tail, indent_depth + 1, out),
+                EntryKind::File => self.render_file(&tail, indent_depth + 1, out),
             }
         }
         if listing_partial(children.len(), self.dir_entry_count(path)) {
@@ -819,11 +916,13 @@ fn format_marker_row(indent_depth: usize) -> String {
     s
 }
 
-/// One tree entry row. An entry with nothing rendered under it reads as
-/// unexpanded, so the rare entry that is empty on disk says so.
-fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize, empty: bool) -> String {
+/// One tree entry row: an entry, or a chain of directories that each
+/// hold only the next (`src/main/java/`). An entry with nothing rendered
+/// under it reads as unexpanded, so the rare entry that is empty on disk
+/// says so.
+fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empty: bool) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    for ch in name.chars() {
+    for ch in names.join("/").chars() {
         if ch.is_control() {
             s.extend(ch.escape_default());
         } else {
@@ -1025,6 +1124,56 @@ mod tests {
             .map(|line| tokenizer::count(&format!("{line}\n")))
             .sum();
         assert_eq!(charged, rendered, "output:\n{}", tree.render());
+    }
+
+    #[test]
+    fn render_single_entry_directories_chain_onto_one_row() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().to_path_buf();
+        let core = root.join("deep/pkg/core");
+        std::fs::create_dir_all(&core).unwrap();
+        std::fs::create_dir_all(root.join("deep/pkg/core/leaf")).unwrap();
+        std::fs::write(core.join("x.rs"), "fn x() {}\n").unwrap();
+        std::fs::write(root.join("top.rs"), "fn top() {}\n").unwrap();
+        let one_link_at_a_time = [
+            dir_listing(root.clone(), &["deep", "top.rs"]),
+            dir_listing(root.join("deep"), &["pkg"]),
+            dir_listing(root.join("deep/pkg"), &["core"]),
+            dir_listing(core.clone(), &["leaf", "x.rs"]),
+            one_span(core.join("x.rs"), 1, Render::Full),
+        ];
+        let whole_chain_at_once = [
+            dir_listing(root.clone(), &["deep", "top.rs"]),
+            BatchContent::Fs {
+                groups: [
+                    (root.join("deep"), "pkg"),
+                    (root.join("deep/pkg"), "core"),
+                    (core.clone(), "x.rs"),
+                ]
+                .into_iter()
+                .map(|(parent, name)| FsGroup {
+                    parent,
+                    entries: FsEntries::Listed(vec![PathBuf::from(name)]),
+                })
+                .collect(),
+            },
+            dir_listing(core.clone(), &["leaf"]),
+            one_span(core.join("x.rs"), 1, Render::Full),
+        ];
+        for steps in [&one_link_at_a_time[..], &whole_chain_at_once[..]] {
+            let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
+            let mut charged = 0;
+            for (i, content) in steps.iter().enumerate() {
+                charged += tree.marginal_cost(content).tokens;
+                tree.apply(content, BatchId::new(i), |_| true);
+            }
+            let out = tree.render();
+            assert_eq!(
+                out,
+                "deep/pkg/core/\n  leaf/ (empty)\n  x.rs\n    1→fn x() {}\ntop.rs\n"
+            );
+            assert_eq!(charged, tokenizer::count(&out), "output:\n{out}");
+        }
     }
 
     #[test]

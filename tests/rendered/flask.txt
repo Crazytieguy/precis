@@ -155,12 +155,11 @@ examples/
     make_celery.py
     pyproject.toml
     requirements.txt
-    src/
-      task_app/
-        __init__.py
-        tasks.py
-        templates/
-        views.py
+    src/task_app/
+      __init__.py
+      tasks.py
+      templates/
+      views.py
   javascript/
     .gitignore
     LICENSE.txt
@@ -218,127 +217,126 @@ pyproject.toml
   81→[project.scripts]
   82→flask = "flask.cli:main"
   …
-src/
-  flask/
+src/flask/
+  __init__.py
+    1→from . import json as json
+    2→from .app import Flask as Flask
+    3→from .blueprints import Blueprint as Blueprint
+    4→from .config import Config as Config
+    5→from .ctx import after_this_request as after_this_request
+    6→from .ctx import copy_current_request_context as copy_current_request_context
+    7→from .ctx import has_app_context as has_app_context
+    8→from .ctx import has_request_context as has_request_context
+    9→from .globals import current_app as current_app
+    10→from .globals import g as g
+    11→from .globals import request as request
+    12→from .globals import session as session
+    13→from .helpers import abort as abort
+    14→from .helpers import flash as flash
+    15→from .helpers import get_flashed_messages as get_flashed_messages
+    16→from .helpers import get_template_attribute as get_template_attribute
+    17→from .helpers import make_response as make_response
+    18→from .helpers import redirect as redirect
+    19→from .helpers import send_file as send_file
+    20→from .helpers import send_from_directory as send_from_directory
+    21→from .helpers import stream_with_context as stream_with_context
+    22→from .helpers import url_for as url_for
+    23→from .json import jsonify as jsonify
+    24→from .signals import appcontext_popped as appcontext_popped
+    25→from .signals import appcontext_pushed as appcontext_pushed
+    26→from .signals import appcontext_tearing_down as appcontext_tearing_down
+    27→from .signals import before_render_template as before_render_template
+    28→from .signals import got_request_exception as got_request_exception
+    29→from .signals import message_flashed as message_flashed
+    30→from .signals import request_finished as request_finished
+    31→from .signals import request_started as request_started
+    32→from .signals import request_tearing_down as request_tearing_down
+    33→from .signals import template_rendered as template_rendered
+    34→from .templating import render_template as render_template
+    35→from .templating import render_template_string as render_template_string
+    36→from .templating import stream_template as stream_template
+    37→from .templating import stream_template_string as stream_template_string
+    38→from .wrappers import Request as Request
+    39→from .wrappers import Response as Response
+  __main__.py
+  app.py
+  blueprints.py
+    …
+    18→class Blueprint(SansioBlueprint):
+    19→    def __init__(
+    20→        self,
+    21→        name: str,
+    22→        import_name: str,
+    23→        static_folder: str | os.PathLike[str] | None = None,
+    …
+    55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
+    …
+    82→    def send_static_file(self, filename: str) -> Response:
+    …
+    104→    def open_resource(
+    105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
+    106→    ) -> t.IO[t.AnyStr]:
+    …
+  cli.py
+  config.py
+  ctx.py
+  debughelpers.py
+  globals.py
+  helpers.py
+  json/
     __init__.py
-      1→from . import json as json
-      2→from .app import Flask as Flask
-      3→from .blueprints import Blueprint as Blueprint
-      4→from .config import Config as Config
-      5→from .ctx import after_this_request as after_this_request
-      6→from .ctx import copy_current_request_context as copy_current_request_context
-      7→from .ctx import has_app_context as has_app_context
-      8→from .ctx import has_request_context as has_request_context
-      9→from .globals import current_app as current_app
-      10→from .globals import g as g
-      11→from .globals import request as request
-      12→from .globals import session as session
-      13→from .helpers import abort as abort
-      14→from .helpers import flash as flash
-      15→from .helpers import get_flashed_messages as get_flashed_messages
-      16→from .helpers import get_template_attribute as get_template_attribute
-      17→from .helpers import make_response as make_response
-      18→from .helpers import redirect as redirect
-      19→from .helpers import send_file as send_file
-      20→from .helpers import send_from_directory as send_from_directory
-      21→from .helpers import stream_with_context as stream_with_context
-      22→from .helpers import url_for as url_for
-      23→from .json import jsonify as jsonify
-      24→from .signals import appcontext_popped as appcontext_popped
-      25→from .signals import appcontext_pushed as appcontext_pushed
-      26→from .signals import appcontext_tearing_down as appcontext_tearing_down
-      27→from .signals import before_render_template as before_render_template
-      28→from .signals import got_request_exception as got_request_exception
-      29→from .signals import message_flashed as message_flashed
-      30→from .signals import request_finished as request_finished
-      31→from .signals import request_started as request_started
-      32→from .signals import request_tearing_down as request_tearing_down
-      33→from .signals import template_rendered as template_rendered
-      34→from .templating import render_template as render_template
-      35→from .templating import render_template_string as render_template_string
-      36→from .templating import stream_template as stream_template
-      37→from .templating import stream_template_string as stream_template_string
-      38→from .wrappers import Request as Request
-      39→from .wrappers import Response as Response
-    __main__.py
+      …
+      6→from ..globals import current_app
+      7→from .provider import _default
+      …
+      13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
+      …
+      47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
+      …
+      77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
+      …
+      102→    if current_app:
+      103→        return current_app.json.loads(s, **kwargs)
+      104→
+      105→    return _json.loads(s, **kwargs)
+      108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
+      …
+      132→    if current_app:
+      133→        return current_app.json.load(fp, **kwargs)
+      134→
+      135→    return _json.load(fp, **kwargs)
+      138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
+      …
+      170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
+    provider.py
+    tag.py
+  logging.py
+  py.typed (empty)
+  sansio/
+    README.md
     app.py
     blueprints.py
-      …
-      18→class Blueprint(SansioBlueprint):
-      19→    def __init__(
-      20→        self,
-      21→        name: str,
-      22→        import_name: str,
-      23→        static_folder: str | os.PathLike[str] | None = None,
-      …
-      55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
-      …
-      82→    def send_static_file(self, filename: str) -> Response:
-      …
-      104→    def open_resource(
-      105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
-      106→    ) -> t.IO[t.AnyStr]:
-      …
-    cli.py
-    config.py
-    ctx.py
-    debughelpers.py
-    globals.py
-    helpers.py
-    json/
-      __init__.py
-        …
-        6→from ..globals import current_app
-        7→from .provider import _default
-        …
-        13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
-        …
-        47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
-        …
-        77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
-        …
-        102→    if current_app:
-        103→        return current_app.json.loads(s, **kwargs)
-        104→
-        105→    return _json.loads(s, **kwargs)
-        108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
-        …
-        132→    if current_app:
-        133→        return current_app.json.load(fp, **kwargs)
-        134→
-        135→    return _json.load(fp, **kwargs)
-        138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
-        …
-        170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
-      provider.py
-      tag.py
-    logging.py
-    py.typed (empty)
-    sansio/
-      README.md
-      app.py
-      blueprints.py
-      scaffold.py
-    sessions.py
-    signals.py
-    templating.py
-    testing.py
-    typing.py
-    views.py
-    wrappers.py
-      …
-      18→class Request(RequestBase):
-      …
-      222→class Response(ResponseBase):
-      …
-      240→    default_mimetype: str | None = "text/html"
-      241→
-      242→    json_module = json
-      243→
-      244→    autocorrect_location_header = False
-      246→    @property
-      247→    def max_cookie_size(self) -> int:  # type: ignore
-      …
+    scaffold.py
+  sessions.py
+  signals.py
+  templating.py
+  testing.py
+  typing.py
+  views.py
+  wrappers.py
+    …
+    18→class Request(RequestBase):
+    …
+    222→class Response(ResponseBase):
+    …
+    240→    default_mimetype: str | None = "text/html"
+    241→
+    242→    json_module = json
+    243→
+    244→    autocorrect_location_header = False
+    246→    @property
+    247→    def max_cookie_size(self) -> int:  # type: ignore
+    …
 tests/
   conftest.py
   static/

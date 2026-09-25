@@ -1,6 +1,4 @@
 .codex/
-  environments/
-    environment.toml
 .coverage
 .github/
   FUNDING.yml
@@ -154,190 +152,190 @@ pyproject.toml
   49→[project.scripts]
   50→posting = "posting.__main__:cli"
   …
-src/
-  posting/
-    __init__.py
-      …
-      3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
-      …
-      10→from .collection import (
-      11→    Auth,
-      12→    Cookie,
-      13→    Header,
-      14→    QueryParam,
-      15→    RequestBody,
-      16→    RequestModel,
-      17→    FormItem,
-      18→    Options,
-      19→    Scripts,
-      20→)
-      21→from .scripts import Posting
-      22→
-      23→
-      24→__all__ = [
-      25→    "Auth",
-      26→    "Cookie",
-      27→    "Header",
-      28→    "QueryParam",
-      29→    "RequestBody",
-      30→    "RequestModel",
-      31→    "FormItem",
-      32→    "Options",
-      33→    "Scripts",
-      34→    "Posting",
-      35→]
-    __main__.py
-      1→"""The main entry point for the Posting CLI."""
-      …
-      21→def create_config_file() -> None:
-      …
-      32→def create_default_collection() -> Path:
-      …
-      45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
-      46→def cli() -> None:
-      47→    """A TUI for testing HTTP APIs."""
-      50→@cli.command()
-      51→@click.option(
-      52→    "--collection",
-      53→    "-c",
-      54→    type=click.Path(exists=True),
-      55→    help="Path to the collection directory",
-      56→)
-      57→@click.option(
-      58→    "--env",
-      59→    "-e",
-      60→    type=click.Path(exists=True),
-      61→    help="Path to the .env environment file(s)",
-      62→    multiple=True,
-      63→)
-      64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
-      …
-      76→@cli.command()
-      77→@click.argument(
-      78→    "thing_to_locate",
-      79→)
-      80→def locate(thing_to_locate: str) -> None:
-      …
-      96→@cli.command(name="import")
-      97→@click.argument("spec_path", type=click.Path(exists=True))
-      98→@click.option(
-      99→    "--output",
-      100→    "-o",
-      101→    type=click.Path(),
-      102→    help="Path to save the imported collection",
-      103→    default=None,
-      104→)
-      105→@click.option(
-      106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
-      107→)
-      108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
-      109→    """Import an OpenAPI specification into a Posting collection."""
-      …
-      177→@cli.command(name="sponsors")
-      178→def sponsors() -> None:
-      179→    """Show the list of sponsors."""
-      …
-      194→def make_posting(
-      195→    collection: Path,
-      196→    env: tuple[str, ...] = (),
-      197→    using_default_collection: bool = False,
-      198→) -> Posting:
-      199→    """Return a Posting instance with the given collection and environment."""
-      …
-    _start_time.py
-    app.py
-    auth.py
-    collection.py
-      …
-      19→HttpRequestMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
-      20→VALID_HTTP_METHODS = get_args(HttpRequestMethod)
-      21→
-      22→
-      23→class Auth(BaseModel):
-      …
-      56→class BasicAuth(BaseModel):
-      …
-      61→class DigestAuth(BaseModel):
-      …
-      66→class BearerTokenAuth(BaseModel):
-      …
-      70→class PathParam(BaseModel):
-      …
-      75→class Header(BaseModel):
-      …
-    commands.py
-    config.py
-    exit_codes.py
-    files.py
-    help_data.py
-    help_screen.py
-    highlight_url.py (empty)
-    highlighters.py
-    importing/
-      curl.py
-      open_api.py
-      postman.py
-    jump_overlay.py
-    jumper.py
-    locations.py
-    messages.py
-    posting.scss
-    request_headers.py
-    save_request.py
-    scripts.py
-    suggesters.py
-    themes.py
-    tuple_to_multidict.py
-    types.py
-    urls.py
-    user_host.py
-    variables.py
-    version.py
-    widgets/
+src/posting/
+  __init__.py
+    …
+    3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
+    …
+    10→from .collection import (
+    11→    Auth,
+    12→    Cookie,
+    13→    Header,
+    14→    QueryParam,
+    15→    RequestBody,
+    16→    RequestModel,
+    17→    FormItem,
+    18→    Options,
+    19→    Scripts,
+    20→)
+    21→from .scripts import Posting
+    22→
+    23→
+    24→__all__ = [
+    25→    "Auth",
+    26→    "Cookie",
+    27→    "Header",
+    28→    "QueryParam",
+    29→    "RequestBody",
+    30→    "RequestModel",
+    31→    "FormItem",
+    32→    "Options",
+    33→    "Scripts",
+    34→    "Posting",
+    35→]
+  __main__.py
+    1→"""The main entry point for the Posting CLI."""
+    …
+    21→def create_config_file() -> None:
+    …
+    32→def create_default_collection() -> Path:
+    …
+    45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
+    46→def cli() -> None:
+    47→    """A TUI for testing HTTP APIs."""
+    50→@cli.command()
+    51→@click.option(
+    52→    "--collection",
+    53→    "-c",
+    54→    type=click.Path(exists=True),
+    55→    help="Path to the collection directory",
+    56→)
+    57→@click.option(
+    58→    "--env",
+    59→    "-e",
+    60→    type=click.Path(exists=True),
+    61→    help="Path to the .env environment file(s)",
+    62→    multiple=True,
+    63→)
+    64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
+    …
+    76→@cli.command()
+    77→@click.argument(
+    78→    "thing_to_locate",
+    79→)
+    80→def locate(thing_to_locate: str) -> None:
+    …
+    96→@cli.command(name="import")
+    97→@click.argument("spec_path", type=click.Path(exists=True))
+    98→@click.option(
+    99→    "--output",
+    100→    "-o",
+    101→    type=click.Path(),
+    102→    help="Path to save the imported collection",
+    103→    default=None,
+    104→)
+    105→@click.option(
+    106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
+    107→)
+    108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
+    109→    """Import an OpenAPI specification into a Posting collection."""
+    …
+    177→@cli.command(name="sponsors")
+    178→def sponsors() -> None:
+    179→    """Show the list of sponsors."""
+    …
+    194→def make_posting(
+    195→    collection: Path,
+    196→    env: tuple[str, ...] = (),
+    197→    using_default_collection: bool = False,
+    198→) -> Posting:
+    199→    """Return a Posting instance with the given collection and environment."""
+    …
+  _start_time.py
+  app.py
+  auth.py
+  collection.py
+    …
+    19→HttpRequestMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+    20→VALID_HTTP_METHODS = get_args(HttpRequestMethod)
+    21→
+    22→
+    23→class Auth(BaseModel):
+    …
+    56→class BasicAuth(BaseModel):
+    …
+    61→class DigestAuth(BaseModel):
+    …
+    66→class BearerTokenAuth(BaseModel):
+    …
+    70→class PathParam(BaseModel):
+    …
+    75→class Header(BaseModel):
+    …
+    81→class FormItem(BaseModel):
+    …
+  commands.py
+  config.py
+  exit_codes.py
+  files.py
+  help_data.py
+  help_screen.py
+  highlight_url.py (empty)
+  highlighters.py
+  importing/
+    curl.py
+    open_api.py
+    postman.py
+  jump_overlay.py
+  jumper.py
+  locations.py
+  messages.py
+  posting.scss
+  request_headers.py
+  save_request.py
+  scripts.py
+  suggesters.py
+  themes.py
+  tuple_to_multidict.py
+  types.py
+  urls.py
+  user_host.py
+  variables.py
+  version.py
+  widgets/
+    __init__.py (empty)
+    center_middle.py
+    collection/
+      browser.py
+      new_request_modal.py
+    confirmation.py
+    datatable.py
+    input.py
+    key_value.py
+    key_value_copy_modal.py
+    load_env_file_dialog.py
+    request/
       __init__.py (empty)
-      center_middle.py
-      collection/
-        browser.py
-        new_request_modal.py
-      confirmation.py
-      datatable.py
-      input.py
-      key_value.py
-      key_value_copy_modal.py
-      load_env_file_dialog.py
-      request/
-        __init__.py (empty)
-        form_editor.py
-        header_editor.py
-        method_selection.py
-        path_editor.py
-        query_editor.py
-        request_auth.py
-        request_body.py
-        request_editor.py
-        request_metadata.py
-        request_options.py
-        request_scripts.py
-        url_bar.py
-      response/
-        cookies_table.py
-        response_area.py
-        response_body.py
-        response_headers.py
-        response_trace.py
-        script_output.py
-      rich_log.py
-      select.py
-      tabbed_content.py
-      text_area.py
-      tree.py
-      variable_autocomplete.py
-      variable_input.py
-    xresources.py
-    yaml.py
+      form_editor.py
+      header_editor.py
+      method_selection.py
+      path_editor.py
+      query_editor.py
+      request_auth.py
+      request_body.py
+      request_editor.py
+      request_metadata.py
+      request_options.py
+      request_scripts.py
+      url_bar.py
+    response/
+      cookies_table.py
+      response_area.py
+      response_body.py
+      response_headers.py
+      response_trace.py
+      script_output.py
+    rich_log.py
+    select.py
+    tabbed_content.py
+    text_area.py
+    tree.py
+    variable_autocomplete.py
+    variable_input.py
+  xresources.py
+  yaml.py
 tests/
   __snapshots__/
-    test_snapshots/
   posting_snapshot_app.py
   resources/
   sample-collections/

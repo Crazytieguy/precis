@@ -245,7 +245,14 @@ examples/
         tusb_config.h
     msc_file_explorer/
       CMakeLists.txt
-      …
+      CMakePresets.json
+      Makefile
+      README.md
+      only.txt
+      skip.txt
+      src/
+        ffconf.h
+        …
     msc_file_explorer_freertos/
   typec/
     CMakeLists.txt
@@ -262,18 +269,15 @@ examples/
 hw/
   bsp/
   mcu/
-    bridgetek/
-      ft9xx/
-        Readme.md
-        scripts/
+    bridgetek/ft9xx/
+      Readme.md
+      scripts/
     dialog/
       README.md
       da1469x/
-        SDK_10.0.8.105/
-          sdk/
-            bsp/
-              arm_license.txt
-              include/
+        SDK_10.0.8.105/sdk/bsp/
+          arm_license.txt
+          include/
         da1469x.ld
         include/
           hal/
@@ -289,22 +293,18 @@ hw/
           hal_system_start.c
           system_da1469x.c
     nordic/
-      nrf5x/
-        s140_nrf52_6.1.1_API/
-          include/
-    sony/
-      cxd56/
-        mkspk/
-          .gitignore
-          Makefile
-          clefia.c
-          clefia.h
-          elf32.h
-          mkspk.c
-          mkspk.h
-        tools/
-          flash_writer.py
-          xmodem.py
+    sony/cxd56/
+      mkspk/
+        .gitignore
+        Makefile
+        clefia.c
+        clefia.h
+        elf32.h
+        mkspk.c
+        mkspk.h
+      tools/
+        flash_writer.py
+        xmodem.py
 lib/
   SEGGER_RTT/
     Config/

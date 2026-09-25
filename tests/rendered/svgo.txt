@@ -17,9 +17,8 @@
 .prettierrc
 .yarn/
   patches/
-  plugins/
-    @yarnpkg/
-      plugin-interactive-tools.cjs
+  plugins/@yarnpkg/
+    plugin-interactive-tools.cjs
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -136,6 +135,7 @@ docs/
     removeDimensions.mdx
     removeDoctype.mdx
     removeEditorsNSData.mdx
+    removeElementsByAttr.mdx
     …
   05-plugins-api.mdx
   06-migrations/
@@ -328,22 +328,20 @@ test/
     testSvg/
     testSvgDatauri/
     testSvgRecursively/
-  fixtures/
-    config-loader/
-      cjs/
-        svgo.config.cjs
-      invalid-array.js
-      invalid-null.js
-      invalid-runtime.js
-      invalid-runtime.mjs
-      invalid-string.js
-      mjs/
-        svgo.config.mjs
-      module-not-found.js
-      one/
-        two/
-          config.js
-      svgo.config.js
+  fixtures/config-loader/
+    cjs/
+      svgo.config.cjs
+    invalid-array.js
+    invalid-null.js
+    invalid-runtime.js
+    invalid-runtime.mjs
+    invalid-string.js
+    mjs/
+      svgo.config.mjs
+    module-not-found.js
+    one/two/
+      config.js
+    svgo.config.js
   plugins/
   regression/
     compare.js
@@ -359,9 +357,8 @@ test/
     test.svg
   svgo/
   svgo.cjs
-test-d/
-  lib/
-    svgo-node.test-d.ts
+test-d/lib/
+  svgo-node.test-d.ts
 tsconfig.build.json
 tsconfig.json
 yarn.lock

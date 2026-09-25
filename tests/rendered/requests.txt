@@ -162,171 +162,170 @@ requirements-dev.txt
   6→trustme
   7→wheel
 setup.py
-src/
-  requests/
-    __init__.py
-      …
-      6→"""
-      7→Requests HTTP Library
-      8→~~~~~~~~~~~~~~~~~~~~~
-      9→
-      10→Requests is an HTTP library, written in Python, for human beings.
-      11→Basic GET usage:
-      12→
-      13→   >>> import requests
-      14→   >>> r = requests.get('https://www.python.org')
-      15→   >>> r.status_code
-      16→   200
-      17→   >>> b'Python is a programming language' in r.content
-      18→   True
-      19→
-      20→... or POST:
-      21→
-      22→   >>> payload = dict(key1='value1', key2='value2')
-      23→   >>> r = requests.post('https://httpbin.org/post', data=payload)
-      24→   >>> print(r.text)
-      25→   {
-      26→     ...
-      27→     "form": {
-      28→       "key1": "value1",
-      29→       "key2": "value2"
-      30→     },
-      31→     ...
-      32→   }
-      33→
-      34→The other HTTP methods are supported - see `requests.api`. Full documentation
-      35→is at <https://requests.readthedocs.io>.
-      36→
-      37→:copyright: (c) 2017 by Kenneth Reitz.
-      38→:license: Apache 2.0, see LICENSE for more details.
-      39→"""
-      …
-      47→from .exceptions import RequestsDependencyWarning
-      …
-      60→def check_compatibility(
-      61→    urllib3_version: str,
-      62→    chardet_version: str | None,
-      63→    charset_normalizer_version: str | None,
-      64→) -> None:
-      …
-      99→def _check_cryptography(cryptography_version: str) -> None:
-      …
-      150→from urllib3.exceptions import DependencyWarning
-      …
-      156→from logging import NullHandler
-      157→
-      158→from . import packages, utils
-      159→from .__version__ import (
-      160→    __author__,
-      161→    __author_email__,
-      162→    __build__,
-      163→    __cake__,
-      164→    __copyright__,
-      165→    __description__,
-      166→    __license__,
-      167→    __title__,
-      168→    __url__,
-      169→    __version__,
-      170→)
-      171→from .api import delete, get, head, options, patch, post, put, request
-      172→from .exceptions import (
-      173→    ConnectionError,
-      174→    ConnectTimeout,
-      175→    FileModeWarning,
-      176→    HTTPError,
-      177→    JSONDecodeError,
-      178→    ReadTimeout,
-      179→    RequestException,
-      180→    Timeout,
-      181→    TooManyRedirects,
-      182→    URLRequired,
-      183→)
-      184→from .models import PreparedRequest, Request, Response
-      185→from .sessions import Session, session
-      186→from .status_codes import codes
-      187→
-      188→__all__ = (
-      189→    "ConnectionError",
-      190→    "ConnectTimeout",
-      191→    "HTTPError",
-      192→    "JSONDecodeError",
-      193→    "PreparedRequest",
-      194→    "ReadTimeout",
-      195→    "Request",
-      196→    "RequestException",
-      197→    "Response",
-      198→    "Session",
-      199→    "Timeout",
-      200→    "TooManyRedirects",
-      201→    "URLRequired",
-      202→    "codes",
-      203→    "delete",
-      204→    "get",
-      205→    "head",
-      206→    "options",
-      207→    "packages",
-      208→    "patch",
-      209→    "post",
-      210→    "put",
-      211→    "request",
-      212→    "session",
-      213→    "utils",
-      214→)
-      …
-    __version__.py
-      …
-      5→__title__ = "requests"
-      6→__description__ = "Python HTTP for Humans."
-      7→__url__ = "https://requests.readthedocs.io"
-      8→__version__ = "2.34.2"
-      9→__build__ = 0x023402
-      10→__author__ = "Kenneth Reitz"
-      11→__author_email__ = "me@kennethreitz.org"
-      12→__license__ = "Apache-2.0"
-      13→__copyright__ = "Copyright Kenneth Reitz"
-      14→__cake__ = "\u2728 \U0001f370 \u2728"
-    _internal_utils.py
-    _types.py
-    adapters.py
-    api.py
-    auth.py
-    certs.py
-    compat.py
-    cookies.py
-    exceptions.py
-    help.py
-    hooks.py
-    models.py
-    packages.py
-    py.typed (empty)
-    sessions.py
-      …
-      76→def merge_setting(
-      77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
-      78→) -> Any:
-      …
-      108→def merge_hooks(
-      109→    request_hooks: _t.HooksType,
-      110→    session_hooks: _t.HooksType,
-      111→    dict_class: type = OrderedDict,
-      112→) -> _t.HooksType:
-      …
-      127→class SessionRedirectMixin:
-      128→    max_redirects: int
-      129→    trust_env: bool
-      130→    cookies: RequestsCookieJar
-      131→
-      132→    def send(self, request: PreparedRequest, **kwargs: Any) -> Response: ...
-      133→
-      134→    def get_redirect_target(self, resp: Response) -> str | None:
-      …
-      395→class Session(SessionRedirectMixin):
-      …
-      908→def session() -> Session:
-      …
-    status_codes.py
-    structures.py
-    utils.py
+src/requests/
+  __init__.py
+    …
+    6→"""
+    7→Requests HTTP Library
+    8→~~~~~~~~~~~~~~~~~~~~~
+    9→
+    10→Requests is an HTTP library, written in Python, for human beings.
+    11→Basic GET usage:
+    12→
+    13→   >>> import requests
+    14→   >>> r = requests.get('https://www.python.org')
+    15→   >>> r.status_code
+    16→   200
+    17→   >>> b'Python is a programming language' in r.content
+    18→   True
+    19→
+    20→... or POST:
+    21→
+    22→   >>> payload = dict(key1='value1', key2='value2')
+    23→   >>> r = requests.post('https://httpbin.org/post', data=payload)
+    24→   >>> print(r.text)
+    25→   {
+    26→     ...
+    27→     "form": {
+    28→       "key1": "value1",
+    29→       "key2": "value2"
+    30→     },
+    31→     ...
+    32→   }
+    33→
+    34→The other HTTP methods are supported - see `requests.api`. Full documentation
+    35→is at <https://requests.readthedocs.io>.
+    36→
+    37→:copyright: (c) 2017 by Kenneth Reitz.
+    38→:license: Apache 2.0, see LICENSE for more details.
+    39→"""
+    …
+    47→from .exceptions import RequestsDependencyWarning
+    …
+    60→def check_compatibility(
+    61→    urllib3_version: str,
+    62→    chardet_version: str | None,
+    63→    charset_normalizer_version: str | None,
+    64→) -> None:
+    …
+    99→def _check_cryptography(cryptography_version: str) -> None:
+    …
+    150→from urllib3.exceptions import DependencyWarning
+    …
+    156→from logging import NullHandler
+    157→
+    158→from . import packages, utils
+    159→from .__version__ import (
+    160→    __author__,
+    161→    __author_email__,
+    162→    __build__,
+    163→    __cake__,
+    164→    __copyright__,
+    165→    __description__,
+    166→    __license__,
+    167→    __title__,
+    168→    __url__,
+    169→    __version__,
+    170→)
+    171→from .api import delete, get, head, options, patch, post, put, request
+    172→from .exceptions import (
+    173→    ConnectionError,
+    174→    ConnectTimeout,
+    175→    FileModeWarning,
+    176→    HTTPError,
+    177→    JSONDecodeError,
+    178→    ReadTimeout,
+    179→    RequestException,
+    180→    Timeout,
+    181→    TooManyRedirects,
+    182→    URLRequired,
+    183→)
+    184→from .models import PreparedRequest, Request, Response
+    185→from .sessions import Session, session
+    186→from .status_codes import codes
+    187→
+    188→__all__ = (
+    189→    "ConnectionError",
+    190→    "ConnectTimeout",
+    191→    "HTTPError",
+    192→    "JSONDecodeError",
+    193→    "PreparedRequest",
+    194→    "ReadTimeout",
+    195→    "Request",
+    196→    "RequestException",
+    197→    "Response",
+    198→    "Session",
+    199→    "Timeout",
+    200→    "TooManyRedirects",
+    201→    "URLRequired",
+    202→    "codes",
+    203→    "delete",
+    204→    "get",
+    205→    "head",
+    206→    "options",
+    207→    "packages",
+    208→    "patch",
+    209→    "post",
+    210→    "put",
+    211→    "request",
+    212→    "session",
+    213→    "utils",
+    214→)
+    …
+  __version__.py
+    …
+    5→__title__ = "requests"
+    6→__description__ = "Python HTTP for Humans."
+    7→__url__ = "https://requests.readthedocs.io"
+    8→__version__ = "2.34.2"
+    9→__build__ = 0x023402
+    10→__author__ = "Kenneth Reitz"
+    11→__author_email__ = "me@kennethreitz.org"
+    12→__license__ = "Apache-2.0"
+    13→__copyright__ = "Copyright Kenneth Reitz"
+    14→__cake__ = "\u2728 \U0001f370 \u2728"
+  _internal_utils.py
+  _types.py
+  adapters.py
+  api.py
+  auth.py
+  certs.py
+  compat.py
+  cookies.py
+  exceptions.py
+  help.py
+  hooks.py
+  models.py
+  packages.py
+  py.typed (empty)
+  sessions.py
+    …
+    76→def merge_setting(
+    77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
+    78→) -> Any:
+    …
+    108→def merge_hooks(
+    109→    request_hooks: _t.HooksType,
+    110→    session_hooks: _t.HooksType,
+    111→    dict_class: type = OrderedDict,
+    112→) -> _t.HooksType:
+    …
+    127→class SessionRedirectMixin:
+    128→    max_redirects: int
+    129→    trust_env: bool
+    130→    cookies: RequestsCookieJar
+    131→
+    132→    def send(self, request: PreparedRequest, **kwargs: Any) -> Response: ...
+    133→
+    134→    def get_redirect_target(self, resp: Response) -> str | None:
+    …
+    395→class Session(SessionRedirectMixin):
+    …
+    908→def session() -> Session:
+    …
+  status_codes.py
+  structures.py
+  utils.py
 tests/
   __init__.py
   certs/
