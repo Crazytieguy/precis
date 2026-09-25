@@ -24,7 +24,7 @@ use scheduler::Scheduler;
 use walker::FsWalker;
 
 /// Render a precis summary of the directory at `path` under the given
-/// budgets.
+/// budgets (`char_budget` in [`char_units`]).
 pub fn render(path: &Path, token_budget: usize, char_budget: Option<usize>) -> Result<String> {
     let root = canonicalize_dir(path)?;
     let scheduler = Scheduler::new(root, FsWalker, token_budget, char_budget);
