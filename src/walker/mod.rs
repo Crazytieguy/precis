@@ -516,10 +516,7 @@ pub(crate) fn gated_read_source(
     ctx: &WalkCtx,
     byte_gate: usize,
 ) -> Option<Arc<Source>> {
-    let byte_len = std::fs::metadata(file)
-        .map(|m| m.len() as usize)
-        .unwrap_or(usize::MAX);
-    if byte_len > byte_gate {
+    if std::fs::metadata(file).is_ok_and(|m| m.len() as usize > byte_gate) {
         return None;
     }
     ctx.read_source(file)
