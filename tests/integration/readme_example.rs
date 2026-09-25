@@ -19,7 +19,7 @@ fn readme_example_matches_output() {
         "fixture `{README_EXAMPLE_FIXTURE}` not present at {}; run `cargo run --example clone_fixtures`",
         fixture_root.display()
     );
-    let output = precis::render(&[&fixture_root], README_EXAMPLE_BUDGET, None)
+    let output = precis::render(&fixture_root, README_EXAMPLE_BUDGET, None)
         .expect("render README example fixture");
 
     let readme =

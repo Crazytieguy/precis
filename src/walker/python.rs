@@ -2039,7 +2039,7 @@ mod tests {
     fn render_python_module(src: &str) -> String {
         let dir = tempfile::tempdir().unwrap();
         std::fs::write(dir.path().join("catalog.py"), src).unwrap();
-        crate::render(&[dir.path()], 1_000_000, None).expect("render")
+        crate::render(dir.path(), 1_000_000, None).expect("render")
     }
 
     /// The file a names-surface batch belongs to, or `None` for any

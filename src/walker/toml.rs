@@ -1437,7 +1437,7 @@ mod tests {
         assert!(candidate_values.windows(2).all(|pair| pair[0] == pair[1]));
         assert!(identity_value(&manifests[3], &ctx) < candidate_values[0]);
 
-        let output = crate::render(&[root], 200, None).unwrap();
+        let output = crate::render(&root, 200, None).unwrap();
         assert!(
             ["acme", "ACME", "Acme"]
                 .iter()

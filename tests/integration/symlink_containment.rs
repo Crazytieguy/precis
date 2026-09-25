@@ -71,7 +71,7 @@ fn render_within(root: &Path, budget: usize, limit: Duration) -> String {
     let (tx, rx) = mpsc::channel();
     let root = root.to_path_buf();
     std::thread::spawn(move || {
-        let _ = tx.send(precis::render(&[root], budget, None));
+        let _ = tx.send(precis::render(&root, budget, None));
     });
     rx.recv_timeout(limit)
         .expect("the walk must terminate on a checkout full of link cycles")

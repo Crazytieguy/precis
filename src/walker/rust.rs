@@ -4202,7 +4202,7 @@ use self::not_pub::Hidden;
     /// scheduler's line-ownership assert (debug builds panic on any
     /// non-ancestor overlap), which membership-only assertions cannot.
     fn schedule_descriptors(dir: &TempDir) -> Vec<String> {
-        let schedule = crate::render_schedule(&[dir.path()], 10_000).unwrap();
+        let schedule = crate::render_schedule(dir.path(), 10_000).unwrap();
         schedule.batches.into_iter().map(|b| b.descriptor).collect()
     }
 

@@ -22,5 +22,5 @@ fn render_js_project(dir: &Path, entry: &str) -> String {
     )
     .unwrap();
     std::fs::write(dir.join("index.js"), entry).unwrap();
-    precis::render(&[dir], 20_000, None).unwrap()
+    precis::render(dir, 20_000, None).unwrap()
 }

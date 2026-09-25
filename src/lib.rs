@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use anyhow::{Context, Result, anyhow, bail};
+use anyhow::{Context, Result, bail};
 
 pub mod batch;
 pub mod content;
@@ -23,17 +23,9 @@ pub use render::{Cost, RenderedTree, SourceCache};
 use scheduler::Scheduler;
 use walker::FsWalker;
 
-/// Render a precis summary of the given path(s) under the given
-/// budgets. v0.2 supports a single directory seed.
-pub fn render(
-    paths: &[impl AsRef<Path>],
-    token_budget: usize,
-    byte_budget: Option<usize>,
-) -> Result<String> {
-    let path = paths
-        .first()
-        .ok_or_else(|| anyhow!("no path provided"))?
-        .as_ref();
+/// Render a precis summary of the directory at `path` under the given
+/// budgets.
+pub fn render(path: &Path, token_budget: usize, byte_budget: Option<usize>) -> Result<String> {
     let root = canonicalize_dir(path)?;
     let scheduler = Scheduler::new(root, FsWalker, token_budget, byte_budget);
     Ok(scheduler.run().render())
@@ -42,20 +34,15 @@ pub fn render(
 /// Replay a previously-produced [`Schedule`] against a fresh tree at
 /// `budget`. Under prefix-monotone scheduling this matches running
 /// `render` at the smaller budget, without re-running the walker.
-pub fn render_with_schedule(
-    schedule: &Schedule,
-    root: impl AsRef<Path>,
-    budget: usize,
-) -> Result<String> {
-    let root = canonicalize_dir(root.as_ref())?;
-    let mut tree = RenderedTree::new(root, SourceCache::new());
+pub fn render_with_schedule(schedule: &Schedule, budget: usize) -> String {
+    let mut tree = RenderedTree::new(schedule.root.clone(), SourceCache::new());
     for (i, sb) in schedule.batches.iter().enumerate() {
         if sb.cum_tokens > budget {
             break;
         }
         tree.apply(&sb.content, batch::BatchId::new(i), |_| true);
     }
-    Ok(tree.render())
+    tree.render()
 }
 
 /// Complete walker schedule from one [`render_schedule`] run, in
@@ -75,11 +62,7 @@ pub struct ScheduledBatch {
 
 /// Run the walker at `budget` and return a [`Schedule`] — input for
 /// regression snapshots and the divergence metric.
-pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Schedule> {
-    let path = paths
-        .first()
-        .ok_or_else(|| anyhow!("no path provided"))?
-        .as_ref();
+pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
     let root = canonicalize_dir(path)?;
     let report = Scheduler::new(root.clone(), FsWalker, budget, None).run_with_report();
     let batches = report

@@ -54,8 +54,7 @@ fn repo_path(relative: &str) -> PathBuf {
 
 fn check_training_fixture(name: &str, rev: &str) {
     let (fixture, fixture_dir, schedule) = run_fixture(name, rev);
-    let rendered = render_with_schedule(&schedule, &fixture_dir, RENDERED_BUDGET)
-        .unwrap_or_else(|e| panic!("render_with_schedule({fixture}): {e}"));
+    let rendered = render_with_schedule(&schedule, RENDERED_BUDGET);
     compare_or_update(
         &repo_path(&format!("tests/rendered/{fixture}.txt")),
         rendered.as_bytes(),
@@ -106,7 +105,7 @@ fn run_fixture(name: &str, rev: &str) -> (String, PathBuf, Schedule) {
          rm -rf {} && cargo run --example clone_fixtures",
         fixture_dir.display()
     );
-    let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
+    let schedule = render_schedule(&fixture_dir, SCHEDULE_BUDGET)
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
     (fixture, fixture_dir, schedule)
 }

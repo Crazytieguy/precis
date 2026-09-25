@@ -45,7 +45,7 @@ fn main() -> Result<()> {
         bail!("{} does not exist", cli.path.display());
     }
 
-    let output = precis::render(&[&cli.path], cli.token_budget, byte_budget)?;
+    let output = precis::render(&cli.path, cli.token_budget, byte_budget)?;
     if output.is_empty() {
         warn_empty_output(&cli.path, cli.token_budget, byte_budget);
     }
