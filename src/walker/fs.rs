@@ -157,7 +157,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
 /// listing's depth prior, not its tier. Shared with the markdown walker,
 /// where a whole-file table of contents prices as the listing it
 /// duplicates rather than as an orientation doc.
-pub(super) const PLAIN_LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
+pub(super) const LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);
@@ -194,9 +194,8 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         && (non_essential < 1.0 || under_root_source_ancestor);
     let depth = if source_inventory_dir && under_root_source_ancestor {
         // A flat partition under a root-adjacent `lib/`/`src/` is the
-        // package's API surface root (alongside the module-source tier)
-        // — its listing is what names the partition, regardless of
-        // layout depth. Pin to depth 1 so axios's `lib/helpers` doesn't
+        // package's API surface root — its listing is what names the
+        // partition, regardless of layout depth. Pin to depth 1 so axios's `lib/helpers` doesn't
         // get a path-depth discount that lets the same package's tiny
         // sibling dirs out-rank it on the V/C race.
         file_depth_factor(dir, ctx, true)
@@ -245,8 +244,8 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    let (cat, fu, ztu) = PLAIN_LISTING_SIGNALS;
-    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_TIER_SCALE
+    let (cat, fu, ztu) = LISTING_SIGNALS;
+    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_SCALE
 }
 
 /// Uniform price of the directory-listing class against the source
@@ -255,7 +254,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
 /// Score(3000) in combination with the roster-mass-neutralization
 /// removal. Measured point grids are recorded in
 /// `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep curves").
-const LISTING_TIER_SCALE: f64 = 1.13;
+const LISTING_SCALE: f64 = 1.13;
 
 /// Min child-directory count for a parent to count as a "catalog" whose
 /// per-child listings are redundant with its own listing.

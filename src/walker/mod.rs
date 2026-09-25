@@ -395,7 +395,7 @@ fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
         .filter(|(_, len, language)| {
             *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
         })
-        .min_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)))
+        .max_by(|a, b| a.1.cmp(&b.1).then_with(|| b.0.cmp(&a.0)))
         .map(|(path, _, _)| path.clone())
 }
 
