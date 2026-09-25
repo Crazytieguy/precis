@@ -126,31 +126,31 @@ Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | ns | 4520 |  | 219 | class Client: remaining fields and model_config | 3.2 | 3.1 | 0.556 |
 | walker |  | 4549 | 67 | python decl py3xui/api/api.py:139 |  |  | 0.562 |
 | walker |  | 4617 | 68 | python decl py3xui/async_api/async_api.py:144 |  |  | 0.562 |
-| walker |  | 4639 | 22 | README.md section #2 |  |  | 0.562 |
-| walker |  | 4746 | 107 | python doc demo.py:70 |  |  | 0.562 |
+| walker |  | 4724 | 107 | python doc demo.py:70 |  |  | 0.562 |
 | ns | 4778 |  | 258 | ClientFields: the complete python-name to panel-JSON-key mapping | 3.3 |  | 0.537 |
-| walker |  | 4883 | 137 | python decl py3xui/api/api_inbound.py:9 |  |  | 0.546 |
+| walker |  | 4861 | 137 | python decl py3xui/api/api_inbound.py:9 |  |  | 0.546 |
 | ns | 4921 |  | 143 | class Inbound: required fields and the first block of optionals | 3.4 |  | 0.534 |
-| walker |  | 5027 | 144 | python decl py3xui/async_api/async_api_inbound.py:11 |  |  | 0.559 |
+| walker |  | 5005 | 144 | python decl py3xui/async_api/async_api_inbound.py:11 |  |  | 0.559 |
 | ns | 5088 |  | 167 | class Inbound: traffic counters, expiry, client_stats and model_config | 3.5 | 3.4 | 0.546 |
-| walker |  | 5127 | 100 | headings outline in py3xui/server/README.md |  |  | 0.546 |
-| walker |  | 5140 | 13 | py3xui/server/README.md section #0 |  |  | 0.546 |
-| walker |  | 5235 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
+| walker |  | 5105 | 100 | headings outline in py3xui/server/README.md |  |  | 0.546 |
+| walker |  | 5118 | 13 | py3xui/server/README.md section #0 |  |  | 0.546 |
+| walker |  | 5213 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
 | ns | 5301 |  | 213 | InboundFields: the complete inbound JSON key mapping | 3.6 |  | 0.552 |
-| walker |  | 5330 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.566 |
+| walker |  | 5308 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.566 |
 | ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.560 |
-| walker |  | 5511 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.591 |
-| walker |  | 5527 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
+| walker |  | 5489 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.591 |
+| walker |  | 5505 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
 | ns | 5681 |  | 306 | Inbound.to_json body: which fields are sent, and the nested-JSON-string encoding | 3.8 | 3.7 | 0.577 |
-| walker |  | 5742 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
+| walker |  | 5720 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
 | ns | 5829 |  | 148 | Inbound.validate_stream_settings: the dict / JSON-string / empty-string union | 3.9 |  | 0.576 |
-| walker |  | 5885 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
+| walker |  | 5863 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
 | ns | 6066 |  | 237 | Settings and Sniffing models with their field-name constants | 3.10 |  | 0.588 |
-| walker |  | 6110 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
+| walker |  | 6088 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
 | ns | 6205 |  | 139 | StreamSettingsFields: every transport-settings JSON key | 3.11 |  | 0.614 |
-| ns | 6335 |  | 130 | class StreamSettings: every field, protocol dicts truncated to their names | 3.12 | 3.11 | 0.605 |
-| walker |  | 6337 | 227 | python decl py3xui/client/client.py:7 |  |  | 0.639 |
-| walker |  | 6353 | 16 | python doc py3xui/client/client.py:7 |  |  | 0.646 |
+| walker |  | 6315 | 227 | python decl py3xui/client/client.py:7 |  |  | 0.648 |
+| walker |  | 6331 | 16 | python doc py3xui/client/client.py:7 |  |  | 0.655 |
+| ns | 6335 |  | 130 | class StreamSettings: every field, protocol dicts truncated to their names | 3.12 | 3.11 | 0.646 |
+| walker |  | 6353 | 22 | README.md section #2 |  |  | 0.646 |
 | ns | 6478 |  | 143 | JsonStringModel: the base class that parses JSON-string fields | 3.13 |  | 0.641 |
 | walker |  | 6504 | 151 | headings outline in py3xui/inbound/README.md |  |  | 0.641 |
 | walker |  | 6543 | 39 | python body py3xui/utils/env.py:33 |  |  | 0.641 |

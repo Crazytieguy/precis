@@ -1,4 +1,4 @@
-Score(3000)=0.609 I=0.859 C=0.431 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.650/0.684/0.609/0.628/0.594/0.561
+Score(3000)=0.609 I=0.859 C=0.431 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.650/0.684/0.609/0.628/0.594/0.568
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -178,26 +178,26 @@ Score(3000)=0.609 I=0.859 C=0.431 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.568 |
 | walker |  | 8361 | 867 | plaintext config requirements.txt |  |  | 0.568 |
 | ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.563 |
-| walker |  | 8434 | 73 | README.md section #20 |  |  | 0.563 |
-| walker |  | 8515 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.569 |
-| walker |  | 8592 | 77 | README.md section #11 |  |  | 0.569 |
-| walker |  | 8697 | 105 | python body peepdb/config.py:60 |  |  | 0.577 |
+| walker |  | 8442 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.569 |
+| walker |  | 8547 | 105 | python body peepdb/config.py:60 |  |  | 0.577 |
+| walker |  | 8635 | 88 | docs/index.md section #2 |  |  | 0.577 |
+| walker |  | 8681 | 46 | docs/README.md section #9 |  |  | 0.577 |
 | ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.564 |
-| walker |  | 8785 | 88 | docs/index.md section #2 |  |  | 0.564 |
-| walker |  | 8831 | 46 | docs/README.md section #9 |  |  | 0.564 |
-| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.560 |
-| walker |  | 8927 | 96 | docs/usage.md section #3 |  |  | 0.560 |
-| walker |  | 8968 | 41 | python doc peepdb/cli.py:86 |  |  | 0.561 |
-| walker |  | 9071 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.568 |
-| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.562 |
-| walker |  | 9171 | 100 | docs/usage.md section #1 |  |  | 0.560 |
-| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.560 |
-| walker |  | 9185 | 14 | python body peepdb/db/base.py:33 |  |  | 0.564 |
-| walker |  | 9408 | 223 | docs/README.md section #3 |  |  | 0.564 |
-| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.560 |
-| walker |  | 9516 | 108 | python body peepdb/config.py:49 |  |  | 0.568 |
+| walker |  | 8777 | 96 | docs/usage.md section #3 |  |  | 0.564 |
+| walker |  | 8818 | 41 | python doc peepdb/cli.py:86 |  |  | 0.565 |
+| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.561 |
+| walker |  | 8921 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.568 |
+| walker |  | 9021 | 100 | docs/usage.md section #1 |  |  | 0.568 |
+| walker |  | 9035 | 14 | python body peepdb/db/base.py:33 |  |  | 0.572 |
+| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.566 |
+| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.564 |
+| walker |  | 9258 | 223 | docs/README.md section #3 |  |  | 0.564 |
+| walker |  | 9366 | 108 | python body peepdb/config.py:49 |  |  | 0.572 |
+| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.568 |
 | ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.569 |
 | ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.562 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.562 |
-| walker |  | 9943 | 427 | python body peepdb/core.py:27 |  |  | 0.590 |
+| walker |  | 9793 | 427 | python body peepdb/core.py:27 |  |  | 0.591 |
+| walker |  | 9907 | 114 | docs/usage.md section #6 |  |  | 0.591 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.590 |
+| walker |  | 9950 | 43 | python doc peepdb/cli.py:113 |  |  | 0.591 |
 | ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.588 |

@@ -1,4 +1,4 @@
-Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.516/0.420/0.532
+Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.516/0.420/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -115,20 +115,20 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 5613 | 65 | ts doc lib/utils.js:61 |  |  | 0.447 |
 | walker |  | 5759 | 146 | Readme.md section #6 |  |  | 0.447 |
 | ns | 5771 |  | 181 | View.prototype.lookup() — view file resolution | 4.5 | 2.5 | 0.439 |
-| walker |  | 5796 | 37 | Readme.md section #8 |  |  | 0.439 |
-| walker |  | 6038 | 242 | Readme.md section #1 |  |  | 0.439 |
-| walker |  | 6098 | 60 | ts body lib/response.js:604 |  |  | 0.439 |
-| walker |  | 6161 | 63 | ts doc lib/request.js:140 |  |  | 0.439 |
+| walker |  | 6001 | 242 | Readme.md section #1 |  |  | 0.439 |
+| walker |  | 6061 | 60 | ts body lib/response.js:604 |  |  | 0.439 |
+| walker |  | 6124 | 63 | ts doc lib/request.js:140 |  |  | 0.439 |
+| walker |  | 6189 | 65 | ts doc lib/utils.js:75 |  |  | 0.439 |
 | ns | 6222 |  | 451 | res.send() response finalization | 4.6 | 4.4 | 0.420 |
-| walker |  | 6226 | 65 | ts doc lib/utils.js:75 |  |  | 0.420 |
-| walker |  | 6443 | 217 | ts body lib/express.js:36 |  |  | 0.454 |
-| walker |  | 6509 | 66 | ts doc lib/response.js:604 |  |  | 0.454 |
+| walker |  | 6406 | 217 | ts body lib/express.js:36 |  |  | 0.454 |
+| walker |  | 6472 | 66 | ts doc lib/response.js:604 |  |  | 0.454 |
 | ns | 6598 |  | 376 | test/ listing — every spec file | 5.1 |  | 0.514 |
 | ns | 6684 |  | 86 | test/acceptance/ listing | 5.2 |  | 0.526 |
-| walker |  | 6754 | 245 | Readme.md section #4 |  |  | 0.526 |
+| walker |  | 6717 | 245 | Readme.md section #4 |  |  | 0.526 |
 | ns | 6785 |  | 101 | examples/ listing | 5.3 |  | 0.542 |
-| walker |  | 6923 | 169 | ts body lib/view.js:169 |  |  | 0.542 |
-| walker |  | 6992 | 69 | ts doc lib/utils.js:194 |  |  | 0.542 |
+| walker |  | 6886 | 169 | ts body lib/view.js:169 |  |  | 0.542 |
+| walker |  | 6955 | 69 | ts doc lib/utils.js:194 |  |  | 0.542 |
+| walker |  | 6992 | 37 | Readme.md section #8 |  |  | 0.542 |
 | ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.536 |
 | walker |  | 7049 | 57 | ts doc lib/application.js:451 |  |  | 0.536 |
 | walker |  | 7129 | 80 | ts doc lib/request.js:185 |  |  | 0.536 |
@@ -139,38 +139,37 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.523 |
 | walker |  | 7505 | 176 | ts body lib/view.js:104 |  |  | 0.542 |
 | ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.538 |
-| walker |  | 7589 | 84 | Readme.md section #9 |  |  | 0.538 |
-| walker |  | 7661 | 72 | ts doc lib/utils.js:40 |  |  | 0.538 |
+| walker |  | 7577 | 72 | ts doc lib/utils.js:40 |  |  | 0.538 |
+| walker |  | 7656 | 79 | ts body lib/response.js:709 |  |  | 0.538 |
 | ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.532 |
-| walker |  | 7740 | 79 | ts body lib/response.js:709 |  |  | 0.532 |
 | ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.527 |
-| walker |  | 8080 | 340 | Readme.md section #34 |  |  | 0.527 |
+| walker |  | 7996 | 340 | Readme.md section #34 |  |  | 0.527 |
+| walker |  | 8067 | 71 | ts doc lib/application.js:59 |  |  | 0.527 |
 | ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.541 |
-| walker |  | 8151 | 71 | ts doc lib/application.js:59 |  |  | 0.541 |
-| walker |  | 8223 | 72 | ts doc lib/utils.js:51 |  |  | 0.541 |
-| walker |  | 8296 | 73 | ts doc lib/utils.js:225 |  |  | 0.541 |
+| walker |  | 8139 | 72 | ts doc lib/utils.js:51 |  |  | 0.541 |
+| walker |  | 8251 | 112 | ts body lib/request.js:269 |  |  | 0.541 |
+| walker |  | 8337 | 86 | ts doc lib/response.js:875 |  |  | 0.541 |
 | ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.535 |
-| walker |  | 8369 | 73 | ts body lib/utils.js:249 |  |  | 0.535 |
-| walker |  | 8450 | 81 | ts doc lib/application.js:152 |  |  | 0.535 |
+| walker |  | 8410 | 73 | ts doc lib/utils.js:225 |  |  | 0.535 |
 | ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.530 |
-| walker |  | 8536 | 86 | ts doc lib/response.js:875 |  |  | 0.530 |
-| walker |  | 8624 | 88 | ts doc lib/application.js:256 |  |  | 0.530 |
-| walker |  | 8711 | 87 | ts body lib/application.js:494 |  |  | 0.533 |
-| walker |  | 8803 | 92 | ts doc lib/response.js:232 |  |  | 0.533 |
-| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.527 |
-| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.532 |
-| walker |  | 8898 | 95 | ts doc lib/application.js:190 |  |  | 0.532 |
-| walker |  | 8993 | 95 | ts doc lib/application.js:494 |  |  | 0.532 |
-| walker |  | 9092 | 99 | ts doc lib/response.js:260 |  |  | 0.532 |
+| walker |  | 8654 | 244 | ts body lib/view.js:133 |  |  | 0.530 |
+| walker |  | 8738 | 84 | Readme.md section #9 |  |  | 0.530 |
+| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.524 |
+| walker |  | 8811 | 73 | ts body lib/utils.js:249 |  |  | 0.524 |
+| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.529 |
+| walker |  | 8892 | 81 | ts doc lib/application.js:152 |  |  | 0.529 |
+| walker |  | 8980 | 88 | ts doc lib/application.js:256 |  |  | 0.529 |
+| walker |  | 9067 | 87 | ts body lib/application.js:494 |  |  | 0.532 |
 | ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.527 |
-| walker |  | 9193 | 101 | ts body lib/application.js:322 |  |  | 0.527 |
-| walker |  | 9296 | 103 | ts body lib/application.js:598 |  |  | 0.527 |
+| walker |  | 9159 | 92 | ts doc lib/response.js:232 |  |  | 0.527 |
+| walker |  | 9254 | 95 | ts doc lib/application.js:190 |  |  | 0.527 |
+| walker |  | 9349 | 95 | ts doc lib/application.js:494 |  |  | 0.527 |
 | ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.520 |
-| walker |  | 9400 | 104 | ts body lib/utils.js:225 |  |  | 0.520 |
-| walker |  | 9514 | 114 | ts doc lib/response.js:125 |  |  | 0.520 |
-| walker |  | 9626 | 112 | ts body lib/request.js:269 |  |  | 0.520 |
+| walker |  | 9448 | 99 | ts doc lib/response.js:260 |  |  | 0.520 |
+| walker |  | 9549 | 101 | ts body lib/application.js:322 |  |  | 0.520 |
+| walker |  | 9652 | 103 | ts body lib/application.js:598 |  |  | 0.520 |
 | ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.514 |
-| walker |  | 9745 | 119 | ts doc lib/application.js:322 |  |  | 0.514 |
-| walker |  | 9866 | 121 | ts doc lib/application.js:439 |  |  | 0.514 |
+| walker |  | 9756 | 104 | ts body lib/utils.js:225 |  |  | 0.514 |
+| walker |  | 9870 | 114 | ts doc lib/response.js:125 |  |  | 0.514 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.510 |
-| walker |  | 9990 | 124 | ts doc lib/application.js:399 |  |  | 0.510 |
+| walker |  | 9989 | 119 | ts doc lib/application.js:322 |  |  | 0.510 |

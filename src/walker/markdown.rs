@@ -462,15 +462,11 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     } else {
         heading_slab_value(file, ctx)
     };
-    let sub_scale = if is_readme(file) {
-        // A root-README reference-vocabulary H3 (`### Colors`,
-        // `### Modifiers`) is a top-rank catalog row in its own right,
-        // not H3 fan-out noise — it skips the sub-section scale.
-        if range.is_reference_usage_section && ctx.depth_from_root(file) <= 1 {
-            1.0
-        } else {
-            README_SUB_SECTION_SIGNAL_SCALE
-        }
+    // A reference-vocabulary README H3 (`### Colors`, `### Modifiers`)
+    // is a top-rank catalog row in its own right, not H3 fan-out noise —
+    // it skips the sub-section scale.
+    let sub_scale = if range.is_reference_usage_section {
+        1.0
     } else {
         SUB_SECTION_SIGNAL_SCALE
     };
@@ -482,10 +478,6 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
         SectionKind::LedeBody => parent,
     }
 }
-
-/// README H3 children are often canonical concept rows in their own
-/// right; bump above the generic `SUB_SECTION_SIGNAL_SCALE`.
-const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
 
 // --- parser ---
 

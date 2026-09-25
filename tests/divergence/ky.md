@@ -129,22 +129,22 @@ Score(3000)=0.716 I=0.917 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 6342 | 422 | ts decl source/types/options.ts:312 |  |  | 0.626 |
 | ns | 6360 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.613 |
 | walker |  | 6369 | 27 | ts doc source/types/options.ts:312 |  |  | 0.613 |
-| walker |  | 6414 | 45 | readme.md section #32 |  |  | 0.613 |
-| walker |  | 6455 | 41 | ts body source/errors/TimeoutError.ts:6 |  |  | 0.619 |
+| walker |  | 6410 | 41 | ts body source/errors/TimeoutError.ts:6 |  |  | 0.619 |
+| walker |  | 6456 | 46 | ts names test/main.ts |  |  | 0.617 |
 | ns | 6456 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.617 |
-| walker |  | 6501 | 46 | ts names test/main.ts |  |  | 0.617 |
-| walker |  | 6564 | 63 | readme.md section #37 |  |  | 0.617 |
-| walker |  | 6650 | 86 | ts names source/types/common.ts |  |  | 0.617 |
-| walker |  | 6671 | 21 | ts decl source/types/common.ts:6 |  |  | 0.617 |
-| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.627 |
-| walker |  | 6783 | 112 | json config tsconfig.dist.json |  |  | 0.628 |
-| walker |  | 6872 | 89 | ts names source/utils/body.ts |  |  | 0.634 |
-| walker |  | 6949 | 77 | readme.md section #31 |  |  | 0.634 |
+| walker |  | 6519 | 63 | readme.md section #37 |  |  | 0.617 |
+| walker |  | 6605 | 86 | ts names source/types/common.ts |  |  | 0.617 |
+| walker |  | 6626 | 21 | ts decl source/types/common.ts:6 |  |  | 0.617 |
+| walker |  | 6738 | 112 | json config tsconfig.dist.json |  |  | 0.618 |
+| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.628 |
+| walker |  | 6827 | 89 | ts names source/utils/body.ts |  |  | 0.634 |
+| walker |  | 6904 | 77 | readme.md section #31 |  |  | 0.634 |
 | ns | 6965 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.624 |
-| walker |  | 7028 | 79 | readme.md section #23 |  |  | 0.624 |
+| walker |  | 6983 | 79 | readme.md section #23 |  |  | 0.624 |
 | ns | 7168 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.616 |
-| walker |  | 7247 | 219 | readme.md section #46 |  |  | 0.618 |
-| walker |  | 7503 | 256 | readme.md section #47 |  |  | 0.619 |
+| walker |  | 7202 | 219 | readme.md section #46 |  |  | 0.618 |
+| walker |  | 7458 | 256 | readme.md section #47 |  |  | 0.619 |
+| walker |  | 7503 | 45 | readme.md section #32 |  |  | 0.619 |
 | ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.604 |
 | walker |  | 7622 | 119 | ts names source/utils/merge.ts |  |  | 0.609 |
 | walker |  | 7716 | 94 | ts decl source/utils/merge.ts:38 |  |  | 0.611 |

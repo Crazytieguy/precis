@@ -41,15 +41,15 @@ Score(3000)=0.636 I=0.875 C=0.462 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.734 |
 | walker |  | 1832 | 233 | package scripts in package.json |  |  | 0.743 |
 | walker |  | 1851 | 19 | README.md section #13 |  |  | 0.743 |
-| walker |  | 1868 | 17 | README.md section #7 |  |  | 0.743 |
-| walker |  | 1898 | 30 | README.md section #12 |  |  | 0.743 |
+| walker |  | 1881 | 30 | README.md section #12 |  |  | 0.743 |
+| walker |  | 1898 | 17 | README.md section #7 |  |  | 0.743 |
 | ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.686 |
 | walker |  | 1931 | 33 | README.md section #10 |  |  | 0.686 |
 | ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.662 |
 | walker |  | 2042 | 111 | README.md section #4 |  |  | 0.663 |
-| walker |  | 2077 | 35 | README.md section #6 |  |  | 0.663 |
 | ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.636 |
-| walker |  | 2357 | 280 | README.md section #2 |  |  | 0.719 |
+| walker |  | 2322 | 280 | README.md section #2 |  |  | 0.719 |
+| walker |  | 2357 | 35 | README.md section #6 |  |  | 0.719 |
 | ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.686 |
 | ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.669 |
 | ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.636 |
@@ -57,10 +57,10 @@ Score(3000)=0.636 I=0.875 C=0.462 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.630 |
 | walker |  | 3255 | 898 | ts body src/index.ts:46 |  |  | 0.810 |
 | ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.791 |
-| walker |  | 3310 | 55 | README.md section #16 |  |  | 0.791 |
-| walker |  | 3459 | 149 | json config tsconfig.json |  |  | 0.824 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.786 |
-| walker |  | 3558 | 99 | README.md section #14 |  |  | 0.786 |
+| walker |  | 3404 | 149 | json config tsconfig.json |  |  | 0.824 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.785 |
+| walker |  | 3503 | 99 | README.md section #14 |  |  | 0.786 |
+| walker |  | 3558 | 55 | README.md section #16 |  |  | 0.786 |
 | ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.792 |
 | walker |  | 3674 | 116 | README.md section #11 |  |  | 0.793 |
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.785 |

@@ -1,4 +1,4 @@
-Score(3000)=0.679 I=0.860 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.765/0.714/0.679/0.601/0.518/0.456
+Score(3000)=0.679 I=0.860 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.765/0.714/0.679/0.601/0.518/0.468
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -127,32 +127,32 @@ Score(3000)=0.679 I=0.860 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.473 |
 | walker |  | 8000 | 101 | docs/API.md section #135 |  |  | 0.473 |
 | walker |  | 8104 | 104 | docs/API.md section #129 |  |  | 0.473 |
-| walker |  | 8180 | 76 | README.md section #15 |  |  | 0.484 |
-| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.475 |
-| walker |  | 8285 | 105 | docs/API.md section #134 |  |  | 0.475 |
-| ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.472 |
-| walker |  | 8393 | 108 | docs/API.md section #15 |  |  | 0.472 |
-| walker |  | 8501 | 108 | docs/API.md section #22 |  |  | 0.472 |
-| ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.463 |
-| walker |  | 8609 | 108 | docs/API.md section #136 |  |  | 0.463 |
-| walker |  | 8717 | 108 | docs/API.md section #140 |  |  | 0.463 |
-| ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.456 |
-| walker |  | 9019 | 302 | README.md section #13 |  |  | 0.478 |
-| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.467 |
-| walker |  | 9132 | 113 | docs/API.md section #139 |  |  | 0.467 |
-| walker |  | 9248 | 116 | docs/API.md section #126 |  |  | 0.467 |
-| walker |  | 9365 | 117 | docs/API.md section #137 |  |  | 0.467 |
-| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.459 |
-| ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.454 |
-| walker |  | 9625 | 260 | c names neco.c #1 |  |  | 0.454 |
-| walker |  | 9640 | 15 | c decl neco.c:1251 |  |  | 0.454 |
-| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.452 |
-| walker |  | 9659 | 19 | c decl neco.c:1348 |  |  | 0.452 |
-| walker |  | 9680 | 21 | c decl neco.c:1204 |  |  | 0.452 |
-| walker |  | 9779 | 99 | c decl neco.c:1364 |  |  | 0.452 |
-| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.447 |
-| walker |  | 9902 | 123 | c decl neco.c:1330 |  |  | 0.447 |
-| walker |  | 9913 | 11 | c doc neco.c:1282 |  |  | 0.447 |
-| walker |  | 9924 | 11 | c doc neco.c:1293 |  |  | 0.447 |
-| ns | 9939 |  | 112 | CI | 6.6 |  | 0.443 |
-| ns | 9984 |  | 45 | License | 6.7 |  | 0.444 |
+| walker |  | 8209 | 105 | docs/API.md section #134 |  |  | 0.473 |
+| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.465 |
+| walker |  | 8317 | 108 | docs/API.md section #15 |  |  | 0.465 |
+| ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.462 |
+| walker |  | 8425 | 108 | docs/API.md section #22 |  |  | 0.462 |
+| walker |  | 8533 | 108 | docs/API.md section #136 |  |  | 0.462 |
+| ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.453 |
+| walker |  | 8641 | 108 | docs/API.md section #140 |  |  | 0.453 |
+| ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.446 |
+| walker |  | 8943 | 302 | README.md section #13 |  |  | 0.468 |
+| walker |  | 9056 | 113 | docs/API.md section #139 |  |  | 0.468 |
+| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.458 |
+| walker |  | 9172 | 116 | docs/API.md section #126 |  |  | 0.458 |
+| walker |  | 9289 | 117 | docs/API.md section #137 |  |  | 0.458 |
+| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.450 |
+| walker |  | 9549 | 260 | c names neco.c #1 |  |  | 0.450 |
+| ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.445 |
+| walker |  | 9564 | 15 | c decl neco.c:1251 |  |  | 0.445 |
+| walker |  | 9583 | 19 | c decl neco.c:1348 |  |  | 0.445 |
+| walker |  | 9604 | 21 | c decl neco.c:1204 |  |  | 0.445 |
+| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.443 |
+| walker |  | 9703 | 99 | c decl neco.c:1364 |  |  | 0.443 |
+| walker |  | 9826 | 123 | c decl neco.c:1330 |  |  | 0.443 |
+| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.438 |
+| walker |  | 9837 | 11 | c doc neco.c:1282 |  |  | 0.438 |
+| walker |  | 9848 | 11 | c doc neco.c:1293 |  |  | 0.438 |
+| ns | 9939 |  | 112 | CI | 6.6 |  | 0.434 |
+| ns | 9984 |  | 45 | License | 6.7 |  | 0.435 |
+| walker |  | 9991 | 143 | plaintext config .github/workflows/main.yml |  |  | 0.449 |

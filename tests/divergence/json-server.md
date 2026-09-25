@@ -1,4 +1,4 @@
-Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.571/0.577/0.547/0.706
+Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.571/0.565/0.547/0.738
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -87,38 +87,38 @@ Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 3061 |  | 199 | Full signatures of the Service mutation methods | 3.5 | 3.3 | 0.564 |
 | walker |  | 3128 | 117 | ts body src/parse-where.ts:58 |  |  | 0.566 |
 | walker |  | 3176 | 48 | README.md section #15 |  |  | 0.570 |
-| walker |  | 3216 | 40 | README.md section #16 |  |  | 0.572 |
-| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.554 |
-| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.545 |
-| walker |  | 3379 | 163 | README.md section #8 |  |  | 0.573 |
-| walker |  | 3422 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.573 |
-| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.579 |
-| walker |  | 3510 | 88 | ts body src/service.ts:145 |  |  | 0.579 |
-| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.583 |
-| walker |  | 3612 | 102 | json config schema.json |  |  | 0.583 |
-| ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.582 |
-| walker |  | 3787 | 175 | README.md section #20 |  |  | 0.596 |
-| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.593 |
-| walker |  | 3842 | 55 | README.md section #12 |  |  | 0.601 |
-| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.590 |
-| walker |  | 3968 | 126 | ts body src/service.ts:96 |  |  | 0.590 |
-| walker |  | 4120 | 152 | json config tsconfig.json |  |  | 0.592 |
-| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.573 |
-| walker |  | 4191 | 71 | README.md section #17 |  |  | 0.577 |
-| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.557 |
-| walker |  | 4513 | 322 | ts body src/paginate.ts:11 |  |  | 0.559 |
-| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.547 |
-| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.551 |
-| walker |  | 4686 | 173 | ts body src/service.ts:202 |  |  | 0.554 |
-| walker |  | 4792 | 106 | README.md section #4 |  |  | 0.554 |
+| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.552 |
+| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.543 |
+| walker |  | 3339 | 163 | README.md section #8 |  |  | 0.571 |
+| walker |  | 3382 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.571 |
+| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.577 |
+| walker |  | 3470 | 88 | ts body src/service.ts:145 |  |  | 0.577 |
+| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.581 |
+| walker |  | 3572 | 102 | json config schema.json |  |  | 0.582 |
+| ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.580 |
+| walker |  | 3747 | 175 | README.md section #20 |  |  | 0.595 |
+| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.591 |
+| walker |  | 3873 | 126 | ts body src/service.ts:96 |  |  | 0.591 |
+| walker |  | 3913 | 40 | README.md section #16 |  |  | 0.593 |
+| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.581 |
+| walker |  | 4065 | 152 | json config tsconfig.json |  |  | 0.583 |
+| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.565 |
+| walker |  | 4387 | 322 | ts body src/paginate.ts:11 |  |  | 0.568 |
+| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.548 |
+| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.536 |
+| walker |  | 4560 | 173 | ts body src/service.ts:202 |  |  | 0.539 |
+| walker |  | 4615 | 55 | README.md section #12 |  |  | 0.546 |
+| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.550 |
+| walker |  | 4852 | 237 | ts body src/service.ts:110 |  |  | 0.554 |
 | ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.537 |
-| walker |  | 5029 | 237 | ts body src/service.ts:110 |  |  | 0.540 |
-| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.524 |
-| walker |  | 5188 | 159 | README.md section #5 |  |  | 0.524 |
-| walker |  | 5315 | 127 | README.md section #11 |  |  | 0.538 |
-| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.522 |
-| walker |  | 5455 | 140 | README.md section #10 |  |  | 0.538 |
-| walker |  | 5610 | 155 | README.md section #14 |  |  | 0.554 |
+| walker |  | 5011 | 159 | README.md section #5 |  |  | 0.537 |
+| walker |  | 5138 | 127 | README.md section #11 |  |  | 0.551 |
+| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.535 |
+| walker |  | 5209 | 71 | README.md section #17 |  |  | 0.538 |
+| walker |  | 5349 | 140 | README.md section #10 |  |  | 0.555 |
+| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.538 |
+| walker |  | 5504 | 155 | README.md section #14 |  |  | 0.554 |
+| walker |  | 5610 | 106 | README.md section #4 |  |  | 0.554 |
 | ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.538 |
 | ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.547 |
 | walker |  | 6342 | 732 | README.md section #2 |  |  | 0.690 |
@@ -138,9 +138,9 @@ Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 8376 | 273 | ts body src/app.ts:94 #1 |  |  | 0.721 |
 | ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.714 |
 | ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.717 |
-| walker |  | 8702 | 326 | README.md section #3 |  |  | 0.717 |
-| ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.706 |
-| walker |  | 9029 | 327 | ts body src/app.ts:94 #2 |  |  | 0.738 |
+| walker |  | 8703 | 327 | ts body src/app.ts:94 #2 |  |  | 0.750 |
+| ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.738 |
+| walker |  | 9029 | 326 | README.md section #3 |  |  | 0.738 |
 | walker |  | 9060 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
 | walker |  | 9111 | 51 | plaintext config .gitignore |  |  | 0.738 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.743 |
