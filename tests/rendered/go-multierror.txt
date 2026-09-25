@@ -45,7 +45,8 @@ README.md
   …
   7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
   8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
-  10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, t…
+  9→
+  10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
   12→## Migrating to `errors.Join`
   …
   104→## Installation and Docs

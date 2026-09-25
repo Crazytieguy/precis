@@ -846,7 +846,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     (
         HeadlineSpec {
             covered_rows,
-            truncate: None,
+            truncated: Vec::new(),
         },
         ranges,
     )
@@ -904,12 +904,13 @@ fn title_core(title: &str) -> String {
 
 // --- headline spec + span construction ---
 
-/// Computed shape of `ReadmeHeadline` — rendered source rows plus an
-/// optional per-row truncation override for the heading line.
-#[derive(Debug, Clone)]
+/// Computed shape of `ReadmeHeadline` — rendered source rows plus the
+/// covered rows rendered as a prefix: a heading's trailing badge run,
+/// and the long rows of an oversize lede block.
+#[derive(Debug, Clone, Default)]
 struct HeadlineSpec {
     covered_rows: BTreeSet<usize>,
-    truncate: Option<TruncatedRow>,
+    truncated: Vec<TruncatedRow>,
 }
 
 /// Per-row truncation override — paired so "rows without pattern" is
@@ -930,16 +931,16 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     let section = headed_sections(tree.root_node()).next()?;
     let heading = first_heading_child(section)?;
 
-    let mut covered: BTreeSet<usize> = BTreeSet::new();
+    let mut spec = HeadlineSpec::default();
     // Prelude content: README opens with HTML title blocks / badges /
     // lede paragraph before the first heading.
     extend_lede(
-        &mut covered,
+        &mut spec,
         &prelude_blocks(tree.root_node(), section),
         source,
         true,
     );
-    extend_rows_inclusive(&mut covered, heading, source);
+    extend_rows_inclusive(&mut spec.covered_rows, heading, source);
     let heading_first_row = heading.start_position().row + 1;
 
     // The "tagline + lede" extension only fires under the project's
@@ -947,64 +948,33 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     // `## About`) the first substantive paragraph IS the section body
     // and shouldn't pull in further content.
     let post: Vec<Node> = children_after(section, heading);
-    extend_lede(&mut covered, &post, source, heading_level(heading) == 1);
+    extend_lede(&mut spec, &post, source, heading_level(heading) == 1);
 
-    let truncate = compute_heading_truncation(heading, source);
-
-    if covered.is_empty() {
-        return None;
-    }
+    spec.truncated
+        .extend(compute_heading_truncation(heading, source));
     debug_assert!(
-        covered.contains(&heading_first_row),
+        spec.covered_rows.contains(&heading_first_row),
         "headline covered_rows missing heading row"
     );
-
-    Some(HeadlineSpec {
-        covered_rows: covered,
-        truncate,
-    })
+    Some(spec)
 }
 
 fn build_headline_spans(file: &Path, source: &Source, spec: &HeadlineSpec) -> Vec<Span> {
-    let trunc_row = spec.truncate.as_ref().map(|t| t.row);
-    let src_lines: Vec<&str> = source.lines().collect();
-    let oversize_rows: Vec<usize> = spec
-        .covered_rows
-        .iter()
-        .copied()
-        .filter(|row| {
-            Some(*row) != trunc_row
-                && src_lines
-                    .get(*row - 1)
-                    .is_some_and(|line| line.chars().count() > HEADLINE_OVERSIZE_LINE_CHARS)
-        })
-        .collect();
     let full_rows: Vec<usize> = spec
         .covered_rows
         .iter()
         .copied()
-        .filter(|row| Some(*row) != trunc_row && !oversize_rows.contains(row))
+        .filter(|row| spec.truncated.iter().all(|t| t.row != *row))
         .collect();
-
     // Full rows go through `build_file_spans` (blank-filter + merge);
-    // splice the truncated-row span in afterwards.
+    // splice the truncated-row spans in afterwards.
     let mut spans = super::build_file_spans(file, source, FileLines::new(full_rows));
-    if let Some(t) = &spec.truncate {
-        spans.push(Span {
-            path: file.to_path_buf(),
-            start: t.row,
-            end: t.row,
-            render: Render::Truncated {
-                pattern: t.pattern.clone(),
-            },
-        });
-    }
-    spans.extend(oversize_rows.into_iter().map(|row| Span {
+    spans.extend(spec.truncated.iter().map(|t| Span {
         path: file.to_path_buf(),
-        start: row,
-        end: row,
+        start: t.row,
+        end: t.row,
         render: Render::Truncated {
-            pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
+            pattern: t.pattern.clone(),
         },
     }));
     spans.sort_by_key(|span| span.start);
@@ -1020,9 +990,9 @@ fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
     }
 }
 
-fn extend_headline_block_rows(out: &mut BTreeSet<usize>, node: Node, source: &str) {
+fn extend_headline_block_rows(spec: &mut HeadlineSpec, node: Node, source: &str) {
     if node.end_byte() - node.start_byte() <= HEADLINE_BLOCK_BYTE_GATE {
-        extend_rows_inclusive(out, node, source);
+        extend_rows_inclusive(&mut spec.covered_rows, node, source);
         return;
     }
     let src_lines: Vec<&str> = source.lines().collect();
@@ -1034,7 +1004,13 @@ fn extend_headline_block_rows(out: &mut BTreeSet<usize>, node: Node, source: &st
         if line.trim().is_empty() {
             continue;
         }
-        out.insert(row + 1);
+        spec.covered_rows.insert(row + 1);
+        if line.chars().count() > HEADLINE_OVERSIZE_LINE_CHARS {
+            spec.truncated.push(TruncatedRow {
+                row: row + 1,
+                pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
+            });
+        }
         bytes += line.len() + 1;
         if bytes >= HEADLINE_OVERSIZE_LEDE_BYTES {
             break;
@@ -2450,15 +2426,13 @@ fn strip_html_entities(text: &str) -> String {
 
 /// Include `blocks` through the first substantive paragraph, stepping
 /// over chrome ([`is_prelude_chrome_block`]); after a short tagline
-/// paragraph, take one more block. Any non-chrome block counts as a
-/// lede. Returns whether a lede was taken.
+/// paragraph, take one more block.
 fn extend_lede(
-    covered: &mut BTreeSet<usize>,
+    spec: &mut HeadlineSpec,
     blocks: &[Node],
     source: &str,
     allow_tagline_extension: bool,
-) -> bool {
-    let mut captured = false;
+) {
     let mut extending = false;
     for &block in blocks {
         if is_section_boundary(block.kind()) {
@@ -2467,8 +2441,7 @@ fn extend_lede(
         if is_prelude_chrome_block(block, source) {
             continue;
         }
-        extend_headline_block_rows(covered, block, source);
-        captured = true;
+        extend_headline_block_rows(spec, block, source);
         if extending {
             break;
         }
@@ -2480,7 +2453,6 @@ fn extend_lede(
             }
         }
     }
-    captured
 }
 
 /// Top-level blocks above the first headed section.

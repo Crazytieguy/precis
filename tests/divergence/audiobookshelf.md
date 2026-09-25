@@ -89,279 +89,279 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 1872 | 75 | listing of 'server/scanner' |  |  | 0.652 |
 | ns | 1879 |  | 181 | client/package.json: scripts (nuxt generate, cypress) | 1.12 |  | 0.629 |
 | walker |  | 1915 | 43 | listing of 'client/components/stats' |  |  | 0.629 |
-| ns | 1943 |  | 64 | readme top-level section headings | 1.13 |  | 0.616 |
-| walker |  | 2000 | 85 | README headline in docs/README.md |  |  | 0.616 |
-| walker |  | 2026 | 26 | listing of 'client/pages/library/_library' |  |  | 0.617 |
-| walker |  | 2031 | 5 | listing of 'client/pages/library/_library/bookshelf' |  |  | 0.617 |
-| walker |  | 2036 | 5 | listing of 'client/pages/library/_library/series' |  |  | 0.617 |
-| walker |  | 2050 | 14 | listing of 'client/pages/library/_library/podcast' |  |  | 0.618 |
-| walker |  | 2078 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.618 |
+| walker |  | 1941 | 26 | listing of 'client/pages/library/_library' |  |  | 0.630 |
+| ns | 1943 |  | 64 | readme top-level section headings | 1.13 |  | 0.617 |
+| walker |  | 1946 | 5 | listing of 'client/pages/library/_library/bookshelf' |  |  | 0.617 |
+| walker |  | 1951 | 5 | listing of 'client/pages/library/_library/series' |  |  | 0.617 |
+| walker |  | 1965 | 14 | listing of 'client/pages/library/_library/podcast' |  |  | 0.618 |
+| walker |  | 1993 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.618 |
 | ns | 2080 |  | 137 | server/routers + server/controllers rosters (complete) | 2.1 |  | 0.570 |
-| walker |  | 2175 | 97 | listing of 'server/managers' |  |  | 0.574 |
+| walker |  | 2091 | 98 | README headline in docs/README.md |  |  | 0.570 |
+| walker |  | 2188 | 97 | listing of 'server/managers' |  |  | 0.574 |
 | ns | 2196 |  | 116 | server/models roster (complete Sequelize entity set) | 2.2 |  | 0.536 |
-| walker |  | 2227 | 52 | listing of 'client/components/app' |  |  | 0.536 |
-| walker |  | 2283 | 56 | listing of 'client/pages/config' |  |  | 0.538 |
-| walker |  | 2287 | 4 | listing of 'client/pages/config/api-keys' |  |  | 0.538 |
-| ns | 2293 |  | 97 | server/managers roster (complete) | 2.3 |  | 0.573 |
-| walker |  | 2295 | 8 | listing of 'client/pages/config/users' |  |  | 0.573 |
-| walker |  | 2303 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.573 |
-| walker |  | 2323 | 20 | listing of 'client/pages/config/item-metadata-utils' |  |  | 0.575 |
-| walker |  | 2371 | 48 | headings outline in docs/README.md |  |  | 0.575 |
+| walker |  | 2240 | 52 | listing of 'client/components/app' |  |  | 0.536 |
+| ns | 2293 |  | 97 | server/managers roster (complete) | 2.3 |  | 0.570 |
+| walker |  | 2296 | 56 | listing of 'client/pages/config' |  |  | 0.573 |
+| walker |  | 2300 | 4 | listing of 'client/pages/config/api-keys' |  |  | 0.573 |
+| walker |  | 2308 | 8 | listing of 'client/pages/config/users' |  |  | 0.573 |
+| walker |  | 2316 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.573 |
+| walker |  | 2336 | 20 | listing of 'client/pages/config/item-metadata-utils' |  |  | 0.575 |
+| walker |  | 2384 | 48 | headings outline in docs/README.md |  |  | 0.575 |
 | ns | 2432 |  | 139 | server/scanner + server/finders + server/providers rosters | 2.4 |  | 0.611 |
-| walker |  | 2482 | 111 | listing of 'server/utils' |  |  | 0.613 |
-| walker |  | 2501 | 19 | listing of 'server/utils/generators' |  |  | 0.614 |
-| walker |  | 2546 | 45 | listing of 'server/utils/queries' |  |  | 0.616 |
-| walker |  | 2563 | 17 | listing of 'server/utils/migrations' |  |  | 0.617 |
-| walker |  | 2679 | 116 | listing of 'server/models' |  |  | 0.686 |
+| walker |  | 2495 | 111 | listing of 'server/utils' |  |  | 0.613 |
+| walker |  | 2514 | 19 | listing of 'server/utils/generators' |  |  | 0.614 |
+| walker |  | 2559 | 45 | listing of 'server/utils/queries' |  |  | 0.616 |
+| walker |  | 2576 | 17 | listing of 'server/utils/migrations' |  |  | 0.617 |
+| walker |  | 2692 | 116 | listing of 'server/models' |  |  | 0.686 |
 | ns | 2697 |  | 265 | server/utils tree roster (complete, with subdirectories) | 2.5 |  | 0.683 |
-| walker |  | 2800 | 121 | listing of 'server/controllers' |  |  | 0.741 |
+| walker |  | 2813 | 121 | listing of 'server/controllers' |  |  | 0.741 |
 | ns | 2815 |  | 118 | server/auth + server/objects tree rosters | 2.6 |  | 0.752 |
-| walker |  | 2873 | 73 | listing of 'server/utils/parsers' |  |  | 0.789 |
-| walker |  | 3017 | 144 | listing of 'server/libs' |  |  | 0.794 |
-| walker |  | 3021 | 4 | listing of 'server/libs/commandLineArgs' |  |  | 0.794 |
-| ns | 3023 |  | 208 | server/migrations roster (complete, version-named) | 2.7 |  | 0.773 |
-| walker |  | 3025 | 4 | listing of 'server/libs/fusejs' |  |  | 0.773 |
-| walker |  | 3032 | 7 | listing of 'server/libs/async' |  |  | 0.773 |
-| walker |  | 3039 | 7 | listing of 'server/libs/bcryptjs' |  |  | 0.773 |
-| walker |  | 3046 | 7 | listing of 'server/libs/dateAndTime' |  |  | 0.773 |
-| walker |  | 3053 | 7 | listing of 'server/libs/fastSort' |  |  | 0.773 |
-| walker |  | 3060 | 7 | listing of 'server/libs/lodash.once' |  |  | 0.773 |
-| walker |  | 3067 | 7 | listing of 'server/libs/memorystore' |  |  | 0.773 |
-| walker |  | 3074 | 7 | listing of 'server/libs/nodeFfprobe' |  |  | 0.773 |
-| walker |  | 3081 | 7 | listing of 'server/libs/nodeStreamZip' |  |  | 0.773 |
-| walker |  | 3088 | 7 | listing of 'server/libs/recursiveReaddirAsync' |  |  | 0.773 |
-| walker |  | 3095 | 7 | listing of 'server/libs/rss' |  |  | 0.773 |
-| walker |  | 3102 | 7 | listing of 'server/libs/sanitizeHtml' |  |  | 0.773 |
-| walker |  | 3109 | 7 | listing of 'server/libs/streamsearch' |  |  | 0.773 |
-| walker |  | 3116 | 7 | listing of 'server/libs/uaParser' |  |  | 0.773 |
-| walker |  | 3123 | 7 | listing of 'server/libs/universalify' |  |  | 0.773 |
-| walker |  | 3130 | 7 | listing of 'server/libs/which' |  |  | 0.773 |
-| walker |  | 3140 | 10 | listing of 'server/libs/jws' |  |  | 0.773 |
-| walker |  | 3151 | 11 | listing of 'server/libs/passportLocal' |  |  | 0.773 |
-| walker |  | 3163 | 12 | listing of 'server/libs/imageType' |  |  | 0.773 |
-| walker |  | 3175 | 12 | listing of 'server/libs/requestIp' |  |  | 0.773 |
-| walker |  | 3188 | 13 | listing of 'server/libs/xml' |  |  | 0.773 |
-| walker |  | 3202 | 14 | listing of 'server/libs/busboy' |  |  | 0.773 |
+| walker |  | 2886 | 73 | listing of 'server/utils/parsers' |  |  | 0.789 |
+| ns | 3023 |  | 208 | server/migrations roster (complete, version-named) | 2.7 |  | 0.769 |
+| walker |  | 3030 | 144 | listing of 'server/libs' |  |  | 0.773 |
+| walker |  | 3034 | 4 | listing of 'server/libs/commandLineArgs' |  |  | 0.773 |
+| walker |  | 3038 | 4 | listing of 'server/libs/fusejs' |  |  | 0.773 |
+| walker |  | 3045 | 7 | listing of 'server/libs/async' |  |  | 0.773 |
+| walker |  | 3052 | 7 | listing of 'server/libs/bcryptjs' |  |  | 0.773 |
+| walker |  | 3059 | 7 | listing of 'server/libs/dateAndTime' |  |  | 0.773 |
+| walker |  | 3066 | 7 | listing of 'server/libs/fastSort' |  |  | 0.773 |
+| walker |  | 3073 | 7 | listing of 'server/libs/lodash.once' |  |  | 0.773 |
+| walker |  | 3080 | 7 | listing of 'server/libs/memorystore' |  |  | 0.773 |
+| walker |  | 3087 | 7 | listing of 'server/libs/nodeFfprobe' |  |  | 0.773 |
+| walker |  | 3094 | 7 | listing of 'server/libs/nodeStreamZip' |  |  | 0.773 |
+| walker |  | 3101 | 7 | listing of 'server/libs/recursiveReaddirAsync' |  |  | 0.773 |
+| walker |  | 3108 | 7 | listing of 'server/libs/rss' |  |  | 0.773 |
+| walker |  | 3115 | 7 | listing of 'server/libs/sanitizeHtml' |  |  | 0.773 |
+| walker |  | 3122 | 7 | listing of 'server/libs/streamsearch' |  |  | 0.773 |
+| walker |  | 3129 | 7 | listing of 'server/libs/uaParser' |  |  | 0.773 |
+| walker |  | 3136 | 7 | listing of 'server/libs/universalify' |  |  | 0.773 |
+| walker |  | 3143 | 7 | listing of 'server/libs/which' |  |  | 0.773 |
+| walker |  | 3153 | 10 | listing of 'server/libs/jws' |  |  | 0.773 |
+| walker |  | 3164 | 11 | listing of 'server/libs/passportLocal' |  |  | 0.773 |
+| walker |  | 3176 | 12 | listing of 'server/libs/imageType' |  |  | 0.773 |
+| walker |  | 3188 | 12 | listing of 'server/libs/requestIp' |  |  | 0.773 |
+| walker |  | 3201 | 13 | listing of 'server/libs/xml' |  |  | 0.773 |
 | ns | 3214 |  | 191 | client/pages roster (complete SPA route tree) | 2.8 |  | 0.787 |
-| walker |  | 3217 | 15 | listing of 'server/libs/isexe' |  |  | 0.787 |
-| walker |  | 3226 | 9 | listing of 'server/libs/busboy/types' |  |  | 0.787 |
-| walker |  | 3244 | 18 | listing of 'server/libs/readChunk' |  |  | 0.787 |
-| walker |  | 3266 | 22 | listing of 'server/libs/jsonwebtoken' |  |  | 0.787 |
-| walker |  | 3289 | 23 | listing of 'server/libs/umzug' |  |  | 0.787 |
-| walker |  | 3313 | 24 | listing of 'server/libs/jwa' |  |  | 0.787 |
-| walker |  | 3320 | 7 | listing of 'server/libs/jwa/buffer-equal-constant-time' |  |  | 0.787 |
-| walker |  | 3344 | 24 | listing of 'server/libs/libarchive' |  |  | 0.787 |
-| walker |  | 3360 | 16 | listing of 'server/libs/jwa/ecdsa-sig-formatter' |  |  | 0.787 |
+| walker |  | 3215 | 14 | listing of 'server/libs/busboy' |  |  | 0.787 |
+| walker |  | 3230 | 15 | listing of 'server/libs/isexe' |  |  | 0.787 |
+| walker |  | 3239 | 9 | listing of 'server/libs/busboy/types' |  |  | 0.787 |
+| walker |  | 3257 | 18 | listing of 'server/libs/readChunk' |  |  | 0.787 |
+| walker |  | 3279 | 22 | listing of 'server/libs/jsonwebtoken' |  |  | 0.787 |
+| walker |  | 3302 | 23 | listing of 'server/libs/umzug' |  |  | 0.787 |
+| walker |  | 3326 | 24 | listing of 'server/libs/jwa' |  |  | 0.787 |
+| walker |  | 3333 | 7 | listing of 'server/libs/jwa/buffer-equal-constant-time' |  |  | 0.787 |
+| walker |  | 3357 | 24 | listing of 'server/libs/libarchive' |  |  | 0.787 |
+| walker |  | 3373 | 16 | listing of 'server/libs/jwa/ecdsa-sig-formatter' |  |  | 0.787 |
 | ns | 3377 |  | 163 | client component categories + store/plugins/players/mixins rosters | 2.9 |  | 0.795 |
-| walker |  | 3379 | 19 | listing of 'server/libs/jws/lib' |  |  | 0.795 |
-| walker |  | 3416 | 37 | listing of 'server/libs/fsExtra' |  |  | 0.795 |
-| walker |  | 3420 | 4 | listing of 'server/libs/fsExtra/empty' |  |  | 0.795 |
-| walker |  | 3424 | 4 | listing of 'server/libs/fsExtra/fs' |  |  | 0.795 |
-| walker |  | 3428 | 4 | listing of 'server/libs/fsExtra/path-exists' |  |  | 0.795 |
-| walker |  | 3437 | 9 | listing of 'server/libs/fsExtra/remove' |  |  | 0.795 |
-| walker |  | 3446 | 9 | listing of 'server/libs/fsExtra/util' |  |  | 0.795 |
-| walker |  | 3459 | 13 | listing of 'server/libs/fsExtra/copy' |  |  | 0.795 |
-| walker |  | 3472 | 13 | listing of 'server/libs/fsExtra/mkdirs' |  |  | 0.795 |
-| walker |  | 3485 | 13 | listing of 'server/libs/fsExtra/move' |  |  | 0.795 |
-| walker |  | 3509 | 24 | listing of 'server/libs/jsonwebtoken/lib' |  |  | 0.795 |
-| walker |  | 3548 | 39 | listing of 'server/libs/fluentFfmpeg' |  |  | 0.795 |
-| walker |  | 3562 | 14 | listing of 'server/libs/fluentFfmpeg/presets' |  |  | 0.795 |
-| walker |  | 3586 | 24 | listing of 'server/libs/umzug/storage' |  |  | 0.795 |
-| walker |  | 3631 | 45 | listing of 'server/libs/nodeCron' |  |  | 0.795 |
-| walker |  | 3639 | 8 | listing of 'server/libs/nodeCron/background-scheduled-task' |  |  | 0.795 |
+| walker |  | 3392 | 19 | listing of 'server/libs/jws/lib' |  |  | 0.795 |
+| walker |  | 3429 | 37 | listing of 'server/libs/fsExtra' |  |  | 0.795 |
+| walker |  | 3433 | 4 | listing of 'server/libs/fsExtra/empty' |  |  | 0.795 |
+| walker |  | 3437 | 4 | listing of 'server/libs/fsExtra/fs' |  |  | 0.795 |
+| walker |  | 3441 | 4 | listing of 'server/libs/fsExtra/path-exists' |  |  | 0.795 |
+| walker |  | 3450 | 9 | listing of 'server/libs/fsExtra/remove' |  |  | 0.795 |
+| walker |  | 3459 | 9 | listing of 'server/libs/fsExtra/util' |  |  | 0.795 |
+| walker |  | 3472 | 13 | listing of 'server/libs/fsExtra/copy' |  |  | 0.795 |
+| walker |  | 3485 | 13 | listing of 'server/libs/fsExtra/mkdirs' |  |  | 0.795 |
+| walker |  | 3498 | 13 | listing of 'server/libs/fsExtra/move' |  |  | 0.795 |
+| walker |  | 3522 | 24 | listing of 'server/libs/jsonwebtoken/lib' |  |  | 0.795 |
+| walker |  | 3561 | 39 | listing of 'server/libs/fluentFfmpeg' |  |  | 0.795 |
+| walker |  | 3575 | 14 | listing of 'server/libs/fluentFfmpeg/presets' |  |  | 0.795 |
+| walker |  | 3599 | 24 | listing of 'server/libs/umzug/storage' |  |  | 0.795 |
+| walker |  | 3644 | 45 | listing of 'server/libs/nodeCron' |  |  | 0.795 |
+| walker |  | 3652 | 8 | listing of 'server/libs/nodeCron/background-scheduled-task' |  |  | 0.795 |
 | ns | 3665 |  | 288 | test/ tree roster (complete mocha suite) | 2.10 |  | 0.761 |
-| walker |  | 3687 | 48 | listing of 'server/libs/expressFileupload' |  |  | 0.761 |
-| walker |  | 3736 | 49 | listing of 'server/libs/archiver' |  |  | 0.761 |
-| walker |  | 3743 | 7 | listing of 'server/libs/archiver/buffer-crc32' |  |  | 0.761 |
-| walker |  | 3750 | 7 | listing of 'server/libs/archiver/crc32' |  |  | 0.761 |
-| walker |  | 3757 | 7 | listing of 'server/libs/archiver/normalize-path' |  |  | 0.761 |
-| walker |  | 3764 | 7 | listing of 'server/libs/archiver/readdir-glob' |  |  | 0.761 |
-| walker |  | 3771 | 7 | listing of 'server/libs/archiver/zip-stream' |  |  | 0.761 |
-| walker |  | 3782 | 11 | listing of 'server/libs/archiver/lib' |  |  | 0.761 |
-| walker |  | 3790 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.761 |
-| walker |  | 3804 | 14 | listing of 'server/libs/archiver/compress-commons' |  |  | 0.761 |
-| walker |  | 3808 | 4 | listing of 'server/libs/archiver/compress-commons/util' |  |  | 0.761 |
+| walker |  | 3700 | 48 | listing of 'server/libs/expressFileupload' |  |  | 0.761 |
+| walker |  | 3749 | 49 | listing of 'server/libs/archiver' |  |  | 0.761 |
+| walker |  | 3756 | 7 | listing of 'server/libs/archiver/buffer-crc32' |  |  | 0.761 |
+| walker |  | 3763 | 7 | listing of 'server/libs/archiver/crc32' |  |  | 0.761 |
+| walker |  | 3770 | 7 | listing of 'server/libs/archiver/normalize-path' |  |  | 0.761 |
+| walker |  | 3777 | 7 | listing of 'server/libs/archiver/readdir-glob' |  |  | 0.761 |
+| walker |  | 3784 | 7 | listing of 'server/libs/archiver/zip-stream' |  |  | 0.761 |
+| walker |  | 3795 | 11 | listing of 'server/libs/archiver/lib' |  |  | 0.761 |
+| walker |  | 3803 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.761 |
+| walker |  | 3817 | 14 | listing of 'server/libs/archiver/compress-commons' |  |  | 0.761 |
 | ns | 3818 |  | 153 | docs/ OpenAPI spec tree roster (complete) | 2.11 |  | 0.768 |
-| walker |  | 3822 | 14 | listing of 'server/libs/archiver/compress-commons/archivers' |  |  | 0.768 |
-| walker |  | 3844 | 22 | listing of 'server/libs/archiver/crc32-stream' |  |  | 0.768 |
-| walker |  | 3873 | 29 | listing of 'server/libs/fluentFfmpeg/options' |  |  | 0.768 |
-| walker |  | 3903 | 30 | listing of 'server/libs/fsExtra/ensure' |  |  | 0.768 |
-| walker |  | 3920 | 17 | ts names server/libs/jws/lib/tostring.js |  |  | 0.768 |
-| walker |  | 3939 | 19 | ts names server/libs/jsonwebtoken/lib/timespan.js |  |  | 0.768 |
+| walker |  | 3821 | 4 | listing of 'server/libs/archiver/compress-commons/util' |  |  | 0.768 |
+| walker |  | 3835 | 14 | listing of 'server/libs/archiver/compress-commons/archivers' |  |  | 0.768 |
+| walker |  | 3857 | 22 | listing of 'server/libs/archiver/crc32-stream' |  |  | 0.768 |
+| walker |  | 3886 | 29 | listing of 'server/libs/fluentFfmpeg/options' |  |  | 0.768 |
+| walker |  | 3916 | 30 | listing of 'server/libs/fsExtra/ensure' |  |  | 0.768 |
+| walker |  | 3933 | 17 | ts names server/libs/jws/lib/tostring.js |  |  | 0.768 |
+| walker |  | 3952 | 19 | ts names server/libs/jsonwebtoken/lib/timespan.js |  |  | 0.768 |
 | ns | 3962 |  | 144 | server/libs roster: 35 vendored third-party packages | 2.12 |  | 0.775 |
-| walker |  | 3982 | 43 | listing of 'server/libs/nodeCron/convert-expression' |  |  | 0.775 |
+| walker |  | 3995 | 43 | listing of 'server/libs/nodeCron/convert-expression' |  |  | 0.775 |
 | ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.765 |
-| walker |  | 4149 | 167 | listing of 'client/strings' |  |  | 0.765 |
-| walker |  | 4246 | 97 | listing of 'client/components/tables' |  |  | 0.765 |
-| walker |  | 4252 | 6 | listing of 'client/components/tables/collection' |  |  | 0.765 |
-| walker |  | 4258 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.765 |
-| walker |  | 4268 | 10 | listing of 'client/components/tables/library' |  |  | 0.765 |
-| walker |  | 4286 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.765 |
+| walker |  | 4162 | 167 | listing of 'client/strings' |  |  | 0.765 |
+| walker |  | 4259 | 97 | listing of 'client/components/tables' |  |  | 0.765 |
+| walker |  | 4265 | 6 | listing of 'client/components/tables/collection' |  |  | 0.765 |
+| walker |  | 4271 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.765 |
+| walker |  | 4281 | 10 | listing of 'client/components/tables/library' |  |  | 0.765 |
+| walker |  | 4299 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.765 |
 | ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.748 |
-| walker |  | 4450 | 164 | ts decl index.js:1 |  |  | 0.762 |
-| walker |  | 4548 | 98 | listing of 'client/components/widgets' |  |  | 0.763 |
-| walker |  | 4651 | 103 | listing of 'server/libs/watcher' |  |  | 0.763 |
-| walker |  | 4659 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.763 |
-| walker |  | 4671 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.763 |
-| walker |  | 4684 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.763 |
-| walker |  | 4721 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.763 |
+| walker |  | 4463 | 164 | ts decl index.js:1 |  |  | 0.762 |
+| walker |  | 4561 | 98 | listing of 'client/components/widgets' |  |  | 0.763 |
+| walker |  | 4664 | 103 | listing of 'server/libs/watcher' |  |  | 0.763 |
+| walker |  | 4672 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.763 |
+| walker |  | 4684 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.763 |
+| walker |  | 4697 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.763 |
+| walker |  | 4734 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.763 |
 | ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.742 |
-| walker |  | 4835 | 114 | listing of 'client/components/cards' |  |  | 0.742 |
-| walker |  | 4865 | 30 | ts names server/libs/archiver/lib/error.js |  |  | 0.742 |
-| walker |  | 4966 | 101 | docs/README.md section #0 |  |  | 0.742 |
-| walker |  | 4997 | 31 | ts names server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.742 |
-| walker |  | 5028 | 31 | ts names server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.742 |
-| walker |  | 5060 | 32 | ts names server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.742 |
-| walker |  | 5132 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.742 |
-| walker |  | 5139 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.742 |
-| walker |  | 5146 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.742 |
-| walker |  | 5153 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.742 |
+| walker |  | 4848 | 114 | listing of 'client/components/cards' |  |  | 0.742 |
+| walker |  | 4878 | 30 | ts names server/libs/archiver/lib/error.js |  |  | 0.742 |
+| walker |  | 4979 | 101 | docs/README.md section #0 |  |  | 0.742 |
+| walker |  | 5010 | 31 | ts names server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.742 |
+| walker |  | 5041 | 31 | ts names server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.742 |
+| walker |  | 5073 | 32 | ts names server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.742 |
+| walker |  | 5145 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.742 |
+| walker |  | 5152 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.742 |
+| walker |  | 5159 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.724 |
 | ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.724 |
-| walker |  | 5160 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.724 |
-| walker |  | 5167 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.724 |
-| walker |  | 5174 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.724 |
-| walker |  | 5181 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.724 |
-| walker |  | 5188 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.724 |
-| walker |  | 5195 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.724 |
-| walker |  | 5202 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.724 |
-| walker |  | 5209 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.724 |
-| walker |  | 5220 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.724 |
-| walker |  | 5231 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.724 |
-| walker |  | 5246 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.724 |
-| walker |  | 5259 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.724 |
-| walker |  | 5303 | 44 | declaration surface of client/layouts/blank.vue |  |  | 0.724 |
-| walker |  | 5347 | 44 | declaration surface of client/layouts/error.vue |  |  | 0.724 |
-| walker |  | 5391 | 44 | declaration surface of client/pages/account.vue |  |  | 0.724 |
-| walker |  | 5435 | 44 | declaration surface of client/pages/index.vue |  |  | 0.724 |
-| walker |  | 5479 | 44 | declaration surface of client/pages/login.vue |  |  | 0.724 |
+| walker |  | 5166 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.724 |
+| walker |  | 5173 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.724 |
+| walker |  | 5180 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.724 |
+| walker |  | 5187 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.724 |
+| walker |  | 5194 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.724 |
+| walker |  | 5201 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.724 |
+| walker |  | 5208 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.724 |
+| walker |  | 5215 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.724 |
+| walker |  | 5222 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.724 |
+| walker |  | 5233 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.724 |
+| walker |  | 5244 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.724 |
+| walker |  | 5259 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.724 |
+| walker |  | 5272 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.724 |
+| walker |  | 5316 | 44 | declaration surface of client/layouts/blank.vue |  |  | 0.724 |
+| walker |  | 5360 | 44 | declaration surface of client/layouts/error.vue |  |  | 0.724 |
+| walker |  | 5404 | 44 | declaration surface of client/pages/account.vue |  |  | 0.724 |
+| walker |  | 5448 | 44 | declaration surface of client/pages/index.vue |  |  | 0.724 |
+| walker |  | 5492 | 44 | declaration surface of client/pages/login.vue |  |  | 0.724 |
 | ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.707 |
-| walker |  | 5523 | 44 | declaration surface of client/pages/oops.vue |  |  | 0.707 |
-| walker |  | 5868 | 345 | package runtime dependencies in package.json |  |  | 0.730 |
+| walker |  | 5536 | 44 | declaration surface of client/pages/oops.vue |  |  | 0.707 |
+| walker |  | 5881 | 345 | package runtime dependencies in package.json |  |  | 0.730 |
 | ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.714 |
-| walker |  | 5902 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.714 |
-| walker |  | 6049 | 147 | listing of 'client/components/modals' |  |  | 0.714 |
-| walker |  | 6054 | 5 | listing of 'client/components/modals/authors' |  |  | 0.714 |
-| walker |  | 6059 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.714 |
-| walker |  | 6064 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.714 |
-| walker |  | 6070 | 6 | listing of 'client/components/modals/notification' |  |  | 0.714 |
-| walker |  | 6078 | 8 | listing of 'client/components/modals/item' |  |  | 0.714 |
-| walker |  | 6090 | 12 | listing of 'client/components/modals/player' |  |  | 0.714 |
-| walker |  | 6102 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.714 |
-| walker |  | 6117 | 15 | listing of 'client/components/modals/emails' |  |  | 0.714 |
+| walker |  | 5915 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.714 |
+| walker |  | 6062 | 147 | listing of 'client/components/modals' |  |  | 0.714 |
+| walker |  | 6067 | 5 | listing of 'client/components/modals/authors' |  |  | 0.714 |
+| walker |  | 6072 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.714 |
+| walker |  | 6077 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.714 |
+| walker |  | 6083 | 6 | listing of 'client/components/modals/notification' |  |  | 0.714 |
+| walker |  | 6091 | 8 | listing of 'client/components/modals/item' |  |  | 0.714 |
+| walker |  | 6103 | 12 | listing of 'client/components/modals/player' |  |  | 0.714 |
+| walker |  | 6115 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.714 |
 | ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.703 |
-| walker |  | 6133 | 16 | listing of 'client/components/modals/collections' |  |  | 0.703 |
-| walker |  | 6150 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.703 |
-| walker |  | 6185 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.703 |
-| walker |  | 6195 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.703 |
-| walker |  | 6232 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.703 |
-| walker |  | 6264 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.703 |
-| walker |  | 6319 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.703 |
-| walker |  | 6323 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.703 |
-| walker |  | 6330 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.703 |
-| walker |  | 6348 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.703 |
-| walker |  | 6387 | 39 | ts names server/libs/jws/lib/sign-stream.js |  |  | 0.703 |
-| walker |  | 6426 | 39 | ts names server/libs/jws/lib/verify-stream.js |  |  | 0.703 |
-| walker |  | 6453 | 27 | listing of 'test/server' |  |  | 0.704 |
-| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.690 |
-| walker |  | 6475 | 22 | listing of 'test/server/managers' |  |  | 0.692 |
-| walker |  | 6629 | 154 | listing of 'client/components/ui' |  |  | 0.695 |
+| walker |  | 6130 | 15 | listing of 'client/components/modals/emails' |  |  | 0.703 |
+| walker |  | 6146 | 16 | listing of 'client/components/modals/collections' |  |  | 0.703 |
+| walker |  | 6163 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.703 |
+| walker |  | 6198 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.703 |
+| walker |  | 6208 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.703 |
+| walker |  | 6245 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.703 |
+| walker |  | 6277 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.703 |
+| walker |  | 6332 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.703 |
+| walker |  | 6336 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.703 |
+| walker |  | 6343 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.703 |
+| walker |  | 6361 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.703 |
+| walker |  | 6400 | 39 | ts names server/libs/jws/lib/sign-stream.js |  |  | 0.703 |
+| walker |  | 6439 | 39 | ts names server/libs/jws/lib/verify-stream.js |  |  | 0.703 |
+| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.689 |
+| walker |  | 6466 | 27 | listing of 'test/server' |  |  | 0.690 |
+| walker |  | 6488 | 22 | listing of 'test/server/managers' |  |  | 0.692 |
+| walker |  | 6642 | 154 | listing of 'client/components/ui' |  |  | 0.695 |
 | ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.680 |
-| walker |  | 6948 | 319 | headings outline in readme.md |  |  | 0.687 |
-| walker |  | 6948 | 0 | readme.md section #49 |  |  | 0.687 |
-| walker |  | 6971 | 23 | readme.md section #50 |  |  | 0.687 |
-| walker |  | 6985 | 14 | readme.md section #9 |  |  | 0.679 |
+| walker |  | 6961 | 319 | headings outline in readme.md |  |  | 0.687 |
+| walker |  | 6961 | 0 | readme.md section #49 |  |  | 0.687 |
+| walker |  | 6984 | 23 | readme.md section #50 |  |  | 0.687 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.679 |
-| walker |  | 6998 | 13 | readme.md section #8 |  |  | 0.680 |
-| walker |  | 7013 | 15 | readme.md section #2 |  |  | 0.681 |
-| walker |  | 7028 | 15 | readme.md section #4 |  |  | 0.682 |
-| walker |  | 7043 | 15 | readme.md section #3 |  |  | 0.684 |
-| walker |  | 7058 | 15 | readme.md section #5 |  |  | 0.686 |
-| walker |  | 7073 | 15 | readme.md section #10 |  |  | 0.686 |
-| walker |  | 7087 | 14 | readme.md section #11 |  |  | 0.686 |
+| walker |  | 6998 | 14 | readme.md section #9 |  |  | 0.679 |
+| walker |  | 7011 | 13 | readme.md section #8 |  |  | 0.680 |
+| walker |  | 7026 | 15 | readme.md section #2 |  |  | 0.681 |
+| walker |  | 7041 | 15 | readme.md section #4 |  |  | 0.682 |
+| walker |  | 7056 | 15 | readme.md section #3 |  |  | 0.684 |
+| walker |  | 7071 | 15 | readme.md section #5 |  |  | 0.686 |
+| walker |  | 7086 | 15 | readme.md section #10 |  |  | 0.686 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.682 |
-| walker |  | 7121 | 34 | readme.md section #24 |  |  | 0.682 |
-| walker |  | 7137 | 16 | readme.md section #16 |  |  | 0.683 |
-| walker |  | 7154 | 17 | readme.md section #14 |  |  | 0.685 |
-| walker |  | 7170 | 16 | readme.md section #13 |  |  | 0.686 |
-| walker |  | 7198 | 28 | readme.md section #71 |  |  | 0.686 |
-| walker |  | 7216 | 18 | readme.md section #7 |  |  | 0.689 |
-| walker |  | 7233 | 17 | readme.md section #6 |  |  | 0.691 |
-| walker |  | 7245 | 12 | readme.md section #63 |  |  | 0.691 |
-| walker |  | 7267 | 22 | readme.md section #18 |  |  | 0.691 |
-| walker |  | 7291 | 24 | readme.md section #12 |  |  | 0.694 |
-| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.688 |
-| walker |  | 7365 | 74 | readme.md section #23 |  |  | 0.688 |
-| walker |  | 7385 | 20 | readme.md section #46 |  |  | 0.688 |
-| walker |  | 7417 | 32 | readme.md section #17 |  |  | 0.688 |
-| walker |  | 7450 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.688 |
-| walker |  | 7483 | 33 | listing of 'test/server/utils' |  |  | 0.692 |
-| walker |  | 7506 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.695 |
-| walker |  | 7527 | 21 | readme.md section #39 |  |  | 0.695 |
-| walker |  | 7565 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.695 |
-| walker |  | 7568 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.695 |
-| walker |  | 7586 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.695 |
-| walker |  | 7597 | 11 | ts names server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams/stream.js |  |  | 0.695 |
-| walker |  | 7633 | 36 | readme.md section #1 |  |  | 0.700 |
-| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.685 |
-| walker |  | 7677 | 44 | declaration surface of client/components/app/BookShelfCategorized.vue |  |  | 0.685 |
-| walker |  | 7721 | 44 | declaration surface of client/components/app/ConfigSideNav.vue |  |  | 0.685 |
-| walker |  | 7765 | 44 | declaration surface of client/components/cards/AuthorCard.vue |  |  | 0.685 |
-| walker |  | 7809 | 44 | declaration surface of client/components/cards/BookMatchCard.vue |  |  | 0.685 |
-| walker |  | 7853 | 44 | declaration surface of client/components/cards/GroupCard.vue |  |  | 0.685 |
-| walker |  | 7897 | 44 | declaration surface of client/components/cards/LazyCollectionCard.vue |  |  | 0.685 |
-| walker |  | 7941 | 44 | declaration surface of client/components/cards/LazyPlaylistCard.vue |  |  | 0.685 |
+| walker |  | 7100 | 14 | readme.md section #11 |  |  | 0.682 |
+| walker |  | 7134 | 34 | readme.md section #24 |  |  | 0.682 |
+| walker |  | 7150 | 16 | readme.md section #16 |  |  | 0.683 |
+| walker |  | 7167 | 17 | readme.md section #14 |  |  | 0.685 |
+| walker |  | 7183 | 16 | readme.md section #13 |  |  | 0.686 |
+| walker |  | 7211 | 28 | readme.md section #71 |  |  | 0.686 |
+| walker |  | 7229 | 18 | readme.md section #7 |  |  | 0.689 |
+| walker |  | 7246 | 17 | readme.md section #6 |  |  | 0.691 |
+| walker |  | 7258 | 12 | readme.md section #63 |  |  | 0.691 |
+| walker |  | 7280 | 22 | readme.md section #18 |  |  | 0.691 |
+| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.686 |
+| walker |  | 7304 | 24 | readme.md section #12 |  |  | 0.688 |
+| walker |  | 7378 | 74 | readme.md section #23 |  |  | 0.688 |
+| walker |  | 7398 | 20 | readme.md section #46 |  |  | 0.688 |
+| walker |  | 7430 | 32 | readme.md section #17 |  |  | 0.688 |
+| walker |  | 7463 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.688 |
+| walker |  | 7496 | 33 | listing of 'test/server/utils' |  |  | 0.692 |
+| walker |  | 7519 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.695 |
+| walker |  | 7540 | 21 | readme.md section #39 |  |  | 0.695 |
+| walker |  | 7578 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.695 |
+| walker |  | 7581 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.695 |
+| walker |  | 7599 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.695 |
+| walker |  | 7610 | 11 | ts names server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams/stream.js |  |  | 0.695 |
+| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.680 |
+| walker |  | 7646 | 36 | readme.md section #1 |  |  | 0.685 |
+| walker |  | 7690 | 44 | declaration surface of client/components/app/BookShelfCategorized.vue |  |  | 0.685 |
+| walker |  | 7734 | 44 | declaration surface of client/components/app/ConfigSideNav.vue |  |  | 0.685 |
+| walker |  | 7778 | 44 | declaration surface of client/components/cards/AuthorCard.vue |  |  | 0.685 |
+| walker |  | 7822 | 44 | declaration surface of client/components/cards/BookMatchCard.vue |  |  | 0.685 |
+| walker |  | 7866 | 44 | declaration surface of client/components/cards/GroupCard.vue |  |  | 0.685 |
+| walker |  | 7910 | 44 | declaration surface of client/components/cards/LazyCollectionCard.vue |  |  | 0.685 |
+| walker |  | 7954 | 44 | declaration surface of client/components/cards/LazyPlaylistCard.vue |  |  | 0.685 |
 | ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.673 |
-| walker |  | 7985 | 44 | declaration surface of client/components/cards/LazySeriesCard.vue |  |  | 0.673 |
-| walker |  | 8029 | 44 | declaration surface of client/components/cards/NarratorCard.vue |  |  | 0.673 |
-| walker |  | 8073 | 44 | declaration surface of client/components/cards/NotificationCard.vue |  |  | 0.673 |
-| walker |  | 8117 | 44 | declaration surface of client/components/cards/PodcastFeedSummaryCard.vue |  |  | 0.673 |
-| walker |  | 8161 | 44 | declaration surface of client/components/content/LibraryItemDetails.vue |  |  | 0.673 |
-| walker |  | 8205 | 44 | declaration surface of client/components/controls/FilterSelect.vue |  |  | 0.673 |
-| walker |  | 8249 | 44 | declaration surface of client/components/controls/PlaybackSpeedControl.vue |  |  | 0.673 |
-| walker |  | 8293 | 44 | declaration surface of client/components/controls/SortSelect.vue |  |  | 0.673 |
+| walker |  | 7998 | 44 | declaration surface of client/components/cards/LazySeriesCard.vue |  |  | 0.673 |
+| walker |  | 8042 | 44 | declaration surface of client/components/cards/NarratorCard.vue |  |  | 0.673 |
+| walker |  | 8086 | 44 | declaration surface of client/components/cards/NotificationCard.vue |  |  | 0.673 |
+| walker |  | 8130 | 44 | declaration surface of client/components/cards/PodcastFeedSummaryCard.vue |  |  | 0.673 |
+| walker |  | 8174 | 44 | declaration surface of client/components/content/LibraryItemDetails.vue |  |  | 0.673 |
+| walker |  | 8218 | 44 | declaration surface of client/components/controls/FilterSelect.vue |  |  | 0.673 |
+| walker |  | 8262 | 44 | declaration surface of client/components/controls/PlaybackSpeedControl.vue |  |  | 0.673 |
+| walker |  | 8306 | 44 | declaration surface of client/components/controls/SortSelect.vue |  |  | 0.673 |
 | ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.661 |
-| walker |  | 8337 | 44 | declaration surface of client/components/controls/VolumeControl.vue |  |  | 0.661 |
-| walker |  | 8381 | 44 | declaration surface of client/components/covers/AuthorImage.vue |  |  | 0.661 |
-| walker |  | 8425 | 44 | declaration surface of client/components/covers/BookCover.vue |  |  | 0.661 |
-| walker |  | 8469 | 44 | declaration surface of client/components/covers/CollectionCover.vue |  |  | 0.661 |
-| walker |  | 8513 | 44 | declaration surface of client/components/covers/GroupCover.vue |  |  | 0.661 |
-| walker |  | 8557 | 44 | declaration surface of client/components/covers/PlaylistCover.vue |  |  | 0.661 |
-| walker |  | 8601 | 44 | declaration surface of client/components/covers/PreviewCover.vue |  |  | 0.661 |
+| walker |  | 8350 | 44 | declaration surface of client/components/controls/VolumeControl.vue |  |  | 0.661 |
+| walker |  | 8394 | 44 | declaration surface of client/components/covers/AuthorImage.vue |  |  | 0.661 |
+| walker |  | 8438 | 44 | declaration surface of client/components/covers/BookCover.vue |  |  | 0.661 |
+| walker |  | 8482 | 44 | declaration surface of client/components/covers/CollectionCover.vue |  |  | 0.661 |
+| walker |  | 8526 | 44 | declaration surface of client/components/covers/GroupCover.vue |  |  | 0.661 |
+| walker |  | 8570 | 44 | declaration surface of client/components/covers/PlaylistCover.vue |  |  | 0.661 |
 | ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.650 |
-| walker |  | 8645 | 44 | declaration surface of client/components/modals/AccountModal.vue |  |  | 0.650 |
-| walker |  | 8689 | 44 | declaration surface of client/components/modals/AddCustomMetadataProviderModal.vue |  |  | 0.650 |
-| walker |  | 8733 | 44 | declaration surface of client/components/modals/ApiKeyCreatedModal.vue |  |  | 0.650 |
-| walker |  | 8777 | 44 | declaration surface of client/components/modals/ApiKeyModal.vue |  |  | 0.650 |
-| walker |  | 8821 | 44 | declaration surface of client/components/modals/AudioFileDataModal.vue |  |  | 0.650 |
+| walker |  | 8614 | 44 | declaration surface of client/components/covers/PreviewCover.vue |  |  | 0.650 |
+| walker |  | 8658 | 44 | declaration surface of client/components/modals/AccountModal.vue |  |  | 0.650 |
+| walker |  | 8702 | 44 | declaration surface of client/components/modals/AddCustomMetadataProviderModal.vue |  |  | 0.650 |
+| walker |  | 8746 | 44 | declaration surface of client/components/modals/ApiKeyCreatedModal.vue |  |  | 0.650 |
+| walker |  | 8790 | 44 | declaration surface of client/components/modals/ApiKeyModal.vue |  |  | 0.650 |
+| walker |  | 8834 | 44 | declaration surface of client/components/modals/AudioFileDataModal.vue |  |  | 0.650 |
 | ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.642 |
-| walker |  | 8865 | 44 | declaration surface of client/components/modals/BackupScheduleModal.vue |  |  | 0.642 |
-| walker |  | 8909 | 44 | declaration surface of client/components/modals/BatchQuickMatchModel.vue |  |  | 0.642 |
-| walker |  | 8953 | 44 | declaration surface of client/components/modals/BookmarksModal.vue |  |  | 0.642 |
-| walker |  | 8997 | 44 | declaration surface of client/components/modals/Dialog.vue |  |  | 0.642 |
-| walker |  | 9041 | 44 | declaration surface of client/components/modals/EditSeriesInputInnerModal.vue |  |  | 0.642 |
+| walker |  | 8878 | 44 | declaration surface of client/components/modals/BackupScheduleModal.vue |  |  | 0.642 |
+| walker |  | 8922 | 44 | declaration surface of client/components/modals/BatchQuickMatchModel.vue |  |  | 0.642 |
+| walker |  | 8966 | 44 | declaration surface of client/components/modals/BookmarksModal.vue |  |  | 0.642 |
+| walker |  | 9010 | 44 | declaration surface of client/components/modals/Dialog.vue |  |  | 0.642 |
 | ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.636 |
-| walker |  | 9085 | 44 | declaration surface of client/components/modals/ListeningSessionModal.vue |  |  | 0.636 |
-| walker |  | 9129 | 44 | declaration surface of client/components/modals/Modal.vue |  |  | 0.636 |
-| walker |  | 9173 | 44 | declaration surface of client/components/modals/PlayerSettingsModal.vue |  |  | 0.636 |
-| walker |  | 9217 | 44 | declaration surface of client/components/modals/RawCoverPreviewModal.vue |  |  | 0.636 |
-| walker |  | 9261 | 44 | declaration surface of client/components/modals/ShareModal.vue |  |  | 0.636 |
+| walker |  | 9054 | 44 | declaration surface of client/components/modals/EditSeriesInputInnerModal.vue |  |  | 0.636 |
+| walker |  | 9098 | 44 | declaration surface of client/components/modals/ListeningSessionModal.vue |  |  | 0.636 |
+| walker |  | 9142 | 44 | declaration surface of client/components/modals/Modal.vue |  |  | 0.636 |
+| walker |  | 9186 | 44 | declaration surface of client/components/modals/PlayerSettingsModal.vue |  |  | 0.636 |
+| walker |  | 9230 | 44 | declaration surface of client/components/modals/RawCoverPreviewModal.vue |  |  | 0.636 |
+| walker |  | 9274 | 44 | declaration surface of client/components/modals/ShareModal.vue |  |  | 0.636 |
 | ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.649 |
-| walker |  | 9305 | 44 | declaration surface of client/components/modals/SleepTimerModal.vue |  |  | 0.649 |
-| walker |  | 9349 | 44 | declaration surface of client/components/modals/UploadImageModal.vue |  |  | 0.649 |
-| walker |  | 9393 | 44 | declaration surface of client/components/player/PlayerPlaybackControls.vue |  |  | 0.649 |
-| walker |  | 9437 | 44 | declaration surface of client/components/player/PlayerTrackBar.vue |  |  | 0.649 |
-| walker |  | 9481 | 44 | declaration surface of client/components/prompt/Dialog.vue |  |  | 0.649 |
-| walker |  | 9525 | 44 | declaration surface of client/components/stats/DailyListeningChart.vue |  |  | 0.649 |
+| walker |  | 9318 | 44 | declaration surface of client/components/modals/SleepTimerModal.vue |  |  | 0.649 |
+| walker |  | 9362 | 44 | declaration surface of client/components/modals/UploadImageModal.vue |  |  | 0.649 |
+| walker |  | 9406 | 44 | declaration surface of client/components/player/PlayerPlaybackControls.vue |  |  | 0.649 |
+| walker |  | 9450 | 44 | declaration surface of client/components/player/PlayerTrackBar.vue |  |  | 0.649 |
+| walker |  | 9494 | 44 | declaration surface of client/components/prompt/Dialog.vue |  |  | 0.649 |
+| walker |  | 9538 | 44 | declaration surface of client/components/stats/DailyListeningChart.vue |  |  | 0.649 |
 | ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.644 |
-| walker |  | 9569 | 44 | declaration surface of client/components/stats/Heatmap.vue |  |  | 0.644 |
-| walker |  | 9613 | 44 | declaration surface of client/components/stats/PreviewIcons.vue |  |  | 0.644 |
-| walker |  | 9657 | 44 | declaration surface of client/components/stats/YearInReview.vue |  |  | 0.644 |
-| walker |  | 9701 | 44 | declaration surface of client/components/stats/YearInReviewBanner.vue |  |  | 0.644 |
-| walker |  | 9745 | 44 | declaration surface of client/components/stats/YearInReviewServer.vue |  |  | 0.644 |
+| walker |  | 9582 | 44 | declaration surface of client/components/stats/Heatmap.vue |  |  | 0.644 |
+| walker |  | 9626 | 44 | declaration surface of client/components/stats/PreviewIcons.vue |  |  | 0.644 |
+| walker |  | 9670 | 44 | declaration surface of client/components/stats/YearInReview.vue |  |  | 0.644 |
+| walker |  | 9714 | 44 | declaration surface of client/components/stats/YearInReviewBanner.vue |  |  | 0.644 |
+| walker |  | 9758 | 44 | declaration surface of client/components/stats/YearInReviewServer.vue |  |  | 0.644 |
 | ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.641 |
-| walker |  | 9789 | 44 | declaration surface of client/components/stats/YearInReviewShort.vue |  |  | 0.641 |
-| walker |  | 9833 | 44 | declaration surface of client/components/tables/AudioTracksTableRow.vue |  |  | 0.641 |
-| walker |  | 9877 | 44 | declaration surface of client/components/tables/ChaptersTable.vue |  |  | 0.641 |
+| walker |  | 9802 | 44 | declaration surface of client/components/stats/YearInReviewShort.vue |  |  | 0.641 |
+| walker |  | 9846 | 44 | declaration surface of client/components/tables/AudioTracksTableRow.vue |  |  | 0.641 |
+| walker |  | 9890 | 44 | declaration surface of client/components/tables/ChaptersTable.vue |  |  | 0.641 |
 | ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.642 |
-| walker |  | 9921 | 44 | declaration surface of client/components/tables/EbookFilesTable.vue |  |  | 0.642 |
-| walker |  | 9965 | 44 | declaration surface of client/components/tables/EbookFilesTableRow.vue |  |  | 0.642 |
+| walker |  | 9934 | 44 | declaration surface of client/components/tables/EbookFilesTable.vue |  |  | 0.642 |
+| walker |  | 9978 | 44 | declaration surface of client/components/tables/EbookFilesTableRow.vue |  |  | 0.642 |
