@@ -13,8 +13,7 @@
 //!   cover, when 2..=[`MAX_OUTLINE_HEADINGS`] rows fit
 //!   [`MAX_OUTLINE_HEADING_BYTES`]. Predecessor: the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
-//!   an intro plus its H2s). Under an emitted outline a large H2 with
-//!   H3s splits per H3, and any oversize section splits into a head
+//!   an intro plus its H2s); an oversize section splits into a head
 //!   chunk plus chained `OversizeTail` chunks. Predecessor: the
 //!   outline, else the headline.
 //!
@@ -46,12 +45,7 @@ const MAX_OUTLINE_HEADINGS: usize = 30;
 /// Source-byte cap on the outline's heading content (~400 tokens).
 const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
-/// Minimum H2 source bytes to split into H3 sub-sections.
-const H2_SPLIT_BYTES: usize = 600;
-
-/// Value multiplier for split children (`H3Child`) and headingless
-/// non-README bodies (`BodyBlock`) — a child compensates for its
-/// smaller marginal cost.
+/// Value multiplier for headingless non-README bodies (`BodyBlock`).
 const CHILD_SIGNAL_SCALE: f64 = 0.60;
 
 /// Token threshold above which an otherwise-unsplit section is
@@ -400,9 +394,7 @@ fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.3, 0.5, 0.5, path_depth_factor(file, ctx))
 }
 
-/// Per-section value from the file's [`section_base_value`]. Child
-/// ranges scale the parent's value so they don't over-rank once cost
-/// drops. `Intro` keeps full weight.
+/// Per-section value from the file's [`section_base_value`].
 fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
     let mut parent = base;
     if readme {
@@ -411,13 +403,9 @@ fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
     if range.is_reference_usage_section {
         parent *= REFERENCE_USAGE_SECTION_FACTOR;
     }
-    // A reference-vocabulary README H3 (`### Colors`, `### Modifiers`)
-    // is a top-rank catalog row in its own right, not H3 fan-out noise —
-    // it skips the child scale.
     match range.kind {
-        SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child if range.is_reference_usage_section => parent,
-        SectionKind::H3Child | SectionKind::BodyBlock => parent * CHILD_SIGNAL_SCALE,
+        SectionKind::Whole => parent,
+        SectionKind::BodyBlock => parent * CHILD_SIGNAL_SCALE,
         SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
         SectionKind::LedeBody => parent,
     }
@@ -1248,8 +1236,7 @@ struct SectionRange {
     end: usize,
     kind: SectionKind,
     h2_index: usize,
-    /// README-only: this range's own (or parent H2's, for
-    /// `Whole`/`Intro`) section is a code-dominant canonical usage demo
+    /// README-only: this range's section is a code-dominant canonical usage demo
     /// ([`is_canonical_usage_h2`]), or is titled in the reference/usage
     /// vocabulary ([`is_reference_usage_title`]) with a compact,
     /// structured body. Earns [`REFERENCE_USAGE_SECTION_FACTOR`] and
@@ -1277,10 +1264,6 @@ impl SectionRange {
 enum SectionKind {
     /// Un-split H2 (or synthetic H1-unwrap intro).
     Whole,
-    /// H2 heading + prelude before its first sub-section.
-    Intro,
-    /// One H3 sub-section under a split H2.
-    H3Child,
     /// A headingless non-README file's body.
     BodyBlock,
     /// Predecessor-chained tail chunk of an oversize head-split.
@@ -1302,10 +1285,7 @@ fn is_catalog_line(line: &str) -> bool {
             .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
-/// Section ranges for batching. A large H2 with two or more H3s (under
-/// an emitted `HeadingsOutline`, which renders the heading rows the
-/// split drops) expands to an optional `Intro` plus one `H3Child` per
-/// H3. Other top-level entries emit one `Whole`. Every range is
+/// Section ranges for batching: one `Whole` per top-level entry,
 /// head-split when oversize.
 fn logical_sections(
     file: &Path,
@@ -1342,8 +1322,6 @@ fn logical_sections(
                 );
             }
             TopLevelEntry::H2Section { node, start, end } => {
-                let bytes = node.end_byte() - node.start_byte();
-                let structural_split_gate = outline_emits && bytes >= H2_SPLIT_BYTES;
                 // README H2 that is either a code-dominant canonical
                 // usage demo, or titled in the reference/usage
                 // vocabulary with a non-trivial but compact body (so
@@ -1355,27 +1333,14 @@ fn logical_sections(
                     && (is_canonical_usage_h2(*node, source)
                         || (is_reference_usage_title(*node, source)
                             && reference_usage_body_ok(section_body(*node, None, source))));
-
-                let h3s = if structural_split_gate {
-                    direct_h3_children(*node)
-                } else {
-                    Vec::new()
-                };
-                if h3s.len() >= 2 {
-                    push_intro(&mut out, *node, h3s[0], h2_idx, source);
-                    for h3 in &h3s {
-                        push_h3_child_or_body_blocks(&mut out, *h3, h2_idx, source);
-                    }
-                } else {
-                    push_whole_or_head_split(
-                        &mut out,
-                        &src_lines,
-                        SectionRange {
-                            is_reference_usage_section: reference_h2,
-                            ..SectionRange::new(*start, *end, SectionKind::Whole, h2_idx)
-                        },
-                    );
-                }
+                push_whole_or_head_split(
+                    &mut out,
+                    &src_lines,
+                    SectionRange {
+                        is_reference_usage_section: reference_h2,
+                        ..SectionRange::new(*start, *end, SectionKind::Whole, h2_idx)
+                    },
+                );
             }
         }
     }
@@ -1651,71 +1616,6 @@ fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], hea
     }
 }
 
-/// Append an `Intro` range covering the H2 heading + prelude before
-/// `first_child` (the first H3). A prelude
-/// with no substantive non-heading content is skipped as a zero-cost
-/// duplicate of the outline's own heading row.
-fn push_intro<'a>(
-    out: &mut Vec<SectionRange>,
-    h2_section: Node<'a>,
-    first_child: Node<'a>,
-    h2_idx: usize,
-    source: &str,
-) {
-    let body = section_body(h2_section, Some(first_child), source);
-    if body.trim().is_empty() {
-        return;
-    }
-    // The H2 title carries the reference/usage match; the prelude
-    // before the first H3 inherits it. The compact-body gate measures
-    // just the prelude rows (the whole split H2 is large by
-    // construction). README-only — the caller is gated.
-    out.push(SectionRange {
-        is_reference_usage_section: is_reference_usage_title(h2_section, source)
-            && reference_usage_body_ok(body),
-        ..SectionRange::new(
-            h2_section.start_position().row + 1,
-            first_child.start_position().row,
-            SectionKind::Intro,
-            h2_idx,
-        )
-    });
-}
-
-/// The H3 split only runs under an emitted outline, so every H3 heading
-/// row already has an owner there.
-fn push_h3_child_or_body_blocks(
-    out: &mut Vec<SectionRange>,
-    h3_section: Node<'_>,
-    h2_idx: usize,
-    source: &str,
-) {
-    let body = section_body(h3_section, None, source);
-    if body.trim().is_empty() {
-        return;
-    }
-    // The H3's OWN title carries the reference/usage match (e.g.
-    // `### Colors`, `### Default preset`). Same gates as the H2 path.
-    let (start, end) = node_row_range(h3_section, source);
-    let src_lines: Vec<&str> = source.lines().collect();
-    push_whole_or_head_split(
-        out,
-        &src_lines,
-        SectionRange {
-            is_reference_usage_section: is_reference_usage_title(h3_section, source)
-                && reference_usage_body_ok(body),
-            ..SectionRange::new(start, end, SectionKind::H3Child, h2_idx)
-        },
-    );
-}
-
-fn node_row_range(node: Node, source: &str) -> (usize, usize) {
-    (
-        node.start_position().row + 1,
-        node_end_row_trimmed(node, source) + 1,
-    )
-}
-
 /// One entry in the un-split top-level section list. `SyntheticIntro`
 /// is the row range carved out by H1-unwrap to preserve the H1 heading
 /// and the prelude before the first H2 (a virtual section inside the
@@ -1784,18 +1684,6 @@ fn is_code_block(kind: &str) -> bool {
     matches!(kind, "fenced_code_block" | "indented_code_block")
 }
 
-/// Direct H3-section children of an H2 section node. Tree-sitter-md
-/// nests sections by heading level, so an H2's H3 children are direct
-/// `section` children whose first heading is level 3.
-fn direct_h3_children<'a>(h2_section: Node<'a>) -> Vec<Node<'a>> {
-    let mut cur = h2_section.walk();
-    h2_section
-        .children(&mut cur)
-        .filter(|c| c.kind() == "section")
-        .filter(|c| first_heading_child(*c).is_some_and(|h| heading_level(h) == 3))
-        .collect()
-}
-
 /// README H2 sections worth a canonical-usage boost: title is one of
 /// the canonical-demo markers (`## Usage` / `## Sample usage` /
 /// `## Example(s)` / `## Quick start` / `## Getting started` /
@@ -1833,8 +1721,8 @@ fn is_canonical_usage_title_core(core: &str) -> bool {
 }
 
 /// README reference/usage sections worth the modest
-/// [`REFERENCE_USAGE_SECTION_FACTOR`]: title (H2 or H3, taken from the
-/// section's own first heading) matches a tight reference/usage
+/// [`REFERENCE_USAGE_SECTION_FACTOR`]: title (taken from the section's
+/// own first heading) matches a tight reference/usage
 /// vocabulary. Unlike [`is_canonical_usage_h2`] this is NOT gated on
 /// code dominance — the point is to lift prose/list/table reference
 /// sections (option tables, color/modifier lists, environment-variable
@@ -1891,8 +1779,8 @@ fn is_reference_usage_title_core(core: &str) -> bool {
 const REFERENCE_USAGE_MAX_BODY_BYTES: usize = 1500;
 
 /// Source text of `section` after its heading, up to the start of
-/// `until` (a child the body stops at, e.g. the first H3 of a split H2)
-/// or the section's end. Empty for a section without a heading.
+/// `until` (a child the body stops at, e.g. an H1's first H2) or the
+/// section's end. Empty for a section without a heading.
 fn section_body<'a>(section: Node, until: Option<Node>, source: &'a str) -> &'a str {
     let Some(heading) = first_heading_child(section) else {
         return "";
@@ -2811,121 +2699,13 @@ mod tests {
         );
     }
 
-    // --- H3-splitting tests (logical_sections) ---
+    // --- logical_sections tests ---
 
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
         let file = PathBuf::from(file);
         let gates = derive_outline_gates(&file, &tree, source);
         logical_sections(&file, &tree, source, gates.emits)
-    }
-
-    /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear
-    /// `H2_SPLIT_BYTES`. Returns the source string and the row of the
-    /// first `### Sub` heading.
-    fn make_split_h2_source(prefix: &str, h3_count: usize, filler_per_h3: usize) -> String {
-        let mut s = String::from(prefix);
-        for i in 0..h3_count {
-            s.push_str(&format!("\n### Sub {i}\n\n"));
-            for _ in 0..filler_per_h3 {
-                s.push_str(
-                    "Some prose content with substance to it. \
-                            More words to fill out the section body. \
-                            Even more words. Plenty of bytes here.\n",
-                );
-            }
-        }
-        s
-    }
-
-    #[test]
-    fn markdown_logical_sections_kinds_table() {
-        let cases: &[(&str, &str, String, Vec<SectionKind>)] = &[
-            // README with one H1 wrapping one H2 with two H3 children, body
-            // large enough to clear `H2_SPLIT_BYTES`. Should return one
-            // `Whole` (the H1-unwrap intro) plus two H3Child ranges. The H2
-            // intro range is dropped (heading-only after the H2).
-            (
-                "markdown_h2_split_intro_plus_h3_subsections",
-                "README.md",
-                make_split_h2_source("# Title\n\nTagline.\n\n## Usage", 2, 6),
-                vec![
-                    SectionKind::Whole,   // H1-unwrap intro
-                    SectionKind::H3Child, // ### Sub 0
-                    SectionKind::H3Child, // ### Sub 1
-                ],
-            ),
-            // Substantive intro body — H2 heading followed by a real paragraph
-            // before the first H3 — must keep the Intro range.
-            (
-                "markdown_h2_intro_kept_when_body_substantive",
-                "README.md",
-                make_split_h2_source(
-                    "# Title\n\nTagline.\n\n## Setup\n\n\
-                      Real prose intro before any subheading.\n\
-                      A second sentence makes it substantive.",
-                    2,
-                    6,
-                ),
-                vec![
-                    SectionKind::Whole,
-                    SectionKind::Intro,
-                    SectionKind::H3Child,
-                    SectionKind::H3Child,
-                ],
-            ),
-            // H2 with only one H3 child stays a `Whole`. The split rule
-            // requires ≥2 H3 children.
-            (
-                "markdown_h2_no_split_one_h3",
-                "README.md",
-                make_split_h2_source("# Title\n\nTagline.\n\n## Usage", 1, 6),
-                vec![SectionKind::Whole, SectionKind::Whole],
-            ),
-            // Splittable shape but section bytes < `H2_SPLIT_BYTES` stays one
-            // `Whole` range.
-            (
-                "markdown_h2_no_split_under_threshold",
-                "README.md",
-                make_split_h2_source("# Title\n\nT.\n\n## Usage", 2, 0),
-                vec![SectionKind::Whole, SectionKind::Whole],
-            ),
-            // Doc page (non-README) with H3 children splits too.
-            (
-                "markdown_h2_split_non_readme_doc_page",
-                "docs/setup.md",
-                make_split_h2_source(
-                    "## Setup\n\nIntro paragraph that is real prose.\n\
-                      A second line so the intro body counts as substantive.",
-                    2,
-                    6,
-                ),
-                vec![
-                    SectionKind::Intro,
-                    SectionKind::H3Child,
-                    SectionKind::H3Child,
-                ],
-            ),
-        ];
-
-        for (row_no, (case, file, src, expected)) in cases.iter().enumerate() {
-            if *case == "markdown_h2_no_split_under_threshold" {
-                assert!(
-                    src.len() < 600,
-                    "{case} row {}: test fixture must be under threshold; got {} bytes",
-                    row_no + 1,
-                    src.len()
-                );
-            }
-            let ranges = sections(file, src);
-            let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-            assert_eq!(
-                kinds.as_slice(),
-                expected.as_slice(),
-                "{case} row {}: section kinds mismatch; ranges={ranges:?}",
-                row_no + 1
-            );
-        }
     }
 
     #[test]

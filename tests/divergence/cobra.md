@@ -210,10 +210,9 @@ Score(3000)=0.572 I=0.768 C=0.426 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 9430 | 30 | go doc zsh_completions.go:31 |  |  | 0.530 |
 | walker |  | 9551 | 121 | go decl doc/yaml_docs.go:37 |  |  | 0.531 |
 | ns | 9563 |  | 237 | doc/: the YAML document schema and the shared helpers | 9.3 |  | 0.539 |
-| walker |  | 9572 | 21 | go body shell_completions.go:38 |  |  | 0.539 |
 | ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.536 |
-| walker |  | 9784 | 212 | go decl command.go:54 |  |  | 0.536 |
-| walker |  | 9813 | 29 | go doc cobra.go:99 |  |  | 0.536 |
-| walker |  | 9856 | 43 | headings outline in site/content/docgen/_index.md |  |  | 0.537 |
-| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.531 |
-| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.528 |
+| walker |  | 9706 | 155 | CONDUCT.md section #0 |  |  | 0.536 |
+| walker |  | 9843 | 137 | CONDUCT.md section #1 |  |  | 0.536 |
+| walker |  | 9864 | 21 | go body shell_completions.go:38 |  |  | 0.536 |
+| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.529 |
+| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.527 |

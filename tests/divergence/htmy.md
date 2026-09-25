@@ -102,7 +102,7 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 4121 | 11 | python doc htmy/renderer/typing.py:36 |  |  | 0.591 |
 | walker |  | 4138 | 17 | python doc htmy/utils.py:67 |  |  | 0.591 |
 | walker |  | 4172 | 34 | listing of 'docs/examples' |  |  | 0.591 |
-| walker |  | 4205 | 33 | README.md section #26 |  |  | 0.591 |
+| walker |  | 4205 | 33 | README.md section #23 |  |  | 0.591 |
 | walker |  | 4291 | 86 | python names htmy/md/typing.py |  |  | 0.591 |
 | walker |  | 4316 | 25 | python decl htmy/md/typing.py:14 |  |  | 0.591 |
 | walker |  | 4327 | 11 | python doc htmy/md/typing.py:14 |  |  | 0.585 |
@@ -152,7 +152,7 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 6238 | 9 | python decl htmy/i18n.py:45 |  |  | 0.559 |
 | walker |  | 6246 | 8 | python decl htmy/i18n.py:79 |  |  | 0.559 |
 | ns | 6287 |  | 174 | `core.py`: the default value-formatter table | 6.5 | 6.4 | 0.551 |
-| walker |  | 6292 | 46 | README.md section #20 |  |  | 0.551 |
+| walker |  | 6292 | 46 | README.md section #17 |  |  | 0.551 |
 | ns | 6480 |  | 193 | `htmy/snippet.py`: `Slots` and the slot placeholder syntax | 7.1 |  | 0.543 |
 | walker |  | 6525 | 233 | python decl htmy/etree.py:23 |  |  | 0.543 |
 | walker |  | 6536 | 11 | python body htmy/etree.py:46 |  |  | 0.543 |
@@ -188,7 +188,7 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 7844 | 55 | python decl htmy/renderer/baseline.py:30 |  |  | 0.564 |
 | walker |  | 7850 | 6 | python body htmy/renderer/typing.py:39 |  |  | 0.564 |
 | walker |  | 7896 | 46 | python decl htmy/renderer/default.py:205 |  |  | 0.564 |
-| walker |  | 7953 | 57 | README.md section #24 |  |  | 0.564 |
+| walker |  | 7953 | 57 | README.md section #21 |  |  | 0.564 |
 | ns | 8033 |  | 232 | `htmy/tag.py`: how every `html.*` tag is actually built | 7.7 |  | 0.567 |
 | walker |  | 8170 | 217 | headings outline in docs/index.md |  |  | 0.567 |
 | walker |  | 8176 | 6 | python body htmy/typing.py:48 |  |  | 0.567 |
@@ -207,7 +207,7 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 8651 | 33 | docs/api/html.md section #0 |  |  | 0.577 |
 | walker |  | 8684 | 33 | docs/api/utils.md section #0 |  |  | 0.577 |
 | ns | 8704 |  | 223 | `htmy/utils.py` and `htmy/io.py`: every helper, by signature | 7.10 |  | 0.582 |
-| walker |  | 8754 | 70 | README.md section #23 |  |  | 0.582 |
+| walker |  | 8754 | 70 | README.md section #20 |  |  | 0.582 |
 | walker |  | 8788 | 34 | docs/api/etree.md section #0 |  |  | 0.582 |
 | walker |  | 8822 | 34 | docs/api/function_component.md section #0 |  |  | 0.582 |
 | ns | 8846 |  | 142 | `html.py` tag roster 1/5: document skeleton, `Link` and `Meta` factories | 8.1 |  | 0.589 |
@@ -224,10 +224,10 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 9590 | 13 | python body htmy/snippet.py:110 |  |  | 0.569 |
 | walker |  | 9612 | 22 | python body htmy/tag.py:84 |  |  | 0.569 |
 | walker |  | 9618 | 6 | python body htmy/typing.py:84 |  |  | 0.569 |
-| walker |  | 9719 | 101 | README.md section #17 |  |  | 0.569 |
+| walker |  | 9719 | 101 | README.md section #14 |  |  | 0.569 |
 | walker |  | 9729 | 10 | python doc htmy/html.py:79 |  |  | 0.569 |
-| walker |  | 9762 | 33 | docs/index.md section #25 |  |  | 0.569 |
-| walker |  | 9859 | 97 | README.md section #19 |  |  | 0.569 |
+| walker |  | 9762 | 33 | docs/index.md section #22 |  |  | 0.569 |
+| walker |  | 9859 | 97 | README.md section #16 |  |  | 0.569 |
 | walker |  | 9877 | 18 | python doc htmy/renderer/typing.py:29 |  |  | 0.571 |
 | walker |  | 9880 | 3 | listing of 'examples/internationalization/locale' |  |  | 0.571 |
 | walker |  | 9901 | 21 | docs/api/md.md section #1 |  |  | 0.571 |

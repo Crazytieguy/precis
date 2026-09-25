@@ -1,4 +1,4 @@
-Score(3000)=0.572 I=0.561 C=0.584 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.572/0.573/0.640/0.706
+Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.570/0.560/0.629/0.706
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,7 +55,7 @@ Score(3000)=0.572 I=0.561 C=0.584 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 1850 |  | 140 | Pagination request, response envelope, and clamping notes | 2.6 |  | 0.444 |
 | ns | 1902 |  | 52 | `_where` JSON query param and its override rule | 2.7 |  | 0.441 |
 | walker |  | 1973 | 151 | README.md section #0 |  |  | 0.466 |
-| walker |  | 2003 | 30 | README.md section #13 |  |  | 0.466 |
+| walker |  | 2003 | 30 | README.md section #8 |  |  | 0.466 |
 | ns | 2006 |  | 104 | Dependent deletes and static file serving | 2.8 |  | 0.457 |
 | walker |  | 2026 | 23 | ts body src/service.ts:13 |  |  | 0.457 |
 | ns | 2171 |  | 165 | v0 to v1 migration notes (README 256-263) | 2.9 |  | 0.446 |
@@ -76,71 +76,66 @@ Score(3000)=0.572 I=0.561 C=0.584 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 2603 |  | 167 | Roster of every exported type and class across src/ | 3.2 |  | 0.469 |
 | walker |  | 2628 | 184 | package identity metadata in package.json |  |  | 0.477 |
 | walker |  | 2649 | 21 | ts body src/adapters/normalized-adapter.ts:44 |  |  | 0.477 |
-| walker |  | 2689 | 40 | README.md section #11 |  |  | 0.479 |
-| ns | 2736 |  | 133 | Roster of every Service method (names only) | 3.3 |  | 0.477 |
-| walker |  | 2834 | 145 | README.md section #6 |  |  | 0.553 |
-| ns | 2862 |  | 126 | Full signatures of the Service read methods | 3.4 | 3.3 | 0.557 |
-| walker |  | 2951 | 117 | README.md section #14 |  |  | 0.572 |
-| walker |  | 2983 | 32 | ts body src/adapters/observer.ts:31 |  |  | 0.572 |
+| ns | 2736 |  | 133 | Roster of every Service method (names only) | 3.3 |  | 0.475 |
+| walker |  | 2794 | 145 | README.md section #5 |  |  | 0.551 |
+| ns | 2862 |  | 126 | Full signatures of the Service read methods | 3.4 | 3.3 | 0.555 |
+| walker |  | 2911 | 117 | README.md section #9 |  |  | 0.570 |
+| walker |  | 2943 | 32 | ts body src/adapters/observer.ts:31 |  |  | 0.570 |
+| walker |  | 3060 | 117 | ts body src/parse-where.ts:58 |  |  | 0.572 |
 | ns | 3061 |  | 199 | Full signatures of the Service mutation methods | 3.5 | 3.3 | 0.565 |
-| walker |  | 3100 | 117 | ts body src/parse-where.ts:58 |  |  | 0.567 |
-| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.550 |
-| walker |  | 3263 | 163 | README.md section #7 |  |  | 0.578 |
-| walker |  | 3306 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.578 |
-| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.568 |
-| walker |  | 3361 | 55 | README.md section #9 |  |  | 0.578 |
-| walker |  | 3449 | 88 | ts body src/service.ts:145 |  |  | 0.578 |
-| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.584 |
-| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.588 |
-| walker |  | 3551 | 102 | json config schema.json |  |  | 0.588 |
-| ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.587 |
-| walker |  | 3726 | 175 | README.md section #15 |  |  | 0.601 |
-| walker |  | 3797 | 71 | README.md section #12 |  |  | 0.605 |
-| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.601 |
-| walker |  | 3923 | 126 | ts body src/service.ts:96 |  |  | 0.601 |
-| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.590 |
-| walker |  | 4075 | 152 | json config tsconfig.json |  |  | 0.592 |
-| walker |  | 4181 | 106 | README.md section #4 |  |  | 0.592 |
-| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.573 |
-| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.553 |
-| walker |  | 4503 | 322 | ts body src/paginate.ts:11 |  |  | 0.555 |
-| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.544 |
-| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.548 |
-| walker |  | 4676 | 173 | ts body src/service.ts:202 |  |  | 0.550 |
-| walker |  | 4913 | 237 | ts body src/service.ts:110 |  |  | 0.554 |
-| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.537 |
-| walker |  | 5109 | 196 | README.md section #5 |  |  | 0.537 |
-| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.521 |
-| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.506 |
-| walker |  | 5841 | 732 | README.md section #2 |  |  | 0.645 |
-| ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.627 |
-| walker |  | 6037 | 196 | plaintext config .github/workflows/node.js.yml |  |  | 0.627 |
-| ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.640 |
-| walker |  | 6256 | 219 | ts body src/adapters/normalized-adapter.ts:18 |  |  | 0.642 |
-| ns | 6390 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.626 |
-| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.608 |
-| ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.618 |
-| walker |  | 7085 | 829 | ts body src/matches-where.ts:24 |  |  | 0.680 |
-| ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.688 |
-| walker |  | 7338 | 253 | ts body src/app.ts:94 |  |  | 0.714 |
-| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.694 |
-| walker |  | 7602 | 264 | plaintext config .github/workflows/publish.yml |  |  | 0.694 |
-| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.681 |
-| walker |  | 7850 | 248 | README.md section #10 |  |  | 0.696 |
-| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.704 |
-| walker |  | 8176 | 326 | README.md section #3 |  |  | 0.704 |
-| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.691 |
-| walker |  | 8449 | 273 | ts body src/app.ts:94 #1 |  |  | 0.699 |
-| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.691 |
-| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.695 |
-| walker |  | 8742 | 293 | README.md section #8 |  |  | 0.717 |
+| walker |  | 3223 | 163 | README.md section #6 |  |  | 0.594 |
+| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.576 |
+| walker |  | 3266 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.576 |
+| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.566 |
+| walker |  | 3354 | 88 | ts body src/service.ts:145 |  |  | 0.567 |
+| walker |  | 3456 | 102 | json config schema.json |  |  | 0.567 |
+| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.573 |
+| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.578 |
+| walker |  | 3631 | 175 | README.md section #10 |  |  | 0.592 |
+| ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.590 |
+| walker |  | 3757 | 126 | ts body src/service.ts:96 |  |  | 0.590 |
+| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.587 |
+| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.576 |
+| walker |  | 4083 | 326 | README.md section #3 |  |  | 0.576 |
+| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.558 |
+| walker |  | 4235 | 152 | json config tsconfig.json |  |  | 0.560 |
+| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.540 |
+| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.529 |
+| walker |  | 4557 | 322 | ts body src/paginate.ts:11 |  |  | 0.531 |
+| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.536 |
+| walker |  | 4730 | 173 | ts body src/service.ts:202 |  |  | 0.538 |
+| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.522 |
+| walker |  | 5037 | 307 | README.md section #4 |  |  | 0.522 |
+| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.507 |
+| walker |  | 5274 | 237 | ts body src/service.ts:110 |  |  | 0.510 |
+| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.495 |
+| ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.480 |
+| walker |  | 6006 | 732 | README.md section #2 |  |  | 0.614 |
+| ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.629 |
+| walker |  | 6202 | 196 | plaintext config .github/workflows/node.js.yml |  |  | 0.629 |
+| ns | 6390 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.613 |
+| walker |  | 6421 | 219 | ts body src/adapters/normalized-adapter.ts:18 |  |  | 0.615 |
+| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.597 |
+| ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.608 |
+| ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.619 |
+| walker |  | 7250 | 829 | ts body src/matches-where.ts:24 |  |  | 0.678 |
+| walker |  | 7503 | 253 | ts body src/app.ts:94 |  |  | 0.704 |
+| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.685 |
+| walker |  | 7767 | 264 | plaintext config .github/workflows/publish.yml |  |  | 0.685 |
+| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.672 |
+| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.680 |
+| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.667 |
+| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.661 |
+| walker |  | 8494 | 727 | README.md section #7 |  |  | 0.706 |
+| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.710 |
+| walker |  | 8767 | 273 | ts body src/app.ts:94 #1 |  |  | 0.717 |
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.706 |
-| walker |  | 9069 | 327 | ts body src/app.ts:94 #2 |  |  | 0.738 |
-| walker |  | 9100 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
-| walker |  | 9151 | 51 | plaintext config .gitignore |  |  | 0.738 |
+| walker |  | 9094 | 327 | ts body src/app.ts:94 #2 |  |  | 0.738 |
+| walker |  | 9125 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
+| walker |  | 9176 | 51 | plaintext config .gitignore |  |  | 0.738 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.743 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.733 |
-| walker |  | 9460 | 309 | plaintext config LICENSE |  |  | 0.733 |
-| walker |  | 9685 | 225 | json config fixtures/db.json5 |  |  | 0.734 |
-| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |
+| walker |  | 9485 | 309 | plaintext config LICENSE |  |  | 0.733 |
+| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.721 |
+| walker |  | 9710 | 225 | json config fixtures/db.json5 |  |  | 0.722 |
 | ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.713 |
