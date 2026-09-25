@@ -228,3 +228,6 @@ Score(3000)=0.535 I=0.707 C=0.405 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 9848 | 10 | c doc src/common/tusb_private.h:91 |  |  | 0.338 |
 | walker |  | 9866 | 18 | c doc src/common/tusb_private.h:84 |  |  | 0.338 |
 | ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.368 |
+| walker |  | 9885 | 19 | c doc src/common/tusb_private.h:50 |  |  | 0.368 |
+| walker |  | 9904 | 19 | c doc src/osal/osal_none.h:50 |  |  | 0.368 |
+| walker |  | 9923 | 19 | c doc src/osal/osal_threadx.h:79 |  |  | 0.368 |

@@ -131,17 +131,7 @@ README.md
   242→
   243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
-  1→/* aho_corasick.c - Memory-optimized implementation of Aho-Corasick algorithm
-  2→ *
-  3→ * This implementation uses a more memory-efficient representation for trie nodes
-  4→ * to reduce the 2KB overhead per node (256 pointers x 8 bytes on 64-bit systems).
-  5→ */
-  …
 aho_corasick.h
-  1→/**
-  2→ * Aho-Corasick algorithm for multiple pattern search.
-  3→ * This header declares the Aho-Corasick trie structure and functions.
-  4→ */
   …
   13→// Forward declaration for search_params_t instead of including krep.h
   14→struct search_params;
@@ -164,35 +154,7 @@ aho_corasick.h
   39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
   …
 krep.c
-  1→/* krep - A high-performance string search utility
-  2→ *
-  3→ * Author: Davide Santangelo
-  4→ * Year: 2025
-  5→ *
-  6→ */
-  7→
-  8→// Define _GNU_SOURCE to potentially enable MAP_POPULATE and memrchr
-  …
-  39→static bool is_repetitive_pattern(const char *pattern, size_t pattern_len);
-  …
-  42→static bool ensure_line_buffer_capacity(char **buffer_ptr, size_t *capacity_ptr, size_t current_pos, size_t needed);
-  …
-  44→static bool thread_pool_submit_batch(thread_pool_t *pool, void *(*func)(void *), void **args, int count);
-  …
-  76→// Constants
-  77→#define MAX_PATTERN_LENGTH 1024
-  78→#define DEFAULT_THREAD_COUNT 0
-  79→#define MIN_CHUNK_SIZE (2 * 1024 * 1024)        // Reduced for better parallelism
-  80→#define LARGE_FILE_THRESHOLD (64 * 1024 * 1024) // 64MB threshold for advanced optimizations
-  81→#define SINGLE_THREAD_FILE_SIZE_THRESHOLD MIN_CHUNK_SIZE
-  82→#define ADAPTIVE_THREAD_FILE_SIZE_THRESHOLD 0
-  …
 krep.h
-  1→/* krep.h - Header file for krep utility
-  2→ *
-  3→ * Author: Davide Santangelo
-  4→ * Year: 2025
-  5→ */
   …
   18→// --- Global Variables (declared extern) ---
   19→extern unsigned char lower_table[256];
@@ -210,6 +172,58 @@ krep.h
   39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
   41→/* --- Help UI Colors --- */
   42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
+  43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
+  44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
+  45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
+  …
+  49→typedef struct
+  50→{
+  51→   size_t start_offset; // Starting position of the match
+  52→   size_t end_offset;   // Ending position of the match (exclusive)
+  53→} match_position_t;
+  54→
+  55→typedef struct match_result_t // Add the struct tag here
+  56→{
+  57→   match_position_t *positions; // Dynamically resizing array of match positions
+  58→   uint64_t count;              // Number of matches found and stored
+  59→   uint64_t capacity;           // Current allocated capacity of the positions array
+  60→} match_result_t;               // Typedef remains the same
+  …
+  65→typedef struct search_params
+  …
+  94→} search_params_t;
+  …
+  98→typedef uint64_t (*search_func_t)(const search_params_t *params,
+  99→                                  const char *text_start,
+  100→                                  size_t text_len,
+  101→                                  match_result_t *result);
+  …
+  104→typedef struct
+  …
+  122→} thread_data_t;
+  …
+  125→typedef struct task
+  126→{
+  127→   void *(*func)(void *); // Task function
+  128→   void *arg;             // Function argument
+  129→   struct task *next;     // Next task in queue
+  130→} task_t;
+  131→
+  132→typedef struct
+  133→{
+  134→   pthread_t *threads;           // Array of worker threads
+  135→   int num_threads;              // Number of worker threads
+  136→   task_t *task_queue;           // Task queue head
+  137→   task_t *task_queue_tail;      // Task queue tail for faster enqueue
+  138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
+  139→   pthread_cond_t queue_cond;    // Condition variable for task availability
+  140→   pthread_cond_t complete_cond; // Condition variable for task completion
+  141→   size_t working_threads;       // Counter for busy threads
+  142→   atomic_bool shutdown;         // Shutdown flag
+  143→} thread_pool_t;
+  …
+  146→thread_pool_t *thread_pool_init(int num_threads);
+  147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
   …
 test/
   benchmark_krep_vs_rg.sh

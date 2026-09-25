@@ -181,43 +181,42 @@ Score(3000)=0.587 I=0.675 C=0.511 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 8046 | 15 | c names linux/ProcessField.h |  |  | 0.416 |
 | walker |  | 8063 | 17 | c names linux/HugePageMeter.h |  |  | 0.416 |
 | walker |  | 8080 | 17 | c names linux/SELinuxMeter.h |  |  | 0.416 |
-| walker |  | 8099 | 19 | c module doc linux/PressureStallMeter.h |  |  | 0.416 |
-| walker |  | 8125 | 26 | c names linux/ZramStats.h |  |  | 0.416 |
-| walker |  | 8151 | 26 | c names linux/ZswapStats.h |  |  | 0.416 |
-| walker |  | 8184 | 33 | c names linux/GPU.h |  |  | 0.416 |
-| walker |  | 8217 | 33 | c decl linux/ZramStats.h:12 |  |  | 0.416 |
-| walker |  | 8253 | 36 | c names linux/CGroupUtils.h |  |  | 0.416 |
+| walker |  | 8106 | 26 | c names linux/ZramStats.h |  |  | 0.416 |
+| walker |  | 8132 | 26 | c names linux/ZswapStats.h |  |  | 0.416 |
+| walker |  | 8165 | 33 | c names linux/GPU.h |  |  | 0.416 |
+| walker |  | 8198 | 33 | c decl linux/ZramStats.h:12 |  |  | 0.416 |
+| walker |  | 8234 | 36 | c names linux/CGroupUtils.h |  |  | 0.416 |
+| walker |  | 8270 | 36 | c names linux/OpenRCMeter.h |  |  | 0.416 |
 | ns | 8275 |  | 301 | configure.ac: the complete list of build options | 4.2 |  | 0.410 |
-| walker |  | 8289 | 36 | c names linux/OpenRCMeter.h |  |  | 0.410 |
-| walker |  | 8325 | 36 | c names linux/SystemdMeter.h |  |  | 0.410 |
-| walker |  | 8366 | 41 | c names linux/ZramMeter.h |  |  | 0.410 |
-| walker |  | 8410 | 44 | c names linux/IOPriorityPanel.h |  |  | 0.410 |
-| walker |  | 8460 | 50 | c names linux/LibNl.h |  |  | 0.410 |
-| walker |  | 8513 | 53 | c names linux/LinuxProcessTable.h |  |  | 0.410 |
-| walker |  | 8549 | 36 | c decl linux/LinuxProcessTable.h:15 |  |  | 0.410 |
+| walker |  | 8306 | 36 | c names linux/SystemdMeter.h |  |  | 0.410 |
+| walker |  | 8347 | 41 | c names linux/ZramMeter.h |  |  | 0.410 |
+| walker |  | 8391 | 44 | c names linux/IOPriorityPanel.h |  |  | 0.410 |
+| walker |  | 8441 | 50 | c names linux/LibNl.h |  |  | 0.410 |
+| walker |  | 8494 | 53 | c names linux/LinuxProcessTable.h |  |  | 0.410 |
+| walker |  | 8530 | 36 | c decl linux/LinuxProcessTable.h:15 |  |  | 0.410 |
 | ns | 8559 |  | 284 | CI: every job in the GitHub Actions build matrix | 4.3 |  | 0.404 |
-| walker |  | 8601 | 52 | c decl linux/ZramMeter.h:13 |  |  | 0.404 |
-| walker |  | 8655 | 54 | c decl linux/ZswapStats.h:12 |  |  | 0.404 |
+| walker |  | 8582 | 52 | c decl linux/ZramMeter.h:13 |  |  | 0.404 |
+| walker |  | 8636 | 54 | c decl linux/ZswapStats.h:12 |  |  | 0.404 |
 | ns | 8707 |  | 148 | How htop is tested: TESTPLAN and the lua/rote UI harness | 4.4 |  | 0.401 |
+| walker |  | 8778 | 142 | c names History.h |  |  | 0.401 |
+| walker |  | 8785 | 7 | c doc History.h:31 |  |  | 0.401 |
 | ns | 8793 |  | 86 | Auxiliary directory listings: docs, scripts, iwyu, m4, workflows | 4.5 |  | 0.411 |
-| walker |  | 8797 | 142 | c names History.h |  |  | 0.411 |
-| walker |  | 8804 | 7 | c doc History.h:31 |  |  | 0.411 |
-| walker |  | 8819 | 15 | c doc History.h:38 |  |  | 0.411 |
-| walker |  | 8839 | 20 | c doc History.h:46 |  |  | 0.411 |
-| walker |  | 8957 | 118 | c decl History.h:18 |  |  | 0.411 |
+| walker |  | 8800 | 15 | c doc History.h:38 |  |  | 0.411 |
+| walker |  | 8820 | 20 | c doc History.h:46 |  |  | 0.411 |
+| walker |  | 8938 | 118 | c decl History.h:18 |  |  | 0.411 |
 | ns | 8992 |  | 199 | linux/: the complete Linux platform back-end | 5.1 |  | 0.432 |
-| walker |  | 9015 | 58 | c decl dragonflybsd/ProcessField.h:11 |  |  | 0.432 |
-| walker |  | 9049 | 34 | c names htop.c |  |  | 0.432 |
-| walker |  | 9201 | 152 | c names ScreensPanel.h |  |  | 0.432 |
+| walker |  | 8996 | 58 | c decl dragonflybsd/ProcessField.h:11 |  |  | 0.432 |
+| walker |  | 9030 | 34 | c names htop.c |  |  | 0.432 |
+| walker |  | 9182 | 152 | c names ScreensPanel.h |  |  | 0.432 |
 | ns | 9204 |  | 212 | darwin/, freebsd/, netbsd/ and openbsd/ contents | 5.2 |  | 0.453 |
-| walker |  | 9228 | 27 | c decl ScreensPanel.h:42 |  |  | 0.453 |
+| walker |  | 9209 | 27 | c decl ScreensPanel.h:42 |  |  | 0.453 |
 | ns | 9351 |  | 147 | dragonflybsd/, solaris/ and unsupported/ contents | 5.3 |  | 0.465 |
-| walker |  | 9372 | 144 | c decl ScreensPanel.h:27 |  |  | 0.465 |
+| walker |  | 9353 | 144 | c decl ScreensPanel.h:27 |  |  | 0.465 |
 | ns | 9474 |  | 123 | generic/ and zfs/: routines shared across platforms | 5.4 |  | 0.473 |
-| walker |  | 9526 | 154 | c names DynamicScreen.h |  |  | 0.473 |
-| walker |  | 9614 | 88 | c decl DynamicScreen.h:16 |  |  | 0.473 |
+| walker |  | 9507 | 154 | c names DynamicScreen.h |  |  | 0.473 |
+| walker |  | 9595 | 88 | c decl DynamicScreen.h:16 |  |  | 0.473 |
 | ns | 9622 |  | 148 | linux/Platform.h: the symbols every platform must provide | 5.5 |  | 0.469 |
+| walker |  | 9842 | 247 | c names Panel.h |  |  | 0.469 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.489 |
-| walker |  | 9861 | 247 | c names Panel.h |  |  | 0.489 |
-| walker |  | 9973 | 112 | c decl Panel.h:23 |  |  | 0.493 |
+| walker |  | 9954 | 112 | c decl Panel.h:23 |  |  | 0.493 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.490 |

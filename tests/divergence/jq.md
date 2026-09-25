@@ -123,26 +123,30 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 7306 | 323 | docs/README.md section #0 |  |  | 0.497 |
 | ns | 7435 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.490 |
 | walker |  | 7509 | 203 | c names src/jq.h #2 |  |  | 0.507 |
-| walker |  | 7751 | 242 | c module doc src/parser.h |  |  | 0.507 |
-| walker |  | 7963 | 212 | c names src/compile.h #1 |  |  | 0.507 |
-| walker |  | 8050 | 87 | c doc src/jq.h:60 |  |  | 0.507 |
-| walker |  | 8055 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.507 |
-| walker |  | 8060 | 5 | listing of 'tests/torture' |  |  | 0.507 |
+| walker |  | 7721 | 212 | c names src/compile.h #1 |  |  | 0.507 |
+| walker |  | 7808 | 87 | c doc src/jq.h:60 |  |  | 0.507 |
+| walker |  | 7813 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.507 |
+| walker |  | 7818 | 5 | listing of 'tests/torture' |  |  | 0.507 |
 | ns | 8106 |  | 671 | builtin.c: function_list, part 1 - libm, binops, conversions, keys, strings, paths, sorting | 5.4 |  | 0.490 |
+| walker |  | 8485 | 667 | plaintext config compile-ios.sh |  |  | 0.490 |
 | ns | 8607 |  | 501 | builtin.c: function_list, part 2 - search, min/max, errors, env, regex, I/O, time | 5.5 |  | 0.478 |
-| walker |  | 8727 | 667 | plaintext config compile-ios.sh |  |  | 0.478 |
-| walker |  | 8977 | 250 | c names src/lexer.h #1 |  |  | 0.478 |
-| walker |  | 8993 | 16 | c doc src/lexer.h:336 |  |  | 0.478 |
-| walker |  | 9026 | 33 | c doc src/lexer.h:352 |  |  | 0.478 |
+| walker |  | 8735 | 250 | c names src/lexer.h #1 |  |  | 0.478 |
+| walker |  | 8751 | 16 | c doc src/lexer.h:336 |  |  | 0.478 |
+| walker |  | 8784 | 33 | c doc src/lexer.h:352 |  |  | 0.478 |
+| walker |  | 9112 | 328 | c decl src/lexer.h:386 |  |  | 0.478 |
 | ns | 9119 |  | 512 | builtin.jq: every jq-defined builtin, part 1 (lines 1-115) | 5.6 |  | 0.454 |
-| walker |  | 9354 | 328 | c decl src/lexer.h:386 |  |  | 0.454 |
+| walker |  | 9255 | 143 | c names src/locfile.c |  |  | 0.454 |
+| walker |  | 9273 | 18 | c body src/locfile.c:37 |  |  | 0.454 |
+| walker |  | 9288 | 15 | declaration surface of docs/public/robots.txt |  |  | 0.454 |
+| walker |  | 9451 | 163 | c names src/jv_unicode.c |  |  | 0.454 |
 | ns | 9468 |  | 349 | builtin.jq: every jq-defined builtin, part 2 (lines 116-244) | 5.7 |  | 0.441 |
-| walker |  | 9497 | 143 | c names src/locfile.c |  |  | 0.441 |
-| walker |  | 9515 | 18 | c body src/locfile.c:37 |  |  | 0.441 |
-| walker |  | 9530 | 15 | declaration surface of docs/public/robots.txt |  |  | 0.441 |
-| walker |  | 9693 | 163 | c names src/jv_unicode.c |  |  | 0.441 |
-| walker |  | 9712 | 19 | c doc src/jv_unicode.c:86 |  |  | 0.441 |
+| walker |  | 9470 | 19 | c doc src/jv_unicode.c:86 |  |  | 0.441 |
+| walker |  | 9714 | 244 | c names src/execute.c |  |  | 0.441 |
+| walker |  | 9738 | 24 | c decl src/execute.c:59 |  |  | 0.441 |
+| walker |  | 9778 | 40 | c decl src/execute.c:53 |  |  | 0.431 |
 | ns | 9778 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.431 |
-| walker |  | 9956 | 244 | c names src/execute.c |  |  | 0.431 |
+| walker |  | 9794 | 16 | c decl src/execute.c:130 |  |  | 0.431 |
+| walker |  | 9811 | 17 | c doc src/execute.c:59 |  |  | 0.431 |
+| walker |  | 9913 | 102 | c decl src/execute.c:65 |  |  | 0.431 |
+| walker |  | 9921 | 8 | c doc src/execute.c:65 |  |  | 0.431 |
 | ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.427 |
-| walker |  | 9980 | 24 | c decl src/execute.c:59 |  |  | 0.427 |

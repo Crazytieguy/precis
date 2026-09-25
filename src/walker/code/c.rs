@@ -11,9 +11,10 @@
 //!   body [`Item`] per field or enumerator.
 //! - A non-`inline` `static` in a header is hidden; a `static` in a `.c`
 //!   file is `Private`; everything else is `Public`.
-//! - The leading comment run of the file is its module doc (the banner),
-//!   and a declaration's doc is the comment run directly above it, never
-//!   reaching into the banner.
+//! - A declaration's doc is the comment run directly above it, never
+//!   reaching into the file's leading comment run (the banner). The
+//!   banner, in C most often a license or authorship notice, is not
+//!   modeled.
 
 use std::ops::RangeInclusive;
 use std::path::Path;
@@ -40,17 +41,14 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let source = &*file.source;
     let in_header = is_header(&file.path);
-    let banner = banner_rows(root, file);
-    let banner_end_row = banner.as_ref().map(|rows| *rows.end() - 1);
+    let banner_end_row = banner_end_row(root, file);
     let guard_name = header_guard_name(root, source);
     let mut decls = Vec::new();
     walk_top_level(root, source, in_header, &mut |node| {
         decls.extend(decl_info(node, file, in_header, guard_name, banner_end_row));
     });
     FileModel {
-        module_doc: banner
-            .map(|rows| comment_paragraphs(file, rows))
-            .unwrap_or_default(),
+        module_doc: Vec::new(),
         reexports: Vec::new(),
         decls,
     }
@@ -303,9 +301,10 @@ fn strip_comment_markers(line: &str) -> &str {
     body.trim_matches(|c: char| c == '*' || c == '/' || c.is_whitespace())
 }
 
-/// Rows of the file's leading run of comments, up to the first other
-/// node. A comment sharing its last row with that node stays out.
-fn banner_rows(root: Node, file: &SourceFile) -> Option<RangeInclusive<usize>> {
+/// 0-based last row of the file's leading run of comments, up to the
+/// first other node. A comment sharing its last row with that node stays
+/// out.
+fn banner_end_row(root: Node, file: &SourceFile) -> Option<usize> {
     let mut cursor = root.walk();
     let mut comments = Vec::new();
     for child in root.children(&mut cursor) {
@@ -316,7 +315,7 @@ fn banner_rows(root: Node, file: &SourceFile) -> Option<RangeInclusive<usize>> {
         }
         comments.push(rows);
     }
-    Some(*comments.first()?.start()..=*comments.last()?.end())
+    Some(*comments.last()?.end() - 1)
 }
 
 // --- effective top level --------------------------------------------------
@@ -757,7 +756,7 @@ enum color { RED } paint(void);
     }
 
     #[test]
-    fn c_banner_is_module_doc_and_not_the_first_decls_doc() {
+    fn c_banner_is_not_the_first_decls_doc() {
         let source = "\
 /*
  * sds.h - dynamic strings
@@ -775,10 +774,7 @@ int trailing; /* end-of-line comment */
 int next;
 ";
         let model = model("sds.h", source);
-        assert_eq!(
-            rows(&model.module_doc),
-            vec![vec![1, 2, 3], vec![4, 5], vec![6]]
-        );
+        assert!(model.module_doc.is_empty());
         let [sds, sdsnew, trailing, next] = &model.decls[..] else {
             panic!("{:?}", model.decls);
         };
