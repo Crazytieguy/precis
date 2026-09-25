@@ -1,4 +1,4 @@
-Score(3000)=0.573 I=0.857 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.654/0.571/0.573/0.509/0.472/0.512
+Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.654/0.571/0.573/0.509/0.472/0.512
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -76,11 +76,11 @@ Score(3000)=0.573 I=0.857 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | ns | 2522 |  | 316 | cmd package: complete function roster | 2.7 |  | 0.623 |
 | walker |  | 2549 | 134 | Code::CodeKey { rung: ModuleDoc, file: pkg/artifactcache/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
 | walker |  | 2553 | 4 | Fs::DirListing { dir: .github/actions } |  |  | 0.623 |
+| walker |  | 2560 | 7 | Plaintext::DeclSurface { file: pkg/container/testdata/scratch/test.txt } |  |  | 0.623 |
 | ns | 2869 |  | 347 | pkg/model: complete type roster | 3.1 |  | 0.584 |
 | ns | 2979 |  | 110 | Workflow struct | 3.2 | 3.1 | 0.573 |
 | ns | 3209 |  | 230 | Planner interface + Plan/Stage/Run | 3.3 | 3.1 | 0.545 |
-| walker |  | 3362 | 809 | GoMod::File { file: go.mod } |  |  | 0.546 |
-| walker |  | 3369 | 7 | Plaintext::DeclSurface { file: pkg/container/testdata/scratch/test.txt } |  |  | 0.546 |
+| walker |  | 3369 | 809 | GoMod::File { file: go.mod } |  |  | 0.546 |
 | walker |  | 3436 | 67 | Plaintext::Whole { file: pkg/container/testdata/Dockerfile } |  |  | 0.546 |
 | walker |  | 3444 | 8 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/data.txt } |  |  | 0.546 |
 | ns | 3471 |  | 262 | Job struct: every supported job key | 3.4 | 3.1 | 0.529 |

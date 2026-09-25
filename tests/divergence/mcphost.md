@@ -17,12 +17,12 @@ Score(3000)=0.713 I=0.874 C=0.582 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 161 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.698 |
 | walker |  | 197 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.734 |
 | ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.645 |
-| walker |  | 214 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.647 |
-| walker |  | 220 | 6 | Fs::DirListing { dir: examples } |  |  | 0.648 |
-| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.606 |
-| walker |  | 283 | 63 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.842 |
-| walker |  | 307 | 24 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.842 |
-| walker |  | 360 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.910 |
+| walker |  | 250 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.660 |
+| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.662 |
+| walker |  | 267 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.663 |
+| walker |  | 273 | 6 | Fs::DirListing { dir: examples } |  |  | 0.665 |
+| walker |  | 336 | 63 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.910 |
+| walker |  | 360 | 24 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.910 |
 | walker |  | 395 | 35 | Fs::DirListing { dir: internal/models } |  |  | 0.915 |
 | walker |  | 400 | 5 | Fs::DirListing { dir: internal/models/anthropic } |  |  | 0.915 |
 | walker |  | 405 | 5 | Fs::DirListing { dir: internal/models/gemini } |  |  | 0.916 |
@@ -54,10 +54,10 @@ Score(3000)=0.713 I=0.874 C=0.582 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 1330 | 48 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.812 |
 | walker |  | 1370 | 40 | Markdown::Section { file: README.md, section_index: 33, keeps_default_concavity: false } |  |  | 0.814 |
 | ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.771 |
+| walker |  | 1628 | 258 | Markdown::Section { file: sdk/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.771 |
 | ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.742 |
-| walker |  | 1884 | 514 | GoMod::File { file: go.mod } |  |  | 0.742 |
 | ns | 2098 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.705 |
-| walker |  | 2142 | 258 | Markdown::Section { file: sdk/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.705 |
+| walker |  | 2142 | 514 | GoMod::File { file: go.mod } |  |  | 0.705 |
 | ns | 2224 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.699 |
 | walker |  | 2389 | 247 | Markdown::Section { file: sdk/README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.699 |
 | walker |  | 2447 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.701 |

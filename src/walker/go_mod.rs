@@ -5,7 +5,7 @@ use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, GoModKey};
 use crate::fs_util::list_dir;
-use crate::value::mix_signals;
+use crate::value::{dependency_roster_value, manifest_identity_value};
 
 use super::{WalkCtx, path_depth_factor, single_file_lines_content};
 
@@ -19,6 +19,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let path = dir.join(name);
+        let depth = path_depth_factor(&path, ctx);
         let Some(source) = ctx.read_source(&path) else {
             continue;
         };
@@ -29,7 +30,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone(),
                 predecessor: None,
                 content,
-                value: identity_value(&path, ctx),
+                value: manifest_identity_value(1.0, depth),
             });
             key
         });
@@ -38,7 +39,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: GoModKey::File { file: path.clone() }.into(),
                 predecessor: identity,
                 content,
-                value: file_value(&path, ctx),
+                value: dependency_roster_value(dir == ctx.root(), depth),
             });
         }
     }
@@ -128,14 +129,6 @@ fn keep_directive_line(first: &str, trimmed: &str) -> bool {
 
 fn keep_block_entry(block: &str, trimmed: &str) -> bool {
     block != "require" || !trimmed.contains("// indirect")
-}
-
-fn file_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.80, 0.60, 0.5, path_depth_factor(file, ctx))
-}
-
-fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.90, 0.75, 0.35, path_depth_factor(file, ctx))
 }
 
 #[cfg(test)]

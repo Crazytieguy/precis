@@ -1,23 +1,23 @@
-Score(3000)=0.581 I=0.688 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.581/0.537/0.459/0.432
+Score(3000)=0.579 I=0.683 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.579/0.537/0.459/0.432
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 55 | 55 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 81 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.000 |
 | ns | 83 |  | 83 | Readme lede: what Beszel is | 1.1 |  | 0.000 |
-| walker |  | 86 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.000 |
-| walker |  | 92 | 6 | Fs::DirListing { dir: supplemental/kubernetes } |  |  | 0.000 |
-| walker |  | 95 | 3 | Fs::DirListing { dir: supplemental/kubernetes/beszel-hub } |  |  | 0.000 |
-| walker |  | 105 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.000 |
-| walker |  | 110 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.000 |
-| walker |  | 115 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.000 |
-| walker |  | 120 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.000 |
-| walker |  | 130 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.000 |
-| walker |  | 133 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.000 |
-| walker |  | 136 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.000 |
-| walker |  | 175 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.429 |
-| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.238 |
-| walker |  | 209 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.238 |
+| walker |  | 89 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
+| walker |  | 115 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.000 |
+| walker |  | 120 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.000 |
+| walker |  | 126 | 6 | Fs::DirListing { dir: supplemental/kubernetes } |  |  | 0.000 |
+| walker |  | 129 | 3 | Fs::DirListing { dir: supplemental/kubernetes/beszel-hub } |  |  | 0.000 |
+| walker |  | 139 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.000 |
+| walker |  | 144 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.000 |
+| walker |  | 149 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.000 |
+| walker |  | 154 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.000 |
+| walker |  | 164 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.000 |
+| walker |  | 167 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.000 |
+| walker |  | 170 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.000 |
+| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.000 |
+| walker |  | 209 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.238 |
 | walker |  | 239 | 30 | Code::CodeKey { rung: ModuleDoc, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.240 |
 | ns | 245 |  | 55 | Repository root listing (complete) | 1.3 |  | 0.509 |
 | walker |  | 305 | 66 | Fs::DirListing { dir: internal } |  |  | 0.558 |
@@ -95,12 +95,12 @@ Score(3000)=0.581 I=0.688 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 2375 |  | 390 | Wire protocol: HubRequest and AgentResponse envelopes | 2.5 |  | 0.518 |
 | walker |  | 2431 | 87 | Code::CodeKey { rung: ModuleDoc, file: agent/health/health.go, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
 | walker |  | 2486 | 55 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.518 |
-| ns | 2871 |  | 496 | Hub HTTP API: route registration, part 1 | 2.6 |  | 0.482 |
-| walker |  | 2901 | 415 | GoMod::File { file: go.mod } |  |  | 0.484 |
-| ns | 3159 |  | 288 | Hub HTTP API: route registration, part 2 (completes the route table) | 2.7 |  | 0.464 |
-| walker |  | 3208 | 307 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.557 |
-| walker |  | 3267 | 59 | Code::CodeKey { rung: ModuleDoc, file: internal/hub/heartbeat/heartbeat.go, decl: 0, sub: 0, line: 0 } |  |  | 0.557 |
-| walker |  | 3323 | 56 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.557 |
+| walker |  | 2793 | 307 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.623 |
+| walker |  | 2852 | 59 | Code::CodeKey { rung: ModuleDoc, file: internal/hub/heartbeat/heartbeat.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
+| ns | 2871 |  | 496 | Hub HTTP API: route registration, part 1 | 2.6 |  | 0.579 |
+| walker |  | 2908 | 56 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.579 |
+| ns | 3159 |  | 288 | Hub HTTP API: route registration, part 2 (completes the route table) | 2.7 |  | 0.555 |
+| walker |  | 3323 | 415 | GoMod::File { file: go.mod } |  |  | 0.557 |
 | walker |  | 3423 | 100 | Fs::DirListing { dir: internal/site/src/locales } |  |  | 0.557 |
 | walker |  | 3427 | 4 | Fs::DirListing { dir: internal/site/src/locales/ar } |  |  | 0.557 |
 | walker |  | 3431 | 4 | Fs::DirListing { dir: internal/site/src/locales/bg } |  |  | 0.557 |

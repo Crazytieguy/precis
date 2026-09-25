@@ -146,24 +146,6 @@ go.mod
   6→	github.com/blang/semver v3.5.1+incompatible
   7→	github.com/coreos/go-systemd/v22 v22.7.0
   8→	github.com/ebitengine/purego v0.10.0
-  9→	github.com/fxamacker/cbor/v2 v2.9.0
-  10→	github.com/gliderlabs/ssh v0.3.8
-  11→	github.com/google/uuid v1.6.0
-  12→	github.com/lxzan/gws v1.9.1
-  13→	github.com/nicholas-fedor/shoutrrr v0.14.3
-  14→	github.com/pocketbase/dbx v1.12.0
-  15→	github.com/pocketbase/pocketbase v0.36.8
-  16→	github.com/shirou/gopsutil/v4 v4.26.3
-  17→	github.com/spf13/cast v1.10.0
-  18→	github.com/spf13/cobra v1.10.2
-  19→	github.com/spf13/pflag v1.0.10
-  20→	github.com/stretchr/testify v1.11.1
-  21→	golang.org/x/crypto v0.49.0
-  22→	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
-  23→	golang.org/x/sys v0.42.0
-  24→	gopkg.in/yaml.v3 v3.0.1
-  25→	howett.net/plist v1.0.1
-  26→)
   …
 go.sum
 i18n.yml
@@ -245,6 +227,10 @@ internal/
       expirymap_test.go
     heartbeat/
       heartbeat.go
+        1→// Package heartbeat sends periodic outbound pings to an external monitoring
+        2→// endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
+        3→// monitor Beszel without exposing it to the internet.
+        …
       heartbeat_test.go
     hub.go
       1→// Package hub handles updating systems and serving the web UI.
@@ -355,7 +341,12 @@ readme.md
   3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
   5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
   6→
-  …
+  7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
+  8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
+  9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
+  10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
+  11→
+  12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
   14→## Features
   15→
   16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
@@ -372,7 +363,10 @@ readme.md
   33→
   34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
   36→## Screenshots
-  …
+  37→
+  38→![Dashboard](https://beszel.dev/image/dashboard.png)
+  39→![System page](https://beszel.dev/image/system-full.png)
+  40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
   42→## Supported metrics
   …
   56→## Help and discussion

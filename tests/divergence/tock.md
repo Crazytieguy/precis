@@ -18,14 +18,14 @@ Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 135 | 20 | Fs::DirListing { dir: assets } |  |  | 0.693 |
 | walker |  | 144 | 9 | Fs::DirListing { dir: internal/config } |  |  | 0.694 |
 | walker |  | 153 | 9 | Fs::DirListing { dir: internal/extra } |  |  | 0.696 |
-| walker |  | 164 | 11 | Fs::DirListing { dir: internal/timeutil } |  |  | 0.699 |
-| walker |  | 176 | 12 | Fs::DirListing { dir: internal/core } |  |  | 0.721 |
-| walker |  | 180 | 4 | Fs::DirListing { dir: internal/core/errors } |  |  | 0.723 |
-| walker |  | 184 | 4 | Fs::DirListing { dir: internal/core/models } |  |  | 0.725 |
-| walker |  | 190 | 6 | Fs::DirListing { dir: internal/core/dto } |  |  | 0.728 |
-| walker |  | 197 | 7 | Fs::DirListing { dir: internal/core/ports } |  |  | 0.734 |
-| ns | 217 |  | 83 | README feature bullets, part 1 (storage, notes, TUI, footprint) | 1.4 |  | 0.661 |
-| walker |  | 230 | 33 | GoMod::Identity { file: go.mod } |  |  | 0.736 |
+| walker |  | 186 | 33 | GoMod::Identity { file: go.mod } |  |  | 0.778 |
+| walker |  | 197 | 11 | Fs::DirListing { dir: internal/timeutil } |  |  | 0.781 |
+| walker |  | 209 | 12 | Fs::DirListing { dir: internal/core } |  |  | 0.804 |
+| walker |  | 213 | 4 | Fs::DirListing { dir: internal/core/errors } |  |  | 0.806 |
+| walker |  | 217 | 4 | Fs::DirListing { dir: internal/core/models } |  |  | 0.728 |
+| ns | 217 |  | 83 | README feature bullets, part 1 (storage, notes, TUI, footprint) | 1.4 |  | 0.728 |
+| walker |  | 223 | 6 | Fs::DirListing { dir: internal/core/dto } |  |  | 0.730 |
+| walker |  | 230 | 7 | Fs::DirListing { dir: internal/core/ports } |  |  | 0.736 |
 | walker |  | 239 | 9 | Fs::DirListing { dir: internal/services/activity } |  |  | 0.743 |
 | walker |  | 250 | 11 | Fs::DirListing { dir: internal/adapters/repositories } |  |  | 0.743 |
 | walker |  | 259 | 9 | Fs::DirListing { dir: internal/adapters/repositories/notes } |  |  | 0.744 |
@@ -45,10 +45,10 @@ Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 923 | 264 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.683 |
 | walker |  | 1002 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.832 |
 | ns | 1024 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.798 |
-| ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.761 |
-| walker |  | 1244 | 242 | GoMod::File { file: go.mod } |  |  | 0.762 |
+| walker |  | 1027 | 25 | Markdown::Section { file: README.md, section_index: 26, keeps_default_concavity: false } |  |  | 0.799 |
+| ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.762 |
 | ns | 1255 |  | 78 | Domain sentinel errors | 2.4 |  | 0.744 |
-| walker |  | 1269 | 25 | Markdown::Section { file: README.md, section_index: 26, keeps_default_concavity: false } |  |  | 0.745 |
+| walker |  | 1269 | 242 | GoMod::File { file: go.mod } |  |  | 0.745 |
 | ns | 1442 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.687 |
 | ns | 1508 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.670 |
 | walker |  | 1548 | 279 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.670 |

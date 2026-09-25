@@ -10,9 +10,9 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 145 | 11 | Fs::DirListing { dir: dktesting } |  |  | 0.000 |
 | walker |  | 157 | 12 | Fs::DirListing { dir: cli } |  |  | 0.000 |
 | walker |  | 166 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.000 |
-| walker |  | 170 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.000 |
-| walker |  | 185 | 15 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.000 |
-| walker |  | 220 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
+| walker |  | 201 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
+| walker |  | 205 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.000 |
+| walker |  | 220 | 15 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.000 |
 | walker |  | 230 | 10 | Markdown::ReadmeHeadline { file: cmd/migrate/README.md } |  |  | 0.000 |
 | ns | 244 |  | 100 | Core design premise: dumb drivers, migrate glues | 1.3 |  | 0.000 |
 | walker |  | 281 | 51 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.413 |
@@ -231,9 +231,38 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 9062 | 269 | Markdown::ReadmeHeadline { file: database/cassandra/README.md } |  |  | 0.464 |
 | walker |  | 9082 | 20 | Markdown::HeadingsOutline { file: database/cassandra/README.md } |  |  | 0.464 |
 | walker |  | 9128 | 46 | Code::CodeKey { rung: Body, file: util.go, decl: 4, sub: 0, line: 45 } |  |  | 0.468 |
+| walker |  | 9257 | 129 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.468 |
 | ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.462 |
-| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.457 |
-| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.452 |
-| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.456 |
-| walker |  | 9951 | 823 | GoMod::File { file: go.mod } |  |  | 0.456 |
-| walker |  | 10000 | 49 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.456 |
+| walker |  | 9284 | 27 | Code::CodeKey { rung: Names, file: database/error.go, decl: 0, sub: 0, line: 0 } |  |  | 0.463 |
+| walker |  | 9388 | 104 | Code::CodeKey { rung: Decl, file: database/error.go, decl: 1, sub: 0, line: 8 } |  |  | 0.469 |
+| walker |  | 9406 | 18 | Code::CodeKey { rung: Doc, file: database/error.go, decl: 1, sub: 0, line: 8 } |  |  | 0.472 |
+| walker |  | 9487 | 81 | Code::CodeKey { rung: Names, file: source/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 9498 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 5, sub: 0, line: 97 } |  |  | 0.473 |
+| walker |  | 9509 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 6, sub: 0, line: 110 } |  |  | 0.473 |
+| walker |  | 9521 | 12 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 4, sub: 0, line: 76 } |  |  | 0.473 |
+| walker |  | 9524 | 3 | Fs::DirListing { dir: database/cassandra/examples } |  |  | 0.473 |
+| walker |  | 9527 | 3 | Fs::DirListing { dir: database/clickhouse/examples } |  |  | 0.473 |
+| walker |  | 9530 | 3 | Fs::DirListing { dir: database/cockroachdb/examples } |  |  | 0.473 |
+| walker |  | 9533 | 3 | Fs::DirListing { dir: database/firebird/examples } |  |  | 0.473 |
+| walker |  | 9536 | 3 | Fs::DirListing { dir: database/mongodb/examples } |  |  | 0.473 |
+| walker |  | 9539 | 3 | Fs::DirListing { dir: database/mysql/examples } |  |  | 0.473 |
+| walker |  | 9542 | 3 | Fs::DirListing { dir: database/neo4j/examples } |  |  | 0.473 |
+| walker |  | 9545 | 3 | Fs::DirListing { dir: database/pgx/examples } |  |  | 0.473 |
+| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.467 |
+| walker |  | 9548 | 3 | Fs::DirListing { dir: database/postgres/examples } |  |  | 0.467 |
+| walker |  | 9551 | 3 | Fs::DirListing { dir: database/ql/examples } |  |  | 0.467 |
+| walker |  | 9554 | 3 | Fs::DirListing { dir: database/redshift/examples } |  |  | 0.467 |
+| walker |  | 9557 | 3 | Fs::DirListing { dir: database/rqlite/examples } |  |  | 0.467 |
+| walker |  | 9560 | 3 | Fs::DirListing { dir: database/spanner/examples } |  |  | 0.467 |
+| walker |  | 9563 | 3 | Fs::DirListing { dir: database/sqlcipher/examples } |  |  | 0.467 |
+| walker |  | 9566 | 3 | Fs::DirListing { dir: database/sqlite/examples } |  |  | 0.467 |
+| walker |  | 9569 | 3 | Fs::DirListing { dir: database/sqlite3/examples } |  |  | 0.467 |
+| walker |  | 9572 | 3 | Fs::DirListing { dir: database/sqlserver/examples } |  |  | 0.467 |
+| walker |  | 9575 | 3 | Fs::DirListing { dir: database/yugabytedb/examples } |  |  | 0.467 |
+| walker |  | 9578 | 3 | Fs::DirListing { dir: source/github/examples } |  |  | 0.467 |
+| walker |  | 9581 | 3 | Fs::DirListing { dir: source/gitlab/examples } |  |  | 0.467 |
+| walker |  | 9584 | 3 | Fs::DirListing { dir: source/go_bindata/examples } |  |  | 0.467 |
+| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.463 |
+| walker |  | 9892 | 308 | Markdown::ReadmeHeadline { file: source/pkger/README.md } |  |  | 0.463 |
+| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.466 |
+| walker |  | 9983 | 91 | Markdown::Section { file: database/sqlite/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.466 |

@@ -219,10 +219,7 @@ exp/
       1→module github.com/samber/lo/exp/simd
       2→
       3→go 1.26.0
-      4→
-      5→require github.com/samber/lo v0.0.0
       …
-      9→replace github.com/samber/lo => ../../
     go.sum
     intersect_avx512.go
     intersect_avx512_test.go
@@ -351,6 +348,8 @@ type_manipulation.go
   28→func ToPtr[T any](x T) *T {
   29→	return &x
   …
+  32→// Nil returns a nil pointer of type.
+  …
   34→func Nil[T any]() *T {
   35→	return nil
   …
@@ -361,6 +360,9 @@ type_manipulation.go
   63→func FromPtrOr[T any](x *T, fallback T) T {
   64→	if x == nil {
   65→		return fallback
+  66→	}
+  67→
+  68→	return *x
   …
   73→func ToSlicePtr[T any](collection []T) []*T {
   …

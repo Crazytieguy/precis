@@ -14,11 +14,11 @@ Score(3000)=0.623 I=0.787 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 292 | 8 | Fs::DirListing { dir: testdata/certificate } |  |  | 0.000 |
 | walker |  | 301 | 9 | Fs::DirListing { dir: internal/fs } |  |  | 0.000 |
 | walker |  | 310 | 9 | Fs::DirListing { dir: testdata/protoexample } |  |  | 0.000 |
-| walker |  | 320 | 10 | Fs::DirListing { dir: testdata/template } |  |  | 0.000 |
 | ns | 324 |  | 138 | doc.go: the canonical hello-world call site | 1.3 | 1.1 | 0.000 |
-| walker |  | 331 | 11 | Fs::DirListing { dir: internal/bytesconv } |  |  | 0.000 |
-| walker |  | 335 | 4 | Fs::DirListing { dir: examples } |  |  | 0.000 |
-| walker |  | 366 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.090 |
+| walker |  | 341 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.089 |
+| walker |  | 351 | 10 | Fs::DirListing { dir: testdata/template } |  |  | 0.089 |
+| walker |  | 362 | 11 | Fs::DirListing { dir: internal/bytesconv } |  |  | 0.090 |
+| walker |  | 366 | 4 | Fs::DirListing { dir: examples } |  |  | 0.090 |
 | walker |  | 388 | 22 | Fs::DirListing { dir: codec/json } |  |  | 0.092 |
 | ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.079 |
 | walker |  | 463 | 75 | Fs::DirListing { dir: render } |  |  | 0.080 |
@@ -33,11 +33,11 @@ Score(3000)=0.623 I=0.787 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 1017 | 145 | Markdown::ReadmeHeadline { file: ginS/README.md } |  |  | 0.757 |
 | ns | 1121 |  | 231 | binding/ and render/ directory listings | 1.8 |  | 0.766 |
 | walker |  | 1212 | 195 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.766 |
+| walker |  | 1224 | 12 | Code::CodeKey { rung: Names, file: context_appengine.go, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
+| walker |  | 1236 | 12 | Code::CodeKey { rung: Body, file: context_appengine.go, decl: 1, sub: 0, line: 9 } |  |  | 0.766 |
 | ns | 1238 |  | 117 | Remaining source/data directory listings (codec, ginS, internal, docs, examples, testdata) | 1.9 |  | 0.766 |
 | ns | 1436 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.724 |
-| walker |  | 1520 | 308 | GoMod::File { file: go.mod } |  |  | 0.724 |
-| walker |  | 1532 | 12 | Code::CodeKey { rung: Names, file: context_appengine.go, decl: 0, sub: 0, line: 0 } |  |  | 0.724 |
-| walker |  | 1544 | 12 | Code::CodeKey { rung: Body, file: context_appengine.go, decl: 1, sub: 0, line: 9 } |  |  | 0.724 |
+| walker |  | 1544 | 308 | GoMod::File { file: go.mod } |  |  | 0.724 |
 | ns | 1686 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.655 |
 | walker |  | 1858 | 314 | Code::CodeKey { rung: Names, file: utils.go, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
 | walker |  | 1870 | 12 | Code::CodeKey { rung: Doc, file: utils.go, decl: 2, sub: 0, line: 23 } |  |  | 0.656 |
