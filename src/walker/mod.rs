@@ -211,7 +211,7 @@ impl WalkCtx {
     /// parsed while its directory expands, and its batches carry
     /// everything they need from it.
     pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Tree)> {
-        let source = self.read_source(path)?;
+        let source = gated_read_source(path, self, PARSE_BYTE_CAP)?;
         let tree = parser_for(language).parse(source.as_bytes(), None)?;
         Some((source, tree))
     }
@@ -220,7 +220,7 @@ impl WalkCtx {
     pub fn parse_trees(&self, files: &[(&Path, Language)]) -> Vec<Option<(Arc<Source>, Tree)>> {
         let sources: Vec<Option<Arc<Source>>> = files
             .iter()
-            .map(|(path, _)| self.read_source(path))
+            .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
             .collect();
         let next = AtomicUsize::new(0);
         let parse_pending = || {
@@ -282,6 +282,13 @@ fn parser_for(language: &Language) -> tree_sitter::Parser {
         .expect("tree-sitter language load");
     parser
 }
+
+/// Largest file precis parses. Past it a file is treated like a
+/// generated or minified one and yields no batches: the 186-repo
+/// robustness sweep's largest hand-written single-file library is
+/// 4.1 MB (`miniaudio.h`), while a 25.9 MB generated `parser.c` cost
+/// 900 MB and seconds to parse.
+const PARSE_BYTE_CAP: usize = 8 * 1024 * 1024;
 
 pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
     let mut cursor = node.walk();
@@ -658,6 +665,18 @@ mod tests {
         std::fs::write(root.join("src/main.c"), "int main(void) { return 0; }\n").unwrap();
 
         assert_eq!(dominant_source_file_of(root), None);
+    }
+
+    #[test]
+    fn walker_mod_parse_skips_files_over_the_byte_cap() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join("small.c"), "int x;\n").unwrap();
+        std::fs::write(root.join("huge.c"), " ".repeat(PARSE_BYTE_CAP + 1)).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let c: Language = tree_sitter_c::LANGUAGE.into();
+        assert!(ctx.parse_tree(&root.join("small.c"), &c).is_some());
+        assert!(ctx.parse_tree(&root.join("huge.c"), &c).is_none());
     }
 
     #[test]
