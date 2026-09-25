@@ -388,16 +388,6 @@ crates/
         assignments.rs
         association.rs
         condition.rs
-        cte.rs
-        cx.rs
-        delete.rs
-        direction.rs
-        entry.rs
-        entry_mut.rs
-        entry_path.rs
-        eval.rs
-        expr.rs
-        expr_and.rs
         …
       stmt.rs
     tests/
@@ -433,6 +423,10 @@ crates/
       tests.rs
   toasty-driver-integration-suite-macros/
     Cargo.toml
+      …
+      7→[lib]
+      8→proc-macro = true
+      …
     src/
       driver_test.rs
       lib.rs
@@ -459,6 +453,10 @@ crates/
       value.rs
   toasty-macros/
     Cargo.toml
+      …
+      7→[lib]
+      8→proc-macro = true
+      …
     src/
       lib.rs
   toasty-sql/

@@ -139,6 +139,11 @@ README.md
 rustfmt.toml
 sps/
   Cargo.toml
+    …
+    13→[[bin]]
+    14→name = "sps"
+    15→path = "src/main.rs"
+    …
   src/
     cli/
       info.rs
@@ -179,9 +184,6 @@ sps/
       45→    Init(InitArgs),
       46→    Search(Search),
       47→    List(List),
-      48→    Info(Info),
-      49→    Update(Update),
-      50→    Install(InstallArgs),
       …
       56→impl Command {
       57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {

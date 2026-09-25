@@ -8,7 +8,8 @@
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
 //!   `[project]`, `[tool.poetry]`; the Python tables contribute their lede
 //!   only, so the batch stays cheap enough to win an early slot
-//! - `Operational { file }` — `[features]`, and a Python manifest's
+//! - `Operational { file }` — `[features]`, Cargo's `[lib]` and `[[bin]]`
+//!   target declarations, and a Python manifest's
 //!   `[project.scripts]` / `[tool.poetry.scripts]`
 //! - `Dependencies { file }` — Cargo `[dependencies]` (platform-specific
 //!   ones included) / `[workspace.dependencies]`,
@@ -67,7 +68,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             });
         }
         let operational_rows = section_rows(&sections, |n| {
-            n == "features" || (python_project_manifest && is_scripts_section(n))
+            is_operational_section(n, python_project_manifest)
         });
         if let Some(content) = rows_content(&file, &source, operational_rows) {
             out.push(Batch {
@@ -210,6 +211,13 @@ fn untargeted_cargo_table(name: &str) -> &str {
             )
         })
         .unwrap_or(name)
+}
+
+/// Feature flags, Cargo's library and binary target declarations, and a
+/// Python manifest's console scripts: the package's build and entry surface.
+fn is_operational_section(name: &str, python_project_manifest: bool) -> bool {
+    matches!(name, "features" | "lib" | "bin")
+        || (python_project_manifest && is_scripts_section(name))
 }
 
 fn is_scripts_section(name: &str) -> bool {
@@ -628,6 +636,20 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         assert_eq!(
             section_rows(&sections, is_ordinary_dependency_section),
             vec![4, 5, 6, 7, 8, 9, 10, 11, 12],
+        );
+    }
+
+    #[test]
+    fn walker_toml_cargo_targets_are_operational() {
+        let source = "[package]\nname = \"demo\"\n\n\
+                      [lib]\nproc-macro = true\n\n\
+                      [[bin]]\nname = \"demo-cli\"\npath = \"src/cli.rs\"\n\
+                      required-features = [\"cli\"]\n\n\
+                      [profile.release]\nlto = true\n";
+        let sections = collect_sections(&parse(source), source);
+        assert_eq!(
+            section_rows(&sections, |n| is_operational_section(n, false)),
+            vec![4, 5, 6, 7, 8, 9, 10, 11],
         );
     }
 

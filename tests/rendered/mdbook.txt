@@ -51,6 +51,10 @@ Cargo.toml
   131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
   132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
   133→search = ["mdbook-html/search"]
+  134→
+  135→[[bin]]
+  136→doc = false
+  137→name = "mdbook"
   …
 LICENSE
 README.md
@@ -282,11 +286,8 @@ crates/
         20→pub use mdbook_core::errors;
         …
         28→pub trait Renderer {
-        29→    /// The `Renderer`'s name.
-        30→    fn name(&self) -> &str;
         …
-        34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
-        35→}
+        30→    fn name(&self) -> &str;
         …
         40→pub struct RenderContext {
         …
