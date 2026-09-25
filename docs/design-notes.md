@@ -204,6 +204,17 @@ language.**
 - Per-walker run state goes in named fields on `WalkCtx`
   (`json_state`, `ctx.code.<lang>`, …), not a `TypeId` bag or
   thread-local.
+- Manifests (`Cargo.toml`, `pyproject.toml`, `package.json`) share one
+  ontology: identity, operational (entry points / scripts / features /
+  runtime constraints), runtime dependencies, appendix. Their prices live
+  once in `value.rs` (`manifest_*_value`, `dependency_roster_value`);
+  walkers only map their tables/keys onto those kinds. Development and
+  peer rosters are not emitted. A workspace's primary member is the one
+  member directory named after the repository, for Cargo and JS alike.
+- Files no parser claims go through the plaintext walker: named classes
+  (build entrypoints incl. compose files, dotenv samples, tooling config
+  incl. CI YAML, …) render whole or as a head slice at one of four value
+  tiers; everything else falls to the column-0 declaration surface.
 
 ## Output notation and the plugin cap
 
@@ -266,8 +277,8 @@ must not undo:
   its ancestor renders as content.** `RenderedTree::apply_spans`
   replaces ancestor-owned records unconditionally, so the paid-for row
   would demote to `…` in the render — invisible to `Score`, which
-  atomizes schedule content. Head/tail splits (e.g. the Dockerfile
-  split) ship their tail full-lines-only for this reason.
+  atomizes schedule content. Head/tail splits (e.g. the Prisma
+  wide model split) ship their tail full-lines-only for this reason.
 - **Per-row Score column can't decompose I × C**, and small walker
   tweaks cascade decimal noise through every later row. Revisit if
   iteration shows the single column loses signal.
