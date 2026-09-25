@@ -174,7 +174,6 @@ struct TablePair {
     key: String,
     start: usize,
     end: usize,
-    value_is_array: bool,
 }
 
 fn collect_table_pairs(tree: &Tree, source: &str) -> Vec<TablePair> {
@@ -196,13 +195,11 @@ fn collect_table_pairs(tree: &Tree, source: &str) -> Vec<TablePair> {
             let Some(key) = pair_key(pair, source) else {
                 continue;
             };
-            let value = pair_value_node(pair);
             out.push(TablePair {
                 table: table.clone(),
                 key,
                 start: pair.start_position().row + 1,
-                end: value.unwrap_or(pair).end_position().row + 1,
-                value_is_array: value.is_some_and(|v| v.kind() == "array"),
+                end: pair_value_node(pair).unwrap_or(pair).end_position().row + 1,
             });
         }
     }
@@ -344,7 +341,8 @@ fn python_identity_non_lede_rows(source: &str, sections: &[Section]) -> HashSet<
 }
 
 /// The PEP 621 / Poetry lede: the keys that name, version and describe the
-/// package, in their single-line scalar form.
+/// package, in their single-line scalar form (a `"""` string continues onto
+/// rows the lede does not take, so its opener stays out too).
 ///
 /// Row-ownership invariant: this line predicate is the only thing keeping
 /// `Identity` and `Dependencies` from claiming the same row — `Identity`
@@ -362,11 +360,13 @@ fn is_lede_pair_line(line: &str) -> bool {
     matches!(
         key.trim(),
         "name" | "version" | "description" | "requires-python" | "license" | "readme"
-    ) && value
-        .trim_start()
-        .chars()
-        .next()
-        .is_some_and(|ch| ch != '[' && ch != '{')
+    ) && {
+        let value = value.trim_start();
+        !value.is_empty()
+            && !value.starts_with(['[', '{'])
+            && !value.starts_with("\"\"\"")
+            && !value.starts_with("'''")
+    }
 }
 
 /// PEP 621 dependency arrays live inside `[project]` but belong to the
@@ -396,9 +396,7 @@ fn packaging_mechanics_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> 
 fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {
     pairs
         .iter()
-        .filter(|pair| {
-            pair.table == "project" && pair.value_is_array && is_pep621_dependency_key(&pair.key)
-        })
+        .filter(|pair| pair.table == "project" && is_pep621_dependency_key(&pair.key))
         .flat_map(|pair| pair.start..=pair.end)
 }
 
@@ -669,6 +667,29 @@ requires-python = ">=3.10"
         let (lede, residue) = identity_partition(source, 13);
         assert_eq!(lede, vec![1, 2, 4, 13]);
         assert_eq!(residue, vec![3, 5, 6, 7, 8, 9]);
+    }
+
+    /// A multi-line string value renders whole in the residue rather than as
+    /// a dangling opener in the lede.
+    #[test]
+    fn walker_toml_multiline_description_stays_out_of_the_lede() {
+        let source = "[project]\nname = \"demo\"\ndescription = \"\"\"\nA demo.\n\"\"\"\n";
+        let (lede, residue) = identity_partition(source, 5);
+        assert_eq!(lede, vec![1, 2]);
+        assert_eq!(residue, vec![3, 4, 5]);
+    }
+
+    /// `optional-dependencies` belongs to the dependency roster whether it is
+    /// written as a `[project.optional-dependencies]` table or inline.
+    #[test]
+    fn walker_toml_inline_optional_dependencies_join_the_roster() {
+        let source = "[project]\nname = \"demo\"\noptional-dependencies = { dev = [\"pytest\"] }\n";
+        let owned: Vec<usize> =
+            pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
+        assert_eq!(owned, vec![3]);
+        let (lede, residue) = identity_partition(source, 3);
+        assert_eq!(lede, vec![1, 2]);
+        assert!(residue.is_empty());
     }
 
     /// A Cargo manifest has no residue: `[package]` is taken whole, and the
