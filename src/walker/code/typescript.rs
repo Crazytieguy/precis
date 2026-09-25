@@ -62,6 +62,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         .iter()
         .map(|&statement| (statement, scan.classify(file, statement)))
         .collect();
+    scan.follow_local_factories(file, &classified);
 
     let lists_unexported = is_declaration_file(&file.path);
 
@@ -319,6 +320,36 @@ impl<'source> ExportScan<'source> {
 
     fn mark(&mut self, file: &'source SourceFile, name: Node) {
         self.public_names.insert(file.text(name));
+    }
+
+    /// A published `const x = make()` / `new X()` is a handle on the
+    /// local implementation it calls, so that implementation is
+    /// published too (one hop).
+    fn follow_local_factories(
+        &mut self,
+        file: &'source SourceFile,
+        classified: &[(Node, TopLevel)],
+    ) {
+        let mut callees = Vec::new();
+        for (_, top_level) in classified {
+            let TopLevel::Local(node) = top_level else {
+                continue;
+            };
+            let Some(declarator) = single_declarator(*node) else {
+                continue;
+            };
+            let published = declarator
+                .child_by_field_name("name")
+                .is_some_and(|name| self.public_names.contains(file.text(name)));
+            if let Some(callee) = declarator
+                .child_by_field_name("value")
+                .and_then(callee_identifier)
+                .filter(|_| published)
+            {
+                callees.push(file.text(callee));
+            }
+        }
+        self.public_names.extend(callees);
     }
 }
 
@@ -1102,7 +1133,7 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_default_export_publishes_the_local_it_names() {
+    fn code_typescript_default_export_resolves_to_the_local_implementation() {
         let model = extract_source(
             "src/client.ts",
             "\
@@ -1115,7 +1146,35 @@ export default instance;
 ",
         );
         assert_eq!(rows(&model.reexports), [vec![6]]);
-        assert_eq!(describe(&model), ["Whole name [4] head [4] doc [] body []"]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [1] head [1] doc [] body [[2]]",
+                "Whole name [4] head [4] doc [] body []",
+            ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_exported_singleton_keeps_its_class() {
+        let model = extract_source(
+            "src/client.js",
+            "\
+class Client {
+  request() {}
+}
+const client = new Client();
+export default client;
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1, 3] doc [] body [[2]]",
+                "  Callable name [2] head [2] doc [] body []",
+                "Whole name [4] head [4] doc [] body []",
+            ]
+        );
     }
 
     #[test]

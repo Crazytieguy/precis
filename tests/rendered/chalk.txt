@@ -275,6 +275,9 @@ source/
     …
     39→}
     …
+    50→function createChalk(options) {
+    51→	return chalkFactory(options);
+    …
     204→const chalk = createChalk();
     205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
     206→
