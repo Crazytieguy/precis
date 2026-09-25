@@ -32,7 +32,7 @@ use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::render::Source;
 use crate::tokenizer;
-use crate::value::{is_orientation_doc, is_peripheral_doc, mix_signals};
+use crate::value::{is_peripheral_doc, mix_signals};
 
 use super::{
     FileLines, WalkCtx, budget_chunk_ranges, extend_nonblank_rows, first_child_of_kind,
@@ -333,22 +333,17 @@ fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
 // --- value ---
 
 fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx)) * nav.factor(file)
+    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx)) * nav.factor()
 }
 
 /// `Prelude` prices as the README's index-0 section: it is the top of
 /// the README body, just above the first heading rather than below it.
 fn prelude_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    section_base_value(file, ctx) * nav.factor(file)
+    section_base_value(file, ctx) * nav.factor()
 }
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    mix_signals(
-        0.7,
-        0.55,
-        0.4,
-        super::file_depth_factor(file, ctx, is_orientation_doc(file)),
-    ) * nav.factor(file)
+    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx)) * nav.factor()
 }
 
 /// How crowded the directory is that a markdown file's navigation
@@ -364,18 +359,14 @@ impl NavDensity {
     /// Saturate a file's navigation value in dirs with many .md siblings
     /// — the dir listing already names them.
     ///
-    /// The root README and orientation docs are exempt. The root README's
-    /// exemption is load-bearing rather than cosmetic: its outline is the
+    /// The root README is exempt, and not cosmetically: its outline is the
     /// hard predecessor of every root README section, so damping it
     /// delays the whole README body, which is the largest credited
     /// early-budget purchase on repos that have one. A README deeper in
     /// the tree carries no such stream and is just one more page in a
     /// docs directory the listing already enumerated.
-    fn factor(self, file: &Path) -> f64 {
-        if self.root_readme || is_orientation_doc(file) {
-            return 1.0;
-        }
-        if self.sibling_md_count <= DENSE_MD_SIBLINGS {
+    fn factor(self) -> f64 {
+        if self.root_readme || self.sibling_md_count <= DENSE_MD_SIBLINGS {
             return 1.0;
         }
         ((DENSE_MD_SIBLINGS as f64) / (self.sibling_md_count as f64)).sqrt()
@@ -410,12 +401,7 @@ fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
     if is_readme(file) {
         return mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
     }
-    mix_signals(
-        0.3,
-        0.5,
-        0.5,
-        super::file_depth_factor(file, ctx, is_orientation_doc(file)),
-    )
+    mix_signals(0.3, 0.5, 0.5, path_depth_factor(file, ctx))
 }
 
 /// Per-section value from the file's [`section_base_value`]. Child

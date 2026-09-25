@@ -542,28 +542,6 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     false
 }
 
-/// Project-orientation markdown files — the matklad-style
-/// `ARCHITECTURE.md` convention plus the related `OVERVIEW.md` /
-/// `DESIGN.md` / `STRUCTURE.md` names, matched at any depth so a
-/// `docs/ARCHITECTURE.md` counts the same as a root-level one. NS
-/// authors anchor on these as primary orientation alongside the README;
-/// the markdown walker depth-pins them and lifts their section cat to
-/// match.
-pub fn is_orientation_doc(file: &std::path::Path) -> bool {
-    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
-        return false;
-    };
-    let Some(ext) = file.extension().and_then(|e| e.to_str()) else {
-        return false;
-    };
-    if !ext.eq_ignore_ascii_case("md") {
-        return false;
-    }
-    ["ARCHITECTURE", "OVERVIEW", "DESIGN", "STRUCTURE"]
-        .iter()
-        .any(|n| stem.eq_ignore_ascii_case(n))
-}
-
 /// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
 /// anywhere in the tree, where `<locale>` is shaped like an
 /// ISO-639-style code (2-3 lowercase ASCII letters, optional `-`/`_`
