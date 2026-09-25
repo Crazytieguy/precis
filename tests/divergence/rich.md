@@ -20,10 +20,10 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 728 | 81 | [dependencies] in pyproject.toml |  |  | 0.187 |
 | ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.174 |
 | walker |  | 875 | 147 | README headline in README.md |  |  | 0.316 |
+| walker |  | 898 | 23 | listing of '.github' |  |  | 0.316 |
+| walker |  | 928 | 30 | listing of '.github/workflows' |  |  | 0.316 |
 | ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.548 |
-| walker |  | 956 | 81 | README prelude in README.md |  |  | 0.548 |
-| walker |  | 979 | 23 | listing of '.github' |  |  | 0.548 |
-| walker |  | 1009 | 30 | listing of '.github/workflows' |  |  | 0.548 |
+| walker |  | 1009 | 81 | README prelude in README.md |  |  | 0.548 |
 | walker |  | 1032 | 23 | listing of 'benchmarks' |  |  | 0.549 |
 | walker |  | 1123 | 91 | headings outline in README.md |  |  | 0.647 |
 | walker |  | 1145 | 22 | README.md section #0 |  |  | 0.656 |

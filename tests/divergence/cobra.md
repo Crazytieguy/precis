@@ -1,4 +1,4 @@
-Score(3000)=0.554 I=0.765 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.569/0.700/0.554/0.486/0.415/0.511
+Score(3000)=0.572 I=0.768 C=0.426 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.569/0.700/0.572/0.483/0.415/0.511
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -60,70 +60,70 @@ Score(3000)=0.554 I=0.765 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 2625 | 23 | go decl completions.go:98 |  |  | 0.598 |
 | walker |  | 2726 | 101 | go decl completions.go:28 |  |  | 0.599 |
 | ns | 2740 |  | 226 | Command method roster: the complete flag API | 3.3 |  | 0.573 |
-| walker |  | 2937 | 211 | README prelude in README.md |  |  | 0.577 |
-| ns | 2955 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.554 |
-| ns | 3142 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.537 |
-| walker |  | 3178 | 241 | go names command.go |  |  | 0.550 |
-| walker |  | 3189 | 11 | go decl command.go:33 |  |  | 0.553 |
-| walker |  | 3210 | 21 | go decl command.go:45 |  |  | 0.558 |
-| walker |  | 3218 | 8 | go body command.go:269 |  |  | 0.558 |
-| walker |  | 3227 | 9 | go body command.go:275 |  |  | 0.558 |
-| walker |  | 3236 | 9 | go body command.go:281 |  |  | 0.558 |
-| walker |  | 3247 | 11 | go doc command.go:45 |  |  | 0.562 |
-| ns | 3332 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.545 |
-| walker |  | 3417 | 170 | go names powershell_completions.go |  |  | 0.545 |
-| walker |  | 3431 | 14 | go body powershell_completions.go:337 |  |  | 0.545 |
-| walker |  | 3445 | 14 | go body powershell_completions.go:348 |  |  | 0.545 |
-| walker |  | 3460 | 15 | go body powershell_completions.go:331 |  |  | 0.545 |
-| walker |  | 3475 | 15 | go body powershell_completions.go:342 |  |  | 0.545 |
-| walker |  | 3493 | 18 | go doc powershell_completions.go:331 |  |  | 0.545 |
-| ns | 3516 |  | 184 | user_guide.md: complete H2 section map | 4.1 |  | 0.530 |
-| walker |  | 3542 | 49 | go decl active_help.go:22 |  |  | 0.530 |
-| walker |  | 3642 | 100 | go decl cobra.go:32 |  |  | 0.530 |
-| walker |  | 3674 | 32 | go doc bash_completionsV2.go:482 |  |  | 0.530 |
-| walker |  | 3685 | 11 | go body command.go:296 |  |  | 0.530 |
-| ns | 3754 |  | 238 | user_guide.md: complete H3/H4 subsection map | 4.2 | 4.1 | 0.511 |
-| walker |  | 3912 | 227 | go names args.go |  |  | 0.512 |
-| walker |  | 3919 | 7 | go body args.go:82 |  |  | 0.512 |
-| walker |  | 3932 | 13 | go doc args.go:82 |  |  | 0.512 |
-| walker |  | 3948 | 16 | go doc args.go:42 |  |  | 0.512 |
-| ns | 3950 |  | 196 | Completion and Active Help documentation: H1/H2 maps | 4.3 |  | 0.499 |
-| walker |  | 3964 | 16 | go body args.go:142 |  |  | 0.499 |
-| walker |  | 3982 | 18 | go doc args.go:107 |  |  | 0.499 |
-| walker |  | 4016 | 34 | go doc completions.go:45 |  |  | 0.499 |
-| walker |  | 4110 | 94 | headings outline in CONDUCT.md |  |  | 0.499 |
-| ns | 4133 |  | 183 | Test harness: the helpers every root-package test is written against | 4.4 |  | 0.486 |
-| walker |  | 4340 | 230 | go names zsh_completions.go |  |  | 0.486 |
-| walker |  | 4347 | 7 | go body zsh_completions.go:55 |  |  | 0.486 |
-| walker |  | 4354 | 7 | go body zsh_completions.go:66 |  |  | 0.486 |
-| walker |  | 4368 | 14 | go body zsh_completions.go:31 |  |  | 0.486 |
-| walker |  | 4382 | 14 | go body zsh_completions.go:42 |  |  | 0.486 |
-| walker |  | 4397 | 15 | go body zsh_completions.go:25 |  |  | 0.486 |
-| walker |  | 4412 | 15 | go body zsh_completions.go:36 |  |  | 0.486 |
-| walker |  | 4430 | 18 | go doc args.go:127 |  |  | 0.486 |
-| walker |  | 4458 | 28 | README.md section #5 |  |  | 0.467 |
-| ns | 4458 |  | 325 | CI: the four jobs and the platform / Go-version matrix | 4.5 |  | 0.467 |
-| ns | 4706 |  | 248 | golangci-lint configuration: the enabled linter set | 4.6 |  | 0.450 |
-| walker |  | 4712 | 254 | go names shell_completions.go |  |  | 0.451 |
-| walker |  | 4725 | 13 | go body shell_completions.go:24 |  |  | 0.451 |
-| walker |  | 4739 | 14 | go body shell_completions.go:31 |  |  | 0.451 |
-| walker |  | 4753 | 14 | go body shell_completions.go:83 |  |  | 0.451 |
-| walker |  | 4768 | 15 | go body shell_completions.go:44 |  |  | 0.451 |
-| walker |  | 4783 | 15 | go body shell_completions.go:54 |  |  | 0.451 |
-| walker |  | 4798 | 15 | go body shell_completions.go:90 |  |  | 0.451 |
-| walker |  | 4818 | 20 | go doc powershell_completions.go:342 |  |  | 0.451 |
-| walker |  | 4829 | 11 | go body command.go:302 |  |  | 0.451 |
-| walker |  | 4850 | 21 | go body cobra.go:243 |  |  | 0.451 |
-| ns | 5045 |  | 339 | Execute / ExecuteC: doc comments and the root-redirect rule | 5.1 | 3.1 | 0.435 |
-| walker |  | 5161 | 311 | go names flag_groups.go |  |  | 0.435 |
-| walker |  | 5172 | 11 | go decl flag_groups.go:25 |  |  | 0.435 |
-| walker |  | 5205 | 33 | go doc flag_groups.go:81 |  |  | 0.435 |
-| walker |  | 5246 | 41 | go doc flag_groups.go:33 |  |  | 0.436 |
-| walker |  | 5288 | 42 | go doc flag_groups.go:49 |  |  | 0.436 |
-| walker |  | 5333 | 45 | go body fish_completions.go:276 |  |  | 0.436 |
-| walker |  | 5349 | 16 | go body shell_completions.go:61 |  |  | 0.436 |
-| walker |  | 5482 | 133 | go names doc/util.go |  |  | 0.436 |
-| walker |  | 5500 | 18 | go doc zsh_completions.go:25 |  |  | 0.436 |
+| ns | 2955 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.550 |
+| walker |  | 2967 | 241 | go names command.go |  |  | 0.564 |
+| walker |  | 2978 | 11 | go decl command.go:33 |  |  | 0.567 |
+| walker |  | 2999 | 21 | go decl command.go:45 |  |  | 0.572 |
+| walker |  | 3007 | 8 | go body command.go:269 |  |  | 0.572 |
+| walker |  | 3016 | 9 | go body command.go:275 |  |  | 0.572 |
+| walker |  | 3025 | 9 | go body command.go:281 |  |  | 0.572 |
+| walker |  | 3036 | 11 | go doc command.go:45 |  |  | 0.576 |
+| ns | 3142 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.558 |
+| walker |  | 3206 | 170 | go names powershell_completions.go |  |  | 0.558 |
+| walker |  | 3220 | 14 | go body powershell_completions.go:337 |  |  | 0.558 |
+| walker |  | 3234 | 14 | go body powershell_completions.go:348 |  |  | 0.558 |
+| walker |  | 3249 | 15 | go body powershell_completions.go:331 |  |  | 0.558 |
+| walker |  | 3264 | 15 | go body powershell_completions.go:342 |  |  | 0.558 |
+| walker |  | 3282 | 18 | go doc powershell_completions.go:331 |  |  | 0.558 |
+| walker |  | 3331 | 49 | go decl active_help.go:22 |  |  | 0.558 |
+| ns | 3332 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.542 |
+| walker |  | 3431 | 100 | go decl cobra.go:32 |  |  | 0.542 |
+| walker |  | 3463 | 32 | go doc bash_completionsV2.go:482 |  |  | 0.542 |
+| walker |  | 3474 | 11 | go body command.go:296 |  |  | 0.542 |
+| ns | 3516 |  | 184 | user_guide.md: complete H2 section map | 4.1 |  | 0.526 |
+| walker |  | 3701 | 227 | go names args.go |  |  | 0.527 |
+| walker |  | 3708 | 7 | go body args.go:82 |  |  | 0.527 |
+| walker |  | 3721 | 13 | go doc args.go:82 |  |  | 0.527 |
+| walker |  | 3737 | 16 | go doc args.go:42 |  |  | 0.527 |
+| walker |  | 3753 | 16 | go body args.go:142 |  |  | 0.527 |
+| ns | 3754 |  | 238 | user_guide.md: complete H3/H4 subsection map | 4.2 | 4.1 | 0.508 |
+| walker |  | 3771 | 18 | go doc args.go:107 |  |  | 0.509 |
+| walker |  | 3805 | 34 | go doc completions.go:45 |  |  | 0.509 |
+| walker |  | 3899 | 94 | headings outline in CONDUCT.md |  |  | 0.509 |
+| ns | 3950 |  | 196 | Completion and Active Help documentation: H1/H2 maps | 4.3 |  | 0.496 |
+| walker |  | 4129 | 230 | go names zsh_completions.go |  |  | 0.496 |
+| ns | 4133 |  | 183 | Test harness: the helpers every root-package test is written against | 4.4 |  | 0.483 |
+| walker |  | 4136 | 7 | go body zsh_completions.go:55 |  |  | 0.483 |
+| walker |  | 4143 | 7 | go body zsh_completions.go:66 |  |  | 0.483 |
+| walker |  | 4157 | 14 | go body zsh_completions.go:31 |  |  | 0.483 |
+| walker |  | 4171 | 14 | go body zsh_completions.go:42 |  |  | 0.483 |
+| walker |  | 4186 | 15 | go body zsh_completions.go:25 |  |  | 0.483 |
+| walker |  | 4201 | 15 | go body zsh_completions.go:36 |  |  | 0.483 |
+| walker |  | 4219 | 18 | go doc args.go:127 |  |  | 0.483 |
+| walker |  | 4247 | 28 | README.md section #5 |  |  | 0.483 |
+| ns | 4458 |  | 325 | CI: the four jobs and the platform / Go-version matrix | 4.5 |  | 0.464 |
+| walker |  | 4501 | 254 | go names shell_completions.go |  |  | 0.465 |
+| walker |  | 4514 | 13 | go body shell_completions.go:24 |  |  | 0.465 |
+| walker |  | 4528 | 14 | go body shell_completions.go:31 |  |  | 0.465 |
+| walker |  | 4542 | 14 | go body shell_completions.go:83 |  |  | 0.465 |
+| walker |  | 4557 | 15 | go body shell_completions.go:44 |  |  | 0.465 |
+| walker |  | 4572 | 15 | go body shell_completions.go:54 |  |  | 0.465 |
+| walker |  | 4587 | 15 | go body shell_completions.go:90 |  |  | 0.465 |
+| walker |  | 4607 | 20 | go doc powershell_completions.go:342 |  |  | 0.465 |
+| walker |  | 4618 | 11 | go body command.go:302 |  |  | 0.465 |
+| walker |  | 4639 | 21 | go body cobra.go:243 |  |  | 0.465 |
+| ns | 4706 |  | 248 | golangci-lint configuration: the enabled linter set | 4.6 |  | 0.447 |
+| walker |  | 4950 | 311 | go names flag_groups.go |  |  | 0.448 |
+| walker |  | 4961 | 11 | go decl flag_groups.go:25 |  |  | 0.448 |
+| walker |  | 4994 | 33 | go doc flag_groups.go:81 |  |  | 0.448 |
+| walker |  | 5035 | 41 | go doc flag_groups.go:33 |  |  | 0.448 |
+| ns | 5045 |  | 339 | Execute / ExecuteC: doc comments and the root-redirect rule | 5.1 | 3.1 | 0.433 |
+| walker |  | 5077 | 42 | go doc flag_groups.go:49 |  |  | 0.433 |
+| walker |  | 5122 | 45 | go body fish_completions.go:276 |  |  | 0.433 |
+| walker |  | 5138 | 16 | go body shell_completions.go:61 |  |  | 0.433 |
+| walker |  | 5271 | 133 | go names doc/util.go |  |  | 0.433 |
+| walker |  | 5289 | 18 | go doc zsh_completions.go:25 |  |  | 0.433 |
+| walker |  | 5500 | 211 | README prelude in README.md |  |  | 0.436 |
 | ns | 5583 |  | 538 | execute(): the ordered run pipeline | 5.2 | 5.1 | 0.410 |
 | walker |  | 5642 | 142 | go names doc/md_docs.go |  |  | 0.410 |
 | walker |  | 5653 | 11 | go doc doc/md_docs.go:52 |  |  | 0.410 |

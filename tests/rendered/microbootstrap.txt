@@ -21,46 +21,7 @@ Justfile
 README.md
   …
   12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
-  14→```python
-  15→# settings.py
-  16→from microbootstrap import LitestarSettings
-  17→
-  18→
-  19→class YourSettings(LitestarSettings):
-  20→    ...  # Your settings are stored here
-  21→
-  22→
-  23→settings = YourSettings()
-  24→
-  25→
-  26→# application.py
-  27→import litestar
-  28→from microbootstrap.bootstrappers.litestar import LitestarBootstrapper
-  29→
-  30→from your_application.settings import settings
-  31→
-  32→# Use the Litestar application!
-  33→application: litestar.Litestar = LitestarBootstrapper(settings).bootstrap()
-  34→```
-  35→
-  36→With <b>microbootstrap</b>, you receive an application with lightweight built-in support for:
-  37→
-  38→- `sentry`
-  39→- `prometheus`
-  40→- `opentelemetry`
-  41→- `logging`
-  42→- `cors`
-  43→- `swagger` - with additional offline version support
-  44→- `health-checks`
-  45→
-  46→Those instruments can be bootstrapped for:
-  47→
-  48→- `fastapi`,
-  49→- `litestar`,
-  50→- or `faststream` service,
-  51→- or even a service that doesn't use one of these frameworks.
-  52→
-  53→Interested? Let's dive right in ⚡
+  …
   55→## Table of Contents
   56→
   57→- [Installation](#installation)
@@ -283,11 +244,43 @@ microbootstrap/
     56→    server_reload: bool = True
     57→    server_workers_count: int = 1
     60→class LitestarSettings(  # type: ignore[misc]
+    61→    BaseServiceSettings,
+    62→    ServerConfig,
+    63→    LoggingConfig,
+    64→    OpentelemetryConfig,
+    65→    SentryConfig,
+    66→    LitestarPrometheusConfig,
+    67→    SwaggerConfig,
+    68→    CorsConfig,
+    69→    HealthChecksConfig,
+    70→    PyroscopeConfig,
+    71→):
     …
     75→class FastApiSettings(  # type: ignore[misc]
+    76→    BaseServiceSettings,
+    77→    ServerConfig,
+    78→    LoggingConfig,
+    79→    OpentelemetryConfig,
+    80→    SentryConfig,
+    81→    FastApiPrometheusConfig,
+    82→    SwaggerConfig,
+    83→    CorsConfig,
+    84→    HealthChecksConfig,
+    85→    PyroscopeConfig,
+    86→):
     …
     90→class FastStreamSettings(  # type: ignore[misc]
+    91→    BaseServiceSettings,
+    92→    ServerConfig,
+    93→    LoggingConfig,
+    94→    FastStreamOpentelemetryConfig,
+    95→    SentryConfig,
+    96→    FastStreamPrometheusConfig,
+    97→    HealthChecksConfig,
+    98→    PyroscopeConfig,
+    99→):
     …
+    102→    asyncapi_path: str | None = "/asyncapi"
     105→class InstrumentsSetupperSettings(  # type: ignore[misc]
     106→    BaseServiceSettings,
     107→    LoggingConfig,

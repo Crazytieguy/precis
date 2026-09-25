@@ -363,18 +363,8 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
 /// `Prelude` prices as the README's index-0 section: it is the top of
 /// the README body, just above the first heading rather than below it.
 fn prelude_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
-        * PRELUDE_VALUE_FACTOR
-        * nav.factor(file)
+    section_base_value(file, ctx) * nav.factor(file)
 }
-
-/// Premium over the index-0 [`readme_section_value`] — same signal mix,
-/// no index decay, times this. Swept: per-fixture rows are identical
-/// everywhere over [1.3, 1.6], and at 1.0 cobra's 211-token prelude
-/// prices out of the 3K frontier for −0.0004. Shipped at the low end of
-/// the measured-flat plateau; there is no argument for the exact value
-/// beyond that.
-const PRELUDE_VALUE_FACTOR: f64 = 1.3;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
     mix_signals(

@@ -29,8 +29,8 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.780 |
 | walker |  | 808 | 197 | README headline in Readme.md |  |  | 0.787 |
 | ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.712 |
-| walker |  | 874 | 66 | README prelude in Readme.md |  |  | 0.728 |
-| walker |  | 928 | 54 | headings outline in Readme.md |  |  | 0.729 |
+| walker |  | 862 | 54 | headings outline in Readme.md |  |  | 0.713 |
+| walker |  | 928 | 66 | README prelude in Readme.md |  |  | 0.729 |
 | walker |  | 947 | 19 | Readme.md section #8 |  |  | 0.729 |
 | ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.640 |
 | walker |  | 1023 | 76 | package entrypoints in package.json |  |  | 0.641 |

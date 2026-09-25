@@ -1,4 +1,4 @@
-Score(3000)=0.653 I=0.788 C=0.541 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.696/0.715/0.653/0.623/0.524/0.550
+Score(3000)=0.653 I=0.788 C=0.541 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.671/0.647/0.715/0.653/0.623/0.524/0.550
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -31,16 +31,16 @@ Score(3000)=0.653 I=0.788 C=0.541 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 730 | 39 | ts decl src/is-matching.ts:48 |  |  | 0.729 |
 | ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.667 |
 | walker |  | 839 | 109 | README.md section #0 |  |  | 0.667 |
-| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.631 |
-| walker |  | 1100 | 261 | README prelude in README.md |  |  | 0.754 |
-| walker |  | 1116 | 16 | ts body src/match.ts:32 |  |  | 0.754 |
-| walker |  | 1131 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.758 |
-| ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.696 |
-| walker |  | 1460 | 329 | README.md section #1 |  |  | 0.743 |
-| walker |  | 1470 | 10 | ts names src/types/index.ts |  |  | 0.743 |
-| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.598 |
-| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.562 |
-| walker |  | 1768 | 298 | listing of 'tests' |  |  | 0.739 |
+| walker |  | 855 | 16 | ts body src/match.ts:32 |  |  | 0.668 |
+| walker |  | 870 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.671 |
+| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.634 |
+| walker |  | 1199 | 329 | README.md section #1 |  |  | 0.697 |
+| walker |  | 1209 | 10 | ts names src/types/index.ts |  |  | 0.697 |
+| ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.647 |
+| walker |  | 1507 | 298 | listing of 'tests' |  |  | 0.674 |
+| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.718 |
+| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.675 |
+| walker |  | 1768 | 261 | README prelude in README.md |  |  | 0.739 |
 | walker |  | 1791 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.764 |
 | walker |  | 1831 | 40 | ts doc src/errors.ts:5 |  |  | 0.765 |
 | ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.729 |
