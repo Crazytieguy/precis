@@ -474,16 +474,27 @@ fn find_primary_language(source: &EssentialSource) -> Option<&'static str> {
 
 /// Extension → language family, collapsing the families whose files sit
 /// side by side in one codebase (a `.h` beside its `.c`, a `.js` beside
-/// its `.ts`). A language only the plaintext fallback reads is its own
-/// family. `None` for anything that isn't hand-authored code.
+/// its `.ts`, an interface beside its implementation). Any other
+/// extension the plaintext fallback reads is its own family. `None` for anything that isn't hand-authored code.
 pub(super) fn language_group(path: &Path) -> Option<&'static str> {
     let ext = path.extension()?.to_str()?.to_ascii_lowercase();
     Some(match ext.as_str() {
-        "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" => "c",
+        "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" | "hh" | "hxx" | "cu" | "cuh" | "mm" => "c",
         "js" | "jsx" | "cjs" | "mjs" | "ts" | "tsx" => "js",
         "go" => "go",
         "lua" => "lua",
-        "py" => "py",
+        "py" | "pyi" => "py",
+        "hs" | "lhs" => "hs",
+        "ml" | "mli" => "ml",
+        "erl" | "hrl" => "erl",
+        "ex" | "exs" => "ex",
+        "pl" | "pm" => "pl",
+        "pas" | "pp" | "dpr" | "lpr" => "pas",
+        "f" | "f90" | "f95" | "f03" | "f08" | "for" => "f",
+        "cob" | "cbl" | "cpy" => "cob",
+        "adb" | "ads" => "ada",
+        "v" | "sv" | "svh" => "v",
+        "vhd" | "vhdl" => "vhdl",
         "rb" => "rb",
         "rs" => "rs",
         "swift" => "swift",

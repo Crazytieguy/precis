@@ -474,12 +474,16 @@ fn is_block_closer(trimmed: &str) -> bool {
 /// `#region` / `#endregion` (C#, Visual Basic, PHP) name a fold for the
 /// editor and read as comments too.
 fn is_comment_line(trimmed: &str) -> bool {
-    let starts_with_ignoring_case = |prefix: &str| {
+    let names_fold = |marker: &str| {
         trimmed
-            .get(..prefix.len())
-            .is_some_and(|head| head.eq_ignore_ascii_case(prefix))
+            .get(..marker.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(marker))
+            && trimmed[marker.len()..]
+                .chars()
+                .next()
+                .is_none_or(char::is_whitespace)
     };
-    if starts_with_ignoring_case("#region") || starts_with_ignoring_case("#endregion") {
+    if names_fold("#region") || names_fold("#endregion") {
         return true;
     }
     for marker in ["//", "/*", "<!--", "\"\"\"", "'''"] {
@@ -1007,6 +1011,13 @@ mod tests {
         assert_eq!(text, vec!["using System;", "namespace ShareX"]);
     }
 
+    #[test]
+    fn plaintext_source_text_region_marker_is_a_comment_but_a_css_id_is_not() {
+        assert!(is_comment_line("#Region \"Fields\""));
+        assert!(is_comment_line("#endregion"));
+        assert!(!is_comment_line("#region-picker {"));
+    }
+
     /// Column-zero statements ahead of a file's functions do not take the
     /// roster's slots from them, in a language file; a flat file's surface
     /// stays its head.
@@ -1438,18 +1449,20 @@ mod tests {
     }
 
     /// Where no walker parses the language a repository is written in, its
-    /// files' surfaces price like parsed declarations; a side language's
-    /// stay below them.
+    /// files' surfaces (interfaces included) price like parsed
+    /// declarations; a side language's stay below them.
     #[test]
     fn plaintext_primary_language_surface_prices_like_a_parsed_declaration() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        std::fs::write(root.join("core.zig"), "pub fn step() void {}\n".repeat(50)).unwrap();
+        std::fs::write(root.join("core.ml"), "let step () = ()\n".repeat(50)).unwrap();
+        std::fs::write(root.join("core.mli"), "val step : unit -> unit\n").unwrap();
         std::fs::write(root.join("tool.rb"), "def tool\nend\n").unwrap();
         let ctx = WalkCtx::new(root.to_path_buf());
         let decl = crate::value::code_rung_value(crate::batch::Rung::Decl);
         let value = |name: &str| class_value(Class::LanguageSource, &root.join(name), &ctx);
-        assert_eq!(value("core.zig"), decl);
+        assert_eq!(value("core.ml"), decl);
+        assert_eq!(value("core.mli"), decl);
         assert!(value("tool.rb") < decl);
     }
 
