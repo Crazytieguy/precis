@@ -7,17 +7,33 @@ Justfile
   1→default: install lint test
   2→
   3→install:
-  …
+  4→    uv lock --upgrade
+  5→    uv sync --all-extras --frozen
+  6→
   7→lint:
-  …
+  8→    uv run ruff format
+  9→    uv run ruff check --fix
+  10→    uv run mypy .
+  11→
   12→lint-ci:
-  …
+  13→    uv run ruff format --check
+  14→    uv run ruff check --no-fix
+  15→    uv run mypy .
+  16→
   17→test *args:
-  …
+  18→    uv run --no-sync pytest {{ args }}
+  19→
   20→publish:
-  …
+  21→    rm -rf dist
+  22→    uv version $GITHUB_REF_NAME
+  23→    uv build
+  24→    uv publish --token $PYPI_TOKEN
+  25→
   26→run-faststream-example *args:
-  …
+  27→    #!/bin/bash
+  28→    trap 'echo; docker rm -f microbootstrap-redis' EXIT
+  29→    docker run --name microbootstrap-redis -p 6379:6379 -d redis
+  30→    uv run examples/faststream_app.py
 README.md
   …
   12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
@@ -160,29 +176,7 @@ microbootstrap/
     33→            self.rich_console.print(Rule("[yellow]Bootstrapping application[/yellow]", align="left"))
     34→            self.rich_console.print(self.rich_table)
   exceptions.py
-    1→class MicroBootstrapBaseError(Exception):
-    2→    """Base for all exceptions."""
-    5→class ConfigMergeError(MicroBootstrapBaseError):
-    …
-    9→class MissingInstrumentError(MicroBootstrapBaseError):
-    …
   granian_server.py
-    …
-    16→GRANIAN_LOG_LEVELS_MAP = {
-    17→    logging.CRITICAL: LogLevels.critical,
-    18→    logging.ERROR: LogLevels.error,
-    19→    logging.WARNING: LogLevels.warning,
-    20→    logging.WARNING: LogLevels.warn,
-    21→    logging.INFO: LogLevels.info,
-    22→    logging.DEBUG: LogLevels.debug,
-    23→}
-    …
-    27→def create_granian_server(
-    28→    target: str,
-    29→    settings: ServerConfig,
-    30→    **granian_options: typing.Any,  # noqa: ANN401
-    31→) -> GranianServer[typing.Any]:
-    …
   helpers.py
   instruments/
     __init__.py (empty)
@@ -205,8 +199,7 @@ microbootstrap/
     23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
     …
     28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-    29→        self.instrument_box.configure_instrument(instrument_config)
-    30→        return self
+    …
     32→    def configure_instruments(
     33→        self,
     34→        *instrument_configs: InstrumentConfigT,

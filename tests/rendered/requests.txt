@@ -321,10 +321,15 @@ tox.ini
   4→[testenv]
   5→deps = -rrequirements-dev.txt
   6→extras =
-  …
+  7→    security
+  8→    socks
   9→commands =
-  …
+  10→    pytest {posargs:tests}
+  11→
   12→[testenv:default]
   13→
   14→[testenv:use_chardet_on_py3]
-  …
+  15→extras =
+  16→    security
+  17→    socks
+  18→    use_chardet_on_py3

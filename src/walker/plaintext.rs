@@ -36,7 +36,7 @@
 
 use std::path::Path;
 
-use crate::batch::{Batch, PlaintextKey};
+use crate::batch::{Batch, BatchKey, PlaintextKey};
 
 use super::{
     FileLines, WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content,
@@ -650,27 +650,53 @@ fn declaration_surface(source: &str) -> Vec<usize> {
     selected
 }
 
-/// Declaration-surface content for one fallback file, or `None` when
-/// the file is unreadable, machine-generated, or has no surface. Line
-/// length says nothing about prose, which is often written one
-/// paragraph per line.
-fn source_text_content(
-    file: &Path,
-    ctx: &WalkCtx,
-    class: Class,
-) -> Option<crate::content::BatchContent> {
-    let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
+/// A fallback file's declaration surface, then — when the surface
+/// elides part of a file short enough to render whole — the whole file
+/// behind it. Nothing when the file is unreadable, machine-generated, or
+/// has no surface. Line length says nothing about prose, which is often
+/// written one paragraph per line.
+fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, class: Class) {
+    let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
+        return;
+    };
     if has_generated_marker(&source) || (class == Class::SourceText && has_minified_lines(&source))
     {
-        return None;
+        return;
     }
     let selected = declaration_surface(&source);
-    if selected.is_empty() {
-        return None;
+    let surface_rows = selected.len();
+    let Some(content) = single_file_lines_content(file, &source, FileLines::new(selected)) else {
+        return;
+    };
+    let surface_key: BatchKey = PlaintextKey::DeclSurface {
+        file: file.to_path_buf(),
     }
-    // Full lines only — the renderer synthesizes a `…` row for every
-    // elided non-blank gap from the anchor set on its own.
-    single_file_lines_content(file, &source, FileLines::new(selected))
+    .into();
+    let value = class_value(class, file, ctx);
+    out.push(Batch {
+        key: surface_key.clone(),
+        predecessor: None,
+        content,
+        value,
+    });
+    let content_rows = source
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .count();
+    if surface_rows < content_rows
+        && let Some(content) =
+            gated_whole_file_content(file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
+    {
+        out.push(Batch {
+            key: PlaintextKey::Whole {
+                file: file.to_path_buf(),
+            }
+            .into(),
+            predecessor: Some(surface_key),
+            content,
+            value,
+        });
+    }
 }
 
 /// True for text that is machine-emitted rather than hand-authored:
@@ -739,14 +765,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         };
         if matches!(class, Class::SourceText | Class::SourceProse) {
-            if let Some(content) = source_text_content(&file, ctx, class) {
-                out.push(Batch {
-                    key: PlaintextKey::DeclSurface { file: file.clone() }.into(),
-                    predecessor: None,
-                    content,
-                    value: class_value(class, &file, ctx),
-                });
-            }
+            push_source_text_batches(&mut out, &file, ctx, class);
             continue;
         }
         let content = match class {
@@ -1247,6 +1266,24 @@ mod tests {
         );
         assert_has_plaintext_whole(&report, "LICENSE");
         assert_has_plaintext_whole(&report, ".gitignore");
+    }
+
+    /// A small file in an unparsed language renders whole once the
+    /// budget reaches past its surface — not four lines and a `…` for
+    /// the closing brace.
+    #[test]
+    fn plaintext_small_source_text_file_renders_whole() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("Foo.java"),
+            "package demo;\n\npublic class Foo {\n    int x;\n}\n",
+        )
+        .unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let rendered = scheduler.run().render();
+        assert!(rendered.contains("5→}"), "{rendered}");
+        assert!(!rendered.contains('…'), "{rendered}");
     }
 
     /// A LICENSE that exceeds `PLAINTEXT_BYTE_GATE` is dropped at

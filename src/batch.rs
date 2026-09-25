@@ -129,7 +129,9 @@ pub enum JsonKey {
 /// language-agnostic declaration surface. See [`crate::walker::plaintext`].
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
-    /// Whole-file render, or a head slice of a longer file.
+    /// Whole-file render, or a head slice of a longer file. For a
+    /// fallback file, the whole of a short one; predecessor: its
+    /// `DeclSurface`.
     Whole { file: PathBuf },
     /// Indentation-zero declaration surface of a source-like text file
     /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
