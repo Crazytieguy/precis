@@ -118,8 +118,10 @@ fn callable(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
     let receiver_exported = node.kind() != "method_declaration"
         || receiver_type_name(node, &file.source).is_some_and(is_exported);
     let start = *file.node_rows(node).start();
+    let block = node.child_by_field_name("body");
+    let open_row = block.map_or(start, |block| *file.node_rows(block).start());
     let mut statements = Vec::new();
-    if let Some(block) = node.child_by_field_name("body") {
+    if let Some(block) = block {
         let mut cursor = block.walk();
         for child in block.named_children(&mut cursor) {
             if child.kind() == "statement_list" {
@@ -130,11 +132,10 @@ fn callable(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
             }
         }
     }
-    let body = file.node_items(statements, start);
-    // The closing `}` row belongs to no part.
+    let body = file.node_items(statements, open_row);
     let mut decl = decl_info(node, file, Shape::Callable, vec![start], body);
     if !decl.body.is_empty() {
-        decl.head.retain(|&row| row < decl.body[0].rows[0]);
+        decl.head = (start..=open_row).collect();
     }
     Some((decl, is_exported(name) && receiver_exported))
 }
@@ -262,6 +263,12 @@ func (s *Server) Run(
 }
 
 func helper() int { return 1 }
+
+func Exported(
+\tx int,
+) int { return x
+\t_ = x
+}
 ",
         );
         assert_eq!(model.module_doc, [Item::new([1])]);
@@ -276,6 +283,9 @@ func helper() int { return 1 }
         let helper = &model.decls[1];
         assert_eq!((helper.head.as_slice(), helper.body.len()), (&[13][..], 0));
         assert_eq!(helper.visibility, Visibility::Private);
+        let shared_open_row = &model.decls[2];
+        assert_eq!(shared_open_row.head, [15, 16, 17]);
+        assert_eq!(body_rows(shared_open_row), [vec![18]]);
     }
 
     #[test]
