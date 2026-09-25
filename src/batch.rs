@@ -44,6 +44,7 @@ pub enum BatchKey {
     C(CKey),
     Go(GoKey),
     Python(PythonKey),
+    Code(CodeKey),
     Lua(LuaKey),
     Yaml(YamlKey),
     Sql(SqlKey),
@@ -98,6 +99,7 @@ impl_batchkey! {
     C => CKey,
     Go => GoKey,
     Python => PythonKey,
+    Code => CodeKey,
     Lua => LuaKey,
     Yaml => YamlKey,
     Sql => SqlKey,
@@ -592,6 +594,42 @@ pub enum PythonKey {
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).
     TestNames { file: PathBuf },
+}
+
+/// Batches of the shared code engine (`walker::code`): one key shape for
+/// every language it has ported. Identity is `(rung, file, decl, sub)`.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub struct CodeKey {
+    pub rung: Rung,
+    pub file: PathBuf,
+    /// Per-file declaration index in the engine's normalized order
+    /// (top-level declarations by first row, each container directly
+    /// followed by its members). 0 for the file-level rungs.
+    pub decl: u32,
+    /// Chunk index within the part; 0 is the head chunk.
+    pub sub: u32,
+    /// The declaration's first source row (1-based), shown by
+    /// [`WalkerKey::describe`]. `decl` already determines it, so it never
+    /// decides identity or order; a container and its first member can
+    /// share it. 0 for the file-level rungs.
+    pub line: usize,
+}
+
+/// The rungs of the per-file declaration ladder, in emission order.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Rung {
+    /// File-level documentation: crate/package/module doc or docstring.
+    ModuleDoc,
+    /// The file's roster: every top-level declaration's name rows and
+    /// every re-export, in source order.
+    Names,
+    /// One declaration's head, plus its body when the declaration is
+    /// `Whole` (a container's body is its member roster).
+    Decl,
+    /// One declaration's doc comment or docstring.
+    Doc,
+    /// One `Callable` declaration's body statements.
+    Body,
 }
 
 /// Lua batches. LuaCATS spec files (`---@meta`, `---@class`,
@@ -1368,6 +1406,38 @@ impl InnerKey for CKey {
                 display_path(file, root)
             ),
         }
+    }
+}
+
+impl InnerKey for CodeKey {
+    fn is_depth_follow_up(&self) -> bool {
+        matches!(self.rung, Rung::Doc | Rung::Body)
+    }
+
+    fn is_dominant_file_surface(&self) -> bool {
+        matches!(self.rung, Rung::Names | Rung::Decl)
+    }
+
+    /// `"<lang> <rung> <path>[:<line>][ #<sub>]"`, e.g. `go decl pkg/a.go:42`
+    /// or `rust names src/lib.rs #1`.
+    fn describe(&self, root: &Path) -> String {
+        let language = crate::walker::code::Language::from_path(&self.file)
+            .map_or("code", |language| language.label());
+        let rung = match self.rung {
+            Rung::ModuleDoc => "module doc",
+            Rung::Names => "names",
+            Rung::Decl => "decl",
+            Rung::Doc => "doc",
+            Rung::Body => "body",
+        };
+        let mut out = format!("{language} {rung} {}", display_path(&self.file, root));
+        if matches!(self.rung, Rung::Decl | Rung::Doc | Rung::Body) {
+            out.push_str(&format!(":{}", self.line));
+        }
+        if self.sub > 0 {
+            out.push_str(&format!(" #{}", self.sub));
+        }
+        out
     }
 }
 

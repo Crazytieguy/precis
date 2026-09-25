@@ -25,6 +25,11 @@ use crate::fs_util::DirFilter;
 use crate::render::{Source, SourceCache};
 
 pub mod c;
+#[allow(
+    dead_code,
+    reason = "engine skeleton: the engine lane's emit consumes the model, chunk and ledger"
+)]
+pub(crate) mod code;
 pub mod fs;
 pub mod go;
 pub(crate) mod import_chunks;
@@ -117,6 +122,7 @@ impl Walker for FsWalker {
         out.extend(c::expand_in_dir(dir, ctx));
         out.extend(go::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
+        out.extend(code::expand_in_dir(dir, ctx));
         out.extend(lua::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));
         out.extend(sql::expand_in_dir(dir, ctx));
@@ -141,6 +147,12 @@ pub struct WalkCtx {
     typescript_state: typescript::TypescriptState,
     c_state: c::CState,
     python_state: python::PythonState,
+    /// Run state of the code engine's language modules.
+    #[allow(
+        dead_code,
+        reason = "engine skeleton: no language module has run state yet"
+    )]
+    code: code::CodeState,
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
@@ -170,6 +182,7 @@ impl WalkCtx {
             typescript_state: typescript::TypescriptState::new(),
             c_state: c::CState::default(),
             python_state: python::PythonState::default(),
+            code: code::CodeState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
             essential_source: OnceCell::new(),
