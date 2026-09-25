@@ -551,7 +551,6 @@ fn parse_manifest(path: &Path) -> Option<toml::Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::walker::dedup_sorted;
     use std::fs;
 
     fn fixture_path(rel: &str) -> PathBuf {
@@ -574,9 +573,11 @@ mod tests {
         let residue = python_identity_non_lede_rows(source, &sections);
         let owned: HashSet<usize> =
             pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
+        let mut config_rows: Vec<usize> = residue.difference(&owned).copied().collect();
+        config_rows.sort();
         (
             (1..=end).filter(|row| !residue.contains(row)).collect(),
-            dedup_sorted(residue.difference(&owned).copied().collect()),
+            config_rows,
         )
     }
 

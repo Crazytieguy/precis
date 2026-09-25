@@ -555,12 +555,6 @@ pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     node.start_position().row + text.trim_end().split('\n').count().max(1) - 1
 }
 
-pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
-    v.sort();
-    v.dedup();
-    v
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

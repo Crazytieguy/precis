@@ -16,7 +16,7 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, BatchKey};
-use crate::content::{BatchContent, FsEntries};
+use crate::content::BatchContent;
 use crate::fs_util::DirFilter;
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
@@ -295,7 +295,7 @@ impl<W: Walker> Scheduler<W> {
             return;
         };
         for group in groups {
-            let FsEntries::Listed(paths) = &group.entries else {
+            let crate::content::FsEntries::Listed(paths) = &group.entries else {
                 continue;
             };
             for path in paths {
