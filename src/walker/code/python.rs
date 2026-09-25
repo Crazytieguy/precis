@@ -27,7 +27,7 @@ pub(super) const LANGUAGE: Language = Language {
     grammar: |_| tree_sitter_python::LANGUAGE.into(),
     extract,
     is_entrypoint: Some(is_entrypoint),
-    file_weight: None,
+    file_weight: Some(file_weight),
 };
 
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
@@ -80,6 +80,37 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
     file_name(path).is_some_and(|name| name.starts_with("__") && name.ends_with("__.py"))
 }
+
+/// A module its package's `__init__.py` imports names from (`from .core
+/// import Engine`, `from pkg.core import Engine`) implements the package's
+/// public API, so it outranks its sibling helper modules.
+fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
+    let (Some(stem), Some(package_dir)) =
+        (path.file_stem().and_then(|s| s.to_str()), path.parent())
+    else {
+        return 1.0;
+    };
+    let Some(init) = ctx.read_source(&package_dir.join("__init__.py")) else {
+        return 1.0;
+    };
+    let package = package_dir
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or("");
+    let relative = format!("from .{stem} import");
+    let absolute = format!("from {package}.{stem} import");
+    let imported_by_init = init
+        .lines()
+        .map(str::trim_start)
+        .any(|line| line.starts_with(&relative) || line.starts_with(&absolute));
+    if imported_by_init {
+        PUBLIC_API_MODULE_WEIGHT
+    } else {
+        1.0
+    }
+}
+
+const PUBLIC_API_MODULE_WEIGHT: f64 = 1.2;
 
 fn file_name(path: &Path) -> Option<&str> {
     path.file_name().and_then(|name| name.to_str())
@@ -496,6 +527,24 @@ _first = second = 0
         assert_eq!(rows(&model.module_doc), vec![vec![1]]);
         let summary: Vec<_> = model.decls.iter().map(|decl| decl.head.clone()).collect();
         assert_eq!(summary, vec![vec![2], vec![3]]);
+    }
+
+    #[test]
+    fn code_python_file_weight_favors_modules_the_package_init_imports_from() {
+        let dir = tempfile::tempdir().unwrap();
+        let package = dir.path().join("pkg");
+        std::fs::create_dir_all(&package).unwrap();
+        std::fs::write(
+            package.join("__init__.py"),
+            "from .core import Engine\nfrom pkg.api import run\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let weight = |name: &str| file_weight(&package.join(name), &ctx);
+        assert_eq!(weight("core.py"), PUBLIC_API_MODULE_WEIGHT);
+        assert_eq!(weight("api.py"), PUBLIC_API_MODULE_WEIGHT);
+        assert_eq!(weight("helpers.py"), 1.0);
+        assert_eq!(file_weight(&dir.path().join("script.py"), &ctx), 1.0);
     }
 
     #[test]

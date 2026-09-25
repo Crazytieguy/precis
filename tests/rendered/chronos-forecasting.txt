@@ -1,8 +1,6 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
-    bug_report.md
-    config.yml
   workflows/
     ci.yml
     eval-model.yml
@@ -99,8 +97,6 @@ scripts/
   evaluation/
   kernel-synth.py
   training/
-    configs/
-    train.py
 src/
   chronos/
     __about__.py
@@ -150,6 +146,8 @@ src/
       39→    n_special_tokens: int
       40→    pad_token_id: int
       41→    eos_token_id: int
+      42→    use_eos_token: bool
+      43→    model_type: Literal["causal", "seq2seq"]
       …
       59→class ChronosTokenizer:
       …
@@ -265,13 +263,9 @@ src/
 test/
   __init__.py
   dummy-chronos-bolt-model/
-    config.json
-    model.safetensors
   dummy-chronos-model/
   dummy-chronos2-lora/
   dummy-chronos2-model/
-    config.json
-    model.safetensors
   test_chronos.py
   test_chronos2.py
   test_chronos_bolt.py

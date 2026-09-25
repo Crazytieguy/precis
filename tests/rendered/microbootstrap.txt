@@ -198,39 +198,8 @@ microbootstrap/
     faststream.py
     litestar.py
   console_writer.py
-    …
-    10→@dataclasses.dataclass
-    11→class ConsoleWriter:
-    12→    writer_enabled: bool = True
-    13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
-    14→    rich_table: Table = dataclasses.field(init=False)
-    15→
-    16→    def __post_init__(self) -> None:
-    …
-    22→    def write_instrument_status(
-    23→        self,
-    24→        instrument_name: str,
-    25→        is_enabled: bool,
-    26→        disable_reason: str | None = None,
-    27→    ) -> None:
-    28→        is_enabled_value: typing.Final = "[green]Enabled[/green]" if is_enabled else "[red]Disabled[/red]"
-    29→        self.rich_table.add_row(rf"{instrument_name}", is_enabled_value, disable_reason or "")
-    31→    def print_bootstrap_table(self) -> None:
-    32→        if self.writer_enabled:
-    33→            self.rich_console.print(Rule("[yellow]Bootstrapping application[/yellow]", align="left"))
-    34→            self.rich_console.print(self.rich_table)
   exceptions.py
   granian_server.py
-    …
-    16→GRANIAN_LOG_LEVELS_MAP = {
-    17→    logging.CRITICAL: LogLevels.critical,
-    …
-    27→def create_granian_server(
-    28→    target: str,
-    29→    settings: ServerConfig,
-    30→    **granian_options: typing.Any,  # noqa: ANN401
-    31→) -> GranianServer[typing.Any]:
-    …
   helpers.py
   instruments/
     __init__.py (empty)
@@ -245,44 +214,79 @@ microbootstrap/
     sentry_instrument.py
     swagger_instrument.py
   instruments_setupper.py
-    …
-    19→class InstrumentsSetupper:
-    20→    console_writer: ConsoleWriter
-    21→    instrument_box: InstrumentBox
-    22→
-    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
-    …
-    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-    29→        self.instrument_box.configure_instrument(instrument_config)
-    30→        return self
-    32→    def configure_instruments(
-    33→        self,
-    34→        *instrument_configs: InstrumentConfigT,
-    35→    ) -> typing_extensions.Self:
-    …
-    40→    @classmethod
-    41→    def use_instrument(
-    42→        cls,
-    43→    ) -> typing.Callable[
-    44→        [type[Instrument[InstrumentConfigT]]],
-    45→        type[Instrument[InstrumentConfigT]],
-    46→    ]:
-    …
-    51→    def setup(self) -> None:
-    …
-    57→    def teardown(self) -> None:
-    …
-    62→    def __enter__(self) -> None:
-    63→        self.setup()
-    65→    def __exit__(self, *args: object) -> None:
-    66→        self.teardown()
-    …
   middlewares/
     __init__.py (empty)
     fastapi.py
     litestar.py
   py.typed (empty)
   settings.py
+    …
+    23→SettingsT = typing.TypeVar("SettingsT", bound="BaseServiceSettings")
+    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
+    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
+    …
+    29→class BaseServiceSettings(
+    30→    pydantic_settings.BaseSettings,
+    31→):
+    32→    service_debug: bool = True
+    33→    service_environment: str | None = None
+    34→    service_name: str = pydantic.Field(
+    35→        "micro-service",
+    36→        validation_alias=pydantic.AliasChoices("SERVICE_NAME", f"{ENV_PREFIX}SERVICE_NAME"),
+    37→    )
+    38→    service_description: str = "Micro service description"
+    …
+    53→class ServerConfig(pydantic.BaseModel):
+    54→    server_host: str = "0.0.0.0"  # noqa: S104
+    55→    server_port: int = 8000
+    56→    server_reload: bool = True
+    57→    server_workers_count: int = 1
+    60→class LitestarSettings(  # type: ignore[misc]
+    61→    BaseServiceSettings,
+    62→    ServerConfig,
+    63→    LoggingConfig,
+    64→    OpentelemetryConfig,
+    65→    SentryConfig,
+    66→    LitestarPrometheusConfig,
+    67→    SwaggerConfig,
+    68→    CorsConfig,
+    69→    HealthChecksConfig,
+    70→    PyroscopeConfig,
+    71→):
+    72→    """Settings for a litestar botstrap."""
+    75→class FastApiSettings(  # type: ignore[misc]
+    76→    BaseServiceSettings,
+    77→    ServerConfig,
+    78→    LoggingConfig,
+    79→    OpentelemetryConfig,
+    80→    SentryConfig,
+    81→    FastApiPrometheusConfig,
+    82→    SwaggerConfig,
+    83→    CorsConfig,
+    84→    HealthChecksConfig,
+    85→    PyroscopeConfig,
+    86→):
+    87→    """Settings for a fastapi botstrap."""
+    90→class FastStreamSettings(  # type: ignore[misc]
+    91→    BaseServiceSettings,
+    92→    ServerConfig,
+    93→    LoggingConfig,
+    94→    FastStreamOpentelemetryConfig,
+    95→    SentryConfig,
+    96→    FastStreamPrometheusConfig,
+    97→    HealthChecksConfig,
+    98→    PyroscopeConfig,
+    99→):
+    100→    """Settings for a faststream bootstrap."""
+    102→    asyncapi_path: str | None = "/asyncapi"
+    105→class InstrumentsSetupperSettings(  # type: ignore[misc]
+    106→    BaseServiceSettings,
+    107→    LoggingConfig,
+    108→    OpentelemetryConfig,
+    109→    SentryConfig,
+    110→    PyroscopeConfig,
+    111→):
+    112→    """Settings for a vanilla service."""
 package-lock.json
 package.json
   …
@@ -321,16 +325,6 @@ tests/
     test_litestar_opentelemetry.py
   conftest.py
   instruments/
-    __init__.py (empty)
-    test_cors.py
-    test_health_checks.py
-    test_instrument_box.py
-    test_logging.py
-    test_opentelemetry.py
-    test_prometheus.py
-    test_pyroscope.py
-    test_sentry.py
-    test_swagger.py
   test_granian_server.py
   test_helpers.py
   test_instruments_setupper.py

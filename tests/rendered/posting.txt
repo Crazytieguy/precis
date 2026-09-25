@@ -248,20 +248,34 @@ src/
     app.py
     auth.py
     collection.py
+      …
+      19→HttpRequestMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+      20→VALID_HTTP_METHODS = get_args(HttpRequestMethod)
+      21→
+      22→
+      23→class Auth(BaseModel):
+      …
+      56→class BasicAuth(BaseModel):
+      …
+      61→class DigestAuth(BaseModel):
+      …
+      66→class BearerTokenAuth(BaseModel):
+      …
+      70→class PathParam(BaseModel):
+      …
+      75→class Header(BaseModel):
+      …
+      81→class FormItem(BaseModel):
+      …
+      87→class QueryParam(BaseModel):
+      …
+      93→class Cookie(BaseModel):
+      …
     commands.py
     config.py
     exit_codes.py
-      1→GENERAL_ERROR = 1
     files.py
     help_data.py
-      …
-      4→@dataclass
-      5→class HelpData:
-      6→    """Data relating to the widget to be displayed in the HelpScreen"""
-      8→    title: str = field(default="")
-      9→    """Title of the widget"""
-      10→    description: str = field(default="")
-      11→    """Markdown description to be displayed in the HelpScreen"""
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
@@ -271,13 +285,6 @@ src/
       postman.py
     jump_overlay.py
     jumper.py
-      …
-      10→class Jumpable(Protocol):
-      …
-      16→class JumpInfo(NamedTuple):
-      …
-      26→class Jumper:
-      …
     locations.py
     messages.py
     posting.scss
@@ -292,8 +299,6 @@ src/
     user_host.py
     variables.py
     version.py
-      …
-      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
@@ -341,12 +346,9 @@ tests/
     test_snapshots/
   posting_snapshot_app.py
   resources/
-    snapshot_report_template.jinja2
   sample-collections/
   sample-configs/
   sample-envs/
-    sample_base.env
-    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

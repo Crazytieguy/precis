@@ -202,29 +202,6 @@ peepdb/
     196→def add_key_security():
     …
   core.py
-    …
-    18→logger = logging.getLogger(__name__)
-    …
-    21→console_handler = logging.StreamHandler()
-    …
-    27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
-    …
-    56→def peep_db(db_type: str,
-    57→            host: str,
-    58→            user: str,
-    59→            password: str,
-    60→            database: str,
-    61→            table: str = None,
-    62→            format: str = 'table',
-    63→            page: int = 1,
-    64→            page_size: int = 100,
-    65→            scientific: bool = False,
-    66→            trusted: bool = False) -> Any:
-    …
-    101→def format_as_table(data: Dict[str, Any]) -> str:
-    …
-    118→def format_value(value, scientific: bool, output_format: str):
-    …
   db/
     __init__.py
       1→from .base import BaseDatabase
@@ -249,12 +226,36 @@ peepdb/
       20→    'OracleDatabase'
       21→]
     base.py
+      …
+      5→class BaseDatabase(ABC):
+      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
+      …
+      17→    @abstractmethod
+      18→    def connect(self) -> None:
+      19→        pass
+      21→    @abstractmethod
+      22→    def disconnect(self) -> None:
+      23→        pass
+      25→    @abstractmethod
+      26→    def fetch_tables(self) -> List[str]:
+      27→        pass
+      29→    @abstractmethod
+      30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+      31→        pass
+      33→    def __enter__(self):
+      …
+      37→    def __exit__(self, exc_type, exc_val, exc_tb):
+      38→        self.disconnect()
     firebase.py
     mariadb.py
     mongodb.py
     mssql.py
     mysql.py
     oracle.py
+      …
+      7→class OracleDatabase(BaseDatabase):
+      8→    def connect(self) -> None:
+      …
     postgresql.py
     sqlite.py
   exceptions.py
@@ -299,6 +300,4 @@ project.toml
   47→peepdb = "peepdb.cli:main"
   …
 requirements.txt
-  1→async-timeout==4.0.3
-  …
 setup.py

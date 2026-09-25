@@ -1,4 +1,4 @@
-Score(3000)=0.743 I=0.896 C=0.616 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.762/0.803/0.787/0.743/0.663/0.593/0.598
+Score(3000)=0.743 I=0.896 C=0.616 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.772/0.803/0.787/0.743/0.663/0.593/0.598
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,19 +27,19 @@ Score(3000)=0.743 I=0.896 C=0.616 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 558 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
 | ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.698 |
 | walker |  | 650 | 92 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 661 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.592 |
-| walker |  | 845 | 184 | Code::CodeKey { rung: Decl, file: nanovllm/config.py, decl: 1, sub: 0, line: 6 } |  |  | 0.701 |
-| walker |  | 857 | 12 | Code::CodeKey { rung: Names, file: nanovllm/sampling_params.py, decl: 0, sub: 0, line: 0 } |  |  | 0.702 |
-| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.666 |
-| walker |  | 922 | 65 | Code::CodeKey { rung: Decl, file: nanovllm/sampling_params.py, decl: 1, sub: 0, line: 4 } |  |  | 0.702 |
-| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.714 |
-| walker |  | 943 | 21 | Code::CodeKey { rung: Body, file: nanovllm/sampling_params.py, decl: 2, sub: 0, line: 10 } |  |  | 0.740 |
-| ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.757 |
-| ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.726 |
-| walker |  | 1096 | 153 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.795 |
-| walker |  | 1112 | 16 | Code::CodeKey { rung: Names, file: nanovllm/llm.py, decl: 0, sub: 0, line: 0 } |  |  | 0.802 |
-| walker |  | 1117 | 5 | Code::CodeKey { rung: Decl, file: nanovllm/llm.py, decl: 1, sub: 0, line: 4 } |  |  | 0.809 |
+| walker |  | 662 | 12 | Code::CodeKey { rung: Names, file: nanovllm/sampling_params.py, decl: 0, sub: 0, line: 0 } |  |  | 0.701 |
+| walker |  | 727 | 65 | Code::CodeKey { rung: Decl, file: nanovllm/sampling_params.py, decl: 1, sub: 0, line: 4 } |  |  | 0.751 |
+| walker |  | 748 | 21 | Code::CodeKey { rung: Body, file: nanovllm/sampling_params.py, decl: 2, sub: 0, line: 10 } |  |  | 0.788 |
+| walker |  | 764 | 16 | Code::CodeKey { rung: Names, file: nanovllm/llm.py, decl: 0, sub: 0, line: 0 } |  |  | 0.801 |
+| walker |  | 769 | 5 | Code::CodeKey { rung: Decl, file: nanovllm/llm.py, decl: 1, sub: 0, line: 4 } |  |  | 0.812 |
+| walker |  | 780 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
+| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.686 |
+| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.650 |
+| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.667 |
+| walker |  | 964 | 184 | Code::CodeKey { rung: Decl, file: nanovllm/config.py, decl: 1, sub: 0, line: 6 } |  |  | 0.757 |
+| ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.772 |
+| ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.741 |
+| walker |  | 1117 | 153 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.809 |
 | ns | 1121 |  | 74 | Scheduler method roster | 2.4 |  | 0.778 |
 | walker |  | 1138 | 21 | Code::CodeKey { rung: Names, file: nanovllm/engine/block_manager.py, decl: 0, sub: 0, line: 0 } |  |  | 0.779 |
 | walker |  | 1189 | 51 | Code::CodeKey { rung: Decl, file: nanovllm/engine/block_manager.py, decl: 1, sub: 0, line: 8 } |  |  | 0.780 |

@@ -60,12 +60,7 @@ README.md
   307→## XSS prevention
   …
   316→## AI assistance
-  317→
-  318→The library is registered at [Context7](https://context7.com/volfpeter).
-  319→
-  320→To get good AI assistance, all you need to do is register the Context7 MCP server in your coding tool and tell the agent to use it.
-  321→
-  322→Because of the similarity with native HTML, JSX, and React, you can expect good results, both for vibe coding or inline completion.
+  …
   324→## Compatibility and performance
   …
   330→## Framework integrations
@@ -76,12 +71,7 @@ README.md
   341→## Why
   …
   353→## Dependencies
-  354→
-  355→The library aims to minimze its dependencies. Currently the following dependencies are required:
-  356→
-  357→- `anyio`: for async file operations and networking.
-  358→- `async-lru`: for async caching.
-  359→- `markdown`: for markdown parsing.
+  …
   361→## Development
   362→
   363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
@@ -182,7 +172,7 @@ htmy/
   core.py
     …
     19→class Fragment:
-    …
+    20→    """Fragment utility component that simply wraps some children components."""
     22→    __slots__ = ("_children",)
     23→
     24→    def __init__(self, *children: ComponentType) -> None:
@@ -197,17 +187,28 @@ htmy/
     45→    def __init__(self, *children: ComponentType, context: Context) -> None:
     …
     56→    def htmy_context(self) -> Context:
+    57→        """Returns the context for child rendering."""
     …
     64→class ContextAware:
     …
-    146→class SkipProperty(Exception):
+    100→    __slots__ = ()
+    101→
+    102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+    103→
+    104→    def __init_subclass__(cls) -> None:
     …
+    108→    def in_context(self, *children: ComponentType) -> WithContext:
+    …
+    115→    def to_context(self) -> Context:
+    …
+    146→class SkipProperty(Exception):
+    147→    """Exception raised by property formatters if the property should be skipped."""
     149→    ...
     151→    @classmethod
     152→    def format_property(cls, _: Any) -> Never:
     …
     157→class Text(str):
-    …
+    158→    """Marker class for differentiating text content from other strings."""
     160→    ...
     163→class SafeStr(Text):
     …

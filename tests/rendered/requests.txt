@@ -89,17 +89,6 @@ README.md
   37→
   38→Requests officially supports Python 3.10+.
   40→## Supported Features & Best–Practices
-  41→
-  42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
-  43→
-  44→- Keep-Alive & Connection Pooling
-  45→- International Domains and URLs
-  46→- Sessions with Cookie Persistence
-  47→- Browser-style TLS/SSL Verification
-  48→- Basic & Digest Authentication
-  49→- Familiar `dict`–like Cookies
-  50→- Automatic Content Decompression and Decoding
-  51→- Multi-part File Uploads
   …
   58→## Cloning the repository
   …
@@ -320,6 +309,23 @@ src/
     packages.py
     py.typed (empty)
     sessions.py
+      …
+      76→def merge_setting(
+      77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
+      78→) -> Any:
+      …
+      108→def merge_hooks(
+      109→    request_hooks: _t.HooksType,
+      110→    session_hooks: _t.HooksType,
+      111→    dict_class: type = OrderedDict,
+      …
+      127→class SessionRedirectMixin:
+      …
+      395→class Session(SessionRedirectMixin):
+      …
+      908→def session() -> Session:
+      …
+      920→    return Session()
     status_codes.py
     structures.py
     utils.py
