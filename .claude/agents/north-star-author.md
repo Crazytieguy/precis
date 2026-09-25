@@ -138,8 +138,8 @@ than front-loading a few large batches. This is formalized as a
 `cost_i ≤ 100 + 0.3 · cumulative_before`. At batch 2 a new batch can
 roughly double the aggregate (the 100-token floor dominates early);
 by batch 10+ each new batch is bounded to ~30% of current cumulative.
-The validator surfaces `GrowthEnvelope` violations with
-`cumulative_before` and `max_allowed` numbers. Fix by splitting
+The validator reports `growth envelope` violations with the
+cumulative so far and the allowed maximum. Fix by splitting
 oversized batches, ranking smaller high-value batches earlier, or
 both.
 
@@ -166,10 +166,9 @@ The rule this encodes — and that the simulator enforces — is
 same `(path, line)` only if one is the transitive predecessor of the
 other; the later one "owns" the line and overrides the earlier
 rendering. Unrelated batches overlapping on the same line is a
-`NonAncestorOverlap` violation; fix by adding a predecessor edge or
+`non-ancestor overlap` violation; fix by adding a predecessor edge or
 moving one of the spans. Overlap *within a single batch* is always
-invalid (`OverlappingSpans`) — cross-batch overrides are the only
-legitimate route.
+invalid — cross-batch overrides are the only legitimate route.
 
 ## Authoring process (incremental, tier-by-tier)
 

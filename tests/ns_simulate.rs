@@ -1,467 +1,165 @@
-//! Violation + growth-envelope tests for `ns_simulate::simulate_ns`.
-//! Each test constructs a synthetic NS TOML pointed at the `log` fixture
-//! and checks that the expected violation surfaces. Covers the three
-//! NS-authoring pathologies the growth envelope + load-time validation
-//! are meant to catch.
+//! `ns_simulate::simulate_ns` on synthetic North Stars over the `log`
+//! fixture: each authoring rule fires on its violation and only there.
 
 use std::path::Path;
 
 use precis::north_star::NorthStar;
-use precis::ns_simulate::{ENV_BASE, Violation, envelope_max, simulate_ns};
+use precis::ns_simulate::simulate_ns;
 
 const LOG_FIXTURE: &str = "tests/fixtures/log";
 
-fn load_ns_toml(toml: &str) -> NorthStar {
-    toml::from_str(toml).expect("valid ns toml")
+/// A `[[batches]]` table with the given `[batches.content]` body.
+fn batch(id: &str, content: &str) -> String {
+    format!(
+        "[[batches]]\nid = \"{id}\"\ndescriptor = \"d\"\njustification = \"j\"\n\
+         [batches.content]\n{content}\n"
+    )
 }
 
-fn fixture_pin(path: &str) -> String {
-    std::fs::read_to_string(Path::new(path).join(".precis-pin"))
-        .unwrap()
-        .trim()
-        .to_string()
+/// A lines batch over `src/lib.rs` rendering `start..=end` with `render`.
+fn lines(id: &str, start: usize, end: usize, render: &str) -> String {
+    batch(
+        id,
+        &format!(
+            "kind = \"lines\"\nspans = [{{ path = \"src/lib.rs\", start = {start}, end = {end}, render = {render} }}]"
+        ),
+    )
 }
 
-#[test]
-fn ns_simulate_envelope_math() {
-    assert_eq!(envelope_max(0), ENV_BASE);
-    assert_eq!(envelope_max(100), 130);
-    assert_eq!(envelope_max(1000), 400);
-    assert_eq!(envelope_max(10000), 3100);
+const FULL: &str = "{ kind = \"full\" }";
+const ELLIPSIS: &str = "{ kind = \"ellipsis\" }";
+
+/// Each batch's violation messages.
+fn violations(batches: &[String]) -> Vec<Vec<String>> {
+    let pin = std::fs::read_to_string(Path::new(LOG_FIXTURE).join(".precis-pin")).unwrap();
+    let toml = format!(
+        "fixture = \"log\"\nrevision_pin = \"{}\"\n\n{}",
+        pin.trim(),
+        batches.concat()
+    );
+    let ns: NorthStar = toml::from_str(&toml).expect("valid ns toml");
+    simulate_ns(&ns, Path::new(LOG_FIXTURE))
+        .into_iter()
+        .map(|b| b.violations)
+        .collect()
 }
 
-/// Mutation #1 — one batch's cost exceeds the 100 + 0.3·C_{i-1} envelope.
-/// Expected: `GrowthEnvelope` violation on that batch, no others.
+#[track_caller]
+fn assert_flags(violations: &[String], needle: &str) {
+    assert!(
+        violations.iter().any(|v| v.contains(needle)),
+        "expected `{needle}`, got {violations:?}"
+    );
+}
+
 #[test]
 fn ns_simulate_detects_growth_envelope_violation() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    // Batch 1 is tiny (lines 1-3 of lib.rs, ~30 tokens). Batch 2 covers
-    // ~400 lines of full rustdoc — thousands of tokens — which blows past
-    // envelope_max(~30) = 100 + 9 = 109.
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "tiny"
-justification = "anchor"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 1, end = 3, render = {{ kind = "full" }} }}]
-
-[[batches]]
-id = "2"
-descriptor = "oversized"
-justification = "blows envelope"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 10, end = 400, render = {{ kind = "full" }} }}]
-"#
-    ));
-
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert_eq!(report.batches.len(), 2);
-    assert!(
-        report.batches[0].violations.is_empty(),
-        "batch 1 unexpected violations: {:?}",
-        report.batches[0].violations
-    );
-    let violated = &report.batches[1].violations;
-    assert!(
-        violated
-            .iter()
-            .any(|v| matches!(v, Violation::GrowthEnvelope { .. })),
-        "expected GrowthEnvelope, got {violated:?}"
-    );
+    let found = violations(&[lines("1", 1, 3, FULL), lines("2", 10, 400, FULL)]);
+    assert!(found[0].is_empty(), "{:?}", found[0]);
+    assert_flags(&found[1], "growth envelope");
 }
 
-/// Mutation #2 — two batches share an id. Expected: `DuplicateBatchId`
-/// on the second occurrence.
-#[test]
-fn ns_simulate_detects_duplicate_batch_id() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1.1"
-descriptor = "first"
-justification = "anchor"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 1, end = 3, render = {{ kind = "full" }} }}]
-
-[[batches]]
-id = "1.1"
-descriptor = "second with same id"
-justification = "clash"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 5, end = 7, render = {{ kind = "full" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0].violations.is_empty(),
-        "first batch should pass"
-    );
-    assert!(
-        report.batches[1]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::DuplicateBatchId(id) if id == "1.1")),
-        "expected DuplicateBatchId on second, got {:?}",
-        report.batches[1].violations
-    );
-}
-
-/// Mutation #2b — first batch exceeds the envelope (envelope_max(0) = 100).
-/// Regression for a bug where the validator skipped the envelope check
-/// when `cumulative_before == 0`, letting oversized first batches pass.
+/// The envelope binds even with nothing before it (`100 + 0.3·0`).
 #[test]
 fn ns_simulate_first_batch_obeys_envelope() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    // Single batch spanning ~400 lines of rustdoc — well over 100 tokens.
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "oversized first"
-justification = "should fail envelope_max(0)=100"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 1, end = 400, render = {{ kind = "full" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::GrowthEnvelope { .. })),
-        "expected GrowthEnvelope on first batch, got {:?}",
-        report.batches[0].violations
+    assert_flags(
+        &violations(&[lines("1", 1, 400, FULL)])[0],
+        "growth envelope",
     );
 }
 
-/// Two spans in one batch cover the same `(path, line)`. Batch spans
-/// must be disjoint; cross-batch overrides use predecessor edges.
-/// Expected: `OverlappingSpans` violation.
+#[test]
+fn ns_simulate_detects_duplicate_batch_id() {
+    let found = violations(&[lines("1.1", 1, 3, FULL), lines("1.1", 5, 7, FULL)]);
+    assert!(found[0].is_empty(), "{:?}", found[0]);
+    assert_flags(&found[1], "duplicate batch id \"1.1\"");
+}
+
 #[test]
 fn ns_simulate_detects_overlapping_spans_within_batch() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "overlapping"
-justification = "two spans cover line 5"
-[batches.content]
-kind = "lines"
-spans = [
-  {{ path = "src/lib.rs", start = 1, end = 5, render = {{ kind = "full" }} }},
-  {{ path = "src/lib.rs", start = 5, end = 10, render = {{ kind = "full" }} }},
-]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::OverlappingSpans { line, .. } if *line == 5)),
-        "expected OverlappingSpans at line 5, got {:?}",
-        report.batches[0].violations
+    let spans = "kind = \"lines\"\nspans = [\
+        { path = \"src/lib.rs\", start = 1, end = 5, render = { kind = \"full\" } },\
+        { path = \"src/lib.rs\", start = 5, end = 10, render = { kind = \"full\" } }]";
+    assert_flags(
+        &violations(&[batch("1", spans)])[0],
+        "overlapping spans within one batch at src/lib.rs:5",
     );
 }
 
 #[test]
 fn ns_simulate_detects_overlapping_fs_entries_across_batches() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "root listing"
-justification = "orientation"
-[batches.content]
-kind = "fs"
-groups = [{{ parent = ".", entries = ["src"] }}]
-
-[[batches]]
-id = "2"
-descriptor = "duplicate root listing"
-justification = "duplicate fs atom"
-[batches.content]
-kind = "fs"
-groups = [{{ parent = ".", entries = ["src", "Cargo.toml"] }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0].violations.is_empty(),
-        "first owner should pass, got {:?}",
-        report.batches[0].violations
-    );
-    assert!(
-        report.batches[1].violations.iter().any(|v| matches!(
-            v,
-            Violation::OverlappingFsEntry {
-                entry,
-                existing_batch,
-                ..
-            } if entry == "src" && existing_batch == "1"
-        )),
-        "expected OverlappingFsEntry for src, got {:?}",
-        report.batches[1].violations
-    );
+    let found = violations(&[
+        batch(
+            "1",
+            "kind = \"fs\"\ngroups = [{ parent = \".\", entries = [\"src\"] }]",
+        ),
+        batch(
+            "2",
+            "kind = \"fs\"\ngroups = [{ parent = \".\", entries = [\"src\", \"Cargo.toml\"] }]",
+        ),
+    ]);
+    assert!(found[0].is_empty(), "{:?}", found[0]);
+    assert_flags(&found[1], "lists \"src\", already owned by 1");
 }
 
-/// Multi-line `Render::Ellipsis` span renders one `…` per covered line
-/// — visually indistinguishable from a single marker (no line numbers
-/// to differentiate them) but costs N× the tokens. The schema doc on
-/// `Render::Ellipsis` calls this single-line-only; the validator
-/// should flag it. Expected: `EllipsisMultiLine` violation, batch
-/// still simulates (quality-only, not render-blocking).
 #[test]
 fn ns_simulate_detects_multi_line_ellipsis() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "ellipsis 5..=8"
-justification = "should fail single-line invariant"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 5, end = 8, render = {{ kind = "ellipsis" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert_eq!(report.batches.len(), 1);
-    let violations = &report.batches[0].violations;
-    assert!(
-        violations.iter().any(|v| matches!(
-            v,
-            Violation::EllipsisMultiLine { start, end, .. } if *start == 5 && *end == 8
-        )),
-        "expected EllipsisMultiLine 5..=8, got {violations:?}"
+    assert_flags(
+        &violations(&[lines("1", 5, 8, ELLIPSIS)])[0],
+        "multi-line Ellipsis span at src/lib.rs:5..=8",
     );
 }
 
-/// Single-line `Render::Ellipsis` is valid — the validator must not
-/// fire on `start == end`.
 #[test]
 fn ns_simulate_accepts_single_line_ellipsis() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "ellipsis at line 5"
-justification = "single-line ellipsis is valid"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 5, end = 5, render = {{ kind = "ellipsis" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    let violations = &report.batches[0].violations;
-    assert!(
-        !violations
-            .iter()
-            .any(|v| matches!(v, Violation::EllipsisMultiLine { .. })),
-        "single-line Ellipsis should not fire EllipsisMultiLine, got {violations:?}"
-    );
+    let found = violations(&[lines("1", 5, 5, ELLIPSIS)]);
+    assert!(found[0].is_empty(), "{:?}", found[0]);
 }
 
-/// Mutation #3 — span covers lines beyond the file's line count.
-/// Matches the `schema load should have caught this` panic observed last
-/// session. Expected: `SpanOutOfRange` (not a panic).
+/// Past EOF is a violation, not a render panic.
 #[test]
 fn ns_simulate_detects_span_out_of_range() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "line 99999"
-justification = "past EOF"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 1, end = 99999, render = {{ kind = "full" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::SpanOutOfRange { .. })),
-        "expected SpanOutOfRange, got {:?}",
-        report.batches[0].violations
+    assert_flags(
+        &violations(&[lines("1", 1, 99999, FULL)])[0],
+        "span out of range",
     );
 }
 
-/// A `lines` batch with no spans resolves to zero atoms — it renders as a
-/// no-op and can never be credited by divergence. Expected: `EmptyBatch`.
 #[test]
 fn ns_simulate_detects_empty_lines_batch() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "no spans"
-justification = "zero-atom no-op"
-[batches.content]
-kind = "lines"
-spans = []
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::EmptyBatch)),
-        "expected EmptyBatch, got {:?}",
-        report.batches[0].violations
-    );
+    let found = violations(&[batch("1", "kind = \"lines\"\nspans = []")]);
+    assert_flags(&found[0], "zero atoms");
 }
 
-/// An `fs` batch whose only group lists nothing resolves to zero atoms.
-/// Expected: `EmptyBatch`.
 #[test]
 fn ns_simulate_detects_empty_fs_batch() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "empty listing"
-justification = "zero-atom no-op"
-[batches.content]
-kind = "fs"
-groups = [{{ parent = ".", entries = [] }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::EmptyBatch)),
-        "expected EmptyBatch, got {:?}",
-        report.batches[0].violations
-    );
+    let found = violations(&[batch(
+        "1",
+        "kind = \"fs\"\ngroups = [{ parent = \".\", entries = [] }]",
+    )]);
+    assert_flags(&found[0], "zero atoms");
 }
 
-/// An absolute span path escapes the fixture root. Expected:
-/// `SpanPathEscapesRoot` (render-blocking — the batch is skipped).
 #[test]
-fn ns_simulate_detects_absolute_span_path() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "absolute path"
-justification = "escapes fixture root"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "/etc/passwd", start = 1, end = 1, render = {{ kind = "full" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::SpanPathEscapesRoot { .. })),
-        "expected SpanPathEscapesRoot, got {:?}",
-        report.batches[0].violations
-    );
+fn ns_simulate_detects_span_paths_escaping_the_root() {
+    for path in ["/etc/passwd", "../Cargo.toml"] {
+        let content = format!(
+            "kind = \"lines\"\nspans = [{{ path = \"{path}\", start = 1, end = 1, render = {FULL} }}]"
+        );
+        assert_flags(
+            &violations(&[batch("1", &content)])[0],
+            "escapes the fixture root",
+        );
+    }
 }
 
-/// A `..`-traversing span path escapes the fixture root. Expected:
-/// `SpanPathEscapesRoot`.
-#[test]
-fn ns_simulate_detects_parent_traversal_span_path() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "parent traversal"
-justification = "escapes fixture root"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "../Cargo.toml", start = 1, end = 1, render = {{ kind = "full" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::SpanPathEscapesRoot { .. })),
-        "expected SpanPathEscapesRoot, got {:?}",
-        report.batches[0].violations
-    );
-}
-
-/// A `Truncated` span whose pattern leaves only punctuation behind on
-/// every line — the `…` implies elided substance that isn't there.
-/// Expected: `TruncationElidesOnlyPunctuation`.
+/// src/lib.rs:827 is `///        println!("{}:{} -- {}",`: truncating after
+/// `println` saves tokens but elides no word character.
 #[test]
 fn ns_simulate_detects_truncation_eliding_only_punctuation() {
-    let pin = fixture_pin(LOG_FIXTURE);
-    // src/lib.rs:827 is `///        println!("{}:{} -- {}",` — matching
-    // through `println` drops `!("{}:{} -- {}",`: long enough to save
-    // tokens, but with no word character in the elided tail.
-    let ns = load_ns_toml(&format!(
-        r#"fixture = "log"
-revision_pin = "{pin}"
-
-[[batches]]
-id = "1"
-descriptor = "punctuation-only elision"
-justification = "truncation drops nothing meaningful"
-[batches.content]
-kind = "lines"
-spans = [{{ path = "src/lib.rs", start = 827, end = 827, render = {{ kind = "truncated", pattern = "^.*println" }} }}]
-"#
-    ));
-    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
-    assert!(
-        report.batches[0]
-            .violations
-            .iter()
-            .any(|v| matches!(v, Violation::TruncationElidesOnlyPunctuation { .. })),
-        "expected TruncationElidesOnlyPunctuation, got {:?}",
-        report.batches[0].violations
+    let truncated = "{ kind = \"truncated\", pattern = \"^.*println\" }";
+    assert_flags(
+        &violations(&[lines("1", 827, 827, truncated)])[0],
+        "never elides a word character",
     );
 }
